@@ -1,0 +1,104 @@
+SpeedCrunch is a simple but powerful calculator.
+
+Among its features are:
+- high precision, up to 50 decimal digits
+- to be enjoyed using keyboard
+- result shown in scrollable window
+- history of last expressions (use up and down arrow)
+- built-in functions: abs, sqrt, pi, log, exp, ln, sin, cos, tan, sinh,
+  cosh, tanh, asin, acos, atan
+- support for variables, e.g try x=pi/3 and then sin(x)
+- special variable ans holds the last calculation result
+- percent operator, try e.g. 45%*75 or price/80%
+- angle mode: Alt+D for degrees, Alt+R for radians
+- automatic parentheses closing, e.g. cos(pi/4 becomes cos(pi/4)
+
+
+Using SpeedCrunch
+------------------
+
+SpeedCrunch is easy to use, just type the expression that you want to calculate
+and press Enter. Result is shown in the scrollable display. And, you can quickly
+copy the last calculation result to the clipboard using Ctrl+R.
+
+If you want to reuse again the expression which you typed before, then press up
+and down arrow to access the expression history.
+
+Beside standard algebraic operator like + (addition), - (substraction),
+* (multiplication), * (division), ^ or ** (power), there is support for some
+functions, for example sin, log, abs, and many more. You do not need to memorize
+function names, use Ctrl+F to pop up a dialog where you can choose the function
+that you need. Or take advantage of auto-completion feature, for example type s
+only and in less than a second you will be automagically given with choices of
+sin, sinh, and sqrt.
+
+Advanced calculation sometimes needs memory feature. SpeedCrunch allows a
+variable to hold calculation result. Using assignment, such as x=0.3 means that
+variable named x has the value of 0.3, which you can always later on, for
+example sin(x). You can define as many variables as you want. When you want to
+use a variable but you can not recall its exact name, use Ctrl+I to show a list
+of variables that you can pick easily.
+
+There is a special variable, ans, which always holds the last calculation
+result. Another variable pi holds one of the most important constant in
+math world.
+
+Your expression history (maximum last 100 expressions), as well as variables
+you have defined, are saved between sessions. This means, you can still recall
+those calculations you have done yesterday or last week.
+
+Often, SpeedCrunch can still understand an incomplete expression. For example,
+just typing sin followed by Enter - likely means taking the sine of last value
+- is automatically translated as sin(ans). Also, for such function you may skip
+the parentheses if you pass simple number or variable, sin 0.1 is as valid as
+sin(0.1). Speaking about parentheses, closing them can be left to SpeedCrunch,
+e.g. cos(pi/4 is automatically corrected to cos(pi/4).
+
+For your convenience, it is even possible to customize the font and color used
+for the display.
+
+Keyboard Shortcuts
+------------------
+Up/Down   recall last expression
+Ctrl+I    insert variable
+Ctrl+F    insert function
+Ctrl+R    copy last result to clipboard
+Ctrl+S    save current session to text file
+Alt+D     degrees mode for trigonometric functions
+Alt+R     radians mode for trigonometric functions
+
+
+Installation
+------------
+
+Download is available from http://speedcrunch.berlios.de, the official website.
+
+You need Qt (from Trolltech) at least version 4.0 to be able to compile
+SpeedCrunch. Most Linux distributions normally already package the latest
+version of Qt, so it is likely that you need to worry about this. However,
+you need the development package as well (sometimes named as qt-devel or
+qt3-devel, it varies depends on the distributions).
+
+To compile, simply extract the source tarball and run:
+  ./configure
+  make
+
+To install, do this as root:
+  make install
+
+
+License
+-------
+
+Copyright (C) 2004-2005 Ariya Hidayat <ariya@kde.org>
+              2005-2006 Johan Thelin <e8johan@gmail.com>
+Portions Copyright (C) 1991-1994, 1997, 2000 Free Software Foundation, Inc.
+
+SpeedCrunch is free software; you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation; either version 2 of the License, or (at your option) any later
+version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.

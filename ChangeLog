@@ -1,0 +1,130 @@
+SpeedCrunch 0.7-beta2
+---------------------
+patched crunch.pro to fix "make install" (thanks to Vladimir Pouzanov)
+made the application look for translations in the current directory too
+updated the russian, french and portuguese translations - thanks all translators
+
+
+SpeedCrunch 0-7-beta1
+---------------------
+changed from Qt 3 to Qt 4
+changed the configure script to be compatible with Qt 4
+converted the layout system from container widgets to layouts
+added the keypad
+added an application icon for windows systems
+
+SpeedCrunch 0.6-beta2
+---------------------
+fixed mouse wheel scrolls do not recally history
+too large or too small number yields NaN, instead of silently becomes 0
+added (partial) Czech translation by Blondak (blondak@neser.cz)
+added Portuguese BR by Henrique Pinto (henrique.pinto@kdemail.net)
+fixed Enter in numeric keypad does not evaluate
+flicker-free about box, by Michael Pyne (pynm0001@comcast.net)
+comma key is also mapped as gives decimal digit, by Thomas Luebking
+copy displayed item by clicking on it, by Gary Cramblitt
+MS visual C++ fixes, by Philippe Fremy
+
+SpeedCrunch 0.6-beta1 (8 June 2005)
+-----------------------------------
+support for syntax highlight, with matched parenthesis indicator
+Calc-As-You-Type: show result even before you finish typing
+autocomplete now also works for variables
+fixed invisible pop-up completion for very long expression
+show function description in function name autocomplete
+show variable value in variable name autocomplete
+dialog position/size are not saved anymore (leave it to the WM)
+better display of long error message, Pieter Pareit (pieter.pareit@scarlet.be)
+prompt error when trying to overwrite variable PI
+translation (i18n) of all error messages
+error when unknown variable is in the expression
+always reuse already shown dialog, do not recreate
+support deleting variable(s) (Ctrl+D)
+prevent variable name like 'sin', 'tan', etc
+simple tooltip on "clear input" button
+
+SpeedCrunch 0.5.4
+-----------------
+German translation by Damir Perisa (damir.perisa@solnet.ch)
+fixed i18n problem caused by errorneous handling of LANG
+minor fix in Portuguese translation
+Indonesian translation by Yolla Indria (yolla.indria@gmail.com)
+
+SpeedCrunch 0.5.3
+-----------------
+fixed bug with function asin and acos
+Portuguese translation by Helder Correia (helder.correia@netcabo.pt)
+Russian translation by Alexey Kouznetsov (kouznetsov@phtf.stu.neva.ru)
+Italian translation by Francesco di Cugno (fdicugno@gmail.com)
+fixed invisible popup completion in maximized window
+removed unnecessary artwork in dialog box
+fixed autocomplete in the middle of expression
+
+SpeedCrunch 0.5.2
+-----------------
+fixed grave bug which made percentage operator did not work
+French translation by Vibet Alexis (bevi@netcourrier.com)
+
+SpeedCrunch 0.5.1
+-----------------
+fixed bug related to degrees mode
+fixed compile in FreeBSD
+
+SpeedCrunch 0.5
+---------------
+higher precision, up to 50 decimal digits
+format for numbers: general, fixed decimals or exponential
+shown decimal digits can vary from 2 to 50
+merge Insert menu to Edit menu
+optional clear input button
+optional evaluate button
+fixed shortcut conflict between Session and Settings menus
+error messages shown in red color
+pixmaps are handled better in the build system
+
+SpeedCrunch 0.4
+---------------
+configuration dialog
+session can be exported to text file (Ctrl+S)
+customize font and color for the display
+history and variables are saved between sessions
+auto-completion for function name
+new functions: int, frac, round
+little margins (left and right) for the display
+application icon, thanks to Kuswanto (aka Zeus)
+every dialog's settings (size+position) are always saved
+fixed wrong parsing for "sin -90" and similar syntax
+show license and credits in the (new and fancier) about box
+
+SpeedCrunch 0.3
+---------------
+now it has menubar
+clear the screen, history, and/or variables
+Ctrl+I to activate Insert Variable dialog
+Ctrl+F to activate Insert Function dialog
+simple function, e.g "cos" is treated as "cos(ans)"
+Ctrl+R to copy last result to clipboard
+anything shown in the screen is also dumped to stdout
+tan 90 and tan 270 correctly gives error
+about box, to show program version
+
+SpeedCrunch 0.2
+---------------
+percent operator, try e.g. "45%*75" or "price/80%"
+support for simplified syntax, e.g. "sin x" instead of "sin(x)"
+angle mode: Alt+D for degrees, Alt+R for radians
+horizontal scrollbar appears when result becomes wider
+fixed bug where built-in function always returns error
+fixed wrong operator precedence ("2**3**2" now correctly gives 512)
+source tarball includes GPL license file
+
+SpeedCrunch 0.1
+---------------
+history of last expressions (use up and down arrow)
+result shown in scrollable window
+built-in functions: abs, sqrt, pi, log, exp, ln, sin, cos, tan, sinh,
+  cosh, tanh, asin, acos, atan
+support for variables, e.g try "x=pi/3" and then "sin(x)"
+special variable ans holds the last calculation result
+automatic parentheses closing, e.g. "cos(pi/4" becomes "cos(pi/4)"
+

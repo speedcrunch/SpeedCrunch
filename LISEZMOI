@@ -1,0 +1,80 @@
+
+
+SpeedCrunch est un calculateur puissant et de haute précision.
+
+Sont décrites ci-dessous ces possibilités les plus intéressantes:
+
+    * Haute précision, jusqu'à 50 décimales
+    * S'utilise facilement avec le clavier informatique
+    * Résultats montrés dans une liste défilante
+    * Historique des expressions utilisées (en utilisant les flèches haut et bas)
+    * Fonctions intégrées: abs, sqrt, pi, log, exp, ln, sin, cos, etc
+    * Auto-complétion des noms de fonctions
+    * Support des variables, pour comprendre essayer x=pi/3 puis sin(x)
+    * Variable spéciale ans, ayant pour valeur le résultat du calcul précédent
+    * "Opérateur" de pourcent, pour comprendre essayer 45%*75, ou prix/80%
+    * Support des angles: Alt+D pour passer en degrés, Alt+R pour passer en radians
+
+Aide et patches sont les bienvenus. Critiquez ou envoyez vos messages électroniques à ariya@kde.org.
+
+Utilisation de SpeedCrunch
+--------------------------
+
+L'utilisation de SpeedCrunch est aisée: Tout ce que vous avez à faire est de taper l'expression que vous désirez calculer et de presser la touche entrée. Le résultat est affiché dans une liste supportant plusieurs lignes. Vous pouvez tout aussi aisément copier le dernier résultat d'un calcul dans le presse-papiers en utilisant la combinaison de touche Ctrl+R.
+
+Si vous souhaitez réutiliser l'expression que vous venez alors de taper, pressez les flèches haut et bas de votre clavier pour ainsi accéder à l'historique.
+
+En sus des opérateurs algébriques de bases tels que + (addition), - (soustraction), * (multiplication), / (division), ^ ou ** (mettre en puissance), sont aussi supportées certaines fonctions, comme sin, log, abs et beaucoup d'autres. Vous n'avez aucunement besoin de vous rappelez les noms des fonctions, vous avez pour cela une fenêtre vous donnant toutes les définitions en tapant la combinaison de touches Ctrl+F. Notez aussi le support de l'auto-complétion: tapez par exemple le lettre s et dans un temps très réduit il vous sera donné le choix entre les fonctions sin, sinh et sqrt.
+
+Les calculs plus avancés nécessitent parfois l'utilisation de variables. SpeedCrunch est tout à fait capable de définir des variables. En les définissant au départ, en prenant par exemple x=0,3, cela voudra dire que la variable nommé x aura une valeur de 0,3. Si vous tapez alors sin(x), cela reviendra à faire dans la cas exposé ci-avant sin 0,3. Vous pouvez définir autant de variables qu'il vous plaira. Si à force d'utilisation de nombreuses variables, vous ne souvenez plus qui correspond à quoi, la fenêtre accessible via la combinaison de touches Ctrl+I vous aidera surement en vous donnant accès à toutes les variables précédemment définies.
+
+Il existe une variable spéciale, appelée ans, qui a systématiquement pour valeur le résultat du calcul précédent. La non-moins célèbre et indispensable variable pi est aussi présente.
+
+Votre historique des expressions (100 expressions au maximum) et vos variables sont enregistrés pour une utilisation future. Ce qui revient à dire que vous pouvez utilisez les résultats de vos travaux mathématiques à n'importe quel moment.
+
+SpeedCrunch peut aussi comprendre certaines expressions incomplètes. Pour prendre un exemple, si vous tapez sin suivi d'entrée - communément calculer le sinus de la dernière valeur- , le logiciel traduira automatiquement l'expression en sin(ans). Vous pouvez également pour des fonctions comme celle-ci omettre les parenthèses si comme variable vous prenez un simple nombre sin 0,1 égale sin(0,1). En parlant de parenthèses, ne pas les fermer n'est pas grave: SpeedCrunch le fera automatiquement pour vous ( cos(pi/4 égale cos(pi/4).<
+
+Il est aussi possible de personnaliser l'apparence de SpeedCrunch en changeant les polices et couleurs utilisées pour l'affichage selon votre bon-vouloir.
+
+Raccourci-claviers:
+-------------------
+Haut/Bas	réaffiche l'expression précédente
+Ctrl+I		insérer une variable
+Ctrl+F		insérer une fonction
+Ctrl+R		copier le dernier résultat dans le presse-papiers
+Ctrl+S		sauvegarder la session actuelle dans un fichier texte
+Alt+D		mode degrés pour les fonctions trigonométriques
+Alt+R		mode radians pour les fonctions trigonométriques
+
+
+Installation
+------------
+
+Rendez-vous sur le site officiel http://speedcrunch.berlios.de pour le téléchargement
+
+Vous aurez besoin de Qt (par Trolltech), avec au minimum une version 4.0 si vous désirez compiler SpeedCrunch. La plupart des distributions Linux ont normalement la dernière version de Qt, il n'y donc pas de quoi s'inquiéter si vous êtes dans ce cas de figure. En sus de cela, vous aurez aussi besoin du paquet de développement (appelé qt-devel ou qt3-devel, cela dépend des distributions).
+
+Pour compiler, extrayez les fichiers du fichier compressé et lancez:
+
+./configure
+make
+
+Pour installer, lancez cette commande avec l'utilisateur root:
+
+make install
+
+NB: Le nom de l'exécutable est crunch.
+
+
+Licence
+-------
+
+Copyright © 2004-2005 Ariya Hidayat <ariya@kde.org> (site internet)
+            2005-2006 Johan Thelin <e8johan@gmail.com>
+Portions Copyright © 1991-1994, 1997, 2000 Free Software Foundation, Inc.
+French translation: Vibet Alexis <bevi@netcourrier.com>
+
+SpeedCrunch est un logiciel libre; vous pouvez le redistribuer et le modifier conformément à la licence "GNU General Public License" tel que publiée à la "Free Software Foundation"; soit la version deuxième, soit selon votre choix n'importe quelle version ultérieure à cette dernière.
+
+Ce programme est distribué dans l'espoir qu'il sera utile et plaisant, mais SANS GARANTIE AUCUNE; même avec le concept implicite de VALEUR MARCHANDE. Référez-vous pour plus de détail à la "GNU General Public License".
+
