@@ -22,7 +22,7 @@
 #include "hmath.h"
 #include "settings.h"
 
-#include <QDialog.h>
+#include <QDialog>
 #include <QTreeWidget>
 #include <QPushButton>
 #include <QTimer>

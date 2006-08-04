@@ -20,7 +20,7 @@
 #include "settings.h"
 
 #include <QCheckBox>
-#include <QColorDialog.h>
+#include <QColorDialog>
 #include <QDialog>
 #include <QFontDialog>
 #include <QLabel>
