@@ -1246,6 +1246,14 @@ std::ostream& operator<<( std::ostream& s, HNumber num )
   return s;
 }
 
+QTextStream& operator<<( QTextStream& s, HNumber num )
+{
+  char* str = HMath::formatFixed( num );
+  s << str;
+  delete[] str;
+  return s;
+}
+
 #ifdef HMATH_TEST
 
 #include <iostream>

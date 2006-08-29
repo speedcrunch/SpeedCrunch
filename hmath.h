@@ -23,6 +23,7 @@
 #define HMATH_H
 
 #include <iostream>
+#include <QTextStream>
 
 class HMath;
 
@@ -331,5 +332,6 @@ public:
 };
 
 std::ostream& operator<<( std::ostream& s, HNumber );
+QTextStream& operator<<( QTextStream& s, const HNumber );
 
 #endif // HMATH_H

@@ -625,6 +625,30 @@ void Evaluator::compile( const Tokens& tokens ) const
         }
     }
 
+    // are we entering a function with a unary op before the argument?
+    // if token is operator, and stack already has: id ( op arg
+    if( tokenType == Token::Operator )
+    if( syntaxStack.itemCount() >= 4 )
+    {
+        Token arg = syntaxStack.top();
+        Token op = syntaxStack.top( 1 );
+        Token par = syntaxStack.top( 2 );
+        Token id = syntaxStack.top( 3 );
+        if( !arg.isOperator() )
+        if( op.isOperator() )
+        if( ( op.asOperator() == Token::Plus ) ||
+            ( op.asOperator() == Token::Minus ) )
+        if( par.asOperator() == Token::LeftPar )
+        if( id.isIdentifier() )
+        {
+          argStack.push( argCount );
+          argCount = 1;
+#ifdef EVALUATOR_DEBUG
+          dbg << "  Entering function with unary operator" << "\n";
+#endif
+        }
+    }
+
 #if 0
     // allow simplified syntax for function
     // e.g. "sin pi" or "cos 1.2"
