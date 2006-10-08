@@ -1,6 +1,10 @@
 project(speedcrunch) 
 
+# standard setup for cmake
 cmake_minimum_required(VERSION 2.4.0)
+set(CMAKE_COLOR_MAKEFILE ON)
+set(CMAKE_VERBOSE_MAKEFILE ON)
+set(CMAKE_INCLUDE_CURRENT_DIR TRUE)
 
 # note: change this BEFORE making a release !!
 ADD_DEFINITIONS(-DSPEEDCRUNCH_VERSION=\"trunk\" )
@@ -20,10 +24,10 @@ editor.cpp
 evaluator.cpp
 functions.cpp
 hmath.cpp
+insertfunctiondlg.cpp
+insertvardlg.cpp
 keypad.cpp
 main.cpp
-insertvardlg.cpp
-insertfunctiondlg.cpp
 number.c
 result.cpp
 settings.cpp
@@ -35,7 +39,6 @@ aboutbox.h
 binreloc.h
 configdlg.h
 crunch.h
-config.h
 deletevardlg.h
 editor.h
 evaluator.h
@@ -94,7 +97,7 @@ target_link_libraries(speedcrunch ${QT_LIBRARIES})
 
 # install executable and translation files
 # note: it will install to CMAKE_INSTALL_PREFIX, which can be set e.g
-#  cmake ../trunk --prefix=/usr
+#  cmake ../trunk  -DCMAKE_INSTALL_PREFIX=/usr
 install(TARGETS speedcrunch DESTINATION bin)
 install(FILES ${speedcrunch_TRANSLATIONS} DESTINATION share/crunch)
 
