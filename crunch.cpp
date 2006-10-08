@@ -556,7 +556,10 @@ void Crunch::returnPressed()
   if( !d->eval->error().isEmpty() )
     d->result->appendError( str, tr( "Error: %1" ).arg( d->eval->error() )  );
   else
+  {
     d->result->append( str, result );
+    d->editor->setAnsAvailable( true );
+  }  
 
   d->editor->setText( str );
   d->editor->selectAll();

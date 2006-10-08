@@ -66,6 +66,8 @@ class Editor : public Q3TextEdit
     bool isSyntaxHighlightEnabled() const;
     void setHighlightColor( ColorType type, QColor color );
     QColor highlightColor( ColorType type );
+    
+    void setAnsAvailable( bool avail );
 
   public slots:
     void appendHistory( const QString& text );

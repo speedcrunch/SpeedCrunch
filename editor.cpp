@@ -69,6 +69,7 @@ public:
   EditorHighlighter* highlighter;
   QMap<ColorType,QColor> highlightColors;
   QTimer* matchingTimer;
+  bool ansAvailable;
 };
 
 class EditorCompletion::Private
@@ -175,6 +176,7 @@ Editor::Editor( Evaluator* e, QWidget* parent, const char* name ):
   d->highlighter = new EditorHighlighter( this );
   d->autoCalcTimer = new QTimer( this );
   d->matchingTimer = new QTimer( this );
+  d->ansAvailable = false;
 
   setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
   setWordWrap( NoWrap );
@@ -514,8 +516,16 @@ void Editor::autoCalc()
 
   QString str = Evaluator::autoFix( text() );
   if( str.isEmpty() ) return;
+  
+  // very short (just one token) and still no calculation, then skip
+  if( !d->ansAvailable )
+  {
+    Tokens tokens = Evaluator::scan( text() );
+    if( tokens.count() < 2 ) 
+      return;
+  }   
 
-  // too short? do not bother...
+  // too short even after autofix ? do not bother either...
   Tokens tokens = Evaluator::scan( str );
   if( tokens.count() < 2 ) return;
 
@@ -667,6 +677,12 @@ QColor Editor::highlightColor( ColorType type )
 {
   return d->highlightColors[ type ];
 }
+
+void Editor::setAnsAvailable(bool avail)
+{
+  d->ansAvailable = avail;
+}
+
 
 
 EditorCompletion::EditorCompletion( Editor* editor ): QObject( editor )
