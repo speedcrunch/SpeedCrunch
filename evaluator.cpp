@@ -614,70 +614,6 @@ void Evaluator::compile( const Tokens& tokens ) const
 #endif
     }
 
-    // are we entering a function ?
-    // if token is operator, and stack already has: id ( arg
-    if( tokenType == Token::Operator )
-    if( syntaxStack.itemCount() >= 3 )
-    {
-        Token arg = syntaxStack.top();
-        Token par = syntaxStack.top( 1 );
-        Token id = syntaxStack.top( 2 );
-        if( !arg.isOperator() )
-        if( par.asOperator() == Token::LeftPar )
-        if( id.isIdentifier() )
-        {
-          argStack.push( argCount );
-          argCount = 1;
-#ifdef EVALUATOR_DEBUG
-          dbg << "  Entering function" << "\n";
-#endif
-        }
-    }
-
-    // are we entering a function with a unary op before the argument?
-    // if token is operator, and stack already has: id ( op arg
-    if( tokenType == Token::Operator )
-    if( syntaxStack.itemCount() >= 4 )
-    {
-        Token arg = syntaxStack.top();
-        Token op = syntaxStack.top( 1 );
-        Token par = syntaxStack.top( 2 );
-        Token id = syntaxStack.top( 3 );
-        if( !arg.isOperator() )
-        if( op.isOperator() )
-        if( ( op.asOperator() == Token::Plus ) ||
-            ( op.asOperator() == Token::Minus ) )
-        if( par.asOperator() == Token::LeftPar )
-        if( id.isIdentifier() )
-        {
-          argStack.push( argCount );
-          argCount = 1;
-#ifdef EVALUATOR_DEBUG
-          dbg << "  Entering function with unary operator" << "\n";
-#endif
-        }
-    }
-
-#if 0
-    // allow simplified syntax for function
-    // e.g. "sin pi" or "cos 1.2"
-    if( tokenType == Token::Operator )
-    if( syntaxStack.itemCount() >= 2 )
-    {
-        Token arg = syntaxStack.top();
-        Token id = syntaxStack.top( 1 );
-        if( !arg.isOperator() )
-        if( id.isIdentifier() )
-        if( FunctionRepository::self()->function( id.text() ) )
-        {
-          d->codes.append( Opcode( Opcode::Function, 1 ) );
-          syntaxStack.pop();
-          syntaxStack.pop();
-          syntaxStack.push( arg );
-        }
-    }
-#endif
-
     // special case for percentage
     if( tokenType == Token::Operator )
     if( token.asOperator() == Token::Percent )
@@ -702,7 +638,30 @@ void Evaluator::compile( const Tokens& tokens ) const
       // repeat until no more rule applies
       for( ; ; )
       {
-        bool ruleFound = false;
+            bool ruleFound = false;
+    
+        // are we entering a function ?
+        // if token is operator, and stack already has: id ( arg
+        if( tokenType == Token::Operator )
+        if( syntaxStack.itemCount() >= 3 )
+        {
+            Token arg = syntaxStack.top();
+            Token par = syntaxStack.top( 1 );
+            Token id = syntaxStack.top( 2 );
+            if( !arg.isOperator() )
+            if( par.asOperator() == Token::LeftPar )
+            if( id.isIdentifier() )
+            {
+                ruleFound = true;
+                argStack.push( argCount );
+                argCount = 1;
+#ifdef EVALUATOR_DEBUG
+                dbg << "  Entering function" << "\n";
+#endif
+                break;
+            }
+        }
+    
 
         // rule for simplified syntax for function e.g. "sin pi" or "cos 1.2"
         // i.e no need for parentheses like "sin(pi)" or "cos(1.2)"
