@@ -636,12 +636,43 @@ void Evaluator::compile( const Tokens& tokens ) const
           dbg << "  Checking rules..." << "\n";
 #endif
       // repeat until no more rule applies
+    bool argHandled = false;
       for( ; ; )
       {
             bool ruleFound = false;
     
+        // rule for function last argument:
+        //  id ( arg ) -> arg
+        if( !ruleFound )
+        if( syntaxStack.itemCount() >= 4 )
+        {
+          Token par2 = syntaxStack.top();
+          Token arg = syntaxStack.top( 1 );
+          Token par1 = syntaxStack.top( 2 );
+          Token id = syntaxStack.top( 3 );
+          if( par2.asOperator() == Token::RightPar )
+          if( !arg.isOperator() )
+          if( par1.asOperator() == Token::LeftPar )
+          if( id.isIdentifier() )
+          {
+            ruleFound = true;
+            syntaxStack.pop();
+            syntaxStack.pop();
+            syntaxStack.pop();
+            syntaxStack.pop();
+            syntaxStack.push( arg );
+            d->codes.append( Opcode( Opcode::Function, argCount ) );
+#ifdef EVALUATOR_DEBUG
+          dbg << "    Rule for function last argument " << argCount << " \n";
+#endif
+            argCount = argStack.empty() ? 0 : argStack.pop();
+          }
+        }
+
         // are we entering a function ?
         // if token is operator, and stack already has: id ( arg
+        if( !ruleFound )
+        if( !argHandled )
         if( tokenType == Token::Operator )
         if( syntaxStack.itemCount() >= 3 )
         {
@@ -656,7 +687,7 @@ void Evaluator::compile( const Tokens& tokens ) const
                 argStack.push( argCount );
                 argCount = 1;
 #ifdef EVALUATOR_DEBUG
-                dbg << "  Entering function" << "\n";
+                dbg << "  Entering function " << argCount << " \n";
 #endif
                 break;
             }
@@ -732,39 +763,12 @@ void Evaluator::compile( const Tokens& tokens ) const
           if( id.isIdentifier() )
           {
             ruleFound = true;
+            argHandled = true;
             syntaxStack.pop();
             syntaxStack.pop();
             argCount++;
 #ifdef EVALUATOR_DEBUG
-          dbg << "    Rule for function argument" << "\n";
-#endif
-          }
-        }
-
-        // rule for function last argument:
-        //  id ( arg ) -> arg
-        if( !ruleFound )
-        if( syntaxStack.itemCount() >= 4 )
-        {
-          Token par2 = syntaxStack.top();
-          Token arg = syntaxStack.top( 1 );
-          Token par1 = syntaxStack.top( 2 );
-          Token id = syntaxStack.top( 3 );
-          if( par2.asOperator() == Token::RightPar )
-          if( !arg.isOperator() )
-          if( par1.asOperator() == Token::LeftPar )
-          if( id.isIdentifier() )
-          {
-            ruleFound = true;
-            syntaxStack.pop();
-            syntaxStack.pop();
-            syntaxStack.pop();
-            syntaxStack.pop();
-            syntaxStack.push( arg );
-            d->codes.append( Opcode( Opcode::Function, argCount ) );
-            argCount = argStack.empty() ? 0 : argStack.pop();
-#ifdef EVALUATOR_DEBUG
-          dbg << "    Rule for function last argument" << "\n";
+          dbg << "    Rule for function argument " << argCount << " \n";
 #endif
           }
         }
@@ -928,6 +932,10 @@ void Evaluator::compile( const Tokens& tokens ) const
   if( syntaxStack.top().asOperator() == Token::InvalidOp )
   if( !syntaxStack.top(1).isOperator() )
     d->valid = true;
+
+#ifdef EVALUATOR_DEBUG
+    dbg << "Dump: " << dump() << "\n";
+#endif
 
   // bad parsing ? clean-up everything
   if( !d->valid )
