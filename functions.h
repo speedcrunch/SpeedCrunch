@@ -33,7 +33,8 @@ typedef HNumber (*FunctionPtr)( const Evaluator*, Function*, const FunctionArgum
 class Function
 {
 public:
-  Function( const QString& name, unsigned argc, FunctionPtr ptr, const QString& desc );
+  Function( const QString& name, int argc, FunctionPtr ptr, const QString& desc );
+  Function( const QString& name, FunctionPtr ptr, const QString& desc );
   ~Function();
   QString name() const;
   QString description() const;

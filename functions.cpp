@@ -246,12 +246,37 @@ HNumber function_tanh( const Evaluator* eval, Function*, const FunctionArguments
   return HMath::tanh( angle );
 }
 
+HNumber function_max( const Evaluator*, Function*, const FunctionArguments& args )
+{
+  if( args.count() <= 0 )
+    return HNumber::nan();
+    
+  HNumber result = args[0];
+  for( int c = 1; c < args.count(); c++ )
+    if( HMath::compare( result, args[c] ) == -1 )
+      result = args[c];
+      
+  return result;
+}
+
+HNumber function_min( const Evaluator*, Function*, const FunctionArguments& args )
+{
+  if( args.count() <= 0 )
+    return HNumber::nan();
+    
+  HNumber result = args[0];
+  for( int c = 1; c < args.count(); c++ )
+    if( HMath::compare( result, args[c] ) == 1 )
+      result = args[c];
+      
+  return result;
+}
 
 class Function::Private
 {
 public:
   QString name;
-  unsigned argc;
+  int argc;
   QString desc;
   QString error;
   FunctionPtr ptr;
@@ -263,11 +288,20 @@ public:
   QHash<QString, Function*> functions;
 };
 
-Function::Function( const QString& name, unsigned argc, FunctionPtr ptr, const QString& desc )
+Function::Function( const QString& name, int argc, FunctionPtr ptr, const QString& desc )
 {
   d = new Private;
   d->name = name;
   d->argc = argc;
+  d->desc = qApp->translate( "FunctionRepository", desc );
+  d->ptr = ptr;
+}
+
+Function::Function( const QString& name, FunctionPtr ptr, const QString& desc )
+{
+  d = new Private;
+  d->name = name;
+  d->argc = -1;
   d->desc = qApp->translate( "FunctionRepository", desc );
   d->ptr = ptr;
 }
@@ -307,6 +341,7 @@ HNumber Function::exec( const Evaluator* eval, const FunctionArguments& args )
     return 0;
   }
 
+  if( d->argc >= 0 )
   if( args.count() != d->argc )
   {
     setError( QString( qApp->translate( "Error",
@@ -338,6 +373,7 @@ FunctionRepository::FunctionRepository()
   add( new Function( "exp",   1, function_exp, QT_TR_NOOP("Exponent" ) ) );
   add( new Function( "ln",    1, function_ln, QT_TR_NOOP("Natural Logarithm" ) ) );
   add( new Function( "log",   1, function_log, QT_TR_NOOP("Base-10 Logarithm" ) ) );
+  
   add( new Function( "sin",   1, function_sin, QT_TR_NOOP("Sine" ) ) );
   add( new Function( "cos",   1, function_cos, QT_TR_NOOP("Cosine" ) ) );
   add( new Function( "tan",   1, function_tan, QT_TR_NOOP("Tangent" ) ) );
@@ -347,6 +383,9 @@ FunctionRepository::FunctionRepository()
   add( new Function( "sinh",  1, function_sinh, QT_TR_NOOP("Hyperbolic Sine" ) ) );
   add( new Function( "cosh",  1, function_cosh, QT_TR_NOOP("Hyperbolic Cosine" ) ) );
   add( new Function( "tanh",  1, function_tanh, QT_TR_NOOP("Hyperbolic Tangent" ) ) );
+
+  add( new Function( "min",  function_min, QT_TR_NOOP("Minimum" ) ) );
+  add( new Function( "max",  function_max, QT_TR_NOOP("Maximum" ) ) );
 }
 
 FunctionRepository::~FunctionRepository()
