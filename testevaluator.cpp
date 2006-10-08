@@ -216,6 +216,32 @@ void test_function_trig()
   CHECK_EVAL( "sin(-pi/2) - sin(pi/2)", "-2" );
   CHECK_EVAL( "cos(-pi/2) + cos(pi/2)", "0" );
   CHECK_EVAL( "cos(-pi/2) - cos(pi/2)", "0" );
+  
+  CHECK_EVAL( "asin(sin(1))", "1");
+  CHECK_EVAL( "acos(cos(1))", "1");
+}
+
+void test_function_stat()
+{
+  CHECK_EVAL( "MIN(0)", "0" );
+  CHECK_EVAL( "MIN(0, 1)", "0" );
+  CHECK_EVAL( "MIN(0, 2)", "0" );
+  CHECK_EVAL( "MIN(-1, 0)", "-1" );
+  CHECK_EVAL( "MIN(-1, 1)", "-1" );
+  CHECK_EVAL( "MIN(-0.01, 0)", "-0.01" );
+  CHECK_EVAL( "MIN(0, 1, 2)", "0" );
+  CHECK_EVAL( "MIN(-1, 0, 1, 2)", "-1" );
+  CHECK_EVAL( "MIN(-2, -1, 0, 1, 2)", "-2" );
+
+  CHECK_EVAL( "MAX(0)", "0" );
+  CHECK_EVAL( "MAX(0, 1)", "1" );
+  CHECK_EVAL( "MAX(0, 2)", "2" );
+  CHECK_EVAL( "MAX(-1, 0)", "0" );
+  CHECK_EVAL( "MAX(-1, 1)", "1" );
+  CHECK_EVAL( "MAX(0.01, 0)", "0.01" );
+  CHECK_EVAL( "MAX(0, 1, 2)", "2" );
+  CHECK_EVAL( "MAX(-1, 0, 1, 2)", "2" );
+  CHECK_EVAL( "MAX(-2, -1, 0, 1, 2)", "2" );
 }
 
 int main(int argc, char** argv)
@@ -229,6 +255,7 @@ int main(int argc, char** argv)
   
   test_function_basic();
   test_function_trig();
+  test_function_stat();
 
   std::cerr << eval_total_tests << " total, ";
   std::cerr << eval_failed_tests << " failed\n";
