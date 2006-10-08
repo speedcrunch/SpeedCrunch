@@ -16,6 +16,7 @@ HEADERS += insertfunctiondlg.h
 HEADERS += configdlg.h
 HEADERS += aboutbox.h
 HEADERS += keypad.h
+HEADERS += binreloc.h
 
 SOURCES += crunch.cpp
 SOURCES += hmath.cpp
@@ -32,6 +33,7 @@ SOURCES += configdlg.cpp
 SOURCES += aboutbox.cpp
 SOURCES += main.cpp
 SOURCES += keypad.cpp
+SOURCES += binreloc.c
 
 FORMS += listdialog.ui
 

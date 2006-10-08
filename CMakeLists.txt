@@ -2,13 +2,12 @@ project(speedcrunch)
 
 cmake_minimum_required(VERSION 2.4.0)
 
-
-
 # note: sort files alphabetically !
 
 # sources
 set(speedcrunch_SOURCES 
 aboutbox.cpp
+binreloc.c
 configdlg.cpp
 crunch.cpp
 crunchico.rc  # special
@@ -29,6 +28,7 @@ settings.cpp
 # headers
 set(speedcrunch_HEADERS
 aboutbox.h
+binreloc.h
 configdlg.h
 crunch.h
 config.h
@@ -70,6 +70,9 @@ set( QT_USE_QT3SUPPORT TRUE )
 
 # enable warnings
 ADD_DEFINITIONS( -Wall )
+
+# for BinReloc stuff
+ADD_DEFINITIONS( -DENABLE_BINRELOC )
 
 # setup for Qt4
 find_package(Qt4 REQUIRED)

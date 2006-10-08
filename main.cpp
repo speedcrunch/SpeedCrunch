@@ -21,6 +21,8 @@
 #include <qtranslator.h>
 #include <qfileinfo.h>
 #include <qdir.h>
+
+#include "binreloc.h"
 #include "crunch.h"
 #include "config.h"
 
@@ -63,9 +65,14 @@ QTranslator *createTranslator()
   }
 #endif // Q_OS_WIN32
 
-#ifdef INSTALL_PREFIX 
- 	QDir qmpath( INSTALL_PREFIX );
- 	qmpath.cd( "share/crunch" ); 
+    BrInitError error;
+
+    if (br_init (&error) == 0 && error != BR_INIT_ERROR_DISABLED) {
+        printf ("Warning: BinReloc failed to initialize (error code %d)\n", error);
+        printf ("Will fallback to hardcoded default path.\n");
+    } 	
+    
+ 	QDir qmpath( br_find_data_dir(".") );
 
 	if( !foundTranslator )
   {
@@ -92,33 +99,7 @@ QTranslator *createTranslator()
 			foundTranslator = true;
     }
 	}
-#endif // INSTALL_PREFIX
 
-	if( !foundTranslator )
-	{
-    qmfile = QString("./crunch_") + locale + ".qm";
-    fi = QFileInfo( qmfile );
-    if( fi.exists() )
-    {
-      translator = new QTranslator( 0 );
-      translator->load( qmfile );
-      
-			foundTranslator = true;
-    }
-	}
-
-	if( !foundTranslator )
-	{
-    qmfile = QString("./crunch_") + localeShort + ".qm";
-    fi = QFileInfo( qmfile );
-    if( fi.exists() )
-    {
-      translator = new QTranslator( 0 );
-      translator->load( qmfile );
-      
-			foundTranslator = true;
-    }
-	}
 
 	if( foundTranslator )
 		return translator;
