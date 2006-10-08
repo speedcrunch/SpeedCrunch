@@ -208,7 +208,7 @@ Crunch::Crunch(): QMainWindow()
   setCaption( tr( "SpeedCrunch" ) );
   d->degButton->setChecked( true );
   createUI();
-  QTimer::singleShot( 0, this, SLOT( applySettings() ) );
+  applySettings();
 }
 
 Crunch::~Crunch()
