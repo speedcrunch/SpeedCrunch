@@ -97,3 +97,17 @@ target_link_libraries(speedcrunch ${QT_LIBRARIES})
 #  cmake ../trunk --prefix=/usr
 install(TARGETS speedcrunch DESTINATION bin)
 install(FILES ${speedcrunch_TRANSLATIONS} DESTINATION share/crunch)
+
+# required for regression tests
+enable_testing()
+
+# regression test for HMath
+set(testhmath_SOURCES testhmath.cpp hmath.cpp number.c)
+add_executable(testhmath ${testhmath_SOURCES})
+add_test(testhmath ${EXECUTABLE_OUTPUT_PATH}/testhmath)
+
+# regression test for Evaluator class
+set(testevaluator_SOURCES testevaluator.cpp evaluator.cpp functions.cpp hmath.cpp number.c)
+add_executable(testevaluator ${testevaluator_SOURCES})
+target_link_libraries(testevaluator ${QT_LIBRARIES})
+add_test(testevaluator ${EXECUTABLE_OUTPUT_PATH}/testevaluator)
