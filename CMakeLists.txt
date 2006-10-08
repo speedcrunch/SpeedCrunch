@@ -96,4 +96,4 @@ target_link_libraries(speedcrunch ${QT_LIBRARIES})
 # note: it will install to CMAKE_INSTALL_PREFIX, which can be set e.g
 #  cmake ../trunk --prefix=/usr
 install(TARGETS speedcrunch DESTINATION bin)
-install(FILES ${speedcrunch_TRANSLATIONS} DESTINATION share)
+install(FILES ${speedcrunch_TRANSLATIONS} DESTINATION share/crunch)

@@ -71,7 +71,16 @@ QTranslator *createTranslator()
         printf ("Will fallback to hardcoded default path.\n");
     } 	
     
- 	QDir qmpath( br_find_data_dir(".") );
+    // Search with the following order:
+    // (1) install prefix + share/crunch, e.g. "/usr/local/share/crunch"
+    // (2) install prefix + share, e.g. "/usr/local/share"
+    // (3) current directory
+    
+    
+    // item (1)
+    QString shareDir = QString(br_find_data_dir(0)).append("/crunch");
+ 	QDir qmpath( shareDir );
+ 	qmpath.cd("crunch");
 
 	if( !foundTranslator )
   {
@@ -99,6 +108,34 @@ QTranslator *createTranslator()
     }
 	}
 
+	// item (2), fallback is item (3)
+ 	qmpath = QDir( br_find_data_dir(".") );
+
+	if( !foundTranslator )
+  {
+  	qmfile = qmpath.absPath() + "/crunch_" + locale + ".qm";
+  	fi = QFileInfo( qmfile );
+  	if( fi.exists() )
+  	{
+    	translator = new QTranslator( 0 );
+    	translator->load( qmfile );
+
+			foundTranslator = true;
+  	}
+	}
+	
+	if( !foundTranslator )
+  {
+    qmfile = qmpath.absPath() + "/crunch_" + localeShort + ".qm";
+    fi = QFileInfo( qmfile );
+    if( fi.exists() )
+    {
+      translator = new QTranslator( 0 );
+      translator->load( qmfile );
+      
+			foundTranslator = true;
+    }
+	}
 
 	if( foundTranslator )
 		return translator;
