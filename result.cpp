@@ -327,7 +327,10 @@ void Result::itemClicked( Q3ListBoxItem* item )
 
 void Result::scrollEnd()
 {
-  ensureVisible( 0, contentsHeight()-1 );
+  if( layoutDirection() == Qt::LeftToRight )
+    ensureVisible( contentsWidth()-1, contentsHeight()-1 );
+  else  
+    ensureVisible( 0, contentsHeight()-1 );
 }
 
 
