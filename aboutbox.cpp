@@ -194,7 +194,7 @@ AboutBox::AboutBox( QWidget* parent ):
   info += "<br>";
   info += tr("Copyright (C) 2005-2006 Johan Thelin (e8johan@gmail.com)");
   info += "<br>";
-  info += tr( "http://speedcrunch.berlios.de");
+  info += tr( "http://speedcrunch.digitalfanatics.org");
   infoLabel->setText( info );
 
   QLabel* iconLabel = new QLabel( this );
