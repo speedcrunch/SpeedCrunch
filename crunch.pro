@@ -42,6 +42,8 @@ CONFIG += thread
 CONFIG += warn_on
 CONFIG += release
 
+DEFINES += ENABLE_BINRELOC
+
 RC_FILE = crunchico.rc
 
 TRANSLATIONS += crunch_cs.ts
