@@ -851,7 +851,20 @@ HNumber HMath::raise( const HNumber& n1, int n )
 {
   if( n1.isNan() ) return n1;
   
-  if( n1.isZero() ) return n1;
+  // http://en.wikipedia.org/wiki/Exponentiation#Powers_of_zero
+  if( n1.isZero() )
+  {
+    if( n < 0 )
+      return HNumber::nan();
+    if( n > 0 )
+      return HNumber(0);
+    
+    // debatable, see http://en.wikipedia.org/wiki/Empty_product#0_raised_to_the_0th_power
+    // vs http://mathworld.wolfram.com/Power.html
+    if( n == 0 )
+      return HNumber(1);
+  }
+  
   if( n1 == HNumber(1) ) return n1;
   if( n == 0 ) return HNumber(1);
   if( n == 1 ) return n1;
@@ -868,14 +881,41 @@ HNumber HMath::raise( const HNumber& n1, const HNumber& n2  )
   if( n1.isNan() ) return HNumber::nan();
   if( n2.isNan() ) return HNumber::nan();
 
-  if( n1.isZero() ) return HNumber(0);
+  // see previous function
+  if( n1.isZero() )
+  {
+    if( n2.isNegative() )
+      return HNumber::nan();
+    if( n2.isPositive() )
+      return HNumber(0);
+    if( n2.isZero() )
+      return HNumber(1);
+  }
+  
   if( n1 == HNumber(1) ) return n1;
   if( n2.isZero() ) return HNumber(1);
   if( n2 == HNumber(1) ) return n1;
   
-  // x^y = exp( y*ln(x) )
-  HNumber result = n2 * HMath::ln(n1);
-  result = HMath::exp( result );
+  HNumber result;
+  
+  // n1 is negative, n2 must be integer
+  if( n1.isNegative() )
+  {
+    if( HMath::integer(n2) != n2)
+      result = HNumber::nan();
+    else      
+    {
+      // use integer raise function
+      HNumber nn = n2;
+      result = raise( n1, atoi( HMath::formatFixed(nn, 0) ) );
+    }
+  }
+  else
+  {
+    // x^y = exp( y*ln(x) )
+    result = n2 * HMath::ln(n1);
+    result = HMath::exp( result );
+  }  
   
   return result;
 }
