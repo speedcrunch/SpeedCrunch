@@ -24,7 +24,6 @@
 
 #include "binreloc.h"
 #include "crunch.h"
-#include "config.h"
 
 QTranslator *createTranslator()
 {

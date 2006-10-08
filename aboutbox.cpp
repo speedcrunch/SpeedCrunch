@@ -18,9 +18,11 @@
  */
 
 #include "aboutbox.h"
-#include "config.h"
 
 #include <QtGui>
+
+#define MAKE_STRING(a) DO_MAKE_STRING(a)
+#define DO_MAKE_STRING(a) # a
 
 class MarqueeText::Private
 {
@@ -186,7 +188,7 @@ AboutBox::AboutBox( QWidget* parent ):
 
   QLabel* infoLabel = new QLabel( this );
   QString info = "<b>";
-  info += tr("SpeedCrunch version %1").arg( SPEEDCRUNCH_VERSION );
+  info += tr("SpeedCrunch version %1").arg( MAKE_STRING(SPEEDCRUNCH_VERSION) );
   info += "</b><br>";
   info += tr("Copyright (C) 2004-2005 Ariya Hidayat (ariya@kde.org)");
   info += "<br>";
@@ -202,7 +204,7 @@ AboutBox::AboutBox( QWidget* parent ):
   MarqueeText* marqueeText = new MarqueeText( this );
   QString msg = "<center>";
   msg += "<p><b>";
-  msg += tr( "SpeedCrunch version %1").arg( SPEEDCRUNCH_VERSION );
+  msg += tr( "SpeedCrunch version %1").arg( MAKE_STRING(SPEEDCRUNCH_VERSION) );
   msg += "</b></p>";
   msg += QString( "<p>%1:<br>%2" ).arg( tr("Author") ).arg( "Ariya Hidayat" );
   msg += QString( "<p>%1:<br>%2" ).arg( tr("Maintainer") ).arg( "Johan Thelin" );

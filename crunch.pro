@@ -1,6 +1,9 @@
 TEMPLATE = app
 TARGET = speedcrunch
 
+# note: change this BEFORE making a release !
+DEFINES += SPEEDCRUNCH_VERSION="trunk"
+
 HEADERS += crunch.h
 HEADERS += config.h
 HEADERS += number.h

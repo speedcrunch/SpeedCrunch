@@ -2,6 +2,10 @@ project(speedcrunch)
 
 cmake_minimum_required(VERSION 2.4.0)
 
+# note: change this BEFORE making a release !!
+ADD_DEFINITIONS(-DSPEEDCRUNCH_VERSION=\"trunk\" )
+
+
 # note: sort files alphabetically !
 
 # sources
