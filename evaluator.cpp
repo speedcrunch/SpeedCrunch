@@ -36,6 +36,15 @@
 #ifdef EVALUATOR_DEBUG
 #include <QFile>
 #include <QTextStream>
+
+QTextStream& operator<<( QTextStream& s, HNumber num )
+{
+  char* str = HMath::formatFixed( num );
+  s << str;
+  delete[] str;
+  return s;
+}
+
 #endif
 
 class Opcode
