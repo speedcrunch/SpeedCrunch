@@ -3,7 +3,8 @@ SpeedCrunch 0.7-beta2
 support for building using CMake
 fixed issue #9: unary minus before a function
 fixed issue #7: function argument in brackets
-fixed issue #5: exponentiation of a negative number returns NaN
+fixed issue #6: exponentiation of a negative number returns NaN
+fixed issue #5: auto calculation shows up even on the first run
 fixed issue #3: function argument starts with unary minus
 patched crunch.pro to fix "make install" (thanks to Vladimir Pouzanov)
 made the application look for translations in the current directory too
