@@ -42,35 +42,42 @@ class KeyPad : public QWidget
     void clicked9();
     void clickedDot();
     void clickedEq();
-    void clickedDiv();
-    void clickedAns();
-    void clickedLn();
-    void clickedLog();
-    void clickedExp();
-    void clickedMul();
-    void clickedX();
-    void clickedSinh();
-    void clickedCosh();
-    void clickedTanh();
+
+    void clickedSqrt();
+    void clickedBackspace();
+    void clickedLParen();
+    void clickedRParen();
+    void clickedAdd();
     void clickedSub();
+    void clickedMul();
+    void clickedDiv();
+
     void clickedPi();
+    void clickedAns();
+    void clickedX();
+    void clickedXEq();
+		
+    void clickedExp();
+    void clickedLog();
     void clickedSin();
     void clickedCos();
     void clickedTan();
-    void clickedAdd();
-    void clickedLParen();
-    void clickedRParen();
-    void clickedSqrt();
-    void clickedBackspace();
+    void clickedASin();
+    void clickedACos();
+    void clickedATan();
 
   signals:
     void addText( const QString& );
-    void evalFunction( const QString& );
-    void evalLine( const QString& );
-    void clearText();
-    void clearAll();
+		void evaluate();
 
   private:
+    void createButtons();
+    void polishButtons();
+    void sizeButtons();
+    void dontFocusButtons();
+    void layoutButtons();
+    void connectButtons();	
+	
     class Private;
     Private*d;
 };
