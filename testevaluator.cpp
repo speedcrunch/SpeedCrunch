@@ -242,6 +242,20 @@ void test_function_stat()
   CHECK_EVAL( "MAX(0, 1, 2)", "2" );
   CHECK_EVAL( "MAX(-1, 0, 1, 2)", "2" );
   CHECK_EVAL( "MAX(-2, -1, 0, 1, 2)", "2" );
+  
+  CHECK_EVAL( "SUM()", "0");
+  CHECK_EVAL( "SUM(0)", "0");
+  CHECK_EVAL( "SUM(1)", "1");
+  CHECK_EVAL( "SUM(-1)", "-1");
+  CHECK_EVAL( "SUM(100)", "100");
+  CHECK_EVAL( "SUM(-100)", "-100");
+  CHECK_EVAL( "SUM(100,1)", "101");
+  CHECK_EVAL( "SUM(-100,1)", "-99");
+  CHECK_EVAL( "SUM(0,0,0)", "0");
+  CHECK_EVAL( "SUM(100,-1)", "99");
+  CHECK_EVAL( "SUM(-100,-1)", "-101");
+  CHECK_EVAL( "SUM(1,2,3,4,5,6)", "21");
+  CHECK_EVAL( "SUM(1,-2,3,-4,5,-6)", "-3");
 }
 
 int main(int argc, char** argv)

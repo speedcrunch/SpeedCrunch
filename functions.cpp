@@ -272,6 +272,30 @@ HNumber function_min( const Evaluator*, Function*, const FunctionArguments& args
   return result;
 }
 
+HNumber function_sum( const Evaluator*, Function*, const FunctionArguments& args )
+{
+  if( args.count() <= 0 )
+    return HNumber(0);
+    
+  HNumber result = args[0];
+  for( int c = 1; c < args.count(); c++ )
+    result = result + args[c];
+      
+  return result;
+}
+
+HNumber function_product( const Evaluator*, Function*, const FunctionArguments& args )
+{
+  if( args.count() <= 0 )
+    return HNumber(0);
+    
+  HNumber result = args[0];
+  for( int c = 1; c < args.count(); c++ )
+    result = result * args[c];
+      
+  return result;
+}
+
 class Function::Private
 {
 public:
@@ -386,6 +410,8 @@ FunctionRepository::FunctionRepository()
 
   add( new Function( "min",  function_min, QT_TR_NOOP("Minimum" ) ) );
   add( new Function( "max",  function_max, QT_TR_NOOP("Maximum" ) ) );
+  add( new Function( "sum",  function_sum, QT_TR_NOOP("Sum" ) ) );
+  add( new Function( "product",  function_product, QT_TR_NOOP("Product" ) ) );
 }
 
 FunctionRepository::~FunctionRepository()
