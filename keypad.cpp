@@ -80,7 +80,8 @@ void KeyPad::createButtons()
 
   d->keySqrt = new QPushButton( this );
   d->keySqrt->setIcon( QPixmap( ":/math_sqrt.png" ) );
-  d->keyBackspace = new QPushButton( tr("<--"), this );
+  d->keyBackspace = new QPushButton( this );
+  d->keyBackspace->setIcon( QPixmap( ":/back.png" ) );
   d->keyLParen = new QPushButton( tr("("), this );
   d->keyRParen = new QPushButton( tr(")"), this );
   d->keyAdd = new QPushButton( tr("+"), this );

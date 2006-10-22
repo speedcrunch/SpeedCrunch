@@ -3,5 +3,6 @@
         <file>clearinput.png</file>
         <file>crunch.png</file>
         <file>math_sqrt.png</file>
+        <file>back.png</file>
     </qresource>
 </RCC>
