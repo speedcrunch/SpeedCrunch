@@ -68,6 +68,7 @@ class Editor : public Q3TextEdit
     QColor highlightColor( ColorType type );
     
     void setAnsAvailable( bool avail );
+    void stopAutoCalc();
 
   public slots:
     void appendHistory( const QString& text );

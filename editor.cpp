@@ -686,6 +686,13 @@ void Editor::setAnsAvailable(bool avail)
   d->ansAvailable = avail;
 }
 
+// typically caled by the main window, just after the user evaluates seomthing
+// useful so we don't pop up the autocalc tooltip again
+void Editor::stopAutoCalc()
+{
+  d->autoCalcTimer->stop();
+  d->autoCalcLabel->hide();
+}
 
 
 EditorCompletion::EditorCompletion( Editor* editor ): QObject( editor )

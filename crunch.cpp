@@ -563,6 +563,7 @@ void Crunch::returnPressed()
 
   d->editor->setText( str );
   d->editor->selectAll();
+  d->editor->stopAutoCalc();
   d->autoAns = true;
 }
 
