@@ -1,5 +1,5 @@
 /* This file is part of the SpeedCrunch project
-   Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
+   Copyright (C) 2004-2006 Ariya Hidayat <ariya@kde.org>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -246,6 +246,27 @@ HNumber function_tanh( const Evaluator* eval, Function*, const FunctionArguments
   return HMath::tanh( angle );
 }
 
+HNumber function_degrees( const Evaluator*, Function*, const FunctionArguments& args )
+{
+  if( args.count() != 1 )
+    return HNumber::nan();
+
+
+  HNumber angle = args[0];
+  return angle * HNumber(180) / HMath::pi();
+}
+
+HNumber function_radians( const Evaluator*, Function*, const FunctionArguments& args )
+{
+  if( args.count() != 1 )
+    return HNumber::nan();
+
+
+  HNumber angle = args[0];
+  return angle * HMath::pi() / HNumber(180);
+}
+
+
 HNumber function_max( const Evaluator*, Function*, const FunctionArguments& args )
 {
   if( args.count() <= 0 )
@@ -407,6 +428,8 @@ FunctionRepository::FunctionRepository()
   add( new Function( "sinh",  1, function_sinh, QT_TR_NOOP("Hyperbolic Sine" ) ) );
   add( new Function( "cosh",  1, function_cosh, QT_TR_NOOP("Hyperbolic Cosine" ) ) );
   add( new Function( "tanh",  1, function_tanh, QT_TR_NOOP("Hyperbolic Tangent" ) ) );
+  add( new Function( "degrees",  1, function_degrees, QT_TR_NOOP("Degrees" ) ) );
+  add( new Function( "radians",  1, function_radians, QT_TR_NOOP("Radians" ) ) );
 
   add( new Function( "min",  function_min, QT_TR_NOOP("Minimum" ) ) );
   add( new Function( "max",  function_max, QT_TR_NOOP("Maximum" ) ) );

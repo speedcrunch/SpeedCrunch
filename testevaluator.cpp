@@ -219,6 +219,18 @@ void test_function_trig()
   
   CHECK_EVAL( "asin(sin(1))", "1");
   CHECK_EVAL( "acos(cos(1))", "1");
+  
+  CHECK_EVAL( "degrees(0)", "0");
+  CHECK_EVAL( "degrees(pi/2)", "90");
+  CHECK_EVAL( "degrees(pi)", "180");
+  CHECK_EVAL( "degrees(3*pi/2)", "270");
+  CHECK_EVAL( "degrees(2*pi)", "360");
+  
+  CHECK_EVAL( "radians(0)", "0" );
+  CHECK_EVAL( "radians(90)/pi", "0.5" );
+  CHECK_EVAL( "radians(180)/pi", "1.5" );
+  CHECK_EVAL( "radians(270)/pi", "1" );
+  CHECK_EVAL( "radians(360)/pi", "2" );
 }
 
 void test_function_stat()
