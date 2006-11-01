@@ -1,21 +1,21 @@
 project(speedcrunch) 
 
-IF( APPLE )
-  set( PROGNAME Speedcrunch )
-ELSE( NOT APPLE )
-  set( PROGNAME speedcrunch )
-ENDIF( APPLE )
-
+# standard setup for cmake
 cmake_minimum_required(VERSION 2.4.0)
 set(CMAKE_COLOR_MAKEFILE ON)
-#set(CMAKE_VERBOSE_MAKEFILE ON)
+set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_INCLUDE_CURRENT_DIR TRUE)
+
+# note: change this BEFORE making a release !!
+ADD_DEFINITIONS(-DSPEEDCRUNCH_VERSION=\"trunk\" )
+
 
 # note: sort files alphabetically !
 
 # sources
 set(speedcrunch_SOURCES 
 aboutbox.cpp
+binreloc.c
 configdlg.cpp
 crunch.cpp
 crunchico.rc  # special
@@ -36,6 +36,7 @@ settings.cpp
 # headers
 set(speedcrunch_HEADERS
 aboutbox.h
+binreloc.h
 configdlg.h
 crunch.h
 deletevardlg.h
@@ -69,7 +70,6 @@ crunch_pl_PL.qm
 crunch_pt_BR.qm
 crunch_pt.qm
 crunch_ru.qm
-crunch_sl.qm
 )
 
 # we still need those Q3 classes
@@ -77,6 +77,9 @@ set( QT_USE_QT3SUPPORT TRUE )
 
 # enable warnings
 ADD_DEFINITIONS( -Wall )
+
+# for BinReloc stuff
+ADD_DEFINITIONS( -DENABLE_BINRELOC )
 
 # setup for Qt4
 find_package(Qt4 REQUIRED)
@@ -87,20 +90,27 @@ qt4_add_RESOURCES( speedcrunch_RESOURCES_SOURCES ${speedcrunch_RESOURCES} )
 QT4_WRAP_UI( speedcruch_FORMS_HEADERS ${speedcrunch_FORMS} )
 QT4_WRAP_CPP( speedcrunch_HEADERS_MOC ${speedcrunch_HEADERS} )
 INCLUDE_DIRECTORIES( ${CMAKE_BINARY_DIR} )
-IF( APPLE )
-  SET_SOURCE_FILES_PROPERTIES( ${speedcrunch_RESOURCES} ${speedcrunch_TRANSLATIONS}
-    PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
-  ADD_EXECUTABLE( Speedcrunch MACOSX_BUNDLE ${speedcrunch_SOURCES} ${speedcrunch_HEADERS_MOC} ${speedcrunch_RESOURCES_SOURCES} ${speedcruch_FORMS_HEADERS} )
-ELSE( NOT APPLE )
-  ADD_EXECUTABLE( speedcrunch ${speedcrunch_SOURCES} ${speedcrunch_HEADERS_MOC} ${speedcrunch_RESOURCES_SOURCES} ${speedcruch_FORMS_HEADERS} )
-ENDIF( APPLE )
-
-target_link_libraries(${PROGNAME} ${QT_LIBRARIES})
+ADD_EXECUTABLE( speedcrunch ${speedcrunch_SOURCES} ${speedcrunch_HEADERS_MOC} ${speedcrunch_RESOURCES_SOURCES} ${speedcruch_FORMS_HEADERS} )
+target_link_libraries(speedcrunch ${QT_LIBRARIES})
 
 # set(EXECUTABLE_OUTPUT_PATH ${speedcrunch_BINARY_DIR}/../bin)
 
 # install executable and translation files
 # note: it will install to CMAKE_INSTALL_PREFIX, which can be set e.g
-#  cmake ../branches/0.7 -DCMAKE_INSTALL_PREFIX=/usr
-install(TARGETS ${PROGNAME} DESTINATION bin)
+#  cmake ../trunk  -DCMAKE_INSTALL_PREFIX=/usr
+install(TARGETS speedcrunch DESTINATION bin)
 install(FILES ${speedcrunch_TRANSLATIONS} DESTINATION share/crunch)
+
+# required for regression tests
+enable_testing()
+
+# regression test for HMath
+set(testhmath_SOURCES testhmath.cpp hmath.cpp number.c)
+add_executable(testhmath ${testhmath_SOURCES})
+add_test(testhmath ${EXECUTABLE_OUTPUT_PATH}/testhmath)
+
+# regression test for Evaluator class
+set(testevaluator_SOURCES testevaluator.cpp evaluator.cpp functions.cpp hmath.cpp number.c)
+add_executable(testevaluator ${testevaluator_SOURCES})
+target_link_libraries(testevaluator ${QT_LIBRARIES})
+add_test(testevaluator ${EXECUTABLE_OUTPUT_PATH}/testevaluator)
