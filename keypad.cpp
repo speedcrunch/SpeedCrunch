@@ -192,7 +192,7 @@ void KeyPad::sizeButtons()
   // Limit the size of the buttons
   
   d->key0->setMaximumSize(
-  d->key0->style()->sizeFromContents( QStyle::CT_PushButton,
+  d->key0->style()->sizeFromContents( QStyle::CT_ToolButton,
                                       0,
                                       QSize( int(maxWidth*1.5), int(textHeight*1.5) ).expandedTo(QApplication::globalStrut()), d->key0 ) );
   d->key1->setMaximumSize( d->key0->maximumSize() );
