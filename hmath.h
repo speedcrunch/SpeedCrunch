@@ -327,6 +327,13 @@ public:
    */
   static HNumber sign( const HNumber& x );
 
+   /*!
+   * Returns the factorial of x.
+   * If x is non integer, returns NaN.
+   */
+  static HNumber factorial( const HNumber& x, const HNumber& base = HNumber(1) );
+
+
   /*!
    * Releases all resources. After calling this function, you can not use
    * any other functions as well as class HNumber. 

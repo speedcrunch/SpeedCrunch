@@ -277,6 +277,19 @@ void test_functions()
   CHECK( HMath::sign(2), "1");
   CHECK( HMath::sign(-2), "-1");
 
+  // factorial
+  CHECK( HMath::factorial(-1), "NaN");
+  CHECK( HMath::factorial("NaN"), "NaN");
+  CHECK( HMath::factorial(0), "NaN");
+  CHECK( HMath::factorial(1), "NaN");
+  CHECK( HMath::factorial(2), "2");
+  CHECK( HMath::factorial(3), "6");
+  CHECK( HMath::factorial(4), "24");
+  CHECK( HMath::factorial(5), "120");
+  CHECK( HMath::factorial(6), "720");
+  CHECK( HMath::factorial(7), "5040");
+  CHECK( HMath::factorial(8), "40320");
+
   // raise
   CHECK( HMath::raise(10,-3), "0.001" );
   CHECK( HMath::raise(10,-2), "0.01" );

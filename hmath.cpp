@@ -1280,6 +1280,24 @@ HNumber HMath::sign( const HNumber& x )
   return result;
 }
 
+HNumber HMath::factorial( const HNumber& x, const HNumber& base )
+{
+  if( x.isNan() || x < HNumber(0) || x != integer(x) || base < HNumber(1) || !(x > base))
+    return HNumber::nan();
+  
+  HNumber one(1);
+  HNumber result = one;
+  HNumber n = base-one;
+  do
+  {
+     n = n+one;
+     result = result * n;
+  }
+  while (n < x);
+
+  return result;
+}
+
 void HMath::finalize()
 {
   bc_free_num( &_zero_ );
