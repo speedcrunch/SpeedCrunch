@@ -21,6 +21,32 @@ the targeted milestone is not available yet, add it using tab Administer, Issue
 Tracking.
 
 
+TEST SUITE
+----------
+
+In order to catch regressions as early as possible, automatic test suite is 
+already implemented (and should always be updated).
+
+At the moment, it comprises of two programs: testhmath and testevaluator. 
+These programs are available only if you build using CMake. Generally it is 
+recommended to run these both test programs as often as possible, preferably 
+after changing something and before committing the changes.
+
+New feature which breaks the test suite or without a corresponding test case 
+is subjected to be reverted.
+
+Program 'testhmath' checks all the functionalities of the core math library. 
+Some corner-cases are necessary to ensure the library is well behaved. 
+If you change hmath.h/hmath.cpp, make sure to run 'testhmath' to verify that 
+your change does not break anything. If you add new feature(s), add the proper 
+feature(s) tests into testhmath.cpp. 
+
+Program 'testevaluator' mainly checks expression parser and evaluator. This 
+includes all the supported built-in functions. If you add a new function, 
+make sure also to add test cases for that function (the more, the better) 
+in testevaluator.cpp.
+
+
 REPOSITORY
 ------------
 
