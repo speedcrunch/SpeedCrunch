@@ -268,6 +268,39 @@ void test_function_stat()
   CHECK_EVAL( "SUM(-100;-1)", "-101");
   CHECK_EVAL( "SUM(1;2;3;4;5;6)", "21");
   CHECK_EVAL( "SUM(1;-2;3;-4;5;-6)", "-3");
+  
+  CHECK_EVAL( "AVERAGE()", "NaN");
+  CHECK_EVAL( "AVERAGE(0)", "0");
+  CHECK_EVAL( "AVERAGE(0;0)", "0");
+  CHECK_EVAL( "AVERAGE(0;0;0)", "0");
+  CHECK_EVAL( "AVERAGE(0;1)", "0.5");
+  CHECK_EVAL( "AVERAGE(0;1;2)", "1");
+  CHECK_EVAL( "AVERAGE(0;1;0)*3", "1");
+  CHECK_EVAL( "AVERAGE(1;1;1)", "1");
+  CHECK_EVAL( "AVERAGE(2;2;2)", "2");
+  CHECK_EVAL( "AVERAGE(3;3;3)", "3");
+  CHECK_EVAL( "AVERAGE(0.25;0.75)", "0.5");
+  CHECK_EVAL( "AVERAGE(2.25;4.75)", "3.5");
+  CHECK_EVAL( "AVERAGE(1/3;2/3)", "0.5");
+
+  CHECK_EVAL( "GEOMEAN()", "NaN");
+  CHECK_EVAL( "GEOMEAN(0)", "NaN");
+  CHECK_EVAL( "GEOMEAN(-1)", "NaN");
+  CHECK_EVAL( "GEOMEAN(-1e20)", "NaN");
+  CHECK_EVAL( "GEOMEAN(1)", "1");
+  CHECK_EVAL( "GEOMEAN(2)", "2");
+  CHECK_EVAL( "GEOMEAN(3)", "3");
+  CHECK_EVAL( "GEOMEAN(4)", "4");
+  CHECK_EVAL( "GEOMEAN(5)", "5");
+  CHECK_EVAL( "GEOMEAN(1;1)", "0.5");
+  CHECK_EVAL( "GEOMEAN(1;2)", "1");
+  CHECK_EVAL( "GEOMEAN(2;3)", "3");
+  CHECK_EVAL( "GEOMEAN(3;4)", "6");
+  CHECK_EVAL( "GEOMEAN(3;4;5)", "20");
+  CHECK_EVAL( "GEOMEAN(1;1;1)*3", "1");
+  CHECK_EVAL( "GEOMEAN(1;1;1;1)*4", "1");
+  CHECK_EVAL( "GEOMEAN(1;1;1;-1)", "NaN");
+
 }
 
 int main(int argc, char** argv)

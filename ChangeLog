@@ -1,7 +1,7 @@
 SpeedCrunch post 0.7
 ---------------------
 binary is now relocatable (using BinReloc)
-new functions: MIN, MAX, SUM, PRODUCT
+new functions: MIN, MAX, SUM, PRODUCT, AVERAGE, GEOMEAN
 new functions: SIGN, DEGREES, RADIANS
 
 SpeedCrunch 0.7-beta2

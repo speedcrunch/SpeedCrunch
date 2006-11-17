@@ -324,6 +324,39 @@ HNumber function_product( const Evaluator*, Function*, const FunctionArguments& 
   return result;
 }
 
+HNumber function_average( const Evaluator*, Function*, const FunctionArguments& args )
+{
+  if( args.count() <= 0 )
+    return HNumber("NaN");
+    
+  HNumber result = args[0];
+  for( int c = 1; c < args.count(); c++ )
+    result = result + args[c];
+    
+  result = result / args.count();  
+      
+  return result;
+}
+
+HNumber function_geomean( const Evaluator*, Function*, const FunctionArguments& args )
+{
+  if( args.count() <= 0 )
+    return HNumber("NaN");
+    
+  HNumber result = args[0];
+  for( int c = 1; c < args.count(); c++ )
+    result = result * args[c];
+
+  result = result / args.count();  
+    
+  if( result <= 0)  
+    return HNumber("NaN");
+      
+  return result;
+}
+
+
+
 class FunctionPrivate
 {
 public:
@@ -443,6 +476,8 @@ FunctionRepository::FunctionRepository()
   add( new Function( "max",  function_max, QT_TR_NOOP("Maximum" ) ) );
   add( new Function( "sum",  function_sum, QT_TR_NOOP("Sum" ) ) );
   add( new Function( "product",  function_product, QT_TR_NOOP("Product" ) ) );
+  add( new Function( "average",  function_average, QT_TR_NOOP("Average (Arithmetic Mean)" ) ) );
+  add( new Function( "geomean",  function_geomean, QT_TR_NOOP("Geometric Mean" ) ) );
 }
 
 FunctionRepository::~FunctionRepository()
