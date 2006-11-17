@@ -91,7 +91,7 @@ public:
   const Token& top( unsigned index );
 private:
   void ensureSpace();
-  unsigned topIndex;
+  int topIndex;
 };
 
 // for null token
@@ -245,7 +245,7 @@ const Token& TokenStack::top()
 
 const Token& TokenStack::top( unsigned index )
 {
-  if( topIndex > index )
+  if( topIndex > (int)index )
     return at( topIndex-index-1 );
   return Token::null;
 }
@@ -364,7 +364,7 @@ Tokens Evaluator::scan( const QString& expr )
 
   // initialize variables
   state = Start;
-  unsigned int i = 0;
+  int i = 0;
   QString ex = expr;
   QString tokenText;
   int tokenStart = 0;
@@ -573,7 +573,7 @@ void Evaluator::compile( const Tokens& tokens ) const
   QStack<int> argStack;
   unsigned argCount = 1;
 
-  for( unsigned i = 0; i <= tokens.count(); i++ )
+  for( int i = 0; i <= tokens.count(); i++ )
   {
     // helper token: InvalidOp is end-of-expression
     Token token =  ( i < tokens.count() ) ? tokens[i] : Token( Token::Operator );
@@ -964,7 +964,7 @@ HNumber Evaluator::eval()
 {
   QStack<HNumber> stack;
   QStack<QString> refs;
-  unsigned index;
+  int index;
   HNumber val1, val2;
   QVector<HNumber> args;
   QString fname;
@@ -1013,7 +1013,7 @@ HNumber Evaluator::eval()
   // magic: always set here to avoid being overwritten by user
   set( QString("PI"), HMath::pi() );
 
-  for( unsigned pc = 0; pc < d->codes.count(); pc++ )
+  for( int pc = 0; pc < d->codes.count(); pc++ )
   {
     Opcode& opcode = d->codes[pc];
     index = opcode.index;
@@ -1229,7 +1229,7 @@ void Evaluator::clearVariables()
 {
   d->variables.clear();
   set( QString("PI"), HMath::pi() );
-  set( QString("ans"), 0.0 );
+  set( QString("ans"), 0 );
 }
 
 QString Evaluator::autoFix( const QString& expr )
@@ -1238,13 +1238,13 @@ QString Evaluator::autoFix( const QString& expr )
   QString result;
 
   // strip off all funny characters
-  for( unsigned c = 0; c < expr.length(); c++ )
+  for( int c = 0; c < expr.length(); c++ )
     if( expr[c] >= QChar(32) )
       result.append( expr[c] );
 
   // automagically close all parenthesis
   Tokens tokens = Evaluator::scan( result );
-  for( unsigned i=0; i<tokens.count(); i++ )
+  for( int i=0; i<tokens.count(); i++ )
     if( tokens[i].asOperator() == Token::LeftPar ) par++;
     else if( tokens[i].asOperator() == Token::RightPar ) par--;
   for(; par > 0; par-- )
@@ -1273,7 +1273,7 @@ QString Evaluator::autoFix( const QString& expr )
 QString Evaluator::dump() const
 {
   QString result;
-  unsigned c;
+  int c;
 
   if( d->dirty )
   {
@@ -1303,7 +1303,7 @@ QString Evaluator::dump() const
 
   result.append("\n");
   result.append("  Code:\n");
-  for( unsigned i = 0; i < d->codes.count(); i++ )
+  for( int i = 0; i < d->codes.count(); i++ )
   {
     QString ctext;
     switch( d->codes[i].type )
