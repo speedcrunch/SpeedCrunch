@@ -44,7 +44,7 @@ QDialog( parent, name )
     this, SLOT( accept() ) );
 
   QStringList functionNames = FunctionRepository::self()->functionNames();
-  for( unsigned i = 0; i < functionNames.count(); i++ )
+  for( int i = 0; i < functionNames.count(); i++ )
   {
     Function* f = FunctionRepository::self()->function( functionNames[i] );
     if( f )

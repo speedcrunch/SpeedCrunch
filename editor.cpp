@@ -388,7 +388,7 @@ void Editor::doMatchingRight()
   {
     // find the matching right par
     unsigned par = 1;
-    unsigned int k = 0;
+    int k = 0;
     Token matchToken;
     int matchPos = -1;
 

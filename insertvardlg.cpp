@@ -69,7 +69,7 @@ void InsertVariableDlg::updateList()
 {
   ui.treeWidget->clear();
   QVector<Variable> vars = d->eval->variables();
-  for( unsigned i = 0; i < vars.count(); i++ )
+  for( int i = 0; i < vars.count(); i++ )
   {
     char* ss = HMath::format( vars[i].value, 'g' );
     QStringList itemTexts;

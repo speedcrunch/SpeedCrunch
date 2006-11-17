@@ -194,7 +194,7 @@ void KeyPad::sizeButtons()
   d->key0->setMaximumSize(
   d->key0->style()->sizeFromContents( QStyle::CT_PushButton,
                                       0,
-                                      QSize( maxWidth*1.5, textHeight*1.5 ).expandedTo(QApplication::globalStrut()), d->key0 ) );
+                                      QSize( int(maxWidth*1.5), int(textHeight*1.5) ).expandedTo(QApplication::globalStrut()), d->key0 ) );
   d->key1->setMaximumSize( d->key0->maximumSize() );
   d->key2->setMaximumSize( d->key0->maximumSize() );
   d->key3->setMaximumSize( d->key0->maximumSize() );
