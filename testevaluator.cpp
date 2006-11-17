@@ -236,24 +236,24 @@ void test_function_trig()
 void test_function_stat()
 {
   CHECK_EVAL( "MIN(0)", "0" );
-  CHECK_EVAL( "MIN(0, 1)", "0" );
-  CHECK_EVAL( "MIN(0, 2)", "0" );
-  CHECK_EVAL( "MIN(-1, 0)", "-1" );
-  CHECK_EVAL( "MIN(-1, 1)", "-1" );
-  CHECK_EVAL( "MIN(-0.01, 0)", "-0.01" );
-  CHECK_EVAL( "MIN(0, 1, 2)", "0" );
-  CHECK_EVAL( "MIN(-1, 0, 1, 2)", "-1" );
-  CHECK_EVAL( "MIN(-2, -1, 0, 1, 2)", "-2" );
+  CHECK_EVAL( "MIN(0; 1)", "0" );
+  CHECK_EVAL( "MIN(0; 2)", "0" );
+  CHECK_EVAL( "MIN(-1; 0)", "-1" );
+  CHECK_EVAL( "MIN(-1; 1)", "-1" );
+  CHECK_EVAL( "MIN(-0.01; 0)", "-0.01" );
+  CHECK_EVAL( "MIN(0; 1; 2)", "0" );
+  CHECK_EVAL( "MIN(-1; 0; 1; 2)", "-1" );
+  CHECK_EVAL( "MIN(-2; -1; 0; 1; 2)", "-2" );
 
   CHECK_EVAL( "MAX(0)", "0" );
-  CHECK_EVAL( "MAX(0, 1)", "1" );
-  CHECK_EVAL( "MAX(0, 2)", "2" );
-  CHECK_EVAL( "MAX(-1, 0)", "0" );
-  CHECK_EVAL( "MAX(-1, 1)", "1" );
-  CHECK_EVAL( "MAX(0.01, 0)", "0.01" );
-  CHECK_EVAL( "MAX(0, 1, 2)", "2" );
-  CHECK_EVAL( "MAX(-1, 0, 1, 2)", "2" );
-  CHECK_EVAL( "MAX(-2, -1, 0, 1, 2)", "2" );
+  CHECK_EVAL( "MAX(0; 1)", "1" );
+  CHECK_EVAL( "MAX(0; 2)", "2" );
+  CHECK_EVAL( "MAX(-1; 0)", "0" );
+  CHECK_EVAL( "MAX(-1; 1)", "1" );
+  CHECK_EVAL( "MAX(0.01; 0)", "0.01" );
+  CHECK_EVAL( "MAX(0; 1; 2)", "2" );
+  CHECK_EVAL( "MAX(-1; 0; 1; 2)", "2" );
+  CHECK_EVAL( "MAX(-2; -1; 0; 1; 2)", "2" );
   
   CHECK_EVAL( "SUM()", "0");
   CHECK_EVAL( "SUM(0)", "0");
@@ -261,13 +261,13 @@ void test_function_stat()
   CHECK_EVAL( "SUM(-1)", "-1");
   CHECK_EVAL( "SUM(100)", "100");
   CHECK_EVAL( "SUM(-100)", "-100");
-  CHECK_EVAL( "SUM(100,1)", "101");
-  CHECK_EVAL( "SUM(-100,1)", "-99");
-  CHECK_EVAL( "SUM(0,0,0)", "0");
-  CHECK_EVAL( "SUM(100,-1)", "99");
-  CHECK_EVAL( "SUM(-100,-1)", "-101");
-  CHECK_EVAL( "SUM(1,2,3,4,5,6)", "21");
-  CHECK_EVAL( "SUM(1,-2,3,-4,5,-6)", "-3");
+  CHECK_EVAL( "SUM(100;1)", "101");
+  CHECK_EVAL( "SUM(-100;1)", "-99");
+  CHECK_EVAL( "SUM(0;0;0)", "0");
+  CHECK_EVAL( "SUM(100;-1)", "99");
+  CHECK_EVAL( "SUM(-100;-1)", "-101");
+  CHECK_EVAL( "SUM(1;2;3;4;5;6)", "21");
+  CHECK_EVAL( "SUM(1;-2;3;-4;5;-6)", "-3");
 }
 
 int main(int argc, char** argv)
