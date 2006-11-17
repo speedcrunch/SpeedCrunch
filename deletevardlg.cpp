@@ -64,7 +64,7 @@ void DeleteVariableDlg::updateList()
 {
   ui.treeWidget->clear();
   QVector<Variable> vars = d->eval->variables();
-  for( unsigned i = 0; i < vars.count(); i++ )
+  for( int i = 0; i < vars.count(); i++ )
   {
     QString var = vars[i].name;
     if( var.upper() == QString("ANS") ) continue;

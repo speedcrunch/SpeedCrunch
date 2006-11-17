@@ -127,7 +127,7 @@ int EditorHighlighter::highlightParagraph ( const QString & text, int )
   }
 
   Tokens tokens = Evaluator::scan( text );
-  for( unsigned i = 0; i < tokens.count(); i++ )
+  for( int i = 0; i < tokens.count(); i++ )
   {
     Token& token = tokens[i];
     QString text = token.text().lower();
@@ -143,7 +143,7 @@ int EditorHighlighter::highlightParagraph ( const QString & text, int )
         {
           color = editor->highlightColor( Editor::Variable );
           QStringList fnames = FunctionRepository::self()->functionNames();
-          for( unsigned i=0; i<fnames.count(); i++ )
+          for( int i=0; i<fnames.count(); i++ )
             if( fnames[i].lower() == text )
               color = editor->highlightColor( Editor::FunctionName );
         }
@@ -441,7 +441,7 @@ void Editor::triggerAutoComplete()
   // find matches in function names
   QStringList fnames = FunctionRepository::self()->functionNames();
   QStringList choices;
-  for( unsigned i=0; i<fnames.count(); i++ )
+  for( int i=0; i<fnames.count(); i++ )
     if( fnames[i].startsWith( id, false ) )
     {
       QString str = fnames[i];
@@ -454,7 +454,7 @@ void Editor::triggerAutoComplete()
 
   // find matches in variables names
   QStringList vchoices;
-  for( unsigned i=0; i<d->eval->variables().count(); i++ )
+  for( int i=0; i<d->eval->variables().count(); i++ )
     if( d->eval->variables()[i].name.startsWith( id, false ) )
       vchoices.append( QString("%1: %2").arg( d->eval->variables()[i].name ).
         arg( formatNumber( d->eval->variables()[i].value ) ) );
@@ -773,7 +773,7 @@ void EditorCompletion::showCompletion( const QStringList &choices )
   if( !choices.count() ) return;
 
   d->completionListBox->clear();
-  for( unsigned i = 0; i < choices.count(); i++ )
+  for( int i = 0; i < choices.count(); i++ )
     new ChoiceItem( d->completionListBox, choices[i] );
   d->completionListBox->setCurrentItem( 0 );
 
