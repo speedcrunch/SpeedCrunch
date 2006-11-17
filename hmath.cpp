@@ -1264,6 +1264,22 @@ HNumber HMath::tanh( const HNumber& x )
   return result;
 }
 
+HNumber HMath::sign( const HNumber& x )
+{
+  if( x.isNan() )
+    return HNumber::nan();
+
+  HNumber result( 0 );
+  if (x == result)
+     return result;
+  if (x < result)
+     result = HNumber(-1);
+  else
+     result = HNumber(1);
+ 
+  return result;
+}
+
 void HMath::finalize()
 {
   bc_free_num( &_zero_ );

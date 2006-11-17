@@ -322,6 +322,11 @@ public:
    */
   static HNumber tanh( const HNumber& x );
 
+   /*!
+   * Returns the sign of x.
+   */
+  static HNumber sign( const HNumber& x );
+
   /*!
    * Releases all resources. After calling this function, you can not use
    * any other functions as well as class HNumber. 

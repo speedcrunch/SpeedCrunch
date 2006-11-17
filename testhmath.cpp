@@ -270,6 +270,13 @@ void test_functions()
   CHECK( HMath::sqrt(-1), "NaN" );
   CHECK( HMath::sqrt("NaN"), "NaN" );
 
+  // sign  
+  CHECK( HMath::sign(0), "0");
+  CHECK( HMath::sign(1), "1");
+  CHECK( HMath::sign(-1), "-1");
+  CHECK( HMath::sign(2), "1");
+  CHECK( HMath::sign(-2), "-1");
+
   // raise
   CHECK( HMath::raise(10,-3), "0.001" );
   CHECK( HMath::raise(10,-2), "0.01" );
