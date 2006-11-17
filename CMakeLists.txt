@@ -83,7 +83,9 @@ crunch_ru.qm
 set( QT_USE_QT3SUPPORT TRUE )  
 
 # enable warnings
-ADD_DEFINITIONS( -Wall )
+if(CMAKE_COMPILER_IS_GNUCXX )
+  ADD_DEFINITIONS( -Wall -Werror )
+endif(CMAKE_COMPILER_IS_GNUCXX )
 
 
 # setup for Qt4
