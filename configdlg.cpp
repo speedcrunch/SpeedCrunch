@@ -19,6 +19,7 @@
 #include "configdlg.h"
 #include "settings.h"
 
+#include <QApplication>
 #include <QCheckBox>
 #include <QColorDialog>
 #include <QDialog>
@@ -41,14 +42,14 @@
 #include <q3vbox.h>
 #include <Q3Frame>
 
-class ColorButton::Private
+class ColorButtonPrivate
 {
 public:
   QColor color;
 };
 
 
-class ConfigDlg::Private
+class ConfigDlgPrivate
 {
 public:
   QTabWidget* centerWidget;
@@ -83,7 +84,7 @@ public:
   QWidget* hilitePage();
 };
 
-void ConfigDlg::Private::loadSettings()
+void ConfigDlgPrivate::loadSettings()
 {
   Settings* settings = Settings::self();
 
@@ -98,7 +99,7 @@ void ConfigDlg::Private::loadSettings()
 
   QString str = settings->customFont.family();
   str.append( " " );
-  str.append( QString( tr("%1pt") ).arg( settings->customFont.pointSizeFloat() ) );
+  str.append( qApp->translate("ConfigDlgPrivate", "%1pt").arg( settings->customFont.pointSizeFloat() ) );
   fontLabel->setText( str );
 
   textColorButton->setColor( settings->customTextColor );
@@ -112,7 +113,7 @@ void ConfigDlg::Private::loadSettings()
   matchParColorButton->setColor( settings->matchedParenthesisColor );
 }
 
-void ConfigDlg::Private::saveSettings()
+void ConfigDlgPrivate::saveSettings()
 {
   Settings* settings = Settings::self();
   settings->saveHistory = saveHistoryCheck->isChecked();
@@ -131,14 +132,14 @@ void ConfigDlg::Private::saveSettings()
   settings->save();
 }
 
-QWidget* ConfigDlg::Private::generalPage()
+QWidget* ConfigDlgPrivate::generalPage()
 {
   QWidget *page = new QWidget( centerWidget );
 
-  saveHistoryCheck = new QCheckBox( tr("Save history on exit"), page );
-  saveVariablesCheck = new QCheckBox( tr("Save variables on exit"), page );
-  autoCompleteCheck = new QCheckBox( tr("Automatic completion"), page );
-  autoCalcCheck = new QCheckBox( tr("Automatically calculate as you type"), page );
+  saveHistoryCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Save history on exit"), page );
+  saveVariablesCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Save variables on exit"), page );
+  autoCompleteCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Automatic completion"), page );
+  autoCalcCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Automatically calculate as you type"), page );
 
   QVBoxLayout *layout = new QVBoxLayout;
 
@@ -159,7 +160,7 @@ QWidget* ConfigDlg::Private::generalPage()
   return page;
 }
 
-QWidget* ConfigDlg::Private::appearancePage()
+QWidget* ConfigDlgPrivate::appearancePage()
 {
   Q3VBox* page = new Q3VBox( centerWidget );
   page->setSpacing( 4 );
@@ -167,8 +168,8 @@ QWidget* ConfigDlg::Private::appearancePage()
 
   Q3ButtonGroup* group = new Q3ButtonGroup( page );
   group->hide();
-  standardAppearanceCheck = new QRadioButton( tr("Standard"), page );
-  customAppearanceCheck = new QRadioButton( tr("Custom"), page );
+  standardAppearanceCheck = new QRadioButton( qApp->translate("ConfigDlgPrivate", "Standard"), page );
+  customAppearanceCheck = new QRadioButton( qApp->translate("ConfigDlgPrivate", "Custom"), page );
   group->insert( standardAppearanceCheck );
   group->insert( customAppearanceCheck );
 
@@ -177,24 +178,24 @@ QWidget* ConfigDlg::Private::appearancePage()
 
   Q3HBox* fontBox = new Q3HBox( customBox );
   fontBox->setSpacing( 5 );
-  new QLabel( tr("Font:"), fontBox );
+  new QLabel( qApp->translate("ConfigDlgPrivate", "Font:"), fontBox );
   fontLabel = new QLabel( fontBox );
   fontLabel->setMinimumWidth( 150 );
   fontLabel->setFrameStyle( Q3Frame::StyledPanel | Q3Frame::Sunken );
   fontLabel->setLineWidth( 1 );
   fontLabel->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Preferred );
-  chooseFontButton = new QPushButton( tr("Choose..."), fontBox );
+  chooseFontButton = new QPushButton( qApp->translate("ConfigDlgPrivate", "Choose..."), fontBox );
 
   Q3Grid* colorGrid = new Q3Grid( 3, customBox );
   colorGrid->setSpacing( 5 );
-  (new QLabel( tr("Text Color:"), colorGrid ))->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
+  (new QLabel( qApp->translate("ConfigDlgPrivate", "Text Color:"), colorGrid ))->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
   textColorButton = new ColorButton( colorGrid );
   (new QWidget( colorGrid ))->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
-  (new QLabel( tr("Background Color 1:"), colorGrid ))->setAlignment(
+  (new QLabel( qApp->translate("ConfigDlgPrivate", "Background Color 1:"), colorGrid ))->setAlignment(
     Qt::AlignVCenter | Qt::AlignRight );
   bg1ColorButton = new ColorButton( colorGrid );
   (new QWidget( colorGrid ))->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
-  (new QLabel( tr("Background Color 2:"), colorGrid ))->setAlignment(
+  (new QLabel( qApp->translate("ConfigDlgPrivate", "Background Color 2:"), colorGrid ))->setAlignment(
     Qt::AlignVCenter | Qt::AlignRight );
   bg2ColorButton = new ColorButton( colorGrid );
   (new QWidget( colorGrid ))->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
@@ -204,31 +205,31 @@ QWidget* ConfigDlg::Private::appearancePage()
   return page;
 }
 
-QWidget* ConfigDlg::Private::hilitePage()
+QWidget* ConfigDlgPrivate::hilitePage()
 {
   Q3VBox* page = new Q3VBox( centerWidget );
   page->setSpacing( 4 );
   page->setMargin( 10 );
 
-  enableHiliteCheck = new QCheckBox( tr("Enable syntax highlight"), page );
+  enableHiliteCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Enable syntax highlight"), page );
 
   Q3GroupBox* colorGroup = new Q3GroupBox( 1, Qt::Vertical, page );
-  colorGroup->setTitle( tr("Highlight Colors") );
+  colorGroup->setTitle( qApp->translate("ConfigDlgPrivate", "Highlight Colors") );
   Q3VBox* colorBox = new Q3VBox( colorGroup );
   colorBox->setSpacing( 10 );
 
   Q3Grid* colorGrid = new Q3Grid( 3, colorBox );
   colorGrid->setSpacing( 5 );
-  (new QLabel( tr("Number:"), colorGrid ))->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
+  (new QLabel( qApp->translate("ConfigDlgPrivate", "Number:"), colorGrid ))->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
   numberColorButton = new ColorButton( colorGrid );
   (new QWidget( colorGrid ))->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
-  (new QLabel( tr("Function:"), colorGrid ))->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
+  (new QLabel( qApp->translate("ConfigDlgPrivate", "Function:"), colorGrid ))->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
   functionColorButton = new ColorButton( colorGrid );
   (new QWidget( colorGrid ))->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
-  (new QLabel( tr("Variable:"), colorGrid ))->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
+  (new QLabel( qApp->translate("ConfigDlgPrivate", "Variable:"), colorGrid ))->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
   variableColorButton = new ColorButton( colorGrid );
   (new QWidget( colorGrid ))->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
-  (new QLabel( tr("Matched Parenthesis:"), colorGrid ))->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
+  (new QLabel( qApp->translate("ConfigDlgPrivate", "Matched Parenthesis:"), colorGrid ))->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
   matchParColorButton = new ColorButton( colorGrid );
   (new QWidget( colorGrid ))->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
 
@@ -240,7 +241,7 @@ QWidget* ConfigDlg::Private::hilitePage()
 ColorButton::ColorButton( QWidget* parent, const char* name ):
 QPushButton( parent, name )
 {
-  d = new Private;
+  d = new ColorButtonPrivate;
   connect( this, SIGNAL( clicked() ), SLOT( showColorPicker() ) );
 }
 
@@ -284,7 +285,7 @@ void ColorButton::paintEvent( QPaintEvent* e )
 ConfigDlg::ConfigDlg( QWidget* parent, const char* name ):
 QDialog( parent, name )
 {
-  d = new Private;
+  d = new ConfigDlgPrivate;
   setCaption( tr("Configure SpeedCrunch" ) );
 
   QBoxLayout* mainLayout = new QVBoxLayout( this, 11, 6 );

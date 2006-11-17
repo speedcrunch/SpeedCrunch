@@ -93,6 +93,7 @@ class Variable
     HNumber value;
 };
 
+class EvaluatorPrivate;
 
 class Evaluator
 {
@@ -130,8 +131,7 @@ class Evaluator
     void compile( const Tokens& tokens ) const;
 
   private:
-    class Private;
-    Private *d;
+    EvaluatorPrivate *d;
     Evaluator( const Evaluator& );
     Evaluator& operator=( const Evaluator& );
 };

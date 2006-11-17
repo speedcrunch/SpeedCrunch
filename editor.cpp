@@ -51,7 +51,7 @@ private:
   Editor* editor;
 };
 
-class Editor::Private
+class EditorPrivate
 {
 public:
   Evaluator* eval;
@@ -67,12 +67,12 @@ public:
   QLabel* autoCalcLabel;
   bool syntaxHighlightEnabled;
   EditorHighlighter* highlighter;
-  QMap<ColorType,QColor> highlightColors;
+  QMap<Editor::ColorType,QColor> highlightColors;
   QTimer* matchingTimer;
   bool ansAvailable;
 };
 
-class EditorCompletion::Private
+class EditorCompletionPrivate
 {
 public:
   Editor* editor;
@@ -165,7 +165,7 @@ int EditorHighlighter::highlightParagraph ( const QString & text, int )
 Editor::Editor( Evaluator* e, QWidget* parent, const char* name ):
   Q3TextEdit( parent, name )
 {
-  d = new Private;
+  d = new EditorPrivate;
   d->eval = e;
   d->index = 0;
   d->autoCompleteEnabled = true;
@@ -695,7 +695,7 @@ void Editor::stopAutoCalc()
 
 EditorCompletion::EditorCompletion( Editor* editor ): QObject( editor )
 {
-  d = new Private;
+  d = new EditorCompletionPrivate;
   d->editor = editor;
 
   d->completionPopup = new Q3VBox( editor->topLevelWidget(), 0, Qt::WType_Popup );

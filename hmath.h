@@ -25,6 +25,7 @@
 #include <iostream>
 
 class HMath;
+class HNumberPrivate;
 
 class HNumber
 {
@@ -158,8 +159,7 @@ public:
   static HNumber nan();
 
 private:
-  class Private;
-  Private* d;  
+  HNumberPrivate* d;  
 };
 
 class HMath

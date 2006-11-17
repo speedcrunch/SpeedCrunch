@@ -21,6 +21,8 @@
 
 #include <QWidget>
 
+class KeyPadPrivate;
+
 class KeyPad : public QWidget
 {
   Q_OBJECT
@@ -78,8 +80,7 @@ class KeyPad : public QWidget
     void layoutButtons();
     void connectButtons();	
 	
-    class Private;
-    Private*d;
+    KeyPadPrivate*d;
 };
 
 #endif // KEYPAD

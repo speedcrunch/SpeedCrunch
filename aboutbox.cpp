@@ -24,7 +24,7 @@
 #define MAKE_STRING(a) DO_MAKE_STRING(a)
 #define DO_MAKE_STRING(a) # a
 
-class MarqueeText::Private
+class MarqueeTextPrivate
 {
 public:
   QTextEdit* editor;
@@ -39,7 +39,7 @@ public:
 MarqueeText::MarqueeText( QWidget* parent, const char* name ):
 QFrame( parent )
 {
-  d = new Private;
+  d = new MarqueeTextPrivate;
   d->scrollStep = 4;
   d->scrollTick = 200;
   d->sideMargin = 20;

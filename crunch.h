@@ -23,6 +23,8 @@
 #include <QMainWindow>
 #include <QCloseEvent>
 
+class CrunchPrivate;
+
 class Crunch : public QMainWindow
 {
   Q_OBJECT
@@ -69,8 +71,7 @@ class Crunch : public QMainWindow
     void createUI();
     void saveSettings();
 
-    class Private;
-    Private*d;
+    CrunchPrivate* d;
     Crunch( const Crunch& );
     Crunch& operator=( const Crunch& );
 };

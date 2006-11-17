@@ -26,6 +26,8 @@
 class QPaintEvent;
 class QResizeEvent;
 
+class MarqueeTextPrivate;
+
 class MarqueeText: public QFrame
 {
   Q_OBJECT
@@ -46,8 +48,7 @@ class MarqueeText: public QFrame
     void layout();
     
   private:
-    class Private;
-    Private *d;  
+    MarqueeTextPrivate *d;  
 };
 
 class AboutBox : public QDialog

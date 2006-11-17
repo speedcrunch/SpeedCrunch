@@ -27,6 +27,9 @@
 class Function;
 class Evaluator;
 
+class FunctionPrivate;
+class FunctionRepositoryPrivate;
+
 typedef QVector<HNumber> FunctionArguments;
 typedef HNumber (*FunctionPtr)( const Evaluator*, Function*, const FunctionArguments& );
 
@@ -43,8 +46,7 @@ public:
   HNumber exec( const Evaluator*, const FunctionArguments& args );
 
 private:
-  class Private;
-  Private* d;
+  FunctionPrivate* d;
   Function( const Function& );
   Function& operator=( const Function& );
 };
@@ -59,8 +61,7 @@ public:
   Function* function( const QString& name );
   QStringList functionNames() const;
 private:
-  class Private;
-  Private* d;
+  FunctionRepositoryPrivate* d;
   static FunctionRepository* s_self;
   FunctionRepository( const FunctionRepository& );
   FunctionRepository& operator=( const FunctionRepository& );

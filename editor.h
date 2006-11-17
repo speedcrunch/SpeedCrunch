@@ -34,6 +34,8 @@ class QWidget;
 class Evaluator;
 #include "hmath.h"
 
+class EditorPrivate;
+
 class Editor : public Q3TextEdit
 {
   Q_OBJECT
@@ -92,12 +94,12 @@ class Editor : public Q3TextEdit
     QString formatNumber( const HNumber& value ) const;
 
   private:
-    class Private;
-    Private* d;
+    EditorPrivate* d;
     Editor( const Editor& );
     Editor& operator=( const Editor& );
 };
 
+class EditorCompletionPrivate;
 
 class EditorCompletion : public QObject
 {
@@ -115,8 +117,7 @@ class EditorCompletion : public QObject
     void selectedCompletion( const QString& item );
 
   private:
-    class Private;
-    Private* d;
+    EditorCompletionPrivate* d;
     EditorCompletion( const EditorCompletion& );
     EditorCompletion& operator=( const EditorCompletion& );
 };

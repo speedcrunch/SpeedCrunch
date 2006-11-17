@@ -324,7 +324,7 @@ HNumber function_product( const Evaluator*, Function*, const FunctionArguments& 
   return result;
 }
 
-class Function::Private
+class FunctionPrivate
 {
 public:
   QString name;
@@ -334,7 +334,7 @@ public:
   FunctionPtr ptr;
 };
 
-class FunctionRepository::Private
+class FunctionRepositoryPrivate
 {
 public:
   QHash<QString, Function*> functions;
@@ -342,7 +342,7 @@ public:
 
 Function::Function( const QString& name, int argc, FunctionPtr ptr, const QString& desc )
 {
-  d = new Private;
+  d = new FunctionPrivate;
   d->name = name;
   d->argc = argc;
   d->desc = qApp->translate( "FunctionRepository", desc );
@@ -351,7 +351,7 @@ Function::Function( const QString& name, int argc, FunctionPtr ptr, const QStrin
 
 Function::Function( const QString& name, FunctionPtr ptr, const QString& desc )
 {
-  d = new Private;
+  d = new FunctionPrivate;
   d->name = name;
   d->argc = -1;
   d->desc = qApp->translate( "FunctionRepository", desc );
@@ -415,7 +415,7 @@ FunctionRepository* FunctionRepository::self()
 
 FunctionRepository::FunctionRepository()
 {
-  d = new Private;
+  d = new FunctionRepositoryPrivate;
 
   add( new Function( "abs",   1, function_abs, QT_TR_NOOP("Absolute" ) ) );
   add( new Function( "int",   1, function_int, QT_TR_NOOP("Integer" ) ) );

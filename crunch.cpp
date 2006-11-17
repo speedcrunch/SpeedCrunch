@@ -85,7 +85,7 @@ public:
 };
 
 
-class Crunch::Private
+class CrunchPrivate
 {
 public:
   CrunchActions* actions;
@@ -107,7 +107,7 @@ public:
 
 Crunch::Crunch(): QMainWindow()
 {
-  d = new Private;
+  d = new CrunchPrivate;
   d->actions = new CrunchActions;
 
   d->eval = new Evaluator;

@@ -43,7 +43,7 @@ extern bc_num _zero_;
 extern bc_num _one_;
 extern bc_num _two_;
 
-class HNumber::Private
+class HNumberPrivate
 {
 public:
   bc_num num;
@@ -300,7 +300,7 @@ static void h_init()
 HNumber::HNumber()
 {
   h_init();
-  d = new Private;
+  d = new HNumberPrivate;
   d->nan = false;
   d->num = h_create();
 }
@@ -308,7 +308,7 @@ HNumber::HNumber()
 HNumber::HNumber( const HNumber& hn )
 {
   h_init();
-  d = new Private;
+  d = new HNumberPrivate;
   d->nan = false;
   d->num = h_create();
   operator=( hn );
@@ -317,7 +317,7 @@ HNumber::HNumber( const HNumber& hn )
 HNumber::HNumber( int i )
 {
   h_init();
-  d = new Private;
+  d = new HNumberPrivate;
   d->nan = false;
   d->num = h_create();
   bc_int2num( &d->num, i );
@@ -326,7 +326,7 @@ HNumber::HNumber( int i )
 HNumber::HNumber( const char* str )
 {
   h_init();
-  d = new Private;
+  d = new HNumberPrivate;
   d->nan = false;
   d->num = h_create();
 

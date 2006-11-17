@@ -23,7 +23,7 @@
 #include <QStyle>
 #include <QApplication>
 
-class KeyPad::Private
+class KeyPadPrivate
 {
   public:
     QPushButton* key0;
@@ -366,7 +366,7 @@ void KeyPad::connectButtons()
 
 KeyPad::KeyPad( QWidget* parent ) : QWidget( parent )
 {
-  d = new Private;
+  d = new KeyPadPrivate;
 
   // Setup buttons
 

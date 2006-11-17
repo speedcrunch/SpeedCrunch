@@ -27,7 +27,7 @@
 #include <QTimer>
 #include <QStringList>
 
-class DeleteVariableDlg::Private
+class DeleteVariableDlgPrivate
 {
 public:
   Evaluator* eval;
@@ -36,7 +36,7 @@ public:
 DeleteVariableDlg::DeleteVariableDlg( Evaluator* e, QWidget* parent, const char* name ):
 QDialog( parent, name )
 {
-  d = new Private;
+  d = new DeleteVariableDlgPrivate;
   d->eval = e;
 
   ui.setupUi( this );

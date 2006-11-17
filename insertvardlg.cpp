@@ -28,7 +28,7 @@
 #include <QTimer>
 #include <QStringList>
 
-class InsertVariableDlg::Private
+class InsertVariableDlgPrivate
 {
 public:
   Evaluator* eval;
@@ -37,7 +37,7 @@ public:
 InsertVariableDlg::InsertVariableDlg( Evaluator* e, QWidget* parent, const char* name ):
 QDialog( parent, name )
 {
-  d = new Private;
+  d = new InsertVariableDlgPrivate;
   d->eval = e;
 
   ui.setupUi( this );

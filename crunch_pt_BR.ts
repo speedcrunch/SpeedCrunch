@@ -150,7 +150,7 @@
     </message>
 </context>
 <context>
-    <name>ConfigDlg::Private</name>
+    <name>ConfigDlgPrivate</name>
     <message>
         <source>%1pt</source>
         <translation>%1pt</translation>

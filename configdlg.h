@@ -30,6 +30,9 @@ class Evaluator;
 class QPaintEvent;
 class ShowEvent;
 
+class ColorButtonPrivate;
+
+
 class ColorButton : public QPushButton
 {
   Q_OBJECT
@@ -47,11 +50,12 @@ class ColorButton : public QPushButton
     void paintEvent( QPaintEvent* );
     
   private:
-    class Private;
-    Private* d;
+    ColorButtonPrivate* d;
     ColorButton( const ColorButton& );
     ColorButton& operator=( const ColorButton& );  
 };
+
+class ConfigDlgPrivate;
 
 class ConfigDlg : public QDialog
 {
@@ -72,8 +76,7 @@ class ConfigDlg : public QDialog
     virtual void accept();    
   
   private:
-    class Private;
-    Private* d;
+    ConfigDlgPrivate* d;
     ConfigDlg( const ConfigDlg& );
     ConfigDlg& operator=( const ConfigDlg& );
 };

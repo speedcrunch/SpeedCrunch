@@ -24,6 +24,7 @@
 #include "ui_listdialog.h"
 
 class Evaluator;
+class InsertVariableDlgPrivate;
 
 class InsertVariableDlg : public QDialog
 {
@@ -40,8 +41,7 @@ class InsertVariableDlg : public QDialog
     void initUI();
 
   private:
-    class Private;
-    Private* d;
+    InsertVariableDlgPrivate* d;
     Ui::ListDialog ui;
 
     InsertVariableDlg( const InsertVariableDlg& );

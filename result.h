@@ -29,6 +29,8 @@ class QWidget;
 #include <q3listbox.h>
 class Q3ListBoxItem;
 
+class ResultPrivate;
+
 class Result : public Q3ListBox
 {
   Q_OBJECT
@@ -69,8 +71,7 @@ class Result : public Q3ListBox
     void itemClicked( Q3ListBoxItem* );
     
   private:
-    class Private;
-    Private* d;
+    ResultPrivate* d;
     Result( const Result& );
     Result& operator=( const Result& );
 };

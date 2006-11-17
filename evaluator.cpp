@@ -61,7 +61,7 @@ public:
   Opcode( unsigned t, unsigned i ): type(t), index(i) {};
 };
 
-class Evaluator::Private
+class EvaluatorPrivate
 {
 public:
   Evaluator *evaluator;
@@ -268,7 +268,7 @@ static bool isIdentifier( QChar ch )
 
 Evaluator::Evaluator()
 {
-  d = new Private;
+  d = new EvaluatorPrivate;
   clear();
 }
 

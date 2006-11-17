@@ -24,6 +24,7 @@
 #include "ui_listdialog.h"
 
 class Evaluator;
+class DeleteVariableDlgPrivate;
 
 class DeleteVariableDlg : public QDialog
 {
@@ -40,8 +41,7 @@ class DeleteVariableDlg : public QDialog
     void deleteVar();
 
   private:
-    class Private;
-    Private* d;
+    DeleteVariableDlgPrivate* d;
     Ui::ListDialog ui;
 
     DeleteVariableDlg( const DeleteVariableDlg& );
