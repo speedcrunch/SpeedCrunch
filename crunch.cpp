@@ -409,7 +409,7 @@ void Crunch::applySettings()
 
   if( settings->saveVariables )
   {
-    for( unsigned k=0; k<settings->variables.count(); k++ )
+    for( int k=0; k<settings->variables.count(); k++ )
     {
       d->eval->setExpression( settings->variables[k] );
       d->eval->eval();
@@ -511,7 +511,7 @@ void Crunch::saveSettings()
   {
     settings->variables.clear();
     QVector<Variable> vars = d->eval->variables();
-    for( unsigned i=0; i<vars.count(); i++ )
+    for( int i=0; i<vars.count(); i++ )
       if( vars[i].name.lower() != "pi" )
       {
         char* str = HMath::formatFixed( vars[i].value, 100 );
