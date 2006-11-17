@@ -158,7 +158,7 @@ void MarqueeText::layout()
 
   QPainter pw( this );
   QBrush bgbrush = pw.background();
-  d->buffer = new QPixmap( QSize(lineWidth+5, 2*hh+50 ) );
+  d->buffer = new QPixmap( QSize((int)(lineWidth+5), (int)(2*hh+50) ) );
   d->buffer->fill( bgbrush.color() );
 
   // paint the lines
