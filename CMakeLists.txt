@@ -9,6 +9,13 @@ set(CMAKE_INCLUDE_CURRENT_DIR TRUE)
 # note: change this BEFORE making a release !!
 ADD_DEFINITIONS(-DSPEEDCRUNCH_VERSION=\"trunk\" )
 
+IF( NOT WIN32 )
+IF( NOT APPLE )
+  # for BinReloc stuff
+  ADD_DEFINITIONS( -DENABLE_BINRELOC )
+ENDIF( NOT APPLE )
+ENDIF( NOT WIN32 )
+
 
 # note: sort files alphabetically !
 
@@ -78,8 +85,6 @@ set( QT_USE_QT3SUPPORT TRUE )
 # enable warnings
 ADD_DEFINITIONS( -Wall )
 
-# for BinReloc stuff
-ADD_DEFINITIONS( -DENABLE_BINRELOC )
 
 # setup for Qt4
 find_package(Qt4 REQUIRED)
