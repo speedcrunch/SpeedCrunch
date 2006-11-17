@@ -626,8 +626,7 @@ void Editor::keyPressEvent( QKeyEvent* e )
 */
 
 // FIXME: use locale settings
-#if 0
-  if( e->key() == Qt::Key_Comma)
+   if( e->key() == Qt::Key_Comma )
   {
     QKeyEvent * ke = new QKeyEvent(QEvent::KeyPress, Qt::Key_Period, 46,
       e->state(), ".");
@@ -635,7 +634,6 @@ void Editor::keyPressEvent( QKeyEvent* e )
     delete ke;
     return;
   }
-#endif
 
   if( e->key() == Qt::Key_Left ) checkMatching();
   if( e->key() == Qt::Key_Right ) checkMatching();

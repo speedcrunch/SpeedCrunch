@@ -45,7 +45,7 @@ class Token
       Caret,          //  ^ (power)
       LeftPar,        //  (
       RightPar,       //  )
-      Comma,          // argument separator
+      Semicolon,      // argument separator
       Percent,
       Equal           // variable assignment
     } Op;

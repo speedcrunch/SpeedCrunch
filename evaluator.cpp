@@ -113,7 +113,7 @@ static Token::Op matchOperator( const QString& text )
         case '*': result = Token::Asterisk; break;
         case '/': result = Token::Slash; break;
         case '^': result = Token::Caret; break;
-        case ',': result = Token::Comma; break;
+        case ';': result = Token::Semicolon; break;
         case '(': result = Token::LeftPar; break;
         case ')': result = Token::RightPar; break;
         case '%': result = Token::Percent; break;
@@ -145,7 +145,7 @@ static int opPrecedence( Token::Op op )
     case Token::Minus        : prec = 3; break;
     case Token::RightPar     : prec = 0; break;
     case Token::LeftPar      : prec = -1; break;
-    case Token::Comma        : prec = 0; break;
+    case Token::Semicolon    : prec = 0; break;
     default: prec = -1; break;
   }
   return prec;
@@ -749,7 +749,7 @@ void Evaluator::compile( const Tokens& tokens ) const
         if( !ruleFound )
         if( syntaxStack.itemCount() >= 5 )
         if( ( token.asOperator() == Token::RightPar ) ||
-        ( token.asOperator() == Token::Comma ) )
+        ( token.asOperator() == Token::Semicolon ) )
         {
           Token arg2 = syntaxStack.top();
           Token sep = syntaxStack.top( 1 );
@@ -757,7 +757,7 @@ void Evaluator::compile( const Tokens& tokens ) const
           Token par = syntaxStack.top( 3 );
           Token id = syntaxStack.top( 4 );
           if( !arg2.isOperator() )
-          if( sep.asOperator() == Token::Comma )
+          if( sep.asOperator() == Token::Semicolon )
           if( !arg1.isOperator() )
           if( par.asOperator() == Token::LeftPar )
           if( id.isIdentifier() )
