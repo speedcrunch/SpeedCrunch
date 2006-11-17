@@ -108,7 +108,7 @@ void Settings::load()
     if( !str.isEmpty() )
     {
       QString expr;
-      for( unsigned c = 0; c < str.length(); c++ )
+      for( int c = 0; c < str.length(); c++ )
         if( str[c] >= 32 ) expr.append( str[c] );
       history.append( expr );
     }
@@ -116,7 +116,7 @@ void Settings::load()
 
   variables.clear();
   QStringList names = settings.entryList( key + "/Variables" );
-  for( unsigned k=0; k<names.count(); k++ )
+  for( int k=0; k<names.count(); k++ )
   {
     QString keyname = QString("%1/Variables/%2").arg(key).arg(names[k]);
     QString value = settings.readEntry( keyname );
@@ -128,7 +128,7 @@ void Settings::load()
 void Settings::save()
 {
   QSettings settings( QSettings::UserScope, SETTINGSKEY, SETTINGSKEY );
-  unsigned k, i;
+  int k, i;
 
   QString key = SETTINGSKEY;
 
@@ -170,7 +170,7 @@ void Settings::save()
   {
     realHistory.clear();
     unsigned start = history.count() - 100;
-    for( unsigned j=start; j<history.count(); j++ )
+    for( int j=start; j<history.count(); j++ )
       realHistory.append( history[j] );
   }
 
