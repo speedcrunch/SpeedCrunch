@@ -4,6 +4,11 @@ binary is now relocatable (using BinReloc)
 new functions: MIN, MAX, SUM, PRODUCT, AVERAGE, GEOMEAN
 new functions: SIGN, DEGREES, RADIANS
 
+SpeedCrunch 0.7
+---------------
+fixed CMake build under Mac OS X
+fixed very wide buttons when using Cleanlooks style
+
 SpeedCrunch 0.7-beta2
 ---------------------
 support for building using CMake
