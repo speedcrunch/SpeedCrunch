@@ -257,7 +257,7 @@ AboutBox::AboutBox( QWidget* parent ):
     "GNU General Public License for more details.");
   msg += "</p>";
   msg +=  "<p>&nbsp;</p>";
-  msg += QString( "<p>%1</p>" ).arg( tr("Visit http://speedcrunch.berlios.de for more information!") );
+  msg += QString( "<p>%1</p>" ).arg( tr("Visit http://speedcrunch.digitalfanatics.org for more information!") );
   marqueeText->setText( msg );
 
   QPushButton* okButton = new QPushButton(this);
