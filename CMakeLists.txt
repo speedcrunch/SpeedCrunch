@@ -7,7 +7,7 @@ IF( APPLE )
   set( MACOSX_BUNDLE_VERSION 0.7-beta2 )
   set( MACOSX_BUNDLE_LONG_VERSION_STRING Version 0.7-beta2 )
   set( CMAKE_OSX_ARCHITECTURES ppc;i386 ) #Comment out if not universal binary
-ELSE( NOT APPLE )
+ELSE( APPLE )
   set( PROGNAME speedcrunch )
 ENDIF( APPLE )
 
@@ -131,7 +131,7 @@ IF( APPLE )
     COMMAND cp ARGS *.qm ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources 
     COMMENT Setting up translations & resources )
   #ADD_DEPENDENCIES( ${PROGNAME} Speedcrunch_RESOURCE_DIR )
-ELSE( NOT APPLE )
+ELSE( APPLE )
   ADD_EXECUTABLE( ${PROGNAME} ${speedcrunch_SOURCES} ${speedcrunch_HEADERS_MOC} ${speedcrunch_RESOURCES_SOURCES} ${speedcrunch_FORMS_HEADERS} )
 ENDIF( APPLE )
 
