@@ -186,6 +186,8 @@ AboutBox::AboutBox( QWidget* parent ):
 {
   setObjectName( "AboutBox" );
 
+  QString website = tr( "http://speedcrunch.digitalfanatics.org");
+
   QLabel* infoLabel = new QLabel( this );
   QString info = "<b>";
   info += tr("SpeedCrunch version %1").arg( MAKE_STRING(SPEEDCRUNCH_VERSION) );
@@ -194,8 +196,9 @@ AboutBox::AboutBox( QWidget* parent ):
   info += "<br>";
   info += tr("Copyright (C) 2005-2006 Johan Thelin (e8johan@gmail.com)");
   info += "<br>";
-  info += tr( "http://speedcrunch.digitalfanatics.org");
+  info += QString("<a href=\"%1\">%2</a>").arg(website).arg(website);
   infoLabel->setText( info );
+  infoLabel->setOpenExternalLinks(true);
 
   QLabel* iconLabel = new QLabel( this );
   iconLabel->setPixmap( QPixmap( ":/crunch.png" ) );
