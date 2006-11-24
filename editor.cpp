@@ -199,7 +199,7 @@ Editor::Editor( Evaluator* e, QWidget* parent, const char* name ):
   connect( d->autoCalcTimer, SIGNAL( timeout() ), SLOT( autoCalc() ) );
 
   d->autoCalcLabel = new QLabel( 0, "autocalc", Qt::WStyle_StaysOnTop |
-    Qt::WStyle_Customize | Qt::WStyle_NoBorder | Qt::WStyle_Tool |  Qt::WX11BypassWM );
+    Qt::WStyle_Customize | Qt::WStyle_NoBorder | Qt::ToolTip |  Qt::WX11BypassWM );
   d->autoCalcLabel->setFrameStyle( Q3Frame::Plain | Q3Frame::Box );
   d->autoCalcLabel->setPalette( QToolTip::palette() );
   d->autoCalcLabel->hide();
