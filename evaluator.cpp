@@ -51,7 +51,7 @@ class Opcode
 {
 public:
 
-  enum { Nop = 0, Load, Ref, Function, Add, Sub, Neg, Mul, Div, Pow };
+  enum { Nop = 0, Load, Ref, Function, Add, Sub, Neg, Mul, Div, Pow, Fact };
 
   unsigned type;
   unsigned index;
@@ -117,6 +117,7 @@ static Token::Op matchOperator( const QString& text )
         case '(': result = Token::LeftPar; break;
         case ')': result = Token::RightPar; break;
         case '%': result = Token::Percent; break;
+        case '!': result = Token::Exclamation; break;
         case '=': result = Token::Equal; break;
         default : result = Token::InvalidOp; break;
     }
@@ -137,6 +138,7 @@ static int opPrecedence( Token::Op op )
   int prec = -1;
   switch( op )
   {
+    case Token::Exclamation  : prec = 8; break;
     case Token::Percent      : prec = 8; break;
     case Token::Caret        : prec = 7; break;
     case Token::Asterisk     : prec = 5; break;
@@ -742,6 +744,31 @@ void Evaluator::compile( const Tokens& tokens ) const
 #endif
             }
           }
+         
+         // rule for unary postfix operator in simplified function syntax
+         // this handles case like "sin 90!"
+         if( !ruleFound )
+         if( syntaxStack.itemCount() >= 3 )
+         {
+            Token op = syntaxStack.top();
+            Token x = syntaxStack.top( 1 );
+            Token id = syntaxStack.top( 2 );
+            if( id.isIdentifier() && FunctionRepository::self()->function( id.text() ) )
+            {
+               if( !x.isOperator() && op.isOperator() && 
+                  op.asOperator() == Token::Exclamation )
+               {
+                  ruleFound = true;
+                  syntaxStack.pop();
+                  syntaxStack.pop();
+                  syntaxStack.push( x );
+                  d->codes.append( Opcode( Opcode::Fact ) );
+#ifdef EVALUATOR_DEBUG
+                  dbg << "    Rule for unary operator in simplified function syntax" << "\n";
+#endif
+               }
+            }
+         }
 
 
         // rule for function arguments, if token is , or )
@@ -872,23 +899,33 @@ void Evaluator::compile( const Tokens& tokens ) const
             Token x = syntaxStack.top();
             Token op2 = syntaxStack.top( 1 );
             Token op1 = syntaxStack.top( 2 );
-            if( !x.isOperator() )
-            if( op1.isOperator() )
-            if( op2.isOperator() )
-            if( ( op2.asOperator() == Token::Plus ) ||
-               ( op2.asOperator() == Token::Minus ) )
+            if( !x.isOperator() && op1.isOperator() && op2.isOperator() &&
+               ( op2.asOperator() == Token::Plus || op2.asOperator() == Token::Minus ) )
             {
-              ruleFound = true;
-              syntaxStack.pop();
-              syntaxStack.pop();
-              syntaxStack.push( x );
-              if( op2.asOperator() == Token::Minus )
-                d->codes.append( Opcode( Opcode::Neg ) );
+               ruleFound = true;
+               if( op2.asOperator() == Token::Minus )
+                  d->codes.append( Opcode( Opcode::Neg ) );
+            }
+            else // maybe postfix
+            {
+               x = op2; op2 = syntaxStack.top();
+               if( !x.isOperator() && op1.isOperator() && op2.isOperator() &&
+               op2.asOperator() == Token::Exclamation )
+               {
+                  ruleFound = true;
+                  d->codes.append( Opcode( Opcode::Fact ) );
+               }
+            }
+            if (ruleFound)
+            {
+               syntaxStack.pop();
+               syntaxStack.pop();
+               syntaxStack.push( x );
 #ifdef EVALUATOR_DEBUG
           dbg << "    Rule for unary operator" << "\n";
 #endif
             }
-          }
+         }
 
          // auxilary rule for unary operator:  (op) X -> X
          // conditions: op is unary, op is first in syntax stack, token is not '('
@@ -899,17 +936,28 @@ void Evaluator::compile( const Tokens& tokens ) const
          {
             Token x = syntaxStack.top();
             Token op = syntaxStack.top( 1 );
-            if( !x.isOperator() )
-            if( op.isOperator() )
-            if( ( op.asOperator() == Token::Plus ) ||
-               ( op.asOperator() == Token::Minus ) )
+            if( !x.isOperator() && op.isOperator() &&
+               ( op.asOperator() == Token::Plus || op.asOperator() == Token::Minus ) )
             {
               ruleFound = true;
+              if( op.asOperator() == Token::Minus )
+                d->codes.append( Opcode( Opcode::Neg ) );
+            }
+            else
+            {
+               x = op; op = syntaxStack.top();
+               if( !x.isOperator() && op.isOperator() &&
+                  ( op.asOperator() == Token::Exclamation ) )
+               {
+                  ruleFound = true;
+                  d->codes.append( Opcode( Opcode::Fact ) );
+               }
+            }
+            if (ruleFound)
+            {
               syntaxStack.pop();
               syntaxStack.pop();
               syntaxStack.push( x );
-              if( op.asOperator() == Token::Minus )
-                d->codes.append( Opcode( Opcode::Neg ) );
 #ifdef EVALUATOR_DEBUG
           dbg << "    Rule for unary operator (auxilary)" << "\n";
 #endif
@@ -1106,6 +1154,17 @@ HNumber Evaluator::eval()
         val2 = stack.pop();
         val2 = HMath::raise( val2, val1 );
         stack.push( val2 );
+        break;
+       
+      case Opcode::Fact:
+        if( stack.count() < 1 )
+        {
+          d->error = qApp->translate( "Error", "Invalid expression" );
+          return HNumber( 0 );
+        }
+        val1 = stack.pop();
+        val1 = HMath::factorial( val1 );
+        stack.push( val1 );
         break;
 
       // reference
@@ -1317,6 +1376,7 @@ QString Evaluator::dump() const
       case Opcode::Div:      ctext = "Div"; break;
       case Opcode::Neg:      ctext = "Neg"; break;
       case Opcode::Pow:      ctext = "Pow"; break;
+      case Opcode::Fact:     ctext = "Fact"; break;
       default: ctext = "Unknown"; break;
     }
     result.append( "   " ).append( ctext ).append("\n");

@@ -1280,6 +1280,23 @@ HNumber HMath::sign( const HNumber& x )
   return result;
 }
 
+HNumber HMath::nCr( const HNumber& n, const HNumber& k )
+{
+  if( n.isNan() || k.isNan() || k > n)
+    return HNumber::nan();
+
+   if (k == HNumber(0) || k == n)
+      return HNumber(1);
+
+   if (k == HNumber(1))
+      return HNumber(n);
+
+   if (k > n/2)
+      return factorial(n, k+1)/factorial((n-k), 1);
+   else
+      return factorial(n, (n-k+1))/factorial(k, 1);
+}
+
 HNumber HMath::factorial( const HNumber& x, const HNumber& base )
 {
   if( x.isNan() || x < HNumber(0) || x != integer(x) || base < HNumber(1) || !(x > base))

@@ -326,6 +326,11 @@ public:
    * Returns the sign of x.
    */
   static HNumber sign( const HNumber& x );
+   
+   /*!
+   * Returns the binomial coefficient of n and k.
+   */
+  static HNumber nCr( const HNumber& n,  const HNumber& k);
 
    /*!
    * Returns the factorial of x.

@@ -47,6 +47,7 @@ class Token
       RightPar,       //  )
       Semicolon,      // argument separator
       Percent,
+      Exclamation,    // ! (factorial)
       Equal           // variable assignment
     } Op;
 

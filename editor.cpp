@@ -626,7 +626,7 @@ void Editor::keyPressEvent( QKeyEvent* e )
 */
 
 // FIXME: use locale settings
-   if( e->key() == Qt::Key_Comma )
+   if( e->key() == Qt::Key_Comma && !(e->modifiers() & Qt::ControlModifier))
   {
     QKeyEvent * ke = new QKeyEvent(QEvent::KeyPress, Qt::Key_Period, 46,
       e->state(), ".");

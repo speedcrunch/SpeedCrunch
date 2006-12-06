@@ -246,11 +246,18 @@ HNumber function_tanh( const Evaluator* eval, Function*, const FunctionArguments
   return HMath::tanh( angle );
 }
 
-HNumber function_sign( const Evaluator* eval, Function*, const FunctionArguments& args )
+HNumber function_sign( const Evaluator*, Function*, const FunctionArguments& args )
 {
   if( args.count() != 1 )
     return HNumber::nan();
   return HMath::sign( args[0] );
+}
+
+HNumber function_nCr( const Evaluator*, Function*, const FunctionArguments& args )
+{
+  if( args.count() != 2 )
+    return HNumber::nan();
+  return HMath::nCr( args[0], args[1] );
 }
 
 HNumber function_degrees( const Evaluator*, Function*, const FunctionArguments& args )
@@ -469,6 +476,7 @@ FunctionRepository::FunctionRepository()
   add( new Function( "cosh",  1, function_cosh, QT_TR_NOOP("Hyperbolic Cosine" ) ) );
   add( new Function( "tanh",  1, function_tanh, QT_TR_NOOP("Hyperbolic Tangent" ) ) );
   add( new Function( "sign",  1, function_sign, QT_TR_NOOP("Signum" ) ) );
+  add( new Function( "ncr",   2, function_nCr, QT_TR_NOOP("Binomial coefficient" ) ) );
   add( new Function( "degrees",  1, function_degrees, QT_TR_NOOP("Degrees" ) ) );
   add( new Function( "radians",  1, function_radians, QT_TR_NOOP("Radians" ) ) );
 
