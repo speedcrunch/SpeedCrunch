@@ -119,6 +119,43 @@ static bc_num h_rescale( bc_num n, int sc )
   return result;
 }
 
+// add two numbers, return newly allocated number
+static bc_num h_add( bc_num n1, bc_num n2 )
+{  
+  bc_num r = h_create();
+  bc_add( n1, n2, &r, 1 );
+  h_grabfree();
+  return r;
+}
+
+// multiply two numbers, return newly allocated number
+static bc_num h_mul( bc_num n1, bc_num n2 )
+{  
+  bc_num r = h_create();
+  bc_multiply( n1, n2, &r, HMATH_MAX_PREC );
+  h_grabfree();
+  return r;
+}
+
+enum Base {Decimal, Hexadec, Octal, Binary};
+
+static bool isValidDigit(const char c, const Base b)
+{
+   switch (b)
+   {
+   case Hexadec:
+      return ((c >= '0' && c <= '9') || (c >= 'A' && c < 'G') || (c >= 'a' && c < 'g'));
+   case Octal:
+      return (c >= '0' && c < '8');
+   case Binary:
+      return ( c == '0' || c == '1' );
+   case Decimal:
+   default:
+      break;
+   }
+   return (c >= '0' && c <= '9');
+}
+
 // convert simple string to number
 static bc_num h_str2num( const char* str, int scale = HMATH_MAX_PREC )
 {
@@ -132,80 +169,161 @@ static bc_num h_str2num( const char* str, int scale = HMATH_MAX_PREC )
   digits = 0;
   strscale = 0;
   zero_int = FALSE;
-  if ( (*ptr == '+') || (*ptr == '-'))  ptr++;  /* Sign */
+  Base base = Decimal;
+  if (*ptr == '+' || *ptr == '-') ptr++;  /* Sign */
+   if ( *ptr == '0' ) //leadeing 0, could be hexadec etc.
+  {
+     ptr++;
+     if (*ptr == 'x') { base = Hexadec; ptr++; }
+     else if (*ptr == 'o') { base = Octal; ptr++; }
+     else if (*ptr == 'b') { base = Binary; ptr++; }
+     else if (*ptr == 'd') ptr++;
+  }
   while (*ptr == '0') ptr++;			/* Skip leading zeros. */
-  while (isdigit((int)*ptr)) ptr++, digits++;	/* digits */
-  if (*ptr == '.') ptr++;			/* decimal point */
-  while (isdigit((int)*ptr)) ptr++, strscale++;	/* digits */
+  while (isValidDigit((int)*ptr, base)) ptr++, digits++;	/* digits, maybe non decimal base */
+  if (*ptr == '.') { if (base == Decimal) ptr++; else return h_create(); } /* decimal point */
+  while (isdigit((int)*ptr)) ptr++, strscale++;	/* digits, must be decimal, we had a period ; */
   if ((*ptr != '\0') || (digits+strscale == 0))
     return h_create();
 
-  /* Adjust numbers and allocate storage and initialize fields. */
-  strscale = MIN(strscale, scale);
-  if (digits == 0)
-    {
-      zero_int = TRUE;
-      digits = 1;
-    }
-    
-  bc_num num = h_create( digits, strscale );  
-
-  ptr = str;
-  if (*ptr == '-')
-    {
-      num->n_sign = MINUS;
-      ptr++;
-    }
-  else
-    {
-      num->n_sign = PLUS;
-      if (*ptr == '+') ptr++;
-    }
-  while (*ptr == '0') ptr++;
-  nptr = num->n_value;
-  if (zero_int)
-    {
-      *nptr++ = 0;
-      digits = 0;
-    }
-  for (;digits > 0; digits--)
-    *nptr++ = (char)CH_VAL(*ptr++);
-
-
-  if (strscale > 0)
-    {
-      ptr++;
-      for (;strscale > 0; strscale--)
-	*nptr++ = (char)CH_VAL(*ptr++);
-    }
-    
-   return num; 
+   bc_num num;
+   
+   switch (base)
+   {
+   case Hexadec:
+   {
+      int chr;
+      bc_num _16 = h_create(); bc_int2num( &_16, 16 );
+      bc_num factor = h_create(); bc_int2num( &factor, 1 );
+      bc_num tmp1, tmp2;
+      num = h_create(); bc_int2num( &num, 0 );
+      for (;digits > 0; --digits) // n = n+f*x;
+      {
+         --ptr;
+         chr = CH_HEX(*ptr);
+         if (chr) // skip increment if digit is '0'
+         {
+            tmp1 = h_create();
+            bc_int2num( &tmp1, chr ); // x
+            tmp2 = h_mul( factor, tmp1 ); // f*x
+            h_destroy( tmp1 );
+            tmp1 = h_add( num, tmp2 ); // n+f*x;
+            h_destroy( num ); h_destroy( tmp2 ); 
+            num = h_copy( tmp1 ); // n = n+f*x;
+            h_destroy( tmp1 );
+         }
+         tmp1 = h_mul( factor, _16 ); // f*16
+         h_destroy( factor );
+         factor = h_copy( tmp1 ); // f = f*16;
+         h_destroy( tmp1 );
+      }
+      if (*str == '-') num->n_sign = MINUS; else num->n_sign = PLUS;
+      break;
+   }
+   case Octal:
+   {
+      int chr;
+      bc_num _8 = h_create(); bc_int2num( &_8, 8 );
+      bc_num factor = h_create(); bc_int2num( &factor, 1 );
+      bc_num tmp1, tmp2;
+      num = h_create(); bc_int2num( &num, 0 );
+      for (;digits > 0; --digits) // n = n+f*x;
+      {
+         --ptr;
+         chr = CH_VAL(*ptr);
+         if (chr) // skip increment if digit is '0'
+         {
+            tmp1 = h_create();
+            bc_int2num( &tmp1, chr ); // x
+            tmp2 = h_mul( factor, tmp1 ); // f*x
+            h_destroy( tmp1 );
+            tmp1 = h_add( num, tmp2 ); // n+f*x;
+            h_destroy( num ); h_destroy( tmp2 ); 
+            num = h_copy( tmp1 ); // n = n+f*x;
+            h_destroy( tmp1 );
+         }
+         tmp1 = h_mul( factor, _8 ); // f*8
+         h_destroy( factor );
+         factor = h_copy( tmp1 ); // f = f*8;
+         h_destroy( tmp1 );
+      }
+      if (*str == '-') num->n_sign = MINUS; else num->n_sign = PLUS;
+      break;
+   }
+   case Binary:
+   {
+      bc_num _2 = h_create(); bc_int2num( &_2, 2 );
+      bc_num factor = h_create(); bc_int2num( &factor, 1 );
+      bc_num tmp;
+      num = h_create(); bc_int2num( &num, 0 );
+      for (;digits > 0; --digits) // n = n+f;
+      {
+         --ptr;
+         if (CH_VAL(*ptr)) // only increment if bit is set
+         {
+            tmp = h_add( num, factor ); // n+f;
+            h_destroy( num ); num = h_copy( tmp ); // n = n+f;
+            h_destroy( tmp );
+         }
+         tmp = h_mul( factor, _2 ); // f*2
+         factor = h_copy( tmp ); // f = f*2;
+         h_destroy( tmp );
+      }
+      if (*str == '-') num->n_sign = MINUS; else num->n_sign = PLUS;
+      break;
+   }
+   case Decimal:
+   default:
+   {
+      /* Adjust numbers and allocate storage and initialize fields. */
+      strscale = MIN(strscale, scale);
+      if (digits == 0)
+      {
+         zero_int = TRUE;
+         digits = 1;
+      }
+         
+      num = h_create( digits, strscale );  
+      
+      ptr = str;
+      if (*ptr == '-')
+      {
+         num->n_sign = MINUS;
+         ptr++;
+      }
+      else
+      {
+         num->n_sign = PLUS;
+         if (*ptr == '+') ptr++;
+      }
+      while (*ptr == '0') ptr++;
+      nptr = num->n_value;
+      if (zero_int)
+      {
+         *nptr++ = 0;
+         digits = 0;
+      }
+      for (;digits > 0; digits--)
+         *nptr++ = (char)CH_VAL(*ptr++);
+      
+      
+      if (strscale > 0)
+      {
+         ptr++;
+         for (;strscale > 0; strscale--)
+      *nptr++ = (char)CH_VAL(*ptr++);
+      }
+   }
+   }
+   return num;
 }
 
-
-// add two numbers, return newly allocated number
-static bc_num h_add( bc_num n1, bc_num n2 )
-{  
-  bc_num r = h_create();
-  bc_add( n1, n2, &r, 1 );
-  h_grabfree();
-  return r;
-}
 
 // subtract two numbers, return newly allocated number
 static bc_num h_sub( bc_num n1, bc_num n2 )
 {  
   bc_num r = h_create();
   bc_sub( n1, n2, &r, 1 );
-  h_grabfree();
-  return r;
-}
-
-// multiply two numbers, return newly allocated number
-static bc_num h_mul( bc_num n1, bc_num n2 )
-{  
-  bc_num r = h_create();
-  bc_multiply( n1, n2, &r, HMATH_MAX_PREC );
   h_grabfree();
   return r;
 }
@@ -342,46 +460,63 @@ HNumber::HNumber( const char* str )
     char* s = new char[ strlen(str)+1 ];
     strcpy( s, str );
     
+    bool isHex = false, isDecimal = true;
     char* p = s;
     for( ;; p++ )
     {
+      if (*p == 'x' && *(p-1) == '0')
+      {
+         isHex = true;
+         isDecimal = false;
+         continue;
+      }
+      if ((*p == 'b' || *p == 'o') && *(p-1) == '0')
+      {
+         isDecimal = false;
+         continue;
+      }
       if( *p != '+' )
       if( *p != '-' )
       if( *p != '.' )
       if( !isdigit(*p) )
+      if(!(isHex && *p >= 'a' && *p < 'g'))
         break;
      }
      
-    int expd = 0;  
-    
-    if( ( *p == 'e' ) || ( *p == 'E' ) )
-    {
-      *p = '\0';
-      expd = atoi( p+1 );
-    }
+     int expd = 0;
+     if (isDecimal)
+     {
+         if( ( *p == 'e' ) || ( *p == 'E' ) )
+         {
+            *p = '\0';
+            expd = atoi( p+1 );
+         }
+     }
     
     h_destroy( d->num );
     d->num = h_str2num( s );
     delete [] s;
-    
-    if( expd >= HMATH_MAX_PREC ) // too large
+    if (isDecimal)
     {
-      d->nan = true;
-    }
-    else
-    if( expd <= -HMATH_MAX_PREC ) // too small
-    {
-      d->nan = true;
-    }
-    else
-    if( expd != 0 )
-    {
-      bc_num factor = h_raise10( expd );
-      bc_num nn = h_copy( d->num );
-      h_destroy( d->num );
-      d->num = h_mul( nn, factor );
-      h_destroy( nn );
-      h_destroy( factor );
+      if( expd >= HMATH_MAX_PREC ) // too large
+      {
+         d->nan = true;
+      }
+      else
+      if( expd <= -HMATH_MAX_PREC ) // too small
+      {
+         d->nan = true;
+      }
+      else
+      if( expd != 0 )
+      {
+         bc_num factor = h_raise10( expd );
+         bc_num nn = h_copy( d->num );
+         h_destroy( d->num );
+         d->num = h_mul( nn, factor );
+         h_destroy( nn );
+         h_destroy( factor );
+      }
     }
     h_trimzeros( d->num );
   }

@@ -255,6 +255,7 @@ int ErrorItem::height( const Q3ListBox* lb ) const
 Result::Result( QWidget* parent, const char* name ):
   Q3ListBox( parent, name )
 {
+  setBackgroundRole(QPalette::Base);
   d = new ResultPrivate;
   d->format = 'g';
   d->decimalDigits = -1;

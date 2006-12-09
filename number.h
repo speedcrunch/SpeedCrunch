@@ -71,6 +71,7 @@ typedef struct bc_struct
 /*  Some useful macros and constants. */
 
 #define CH_VAL(c)     (c - '0')
+#define CH_HEX(c)     ((c < ':') ? ( c - '0') : (c < 'G') ? ( c - 'A' + 10) : ( c - 'a' + 10))
 #define BCD_CHAR(d)   (d + '0')
 
 #ifdef MIN

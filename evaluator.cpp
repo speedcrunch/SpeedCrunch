@@ -357,7 +357,7 @@ Tokens Evaluator::scan( const QString& expr )
   Tokens tokens;
 
   // parsing state
-  enum { Start, Finish, Bad, InNumber, InDecimal, InExpIndicator,
+  enum { Start, Finish, Bad, InNumber, InHexa, InOctal, InBinary, InDecimal, InExpIndicator,
     InExponent, InIdentifier } state;
 
   // TODO use locale settings if specified
@@ -393,6 +393,12 @@ Tokens Evaluator::scan( const QString& expr )
        else if( ch.isDigit() )
        {
          state = InNumber;
+       }
+       else if ( ch == '#' ) // simple hexadec notation
+       {
+          tokenText.append( "0x" );
+          state = InHexa;
+          i++;
        }
 
        // beginning with alphanumeric ?
@@ -480,16 +486,61 @@ Tokens Evaluator::scan( const QString& expr )
          i++;
          state = InExpIndicator;
        }
+       else if (ch.upper() == 'X' && tokenText == "0") // normal hexadec notation
+       {
+         tokenText.append( 'x' ); i++; state = InHexa;
+       }
+       else if (ch.upper() == 'B' && tokenText == "0") // binary notation
+       {
+         tokenText.append( 'b' ); i++; state = InBinary;
+       }
+       else if (ch.upper() == 'O' && tokenText == "0") // octal notation
+       {
+         tokenText.append( 'o' ); i++; state = InOctal;
+       }
+       else if (ch.upper() == 'D' && tokenText == "0") // explicit decimal notation
+       {
+         // we also need to get rid of the leading zero
+         tokenText = ""; i++;
+       }
 
        // we're done with integer number
        else
        {
          tokens.append( Token( Token::Number, tokenText, tokenStart ) );
+         tokenText = ""; state = Start;
+       }
+       break;
+       
+    case InHexa:
+       if (ch.isDigit() || (ch >= 'A' && ch < 'G') || (ch >= 'a' && ch < 'g'))
+          tokenText.append( ex.at(i++).toUpper() );
+       else // we're done with hexa number
+       {
+         tokens.append( Token( Token::Number, tokenText, tokenStart ) );
+         tokenText = ""; state = Start;
+       }
+       break;
+    case InBinary:
+       if (ch == '0' || ch == '1') // very strict rule ;)
+          tokenText.append( ex.at(i++) );
+       else // we're done with binary number
+       {
+         tokens.append( Token( Token::Number, tokenText, tokenStart ) );
          tokenText = "";
          state = Start;
-       };
+       }
        break;
-
+    case InOctal:
+       if (ch >= '0' && ch < '8') // octal has only 8 digits, 8 & 9 are invalid
+          tokenText.append( ex.at(i++) );
+       else // we're done with octal number
+       {
+         tokens.append( Token( Token::Number, tokenText, tokenStart ) );
+         tokenText = ""; state = Start;
+       }
+       break;
+    
     case InDecimal:
 
        // consume as long as it's digit
