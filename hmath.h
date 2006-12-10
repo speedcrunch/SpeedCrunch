@@ -122,6 +122,11 @@ public:
    * Divides with another number.
    */
   HNumber& operator/=( const HNumber& );
+   
+  /*!
+   * Modulo (rest of integer division)
+   */
+  HNumber operator%( const HNumber& ) const;
  
   /*!
    * Returns true if this number is greater than n.
@@ -189,6 +194,24 @@ public:
    * Note that the returned string must be freed.
    */
   static char* formatGeneral( const HNumber&n, int prec = -1 );  
+   
+   /*!
+   * Formats the given number as string, using hexadecimal digits. (NaN if hn isn't integer)
+   * Note that the returned string must be freed.
+   */
+  static char* formatHexadec( const HNumber&n );  
+   
+   /*!
+   * Formats the given number as string, using octal digits. (NaN if hn isn't integer)
+   * Note that the returned string must be freed.
+   */
+  static char* formatOctal( const HNumber&n );  
+   
+   /*!
+   * Formats the given number as string, using binary digits. (NaN if hn isn't integer)
+   * Note that the returned string must be freed.
+   */
+  static char* formatBinary( const HNumber&n );  
 
   /*!
    * Returns the constant pi.

@@ -638,6 +638,16 @@ HNumber& HNumber::operator/=( const HNumber& num )
   return *this;
 }
 
+HNumber HNumber::operator%( const HNumber& num ) const
+{
+  if( isNan() ) return HNumber( *this );
+  if( num.isNan() ) return HNumber( num );
+  
+  HNumber result;
+  bc_modulo (d->num, num.d->num, &result.d->num, 0);
+  return result;
+}
+
 bool HNumber::operator>( const HNumber& n ) const
 {
   return HMath::compare( *this, n ) > 0;
@@ -823,6 +833,113 @@ char* HMath::formatGeneral( const HNumber& hn, int prec )
   return str; 
 }
 
+char* HMath::formatHexadec( const HNumber& hn )
+{
+  char* str;
+  if( hn.isNan() || hn != integer(hn))
+  {
+    str = (char*)malloc( 4 );
+    str[0] = 'N';
+    str[1] = 'a';
+    str[2] = 'N';
+    str[3] = '\0';
+    return str;
+  }
+
+  int digits = 1; HNumber _16(16);
+  bool negative = (hn < 0);
+  HNumber tmp = negative ? HNumber(0)-hn : hn;
+  while (integer(tmp/=_16) > 0) ++digits; // how many digits
+  str = (char*)malloc( digits+3+negative );
+  char* ptr = &str[digits+2+negative]; *ptr = '\0';
+  HNumber val;
+  int i;
+  tmp = negative ? HNumber(0)-hn : hn;
+  HNumber f;
+  HNumber f_old(1);
+  while (digits--)
+  {
+     f = f_old*_16;
+     val = tmp % (f); tmp -= val;
+     val /= f_old; f_old = f; i = bc_num2long( val.d->num);
+     *--ptr = (i < 10) ? '0'+i : 'A'+i-10;
+  }
+  *--ptr = 'x'; *--ptr = '0'; if (negative) *--ptr = '-';
+    
+  return str; 
+}
+
+char* HMath::formatOctal( const HNumber& hn )
+{
+  char* str;
+  if( hn.isNan() || hn != integer(hn))
+  {
+    str = (char*)malloc( 4 );
+    str[0] = 'N';
+    str[1] = 'a';
+    str[2] = 'N';
+    str[3] = '\0';
+    return str;
+  }
+
+  int digits = 1; HNumber _8(8);
+  bool negative = (hn < 0);
+  HNumber tmp = negative ? HNumber(0)-hn : hn;
+  while (integer(tmp/=_8) > 0) ++digits; // how many digits
+  str = (char*)malloc( digits+3+negative );
+  char* ptr = &str[digits+2+negative]; *ptr = '\0';
+  HNumber val;
+  tmp = negative ? HNumber(0)-hn : hn;
+  HNumber f;
+  HNumber f_old(1);
+  while (digits--)
+  {
+     f = f_old*_8;
+     val = tmp % (f); tmp -= val;
+     val /= f_old; f_old = f;
+     *--ptr = '0'+bc_num2long( val.d->num);
+  }
+  *--ptr = 'o'; *--ptr = '0'; if (negative) *--ptr = '-';
+    
+  return str; 
+}
+
+char* HMath::formatBinary( const HNumber& hn )
+{
+  char* str;
+  if( hn.isNan() || hn != integer(hn))
+  {
+    str = (char*)malloc( 4 );
+    str[0] = 'N';
+    str[1] = 'a';
+    str[2] = 'N';
+    str[3] = '\0';
+    return str;
+  }
+
+  int digits = 1; HNumber _2(2);
+  bool negative = (hn < 0);
+  HNumber tmp = negative ? HNumber(0)-hn : hn;
+  while (integer(tmp/=_2) > 0) ++digits; // how many digits
+  str = (char*)malloc( digits+3+negative );
+  char* ptr = &str[digits+2+negative]; *ptr = '\0';
+  HNumber val;
+  HNumber _0(0);
+  tmp = negative ? _0-hn : hn;
+  HNumber f;
+  HNumber f_old(1);
+  while (digits--)
+  {
+     f = f_old*_2;
+     val = tmp % (f); tmp -= val;
+     val /= f_old; f_old = f;
+     *--ptr = (val == _0) ?'0':'1';
+  }
+  *--ptr = 'b'; *--ptr = '0'; if (negative) *--ptr = '-';
+    
+  return str; 
+}
+
 char* HMath::format( const HNumber& hn, char format, int prec )
 {
   if( hn.isNan() )
@@ -840,7 +957,13 @@ char* HMath::format( const HNumber& hn, char format, int prec )
   else if( format=='f' )
     return formatFixed( hn, prec );
   else if( format=='e' )
-    return formatExp( hn, prec );  
+    return formatExp( hn, prec );
+  else if( format=='h' )
+    return formatHexadec( hn );
+  else if( format=='o' )
+    return formatOctal( hn );
+  else if( format=='b' )
+    return formatBinary( hn );
 
   // fallback to 'g'
   return formatGeneral( hn, prec );  

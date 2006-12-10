@@ -45,6 +45,9 @@ class Crunch : public QMainWindow
     void viewGeneral();
     void viewFixed();
     void viewExponential();
+    void viewHexadec();
+    void viewOctal();
+    void viewBinary();
     void digitsAuto();
     void digits2();
     void digits3();
@@ -70,6 +73,8 @@ class Crunch : public QMainWindow
   private:
     void createUI();
     void saveSettings();
+    void setView(char c = 'g');
+    void setDigits(int i = -1);
 
     CrunchPrivate* d;
     Crunch( const Crunch& );

@@ -70,6 +70,9 @@ public:
   QAction* viewGeneral;
   QAction* viewFixed;
   QAction* viewExponential;
+  QAction* viewHexadec;
+  QAction* viewOctal;
+  QAction* viewBinary;
   QAction* digitsAuto;
   QAction* digits2;
   QAction* digits3;
@@ -89,6 +92,7 @@ class CrunchPrivate
 {
 public:
   CrunchActions* actions;
+  QActionGroup *digitsGroup;
   Evaluator* eval;
   Editor *editor;
   Result* result;
@@ -246,15 +250,24 @@ void Crunch::createUI()
   d->actions->viewGeneral = new QAction( tr("&General"), 0 );
   d->actions->viewFixed = new QAction( tr("&Fixed Decimal"), 0 );
   d->actions->viewExponential = new QAction( tr("&Exponential"), 0 );
+  d->actions->viewHexadec = new QAction( tr("&Hexadecimal"), 0 );
+  d->actions->viewOctal = new QAction( tr("&Octal"), 0 );
+  d->actions->viewBinary = new QAction( tr("&Binary"), 0 );
 
   QActionGroup *formatGroup = new QActionGroup( this );
   formatGroup->addAction( d->actions->viewGeneral );
   formatGroup->addAction( d->actions->viewFixed );
   formatGroup->addAction( d->actions->viewExponential );
+  formatGroup->addAction( d->actions->viewHexadec );
+  formatGroup->addAction( d->actions->viewOctal );
+  formatGroup->addAction( d->actions->viewBinary );
 
   d->actions->viewGeneral->setToggleAction( true );
   d->actions->viewFixed->setToggleAction( true );
   d->actions->viewExponential->setToggleAction( true );
+  d->actions->viewHexadec->setToggleAction( true );
+  d->actions->viewOctal->setToggleAction( true );
+  d->actions->viewBinary->setToggleAction( true );
 
   d->actions->digitsAuto = new QAction( tr("&Automatic Precision"), 0 );
   d->actions->digits2 = new QAction( tr("&2 Decimal Digits"), 0 );
@@ -263,13 +276,13 @@ void Crunch::createUI()
   d->actions->digits15 = new QAction( tr("&15 Decimal Digits"), 0 );
   d->actions->digits50 = new QAction( tr("&50 Decimal Digits"), 0 );
 
-  QActionGroup *digitsGroup = new QActionGroup( this );
-  digitsGroup->addAction( d->actions->digitsAuto );
-  digitsGroup->addAction( d->actions->digits2 );
-  digitsGroup->addAction( d->actions->digits3 );
-  digitsGroup->addAction( d->actions->digits8 );
-  digitsGroup->addAction( d->actions->digits15 );
-  digitsGroup->addAction( d->actions->digits50 );
+  d->digitsGroup = new QActionGroup( this );
+  d->digitsGroup->addAction( d->actions->digitsAuto );
+  d->digitsGroup->addAction( d->actions->digits2 );
+  d->digitsGroup->addAction( d->actions->digits3 );
+  d->digitsGroup->addAction( d->actions->digits8 );
+  d->digitsGroup->addAction( d->actions->digits15 );
+  d->digitsGroup->addAction( d->actions->digits50 );
 
   d->actions->digitsAuto->setToggleAction( true );
   d->actions->digits2->setToggleAction( true );
@@ -306,6 +319,9 @@ void Crunch::createUI()
   connect( d->actions->viewGeneral, SIGNAL( activated() ), this, SLOT( viewGeneral() ) );
   connect( d->actions->viewFixed, SIGNAL( activated() ), this, SLOT( viewFixed() ) );
   connect( d->actions->viewExponential, SIGNAL( activated() ), this, SLOT( viewExponential() ) );
+  connect( d->actions->viewHexadec, SIGNAL( activated() ), this, SLOT( viewHexadec() ) );
+  connect( d->actions->viewOctal, SIGNAL( activated() ), this, SLOT( viewOctal() ) );
+  connect( d->actions->viewBinary, SIGNAL( activated() ), this, SLOT( viewBinary() ) );
   connect( d->actions->digitsAuto, SIGNAL( activated() ), this, SLOT( digitsAuto() ) );
   connect( d->actions->digits2, SIGNAL( activated() ), this, SLOT( digits2() ) );
   connect( d->actions->digits3, SIGNAL( activated() ), this, SLOT( digits3() ) );
@@ -354,6 +370,10 @@ void Crunch::createUI()
   viewMenu->addAction( d->actions->digits8 );
   viewMenu->addAction( d->actions->digits15 );
   viewMenu->addAction( d->actions->digits50 );
+  viewMenu->insertSeparator();
+  viewMenu->addAction( d->actions->viewHexadec );
+  viewMenu->addAction( d->actions->viewOctal );
+  viewMenu->addAction( d->actions->viewBinary );
 
   QMenu *settingsMenu = new QMenu( this );
   settingsMenu->addAction( d->actions->showClearButton );
@@ -440,6 +460,9 @@ void Crunch::applySettings()
   if( settings->format == 'g' ) d->actions->viewGeneral->setOn( true );
   if( settings->format == 'f' ) d->actions->viewFixed->setOn( true );
   if( settings->format == 'e' ) d->actions->viewExponential->setOn( true );
+  if( settings->format == 'h' ) d->actions->viewHexadec->setOn( true );
+  if( settings->format == 'o' ) d->actions->viewOctal->setOn( true );
+  if( settings->format == 'b' ) d->actions->viewBinary->setOn( true );
 
   if( settings->decimalDigits < 0 ) d->actions->digitsAuto->setOn( true );
   if( settings->decimalDigits == 2 ) d->actions->digits2->setOn( true );
@@ -646,76 +669,86 @@ void Crunch::deleteVariable()
   d->deleteVariableDlg->exec();
 }
 
-void Crunch::viewGeneral()
+void Crunch::setView(char c)
 {
   Settings* settings = Settings::self();
-  settings->format = 'g';
+  settings->format = c;
   saveSettings();
   applySettings();
+}
+
+void Crunch::viewGeneral()
+{
+  d->digitsGroup->setEnabled(true);
+  setView('g');
 }
 
 void Crunch::viewFixed()
 {
-  Settings* settings = Settings::self();
-  settings->format = 'f';
-  saveSettings();
-  applySettings();
+  d->digitsGroup->setEnabled(true);
+  setView('f');
 }
 
 void Crunch::viewExponential()
 {
+  d->digitsGroup->setEnabled(true);
+  setView('f');
+}
+
+void Crunch::viewHexadec()
+{
+  d->digitsGroup->setDisabled(true);
+  setView('h');
+}
+
+void Crunch::viewOctal()
+{
+  d->digitsGroup->setDisabled(true);
+  setView('o');
+}
+
+void Crunch::viewBinary()
+{
+  d->digitsGroup->setDisabled(true);
+  setView('b');
+}
+
+void Crunch::setDigits(int i)
+{
   Settings* settings = Settings::self();
-  settings->format = 'e';
+  settings->decimalDigits = i;
   saveSettings();
   applySettings();
 }
 
 void Crunch::digitsAuto()
 {
-  Settings* settings = Settings::self();
-  settings->decimalDigits = -1;
-  saveSettings();
-  applySettings();
+  setDigits(-1);
 }
 
 void Crunch::digits2()
 {
-  Settings* settings = Settings::self();
-  settings->decimalDigits = 2;
-  saveSettings();
-  applySettings();
+  setDigits(2);
 }
 
 void Crunch::digits3()
 {
-  Settings* settings = Settings::self();
-  settings->decimalDigits = 3;
-  saveSettings();
-  applySettings();
+  setDigits(3);
 }
 
 void Crunch::digits8()
 {
-  Settings* settings = Settings::self();
-  settings->decimalDigits = 8;
-  saveSettings();
-  applySettings();
+  setDigits(8);
 }
 
 void Crunch::digits15()
 {
-  Settings* settings = Settings::self();
-  settings->decimalDigits = 15;
-  saveSettings();
-  applySettings();
+  setDigits(15);
 }
 
 void Crunch::digits50()
 {
-  Settings* settings = Settings::self();
-  settings->decimalDigits = 50;
-  saveSettings();
-  applySettings();
+  setDigits(50);
 }
 
 void Crunch::showClearButton()
