@@ -615,7 +615,21 @@ void Crunch::textChanged()
 void Crunch::copyResult()
 {
   QClipboard *cb = QApplication::clipboard();
-  char *ss = HMath::formatFixed( d->eval->get("ans") );
+  HNumber num = d->eval->get("ans"); char *ss;
+  switch (num.format())
+  {
+  case 'h':
+     ss = HMath::formatHexadec( num );
+     break;
+  case 'o':
+     ss = HMath::formatOctal( num );
+     break;
+  case 'b':
+     ss = HMath::formatBinary( num );
+     break;
+  default:
+     ss = HMath::formatFixed( num );
+  }
   cb->setText( QString(ss), QClipboard::Clipboard );
   free( ss );
 }

@@ -364,7 +364,7 @@ int Result::decimalDigits() const
 
 QString Result::formatNumber( const HNumber& value ) const
 {
-  char* str = HMath::format( value, d->format, d->decimalDigits );
+  char* str = HMath::format( value, value.format() ? value.format() : d->format, d->decimalDigits );
   QString s = QString::fromLatin1( str );
   free( str );
   return s;

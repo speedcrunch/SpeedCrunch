@@ -48,7 +48,9 @@ class Token
       Semicolon,      // argument separator
       Percent,
       Exclamation,    // ! (factorial)
-      Equal           // variable assignment
+      Equal,          // variable assignment
+      Modulo,         // integer rest devision
+      Div             // integer devision
     } Op;
 
     Token( Type type = Unknown, const QString& text = QString::null, int pos = -1 );

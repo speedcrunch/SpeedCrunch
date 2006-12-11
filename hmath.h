@@ -82,6 +82,16 @@ public:
    * Returns true if this number is less than zero.
    */
   bool isNegative() const;
+   
+   /*!
+   * Returns the preferred format (base/precision), default is 0
+   */
+   char format() const;
+   
+   /*!
+   * Sets the preferred format (base/precision), default is 0
+   */
+   void setFormat(char c = 0) const;
 
   /*!
    * Adds another number.
@@ -360,7 +370,6 @@ public:
    * If x is non integer, returns NaN.
    */
   static HNumber factorial( const HNumber& x, const HNumber& base = HNumber(1) );
-
 
   /*!
    * Releases all resources. After calling this function, you can not use

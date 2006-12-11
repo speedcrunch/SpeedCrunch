@@ -48,6 +48,7 @@ class HNumberPrivate
 public:
   bc_num num;
   bool nan;
+  char format;
 };
 
 void out_of_memory(void){
@@ -420,6 +421,7 @@ HNumber::HNumber()
   h_init();
   d = new HNumberPrivate;
   d->nan = false;
+  d->format = 0;
   d->num = h_create();
 }
 
@@ -438,6 +440,7 @@ HNumber::HNumber( int i )
   d = new HNumberPrivate;
   d->nan = false;
   d->num = h_create();
+  d->format = 0;
   bc_int2num( &d->num, i );
 }
 
@@ -447,6 +450,7 @@ HNumber::HNumber( const char* str )
   d = new HNumberPrivate;
   d->nan = false;
   d->num = h_create();
+  d->format = 0;
 
   if( str )
   if( strlen(str) == 3 )
@@ -549,6 +553,16 @@ bool HNumber::isNegative() const
   return !d->nan && ( bc_is_neg( d->num )!=0 );
 }
 
+char HNumber::format() const
+{
+   return d->format;
+}
+
+void HNumber::setFormat(char c) const
+{
+   d->format = d->nan?0:c;
+}
+
 HNumber HNumber::nan()
 {
   HNumber n;
@@ -561,6 +575,7 @@ HNumber& HNumber::operator=( const HNumber& hn )
   d->nan = hn.d->nan;
   h_destroy( d->num );
   d->num = h_copy( hn.d->num );
+  d->format = hn.format();
   return *this;
 }
 

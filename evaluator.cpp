@@ -51,7 +51,7 @@ class Opcode
 {
 public:
 
-  enum { Nop = 0, Load, Ref, Function, Add, Sub, Neg, Mul, Div, Pow, Fact };
+  enum { Nop = 0, Load, Ref, Function, Add, Sub, Neg, Mul, Div, Pow, Fact, Modulo, IntDiv };
 
   unsigned type;
   unsigned index;
@@ -123,10 +123,17 @@ static Token::Op matchOperator( const QString& text )
     }
   }
 
-  if( text.length() == 2 )
+  else if( text.length() == 2 )
   {
     if( text == "**" ) result = Token::Caret;
   }
+#if 0
+   else if( text.length() == 3 )
+   {
+      if (text == "mod") result = Token::Modulo;
+      else if (text == "div") result = Token::Div;
+   }
+#endif
 
   return result;
 }
@@ -143,6 +150,8 @@ static int opPrecedence( Token::Op op )
     case Token::Caret        : prec = 7; break;
     case Token::Asterisk     : prec = 5; break;
     case Token::Slash        : prec = 6; break;
+    case Token::Modulo       : prec = 6; break;
+    case Token::Div          : prec = 6; break;
     case Token::Plus         : prec = 3; break;
     case Token::Minus        : prec = 3; break;
     case Token::RightPar     : prec = 0; break;
@@ -401,13 +410,6 @@ Tokens Evaluator::scan( const QString& expr )
           i++;
        }
 
-       // beginning with alphanumeric ?
-       // could be identifier, or function...
-       else if( isIdentifier( ch ) )
-       {
-         state = InIdentifier;
-       }
-
        // decimal dot ?
        else if ( QString(ch) == decimal )
        {
@@ -424,10 +426,20 @@ Tokens Evaluator::scan( const QString& expr )
        {
          int op;
          QString s;
+          
+#if 0
+         // check for three-chars operator
+         s.append( ch ).append( ex.at(i+1) ).append( ex.at(i+2) );
+         op = matchOperator( s );
 
          // check for two-chars operator
-         s.append( ch ).append( ex.at(i+1) );
-         op = matchOperator( s );
+         if( op == Token::InvalidOp )
+#endif
+         {
+          
+            s = QString( ch ).append( ex.at(i+1) );
+            op = matchOperator( s );
+         }
 
          // check for one-char operator
          if( op == Token::InvalidOp )
@@ -445,6 +457,13 @@ Tokens Evaluator::scan( const QString& expr )
          }
          else state = Bad;
         }
+       
+       // beginning with unknown alphanumeric ?
+       // could be identifier, or function...
+       if( state == Bad && isIdentifier( ch ) )
+       {
+         state = InIdentifier;
+       }
        break;
 
     case InIdentifier:
@@ -931,6 +950,8 @@ void Evaluator::compile( const Tokens& tokens ) const
               case Token::Asterisk:     d->codes.append( Opcode::Mul ); break;
               case Token::Slash:        d->codes.append( Opcode::Div ); break;
               case Token::Caret:        d->codes.append( Opcode::Pow ); break;
+              case Token::Modulo:       d->codes.append( Opcode::Modulo ); break;
+              case Token::Div:          d->codes.append( Opcode::IntDiv ); break;
               default: break;
             };
 #ifdef EVALUATOR_DEBUG
@@ -1217,7 +1238,41 @@ HNumber Evaluator::eval()
         val1 = HMath::factorial( val1 );
         stack.push( val1 );
         break;
-
+       
+      case Opcode::Modulo:
+        if( stack.count() < 2 )
+        {
+          d->error = qApp->translate( "Error", "Invalid expression" );
+          return HNumber( 0 );
+        }
+        val1 = stack.pop();
+        val2 = stack.pop();
+        if( val1.isZero() )
+        {
+          d->error = qApp->translate( "Error", "Divide by zero" );
+          return HNumber( 0 );
+        }
+        val2 = val2 % val1;
+        stack.push( val2 );
+        break;
+      
+      case Opcode::IntDiv:
+        if( stack.count() < 2 )
+        {
+          d->error = qApp->translate( "Error", "Invalid expression" );
+          return HNumber( 0 );
+        }
+        val1 = stack.pop();
+        val2 = stack.pop();
+        if( val1.isZero() )
+        {
+          d->error = qApp->translate( "Error", "Divide by zero" );
+          return HNumber( 0 );
+        }
+        val2 /= val1;
+        stack.push( HMath::integer(val2) );
+        break;
+       
       // reference
       case Opcode::Ref:
         fname = d->identifiers[index];
