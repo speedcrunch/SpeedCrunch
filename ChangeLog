@@ -8,6 +8,11 @@ SpeedCrunch 0.7
 ---------------
 fixed CMake build under Mac OS X
 fixed very wide buttons when using Cleanlooks style
+updated link to new homepage
+fixed issue #17: crash with segmentation fault
+fixed issue #22: segfault after equal,backspace,evaluate, operator
+fixed issue #27: program closed unexpectedly
+fixed issue #28: crash on pressing "/"
 
 SpeedCrunch 0.7-beta2
 ---------------------
