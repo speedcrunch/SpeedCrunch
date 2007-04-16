@@ -29,7 +29,7 @@ static int hmath_failed_tests = 0;
 #define CHECK_FORMAT(f,p,x,y) check_format(__FILE__,__LINE__,#x,x,f,p,y)
 #define CHECK_PRECISE(x,y)  check_precise(__FILE__,__LINE__,#x,x,y)
 
-static void check_value( const char *file, int line, const char* msg, 
+static void check_value( const char *file, int line, const char* msg,
 const HNumber&n, const char* expected )
 {
   hmath_total_tests++;
@@ -46,7 +46,7 @@ const HNumber&n, const char* expected )
   free( result );
 }
 
-static void check_format( const char *file, int line, const char* msg, 
+static void check_format( const char *file, int line, const char* msg,
 const HNumber&n, char format, int prec, const char* expected )
 {
   hmath_total_tests++;
@@ -63,7 +63,7 @@ const HNumber&n, char format, int prec, const char* expected )
   free( result );
 }
 
-static void check_precise( const char *file, int line, const char* msg, 
+static void check_precise( const char *file, int line, const char* msg,
 const HNumber&n, const char* expected )
 {
   hmath_total_tests++;
@@ -85,7 +85,7 @@ void test_create()
   CHECK( HNumber("1.0"), "1" );
   CHECK( HNumber("2.0"), "2" );
   CHECK( HNumber("1e-3"), "0.001" );
-  
+
   // too large or too small
   CHECK( HNumber("1e200"), "NaN" );
   CHECK( HNumber("1e-200"), "NaN" );
@@ -134,7 +134,7 @@ void test_format()
   CHECK_FORMAT( 'e', 2, HNumber("100000"), "1.00e5" );
   CHECK_FORMAT( 'e', 2, HNumber("1000000"), "1.00e6" );
   CHECK_FORMAT( 'e', 2, HNumber("10000000"), "1.00e7" );
-  
+
   // general format
   CHECK_FORMAT( 'g', -1, HMath::pi(), "3.14159265358979323846" );
   CHECK_FORMAT( 'g', 3, HNumber("0"), "0.000" );
@@ -171,12 +171,12 @@ void test_op()
   CHECK( HNumber(1)+HNumber(10), "11" );
   CHECK( HNumber(1)+HNumber(100), "101" );
   CHECK( HNumber(1)+HNumber(1000), "1001" );
-  
+
   // subtraction
   CHECK( HNumber(0)-HNumber(0), "0" );
   CHECK( HNumber(1)-HNumber(0), "1" );
   CHECK( HNumber(1)-HNumber(2), "-1" );
-  
+
   // division
   CHECK( HNumber(1)/HNumber(2), "0.5" );
   CHECK_PRECISE( HNumber(1)/HNumber(3), "0.33333333333333333333333333333333333333333333333333" );
@@ -202,7 +202,7 @@ void test_functions()
   // pi
   CHECK( HMath::pi(), "3.14159265358979323846" );
   CHECK_PRECISE( HMath::pi(), "3.14159265358979323846264338327950288419716939937511" );
-  
+
   // abs
   CHECK( HMath::abs("0"), "0" );
   CHECK( HMath::abs("1"), "1" );
@@ -225,7 +225,7 @@ void test_functions()
   CHECK( HMath::round( "-2.6041980", 1 ), "-2.6" );
   CHECK( HMath::round( "-2.6041980", 0 ), "-3" );
   CHECK( HMath::round( "NaN" ), "NaN" );
-  
+
   // integer
   CHECK( HMath::integer( "0" ), "0" );
   CHECK( HMath::integer( "0.25" ), "0" );
@@ -243,7 +243,7 @@ void test_functions()
   CHECK( HMath::frac( "-3.14159" ), "-0.14159" );
   CHECK( HMath::frac( "-0.14159" ), "-0.14159" );
   CHECK( HMath::frac( "NaN" ), "NaN" );
-  
+
   // checking function 'sqrt'
   CHECK( HMath::sqrt(1), "1" );
   CHECK( HMath::sqrt(4), "2" );
@@ -270,7 +270,7 @@ void test_functions()
   CHECK( HMath::sqrt(-1), "NaN" );
   CHECK( HMath::sqrt("NaN"), "NaN" );
 
-  // sign  
+  // sign
   CHECK( HMath::sign(0), "0");
   CHECK( HMath::sign(1), "1");
   CHECK( HMath::sign(-1), "-1");
@@ -307,7 +307,7 @@ void test_functions()
   CHECK_PRECISE( HMath::raise("2","0.3"), "1.23114441334491628449939306916774310987613776110082" );
   CHECK( HMath::raise("NaN","0"), "NaN" );
   CHECK( HMath::raise("-1","NaN"), "NaN" );
-  
+
   // exp
   CHECK_PRECISE( HMath::exp("0.1"), "1.10517091807564762481170782649024666822454719473752" );
   CHECK_PRECISE( HMath::exp("0.2"), "1.22140275816016983392107199463967417030758094152050" );
@@ -319,7 +319,7 @@ void test_functions()
   CHECK_PRECISE( HMath::exp("0.8"), "2.22554092849246760457953753139507675705363413504848" );
   CHECK_PRECISE( HMath::exp("0.9"), "2.45960311115694966380012656360247069542177230644008" );
   CHECK_PRECISE( HMath::exp("1.0"), "2.71828182845904523536028747135266249775724709369996" );
-  
+
   // ln
   CHECK_PRECISE( HMath::ln("0.1"), "-2.30258509299404568401799145468436420760110148862877" );
   CHECK_PRECISE( HMath::ln("0.2"), "-1.60943791243410037460075933322618763952560135426852" );
@@ -344,7 +344,7 @@ void test_functions()
   CHECK_PRECISE( HMath::ln("3.0"),  "1.09861228866810969139524523692252570464749055782275" );
   CHECK_PRECISE( HMath::ln("4.0"),  "1.38629436111989061883446424291635313615100026872051" );
   CHECK_PRECISE( HMath::ln("100"),  "4.60517018598809136803598290936872841520220297725755" );
-  
+
   // log
   CHECK( HMath::log("1e-5"), "-5" );
   CHECK( HMath::log("1e-4"), "-4" );
@@ -361,6 +361,17 @@ void test_functions()
   CHECK( HMath::log("1e10"), "10" );
   CHECK( HMath::log("-1"), "NaN" );
   CHECK( HMath::log("NaN"), "NaN" );
+
+  // lg
+  CHECK( HMath::lg("1"), "0" );
+  CHECK( HMath::lg("2"), "1" );
+  CHECK( HMath::lg("4"), "2" );
+  CHECK( HMath::lg("8"), "3" );
+  CHECK( HMath::lg("16"), "4" );
+  CHECK( HMath::lg("32"), "5" );
+  CHECK( HMath::lg("-1"), "NaN" );
+  CHECK( HMath::lg("NaN"), "NaN" );
+
 
   // sin
   CHECK( HMath::sin( "0" ), "0" );
@@ -389,7 +400,7 @@ void test_functions()
   CHECK_PRECISE( HMath::sin("3.0"), "0.14112000805986722210074480280811027984693326425227" );
   CHECK_PRECISE( HMath::sin("4.0"), "-0.75680249530792825137263909451182909413591288733647" );
   CHECK_PRECISE( HMath::sin("5.0"), "-0.95892427466313846889315440615599397335246154396460" );
-  
+
   // cos
   CHECK( HMath::cos( "0" ), "1" );
   CHECK( HMath::cos( HMath::pi()/4 ), "0.7071067811865475244" );
@@ -435,7 +446,7 @@ void test_functions()
   CHECK_PRECISE( HMath::tan("2.0"), "-2.18503986326151899164330610231368254343201774622766" );
   CHECK_PRECISE( HMath::tan("3.0"), "-0.14254654307427780529563541053391349322609228490180" );
   CHECK_PRECISE( HMath::tan("4.0"), "1.15782128234957758313734241826732392311976276736714" );
-  
+
   // atan
   CHECK_PRECISE( HMath::atan("0.0"), "0.00000000000000000000000000000000000000000000000000" );
   CHECK_PRECISE( HMath::atan("0.1"), "0.09966865249116202737844611987802059024327832250431" );
@@ -477,7 +488,7 @@ void test_functions()
   CHECK( HMath::atan("1.02963855705036401274636117282036528416821960677231"), "0.8" );
   CHECK( HMath::atan("1.26015821755033913713457548539574847783362583439629"), "0.9" );
   CHECK( HMath::atan("1.55740772465490223050697480745836017308725077238152"), "1" );
-  
+
   // consistency: sin vs asin for small angle
   CHECK( HMath::asin("0.09983341664682815230681419841062202698991538801798" ), "0.1");
   CHECK( HMath::asin("0.19866933079506121545941262711838975037020672954021" ), "0.2");
@@ -499,7 +510,7 @@ void test_functions()
   CHECK_PRECISE( HMath::sinh("0.8"), "0.88810598218762300657471757318975698055970959688815" );
   CHECK_PRECISE( HMath::sinh("0.9"), "1.02651672570817527595833616197842235379403446513485" );
   CHECK_PRECISE( HMath::sinh("1.0"), "1.17520119364380145688238185059560081515571798133410" );
-  
+
   // cosh
   CHECK_PRECISE( HMath::cosh("0.1"), "1.00500416805580359898797844296834164470962627785896" );
   CHECK_PRECISE( HMath::cosh("0.2"), "1.02006675561907584629550375162935679733308609889476" );
@@ -524,10 +535,10 @@ int main(int argc, char** argv)
   test_format();
   test_op();
   test_functions();
-  
+
   std::cerr << hmath_total_tests << " total, ";
   std::cerr << hmath_failed_tests << " failed\n";
 
-  HMath::finalize();  
+  HMath::finalize();
   return hmath_failed_tests;
 }

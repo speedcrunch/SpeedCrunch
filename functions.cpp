@@ -132,6 +132,22 @@ HNumber function_log( const Evaluator*, Function* fn, const FunctionArguments& a
   return HMath::log( num );
 }
 
+HNumber function_lg( const Evaluator*, Function* fn, const FunctionArguments& args )
+{
+  if( args.count() != 1 )
+    return HNumber::nan();
+
+  HNumber num = args[0];
+  if( num < 0 )
+  {
+    fn->setError( qApp->translate( "Error",
+      "Function lg expects positive argument" ) );
+    return HNumber( 0 );
+  }
+
+  return HMath::lg( num );
+}
+
 HNumber function_sin( const Evaluator* eval, Function*, const FunctionArguments& args )
 {
   if( args.count() != 1 )
@@ -285,12 +301,12 @@ HNumber function_max( const Evaluator*, Function*, const FunctionArguments& args
 {
   if( args.count() <= 0 )
     return HNumber::nan();
-    
+
   HNumber result = args[0];
   for( int c = 1; c < args.count(); c++ )
     if( HMath::compare( result, args[c] ) == -1 )
       result = args[c];
-      
+
   return result;
 }
 
@@ -298,12 +314,12 @@ HNumber function_min( const Evaluator*, Function*, const FunctionArguments& args
 {
   if( args.count() <= 0 )
     return HNumber::nan();
-    
+
   HNumber result = args[0];
   for( int c = 1; c < args.count(); c++ )
     if( HMath::compare( result, args[c] ) == 1 )
       result = args[c];
-      
+
   return result;
 }
 
@@ -311,11 +327,11 @@ HNumber function_sum( const Evaluator*, Function*, const FunctionArguments& args
 {
   if( args.count() <= 0 )
     return HNumber(0);
-    
+
   HNumber result = args[0];
   for( int c = 1; c < args.count(); c++ )
     result = result + args[c];
-      
+
   return result;
 }
 
@@ -323,11 +339,11 @@ HNumber function_product( const Evaluator*, Function*, const FunctionArguments& 
 {
   if( args.count() <= 0 )
     return HNumber(0);
-    
+
   HNumber result = args[0];
   for( int c = 1; c < args.count(); c++ )
     result = result * args[c];
-      
+
   return result;
 }
 
@@ -335,13 +351,13 @@ HNumber function_average( const Evaluator*, Function*, const FunctionArguments& 
 {
   if( args.count() <= 0 )
     return HNumber("NaN");
-    
+
   HNumber result = args[0];
   for( int c = 1; c < args.count(); c++ )
     result = result + args[c];
-    
-  result = result / args.count();  
-      
+
+  result = result / args.count();
+
   return result;
 }
 
@@ -349,16 +365,16 @@ HNumber function_geomean( const Evaluator*, Function*, const FunctionArguments& 
 {
   if( args.count() <= 0 )
     return HNumber("NaN");
-    
+
   HNumber result = args[0];
   for( int c = 1; c < args.count(); c++ )
     result = result * args[c];
 
-  result = result / args.count();  
-    
-  if( result <= 0)  
+  result = result / args.count();
+
+  if( result <= 0)
     return HNumber("NaN");
-      
+
   return result;
 }
 
@@ -500,7 +516,8 @@ FunctionRepository::FunctionRepository()
   add( new Function( "exp",   1, function_exp, QT_TR_NOOP("Exponent" ) ) );
   add( new Function( "ln",    1, function_ln, QT_TR_NOOP("Natural Logarithm" ) ) );
   add( new Function( "log",   1, function_log, QT_TR_NOOP("Base-10 Logarithm" ) ) );
-  
+  add( new Function( "lg",   1, function_lg, QT_TR_NOOP("Base-2 Logarithm" ) ) );
+
   add( new Function( "sin",   1, function_sin, QT_TR_NOOP("Sine" ) ) );
   add( new Function( "cos",   1, function_cos, QT_TR_NOOP("Cosine" ) ) );
   add( new Function( "tan",   1, function_tan, QT_TR_NOOP("Tangent" ) ) );
@@ -521,7 +538,7 @@ FunctionRepository::FunctionRepository()
   add( new Function( "product",  function_product, QT_TR_NOOP("Product" ) ) );
   add( new Function( "average",  function_average, QT_TR_NOOP("Average (Arithmetic Mean)" ) ) );
   add( new Function( "geomean",  function_geomean, QT_TR_NOOP("Geometric Mean" ) ) );
-   
+
   add( new Function( "dec",  function_dec, QT_TR_NOOP("Decimal representation" ) ) );
   add( new Function( "hex",  function_hex, QT_TR_NOOP("Hexadecimal representation" ) ) );
   add( new Function( "oct",  function_oct, QT_TR_NOOP("Octal representation" ) ) );

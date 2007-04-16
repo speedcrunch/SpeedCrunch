@@ -1,5 +1,5 @@
 /* HMath: C++ high precision math routines
-   Copyright (C) 2004 Ariya Hidayat <ariya.hidayat@gmail.com>   
+   Copyright (C) 2004 Ariya Hidayat <ariya.hidayat@gmail.com>
    Last update: November 15, 2004
 
    This program is free software; you can redistribute it and/or
@@ -17,9 +17,9 @@
       The Free Software Foundation, Inc.
       59 Temple Place, Suite 330
       Boston, MA 02111-1307 USA.
-   
+
  */
- 
+
 #include "hmath.h"
 #include "number.h"
 
@@ -122,7 +122,7 @@ static bc_num h_rescale( bc_num n, int sc )
 
 // add two numbers, return newly allocated number
 static bc_num h_add( bc_num n1, bc_num n2 )
-{  
+{
   bc_num r = h_create();
   bc_add( n1, n2, &r, 1 );
   h_grabfree();
@@ -131,7 +131,7 @@ static bc_num h_add( bc_num n1, bc_num n2 )
 
 // multiply two numbers, return newly allocated number
 static bc_num h_mul( bc_num n1, bc_num n2 )
-{  
+{
   bc_num r = h_create();
   bc_multiply( n1, n2, &r, HMATH_MAX_PREC );
   h_grabfree();
@@ -188,7 +188,7 @@ static bc_num h_str2num( const char* str, int scale = HMATH_MAX_PREC )
     return h_create();
 
    bc_num num;
-   
+
    switch (base)
    {
    case Hexadec:
@@ -209,7 +209,7 @@ static bc_num h_str2num( const char* str, int scale = HMATH_MAX_PREC )
             tmp2 = h_mul( factor, tmp1 ); // f*x
             h_destroy( tmp1 );
             tmp1 = h_add( num, tmp2 ); // n+f*x;
-            h_destroy( num ); h_destroy( tmp2 ); 
+            h_destroy( num ); h_destroy( tmp2 );
             num = h_copy( tmp1 ); // n = n+f*x;
             h_destroy( tmp1 );
          }
@@ -239,7 +239,7 @@ static bc_num h_str2num( const char* str, int scale = HMATH_MAX_PREC )
             tmp2 = h_mul( factor, tmp1 ); // f*x
             h_destroy( tmp1 );
             tmp1 = h_add( num, tmp2 ); // n+f*x;
-            h_destroy( num ); h_destroy( tmp2 ); 
+            h_destroy( num ); h_destroy( tmp2 );
             num = h_copy( tmp1 ); // n = n+f*x;
             h_destroy( tmp1 );
          }
@@ -283,9 +283,9 @@ static bc_num h_str2num( const char* str, int scale = HMATH_MAX_PREC )
          zero_int = TRUE;
          digits = 1;
       }
-         
-      num = h_create( digits, strscale );  
-      
+
+      num = h_create( digits, strscale );
+
       ptr = str;
       if (*ptr == '-')
       {
@@ -306,8 +306,8 @@ static bc_num h_str2num( const char* str, int scale = HMATH_MAX_PREC )
       }
       for (;digits > 0; digits--)
          *nptr++ = (char)CH_VAL(*ptr++);
-      
-      
+
+
       if (strscale > 0)
       {
          ptr++;
@@ -322,7 +322,7 @@ static bc_num h_str2num( const char* str, int scale = HMATH_MAX_PREC )
 
 // subtract two numbers, return newly allocated number
 static bc_num h_sub( bc_num n1, bc_num n2 )
-{  
+{
   bc_num r = h_create();
   bc_sub( n1, n2, &r, 1 );
   h_grabfree();
@@ -331,7 +331,7 @@ static bc_num h_sub( bc_num n1, bc_num n2 )
 
 // divide two numbers, return newly allocated number
 static bc_num h_div( bc_num n1, bc_num n2 )
-{  
+{
   bc_num r = h_create();
   bc_divide( n1, n2, &r, HMATH_MAX_PREC );
   h_grabfree();
@@ -339,18 +339,18 @@ static bc_num h_div( bc_num n1, bc_num n2 )
 }
 
 // find 10 raise to num
-// e.g.: when num is 5, it results 100000 
+// e.g.: when num is 5, it results 100000
 static bc_num h_raise10( int n )
 {
   // calculate proper factor
   int len = abs(n)+2;
   char* sf = new char[len+1];
-  sf[len] = '\0'; 
+  sf[len] = '\0';
   if( n >= 0 )
   {
     sf[0] = '1';
-    sf[len-1] = '\0'; 
-    sf[len-2] = '\0'; 
+    sf[len-1] = '\0';
+    sf[len-2] = '\0';
     for( int i = 0; i < n; i++ )
       sf[i+1] = '0';
   }
@@ -359,12 +359,12 @@ static bc_num h_raise10( int n )
     sf[0] = '0'; sf[1] = '.';
     for( int i = 0; i < -n; i++ )
       sf[i+2] = '0';
-    sf[len-1] = '1';  
+    sf[len-1] = '1';
   }
 
   bc_num factor = h_str2num( sf, abs(n) );
   delete[] sf;
-  
+
   return factor;
 }
 
@@ -374,7 +374,7 @@ static bc_num h_round( bc_num n, int prec )
   // no need to round?
   if( prec >= n->n_scale )
     return h_copy( n );
-    
+
   // example: rounding "3.14159" to 4 decimal digits means
   //   adding 0.5e-4 to 3.14159, it becomes 3.14164
   //   taking only 4 decimal digits, so it's now 3.1416
@@ -386,14 +386,14 @@ static bc_num h_round( bc_num n, int prec )
   z->n_sign = n->n_sign;
   bc_num r = h_add( n, z );
   h_destroy( x );
-  h_destroy( y );  
+  h_destroy( y );
   h_destroy( z );
 
   // only digits we are interested in
   bc_num v = h_rescale( r, prec );
   h_destroy( r );
 
-  return v;    
+  return v;
 }
 
 // remove trailing zeros
@@ -402,7 +402,7 @@ static void h_trimzeros( bc_num num )
   while( ( num->n_scale > 0 ) && ( num->n_len+num->n_scale > 0 ) )
     if( num->n_value[num->n_len+num->n_scale-1] == 0 )
       num->n_scale--;
-    else break;  
+    else break;
 }
 
 static void h_init()
@@ -463,7 +463,7 @@ HNumber::HNumber( const char* str )
   {
     char* s = new char[ strlen(str)+1 ];
     strcpy( s, str );
-    
+
     bool isHex = false, isDecimal = true;
     char* p = s;
     for( ;; p++ )
@@ -486,7 +486,7 @@ HNumber::HNumber( const char* str )
       if(!(isHex && *p >= 'a' && *p < 'g'))
         break;
      }
-     
+
      int expd = 0;
      if (isDecimal)
      {
@@ -496,7 +496,7 @@ HNumber::HNumber( const char* str )
             expd = atoi( p+1 );
          }
      }
-    
+
     h_destroy( d->num );
     d->num = h_str2num( s );
     delete [] s;
@@ -524,7 +524,7 @@ HNumber::HNumber( const char* str )
     }
     h_trimzeros( d->num );
   }
-  
+
 }
 
 HNumber::~HNumber()
@@ -567,7 +567,7 @@ HNumber HNumber::nan()
 {
   HNumber n;
   n.d->nan = true;
-  return n;  
+  return n;
 }
 
 HNumber& HNumber::operator=( const HNumber& hn )
@@ -583,11 +583,11 @@ HNumber HNumber::operator+( const HNumber& num ) const
 {
   if( isNan() ) return HNumber( *this );
   if( num.isNan() ) return HNumber( num );
-  
+
   HNumber result;
   h_destroy( result.d->num );
   result.d->num = h_add( d->num, num.d->num );
-  
+
   return result;
 }
 
@@ -602,11 +602,11 @@ HNumber HNumber::operator-( const HNumber& num ) const
 {
   if( isNan() ) return HNumber( *this );
   if( num.isNan() ) return HNumber( num );
-  
+
   HNumber result;
   h_destroy( result.d->num );
   result.d->num = h_sub( d->num, num.d->num );
-  
+
   return result;
 }
 
@@ -621,7 +621,7 @@ HNumber HNumber::operator*( const HNumber& num ) const
 {
   if( isNan() ) return HNumber( *this );
   if( num.isNan() ) return HNumber( num );
-  
+
   HNumber result;
   h_destroy( result.d->num );
   result.d->num = h_mul( d->num, num.d->num );
@@ -639,7 +639,7 @@ HNumber HNumber::operator/( const HNumber& num ) const
 {
   if( isNan() ) return HNumber( *this );
   if( num.isNan() ) return HNumber( num );
-  
+
   HNumber result;
   h_destroy( result.d->num );
   result.d->num = h_div( d->num, num.d->num );
@@ -657,7 +657,7 @@ HNumber HNumber::operator%( const HNumber& num ) const
 {
   if( isNan() ) return HNumber( *this );
   if( num.isNan() ) return HNumber( num );
-  
+
   HNumber result;
   bc_modulo (d->num, num.d->num, &result.d->num, 0);
   return result;
@@ -714,10 +714,10 @@ char* HMath::formatFixed( const HNumber& hn, int prec )
   if( prec < 0 )
   {
     prec = HMATH_MAX_SHOWN;
-    if( n->n_scale < HMATH_MAX_SHOWN ) 
+    if( n->n_scale < HMATH_MAX_SHOWN )
       prec = n->n_scale;
   }
-  
+
   // yes, this is necessary!
   bc_num m = h_round( n, prec );
   h_trimzeros( m );
@@ -726,7 +726,7 @@ char* HMath::formatFixed( const HNumber& hn, int prec )
   if( oprec < 0 )
   {
     prec = HMATH_MAX_SHOWN;
-    if( n->n_scale < HMATH_MAX_SHOWN ) 
+    if( n->n_scale < HMATH_MAX_SHOWN )
       prec = n->n_scale;
   }
 
@@ -734,17 +734,17 @@ char* HMath::formatFixed( const HNumber& hn, int prec )
   int len = n->n_len + prec;
   if( n->n_sign != PLUS ) len++;
   if( prec > 0 ) len++;
-  
+
   char* str = (char*)malloc( len+1 );
   char* p = str;
-  
+
   // the sign and the integer part
   // but avoid printing "-0"
   if( n->n_sign != PLUS )
-    if( !bc_is_zero( n ) ) *p++ = '-'; 
+    if( !bc_is_zero( n ) ) *p++ = '-';
   for( int c=0; c<n->n_len; c++ )
     *p++ = (char)BCD_CHAR( n->n_value[c] );
-  
+
   // the fraction part
   if( prec > 0 )
   {
@@ -755,14 +755,14 @@ char* HMath::formatFixed( const HNumber& hn, int prec )
     for( int r=n->n_scale; r<prec; r++ )
       *p++ = '0';
   }
-  
+
   *p = '\0';
   h_destroy( n );
-  
+
   return str;
 }
 
-// format number with exponential 
+// format number with exponential
 char* HMath::formatExp( const HNumber& hn, int prec )
 {
   if( hn.isNan() )
@@ -774,21 +774,21 @@ char* HMath::formatExp( const HNumber& hn, int prec )
     str[3] = '\0';
     return str;
   }
-  
+
   // find the exponent and the factor
   int tzeros = 0;
   for( int c=0; c<hn.d->num->n_len+hn.d->num->n_scale; c++, tzeros++ )
     if( hn.d->num->n_value[c]!= 0 ) break;
   int expd = hn.d->num->n_len - tzeros - 1;
 
-  // extra digits needed for the exponent part  
+  // extra digits needed for the exponent part
   int expn = 0;
   for( int e = ::abs(expd); e > 0; e/=10 ) expn++;
   if( expd <= 0 ) expn++;
 
   // scale the number by a new factor
   HNumber nn = hn * HMath::raise( 10, -expd );
-  
+
   // too close to zero?
   if( hn.isZero() || ( expd <= -HMATH_COMPARE_PREC ) )
   {
@@ -796,16 +796,16 @@ char* HMath::formatExp( const HNumber& hn, int prec )
     expd = 0;
     expn = 1;
   }
-  
-  char* str = formatFixed( nn, prec );  
+
+  char* str = formatFixed( nn, prec );
   char* result = (char*) malloc( strlen(str)+expn+2 );
   strcpy( result, str );
   free( str );
-  
+
   // the exponential part
   char* p = result + strlen(result);
   *p++ = 'e'; p[expn] = '\0';
-  if( expd < 0 ) *p = '-'; 
+  if( expd < 0 ) *p = '-';
   for( int k=expn; k>0; k-- )
   {
     int digit = expd % 10;
@@ -814,7 +814,7 @@ char* HMath::formatExp( const HNumber& hn, int prec )
     if( expd == 0 ) break;
   }
 
-  return result;  
+  return result;
 }
 
 char* HMath::formatGeneral( const HNumber& hn, int prec )
@@ -836,7 +836,7 @@ char* HMath::formatGeneral( const HNumber& hn, int prec )
   int expd = hn.d->num->n_len - tzeros - 1;
 
   char* str;
-  if( expd > 5 ) 
+  if( expd > 5 )
     str = formatExp( hn, prec );
   else if( ( expd < -4 ) && (expd>-HMATH_COMPARE_PREC ) )
     str = formatExp( hn, prec );
@@ -844,8 +844,8 @@ char* HMath::formatGeneral( const HNumber& hn, int prec )
     str = formatExp( hn, prec );
   else
     str = formatFixed( hn, prec );
-    
-  return str; 
+
+  return str;
 }
 
 char* HMath::formatHexadec( const HNumber& hn )
@@ -880,8 +880,8 @@ char* HMath::formatHexadec( const HNumber& hn )
      *--ptr = (i < 10) ? '0'+i : 'A'+i-10;
   }
   *--ptr = 'x'; *--ptr = '0'; if (negative) *--ptr = '-';
-    
-  return str; 
+
+  return str;
 }
 
 char* HMath::formatOctal( const HNumber& hn )
@@ -915,8 +915,8 @@ char* HMath::formatOctal( const HNumber& hn )
      *--ptr = '0'+bc_num2long( val.d->num);
   }
   *--ptr = 'o'; *--ptr = '0'; if (negative) *--ptr = '-';
-    
-  return str; 
+
+  return str;
 }
 
 char* HMath::formatBinary( const HNumber& hn )
@@ -951,8 +951,8 @@ char* HMath::formatBinary( const HNumber& hn )
      *--ptr = (val == _0) ?'0':'1';
   }
   *--ptr = 'b'; *--ptr = '0'; if (negative) *--ptr = '-';
-    
-  return str; 
+
+  return str;
 }
 
 char* HMath::format( const HNumber& hn, char format, int prec )
@@ -968,7 +968,7 @@ char* HMath::format( const HNumber& hn, char format, int prec )
   }
 
   if( format=='g' )
-    return formatGeneral( hn, prec );  
+    return formatGeneral( hn, prec );
   else if( format=='f' )
     return formatFixed( hn, prec );
   else if( format=='e' )
@@ -981,7 +981,7 @@ char* HMath::format( const HNumber& hn, char format, int prec )
     return formatBinary( hn );
 
   // fallback to 'g'
-  return formatGeneral( hn, prec );  
+  return formatGeneral( hn, prec );
 }
 
 HNumber HMath::pi()
@@ -1035,7 +1035,7 @@ HNumber HMath::div( const HNumber& n1, const HNumber& n2 )
 int HMath::compare( const HNumber& n1, const HNumber& n2 )
 {
   if( n1.isNan() && n2.isNan() ) return 0;
-  
+
   HNumber delta = sub( n1, n2 );
   delta = HMath::round( delta, HMATH_COMPARE_PREC );
   if( delta.isZero() ) return 0;
@@ -1053,7 +1053,7 @@ HNumber HMath::abs( const HNumber& n )
 HNumber HMath::negate( const HNumber& n )
 {
   if( n.isNan() || n.isZero() )
-    return HNumber( n );  
+    return HNumber( n );
 
   HNumber result( n );
   result.d->num->n_sign = ( n.d->num->n_sign == PLUS ) ? MINUS : PLUS;
@@ -1063,8 +1063,8 @@ HNumber HMath::negate( const HNumber& n )
 HNumber HMath::round( const HNumber& n, int prec )
 {
   if( n.isNan() )
-    return HNumber::nan();  
-    
+    return HNumber::nan();
+
   HNumber result;
   h_destroy( result.d->num );
   result.d->num = h_round( n.d->num, prec );
@@ -1075,10 +1075,10 @@ HNumber HMath::integer( const HNumber& n )
 {
   if( n.isNan() )
     return HNumber::nan();
-    
+
   if( n.isZero() )
     return HNumber( 0 );
-    
+
   HNumber result;
   h_destroy( result.d->num );
   result.d->num = h_rescale( n.d->num, 0 );
@@ -1089,21 +1089,21 @@ HNumber HMath::frac( const HNumber& n )
 {
   if( n.isNan() )
     return HNumber::nan();
-    
-  return n - integer(n);  
+
+  return n - integer(n);
 }
-    
+
 HNumber HMath::sqrt( const HNumber& n )
 {
   if( n.isNan() )
     return HNumber::nan();
-    
+
   if( n.isZero() )
     return n;
-    
+
   if( n.isNegative() )
     return HNumber::nan();
-    
+
   // useful constant
   HNumber half("0.5");
 
@@ -1116,14 +1116,14 @@ HNumber HMath::sqrt( const HNumber& n )
     HNumber s = r + q;
     r = s * half;
   }
-  
+
   return r;
 }
 
 HNumber HMath::raise( const HNumber& n1, int n )
 {
   if( n1.isNan() ) return n1;
-  
+
   // http://en.wikipedia.org/wiki/Exponentiation#Powers_of_zero
   if( n1.isZero() )
   {
@@ -1131,17 +1131,17 @@ HNumber HMath::raise( const HNumber& n1, int n )
       return HNumber::nan();
     if( n > 0 )
       return HNumber(0);
-    
+
     // debatable, see http://en.wikipedia.org/wiki/Empty_product#0_raised_to_the_0th_power
     // vs http://mathworld.wolfram.com/Power.html
     if( n == 0 )
       return HNumber(1);
   }
-  
+
   if( n1 == HNumber(1) ) return n1;
   if( n == 0 ) return HNumber(1);
   if( n == 1 ) return n1;
-  
+
   HNumber result = n1;
   for( ; n > 1; n-- ) result *= n1;
   for( ; n < 1; n++ ) result /= n1;
@@ -1164,19 +1164,19 @@ HNumber HMath::raise( const HNumber& n1, const HNumber& n2  )
     if( n2.isZero() )
       return HNumber(1);
   }
-  
+
   if( n1 == HNumber(1) ) return n1;
   if( n2.isZero() ) return HNumber(1);
   if( n2 == HNumber(1) ) return n1;
-  
+
   HNumber result;
-  
+
   // n1 is negative, n2 must be integer
   if( n1.isNegative() )
   {
     if( HMath::integer(n2) != n2)
       result = HNumber::nan();
-    else      
+    else
     {
       // use integer raise function
       HNumber nn = n2;
@@ -1188,8 +1188,8 @@ HNumber HMath::raise( const HNumber& n1, const HNumber& n2  )
     // x^y = exp( y*ln(x) )
     result = n2 * HMath::ln(n1);
     result = HMath::exp( result );
-  }  
-  
+  }
+
   return result;
 }
 
@@ -1197,7 +1197,7 @@ HNumber HMath::exp( const HNumber& x )
 {
   if( x.isNan() )
     return HNumber::nan();
-    
+
   bool negative = x.isNegative();
   HNumber xs = HMath::abs( x );
 
@@ -1206,7 +1206,7 @@ HNumber HMath::exp( const HNumber& x )
   HNumber num = xs;
   HNumber den = 1;
   HNumber sum = xs + 1;
-  
+
   // now loop to sum the series
   for( int i = 2; i < HMATH_MAX_PREC; i++ )
   {
@@ -1217,11 +1217,11 @@ HNumber HMath::exp( const HNumber& x )
     if( s.isZero() ) break;
     sum += s;
   }
-  
+
   HNumber result = sum;
   if( negative )
     result = HMath::div( HNumber(1), result );
-  
+
   return result;
 };
 
@@ -1229,17 +1229,17 @@ HNumber HMath::ln( const HNumber& x )
 {
   if( x.isNan() )
     return HNumber::nan();
-    
+
   if( !x.isPositive() )
     return HNumber::nan();
-    
+
   // short circuit
   if( x == HNumber(10) )
     return HNumber("2.30258509299404568401799145468436420760110148862877"
                      "29760333279009675726102948650438303813865953227795"
                      "49054520440916779445247118780973037711833599749301"
                      "72118016928228381938415404059160910960135436620869" );
-    
+
   // useful constants
   HNumber two(2);
   HNumber one(1);
@@ -1259,8 +1259,8 @@ HNumber HMath::ln( const HNumber& x )
     factor *= 2;
     xs = HMath::sqrt( xs );
   }
-  
-  // Taylor expansion: ln(x) = 2(a+a^3/3+a^5/5+...) 
+
+  // Taylor expansion: ln(x) = 2(a+a^3/3+a^5/5+...)
   // where a=(x-1)/(x+1)
   HNumber p = xs - 1;
   HNumber q = xs + 1;
@@ -1268,7 +1268,7 @@ HNumber HMath::ln( const HNumber& x )
   HNumber as = a*a;
   HNumber t = a;
   HNumber sum = a;
-  
+
   // loop for the series (limited to avoid nasty cases)
   for( int i = 3; i < HMATH_MAX_PREC; i+= 2 )
   {
@@ -1278,7 +1278,7 @@ HNumber HMath::ln( const HNumber& x )
     if( s.isZero() ) break;
     sum += s;
   }
-  
+
   HNumber result = sum * HNumber( factor );
   return result;
 }
@@ -1287,11 +1287,23 @@ HNumber HMath::log( const HNumber& x )
 {
   if( x.isNan() )
     return HNumber::nan();
-    
+
   if( !x.isPositive() )
     return HNumber::nan();
 
-  HNumber result = HMath::ln( x ) / HMath::ln(10);    
+  HNumber result = HMath::ln( x ) / HMath::ln(10);
+  return result;
+}
+
+HNumber HMath::lg( const HNumber& x )
+{
+  if( x.isNan() )
+    return HNumber::nan();
+
+  if( !x.isPositive() )
+    return HNumber::nan();
+
+  HNumber result = HMath::ln( x ) / HMath::ln(2);
   return result;
 }
 
@@ -1301,9 +1313,9 @@ static HNumber simplifyAngle( const HNumber& x )
 {
   if( x.isNan() )
     return HNumber::nan();
-    
-  HNumber pi2 = HMath::pi() * 2; 
-  HNumber nn = x / pi2;  
+
+  HNumber pi2 = HMath::pi() * 2;
+  HNumber nn = x / pi2;
   HNumber xs = x - HMath::integer(nn)*pi2;
   if( xs.isNegative() ) xs += pi2;
 
@@ -1314,20 +1326,20 @@ HNumber HMath::sin( const HNumber& x )
 {
   if( x.isNan() )
     return HNumber::nan();
-    
+
   // short circuit
   if( x.isZero() )
     return x;
-    
-  // adjust to small angle for speedup  
-  HNumber xs = simplifyAngle( x ); 
-  
+
+  // adjust to small angle for speedup
+  HNumber xs = simplifyAngle( x );
+
   // Taylor expansion: sin(x) = x - x^3/3! + x^5/5! - x^7/7! ...
   HNumber xsq = xs*xs;
   HNumber num = xs;
   HNumber den = 1;
-  HNumber sum = xs;  
-    
+  HNumber sum = xs;
+
   // loop for the series (limited to avoid nasty cases)
   for( int i = 3; i < HMATH_MAX_PREC; i+=2 )
   {
@@ -1350,20 +1362,20 @@ HNumber HMath::cos( const HNumber& x )
 {
   if( x.isNan() )
     return HNumber::nan();
-    
+
   // short circuit
   if( x.isZero() )
     return HNumber( 1 );
-    
-  // adjust to small angle for speedup  
-  HNumber xs = simplifyAngle( x ); 
-  
+
+  // adjust to small angle for speedup
+  HNumber xs = simplifyAngle( x );
+
   // Taylor expansion: cos(x) = 1 - x^2/2! + x^4/4! - x^6/6! ...
   HNumber xsq = xs*xs;
   HNumber num = 1;
   HNumber den = 1;
-  HNumber sum = 1;  
-    
+  HNumber sum = 1;
+
   // loop for the series (limited to avoid nasty cases)
   for( int i = 2; i < HMATH_MAX_PREC; i+=2 )
   {
@@ -1385,18 +1397,18 @@ HNumber HMath::tan( const HNumber& x )
 {
   if( x.isNan() )
     return HNumber::nan();
-    
+
   // tan(x) = cos(x)/sin(x)
 
   HNumber s = HMath::sin( x );
-  if( s.isZero() ) 
+  if( s.isZero() )
     return s;
-    
+
   HNumber c = HMath::cos( x );
   if( c.isZero() )
     return HNumber::nan();
-    
-  HNumber result = s / c;  
+
+  HNumber result = s / c;
   return result;
 }
 
@@ -1404,25 +1416,25 @@ HNumber HMath::atan( const HNumber& x )
 {
   if( x.isNan() )
     return HNumber::nan();
-    
+
   // useful constants
   HNumber one("1.0");
   HNumber c( "0.2" );
 
   // short circuit
-  if( x == c ) 
+  if( x == c )
     return HNumber("0.19739555984988075837004976519479029344758510378785"
                      "21015176889402410339699782437857326978280372880441"
                      "12628118073691360104456479886794239355747565495216"
                      "30327005221074700156450155600612861855266332573187" );
 
-  if( x == one ) 
+  if( x == one )
     // essentially equals to HMath::pi()/4;
     return HNumber("0.78539816339744830961566084581987572104929234984377"
                      "64552437361480769541015715522496570087063355292669"
                      "95537021628320576661773461152387645557931339852032"
                      "12027936257102567548463027638991115573723873259549" );
-  
+
   bool negative = x.isNegative();
   HNumber xs = HMath::abs( x );
 
@@ -1443,8 +1455,8 @@ HNumber HMath::atan( const HNumber& x )
   HNumber num = xs;
   HNumber xsq = xs*xs;
   HNumber den = 1;
-  HNumber sum = xs;  
-  
+  HNumber sum = xs;
+
   // loop for the series (limited to avoid nasty cases)
   for( int i = 3; i < HMATH_MAX_PREC; i+=2 )
   {
@@ -1457,7 +1469,7 @@ HNumber HMath::atan( const HNumber& x )
     if( s.isZero() ) break;
     sum += s;
   }
-  
+
   HNumber result = factor*base + sum;
   if( negative ) result = HMath::negate( result );
   return result;
@@ -1467,18 +1479,18 @@ HNumber HMath::asin( const HNumber& x )
 {
   if( x.isNan() )
     return HNumber::nan();
-    
+
   // asin(x) = atan(x/sqrt(1-x*x));
   HNumber d = HMath::sqrt( HNumber(1) - x*x );
   if( d.isZero() )
   {
     HNumber result = HMath::pi()/2;
-    if( x.isNegative() ) 
+    if( x.isNegative() )
       result = HMath::negate( result );
     return result;
   }
-    
-  HNumber result = HMath::atan( x / d );  
+
+  HNumber result = HMath::atan( x / d );
   return result;
 };
 
@@ -1486,14 +1498,14 @@ HNumber HMath::acos( const HNumber& x )
 {
   if( x.isNan() )
     return HNumber::nan();
-    
+
   if( x.isZero() )
     return HMath::pi()/2;
-    
+
   // acos(x) = atan(sqrt(1-x*x)/x);
   HNumber n = HMath::sqrt( HNumber(1) - x*x );
-  
-  HNumber result = HMath::atan( n / x );  
+
+  HNumber result = HMath::atan( n / x );
   return result;
 };
 
@@ -1502,7 +1514,7 @@ HNumber HMath::sinh( const HNumber& x )
   if( x.isNan() )
     return HNumber::nan();
 
-  // sinh(x) = 0.5*(e^x - e^(-x) )    
+  // sinh(x) = 0.5*(e^x - e^(-x) )
   HNumber result = HMath::exp(x) - HMath::exp( HMath::negate(x) );
   result = result / 2;
 
@@ -1513,8 +1525,8 @@ HNumber HMath::cosh( const HNumber& x )
 {
   if( x.isNan() )
     return HNumber::nan();
- 
-  // cosh(x) = 0.5*(e^x - e^(-x) )    
+
+  // cosh(x) = 0.5*(e^x - e^(-x) )
   HNumber result = HMath::exp(x) + HMath::exp( HMath::negate(x) );
   result = result / 2;
 
@@ -1526,14 +1538,14 @@ HNumber HMath::tanh( const HNumber& x )
   if( x.isNan() )
     return HNumber::nan();
 
-  // tanh(h) = sinh(x)/cosh(x)    
+  // tanh(h) = sinh(x)/cosh(x)
   HNumber c = HMath::cosh( x );
   if( c.isZero() )
     return HNumber::nan();
-    
+
   HNumber s = HMath::sinh( x );
   HNumber result = s / c;
- 
+
   return result;
 }
 
@@ -1549,7 +1561,7 @@ HNumber HMath::sign( const HNumber& x )
      result = HNumber(-1);
   else
      result = HNumber(1);
- 
+
   return result;
 }
 
@@ -1574,7 +1586,7 @@ HNumber HMath::factorial( const HNumber& x, const HNumber& base )
 {
   if( x.isNan() || x < HNumber(0) || x != integer(x) || base < HNumber(1) || !(x > base))
     return HNumber::nan();
-  
+
   HNumber one(1);
   HNumber result = one;
   HNumber n = base-one;
