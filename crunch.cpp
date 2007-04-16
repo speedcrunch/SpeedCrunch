@@ -839,8 +839,7 @@ void Crunch::addKeyPadText( const QString& text )
     bool wasAns = d->editor->text().startsWith( "ans", Qt::CaseInsensitive );
 
     d->editor->getCursorPosition( &para, &index );
-    d->editor->insertAt( text, para, index );
-    d->editor->setCursorPosition( para, index+text.length() );
+    d->editor->insert( text );
 
     if( !wasAns && d->editor->text().startsWith( "ans", Qt::CaseInsensitive ) )
       d->editor->setCursorPosition( para, d->editor->text().length() );
