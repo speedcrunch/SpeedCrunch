@@ -58,6 +58,8 @@ QFrame( parent )
   QTimer* scrollTimer = new QTimer( this );
   connect( scrollTimer, SIGNAL( timeout() ), this, SLOT( scroll() ) );
   scrollTimer->start( d->scrollTick );
+  
+  setBackgroundRole( QPalette::Base );
 }
 
 MarqueeText::~MarqueeText()
@@ -82,15 +84,19 @@ void MarqueeText::setText( const QString& text )
 
 void MarqueeText::paintEvent( QPaintEvent *e )
 {
+  QPainter painter( this );
+  painter.fillRect( this->rect(), painter.background().color() );
+  painter.end();
+  
   QFrame::paintEvent( e );
-
+  
   if( d->buffer )
   {
+    QPainter p( this );
     QPixmap pix = d->buffer->copy();
-    QPainter painter( this );
     QRegion clip( 2, 2, width()-4, height()-4 );
-    painter.setClipRegion( clip );
-    painter.drawPixmap( 0, d->pos, pix );
+    p.setClipRegion( clip );
+    p.drawPixmap( 0, d->pos, pix );
   }
 
 }
@@ -156,9 +162,8 @@ void MarqueeText::layout()
   d->buffer = 0;
   delete oldbuf;
 
-  QPainter pw( this );
-  QBrush bgbrush = pw.background();
-  d->buffer = new QPixmap( QSize((int)(lineWidth+5), (int)(2*hh+50) ) );
+  QBrush bgbrush( palette().base() );
+  d->buffer = new QPixmap( QSize(int(lineWidth+5), int(2*hh+50) ) );
   d->buffer->fill( bgbrush.color() );
 
   // paint the lines
