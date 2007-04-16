@@ -5,6 +5,7 @@ support for different bases: hex, octal and binary
 new functions: MIN, MAX, SUM, PRODUCT, AVERAGE, GEOMEAN
 new functions: SIGN, DEGREES, RADIANS, LG
 postfix factorial operator (!)
+fixed accuracy problem when calculating 10^x where x is integer
 
 SpeedCrunch 0.7
 ---------------

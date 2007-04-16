@@ -1120,6 +1120,7 @@ HNumber HMath::sqrt( const HNumber& n )
   return r;
 }
 
+
 HNumber HMath::raise( const HNumber& n1, int n )
 {
   if( n1.isNan() ) return n1;
@@ -1142,9 +1143,28 @@ HNumber HMath::raise( const HNumber& n1, int n )
   if( n == 0 ) return HNumber(1);
   if( n == 1 ) return n1;
 
+  if(n > 0)
+  {
+    // squaring algorithm to find exponentiation
+    // see http://en.wikipedia.org/wiki/Exponentiation_by_squaring
+    HNumber result = HNumber(1);
+    HNumber x = n1;
+    while(n > 0)
+    {
+      if(n & 1)
+      {
+        result = result * x;
+        n--;
+      }
+      x = x * x;
+      n = n >> 1;
+    }
+    return result;
+  }
+
   HNumber result = n1;
-  for( ; n > 1; n-- ) result *= n1;
-  for( ; n < 1; n++ ) result /= n1;
+  for( ; n < 1; n++ )
+    result /= n1;
 
   return result;
 }
@@ -1185,9 +1205,19 @@ HNumber HMath::raise( const HNumber& n1, const HNumber& n2  )
   }
   else
   {
-    // x^y = exp( y*ln(x) )
-    result = n2 * HMath::ln(n1);
-    result = HMath::exp( result );
+    // n2 integer? use the integer raise version
+    if( HMath::integer(n2) == n2)
+    {
+      // use integer raise function
+      HNumber nn = n2;
+      result = raise( n1, atoi( HMath::formatFixed(nn, 0) ) );
+    }
+    else
+    {
+      // x^y = exp( y*ln(x) )
+      result = n2 * HMath::ln(n1);
+      result = HMath::exp( result );
+    }
   }
 
   return result;
