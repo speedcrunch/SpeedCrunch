@@ -1314,12 +1314,35 @@ static HNumber simplifyAngle( const HNumber& x )
   if( x.isNan() )
     return HNumber::nan();
 
+#if 1
+  // using simple method
   HNumber pi2 = HMath::pi() * 2;
   HNumber nn = x / pi2;
   HNumber xs = x - HMath::integer(nn)*pi2;
   if( xs.isNegative() ) xs += pi2;
 
   return xs;
+#else
+  // using argument reduction method
+  // see http://www.derekroconnor.net/Software/Ng--ArgReduction.pdf
+  HNumber factor = HNumber(2) / HMath::pi();
+  HNumber y = x * factor;
+  HNumber f = HMath::frac(y);
+  HNumber r = f * HMath::pi()/HNumber(2);
+
+  // find int(y) mod 4
+  HNumber n = HMath::integer( y );
+  HNumber m = n - HNumber(4)*HMath::integer( n / HNumber(4) );
+  HNumber halfpi = HMath::pi() / HNumber(2);
+  if(m == HNumber(1))
+    r += halfpi;
+  if(m == HNumber(2))
+    r += HMath::pi();
+  if(m == HNumber(3))
+    r += halfpi + HMath::pi();
+
+  return r;
+#endif
 }
 
 HNumber HMath::sin( const HNumber& x )

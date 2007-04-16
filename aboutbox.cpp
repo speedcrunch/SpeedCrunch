@@ -234,6 +234,7 @@ AboutBox::AboutBox( QWidget* parent ):
          "Gary Cramblitt<br>"
          "Philippe Fremy<br>"
          "Vladimir Pouzanov<br>"
+         "Derek O'Connor<br>"
          ;
   msg += QString( "<br>%1</p>" ).arg( tr("and many others.") );
 
