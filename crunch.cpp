@@ -703,6 +703,9 @@ void Crunch::expressionSelected( const QString& e )
 {
   d->editor->setText( e );
   returnPressed();
+
+  if( !isActiveWindow () )
+    activateWindow();
 }
 
 void Crunch::functionSelected( const QString& e )
@@ -711,7 +714,11 @@ void Crunch::functionSelected( const QString& e )
     return;
   d->editor->insert( e );
   d->editor->insert( "(" );
+
   QTimer::singleShot( 0, d->editor, SLOT(setFocus()) );
+
+  if( !isActiveWindow () )
+    activateWindow();
 }
 
 void Crunch::textChanged()
