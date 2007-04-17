@@ -21,34 +21,32 @@
 #define RESULT
 
 #include "hmath.h"
-//Added by qt3to4:
+
+#include <QListWidget>
 #include <QResizeEvent>
 
-class QWidget;
-#include <qcolor.h>
-#include <q3listbox.h>
-class Q3ListBoxItem;
+class QListWidgetItem;
 
 class ResultPrivate;
 
-class Result : public Q3ListBox
+class Result : public QListWidget
 {
   Q_OBJECT
-  
+
   public:
     Result( QWidget* parent = 0, const char* name = 0 );
     ~Result();
-    
-    void append( const QString& expr, const HNumber& value );    
+
+    void append( const QString& expr, const HNumber& value );
     void appendError( const QString& expr, const QString& msg );
     QString asText() const;
-    
+
     void setFormat( char format );
     char format() const;
     void setDecimalDigits( int digits );
     int decimalDigits() const;
     QString formatNumber( const HNumber& value ) const;
-    
+
     void setCustomAppearance( bool custom );
     bool customAppearance() const;
     void setCustomTextColor( const QColor& textColor );
@@ -56,20 +54,20 @@ class Result : public Q3ListBox
     void setCustomBackgroundColor( const QColor& bg1, const QColor& bg2 );
     QColor customBackgroundColor1() const;
     QColor customBackgroundColor2() const;
-    
+
   signals:
     void textCopied( const QString& text );
-    
+
   public slots:
     void clear();
-    
-  protected:  
+
+  protected:
     virtual void resizeEvent( QResizeEvent* );
-    
+
   private slots:
-    void scrollEnd();
-    void itemClicked( Q3ListBoxItem* );
-    
+    void copyToClipboard( QListWidgetItem* );
+    void triggerUpdate();
+
   private:
     ResultPrivate* d;
     Result( const Result& );

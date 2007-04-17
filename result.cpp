@@ -1,4 +1,5 @@
 /* This file is part of the SpeedCrunch project
+   Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
    Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
                  2005-2006 Johan Thelin <e8johan@gmail.com>
 
@@ -21,14 +22,10 @@
 #include "hmath.h"
 #include "functions.h"
 
-#include <qapplication.h>
-#include <qclipboard.h>
-#include <q3listbox.h>
-#include <qpainter.h>
-#include <qstring.h>
-#include <qtimer.h>
-//Added by qt3to4:
+#include <QApplication>
+#include <QClipboard>
 #include <QResizeEvent>
+#include <QTimer>
 
 class ResultPrivate
 {
@@ -43,231 +40,89 @@ public:
   QColor customBackgroundColor2;
 };
 
-class ExprItem: public Q3ListBoxText
+class BaseItem: public QListWidgetItem
 {
   public:
-    ExprItem( Result*, int index, const QString& );
-  protected:
-    void paint( QPainter* p );
-    virtual int width( const Q3ListBox* ) const;
-    virtual int height( const Q3ListBox* ) const;
+    BaseItem( Result* r ): QListWidgetItem( r ) {}
+    virtual void updateItem() {}
+};
+
+class ExprItem: public BaseItem
+{
+  public:
+    ExprItem( Result* r, int i, const QString& e ): BaseItem( r )
+    {
+      expr = e;
+      result = r;
+      index = i;
+      setTextAlignment( Qt::AlignLeft );
+      setText( e );
+      printf("%s\n", qPrintable(e));
+    }
   private:
     Result* result;
     int index;
     QString expr;
 };
 
-class ResultItem: public Q3ListBoxText
+class ResultItem: public BaseItem
 {
   public:
-    ResultItem( Result*, int index, const HNumber& );
-    QString formattedText() const;
-  protected:
-    void paint( QPainter* p );
-    virtual int width( const Q3ListBox* ) const;
-    virtual int height( const Q3ListBox* ) const;
+    ResultItem( Result* r, int i,  const HNumber& v ): BaseItem( r )
+    {
+      value = v;
+      result = r;
+      index = i;
+      setTextAlignment( Qt::AlignRight );
+      setText( result->formatNumber( value ) );
+      printf("%s\n", qPrintable(text()));
+    }
+
+    void updateItem()
+    {
+      setText( result->formatNumber( value ) );
+    }
   private:
     Result* result;
     int index;
     HNumber value;
 };
 
-class ErrorItem: public Q3ListBoxText
+class ErrorItem: public BaseItem
 {
   public:
-    ErrorItem( Result*, int index, const QString& );
-  protected:
-    void paint( QPainter* p );
-    virtual int width( const Q3ListBox* ) const;
-    virtual int height( const Q3ListBox* ) const;
+    ErrorItem( Result* r, int i, const QString& m ): BaseItem( r )
+    {
+      msg = m;
+      result = r;
+      index = i;
+      setTextAlignment( Qt::AlignRight );
+      setText( m );
+      printf("%s\n", qPrintable(msg));
+    }
   private:
     Result* result;
     int index;
     QString msg;
 };
 
-ExprItem::ExprItem( Result* r, int i, const QString& e ):
-  Q3ListBoxText ( r, e )
+
+Result::Result( QWidget* parent, const char* name ): QListWidget( parent )
 {
-  result = r;
-  index = i;
-  expr = e;
-}
-
-void ExprItem::paint( QPainter* painter )
-{
-  painter->save();
-
-  QColor bgcolor = result->colorGroup().base();
-  if( index&1 ) bgcolor = bgcolor.dark( 120 );
-
-  if( result->customAppearance() )
-  {
-    painter->setPen( result->customTextColor() );
-    bgcolor = result->customBackgroundColor1();
-    if( index&1 ) bgcolor = result->customBackgroundColor2();
-  }
-
-  QRect r ( 0, 0, listBox()->contentsWidth(), height( listBox() ) );
-  painter->fillRect( r, bgcolor );
-
-  int tf = Qt::NoAccel | Qt::SingleLine | Qt::AlignVCenter;
-  r.addCoords( 5, 0, -5, 0 );
-  painter->drawText( r, tf, expr );
-
-  painter->restore();
-}
-
-int ExprItem::width( const Q3ListBox* lb ) const
-{
-  QFont font = lb->font();
-  return QFontMetrics( font ).width( expr ) + 10;
-}
-
-int ExprItem::height( const Q3ListBox* lb ) const
-{
-  QFont font = lb->font();
-  return QFontMetrics( font ).height() + 4;
-}
-
-
-ResultItem::ResultItem( Result* r, int i, const HNumber& v ):
-  Q3ListBoxText ( r )
-{
-  result = r;
-  index = i;
-  value = v;
-  setText( formattedText() );
-}
-
-QString ResultItem::formattedText() const
-{
-  return result->formatNumber( value );
-}
-
-void ResultItem::paint( QPainter* painter )
-{
-  painter->save();
-
-  QColor bgcolor = result->colorGroup().base();
-  if( index&1 ) bgcolor = bgcolor.dark( 120 );
-
-  if( result->customAppearance() )
-  {
-    painter->setPen( result->customTextColor() );
-    bgcolor = result->customBackgroundColor1();
-    if( index&1 ) bgcolor = result->customBackgroundColor2();
-  }
-
-  QRect r ( 0, 0, listBox()->contentsWidth(), height( listBox() ) );
-  painter->fillRect( r, bgcolor );
-
-  int tf = Qt::NoAccel | Qt::SingleLine | Qt::AlignVCenter| Qt::AlignRight;
-  QFont font = painter->font();
-  font.setBold( true );
-  painter->setFont( font );
-  r.addCoords( 5, 0, -5, 0 );
-  painter->drawText( r, tf, formattedText() );
-
-  painter->restore();
-}
-
-int ResultItem::width( const Q3ListBox* lb ) const
-{
-  QFont font = lb->font();
-  font.setBold( true );
-  return QFontMetrics( font ).width( formattedText() ) + 10;
-}
-
-int ResultItem::height( const Q3ListBox* lb ) const
-{
-  QFont font = lb->font();
-  font.setBold( true );
-  return QFontMetrics( font ).height() + 4;
-}
-
-ErrorItem::ErrorItem( Result* r, int i, const QString& m ):
-  Q3ListBoxText ( r, m )
-{
-  result = r;
-  index = i;
-  msg = m;
-}
-
-void ErrorItem::paint( QPainter* painter )
-{
-  painter->save();
-
-  QColor bgcolor = result->colorGroup().base();
-  if( index&1 ) bgcolor = bgcolor.dark( 120 );
-
-  if( result->customAppearance() )
-  {
-    painter->setPen( result->customTextColor() );
-    bgcolor = result->customBackgroundColor1();
-    if( index&1 ) bgcolor = result->customBackgroundColor2();
-  }
-
-  QRect r ( 0, 0, listBox()->contentsWidth(), height( listBox() ) );
-  painter->fillRect( r, bgcolor );
-
-  int tf = Qt::NoAccel | Qt::SingleLine | Qt::AlignVCenter| Qt::AlignRight;
-  QFont font = painter->font();
-  font.setBold( true );
-
-  QFontMetrics fm(font);
-  QString dispMsg(msg);
-  // as long as we can't dispaly msg (length > 4 is saveguard)
-  while ( fm.width( dispMsg ) + 10 > r.width() && dispMsg.length() > 4 )
-  {
-    // move to last real char (!= '.') with i
-    int i = dispMsg.length() - 1;
-    while ( dispMsg[ i ] == '.' && i > 0 )
-      --i;
-    // create new dispMsg without that last char and add ...
-    dispMsg = dispMsg.left( i ) + "...";
-  }
-  painter->setFont( font );
-  r.addCoords( 5, 0, -5, 0 );
-  painter->setPen( Qt::red );
-  painter->drawText( r, tf, dispMsg );
-
-  painter->restore();
-}
-
-int ErrorItem::width( const Q3ListBox* lb ) const
-{
- // @todo: method can be removed allthougether, default implementation will do
-       // error items have the tendency to grow to large in width
-       // here we return the minimum with, in ErrorItem::paint() we'll
-       // implement a routine that only uses the with given to display string
-  return Q3ListBoxItem::width( lb );
-}
-
-int ErrorItem::height( const Q3ListBox* lb ) const
-{
-  QFont font = lb->font();
-  font.setBold( true );
-  return QFontMetrics( font ).height() + 4;
-}
-
-
-Result::Result( QWidget* parent, const char* name ):
-  Q3ListBox( parent, name )
-{
-  setBackgroundRole(QPalette::Base);
   d = new ResultPrivate;
   d->format = 'g';
   d->decimalDigits = -1;
   d->customAppearance = false;
   d->count = 0;
 
+  setObjectName( name );
+  setBackgroundRole(QPalette::Base);
+
   setSelectionMode( NoSelection );
-  setVariableWidth( true );
   setMinimumWidth( 150 );
 
-  connect( this, SIGNAL( clicked( Q3ListBoxItem* ) ),
-    this, SLOT( itemClicked( Q3ListBoxItem* ) ) );
+  connect( this, SIGNAL( itemClicked( QListWidgetItem* ) ),
+    this, SLOT( copyToClipboard( QListWidgetItem* ) ) );
 }
 
 Result::~Result()
@@ -280,15 +135,9 @@ void Result::append( const QString& expr, const HNumber& value )
   d->count++;
 
   new ExprItem( this, d->count, expr );
-  ResultItem* item = new ResultItem( this, d->count, value );
+  new ResultItem( this, d->count, value );
 
-  d->contents.append( expr );
-  d->contents.append( item->formattedText() );
-
-  QTimer::singleShot( 100, this, SLOT( scrollEnd() ) );
-
-  printf( "%s\n", expr.latin1() );
-  printf( "%s\n", item->formattedText().latin1() );
+  scrollToItem( item(count()-1) );
 }
 
 void Result::appendError( const QString& expr, const QString&  msg )
@@ -298,13 +147,7 @@ void Result::appendError( const QString& expr, const QString&  msg )
   new ExprItem( this, d->count, expr );
   new ErrorItem( this, d->count, msg );
 
-  d->contents.append( expr );
-  d->contents.append( msg );
-
-  QTimer::singleShot( 100, this, SLOT( scrollEnd() ) );
-
-  printf( "%s\n", expr.latin1() );
-  printf( "%s\n", msg.latin1() );
+  scrollToItem( item(count()-1) );
 }
 
 QString Result::asText() const
@@ -314,11 +157,12 @@ QString Result::asText() const
 
 void Result::clear()
 {
+  d->count = 0;
   d->contents.clear();
-  Q3ListBox::clear();
+  QListWidget::clear();
 }
 
-void Result::itemClicked( Q3ListBoxItem* item )
+void Result::copyToClipboard( QListWidgetItem* item )
 {
  if ( !item ) return;
  QClipboard *cb = QApplication::clipboard();
@@ -326,24 +170,15 @@ void Result::itemClicked( Q3ListBoxItem* item )
  emit textCopied( item->text() );
 }
 
-void Result::scrollEnd()
-{
-  if( layoutDirection() == Qt::LeftToRight )
-    ensureVisible( contentsWidth()-1, contentsHeight()-1 );
-  else  
-    ensureVisible( 0, contentsHeight()-1 );
-}
-
-
 void Result::resizeEvent( QResizeEvent* )
 {
-  triggerUpdate( true );
+  triggerUpdate();
 }
 
 void Result::setFormat( char format )
 {
   d->format = format;
-  triggerUpdate( true );
+  triggerUpdate();
 }
 
 char Result::format() const
@@ -354,7 +189,7 @@ char Result::format() const
 void Result::setDecimalDigits( int digits )
 {
   d->decimalDigits = digits;
-  triggerUpdate( true );
+  triggerUpdate();
 }
 
 int Result::decimalDigits() const
@@ -370,13 +205,19 @@ QString Result::formatNumber( const HNumber& value ) const
   return s;
 }
 
+void Result::triggerUpdate()
+{
+  for(int c = 0; c < count(); c++)
+    dynamic_cast<BaseItem*>(item(c))->updateItem();
+}
+
 void Result::setCustomAppearance( bool custom )
 {
   d->customAppearance = custom;
   QColor bgcolor = QApplication::palette().active().base();
   if( custom ) bgcolor = customBackgroundColor1();
   setPaletteBackgroundColor( bgcolor );
-  triggerUpdate( false );
+  triggerUpdate();
 }
 
 bool Result::customAppearance() const
@@ -387,7 +228,7 @@ bool Result::customAppearance() const
 void Result::setCustomTextColor( const QColor& c )
 {
   d->customTextColor = c;
-  triggerUpdate( false );
+  triggerUpdate();
 }
 
 QColor Result::customTextColor() const
@@ -401,7 +242,7 @@ void Result::setCustomBackgroundColor( const QColor& bg1, const QColor& bg2 )
   d->customBackgroundColor2 = bg2;
   if( d->customAppearance )
     setPaletteBackgroundColor( bg1 );
-  triggerUpdate( false );
+  triggerUpdate();
 }
 
 QColor Result::customBackgroundColor1() const
@@ -413,4 +254,5 @@ QColor Result::customBackgroundColor2() const
 {
   return d->customBackgroundColor2;
 }
+
 
