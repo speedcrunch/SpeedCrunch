@@ -1,4 +1,5 @@
 /* This file is part of the SpeedCrunch project
+   Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
    Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
 
    This program is free software; you can redistribute it and/or
@@ -21,9 +22,7 @@
 
 #include <QDialog>
 
-#include "ui_listdialog.h"
-
-class Evaluator;
+class InsertFunctionDlgPrivate;
 
 class InsertFunctionDlg : public QDialog
 {
@@ -39,8 +38,7 @@ class InsertFunctionDlg : public QDialog
     void initUI();
 
   private:
-    Ui::ListDialog ui;
-
+    InsertFunctionDlgPrivate* d;
     InsertFunctionDlg( const InsertFunctionDlg& );
     InsertFunctionDlg& operator=( const InsertFunctionDlg& );
 };
