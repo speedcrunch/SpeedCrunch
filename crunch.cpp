@@ -629,6 +629,7 @@ void Crunch::angleModeChanged()
   if( d->radButton->isChecked() )
     d->eval->setAngleMode( Evaluator::Radian );
 
+  QTimer::singleShot(0, d->editor, SLOT( setFocus() ) );
 }
 
 void Crunch::radixChanged()
@@ -636,9 +637,6 @@ void Crunch::radixChanged()
   const QObject* s = sender();
   if( !s ) return;
   if( !s->isA( "QRadioButton" ) ) return;
-
-  blockSignals( true );
-  blockSignals( false );
 
   Settings* settings = Settings::self();
 
@@ -666,6 +664,8 @@ void Crunch::radixChanged()
     d->digitsGroup->setDisabled(true);
     setView('b');
   }
+
+  QTimer::singleShot(0, d->editor, SLOT( setFocus() ) );
 }
 
 void Crunch::returnPressed()
