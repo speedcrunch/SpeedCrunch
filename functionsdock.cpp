@@ -21,53 +21,48 @@
 #include "settings.h"
 
 #include <QHeaderView>
-#include <QTableWidget>
+#include <QTreeWidget>
 
 class FunctionsDockPrivate
 {
   public:
-    QTableWidget* list;
+    QTreeWidget* list;
 };
 
 FunctionsDock::FunctionsDock( QWidget* parent ): QDockWidget( tr("Functions"), parent )
 {
   d = new FunctionsDockPrivate;
 
-  d->list = new QTableWidget( this );
-  d->list->setColumnCount( 3 );
+  d->list = new QTreeWidget( this );
+  d->list->setColumnCount( 2 );
   d->list->setAlternatingRowColors( true );
-  d->list->verticalHeader()->hide();
-  d->list->horizontalHeader()->hide();
-  d->list->horizontalHeader()->setStretchLastSection( true );
-  d->list->setShowGrid( false );
-  d->list->setContentsMargins( 0, 0, 0, 0 );
-  d->list->setEditTriggers( QTableWidget::NoEditTriggers );
-  d->list->setSelectionBehavior( QTableWidget::SelectRows );
-  //d->list->setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
-  connect( d->list, SIGNAL( itemDoubleClicked( QTableWidgetItem* ) ),
-    SLOT( handleItem( QTableWidgetItem* ) ) );
+  d->list->setRootIsDecorated( false );
+  d->list->header()->hide();
+  d->list->setEditTriggers( QTreeWidget::NoEditTriggers );
+  d->list->setSelectionBehavior( QTreeWidget::SelectRows );
+  connect( d->list, SIGNAL( itemDoubleClicked( QTreeWidgetItem*, int ) ),
+    SLOT( handleItem( QTreeWidgetItem* ) ) );
   setWidget( d->list );
 
   setMinimumWidth( 200 );
   setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
 
   QStringList functionNames = FunctionRepository::self()->functionNames();
-  d->list->setRowCount( functionNames.count() );
   int k = 0;
   for( int i = 0; i < functionNames.count(); i++ )
   {
     Function* f = FunctionRepository::self()->function( functionNames[i] );
     if( f )
     {
-      d->list->setItem( k, 0, new QTableWidgetItem( f->name() ) );
-      d->list->setItem( k, 1, new QTableWidgetItem( f->description() ) );
+      QStringList str;
+      str << f->name();
+      str << f->description();
+      new QTreeWidgetItem( d->list, str );
       k++;
     }
   }
-  d->list->setRowCount( k );
-  d->list->sortItems( 0 );
-  d->list->resizeColumnsToContents();
-  d->list->resizeRowsToContents();
+
+  d->list->sortItems( 0, Qt::AscendingOrder );
 }
 
 FunctionsDock::~FunctionsDock()
@@ -75,7 +70,7 @@ FunctionsDock::~FunctionsDock()
   delete d;
 }
 
-void FunctionsDock::handleItem( QTableWidgetItem* item )
+void FunctionsDock::handleItem( QTreeWidgetItem* item )
 {
-  emit functionSelected( item->text() );
+  emit functionSelected( item->text(0) );
 }

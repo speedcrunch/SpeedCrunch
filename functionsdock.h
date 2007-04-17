@@ -22,7 +22,7 @@
 #include <QDockWidget>
 
 class FunctionsDockPrivate;
-class QTableWidgetItem;
+class QTreeWidgetItem;
 
 class FunctionsDock : public QDockWidget
 {
@@ -36,7 +36,7 @@ class FunctionsDock : public QDockWidget
     void functionSelected( const QString& e );
 
   protected slots:
-    void handleItem( QTableWidgetItem* item );
+    void handleItem( QTreeWidgetItem* item );
 
   private:
     FunctionsDockPrivate*d;
