@@ -697,6 +697,11 @@ void Crunch::returnPressed()
   d->editor->selectAll();
   d->editor->stopAutoCalc();
   d->autoAns = true;
+
+  QTimer::singleShot( 0, d->editor, SLOT(setFocus()) );
+
+  if( !isActiveWindow () )
+    activateWindow();
 }
 
 void Crunch::expressionSelected( const QString& e )
