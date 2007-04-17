@@ -24,26 +24,26 @@ Tracking.
 TEST SUITE
 ----------
 
-In order to catch regressions as early as possible, automatic test suite is 
+In order to catch regressions as early as possible, automatic test suite is
 already implemented (and should always be updated).
 
-At the moment, it comprises of two programs: testhmath and testevaluator. 
-These programs are available only if you build using CMake. Generally it is 
-recommended to run these both test programs as often as possible, preferably 
+At the moment, it comprises of two programs: testhmath and testevaluator.
+These programs are available only if you build using CMake. Generally it is
+recommended to run these both test programs as often as possible, preferably
 after changing something and before committing the changes.
 
-New feature which breaks the test suite or without a corresponding test case 
+New feature which breaks the test suite or without a corresponding test case
 is subjected to be reverted.
 
-Program 'testhmath' checks all the functionalities of the core math library. 
-Some corner-cases are necessary to ensure the library is well behaved. 
-If you change hmath.h/hmath.cpp, make sure to run 'testhmath' to verify that 
-your change does not break anything. If you add new feature(s), add the proper 
-feature(s) tests into testhmath.cpp. 
+Program 'testhmath' checks all the functionalities of the core math library.
+Some corner-cases are necessary to ensure the library is well behaved.
+If you change hmath.h/hmath.cpp, make sure to run 'testhmath' to verify that
+your change does not break anything. If you add new feature(s), add the proper
+feature(s) tests into testhmath.cpp.
 
-Program 'testevaluator' mainly checks expression parser and evaluator. This 
-includes all the supported built-in functions. If you add a new function, 
-make sure also to add test cases for that function (the more, the better) 
+Program 'testevaluator' mainly checks expression parser and evaluator. This
+includes all the supported built-in functions. If you add a new function,
+make sure also to add test cases for that function (the more, the better)
 in testevaluator.cpp.
 
 
@@ -62,18 +62,18 @@ steps:
   svn copy trunk branches/0.8
 
 /tags is for tagging a release version. Think of it as a snapshot of a branch.
-Nothing should be committed to this directory, thus bug fixes should be applied 
-the appropriate branch. Furthermore, each release must have exactly one tag. 
-For example, there are release like version 0.8-alpha, 0.8-beta, 0.8, 0.8.1 
+Nothing should be committed to this directory, thus bug fixes should be applied
+the appropriate branch. Furthermore, each release must have exactly one tag.
+For example, there are release like version 0.8-alpha, 0.8-beta, 0.8, 0.8.1
 then the /tag directory may look like this:
-  /tag/0.8-alpha
-  /tag/0.8-beta
-  /tag/0.8
-  /tag/0.8.1
+  /tags/0.8-alpha
+  /tags/0.8-beta
+  /tags/0.8
+  /tags/0.8.1
 Tagging the repository can be done like the following steps:
-  mkdir tag/0.8-beta
-  svn add tag/0.8-beta
-  svn copy branches/0.8 tag/0.8-beta
+  mkdir tags/0.8-beta
+  svn add tags/0.8-beta
+  svn copy branches/0.8 tags/0.8-beta
 
 /www stores files for the web site. Johan Thelin will synchronize his server
 content (http://speedcrunch.digitalfanatics.org) with this directory every now
@@ -103,21 +103,21 @@ PREPARING A RELEASE
 ---------------------
 This is a checklist of things that must be done to prepare a release:
 
-* Make sure that /trunk/ChangeLog is up to date
+* Make sure that ChangeLog is up to date
 
 * For the first release of a version (e.g. version 0.8-beta, not version 0.8,
   0.8.1, 0.8.2), create a branch (e.g /branch/0.8).
 
 * Tag the repository with a good name, e.g /tags/0.8-beta
 
-* Create the source code package, e.g. speedcrunch-0.8-beta.tar.gz. Place it 
+* Create the source code package, e.g. speedcrunch-0.8-beta.tar.gz. Place it
   in the download location.
 
 * Calculate the MD5 sum of the source code package
 
 * Notify packagers to make them aware of the new release.
 
-* Update the website. Most important is the link to new source code package 
+* Update the website. Most important is the link to new source code package
   and its MD5 sum.
 
   For a stable release (e.g. 0.8 or 0.8.1):
@@ -128,5 +128,5 @@ This is a checklist of things that must be done to prepare a release:
     update link to ChangeLog in the sidebar of download.htm
 
   For a non-stable release (e.g. 0.8-alpha, 0.8-beta, 0-8-RC)
-    update sidebar in download.htm   
- 
+    update sidebar in download.htm
+
