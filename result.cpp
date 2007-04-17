@@ -58,6 +58,23 @@ class ExprItem: public BaseItem
       setTextAlignment( Qt::AlignLeft );
       setText( e );
       printf("%s\n", qPrintable(e));
+      updateItem();
+    }
+
+    void updateItem()
+    {
+      if( result->customAppearance() )
+      {
+        setForeground( result->customTextColor() );
+        setBackground( (index&1) ? result->customBackgroundColor1() :
+          result->customBackgroundColor2() );
+      }
+      else
+      {
+        const QPalette& pal = result->palette();
+        setForeground( pal.text() );
+        setBackground( (index&1) ? pal.base() : pal.alternateBase() );
+      }
     }
   private:
     Result* result;
@@ -76,11 +93,26 @@ class ResultItem: public BaseItem
       setTextAlignment( Qt::AlignRight );
       setText( result->formatNumber( value ) );
       printf("%s\n", qPrintable(text()));
+      updateItem();
     }
 
     void updateItem()
     {
       setText( result->formatNumber( value ) );
+    {
+      if( result->customAppearance() )
+      {
+        setForeground( result->customTextColor() );
+        setBackground( (index&1) ? result->customBackgroundColor1() :
+          result->customBackgroundColor2() );
+      }
+      else
+      {
+        const QPalette& pal = result->palette();
+        setForeground( pal.text() );
+        setBackground( (index&1) ? pal.base() : pal.alternateBase() );
+      }
+    }
     }
   private:
     Result* result;
@@ -99,7 +131,25 @@ class ErrorItem: public BaseItem
       setTextAlignment( Qt::AlignRight );
       setText( m );
       printf("%s\n", qPrintable(msg));
+      updateItem();
     }
+
+    void updateItem()
+    {
+      if( result->customAppearance() )
+      {
+        setForeground( result->customTextColor() );
+        setBackground( (index&1) ? result->customBackgroundColor1() :
+          result->customBackgroundColor2() );
+      }
+      else
+      {
+        const QPalette& pal = result->palette();
+        setForeground( Qt::red );
+        setBackground( (index&1) ? pal.base() : pal.alternateBase() );
+      }
+    }
+
   private:
     Result* result;
     int index;
