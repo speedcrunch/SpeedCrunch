@@ -19,6 +19,7 @@
 
 #include "crunch.h"
 #include "evaluator.h"
+#include "historydock.h"
 #include "hmath.h"
 #include "editor.h"
 #include "functions.h"
@@ -102,6 +103,8 @@ public:
   QRadioButton* degButton;
   QRadioButton* radButton;
   bool autoAns;
+
+  HistoryDock* historyDock;
 
   ConfigDlg* configDlg;
   InsertFunctionDlg* insertFunctionDlg;
@@ -191,6 +194,11 @@ Crunch::Crunch(): QMainWindow()
 
   outerBoxLayout->addLayout( keypadLayout );
 
+  // Docks
+
+  d->historyDock = new HistoryDock( this );
+  addDockWidget( Qt::RightDockWidgetArea, d->historyDock );
+
   // Connect signals and slots
 
   connect( d->clearInputButton, SIGNAL( clicked() ), SLOT( clearInput() ) );
@@ -199,6 +207,7 @@ Crunch::Crunch(): QMainWindow()
   connect( d->editor, SIGNAL( textChanged() ), SLOT( textChanged() ) );
   connect( d->result, SIGNAL( textCopied( const QString& ) ), d->editor, SLOT( paste() ) );
   connect( d->result, SIGNAL( textCopied( const QString& ) ), d->editor, SLOT( setFocus() ) );
+  connect( d->historyDock, SIGNAL( expressionSelected( const QString& ) ), SLOT( expressionSelected( const QString& ) ) );
 
   connect( d->keypad, SIGNAL( addText( const QString& ) ), SLOT( addKeyPadText( const QString& ) ) );
 
@@ -312,6 +321,7 @@ void Crunch::createUI()
   connect( d->actions->clearInput, SIGNAL( activated() ), this, SLOT( clearInput() ) );
   connect( d->actions->clearDisplay, SIGNAL( activated() ), d->result, SLOT( clear() ) );
   connect( d->actions->clearHistory, SIGNAL( activated() ), d->editor, SLOT( clearHistory() ) );
+  connect( d->actions->clearHistory, SIGNAL( activated() ), d->historyDock, SLOT( clear() ) );
   connect( d->actions->clearVariables, SIGNAL( activated() ), this, SLOT( clearVariables() ) );
   connect( d->actions->insertFunction, SIGNAL( activated() ), this, SLOT( insertFunction() ) );
   connect( d->actions->insertVariable, SIGNAL( activated() ), this, SLOT( insertVariable() ) );
@@ -375,10 +385,13 @@ void Crunch::createUI()
   viewMenu->addAction( d->actions->viewOctal );
   viewMenu->addAction( d->actions->viewBinary );
 
+
   QMenu *settingsMenu = new QMenu( this );
   settingsMenu->addAction( d->actions->showClearButton );
   settingsMenu->addAction( d->actions->showEvalButton );
   settingsMenu->addAction( d->actions->showKeyPad );
+  QMenu* docksMenu = settingsMenu->addMenu( tr("Show &Docks") );
+  docksMenu->addAction( d->historyDock->toggleViewAction() );
   menuBar()->insertItem( tr("Se&ttings"), settingsMenu );
   settingsMenu->insertSeparator();
   settingsMenu->addAction( d->actions->configure );
@@ -423,9 +436,13 @@ void Crunch::applySettings()
     d->radButton->setChecked( true );
   }
 
+  d->historyDock->clear();
   if( settings->saveHistory )
   if( settings->history.count() )
+  {
     d->editor->setHistory( settings->history );
+    d->historyDock->setHistory( settings->history );
+  }
 
   if( settings->saveVariables )
   {
@@ -574,6 +591,7 @@ void Crunch::returnPressed()
 
   d->eval->setExpression( str );
   d->editor->appendHistory( str );
+  d->historyDock->setHistory( d->editor->history() );
 
   HNumber result = d->eval->eval();
   if( !d->eval->error().isEmpty() )
@@ -582,12 +600,18 @@ void Crunch::returnPressed()
   {
     d->result->append( str, result );
     d->editor->setAnsAvailable( true );
-  }  
+  }
 
   d->editor->setText( str );
   d->editor->selectAll();
   d->editor->stopAutoCalc();
   d->autoAns = true;
+}
+
+void Crunch::expressionSelected( const QString& e )
+{
+  d->editor->setText( e );
+  returnPressed();
 }
 
 void Crunch::textChanged()

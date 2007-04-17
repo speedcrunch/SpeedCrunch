@@ -1,4 +1,4 @@
-project(speedcrunch) 
+project(speedcrunch)
 
 IF( APPLE )
   set( PROGNAME Speedcrunch )
@@ -30,7 +30,7 @@ ENDIF( NOT WIN32 )
 # note: sort files alphabetically !
 
 # sources
-set(speedcrunch_SOURCES 
+set(speedcrunch_SOURCES
 aboutbox.cpp
 binreloc.c
 configdlg.cpp
@@ -39,6 +39,7 @@ deletevardlg.cpp
 editor.cpp
 evaluator.cpp
 functions.cpp
+historydock.cpp
 hmath.cpp
 insertfunctiondlg.cpp
 insertvardlg.cpp
@@ -59,6 +60,7 @@ deletevardlg.h
 editor.h
 evaluator.h
 functions.h
+historydock.h
 hmath.h
 insertfunctiondlg.h
 insertvardlg.h
@@ -99,7 +101,7 @@ else(MINGW)
 endif(MINGW)
 
 # we still need those Q3 classes
-set( QT_USE_QT3SUPPORT TRUE )  
+set( QT_USE_QT3SUPPORT TRUE )
 
 if( APPLE )
   if( QT_USE_QT3SUPPORT )
@@ -128,7 +130,7 @@ IF( APPLE )
   ADD_CUSTOM_COMMAND( TARGET ${PROGNAME} POST_BUILD
     COMMAND mkdir ARGS ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources
     COMMAND cp ARGS ${MACOSX_BUNDLE_ICON_FILE} ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources
-    COMMAND cp ARGS *.qm ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources 
+    COMMAND cp ARGS *.qm ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources
     COMMENT Setting up translations & resources )
   #ADD_DEPENDENCIES( ${PROGNAME} Speedcrunch_RESOURCE_DIR )
 ELSE( APPLE )
