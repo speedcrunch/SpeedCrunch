@@ -162,7 +162,7 @@ Crunch::Crunch(): QMainWindow()
   radixLayout->addWidget( d->octButton );
   radixLayout->addWidget( d->binButton );
 
-  QSpacerItem *spacer = new QSpacerItem( 50, 0, QSizePolicy::Expanding, QSizePolicy::Minimum );
+  QSpacerItem *spacer = new QSpacerItem( 50, 0, QSizePolicy::MinimumExpanding, QSizePolicy::Minimum );
   topboxLayout->addWidget( radixBox );
   topboxLayout->addItem( spacer );
 
