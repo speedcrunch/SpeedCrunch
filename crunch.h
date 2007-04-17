@@ -65,6 +65,7 @@ class Crunch : public QMainWindow
   protected slots:
     void returnPressed();
     void expressionSelected( const QString & );
+    void functionSelected( const QString & );
     void textChanged();
     void angleModeChanged();
     void radixChanged();

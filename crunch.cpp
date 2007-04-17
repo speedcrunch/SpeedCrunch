@@ -23,6 +23,7 @@
 #include "hmath.h"
 #include "editor.h"
 #include "functions.h"
+#include "functionsdock.h"
 #include "result.h"
 #include "settings.h"
 #include "insertfunctiondlg.h"
@@ -111,6 +112,7 @@ public:
   bool autoAns;
 
   HistoryDock* historyDock;
+  FunctionsDock* functionsDock;
 
   ConfigDlg* configDlg;
   InsertFunctionDlg* insertFunctionDlg;
@@ -230,6 +232,9 @@ Crunch::Crunch(): QMainWindow()
   d->historyDock = new HistoryDock( this );
   addDockWidget( Qt::RightDockWidgetArea, d->historyDock );
 
+  d->functionsDock = new FunctionsDock( this );
+  addDockWidget( Qt::RightDockWidgetArea, d->functionsDock );
+
   // Connect signals and slots
 
   connect( d->clearInputButton, SIGNAL( clicked() ), SLOT( clearInput() ) );
@@ -239,6 +244,7 @@ Crunch::Crunch(): QMainWindow()
   connect( d->result, SIGNAL( textCopied( const QString& ) ), d->editor, SLOT( paste() ) );
   connect( d->result, SIGNAL( textCopied( const QString& ) ), d->editor, SLOT( setFocus() ) );
   connect( d->historyDock, SIGNAL( expressionSelected( const QString& ) ), SLOT( expressionSelected( const QString& ) ) );
+  connect( d->functionsDock, SIGNAL( functionSelected( const QString& ) ), SLOT( functionSelected( const QString& ) ) );
 
   connect( d->keypad, SIGNAL( addText( const QString& ) ), SLOT( addKeyPadText( const QString& ) ) );
 
@@ -424,6 +430,7 @@ void Crunch::createUI()
   settingsMenu->addAction( d->actions->showKeyPad );
   QMenu* docksMenu = settingsMenu->addMenu( tr("Show &Docks") );
   docksMenu->addAction( d->historyDock->toggleViewAction() );
+  docksMenu->addAction( d->functionsDock->toggleViewAction() );
   menuBar()->insertItem( tr("Se&ttings"), settingsMenu );
   settingsMenu->insertSeparator();
   settingsMenu->addAction( d->actions->configure );
@@ -696,6 +703,15 @@ void Crunch::expressionSelected( const QString& e )
 {
   d->editor->setText( e );
   returnPressed();
+}
+
+void Crunch::functionSelected( const QString& e )
+{
+  if( e.isEmpty() )
+    return;
+  d->editor->insert( e );
+  d->editor->insert( "(" );
+  QTimer::singleShot( 0, d->editor, SLOT(setFocus()) );
 }
 
 void Crunch::textChanged()

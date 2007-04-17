@@ -39,6 +39,7 @@ deletevardlg.cpp
 editor.cpp
 evaluator.cpp
 functions.cpp
+functionsdock.cpp
 historydock.cpp
 hmath.cpp
 insertfunctiondlg.cpp
@@ -60,6 +61,7 @@ deletevardlg.h
 editor.h
 evaluator.h
 functions.h
+functionsdock.h
 historydock.h
 hmath.h
 insertfunctiondlg.h
