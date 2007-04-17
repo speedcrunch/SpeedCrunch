@@ -71,8 +71,6 @@ then the /tag directory may look like this:
   /tags/0.8
   /tags/0.8.1
 Tagging the repository can be done like the following steps:
-  mkdir tags/0.8-beta
-  svn add tags/0.8-beta
   svn copy branches/0.8 tags/0.8-beta
 
 /www stores files for the web site. Johan Thelin will synchronize his server
