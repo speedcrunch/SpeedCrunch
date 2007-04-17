@@ -71,6 +71,9 @@ void Settings::load()
   if( formatStr == "Fixed" ) format = 'f';
   if( formatStr == "Exp" ) format = 'e';
   if( formatStr == "General" ) format = 'g';
+  if( formatStr == "Hexadecimal" ) format = 'h';
+  if( formatStr == "Octal" ) format = 'o';
+  if( formatStr == "Binary" ) format = 'b';
   decimalDigits = settings.readNumEntry( key + "/View/DecimalDigits", -1 );
   if( decimalDigits > 70 ) decimalDigits = 70;
 
@@ -142,6 +145,9 @@ void Settings::save()
   if( format == 'f' ) formatStr = "Fixed";
   if( format == 'e' ) formatStr = "Exp";
   if( format == 'g' ) formatStr = "General";
+  if( format == 'h' ) formatStr = "Hexadecimal";
+  if( format == 'o' ) formatStr = "Octal";
+  if( format == 'b' ) formatStr = "Binary";
   settings.writeEntry( key + "/View/Format", formatStr );
   settings.writeEntry( key + "/View/DecimalDigits", decimalDigits );
 
