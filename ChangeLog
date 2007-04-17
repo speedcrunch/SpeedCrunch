@@ -6,6 +6,7 @@ new functions: MIN, MAX, SUM, PRODUCT, AVERAGE, GEOMEAN
 new functions: SIGN, DEGREES, RADIANS, LG
 postfix factorial operator (!)
 fixed accuracy problem when calculating 10^x where x is integer
+shortcut Ctrl+Q to quit (ubuntu bug#102734)
 
 SpeedCrunch 0.7
 ---------------

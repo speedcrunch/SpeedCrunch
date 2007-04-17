@@ -237,6 +237,7 @@ void Crunch::createUI()
   d->actions->sessionSave = new QAction( tr("&Save..."), this );
     d->actions->sessionSave->setShortcut( Qt::CTRL + Qt::Key_S );
   d->actions->sessionQuit = new QAction( tr("&Quit"), this );
+    d->actions->sessionQuit->setShortcut( Qt::CTRL + Qt::Key_Q );
 
   d->actions->editCopy = new QAction( tr("&Copy"), this );
     d->actions->editCopy->setShortcut( Qt::CTRL + Qt::Key_C );
