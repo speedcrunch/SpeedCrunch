@@ -102,6 +102,12 @@ public:
   QPushButton* evalButton;
   QRadioButton* degButton;
   QRadioButton* radButton;
+
+  QRadioButton* hexButton;
+  QRadioButton* decButton;
+  QRadioButton* octButton;
+  QRadioButton* binButton;
+
   bool autoAns;
 
   HistoryDock* historyDock;
@@ -133,11 +139,34 @@ Crunch::Crunch(): QMainWindow()
 
   QHBoxLayout *topboxLayout = new QHBoxLayout();
 
+  QWidget* radixBox = new QWidget( this );
+  QHBoxLayout *radixLayout = new QHBoxLayout();
+  radixLayout->setMargin( 0 );
+  radixBox->setLayout( radixLayout );
+  d->hexButton = new QRadioButton( tr( "Hex" ), radixBox );
+  d->decButton = new QRadioButton( tr( "Dec" ), radixBox );
+  d->octButton = new QRadioButton( tr( "Oct" ), radixBox );
+  d->binButton = new QRadioButton( tr( "Bin" ), radixBox );
+  d->hexButton->setFocusPolicy( Qt::ClickFocus );
+  d->decButton->setFocusPolicy( Qt::ClickFocus );
+  d->octButton->setFocusPolicy( Qt::ClickFocus );
+  d->binButton->setFocusPolicy( Qt::ClickFocus );
+  connect( d->hexButton, SIGNAL( toggled( bool ) ), SLOT( radixChanged() ) );
+  connect( d->decButton, SIGNAL( toggled( bool ) ), SLOT( radixChanged() ) );
+  connect( d->octButton, SIGNAL( toggled( bool ) ), SLOT( radixChanged() ) );
+  connect( d->binButton, SIGNAL( toggled( bool ) ), SLOT( radixChanged() ) );
+  radixLayout->addWidget( d->hexButton );
+  radixLayout->addWidget( d->decButton );
+  radixLayout->addWidget( d->octButton );
+  radixLayout->addWidget( d->binButton );
+
   QSpacerItem *spacer = new QSpacerItem( 50, 0, QSizePolicy::Expanding, QSizePolicy::Minimum );
+  topboxLayout->addWidget( radixBox );
   topboxLayout->addItem( spacer );
 
-  d->degButton = new QRadioButton( tr( "&Degrees" ), box );
-  d->radButton = new QRadioButton( tr( "&Radians" ), box );
+  QWidget* angleBox = new QWidget( this );
+  d->degButton = new QRadioButton( tr( "&Degrees" ), angleBox );
+  d->radButton = new QRadioButton( tr( "&Radians" ), angleBox );
   d->degButton->setFocusPolicy( Qt::ClickFocus );
   d->radButton->setFocusPolicy( Qt::ClickFocus );
   connect( d->degButton, SIGNAL( toggled( bool ) ), SLOT( angleModeChanged() ) );
@@ -146,6 +175,8 @@ Crunch::Crunch(): QMainWindow()
   topboxLayout->addWidget( d->radButton );
 
   outerBoxLayout->addLayout( topboxLayout );
+
+
 
   // Result list
 
@@ -454,6 +485,21 @@ void Crunch::applySettings()
     }
   }
 
+  switch( settings->format )
+  {
+    case 'h':
+      d->hexButton->setChecked( true ); break;
+    case 'o':
+      d->octButton->setChecked( true ); break;
+    case 'b':
+      d->binButton->setChecked( true ); break;
+    case 'f':
+    case 'e':
+    case 'g':
+    default:
+      d->decButton->setChecked( true ); break;
+  }
+
   d->result->setFormat( settings->format );
   d->result->setDecimalDigits( settings->decimalDigits );
   d->editor->setFormat( settings->format );
@@ -583,6 +629,43 @@ void Crunch::angleModeChanged()
   if( d->radButton->isChecked() )
     d->eval->setAngleMode( Evaluator::Radian );
 
+}
+
+void Crunch::radixChanged()
+{
+  const QObject* s = sender();
+  if( !s ) return;
+  if( !s->isA( "QRadioButton" ) ) return;
+
+  blockSignals( true );
+  blockSignals( false );
+
+  Settings* settings = Settings::self();
+
+  if( d->hexButton->isChecked() && settings->format != 'h')
+  {
+    d->digitsGroup->setDisabled(true);
+    setView('h');
+  }
+
+  if( d->decButton->isChecked() && settings->format != 'g' &&
+    settings->format != 'e'  && settings->format != 'f' )
+  {
+    d->digitsGroup->setDisabled(false);
+    setView('g');
+  }
+
+  if( d->octButton->isChecked()  && settings->format != 'o')
+  {
+    d->digitsGroup->setDisabled(true);
+    setView('o');
+  }
+
+  if( d->binButton->isChecked()  &&  settings->format != 'b')
+  {
+    d->digitsGroup->setDisabled(true);
+    setView('b');
+  }
 }
 
 void Crunch::returnPressed()
@@ -719,36 +802,44 @@ void Crunch::setView(char c)
 void Crunch::viewGeneral()
 {
   d->digitsGroup->setEnabled(true);
+  blockSignals(true);
+  d->decButton->setChecked(true);
+  blockSignals(true);
   setView('g');
 }
 
 void Crunch::viewFixed()
 {
   d->digitsGroup->setEnabled(true);
+  d->decButton->setChecked(true);
   setView('f');
 }
 
 void Crunch::viewExponential()
 {
   d->digitsGroup->setEnabled(true);
-  setView('f');
+  d->decButton->setChecked(true);
+  setView('e');
 }
 
 void Crunch::viewHexadec()
 {
   d->digitsGroup->setDisabled(true);
+  d->hexButton->setChecked(true);
   setView('h');
 }
 
 void Crunch::viewOctal()
 {
   d->digitsGroup->setDisabled(true);
+  d->octButton->setChecked(true);
   setView('o');
 }
 
 void Crunch::viewBinary()
 {
   d->digitsGroup->setDisabled(true);
+  d->binButton->setChecked(true);
   setView('b');
 }
 

@@ -67,6 +67,7 @@ class Crunch : public QMainWindow
     void expressionSelected( const QString & );
     void textChanged();
     void angleModeChanged();
+    void radixChanged();
 
   protected:
     virtual void closeEvent( QCloseEvent* );
