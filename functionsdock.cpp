@@ -82,5 +82,6 @@ FunctionsDock::~FunctionsDock()
 
 void FunctionsDock::handleItem( QTreeWidgetItem* item )
 {
+  d->list->clearSelection();
   emit functionSelected( item->text(0) );
 }

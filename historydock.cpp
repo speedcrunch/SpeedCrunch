@@ -53,6 +53,7 @@ void HistoryDock::append( const QString& h )
 {
   d->list->addItem( h );
   recolor();
+  d->list->clearSelection();
 }
 
 void HistoryDock::setHistory( const QStringList& h )
@@ -62,10 +63,12 @@ void HistoryDock::setHistory( const QStringList& h )
   d->list->setCurrentRow( h.count()-1 );
   recolor();
   d->list->scrollToItem( d->list->item(h.count()), QListWidget::PositionAtTop );
+  d->list->clearSelection();
 }
 
 void HistoryDock::handleItem( QListWidgetItem* item )
 {
+  d->list->clearSelection();
   emit expressionSelected( item->text() );
 }
 
