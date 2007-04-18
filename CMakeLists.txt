@@ -32,6 +32,7 @@ ENDIF( NOT WIN32 )
 # sources
 set(speedcrunch_SOURCES
 aboutbox.cpp
+autohidelabel.cpp
 binreloc.c
 configdlg.cpp
 crunch.cpp
@@ -54,6 +55,7 @@ settings.cpp
 # headers
 set(speedcrunch_HEADERS
 aboutbox.h
+autohidelabel.h
 binreloc.h
 configdlg.h
 crunch.h

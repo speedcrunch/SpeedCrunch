@@ -17,6 +17,7 @@
    Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
+#include "autohidelabel.h"
 #include "crunch.h"
 #include "evaluator.h"
 #include "historydock.h"
@@ -99,7 +100,7 @@ public:
   Evaluator* eval;
 
   Editor *editor;
-  QLabel* autoCalcLabel;
+  AutoHideLabel* autoCalcLabel;
 
   Result* result;
   KeyPad* keypad;
@@ -241,10 +242,7 @@ Crunch::Crunch(): QMainWindow()
   addDockWidget( Qt::RightDockWidgetArea, d->functionsDock );
 
   // for autocalc
-  d->autoCalcLabel = new QLabel( this );
-  d->autoCalcLabel->setPalette( QToolTip::palette() );
-  d->autoCalcLabel->setAutoFillBackground( true );
-  d->autoCalcLabel->setFrameShape( QFrame::Box );
+  d->autoCalcLabel = new AutoHideLabel( this );
   d->autoCalcLabel->hide();
 
   // Connect signals and slots
@@ -1008,20 +1006,14 @@ void Crunch::addKeyPadText( const QString& text )
 
 void Crunch::hideAutoCalc()
 {
-  d->autoCalcLabel->hide();
+  d->autoCalcLabel->hideText();
 }
 
 void Crunch::showAutoCalc( const QString& msg )
 {
-  d->autoCalcLabel->setText( msg );
-  d->autoCalcLabel->adjustSize();
-
   QPoint p = d->editor->mapToParent( QPoint(0, 0) );
   d->autoCalcLabel->move( p );
 
-  d->autoCalcLabel->show();
-  d->autoCalcLabel->raise();
+  d->autoCalcLabel->showText( msg );
 
-  // do not show it forever
-  QTimer::singleShot( 5000, d->autoCalcLabel, SLOT( hide()) );
 }
