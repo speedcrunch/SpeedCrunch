@@ -35,7 +35,6 @@ FunctionsDock::FunctionsDock( QWidget* parent ): QDockWidget( tr("Functions"), p
 
   d->list = new QTreeWidget( this );
   d->list->setColumnCount( 2 );
-  d->list->setAlternatingRowColors( true );
   d->list->setRootIsDecorated( false );
   d->list->header()->hide();
   d->list->setEditTriggers( QTreeWidget::NoEditTriggers );
@@ -63,6 +62,15 @@ FunctionsDock::FunctionsDock( QWidget* parent ): QDockWidget( tr("Functions"), p
   }
 
   d->list->sortItems( 0, Qt::AscendingOrder );
+
+  int group = 3;
+  for(int i = 0; i < d->list->topLevelItemCount(); i++)
+  {
+    QTreeWidgetItem* item = d->list->topLevelItem(i);
+    QBrush c = ((int)(i/group))&1 ? palette().base() : palette().alternateBase();
+    item->setBackground( 0, c );
+    item->setBackground( 1, c );
+  }
 }
 
 FunctionsDock::~FunctionsDock()
