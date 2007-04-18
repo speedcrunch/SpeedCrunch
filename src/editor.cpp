@@ -21,6 +21,9 @@
 #include "editor.h"
 #include "evaluator.h"
 
+#include <QFrame>
+#include <QVBoxLayout>
+
 #include <qapplication.h>
 #include <qevent.h>
 #include <qlineedit.h>
@@ -74,7 +77,7 @@ class EditorCompletionPrivate
 {
 public:
   Editor* editor;
-  Q3VBox *completionPopup;
+  QFrame *completionPopup;
   Q3ListBox *completionListBox;
 };
 
@@ -679,9 +682,8 @@ EditorCompletion::EditorCompletion( Editor* editor ): QObject( editor )
   d = new EditorCompletionPrivate;
   d->editor = editor;
 
-  d->completionPopup = new Q3VBox( editor->topLevelWidget(), 0, Qt::WType_Popup );
-  d->completionPopup->setFrameStyle( Q3Frame::Box | Q3Frame::Plain );
-  d->completionPopup->setLineWidth( 1 );
+  d->completionPopup = new QFrame( editor->topLevelWidget(), 0, Qt::WType_Popup );
+  d->completionPopup->setFrameShape( QFrame::Box );
   d->completionPopup->installEventFilter( this );
   d->completionPopup->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -690,6 +692,12 @@ EditorCompletion::EditorCompletion( Editor* editor ): QObject( editor )
   d->completionListBox->setFrameStyle( Q3Frame::NoFrame );
   d->completionListBox->setVariableWidth( true );
   d->completionListBox->installEventFilter( this );
+
+  QVBoxLayout* layout = new QVBoxLayout(d->completionPopup);
+  d->completionPopup->setLayout(layout);
+  layout->setMargin( 0 );
+  layout->setSpacing( 0 );
+  layout->addWidget(d->completionListBox);
 }
 
 EditorCompletion::~EditorCompletion()
