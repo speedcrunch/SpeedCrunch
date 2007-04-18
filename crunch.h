@@ -61,6 +61,8 @@ class Crunch : public QMainWindow
     void about();
     void aboutQt();
     void addKeyPadText( const QString& );
+    void hideAutoCalc();
+    void showAutoCalc( const QString& );
 
   protected slots:
     void returnPressed();

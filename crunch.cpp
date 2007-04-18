@@ -41,6 +41,7 @@
 #include <QFile>
 #include <QFileDialog>
 #include <QHBoxLayout>
+#include <QLabel>
 #include <QMainWindow>
 #include <QMenu>
 #include <QMenuBar>
@@ -96,10 +97,14 @@ public:
   CrunchActions* actions;
   QActionGroup *digitsGroup;
   Evaluator* eval;
+
   Editor *editor;
+  QLabel* autoCalcLabel;
+
   Result* result;
   KeyPad* keypad;
   QPushButton* clearInputButton;
+
   QPushButton* evalButton;
   QRadioButton* degButton;
   QRadioButton* radButton;
@@ -235,12 +240,21 @@ Crunch::Crunch(): QMainWindow()
   d->functionsDock = new FunctionsDock( this );
   addDockWidget( Qt::RightDockWidgetArea, d->functionsDock );
 
+  // for autocalc
+  d->autoCalcLabel = new QLabel( this );
+  d->autoCalcLabel->setPalette( QToolTip::palette() );
+  d->autoCalcLabel->setAutoFillBackground( true );
+  d->autoCalcLabel->setFrameShape( QFrame::Box );
+  d->autoCalcLabel->hide();
+
   // Connect signals and slots
 
   connect( d->clearInputButton, SIGNAL( clicked() ), SLOT( clearInput() ) );
   connect( d->evalButton, SIGNAL( clicked() ), SLOT( returnPressed() ) );
   connect( d->editor, SIGNAL( returnPressed() ), SLOT( returnPressed() ) );
   connect( d->editor, SIGNAL( textChanged() ), SLOT( textChanged() ) );
+  connect( d->editor, SIGNAL( autoCalcDeactivated() ), SLOT( hideAutoCalc() ) );
+  connect( d->editor, SIGNAL( autoCalcActivated( const QString& ) ), SLOT( showAutoCalc( const QString& ) ) );
   connect( d->result, SIGNAL( textCopied( const QString& ) ), d->editor, SLOT( paste() ) );
   connect( d->result, SIGNAL( textCopied( const QString& ) ), d->editor, SLOT( setFocus() ) );
   connect( d->historyDock, SIGNAL( expressionSelected( const QString& ) ), SLOT( expressionSelected( const QString& ) ) );
@@ -990,4 +1004,24 @@ void Crunch::addKeyPadText( const QString& text )
   }
 
   d->editor->setFocus();
+}
+
+void Crunch::hideAutoCalc()
+{
+  d->autoCalcLabel->hide();
+}
+
+void Crunch::showAutoCalc( const QString& msg )
+{
+  d->autoCalcLabel->setText( msg );
+  d->autoCalcLabel->adjustSize();
+
+  QPoint p = d->editor->mapToParent( QPoint(0, 0) );
+  d->autoCalcLabel->move( p );
+
+  d->autoCalcLabel->show();
+  d->autoCalcLabel->raise();
+
+  // do not show it forever
+  QTimer::singleShot( 5000, d->autoCalcLabel, SLOT( hide()) );
 }

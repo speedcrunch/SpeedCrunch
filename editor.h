@@ -68,7 +68,7 @@ class Editor : public Q3TextEdit
     bool isSyntaxHighlightEnabled() const;
     void setHighlightColor( ColorType type, QColor color );
     QColor highlightColor( ColorType type );
-    
+
     void setAnsAvailable( bool avail );
     void stopAutoCalc();
 
@@ -87,6 +87,10 @@ class Editor : public Q3TextEdit
     void doMatchingRight();
     void historyBack();
     void historyForward();
+
+  signals:
+    void autoCalcDeactivated();
+    void autoCalcActivated( const QString& );
 
   protected:
     void keyPressEvent( QKeyEvent* );

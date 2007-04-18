@@ -23,7 +23,6 @@
 
 #include <qapplication.h>
 #include <qevent.h>
-#include <qlabel.h>
 #include <qlineedit.h>
 #include <q3listbox.h>
 #include <qpainter.h>
@@ -64,7 +63,6 @@ public:
   char format;
   int decimalDigits;
   QTimer* autoCalcTimer;
-  QLabel* autoCalcLabel;
   bool syntaxHighlightEnabled;
   EditorHighlighter* highlighter;
   QMap<Editor::ColorType,QColor> highlightColors;
@@ -198,12 +196,6 @@ Editor::Editor( Evaluator* e, QWidget* parent, const char* name ):
   connect( this, SIGNAL( textChanged() ), SLOT( checkAutoCalc() ) );
   connect( d->autoCalcTimer, SIGNAL( timeout() ), SLOT( autoCalc() ) );
 
-  d->autoCalcLabel = new QLabel( 0, "autocalc", Qt::WStyle_StaysOnTop |
-    Qt::WStyle_Customize | Qt::WStyle_NoBorder | Qt::ToolTip |  Qt::WX11BypassWM );
-  d->autoCalcLabel->setFrameStyle( Q3Frame::Plain | Q3Frame::Box );
-  d->autoCalcLabel->setPalette( QToolTip::palette() );
-  d->autoCalcLabel->hide();
-
   setHighlightColor( Number, QColor(0,0,127) );
   setHighlightColor( FunctionName, QColor(85,0,0) );
   setHighlightColor( Variable, QColor(0,85,0) );
@@ -212,7 +204,6 @@ Editor::Editor( Evaluator* e, QWidget* parent, const char* name ):
 
 Editor::~Editor()
 {
-  d->autoCalcLabel->hide();
   delete d;
 }
 
@@ -314,7 +305,8 @@ void Editor::checkAutoCalc()
 
   d->autoCalcTimer->stop();
   d->autoCalcTimer->start( 1000, true );
-  d->autoCalcLabel->hide();
+
+  emit autoCalcDeactivated();
 }
 
 void Editor::doMatchingLeft()
@@ -516,14 +508,14 @@ void Editor::autoCalc()
 
   QString str = Evaluator::autoFix( text() );
   if( str.isEmpty() ) return;
-  
+
   // very short (just one token) and still no calculation, then skip
   if( !d->ansAvailable )
   {
     Tokens tokens = Evaluator::scan( text() );
-    if( tokens.count() < 2 ) 
+    if( tokens.count() < 2 )
       return;
-  }   
+  }
 
   // too short even after autofix ? do not bother either...
   Tokens tokens = Evaluator::scan( str );
@@ -548,23 +540,12 @@ void Editor::autoCalc()
   {
     QString ss = QString("%1&nbsp;<b>%2</b>").arg(tr("Result:")).
       arg( formatNumber( num ) );
-    d->autoCalcLabel->setText( ss );
-    d->autoCalcLabel->adjustSize();
-
-    // reposition nicely
-    QPoint pos = mapToGlobal( QPoint( 0, 0 ) );
-    pos.setY( pos.y() - d->autoCalcLabel->height() - 1 );
-    d->autoCalcLabel->move( pos );
-    d->autoCalcLabel->show();
-    d->autoCalcLabel->raise();
-
-    // do not show it forever
-    QTimer::singleShot( 5000, d->autoCalcLabel, SLOT( hide()) );
+    emit autoCalcActivated( ss );
   }
   else
   {
     // invalid expression
-    d->autoCalcLabel->hide();
+    emit autoCalcDeactivated();
   }
 }
 
@@ -689,7 +670,7 @@ void Editor::setAnsAvailable(bool avail)
 void Editor::stopAutoCalc()
 {
   d->autoCalcTimer->stop();
-  d->autoCalcLabel->hide();
+  emit autoCalcDeactivated();
 }
 
 
