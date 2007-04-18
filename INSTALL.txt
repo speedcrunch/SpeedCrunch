@@ -1,0 +1,15 @@
+Instruction to compile SpeedCrunch from source code
+
+Requirements:
+- CMake 2.4 or newer
+- Qt 4.2 or newer
+
+Steps:
+- Creates a sub-directory named 'build'
+- Go to this sub-directory
+- Run CMake like this:
+    cmake ../src
+- Then run make
+    make
+
+
