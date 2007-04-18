@@ -31,7 +31,6 @@ HistoryDock::HistoryDock( QWidget* parent ): QDockWidget( tr("History"), parent 
   d = new HistoryDockPrivate;
 
   d->list = new QListWidget( this );
-  d->list->setAlternatingRowColors( true );
   connect( d->list, SIGNAL( itemDoubleClicked( QListWidgetItem* ) ),
     SLOT( handleItem( QListWidgetItem* ) ) );
   setWidget( d->list );
@@ -53,6 +52,7 @@ void HistoryDock::clear()
 void HistoryDock::append( const QString& h )
 {
   d->list->addItem( h );
+  recolor();
 }
 
 void HistoryDock::setHistory( const QStringList& h )
@@ -60,10 +60,24 @@ void HistoryDock::setHistory( const QStringList& h )
   d->list->clear();
   d->list->insertItems( 0, h );
   d->list->setCurrentRow( h.count()-1 );
+  recolor();
   d->list->scrollToItem( d->list->item(h.count()), QListWidget::PositionAtTop );
 }
 
 void HistoryDock::handleItem( QListWidgetItem* item )
 {
   emit expressionSelected( item->text() );
+}
+
+void HistoryDock::recolor()
+{
+  int group = 3;
+  d->list->setUpdatesEnabled( false );
+  for(int i = 0; i < d->list->count(); i++)
+  {
+    QListWidgetItem* item = d->list->item(i);
+    QBrush c = ((int)(i/group))&1 ? palette().base() : palette().alternateBase();
+    item->setBackground( c );
+  }
+  d->list->setUpdatesEnabled( true );
 }

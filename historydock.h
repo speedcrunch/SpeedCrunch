@@ -45,6 +45,7 @@ class HistoryDock : public QDockWidget
 
   private:
     HistoryDockPrivate*d;
+    void recolor();
 };
 
 #endif // HISTORYDOCK
