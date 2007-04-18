@@ -21,6 +21,7 @@ HEADERS += configdlg.h
 HEADERS += aboutbox.h
 HEADERS += keypad.h
 HEADERS += binreloc.h
+HEADERS += autohidelabel.h
 
 SOURCES += crunch.cpp
 SOURCES += historydock.cpp
@@ -39,6 +40,7 @@ SOURCES += aboutbox.cpp
 SOURCES += main.cpp
 SOURCES += keypad.cpp
 SOURCES += binreloc.c
+SOURCES += autohidelabel.cpp
 
 FORMS += listdialog.ui
 
