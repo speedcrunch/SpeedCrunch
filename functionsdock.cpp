@@ -61,6 +61,7 @@ FunctionsDock::FunctionsDock( QWidget* parent ): QDockWidget( tr("Functions"), p
     }
   }
 
+  d->list->setUpdatesEnabled(false);
   d->list->sortItems( 0, Qt::AscendingOrder );
 
   int group = 3;
@@ -71,6 +72,7 @@ FunctionsDock::FunctionsDock( QWidget* parent ): QDockWidget( tr("Functions"), p
     item->setBackground( 0, c );
     item->setBackground( 1, c );
   }
+  d->list->setUpdatesEnabled(true);
 }
 
 FunctionsDock::~FunctionsDock()
