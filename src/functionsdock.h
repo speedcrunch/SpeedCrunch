@@ -36,6 +36,8 @@ class FunctionsDock : public QDockWidget
     void functionSelected( const QString& e );
 
   protected slots:
+    void triggerFilter();
+    void filter();
     void handleItem( QTreeWidgetItem* item );
 
   private:
