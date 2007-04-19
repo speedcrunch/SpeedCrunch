@@ -1,4 +1,5 @@
 /* This file is part of the SpeedCrunch project
+   Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
    Copyright (C) 2004,2005 Ariya Hidayat <ariya@kde.org>
                  2005-2006 Johan Thelin <e8johan@gmail.com>
 
@@ -22,6 +23,8 @@
 #include "evaluator.h"
 
 #include <QFrame>
+#include <QHeaderView>
+#include <QTreeWidget>
 #include <QVBoxLayout>
 
 #include <qapplication.h>
@@ -78,40 +81,8 @@ class EditorCompletionPrivate
 public:
   Editor* editor;
   QFrame *completionPopup;
-  Q3ListBox *completionListBox;
+  QTreeWidget *completionListBox;
 };
-
-class ChoiceItem: public Q3ListBoxText
-{
-  public:
-    ChoiceItem( Q3ListBox*, const QString& );
-  protected:
-    void paint( QPainter* p );
-  private:
-    QString item;
-    QString desc;
-};
-
-ChoiceItem::ChoiceItem( Q3ListBox* listBox, const QString& text ):
-  Q3ListBoxText( listBox, text )
-{
-  QStringList list = QStringList::split( ':', text );
-  if( list.count() )  item = list[0];
-  if( list.count()>1 )  desc = list[1];
-}
-
-void ChoiceItem::paint( QPainter* painter )
-{
-  int itemHeight = height( listBox() );
-  QFontMetrics fm = painter->fontMetrics();
-  int yPos = ( ( itemHeight - fm.height() ) / 2 ) + fm.ascent();
-  painter->drawText( 3, yPos, item );
-
-  int xPos = fm.width( item );
-  if( !isSelected() )
-    painter->setPen( listBox()->palette().disabled().text().dark() );
-  painter->drawText( 10 + xPos, yPos, desc );
-}
 
 EditorHighlighter::EditorHighlighter( Editor* e ):
   Q3SyntaxHighlighter( e )
@@ -687,11 +658,17 @@ EditorCompletion::EditorCompletion( Editor* editor ): QObject( editor )
   d->completionPopup->installEventFilter( this );
   d->completionPopup->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-  d->completionListBox = new Q3ListBox( d->completionPopup );
+  d->completionListBox = new QTreeWidget( d->completionPopup );
+  d->completionListBox->setFrameShape( QFrame::NoFrame );
+  d->completionListBox->setColumnCount( 2 );
+  d->completionListBox->setRootIsDecorated( false );
+  d->completionListBox->header()->hide();
+  d->completionListBox->setEditTriggers( QTreeWidget::NoEditTriggers );
+  d->completionListBox->setSelectionBehavior( QTreeWidget::SelectRows );
+  d->completionListBox->setMouseTracking( true );
   d->completionPopup->setFocusProxy( d->completionListBox );
-  d->completionListBox->setFrameStyle( Q3Frame::NoFrame );
-  d->completionListBox->setVariableWidth( true );
   d->completionListBox->installEventFilter( this );
+  connect( d->completionListBox, SIGNAL(itemClicked(QTreeWidgetItem*,int)), SLOT(doneCompletion()) );
 
   QVBoxLayout* layout = new QVBoxLayout(d->completionPopup);
   d->completionPopup->setLayout(layout);
@@ -724,11 +701,7 @@ bool EditorCompletion::eventFilter( QObject *obj, QEvent *ev )
 		ke->key() == Qt::Key_Prior || ke->key() == Qt::Key_Next )
 	  {
 	    if( obj == d->completionPopup )
-	    {
-          d->completionListBox->setFocus();
-          QApplication::sendEvent( d->completionListBox, ev );
-          return true;
-        }
+             return true;
         else
         return false;
       }
@@ -738,13 +711,6 @@ bool EditorCompletion::eventFilter( QObject *obj, QEvent *ev )
       QApplication::sendEvent( d->editor, ev );
       return true;
     }
-
-    if ( ev->type() == QEvent::MouseButtonDblClick )
-    {
-      doneCompletion();
-      return true;
-    }
-
   }
 
   return false;
@@ -754,23 +720,28 @@ void EditorCompletion::doneCompletion()
 {
   d->completionPopup->close();
   d->editor->setFocus();
-  emit selectedCompletion( d->completionListBox->currentText() );
+  QTreeWidgetItem* item = d->completionListBox->currentItem();
+  emit selectedCompletion( item ? item->text(0) : QString() );
 }
 
 void EditorCompletion::showCompletion( const QStringList &choices )
 {
   if( !choices.count() ) return;
 
+  d->completionListBox->setUpdatesEnabled( false );
   d->completionListBox->clear();
   for( int i = 0; i < choices.count(); i++ )
-    new ChoiceItem( d->completionListBox, choices[i] );
-  d->completionListBox->setCurrentItem( 0 );
+    new QTreeWidgetItem( d->completionListBox, choices[i].split(':') );
+  d->completionListBox->sortItems( 0, Qt::AscendingOrder );
+  d->completionListBox->setCurrentItem( d->completionListBox->topLevelItem(0) );
+  d->completionListBox->adjustSize();
+  d->completionListBox->setUpdatesEnabled( true );
 
   // size of the pop-up
   d->completionPopup->setMaximumHeight( 100 );
-  d->completionPopup->resize( d->completionListBox->sizeHint() +
-           QSize( d->completionListBox->verticalScrollBar()->width() + 4,
-            d->completionListBox->horizontalScrollBar()->height() + 4 ) );
+  d->completionListBox->adjustSize();
+  //d->completionListBox->setMaximumHeight( 100 );
+  //d->completionPopup->adjustSize();
   int h = d->completionListBox->height();
   int w = d->completionListBox->width();
 

@@ -1,4 +1,5 @@
 /* This file is part of the SpeedCrunch project
+   Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
    Copyright (C) 2004,2005 Ariya Hidayat <ariya@kde.org>
 
    This program is free software; you can redistribute it and/or
@@ -20,19 +21,16 @@
 #ifndef EDITOR
 #define EDITOR
 
+#include "hmath.h"
+
 class QEvent;
 class QKeyEvent;
+class QWheelEvent;
 class QWidget;
-#include <qobject.h>
-#include <qstringlist.h>
+
 #include <q3textedit.h>
-//Added by qt3to4:
-#include <QWheelEvent>
-#include <QKeyEvent>
-#include <QEvent>
 
 class Evaluator;
-#include "hmath.h"
 
 class EditorPrivate;
 
@@ -114,11 +112,13 @@ class EditorCompletion : public QObject
     ~EditorCompletion();
 
     bool eventFilter( QObject *o, QEvent *e );
-    void doneCompletion();
     void showCompletion( const QStringList &choices );
 
   signals:
     void selectedCompletion( const QString& item );
+
+  public slots:
+    void doneCompletion();
 
   private:
     EditorCompletionPrivate* d;
