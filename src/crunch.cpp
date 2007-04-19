@@ -86,6 +86,8 @@ public:
   QAction* showClearButton;
   QAction* showEvalButton;
   QAction* showKeyPad;
+  QAction* showHistory;
+  QAction* showFunctions;
   QAction* configure;
   QAction* helpAboutQt;
   QAction* helpAbout;
@@ -237,9 +239,11 @@ Crunch::Crunch(): QMainWindow()
 
   d->historyDock = new HistoryDock( this );
   addDockWidget( Qt::RightDockWidgetArea, d->historyDock );
+  d->historyDock->installEventFilter( this );
 
   d->functionsDock = new FunctionsDock( this );
   addDockWidget( Qt::RightDockWidgetArea, d->functionsDock );
+  d->functionsDock->installEventFilter( this );
 
   // for autocalc
   d->autoCalcLabel = new AutoHideLabel( this );
@@ -353,9 +357,14 @@ void Crunch::createUI()
   d->actions->showClearButton = new QAction( tr("&Show Clear Button"), this );
   d->actions->showEvalButton = new QAction( tr("Show &Evaluate Button"), this );
   d->actions->showKeyPad = new QAction( tr("Show &Key Pad"), this );
+  d->actions->showHistory = new QAction( tr("Show Expression &History"), this );
+  d->actions->showFunctions = new QAction( tr("Show &Functions List"), this );
+
   d->actions->showClearButton->setToggleAction( true );
   d->actions->showEvalButton->setToggleAction( true );
   d->actions->showKeyPad->setToggleAction( true );
+  d->actions->showHistory->setToggleAction( true );
+  d->actions->showFunctions->setToggleAction( true );
 
   d->actions->configure = new QAction( tr("&Configure..."), this );
 
@@ -391,6 +400,8 @@ void Crunch::createUI()
   connect( d->actions->showClearButton, SIGNAL( activated() ), this, SLOT( showClearButton() ) );
   connect( d->actions->showEvalButton, SIGNAL( activated() ), this, SLOT( showEvalButton() ) );
   connect( d->actions->showKeyPad, SIGNAL( activated() ), this, SLOT( showKeyPad() ) );
+  connect( d->actions->showHistory, SIGNAL( activated() ), this, SLOT( showHistory() ) );
+  connect( d->actions->showFunctions, SIGNAL( activated() ), this, SLOT( showFunctions() ) );
   connect( d->actions->configure, SIGNAL( activated() ), this, SLOT( configure() ) );
   connect( d->actions->helpAbout, SIGNAL( activated() ), this, SLOT( about() ) );
   connect( d->actions->helpAboutQt, SIGNAL( activated() ), this, SLOT( aboutQt() ) );
@@ -440,9 +451,8 @@ void Crunch::createUI()
   settingsMenu->addAction( d->actions->showClearButton );
   settingsMenu->addAction( d->actions->showEvalButton );
   settingsMenu->addAction( d->actions->showKeyPad );
-  QMenu* docksMenu = settingsMenu->addMenu( tr("Show &Docks") );
-  docksMenu->addAction( d->historyDock->toggleViewAction() );
-  docksMenu->addAction( d->functionsDock->toggleViewAction() );
+  settingsMenu->addAction( d->actions->showHistory );
+  settingsMenu->addAction( d->actions->showFunctions );
   menuBar()->insertItem( tr("Se&ttings"), settingsMenu );
   settingsMenu->insertSeparator();
   settingsMenu->addAction( d->actions->configure );
@@ -571,6 +581,13 @@ void Crunch::applySettings()
   else
     d->keypad->hide();
   d->actions->showKeyPad->setOn( settings->showKeyPad );
+
+  d->historyDock->setVisible( settings->showHistory );
+  d->actions->showHistory->setOn( settings->showHistory );
+
+  d->functionsDock->setVisible( settings->showFunctions );
+  d->actions->showFunctions->setOn( settings->showFunctions );
+
 }
 
 void Crunch::closeEvent( QCloseEvent* e )
@@ -945,6 +962,22 @@ void Crunch::showKeyPad()
   applySettings();
 }
 
+void Crunch::showHistory()
+{
+  Settings* settings = Settings::self();
+  settings->showHistory = !settings->showHistory;
+  saveSettings();
+  applySettings();
+}
+
+void Crunch::showFunctions()
+{
+  Settings* settings = Settings::self();
+  settings->showFunctions = !settings->showFunctions;
+  saveSettings();
+  applySettings();
+}
+
 void Crunch::configure()
 {
   saveSettings();
@@ -1015,5 +1048,31 @@ void Crunch::showAutoCalc( const QString& msg )
   d->autoCalcLabel->move( p );
 
   d->autoCalcLabel->showText( msg );
+}
 
+bool Crunch::eventFilter( QObject* object, QEvent* event )
+{
+  if( object == d->historyDock )
+  {
+    if( event->type() == QEvent::Hide || event->type() == QEvent::Show )
+    {
+      Settings* settings = Settings::self();
+      settings->showHistory = event->type() == QEvent::Show;
+      saveSettings();
+      applySettings();
+    }
+  }
+
+  if( object == d->functionsDock )
+  {
+    if( event->type() == QEvent::Hide || event->type() == QEvent::Show )
+    {
+      Settings* settings = Settings::self();
+      settings->showFunctions = event->type() == QEvent::Show;
+      saveSettings();
+      applySettings();
+    }
+  }
+
+  return false;
 }

@@ -44,6 +44,9 @@ class Settings
     bool showClearInputButton;
     bool showEvaluateButton;
     bool showKeyPad;
+    bool showHistory;
+    bool showFunctions;
+
     bool customAppearance;
     QFont customFont;
     QColor customTextColor;

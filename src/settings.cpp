@@ -42,6 +42,9 @@ Settings::Settings()
   showClearInputButton = true;
   showEvaluateButton = true;
   showKeyPad = true;
+  showHistory = false;
+  showFunctions = false;
+
   customAppearance = false;
   customTextColor = Qt::black;
   customBackgroundColor1 = Qt::white;
@@ -80,6 +83,9 @@ void Settings::load()
   showClearInputButton = settings.readBoolEntry( key + "/Appearance/ShowClearInputButton", true );
   showEvaluateButton = settings.readBoolEntry( key + "/Appearance/ShowEvaluateButton", true );
   showKeyPad = settings.readBoolEntry( key + "/Appearance/ShowKeyPad", true );
+  showHistory = settings.readBoolEntry( key + "/Appearance/ShowHistory", false );
+  showFunctions = settings.readBoolEntry( key + "/Appearance/ShowFunctions", false );
+
   customAppearance = settings.readBoolEntry( key + "/Appearance/CustomAppearance", false );
   customFont.fromString( settings.readEntry( key + "/Appearance/CustomFont", QFont().toString() ) );
   customTextColor.setNamedColor( settings.readEntry(
@@ -154,6 +160,9 @@ void Settings::save()
   settings.writeEntry( key + "/Appearance/ShowClearInputButton", showClearInputButton );
   settings.writeEntry( key + "/Appearance/ShowEvaluateButton", showEvaluateButton );
   settings.writeEntry( key + "/Appearance/ShowKeyPad", showKeyPad );
+  settings.writeEntry( key + "/Appearance/ShowHistory", showHistory );
+  settings.writeEntry( key + "/Appearance/ShowFunctions", showFunctions );
+
   settings.writeEntry( key + "/Appearance/CustomAppearance", customAppearance );
   settings.writeEntry( key + "/Appearance/CustomFont", customFont.toString() );
   settings.writeEntry( key + "/Appearance/CustomTextColor", customTextColor.name() );
