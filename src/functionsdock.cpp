@@ -36,6 +36,7 @@ class FunctionsDockPrivate
     QTreeWidget* list;
     QLineEdit* filter;
     QTimer* filterTimer;
+    QLabel* noMatchLabel;
 };
 
 FunctionsDock::FunctionsDock( QWidget* parent ): QDockWidget( tr("Functions"), parent )
@@ -76,6 +77,12 @@ FunctionsDock::FunctionsDock( QWidget* parent ): QDockWidget( tr("Functions"), p
   d->filterTimer->setSingleShot( true );
   connect( d->filterTimer, SIGNAL( timeout() ), SLOT( filter() ) );
 
+  d->noMatchLabel = new QLabel( this );
+  d->noMatchLabel->setText( tr("No match found") );
+  d->noMatchLabel->setAlignment( Qt::AlignCenter );
+  d->noMatchLabel->adjustSize();
+  d->noMatchLabel->hide();
+
   setMinimumWidth( 200 );
   setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
 
@@ -109,7 +116,7 @@ void FunctionsDock::filter()
 {
   QString term = d->filter->text();
 
-  d->list->setUpdatesEnabled(false);
+  setUpdatesEnabled(false);
 
   d->list->clear();
   for( int k = 0; k < d->functionNames.count(); k++ )
@@ -127,18 +134,29 @@ void FunctionsDock::filter()
       }
   }
 
-  d->list->sortItems( 0, Qt::AscendingOrder );
-
-  int group = 3;
-  for(int i = 0; i < d->list->topLevelItemCount(); i++)
+  if( d->list->topLevelItemCount() > 0 )
   {
-    QTreeWidgetItem* item = d->list->topLevelItem(i);
-    QBrush c = ((int)(i/group))&1 ? palette().base() : palette().alternateBase();
-    item->setBackground( 0, c );
-    item->setBackground( 1, c );
+    d->noMatchLabel->hide();
+    d->list->sortItems( 0, Qt::AscendingOrder );
+
+    int group = 3;
+    for(int i = 0; i < d->list->topLevelItemCount(); i++)
+    {
+      QTreeWidgetItem* item = d->list->topLevelItem(i);
+      QBrush c = ((int)(i/group))&1 ? palette().base() : palette().alternateBase();
+      item->setBackground( 0, c );
+      item->setBackground( 1, c );
+    }
+  }
+  else
+  {
+    d->noMatchLabel->setGeometry( d->list->geometry() );
+    d->noMatchLabel->show();
+    d->noMatchLabel->raise();
   }
 
-  d->list->setUpdatesEnabled(true);
+
+  setUpdatesEnabled(true);
 }
 
 void FunctionsDock::handleItem( QTreeWidgetItem* item )
