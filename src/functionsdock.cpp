@@ -140,13 +140,14 @@ void FunctionsDock::filter()
     d->list->sortItems( 0, Qt::AscendingOrder );
 
     int group = 3;
-    for(int i = 0; i < d->list->topLevelItemCount(); i++)
-    {
-      QTreeWidgetItem* item = d->list->topLevelItem(i);
-      QBrush c = ((int)(i/group))&1 ? palette().base() : palette().alternateBase();
-      item->setBackground( 0, c );
-      item->setBackground( 1, c );
-    }
+    if( d->list->topLevelItemCount() >= 2*group )
+      for(int i = 0; i < d->list->topLevelItemCount(); i++)
+      {
+        QTreeWidgetItem* item = d->list->topLevelItem(i);
+        QBrush c = ((int)(i/group))&1 ? palette().base() : palette().alternateBase();
+        item->setBackground( 0, c );
+        item->setBackground( 1, c );
+      }
   }
   else
   {
