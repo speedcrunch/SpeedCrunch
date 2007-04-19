@@ -1,4 +1,5 @@
 /* This file is part of the SpeedCrunch project
+   Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
    Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
 
    This program is free software; you can redistribute it and/or
@@ -20,27 +21,22 @@
 #include "settings.h"
 
 #include <QApplication>
+#include <QButtonGroup>
 #include <QCheckBox>
 #include <QColorDialog>
 #include <QDialog>
 #include <QFontDialog>
+#include <QGroupBox>
+#include <QGridLayout>
+#include <QHBoxLayout>
 #include <QLabel>
-#include <qlayout.h>
 #include <QPainter>
 #include <QPushButton>
 #include <QRadioButton>
 #include <QTabWidget>
 #include <QTimer>
-#include <QPaintEvent>
-#include <QBoxLayout>
-#include <QShowEvent>
 #include <QVBoxLayout>
 
-#include <q3buttongroup.h>
-#include <q3grid.h>
-#include <q3hbox.h>
-#include <q3vbox.h>
-#include <Q3Frame>
 
 class ColorButtonPrivate
 {
@@ -61,7 +57,7 @@ public:
 
   QRadioButton* standardAppearanceCheck;
   QRadioButton* customAppearanceCheck;
-  Q3VBox* customBox;
+  QWidget* customBox;
   QLabel* fontLabel;
   QPushButton* chooseFontButton;
   ColorButton* textColorButton;
@@ -162,78 +158,119 @@ QWidget* ConfigDlgPrivate::generalPage()
 
 QWidget* ConfigDlgPrivate::appearancePage()
 {
-  Q3VBox* page = new Q3VBox( centerWidget );
-  page->setSpacing( 4 );
-  page->setMargin( 10 );
+  QWidget* page = new QWidget( centerWidget );
+  QVBoxLayout* layout = new QVBoxLayout;
+  page->setLayout( layout );
 
-  Q3ButtonGroup* group = new Q3ButtonGroup( page );
-  group->hide();
+  QButtonGroup* group = new QButtonGroup( page );
   standardAppearanceCheck = new QRadioButton( qApp->translate("ConfigDlgPrivate", "Standard"), page );
   customAppearanceCheck = new QRadioButton( qApp->translate("ConfigDlgPrivate", "Custom"), page );
-  group->insert( standardAppearanceCheck );
-  group->insert( customAppearanceCheck );
+  group->addButton( standardAppearanceCheck );
+  group->addButton( customAppearanceCheck );
 
-  customBox = new Q3VBox( page );
-  customBox->setSpacing( 10 );
+  customBox = new QWidget( page );
+  QVBoxLayout* customLayout = new QVBoxLayout;
+  customBox->setLayout( customLayout );
+  customLayout->setMargin( 0 );
 
-  Q3HBox* fontBox = new Q3HBox( customBox );
-  fontBox->setSpacing( 5 );
-  new QLabel( qApp->translate("ConfigDlgPrivate", "Font:"), fontBox );
+  QWidget* fontBox = new QWidget( customBox );
+  QHBoxLayout* fontLayout = new QHBoxLayout;
+  fontBox->setLayout( fontLayout );
+  fontLayout->setMargin( 0 );
+
+  QLabel* label = new QLabel( qApp->translate("ConfigDlgPrivate", "Font:"), fontBox );
   fontLabel = new QLabel( fontBox );
   fontLabel->setMinimumWidth( 150 );
-  fontLabel->setFrameStyle( Q3Frame::StyledPanel | Q3Frame::Sunken );
+  fontLabel->setFrameShape( QFrame::StyledPanel );
+  fontLabel->setFrameShadow( QFrame::Sunken );
   fontLabel->setLineWidth( 1 );
   fontLabel->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Preferred );
   chooseFontButton = new QPushButton( qApp->translate("ConfigDlgPrivate", "Choose..."), fontBox );
 
-  Q3Grid* colorGrid = new Q3Grid( 3, customBox );
-  colorGrid->setSpacing( 5 );
-  (new QLabel( qApp->translate("ConfigDlgPrivate", "Text Color:"), colorGrid ))->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
-  textColorButton = new ColorButton( colorGrid );
-  (new QWidget( colorGrid ))->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
-  (new QLabel( qApp->translate("ConfigDlgPrivate", "Background Color 1:"), colorGrid ))->setAlignment(
-    Qt::AlignVCenter | Qt::AlignRight );
-  bg1ColorButton = new ColorButton( colorGrid );
-  (new QWidget( colorGrid ))->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
-  (new QLabel( qApp->translate("ConfigDlgPrivate", "Background Color 2:"), colorGrid ))->setAlignment(
-    Qt::AlignVCenter | Qt::AlignRight );
-  bg2ColorButton = new ColorButton( colorGrid );
-  (new QWidget( colorGrid ))->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
+  fontLayout->addWidget( label );
+  fontLayout->addWidget( fontLabel );
+  fontLayout->addWidget( chooseFontButton );
 
-  (new QWidget( page ))->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Expanding );
+  QWidget* colorGroup = new QWidget( page );
+
+  QGridLayout* colorLayout = new QGridLayout;
+  colorGroup->setLayout( colorLayout );
+
+  QLabel* label1 = new QLabel( qApp->translate("ConfigDlgPrivate", "Text Color:"), colorGroup );
+  QLabel* label2 = new QLabel( qApp->translate("ConfigDlgPrivate", "Background Color 1:"), colorGroup );
+  QLabel* label3 = new QLabel( qApp->translate("ConfigDlgPrivate", "Background Color 2:"), colorGroup );
+
+  label1->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
+  label2->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
+  label3->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
+
+  textColorButton = new ColorButton( colorGroup );
+  bg1ColorButton = new ColorButton( colorGroup );
+  bg2ColorButton = new ColorButton( colorGroup );
+
+  colorLayout->addWidget( label1, 0, 0 );
+  colorLayout->addWidget( textColorButton, 0, 1 );
+  colorLayout->addWidget( label2, 1, 0 );
+  colorLayout->addWidget( bg1ColorButton, 1, 1 );
+  colorLayout->addWidget( label3, 2, 0 );
+  colorLayout->addWidget( bg2ColorButton, 2, 1 );
+  colorLayout->addItem( new QSpacerItem( 20, 0, QSizePolicy::MinimumExpanding,
+    QSizePolicy::Minimum ), 0, 2 );
+
+  customLayout->addWidget( fontBox );
+  customLayout->addWidget( colorGroup );
+
+  layout->addWidget( standardAppearanceCheck );
+  layout->addWidget( customAppearanceCheck );
+  layout->addWidget( customBox );
+  layout->addItem( new QSpacerItem( 0, 20, QSizePolicy::Minimum, QSizePolicy::MinimumExpanding ) );
 
   return page;
 }
 
 QWidget* ConfigDlgPrivate::hilitePage()
 {
-  Q3VBox* page = new Q3VBox( centerWidget );
-  page->setSpacing( 4 );
-  page->setMargin( 10 );
+  QWidget* page = new QWidget( centerWidget );
+  QVBoxLayout* layout = new QVBoxLayout;
+  page->setLayout( layout );
 
   enableHiliteCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Enable syntax highlight"), page );
 
-  Q3GroupBox* colorGroup = new Q3GroupBox( 1, Qt::Vertical, page );
+  QGroupBox* colorGroup = new QGroupBox( page );
   colorGroup->setTitle( qApp->translate("ConfigDlgPrivate", "Highlight Colors") );
-  Q3VBox* colorBox = new Q3VBox( colorGroup );
-  colorBox->setSpacing( 10 );
 
-  Q3Grid* colorGrid = new Q3Grid( 3, colorBox );
-  colorGrid->setSpacing( 5 );
-  (new QLabel( qApp->translate("ConfigDlgPrivate", "Number:"), colorGrid ))->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
-  numberColorButton = new ColorButton( colorGrid );
-  (new QWidget( colorGrid ))->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
-  (new QLabel( qApp->translate("ConfigDlgPrivate", "Function:"), colorGrid ))->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
-  functionColorButton = new ColorButton( colorGrid );
-  (new QWidget( colorGrid ))->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
-  (new QLabel( qApp->translate("ConfigDlgPrivate", "Variable:"), colorGrid ))->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
-  variableColorButton = new ColorButton( colorGrid );
-  (new QWidget( colorGrid ))->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
-  (new QLabel( qApp->translate("ConfigDlgPrivate", "Matched Parenthesis:"), colorGrid ))->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
-  matchParColorButton = new ColorButton( colorGrid );
-  (new QWidget( colorGrid ))->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
+  QGridLayout* colorLayout = new QGridLayout;
+  colorGroup->setLayout( colorLayout );
 
-  (new QWidget( page ))->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Expanding );
+  QLabel* label1 = new QLabel( qApp->translate("ConfigDlgPrivate", "Number:"), colorGroup );
+  QLabel* label2 = new QLabel( qApp->translate("ConfigDlgPrivate", "Function:"), colorGroup );
+  QLabel* label3 = new QLabel( qApp->translate("ConfigDlgPrivate", "Variable:"), colorGroup );
+  QLabel* label4 = new QLabel( qApp->translate("ConfigDlgPrivate", "Matched Parenthesis:"), colorGroup );
+
+  label1->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
+  label2->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
+  label3->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
+  label4->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
+
+  numberColorButton = new ColorButton( colorGroup );
+  functionColorButton = new ColorButton( colorGroup );
+  variableColorButton = new ColorButton( colorGroup );
+  matchParColorButton = new ColorButton( colorGroup );
+
+  colorLayout->addWidget( label1, 0, 0 );
+  colorLayout->addWidget( numberColorButton, 0, 1 );
+  colorLayout->addWidget( label2, 1, 0 );
+  colorLayout->addWidget( functionColorButton, 1, 1 );
+  colorLayout->addWidget( label3, 2, 0 );
+  colorLayout->addWidget( variableColorButton, 2, 1 );
+  colorLayout->addWidget( label4, 3, 0 );
+  colorLayout->addWidget( matchParColorButton, 3, 1 );
+  colorLayout->addItem( new QSpacerItem( 20, 0, QSizePolicy::MinimumExpanding,
+    QSizePolicy::Minimum ), 0, 2 );
+
+  layout->addWidget( enableHiliteCheck );
+  layout->addWidget( colorGroup );
+  layout->addItem( new QSpacerItem( 0, 20, QSizePolicy::Minimum, QSizePolicy::MinimumExpanding ) );
 
   return page;
 }
@@ -288,22 +325,28 @@ QDialog( parent, name )
   d = new ConfigDlgPrivate;
   setCaption( tr("Configure SpeedCrunch" ) );
 
-  QBoxLayout* mainLayout = new QVBoxLayout( this, 11, 6 );
-
   d->centerWidget = new QTabWidget( this );
-  mainLayout->addWidget( d->centerWidget );
+  d->centerWidget->addTab( d->generalPage(), tr("General") );
+  d->centerWidget->addTab( d->appearancePage(), tr("Appearance") );
+  d->centerWidget->addTab( d->hilitePage(), tr("Syntax Highlight") );
 
-  Q3HBox* buttonBox = new Q3HBox( this );
-  buttonBox->setSpacing( 10 );
-  mainLayout->addWidget( buttonBox );
-  (new QWidget( buttonBox ))->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
+  QWidget* buttonBox = new QWidget( this );
+  QHBoxLayout* buttonLayout = new QHBoxLayout;
+  buttonLayout->setMargin( 0 );
+  buttonBox->setLayout( buttonLayout );
+
   d->okButton = new QPushButton( tr("OK"), buttonBox );
   d->cancelButton = new QPushButton( tr("Cancel"), buttonBox );
   d->okButton->setDefault( true );
 
-  d->centerWidget->addTab( d->generalPage(), tr("General") );
-  d->centerWidget->addTab( d->appearancePage(), tr("Appearance") );
-  d->centerWidget->addTab( d->hilitePage(), tr("Syntax Highlight") );
+  buttonLayout->addItem( new QSpacerItem( 50, 0, QSizePolicy::MinimumExpanding, QSizePolicy::Minimum ) );
+  buttonLayout->addWidget( d->okButton );
+  buttonLayout->addWidget( d->cancelButton );
+
+  QBoxLayout* mainLayout = new QVBoxLayout;
+  mainLayout->addWidget( d->centerWidget );
+  mainLayout->addWidget( buttonBox );
+  setLayout( mainLayout );
 
   // signal slot
   connect( d->standardAppearanceCheck, SIGNAL( clicked() ), SLOT( customAppearance() ) );
