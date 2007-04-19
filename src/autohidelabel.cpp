@@ -22,7 +22,7 @@
 #include <QTimer>
 #include <QToolTip>
 
-#define TIMER_INTERVAL 50
+#define TIMER_INTERVAL 25
 #define FADE_STEP 16
 
 class AutoHideLabelPrivate
@@ -69,8 +69,8 @@ void AutoHideLabel::showText( const QString& msg )
 
 void AutoHideLabel::hideText()
 {
-  d->fadeTimer->stop();
-  hide();
+  if( d->alpha > 255 )
+    d->alpha = 255;
 }
 
 void AutoHideLabel::fade()
