@@ -259,8 +259,8 @@ Crunch::Crunch(): QMainWindow()
   connect( d->result, SIGNAL( textCopied( const QString& ) ), d->editor, SLOT( setFocus() ) );
   connect( d->historyDock, SIGNAL( expressionSelected( const QString& ) ), SLOT( expressionSelected( const QString& ) ) );
   connect( d->functionsDock, SIGNAL( functionSelected( const QString& ) ), SLOT( functionSelected( const QString& ) ) );
-  
-  
+
+
   connect( d->keypad, SIGNAL( addText( const QString& ) ), SLOT( addKeyPadText( const QString& ) ) );
 
   // Initialize settings
@@ -396,15 +396,15 @@ void Crunch::createUI()
   connect( d->actions->digits8, SIGNAL( activated() ), this, SLOT( digits8() ) );
   connect( d->actions->digits15, SIGNAL( activated() ), this, SLOT( digits15() ) );
   connect( d->actions->digits50, SIGNAL( activated() ), this, SLOT( digits50() ) );
-  connect( d->actions->showClearButton, SIGNAL( activated() ), this, SLOT( showClearButton() ) );
-  connect( d->actions->showEvalButton, SIGNAL( activated() ), this, SLOT( showEvalButton() ) );
-  connect( d->actions->showKeyPad, SIGNAL( activated() ), this, SLOT( showKeyPad() ) );
+  connect( d->actions->showClearButton, SIGNAL( toggled(bool) ), this, SLOT( showClearButton(bool) ) );
+  connect( d->actions->showEvalButton, SIGNAL( toggled(bool) ), this, SLOT( showEvalButton(bool) ) );
+  connect( d->actions->showKeyPad, SIGNAL( toggled(bool) ), this, SLOT( showKeyPad(bool) ) );
   connect( d->actions->showHistory, SIGNAL( toggled(bool) ), this, SLOT( showHistory(bool) ) );
   connect( d->actions->showFunctions, SIGNAL( toggled(bool) ), this, SLOT( showFunctions(bool) ) );
   connect( d->actions->configure, SIGNAL( activated() ), this, SLOT( configure() ) );
   connect( d->actions->helpAbout, SIGNAL( activated() ), this, SLOT( about() ) );
   connect( d->actions->helpAboutQt, SIGNAL( activated() ), this, SLOT( aboutQt() ) );
-  
+
   // synchronize dock actions
   connect( d->historyDock->toggleViewAction(), SIGNAL( toggled( bool ) ), d->actions->showHistory, SLOT( setChecked( bool ) ) );
   connect( d->functionsDock->toggleViewAction(), SIGNAL( toggled( bool ) ), d->actions->showFunctions, SLOT( setChecked( bool ) ) );
@@ -941,26 +941,26 @@ void Crunch::digits50()
   setDigits(50);
 }
 
-void Crunch::showClearButton()
+void Crunch::showClearButton( bool b )
 {
   Settings* settings = Settings::self();
-  settings->showClearInputButton = !settings->showClearInputButton;
+  settings->showClearInputButton = b;
   saveSettings();
   applySettings();
 }
 
-void Crunch::showEvalButton()
+void Crunch::showEvalButton( bool b )
 {
   Settings* settings = Settings::self();
-  settings->showEvaluateButton = !settings->showEvaluateButton;
+  settings->showEvaluateButton = b;
   saveSettings();
   applySettings();
 }
 
-void Crunch::showKeyPad()
+void Crunch::showKeyPad( bool b )
 {
   Settings* settings = Settings::self();
-  settings->showKeyPad = !settings->showKeyPad;
+  settings->showKeyPad = b;
   saveSettings();
   applySettings();
 }

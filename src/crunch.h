@@ -54,9 +54,9 @@ class Crunch : public QMainWindow
     void digits8();
     void digits15();
     void digits50();
-    void showClearButton();
-    void showEvalButton();
-    void showKeyPad();
+    void showClearButton(bool);
+    void showEvalButton(bool);
+    void showKeyPad(bool);
     void showHistory(bool);
     void showFunctions(bool);
     void configure();
