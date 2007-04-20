@@ -67,6 +67,7 @@ class Crunch : public QMainWindow
     void showAutoCalc( const QString& );
 
   protected slots:
+    void restoreDocks();
     void returnPressed();
     void expressionSelected( const QString & );
     void functionSelected( const QString & );
@@ -75,6 +76,7 @@ class Crunch : public QMainWindow
     void radixChanged();
 
   protected:
+    void saveDocks();
     virtual void closeEvent( QCloseEvent* );
 
   private:

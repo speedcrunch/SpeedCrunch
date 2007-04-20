@@ -238,9 +238,11 @@ Crunch::Crunch(): QMainWindow()
   // Docks
 
   d->historyDock = new HistoryDock( this );
+  d->historyDock->setObjectName( "HistoryWindow" );
   addDockWidget( Qt::RightDockWidgetArea, d->historyDock );
 
   d->functionsDock = new FunctionsDock( this );
+  d->functionsDock->setObjectName( "FunctionsList" );
   addDockWidget( Qt::RightDockWidgetArea, d->functionsDock );
 
   tabifyDockWidget( d->functionsDock, d->historyDock );
@@ -278,6 +280,7 @@ Crunch::Crunch(): QMainWindow()
   d->degButton->setChecked( true );
   createUI();
   applySettings();
+  restoreDocks();
 }
 
 Crunch::~Crunch()
@@ -590,17 +593,17 @@ void Crunch::applySettings()
     d->keypad->hide();
   d->actions->showKeyPad->setOn( settings->showKeyPad );
 
-  d->historyDock->setVisible( settings->showHistory );
   d->actions->showHistory->setOn( settings->showHistory );
-
-  d->functionsDock->setVisible( settings->showFunctions );
   d->actions->showFunctions->setOn( settings->showFunctions );
 
+  d->historyDock->setVisible( settings->showHistory );
+  d->functionsDock->setVisible( settings->showFunctions );
 }
 
 void Crunch::closeEvent( QCloseEvent* e )
 {
   saveSettings();
+  saveDocks();
   QMainWindow::closeEvent( e );
 }
 
@@ -653,6 +656,56 @@ void Crunch::saveSettings()
   }
 
   settings->save();
+}
+
+void Crunch::saveDocks()
+{
+  Settings* settings = Settings::self();
+
+  settings->mainWindowState = saveState();
+
+  settings->historyDockFloating = d->historyDock->isFloating();
+  settings->historyDockLeft = d->historyDock->x();
+  settings->historyDockTop = d->historyDock->y();
+  settings->historyDockWidth = d->historyDock->width();
+  settings->historyDockHeight = d->historyDock->height();
+
+  settings->functionsDockFloating = d->functionsDock->isFloating();
+  settings->functionsDockLeft = d->functionsDock->x();
+  settings->functionsDockTop = d->functionsDock->y();
+  settings->functionsDockWidth = d->functionsDock->width();
+  settings->functionsDockHeight = d->functionsDock->height();
+
+  settings->save();
+}
+
+void Crunch::restoreDocks()
+{
+  Settings* settings = Settings::self();
+
+  restoreState( settings->mainWindowState );
+
+  if( settings->showHistory )
+  if( settings->historyDockFloating )
+  if( !d->historyDock->isFloating() )
+  {
+    d->historyDock->hide();
+    d->historyDock->setFloating( true );
+    d->historyDock->move( settings->historyDockLeft, settings->historyDockTop );
+    d->historyDock->resize( settings->historyDockWidth, settings->historyDockHeight );
+    QTimer::singleShot(0, d->historyDock, SLOT(show()));
+  }
+
+  if( settings->showFunctions )
+  if( settings->functionsDockFloating )
+  if( !d->functionsDock->isFloating() )
+  {
+    d->functionsDock->hide();
+    d->functionsDock->setFloating( true );
+    d->functionsDock->move( settings->functionsDockLeft, settings->functionsDockTop );
+    d->functionsDock->resize( settings->functionsDockWidth, settings->functionsDockHeight );
+    QTimer::singleShot(0, d->functionsDock, SLOT(show()));
+  }
 }
 
 void Crunch::angleModeChanged()

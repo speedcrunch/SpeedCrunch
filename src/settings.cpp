@@ -57,6 +57,16 @@ Settings::Settings()
   matchedParenthesisColor = QColor(255,255,183);
 
   mainWindowSize = QSize( 0, 0 );
+  historyDockFloating = false;
+  historyDockLeft = 0;
+  historyDockTop = 0;
+  historyDockWidth = 150;
+  historyDockHeight = 400;
+  functionsDockFloating = false;
+  functionsDockLeft = 0;
+  functionsDockTop = 0;
+  functionsDockWidth = 150;
+  functionsDockHeight = 400;
 }
 
 void Settings::load()
@@ -99,6 +109,20 @@ void Settings::load()
     key + "/Appearance/CustomErrorColor", "red" ) );
   mainWindowSize = QSize( settings.readNumEntry( key + "/Appearance/WindowWidth", 0 ),
                           settings.readNumEntry( key + "/Appearance/WindowHeight", 0 ) );
+
+  key = SETTINGSKEY;
+  key += "/MainWindow/";
+  mainWindowState = settings.value( key + "State" ).toByteArray();
+  historyDockFloating = settings.readBoolEntry( key + "HistoryDockFloating", false );
+  historyDockTop = settings.readNumEntry( key + "HistoryDockTop", 0 );
+  historyDockLeft = settings.readNumEntry( key + "HistoryDockLeft", 0 );
+  historyDockWidth = settings.readNumEntry( key + "HistoryDockWidth", 150 );
+  historyDockHeight = settings.readNumEntry( key + "HistoryDockHeight", 400 );
+  functionsDockFloating = settings.readBoolEntry( key + "FunctionsDockFloating", false );
+  functionsDockTop = settings.readNumEntry( key + "FunctionsDockTop", 0 );
+  functionsDockLeft = settings.readNumEntry( key + "FunctionsDockLeft", 0 );
+  functionsDockWidth = settings.readNumEntry( key + "FunctionsDockWidth", 150 );
+  functionsDockHeight = settings.readNumEntry( key + "FunctionsDockHeight", 400 );
 
   key = SETTINGSKEY;
   key += "/SyntaxHighlight/";
@@ -174,6 +198,18 @@ void Settings::save()
   settings.writeEntry( key + "/Appearance/CustomErrorColor", customErrorColor.name() );
   settings.writeEntry( key + "/Appearance/WindowWidth", mainWindowSize.width() ),
   settings.writeEntry( key + "/Appearance/WindowHeight", mainWindowSize.height() );
+
+  settings.setValue( key + "/MainWindow/State", mainWindowState );
+  settings.writeEntry( key + "/MainWindow/HistoryDockFloating", historyDockFloating );
+  settings.writeEntry( key + "/MainWindow/HistoryDockTop", historyDockTop );
+  settings.writeEntry( key + "/MainWindow/HistoryDockLeft", historyDockLeft );
+  settings.writeEntry( key + "/MainWindow/HistoryDockWidth", historyDockWidth );
+  settings.writeEntry( key + "/MainWindow/HistoryDockHeight", historyDockHeight );
+  settings.writeEntry( key + "/MainWindow/FunctionsDockFloating", functionsDockFloating );
+  settings.writeEntry( key + "/MainWindow/FunctionsDockTop", functionsDockTop );
+  settings.writeEntry( key + "/MainWindow/FunctionsDockLeft", functionsDockLeft );
+  settings.writeEntry( key + "/MainWindow/FunctionsDockWidth", functionsDockWidth );
+  settings.writeEntry( key + "/MainWindow/FunctionsDockHeight", functionsDockHeight );
 
   key = SETTINGSKEY;
   key += "/SyntaxHighlight/";

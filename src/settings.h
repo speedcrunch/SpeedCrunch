@@ -64,6 +64,17 @@ class Settings
     QStringList variables;
 
     QSize mainWindowSize;
+    QByteArray mainWindowState;
+    bool historyDockFloating;
+    int historyDockTop;
+    int historyDockLeft;
+    int historyDockWidth;
+    int historyDockHeight;
+    bool functionsDockFloating;
+    int functionsDockTop;
+    int functionsDockLeft;
+    int functionsDockWidth;
+    int functionsDockHeight;
 
     Settings();
     static Settings* self();
