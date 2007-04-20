@@ -54,6 +54,8 @@ class Result : public QListWidget
     void setCustomBackgroundColor( const QColor& bg1, const QColor& bg2 );
     QColor customBackgroundColor1() const;
     QColor customBackgroundColor2() const;
+    void setCustomErrorColor( const QColor& e );
+    QColor customErrorColor() const;
 
   signals:
     void textCopied( const QString& text );

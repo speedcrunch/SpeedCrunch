@@ -38,6 +38,7 @@ public:
   QColor customTextColor;
   QColor customBackgroundColor1;
   QColor customBackgroundColor2;
+  QColor customErrorColor;
 };
 
 class BaseItem: public QListWidgetItem
@@ -138,7 +139,7 @@ class ErrorItem: public BaseItem
     {
       if( result->customAppearance() )
       {
-        setForeground( result->customTextColor() );
+        setForeground( result->customErrorColor() );
         setBackground( (index&1) ? result->customBackgroundColor1() :
           result->customBackgroundColor2() );
       }
@@ -164,6 +165,11 @@ Result::Result( QWidget* parent, const char* name ): QListWidget( parent )
   d->decimalDigits = -1;
   d->customAppearance = false;
   d->count = 0;
+
+  d->customTextColor = Qt::black;
+  d->customBackgroundColor1 = QColor( 255, 255, 255 );
+  d->customBackgroundColor2 = QColor( 200, 200, 200 );
+  d->customErrorColor = Qt::red;
 
   setObjectName( name );
   setBackgroundRole(QPalette::Base);
@@ -305,4 +311,14 @@ QColor Result::customBackgroundColor2() const
   return d->customBackgroundColor2;
 }
 
+void Result::setCustomErrorColor( const QColor& e )
+{
+  d->customErrorColor = e;
+  triggerUpdate();
+};
+
+QColor Result::customErrorColor() const
+{
+  return d->customErrorColor;
+}
 

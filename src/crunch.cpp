@@ -552,6 +552,7 @@ void Crunch::applySettings()
   d->result->setCustomTextColor( settings->customTextColor );
   d->result->setCustomBackgroundColor( settings->customBackgroundColor1,
     settings->customBackgroundColor2 );
+  d->result->setCustomErrorColor( settings->customErrorColor );
 
   if( settings->format == 'g' ) d->actions->viewGeneral->setOn( true );
   if( settings->format == 'f' ) d->actions->viewFixed->setOn( true );

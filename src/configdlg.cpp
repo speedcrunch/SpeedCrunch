@@ -63,6 +63,7 @@ public:
   ColorButton* textColorButton;
   ColorButton* bg1ColorButton;
   ColorButton* bg2ColorButton;
+  ColorButton* errorColorButton;
 
   QCheckBox* enableHiliteCheck;
   ColorButton* numberColorButton;
@@ -101,6 +102,7 @@ void ConfigDlgPrivate::loadSettings()
   textColorButton->setColor( settings->customTextColor );
   bg1ColorButton->setColor( settings->customBackgroundColor1 );
   bg2ColorButton->setColor( settings->customBackgroundColor2 );
+  errorColorButton->setColor( settings->customErrorColor );
 
   enableHiliteCheck->setChecked( settings->enableSyntaxHighlight );
   numberColorButton->setColor( settings->highlightNumberColor );
@@ -120,6 +122,7 @@ void ConfigDlgPrivate::saveSettings()
   settings->customTextColor = textColorButton->color();
   settings->customBackgroundColor1 = bg1ColorButton->color();
   settings->customBackgroundColor2 = bg2ColorButton->color();
+  settings->customErrorColor = errorColorButton->color();
   settings->enableSyntaxHighlight = enableHiliteCheck->isChecked();
   settings->highlightNumberColor = numberColorButton->color();
   settings->highlightFunctionColor = functionColorButton->color();
@@ -199,14 +202,17 @@ QWidget* ConfigDlgPrivate::appearancePage()
   QLabel* label1 = new QLabel( qApp->translate("ConfigDlgPrivate", "Text Color:"), colorGroup );
   QLabel* label2 = new QLabel( qApp->translate("ConfigDlgPrivate", "Background Color 1:"), colorGroup );
   QLabel* label3 = new QLabel( qApp->translate("ConfigDlgPrivate", "Background Color 2:"), colorGroup );
+  QLabel* label4 = new QLabel( qApp->translate("ConfigDlgPrivate", "Error Color:"), colorGroup );
 
   label1->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
   label2->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
   label3->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
+  label4->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
 
   textColorButton = new ColorButton( colorGroup );
   bg1ColorButton = new ColorButton( colorGroup );
   bg2ColorButton = new ColorButton( colorGroup );
+  errorColorButton = new ColorButton( colorGroup );
 
   colorLayout->addWidget( label1, 0, 0 );
   colorLayout->addWidget( textColorButton, 0, 1 );
@@ -214,6 +220,8 @@ QWidget* ConfigDlgPrivate::appearancePage()
   colorLayout->addWidget( bg1ColorButton, 1, 1 );
   colorLayout->addWidget( label3, 2, 0 );
   colorLayout->addWidget( bg2ColorButton, 2, 1 );
+  colorLayout->addWidget( label4, 3, 0 );
+  colorLayout->addWidget( errorColorButton, 3, 1 );
   colorLayout->addItem( new QSpacerItem( 20, 0, QSizePolicy::MinimumExpanding,
     QSizePolicy::Minimum ), 0, 2 );
 

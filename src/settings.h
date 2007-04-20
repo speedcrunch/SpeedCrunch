@@ -52,6 +52,7 @@ class Settings
     QColor customTextColor;
     QColor customBackgroundColor1;
     QColor customBackgroundColor2;
+    QColor customErrorColor;
 
     bool enableSyntaxHighlight;
     QColor highlightNumberColor;

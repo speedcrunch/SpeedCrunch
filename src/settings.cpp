@@ -49,6 +49,7 @@ Settings::Settings()
   customTextColor = Qt::black;
   customBackgroundColor1 = Qt::white;
   customBackgroundColor2 = Qt::white;
+  customErrorColor = Qt::red;
 
   highlightNumberColor = QColor(0,0,127);
   highlightFunctionColor = QColor(85,0,0);
@@ -94,6 +95,8 @@ void Settings::load()
     key + "/Appearance/CustomBackgroundColor1", "#ffffff" ) );
   customBackgroundColor2.setNamedColor( settings.readEntry(
     key + "/Appearance/CustomBackgroundColor2", "#eeeeee" ) );
+  customErrorColor.setNamedColor( settings.readEntry(
+    key + "/Appearance/CustomErrorColor", "red" ) );
   mainWindowSize = QSize( settings.readNumEntry( key + "/Appearance/WindowWidth", 0 ),
                           settings.readNumEntry( key + "/Appearance/WindowHeight", 0 ) );
 
@@ -168,6 +171,7 @@ void Settings::save()
   settings.writeEntry( key + "/Appearance/CustomTextColor", customTextColor.name() );
   settings.writeEntry( key + "/Appearance/CustomBackgroundColor1", customBackgroundColor1.name() );
   settings.writeEntry( key + "/Appearance/CustomBackgroundColor2", customBackgroundColor2.name() );
+  settings.writeEntry( key + "/Appearance/CustomErrorColor", customErrorColor.name() );
   settings.writeEntry( key + "/Appearance/WindowWidth", mainWindowSize.width() ),
   settings.writeEntry( key + "/Appearance/WindowHeight", mainWindowSize.height() );
 
