@@ -135,10 +135,10 @@ QWidget* ConfigDlgPrivate::generalPage()
 {
   QWidget *page = new QWidget( centerWidget );
 
-  saveHistoryCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Save history on exit"), page );
-  saveVariablesCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Save variables on exit"), page );
-  autoCompleteCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Automatic completion"), page );
-  autoCalcCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Automatically calculate as you type"), page );
+  saveHistoryCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Save &history on exit"), page );
+  saveVariablesCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Save &variables on exit"), page );
+  autoCompleteCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Automatic &completion"), page );
+  autoCalcCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Automatically calculate as you &type"), page );
 
   QVBoxLayout *layout = new QVBoxLayout;
 
@@ -166,8 +166,8 @@ QWidget* ConfigDlgPrivate::appearancePage()
   page->setLayout( layout );
 
   QButtonGroup* group = new QButtonGroup( page );
-  standardAppearanceCheck = new QRadioButton( qApp->translate("ConfigDlgPrivate", "Standard"), page );
-  customAppearanceCheck = new QRadioButton( qApp->translate("ConfigDlgPrivate", "Custom"), page );
+  standardAppearanceCheck = new QRadioButton( qApp->translate("ConfigDlgPrivate", "S&tandard"), page );
+  customAppearanceCheck = new QRadioButton( qApp->translate("ConfigDlgPrivate", "&Custom"), page );
   group->addButton( standardAppearanceCheck );
   group->addButton( customAppearanceCheck );
 
@@ -188,7 +188,7 @@ QWidget* ConfigDlgPrivate::appearancePage()
   fontLabel->setFrameShadow( QFrame::Sunken );
   fontLabel->setLineWidth( 1 );
   fontLabel->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Preferred );
-  chooseFontButton = new QPushButton( qApp->translate("ConfigDlgPrivate", "Choose..."), fontBox );
+  chooseFontButton = new QPushButton( qApp->translate("ConfigDlgPrivate", "C&hoose..."), fontBox );
 
   fontLayout->addWidget( label );
   fontLayout->addWidget( fontLabel );
@@ -199,10 +199,15 @@ QWidget* ConfigDlgPrivate::appearancePage()
   QGridLayout* colorLayout = new QGridLayout;
   colorGroup->setLayout( colorLayout );
 
-  QLabel* label1 = new QLabel( qApp->translate("ConfigDlgPrivate", "Text Color:"), colorGroup );
-  QLabel* label2 = new QLabel( qApp->translate("ConfigDlgPrivate", "Background Color 1:"), colorGroup );
-  QLabel* label3 = new QLabel( qApp->translate("ConfigDlgPrivate", "Background Color 2:"), colorGroup );
-  QLabel* label4 = new QLabel( qApp->translate("ConfigDlgPrivate", "Error Color:"), colorGroup );
+  QLabel* label1 = new QLabel( colorGroup );
+  QLabel* label2 = new QLabel( colorGroup );
+  QLabel* label3 = new QLabel( colorGroup );
+  QLabel* label4 = new QLabel( colorGroup );
+
+  label1->setText( qApp->translate("ConfigDlgPrivate", "Text Color:" ) );
+  label2->setText( qApp->translate("ConfigDlgPrivate", "Background Color 1:" ) );
+  label3->setText( qApp->translate("ConfigDlgPrivate", "Background Color 2:" ) );
+  label4->setText( qApp->translate("ConfigDlgPrivate", "Error Color:" ) );
 
   label1->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
   label2->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
@@ -242,7 +247,7 @@ QWidget* ConfigDlgPrivate::hilitePage()
   QVBoxLayout* layout = new QVBoxLayout;
   page->setLayout( layout );
 
-  enableHiliteCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Enable syntax highlight"), page );
+  enableHiliteCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "&Enable syntax highlight"), page );
 
   QGroupBox* colorGroup = new QGroupBox( page );
   colorGroup->setTitle( qApp->translate("ConfigDlgPrivate", "Highlight Colors") );
@@ -250,10 +255,15 @@ QWidget* ConfigDlgPrivate::hilitePage()
   QGridLayout* colorLayout = new QGridLayout;
   colorGroup->setLayout( colorLayout );
 
-  QLabel* label1 = new QLabel( qApp->translate("ConfigDlgPrivate", "Number:"), colorGroup );
-  QLabel* label2 = new QLabel( qApp->translate("ConfigDlgPrivate", "Function:"), colorGroup );
-  QLabel* label3 = new QLabel( qApp->translate("ConfigDlgPrivate", "Variable:"), colorGroup );
-  QLabel* label4 = new QLabel( qApp->translate("ConfigDlgPrivate", "Matched Parenthesis:"), colorGroup );
+  QLabel* label1 = new QLabel( colorGroup );
+  QLabel* label2 = new QLabel( colorGroup );
+  QLabel* label3 = new QLabel( colorGroup );
+  QLabel* label4 = new QLabel( colorGroup );
+
+  label1->setText( qApp->translate("ConfigDlgPrivate", "Number:") );
+  label2->setText( qApp->translate("ConfigDlgPrivate", "Function:") );
+  label3->setText( qApp->translate("ConfigDlgPrivate", "Variable:") );
+  label4->setText( qApp->translate("ConfigDlgPrivate", "Matched Parenthesis:") );
 
   label1->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
   label2->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
@@ -334,9 +344,9 @@ QDialog( parent, name )
   setCaption( tr("Configure SpeedCrunch" ) );
 
   d->centerWidget = new QTabWidget( this );
-  d->centerWidget->addTab( d->generalPage(), tr("General") );
-  d->centerWidget->addTab( d->appearancePage(), tr("Appearance") );
-  d->centerWidget->addTab( d->hilitePage(), tr("Syntax Highlight") );
+  d->centerWidget->addTab( d->generalPage(), tr("&General") );
+  d->centerWidget->addTab( d->appearancePage(), tr("&Appearance") );
+  d->centerWidget->addTab( d->hilitePage(), tr("&Syntax Highlight") );
 
   QWidget* buttonBox = new QWidget( this );
   QHBoxLayout* buttonLayout = new QHBoxLayout;
