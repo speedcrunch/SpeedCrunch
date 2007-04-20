@@ -976,6 +976,7 @@ void Crunch::showHistory( bool b )
   settings->showHistory = b;
   saveSettings();
   applySettings();
+  d->historyDock->raise();
 }
 
 void Crunch::showFunctions( bool b)
@@ -984,6 +985,7 @@ void Crunch::showFunctions( bool b)
   settings->showFunctions = b;
   saveSettings();
   applySettings();
+  d->functionsDock->raise();
 }
 
 void Crunch::configure()
