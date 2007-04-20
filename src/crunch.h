@@ -57,8 +57,8 @@ class Crunch : public QMainWindow
     void showClearButton();
     void showEvalButton();
     void showKeyPad();
-    void showHistory();
-    void showFunctions();
+    void showHistory(bool);
+    void showFunctions(bool);
     void configure();
     void about();
     void aboutQt();
@@ -76,7 +76,6 @@ class Crunch : public QMainWindow
 
   protected:
     virtual void closeEvent( QCloseEvent* );
-    bool eventFilter( QObject*, QEvent* );
 
   private:
     void createUI();

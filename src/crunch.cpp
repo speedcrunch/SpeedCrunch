@@ -239,11 +239,9 @@ Crunch::Crunch(): QMainWindow()
 
   d->historyDock = new HistoryDock( this );
   addDockWidget( Qt::RightDockWidgetArea, d->historyDock );
-  d->historyDock->installEventFilter( this );
 
   d->functionsDock = new FunctionsDock( this );
   addDockWidget( Qt::RightDockWidgetArea, d->functionsDock );
-  d->functionsDock->installEventFilter( this );
 
   // for autocalc
   d->autoCalcLabel = new AutoHideLabel( this );
@@ -261,7 +259,8 @@ Crunch::Crunch(): QMainWindow()
   connect( d->result, SIGNAL( textCopied( const QString& ) ), d->editor, SLOT( setFocus() ) );
   connect( d->historyDock, SIGNAL( expressionSelected( const QString& ) ), SLOT( expressionSelected( const QString& ) ) );
   connect( d->functionsDock, SIGNAL( functionSelected( const QString& ) ), SLOT( functionSelected( const QString& ) ) );
-
+  
+  
   connect( d->keypad, SIGNAL( addText( const QString& ) ), SLOT( addKeyPadText( const QString& ) ) );
 
   // Initialize settings
@@ -400,11 +399,15 @@ void Crunch::createUI()
   connect( d->actions->showClearButton, SIGNAL( activated() ), this, SLOT( showClearButton() ) );
   connect( d->actions->showEvalButton, SIGNAL( activated() ), this, SLOT( showEvalButton() ) );
   connect( d->actions->showKeyPad, SIGNAL( activated() ), this, SLOT( showKeyPad() ) );
-  connect( d->actions->showHistory, SIGNAL( activated() ), this, SLOT( showHistory() ) );
-  connect( d->actions->showFunctions, SIGNAL( activated() ), this, SLOT( showFunctions() ) );
+  connect( d->actions->showHistory, SIGNAL( toggled(bool) ), this, SLOT( showHistory(bool) ) );
+  connect( d->actions->showFunctions, SIGNAL( toggled(bool) ), this, SLOT( showFunctions(bool) ) );
   connect( d->actions->configure, SIGNAL( activated() ), this, SLOT( configure() ) );
   connect( d->actions->helpAbout, SIGNAL( activated() ), this, SLOT( about() ) );
   connect( d->actions->helpAboutQt, SIGNAL( activated() ), this, SLOT( aboutQt() ) );
+  
+  // synchronize dock actions
+  connect( d->historyDock->toggleViewAction(), SIGNAL( toggled( bool ) ), d->actions->showHistory, SLOT( setChecked( bool ) ) );
+  connect( d->functionsDock->toggleViewAction(), SIGNAL( toggled( bool ) ), d->actions->showFunctions, SLOT( setChecked( bool ) ) );
 
   // construct the menu
 
@@ -962,18 +965,18 @@ void Crunch::showKeyPad()
   applySettings();
 }
 
-void Crunch::showHistory()
+void Crunch::showHistory( bool b )
 {
   Settings* settings = Settings::self();
-  settings->showHistory = !settings->showHistory;
+  settings->showHistory = b;
   saveSettings();
   applySettings();
 }
 
-void Crunch::showFunctions()
+void Crunch::showFunctions( bool b)
 {
   Settings* settings = Settings::self();
-  settings->showFunctions = !settings->showFunctions;
+  settings->showFunctions = b;
   saveSettings();
   applySettings();
 }
@@ -1048,31 +1051,4 @@ void Crunch::showAutoCalc( const QString& msg )
   d->autoCalcLabel->move( p );
 
   d->autoCalcLabel->showText( msg );
-}
-
-bool Crunch::eventFilter( QObject* object, QEvent* event )
-{
-  if( object == d->historyDock )
-  {
-    if( event->type() == QEvent::Hide || event->type() == QEvent::Show )
-    {
-      Settings* settings = Settings::self();
-      settings->showHistory = event->type() == QEvent::Show;
-      saveSettings();
-      applySettings();
-    }
-  }
-
-  if( object == d->functionsDock )
-  {
-    if( event->type() == QEvent::Hide || event->type() == QEvent::Show )
-    {
-      Settings* settings = Settings::self();
-      settings->showFunctions = event->type() == QEvent::Show;
-      saveSettings();
-      applySettings();
-    }
-  }
-
-  return false;
 }
