@@ -243,6 +243,10 @@ Crunch::Crunch(): QMainWindow()
   d->functionsDock = new FunctionsDock( this );
   addDockWidget( Qt::RightDockWidgetArea, d->functionsDock );
 
+  tabifyDockWidget( d->functionsDock, d->historyDock );
+  d->historyDock->hide();
+  d->functionsDock->hide();
+
   // for autocalc
   d->autoCalcLabel = new AutoHideLabel( this );
   d->autoCalcLabel->hide();
