@@ -8,6 +8,7 @@ HEADERS += crunch.h
 HEADERS += config.h
 HEADERS += number.h
 HEADERS += historydock.h
+HEADERS += functionsdock.h
 HEADERS += hmath.h
 HEADERS += evaluator.h
 HEADERS += editor.h
@@ -25,6 +26,7 @@ HEADERS += autohidelabel.h
 
 SOURCES += crunch.cpp
 SOURCES += historydock.cpp
+SOURCES += functionsdock.cpp
 SOURCES += hmath.cpp
 SOURCES += number.c
 SOURCES += evaluator.cpp
