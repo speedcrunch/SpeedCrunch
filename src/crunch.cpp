@@ -121,6 +121,7 @@ public:
   bool autoAns;
 
   QSystemTrayIcon* trayIcon;
+  bool trayNotify;
 
   HistoryDock* historyDock;
   FunctionsDock* functionsDock;
@@ -139,6 +140,7 @@ Crunch::Crunch(): QMainWindow()
   d->eval = new Evaluator;
   d->autoAns = false;
   d->trayIcon = 0;
+  d->trayNotify = true;
 
   // Outer widget and layout
 
@@ -607,6 +609,7 @@ void Crunch::applySettings()
   {
     if( !d->trayIcon && QSystemTrayIcon::isSystemTrayAvailable() )
     {
+      d->trayNotify = true;
       d->trayIcon = new QSystemTrayIcon( this );
       d->trayIcon->setToolTip( tr("SpeedCrunch") );
       d->trayIcon->setIcon( QPixmap( ":/crunch.png" ) );      
@@ -751,9 +754,11 @@ void Crunch::minimizeToTray()
   {
     hide();
     d->trayIcon->show();
-    d->trayIcon->showMessage( QString(), 
-      tr("SpeedCrunch is minimized. \n Click on the icon to reactivate it"),
-      QSystemTrayIcon::NoIcon, 2000);
+	if( d->trayNotify )
+      d->trayIcon->showMessage( QString(), 
+        tr("SpeedCrunch is minimized. \n Click on the icon to reactivate it"),
+        QSystemTrayIcon::NoIcon, 2000);
+	d->trayNotify = false;
   }
 }
 
