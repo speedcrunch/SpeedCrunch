@@ -86,6 +86,7 @@ FunctionsDock::FunctionsDock( QWidget* parent ): QDockWidget( tr("Functions"), p
 
   setMinimumWidth( 200 );
   setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
+  setWindowIcon( QIcon() ); // no icon
 
   QStringList functionNames = FunctionRepository::self()->functionNames();
   for( int i = 0; i < functionNames.count(); i++ )

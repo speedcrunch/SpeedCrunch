@@ -37,6 +37,7 @@ HistoryDock::HistoryDock( QWidget* parent ): QDockWidget( tr("History"), parent 
 
   setMinimumWidth( 200 );
   setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
+  setWindowIcon( QIcon() ); // no icon
 }
 
 HistoryDock::~HistoryDock()
