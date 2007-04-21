@@ -69,6 +69,7 @@ FunctionsDock::FunctionsDock( QWidget* parent ): QDockWidget( tr("Functions"), p
   QVBoxLayout* layout = new QVBoxLayout;
   widget->setLayout( layout );
   setWidget( widget );
+  layout->setMargin( 3 );
   layout->addWidget( searchBox );
   layout->addWidget( d->list );
 
