@@ -37,6 +37,7 @@ class Settings
     bool saveVariables;
     bool autoComplete;
     bool autoCalc;
+	bool minimizeToTray;
 
     char format;
     int decimalDigits;

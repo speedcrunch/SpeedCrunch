@@ -54,6 +54,7 @@ public:
   QCheckBox* saveVariablesCheck;
   QCheckBox* autoCompleteCheck;
   QCheckBox* autoCalcCheck;
+  QCheckBox* minimizeToTrayCheck;
 
   QRadioButton* standardAppearanceCheck;
   QRadioButton* customAppearanceCheck;
@@ -89,6 +90,7 @@ void ConfigDlgPrivate::loadSettings()
   saveVariablesCheck->setChecked( settings->saveVariables );
   autoCompleteCheck->setChecked( settings->autoComplete );
   autoCalcCheck->setChecked( settings->autoCalc );
+  minimizeToTrayCheck->setChecked( settings->minimizeToTray );
 
   standardAppearanceCheck->setChecked( !settings->customAppearance );
   customAppearanceCheck->setChecked( settings->customAppearance );
@@ -118,6 +120,7 @@ void ConfigDlgPrivate::saveSettings()
   settings->saveVariables = saveVariablesCheck->isChecked();
   settings->autoComplete = autoCompleteCheck->isChecked();
   settings->autoCalc = autoCalcCheck->isChecked();
+  settings->minimizeToTray = minimizeToTrayCheck->isChecked();
   settings->customAppearance = customAppearanceCheck->isChecked();
   settings->customTextColor = textColorButton->color();
   settings->customBackgroundColor1 = bg1ColorButton->color();
@@ -139,6 +142,7 @@ QWidget* ConfigDlgPrivate::generalPage()
   saveVariablesCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Save &variables on exit"), page );
   autoCompleteCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Automatic &completion"), page );
   autoCalcCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Automatically calculate as you &type"), page );
+  minimizeToTrayCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Minimi&ze to system tray"), page );
 
   QVBoxLayout *layout = new QVBoxLayout;
 
@@ -146,6 +150,7 @@ QWidget* ConfigDlgPrivate::generalPage()
   layout->addWidget( saveVariablesCheck );
   layout->addWidget( autoCompleteCheck );
   layout->addWidget( autoCalcCheck );
+  layout->addWidget( minimizeToTrayCheck );
 
   QWidget *temp = new QWidget( page );
   temp->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Expanding );

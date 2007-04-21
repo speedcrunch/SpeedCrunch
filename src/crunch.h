@@ -32,6 +32,7 @@ class Crunch : public QMainWindow
   public:
     Crunch();
     ~Crunch();
+	bool event( QEvent* );
 
   public slots:
     void applySettings();
@@ -74,6 +75,8 @@ class Crunch : public QMainWindow
     void textChanged();
     void angleModeChanged();
     void radixChanged();
+	void minimizeToTray();
+	void trayIconActivated();
 
   protected:
     void saveDocks();

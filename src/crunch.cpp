@@ -50,6 +50,7 @@
 #include <QPixmap>
 #include <QPushButton>
 #include <QRadioButton>
+#include <QSystemTrayIcon>
 #include <QTextStream>
 #include <QTimer>
 #include <QToolTip>
@@ -119,6 +120,8 @@ public:
 
   bool autoAns;
 
+  QSystemTrayIcon* trayIcon;
+
   HistoryDock* historyDock;
   FunctionsDock* functionsDock;
 
@@ -135,6 +138,7 @@ Crunch::Crunch(): QMainWindow()
 
   d->eval = new Evaluator;
   d->autoAns = false;
+  d->trayIcon = 0;
 
   // Outer widget and layout
 
@@ -598,10 +602,43 @@ void Crunch::applySettings()
 
   d->historyDock->setVisible( settings->showHistory );
   d->functionsDock->setVisible( settings->showFunctions );
+
+  if( settings->minimizeToTray )
+  {
+    if( !d->trayIcon )
+    {
+      d->trayIcon = new QSystemTrayIcon( this );
+      d->trayIcon->setToolTip( tr("SpeedCrunch") );
+      d->trayIcon->setIcon( QPixmap( ":/crunch.png" ) );      
+      connect( d->trayIcon, SIGNAL( activated(QSystemTrayIcon::ActivationReason) ), 
+        SLOT( trayIconActivated() ) );
+    }
+  }
+  else
+  {
+    if( d->trayIcon )
+	  delete d->trayIcon;
+    d->trayIcon = 0;
+  }
 }
+
+bool Crunch::event( QEvent* e )
+{
+  if( e->type() == QEvent::WindowStateChange )
+  {
+    if( windowState() & Qt::WindowMinimized )
+    if( Settings::self()->minimizeToTray )
+		QTimer::singleShot( 100, this, SLOT(minimizeToTray()) );
+  }
+
+  return QMainWindow::event( e );
+}
+
 
 void Crunch::closeEvent( QCloseEvent* e )
 {
+  if(d->trayIcon)
+    d->trayIcon->hide();
   saveSettings();
   saveDocks();
   QMainWindow::closeEvent( e );
@@ -706,6 +743,25 @@ void Crunch::restoreDocks()
     d->functionsDock->resize( settings->functionsDockWidth, settings->functionsDockHeight );
     QTimer::singleShot(0, d->functionsDock, SLOT(show()));
   }
+}
+
+void Crunch::minimizeToTray()
+{
+  if( d->trayIcon )
+  {
+    hide();
+    d->trayIcon->show();
+    d->trayIcon->showMessage( QString(), 
+      tr("SpeedCrunch is minimized. \n Click on the icon to reactivate it"),
+      QSystemTrayIcon::NoIcon, 2000);
+  }
+}
+
+void Crunch::trayIconActivated()
+{
+  showNormal(); activateWindow();
+  d->editor->setFocus();
+  d->trayIcon->hide();
 }
 
 void Crunch::angleModeChanged()

@@ -35,6 +35,7 @@ Settings::Settings()
   saveVariables = true;
   autoComplete = true;
   autoCalc = true;
+  minimizeToTray = false;
 
   format = 'g';
   decimalDigits = -1;
@@ -80,6 +81,7 @@ void Settings::load()
   saveVariables = settings.readBoolEntry( key + "/General/SaveVariables", true );
   autoComplete = settings.readBoolEntry( key + "/General/AutoComplete", true );
   autoCalc = settings.readBoolEntry( key + "/General/AutoCalc", true );
+  minimizeToTray = settings.readBoolEntry( key + "/General/MinimizeToTray", false );
 
   QString formatStr = settings.readEntry( key + "/View/Format" );
   if( formatStr == "Fixed" ) format = 'f';
@@ -173,6 +175,7 @@ void Settings::save()
   settings.writeEntry( key + "/General/SaveVariables", saveVariables );
   settings.writeEntry( key + "/General/AutoComplete", autoComplete );
   settings.writeEntry( key + "/General/AutoCalc", autoCalc );
+  settings.writeEntry( key + "/General/MinimizeToTray", minimizeToTray );
 
   QString formatStr;
   if( format == 'f' ) formatStr = "Fixed";
