@@ -61,6 +61,7 @@ class Crunch : public QMainWindow
     void showHistory(bool);
     void showFunctions(bool);
     void configure();
+    void gotoWebsite();
     void about();
     void aboutQt();
     void addKeyPadText( const QString& );

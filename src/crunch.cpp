@@ -39,6 +39,7 @@
 #include <QApplication>
 #include <QClipboard>
 #include <QCloseEvent>
+#include <QDesktopServices>
 #include <QFile>
 #include <QFileDialog>
 #include <QHBoxLayout>
@@ -54,6 +55,7 @@
 #include <QTextStream>
 #include <QTimer>
 #include <QToolTip>
+#include <QUrl>
 #include <QVBoxLayout>
 #include <QWidget>
 
@@ -90,6 +92,7 @@ public:
   QAction* showHistory;
   QAction* showFunctions;
   QAction* configure;
+  QAction* helpGotoWebsite;
   QAction* helpAboutQt;
   QAction* helpAbout;
 };
@@ -380,6 +383,7 @@ void Crunch::createUI()
 
   d->actions->configure = new QAction( tr("&Configure..."), this );
 
+  d->actions->helpGotoWebsite = new QAction( tr("SpeedCrunch &Web Site..."), this );
   d->actions->helpAbout = new QAction( tr("&About"), this );
   d->actions->helpAboutQt = new QAction( tr("About &Qt"), this );
 
@@ -415,6 +419,7 @@ void Crunch::createUI()
   connect( d->actions->showHistory, SIGNAL( toggled(bool) ), this, SLOT( showHistory(bool) ) );
   connect( d->actions->showFunctions, SIGNAL( toggled(bool) ), this, SLOT( showFunctions(bool) ) );
   connect( d->actions->configure, SIGNAL( activated() ), this, SLOT( configure() ) );
+  connect( d->actions->helpGotoWebsite, SIGNAL( activated() ), this, SLOT( gotoWebsite() ) );
   connect( d->actions->helpAbout, SIGNAL( activated() ), this, SLOT( about() ) );
   connect( d->actions->helpAboutQt, SIGNAL( activated() ), this, SLOT( aboutQt() ) );
 
@@ -475,6 +480,8 @@ void Crunch::createUI()
 
   QMenu *helpMenu = new QMenu( this );
   menuBar()->insertItem( tr("&Help"), helpMenu );
+  helpMenu->addAction( d->actions->helpGotoWebsite );
+  helpMenu->insertSeparator();
   helpMenu->addAction( d->actions->helpAbout );
   helpMenu->addAction( d->actions->helpAboutQt );
 
@@ -1111,6 +1118,11 @@ void Crunch::configure()
     connect( d->configDlg, SIGNAL( settingsChanged() ), SLOT( applySettings() ) );
   }
   d->configDlg->exec();
+}
+
+void Crunch::gotoWebsite()
+{
+  QDesktopServices::openUrl( QUrl(QString::fromLatin1("http://speedcrunch.digitalfanatics.org")) );
 }
 
 void Crunch::about()
