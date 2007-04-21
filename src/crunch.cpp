@@ -605,7 +605,7 @@ void Crunch::applySettings()
 
   if( settings->minimizeToTray )
   {
-    if( !d->trayIcon )
+    if( !d->trayIcon && QSystemTrayIcon::isSystemTrayAvailable() )
     {
       d->trayIcon = new QSystemTrayIcon( this );
       d->trayIcon->setToolTip( tr("SpeedCrunch") );
