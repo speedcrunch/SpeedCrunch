@@ -10,6 +10,7 @@ fixed accuracy problem when calculating 10^x where x is integer
 shortcut Ctrl+Q to quit (ubuntu bug#102734)
 improved (and non-intrusive) autocalc tip
 color for error messages can be customized
+option to hide from taskbar and minimize to system tray
 
 SpeedCrunch 0.7
 ---------------

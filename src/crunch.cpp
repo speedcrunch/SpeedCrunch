@@ -638,7 +638,7 @@ bool Crunch::event( QEvent* e )
   {
     if( windowState() & Qt::WindowMinimized )
     if( Settings::self()->minimizeToTray )
-		QTimer::singleShot( 100, this, SLOT(minimizeToTray()) );
+      QTimer::singleShot( 100, this, SLOT(minimizeToTray()) );
   }
 
   return QMainWindow::event( e );
@@ -761,12 +761,18 @@ void Crunch::minimizeToTray()
   {
     hide();
     d->trayIcon->show();
-	if( d->trayNotify )
-      d->trayIcon->showMessage( QString(), 
-        tr("SpeedCrunch is minimized. \n Click on the icon to reactivate it"),
-        QSystemTrayIcon::NoIcon, 2000);
-	d->trayNotify = false;
+    if( d->trayNotify )
+      QTimer::singleShot( 500, this, SLOT(showTrayMessage()) );
+    d->trayNotify = false;
   }
+}
+
+void Crunch::showTrayMessage()
+{
+  if( d->trayIcon )
+    d->trayIcon->showMessage( QString(), 
+      tr("SpeedCrunch is minimized. \n Click on the icon to reactivate it"),
+      QSystemTrayIcon::NoIcon, 2000);
 }
 
 void Crunch::trayIconActivated()

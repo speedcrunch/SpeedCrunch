@@ -76,8 +76,9 @@ class Crunch : public QMainWindow
     void textChanged();
     void angleModeChanged();
     void radixChanged();
-	void minimizeToTray();
-	void trayIconActivated();
+    void minimizeToTray();
+    void showTrayMessage();
+    void trayIconActivated();
 
   protected:
     void saveDocks();
