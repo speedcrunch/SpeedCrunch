@@ -38,6 +38,7 @@ class Settings
     bool saveVariables;
     bool autoComplete;
     bool autoCalc;
+	QString decimalPoint;
 	bool minimizeToTray;
 
     char format;

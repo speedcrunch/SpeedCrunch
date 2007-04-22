@@ -25,6 +25,7 @@
 #include <QButtonGroup>
 #include <QCheckBox>
 #include <QColorDialog>
+#include <QComboBox>
 #include <QDialog>
 #include <QFontDialog>
 #include <QGroupBox>
@@ -56,6 +57,8 @@ public:
   QCheckBox* autoCompleteCheck;
   QCheckBox* autoCalcCheck;
   QCheckBox* minimizeToTrayCheck;
+
+  QComboBox* decimalList;
 
   QRadioButton* standardAppearanceCheck;
   QRadioButton* customAppearanceCheck;
@@ -93,6 +96,12 @@ void ConfigDlgPrivate::loadSettings()
   autoCalcCheck->setChecked( settings->autoCalc );
   minimizeToTrayCheck->setChecked( settings->minimizeToTray );
 
+  decimalList->setCurrentIndex(0);
+  if( settings->decimalPoint == "." )
+    decimalList->setCurrentIndex(1);
+  if( settings->decimalPoint == "," )
+    decimalList->setCurrentIndex(2);
+
   standardAppearanceCheck->setChecked( !settings->customAppearance );
   customAppearanceCheck->setChecked( settings->customAppearance );
   customBox->setEnabled( settings->customAppearance );
@@ -122,6 +131,8 @@ void ConfigDlgPrivate::saveSettings()
   settings->autoComplete = autoCompleteCheck->isChecked();
   settings->autoCalc = autoCalcCheck->isChecked();
   settings->minimizeToTray = minimizeToTrayCheck->isChecked();
+  settings->decimalPoint = decimalList->currentIndex()==1 ? QString('.') : 
+    decimalList->currentIndex()==2 ? QString(',') : QString();
   settings->customAppearance = customAppearanceCheck->isChecked();
   settings->customTextColor = textColorButton->color();
   settings->customBackgroundColor1 = bg1ColorButton->color();
@@ -145,6 +156,25 @@ QWidget* ConfigDlgPrivate::generalPage()
   autoCalcCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Automatically calculate as you &type"), page );
   minimizeToTrayCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Minimi&ze to system tray"), page );
 
+  QWidget* box = new QWidget( page );
+  QHBoxLayout* boxLayout = new QHBoxLayout;
+  box->setLayout( boxLayout );
+  boxLayout->setMargin( 0 );
+
+  QLabel* decimalLabel = new QLabel( box );
+  decimalLabel->setText( qApp->translate("ConfigDlgPrivate", "Decimal point:") );
+  //decimalLabel->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
+
+  decimalList = new QComboBox( box );
+  decimalList->setEditable( false );
+  decimalList->addItem( qApp->translate("ConfigDlgPrivate", "Auto detect") );
+  decimalList->addItem( qApp->translate("ConfigDlgPrivate", "Use dot (.)") );
+  decimalList->addItem( qApp->translate("ConfigDlgPrivate", "Use comma (,)" ) );
+
+  boxLayout->addWidget( decimalLabel );
+  boxLayout->addWidget( decimalList );
+  boxLayout->addItem( new QSpacerItem( 10, 0, QSizePolicy::MinimumExpanding, QSizePolicy::Minimum ) );
+
   QVBoxLayout *layout = new QVBoxLayout;
 
   layout->addWidget( saveHistoryCheck );
@@ -152,6 +182,8 @@ QWidget* ConfigDlgPrivate::generalPage()
   layout->addWidget( autoCompleteCheck );
   layout->addWidget( autoCalcCheck );
   layout->addWidget( minimizeToTrayCheck );
+  layout->addItem( new QSpacerItem( 0, 20, QSizePolicy::Minimum, QSizePolicy::Minimum ) );
+  layout->addWidget( box );
 
   QWidget *temp = new QWidget( page );
   temp->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Expanding );

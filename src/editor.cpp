@@ -573,24 +573,6 @@ void Editor::keyPressEvent( QKeyEvent* e )
     e->accept();
   }
 
-/*
-  if( e->key() == Qt::Key_Enter  || e->key() == Qt::Key_Return )
-  {
-    e->accept();
-    return;
-  }
-*/
-
-// FIXME: use locale settings
-   if( e->key() == Qt::Key_Comma && !(e->modifiers() & Qt::ControlModifier))
-  {
-    QKeyEvent * ke = new QKeyEvent(QEvent::KeyPress, Qt::Key_Period, 46,
-      e->state(), ".");
-    Q3TextEdit::keyPressEvent( ke );
-    delete ke;
-    return;
-  }
-
   if( e->key() == Qt::Key_Left ) checkMatching();
   if( e->key() == Qt::Key_Right ) checkMatching();
   if( e->key() == Qt::Key_Home ) checkMatching();

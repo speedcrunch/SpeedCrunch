@@ -20,12 +20,14 @@
 
 #include "evaluator.h"
 #include "functions.h"
+#include "settings.h"
 
 #include <float.h>
 #include <limits.h>
 #include <math.h>
 
 #include <QApplication>
+#include <QLocale>
 #include <QMap>
 #include <QString>
 #include <QStringList>
@@ -366,13 +368,17 @@ Tokens Evaluator::scan( const QString& expr )
   // to hold the result
   Tokens tokens;
 
+  // auto-detect, always dot, or always comma
+  QChar decimalPoint;
+  QString settingsDecimal = Settings::self()->decimalPoint;
+  if( settingsDecimal.length() == 1 )
+    decimalPoint = settingsDecimal[0];
+  else
+    decimalPoint = QLocale().decimalPoint();
+
   // parsing state
   enum { Start, Finish, Bad, InNumber, InHexa, InOctal, InBinary, InDecimal, InExpIndicator,
     InExponent, InIdentifier } state;
-
-  // TODO use locale settings if specified
-  QString thousand = "";
-  QString decimal = ".";
 
   // initialize variables
   state = Start;
@@ -412,7 +418,7 @@ Tokens Evaluator::scan( const QString& expr )
        }
 
        // decimal dot ?
-       else if ( QString(ch) == decimal )
+       else if ( ch == decimalPoint )
        {
          tokenText.append( ex.at(i++) );
          state = InDecimal;
@@ -488,11 +494,8 @@ Tokens Evaluator::scan( const QString& expr )
        // consume as long as it's digit
        if( ch.isDigit() ) tokenText.append( ex.at(i++) );
 
-       // skip thousand separator
-       else if( !thousand.isEmpty() && ( ch ==thousand[0] ) ) i++;
-
-       // convert decimal separator to '.'
-       else if( !decimal.isEmpty() && ( ch == decimal[0] ) )
+	   // convert decimal separator to '.'
+       else if( ch == decimalPoint )
        {
          tokenText.append( '.' );
          i++;
