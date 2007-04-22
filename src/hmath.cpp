@@ -161,13 +161,13 @@ static bc_num h_str2num( const char* str, int scale = HMATH_MAX_PREC )
   int digits, strscale;
   const char *ptr;
   char *nptr;
-  char zero_int;
+  bool zero_int;
 
   /* Check for valid number and count digits. */
   ptr = str;
   digits = 0;
   strscale = 0;
-  zero_int = FALSE;
+  zero_int = false;
   Base base = Decimal;
   if (*ptr == '+' || *ptr == '-') ptr++;  /* Sign */
    if ( *ptr == '0' ) //leadeing 0, could be hexadec etc.
@@ -278,7 +278,7 @@ static bc_num h_str2num( const char* str, int scale = HMATH_MAX_PREC )
       strscale = MIN(strscale, scale);
       if (digits == 0)
       {
-         zero_int = TRUE;
+         zero_int = true;
          digits = 1;
       }
 
