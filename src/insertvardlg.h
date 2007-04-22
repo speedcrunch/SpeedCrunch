@@ -32,7 +32,7 @@ class InsertVariableDlg : public QDialog
   Q_OBJECT
 
   public:
-    InsertVariableDlg( Evaluator* eval, QWidget* parent = 0, const char* name = 0 );
+    explicit InsertVariableDlg( Evaluator* eval, QWidget* parent = 0, const char* name = 0 );
     ~InsertVariableDlg();
 
     void updateList();

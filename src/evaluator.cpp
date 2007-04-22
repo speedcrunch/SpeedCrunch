@@ -1395,7 +1395,7 @@ void Evaluator::clearVariables()
 {
   d->variables.clear();
   set( QString("PI"), HMath::pi() );
-  set( QString("ans"), 0 );
+  set( QString("ans"), HNumber(0) );
 }
 
 QString Evaluator::autoFix( const QString& expr )

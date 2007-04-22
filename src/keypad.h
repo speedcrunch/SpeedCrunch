@@ -29,7 +29,7 @@ class KeyPad : public QWidget
   Q_OBJECT
 
   public:
-    KeyPad( QWidget* parent );
+    explicit KeyPad( QWidget* parent );
     ~KeyPad();
 
   protected slots:

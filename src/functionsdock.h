@@ -30,7 +30,7 @@ class FunctionsDock : public QDockWidget
   Q_OBJECT
 
   public:
-    FunctionsDock( QWidget* parent );
+    explicit FunctionsDock( QWidget* parent );
     ~FunctionsDock();
 
   signals:

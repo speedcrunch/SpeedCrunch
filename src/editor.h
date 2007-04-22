@@ -46,7 +46,7 @@ class Editor : public Q3TextEdit
       Number, FunctionName, Variable, MatchedPar
     } ColorType;
 
-    Editor( Evaluator* eval, QWidget* parent = 0, const char* name = 0 );
+    explicit Editor( Evaluator* eval, QWidget* parent = 0, const char* name = 0 );
     ~Editor();
 
     QSize sizeHint() const;

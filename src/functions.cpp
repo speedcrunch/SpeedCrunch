@@ -32,7 +32,7 @@
 
 HNumber deg2rad( HNumber x )
 {
-  return x * HMath::pi() / 180;
+  return x * HMath::pi() / HNumber(180);
 }
 
 HNumber rad2deg( HNumber x )
@@ -82,7 +82,7 @@ HNumber function_sqrt( const Evaluator*, Function* fn, const FunctionArguments& 
     return HNumber::nan();
 
   HNumber num = args[0];
-  if( num < 0 )
+  if( num < HNumber(0) )
   {
     fn->setError( qApp->translate( "Error",
       "Function sqrt expects positive argument" ) );
@@ -107,7 +107,7 @@ HNumber function_ln( const Evaluator*, Function* fn, const FunctionArguments& ar
     return HNumber::nan();
 
   HNumber num = args[0];
-  if( num < 0 )
+  if( num < HNumber(0) )
   {
     fn->setError( qApp->translate( "Error",
       "Function ln expects positive argument" ) );
@@ -123,7 +123,7 @@ HNumber function_log( const Evaluator*, Function* fn, const FunctionArguments& a
     return HNumber::nan();
 
   HNumber num = args[0];
-  if( num < 0 )
+  if( num < HNumber(0) )
   {
     fn->setError( qApp->translate( "Error",
       "Function log expects positive argument" ) );
@@ -139,7 +139,7 @@ HNumber function_lg( const Evaluator*, Function* fn, const FunctionArguments& ar
     return HNumber::nan();
 
   HNumber num = args[0];
-  if( num < 0 )
+  if( num < HNumber(0) )
   {
     fn->setError( qApp->translate( "Error",
       "Function lg expects positive argument" ) );
@@ -181,7 +181,7 @@ HNumber function_tan( const Evaluator* eval, Function* fn, const FunctionArgumen
     angle = deg2rad( angle );
 
   HNumber halfpi = HMath::pi() / HNumber(2);
-  if( ( angle == halfpi ) || ( angle == halfpi*3 ) )
+  if( ( angle == halfpi ) || ( angle == halfpi*HNumber(3) ) )
   {
     fn->setError( qApp->translate( "Error",
       "Invalid input to function tan" ) );
@@ -357,7 +357,7 @@ HNumber function_average( const Evaluator*, Function*, const FunctionArguments& 
   for( int c = 1; c < args.count(); c++ )
     result = result + args[c];
 
-  result = result / args.count();
+  result = result / HNumber(args.count());
 
   return result;
 }
@@ -371,9 +371,9 @@ HNumber function_geomean( const Evaluator*, Function*, const FunctionArguments& 
   for( int c = 1; c < args.count(); c++ )
     result = result * args[c];
 
-  result = result / args.count();
+  result = result / HNumber(args.count());
 
-  if( result <= 0)
+  if( result <= HNumber(0))
     return HNumber("NaN");
 
   return result;
@@ -484,7 +484,7 @@ HNumber Function::exec( const Evaluator* eval, const FunctionArguments& args )
   {
     setError( QString( qApp->translate( "Error",
       "Cannot execute function %1") ).arg( name() ) );
-    return 0;
+    return HNumber(0);
   }
 
   if( d->argc >= 0 )
@@ -492,7 +492,7 @@ HNumber Function::exec( const Evaluator* eval, const FunctionArguments& args )
   {
     setError( QString( qApp->translate( "Error",
       "Function %1 accepts %2 argument" ) ).arg( d->name ).arg( d->argc ) );
-    return 0;
+    return HNumber(0);
   }
 
   return (*d->ptr)( eval, this, args );

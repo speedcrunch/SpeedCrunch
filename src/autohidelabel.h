@@ -29,7 +29,7 @@ class AutoHideLabel: public QLabel
   Q_OBJECT
 
 public:
-  AutoHideLabel( QWidget* parent );
+  explicit AutoHideLabel( QWidget* parent );
   ~AutoHideLabel();
 
 public slots:
