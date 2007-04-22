@@ -1230,6 +1230,16 @@ HNumber HMath::exp( const HNumber& x )
   HNumber xs = HMath::abs( x );
 
   // adjust so that x is less than 1
+  // use the fact that e^x = (e^(x/2))^2
+  HNumber one(1);
+  HNumber half("0.5");
+  unsigned factor = 0;
+  while( xs > one )
+  {
+    factor ++;
+    xs = xs * half;
+  }
+  
   // Taylor expansion: e^x = 1 + x + x^2/2! + x^3/3! + ...
   HNumber num = xs;
   HNumber den = 1;
@@ -1247,6 +1257,13 @@ HNumber HMath::exp( const HNumber& x )
   }
 
   HNumber result = sum;
+  if( factor > 0 )
+    while( factor > 0 )
+    {
+      factor--;
+      result *= result;
+    }
+    
   if( negative )
     result = HMath::div( HNumber(1), result );
 

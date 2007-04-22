@@ -38,10 +38,9 @@ const HNumber&n, const char* expected )
   if( strcmp( result, expected ) )
   {
     hmath_failed_tests++;
-    std::cerr << file << "["<< line <<"]: " << msg;
-    std::cerr << "  Result: " << result;
-    std::cerr << ", ";
-    std::cerr << "Expected: " << expected;
+    std::cerr << file << "["<< line <<"]: " << msg << std::endl;
+    std::cerr << "  Result  : " << result  << std::endl;
+    std::cerr << "  Expected: " << expected  << std::endl;
     std::cerr << std::endl;
   }
   free( result );
@@ -55,10 +54,9 @@ const HNumber&n, char format, int prec, const char* expected )
   if( strcmp( result, expected ) )
   {
     hmath_failed_tests++;
-    std::cerr << file << "["<< line <<"]: " << msg;
-    std::cerr << "  Result: " << result;
-    std::cerr << ", ";
-    std::cerr << "Expected: " << expected;
+    std::cerr << file << "["<< line <<"]: " << msg << std::endl;
+    std::cerr << "  Result  : " << result  << std::endl;
+    std::cerr << "  Expected: " << expected  << std::endl;
     std::cerr << std::endl;
   }
   free( result );
@@ -72,10 +70,9 @@ const HNumber&n, const char* expected )
   if( strcmp( result, expected ) )
   {
     hmath_failed_tests++;
-    std::cerr << file << "["<< line <<"]: " << msg;
-    std::cerr << "  Result: " << result;
-    std::cerr << ", ";
-    std::cerr << "Expected: " << expected;
+    std::cerr << file << "["<< line <<"]: " << msg << std::endl;
+    std::cerr << "  Result  : " << result  << std::endl;
+    std::cerr << "  Expected: " << expected  << std::endl;
     std::cerr << std::endl;
   }
   free( result );
@@ -320,7 +317,9 @@ void test_functions()
   CHECK_PRECISE( HMath::exp("0.8"), "2.22554092849246760457953753139507675705363413504848" );
   CHECK_PRECISE( HMath::exp("0.9"), "2.45960311115694966380012656360247069542177230644008" );
   CHECK_PRECISE( HMath::exp("1.0"), "2.71828182845904523536028747135266249775724709369996" );
-
+  CHECK_PRECISE( HMath::exp("100"), "26881171418161354484126255515800135873611118.77374192241519160861528028703490956491415887109722" );
+  
+  
   // ln
   CHECK_PRECISE( HMath::ln("0.1"), "-2.30258509299404568401799145468436420760110148862877" );
   CHECK_PRECISE( HMath::ln("0.2"), "-1.60943791243410037460075933322618763952560135426852" );
