@@ -999,7 +999,7 @@ void Evaluator::compile( const Tokens& tokens ) const
             }
          }
 
-         // auxilary rule for unary operator:  (op) X -> X
+         // auxiliary rule for unary operator:  (op) X -> X
          // conditions: op is unary, op is first in syntax stack, token is not '('
          // action: push (op) to result
          if( !ruleFound )
@@ -1031,7 +1031,7 @@ void Evaluator::compile( const Tokens& tokens ) const
               syntaxStack.pop();
               syntaxStack.push( x );
 #ifdef EVALUATOR_DEBUG
-          dbg << "    Rule for unary operator (auxilary)" << "\n";
+          dbg << "    Rule for unary operator (auxiliary)" << "\n";
 #endif
             }
           }
@@ -1327,7 +1327,7 @@ HNumber Evaluator::eval()
     }
   }
 
-  // more than one value in stack ? unsuccesful execution...
+  // more than one value in stack ? unsuccesfull execution...
   if( stack.count() != 1 )
   {
     d->error = qApp->translate( "Error", "Invalid expression" );
