@@ -300,7 +300,7 @@ void Evaluator::setExpression( const QString& expr )
   d->expression = expr;
   d->dirty = true;
   d->valid = false;
-  d->error = QString::null;
+  d->error = QString();
 }
 
 // Returns the expression
@@ -330,16 +330,16 @@ bool Evaluator::isValid() const
 
 void Evaluator::clear()
 {
-  d->expression = QString::null;
+  d->expression = QString();
   d->dirty = true;
   d->valid = false;
 
-  d->error = QString::null;
+  d->error = QString();
   d->angleMode = Degree;
 
   d->constants.clear();
   d->codes.clear();
-  d->assignId = QString::null;
+  d->assignId = QString();
 
   clearVariables();
 }
@@ -637,7 +637,7 @@ void Evaluator::compile( const Tokens& tokens ) const
   d->codes.clear();
   d->constants.clear();
   d->identifiers.clear();
-  d->error = QString::null;
+  d->error = QString();
 
   // sanity check
   if( tokens.count() == 0 ) return;
@@ -1103,7 +1103,7 @@ HNumber Evaluator::eval()
     }
 
     // variable assignment?
-    d->assignId = QString::null;
+    d->assignId = QString();
     if( tokens.count() > 2 )
     if( tokens[0].isIdentifier() )
     if( tokens[1].asOperator() == Token::Equal )

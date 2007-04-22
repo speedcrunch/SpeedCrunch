@@ -479,7 +479,7 @@ void Function::setError( const QString& e )
 
 HNumber Function::exec( const Evaluator* eval, const FunctionArguments& args )
 {
-  d->error = QString::null;
+  d->error = QString();
   if( !d->ptr )
   {
     setError( QString( qApp->translate( "Error",
