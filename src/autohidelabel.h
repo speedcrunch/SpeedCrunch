@@ -40,6 +40,8 @@ private slots:
 
 private:
   AutoHideLabelPrivate* d;
+  AutoHideLabel( const AutoHideLabel& );
+  AutoHideLabel& operator=( const AutoHideLabel& );
 };
 
 #endif // AUTOHIDELABEL

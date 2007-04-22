@@ -81,6 +81,8 @@ class KeyPad : public QWidget
     void connectButtons();	
 	
     KeyPadPrivate*d;
+    KeyPad( const KeyPad& );
+    KeyPad& operator=( const KeyPad& );
 };
 
 #endif // KEYPAD

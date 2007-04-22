@@ -416,7 +416,7 @@ static void h_init()
 }
 
 
-HNumber::HNumber()
+HNumber::HNumber(): d(0)
 {
   h_init();
   d = new HNumberPrivate;
@@ -425,7 +425,7 @@ HNumber::HNumber()
   d->num = h_create();
 }
 
-HNumber::HNumber( const HNumber& hn )
+HNumber::HNumber( const HNumber& hn ): d(0)
 {
   h_init();
   d = new HNumberPrivate;
@@ -434,7 +434,7 @@ HNumber::HNumber( const HNumber& hn )
   operator=( hn );
 }
 
-HNumber::HNumber( int i )
+HNumber::HNumber( int i ): d(0)
 {
   h_init();
   d = new HNumberPrivate;
@@ -444,7 +444,7 @@ HNumber::HNumber( int i )
   bc_int2num( &d->num, i );
 }
 
-HNumber::HNumber( const char* str )
+HNumber::HNumber( const char* str ): d(0)
 {
   h_init();
   d = new HNumberPrivate;

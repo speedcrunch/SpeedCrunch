@@ -48,7 +48,9 @@ class MarqueeText: public QFrame
     void layout();
     
   private:
-    MarqueeTextPrivate *d;  
+    MarqueeTextPrivate *d;
+    MarqueeText( const MarqueeText& );
+    MarqueeText& operator=( const MarqueeText& );
 };
 
 class AboutBox : public QDialog

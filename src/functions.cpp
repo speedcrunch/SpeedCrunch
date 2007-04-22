@@ -423,6 +423,8 @@ public:
   QString desc;
   QString error;
   FunctionPtr ptr;
+  
+  FunctionPrivate(): name(), argc(0), desc(), error(), ptr(0) {}
 };
 
 class FunctionRepositoryPrivate
@@ -431,18 +433,18 @@ public:
   QHash<QString, Function*> functions;
 };
 
-Function::Function( const QString& name, int argc, FunctionPtr ptr, const QString& desc )
+Function::Function( const QString& name, int argc, FunctionPtr ptr, const QString& desc ):
+d( new FunctionPrivate )
 {
-  d = new FunctionPrivate;
   d->name = name;
   d->argc = argc;
   d->desc = qApp->translate( "FunctionRepository", desc );
   d->ptr = ptr;
 }
 
-Function::Function( const QString& name, FunctionPtr ptr, const QString& desc )
+Function::Function( const QString& name, FunctionPtr ptr, const QString& desc ):
+d( new FunctionPrivate )
 {
-  d = new FunctionPrivate;
   d->name = name;
   d->argc = -1;
   d->desc = qApp->translate( "FunctionRepository", desc );

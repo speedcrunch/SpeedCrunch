@@ -32,10 +32,8 @@ public:
   int alpha;
 };
 
-AutoHideLabel::AutoHideLabel( QWidget* parent ): QLabel( parent )
+AutoHideLabel::AutoHideLabel( QWidget* parent ): QLabel( parent ), d( new AutoHideLabelPrivate )
 {
-  d = new AutoHideLabelPrivate;
-
   d->fadeTimer = new QTimer( this );
   d->fadeTimer->setInterval( TIMER_INTERVAL );
   connect( d->fadeTimer, SIGNAL( timeout() ), SLOT( fade() ) );
