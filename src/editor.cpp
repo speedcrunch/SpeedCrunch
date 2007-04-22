@@ -186,7 +186,7 @@ QSize Editor::sizeHint() const
 {
   ensurePolished();
   QFontMetrics fm = fontMetrics();
-  int h = QMAX(fm.lineSpacing(), 14);
+  int h = qMax(fm.lineSpacing(), 14);
   int w = fm.width( 'x' ) * 20;
   int m = frameWidth() * 2;
 

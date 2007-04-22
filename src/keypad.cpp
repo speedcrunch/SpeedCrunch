@@ -150,7 +150,7 @@ void KeyPad::sizeButtons()
   QFontMetrics fm = d->key0->fontMetrics();
 
   int maxWidth = 0;
-  int textHeight = QMAX(fm.lineSpacing(), 14);
+  int textHeight = qMax(fm.lineSpacing(), 14);
 //  int marginSize = d->key0->frameWidth() * 2;
 
   // Find the widest text
