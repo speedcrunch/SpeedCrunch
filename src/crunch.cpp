@@ -777,9 +777,10 @@ void Crunch::showTrayMessage()
 
 void Crunch::trayIconActivated()
 {
-  showNormal(); activateWindow();
+  showNormal(); 
+  activateWindow();
   d->editor->setFocus();
-  d->trayIcon->hide();
+  QTimer::singleShot( 0, d->trayIcon, SLOT(hide()) );
 }
 
 void Crunch::angleModeChanged()
