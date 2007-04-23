@@ -1,0 +1,117 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % English "INCLUDE" > <!-- change language only here -->
+]>
+
+<book lang="&language;">
+<bookinfo>
+<title>The SpeedCrunch Handbook</title>
+
+<authorgroup>
+<author><firstname>Ariya</firstname> <surname>Hidayat</surname></author>
+</authorgroup>
+
+<copyright>
+<year>2007</year>
+<holder>Ariya Hidayat</holder>
+</copyright>
+
+<legalnotice>&FDLNotice;</legalnotice>
+
+<date>2007-04-30</date>
+<releaseinfo>0.8</releaseinfo>
+
+<abstract><para>SpeedCrunch is a multiplatform desktop calculator for power users</para></abstract>
+
+<keywordset>
+<keyword>SpeedCrunch</keyword>
+<keyword>calculator</keyword>
+</keywordset>
+
+</bookinfo>
+
+<chapter id="introduction">
+<title>Introduction</title>
+
+<para>This document describes SpeedCrunch version 0.8.</para>
+
+<para>Have fun with SpeedCrunch!</para>
+</chapter>
+
+<chapter id="installation">
+<title>Installation</title>
+
+<sect1 id="installation-windows">
+<title>Installation for Microsoft Windows</title>
+
+</sect1>
+
+<sect1 id="installation-macos">
+<title>Installation for Mac OS X</title>
+</sect1>
+
+<sect1 id="installation-linux">
+<title>Installation for Linux</title>
+
+<sect2 id="installation-suse">
+<title>Installation for OpenSUSE</title>
+</sect2>
+
+<sect2 id="installation-ubuntu">
+<title>Installation for Ubuntu/Kubuntu</title>
+</sect2>
+
+<sect2 id="installation-fedora">
+<title>Installation for Fedora Core</title>
+</sect2>
+
+</sect1>
+
+<sect1 id="compile">
+<title>Compilation from source code</title>
+</sect1>
+
+</chapter>
+
+<chapter id="getting-started">
+<title>Getting Started</title>
+</chapter>
+
+
+<chapter id="using-functions">
+<title>Using Functions</title>
+</chapter>
+
+
+<chapter id="questions-and-answers">
+<title>Questions and Answers</title>
+
+<qandaset>
+
+
+<qandaentry>
+<question><para>What is ans?</para></question>
+<answer><para>Ans is a special variable which holds the last calculation result.</para></answer>
+</qandaentry>
+
+</qandaset>
+</chapter>
+
+&commands;
+
+<chapter id="copyright">
+<title>Credits and License</title>
+
+<para>Program Copyright &copy; 2004-2007 Ariya Hidayat</para>
+<para>Program Copyright &copy; 2005-2006 Johan Thelin</para>
+
+<para>Documentation Copyright &copy; 2007 Ariya Hidayat.</para>
+
+&underFDL;
+&underGPL;
+
+</chapter>
+
+
+</book>
