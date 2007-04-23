@@ -47,6 +47,7 @@ Settings::Settings()
   showKeyPad = true;
   showHistory = false;
   showFunctions = false;
+  showVariables = false;
 
   customAppearance = false;
   customTextColor = Qt::black;
@@ -70,6 +71,11 @@ Settings::Settings()
   functionsDockTop = 0;
   functionsDockWidth = 150;
   functionsDockHeight = 400;
+  variablesDockFloating = false;
+  variablesDockLeft = 0;
+  variablesDockTop = 0;
+  variablesDockWidth = 150;
+  variablesDockHeight = 400;
 }
 
 void Settings::load()
@@ -101,6 +107,7 @@ void Settings::load()
   showKeyPad = settings.readBoolEntry( key + "/Appearance/ShowKeyPad", true );
   showHistory = settings.readBoolEntry( key + "/Appearance/ShowHistory", false );
   showFunctions = settings.readBoolEntry( key + "/Appearance/ShowFunctions", false );
+  showVariables = settings.readBoolEntry( key + "/Appearance/ShowVariables", false );
 
   customAppearance = settings.readBoolEntry( key + "/Appearance/CustomAppearance", false );
   customFont.fromString( settings.readEntry( key + "/Appearance/CustomFont", QFont().toString() ) );
@@ -128,6 +135,11 @@ void Settings::load()
   functionsDockLeft = settings.readNumEntry( key + "FunctionsDockLeft", 0 );
   functionsDockWidth = settings.readNumEntry( key + "FunctionsDockWidth", 150 );
   functionsDockHeight = settings.readNumEntry( key + "FunctionsDockHeight", 400 );
+  variablesDockFloating = settings.readBoolEntry( key + "VariablesDockFloating", false );
+  variablesDockTop = settings.readNumEntry( key + "VariablesDockTop", 0 );
+  variablesDockLeft = settings.readNumEntry( key + "VariablesDockLeft", 0 );
+  variablesDockWidth = settings.readNumEntry( key + "VariablesDockWidth", 150 );
+  variablesDockHeight = settings.readNumEntry( key + "VariablesDockHeight", 400 );
 
   key = SETTINGSKEY;
   key += "/SyntaxHighlight/";
@@ -196,6 +208,7 @@ void Settings::save()
   settings.writeEntry( key + "/Appearance/ShowKeyPad", showKeyPad );
   settings.writeEntry( key + "/Appearance/ShowHistory", showHistory );
   settings.writeEntry( key + "/Appearance/ShowFunctions", showFunctions );
+  settings.writeEntry( key + "/Appearance/ShowVariables", showVariables );
 
   settings.writeEntry( key + "/Appearance/CustomAppearance", customAppearance );
   settings.writeEntry( key + "/Appearance/CustomFont", customFont.toString() );
@@ -217,6 +230,11 @@ void Settings::save()
   settings.writeEntry( key + "/MainWindow/FunctionsDockLeft", functionsDockLeft );
   settings.writeEntry( key + "/MainWindow/FunctionsDockWidth", functionsDockWidth );
   settings.writeEntry( key + "/MainWindow/FunctionsDockHeight", functionsDockHeight );
+  settings.writeEntry( key + "/MainWindow/VariablesDockFloating", variablesDockFloating );
+  settings.writeEntry( key + "/MainWindow/VariablesDockTop", variablesDockTop );
+  settings.writeEntry( key + "/MainWindow/VariablesDockLeft", variablesDockLeft );
+  settings.writeEntry( key + "/MainWindow/VariablesDockWidth", variablesDockWidth );
+  settings.writeEntry( key + "/MainWindow/VariablesDockHeight", variablesDockHeight );
 
   key = SETTINGSKEY;
   key += "/SyntaxHighlight/";

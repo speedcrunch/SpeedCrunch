@@ -38,8 +38,8 @@ class Settings
     bool saveVariables;
     bool autoComplete;
     bool autoCalc;
-	QString decimalPoint;
-	bool minimizeToTray;
+    QString decimalPoint;
+    bool minimizeToTray;
 
     char format;
     int decimalDigits;
@@ -49,6 +49,7 @@ class Settings
     bool showKeyPad;
     bool showHistory;
     bool showFunctions;
+    bool showVariables;
 
     bool customAppearance;
     QFont customFont;
@@ -78,6 +79,11 @@ class Settings
     int functionsDockLeft;
     int functionsDockWidth;
     int functionsDockHeight;
+    bool variablesDockFloating;
+    int variablesDockTop;
+    int variablesDockLeft;
+    int variablesDockWidth;
+    int variablesDockHeight;
 
     Settings();
     static Settings* self();

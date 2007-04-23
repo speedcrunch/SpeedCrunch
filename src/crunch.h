@@ -33,7 +33,7 @@ class Crunch : public QMainWindow
   public:
     Crunch();
     ~Crunch();
-	bool event( QEvent* );
+    bool event( QEvent* );
 
   public slots:
     void applySettings();
@@ -61,6 +61,7 @@ class Crunch : public QMainWindow
     void showKeyPad(bool);
     void showHistory(bool);
     void showFunctions(bool);
+    void showVariables(bool);
     void configure();
     void gotoWebsite();
     void about();
@@ -74,6 +75,7 @@ class Crunch : public QMainWindow
     void returnPressed();
     void expressionSelected( const QString & );
     void functionSelected( const QString & );
+    void variableSelected( const QString & );
     void textChanged();
     void angleModeChanged();
     void radixChanged();

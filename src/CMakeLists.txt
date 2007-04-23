@@ -50,6 +50,7 @@ main.cpp
 number.c
 result.cpp
 settings.cpp
+variablesdock.cpp
 )
 
 # headers
@@ -72,6 +73,7 @@ keypad.h
 number.h
 result.h
 settings.h
+variablesdock.h
 )
 
 # forms

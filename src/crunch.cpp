@@ -28,6 +28,8 @@
 #include "functionsdock.h"
 #include "result.h"
 #include "settings.h"
+#include "variablesdock.h"
+
 #include "insertfunctiondlg.h"
 #include "insertvardlg.h"
 #include "deletevardlg.h"
@@ -92,6 +94,7 @@ public:
   QAction* showKeyPad;
   QAction* showHistory;
   QAction* showFunctions;
+  QAction* showVariables;
   QAction* configure;
   QAction* helpGotoWebsite;
   QAction* helpAboutQt;
@@ -129,6 +132,7 @@ public:
 
   HistoryDock* historyDock;
   FunctionsDock* functionsDock;
+  VariablesDock* variablesDock;
 
   ConfigDlg* configDlg;
   InsertFunctionDlg* insertFunctionDlg;
@@ -255,9 +259,15 @@ Crunch::Crunch(): QMainWindow()
   d->functionsDock->setObjectName( "FunctionsList" );
   addDockWidget( Qt::RightDockWidgetArea, d->functionsDock );
 
+  d->variablesDock = new VariablesDock( this );
+  d->variablesDock->setObjectName( "VariablesList" );
+  addDockWidget( Qt::RightDockWidgetArea, d->variablesDock );
+
   tabifyDockWidget( d->functionsDock, d->historyDock );
+  tabifyDockWidget( d->functionsDock, d->variablesDock );
   d->historyDock->hide();
   d->functionsDock->hide();
+  d->variablesDock->hide();
 
   // for autocalc
   d->autoCalcLabel = new AutoHideLabel( this );
@@ -275,6 +285,7 @@ Crunch::Crunch(): QMainWindow()
   connect( d->result, SIGNAL( textCopied( const QString& ) ), d->editor, SLOT( setFocus() ) );
   connect( d->historyDock, SIGNAL( expressionSelected( const QString& ) ), SLOT( expressionSelected( const QString& ) ) );
   connect( d->functionsDock, SIGNAL( functionSelected( const QString& ) ), SLOT( functionSelected( const QString& ) ) );
+  connect( d->variablesDock, SIGNAL( variableSelected( const QString& ) ), SLOT( variableSelected( const QString& ) ) );
 
 
   connect( d->keypad, SIGNAL( addText( const QString& ) ), SLOT( addKeyPadText( const QString& ) ) );
@@ -375,12 +386,14 @@ void Crunch::createUI()
   d->actions->showKeyPad = new QAction( tr("Show &Key Pad"), this );
   d->actions->showHistory = new QAction( tr("Show Expression &History"), this );
   d->actions->showFunctions = new QAction( tr("Show &Functions List"), this );
+  d->actions->showVariables = new QAction( tr("Show &Variables List"), this );
 
   d->actions->showClearButton->setToggleAction( true );
   d->actions->showEvalButton->setToggleAction( true );
   d->actions->showKeyPad->setToggleAction( true );
   d->actions->showHistory->setToggleAction( true );
   d->actions->showFunctions->setToggleAction( true );
+  d->actions->showVariables->setToggleAction( true );
 
   d->actions->configure = new QAction( tr("&Configure..."), this );
 
@@ -419,6 +432,7 @@ void Crunch::createUI()
   connect( d->actions->showKeyPad, SIGNAL( toggled(bool) ), this, SLOT( showKeyPad(bool) ) );
   connect( d->actions->showHistory, SIGNAL( toggled(bool) ), this, SLOT( showHistory(bool) ) );
   connect( d->actions->showFunctions, SIGNAL( toggled(bool) ), this, SLOT( showFunctions(bool) ) );
+  connect( d->actions->showVariables, SIGNAL( toggled(bool) ), this, SLOT( showVariables(bool) ) );
   connect( d->actions->configure, SIGNAL( activated() ), this, SLOT( configure() ) );
   connect( d->actions->helpGotoWebsite, SIGNAL( activated() ), this, SLOT( gotoWebsite() ) );
   connect( d->actions->helpAbout, SIGNAL( activated() ), this, SLOT( about() ) );
@@ -427,6 +441,7 @@ void Crunch::createUI()
   // synchronize dock actions
   connect( d->historyDock->toggleViewAction(), SIGNAL( toggled( bool ) ), d->actions->showHistory, SLOT( setChecked( bool ) ) );
   connect( d->functionsDock->toggleViewAction(), SIGNAL( toggled( bool ) ), d->actions->showFunctions, SLOT( setChecked( bool ) ) );
+  connect( d->variablesDock->toggleViewAction(), SIGNAL( toggled( bool ) ), d->actions->showVariables, SLOT( setChecked( bool ) ) );
 
   // construct the menu
 
@@ -475,6 +490,7 @@ void Crunch::createUI()
   settingsMenu->addAction( d->actions->showKeyPad );
   settingsMenu->addAction( d->actions->showHistory );
   settingsMenu->addAction( d->actions->showFunctions );
+  settingsMenu->addAction( d->actions->showVariables );
   menuBar()->insertItem( tr("Se&ttings"), settingsMenu );
   settingsMenu->insertSeparator();
   settingsMenu->addAction( d->actions->configure );
@@ -539,6 +555,7 @@ void Crunch::applySettings()
       d->eval->setExpression( settings->variables[k] );
       d->eval->eval();
     }
+    d->variablesDock->updateList( d->eval );
   }
 
   switch( settings->format )
@@ -612,9 +629,11 @@ void Crunch::applySettings()
 
   d->actions->showHistory->setOn( settings->showHistory );
   d->actions->showFunctions->setOn( settings->showFunctions );
+  d->actions->showVariables->setOn( settings->showVariables );
 
   d->historyDock->setVisible( settings->showHistory );
   d->functionsDock->setVisible( settings->showFunctions );
+  d->variablesDock->setVisible( settings->showVariables );
 
   if( settings->minimizeToTray )
   {
@@ -729,6 +748,12 @@ void Crunch::saveDocks()
   settings->functionsDockWidth = d->functionsDock->width();
   settings->functionsDockHeight = d->functionsDock->height();
 
+  settings->variablesDockFloating = d->variablesDock->isFloating();
+  settings->variablesDockLeft = d->variablesDock->x();
+  settings->variablesDockTop = d->variablesDock->y();
+  settings->variablesDockWidth = d->variablesDock->width();
+  settings->variablesDockHeight = d->variablesDock->height();
+
   settings->save();
 }
 
@@ -758,6 +783,17 @@ void Crunch::restoreDocks()
     d->functionsDock->move( settings->functionsDockLeft, settings->functionsDockTop );
     d->functionsDock->resize( settings->functionsDockWidth, settings->functionsDockHeight );
     QTimer::singleShot(0, d->functionsDock, SLOT(show()));
+  }
+
+  if( settings->showVariables )
+  if( settings->variablesDockFloating )
+  if( !d->variablesDock->isFloating() )
+  {
+    d->variablesDock->hide();
+    d->variablesDock->setFloating( true );
+    d->variablesDock->move( settings->variablesDockLeft, settings->variablesDockTop );
+    d->variablesDock->resize( settings->variablesDockWidth, settings->variablesDockHeight );
+    QTimer::singleShot(0, d->variablesDock, SLOT(show()));
   }
 }
 
@@ -799,6 +835,11 @@ void Crunch::trayIconActivated()
   {
     d->functionsDock->hide();
     QTimer::singleShot( 0, d->functionsDock, SLOT(show()) );
+  }
+  if( d->variablesDock->isFloating() )
+  {
+    d->variablesDock->hide();
+    QTimer::singleShot( 0, d->variablesDock, SLOT(show()) );
   }
 #endif
 }
@@ -876,6 +917,7 @@ void Crunch::returnPressed()
   {
     d->result->append( str, result );
     d->editor->setAnsAvailable( true );
+    d->variablesDock->updateList( d->eval );
   }
 
   d->editor->setText( str );
@@ -904,6 +946,18 @@ void Crunch::functionSelected( const QString& e )
     return;
   d->editor->insert( e );
   d->editor->insert( "(" );
+
+  QTimer::singleShot( 0, d->editor, SLOT(setFocus()) );
+
+  if( !isActiveWindow () )
+    activateWindow();
+}
+
+void Crunch::variableSelected( const QString& v )
+{
+  if( v.isEmpty() )
+    return;
+  d->editor->insert( v );
 
   QTimer::singleShot( 0, d->editor, SLOT(setFocus()) );
 
@@ -963,6 +1017,7 @@ void Crunch::clearInput()
 void Crunch::clearVariables()
 {
   d->eval->clearVariables();
+  d->variablesDock->updateList( d->eval );
 }
 
 void Crunch::insertFunction()
@@ -1002,6 +1057,7 @@ void Crunch::deleteVariable()
     d->deleteVariableDlg->updateList();
 
   d->deleteVariableDlg->exec();
+  d->variablesDock->updateList( d->eval );
 }
 
 void Crunch::setView(char c)
@@ -1134,6 +1190,15 @@ void Crunch::showFunctions( bool b)
   saveSettings();
   applySettings();
   d->functionsDock->raise();
+}
+
+void Crunch::showVariables( bool b)
+{
+  Settings* settings = Settings::self();
+  settings->showVariables = b;
+  saveSettings();
+  applySettings();
+  d->variablesDock->raise();
 }
 
 void Crunch::configure()
