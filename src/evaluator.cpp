@@ -75,6 +75,7 @@ public:
   QString error;
   QMap<QString,Variable> variables;
   Evaluator::AngleMode angleMode;
+  QString decimalPoint;
 
   QString assignId;
   QVector<Opcode> codes;
@@ -319,7 +320,7 @@ bool Evaluator::isValid() const
 {
   if( d->dirty )
   {
-    Tokens tokens = scan( d->expression );
+    Tokens tokens = scan( d->expression, d->decimalPoint );
     if( !tokens.valid() )
       compile( tokens );
     else
@@ -338,6 +339,7 @@ void Evaluator::clear()
 
   d->error = QString();
   d->angleMode = Degree;
+  d->decimalPoint = QString();
 
   d->constants.clear();
   d->codes.clear();
@@ -360,17 +362,16 @@ QString Evaluator::error() const
 
 Tokens Evaluator::tokens() const
 {
-  return scan( d->expression );
+  return scan( d->expression, d->decimalPoint );
 }
 
-Tokens Evaluator::scan( const QString& expr )
+Tokens Evaluator::scan( const QString& expr, const QString& settingsDecimal )
 {
   // to hold the result
   Tokens tokens;
 
   // auto-detect, always dot, or always comma
   QChar decimalPoint;
-  QString settingsDecimal = Settings::self()->decimalPoint;
   if( settingsDecimal.length() == 1 )
     decimalPoint = settingsDecimal[0];
   else
@@ -433,7 +434,7 @@ Tokens Evaluator::scan( const QString& expr )
        {
          int op;
          QString s;
-          
+
 #if 0
          // check for three-chars operator
          s.append( ch ).append( ex.at(i+1) ).append( ex.at(i+2) );
@@ -443,7 +444,7 @@ Tokens Evaluator::scan( const QString& expr )
          if( op == Token::InvalidOp )
 #endif
          {
-          
+
             s = QString( ch ).append( ex.at(i+1) );
             op = matchOperator( s );
          }
@@ -464,7 +465,7 @@ Tokens Evaluator::scan( const QString& expr )
          }
          else state = Bad;
         }
-       
+
        // beginning with unknown alphanumeric ?
        // could be identifier, or function...
        if( state == Bad && isIdentifier( ch ) )
@@ -534,7 +535,7 @@ Tokens Evaluator::scan( const QString& expr )
          tokenText = ""; state = Start;
        }
        break;
-       
+
     case InHexa:
        if (ch.isDigit() || (ch >= 'A' && ch < 'G') || (ch >= 'a' && ch < 'g'))
           tokenText.append( ex.at(i++).toUpper() );
@@ -563,7 +564,7 @@ Tokens Evaluator::scan( const QString& expr )
          tokenText = ""; state = Start;
        }
        break;
-    
+
     case InDecimal:
 
        // consume as long as it's digit
@@ -716,7 +717,7 @@ void Evaluator::compile( const Tokens& tokens ) const
       for( ; ; )
       {
             bool ruleFound = false;
-    
+
         // rule for function last argument:
         //  id ( arg ) -> arg
         if( !ruleFound )
@@ -768,7 +769,7 @@ void Evaluator::compile( const Tokens& tokens ) const
                 break;
             }
         }
-    
+
 
         // rule for simplified syntax for function e.g. "sin pi" or "cos 1.2"
         // i.e no need for parentheses like "sin(pi)" or "cos(1.2)"
@@ -818,7 +819,7 @@ void Evaluator::compile( const Tokens& tokens ) const
 #endif
             }
           }
-         
+
          // rule for unary postfix operator in simplified function syntax
          // this handles case like "sin 90!"
          if( !ruleFound )
@@ -829,7 +830,7 @@ void Evaluator::compile( const Tokens& tokens ) const
             Token id = syntaxStack.top( 2 );
             if( id.isIdentifier() && FunctionRepository::self()->function( id.text() ) )
             {
-               if( !x.isOperator() && op.isOperator() && 
+               if( !x.isOperator() && op.isOperator() &&
                   op.asOperator() == Token::Exclamation )
                {
                   ruleFound = true;
@@ -1084,6 +1085,16 @@ void Evaluator::setAngleMode( AngleMode am )
   d->angleMode = am;
 }
 
+QString Evaluator::decimalPoint() const
+{
+  return d->decimalPoint;
+}
+
+void Evaluator::setDecimalPoint( const QString& dp )
+{
+  d->decimalPoint = dp;
+}
+
 HNumber Evaluator::eval()
 {
   QStack<HNumber> stack;
@@ -1096,7 +1107,7 @@ HNumber Evaluator::eval()
 
   if( d->dirty )
   {
-    Tokens tokens = scan( d->expression );
+    Tokens tokens = scan( d->expression, d->decimalPoint );
 
     // invalid expression ?
     if( !tokens.valid() )
@@ -1231,7 +1242,7 @@ HNumber Evaluator::eval()
         val2 = HMath::raise( val2, val1 );
         stack.push( val2 );
         break;
-       
+
       case Opcode::Fact:
         if( stack.count() < 1 )
         {
@@ -1242,7 +1253,7 @@ HNumber Evaluator::eval()
         val1 = HMath::factorial( val1 );
         stack.push( val1 );
         break;
-       
+
       case Opcode::Modulo:
         if( stack.count() < 2 )
         {
@@ -1259,7 +1270,7 @@ HNumber Evaluator::eval()
         val2 = val2 % val1;
         stack.push( val2 );
         break;
-      
+
       case Opcode::IntDiv:
         if( stack.count() < 2 )
         {
@@ -1276,7 +1287,7 @@ HNumber Evaluator::eval()
         val2 /= val1;
         stack.push( HMath::integer(val2) );
         break;
-       
+
       // reference
       case Opcode::Ref:
         fname = d->identifiers[index];
@@ -1401,7 +1412,7 @@ void Evaluator::clearVariables()
   set( QString("ans"), HNumber(0) );
 }
 
-QString Evaluator::autoFix( const QString& expr )
+QString Evaluator::autoFix( const QString& expr, const QString& decimalPoint )
 {
   int par = 0;
   QString result;
@@ -1412,7 +1423,7 @@ QString Evaluator::autoFix( const QString& expr )
       result.append( expr[c] );
 
   // automagically close all parenthesis
-  Tokens tokens = Evaluator::scan( result );
+  Tokens tokens = Evaluator::scan( result, decimalPoint );
   for( int i=0; i<tokens.count(); i++ )
     if( tokens[i].asOperator() == Token::LeftPar ) par++;
     else if( tokens[i].asOperator() == Token::RightPar ) par--;
@@ -1423,7 +1434,7 @@ QString Evaluator::autoFix( const QString& expr )
   // e.g. "cos" is regarded as "cos(ans)"
   if( !result.isEmpty() )
   {
-    Tokens tokens = Evaluator::scan( result );
+    Tokens tokens = Evaluator::scan( result, decimalPoint );
     if( tokens.count() == 1 )
     {
       if( tokens[0].isIdentifier() )
@@ -1446,7 +1457,7 @@ QString Evaluator::dump() const
 
   if( d->dirty )
   {
-    Tokens tokens = scan( d->expression );
+    Tokens tokens = scan( d->expression, d->decimalPoint );
     compile( tokens );
   }
 

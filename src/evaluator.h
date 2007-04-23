@@ -112,12 +112,15 @@ class Evaluator
     void clear();
     bool isValid() const;
     Tokens tokens() const;
-    static Tokens scan( const QString& expr );
+    static Tokens scan( const QString& expr, const QString& decimalPoint );
     QString error() const;
 
     void setAngleMode( AngleMode am );
     AngleMode angleMode() const;
     HNumber eval();
+
+    void setDecimalPoint( const QString& d );
+    QString decimalPoint() const;
 
     void set( const QString& id, HNumber value );
     HNumber get( const QString& id );
@@ -126,7 +129,7 @@ class Evaluator
     QVector<Variable> variables() const;
     void clearVariables();
 
-    static QString autoFix( const QString& expr );
+    static QString autoFix( const QString& expr, const QString& decimalPoint );
 
     QString dump() const;
 

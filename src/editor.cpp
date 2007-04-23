@@ -22,6 +22,7 @@
 #include "functions.h"
 #include "editor.h"
 #include "evaluator.h"
+#include "settings.h"
 
 #include <QFrame>
 #include <QHeaderView>
@@ -99,7 +100,7 @@ int EditorHighlighter::highlightParagraph ( const QString & text, int )
     return 0;
   }
 
-  Tokens tokens = Evaluator::scan( text );
+  Tokens tokens = Evaluator::scan( text, Settings::self()->decimalPoint );
   for( int i = 0; i < tokens.count(); i++ )
   {
     Token& token = tokens[i];
@@ -294,7 +295,7 @@ void Editor::doMatchingLeft()
 
   // check for right par
   QString subtext = text().left( curPos );
-  Tokens tokens = Evaluator::scan( subtext );
+  Tokens tokens = Evaluator::scan( subtext, Settings::self()->decimalPoint );
   if( !tokens.valid() ) return;
   if( tokens.count()<1 ) return;
   Token lastToken = tokens[ tokens.count()-1 ];
@@ -343,7 +344,7 @@ void Editor::doMatchingRight()
 
   // check for left par
   QString subtext = text().right( text().length() - curPos );
-  Tokens tokens = Evaluator::scan( subtext );
+  Tokens tokens = Evaluator::scan( subtext, Settings::self()->decimalPoint );
   if( !tokens.valid() ) return;
   if( tokens.count()<1 ) return;
   Token firstToken = tokens[ 0 ];
@@ -391,7 +392,7 @@ void Editor::triggerAutoComplete()
   int para = 0, curPos = 0;
   getCursorPosition( &para, &curPos );
   QString subtext = text().left( curPos );
-  Tokens tokens = Evaluator::scan( subtext );
+  Tokens tokens = Evaluator::scan( subtext, Settings::self()->decimalPoint );
   if( !tokens.valid() ) return;
   if( tokens.count()<1 ) return;
 
@@ -462,7 +463,7 @@ void Editor::autoComplete( const QString& item )
   int para = 0, curPos = 0;
   getCursorPosition( &para, &curPos );
   QString subtext = text().left( curPos );
-  Tokens tokens = Evaluator::scan( subtext );
+  Tokens tokens = Evaluator::scan( subtext, Settings::self()->decimalPoint );
   if( !tokens.valid() ) return;
   if( tokens.count()<1 ) return;
 
@@ -481,19 +482,19 @@ void Editor::autoCalc()
 {
   if( !d->autoCalcEnabled ) return;
 
-  QString str = Evaluator::autoFix( text() );
+  QString str = Evaluator::autoFix( text(), Settings::self()->decimalPoint );
   if( str.isEmpty() ) return;
 
   // very short (just one token) and still no calculation, then skip
   if( !d->ansAvailable )
   {
-    Tokens tokens = Evaluator::scan( text() );
+    Tokens tokens = Evaluator::scan( text(), Settings::self()->decimalPoint );
     if( tokens.count() < 2 )
       return;
   }
 
   // too short even after autofix ? do not bother either...
-  Tokens tokens = Evaluator::scan( str );
+  Tokens tokens = Evaluator::scan( str, Settings::self()->decimalPoint );
   if( tokens.count() < 2 ) return;
 
   // strip off assignment operator, e.g. "x=1+2" becomes "1+2" only

@@ -521,6 +521,8 @@ void Crunch::applySettings()
     d->radButton->setChecked( true );
   }
 
+  d->eval->setDecimalPoint( settings->decimalPoint );
+
   d->historyDock->clear();
   if( settings->saveHistory )
   if( settings->history.count() )
@@ -620,8 +622,8 @@ void Crunch::applySettings()
       d->trayNotify = true;
       d->trayIcon = new QSystemTrayIcon( this );
       d->trayIcon->setToolTip( tr("SpeedCrunch") );
-      d->trayIcon->setIcon( QPixmap( ":/crunch.png" ) );      
-      connect( d->trayIcon, SIGNAL( activated(QSystemTrayIcon::ActivationReason) ), 
+      d->trayIcon->setIcon( QPixmap( ":/crunch.png" ) );
+      connect( d->trayIcon, SIGNAL( activated(QSystemTrayIcon::ActivationReason) ),
         SLOT( trayIconActivated() ) );
     }
   }
@@ -685,6 +687,8 @@ void Crunch::saveSettings()
     settings->angleMode = "degree";
   if( d->eval->angleMode()== Evaluator::Radian )
     settings->angleMode = "radian";
+
+  settings->decimalPoint = d->eval->decimalPoint();
 
   if( settings->saveHistory )
     settings->history = d->editor->history();
@@ -771,14 +775,14 @@ void Crunch::minimizeToTray()
 void Crunch::showTrayMessage()
 {
   if( d->trayIcon )
-    d->trayIcon->showMessage( QString(), 
+    d->trayIcon->showMessage( QString(),
       tr("SpeedCrunch is minimized. \n Click on the icon to reactivate it"),
       QSystemTrayIcon::NoIcon, 2000);
 }
 
 void Crunch::trayIconActivated()
 {
-  showNormal(); 
+  showNormal();
   activateWindow();
   d->editor->setFocus();
   QTimer::singleShot( 0, d->trayIcon, SLOT(hide()) );
@@ -843,7 +847,7 @@ void Crunch::radixChanged()
 
 void Crunch::returnPressed()
 {
-  QString str = Evaluator::autoFix( d->editor->text() );
+  QString str = Evaluator::autoFix( d->editor->text(), Settings::self()->decimalPoint );
   if( str.isEmpty() ) return;
 
   d->eval->setExpression( str );
@@ -896,9 +900,9 @@ void Crunch::textChanged()
 {
   if( d->autoAns )
   {
-    QString expr = Evaluator::autoFix( d->editor->text() );
+    QString expr = Evaluator::autoFix( d->editor->text(), Settings::self()->decimalPoint );
     if( expr.isEmpty() ) return;
-    Tokens tokens = Evaluator::scan( expr );
+    Tokens tokens = Evaluator::scan( expr, Settings::self()->decimalPoint );
     if( tokens.count() == 1 )
     if( ( tokens[0].asOperator() == Token::Plus ) ||
         ( tokens[0].asOperator() == Token::Minus ) ||
