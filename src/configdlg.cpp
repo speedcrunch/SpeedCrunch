@@ -131,7 +131,7 @@ void ConfigDlgPrivate::saveSettings()
   settings->autoComplete = autoCompleteCheck->isChecked();
   settings->autoCalc = autoCalcCheck->isChecked();
   settings->minimizeToTray = minimizeToTrayCheck->isChecked();
-  settings->decimalPoint = decimalList->currentIndex()==1 ? QString('.') : 
+  settings->decimalPoint = decimalList->currentIndex()==1 ? QString('.') :
     decimalList->currentIndex()==2 ? QString(',') : QString();
   settings->customAppearance = customAppearanceCheck->isChecked();
   settings->customTextColor = textColorButton->color();
@@ -411,7 +411,7 @@ QDialog( parent, name )
   connect( d->okButton, SIGNAL( clicked() ), SLOT( accept() ) );
   connect( d->cancelButton, SIGNAL( clicked() ), SLOT( reject() ) );
 
-  QTimer::singleShot( 0, this, SLOT( initUI() ) );
+  initUI();
 }
 
 void ConfigDlg::showEvent( QShowEvent* )
@@ -426,7 +426,9 @@ ConfigDlg::~ConfigDlg()
 
 void ConfigDlg::initUI()
 {
+  setUpdatesEnabled( true );
   d->loadSettings();
+  setUpdatesEnabled( true );
   adjustSize();
 }
 
