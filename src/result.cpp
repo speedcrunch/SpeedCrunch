@@ -35,6 +35,7 @@ public:
   QStringList contents;
   char format;
   int decimalDigits;
+  QString decimalPoint;
   bool customAppearance;
   QColor customTextColor;
   QColor customBackgroundColor1;
@@ -164,6 +165,7 @@ Result::Result( QWidget* parent, const char* name ): QListWidget( parent )
   d = new ResultPrivate;
   d->format = 'g';
   d->decimalDigits = -1;
+  d->decimalPoint = QString();
   d->customAppearance = false;
   d->count = 0;
 
@@ -254,11 +256,26 @@ int Result::decimalDigits() const
   return d->decimalDigits;
 }
 
+void Result::setDecimalPoint( const QString& dp )
+{
+  d->decimalPoint = dp;
+  triggerUpdate();
+}
+
+QString Result::decimalPoint() const
+{
+  return d->decimalPoint;
+}
+
 QString Result::formatNumber( const HNumber& value ) const
 {
   char* str = HMath::format( value, value.format() ? value.format() : d->format, d->decimalDigits );
   QString s = QString::fromLatin1( str );
   free( str );
+  if( d->decimalPoint.length() == 1 )
+    for( int i = 0; i < s.length(); i++ )
+      if( s[i] == '.' )
+        s[i] = d->decimalPoint[0];
   return s;
 }
 

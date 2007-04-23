@@ -522,6 +522,7 @@ void Crunch::applySettings()
   }
 
   d->eval->setDecimalPoint( settings->decimalPoint );
+  d->result->setDecimalPoint( settings->decimalPoint );
 
   d->historyDock->clear();
   if( settings->saveHistory )
