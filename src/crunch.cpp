@@ -788,7 +788,8 @@ void Crunch::trayIconActivated()
   d->editor->setFocus();
   QTimer::singleShot( 0, d->trayIcon, SLOT(hide()) );
 
-  // work around docks does not reappear (under KDE)
+  // work around docks does not reappear (under KDE/Linux)
+#ifdef Q_OS_UNIX
   if( d->historyDock->isFloating() )
   {
     d->historyDock->hide();
@@ -799,6 +800,7 @@ void Crunch::trayIconActivated()
     d->functionsDock->hide();
     QTimer::singleShot( 0, d->functionsDock, SLOT(show()) );
   }
+#endif
 }
 
 void Crunch::angleModeChanged()
