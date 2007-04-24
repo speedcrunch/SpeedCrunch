@@ -7,3 +7,17 @@ Fedora Core RPM: Roland "liquidat" Wolters (liquidat@gmail.com)
 OpenSUSE RPM: Stephan Binner (stbinner@suse.de)
 Ubuntu .deb: Sarah Hobbs (hobbsee@ubuntu.com)
 Debian .deb: Bart Martens (bartm@knars.be)
+
+Where to find package information:
+
+General
+  http://code.google.com/p/speedcrunch/downloads/list
+
+Gentoo
+  http://marcowegner.eu/project/speedcrunch
+
+Ubuntu
+  http://packages.ubuntu.com/feisty/kde/speedcrunch
+
+Debian
+  http://packages.debian.org/unstable/math/speedcrunch
