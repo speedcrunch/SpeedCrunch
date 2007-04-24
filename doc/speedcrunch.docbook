@@ -58,18 +58,91 @@
 <title>Installation for OpenSUSE</title>
 </sect2>
 
+<sect2 id="installation-kubuntu">
+<title>Installation for Kubuntu</title>
+
+<para>SpeedCrunch is part of default Kubuntu installation since Kubuntu 5.10.
+It is located in the K Menu, Utility, Calculator (SpeedCrunch).</para>
+
+<para>If it is not available yet, SpeedCrunch can be installed using the following terminal command:</para>
+
+<screen>
+<command>apt-get install speedcrunch</command>
+</screen>
+
+
+</sect2>
+
 <sect2 id="installation-ubuntu">
-<title>Installation for Ubuntu/Kubuntu</title>
+<title>Installation for Ubuntu</title>
+
+<para>SpeedCrunch can be installed using the following terminal command:</para>
+
+<screen>
+<command>apt-get install speedcrunch</command>
+</screen>
+
 </sect2>
 
 <sect2 id="installation-fedora">
 <title>Installation for Fedora Core</title>
+
+<para>Speedcrunch is part of Fedora Extras and is provided by the
+package <varname>speedcrunch</varname>. This package can be installed
+either with the graphical software management program Pirut,
+or with the terminal command:</para>
+
+<screen>
+<command>yum install speedcrunch</command>
+</screen>
+
+<para>To update SpeedCrunch to the latest version, use the terminal
+command:</para>
+
+<screen>
+<command>yum update speedcrunch</command>
+</screen>
+
 </sect2>
 
 </sect1>
 
 <sect1 id="compile">
 <title>Compilation from source code</title>
+
+<para>To compile SpeedCrunch from source code, the following tools are
+required:</para>
+
+<itemizedlist>
+<listitem>
+<para>CMake version 2.4 or newer</para>
+</listitem>
+<listitem>
+<para>Trolltech's Qt library version 4.2 or newer</para>
+</listitem>
+<listitem>
+<para>C++ compiler</para>
+</listitem>
+</itemizedlist>
+
+<para>It is necessary to create a build directory which specifies the target
+location for the buid process. In this build directory, CMake should be
+invoked. The input for CMake will be the src directory in the source tree.
+The exact steps to do all these will depend on the operating system.</para>
+
+<para>As an example, to compile and build SpeedCrunch on Linux using GCC,
+use the following commands:</para>
+
+<screen>
+tar zxvf speedcrunch-0.8.tar.gz
+cd speedcrunch-0.8
+mkdir build
+cd build
+cmake ../src
+make
+</screen>
+
+
 </sect1>
 
 </chapter>
@@ -97,8 +170,6 @@
 
 </qandaset>
 </chapter>
-
-&commands;
 
 <chapter id="copyright">
 <title>Credits and License</title>
