@@ -50,6 +50,7 @@ class Settings
     bool showHistory;
     bool showFunctions;
     bool showVariables;
+    bool showConstants;
 
     bool customAppearance;
     QFont customFont;
@@ -84,6 +85,11 @@ class Settings
     int variablesDockLeft;
     int variablesDockWidth;
     int variablesDockHeight;
+    bool constantsDockFloating;
+    int constantsDockTop;
+    int constantsDockLeft;
+    int constantsDockWidth;
+    int constantsDockHeight;
 
     Settings();
     static Settings* self();

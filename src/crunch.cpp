@@ -1,4 +1,5 @@
 /* This file is part of the SpeedCrunch project
+   Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
    Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
                  2005-2006 Johan Thelin <e8johan@gmail.com>
 
@@ -18,8 +19,10 @@
    Boston, MA 02110-1301, USA.
  */
 
-#include "autohidelabel.h"
 #include "crunch.h"
+
+#include "autohidelabel.h"
+#include "constantsdock.h"
 #include "evaluator.h"
 #include "historydock.h"
 #include "hmath.h"
@@ -95,6 +98,7 @@ public:
   QAction* showHistory;
   QAction* showFunctions;
   QAction* showVariables;
+  QAction* showConstants;
   QAction* configure;
   QAction* helpGotoWebsite;
   QAction* helpAboutQt;
@@ -133,6 +137,7 @@ public:
   HistoryDock* historyDock;
   FunctionsDock* functionsDock;
   VariablesDock* variablesDock;
+  ConstantsDock* constantsDock;
 
   ConfigDlg* configDlg;
   InsertFunctionDlg* insertFunctionDlg;
@@ -263,11 +268,17 @@ Crunch::Crunch(): QMainWindow()
   d->variablesDock->setObjectName( "VariablesList" );
   addDockWidget( Qt::RightDockWidgetArea, d->variablesDock );
 
+  d->constantsDock = new ConstantsDock( this );
+  d->constantsDock->setObjectName( "ConstantsList" );
+  addDockWidget( Qt::RightDockWidgetArea, d->constantsDock );
+
   tabifyDockWidget( d->functionsDock, d->historyDock );
   tabifyDockWidget( d->functionsDock, d->variablesDock );
+  tabifyDockWidget( d->functionsDock, d->constantsDock );
   d->historyDock->hide();
   d->functionsDock->hide();
   d->variablesDock->hide();
+  d->constantsDock->hide();
 
   // for autocalc
   d->autoCalcLabel = new AutoHideLabel( this );
@@ -286,6 +297,7 @@ Crunch::Crunch(): QMainWindow()
   connect( d->historyDock, SIGNAL( expressionSelected( const QString& ) ), SLOT( expressionSelected( const QString& ) ) );
   connect( d->functionsDock, SIGNAL( functionSelected( const QString& ) ), SLOT( functionSelected( const QString& ) ) );
   connect( d->variablesDock, SIGNAL( variableSelected( const QString& ) ), SLOT( variableSelected( const QString& ) ) );
+  connect( d->constantsDock, SIGNAL( constantSelected( const QString& ) ), SLOT( constantSelected( const QString& ) ) );
 
 
   connect( d->keypad, SIGNAL( addText( const QString& ) ), SLOT( addKeyPadText( const QString& ) ) );
@@ -387,6 +399,7 @@ void Crunch::createUI()
   d->actions->showHistory = new QAction( tr("Show Expression &History"), this );
   d->actions->showFunctions = new QAction( tr("Show &Functions List"), this );
   d->actions->showVariables = new QAction( tr("Show &Variables List"), this );
+  d->actions->showConstants = new QAction( tr("Show &Constants List"), this );
 
   d->actions->showClearButton->setToggleAction( true );
   d->actions->showEvalButton->setToggleAction( true );
@@ -394,6 +407,7 @@ void Crunch::createUI()
   d->actions->showHistory->setToggleAction( true );
   d->actions->showFunctions->setToggleAction( true );
   d->actions->showVariables->setToggleAction( true );
+  d->actions->showConstants->setToggleAction( true );
 
   d->actions->configure = new QAction( tr("&Configure..."), this );
 
@@ -433,6 +447,7 @@ void Crunch::createUI()
   connect( d->actions->showHistory, SIGNAL( toggled(bool) ), this, SLOT( showHistory(bool) ) );
   connect( d->actions->showFunctions, SIGNAL( toggled(bool) ), this, SLOT( showFunctions(bool) ) );
   connect( d->actions->showVariables, SIGNAL( toggled(bool) ), this, SLOT( showVariables(bool) ) );
+  connect( d->actions->showConstants, SIGNAL( toggled(bool) ), this, SLOT( showConstants(bool) ) );
   connect( d->actions->configure, SIGNAL( activated() ), this, SLOT( configure() ) );
   connect( d->actions->helpGotoWebsite, SIGNAL( activated() ), this, SLOT( gotoWebsite() ) );
   connect( d->actions->helpAbout, SIGNAL( activated() ), this, SLOT( about() ) );
@@ -442,6 +457,7 @@ void Crunch::createUI()
   connect( d->historyDock->toggleViewAction(), SIGNAL( toggled( bool ) ), d->actions->showHistory, SLOT( setChecked( bool ) ) );
   connect( d->functionsDock->toggleViewAction(), SIGNAL( toggled( bool ) ), d->actions->showFunctions, SLOT( setChecked( bool ) ) );
   connect( d->variablesDock->toggleViewAction(), SIGNAL( toggled( bool ) ), d->actions->showVariables, SLOT( setChecked( bool ) ) );
+  connect( d->constantsDock->toggleViewAction(), SIGNAL( toggled( bool ) ), d->actions->showConstants, SLOT( setChecked( bool ) ) );
 
   // construct the menu
 
@@ -491,6 +507,7 @@ void Crunch::createUI()
   settingsMenu->addAction( d->actions->showHistory );
   settingsMenu->addAction( d->actions->showFunctions );
   settingsMenu->addAction( d->actions->showVariables );
+  settingsMenu->addAction( d->actions->showConstants );
   menuBar()->insertItem( tr("Se&ttings"), settingsMenu );
   settingsMenu->insertSeparator();
   settingsMenu->addAction( d->actions->configure );
@@ -630,10 +647,12 @@ void Crunch::applySettings()
   d->actions->showHistory->setOn( settings->showHistory );
   d->actions->showFunctions->setOn( settings->showFunctions );
   d->actions->showVariables->setOn( settings->showVariables );
+  d->actions->showConstants->setOn( settings->showConstants );
 
   d->historyDock->setVisible( settings->showHistory );
   d->functionsDock->setVisible( settings->showFunctions );
   d->variablesDock->setVisible( settings->showVariables );
+  d->constantsDock->setVisible( settings->showConstants );
 
   if( settings->minimizeToTray )
   {
@@ -754,6 +773,12 @@ void Crunch::saveDocks()
   settings->variablesDockWidth = d->variablesDock->width();
   settings->variablesDockHeight = d->variablesDock->height();
 
+  settings->constantsDockFloating = d->constantsDock->isFloating();
+  settings->constantsDockLeft = d->constantsDock->x();
+  settings->constantsDockTop = d->constantsDock->y();
+  settings->constantsDockWidth = d->constantsDock->width();
+  settings->constantsDockHeight = d->constantsDock->height();
+
   settings->save();
 }
 
@@ -794,6 +819,17 @@ void Crunch::restoreDocks()
     d->variablesDock->move( settings->variablesDockLeft, settings->variablesDockTop );
     d->variablesDock->resize( settings->variablesDockWidth, settings->variablesDockHeight );
     QTimer::singleShot(0, d->variablesDock, SLOT(show()));
+  }
+
+  if( settings->showConstants )
+  if( settings->constantsDockFloating )
+  if( !d->constantsDock->isFloating() )
+  {
+    d->constantsDock->hide();
+    d->constantsDock->setFloating( true );
+    d->constantsDock->move( settings->constantsDockLeft, settings->constantsDockTop );
+    d->constantsDock->resize( settings->constantsDockWidth, settings->constantsDockHeight );
+    QTimer::singleShot(0, d->constantsDock, SLOT(show()));
   }
 }
 
@@ -840,6 +876,11 @@ void Crunch::trayIconActivated()
   {
     d->variablesDock->hide();
     QTimer::singleShot( 0, d->variablesDock, SLOT(show()) );
+  }
+  if( d->constantsDock->isFloating() )
+  {
+    d->constantsDock->hide();
+    QTimer::singleShot( 0, d->constantsDock, SLOT(show()) );
   }
 #endif
 }
@@ -958,6 +999,18 @@ void Crunch::variableSelected( const QString& v )
   if( v.isEmpty() )
     return;
   d->editor->insert( v );
+
+  QTimer::singleShot( 0, d->editor, SLOT(setFocus()) );
+
+  if( !isActiveWindow () )
+    activateWindow();
+}
+
+void Crunch::constantSelected( const QString& c )
+{
+  if( c.isEmpty() )
+    return;
+  d->editor->insert( c );
 
   QTimer::singleShot( 0, d->editor, SLOT(setFocus()) );
 
@@ -1199,6 +1252,15 @@ void Crunch::showVariables( bool b)
   saveSettings();
   applySettings();
   d->variablesDock->raise();
+}
+
+void Crunch::showConstants( bool b)
+{
+  Settings* settings = Settings::self();
+  settings->showConstants = b;
+  saveSettings();
+  applySettings();
+  d->constantsDock->raise();
 }
 
 void Crunch::configure()

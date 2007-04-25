@@ -62,6 +62,7 @@ class Crunch : public QMainWindow
     void showHistory(bool);
     void showFunctions(bool);
     void showVariables(bool);
+    void showConstants(bool);
     void configure();
     void gotoWebsite();
     void about();
@@ -76,6 +77,7 @@ class Crunch : public QMainWindow
     void expressionSelected( const QString & );
     void functionSelected( const QString & );
     void variableSelected( const QString & );
+    void constantSelected( const QString & );
     void textChanged();
     void angleModeChanged();
     void radixChanged();

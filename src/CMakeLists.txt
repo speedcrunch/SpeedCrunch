@@ -35,6 +35,7 @@ aboutbox.cpp
 autohidelabel.cpp
 binreloc.c
 configdlg.cpp
+constantsdock.cpp
 crunch.cpp
 deletevardlg.cpp
 editor.cpp
@@ -59,6 +60,7 @@ aboutbox.h
 autohidelabel.h
 binreloc.h
 configdlg.h
+constantsdock.h
 crunch.h
 deletevardlg.h
 editor.h
