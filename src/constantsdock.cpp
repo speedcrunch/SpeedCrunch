@@ -19,14 +19,12 @@
 
 #include "constantsdock.h"
 
-#include "evaluator.h"
-#include "functions.h"
-#include "settings.h"
-
+#include <QComboBox>
 #include <QHeaderView>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QLineEdit>
+#include <QList>
 #include <QTimer>
 #include <QTreeWidget>
 #include <QVBoxLayout>
@@ -37,13 +35,25 @@ class Constant
 public:
   QString name;
   QString value;
+  QString unit;
   QStringList categories;
+
+  Constant( const QString& n, const QString& v, const QString& u, const QStringList& cat ):
+    name( n ), value( v ), unit( u ), categories( cat ) {}
+
+  Constant( const QString& n, const QString& v, const QString& u, const QString& cat ):
+    name( n ), value( v ), unit( u ) { categories << cat; }
+
+  Constant( const QString& n, const QString& v, const QString& u, const QString& cat1,   const QString& cat2):
+    name( n ), value( v ), unit( u ) {  categories << cat1; categories << cat2; }
+
 };
 
 class ConstantsDockPrivate
 {
   public:
     QList<Constant> constants;
+    QComboBox* category;
     QTreeWidget* list;
     QLineEdit* filter;
     QTimer* filterTimer;
@@ -54,10 +64,26 @@ ConstantsDock::ConstantsDock( QWidget* parent ): QDockWidget( tr("Constants"), p
 {
   d = new ConstantsDockPrivate;
 
+  QLabel* categorylabel = new QLabel( this );
+  categorylabel->setText( tr("Category") );
+
+  d->category = new QComboBox( this );
+  d->category->setEditable( false );
+  d->category->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
+  connect( d->category, SIGNAL( activated( int ) ), SLOT( filter() ) );
+
+  QWidget* categoryBox = new QWidget( this );
+  QHBoxLayout* categoryLayout = new QHBoxLayout;
+  categoryBox->setLayout( categoryLayout );
+  categoryLayout->addWidget( categorylabel );
+  categoryLayout->addWidget( d->category );
+  categoryLayout->setMargin( 0 );
+
   QLabel* label = new QLabel( this );
   label->setText( tr("Search") );
 
   d->filter = new QLineEdit( this );
+  d->filter->setMinimumWidth( fontMetrics().width('X')*10 );
   connect( d->filter, SIGNAL( textChanged( const QString& ) ), SLOT( triggerFilter() ) );
 
   QWidget* searchBox = new QWidget( this );
@@ -68,9 +94,10 @@ ConstantsDock::ConstantsDock( QWidget* parent ): QDockWidget( tr("Constants"), p
   searchLayout->setMargin( 0 );
 
   d->list = new QTreeWidget( this );
-  d->list->setColumnCount( 2 );
+  d->list->setColumnCount( 1 );
   d->list->setRootIsDecorated( false );
   d->list->header()->hide();
+  d->list->setMouseTracking( true );
   d->list->setEditTriggers( QTreeWidget::NoEditTriggers );
   d->list->setSelectionBehavior( QTreeWidget::SelectRows );
   connect( d->list, SIGNAL( itemDoubleClicked( QTreeWidgetItem*, int ) ),
@@ -81,6 +108,7 @@ ConstantsDock::ConstantsDock( QWidget* parent ): QDockWidget( tr("Constants"), p
   widget->setLayout( layout );
   setWidget( widget );
   layout->setMargin( 3 );
+  layout->addWidget( categoryBox );
   layout->addWidget( searchBox );
   layout->addWidget( d->list );
 
@@ -98,6 +126,45 @@ ConstantsDock::ConstantsDock( QWidget* parent ): QDockWidget( tr("Constants"), p
   setMinimumWidth( 200 );
   setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
   setWindowIcon( QIcon() ); // no icon
+
+  // http://en.wikipedia.org/wiki/Physical_constant#Table_of_atomic_and_nuclear_constants
+  d->constants += Constant( tr("Bohr radius"), "0.5291772108e-10", "m", tr("Atomic & Nuclear") );
+  d->constants += Constant( tr("Fermi coupling constant"), "1.16639e-5", "Ge/V^2", tr("Atomic & Nuclear") );
+  d->constants += Constant( tr("fine-structure constant"), "7.297352568e-3", QString(), tr("Atomic & Nuclear") );
+  d->constants += Constant( tr("Hartree energy"), "4.35974417e-18", "J", tr("Atomic & Nuclear") );
+  d->constants += Constant( tr("quantum of circulation"), "3.636947550e-4", "m^2/s", tr("Atomic & Nuclear") );
+  d->constants += Constant( tr("Rydberg constant"), "10973731.568525", "/m", tr("Atomic & Nuclear") );
+  d->constants += Constant( tr("Thomson cross section"), "0.665245873e-28", "m^2", tr("Atomic & Nuclear") );
+  d->constants += Constant( tr("weak mixing angle"), "0.22215", QString(), tr("Atomic & Nuclear") );
+
+  // http://www.astronomynotes.com/tables/tablesa.htm
+  d->constants += Constant( tr("astronomical unit"), "149597870.691", "km", tr("Astronomy") );
+  d->constants += Constant( tr("light year"), "9.460536207e12", "km", tr("Astronomy") );
+  d->constants += Constant( tr("parsec"), "3.08567802e13", "km", tr("Astronomy") );
+  d->constants += Constant( tr("sidereal year"), "365.2564", "days", tr("Astronomy") );
+  d->constants += Constant( tr("tropical year"), "365.2422", "days", tr("Astronomy") );
+  d->constants += Constant( tr("Gregorian year"), "365.2425", "days", tr("Astronomy") );
+  d->constants += Constant( tr("Earth mass"), "5.9736e24", "kg", tr("Astronomy") );
+  d->constants += Constant( tr("Sun mass"), "1.9891e30", "kg", tr("Astronomy") );
+  d->constants += Constant( tr("mean Earth radius"), "6371", "km", tr("Astronomy") );
+  d->constants += Constant( tr("Sun radius"), "6.96265e5", "km", tr("Astronomy") );
+  d->constants += Constant( tr("Sun luminosity"), "3.827e26", "W", tr("Astronomy") );
+
+  QStringList categoryList;
+  for( int k = 0; k < d->constants.count(); k++ )
+  {
+    QStringList cats = d->constants[k].categories;
+    for( int i = 0; i < cats.count(); i++ )
+      if( !categoryList.contains( cats[i] ) )
+        categoryList += cats[i];
+  }
+  categoryList.sort();
+  d->category->addItems( categoryList );
+  d->category->insertItem( 0, tr("All") );
+  d->category->setCurrentIndex( 0 );
+
+  filter();
+  adjustSize();
 }
 
 ConstantsDock::~ConstantsDock()
@@ -119,11 +186,19 @@ void ConstantsDock::filter()
   d->filterTimer->stop();
   setUpdatesEnabled(false);
 
+  QString chosenCategory = d->category->currentText();
+
   d->list->clear();
   for( int k = 0; k < d->constants.count(); k++ )
   {
       QStringList str;
       str << d->constants[k].name;
+
+      bool include = (chosenCategory == tr("All")) ? true:
+        d->constants[k].categories.contains( chosenCategory );
+
+      if( !include )
+        continue;
 
       QTreeWidgetItem* item = 0;
       if( term.isEmpty() )
@@ -132,6 +207,13 @@ void ConstantsDock::filter()
       {
         if( str[0].contains(term, Qt::CaseInsensitive) )
           item = new QTreeWidgetItem( d->list, str );
+      }
+      if( item )
+      {
+        QString tip = QString("<b>%1</b><br> %2").arg(d->constants[k].name, d->constants[k].value );
+        if( !d->constants[k].unit.isEmpty() )
+          tip.append( " " ).append( d->constants[k].unit );
+        item->setToolTip( 0, tip );
       }
   }
 
@@ -163,7 +245,8 @@ void ConstantsDock::filter()
 
 void ConstantsDock::handleItem( QTreeWidgetItem* item )
 {
-  d->list->clearSelection();
-  emit constantSelected( item->text(0) );
+  for( int k = 0; k < d->constants.count(); k++ )
+    if( d->constants[k].name == item->text(0) )
+      emit constantSelected( d->constants[k].value );
 }
 
