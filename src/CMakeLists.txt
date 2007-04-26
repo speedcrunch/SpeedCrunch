@@ -83,7 +83,7 @@ variablesdock.h
 )
 
 # forms
-set(speedcrunch_FORMS listdialog.ui)
+# set(speedcrunch_FORMS foobar.ui)
 
 # resources
 set(speedcrunch_RESOURCES crunch.qrc)

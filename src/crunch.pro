@@ -52,7 +52,6 @@ SOURCES += binreloc.c
 SOURCES += autohidelabel.cpp
 SOURCES += tipwidget.cpp
 
-FORMS += listdialog.ui
 
 CONFIG += qt
 CONFIG += thread
