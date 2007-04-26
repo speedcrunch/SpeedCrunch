@@ -59,7 +59,7 @@ QFrame( parent )
   QTimer* scrollTimer = new QTimer( this );
   connect( scrollTimer, SIGNAL( timeout() ), this, SLOT( scroll() ) );
   scrollTimer->start( d->scrollTick );
-  
+
   setBackgroundRole( QPalette::Base );
 }
 
@@ -88,9 +88,9 @@ void MarqueeText::paintEvent( QPaintEvent *e )
   QPainter painter( this );
   painter.fillRect( this->rect(), painter.background().color() );
   painter.end();
-  
+
   QFrame::paintEvent( e );
-  
+
   if( d->buffer )
   {
     QPainter p( this );
@@ -198,10 +198,6 @@ AboutBox::AboutBox( QWidget* parent ):
   QString info = "<b>";
   info += tr("SpeedCrunch version %1").arg( MAKE_STRING(SPEEDCRUNCH_VERSION) );
   info += "</b><br>";
-  info += tr("Copyright (C) 2004-2005 Ariya Hidayat (ariya@kde.org)");
-  info += "<br>";
-  info += tr("Copyright (C) 2005-2006 Johan Thelin (e8johan@gmail.com)");
-  info += "<br>";
   info += QString("<a href=\"%1\">%2</a>").arg(website).arg(website);
   infoLabel->setText( info );
   infoLabel->setOpenExternalLinks(true);
@@ -253,6 +249,12 @@ AboutBox::AboutBox( QWidget* parent ):
   msg += QString( "%1: %2<br>" ).arg( tr("Polish") ).arg( "Witold Wysota (wysota@wysota.eu.org)" );
   msg += QString( "%1: %2<br>" ).arg( tr("Spanish") ).arg( "Alejandro Villarreal (alexv86@gmail.com)" );
   msg += QString( "</p>" );
+
+  msg += "<p>";
+  msg += tr("Copyright (C) 2004-2007 Ariya Hidayat (ariya@kde.org)");
+  msg += "<br>";
+  msg += tr("Copyright (C) 2005-2006 Johan Thelin (e8johan@gmail.com)");
+  msg += "</p>";
 
   msg += "<p>";
   msg += tr("This program is free software; you can redistribute it and/or "
