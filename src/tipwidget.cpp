@@ -131,7 +131,7 @@ void TipWidget::animateFade( int v )
   resize( width(), d->fadeTimeLine->endFrame() - v );
   d->tipLabel->move( 10, -v );
 
-  int a = qMax( 0, 240 - v*2 );
+  int a = qMax( 0, 240 - v*4 );
 
   QPalette pal = QToolTip::palette();
   QColor c1 = pal.window().color();
