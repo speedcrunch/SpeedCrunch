@@ -1,4 +1,5 @@
 /* This file is part of the SpeedCrunch project
+   Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
    Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
 
    This program is free software; you can redistribute it and/or
@@ -20,9 +21,7 @@
 #ifndef INSERTVARDLG
 #define INSERTVARDLG
 
-#include <qdialog.h>
-
-#include "ui_listdialog.h"
+#include <QDialog>
 
 class Evaluator;
 class InsertVariableDlgPrivate;
@@ -32,19 +31,15 @@ class InsertVariableDlg : public QDialog
   Q_OBJECT
 
   public:
-    explicit InsertVariableDlg( Evaluator* eval, QWidget* parent = 0, const char* name = 0 );
+    InsertVariableDlg( Evaluator* eval, QWidget* parent );
     ~InsertVariableDlg();
 
-    void updateList();
     QString variableName() const;
 
-  private slots:
-    void initUI();
+    void updateList();
 
   private:
     InsertVariableDlgPrivate* d;
-    Ui::ListDialog ui;
-
     InsertVariableDlg( const InsertVariableDlg& );
     InsertVariableDlg& operator=( const InsertVariableDlg& );
 };

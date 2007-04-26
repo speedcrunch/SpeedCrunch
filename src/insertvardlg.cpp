@@ -1,6 +1,7 @@
 /* This file is part of the SpeedCrunch project
-   Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
+   Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
    Copyright (C) 2006 Johan Thelin <e8johan@gmail.com>
+   Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -20,45 +21,84 @@
 
 #include "insertvardlg.h"
 #include "evaluator.h"
-#include "hmath.h"
-#include "settings.h"
 
 #include <QDialog>
-#include <QTreeWidget>
+#include <QHBoxLayout>
+#include <QHeaderView>
 #include <QPushButton>
-#include <QTimer>
 #include <QStringList>
+#include <QTimer>
+#include <QTreeWidget>
+#include <QVBoxLayout>
 
 class InsertVariableDlgPrivate
 {
 public:
   Evaluator* eval;
+  QTreeWidget* list;
+  QPushButton* insertButton;
+  QPushButton* cancelButton;
 };
 
-InsertVariableDlg::InsertVariableDlg( Evaluator* e, QWidget* parent, const char* name ):
-QDialog( parent, name )
+
+static QString formatValue( const HNumber& value )
 {
-  d = new InsertVariableDlgPrivate;
-  d->eval = e;
+  char* str = HMath::format( value, 'g' );
+  QString s = QString::fromLatin1( str );
+  free( str );
+  return s;
+}
 
-  ui.setupUi( this );
-
-  QStringList headers;
-
-  headers << tr("Name") << tr("Value");
-  ui.treeWidget->setHeaderLabels( headers );
-
-  ui.okButton->setText( tr("&Insert") );
-  ui.okButton->setDefault( true );
-
-  connect( ui.okButton, SIGNAL( clicked() ), this, SLOT( accept() ) );
-  // FIXME: cannot get the return pressed event to trigger propertly
-  connect( ui.treeWidget, SIGNAL( returnPressed() ), this, SLOT( accept() ) );
-  connect( ui.treeWidget, SIGNAL( itemDoubleClicked( QTreeWidgetItem*, int ) ),
-    this, SLOT( accept() ) );
-
+InsertVariableDlg::InsertVariableDlg( Evaluator* eval, QWidget* parent ):
+QDialog( parent ), d( new InsertVariableDlgPrivate )
+{
+  setWindowTitle( tr("Insert Variable") );
   setCaption( tr("Insert Variable") );
-  QTimer::singleShot( 0, this, SLOT( initUI() ) );
+  setModal( true );
+
+  d->eval = eval;
+
+  QVBoxLayout* layout = new QVBoxLayout;
+  setLayout( layout );
+
+  d->list = new QTreeWidget( this );
+  d->list->setColumnCount( 2 );
+  d->list->setAlternatingRowColors( true );
+  d->list->setRootIsDecorated( false );
+  d->list->setEditTriggers( QTreeWidget::NoEditTriggers );
+  d->list->setSelectionBehavior( QTreeWidget::SelectRows );
+
+  QStringList titles;
+  titles << tr("Name");
+  titles << tr("Value");
+  d->list->setHeaderLabels( titles );
+
+  d->insertButton = new QPushButton( this );
+  d->insertButton->setText( tr("&Insert") );
+  d->insertButton->setDefault( true );
+
+  d->cancelButton = new QPushButton( this );
+  d->cancelButton->setText( tr("Cancel") );
+
+  QWidget* box = new QWidget( this );
+  QHBoxLayout* boxLayout = new QHBoxLayout;
+  boxLayout->setMargin( 0 );
+  box->setLayout( boxLayout );
+
+  boxLayout->addWidget( d->insertButton );
+  boxLayout->addItem( new QSpacerItem( 50, 0, QSizePolicy::MinimumExpanding, QSizePolicy::Minimum ) );
+  boxLayout->addWidget( d->cancelButton );
+
+  layout->addWidget( d->list );
+  layout->addWidget( box );
+
+  connect( d->insertButton, SIGNAL( clicked() ), this, SLOT( accept() ) );
+  connect( d->cancelButton, SIGNAL( clicked() ), this, SLOT( reject() ) );
+  connect( d->list, SIGNAL( itemActivated( QTreeWidgetItem*, int ) ), this, SLOT( accept() ) );
+  connect( d->list, SIGNAL( itemDoubleClicked( QTreeWidgetItem*, int ) ), this, SLOT( accept() ) );
+
+  updateList();
+  adjustSize();
 }
 
 InsertVariableDlg::~InsertVariableDlg()
@@ -66,33 +106,30 @@ InsertVariableDlg::~InsertVariableDlg()
   delete d;
 }
 
-void InsertVariableDlg::updateList()
-{
-  ui.treeWidget->clear();
-  QVector<Variable> vars = d->eval->variables();
-  for( int i = 0; i < vars.count(); i++ )
-  {
-    char* ss = HMath::format( vars[i].value, 'g' );
-    QStringList itemTexts;
-
-    itemTexts << vars[i].name << QString( ss );
-    QTreeWidgetItem *item = new QTreeWidgetItem( ui.treeWidget, itemTexts );
-    item->setTextAlignment( 1, Qt::AlignRight );
-    free( ss );
-  }
-
-  ui.treeWidget->setFocus();
-}
-
 QString InsertVariableDlg::variableName() const
 {
-  QTreeWidgetItem* item = ui.treeWidget->currentItem();
-  return item ? item->text(0) : QString();
+  QTreeWidgetItem* item = d->list->currentItem();
+  return item ? item->text(0).lower() : QString();
 }
 
-
-void InsertVariableDlg::initUI()
+void InsertVariableDlg::updateList()
 {
-  updateList();
-  adjustSize();
+  d->list->setUpdatesEnabled( false );
+
+  d->list->clear();
+  QVector<Variable> variables = d->eval->variables();
+  for( int k = 0; k < variables.count(); k++ )
+  {
+      QStringList str;
+      str << variables[k].name;
+      str << formatValue( variables[k].value );
+
+      QTreeWidgetItem* item = 0;
+      item = new QTreeWidgetItem( d->list, str );
+      item->setTextAlignment( 0, Qt::AlignLeft | Qt::AlignVCenter );
+      item->setTextAlignment( 1, Qt::AlignRight | Qt::AlignVCenter );
+  }
+  d->list->sortItems( 0, Qt::AscendingOrder );
+
+  d->list->setUpdatesEnabled( true );
 }
