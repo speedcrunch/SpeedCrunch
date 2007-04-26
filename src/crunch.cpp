@@ -520,6 +520,7 @@ void Crunch::createUI()
   settingsMenu->addAction( d->actions->showClearButton );
   settingsMenu->addAction( d->actions->showEvalButton );
   settingsMenu->addAction( d->actions->showKeyPad );
+  settingsMenu->insertSeparator();
   settingsMenu->addAction( d->actions->showHistory );
   settingsMenu->addAction( d->actions->showFunctions );
   settingsMenu->addAction( d->actions->showVariables );
