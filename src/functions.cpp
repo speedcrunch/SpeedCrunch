@@ -567,7 +567,7 @@ void FunctionRepository::add( Function* function )
 
 Function* FunctionRepository::function( const QString& name )
 {
-  return d->functions[ name.upper() ];
+  return d->functions.value( name.upper() );
 }
 
 QStringList FunctionRepository::functionNames() const
