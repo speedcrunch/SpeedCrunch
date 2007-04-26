@@ -85,6 +85,7 @@ QDialog( parent, name )
 
   connect( d->insertButton, SIGNAL( clicked() ), this, SLOT( accept() ) );
   connect( d->cancelButton, SIGNAL( clicked() ), this, SLOT( reject() ) );
+  connect( d->list, SIGNAL( itemActivated( QTreeWidgetItem*, int ) ), this, SLOT( accept() ) );
   connect( d->list, SIGNAL( itemDoubleClicked( QTreeWidgetItem*, int ) ), this, SLOT( accept() ) );
 
   QTimer::singleShot( 0, this, SLOT( initUI() ) );
