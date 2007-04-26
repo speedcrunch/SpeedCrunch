@@ -73,8 +73,8 @@ then the /tag directory may look like this:
 Tagging the repository can be done like the following steps:
   svn copy branches/0.8 tags/0.8-beta
 
-/www stores files for the web site. Johan Thelin will synchronize his server
-content (http://speedcrunch.digitalfanatics.org) with this directory every now
+/www stores files for the web site. Ariya Hidayat will synchronize his server
+content (http://www.speedcrunch.org) with this directory every now
 and then.
 
 

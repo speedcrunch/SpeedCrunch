@@ -1276,7 +1276,7 @@ void Crunch::configure()
 
 void Crunch::gotoWebsite()
 {
-  QDesktopServices::openUrl( QUrl(QString::fromLatin1("http://speedcrunch.digitalfanatics.org")) );
+  QDesktopServices::openUrl( QUrl(QString::fromLatin1("http://www.speedcrunch.org")) );
 }
 
 void Crunch::about()
