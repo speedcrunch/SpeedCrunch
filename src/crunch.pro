@@ -26,6 +26,7 @@ HEADERS += aboutbox.h
 HEADERS += keypad.h
 HEADERS += binreloc.h
 HEADERS += autohidelabel.h
+HEADERS += tipwidget.h
 
 SOURCES += crunch.cpp
 SOURCES += constants.cpp
@@ -49,6 +50,7 @@ SOURCES += main.cpp
 SOURCES += keypad.cpp
 SOURCES += binreloc.c
 SOURCES += autohidelabel.cpp
+SOURCES += tipwidget.cpp
 
 FORMS += listdialog.ui
 

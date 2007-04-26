@@ -32,6 +32,7 @@
 #include "functionsdock.h"
 #include "result.h"
 #include "settings.h"
+#include "tipwidget.h"
 #include "variablesdock.h"
 
 #include "insertfunctiondlg.h"
@@ -40,6 +41,8 @@
 #include "configdlg.h"
 #include "aboutbox.h"
 #include "keypad.h"
+
+#include <stdlib.h> // rand()
 
 #include <QAction>
 #include <QActionGroup>
@@ -101,6 +104,7 @@ public:
   QAction* showVariables;
   QAction* showConstants;
   QAction* configure;
+  QAction* helpTipOfTheDay;
   QAction* helpGotoWebsite;
   QAction* helpAboutQt;
   QAction* helpAbout;
@@ -117,6 +121,7 @@ public:
 
   Editor *editor;
   AutoHideLabel* autoCalcLabel;
+  TipWidget* tip;
 
   Result* result;
   KeyPad* keypad;
@@ -289,6 +294,10 @@ Crunch::Crunch(): QMainWindow()
   d->autoCalcLabel = new AutoHideLabel( this );
   d->autoCalcLabel->hide();
 
+  // for tip of the day
+  d->tip = new TipWidget( this );
+  d->tip->hide();
+
   // Connect signals and slots
 
   connect( d->clearInputButton, SIGNAL( clicked() ), SLOT( clearInput() ) );
@@ -416,6 +425,7 @@ void Crunch::createUI()
 
   d->actions->configure = new QAction( tr("&Configure..."), this );
 
+  d->actions->helpTipOfTheDay = new QAction( tr("&Tip of the Day"), this );
   d->actions->helpGotoWebsite = new QAction( tr("SpeedCrunch &Web Site..."), this );
   d->actions->helpAbout = new QAction( tr("&About"), this );
   d->actions->helpAboutQt = new QAction( tr("About &Qt"), this );
@@ -454,6 +464,7 @@ void Crunch::createUI()
   connect( d->actions->showVariables, SIGNAL( toggled(bool) ), this, SLOT( showVariables(bool) ) );
   connect( d->actions->showConstants, SIGNAL( toggled(bool) ), this, SLOT( showConstants(bool) ) );
   connect( d->actions->configure, SIGNAL( activated() ), this, SLOT( configure() ) );
+  connect( d->actions->helpTipOfTheDay, SIGNAL( activated() ), this, SLOT( showTip() ) );
   connect( d->actions->helpGotoWebsite, SIGNAL( activated() ), this, SLOT( gotoWebsite() ) );
   connect( d->actions->helpAbout, SIGNAL( activated() ), this, SLOT( about() ) );
   connect( d->actions->helpAboutQt, SIGNAL( activated() ), this, SLOT( aboutQt() ) );
@@ -519,6 +530,7 @@ void Crunch::createUI()
 
   QMenu *helpMenu = new QMenu( this );
   menuBar()->insertItem( tr("&Help"), helpMenu );
+  helpMenu->addAction( d->actions->helpTipOfTheDay );
   helpMenu->addAction( d->actions->helpGotoWebsite );
   helpMenu->insertSeparator();
   helpMenu->addAction( d->actions->helpAbout );
@@ -1277,6 +1289,39 @@ void Crunch::configure()
     connect( d->configDlg, SIGNAL( settingsChanged() ), SLOT( applySettings() ) );
   }
   d->configDlg->exec();
+}
+
+void Crunch::showTip()
+{
+  // DEBUG: test tip of the day
+  QPoint p = mapFromGlobal( d->result->mapToGlobal( QPoint(0, 0) ) ) += QPoint(4,4);
+  d->tip->move( p );
+
+  int tipNo = rand() % 4;
+  QString msg;
+  switch( tipNo )
+  {
+    case 0:
+      msg = tr("You can customize the syntax highlight colors. "
+        "Use menu <i>Settings, Configure</i>, and then from the configuration dialog, "
+        "choose tab <i>Syntax Highlight<i>." );
+      break;
+    case 1:
+      msg = tr("To insert a function using keyboard, use Ctrl+F shorcut. "
+        "From the dialog, you can choose the function you want to insert." );
+      break;
+    case 2:
+      msg = tr("To insert a variable using keyboard, use Ctrl+I shorcut. "
+        "From the dialog, you can choose the variable you want to insert." );
+      break;
+    case 3:
+      msg = tr("Use variable <i>pi</i> to use pi constant." );
+      break;
+    default:
+      break;
+  }
+
+  d->tip->showText( msg );
 }
 
 void Crunch::gotoWebsite()

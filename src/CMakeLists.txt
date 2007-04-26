@@ -52,6 +52,7 @@ main.cpp
 number.c
 result.cpp
 settings.cpp
+tipwidget.cpp
 variablesdock.cpp
 )
 
@@ -77,6 +78,7 @@ keypad.h
 number.h
 result.h
 settings.h
+tipwidget.h
 variablesdock.h
 )
 

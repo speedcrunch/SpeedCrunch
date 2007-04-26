@@ -64,6 +64,7 @@ class Crunch : public QMainWindow
     void showVariables(bool);
     void showConstants(bool);
     void configure();
+    void showTip();
     void gotoWebsite();
     void about();
     void aboutQt();

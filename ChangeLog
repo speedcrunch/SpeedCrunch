@@ -5,13 +5,15 @@ support for different bases: hex, octal and binary
 new functions: MIN, MAX, SUM, PRODUCT, AVERAGE, GEOMEAN
 new functions: SIGN, DEGREES, RADIANS, LG
 postfix factorial operator (!)
-history, functions, and variables can be displayed in dock or floated windows
+history, functions, variables, constants in docked/floated windows
+support inserting important physics constants
 fixed accuracy problem when calculating 10^x where x is integer
 fixed exp(x) when x is large
 shortcut Ctrl+Q to quit (ubuntu bug#102734)
 improved (and non-intrusive) autocalc tip
 color for error messages can be customized
 option to hide from taskbar and minimize to system tray
+"tip of the day" feature
 
 SpeedCrunch 0.7
 ---------------
