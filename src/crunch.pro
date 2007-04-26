@@ -7,6 +7,7 @@ DEFINES += SPEEDCRUNCH_VERSION="trunk"
 HEADERS += crunch.h
 HEADERS += config.h
 HEADERS += number.h
+HEADERS += constants.h
 HEADERS += historydock.h
 HEADERS += functionsdock.h
 HEADERS += variablesdock.h
@@ -27,6 +28,7 @@ HEADERS += binreloc.h
 HEADERS += autohidelabel.h
 
 SOURCES += crunch.cpp
+SOURCES += constants.cpp
 SOURCES += historydock.cpp
 SOURCES += functionsdock.cpp
 SOURCES += variablesdock.cpp

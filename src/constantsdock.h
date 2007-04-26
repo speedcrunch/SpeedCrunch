@@ -24,7 +24,7 @@
 
 class ConstantsDockPrivate;
 class QTreeWidgetItem;
-class Evaluator;
+class Constants;
 
 class ConstantsDock : public QDockWidget
 {
@@ -33,6 +33,8 @@ class ConstantsDock : public QDockWidget
   public:
     explicit ConstantsDock( QWidget* parent );
     ~ConstantsDock();
+
+    void update( const Constants* constants );
 
   signals:
     void constantSelected( const QString& c );

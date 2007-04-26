@@ -22,6 +22,7 @@
 #include "crunch.h"
 
 #include "autohidelabel.h"
+#include "constants.h"
 #include "constantsdock.h"
 #include "evaluator.h"
 #include "historydock.h"
@@ -112,6 +113,7 @@ public:
   CrunchActions* actions;
   QActionGroup *digitsGroup;
   Evaluator* eval;
+  Constants* constants;
 
   Editor *editor;
   AutoHideLabel* autoCalcLabel;
@@ -151,6 +153,8 @@ Crunch::Crunch(): QMainWindow()
   d->actions = new CrunchActions;
 
   d->eval = new Evaluator;
+  d->constants = new Constants( this );
+
   d->autoAns = false;
   d->trayIcon = 0;
   d->trayNotify = true;
@@ -270,6 +274,7 @@ Crunch::Crunch(): QMainWindow()
 
   d->constantsDock = new ConstantsDock( this );
   d->constantsDock->setObjectName( "ConstantsList" );
+  d->constantsDock->update( d->constants );
   addDockWidget( Qt::RightDockWidgetArea, d->constantsDock );
 
   tabifyDockWidget( d->functionsDock, d->historyDock );
