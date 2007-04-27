@@ -230,9 +230,9 @@ Crunch::Crunch(): QMainWindow()
   d->clearInputButton = new QPushButton( box );
   d->clearInputButton->setMaximumWidth( 25 );
   d->clearInputButton->setFlat( true );
-  d->clearInputButton->setIconSet( QPixmap(":/clearinput.png") );
+  d->clearInputButton->setIcon( QPixmap(":/clearinput.png") );
   d->clearInputButton->hide();
-  QToolTip::add( d->clearInputButton, tr("Clear input line") );
+  d->clearInputButton->setToolTip( tr("Clear input line") );
   inputBoxLayout->addWidget( d->clearInputButton );
 
   d->editor = new Editor( d->eval, box );
@@ -321,7 +321,7 @@ Crunch::Crunch(): QMainWindow()
   d->insertVariableDlg = 0;
   d->deleteVariableDlg = 0;
 
-  setCaption( tr( "SpeedCrunch" ) );
+  setWindowTitle( tr( "SpeedCrunch" ) );
   d->degButton->setChecked( true );
   createUI();
   applySettings();
@@ -376,12 +376,12 @@ void Crunch::createUI()
   formatGroup->addAction( d->actions->viewOctal );
   formatGroup->addAction( d->actions->viewBinary );
 
-  d->actions->viewGeneral->setToggleAction( true );
-  d->actions->viewFixed->setToggleAction( true );
-  d->actions->viewExponential->setToggleAction( true );
-  d->actions->viewHexadec->setToggleAction( true );
-  d->actions->viewOctal->setToggleAction( true );
-  d->actions->viewBinary->setToggleAction( true );
+  d->actions->viewGeneral->setCheckable( true );
+  d->actions->viewFixed->setCheckable( true );
+  d->actions->viewExponential->setCheckable( true );
+  d->actions->viewHexadec->setCheckable( true );
+  d->actions->viewOctal->setCheckable( true );
+  d->actions->viewBinary->setCheckable( true );
 
   d->actions->digitsAuto = new QAction( tr("&Automatic Precision"), 0 );
   d->actions->digits2 = new QAction( tr("&2 Decimal Digits"), 0 );
@@ -398,12 +398,12 @@ void Crunch::createUI()
   d->digitsGroup->addAction( d->actions->digits15 );
   d->digitsGroup->addAction( d->actions->digits50 );
 
-  d->actions->digitsAuto->setToggleAction( true );
-  d->actions->digits2->setToggleAction( true );
-  d->actions->digits3->setToggleAction( true );
-  d->actions->digits8->setToggleAction( true );
-  d->actions->digits15->setToggleAction( true );
-  d->actions->digits50->setToggleAction( true );
+  d->actions->digitsAuto->setCheckable( true );
+  d->actions->digits2->setCheckable( true );
+  d->actions->digits3->setCheckable( true );
+  d->actions->digits8->setCheckable( true );
+  d->actions->digits15->setCheckable( true );
+  d->actions->digits50->setCheckable( true );
 
   d->actions->showClearButton = new QAction( tr("&Show Clear Button"), this );
   d->actions->showEvalButton = new QAction( tr("Show &Evaluate Button"), this );
@@ -413,13 +413,13 @@ void Crunch::createUI()
   d->actions->showVariables = new QAction( tr("Show &Variables List"), this );
   d->actions->showConstants = new QAction( tr("Show &Constants List"), this );
 
-  d->actions->showClearButton->setToggleAction( true );
-  d->actions->showEvalButton->setToggleAction( true );
-  d->actions->showKeyPad->setToggleAction( true );
-  d->actions->showHistory->setToggleAction( true );
-  d->actions->showFunctions->setToggleAction( true );
-  d->actions->showVariables->setToggleAction( true );
-  d->actions->showConstants->setToggleAction( true );
+  d->actions->showClearButton->setCheckable( true );
+  d->actions->showEvalButton->setCheckable( true );
+  d->actions->showKeyPad->setCheckable( true );
+  d->actions->showHistory->setCheckable( true );
+  d->actions->showFunctions->setCheckable( true );
+  d->actions->showVariables->setCheckable( true );
+  d->actions->showConstants->setCheckable( true );
 
   d->actions->configure = new QAction( tr("&Configure..."), this );
 
@@ -475,67 +475,67 @@ void Crunch::createUI()
 
   // construct the menu
 
-  QMenu *sessionMenu = new QMenu( this );
-  menuBar()->insertItem( tr("&Session"), sessionMenu );
+  QMenu *sessionMenu = new QMenu( tr("&Session"), this );
+  menuBar()->addMenu( sessionMenu );
   sessionMenu->addAction( d->actions->sessionSave );
   sessionMenu->addAction( d->actions->sessionQuit );
 
-  QMenu *editMenu = new QMenu( this );
-  menuBar()->insertItem( tr("&Edit"), editMenu );
+  QMenu *editMenu = new QMenu( tr("&Edit"), this );
+  menuBar()->addMenu( editMenu );
   editMenu->addAction( d->actions->editCopy );
   editMenu->addAction( d->actions->editCopyResult );
   editMenu->addAction( d->actions->editPaste );
-  editMenu->insertSeparator();
+  editMenu->addSeparator();
   editMenu->addAction( d->actions->insertFunction );
   editMenu->addAction( d->actions->insertVariable );
-  editMenu->insertSeparator();
+  editMenu->addSeparator();
   editMenu->addAction( d->actions->deleteVariable );
-  editMenu->insertSeparator();
+  editMenu->addSeparator();
   editMenu->addAction( d->actions->clearInput );
   editMenu->addAction( d->actions->clearDisplay );
   editMenu->addAction( d->actions->clearHistory );
   editMenu->addAction( d->actions->clearVariables );
 
-  QMenu *viewMenu = new QMenu( this );
-  menuBar()->insertItem( tr("&View"), viewMenu );
+  QMenu *viewMenu = new QMenu( tr("&View"), this );
+  menuBar()->addMenu( viewMenu );
   viewMenu->addAction( d->actions->viewGeneral );
   viewMenu->addAction( d->actions->viewFixed );
   viewMenu->addAction( d->actions->viewExponential );
-  viewMenu->insertSeparator();
+  viewMenu->addSeparator();
   viewMenu->addAction( d->actions->digitsAuto );
   viewMenu->addAction( d->actions->digits2 );
   viewMenu->addAction( d->actions->digits3 );
   viewMenu->addAction( d->actions->digits8 );
   viewMenu->addAction( d->actions->digits15 );
   viewMenu->addAction( d->actions->digits50 );
-  viewMenu->insertSeparator();
+  viewMenu->addSeparator();
   viewMenu->addAction( d->actions->viewHexadec );
   viewMenu->addAction( d->actions->viewOctal );
   viewMenu->addAction( d->actions->viewBinary );
 
 
-  QMenu *settingsMenu = new QMenu( this );
+  QMenu *settingsMenu = new QMenu( tr("Se&ttings"), this );
+  menuBar()->addMenu( settingsMenu );
   settingsMenu->addAction( d->actions->showClearButton );
   settingsMenu->addAction( d->actions->showEvalButton );
   settingsMenu->addAction( d->actions->showKeyPad );
-  settingsMenu->insertSeparator();
+  settingsMenu->addSeparator();
   settingsMenu->addAction( d->actions->showHistory );
   settingsMenu->addAction( d->actions->showFunctions );
   settingsMenu->addAction( d->actions->showVariables );
   settingsMenu->addAction( d->actions->showConstants );
-  menuBar()->insertItem( tr("Se&ttings"), settingsMenu );
-  settingsMenu->insertSeparator();
+  settingsMenu->addSeparator();
   settingsMenu->addAction( d->actions->configure );
 
-  QMenu *helpMenu = new QMenu( this );
-  menuBar()->insertItem( tr("&Help"), helpMenu );
+  QMenu *helpMenu = new QMenu( tr("&Help"), this );
+  menuBar()->addMenu( helpMenu );
   helpMenu->addAction( d->actions->helpTipOfTheDay );
   helpMenu->addAction( d->actions->helpGotoWebsite );
-  helpMenu->insertSeparator();
+  helpMenu->addSeparator();
   helpMenu->addAction( d->actions->helpAbout );
   helpMenu->addAction( d->actions->helpAboutQt );
 
-  setIcon( QPixmap( ":/crunch.png" ) );
+  setWindowIcon( QPixmap( ":/crunch.png" ) );
 
   Settings::self()->load();
 }
@@ -631,42 +631,42 @@ void Crunch::applySettings()
     settings->customBackgroundColor2 );
   d->result->setCustomErrorColor( settings->customErrorColor );
 
-  if( settings->format == 'g' ) d->actions->viewGeneral->setOn( true );
-  if( settings->format == 'f' ) d->actions->viewFixed->setOn( true );
-  if( settings->format == 'e' ) d->actions->viewExponential->setOn( true );
-  if( settings->format == 'h' ) d->actions->viewHexadec->setOn( true );
-  if( settings->format == 'o' ) d->actions->viewOctal->setOn( true );
-  if( settings->format == 'b' ) d->actions->viewBinary->setOn( true );
+  if( settings->format == 'g' ) d->actions->viewGeneral->setChecked( true );
+  if( settings->format == 'f' ) d->actions->viewFixed->setChecked( true );
+  if( settings->format == 'e' ) d->actions->viewExponential->setChecked( true );
+  if( settings->format == 'h' ) d->actions->viewHexadec->setChecked( true );
+  if( settings->format == 'o' ) d->actions->viewOctal->setChecked( true );
+  if( settings->format == 'b' ) d->actions->viewBinary->setChecked( true );
 
-  if( settings->decimalDigits < 0 ) d->actions->digitsAuto->setOn( true );
-  if( settings->decimalDigits == 2 ) d->actions->digits2->setOn( true );
-  if( settings->decimalDigits == 3 ) d->actions->digits3->setOn( true );
-  if( settings->decimalDigits == 8 ) d->actions->digits8->setOn( true );
-  if( settings->decimalDigits == 15 ) d->actions->digits15->setOn( true );
-  if( settings->decimalDigits == 50 ) d->actions->digits50->setOn( true );
+  if( settings->decimalDigits < 0 ) d->actions->digitsAuto->setChecked( true );
+  if( settings->decimalDigits == 2 ) d->actions->digits2->setChecked( true );
+  if( settings->decimalDigits == 3 ) d->actions->digits3->setChecked( true );
+  if( settings->decimalDigits == 8 ) d->actions->digits8->setChecked( true );
+  if( settings->decimalDigits == 15 ) d->actions->digits15->setChecked( true );
+  if( settings->decimalDigits == 50 ) d->actions->digits50->setChecked( true );
 
   if( settings->showClearInputButton )
     d->clearInputButton->show();
   else
     d->clearInputButton->hide();
-  d->actions->showClearButton->setOn( settings->showClearInputButton );
+  d->actions->showClearButton->setChecked( settings->showClearInputButton );
 
   if( settings->showEvaluateButton )
     d->evalButton->show();
   else
     d->evalButton->hide();
-  d->actions->showEvalButton->setOn( settings->showEvaluateButton );
+  d->actions->showEvalButton->setChecked( settings->showEvaluateButton );
 
   if( settings->showKeyPad )
     d->keypad->show();
   else
     d->keypad->hide();
-  d->actions->showKeyPad->setOn( settings->showKeyPad );
+  d->actions->showKeyPad->setChecked( settings->showKeyPad );
 
-  d->actions->showHistory->setOn( settings->showHistory );
-  d->actions->showFunctions->setOn( settings->showFunctions );
-  d->actions->showVariables->setOn( settings->showVariables );
-  d->actions->showConstants->setOn( settings->showConstants );
+  d->actions->showHistory->setChecked( settings->showHistory );
+  d->actions->showFunctions->setChecked( settings->showFunctions );
+  d->actions->showVariables->setChecked( settings->showVariables );
+  d->actions->showConstants->setChecked( settings->showConstants );
 
   d->historyDock->setVisible( settings->showHistory );
   d->functionsDock->setVisible( settings->showFunctions );
@@ -718,8 +718,8 @@ void Crunch::closeEvent( QCloseEvent* e )
 void Crunch::saveSession()
 {
   QString filters = tr( "Text Files (*.txt);; All Files (*.*)" );
-  QString fname = QFileDialog::getSaveFileName( QString::null, filters, this, 0,
-    tr("Save Session") );
+  QString fname = QFileDialog::getSaveFileName( this, tr("Save Session"),
+    QString::null, filters );
   if( fname.isEmpty() ) return;
 
   QFile file( fname );
@@ -756,7 +756,7 @@ void Crunch::saveSettings()
     settings->variables.clear();
     QVector<Variable> vars = d->eval->variables();
     for( int i=0; i<vars.count(); i++ )
-      if( vars[i].name.lower() != "pi" )
+      if( vars[i].name.toLower() != "pi" )
       {
         char* str = HMath::formatFixed( vars[i].value, 100 );
         settings->variables.append( QString("%1=%2").arg( vars[i].name ).
@@ -908,7 +908,7 @@ void Crunch::angleModeChanged()
 {
   const QObject* s = sender();
   if( !s ) return;
-  if( !s->isA( "QRadioButton" ) ) return;
+  if( !s->inherits( "QRadioButton" ) ) return;
 
   blockSignals( true );
   if( s == static_cast<QObject*>( d->degButton ) )
@@ -929,7 +929,7 @@ void Crunch::radixChanged()
 {
   const QObject* s = sender();
   if( !s ) return;
-  if( !s->isA( "QRadioButton" ) ) return;
+  if( !s->inherits( "QRadioButton" ) ) return;
 
   Settings* settings = Settings::self();
 
@@ -1334,7 +1334,6 @@ void Crunch::gotoWebsite()
 void Crunch::about()
 {
   AboutBox* aboutBox = new AboutBox( this );
-  aboutBox->setCaption( tr("About SpeedCrunch" ) );
   aboutBox->exec();
   delete aboutBox;
 }
@@ -1347,7 +1346,7 @@ void Crunch::aboutQt()
 void Crunch::addKeyPadText( const QString& text )
 {
   if( text == "<--" ) // Special case: backspace
-    d->editor->doKeyboardAction( Editor::ActionBackspace );
+    d->editor->doBackspace();
   else
   {
     bool wasAns = d->editor->toPlainText().startsWith( "ans", Qt::CaseInsensitive );
