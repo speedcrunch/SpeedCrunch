@@ -29,13 +29,13 @@ class QKeyEvent;
 class QWheelEvent;
 class QWidget;
 
-#include <q3textedit.h>
+#include <QTextEdit>
 
 class Evaluator;
 
 class EditorPrivate;
 
-class Editor : public Q3TextEdit
+class Editor : public QTextEdit
 {
   Q_OBJECT
 
@@ -48,6 +48,9 @@ class Editor : public Q3TextEdit
 
     explicit Editor( Evaluator* eval, QWidget* parent = 0, const char* name = 0 );
     ~Editor();
+
+    int cursorPosition() const;
+    void setCursorPosition( int pos );
 
     QSize sizeHint() const;
     QSize xminimumSizeHint() const;
@@ -82,12 +85,15 @@ class Editor : public Q3TextEdit
     void checkAutoCalc();
     void autoCalc();
     void checkMatching();
+    void doMatchingPar();
     void doMatchingLeft();
     void doMatchingRight();
     void historyBack();
     void historyForward();
+    void triggerEnter();
 
   signals:
+    void returnPressed();
     void autoCalcDeactivated();
     void autoCalcActivated( const QString& );
 

@@ -246,8 +246,6 @@ Crunch::Crunch(): QMainWindow()
 
   outerBoxLayout->addLayout( inputBoxLayout );
 
-  d->clearInputButton->setMaximumHeight( d->editor->sizeHint().height() );
-  d->editor->setMaximumHeight( d->editor->sizeHint().height() );
 
   // Keypad
 
@@ -617,11 +615,14 @@ void Crunch::applySettings()
   {
     d->result->setFont( settings->customFont );
     d->editor->setFont( settings->customFont );
+	d->editor->adjustSize();
+	d->editor->setFixedHeight( d->editor->sizeHint().height() );
   }
   else
   {
     d->result->setFont( QApplication::font( d->result ) );
     d->editor->setFont( QApplication::font( d->editor ) );
+	d->editor->setFixedHeight( d->editor->sizeHint().height() );
   }
 
   d->result->setCustomAppearance( settings->customAppearance );
@@ -1053,7 +1054,7 @@ void Crunch::textChanged()
        d->autoAns = false;
        expr.prepend( "ans" );
        d->editor->setText( expr );
-       d->editor->setCursorPosition( 0, expr.length() );
+       d->editor->setCursorPosition( expr.length() );
      }
   }
 }
@@ -1345,34 +1346,14 @@ void Crunch::aboutQt()
 
 void Crunch::addKeyPadText( const QString& text )
 {
-  int para, index;
-
   if( text == "<--" ) // Special case: backspace
-  {
-    if( !d->editor->hasSelectedText() )
-    {
-      d->editor->getCursorPosition( &para, &index );
-      if( index == 0 )
-        return;
-
-      d->editor->setSelection( para, index-1, para, index );
-      d->editor->removeSelectedText();
-    }
-
-    d->editor->removeSelectedText();
-  }
+    d->editor->doKeyboardAction( Editor::ActionBackspace );
   else
   {
-    if( d->editor->hasSelectedText() )
-      d->editor->removeSelectedText();
-
-    bool wasAns = d->editor->text().startsWith( "ans", Qt::CaseInsensitive );
-
-    d->editor->getCursorPosition( &para, &index );
-    d->editor->insert( text );
-
-    if( !wasAns && d->editor->text().startsWith( "ans", Qt::CaseInsensitive ) )
-      d->editor->setCursorPosition( para, d->editor->text().length() );
+    bool wasAns = d->editor->toPlainText().startsWith( "ans", Qt::CaseInsensitive );
+    d->editor->insertPlainText( text );
+    if( !wasAns && d->editor->toPlainText().startsWith( "ans", Qt::CaseInsensitive ) )
+      d->editor->setCursorPosition( d->editor->text().length() );
   }
 
   d->editor->setFocus();
