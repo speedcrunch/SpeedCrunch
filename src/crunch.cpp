@@ -1084,6 +1084,7 @@ void Crunch::copyResult()
 void Crunch::clearInput()
 {
   d->editor->clear();
+  QTimer::singleShot(0, d->editor, SLOT( setFocus() ) );
 }
 
 void Crunch::clearVariables()
