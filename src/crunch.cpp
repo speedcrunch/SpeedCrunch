@@ -411,7 +411,7 @@ void Crunch::createUI()
   d->actions->showHistory = new QAction( tr("Show Expression &History"), this );
   d->actions->showFunctions = new QAction( tr("Show &Functions List"), this );
   d->actions->showVariables = new QAction( tr("Show &Variables List"), this );
-  d->actions->showConstants = new QAction( tr("Show &Constants List"), this );
+  d->actions->showConstants = new QAction( tr("Show C&onstants List"), this );
 
   d->actions->showClearButton->setCheckable( true );
   d->actions->showEvalButton->setCheckable( true );
