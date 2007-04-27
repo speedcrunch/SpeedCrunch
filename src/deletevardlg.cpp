@@ -53,9 +53,7 @@ static QString formatValue( const HNumber& value )
 DeleteVariableDlg::DeleteVariableDlg( Evaluator* eval, QWidget* parent ):
 QDialog( parent ), d( new DeleteVariableDlgPrivate)
 {
-
   setWindowTitle( tr("Delete Variable") );
-  setCaption( tr("Delete Variable") );
   setModal( true );
 
   d->eval = eval;

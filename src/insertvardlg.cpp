@@ -53,7 +53,6 @@ InsertVariableDlg::InsertVariableDlg( Evaluator* eval, QWidget* parent ):
 QDialog( parent ), d( new InsertVariableDlgPrivate )
 {
   setWindowTitle( tr("Insert Variable") );
-  setCaption( tr("Insert Variable") );
   setModal( true );
 
   d->eval = eval;

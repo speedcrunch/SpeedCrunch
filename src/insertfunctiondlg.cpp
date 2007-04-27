@@ -46,7 +46,6 @@ QDialog( parent, name )
   d = new InsertFunctionDlgPrivate;
 
   setWindowTitle( tr("Insert Function") );
-  setCaption( tr("Insert Function") );
   setModal( true );
 
   QVBoxLayout* layout = new QVBoxLayout;
