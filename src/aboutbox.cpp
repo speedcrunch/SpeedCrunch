@@ -191,6 +191,7 @@ AboutBox::AboutBox( QWidget* parent ):
   QDialog( parent )
 {
   setObjectName( "AboutBox" );
+  setWindowTitle( tr("About SpeedCrunch" ) );
 
   QString website = tr( "http://www.speedcrunch.org");
 
