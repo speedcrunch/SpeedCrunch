@@ -194,7 +194,8 @@ Token& Token::operator=( const Token& token )
 HNumber Token::asNumber() const
 {
   if( isNumber() )
-    return HNumber( m_text.latin1() );
+    return HNumber( (const char*)
+m_text.toLatin1() );
   else
     return HNumber( 0 );
 }
@@ -426,7 +427,7 @@ Tokens Evaluator::scan( const QString& expr, const QString& settingsDecimal )
        }
 
        // terminator character
-       else if ( ch == QChar::null )
+       else if ( ch.isNull() )
           state = Finish;
 
        // look for operator match
@@ -504,25 +505,25 @@ Tokens Evaluator::scan( const QString& expr, const QString& settingsDecimal )
        }
 
        // exponent ?
-       else if( ch.upper() == 'E' )
+       else if( ch.toUpper() == 'E' )
        {
          tokenText.append( 'E' );
          i++;
          state = InExpIndicator;
        }
-       else if (ch.upper() == 'X' && tokenText == "0") // normal hexadec notation
+       else if (ch.toUpper() == 'X' && tokenText == "0") // normal hexadec notation
        {
          tokenText.append( 'x' ); i++; state = InHexa;
        }
-       else if (ch.upper() == 'B' && tokenText == "0") // binary notation
+       else if (ch.toUpper() == 'B' && tokenText == "0") // binary notation
        {
          tokenText.append( 'b' ); i++; state = InBinary;
        }
-       else if (ch.upper() == 'O' && tokenText == "0") // octal notation
+       else if (ch.toUpper() == 'O' && tokenText == "0") // octal notation
        {
          tokenText.append( 'o' ); i++; state = InOctal;
        }
-       else if (ch.upper() == 'D' && tokenText == "0") // explicit decimal notation
+       else if (ch.toUpper() == 'D' && tokenText == "0") // explicit decimal notation
        {
          // we also need to get rid of the leading zero
          tokenText = ""; i++;
@@ -571,7 +572,7 @@ Tokens Evaluator::scan( const QString& expr, const QString& settingsDecimal )
        if( ch.isDigit() ) tokenText.append( ex.at(i++) );
 
        // exponent ?
-       else if( ch.upper() == 'E' )
+       else if( ch.toUpper() == 'E' )
        {
          tokenText.append( 'E' );
          i++;
@@ -1131,7 +1132,7 @@ HNumber Evaluator::eval()
   }
 
   // can not overwrite PI
-  if( d->assignId.lower() == QString("pi") )
+  if( d->assignId.toLower() == QString("pi") )
   {
      d->error = qApp->translate( "Error", "Can not overwrite PI" );
      return HNumber( 0 );
@@ -1365,8 +1366,8 @@ void Evaluator::set( const QString& id, HNumber value )
 {
   if( !id.isEmpty() )
   {
-    d->variables[ id.upper() ].name = id;
-    d->variables[ id.upper() ].value = value;
+    d->variables[ id.toUpper() ].name = id;
+    d->variables[ id.toUpper() ].value = value;
   }
 }
 
@@ -1374,19 +1375,19 @@ HNumber Evaluator::get( const QString& id )
 {
   if( id.isEmpty() ) return HNumber( 0 );
 
-  if( !d->variables.contains( id.upper() ) )
+  if( !d->variables.contains( id.toUpper() ) )
     set( id, HNumber( 0 ) );
-  return d->variables[ id.upper() ].value;
+  return d->variables[ id.toUpper() ].value;
 }
 
 bool Evaluator::has( const QString& id )
 {
-  return id.isEmpty() ? false : d->variables.contains( id.upper() );
+  return id.isEmpty() ? false : d->variables.contains( id.toUpper() );
 }
 
 void Evaluator::remove( const QString& id )
 {
-  d->variables.remove( id.upper() );
+  d->variables.remove( id.toUpper() );
 }
 
 QVector<Variable> Evaluator::variables() const
@@ -1397,8 +1398,8 @@ QVector<Variable> Evaluator::variables() const
   for ( it = d->variables.begin(); it != d->variables.end(); ++it )
   {
     Variable var;
-    var.name = it.data().name;
-    var.value = it.data().value;
+    var.name = it.value().name;
+    var.value = it.value().value;
     result.append( var );
   }
 
