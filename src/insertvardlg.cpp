@@ -108,7 +108,7 @@ InsertVariableDlg::~InsertVariableDlg()
 QString InsertVariableDlg::variableName() const
 {
   QTreeWidgetItem* item = d->list->currentItem();
-  return item ? item->text(0).lower() : QString();
+  return item ? item->text(0) : QString();
 }
 
 void InsertVariableDlg::updateList()
