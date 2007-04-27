@@ -841,6 +841,6 @@ void EditorCompletion::showCompletion( const QStringList &choices )
 void EditorCompletion::fade( int v )
 {
 #ifdef COMPLETION_FADE_EFFECT
-  d->popup->setWindowOpacity( (100-v)/100 );
+  d->popup->setWindowOpacity( (qreal)(100-v)/100 );
 #endif
 }
