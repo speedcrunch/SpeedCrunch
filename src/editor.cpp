@@ -498,13 +498,17 @@ void Editor::triggerAutoComplete()
     QString str = choices[0].split( ':' )[0];
     str = str.remove( 0, id.length() );
     int curPos = textCursor().position();
-    blockSignals( true );
-    insert( str );
-    QTextCursor cursor = textCursor();
-    cursor.setPosition( curPos );
-    cursor.setPosition( curPos+str.length(), QTextCursor::KeepAnchor );
-    setTextCursor( cursor );
-    blockSignals( false );
+    if( textCursor().selectionStart() == textCursor().selectionEnd() )
+    {
+      blockSignals( true );
+      QTextCursor cursor = textCursor();
+      cursor.clearSelection();
+      cursor.insertText( str );
+      cursor.setPosition( curPos );
+      cursor.setPosition( curPos+str.length(), QTextCursor::KeepAnchor );
+      setTextCursor( cursor );
+      blockSignals( false );
+    }
     return;
   }
 
@@ -624,6 +628,9 @@ void Editor::historyForward()
 
 void Editor::triggerEnter()
 {
+  d->completionTimer->stop();
+  d->matchingTimer->stop();
+  d->autoCalcTimer->stop();
   emit returnPressed();
 }
 
