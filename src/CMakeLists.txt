@@ -112,17 +112,6 @@ else(MINGW)
   SET(speedcrunch_SOURCES ${speedcrunch_SOURCES} crunchico.rc)
 endif(MINGW)
 
-# we still need those Q3 classes
-set( QT_USE_QT3SUPPORT TRUE )
-
-if( APPLE )
-  if( QT_USE_QT3SUPPORT )
-    set( QT_USE_QTSQL TRUE )
-    set( QT_USE_QTNETWORK TRUE )
-    set( QT_USE_QTXML TRUE )
-  endif( QT_USE_QT3SUPPORT )
-endif( APPLE )
-
 # enable warnings
 if(CMAKE_COMPILER_IS_GNUCXX )
   ADD_DEFINITIONS( -Wall -Werror )

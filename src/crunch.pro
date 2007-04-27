@@ -114,6 +114,3 @@ DISTFILES += crunch_pt_BR.qm
 DISTFILES += crunch_ru.qm
 DISTFILES += crunch_nn.qm
 DISTFILES += crunch_pl_PL.qm
-
-#The following line was inserted by qt3to4
-QT +=  qt3support
