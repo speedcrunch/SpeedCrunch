@@ -288,9 +288,13 @@ void Result::triggerUpdate()
 void Result::setCustomAppearance( bool custom )
 {
   d->customAppearance = custom;
-  QColor bgcolor = QApplication::palette().active().base();
+  QColor bgcolor = QApplication::palette().base().color();
   if( custom ) bgcolor = customBackgroundColor1();
-  setPaletteBackgroundColor( bgcolor );
+
+  QPalette pal = palette();
+  pal.setColor( QPalette::Background, bgcolor);
+  setPalette( pal );
+
   triggerUpdate();
 }
 
@@ -315,7 +319,12 @@ void Result::setCustomBackgroundColor( const QColor& bg1, const QColor& bg2 )
   d->customBackgroundColor1 = bg1;
   d->customBackgroundColor2 = bg2;
   if( d->customAppearance )
-    setPaletteBackgroundColor( bg1 );
+  {
+    QPalette pal = palette();
+    pal.setColor( QPalette::Background, bg1);
+    setPalette( pal );
+  }
+
   triggerUpdate();
 }
 
