@@ -84,7 +84,7 @@ HNumber function_sqrt( const Evaluator*, Function* fn, const FunctionArguments& 
   HNumber num = args[0];
   if( num < HNumber(0) )
   {
-    fn->setError( qApp->translate( "Error",
+    fn->setError( QApplication::translate( "Error",
       "Function sqrt expects positive argument" ) );
     return HNumber::nan();
   }
@@ -109,7 +109,7 @@ HNumber function_ln( const Evaluator*, Function* fn, const FunctionArguments& ar
   HNumber num = args[0];
   if( num < HNumber(0) )
   {
-    fn->setError( qApp->translate( "Error",
+    fn->setError( QApplication::translate( "Error",
       "Function ln expects positive argument" ) );
     return HNumber( 0 );
   }
@@ -125,7 +125,7 @@ HNumber function_log( const Evaluator*, Function* fn, const FunctionArguments& a
   HNumber num = args[0];
   if( num < HNumber(0) )
   {
-    fn->setError( qApp->translate( "Error",
+    fn->setError( QApplication::translate( "Error",
       "Function log expects positive argument" ) );
     return HNumber( 0 );
   }
@@ -141,7 +141,7 @@ HNumber function_lg( const Evaluator*, Function* fn, const FunctionArguments& ar
   HNumber num = args[0];
   if( num < HNumber(0) )
   {
-    fn->setError( qApp->translate( "Error",
+    fn->setError( QApplication::translate( "Error",
       "Function lg expects positive argument" ) );
     return HNumber( 0 );
   }
@@ -183,7 +183,7 @@ HNumber function_tan( const Evaluator* eval, Function* fn, const FunctionArgumen
   HNumber halfpi = HMath::pi() / HNumber(2);
   if( ( angle == halfpi ) || ( angle == halfpi*HNumber(3) ) )
   {
-    fn->setError( qApp->translate( "Error",
+    fn->setError( QApplication::translate( "Error",
       "Invalid input to function tan" ) );
     return HNumber::nan();
   }
@@ -424,7 +424,7 @@ public:
   QString desc;
   QString error;
   FunctionPtr ptr;
-  
+
   FunctionPrivate(): name(), argc(0), desc(), error(), ptr(0) {}
 };
 
@@ -439,7 +439,7 @@ d( new FunctionPrivate )
 {
   d->name = name;
   d->argc = argc;
-  d->desc = qApp->translate( "FunctionRepository", desc );
+  d->desc = QApplication::translate( "FunctionRepository", desc.toLatin1() );
   d->ptr = ptr;
 }
 
@@ -448,7 +448,7 @@ d( new FunctionPrivate )
 {
   d->name = name;
   d->argc = -1;
-  d->desc = qApp->translate( "FunctionRepository", desc );
+  d->desc = QApplication::translate( "FunctionRepository", desc.toLatin1() );
   d->ptr = ptr;
 }
 
@@ -482,7 +482,7 @@ HNumber Function::exec( const Evaluator* eval, const FunctionArguments& args )
   d->error = QString();
   if( !d->ptr )
   {
-    setError( QString( qApp->translate( "Error",
+    setError( QString( QApplication::translate( "Error",
       "Cannot execute function %1") ).arg( name() ) );
     return HNumber(0);
   }
@@ -490,7 +490,7 @@ HNumber Function::exec( const Evaluator* eval, const FunctionArguments& args )
   if( d->argc >= 0 )
   if( args.count() != d->argc )
   {
-    setError( QString( qApp->translate( "Error",
+    setError( QString( QApplication::translate( "Error",
       "Function %1 accepts %2 argument" ) ).arg( d->name ).arg( d->argc ) );
     return HNumber(0);
   }
@@ -562,12 +562,12 @@ FunctionRepository::~FunctionRepository()
 void FunctionRepository::add( Function* function )
 {
   if( !function ) return;
-  d->functions.insert( function->name().upper(), function );
+  d->functions.insert( function->name().toUpper(), function );
 }
 
 Function* FunctionRepository::function( const QString& name )
 {
-  return d->functions.value( name.upper() );
+  return d->functions.value( name.toUpper() );
 }
 
 QStringList FunctionRepository::functionNames() const
