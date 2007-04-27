@@ -23,6 +23,7 @@
 #include "editor.h"
 #include "evaluator.h"
 #include "settings.h"
+#include "constants.h"
 
 #include <QApplication>
 #include <QDesktopWidget>
@@ -97,6 +98,7 @@ public:
   int index;
   bool autoCompleteEnabled;
   EditorCompletion* completion;
+  ConstantCompletion* constantCompletion;
   QTimer* completionTimer;
   bool autoCalcEnabled;
   char format;
@@ -117,6 +119,7 @@ Editor::Editor( Evaluator* e, QWidget* parent ):
   d->index = 0;
   d->autoCompleteEnabled = true;
   d->completion = new EditorCompletion( this );
+  d->constantCompletion = new ConstantCompletion( this );
   d->completionTimer = new QTimer( this );
   d->autoCalcEnabled = true;
   d->syntaxHighlightEnabled = true;
@@ -652,6 +655,10 @@ void Editor::keyPressEvent( QKeyEvent* e )
   if( e->key() == Qt::Key_Home ) checkMatching();
   if( e->key() == Qt::Key_End ) checkMatching();
 
+  if( e->key() == Qt::Key_Space )
+  if( e->modifiers() == Qt::ControlModifier )
+    d->constantCompletion->showCompletion();
+
   QTextEdit::keyPressEvent( e );
 }
 
@@ -795,7 +802,7 @@ void EditorCompletion::doneCompletion()
   emit selectedCompletion( item ? item->text(0) : QString() );
 }
 
-void EditorCompletion::showCompletion( const QStringList &choices )
+void EditorCompletion::showCompletion( const QStringList& choices )
 {
   if( !choices.count() ) return;
 
@@ -843,4 +850,170 @@ void EditorCompletion::fade( int v )
 #ifdef COMPLETION_FADE_EFFECT
   d->popup->setWindowOpacity( (qreal)(100-v)/100 );
 #endif
+}
+
+
+
+class ConstantCompletionPrivate
+{
+public:
+  Editor* editor;
+  QFrame* popup;
+  QTreeWidget* categoryList;
+  QTreeWidget* constantList;
+  QList<Constant> constants;
+};
+
+ConstantCompletion::ConstantCompletion( Editor* editor ): QObject( editor )
+{
+  d = new ConstantCompletionPrivate;
+  d->editor = editor;
+
+  d->popup = new QFrame( 0 );
+  d->popup->hide();
+  d->popup->setParent( 0, Qt::Popup );
+  d->popup->setFocusPolicy( Qt::NoFocus );
+  d->popup->setFocusProxy( editor );
+  d->popup->setFrameStyle( QFrame::Box | QFrame::Plain );
+  d->popup->installEventFilter( this );
+
+  d->categoryList = new QTreeWidget( d->popup );
+  d->categoryList->setFrameShape( QFrame::NoFrame );
+  d->categoryList->setColumnCount( 1 );
+  d->categoryList->setRootIsDecorated( false );
+  d->categoryList->header()->hide();
+  d->categoryList->setEditTriggers( QTreeWidget::NoEditTriggers );
+  d->categoryList->setSelectionBehavior( QTreeWidget::SelectRows );
+  d->categoryList->setMouseTracking( true );
+  connect( d->categoryList, SIGNAL(itemClicked(QTreeWidgetItem*,int)), SLOT(doneCompletion()) );
+
+  d->constantList = new QTreeWidget( d->popup );
+  d->constantList->setFrameShape( QFrame::NoFrame );
+  d->constantList->setColumnCount( 1 );
+  d->constantList->setRootIsDecorated( false );
+  d->constantList->header()->hide();
+  d->constantList->setEditTriggers( QTreeWidget::NoEditTriggers );
+  d->constantList->setSelectionBehavior( QTreeWidget::SelectRows );
+  d->constantList->setMouseTracking( true );
+  connect( d->constantList, SIGNAL(itemClicked(QTreeWidgetItem*,int)), SLOT(doneCompletion()) );
+
+  // FIXME share constants with others
+  Constants* ct = new Constants( this );
+  d->constants = ct->constantList;
+
+  // populate categories
+  for( int k = 0; k < ct->categoryList.count(); k++ )
+  {
+    QStringList str;
+    str << ct->categoryList[k];
+    new QTreeWidgetItem( d->categoryList, str );
+  }
+
+  // populate constants
+  for( int k = 0; k < ct->constantList.count(); k++ )
+  {
+    QStringList str;
+    str << ct->constantList[k].name;
+    new QTreeWidgetItem( d->constantList, str );
+  }
+
+  // find size, the biggest between both
+  int ww = qMax( d->constantList->width(), d->categoryList->width() );
+  int h1 = d->constantList->sizeHintForRow(0) * qMin(7, d->constants.count()) + 3;
+  int h2 = d->categoryList->sizeHintForRow(0) * qMin(7, ct->categoryList.count()) + 3;
+  int hh = qMax( h1, h2 );
+
+  d->popup->resize( ww, hh );
+  d->constantList->resize( ww, hh );
+  d->categoryList->resize( ww, hh );
+
+  showCategory();
+}
+
+ConstantCompletion::~ConstantCompletion()
+{
+  delete d->popup;
+  delete d;
+}
+
+void ConstantCompletion::showCategory()
+{
+  d->constantList->move( d->popup->width(), 0 );
+  d->categoryList->move( 0, 0 );
+  d->categoryList->setFocus();
+}
+
+void ConstantCompletion::showConstants()
+{
+  d->categoryList->move( d->popup->width(), 0 );
+  d->constantList->move( 0, 0 );
+  d->constantList->setFocus();
+}
+
+bool ConstantCompletion::eventFilter( QObject *obj, QEvent *ev )
+{
+  if ( obj == d->popup )
+  {
+
+    if ( ev->type() == QEvent::KeyPress )
+    {
+      QKeyEvent *ke = (QKeyEvent*)ev;
+      if ( ke->key() == Qt::Key_Enter || ke->key() == Qt::Key_Return || ke->key() == Qt::Key_Tab )
+      {
+        doneCompletion();
+        return true;
+      }
+      else if ( Qt::Key_Right )
+      {
+        showConstants();
+        return true;
+      }
+      else if ( ke->key() == Qt::Key_Left || ke->key() == Qt::Key_Right ||
+      ke->key() == Qt::Key_Up || ke->key() == Qt::Key_Down ||
+      ke->key() == Qt::Key_Home || ke->key() == Qt::Key_End ||
+      ke->key() == Qt::Key_PageUp || ke->key() == Qt::Key_PageDown )
+      {
+        return false;
+      }
+
+      d->popup->hide();
+      d->editor->setFocus();
+      QApplication::sendEvent( d->editor, ev );
+      return true;
+    }
+  }
+
+  return false;
+}
+
+void ConstantCompletion::doneCompletion()
+{
+  d->popup->hide();
+  d->editor->setFocus();
+  QTreeWidgetItem* item = d->constantList->currentItem();
+  emit selectedCompletion( item ? item->text(0) : QString() );
+}
+
+void ConstantCompletion::showCompletion()
+{
+  // position, reference is editor's cursor position in global coord
+  QFontMetrics fm( d->editor->font() );
+  int curPos = d->editor->textCursor().position();
+  int pixelsOffset = fm.width( d->editor->text(), curPos );
+  QPoint pos = d->editor->mapToGlobal( QPoint( pixelsOffset, d->editor->height() ) );
+
+  int h = d->popup->height();
+  int w = d->popup->width();
+
+  // if popup is partially invisible, move to other position
+  const QRect screen = QApplication::desktop()->availableGeometry( d->editor );
+  if( pos.y() + h > screen.y()+screen.height() )
+    pos.setY( pos.y() - h - d->editor->height() );
+  if( pos.x() + w > screen.x()+screen.width() )
+    pos.setX(  screen.x()+screen.width() - w );
+
+  d->popup->move( pos );
+  d->popup->show();
+
+  showCategory();
 }

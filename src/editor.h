@@ -142,4 +142,33 @@ class EditorCompletion : public QObject
     EditorCompletion& operator=( const EditorCompletion& );
 };
 
+class ConstantCompletionPrivate;
+
+class ConstantCompletion : public QObject
+{
+  Q_OBJECT
+
+  public:
+    ConstantCompletion( Editor* editor );
+    ~ConstantCompletion();
+
+    bool eventFilter( QObject *o, QEvent *e );
+    void showCompletion();
+
+  signals:
+    void selectedCompletion( const QString& item );
+
+  public slots:
+    void doneCompletion();
+
+  private slots:
+    void showCategory();
+    void showConstants();
+
+  private:
+    ConstantCompletionPrivate* d;
+    ConstantCompletion( const ConstantCompletion& );
+    ConstantCompletion& operator=( const ConstantCompletion& );
+};
+
 #endif // EDITOR
