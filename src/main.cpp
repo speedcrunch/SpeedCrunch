@@ -16,27 +16,28 @@
    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA 02110-1301, USA.
  */
- 
-#include <qapplication.h>
-#include <qtextcodec.h>
-#include <qtranslator.h>
-#include <qfileinfo.h>
-#include <qdir.h>
+
+#include <QApplication>
+#include <QDir>
+#include <QFileInfo>
+#include <QLocale>
+#include <QTextCodec>
+#include <QTranslator>
 
 #include "binreloc.h"
 #include "crunch.h"
 
 QTranslator *createTranslator()
 {
-  QString locale = QString::fromLatin1( QTextCodec::locale() );
-  QString localeShort = locale.left( 2 ).lower();
-	
+  QString locale = QLocale().name();
+  QString localeShort = locale.left( 2 ).toLower();
+
 	bool foundTranslator = false;
-	
+
 	QString qmfile;
 	QFileInfo fi;
 	QTranslator* translator;
-	
+
 #ifdef Q_OS_WIN32
 	if( !foundTranslator )
   {
@@ -70,14 +71,14 @@ QTranslator *createTranslator()
     if (br_init (&error) == 0 && error != BR_INIT_ERROR_DISABLED) {
         printf ("Warning: BinReloc failed to initialize (error code %d)\n", error);
         printf ("Will fallback to hardcoded default path.\n");
-    } 	
-    
+    }
+
     // Search with the following order:
     // (1) install prefix + share/crunch, e.g. "/usr/local/share/crunch"
     // (2) install prefix + share, e.g. "/usr/local/share"
     // (3) current directory
-    
-    
+
+
     // item (1)
     QString shareDir = QString(br_find_data_dir(0)).append("/crunch");
  	QDir qmpath( shareDir );
@@ -85,7 +86,7 @@ QTranslator *createTranslator()
 
 	if( !foundTranslator )
   {
-  	qmfile = qmpath.absPath() + "/crunch_" + locale + ".qm";
+  	qmfile = qmpath.absolutePath() + "/crunch_" + locale + ".qm";
   	fi = QFileInfo( qmfile );
   	if( fi.exists() )
   	{
@@ -95,16 +96,16 @@ QTranslator *createTranslator()
 			foundTranslator = true;
   	}
 	}
-	
+
 	if( !foundTranslator )
   {
-    qmfile = qmpath.absPath() + "/crunch_" + localeShort + ".qm";
+    qmfile = qmpath.absolutePath() + "/crunch_" + localeShort + ".qm";
     fi = QFileInfo( qmfile );
     if( fi.exists() )
     {
       translator = new QTranslator( 0 );
       translator->load( qmfile );
-      
+
 			foundTranslator = true;
     }
 	}
@@ -114,7 +115,7 @@ QTranslator *createTranslator()
 
 	if( !foundTranslator )
   {
-  	qmfile = qmpath.absPath() + "/crunch_" + locale + ".qm";
+  	qmfile = qmpath.absolutePath() + "/crunch_" + locale + ".qm";
   	fi = QFileInfo( qmfile );
   	if( fi.exists() )
   	{
@@ -124,16 +125,16 @@ QTranslator *createTranslator()
 			foundTranslator = true;
   	}
 	}
-	
+
 	if( !foundTranslator )
   {
-    qmfile = qmpath.absPath() + "/crunch_" + localeShort + ".qm";
+    qmfile = qmpath.absolutePath() + "/crunch_" + localeShort + ".qm";
     fi = QFileInfo( qmfile );
     if( fi.exists() )
     {
       translator = new QTranslator( 0 );
       translator->load( qmfile );
-      
+
 			foundTranslator = true;
     }
 	}
@@ -148,10 +149,10 @@ int main( int argc, char ** argv )
 {
   QApplication a( argc, argv );
   a.installTranslator( createTranslator() );
-  
+
   Crunch* v = new Crunch();
   v->show();
-  
+
   a.connect( &a, SIGNAL(lastWindowClosed()), &a, SLOT(quit()) );
   return a.exec();
 }
