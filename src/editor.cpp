@@ -142,6 +142,9 @@ Editor::Editor( Evaluator* e, QWidget* parent ):
   connect( this, SIGNAL( textChanged() ), SLOT( checkAutoComplete() ) );
   connect( d->completionTimer, SIGNAL( timeout() ), SLOT( triggerAutoComplete() ) );
 
+  connect( d->constantCompletion, SIGNAL( selectedCompletion( const QString& ) ), 
+    SLOT( insertConstant( const QString& ) ) );
+
   connect( this, SIGNAL( textChanged() ), SLOT( checkMatching() ) );
   connect( d->matchingTimer, SIGNAL( timeout() ), SLOT( doMatchingPar() ) );
   connect( this, SIGNAL( textChanged() ), SLOT( checkAutoCalc() ) );
@@ -576,6 +579,11 @@ void Editor::autoCalc()
   }
 }
 
+void Editor::insertConstant( const QString& c )
+{
+  insert( c );
+}
+
 QString Editor::formatNumber( const HNumber& value ) const
 {
   char* str = HMath::format( value, d->format, d->decimalDigits );
@@ -657,7 +665,11 @@ void Editor::keyPressEvent( QKeyEvent* e )
 
   if( e->key() == Qt::Key_Space )
   if( e->modifiers() == Qt::ControlModifier )
+  {
     d->constantCompletion->showCompletion();
+    e->accept();
+    return;
+  }
 
   QTextEdit::keyPressEvent( e );
 }
@@ -847,12 +859,8 @@ void EditorCompletion::showCompletion( const QStringList& choices )
 
 void EditorCompletion::fade( int v )
 {
-#ifdef COMPLETION_FADE_EFFECT
   d->popup->setWindowOpacity( (qreal)(100-v)/100 );
-#endif
 }
-
-
 
 class ConstantCompletionPrivate
 {
@@ -862,6 +870,8 @@ public:
   QTreeWidget* categoryList;
   QTreeWidget* constantList;
   QList<Constant> constants;
+  QString lastCategory;
+  QTimeLine* slider;
 };
 
 ConstantCompletion::ConstantCompletion( Editor* editor ): QObject( editor )
@@ -875,7 +885,6 @@ ConstantCompletion::ConstantCompletion( Editor* editor ): QObject( editor )
   d->popup->setFocusPolicy( Qt::NoFocus );
   d->popup->setFocusProxy( editor );
   d->popup->setFrameStyle( QFrame::Box | QFrame::Plain );
-  d->popup->installEventFilter( this );
 
   d->categoryList = new QTreeWidget( d->popup );
   d->categoryList->setFrameShape( QFrame::NoFrame );
@@ -885,49 +894,64 @@ ConstantCompletion::ConstantCompletion( Editor* editor ): QObject( editor )
   d->categoryList->setEditTriggers( QTreeWidget::NoEditTriggers );
   d->categoryList->setSelectionBehavior( QTreeWidget::SelectRows );
   d->categoryList->setMouseTracking( true );
+  d->categoryList->installEventFilter( this );
   connect( d->categoryList, SIGNAL(itemClicked(QTreeWidgetItem*,int)), SLOT(doneCompletion()) );
 
   d->constantList = new QTreeWidget( d->popup );
   d->constantList->setFrameShape( QFrame::NoFrame );
-  d->constantList->setColumnCount( 1 );
+  d->constantList->setColumnCount( 2 );
+  d->constantList->setColumnHidden( 1, true );
   d->constantList->setRootIsDecorated( false );
   d->constantList->header()->hide();
   d->constantList->setEditTriggers( QTreeWidget::NoEditTriggers );
   d->constantList->setSelectionBehavior( QTreeWidget::SelectRows );
   d->constantList->setMouseTracking( true );
+  d->constantList->installEventFilter( this );
   connect( d->constantList, SIGNAL(itemClicked(QTreeWidgetItem*,int)), SLOT(doneCompletion()) );
+
+  d->slider = new QTimeLine( 250, this );
+  d->slider->setCurveShape( QTimeLine::EaseInCurve );
+  connect( d->slider, SIGNAL(frameChanged(int)), SLOT(slide(int)) );
 
   // FIXME share constants with others
   Constants* ct = new Constants( this );
   d->constants = ct->constantList;
 
   // populate categories
+  QStringList str;
+  str << tr("All");
+  QTreeWidgetItem* all = new QTreeWidgetItem( d->categoryList, str );
   for( int k = 0; k < ct->categoryList.count(); k++ )
   {
-    QStringList str;
+    str.clear();	
     str << ct->categoryList[k];
     new QTreeWidgetItem( d->categoryList, str );
   }
+  d->categoryList->setCurrentItem( all );
 
   // populate constants
+  d->lastCategory = tr("All");
   for( int k = 0; k < ct->constantList.count(); k++ )
   {
     QStringList str;
     str << ct->constantList[k].name;
+    str << ct->constantList[k].name.toUpper();
     new QTreeWidgetItem( d->constantList, str );
   }
 
   // find size, the biggest between both
+  d->constantList->resizeColumnToContents( 0 );
+  d->categoryList->resizeColumnToContents( 0 );
   int ww = qMax( d->constantList->width(), d->categoryList->width() );
   int h1 = d->constantList->sizeHintForRow(0) * qMin(7, d->constants.count()) + 3;
   int h2 = d->categoryList->sizeHintForRow(0) * qMin(7, ct->categoryList.count()) + 3;
   int hh = qMax( h1, h2 );
+  ww += 64; // extra space (FIXME scrollbar size?)
 
+  // adjust dimensions
   d->popup->resize( ww, hh );
   d->constantList->resize( ww, hh );
   d->categoryList->resize( ww, hh );
-
-  showCategory();
 }
 
 ConstantCompletion::~ConstantCompletion()
@@ -938,23 +962,49 @@ ConstantCompletion::~ConstantCompletion()
 
 void ConstantCompletion::showCategory()
 {
-  d->constantList->move( d->popup->width(), 0 );
-  d->categoryList->move( 0, 0 );
+  d->slider->setFrameRange( d->popup->width(), 0 );
+  d->slider->start();
   d->categoryList->setFocus();
 }
 
 void ConstantCompletion::showConstants()
 {
-  d->categoryList->move( d->popup->width(), 0 );
-  d->constantList->move( 0, 0 );
+  d->slider->setFrameRange( 0, d->popup->width() );
+  d->slider->start();
   d->constantList->setFocus();
+
+  QString chosenCategory;
+  if( d->categoryList->currentItem() )
+	  chosenCategory = d->categoryList->currentItem()->text( 0 );
+
+  if( d->lastCategory == chosenCategory )
+	  return;
+  
+  d->constantList->clear();
+  for( int k = 0; k < d->constants.count(); k++ )
+  {
+      QStringList str;
+      str << d->constants[k].name;
+      str << d->constants[k].name.toUpper();
+
+      bool include = (chosenCategory == tr("All")) ? true:
+        d->constants[k].categories.contains( chosenCategory );
+
+      if( !include )
+        continue;
+
+      QTreeWidgetItem* item = 0;
+      item = new QTreeWidgetItem( d->constantList, str );
+  }
+  d->constantList->sortItems( 1, Qt::AscendingOrder );
+
+  d->lastCategory = chosenCategory;
 }
 
 bool ConstantCompletion::eventFilter( QObject *obj, QEvent *ev )
 {
-  if ( obj == d->popup )
+  if ( obj == d->constantList )
   {
-
     if ( ev->type() == QEvent::KeyPress )
     {
       QKeyEvent *ke = (QKeyEvent*)ev;
@@ -963,13 +1013,12 @@ bool ConstantCompletion::eventFilter( QObject *obj, QEvent *ev )
         doneCompletion();
         return true;
       }
-      else if ( Qt::Key_Right )
+      else if ( ke->key() == Qt::Key_Left )
       {
-        showConstants();
+        showCategory();
         return true;
       }
-      else if ( ke->key() == Qt::Key_Left || ke->key() == Qt::Key_Right ||
-      ke->key() == Qt::Key_Up || ke->key() == Qt::Key_Down ||
+      else if ( ke->key() == Qt::Key_Right || ke->key() == Qt::Key_Up || ke->key() == Qt::Key_Down ||
       ke->key() == Qt::Key_Home || ke->key() == Qt::Key_End ||
       ke->key() == Qt::Key_PageUp || ke->key() == Qt::Key_PageDown )
       {
@@ -983,6 +1032,30 @@ bool ConstantCompletion::eventFilter( QObject *obj, QEvent *ev )
     }
   }
 
+  if ( obj == d->categoryList )
+  {
+    if ( ev->type() == QEvent::KeyPress )
+    {
+      QKeyEvent *ke = (QKeyEvent*)ev;
+      if ( ke->key() == Qt::Key_Enter || ke->key() == Qt::Key_Return || ke->key() == Qt::Key_Right )
+      {
+        showConstants();
+        return true;
+      }
+	  else if ( ke->key() == Qt::Key_Up || ke->key() == Qt::Key_Down ||
+      ke->key() == Qt::Key_Home || ke->key() == Qt::Key_End ||
+      ke->key() == Qt::Key_PageUp || ke->key() == Qt::Key_PageDown )
+      {
+        return false;
+      }
+
+      d->popup->hide();
+      d->editor->setFocus();
+      QApplication::sendEvent( d->editor, ev );
+	  return true;
+    }
+  }
+
   return false;
 }
 
@@ -991,7 +1064,9 @@ void ConstantCompletion::doneCompletion()
   d->popup->hide();
   d->editor->setFocus();
   QTreeWidgetItem* item = d->constantList->currentItem();
-  emit selectedCompletion( item ? item->text(0) : QString() );
+  for( int k = 0; k < d->constants.count(); k++ )
+    if( d->constants[k].name == item->text(0) )
+      emit selectedCompletion( d->constants[k].value );
 }
 
 void ConstantCompletion::showCompletion()
@@ -1012,8 +1087,16 @@ void ConstantCompletion::showCompletion()
   if( pos.x() + w > screen.x()+screen.width() )
     pos.setX(  screen.x()+screen.width() - w );
 
+  // start with category
+  d->categoryList->setFocus();
+  slide( 0 );
+
   d->popup->move( pos );
   d->popup->show();
+}
 
-  showCategory();
+void ConstantCompletion::slide( int v )
+{
+  d->categoryList->move( -v, 0 );
+  d->constantList->move( d->popup->width()-v, 0 );
 }

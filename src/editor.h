@@ -52,7 +52,6 @@ class Editor : public QTextEdit
     QString text() const;
     void setText( const QString& );
 
-    void insert( const QString& );
     void doBackspace();
 
     int cursorPosition() const;
@@ -81,6 +80,9 @@ class Editor : public QTextEdit
     void stopAutoCalc();
 
   public slots:
+    void insert( const QString& );
+    void insertConstant( const QString& );
+
     void appendHistory( const QString& text );
     void clearHistory();
 
@@ -164,6 +166,7 @@ class ConstantCompletion : public QObject
   private slots:
     void showCategory();
     void showConstants();
+	void slide( int );
 
   private:
     ConstantCompletionPrivate* d;
