@@ -74,6 +74,7 @@ class Crunch : public QMainWindow
 
   protected slots:
     void restoreDocks();
+    void activate();
     void returnPressed();
     void expressionSelected( const QString & );
     void functionSelected( const QString & );

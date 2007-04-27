@@ -326,6 +326,8 @@ Crunch::Crunch(): QMainWindow()
   createUI();
   applySettings();
   restoreDocks();
+
+  QTimer::singleShot( 0, this, SLOT(activate()) );
 }
 
 Crunch::~Crunch()
@@ -850,6 +852,12 @@ void Crunch::restoreDocks()
     d->constantsDock->resize( settings->constantsDockWidth, settings->constantsDockHeight );
     QTimer::singleShot(0, d->constantsDock, SLOT(show()));
   }
+}
+
+void Crunch::activate()
+{
+  activateWindow();
+  d->editor->setFocus();
 }
 
 void Crunch::minimizeToTray()
