@@ -37,7 +37,7 @@ class ColorButton : public QPushButton
   Q_OBJECT
 
   public:
-    ColorButton( QWidget* parent = 0, const char* name = 0 );
+    ColorButton( QWidget* parent = 0 );
     ~ColorButton();
     void setColor( QColor c );
     QColor color() const;
@@ -61,7 +61,7 @@ class ConfigDlg : public QDialog
   Q_OBJECT
 
   public:
-    ConfigDlg( QWidget* parent = 0, const char* name = 0 );
+    ConfigDlg( QWidget* parent = 0 );
     ~ConfigDlg();
 
   signals:

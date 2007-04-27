@@ -108,7 +108,7 @@ void ConfigDlgPrivate::loadSettings()
 
   QString str = settings->customFont.family();
   str.append( " " );
-  str.append( qApp->translate("ConfigDlgPrivate", "%1pt").arg( settings->customFont.pointSizeFloat() ) );
+  str.append( qApp->translate("ConfigDlgPrivate", "%1pt").arg( settings->customFont.pointSizeF() ) );
   fontLabel->setText( str );
 
   textColorButton->setColor( settings->customTextColor );
@@ -331,8 +331,8 @@ QWidget* ConfigDlgPrivate::hilitePage()
   return page;
 }
 
-ColorButton::ColorButton( QWidget* parent, const char* name ):
-QPushButton( parent, name )
+ColorButton::ColorButton( QWidget* parent ):
+QPushButton( parent )
 {
   d = new ColorButtonPrivate;
   connect( this, SIGNAL( clicked() ), SLOT( showColorPicker() ) );
@@ -367,19 +367,19 @@ void ColorButton::paintEvent( QPaintEvent* e )
   if( !isEnabled() ) return;
 
   QRect r = rect();
-  r.addCoords( 20, 5, -20, -5 );
+  r.adjust( 20, 5, -20, -5 );
   QPainter painter( this );
   painter.setPen( Qt::black );
   painter.drawRect( r );
-  r.addCoords( 1, 1, -1, -1 );
+  r.adjust( 1, 1, -1, -1 );
   painter.fillRect( r, d->color );
 }
 
-ConfigDlg::ConfigDlg( QWidget* parent, const char* name ):
-QDialog( parent, name )
+ConfigDlg::ConfigDlg( QWidget* parent ):
+QDialog( parent )
 {
   d = new ConfigDlgPrivate;
-  setCaption( tr("Configure SpeedCrunch" ) );
+  setWindowTitle( tr("Configure SpeedCrunch" ) );
 
   d->centerWidget = new QTabWidget( this );
   d->centerWidget->addTab( d->generalPage(), tr("&General") );
