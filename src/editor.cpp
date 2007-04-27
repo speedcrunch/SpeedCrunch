@@ -189,7 +189,9 @@ void Editor::insert( const QString& str )
 
 void Editor::doBackspace()
 {
-  // FIXME implement this !
+  QTextCursor cursor = textCursor();
+  cursor.deletePreviousChar();
+  setTextCursor( cursor );
 }
 
 int Editor::cursorPosition() const
