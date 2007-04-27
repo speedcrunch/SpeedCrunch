@@ -40,8 +40,8 @@ public:
   QPushButton* cancelButton;
 };
 
-InsertFunctionDlg::InsertFunctionDlg( QWidget* parent, const char* name ):
-QDialog( parent, name )
+InsertFunctionDlg::InsertFunctionDlg( QWidget* parent ):
+QDialog( parent )
 {
   d = new InsertFunctionDlgPrivate;
 
@@ -98,7 +98,7 @@ InsertFunctionDlg::~InsertFunctionDlg()
 QString InsertFunctionDlg::functionName() const
 {
   QTreeWidgetItem* item = d->list->currentItem();
-  return item ? item->text(0).lower() : QString();
+  return item ? item->text(0).toLower() : QString();
 }
 
 void InsertFunctionDlg::initUI()

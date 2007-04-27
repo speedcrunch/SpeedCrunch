@@ -30,7 +30,7 @@ class InsertFunctionDlg : public QDialog
   Q_OBJECT
 
   public:
-    InsertFunctionDlg( QWidget* parent = 0, const char* name = 0 );
+    InsertFunctionDlg( QWidget* parent = 0 );
     ~InsertFunctionDlg();
 
     QString functionName() const;
