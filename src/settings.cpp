@@ -1,5 +1,5 @@
 /* This file is part of the SpeedCrunch project
-   Copyright (C) 2004, 2005 Ariya Hidayat <ariya@kde.org>
+   Copyright (C) 2004, 2005, 2007 Ariya Hidayat <ariya@kde.org>
                  2005-2006 Johan Thelin <e8johan@gmail.com>
 
    This program is free software; you can redistribute it and/or
@@ -90,86 +90,87 @@ void Settings::load()
 
   QString key = SETTINGSKEY;
 
-  angleMode = settings.readEntry( key + "/General/AngleMode", "degree" );
-  saveHistory = settings.readBoolEntry( key + "/General/SaveHistory", true );
-  saveVariables = settings.readBoolEntry( key + "/General/SaveVariables", true );
-  autoComplete = settings.readBoolEntry( key + "/General/AutoComplete", true );
-  autoCalc = settings.readBoolEntry( key + "/General/AutoCalc", true );
-  decimalPoint = settings.readEntry( key + "/General/DecimalPoint", QString() );
-  minimizeToTray = settings.readBoolEntry( key + "/General/MinimizeToTray", false );
+  angleMode = settings.value( key + "/General/AngleMode", "degree" ).toString();
+  saveHistory = settings.value( key + "/General/SaveHistory", true ).toBool();
+  saveVariables = settings.value( key + "/General/SaveVariables", true ).toBool();
+  autoComplete = settings.value( key + "/General/AutoComplete", true ).toBool();
+  autoCalc = settings.value( key + "/General/AutoCalc", true ).toBool();
+  decimalPoint = settings.value( key + "/General/DecimalPoint", QString() ).toString();
+  minimizeToTray = settings.value( key + "/General/MinimizeToTray", false ).toBool();
 
-  QString formatStr = settings.readEntry( key + "/View/Format" );
+  QString formatStr = settings.value( key + "/View/Format" ).toString();
   if( formatStr == "Fixed" ) format = 'f';
   if( formatStr == "Exp" ) format = 'e';
   if( formatStr == "General" ) format = 'g';
   if( formatStr == "Hexadecimal" ) format = 'h';
   if( formatStr == "Octal" ) format = 'o';
   if( formatStr == "Binary" ) format = 'b';
-  decimalDigits = settings.readNumEntry( key + "/View/DecimalDigits", -1 );
+  decimalDigits = settings.value( key + "/View/DecimalDigits", -1 ).toInt();
   if( decimalDigits > 70 ) decimalDigits = 70;
 
-  showClearInputButton = settings.readBoolEntry( key + "/Appearance/ShowClearInputButton", true );
-  showEvaluateButton = settings.readBoolEntry( key + "/Appearance/ShowEvaluateButton", true );
-  showKeyPad = settings.readBoolEntry( key + "/Appearance/ShowKeyPad", true );
-  showHistory = settings.readBoolEntry( key + "/Appearance/ShowHistory", false );
-  showFunctions = settings.readBoolEntry( key + "/Appearance/ShowFunctions", false );
-  showVariables = settings.readBoolEntry( key + "/Appearance/ShowVariables", false );
-  showConstants = settings.readBoolEntry( key + "/Appearance/ShowConstants", false );
+  showClearInputButton = settings.value( key + "/Appearance/ShowClearInputButton", true ).toBool();
+  showEvaluateButton   = settings.value( key + "/Appearance/ShowEvaluateButton", true ).toBool();
+  showKeyPad           = settings.value( key + "/Appearance/ShowKeyPad", true ).toBool();
 
-  customAppearance = settings.readBoolEntry( key + "/Appearance/CustomAppearance", false );
-  customFont.fromString( settings.readEntry( key + "/Appearance/CustomFont", QFont().toString() ) );
-  customTextColor.setNamedColor( settings.readEntry(
-    key + "/Appearance/CustomTextColor", "#000000" ) );
-  customBackgroundColor1.setNamedColor( settings.readEntry(
-    key + "/Appearance/CustomBackgroundColor1", "#ffffff" ) );
-  customBackgroundColor2.setNamedColor( settings.readEntry(
-    key + "/Appearance/CustomBackgroundColor2", "#eeeeee" ) );
-  customErrorColor.setNamedColor( settings.readEntry(
-    key + "/Appearance/CustomErrorColor", "red" ) );
-  mainWindowSize = QSize( settings.readNumEntry( key + "/Appearance/WindowWidth", 0 ),
-                          settings.readNumEntry( key + "/Appearance/WindowHeight", 0 ) );
+  showHistory   = settings.value( key + "/Appearance/ShowHistory", false ).toBool();
+  showFunctions = settings.value( key + "/Appearance/ShowFunctions", false ).toBool();
+  showVariables = settings.value( key + "/Appearance/ShowVariables", false ).toBool();
+  showConstants = settings.value( key + "/Appearance/ShowConstants", false ).toBool();
+
+  customAppearance = settings.value( key + "/Appearance/CustomAppearance", false ).toBool();
+  customFont.fromString( settings.value( key + "/Appearance/CustomFont", QFont().toString() ).toString() );
+  customTextColor.setNamedColor( settings.value(
+    key + "/Appearance/CustomTextColor", "#000000" ).toString() );
+  customBackgroundColor1.setNamedColor( settings.value(
+    key + "/Appearance/CustomBackgroundColor1", "#ffffff" ).toString() );
+  customBackgroundColor2.setNamedColor( settings.value(
+    key + "/Appearance/CustomBackgroundColor2", "#eeeeee" ).toString() );
+  customErrorColor.setNamedColor( settings.value(
+    key + "/Appearance/CustomErrorColor", "red" ).toString() );
+  mainWindowSize = QSize( settings.value( key + "/Appearance/WindowWidth", 0 ).toInt(),
+                          settings.value( key + "/Appearance/WindowHeight", 0 ).toInt() );
 
   key = SETTINGSKEY;
   key += "/MainWindow/";
   mainWindowState = settings.value( key + "State" ).toByteArray();
-  historyDockFloating = settings.readBoolEntry( key + "HistoryDockFloating", false );
-  historyDockTop = settings.readNumEntry( key + "HistoryDockTop", 0 );
-  historyDockLeft = settings.readNumEntry( key + "HistoryDockLeft", 0 );
-  historyDockWidth = settings.readNumEntry( key + "HistoryDockWidth", 150 );
-  historyDockHeight = settings.readNumEntry( key + "HistoryDockHeight", 400 );
-  functionsDockFloating = settings.readBoolEntry( key + "FunctionsDockFloating", false );
-  functionsDockTop = settings.readNumEntry( key + "FunctionsDockTop", 0 );
-  functionsDockLeft = settings.readNumEntry( key + "FunctionsDockLeft", 0 );
-  functionsDockWidth = settings.readNumEntry( key + "FunctionsDockWidth", 150 );
-  functionsDockHeight = settings.readNumEntry( key + "FunctionsDockHeight", 400 );
-  variablesDockFloating = settings.readBoolEntry( key + "VariablesDockFloating", false );
-  variablesDockTop = settings.readNumEntry( key + "VariablesDockTop", 0 );
-  variablesDockLeft = settings.readNumEntry( key + "VariablesDockLeft", 0 );
-  variablesDockWidth = settings.readNumEntry( key + "VariablesDockWidth", 150 );
-  variablesDockHeight = settings.readNumEntry( key + "VariablesDockHeight", 400 );
-  constantsDockFloating = settings.readBoolEntry( key + "ConstantsDockFloating", false );
-  constantsDockTop = settings.readNumEntry( key + "ConstantsDockTop", 0 );
-  constantsDockLeft = settings.readNumEntry( key + "ConstantsDockLeft", 0 );
-  constantsDockWidth = settings.readNumEntry( key + "ConstantsDockWidth", 150 );
-  constantsDockHeight = settings.readNumEntry( key + "ConstantsDockHeight", 400 );
+  historyDockFloating = settings.value( key + "HistoryDockFloating", false ).toBool();
+  historyDockTop = settings.value( key + "HistoryDockTop", 0 ).toInt();
+  historyDockLeft = settings.value( key + "HistoryDockLeft", 0 ).toInt();
+  historyDockWidth = settings.value( key + "HistoryDockWidth", 150 ).toInt();
+  historyDockHeight = settings.value( key + "HistoryDockHeight", 400 ).toInt();
+  functionsDockFloating = settings.value( key + "FunctionsDockFloating", false ).toBool();
+  functionsDockTop = settings.value( key + "FunctionsDockTop", 0 ).toInt();
+  functionsDockLeft = settings.value( key + "FunctionsDockLeft", 0 ).toInt();
+  functionsDockWidth = settings.value( key + "FunctionsDockWidth", 150 ).toInt();
+  functionsDockHeight = settings.value( key + "FunctionsDockHeight", 400 ).toInt();
+  variablesDockFloating = settings.value( key + "VariablesDockFloating", false ).toBool();
+  variablesDockTop = settings.value( key + "VariablesDockTop", 0 ).toInt();
+  variablesDockLeft = settings.value( key + "VariablesDockLeft", 0 ).toInt();
+  variablesDockWidth = settings.value( key + "VariablesDockWidth", 150 ).toInt();
+  variablesDockHeight = settings.value( key + "VariablesDockHeight", 400 ).toInt();
+  constantsDockFloating = settings.value( key + "ConstantsDockFloating", false ).toBool();
+  constantsDockTop = settings.value( key + "ConstantsDockTop", 0 ).toInt();
+  constantsDockLeft = settings.value( key + "ConstantsDockLeft", 0 ).toInt();
+  constantsDockWidth = settings.value( key + "ConstantsDockWidth", 150 ).toInt();
+  constantsDockHeight = settings.value( key + "ConstantsDockHeight", 400 ).toInt();
 
   key = SETTINGSKEY;
   key += "/SyntaxHighlight/";
-  enableSyntaxHighlight = settings.readBoolEntry( key + "EnableSyntaxHighlight", true );
+  enableSyntaxHighlight = settings.value( key + "EnableSyntaxHighlight", true ).toBool();
 
-  highlightNumberColor.setNamedColor( settings.readEntry( key + "NumberColor", "#00007f" ) );
-  highlightFunctionColor.setNamedColor( settings.readEntry( key + "FunctionColor", "#550000" ) );
-  highlightVariableColor.setNamedColor( settings.readEntry( key + "VariableColor", "#005500" ) );
-  matchedParenthesisColor.setNamedColor( settings.readEntry( key + "MatchedParenthesisColor", "#ffffb7" ) );
+  highlightNumberColor.setNamedColor( settings.value( key + "NumberColor", "#00007f" ).toString() );
+  highlightFunctionColor.setNamedColor( settings.value( key + "FunctionColor", "#550000" ).toString() );
+  highlightVariableColor.setNamedColor( settings.value( key + "VariableColor", "#005500" ).toString() );
+  matchedParenthesisColor.setNamedColor( settings.value( key + "MatchedParenthesisColor", "#ffffb7" ).toString() );
 
   key = SETTINGSKEY;
 
   history.clear();
-  int count = settings.readNumEntry( key + "/History/Count", 0 );
+  int count = settings.value( key + "/History/Count", 0 ).toInt();
   for( int i=0; i<count; i++ )
   {
     QString keyname = QString("%1/History/Expression%2").arg(key).arg(i);
-    QString str = settings.readEntry( keyname );
+    QString str = settings.value( keyname ).toString();
     if( !str.isEmpty() )
     {
       QString expr;
@@ -180,11 +181,13 @@ void Settings::load()
   }
 
   variables.clear();
-  QStringList names = settings.entryList( key + "/Variables" );
+  settings.beginGroup( key + "/Variables" );
+  QStringList names = settings.childKeys();
+  settings.endGroup();
   for( int k=0; k<names.count(); k++ )
   {
     QString keyname = QString("%1/Variables/%2").arg(key).arg(names[k]);
-    QString value = settings.readEntry( keyname );
+    QString value = settings.value( keyname ).toString();
     if( !value.isEmpty() )
       variables.append( QString("%1=%2").arg(names[k]).arg(value) );
   }
@@ -197,13 +200,13 @@ void Settings::save()
 
   QString key = SETTINGSKEY;
 
-  settings.writeEntry( key + "/General/AngleMode", angleMode );
-  settings.writeEntry( key + "/General/SaveHistory", saveHistory );
-  settings.writeEntry( key + "/General/SaveVariables", saveVariables );
-  settings.writeEntry( key + "/General/AutoComplete", autoComplete );
-  settings.writeEntry( key + "/General/AutoCalc", autoCalc );
-  settings.writeEntry( key + "/General/DecimalPoint", decimalPoint );
-  settings.writeEntry( key + "/General/MinimizeToTray", minimizeToTray );
+  settings.setValue( key + "/General/AngleMode", angleMode );
+  settings.setValue( key + "/General/SaveHistory", saveHistory );
+  settings.setValue( key + "/General/SaveVariables", saveVariables );
+  settings.setValue( key + "/General/AutoComplete", autoComplete );
+  settings.setValue( key + "/General/AutoCalc", autoCalc );
+  settings.setValue( key + "/General/DecimalPoint", decimalPoint );
+  settings.setValue( key + "/General/MinimizeToTray", minimizeToTray );
 
   QString formatStr;
   if( format == 'f' ) formatStr = "Fixed";
@@ -212,55 +215,55 @@ void Settings::save()
   if( format == 'h' ) formatStr = "Hexadecimal";
   if( format == 'o' ) formatStr = "Octal";
   if( format == 'b' ) formatStr = "Binary";
-  settings.writeEntry( key + "/View/Format", formatStr );
-  settings.writeEntry( key + "/View/DecimalDigits", decimalDigits );
+  settings.setValue( key + "/View/Format", formatStr );
+  settings.setValue( key + "/View/DecimalDigits", decimalDigits );
 
-  settings.writeEntry( key + "/Appearance/ShowClearInputButton", showClearInputButton );
-  settings.writeEntry( key + "/Appearance/ShowEvaluateButton", showEvaluateButton );
-  settings.writeEntry( key + "/Appearance/ShowKeyPad", showKeyPad );
-  settings.writeEntry( key + "/Appearance/ShowHistory", showHistory );
-  settings.writeEntry( key + "/Appearance/ShowFunctions", showFunctions );
-  settings.writeEntry( key + "/Appearance/ShowVariables", showVariables );
-  settings.writeEntry( key + "/Appearance/ShowConstants", showConstants );
+  settings.setValue( key + "/Appearance/ShowClearInputButton", showClearInputButton );
+  settings.setValue( key + "/Appearance/ShowEvaluateButton", showEvaluateButton );
+  settings.setValue( key + "/Appearance/ShowKeyPad", showKeyPad );
+  settings.setValue( key + "/Appearance/ShowHistory", showHistory );
+  settings.setValue( key + "/Appearance/ShowFunctions", showFunctions );
+  settings.setValue( key + "/Appearance/ShowVariables", showVariables );
+  settings.setValue( key + "/Appearance/ShowConstants", showConstants );
 
-  settings.writeEntry( key + "/Appearance/CustomAppearance", customAppearance );
-  settings.writeEntry( key + "/Appearance/CustomFont", customFont.toString() );
-  settings.writeEntry( key + "/Appearance/CustomTextColor", customTextColor.name() );
-  settings.writeEntry( key + "/Appearance/CustomBackgroundColor1", customBackgroundColor1.name() );
-  settings.writeEntry( key + "/Appearance/CustomBackgroundColor2", customBackgroundColor2.name() );
-  settings.writeEntry( key + "/Appearance/CustomErrorColor", customErrorColor.name() );
-  settings.writeEntry( key + "/Appearance/WindowWidth", mainWindowSize.width() ),
-  settings.writeEntry( key + "/Appearance/WindowHeight", mainWindowSize.height() );
+  settings.setValue( key + "/Appearance/CustomAppearance", customAppearance );
+  settings.setValue( key + "/Appearance/CustomFont", customFont.toString() );
+  settings.setValue( key + "/Appearance/CustomTextColor", customTextColor.name() );
+  settings.setValue( key + "/Appearance/CustomBackgroundColor1", customBackgroundColor1.name() );
+  settings.setValue( key + "/Appearance/CustomBackgroundColor2", customBackgroundColor2.name() );
+  settings.setValue( key + "/Appearance/CustomErrorColor", customErrorColor.name() );
+  settings.setValue( key + "/Appearance/WindowWidth", mainWindowSize.width() ),
+  settings.setValue( key + "/Appearance/WindowHeight", mainWindowSize.height() );
 
   settings.setValue( key + "/MainWindow/State", mainWindowState );
-  settings.writeEntry( key + "/MainWindow/HistoryDockFloating", historyDockFloating );
-  settings.writeEntry( key + "/MainWindow/HistoryDockTop", historyDockTop );
-  settings.writeEntry( key + "/MainWindow/HistoryDockLeft", historyDockLeft );
-  settings.writeEntry( key + "/MainWindow/HistoryDockWidth", historyDockWidth );
-  settings.writeEntry( key + "/MainWindow/HistoryDockHeight", historyDockHeight );
-  settings.writeEntry( key + "/MainWindow/FunctionsDockFloating", functionsDockFloating );
-  settings.writeEntry( key + "/MainWindow/FunctionsDockTop", functionsDockTop );
-  settings.writeEntry( key + "/MainWindow/FunctionsDockLeft", functionsDockLeft );
-  settings.writeEntry( key + "/MainWindow/FunctionsDockWidth", functionsDockWidth );
-  settings.writeEntry( key + "/MainWindow/FunctionsDockHeight", functionsDockHeight );
-  settings.writeEntry( key + "/MainWindow/VariablesDockFloating", variablesDockFloating );
-  settings.writeEntry( key + "/MainWindow/VariablesDockTop", variablesDockTop );
-  settings.writeEntry( key + "/MainWindow/VariablesDockLeft", variablesDockLeft );
-  settings.writeEntry( key + "/MainWindow/VariablesDockWidth", variablesDockWidth );
-  settings.writeEntry( key + "/MainWindow/VariablesDockHeight", variablesDockHeight );
-  settings.writeEntry( key + "/MainWindow/ConstantsDockFloating", constantsDockFloating );
-  settings.writeEntry( key + "/MainWindow/ConstantsDockTop", constantsDockTop );
-  settings.writeEntry( key + "/MainWindow/ConstantsDockLeft", constantsDockLeft );
-  settings.writeEntry( key + "/MainWindow/ConstantsDockWidth", constantsDockWidth );
-  settings.writeEntry( key + "/MainWindow/ConstantsDockHeight", constantsDockHeight );
+  settings.setValue( key + "/MainWindow/HistoryDockFloating", historyDockFloating );
+  settings.setValue( key + "/MainWindow/HistoryDockTop", historyDockTop );
+  settings.setValue( key + "/MainWindow/HistoryDockLeft", historyDockLeft );
+  settings.setValue( key + "/MainWindow/HistoryDockWidth", historyDockWidth );
+  settings.setValue( key + "/MainWindow/HistoryDockHeight", historyDockHeight );
+  settings.setValue( key + "/MainWindow/FunctionsDockFloating", functionsDockFloating );
+  settings.setValue( key + "/MainWindow/FunctionsDockTop", functionsDockTop );
+  settings.setValue( key + "/MainWindow/FunctionsDockLeft", functionsDockLeft );
+  settings.setValue( key + "/MainWindow/FunctionsDockWidth", functionsDockWidth );
+  settings.setValue( key + "/MainWindow/FunctionsDockHeight", functionsDockHeight );
+  settings.setValue( key + "/MainWindow/VariablesDockFloating", variablesDockFloating );
+  settings.setValue( key + "/MainWindow/VariablesDockTop", variablesDockTop );
+  settings.setValue( key + "/MainWindow/VariablesDockLeft", variablesDockLeft );
+  settings.setValue( key + "/MainWindow/VariablesDockWidth", variablesDockWidth );
+  settings.setValue( key + "/MainWindow/VariablesDockHeight", variablesDockHeight );
+  settings.setValue( key + "/MainWindow/ConstantsDockFloating", constantsDockFloating );
+  settings.setValue( key + "/MainWindow/ConstantsDockTop", constantsDockTop );
+  settings.setValue( key + "/MainWindow/ConstantsDockLeft", constantsDockLeft );
+  settings.setValue( key + "/MainWindow/ConstantsDockWidth", constantsDockWidth );
+  settings.setValue( key + "/MainWindow/ConstantsDockHeight", constantsDockHeight );
 
   key = SETTINGSKEY;
   key += "/SyntaxHighlight/";
-  settings.writeEntry( key + "/EnableSyntaxHighlight", enableSyntaxHighlight );
-  settings.writeEntry( key + "/NumberColor", highlightNumberColor.name() );
-  settings.writeEntry( key + "/FunctionColor", highlightFunctionColor.name() );
-  settings.writeEntry( key + "/VariableColor", highlightVariableColor.name() );
-  settings.writeEntry( key + "/MatchedParenthesisColor", matchedParenthesisColor.name() );
+  settings.setValue( key + "/EnableSyntaxHighlight", enableSyntaxHighlight );
+  settings.setValue( key + "/NumberColor", highlightNumberColor.name() );
+  settings.setValue( key + "/FunctionColor", highlightFunctionColor.name() );
+  settings.setValue( key + "/VariableColor", highlightVariableColor.name() );
+  settings.setValue( key + "/MatchedParenthesisColor", matchedParenthesisColor.name() );
   key = SETTINGSKEY;
 
   QStringList realHistory = history;
@@ -272,21 +275,25 @@ void Settings::save()
       realHistory.append( history[j] );
   }
 
-  QStringList hkeys = settings.entryList( key + "/History" );
+  settings.beginGroup( key + "/History" );
+  QStringList hkeys = settings.childKeys();
+  settings.endGroup();
   for( k=0; k<hkeys.count(); k++ )
-    settings.removeEntry( QString("%1/History/Expression%2").arg(key).arg(k) );
-  settings.writeEntry( key + "/History/Count", (int)history.count() );
+    settings.remove( QString("%1/History/Expression%2").arg(key).arg(k) );
+  settings.setValue( key + "/History/Count", (int)history.count() );
   for( i=0; i<realHistory.count(); i++ )
-    settings.writeEntry( QString("%1/History/Expression%2").arg(key).arg(i),realHistory[i] );
+    settings.setValue( QString("%1/History/Expression%2").arg(key).arg(i),realHistory[i] );
 
-  QStringList vkeys = settings.entryList( key + "/Variables" );
+  settings.beginGroup( key + "/Variables" );
+  QStringList vkeys = settings.childKeys();
+  settings.endGroup();
   for( k=0; k<vkeys.count(); k++ )
-    settings.removeEntry( QString("%1/Variables/%2").arg(key).arg(vkeys[k]) );
+    settings.remove( QString("%1/Variables/%2").arg(key).arg(vkeys[k]) );
   for( i=0; i<variables.count(); i++ )
   {
-    QStringList s = QStringList::split( '=', variables[i] );
+    QStringList s = variables[i].split( '=' );
     if( s.count() == 2 )
-      settings.writeEntry( QString("%1/Variables/%2").arg(key).arg(s[0]), s[1] );
+      settings.setValue( QString("%1/Variables/%2").arg(key).arg(s[0]), s[1] );
   }
 
 }
