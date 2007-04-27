@@ -58,7 +58,7 @@ public:
   {
     if( !editor->isSyntaxHighlightEnabled() )
     {
-      setFormat( 0, text.length(), editor->colorGroup().text() );
+      setFormat( 0, text.length(), editor->palette().text().color() );
       return;
     }
 
@@ -66,7 +66,7 @@ public:
     for( int i = 0; i < tokens.count(); i++ )
     {
       Token& token = tokens[i];
-      QString text = token.text().lower();
+      QString text = token.text().toLower();
       QColor color = Qt::black;
       switch( token.type() )
       {
@@ -79,7 +79,7 @@ public:
             color = editor->highlightColor( Editor::Variable );
             QStringList fnames = FunctionRepository::self()->functionNames();
             for( int i=0; i<fnames.count(); i++ )
-              if( fnames[i].lower() == text )
+              if( fnames[i].toLower() == text )
                 color = editor->highlightColor( Editor::FunctionName );
           }
           break;
@@ -124,8 +124,8 @@ public:
   QTreeWidget *completionListBox;
 };
 
-Editor::Editor( Evaluator* e, QWidget* parent, const char* name ):
-  QTextEdit( parent, name )
+Editor::Editor( Evaluator* e, QWidget* parent ):
+  QTextEdit( parent )
 {
   d = new EditorPrivate;
   d->eval = e;
@@ -146,7 +146,7 @@ Editor::Editor( Evaluator* e, QWidget* parent, const char* name ):
   setWordWrapMode( QTextOption::NoWrap );
   setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
   setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
-  setTextFormat( Qt::PlainText );
+  setAcceptRichText( false );
   setAutoFormatting( QTextEdit::AutoNone );
 
   connect( d->completion, SIGNAL( selectedCompletion( const QString& ) ),
@@ -170,6 +170,26 @@ Editor::Editor( Evaluator* e, QWidget* parent, const char* name ):
 Editor::~Editor()
 {
   delete d;
+}
+
+QString Editor::text() const
+{
+  return toPlainText();
+}
+
+void Editor::setText( const QString& str )
+{
+  setPlainText( str );
+}
+
+void Editor::insert( const QString& str )
+{
+  insertPlainText( str );
+}
+
+void Editor::doBackspace()
+{
+  // FIXME implement this !
 }
 
 int Editor::cursorPosition() const
@@ -264,7 +284,8 @@ void Editor::checkAutoComplete()
   if( !d->autoCompleteEnabled ) return;
 
   d->completionTimer->stop();
-  d->completionTimer->start( 500, true );
+  d->completionTimer->setSingleShot( true );
+  d->completionTimer->start( 500 );
 }
 
 void Editor::checkMatching()
@@ -272,7 +293,8 @@ void Editor::checkMatching()
   if( !d->syntaxHighlightEnabled ) return;
 
   d->matchingTimer->stop();
-  d->matchingTimer->start( 200, true );
+  d->matchingTimer->setSingleShot( true );
+  d->matchingTimer->start( 200 );
 }
 
 void Editor::checkAutoCalc()
@@ -281,7 +303,8 @@ void Editor::checkAutoCalc()
   if( !d->autoCalcEnabled ) return;
 
   d->autoCalcTimer->stop();
-  d->autoCalcTimer->start( 1000, true );
+  d->autoCalcTimer->setSingleShot( true );
+  d->autoCalcTimer->start( 1000 );
 
   emit autoCalcDeactivated();
 }
@@ -440,7 +463,7 @@ void Editor::triggerAutoComplete()
   QStringList fnames = FunctionRepository::self()->functionNames();
   QStringList choices;
   for( int i=0; i<fnames.count(); i++ )
-    if( fnames[i].startsWith( id, false ) )
+    if( fnames[i].startsWith( id, Qt::CaseInsensitive ) )
     {
       QString str = fnames[i];
       ::Function* f = FunctionRepository::self()->function( str );
@@ -453,7 +476,7 @@ void Editor::triggerAutoComplete()
   // find matches in variables names
   QStringList vchoices;
   for( int i=0; i<d->eval->variables().count(); i++ )
-    if( d->eval->variables()[i].name.startsWith( id, false ) )
+    if( d->eval->variables()[i].name.startsWith( id, Qt::CaseInsensitive ) )
       vchoices.append( QString("%1: %2").arg( d->eval->variables()[i].name ).
         arg( formatNumber( d->eval->variables()[i].value ) ) );
   vchoices.sort();
@@ -464,13 +487,13 @@ void Editor::triggerAutoComplete()
 
   // single perfect match, no need to give choices
   if( choices.count()==1 )
-    if( choices[0].lower() == id.lower() )
+    if( choices[0].toLower() == id.toLower() )
       return;
 
   // one match, complete it for the user
   if( choices.count()==1 )
   {
-    QString str = QStringList::split( ':', choices[0] )[0];
+    QString str = choices[0].split( ':' )[0];
     str = str.remove( 0, id.length() );
     int curPos = textCursor().position();
     blockSignals( true );
@@ -501,7 +524,7 @@ void Editor::autoComplete( const QString& item )
   Token lastToken = tokens[ tokens.count()-1 ];
   if( !lastToken.isIdentifier() ) return;
 
-  QStringList str = QStringList::split( ':', item );
+  QStringList str = item.split( ':' );
 
   blockSignals( true );
   QTextCursor cursor = textCursor();
@@ -690,7 +713,8 @@ EditorCompletion::EditorCompletion( Editor* editor ): QObject( editor )
   d = new EditorCompletionPrivate;
   d->editor = editor;
 
-  d->completionPopup = new QFrame( editor->topLevelWidget(), 0, Qt::WType_Popup );
+  d->completionPopup = new QFrame( editor->topLevelWidget() );
+  d->completionPopup->setWindowFlags( d->completionPopup->windowFlags() | Qt::Popup );
   d->completionPopup->setFrameShape( QFrame::Box );
   d->completionPopup->installEventFilter( this );
   d->completionPopup->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum);
@@ -735,7 +759,7 @@ bool EditorCompletion::eventFilter( QObject *obj, QEvent *ev )
       else if ( ke->key() == Qt::Key_Left || ke->key() == Qt::Key_Right ||
       ke->key() == Qt::Key_Up || ke->key() == Qt::Key_Down ||
       ke->key() == Qt::Key_Home || ke->key() == Qt::Key_End ||
-      ke->key() == Qt::Key_Prior || ke->key() == Qt::Key_Next )
+      ke->key() == Qt::Key_PageUp || ke->key() == Qt::Key_PageDown )
     {
       if( obj == d->completionPopup )
              return true;

@@ -46,8 +46,14 @@ class Editor : public QTextEdit
       Number, FunctionName, Variable, MatchedPar
     } ColorType;
 
-    explicit Editor( Evaluator* eval, QWidget* parent = 0, const char* name = 0 );
+    explicit Editor( Evaluator* eval, QWidget* parent = 0 );
     ~Editor();
+
+    QString text() const;
+    void setText( const QString& );
+
+    void insert( const QString& );
+    void doBackspace();
 
     int cursorPosition() const;
     void setCursorPosition( int pos );
