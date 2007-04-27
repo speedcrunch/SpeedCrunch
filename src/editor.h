@@ -133,6 +133,9 @@ class EditorCompletion : public QObject
   public slots:
     void doneCompletion();
 
+  private slots:
+    void fade( int );
+
   private:
     EditorCompletionPrivate* d;
     EditorCompletion( const EditorCompletion& );

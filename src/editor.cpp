@@ -24,27 +24,20 @@
 #include "evaluator.h"
 #include "settings.h"
 
+#include <QApplication>
+#include <QDesktopWidget>
+#include <QEvent>
 #include <QFrame>
 #include <QHeaderView>
-#include <QTreeWidget>
-#include <QVBoxLayout>
-
-#include <qapplication.h>
-#include <qevent.h>
-#include <qlineedit.h>
-#include <qpainter.h>
-#include <qstringlist.h>
-#include <qstyle.h>
-#include <qtimer.h>
-#include <qtooltip.h>
-
-#include <QSyntaxHighlighter>
-
-#include <QWheelEvent>
 #include <QKeyEvent>
-
-#include <QDesktopWidget>
+#include <QLineEdit>
 #include <QStyle>
+#include <QSyntaxHighlighter>
+#include <QTimer>
+#include <QTimeLine>
+#include <QTreeWidget>
+#include <QWheelEvent>
+
 
 class EditorHighlighter : public QSyntaxHighlighter
 {
@@ -114,14 +107,6 @@ public:
   QMap<Editor::ColorType,QColor> highlightColors;
   QTimer* matchingTimer;
   bool ansAvailable;
-};
-
-class EditorCompletionPrivate
-{
-public:
-  Editor* editor;
-  QFrame *completionPopup;
-  QTreeWidget *completionListBox;
 };
 
 Editor::Editor( Evaluator* e, QWidget* parent ):
@@ -716,45 +701,59 @@ void Editor::stopAutoCalc()
   emit autoCalcDeactivated();
 }
 
+// uncomment to activate fade-away effect when the completion pop-up disappears
+// #define COMPLETION_FADE_EFFECT
+
+class EditorCompletionPrivate
+{
+public:
+  Editor* editor;
+  QTreeWidget *popup;
+#ifdef COMPLETION_FADE_EFFECT
+  QTimeLine* fader;
+#endif
+};
 
 EditorCompletion::EditorCompletion( Editor* editor ): QObject( editor )
 {
   d = new EditorCompletionPrivate;
   d->editor = editor;
 
-  d->completionPopup = new QFrame( editor->topLevelWidget() );
-  d->completionPopup->setWindowFlags( d->completionPopup->windowFlags() | Qt::Popup );
-  d->completionPopup->setFrameShape( QFrame::Box );
-  d->completionPopup->installEventFilter( this );
-  d->completionPopup->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum);
+  d->popup = new QTreeWidget( 0 );
+  d->popup->setFrameShape( QFrame::NoFrame );
+  d->popup->setColumnCount( 2 );
+  d->popup->setRootIsDecorated( false );
+  d->popup->header()->hide();
+  d->popup->setEditTriggers( QTreeWidget::NoEditTriggers );
+  d->popup->setSelectionBehavior( QTreeWidget::SelectRows );
+  d->popup->setMouseTracking( true );
+  d->popup->installEventFilter( this );
+  connect( d->popup, SIGNAL(itemClicked(QTreeWidgetItem*,int)), SLOT(doneCompletion()) );
 
-  d->completionListBox = new QTreeWidget( d->completionPopup );
-  d->completionListBox->setFrameShape( QFrame::NoFrame );
-  d->completionListBox->setColumnCount( 2 );
-  d->completionListBox->setRootIsDecorated( false );
-  d->completionListBox->header()->hide();
-  d->completionListBox->setEditTriggers( QTreeWidget::NoEditTriggers );
-  d->completionListBox->setSelectionBehavior( QTreeWidget::SelectRows );
-  d->completionListBox->setMouseTracking( true );
-  d->completionPopup->setFocusProxy( d->completionListBox );
-  d->completionListBox->installEventFilter( this );
-  connect( d->completionListBox, SIGNAL(itemClicked(QTreeWidgetItem*,int)), SLOT(doneCompletion()) );
+  d->popup->hide();
+  d->popup->setParent( 0, Qt::Popup );
+  d->popup->setFocusPolicy( Qt::NoFocus );
+  d->popup->setFocusProxy( editor );
 
-  QVBoxLayout* layout = new QVBoxLayout(d->completionPopup);
-  d->completionPopup->setLayout(layout);
-  layout->setMargin( 0 );
-  layout->setSpacing( 0 );
-  layout->addWidget(d->completionListBox);
+  d->popup->setFrameStyle( QFrame::Box | QFrame::Plain );
+
+#ifdef COMPLETION_FADE_EFFECT
+  d->fader = new QTimeLine( 500, this );
+  d->fader->setFrameRange( 0, 100 );
+  d->fader->setCurveShape( QTimeLine::EaseInCurve );
+  connect( d->fader, SIGNAL(frameChanged(int)), SLOT(fade(int)) );
+#endif
 }
 
 EditorCompletion::~EditorCompletion()
 {
+  delete d->popup;
   delete d;
 }
 
 bool EditorCompletion::eventFilter( QObject *obj, QEvent *ev )
 {
-  if ( obj == d->completionPopup || obj == d->completionListBox )
+  if ( obj == d->popup )
   {
 
     if ( ev->type() == QEvent::KeyPress )
@@ -769,14 +768,11 @@ bool EditorCompletion::eventFilter( QObject *obj, QEvent *ev )
       ke->key() == Qt::Key_Up || ke->key() == Qt::Key_Down ||
       ke->key() == Qt::Key_Home || ke->key() == Qt::Key_End ||
       ke->key() == Qt::Key_PageUp || ke->key() == Qt::Key_PageDown )
-    {
-      if( obj == d->completionPopup )
-             return true;
-        else
+      {
         return false;
       }
 
-      d->completionPopup->close();
+      d->popup->hide();
       d->editor->setFocus();
       QApplication::sendEvent( d->editor, ev );
       return true;
@@ -788,9 +784,14 @@ bool EditorCompletion::eventFilter( QObject *obj, QEvent *ev )
 
 void EditorCompletion::doneCompletion()
 {
-  d->completionPopup->close();
+#ifdef COMPLETION_FADE_EFFECT
+  d->fader->start();
+  QTimer::singleShot( 750, d->popup, SLOT( hide() ) ); // sentinel
+#else
+  d->popup->hide();
+#endif
   d->editor->setFocus();
-  QTreeWidgetItem* item = d->completionListBox->currentItem();
+  QTreeWidgetItem* item = d->popup->currentItem();
   emit selectedCompletion( item ? item->text(0) : QString() );
 }
 
@@ -798,22 +799,25 @@ void EditorCompletion::showCompletion( const QStringList &choices )
 {
   if( !choices.count() ) return;
 
-  d->completionListBox->setUpdatesEnabled( false );
-  d->completionListBox->clear();
+#ifdef COMPLETION_FADE_EFFECT
+  d->fader->stop();
+  fade( 0 );
+#endif
+
+  d->popup->setUpdatesEnabled( false );
+  d->popup->clear();
   for( int i = 0; i < choices.count(); i++ )
-    new QTreeWidgetItem( d->completionListBox, choices[i].split(':') );
-  d->completionListBox->sortItems( 0, Qt::AscendingOrder );
-  d->completionListBox->setCurrentItem( d->completionListBox->topLevelItem(0) );
-  d->completionListBox->adjustSize();
-  d->completionListBox->setUpdatesEnabled( true );
+    new QTreeWidgetItem( d->popup, choices[i].split(':') );
+  d->popup->sortItems( 0, Qt::AscendingOrder );
+  d->popup->setCurrentItem( d->popup->topLevelItem(0) );
+  d->popup->adjustSize();
+  d->popup->setUpdatesEnabled( true );
 
   // size of the pop-up
-  d->completionPopup->setMaximumHeight( 100 );
-  d->completionListBox->adjustSize();
-  d->completionListBox->setMaximumHeight( 100 );
-  //d->completionPopup->adjustSize();
-  int h = d->completionListBox->height();
-  int w = d->completionListBox->width();
+  d->popup->adjustSize();
+  int h = d->popup->sizeHintForRow(0) * qMin(7, choices.count()) + 3;
+  int w = d->popup->width();
+  d->popup->resize( w, h );
 
   // position, reference is editor's cursor position in global coord
   QFontMetrics fm( d->editor->font() );
@@ -821,15 +825,22 @@ void EditorCompletion::showCompletion( const QStringList &choices )
   int pixelsOffset = fm.width( d->editor->text(), curPos );
   QPoint pos = d->editor->mapToGlobal( QPoint( pixelsOffset, d->editor->height() ) );
 
+
   // if popup is partially invisible, move to other position
-  int screen_num = QApplication::desktop()->screenNumber( d->completionPopup );
-  QRect screen = QApplication::desktop()->screenGeometry( screen_num );
+  const QRect screen = QApplication::desktop()->availableGeometry( d->editor );
   if( pos.y() + h > screen.y()+screen.height() )
     pos.setY( pos.y() - h - d->editor->height() );
   if( pos.x() + w > screen.x()+screen.width() )
     pos.setX(  screen.x()+screen.width() - w );
 
-  d->completionPopup->move( pos );
-  d->completionListBox->setFocus();
-  d->completionPopup->show();
+  d->popup->move( pos );
+  d->popup->setFocus();
+  d->popup->show();
+}
+
+void EditorCompletion::fade( int v )
+{
+#ifdef COMPLETION_FADE_EFFECT
+  d->popup->setWindowOpacity( (100-v)/100 );
+#endif
 }
