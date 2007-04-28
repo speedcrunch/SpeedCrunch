@@ -91,13 +91,13 @@ class Settings
     int constantsDockWidth;
     int constantsDockHeight;
 
-    Settings();
     static Settings* self();
 
     void load();
     void save();
 
   private:
+    Settings();
     Settings( const Settings& );
     Settings& operator=( const Settings& );
 };
