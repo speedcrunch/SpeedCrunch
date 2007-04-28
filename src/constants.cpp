@@ -19,7 +19,18 @@
 
 #include "constants.h"
 
-Constants::Constants( QObject* parent ): QObject( parent )
+#include <QApplication>
+
+Constants* s_global_constants = 0;
+
+static void deleteGlobalConstants()
+{
+  delete s_global_constants;
+  s_global_constants = 0;
+}
+
+
+Constants::Constants(): QObject( 0 )
 {
   setObjectName( "Constants" );
 
@@ -55,3 +66,14 @@ Constants::Constants( QObject* parent ): QObject( parent )
   }
   categoryList.sort();
 }
+
+Constants* Constants::self()
+{
+  if( !s_global_constants )
+  {
+    s_global_constants = new Constants();
+    qAddPostRoutine(deleteGlobalConstants);
+  }
+  return s_global_constants;
+}
+

@@ -913,8 +913,7 @@ ConstantCompletion::ConstantCompletion( Editor* editor ): QObject( editor )
   d->slider->setCurveShape( QTimeLine::EaseInCurve );
   connect( d->slider, SIGNAL(frameChanged(int)), SLOT(slide(int)) );
 
-  // FIXME share constants with others
-  Constants* ct = new Constants( this );
+  Constants* ct = Constants::self();
   d->constants = ct->constantList;
 
   // populate categories

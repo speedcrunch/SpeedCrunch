@@ -51,10 +51,15 @@ class Constants : public QObject
   Q_OBJECT
 
   public:
-    explicit Constants( QObject* parent );
+    static Constants* self();
 
     QList<Constant> constantList;
     QStringList categoryList;
+
+  private:
+    explicit Constants();
+    Constants( const Constants& );
+    Constants& operator= ( const Constants& );
 };
 
 #endif // CONSTANTS

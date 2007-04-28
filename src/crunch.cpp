@@ -117,7 +117,6 @@ public:
   CrunchActions* actions;
   QActionGroup *digitsGroup;
   Evaluator* eval;
-  Constants* constants;
 
   Editor *editor;
   AutoHideLabel* autoCalcLabel;
@@ -158,7 +157,6 @@ Crunch::Crunch(): QMainWindow()
   d->actions = new CrunchActions;
 
   d->eval = new Evaluator;
-  d->constants = new Constants( this );
 
   d->autoAns = false;
   d->trayIcon = 0;
@@ -277,7 +275,7 @@ Crunch::Crunch(): QMainWindow()
 
   d->constantsDock = new ConstantsDock( this );
   d->constantsDock->setObjectName( "ConstantsList" );
-  d->constantsDock->update( d->constants );
+  d->constantsDock->update( Constants::self() );
   addDockWidget( Qt::RightDockWidgetArea, d->constantsDock );
 
   tabifyDockWidget( d->functionsDock, d->historyDock );
