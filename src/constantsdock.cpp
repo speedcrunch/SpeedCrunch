@@ -75,7 +75,8 @@ ConstantsDock::ConstantsDock( QWidget* parent ): QDockWidget( tr("Constants"), p
   searchLayout->setMargin( 0 );
 
   d->list = new QTreeWidget( this );
-  d->list->setColumnCount( 1 );
+  d->list->setColumnCount( 3 );
+  d->list->setColumnHidden( 2, true );
   d->list->setRootIsDecorated( false );
   d->list->header()->hide();
   d->list->setMouseTracking( true );
@@ -147,6 +148,8 @@ void ConstantsDock::filter()
   {
       QStringList str;
       str << d->constants[k].name;
+      str << QString("%1 %2").arg(d->constants[k].value).arg(d->constants[k].unit);
+      str << d->constants[k].name.toUpper();
 
       bool include = (chosenCategory == tr("All")) ? true:
         d->constants[k].categories.contains( chosenCategory );
@@ -168,13 +171,18 @@ void ConstantsDock::filter()
         if( !d->constants[k].unit.isEmpty() )
           tip.append( " " ).append( d->constants[k].unit );
         item->setToolTip( 0, tip );
+        item->setToolTip( 1, tip );
+		item->setTextAlignment( 1, Qt::AlignRight );
       }
   }
+
+  d->list->resizeColumnToContents( 0 );
+  d->list->resizeColumnToContents( 1 );
 
   if( d->list->topLevelItemCount() > 0 )
   {
     d->noMatchLabel->hide();
-    d->list->sortItems( 0, Qt::AscendingOrder );
+    d->list->sortItems( 2, Qt::AscendingOrder );
 
     int group = 3;
     if( d->list->topLevelItemCount() >= 2*group )
