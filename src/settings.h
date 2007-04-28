@@ -98,7 +98,6 @@ class Settings
     void save();
 
   private:
-    static Settings* s_self;
     Settings( const Settings& );
     Settings& operator=( const Settings& );
 };

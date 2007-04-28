@@ -20,14 +20,22 @@
 
 #include "settings.h"
 
-#include <qdir.h>
-#include <qsettings.h>
+#include <QApplication>
+#include <QDir>
+#include <QSettings>
 
 #include <stdlib.h>
 
 #define SETTINGSKEY "SpeedCrunch"
 
-Settings* Settings::s_self = 0;
+Settings* s_global_settings = 0;
+
+static void deleteGlobalSettings()
+{
+    delete s_global_settings;
+    s_global_settings = 0;
+}
+
 
 Settings::Settings()
 {
@@ -300,7 +308,10 @@ void Settings::save()
 
 Settings* Settings::self()
 {
-  if( !s_self )
-    s_self = new Settings();
-  return s_self;
+  if( !s_global_settings )
+  {
+    s_global_settings = new Settings();
+    qAddPostRoutine(deleteGlobalSettings);
+  }
+  return s_global_settings;
 }
