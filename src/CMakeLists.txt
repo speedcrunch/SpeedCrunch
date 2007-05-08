@@ -13,7 +13,7 @@ ENDIF( APPLE )
 
 cmake_minimum_required(VERSION 2.4.0)
 set(CMAKE_COLOR_MAKEFILE ON)
-set(CMAKE_VERBOSE_MAKEFILE ON)
+set(CMAKE_VERBOSE_MAKEFILE OFF)
 set(CMAKE_INCLUDE_CURRENT_DIR TRUE)
 
 # note: change this BEFORE making a release !!
