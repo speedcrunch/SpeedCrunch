@@ -327,6 +327,16 @@ void test_auto_fix_parentheses()
   CHECK_AUTOFIX( "x+(8-(2*1", "x+(8-(2*1))" );
 }
 
+void test_auto_fix_ans()
+{
+  CHECK_AUTOFIX( "sin", "sin(ans)" );
+  CHECK_AUTOFIX( "cos", "cos(ans)" );
+  CHECK_AUTOFIX( "tan", "tan(ans)" );
+  CHECK_AUTOFIX( "abs", "abs(ans)" );
+  CHECK_AUTOFIX( "exp", "exp(ans)" );
+  CHECK_AUTOFIX( "log", "log(ans)" );
+}
+
 int main(int argc, char** argv)
 {
   eval_total_tests = 0;
@@ -341,6 +351,7 @@ int main(int argc, char** argv)
   test_function_stat();
 
   test_auto_fix_parentheses();
+  test_auto_fix_ans();
 
   std::cerr << eval_total_tests << " total, ";
   std::cerr << eval_failed_tests << " failed\n";
