@@ -337,6 +337,17 @@ void test_auto_fix_ans()
   CHECK_AUTOFIX( "log", "log(ans)" );
 }
 
+void test_auto_fix_untouch()
+{
+  // all expressions are not touched cause they are valid already
+  CHECK_AUTOFIX( "sin(x)", "sin(x)" );
+  CHECK_AUTOFIX( "sin((x/y))", "sin((x/y))" );
+  CHECK_AUTOFIX( "ans", "ans" );
+  CHECK_AUTOFIX( "sin(ans)", "sin(ans)" );
+  CHECK_AUTOFIX( "tan(ans)", "tan(ans)" );
+  CHECK_AUTOFIX( "x=1.2", "x=1.2" );
+}
+
 int main(int argc, char** argv)
 {
   eval_total_tests = 0;
@@ -352,6 +363,7 @@ int main(int argc, char** argv)
 
   test_auto_fix_parentheses();
   test_auto_fix_ans();
+  test_auto_fix_untouch();
 
   std::cerr << eval_total_tests << " total, ";
   std::cerr << eval_failed_tests << " failed\n";
