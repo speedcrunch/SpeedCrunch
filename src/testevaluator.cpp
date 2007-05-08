@@ -32,6 +32,7 @@ static int eval_failed_tests = 0;
 
 #define CHECK_EVAL(x,y)  checkEval(__FILE__,__LINE__,#x,x,y)
 #define CHECK_EVAL_PRECISE(x,y)  checkEvalPrecise(__FILE__,__LINE__,#x,x,y)
+#define CHECK_AUTOFIX(s,p) checkAutoFix(__FILE__,__LINE__,#s,s,p)
 
 static void checkEval( const char *file, int line, const char* msg,
 const QString& expr, const char* expected )
@@ -88,6 +89,22 @@ const QString& expr, const char* expected )
     std::cerr << std::endl;
   }
   free( result );
+}
+
+static void checkAutoFix( const char *file, int line, const char* msg,
+const QString& expr, const QString& fixed )
+{
+  eval_total_tests++;
+
+  QString r = Evaluator::autoFix( expr, "." );
+  if( r != fixed )
+  {
+    eval_failed_tests++;
+    std::cerr << file << "["<< line <<"]: " << msg << std::endl;
+    std::cerr << "    Result: \"" << qPrintable(r) << "\"" << std::endl;
+    std::cerr << "  Expected: \"" << qPrintable(fixed) << "\"" << std::endl;
+    std::cerr << std::endl;
+  }
 }
 
 void test_constants()
@@ -304,6 +321,12 @@ void test_function_stat()
 
 }
 
+void test_auto_fix_parentheses()
+{
+  CHECK_AUTOFIX( "x+(8-2", "x+(8-2)" );
+  CHECK_AUTOFIX( "x+(8-(2*1", "x+(8-(2*1))" );
+}
+
 int main(int argc, char** argv)
 {
   eval_total_tests = 0;
@@ -316,6 +339,8 @@ int main(int argc, char** argv)
   test_function_basic();
   test_function_trig();
   test_function_stat();
+
+  test_auto_fix_parentheses();
 
   std::cerr << eval_total_tests << " total, ";
   std::cerr << eval_failed_tests << " failed\n";
