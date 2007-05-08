@@ -180,7 +180,7 @@ void KeyPad::sizeButtons()
   if( fm.width( d->keyAns->text() ) > maxWidth ) maxWidth = fm.width( d->keyAns->text() );
   if( fm.width( d->keyX->text() ) > maxWidth ) maxWidth = fm.width( d->keyX->text() );
   if( fm.width( d->keyXEq->text() ) > maxWidth ) maxWidth = fm.width( d->keyXEq->text() );
-		
+
   if( fm.width( d->keyExp->text() ) > maxWidth ) maxWidth = fm.width( d->keyExp->text() );
   if( fm.width( d->keyLog->text() ) > maxWidth ) maxWidth = fm.width( d->keyLog->text() );
   if( fm.width( d->keySin->text() ) > maxWidth ) maxWidth = fm.width( d->keySin->text() );
@@ -191,9 +191,13 @@ void KeyPad::sizeButtons()
   if( fm.width( d->keyATan->text() ) > maxWidth ) maxWidth = fm.width( d->keyATan->text() );
 
   // Limit the size of the buttons
-  
+
   d->key0->setMaximumSize(
-  d->key0->style()->sizeFromContents( QStyle::CT_ToolButton,
+#ifdef Q_WS_MAC
+      d->key0->style()->sizeFromContents( QStyle::CT_PushButton,
+#else
+      d->key0->style()->sizeFromContents( QStyle::CT_ToolButton,
+#endif
                                       0,
                                       QSize( int(maxWidth*1.5), int(textHeight*1.5) ).expandedTo(QApplication::globalStrut()), d->key0 ) );
   d->key1->setMaximumSize( d->key0->maximumSize() );
@@ -221,7 +225,7 @@ void KeyPad::sizeButtons()
   d->keyAns->setMaximumSize( d->key0->maximumSize() );
   d->keyX->setMaximumSize( d->key0->maximumSize() );
   d->keyXEq->setMaximumSize( d->key0->maximumSize() );
-		
+
   d->keyExp->setMaximumSize( d->key0->maximumSize() );
   d->keyLog->setMaximumSize( d->key0->maximumSize() );
   d->keySin->setMaximumSize( d->key0->maximumSize() );
