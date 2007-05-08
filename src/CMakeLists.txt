@@ -108,6 +108,7 @@ if( MINGW )
   ADD_CUSTOM_COMMAND( OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/crunchico.o
                       COMMAND windres.exe -I${CMAKE_CURRENT_SOURCE_DIR} -i${CMAKE_CURRENT_SOURCE_DIR}/crunchico.rc -o ${CMAKE_CURRENT_BINARY_DIR}/crunchico.o )
   SET(speedcrunch_SOURCES ${speedcrunch_SOURCES} ${CMAKE_CURRENT_BINARY_DIR}/crunchico.o)
+  SET(LINK_FLAGS -Wl,-subsystem,windows)
 else(MINGW)
   SET(speedcrunch_SOURCES ${speedcrunch_SOURCES} crunchico.rc)
 endif(MINGW)
@@ -141,7 +142,7 @@ ENDIF( APPLE )
 add_custom_target( confclean
   COMMAND rm -rf CMakeFiles/ CMakeCache.txt cmake_install.cmake )
 
-target_link_libraries(${PROGNAME} ${QT_LIBRARIES})
+target_link_libraries(${PROGNAME} ${QT_LIBRARIES} ${LINK_FLAGS})
 
 # set(EXECUTABLE_OUTPUT_PATH ${speedcrunch_BINARY_DIR}/../bin)
 
