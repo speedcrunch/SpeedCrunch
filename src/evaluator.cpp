@@ -1423,6 +1423,13 @@ QString Evaluator::autoFix( const QString& expr, const QString& decimalPoint )
     if( expr[c] >= QChar(32) )
       result.append( expr[c] );
 
+  // no extra whitespaces at the beginning and at the end
+  result = result.trimmed();
+
+  // strip trailing equal sign (=)
+  while( result.endsWith("=") )
+    result = result.left( result.length()-1 );
+
   // automagically close all parenthesis
   Tokens tokens = Evaluator::scan( result, decimalPoint );
   for( int i=0; i<tokens.count(); i++ )

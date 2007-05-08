@@ -337,6 +337,14 @@ void test_auto_fix_ans()
   CHECK_AUTOFIX( "log", "log(ans)" );
 }
 
+void test_auto_fix_trailing_equal()
+{
+  CHECK_AUTOFIX ( "1+2=", "1+2" );
+  CHECK_AUTOFIX ( "1==", "1" );
+  CHECK_AUTOFIX ( "1/3====", "1/3" );
+  CHECK_AUTOFIX ( "sin(x+y)=", "sin(x+y)" );
+}
+
 void test_auto_fix_untouch()
 {
   // all expressions are not touched cause they are valid already
@@ -363,6 +371,7 @@ int main(int argc, char** argv)
 
   test_auto_fix_parentheses();
   test_auto_fix_ans();
+  test_auto_fix_trailing_equal();
   test_auto_fix_untouch();
 
   std::cerr << eval_total_tests << " total, ";
