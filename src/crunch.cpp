@@ -501,6 +501,9 @@ void Crunch::createUI()
   viewMenu->addAction( d->actions->viewGeneral );
   viewMenu->addAction( d->actions->viewFixed );
   viewMenu->addAction( d->actions->viewExponential );
+  viewMenu->addAction( d->actions->viewHexadec );
+  viewMenu->addAction( d->actions->viewOctal );
+  viewMenu->addAction( d->actions->viewBinary );
   viewMenu->addSeparator();
   viewMenu->addAction( d->actions->digitsAuto );
   viewMenu->addAction( d->actions->digits2 );
@@ -508,10 +511,6 @@ void Crunch::createUI()
   viewMenu->addAction( d->actions->digits8 );
   viewMenu->addAction( d->actions->digits15 );
   viewMenu->addAction( d->actions->digits50 );
-  viewMenu->addSeparator();
-  viewMenu->addAction( d->actions->viewHexadec );
-  viewMenu->addAction( d->actions->viewOctal );
-  viewMenu->addAction( d->actions->viewBinary );
 
 
   QMenu *settingsMenu = new QMenu( tr("Se&ttings"), this );
