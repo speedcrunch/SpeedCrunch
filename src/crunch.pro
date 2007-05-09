@@ -73,6 +73,7 @@ TRANSLATIONS += crunch_pt.ts
 TRANSLATIONS += crunch_pt_BR.ts
 TRANSLATIONS += crunch_ru.ts
 TRANSLATIONS += crunch_es.ts
+TRANSLATIONS += crunch_sl.ts
 
 RESOURCES = crunch.qrc
 
