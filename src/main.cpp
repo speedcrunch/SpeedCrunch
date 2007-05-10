@@ -36,7 +36,7 @@ QTranslator *createTranslator()
 
 	QString qmfile;
 	QFileInfo fi;
-	QTranslator* translator;
+	QTranslator* translator = 0;
 
 #ifdef Q_OS_WIN32
 	if( !foundTranslator )
