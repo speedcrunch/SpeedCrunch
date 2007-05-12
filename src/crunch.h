@@ -46,7 +46,7 @@ class Crunch : public QMainWindow
     void insertFunction();
     void viewGeneral();
     void viewFixed();
-    void viewExponential();
+    void viewScientific();
     void viewHexadec();
     void viewOctal();
     void viewBinary();
