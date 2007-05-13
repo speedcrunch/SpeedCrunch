@@ -1,6 +1,7 @@
 /* This file is part of the SpeedCrunch project
    Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
                  2005-2006 Johan Thelin <e8johan@gmail.com>
+								 2007 Helder Correia <helder.pereira.correia@gmail.com>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -112,18 +113,18 @@ static Token::Op matchOperator( const QString& text )
     QChar p = text[0];
     switch( p.unicode() )
     {
-        case '+': result = Token::Plus; break;
-        case '-': result = Token::Minus; break;
-        case '*': result = Token::Asterisk; break;
-        case '/': result = Token::Slash; break;
-        case '^': result = Token::Caret; break;
-        case ';': result = Token::Semicolon; break;
-        case '(': result = Token::LeftPar; break;
-        case ')': result = Token::RightPar; break;
-        case '%': result = Token::Percent; break;
+        case '+': result = Token::Plus       ; break;
+        case '-': result = Token::Minus      ; break;
+        case '*': result = Token::Asterisk   ; break;
+        case '/': result = Token::Slash      ; break;
+        case '^': result = Token::Caret      ; break;
+        case ';': result = Token::Semicolon  ; break;
+        case '(': result = Token::LeftPar    ; break;
+        case ')': result = Token::RightPar   ; break;
+        case '%': result = Token::Percent    ; break;
         case '!': result = Token::Exclamation; break;
-        case '=': result = Token::Equal; break;
-        default : result = Token::InvalidOp; break;
+        case '=': result = Token::Equal      ; break;
+        default : result = Token::InvalidOp  ; break;
     }
   }
 
@@ -149,19 +150,19 @@ static int opPrecedence( Token::Op op )
   int prec = -1;
   switch( op )
   {
-    case Token::Exclamation  : prec = 8; break;
-    case Token::Percent      : prec = 8; break;
-    case Token::Caret        : prec = 7; break;
-    case Token::Asterisk     : prec = 5; break;
-    case Token::Slash        : prec = 6; break;
-    case Token::Modulo       : prec = 6; break;
-    case Token::Div          : prec = 6; break;
-    case Token::Plus         : prec = 3; break;
-    case Token::Minus        : prec = 3; break;
-    case Token::RightPar     : prec = 0; break;
-    case Token::LeftPar      : prec = -1; break;
-    case Token::Semicolon    : prec = 0; break;
-    default: prec = -1; break;
+    case Token::Exclamation : prec =  8; break;
+    case Token::Percent     : prec =  8; break;
+    case Token::Caret       : prec =  7; break;
+    case Token::Asterisk    : prec =  5; break;
+    case Token::Slash       : prec =  6; break;
+    case Token::Modulo      : prec =  6; break;
+    case Token::Div         : prec =  6; break;
+    case Token::Plus        : prec =  3; break;
+    case Token::Minus       : prec =  3; break;
+    case Token::RightPar    : prec =  0; break;
+    case Token::LeftPar     : prec = -1; break;
+    case Token::Semicolon   : prec =  0; break;
+    default                 : prec = -1; break;
   }
   return prec;
 }
@@ -179,7 +180,7 @@ Token::Token( const Token& token )
 {
   m_type = token.m_type;
   m_text = token.m_text;
-  m_pos = token.m_pos;
+  m_pos  = token.m_pos;
 }
 
 // assignment operator
@@ -187,23 +188,24 @@ Token& Token::operator=( const Token& token )
 {
   m_type = token.m_type;
   m_text = token.m_text;
-  m_pos = token.m_pos;
+  m_pos  = token.m_pos;
   return *this;
 }
 
 HNumber Token::asNumber() const
 {
   if( isNumber() )
-    return HNumber( (const char*)
-m_text.toLatin1() );
+    return HNumber( (const char*) m_text.toLatin1() );
   else
     return HNumber( 0 );
 }
 
 Token::Op Token::asOperator() const
 {
-  if( isOperator() ) return matchOperator( m_text );
-  else return InvalidOp;
+  if( isOperator() )
+		return matchOperator( m_text );
+  else
+		return InvalidOp;
 }
 
 QString Token::description() const
@@ -212,13 +214,14 @@ QString Token::description() const
 
   switch (m_type )
   {
-    case  Number:     desc = "Number"; break;
-    case  Identifier: desc = "Identifier"; break;
-    case  Operator:   desc = "Operator"; break;
-    default:          desc = "Unknown"; break;
+    case Number     : desc = "Number"    ; break;
+    case Identifier : desc = "Identifier"; break;
+    case Operator   : desc = "Operator"  ; break;
+    default         : desc = "Unknown"   ; break;
   }
 
-  while( desc.length() < 10 ) desc.prepend( ' ' );
+  while( desc.length() < 10 )
+		desc.prepend( ' ' );
   desc.prepend( "  " );
   desc.prepend( QString::number( m_pos ) );
   desc.append( " : " ).append( m_text );
@@ -276,7 +279,7 @@ void TokenStack::ensureSpace()
 // helper function: return true for valid identifier character
 static bool isIdentifier( QChar ch )
 {
-  return ( ch.unicode() == '_' ) || (ch.unicode() == '$' ) || ( ch.isLetter() );
+  return (ch.unicode() == '_') || (ch.unicode() == '$') || (ch.isLetter());
 }
 
 
@@ -302,9 +305,9 @@ Evaluator::~Evaluator()
 void Evaluator::setExpression( const QString& expr )
 {
   d->expression = expr;
-  d->dirty = true;
-  d->valid = false;
-  d->error = QString();
+  d->dirty      = true;
+  d->valid      = false;
+  d->error      = QString();
 }
 
 // Returns the expression
@@ -335,11 +338,11 @@ bool Evaluator::isValid() const
 void Evaluator::clear()
 {
   d->expression = QString();
-  d->dirty = true;
-  d->valid = false;
+  d->dirty      = true;
+  d->valid      = false;
 
-  d->error = QString();
-  d->angleMode = Degree;
+  d->error        = QString();
+  d->angleMode    = Degree;
   d->decimalPoint = QString();
 
   d->constants.clear();
@@ -1131,10 +1134,16 @@ HNumber Evaluator::eval()
     compile( tokens );
   }
 
-  // can not overwrite PI
-  if( d->assignId.toLower() == QString("pi") )
+  // can not overwrite pi
+  if( d->assignId == QString("pi") )
   {
-     d->error = qApp->translate( "Error", "Can not overwrite PI" );
+     d->error = qApp->translate( "Error", "Can not overwrite variable pi" );
+     return HNumber( 0 );
+  }
+  // can not overwrite ans
+  if( d->assignId == QString("ans") )
+  {
+     d->error = qApp->translate( "Error", "Can not overwrite variable ans" );
      return HNumber( 0 );
   }
 
@@ -1147,7 +1156,7 @@ HNumber Evaluator::eval()
   }
 
   // magic: always set here to avoid being overwritten by user
-  set( QString("PI"), HMath::pi() );
+  set( QString("pi"), HMath::pi() );
 
   for( int pc = 0; pc < d->codes.count(); pc++ )
   {
@@ -1409,7 +1418,7 @@ QVector<Variable> Evaluator::variables() const
 void Evaluator::clearVariables()
 {
   d->variables.clear();
-  set( QString("PI"), HMath::pi() );
+  set( QString("pi"),  HMath::pi() );
   set( QString("ans"), HNumber(0) );
 }
 
@@ -1496,17 +1505,17 @@ QString Evaluator::dump() const
     QString ctext;
     switch( d->codes[i].type )
     {
-      case Opcode::Load:     ctext = QString("Load #%1").arg( d->codes[i].index ); break;
-      case Opcode::Ref:      ctext = QString("Ref #%1").arg( d->codes[i].index ); break;
-      case Opcode::Function: ctext = QString("Function (%1)").arg( d->codes[i].index ); break;
-      case Opcode::Add:      ctext = "Add"; break;
-      case Opcode::Sub:      ctext = "Sub"; break;
-      case Opcode::Mul:      ctext = "Mul"; break;
-      case Opcode::Div:      ctext = "Div"; break;
-      case Opcode::Neg:      ctext = "Neg"; break;
-      case Opcode::Pow:      ctext = "Pow"; break;
-      case Opcode::Fact:     ctext = "Fact"; break;
-      default: ctext = "Unknown"; break;
+			case Opcode::Load    : ctext = QString( "Load #%1"      ).arg( d->codes[i].index ); break;
+			case Opcode::Ref     : ctext = QString( "Ref #%1"       ).arg( d->codes[i].index ); break;
+      case Opcode::Function: ctext = QString( "Function (%1)" ).arg( d->codes[i].index ); break;
+			case Opcode::Add     : ctext = "Add"    ; break;
+			case Opcode::Sub     : ctext = "Sub"    ; break;
+			case Opcode::Mul     : ctext = "Mul"    ; break;
+			case Opcode::Div     : ctext = "Div"    ; break;
+			case Opcode::Neg     : ctext = "Neg"    ; break;
+			case Opcode::Pow     : ctext = "Pow"    ; break;
+			case Opcode::Fact    : ctext = "Fact"   ; break;
+			default              : ctext = "Unknown"; break;
     }
     result.append( "   " ).append( ctext ).append("\n");
   }
