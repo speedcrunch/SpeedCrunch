@@ -47,11 +47,11 @@ class Token
       LeftPar,        //  (
       RightPar,       //  )
       Semicolon,      // argument separator
-      Percent,
+      Percent,        // %
       Exclamation,    // ! (factorial)
       Equal,          // variable assignment
-      Modulo,         // integer rest devision
-      Div             // integer devision
+      Modulo,         // integer rest division
+      Div             // integer division
     } Op;
 
     Token( Type type = Unknown, const QString& text = QString::null, int pos = -1 );
