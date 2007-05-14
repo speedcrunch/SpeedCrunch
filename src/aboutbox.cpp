@@ -303,5 +303,4 @@ AboutBox::AboutBox( QWidget* parent ):
   setWindowTitle( tr("About SpeedCrunch") );
   resize( QSize(350, 200).expandedTo(minimumSizeHint()) );
   setMinimumSize( 300, 150 );
-	setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
 }
