@@ -1,6 +1,7 @@
 /* This file is part of the SpeedCrunch project
    Copyright (C) 2004-2006 Ariya Hidayat <ariya@kde.org>
                  2005-2006 Johan Thelin <e8johan@gmail.com>
+                 2007 Helder Correia <helder.pereira.correia@gmail.com>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -212,27 +213,27 @@ AboutBox::AboutBox( QWidget* parent ):
   msg += "<p><b>";
   msg += tr( "SpeedCrunch version %1").arg( MAKE_STRING(SPEEDCRUNCH_VERSION) );
   msg += "</b></p>";
-  msg += QString( "<p>%1:<br>%2" ).arg( tr("Author") ).arg( "Ariya Hidayat" );
-  msg += QString( "<p>%1:<br>%2" ).arg( tr("Maintainer") ).arg( "Johan Thelin" );
-  msg += QString( "<p>%1:<br>%2" ).arg( tr("Based on idea from") ).arg( "Roberto Alsina" );
+  msg += QString( "<p>%1:<br>%2" ).arg( tr("Original author") ).arg( "Ariya Hidayat" );
+  msg += QString( "<p>%1:<br>%2" ).arg( tr("Current maintainer") ).arg( "Helder Correia" );
+	msg += QString( "<p>%1:<br>%2" ).arg( tr("Previous maintainers") ).arg( "Johan Thelin" );
+  msg += QString( "<p>%1:<br>%2" ).arg( tr("Based on original idea from") ).arg( "Roberto Alsina" );
   msg += QString( "<p>%1:<br>%2" ).arg( tr("Special thanks to") ).arg( "Michael Pyne" );
   msg += QString( "<p>%1:<br>%2" ).arg( tr("Artworks are courtesy of") ).arg( "Kuswanto (aka Zeus)" );
   msg += QString( "<p>%1<br>" ).arg( tr("Thanks to:") );
-  msg += "Damir Perisa<br>"
-         "Melchior Franz<br>"
-         "Maciek Borowka<br>"
+  msg += "Anders Lund<br>"
          "Bernhard Schiffner<br>"
+         "Damir Perisa<br>"
+         "Derek O'Connor<br>"
+         "Gary Cramblitt<br>"
+         "Jean-Remy Falleri<br>"
+         "Maciek Borowka<br>"
+         "Melchior Franz<br>"
          "Mohamed Eldesoky<br>"
-         "Anders Lund<br>"
-         "Thomas Nagy<br>"
-         "Helder Correia<br>"
+         "Philippe Fremy<br>"
          "Pieter Pareit<br>"
          "Thomas Luebking<br>"
-         "Jean-Remy Falleri<br>"
-         "Gary Cramblitt<br>"
-         "Philippe Fremy<br>"
+         "Thomas Nagy<br>"
          "Vladimir Pouzanov<br>"
-         "Derek O'Connor<br>"
          ;
   msg += QString( "<br>%1</p>" ).arg( tr("and many others.") );
 
@@ -242,12 +243,12 @@ AboutBox::AboutBox( QWidget* parent ):
   msg += QString( "%1: %2<br>" ).arg( tr("French") ).arg( "Vibet Alexis (bevi@netcourrier.com)" );
   msg += QString( "%1: %2<br>" ).arg( tr("German") ).arg( "Damir Perisa (damir.perisa@solnet.ch)" );
   msg += QString( "%1: %2<br>" ).arg( tr("Indonesian") ).arg( "Yolla Indria (yolla.indria@gmail.com)" );
-  msg += QString( "%1: %2<br>" ).arg( tr("Portuguese") ).arg( "Helder Correia (helder.pereira.correia@gmail.com)" );
-  msg += QString( "%1: %2<br>" ).arg( tr("Portuguese BR") ).arg( "Henrique Pinto (henrique.pinto@kdemail.net)" );
-  msg += QString( "%1: %2<br>" ).arg( tr("Russian") ).arg( "Alexey Kouznetsov (kouznetsov@phtf.stu.neva.ru)" );
   msg += QString( "%1: %2<br>" ).arg( tr("Italian") ).arg( "Francesco di Cugno (fdicugno@gmail.com)" );
   msg += QString( "%1: %2<br>" ).arg( tr("Norwegian") ).arg( "Lars Ivar Igesund (larsivar@igesund.net)" );
   msg += QString( "%1: %2<br>" ).arg( tr("Polish") ).arg( "Witold Wysota (wysota@wysota.eu.org)" );
+  msg += QString( "%1: %2<br>" ).arg( tr("Portuguese") ).arg( "Helder Correia (helder.pereira.correia@gmail.com)" );
+  msg += QString( "%1: %2<br>" ).arg( tr("Portuguese BR") ).arg( "Henrique Pinto (henrique.pinto@kdemail.net)" );
+  msg += QString( "%1: %2<br>" ).arg( tr("Russian") ).arg( "Alexey Kouznetsov (kouznetsov@phtf.stu.neva.ru)" );
   msg += QString( "%1: %2<br>" ).arg( tr("Spanish") ).arg( "Alejandro Villarreal (alexv86@gmail.com)" );
   msg += QString( "</p>" );
 
@@ -302,7 +303,5 @@ AboutBox::AboutBox( QWidget* parent ):
   setWindowTitle( tr("About SpeedCrunch") );
   resize( QSize(350, 200).expandedTo(minimumSizeHint()) );
   setMinimumSize( 300, 150 );
+	setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
 }
-
-
-
