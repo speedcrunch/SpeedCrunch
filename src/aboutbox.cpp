@@ -29,21 +29,21 @@
 class MarqueeTextPrivate
 {
 public:
-  QTextEdit* editor;
-  QTextDocument* doc;
-  QPixmap* buffer;
-  unsigned pos;
-  unsigned scrollStep;
-  unsigned scrollTick;
-  unsigned sideMargin;
+  QTextEdit     * editor;
+  QTextDocument * doc;
+  QPixmap       * buffer;
+  unsigned        pos;
+  unsigned        scrollStep;
+  unsigned        scrollTick;
+  unsigned        sideMargin;
 };
 
-MarqueeText::MarqueeText( QWidget* parent, const char* name ):
-QFrame( parent )
+MarqueeText::MarqueeText( QWidget * parent, const char * name ):
+  QFrame( parent )
 {
   d = new MarqueeTextPrivate;
-  d->scrollStep = 4;
-  d->scrollTick = 200;
+  d->scrollStep = 1;
+  d->scrollTick = 40;
   d->sideMargin = 20;
 
   d->buffer = new QPixmap;
@@ -55,10 +55,10 @@ QFrame( parent )
   setFrameStyle( Panel | Sunken );
   setLineWidth( 1 );
 
-  setMinimumSize( 300, 150 );
+  setMinimumSize( 400, 275 );
 
-  QTimer* scrollTimer = new QTimer( this );
-  connect( scrollTimer, SIGNAL( timeout() ), this, SLOT( scroll() ) );
+  QTimer * scrollTimer = new QTimer( this );
+  connect( scrollTimer, SIGNAL(timeout()), this, SLOT(scroll()) );
   scrollTimer->start( d->scrollTick );
 
   setBackgroundRole( QPalette::Base );
@@ -75,7 +75,7 @@ QSizePolicy MarqueeText::sizePolicy() const
   return QSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
 }
 
-void MarqueeText::setText( const QString& text )
+void MarqueeText::setText( const QString & text )
 {
   d->doc->clear();
   d->doc->setHtml( text );
@@ -84,7 +84,7 @@ void MarqueeText::setText( const QString& text )
   update();
 }
 
-void MarqueeText::paintEvent( QPaintEvent *e )
+void MarqueeText::paintEvent( QPaintEvent * e )
 {
   QPainter painter( this );
   painter.fillRect( this->rect(), painter.background().color() );
@@ -96,14 +96,14 @@ void MarqueeText::paintEvent( QPaintEvent *e )
   {
     QPainter p( this );
     QPixmap pix = d->buffer->copy();
-    QRegion clip( 2, 2, width()-4, height()-4 );
+    QRegion clip( 2, 2, width() - 4, height() - 4 );
     p.setClipRegion( clip );
     p.drawPixmap( 0, d->pos, pix );
   }
 
 }
 
-void MarqueeText::resizeEvent( QResizeEvent *e )
+void MarqueeText::resizeEvent( QResizeEvent * e )
 {
   layout();
   e->accept();
@@ -115,8 +115,8 @@ void MarqueeText::scroll()
   d->pos -= d->scrollStep;
   int offset = d->pos + d->buffer->height();
 
-  if( offset < 0 )
-    d->pos = height() + 2*d->scrollStep;
+  if ( offset < 0 )
+    d->pos = height() + 2 * d->scrollStep;
 
   update();
 
@@ -124,31 +124,31 @@ void MarqueeText::scroll()
 
 void MarqueeText::layout()
 {
-  QList<QTextLayout*> layouts;
+  QList< QTextLayout * > layouts;
 
   int leading = fontMetrics().leading();
+  double lineWidth = width() - d->sideMargin;
   double hh = 10;
-  double lineWidth = width()-d->sideMargin;
   int c = 0;
 
   // layouting lines, also to find total height
   QTextBlock block = d->doc->begin();
-  while( block.isValid() )
+  while ( block.isValid() )
   {
-    QTextLayout* textLayout = new QTextLayout( block );
+    QTextLayout * textLayout = new QTextLayout( block );
     layouts.append( textLayout );
 
     textLayout->beginLayout();
-    for( ; ; )
+    while ( true )
     {
       QTextLine line = textLayout->createLine();
       if( !line.isValid() )
         break;
 
       line.setLineWidth( lineWidth );
-      double x = (lineWidth - line.naturalTextWidth())/2;
-      line.setPosition( QPointF(x-3, hh) );
-      hh += line.height()/2;
+      double x = (lineWidth - line.naturalTextWidth()) / 2;
+      line.setPosition( QPointF( x - 3, hh ) );
+      hh += line.height() / 2;
       hh += leading;
       c++;
     }
@@ -160,66 +160,71 @@ void MarqueeText::layout()
 
   // recreate off-screen buffer
 
-  QPixmap* oldbuf = d->buffer;
+  QPixmap * oldbuf = d->buffer;
   d->buffer = 0;
   delete oldbuf;
 
   QBrush bgbrush( palette().base() );
-  d->buffer = new QPixmap( QSize(int(lineWidth+5), int(2*hh+50) ) );
+  d->buffer = new QPixmap( QSize( int(lineWidth + 5), int(2 * hh + 50) ) );
   d->buffer->fill( bgbrush.color() );
 
   // paint the lines
 
   QPainter painter( d->buffer );
   double ypos = 0;
-  for( int k = 0; k < layouts.count(); k++ )
+  for ( int k = 0; k < layouts.count(); k++ )
   {
-    QTextLayout* textLayout = layouts[k];
-    if( !textLayout ) continue;
-    for( int i = 0; i < textLayout->lineCount(); ++i)
+    QTextLayout * textLayout = layouts[k];
+    if ( ! textLayout )
+			continue;
+    for( int i = 0; i < textLayout->lineCount(); ++i )
     {
       QTextLine line = textLayout->lineAt( i );
-      QPointF pos = QPointF( d->sideMargin/2, ypos );
-      line.draw( &painter, pos, 0 );
-      ypos +=line.height()/2;
+      QPointF pos = QPointF( d->sideMargin / 2, ypos );
+      line.draw( & painter, pos, 0 );
+      ypos += line.height() / 2;
       ypos += leading;
     }
     ypos += 10; // paragraph-spacing
   }
 }
 
-AboutBox::AboutBox( QWidget* parent ):
+AboutBox::AboutBox( QWidget * parent ):
   QDialog( parent )
 {
   setObjectName( "AboutBox" );
-  setWindowTitle( tr("About SpeedCrunch" ) );
+  setWindowTitle( tr("About SpeedCrunch") );
 
   QString website = tr( "http://www.speedcrunch.org");
 
-  QLabel* infoLabel = new QLabel( this );
+  QLabel * infoLabel = new QLabel( this );
   QString info = "<b>";
   info += tr("SpeedCrunch version %1").arg( MAKE_STRING(SPEEDCRUNCH_VERSION) );
   info += "</b><br>";
-  info += QString("<a href=\"%1\">%2</a>").arg(website).arg(website);
+  info += QString( "<a href=\"%1\">%2</a>" ).arg( website ).arg( website );
   infoLabel->setText( info );
-  infoLabel->setOpenExternalLinks(true);
+  infoLabel->setOpenExternalLinks( true );
 
-  QLabel* iconLabel = new QLabel( this );
+  QLabel * iconLabel = new QLabel( this );
   iconLabel->setPixmap( QPixmap( ":/crunch.png" ) );
   iconLabel->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
 
-  MarqueeText* marqueeText = new MarqueeText( this );
+  MarqueeText * marqueeText = new MarqueeText( this );
   QString msg = "<center>";
-  msg += "<p><b>";
+  msg += "<p><b><i>";
   msg += tr( "SpeedCrunch version %1").arg( MAKE_STRING(SPEEDCRUNCH_VERSION) );
-  msg += "</b></p>";
-  msg += QString( "<p>%1:<br>%2" ).arg( tr("Original author") ).arg( "Ariya Hidayat" );
-  msg += QString( "<p>%1:<br>%2" ).arg( tr("Current maintainer") ).arg( "Helder Correia" );
-	msg += QString( "<p>%1:<br>%2" ).arg( tr("Previous maintainers") ).arg( "Johan Thelin" );
-  msg += QString( "<p>%1:<br>%2" ).arg( tr("Based on original idea from") ).arg( "Roberto Alsina" );
-  msg += QString( "<p>%1:<br>%2" ).arg( tr("Special thanks to") ).arg( "Michael Pyne" );
-  msg += QString( "<p>%1:<br>%2" ).arg( tr("Artworks are courtesy of") ).arg( "Kuswanto (aka Zeus)" );
-  msg += QString( "<p>%1<br>" ).arg( tr("Thanks to:") );
+  msg += "</i></b><br></p>";
+
+	const char * mainFmt = "<p><b>%1</b><br>%2";
+  msg += QString( mainFmt ).arg( tr("Original author")             ).arg( "Ariya Hidayat"       );
+  msg += QString( mainFmt ).arg( tr("Current maintainer")          ).arg( "Helder Correia"      );
+	msg += QString( mainFmt ).arg( tr("Previous maintainers")        ).arg( "Johan Thelin"        );
+  msg += QString( mainFmt ).arg( tr("Based on original idea from") ).arg( "Roberto Alsina"      );
+  msg += QString( mainFmt ).arg( tr("Special thanks to")           ).arg( "Michael Pyne"        );
+  msg += QString( mainFmt ).arg( tr("Artworks")                    ).arg( "Kuswanto (aka Zeus)" );
+
+  msg += "<p>";
+  msg += QString( "<br><b>%1</b><br><br>" ).arg( tr("Thanks to") );
   msg += "Anders Lund<br>"
          "Bernhard Schiffner<br>"
          "Damir Perisa<br>"
@@ -235,27 +240,30 @@ AboutBox::AboutBox( QWidget* parent ):
          "Thomas Nagy<br>"
          "Vladimir Pouzanov<br>"
          ;
-  msg += QString( "<br>%1</p>" ).arg( tr("and many others.") );
-
-  msg += QString( "<p>%1<br>" ).arg( tr("Translators:") );
-
-  msg += QString( "%1: %2<br>" ).arg( tr("Czech") ).arg( "Blondak (blondak@neser.cz)" );
-  msg += QString( "%1: %2<br>" ).arg( tr("French") ).arg( "Vibet Alexis (bevi@netcourrier.com)" );
-  msg += QString( "%1: %2<br>" ).arg( tr("German") ).arg( "Damir Perisa (damir.perisa@solnet.ch)" );
-  msg += QString( "%1: %2<br>" ).arg( tr("Indonesian") ).arg( "Yolla Indria (yolla.indria@gmail.com)" );
-  msg += QString( "%1: %2<br>" ).arg( tr("Italian") ).arg( "Francesco di Cugno (fdicugno@gmail.com)" );
-  msg += QString( "%1: %2<br>" ).arg( tr("Norwegian") ).arg( "Lars Ivar Igesund (larsivar@igesund.net)" );
-  msg += QString( "%1: %2<br>" ).arg( tr("Polish") ).arg( "Witold Wysota (wysota@wysota.eu.org)" );
-  msg += QString( "%1: %2<br>" ).arg( tr("Portuguese") ).arg( "Helder Correia (helder.pereira.correia@gmail.com)" );
-  msg += QString( "%1: %2<br>" ).arg( tr("Portuguese BR") ).arg( "Henrique Pinto (henrique.pinto@kdemail.net)" );
-  msg += QString( "%1: %2<br>" ).arg( tr("Russian") ).arg( "Alexey Kouznetsov (kouznetsov@phtf.stu.neva.ru)" );
-  msg += QString( "%1: %2<br>" ).arg( tr("Spanish") ).arg( "Alejandro Villarreal (alexv86@gmail.com)" );
-  msg += QString( "</p>" );
+  msg += QString( "<i>%1</i><br>" ).arg( tr("...and many others...") );
+  msg += "</p>";
 
   msg += "<p>";
-  msg += tr("Copyright (C) 2004-2007 Ariya Hidayat (ariya@kde.org)");
-  msg += "<br>";
-  msg += tr("Copyright (C) 2005-2006 Johan Thelin (e8johan@gmail.com)");
+  msg += QString( "<b>%1</b><br><br>"  ).arg( tr("Translations") );
+	const char * i18nFmt = "<b>%1</b><br>%2<br><i>%3</i><br><br>";
+  msg += QString( i18nFmt ).arg( tr("Czech")                ).arg( "Blondak"              ).arg( "blondak@neser.cz"                 );
+  msg += QString( i18nFmt ).arg( tr("French")               ).arg( "Vibet Alexis"         ).arg( "bevi@netcourrier.com"             );
+  msg += QString( i18nFmt ).arg( tr("German")               ).arg( "Damir Perisa"         ).arg( "damir.perisa@solnet.ch"           );
+  msg += QString( i18nFmt ).arg( tr("Indonesian")           ).arg( "Yolla Indria"         ).arg( "yolla.indria@gmail.com"           );
+  msg += QString( i18nFmt ).arg( tr("Italian")              ).arg( "Francesco di Cugno"   ).arg( "fdicugno@gmail.com"               );
+  msg += QString( i18nFmt ).arg( tr("Norwegian")            ).arg( "Lars Ivar Igesund"    ).arg( "larsivar@igesund.net"             );
+  msg += QString( i18nFmt ).arg( tr("Polish")               ).arg( "Witold Wysota"        ).arg( "wysota@wysota.eu.org"             );
+  msg += QString( i18nFmt ).arg( tr("Portuguese")           ).arg( "Helder Correia"       ).arg( "helder.pereira.correia@gmail.com" );
+  msg += QString( i18nFmt ).arg( tr("Brazilian Portuguese") ).arg( "Henrique Pinto"       ).arg( "henrique.pinto@kdemail.net"       );
+  msg += QString( i18nFmt ).arg( tr("Russian")              ).arg( "Alexey Kouznetsov"    ).arg( "kouznetsov@phtf.stu.neva.ru"      );
+  msg += QString( i18nFmt ).arg( tr("Spanish")              ).arg( "Alejandro Villarreal" ).arg( "alexv86@gmail.com"                );
+  msg += "</p>";
+
+  msg += "<p>";
+	const char * copyFmt = "<b>%1 %2</b><br>%3<br><i>%4</i><br><br>";
+  msg += QString( copyFmt ).arg( tr("Copyright (C)") ).arg( "2004-2007" ).arg( "Ariya Hidayat"  ).arg( "ariya@kde.org"                    );
+	msg += QString( copyFmt ).arg( tr("Copyright (C)") ).arg( "2005-2006" ).arg( "Johan Thelin"   ).arg( "e8johan@gmail.com"                );
+	msg += QString( copyFmt ).arg( tr("Copyright (C)") ).arg( "2007"      ).arg( "Helder Correia" ).arg( "helder.pereira.correia@gmail.com" );
   msg += "</p>";
 
   msg += "<p>";
@@ -271,22 +279,22 @@ AboutBox::AboutBox( QWidget* parent ):
     "GNU General Public License for more details.");
   msg += "</p>";
   msg +=  "<p>&nbsp;</p>";
-  msg += QString( "<p>%1</p>" ).arg( tr("Visit http://www.speedcrunch.org for more information!") );
+  msg += QString( "<p>%1</p>" ).arg( tr("Visit <b>http://www.speedcrunch.org</b> for more information!") );
   marqueeText->setText( msg );
 
-  QPushButton* okButton = new QPushButton(this);
+  QPushButton * okButton = new QPushButton( this );
   okButton->setObjectName( "OKButton" );
   okButton->setText( tr("OK") );
-  QObject::connect(okButton, SIGNAL(clicked()), this, SLOT(accept()));
+  QObject::connect( okButton, SIGNAL(clicked()), this, SLOT(accept()) );
 
-  QSpacerItem* buttonSpacer = new QSpacerItem( 20, 20,
-    QSizePolicy::Expanding, QSizePolicy::Minimum);
+  QSpacerItem * buttonSpacer =
+    new QSpacerItem( 20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
 
   // --- layout handling ---
 
-  QVBoxLayout* mainLayout = new QVBoxLayout(this);
-  QHBoxLayout* topLayout = new QHBoxLayout();
-  QHBoxLayout* buttonLayout = new QHBoxLayout();
+	QVBoxLayout * mainLayout   = new QVBoxLayout( this );
+  QHBoxLayout * topLayout    = new QHBoxLayout();
+  QHBoxLayout * buttonLayout = new QHBoxLayout();
 
   mainLayout->addLayout( topLayout );
   mainLayout->addWidget( marqueeText );
@@ -299,8 +307,8 @@ AboutBox::AboutBox( QWidget* parent ):
   buttonLayout->addItem( buttonSpacer );
   buttonLayout->addWidget( okButton );
 
-
   setWindowTitle( tr("About SpeedCrunch") );
-  resize( QSize(350, 200).expandedTo(minimumSizeHint()) );
-  setMinimumSize( 300, 150 );
+  resize( QSize( 512, 384 ) );
+  setMinimumSize( 512, 384 );
+	setMaximumSize( 512, 384 );
 }

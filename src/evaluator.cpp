@@ -18,7 +18,6 @@
    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA 02110-1301, USA.
  */
-
 #include "evaluator.h"
 #include "functions.h"
 #include "settings.h"
@@ -481,15 +480,16 @@ Tokens Evaluator::scan( const QString& expr, const QString& settingsDecimal )
     case InIdentifier:
 
        // consume as long as alpha, dollar sign, underscore, or digit
-       if( isIdentifier( ch )  || ch.isDigit() ) tokenText.append( ex.at(i++) );
+       if( isIdentifier( ch )  || ch.isDigit() )
+         tokenText.append( ex.at( i++ ) );
 
        // we're done with identifier
        else
        {
-             tokens.append( Token( Token::Identifier, tokenText, tokenStart ) );
-             tokenStart = i;
-             tokenText = "";
-             state = Start;
+         tokens.append( Token( Token::Identifier, tokenText, tokenStart ) );
+         tokenStart = i;
+         tokenText = "";
+         state = Start;
        }
        break;
 
