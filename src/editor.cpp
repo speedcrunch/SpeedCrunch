@@ -2,6 +2,7 @@
    Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
    Copyright (C) 2004,2005 Ariya Hidayat <ariya@kde.org>
                  2005-2006 Johan Thelin <e8johan@gmail.com>
+                 2007 Helder Correia <helder.pereira.correia@gmail.com>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -142,7 +143,7 @@ Editor::Editor( Evaluator* e, QWidget* parent ):
   connect( this, SIGNAL( textChanged() ), SLOT( checkAutoComplete() ) );
   connect( d->completionTimer, SIGNAL( timeout() ), SLOT( triggerAutoComplete() ) );
 
-  connect( d->constantCompletion, SIGNAL( selectedCompletion( const QString& ) ), 
+  connect( d->constantCompletion, SIGNAL( selectedCompletion( const QString& ) ),
     SLOT( insertConstant( const QString& ) ) );
 
   connect( this, SIGNAL( textChanged() ), SLOT( checkMatching() ) );
@@ -646,6 +647,12 @@ void Editor::keyPressEvent( QKeyEvent* e )
     return;
   }
 
+  if( e->key() == Qt::Key_F6 )
+  {
+    selectAll();
+    return;
+  }
+
   if( e->key() == Qt::Key_Up )
   {
     historyBack();
@@ -658,10 +665,10 @@ void Editor::keyPressEvent( QKeyEvent* e )
     e->accept();
   }
 
-  if( e->key() == Qt::Key_Left ) checkMatching();
+  if( e->key() == Qt::Key_Left  ) checkMatching();
   if( e->key() == Qt::Key_Right ) checkMatching();
-  if( e->key() == Qt::Key_Home ) checkMatching();
-  if( e->key() == Qt::Key_End ) checkMatching();
+  if( e->key() == Qt::Key_Home  ) checkMatching();
+  if( e->key() == Qt::Key_End   ) checkMatching();
 
   if( e->key() == Qt::Key_Space )
   if( e->modifiers() == Qt::ControlModifier )
@@ -922,7 +929,7 @@ ConstantCompletion::ConstantCompletion( Editor* editor ): QObject( editor )
   QTreeWidgetItem* all = new QTreeWidgetItem( d->categoryList, str );
   for( int k = 0; k < ct->categoryList.count(); k++ )
   {
-    str.clear();	
+    str.clear();
     str << ct->categoryList[k];
     new QTreeWidgetItem( d->categoryList, str );
   }
@@ -978,7 +985,7 @@ void ConstantCompletion::showConstants()
 
   if( d->lastCategory == chosenCategory )
 	  return;
-  
+
   d->constantList->clear();
   for( int k = 0; k < d->constants.count(); k++ )
   {

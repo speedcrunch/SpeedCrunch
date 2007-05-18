@@ -166,7 +166,7 @@ class ConstantCompletion : public QObject
   private slots:
     void showCategory();
     void showConstants();
-	void slide( int );
+    void slide( int );
 
   private:
     ConstantCompletionPrivate* d;

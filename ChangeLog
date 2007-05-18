@@ -17,6 +17,7 @@ option to hide from taskbar and minimize to system tray
 exponential view is now known as scientific view
 variable names are now case sensitive
 reserved variable names are now "pi" and "ans" only (case sensitive)
+shortcut F6 to select all the expression to evaluate
 
 SpeedCrunch 0.7
 ---------------
