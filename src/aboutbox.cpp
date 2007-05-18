@@ -28,14 +28,14 @@
 
 class MarqueeTextPrivate
 {
-public:
-  QTextEdit     * editor;
-  QTextDocument * doc;
-  QPixmap       * buffer;
-  unsigned        pos;
-  unsigned        scrollStep;
-  unsigned        scrollTick;
-  unsigned        sideMargin;
+  public:
+    QTextEdit     * editor;
+    QTextDocument * doc;
+    QPixmap       * buffer;
+    unsigned        pos;
+    unsigned        scrollStep;
+    unsigned        scrollTick;
+    unsigned        sideMargin;
 };
 
 MarqueeText::MarqueeText( QWidget * parent, const char * name ):
@@ -96,11 +96,10 @@ void MarqueeText::paintEvent( QPaintEvent * e )
   {
     QPainter p( this );
     QPixmap pix = d->buffer->copy();
-    QRegion clip( 2, 2, width() - 4, height() - 4 );
+    QRegion clip( 2, 2, (width() - 4), (height() - 4) );
     p.setClipRegion( clip );
     p.drawPixmap( 0, d->pos, pix );
   }
-
 }
 
 void MarqueeText::resizeEvent( QResizeEvent * e )
@@ -119,7 +118,6 @@ void MarqueeText::scroll()
     d->pos = height() + 2 * d->scrollStep;
 
   update();
-
 }
 
 void MarqueeText::layout()
@@ -180,7 +178,7 @@ void MarqueeText::layout()
     for( int i = 0; i < textLayout->lineCount(); ++i )
     {
       QTextLine line = textLayout->lineAt( i );
-      QPointF pos = QPointF( d->sideMargin / 2, ypos );
+      QPointF pos = QPointF( (d->sideMargin / 2), ypos );
       line.draw( & painter, pos, 0 );
       ypos += line.height() / 2;
       ypos += leading;
@@ -215,10 +213,10 @@ AboutBox::AboutBox( QWidget * parent ):
   msg += tr( "SpeedCrunch version %1").arg( MAKE_STRING(SPEEDCRUNCH_VERSION) );
   msg += "</i></b><br></p>";
 
-	const char * mainFmt = "<p><b>%1</b><br>%2";
+  const char * mainFmt = "<p><b>%1</b><br>%2";
   msg += QString( mainFmt ).arg( tr("Original author")             ).arg( "Ariya Hidayat"       );
   msg += QString( mainFmt ).arg( tr("Current maintainer")          ).arg( "Helder Correia"      );
-	msg += QString( mainFmt ).arg( tr("Previous maintainers")        ).arg( "Johan Thelin"        );
+  msg += QString( mainFmt ).arg( tr("Previous maintainers")        ).arg( "Johan Thelin"        );
   msg += QString( mainFmt ).arg( tr("Based on original idea from") ).arg( "Roberto Alsina"      );
   msg += QString( mainFmt ).arg( tr("Special thanks to")           ).arg( "Michael Pyne"        );
   msg += QString( mainFmt ).arg( tr("Artworks")                    ).arg( "Kuswanto (aka Zeus)" );
@@ -245,7 +243,7 @@ AboutBox::AboutBox( QWidget * parent ):
 
   msg += "<p>";
   msg += QString( "<b>%1</b><br><br>"  ).arg( tr("Translations") );
-	const char * i18nFmt = "<b>%1</b><br>%2<br><i>%3</i><br><br>";
+  const char * i18nFmt = "<b>%1</b><br>%2<br><i>%3</i><br><br>";
   msg += QString( i18nFmt ).arg( tr("Czech")                ).arg( "Blondak"              ).arg( "blondak@neser.cz"                 );
   msg += QString( i18nFmt ).arg( tr("French")               ).arg( "Vibet Alexis"         ).arg( "bevi@netcourrier.com"             );
   msg += QString( i18nFmt ).arg( tr("German")               ).arg( "Damir Perisa"         ).arg( "damir.perisa@solnet.ch"           );
@@ -260,23 +258,23 @@ AboutBox::AboutBox( QWidget * parent ):
   msg += "</p>";
 
   msg += "<p>";
-	const char * copyFmt = "<b>%1 %2</b><br>%3<br><i>%4</i><br><br>";
+  const char * copyFmt = "<b>%1 %2 %3</b><br><i>%4</i><br><br>";
   msg += QString( copyFmt ).arg( tr("Copyright (C)") ).arg( "2004-2007" ).arg( "Ariya Hidayat"  ).arg( "ariya@kde.org"                    );
-	msg += QString( copyFmt ).arg( tr("Copyright (C)") ).arg( "2005-2006" ).arg( "Johan Thelin"   ).arg( "e8johan@gmail.com"                );
-	msg += QString( copyFmt ).arg( tr("Copyright (C)") ).arg( "2007"      ).arg( "Helder Correia" ).arg( "helder.pereira.correia@gmail.com" );
+  msg += QString( copyFmt ).arg( tr("Copyright (C)") ).arg( "2005-2006" ).arg( "Johan Thelin"   ).arg( "e8johan@gmail.com"                );
+  msg += QString( copyFmt ).arg( tr("Copyright (C)") ).arg( "2007"      ).arg( "Helder Correia" ).arg( "helder.pereira.correia@gmail.com" );
   msg += "</p>";
 
   msg += "<p>";
   msg += tr("This program is free software; you can redistribute it and/or "
-    "modify it under the terms of the GNU General Public License "
-    "as published by the Free Software Foundation; either version 2 "
-    "of the License, or (at your option) any later version" );
+            "modify it under the terms of the GNU General Public License "
+            "as published by the Free Software Foundation; either version 2 "
+            "of the License, or (at your option) any later version" );
   msg += "</p>";
   msg += "<p>";
   msg += tr("This program is distributed in the hope that it will be useful, "
-    "but WITHOUT ANY WARRANTY; without even the implied warranty of "
-    "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the "
-    "GNU General Public License for more details.");
+            "but WITHOUT ANY WARRANTY; without even the implied warranty of "
+            "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the "
+            "GNU General Public License for more details.");
   msg += "</p>";
   msg +=  "<p>&nbsp;</p>";
   msg += QString( "<p>%1</p>" ).arg( tr("Visit <b>http://www.speedcrunch.org</b> for more information!") );
@@ -287,12 +285,11 @@ AboutBox::AboutBox( QWidget * parent ):
   okButton->setText( tr("OK") );
   QObject::connect( okButton, SIGNAL(clicked()), this, SLOT(accept()) );
 
-  QSpacerItem * buttonSpacer =
-    new QSpacerItem( 20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
+  QSpacerItem * buttonSpacer = new QSpacerItem( 20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
 
   // --- layout handling ---
 
-	QVBoxLayout * mainLayout   = new QVBoxLayout( this );
+  QVBoxLayout * mainLayout   = new QVBoxLayout( this );
   QHBoxLayout * topLayout    = new QHBoxLayout();
   QHBoxLayout * buttonLayout = new QHBoxLayout();
 
@@ -310,5 +307,5 @@ AboutBox::AboutBox( QWidget * parent ):
   setWindowTitle( tr("About SpeedCrunch") );
   resize( QSize( 512, 384 ) );
   setMinimumSize( 512, 384 );
-	setMaximumSize( 512, 384 );
+  setMaximumSize( 512, 384 );
 }
