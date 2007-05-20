@@ -1,7 +1,7 @@
 /* This file is part of the SpeedCrunch project
    Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
                  2005-2006 Johan Thelin <e8johan@gmail.com>
-								 2007 Helder Correia <helder.pereira.correia@gmail.com>
+                 2007 Helder Correia <helder.pereira.correia@gmail.com>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -1302,16 +1302,20 @@ HNumber Evaluator::eval()
       case Opcode::Ref:
         fname = d->identifiers[index];
         if( has( fname ) )
+        {
+          // variable
           stack.push( get( fname ) );
+        }
         else
         {
+          // function
           function = FunctionRepository::self()->function( fname );
           if( function )
             refs.push( fname );
           else
           {
             d->error = qApp->translate( "Error",
-              "Undefined variable '%1'" ).arg( fname );
+              "Unknown function or identifier '%1'" ).arg( fname );
             return HNumber( 0 );
           }
         }
@@ -1319,15 +1323,9 @@ HNumber Evaluator::eval()
 
       // calling function
       case Opcode::Function:
-        if( stack.count() < index )
-        {
-          d->error = qApp->translate( "Error", "Invalid expression" );
-          return HNumber( 0 );
-        }
-
-        args.clear();
-        for( ; index; index-- )
-          args.insert( args.begin(), stack.pop() );
+        // must do this first to avoid crash when using vars like functions
+        if ( refs.isEmpty() )
+          break;
 
         fname = refs.pop();
         function = FunctionRepository::self()->function( fname );
@@ -1337,6 +1335,16 @@ HNumber Evaluator::eval()
             "Unknown function or identifier: %1" ) ).arg( fname );
           return HNumber( 0 );
         }
+
+        if( stack.count() < index )
+        {
+          d->error = qApp->translate( "Error", "Invalid expression" );
+          return HNumber( 0 );
+        }
+
+        args.clear();
+        for( ; index; index-- )
+          args.insert( args.begin(), stack.pop() );
 
         stack.push( function->exec( this, args ) );
         if( !function->error().isEmpty() )
