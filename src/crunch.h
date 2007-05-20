@@ -1,6 +1,7 @@
 /* This file is part of the SpeedCrunch project
    Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
                  2005-2006 Johan Thelin <e8johan@gmail.com>
+                 2007 Helder Correia <helder.pereira.correia@gmail.com>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -39,6 +40,7 @@ class Crunch : public QMainWindow
     void applySettings();
     void saveSession();
     void copyResult();
+    void focusAndSelectInput();
     void clearInput();
     void clearVariables();
     void insertVariable();

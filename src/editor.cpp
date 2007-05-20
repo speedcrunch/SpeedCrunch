@@ -647,12 +647,6 @@ void Editor::keyPressEvent( QKeyEvent* e )
     return;
   }
 
-  if( e->key() == Qt::Key_F6 )
-  {
-    selectAll();
-    return;
-  }
-
   if( e->key() == Qt::Key_Up )
   {
     historyBack();

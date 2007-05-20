@@ -2,6 +2,7 @@
    Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
    Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
                  2005-2006 Johan Thelin <e8johan@gmail.com>
+                 2007 Helder Correia <helder.pereira.correia@gmail.com>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -96,6 +97,7 @@ public:
   QAction* digits8;
   QAction* digits15;
   QAction* digits50;
+  QAction* focusAndSelectInput;
   QAction* showClearButton;
   QAction* showEvalButton;
   QAction* showKeyPad;
@@ -343,6 +345,9 @@ void Crunch::createUI()
   d->actions->sessionQuit = new QAction( tr("&Quit"), this );
     d->actions->sessionQuit->setShortcut( Qt::CTRL + Qt::Key_Q );
 
+  d->actions->focusAndSelectInput = new QAction( tr("&Select Input"), this );
+    d->actions->focusAndSelectInput->setShortcut( Qt::Key_F6 );
+
   d->actions->editCopy = new QAction( tr("&Copy"), this );
     d->actions->editCopy->setShortcut( Qt::CTRL + Qt::Key_C );
   d->actions->editPaste = new QAction( tr("&Paste"), this );
@@ -434,6 +439,7 @@ void Crunch::createUI()
   connect( d->actions->editPaste, SIGNAL( activated() ), d->editor, SLOT( paste() ) );
   connect( d->actions->editCopy, SIGNAL( activated() ), d->editor, SLOT( copy() ) );
   connect( d->actions->editCopyResult, SIGNAL( activated() ), this, SLOT( copyResult() ) );
+  connect( d->actions->focusAndSelectInput, SIGNAL( activated() ), this, SLOT( focusAndSelectInput() ) );
   connect( d->actions->clearInput, SIGNAL( activated() ), this, SLOT( clearInput() ) );
   connect( d->actions->clearDisplay, SIGNAL( activated() ), d->result, SLOT( clear() ) );
   connect( d->actions->clearHistory, SIGNAL( activated() ), d->editor, SLOT( clearHistory() ) );
@@ -495,6 +501,8 @@ void Crunch::createUI()
   editMenu->addAction( d->actions->clearDisplay );
   editMenu->addAction( d->actions->clearHistory );
   editMenu->addAction( d->actions->clearVariables );
+  editMenu->addSeparator();
+  editMenu->addAction( d->actions->focusAndSelectInput );
 
   QMenu *viewMenu = new QMenu( tr("&View"), this );
   menuBar()->addMenu( viewMenu );
@@ -1084,6 +1092,12 @@ void Crunch::copyResult()
   }
   cb->setText( QString(ss), QClipboard::Clipboard );
   free( ss );
+}
+
+void Crunch::focusAndSelectInput()
+{
+  d->editor->selectAll();
+  QTimer::singleShot(0, d->editor, SLOT( setFocus() ) );
 }
 
 void Crunch::clearInput()
