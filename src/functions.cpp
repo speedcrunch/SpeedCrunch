@@ -523,6 +523,7 @@ FunctionRepository::FunctionRepository()
 
   add( new Function( "abs",   1, function_abs, QT_TR_NOOP("Absolute" ) ) );
   add( new Function( "int",   1, function_int, QT_TR_NOOP("Integer" ) ) );
+  add( new Function( "trunc", 1, function_int, QT_TR_NOOP("Truncate" ) ) );
   add( new Function( "frac",  1, function_frac, QT_TR_NOOP("Fraction" ) ) );
   add( new Function( "round", 1, function_round, QT_TR_NOOP("Round" ) ) );
   add( new Function( "sqrt",  1, function_sqrt, QT_TR_NOOP("Square Root" ) ) );

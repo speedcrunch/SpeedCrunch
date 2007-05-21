@@ -19,6 +19,7 @@ variable names are now case sensitive
 reserved variable names are now "pi" and "ans" only (case sensitive)
 shortcut F6 to select all the expression to evaluate
 added cbrt(x) function (cube root)
+added trunc(x) function (truncate), aliasing to int(x)
 
 SpeedCrunch 0.7
 ---------------
