@@ -1,5 +1,6 @@
 /* HMath: C++ high precision math routines
    Copyright (C) 2004 Ariya Hidayat <ariya.hidayat@gmail.com>
+                 2007 Helder Correia <helder.pereira.correia@gmail.com>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -280,6 +281,11 @@ public:
    * Returns the square root of n. If n is negative, returns NaN.
    */
   static HNumber sqrt( const HNumber& n );
+
+  /*!
+   * Returns the cube root of n.
+   */
+  static HNumber cbrt( const HNumber& n );
 
   /*!
    * Raises n1 to an integer n.

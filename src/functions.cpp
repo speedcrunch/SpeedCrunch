@@ -1,5 +1,6 @@
 /* This file is part of the SpeedCrunch project
    Copyright (C) 2004-2006 Ariya Hidayat <ariya@kde.org>
+                 2007 Helder Correia <helder.pereira.correia@gmail.com>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -90,6 +91,15 @@ HNumber function_sqrt( const Evaluator*, Function* fn, const FunctionArguments& 
   }
 
   return HMath::sqrt( num );
+}
+
+HNumber function_cbrt( const Evaluator*, Function*, const FunctionArguments& args )
+{
+  if( args.count() != 1 )
+    return HNumber::nan();
+
+  HNumber num = args[0];
+  return HMath::cbrt( num );
 }
 
 HNumber function_exp( const Evaluator*, Function*, const FunctionArguments& args )
@@ -516,10 +526,11 @@ FunctionRepository::FunctionRepository()
   add( new Function( "frac",  1, function_frac, QT_TR_NOOP("Fraction" ) ) );
   add( new Function( "round", 1, function_round, QT_TR_NOOP("Round" ) ) );
   add( new Function( "sqrt",  1, function_sqrt, QT_TR_NOOP("Square Root" ) ) );
+  add( new Function( "cbrt",  1, function_cbrt, QT_TR_NOOP("Cube Root" ) ) );
   add( new Function( "exp",   1, function_exp, QT_TR_NOOP("Exponent" ) ) );
   add( new Function( "ln",    1, function_ln, QT_TR_NOOP("Natural Logarithm" ) ) );
   add( new Function( "log",   1, function_log, QT_TR_NOOP("Base-10 Logarithm" ) ) );
-  add( new Function( "lg",   1, function_lg, QT_TR_NOOP("Base-2 Logarithm" ) ) );
+  add( new Function( "lg",    1, function_lg, QT_TR_NOOP("Base-2 Logarithm" ) ) );
 
   add( new Function( "sin",   1, function_sin, QT_TR_NOOP("Sine" ) ) );
   add( new Function( "cos",   1, function_cos, QT_TR_NOOP("Cosine" ) ) );

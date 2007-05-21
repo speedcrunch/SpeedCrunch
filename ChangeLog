@@ -18,6 +18,7 @@ exponential view is now known as scientific view
 variable names are now case sensitive
 reserved variable names are now "pi" and "ans" only (case sensitive)
 shortcut F6 to select all the expression to evaluate
+added cbrt(x) function (cube root)
 
 SpeedCrunch 0.7
 ---------------

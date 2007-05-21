@@ -1,6 +1,7 @@
 /* HMath: C++ high precision math routines
    Copyright (C) 2004 Ariya Hidayat <ariya.hidayat@gmail.com>
-   Last update: November 15, 2004
+                 2007 Helder Correia <helder.pereira.correia@gmail.com>
+   Last update: May 21, 2007
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -1118,6 +1119,37 @@ HNumber HMath::sqrt( const HNumber& n )
   return r;
 }
 
+HNumber HMath::cbrt( const HNumber& n )
+{
+  if( n.isNan() )
+    return HNumber::nan();
+
+  if( n.isZero() )
+    return n;
+
+  // useful constants
+  HNumber three     = HNumber("3");
+  HNumber twoThirds = HNumber("2") / three;
+
+  // iterations to approximate result
+  // X[i+1] = (2/3)X[i] + n / (3 * X[i]^2))
+  // initial guess = sqrt( n )
+  // r = X[i], q = X[i+1], a = n
+  HNumber a = n.isNegative() ? n * HNumber("-1") : n;
+  HNumber r = sqrt( a );
+  for( int i = 0; i < HMATH_MAX_PREC; i++ )
+  {
+    HNumber q = (twoThirds * r) + (a / (three * r * r));
+    if( r == q )
+      break;
+    r = q;
+  }
+
+  if( n.isNegative())
+    return r * HNumber("-1");
+  else
+    return r;
+}
 
 HNumber HMath::raise( const HNumber& n1, int n )
 {
@@ -1239,7 +1271,7 @@ HNumber HMath::exp( const HNumber& x )
     factor ++;
     xs = xs * half;
   }
-  
+
   // Taylor expansion: e^x = 1 + x + x^2/2! + x^3/3! + ...
   HNumber num = xs;
   HNumber den = 1;
@@ -1263,7 +1295,7 @@ HNumber HMath::exp( const HNumber& x )
       factor--;
       result *= result;
     }
-    
+
   if( negative )
     result = HMath::div( HNumber(1), result );
 

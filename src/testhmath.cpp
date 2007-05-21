@@ -1,5 +1,6 @@
 /* This file is part of the SpeedCrunch project
    Copyright (C) 2004-2006 Ariya Hidayat <ariya@kde.org>
+                 2007 Helder Correia <helder.pereira.correia@gmail.com>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -267,6 +268,38 @@ void test_functions()
   CHECK( HMath::sqrt("0.16"), "0.4" );
   CHECK( HMath::sqrt(-1), "NaN" );
   CHECK( HMath::sqrt("NaN"), "NaN" );
+
+  // checking function 'cbrt'
+  CHECK( HMath::cbrt(1), "1" );
+  CHECK( HMath::cbrt(-1), "-1" );
+  CHECK( HMath::cbrt(8), "2" );
+  CHECK( HMath::cbrt(-8), "-2" );
+  CHECK( HMath::cbrt(27), "3" );
+  CHECK( HMath::cbrt(-27), "-3" );
+  CHECK( HMath::cbrt(64), "4" );
+  CHECK( HMath::cbrt(-64), "-4" );
+  //CHECK_PRECISE( HMath::cbrt(2), "" );
+  //CHECK_PRECISE( HMath::cbrt(3), "" );
+  //CHECK_PRECISE( HMath::cbrt(5), "" );
+  //CHECK_PRECISE( HMath::cbrt(7), "" );
+  //CHECK_PRECISE( HMath::cbrt(8), "" );
+  //CHECK_PRECISE( HMath::cbrt(10), "" );
+  //CHECK_PRECISE( HMath::cbrt(11), "" );
+  //CHECK_PRECISE( HMath::cbrt(12), "" );
+  //CHECK_PRECISE( HMath::cbrt(13), "" );
+  //CHECK_PRECISE( HMath::cbrt(14), "" );
+  //CHECK_PRECISE( HMath::cbrt(15), "" );
+  //CHECK_PRECISE( HMath::cbrt(17), "" );
+  //CHECK_PRECISE( HMath::cbrt(18), "" );
+  //CHECK_PRECISE( HMath::cbrt(19), "" );
+  //CHECK_PRECISE( HMath::cbrt(20), "" );
+  CHECK( HMath::cbrt("0.008"), "0.2" );
+  CHECK( HMath::cbrt("-0.008"), "-0.2" );
+  CHECK( HMath::cbrt("0.027"), "0.3" );
+  CHECK( HMath::cbrt("-0.027"), "-0.3" );
+  CHECK( HMath::cbrt("0.064"), "0.4" );
+  CHECK( HMath::cbrt("-0.064"), "-0.4" );
+  CHECK( HMath::cbrt("NaN"), "NaN" );
 
   // sign
   CHECK( HMath::sign(0), "0");
