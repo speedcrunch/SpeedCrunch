@@ -68,6 +68,24 @@ HNumber function_frac( const Evaluator*, Function*, const FunctionArguments& arg
   return HMath::frac( num );
 }
 
+HNumber function_floor( const Evaluator*, Function*, const FunctionArguments& args )
+{
+  if( args.count() != 1 )
+    return HNumber::nan();
+
+  HNumber num = args[0];
+  return HMath::floor( num );
+}
+
+HNumber function_ceil( const Evaluator*, Function*, const FunctionArguments& args )
+{
+  if( args.count() != 1 )
+    return HNumber::nan();
+
+  HNumber num = args[0];
+  return HMath::ceil( num );
+}
+
 HNumber function_round( const Evaluator*, Function*, const FunctionArguments& args )
 {
   if( args.count() != 1 )
@@ -525,6 +543,8 @@ FunctionRepository::FunctionRepository()
   add( new Function( "int",   1, function_int, QT_TR_NOOP("Integer" ) ) );
   add( new Function( "trunc", 1, function_int, QT_TR_NOOP("Truncate" ) ) );
   add( new Function( "frac",  1, function_frac, QT_TR_NOOP("Fraction" ) ) );
+  add( new Function( "floor", 1, function_floor, QT_TR_NOOP("Floor" ) ) );
+  add( new Function( "ceil",  1, function_ceil, QT_TR_NOOP("Ceiling" ) ) );
   add( new Function( "round", 1, function_round, QT_TR_NOOP("Round" ) ) );
   add( new Function( "sqrt",  1, function_sqrt, QT_TR_NOOP("Square Root" ) ) );
   add( new Function( "cbrt",  1, function_cbrt, QT_TR_NOOP("Cube Root" ) ) );

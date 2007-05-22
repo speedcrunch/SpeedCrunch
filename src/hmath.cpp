@@ -1,7 +1,7 @@
 /* HMath: C++ high precision math routines
    Copyright (C) 2004 Ariya Hidayat <ariya.hidayat@gmail.com>
                  2007 Helder Correia <helder.pereira.correia@gmail.com>
-   Last update: May 21, 2007
+   Last update: May 22, 2007
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -1090,6 +1090,34 @@ HNumber HMath::frac( const HNumber& n )
     return HNumber::nan();
 
   return n - integer(n);
+}
+
+HNumber HMath::floor( const HNumber& n )
+{
+  if( n.isNan() )
+    return HNumber::nan();
+
+  if( n.isZero() )
+    return HNumber(0);
+
+  if( n.isPositive() )
+    return n - frac(n);
+  else
+    return n - HNumber(1) - frac(n);
+}
+
+HNumber HMath::ceil( const HNumber& n )
+{
+  if( n.isNan() )
+    return HNumber::nan();
+
+  if( n.isZero() )
+    return HNumber(0);
+
+  if( n.isPositive() )
+    return n + HNumber(1) - frac(n);
+  else
+    return n - frac(n);
 }
 
 HNumber HMath::sqrt( const HNumber& n )

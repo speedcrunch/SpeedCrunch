@@ -273,6 +273,16 @@ public:
   static HNumber frac( const HNumber& n );
 
   /*!
+   * Returns the floor of n.
+   */
+  static HNumber floor( const HNumber& n );
+
+  /*!
+   * Returns the ceiling of n.
+   */
+  static HNumber ceil( const HNumber& n );
+
+  /*!
    * Rounds n to the specified decimal digits.
    */
   static HNumber round( const HNumber&n, int prec = 0 );

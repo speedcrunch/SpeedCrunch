@@ -210,6 +210,24 @@ void test_functions()
   CHECK( HMath::abs("-3.14159"), "3.14159" );
   CHECK( HMath::abs("NaN"), "NaN" );
 
+  // floor
+  CHECK( HMath::floor( "3.14" ), "3" );
+  CHECK( HMath::floor( "1.77" ), "1" );
+  CHECK( HMath::floor( "-2.6041980" ), "-3" );
+  CHECK( HMath::floor( "2.6041980" ), "2" );
+  CHECK( HMath::floor( "0.000001" ), "0" );
+  CHECK( HMath::floor( "-0.000001" ), "-1" );
+  CHECK( HMath::floor( "NaN" ), "NaN" );
+
+  // ceil
+  CHECK( HMath::ceil( "3.14" ), "4" );
+  CHECK( HMath::ceil( "1.77" ), "2" );
+  CHECK( HMath::ceil( "-2.6041980" ), "-2" );
+  CHECK( HMath::ceil( "2.6041980" ), "3" );
+  CHECK( HMath::ceil( "0.000001" ), "1" );
+  CHECK( HMath::ceil( "-0.000001" ), "0" );
+  CHECK( HMath::ceil( "NaN" ), "NaN" );
+
   // round
   CHECK( HMath::round( "3.14" ), "3" );
   CHECK( HMath::round( "1.77" ), "2" );
