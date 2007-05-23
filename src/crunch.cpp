@@ -763,7 +763,7 @@ void Crunch::saveSettings()
     settings->variables.clear();
     QVector<Variable> vars = d->eval->variables();
     for( int i=0; i<vars.count(); i++ )
-      if( vars[i].name.toLower() != "pi" )
+      if( vars[i].name != "pi" )
       {
         char* str = HMath::formatFixed( vars[i].value, 100 );
         settings->variables.append( QString("%1=%2").arg( vars[i].name ).
