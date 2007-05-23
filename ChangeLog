@@ -14,13 +14,15 @@ improved (and non-intrusive) autocalc tip
 color for error messages can be customized
 option to hide from taskbar and minimize to system tray
 "tip of the day" feature
-exponential view is now known as scientific view
 variable names are now case sensitive
-reserved variable names are now "pi" and "ans" only (case sensitive)
-shortcut F6 to select all the expression to evaluate
+reserved variable names are now case sensitive "pi" and "ans"
+shortcut key F6 to focus and select input
 added cbrt(x) function (cube root)
-added trunc(x) function (truncate), aliasing to int(x)
+added trunc(x) and trunc(x,y) functions (truncation)
 added floor(x) and ceil(x) functions
+added round(x,y) function (decimal digit precision)
+fixed issue #33: exponential notation misnamed
+fixed issue #32: crash when inserting ( after variable
 
 SpeedCrunch 0.7
 ---------------
