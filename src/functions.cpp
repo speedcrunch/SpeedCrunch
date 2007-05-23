@@ -59,6 +59,43 @@ HNumber function_int( const Evaluator*, Function*, const FunctionArguments& args
   return HMath::integer( num );
 }
 
+HNumber function_trunc( const Evaluator*, Function* fn, const FunctionArguments& args )
+{
+  int nArgs = args.count();
+
+  if( nArgs != 1 && nArgs != 2 )
+  {
+    fn->setError( QApplication::translate( "Error",
+      "Function trunc requires 1 or 2 parameters" ) );
+
+    return HNumber::nan();
+  }
+
+  HNumber num = args[0];
+  HNumber prec;
+  if( nArgs == 2)
+    prec = args[1];
+
+  if( prec.isNegative() )
+  {
+    fn->setError( QApplication::translate( "Error",
+      "Function trunc requires non-negative second parameter" ) );
+    return HNumber::nan();
+  }
+
+  if( nArgs == 2 && !prec.isInteger() )
+  {
+    fn->setError( QApplication::translate( "Error",
+      "Function trunc requires integer second parameter" ) );
+    return HNumber::nan();
+  }
+
+  if( nArgs == 1 )
+    return HMath::trunc( num );
+  else // nArgs == 2
+    return HMath::trunc( num, prec.toInt() );
+}
+
 HNumber function_frac( const Evaluator*, Function*, const FunctionArguments& args )
 {
   if( args.count() != 1 )
@@ -86,13 +123,41 @@ HNumber function_ceil( const Evaluator*, Function*, const FunctionArguments& arg
   return HMath::ceil( num );
 }
 
-HNumber function_round( const Evaluator*, Function*, const FunctionArguments& args )
+HNumber function_round( const Evaluator*, Function* fn, const FunctionArguments& args )
 {
-  if( args.count() != 1 )
+  int nArgs = args.count();
+
+  if( nArgs != 1 && nArgs != 2 )
+  {
+    fn->setError( QApplication::translate( "Error",
+      "Function round requires 1 or 2 parameters" ) );
+
     return HNumber::nan();
+  }
 
   HNumber num = args[0];
-  return HMath::round( num );
+  HNumber prec;
+  if( nArgs == 2)
+    prec = args[1];
+
+  if( prec.isNegative() )
+  {
+    fn->setError( QApplication::translate( "Error",
+      "Function round requires non-negative second parameter" ) );
+    return HNumber::nan();
+  }
+
+  if( nArgs == 2 && !prec.isInteger() )
+  {
+    fn->setError( QApplication::translate( "Error",
+      "Function round requires integer second parameter" ) );
+    return HNumber::nan();
+  }
+
+  if( nArgs == 1 )
+    return HMath::round( num );
+  else // nArgs == 2
+    return HMath::round( num, prec.toInt() );
 }
 
 HNumber function_sqrt( const Evaluator*, Function* fn, const FunctionArguments& args )
@@ -539,45 +604,42 @@ FunctionRepository::FunctionRepository()
 {
   d = new FunctionRepositoryPrivate;
 
-  add( new Function( "abs",   1, function_abs, QT_TR_NOOP("Absolute" ) ) );
-  add( new Function( "int",   1, function_int, QT_TR_NOOP("Integer" ) ) );
-  add( new Function( "trunc", 1, function_int, QT_TR_NOOP("Truncate" ) ) );
-  add( new Function( "frac",  1, function_frac, QT_TR_NOOP("Fraction" ) ) );
-  add( new Function( "floor", 1, function_floor, QT_TR_NOOP("Floor" ) ) );
-  add( new Function( "ceil",  1, function_ceil, QT_TR_NOOP("Ceiling" ) ) );
-  add( new Function( "round", 1, function_round, QT_TR_NOOP("Round" ) ) );
-  add( new Function( "sqrt",  1, function_sqrt, QT_TR_NOOP("Square Root" ) ) );
-  add( new Function( "cbrt",  1, function_cbrt, QT_TR_NOOP("Cube Root" ) ) );
-  add( new Function( "exp",   1, function_exp, QT_TR_NOOP("Exponent" ) ) );
-  add( new Function( "ln",    1, function_ln, QT_TR_NOOP("Natural Logarithm" ) ) );
-  add( new Function( "log",   1, function_log, QT_TR_NOOP("Base-10 Logarithm" ) ) );
-  add( new Function( "lg",    1, function_lg, QT_TR_NOOP("Base-2 Logarithm" ) ) );
-
-  add( new Function( "sin",   1, function_sin, QT_TR_NOOP("Sine" ) ) );
-  add( new Function( "cos",   1, function_cos, QT_TR_NOOP("Cosine" ) ) );
-  add( new Function( "tan",   1, function_tan, QT_TR_NOOP("Tangent" ) ) );
-  add( new Function( "asin",  1, function_asin, QT_TR_NOOP("Arc Sine" ) ) );
-  add( new Function( "acos",  1, function_acos, QT_TR_NOOP("Arc Cosine" ) ) );
-  add( new Function( "atan",  1, function_atan, QT_TR_NOOP("Arc Tangent" ) ) );
-  add( new Function( "sinh",  1, function_sinh, QT_TR_NOOP("Hyperbolic Sine" ) ) );
-  add( new Function( "cosh",  1, function_cosh, QT_TR_NOOP("Hyperbolic Cosine" ) ) );
-  add( new Function( "tanh",  1, function_tanh, QT_TR_NOOP("Hyperbolic Tangent" ) ) );
-  add( new Function( "sign",  1, function_sign, QT_TR_NOOP("Signum" ) ) );
-  add( new Function( "ncr",   2, function_nCr, QT_TR_NOOP("Binomial coefficient" ) ) );
-  add( new Function( "degrees",  1, function_degrees, QT_TR_NOOP("Degrees" ) ) );
-  add( new Function( "radians",  1, function_radians, QT_TR_NOOP("Radians" ) ) );
-
-  add( new Function( "min",  function_min, QT_TR_NOOP("Minimum" ) ) );
-  add( new Function( "max",  function_max, QT_TR_NOOP("Maximum" ) ) );
-  add( new Function( "sum",  function_sum, QT_TR_NOOP("Sum" ) ) );
-  add( new Function( "product",  function_product, QT_TR_NOOP("Product" ) ) );
-  add( new Function( "average",  function_average, QT_TR_NOOP("Average (Arithmetic Mean)" ) ) );
-  add( new Function( "geomean",  function_geomean, QT_TR_NOOP("Geometric Mean" ) ) );
-
-  add( new Function( "dec",  function_dec, QT_TR_NOOP("Decimal representation" ) ) );
-  add( new Function( "hex",  function_hex, QT_TR_NOOP("Hexadecimal representation" ) ) );
-  add( new Function( "oct",  function_oct, QT_TR_NOOP("Octal representation" ) ) );
-  add( new Function( "bin",  function_bin, QT_TR_NOOP("Binary representation" ) ) );
+  add( new Function( "abs",     1, function_abs,     QT_TR_NOOP("Absolute")                   ) );
+  add( new Function( "acos",    1, function_acos,    QT_TR_NOOP("Arc Cosine")                 ) );
+  add( new Function( "asin",    1, function_asin,    QT_TR_NOOP("Arc Sine")                   ) );
+  add( new Function( "atan",    1, function_atan,    QT_TR_NOOP("Arc Tangent")                ) );
+  add( new Function( "average",    function_average, QT_TR_NOOP("Average (Arithmetic Mean)")  ) );
+  add( new Function( "log",     1, function_log,     QT_TR_NOOP("Base-10 Logarithm")          ) );
+  add( new Function( "lg",      1, function_lg,      QT_TR_NOOP("Base-2 Logarithm")           ) );
+  add( new Function( "bin",        function_bin,     QT_TR_NOOP("Binary Representation")      ) );
+  add( new Function( "ncr",     2, function_nCr,     QT_TR_NOOP("Binomial Coefficient")       ) );
+  add( new Function( "ceil",    1, function_ceil,    QT_TR_NOOP("Ceiling")                    ) );
+  add( new Function( "cos",     1, function_cos,     QT_TR_NOOP("Cosine")                     ) );
+  add( new Function( "cbrt",    1, function_cbrt,    QT_TR_NOOP("Cube Root")                  ) );
+  add( new Function( "dec",        function_dec,     QT_TR_NOOP("Decimal Representation")     ) );
+  add( new Function( "degrees", 1, function_degrees, QT_TR_NOOP("Degrees")                    ) );
+  add( new Function( "exp",     1, function_exp,     QT_TR_NOOP("Exponent")                   ) );
+  add( new Function( "floor",   1, function_floor,   QT_TR_NOOP("Floor")                      ) );
+  add( new Function( "frac",    1, function_frac,    QT_TR_NOOP("Fraction")                   ) );
+  add( new Function( "geomean",    function_geomean, QT_TR_NOOP("Geometric Mean")             ) );
+  add( new Function( "hex",        function_hex,     QT_TR_NOOP("Hexadecimal representation") ) );
+  add( new Function( "cosh",    1, function_cosh,    QT_TR_NOOP("Hyperbolic Cosine")          ) );
+  add( new Function( "sinh",    1, function_sinh,    QT_TR_NOOP("Hyperbolic Sine")            ) );
+  add( new Function( "tanh",    1, function_tanh,    QT_TR_NOOP("Hyperbolic Tangent")         ) );
+  add( new Function( "int",     1, function_int,     QT_TR_NOOP("Integer")                    ) );
+  add( new Function( "max",        function_max,     QT_TR_NOOP("Maximum")                    ) );
+  add( new Function( "min",        function_min,     QT_TR_NOOP("Minimum")                    ) );
+  add( new Function( "ln",      1, function_ln,      QT_TR_NOOP("Natural Logarithm")          ) );
+  add( new Function( "oct",        function_oct,     QT_TR_NOOP("Octal representation")       ) );
+  add( new Function( "product",    function_product, QT_TR_NOOP("Product")                    ) );
+  add( new Function( "radians", 1, function_radians, QT_TR_NOOP("Radians")                    ) );
+  add( new Function( "round",      function_round,   QT_TR_NOOP("Rounding")                   ) );
+  add( new Function( "sign",    1, function_sign,    QT_TR_NOOP("Signum")                     ) );
+  add( new Function( "sin",     1, function_sin,     QT_TR_NOOP("Sine")                       ) );
+  add( new Function( "sqrt",    1, function_sqrt,    QT_TR_NOOP("Square Root")                ) );
+  add( new Function( "sum",        function_sum,     QT_TR_NOOP("Sum")                        ) );
+  add( new Function( "tan",     1, function_tan,     QT_TR_NOOP("Tangent")                    ) );
+  add( new Function( "trunc",      function_trunc,   QT_TR_NOOP("Truncation")                 ) );
 }
 
 FunctionRepository::~FunctionRepository()

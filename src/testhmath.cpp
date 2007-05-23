@@ -243,6 +243,21 @@ void test_functions()
   CHECK( HMath::round( "-2.6041980", 0 ), "-3" );
   CHECK( HMath::round( "NaN" ), "NaN" );
 
+  // trunc
+  CHECK( HMath::trunc( "3.14" ), "3" );
+  CHECK( HMath::trunc( "1.77" ), "1" );
+  CHECK( HMath::trunc( "3.14159", 4 ), "3.1415" );
+  CHECK( HMath::trunc( "3.14159", 3 ), "3.141" );
+  CHECK( HMath::trunc( "3.14159", 2 ), "3.14" );
+  CHECK( HMath::trunc( "3.14159", 1 ), "3.1" );
+  CHECK( HMath::trunc( "3.14159", 0 ), "3" );
+  CHECK( HMath::trunc( "-2.6041980", 4 ), "-2.6041" );
+  CHECK( HMath::trunc( "-2.6041980", 3 ), "-2.604" );
+  CHECK( HMath::trunc( "-2.6041980", 2 ), "-2.6" );
+  CHECK( HMath::trunc( "-2.6041980", 1 ), "-2.6" );
+  CHECK( HMath::trunc( "-2.6041980", 0 ), "-2" );
+  CHECK( HMath::trunc( "NaN" ), "NaN" );
+
   // integer
   CHECK( HMath::integer( "0" ), "0" );
   CHECK( HMath::integer( "0.25" ), "0" );

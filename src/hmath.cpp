@@ -1,7 +1,7 @@
 /* HMath: C++ high precision math routines
    Copyright (C) 2004 Ariya Hidayat <ariya.hidayat@gmail.com>
                  2007 Helder Correia <helder.pereira.correia@gmail.com>
-   Last update: May 22, 2007
+   Last update: May 23, 2007
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -26,6 +26,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+
+#include <sstream>
 
 // internal number of decimal digits
 #define HMATH_MAX_PREC 150
@@ -395,6 +397,22 @@ static bc_num h_round( bc_num n, int prec )
   return v;
 }
 
+// trunc up to certain decimal digits
+static bc_num h_trunc( bc_num n, int prec )
+{
+  // no need to truncate?
+  if( prec >= n->n_scale )
+    return h_copy( n );
+
+  if( prec < 0 )
+    prec = 0;
+
+  // only digits we are interested in
+  bc_num v = h_rescale( n, prec );
+
+  return v;
+}
+
 // remove trailing zeros
 static void h_trimzeros( bc_num num )
 {
@@ -552,6 +570,11 @@ bool HNumber::isNegative() const
   return !d->nan && ( bc_is_neg( d->num )!=0 );
 }
 
+bool HNumber::isInteger() const
+{
+  return (!d->nan) && (d->num->n_scale == 0) ;
+}
+
 char HNumber::format() const
 {
    return d->format;
@@ -567,6 +590,18 @@ HNumber HNumber::nan()
   HNumber n;
   n.d->nan = true;
   return n;
+}
+
+int HNumber::toInt()
+{
+  char* str = HMath::formatFixed( *this );
+  std::string s( str );
+  delete[] str;
+  std::istringstream iss( s );
+  int i;
+  iss >> i;
+
+  return i;
 }
 
 HNumber& HNumber::operator=( const HNumber& hn )
@@ -1067,6 +1102,17 @@ HNumber HMath::round( const HNumber& n, int prec )
   HNumber result;
   h_destroy( result.d->num );
   result.d->num = h_round( n.d->num, prec );
+  return result;
+}
+
+HNumber HMath::trunc( const HNumber& n, int prec )
+{
+  if( n.isNan() )
+    return HNumber::nan();
+
+  HNumber result;
+  h_destroy( result.d->num );
+  result.d->num = h_trunc( n.d->num, prec );
   return result;
 }
 
@@ -1742,9 +1788,9 @@ void HMath::finalize()
   h_grabfree();
 }
 
-std::ostream& operator<<( std::ostream& s, HNumber num )
+std::ostream& operator<<( std::ostream& s, const HNumber& n )
 {
-  char* str = HMath::formatFixed( num );
+  char* str = HMath::formatFixed( n );
   s << str;
   delete[] str;
   return s;

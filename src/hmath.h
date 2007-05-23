@@ -31,7 +31,6 @@ class HNumber
 friend class HMath;
 
 public:
-
   /*!
    * Creates a new number.
    */
@@ -81,6 +80,11 @@ public:
    * Returns true if this number is less than zero.
    */
   bool isNegative() const;
+
+  /*!
+   * Returns true if this number is integer.
+   */
+  bool isInteger() const;
 
    /*!
    * Returns the preferred format (base/precision), default is 0
@@ -172,6 +176,13 @@ public:
    */
   static HNumber nan();
 
+  /*!
+   * Returns the number as an int.
+   * It is meant to convert small (integer) numbers only and no
+   * checking is done whatsoever.
+   */
+  int toInt();
+
 private:
   HNumberPrivate* d;
 };
@@ -179,7 +190,6 @@ private:
 class HMath
 {
 public:
-
   /*!
    * Formats the given number as string, using specified decimal digits.
    * Note that the returned string must be freed.
@@ -288,6 +298,11 @@ public:
   static HNumber round( const HNumber&n, int prec = 0 );
 
   /*!
+   * Truncates n to the specified decimal digits.
+   */
+  static HNumber trunc( const HNumber&n, int prec = 0 );
+
+  /*!
    * Returns the square root of n. If n is negative, returns NaN.
    */
   static HNumber sqrt( const HNumber& n );
@@ -383,7 +398,7 @@ public:
    /*!
    * Returns the binomial coefficient of n and k.
    */
-  static HNumber nCr( const HNumber& n,  const HNumber& k);
+  static HNumber nCr( const HNumber& n, const HNumber& k );
 
    /*!
    * Returns the factorial of x.
@@ -396,9 +411,8 @@ public:
    * any other functions as well as class HNumber.
    */
   static void finalize();
-
 };
 
-std::ostream& operator<<( std::ostream& s, HNumber );
+std::ostream& operator<<( std::ostream& s, const HNumber& n );
 
 #endif // HMATH_H
