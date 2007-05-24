@@ -21,6 +21,7 @@ added cbrt(x) function (cube root)
 added trunc(x) and trunc(x,y) functions (truncation)
 added floor(x) and ceil(x) functions
 added round(x,y) function (decimal digit precision)
+added ncr(n,r) and npr(n,r) functions (combination and permutation)
 fixed issue #33: exponential notation misnamed
 fixed issue #32: crash when inserting ( after variable
 
@@ -95,7 +96,7 @@ Indonesian translation by Yolla Indria (yolla.indria@gmail.com)
 SpeedCrunch 0.5.3
 -----------------
 fixed bug with function asin and acos
-Portuguese translation by Helder Correia (helder.correia@netcabo.pt)
+Portuguese translation by Helder Correia (helder.pereira.correia@gmail.com)
 Russian translation by Alexey Kouznetsov (kouznetsov@phtf.stu.neva.ru)
 Italian translation by Francesco di Cugno (fdicugno@gmail.com)
 fixed invisible popup completion in maximized window

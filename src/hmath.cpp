@@ -1,7 +1,7 @@
 /* HMath: C++ high precision math routines
    Copyright (C) 2004 Ariya Hidayat <ariya.hidayat@gmail.com>
                  2007 Helder Correia <helder.pereira.correia@gmail.com>
-   Last update: May 23, 2007
+   Last update: May 24, 2007
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -572,7 +572,7 @@ bool HNumber::isNegative() const
 
 bool HNumber::isInteger() const
 {
-  return (!d->nan) && (d->num->n_scale == 0) ;
+  return *this == HMath::integer( *this );
 }
 
 char HNumber::format() const
@@ -885,7 +885,7 @@ char* HMath::formatGeneral( const HNumber& hn, int prec )
 char* HMath::formatHexadec( const HNumber& hn )
 {
   char* str;
-  if( hn.isNan() || hn != integer(hn))
+  if( hn.isNan() || !hn.isInteger())
   {
     str = (char*)malloc( 4 );
     str[0] = 'N';
@@ -921,7 +921,7 @@ char* HMath::formatHexadec( const HNumber& hn )
 char* HMath::formatOctal( const HNumber& hn )
 {
   char* str;
-  if( hn.isNan() || hn != integer(hn))
+  if( hn.isNan() || !hn.isInteger())
   {
     str = (char*)malloc( 4 );
     str[0] = 'N';
@@ -956,7 +956,7 @@ char* HMath::formatOctal( const HNumber& hn )
 char* HMath::formatBinary( const HNumber& hn )
 {
   char* str;
-  if( hn.isNan() || hn != integer(hn))
+  if( hn.isNan() || !hn.isInteger())
   {
     str = (char*)malloc( 4 );
     str[0] = 'N';
@@ -1739,34 +1739,60 @@ HNumber HMath::sign( const HNumber& x )
   return result;
 }
 
-HNumber HMath::nCr( const HNumber& n, const HNumber& k )
+HNumber HMath::nCr( const HNumber& n, const HNumber& r )
 {
-  if( n.isNan() || k.isNan() || k > n)
+  if( n.isNan() || r.isNan() || r > n)
     return HNumber::nan();
 
-   if (k == HNumber(0) || k == n)
+   if (r == HNumber(0) || r == n)
       return HNumber(1);
 
-   if (k == HNumber(1))
+   if (r == HNumber(1))
       return HNumber(n);
 
-   if (k > n/2)
-      return factorial(n, k+1)/factorial((n-k), 1);
+   if (r > n/2)
+      return factorial(n, r+1) / factorial((n-r), 1);
    else
-      return factorial(n, (n-k+1))/factorial(k, 1);
+      return factorial(n, (n-r+1)) / factorial(r, 1);
+}
+
+HNumber HMath::nPr( const HNumber& n, const HNumber& r )
+{
+  if( n.isNan() || r.isNan() || r > n)
+    return HNumber::nan();
+
+  if (r == HNumber(0))
+    return HNumber(1);
+
+  if (r == HNumber(1))
+    return n;
+
+  if (r == n)
+    return factorial(n);
+
+  return factorial(n, (n-r+1));
 }
 
 HNumber HMath::factorial( const HNumber& x, const HNumber& base )
 {
-  if( x.isNan() || x < HNumber(0) || x != integer(x) || base < HNumber(1) || !(x > base))
+  if( x.isNan()
+      || x    < HNumber(0) || !x.isInteger()
+      || base < HNumber(1) || !base.isInteger()
+      || (x < base && x != HNumber(0))  )
     return HNumber::nan();
+
+  if( x == HNumber(0) || x == HNumber(1) )
+    return HNumber(1);
+
+  if( x == base )
+    return x;
 
   HNumber one(1);
   HNumber result = one;
-  HNumber n = base-one;
+  HNumber n = base - one;
   do
   {
-     n = n+one;
+     n = n + one;
      result = result * n;
   }
   while (n < x);

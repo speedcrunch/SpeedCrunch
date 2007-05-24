@@ -157,7 +157,6 @@ void test_format()
   CHECK_FORMAT( 'g', 3, HNumber("1403.1977"), "1403.198" );
   CHECK_FORMAT( 'g', 3, HNumber("2604.1980"), "2604.198" );
   CHECK_FORMAT( 'g', 3, HNumber("2.47e4"), "24700.000" );
-
 }
 
 void test_op()
@@ -276,7 +275,7 @@ void test_functions()
   CHECK( HMath::frac( "-0.14159" ), "-0.14159" );
   CHECK( HMath::frac( "NaN" ), "NaN" );
 
-  // checking function 'sqrt'
+  // sqrt
   CHECK( HMath::sqrt(1), "1" );
   CHECK( HMath::sqrt(4), "2" );
   CHECK( HMath::sqrt(9), "3" );
@@ -302,7 +301,7 @@ void test_functions()
   CHECK( HMath::sqrt(-1), "NaN" );
   CHECK( HMath::sqrt("NaN"), "NaN" );
 
-  // checking function 'cbrt'
+  // cbrt
   CHECK( HMath::cbrt(1), "1" );
   CHECK( HMath::cbrt(-1), "-1" );
   CHECK( HMath::cbrt(8), "2" );
@@ -342,17 +341,53 @@ void test_functions()
   CHECK( HMath::sign(-2), "-1");
 
   // factorial
-  CHECK( HMath::factorial(-1), "NaN");
-  CHECK( HMath::factorial("NaN"), "NaN");
-  CHECK( HMath::factorial(0), "NaN");
-  CHECK( HMath::factorial(1), "NaN");
-  CHECK( HMath::factorial(2), "2");
-  CHECK( HMath::factorial(3), "6");
-  CHECK( HMath::factorial(4), "24");
-  CHECK( HMath::factorial(5), "120");
-  CHECK( HMath::factorial(6), "720");
-  CHECK( HMath::factorial(7), "5040");
-  CHECK( HMath::factorial(8), "40320");
+  CHECK( HMath::factorial(-1), "NaN" );
+  CHECK( HMath::factorial("NaN"), "NaN" );
+  CHECK( HMath::factorial(0), "1" );
+  CHECK( HMath::factorial(1), "1" );
+  CHECK( HMath::factorial(2), "2" );
+  CHECK( HMath::factorial(3), "6" );
+  CHECK( HMath::factorial(4), "24" );
+  CHECK( HMath::factorial(5), "120" );
+  CHECK( HMath::factorial(6), "720" );
+  CHECK( HMath::factorial(7), "5040" );
+  CHECK( HMath::factorial(8), "40320" );
+  CHECK( HMath::factorial(8,6), "336" );
+  CHECK( HMath::factorial(8,7), "56" );
+  CHECK( HMath::factorial(8,8), "8" );
+  CHECK( HMath::factorial(8,0), "NaN" );
+  CHECK( HMath::factorial(8,"NaN"), "NaN" );
+  CHECK( HMath::factorial("NaN",7), "NaN" );
+  CHECK( HMath::factorial("NaN","NaN"), "NaN" );
+  CHECK( HMath::factorial("5.23"), "NaN" );
+  CHECK( HMath::factorial("-5"), "NaN" );
+
+  // nCr
+  CHECK( HMath::nCr(21,-1), "NaN"  );
+  CHECK( HMath::nCr(21,0),  "1"    );
+  CHECK( HMath::nCr(21,1),  "21"   );
+  CHECK( HMath::nCr(21,2),  "210"  );
+  CHECK( HMath::nCr(21,3),  "1330" );
+  CHECK( HMath::nCr(21,19), "210"  );
+  CHECK( HMath::nCr(21,20), "21"   );
+  CHECK( HMath::nCr(21,21), "1"    );
+  CHECK( HMath::nCr(21,22), "NaN"  );
+  CHECK( HMath::nCr(-21,2), "NaN"  );
+  CHECK( HMath::nCr(0,0),   "1"    );
+
+  // nPr
+  CHECK( HMath::nPr( 21,-1), "NaN"       );
+  CHECK( HMath::nPr( 21, 0), "1"         );
+  CHECK( HMath::nPr( 21, 1), "21"        );
+  CHECK( HMath::nPr( 21, 2), "420"       );
+  CHECK( HMath::nPr( 21, 3), "7980"      );
+  CHECK( HMath::nPr( 21, 4), "143640"    );
+  CHECK( HMath::nPr( 21, 5), "2441880"   );
+  CHECK( HMath::nPr( 21, 6), "39070080"  );
+  CHECK( HMath::nPr( 21, 7), "586051200" );
+  CHECK( HMath::nPr( 21,22), "NaN"       );
+  CHECK( HMath::nPr(-21, 2), "NaN"       );
+  CHECK( HMath::nPr(  0, 0), "1"         );
 
   // raise
   CHECK( HMath::raise(10,-3), "0.001" );
@@ -384,7 +419,6 @@ void test_functions()
   CHECK_PRECISE( HMath::exp("0.9"), "2.45960311115694966380012656360247069542177230644008" );
   CHECK_PRECISE( HMath::exp("1.0"), "2.71828182845904523536028747135266249775724709369996" );
   CHECK_PRECISE( HMath::exp("100"), "26881171418161354484126255515800135873611118.77374192241519160861528028703490956491415887109722" );
-
 
   // ln
   CHECK_PRECISE( HMath::ln("0.1"), "-2.30258509299404568401799145468436420760110148862877" );
@@ -437,7 +471,6 @@ void test_functions()
   CHECK( HMath::lg("32"), "5" );
   CHECK( HMath::lg("-1"), "NaN" );
   CHECK( HMath::lg("NaN"), "NaN" );
-
 
   // sin
   CHECK( HMath::sin( "0" ), "0" );
@@ -592,7 +625,6 @@ void test_functions()
   CHECK_PRECISE( HMath::cosh("0.8"), "1.33743494630484459800481995820531977649392453816033" );
   CHECK_PRECISE( HMath::cosh("0.9"), "1.43308638544877438784179040162404834162773784130523" );
   CHECK_PRECISE( HMath::cosh("1.0"), "1.54308063481524377847790562075706168260152911236586" );
-
 }
 
 

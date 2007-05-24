@@ -401,6 +401,11 @@ public:
   static HNumber nCr( const HNumber& n, const HNumber& k );
 
    /*!
+   * Returns the permutation of n elements chosen r elements.
+   */
+  static HNumber nPr( const HNumber& n, const HNumber& r );
+
+   /*!
    * Returns the factorial of x.
    * If x is non integer, returns NaN.
    */
