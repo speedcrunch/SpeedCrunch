@@ -90,6 +90,13 @@ HNumber function_trunc( const Evaluator*, Function* fn, const FunctionArguments&
     return HNumber::nan();
   }
 
+  HNumber limit(150);
+  HNumber zero(0);
+  if( prec > limit )
+    prec = limit;
+  else if( prec < zero )
+    prec = zero;
+
   if( nArgs == 1 )
     return HMath::trunc( num );
   else // nArgs == 2

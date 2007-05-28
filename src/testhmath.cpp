@@ -255,6 +255,8 @@ void test_functions()
   CHECK( HMath::trunc( "-2.6041980", 2 ), "-2.6" );
   CHECK( HMath::trunc( "-2.6041980", 1 ), "-2.6" );
   CHECK( HMath::trunc( "-2.6041980", 0 ), "-2" );
+  CHECK( HMath::trunc( "-2.6041980", 999 ), "-2.604198" );
+  CHECK( HMath::trunc( "-2.6041980", -2 ), "-2" );
   CHECK( HMath::trunc( "NaN" ), "NaN" );
 
   // integer
