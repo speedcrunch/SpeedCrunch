@@ -73,17 +73,12 @@ HNumber function_trunc( const Evaluator*, Function* fn, const FunctionArguments&
 
   HNumber num = args[0];
   HNumber prec;
+  HNumber zero(0);
   if( nArgs == 2)
     prec = args[1];
+  else prec = zero;
 
-  if( prec.isNegative() )
-  {
-    fn->setError( QApplication::translate( "Error",
-      "Function trunc requires non-negative second parameter" ) );
-    return HNumber::nan();
-  }
-
-  if( nArgs == 2 && !prec.isInteger() )
+  if( !prec.isInteger() )
   {
     fn->setError( QApplication::translate( "Error",
       "Function trunc requires integer second parameter" ) );
@@ -91,7 +86,6 @@ HNumber function_trunc( const Evaluator*, Function* fn, const FunctionArguments&
   }
 
   HNumber limit(150);
-  HNumber zero(0);
   if( prec > limit )
     prec = limit;
   else if( prec < zero )
@@ -144,22 +138,24 @@ HNumber function_round( const Evaluator*, Function* fn, const FunctionArguments&
 
   HNumber num = args[0];
   HNumber prec;
+  HNumber zero(0);
   if( nArgs == 2)
     prec = args[1];
+  else
+    prec = zero;
 
-  if( prec.isNegative() )
-  {
-    fn->setError( QApplication::translate( "Error",
-      "Function round requires non-negative second parameter" ) );
-    return HNumber::nan();
-  }
-
-  if( nArgs == 2 && !prec.isInteger() )
+  if( !prec.isInteger() )
   {
     fn->setError( QApplication::translate( "Error",
       "Function round requires integer second parameter" ) );
     return HNumber::nan();
   }
+
+  HNumber limit(150);
+  if( prec > limit )
+    prec = limit;
+  else if( prec < zero )
+    prec = zero;
 
   if( nArgs == 1 )
     return HMath::round( num );
