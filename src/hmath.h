@@ -197,6 +197,12 @@ public:
   static char* format( const HNumber&n, char format = 'g', int prec = -1 );
 
   /*!
+   * Formats the given number as string, in engineering notation.
+   * Note that the returned string must be freed.
+   */
+  static char* formatEngineering( const HNumber&n, int prec = -1 );
+
+  /*!
    * Formats the given number as string, using specified decimal digits.
    * Note that the returned string must be freed.
    */

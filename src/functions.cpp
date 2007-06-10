@@ -67,7 +67,6 @@ HNumber function_trunc( const Evaluator*, Function* fn, const FunctionArguments&
   {
     fn->setError( QApplication::translate( "Error",
       "Function trunc requires 1 or 2 parameters" ) );
-
     return HNumber::nan();
   }
 
@@ -132,7 +131,6 @@ HNumber function_round( const Evaluator*, Function* fn, const FunctionArguments&
   {
     fn->setError( QApplication::translate( "Error",
       "Function round requires 1 or 2 parameters" ) );
-
     return HNumber::nan();
   }
 

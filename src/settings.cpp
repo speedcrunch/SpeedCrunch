@@ -109,6 +109,7 @@ void Settings::load()
 
   QString formatStr = settings.value( key + "/View/Format" ).toString();
   if ( formatStr == "Fixed" )       format = 'f';
+  if ( formatStr == "Engineering" ) format = 'n';
   if ( formatStr == "Exp" )         format = 'e';
   if ( formatStr == "General" )     format = 'g';
   if ( formatStr == "Hexadecimal" ) format = 'h';
@@ -218,6 +219,7 @@ void Settings::save()
 
   QString formatStr;
   if ( format == 'f' ) formatStr = "Fixed";
+  if ( format == 'n' ) formatStr = "Engineering";
   if ( format == 'e' ) formatStr = "Exp";
   if ( format == 'g' ) formatStr = "General";
   if ( format == 'h' ) formatStr = "Hexadecimal";

@@ -87,6 +87,7 @@ public:
   QAction* clearVariables;
   QAction* viewGeneral;
   QAction* viewFixed;
+  QAction* viewEngineering;
   QAction* viewScientific;
   QAction* viewHexadec;
   QAction* viewOctal;
@@ -368,6 +369,7 @@ void Crunch::createUI()
 
   d->actions->viewGeneral = new QAction( tr("&General"), 0 );
   d->actions->viewFixed = new QAction( tr("&Fixed Decimal"), 0 );
+  d->actions->viewEngineering = new QAction( tr("&Engineering"), 0 );
   d->actions->viewScientific = new QAction( tr("&Scientific"), 0 );
   d->actions->viewHexadec = new QAction( tr("&Hexadecimal"), 0 );
   d->actions->viewOctal = new QAction( tr("&Octal"), 0 );
@@ -376,6 +378,7 @@ void Crunch::createUI()
   QActionGroup *formatGroup = new QActionGroup( this );
   formatGroup->addAction( d->actions->viewGeneral );
   formatGroup->addAction( d->actions->viewFixed );
+  formatGroup->addAction( d->actions->viewEngineering );
   formatGroup->addAction( d->actions->viewScientific );
   formatGroup->addAction( d->actions->viewHexadec );
   formatGroup->addAction( d->actions->viewOctal );
@@ -383,6 +386,7 @@ void Crunch::createUI()
 
   d->actions->viewGeneral->setCheckable( true );
   d->actions->viewFixed->setCheckable( true );
+  d->actions->viewEngineering->setCheckable( true );
   d->actions->viewScientific->setCheckable( true );
   d->actions->viewHexadec->setCheckable( true );
   d->actions->viewOctal->setCheckable( true );
@@ -450,6 +454,7 @@ void Crunch::createUI()
   connect( d->actions->deleteVariable, SIGNAL( activated() ), this, SLOT( deleteVariable() ) );
   connect( d->actions->viewGeneral, SIGNAL( activated() ), this, SLOT( viewGeneral() ) );
   connect( d->actions->viewFixed, SIGNAL( activated() ), this, SLOT( viewFixed() ) );
+  connect( d->actions->viewEngineering, SIGNAL( activated() ), this, SLOT( viewEngineering() ) );
   connect( d->actions->viewScientific, SIGNAL( activated() ), this, SLOT( viewScientific() ) );
   connect( d->actions->viewHexadec, SIGNAL( activated() ), this, SLOT( viewHexadec() ) );
   connect( d->actions->viewOctal, SIGNAL( activated() ), this, SLOT( viewOctal() ) );
@@ -508,6 +513,7 @@ void Crunch::createUI()
   menuBar()->addMenu( viewMenu );
   viewMenu->addAction( d->actions->viewGeneral );
   viewMenu->addAction( d->actions->viewFixed );
+  viewMenu->addAction( d->actions->viewEngineering );
   viewMenu->addAction( d->actions->viewScientific );
   viewMenu->addAction( d->actions->viewHexadec );
   viewMenu->addAction( d->actions->viewOctal );
@@ -607,6 +613,7 @@ void Crunch::applySettings()
     case 'b':
       d->binButton->setChecked( true ); break;
     case 'f':
+    case 'n':
     case 'e':
     case 'g':
     default:
@@ -640,6 +647,7 @@ void Crunch::applySettings()
 
   if( settings->format == 'g' ) d->actions->viewGeneral->setChecked( true );
   if( settings->format == 'f' ) d->actions->viewFixed->setChecked( true );
+  if( settings->format == 'n' ) d->actions->viewEngineering->setChecked( true );
   if( settings->format == 'e' ) d->actions->viewScientific->setChecked( true );
   if( settings->format == 'h' ) d->actions->viewHexadec->setChecked( true );
   if( settings->format == 'o' ) d->actions->viewOctal->setChecked( true );
@@ -953,7 +961,8 @@ void Crunch::radixChanged()
   }
 
   if( d->decButton->isChecked() && settings->format != 'g' &&
-    settings->format != 'e'  && settings->format != 'f' )
+    settings->format != 'e'  && settings->format != 'f' &&
+	settings->format != 'n')
   {
     d->digitsGroup->setDisabled(false);
     setView('g');
@@ -1174,6 +1183,13 @@ void Crunch::viewFixed()
   d->digitsGroup->setEnabled(true);
   d->decButton->setChecked(true);
   setView('f');
+}
+
+void Crunch::viewEngineering()
+{
+  d->digitsGroup->setEnabled(true);
+  d->decButton->setChecked(true);
+  setView('n');
 }
 
 void Crunch::viewScientific()

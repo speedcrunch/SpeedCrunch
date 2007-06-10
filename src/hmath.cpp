@@ -1,7 +1,7 @@
 /* HMath: C++ high precision math routines
    Copyright (C) 2004 Ariya Hidayat <ariya.hidayat@gmail.com>
                  2007 Helder Correia <helder.pereira.correia@gmail.com>
-   Last update: May 24, 2007
+   Last update: June 11, 2007
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -28,6 +28,7 @@
 #include <stdio.h>
 
 #include <sstream>
+#include <iostream>
 
 // internal number of decimal digits
 #define HMATH_MAX_PREC 150
@@ -727,6 +728,86 @@ bool HNumber::operator!=( const HNumber& n ) const
   return HMath::compare( *this, n ) != 0;
 }
 
+// format number in engineering notation
+char* HMath::formatEngineering( const HNumber& hn, int prec )
+{
+  if( hn.isNan() )
+  {
+    char* str = (char*)malloc( 4 );
+    str[0] = 'N';
+    str[1] = 'a';
+    str[2] = 'N';
+    str[3] = '\0';
+    return str;
+  }
+
+  int    nIntDigs  = hn.d->num->n_len;
+  int    nFracDigs = hn.d->num->n_scale;
+  char * digs      = hn.d->num->n_value;
+  int    tenExp;
+
+  // find the exponent and the factor
+  int tzeros = 0;
+  for( int c=0; c<hn.d->num->n_len+hn.d->num->n_scale; c++, tzeros++ )
+    if( hn.d->num->n_value[c]!= 0 ) break;
+  int expd = hn.d->num->n_len - tzeros - 1;
+
+  if ( hn >= 1 || hn <= -1 )
+  {
+    // point must be shifted to the left, if needed
+
+    if ( nIntDigs % 3 == 0 )
+    {
+      // 3n digits to the left
+      if ( hn > 999 || hn < -999 )
+        // n > 1
+        tenExp = nIntDigs - 3;
+      else
+        // n = 1
+        tenExp = 0;
+    }
+    else
+      // non-3n digits to the left
+      tenExp = nIntDigs - nIntDigs % 3;
+  }
+  else
+  {
+    // point must be shifted to the right
+    // find first non-zero digit to the right of the point
+    int startDigIdx = nIntDigs;
+    int endDigIdx   = nIntDigs + nFracDigs - 1;
+    int idx;
+    for ( idx = startDigIdx; idx <= endDigIdx; idx++ )
+      if ( digs[idx] != 0 )
+        break;
+    // calculate exponent to shift right
+    while ( idx % 3 != 0 )
+      idx++;
+    tenExp = -idx;
+  }
+
+  // scale the number by a new factor
+  HNumber nn = hn * HMath::raise( 10, -tenExp );
+
+  // too close to zero?
+  if( hn.isZero() || ( expd <= -HMATH_COMPARE_PREC ) )
+  {
+    nn = HNumber( 0 );
+    tenExp = 0;
+  }
+
+  // build result expression string with E notation
+  char* str = formatFixed( nn, prec );
+  std::string resString = std::string( str ) + "e";
+  free( str );
+  std::stringstream ss;
+  ss << tenExp;
+  resString += ss.str();
+  char * result = (char *) malloc( resString.size() + 1 );
+  strcpy( result, resString.c_str() );
+
+  return result;
+}
 
 // format number with fixed number of decimal digits
 char* HMath::formatFixed( const HNumber& hn, int prec )
@@ -1001,18 +1082,13 @@ char* HMath::format( const HNumber& hn, char format, int prec )
     return str;
   }
 
-  if( format=='g' )
-    return formatGeneral( hn, prec );
-  else if( format=='f' )
-    return formatFixed( hn, prec );
-  else if( format=='e' )
-    return formatExp( hn, prec );
-  else if( format=='h' )
-    return formatHexadec( hn );
-  else if( format=='o' )
-    return formatOctal( hn );
-  else if( format=='b' )
-    return formatBinary( hn );
+  if     ( format=='g' ) return formatGeneral    ( hn, prec );
+  else if( format=='f' ) return formatFixed      ( hn, prec );
+  else if( format=='n' ) return formatEngineering( hn, prec );
+  else if( format=='e' ) return formatExp        ( hn, prec );
+  else if( format=='h' ) return formatHexadec    ( hn       );
+  else if( format=='o' ) return formatOctal      ( hn       );
+  else if( format=='b' ) return formatBinary     ( hn       );
 
   // fallback to 'g'
   return formatGeneral( hn, prec );
