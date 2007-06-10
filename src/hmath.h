@@ -299,6 +299,11 @@ public:
   static HNumber ceil( const HNumber& n );
 
   /*!
+   * Returns the greatest common divisor of n1 and n2.
+   */
+  static HNumber gcd( const HNumber& n1, const HNumber& n2 );
+
+  /*!
    * Rounds n to the specified decimal digits.
    */
   static HNumber round( const HNumber&n, int prec = 0 );

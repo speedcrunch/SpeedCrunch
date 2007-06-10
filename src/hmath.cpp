@@ -1242,6 +1242,26 @@ HNumber HMath::ceil( const HNumber& n )
     return n - frac(n);
 }
 
+HNumber HMath::gcd( const HNumber& n1, const HNumber& n2 )
+{
+  HNumber a = abs( n1 );
+  HNumber b = abs( n2 );
+
+  // run Euclidean algorithm
+  while ( true )
+  {
+    a = a % b;
+
+    if ( a == 0 )
+      return b;
+
+    b = b % a;
+
+    if ( b == 0 )
+      return a;
+  }
+}
+
 HNumber HMath::sqrt( const HNumber& n )
 {
   if( n.isNan() )

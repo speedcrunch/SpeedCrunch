@@ -123,6 +123,33 @@ HNumber function_ceil( const Evaluator*, Function*, const FunctionArguments& arg
   return HMath::ceil( num );
 }
 
+HNumber function_gcd( const Evaluator*, Function* fn, const FunctionArguments& args )
+{
+  int nArgs = args.count();
+
+  if ( nArgs < 2 )
+  {
+    fn->setError( QApplication::translate( "Error",
+      "Function gcd requires at least 2 parameters" ) );
+    return HNumber::nan();
+  }
+
+  for ( int i = 0; i < args.count(); i++ )
+    if ( !args[i].isInteger() )
+    {
+      fn->setError( QApplication::translate( "Error",
+        "Function gcd requires integer parameters" ) );
+      return HNumber::nan();
+    }
+
+  HNumber result = HMath::gcd( args[0], args[1] );
+  for ( int i = 2; i < nArgs; i++ )
+  {
+    result = HMath::gcd( result, args[i] );
+  }
+  return result;
+}
+
 HNumber function_round( const Evaluator*, Function* fn, const FunctionArguments& args )
 {
   int nArgs = args.count();
@@ -630,6 +657,7 @@ FunctionRepository::FunctionRepository()
   add( new Function( "floor",   1, function_floor,   QT_TR_NOOP("Floor")                               ) );
   add( new Function( "frac",    1, function_frac,    QT_TR_NOOP("Fraction")                            ) );
   add( new Function( "geomean",    function_geomean, QT_TR_NOOP("Geometric Mean")                      ) );
+  add( new Function( "gcd",        function_gcd,     QT_TR_NOOP("Greatest Common Divisor")             ) );
   add( new Function( "hex",        function_hex,     QT_TR_NOOP("Hexadecimal Representation")          ) );
   add( new Function( "cosh",    1, function_cosh,    QT_TR_NOOP("Hyperbolic Cosine")                   ) );
   add( new Function( "sinh",    1, function_sinh,    QT_TR_NOOP("Hyperbolic Sine")                     ) );
