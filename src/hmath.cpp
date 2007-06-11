@@ -1247,6 +1247,11 @@ HNumber HMath::gcd( const HNumber& n1, const HNumber& n2 )
   HNumber a = abs( n1 );
   HNumber b = abs( n2 );
 
+  if ( a == 0 )
+    return b;
+  if ( b == 0 )
+    return a;
+
   // run Euclidean algorithm
   while ( true )
   {
