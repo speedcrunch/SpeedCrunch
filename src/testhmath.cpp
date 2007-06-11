@@ -111,6 +111,29 @@ void test_format()
   CHECK_FORMAT( 'f', 1, HNumber("4.001"), "4.0" );
   CHECK_FORMAT( 'f', -1, HNumber("4.000000000000000000000000000000000000000000001"), "4" );
 
+  // engineering notation
+  CHECK_FORMAT( 'n', 0, HNumber("NaN"), "NaN" );
+  CHECK_FORMAT( 'n', 0, HNumber("0"), "0e0" );
+  CHECK_FORMAT( 'n', 0, HNumber("3.14"), "3e0" );
+  CHECK_FORMAT( 'n', 1, HNumber("3.14"), "3.1e0" );
+  CHECK_FORMAT( 'n', 2, HNumber("3.14"), "3.14e0" );
+  CHECK_FORMAT( 'n', 3, HNumber("3.14"), "3.140e0" );
+  CHECK_FORMAT( 'n', 5, HNumber("3.14"), "3.14000e0" );
+  CHECK_FORMAT( 'n', 7, HNumber("3.14"), "3.1400000e0" );
+  CHECK_FORMAT( 'n', 3, HNumber("-0.001"), "-1.000e-3" );
+  CHECK_FORMAT( 'n', 2, HNumber("0.0001"), "100.00e-6" );
+  CHECK_FORMAT( 'n', 2, HNumber("0.001"), "1.00e-3" );
+  CHECK_FORMAT( 'n', 2, HNumber("0.01"), "10.00e-3" );
+  CHECK_FORMAT( 'n', 2, HNumber("0.1"), "100.00e-3" );
+  CHECK_FORMAT( 'n', 2, HNumber("1"), "1.00e0" );
+  CHECK_FORMAT( 'n', 2, HNumber("10"), "10.00e0" );
+  CHECK_FORMAT( 'n', 2, HNumber("100"), "100.00e0" );
+  CHECK_FORMAT( 'n', 2, HNumber("1000"), "1.00e3" );
+  CHECK_FORMAT( 'n', 2, HNumber("10000"), "10.00e3" );
+  CHECK_FORMAT( 'n', 2, HNumber("100000"), "100.00e3" );
+  CHECK_FORMAT( 'n', 2, HNumber("1000000"), "1.00e6" );
+  CHECK_FORMAT( 'n', 2, HNumber("10000000"), "10.00e6" );
+
   // scientific notation
   CHECK_FORMAT( 'e', 0, HNumber("NaN"), "NaN" );
   CHECK_FORMAT( 'e', 0, HNumber("0"), "0e0" );
