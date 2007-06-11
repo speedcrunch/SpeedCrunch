@@ -250,6 +250,18 @@ void test_functions()
   CHECK( HMath::ceil( "-0.000001" ), "0" );
   CHECK( HMath::ceil( "NaN" ), "NaN" );
 
+  CHECK( HMath::gcd( "0", "0" ), "0" );
+  CHECK( HMath::gcd( "0", "5" ), "5" );
+  CHECK( HMath::gcd( "5", "0" ), "5" );
+  CHECK( HMath::gcd( "0", "-5" ), "5" );
+  CHECK( HMath::gcd( "-5", "0" ), "5" );
+  CHECK( HMath::gcd( "9", "-27" ), "9" );
+  CHECK( HMath::gcd( "99", "103" ), "1" );
+  CHECK( HMath::gcd( "-102", "306" ), "102" );
+  CHECK( HMath::gcd( "NaN", "5" ), "NaN" );
+  CHECK( HMath::gcd( "5", "NaN" ), "NaN" );
+  CHECK( HMath::gcd( "NaN", "NaN" ), "NaN" );
+
   // round
   CHECK( HMath::round( "3.14" ), "3" );
   CHECK( HMath::round( "1.77" ), "2" );

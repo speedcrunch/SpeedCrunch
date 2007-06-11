@@ -1244,6 +1244,9 @@ HNumber HMath::ceil( const HNumber& n )
 
 HNumber HMath::gcd( const HNumber& n1, const HNumber& n2 )
 {
+  if( n1.isNan() || n2.isNan() )
+    return HNumber::nan();
+
   HNumber a = abs( n1 );
   HNumber b = abs( n2 );
 
