@@ -209,10 +209,10 @@ public:
   static char* formatFixed( const HNumber&n, int prec = -1 );
 
   /*!
-   * Formats the given number as string, in exponential format.
+   * Formats the given number as string, in scientific format.
    * Note that the returned string must be freed.
    */
-  static char* formatExp( const HNumber&n, int prec = -1 );
+  static char* formatScientific( const HNumber&n, int prec = -1 );
 
   /*!
    * Formats the given number as string, using specified decimal digits.
