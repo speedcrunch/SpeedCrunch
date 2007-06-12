@@ -1008,6 +1008,7 @@ void Crunch::returnPressed()
   d->editor->setText( str );
   d->editor->selectAll();
   d->editor->stopAutoCalc();
+  d->editor->stopAutoComplete();
   d->autoAns = true;
 
   QTimer::singleShot( 0, d->editor, SLOT(setFocus()) );

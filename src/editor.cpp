@@ -721,6 +721,13 @@ void Editor::stopAutoCalc()
   emit autoCalcDeactivated();
 }
 
+void Editor::stopAutoComplete()
+{
+  d->completionTimer->stop();
+  d->completion->doneCompletion();
+  setFocus();
+}
+
 // uncomment to activate fade-away effect when the completion pop-up disappears
 // #define COMPLETION_FADE_EFFECT
 

@@ -77,7 +77,9 @@ class Editor : public QTextEdit
     QColor highlightColor( ColorType type );
 
     void setAnsAvailable( bool avail );
+
     void stopAutoCalc();
+    void stopAutoComplete();
 
   public slots:
     void insert( const QString& );
