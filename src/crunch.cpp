@@ -363,6 +363,7 @@ void Crunch::createUI()
     d->actions->deleteVariable->setShortcut( Qt::CTRL + Qt::Key_D );
 
   d->actions->clearInput = new QAction( tr("Clear &Input" ), this );
+    d->actions->clearInput->setShortcut( Qt::Key_Escape );
   d->actions->clearDisplay = new QAction( tr("Clear &Display" ), this );
   d->actions->clearHistory = new QAction( tr("Clear &History" ), this );
   d->actions->clearVariables = new QAction( tr("Clear V&ariables" ), this );
@@ -707,7 +708,7 @@ void Crunch::applySettings()
     d->trayIcon = 0;
   }
 
-  // changed settings should trigger auto calc nor auto complete  
+  // changed settings should trigger auto calc nor auto complete
   d->editor->stopAutoCalc();
   d->editor->stopAutoComplete();
 }

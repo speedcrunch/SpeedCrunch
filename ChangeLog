@@ -16,7 +16,7 @@ option to hide from taskbar and minimize to system tray
 "tip of the day" feature
 variable names are now case sensitive
 reserved variable names are now case sensitive "pi" and "ans"
-shortcut key F6 to focus and select input
+added shortcut key F6 to focus and select input
 added cbrt(x) function (cube root)
 added trunc(x) and trunc(x,y) functions (truncation)
 added floor(x) and ceil(x) functions
@@ -29,6 +29,7 @@ added gcd function (with multiple arguments support)
 improved error system and messages
 added cot(x) function
 minor fixed tan(x)
+added shortcut key Esc to clear the input
 
 SpeedCrunch 0.7
 ---------------
