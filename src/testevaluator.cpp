@@ -323,8 +323,15 @@ void test_function_stat()
 
 void test_auto_fix_parentheses()
 {
+  CHECK_AUTOFIX( "sin(1)", "sin(1)" );
+  CHECK_AUTOFIX( "sin(1", "sin(1)" );
+
   CHECK_AUTOFIX( "x+(8-2", "x+(8-2)" );
+  CHECK_AUTOFIX( "x+(8-2)", "x+(8-2)" );
+
   CHECK_AUTOFIX( "x+(8-(2*1", "x+(8-(2*1))" );
+  CHECK_AUTOFIX( "x+(8-(2*1)", "x+(8-(2*1))" );
+  CHECK_AUTOFIX( "x+(8-(2*1))", "x+(8-(2*1))" );
 }
 
 void test_auto_fix_ans()
