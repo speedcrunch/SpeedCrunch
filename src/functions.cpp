@@ -130,7 +130,7 @@ HNumber function_gcd( const Evaluator*, Function* fn, const FunctionArguments& a
   if ( nArgs < 2 )
   {
     fn->setError( fn->name(), QApplication::translate( "functions",
-      "functio requires at least 2 parameters" ) );
+      "function requires at least 2 parameters" ) );
     return HNumber::nan();
   }
 
@@ -138,7 +138,7 @@ HNumber function_gcd( const Evaluator*, Function* fn, const FunctionArguments& a
     if ( !args[i].isInteger() )
     {
       fn->setError( fn->name(), QApplication::translate( "functions",
-        "funtion requires integer parameters" ) );
+        "function requires integer parameters" ) );
       return HNumber::nan();
     }
 
@@ -640,8 +640,12 @@ HNumber Function::exec( const Evaluator* eval, const FunctionArguments& args )
   if( d->argc >= 0 )
   if( args.count() != d->argc )
   {
-    setError( d->name, QString( QApplication::translate( "functions",
-      "function accepts %2 argument(s)" ) ).arg( d->name ).arg( d->argc ) );
+    if ( d->argc == 1 )
+      setError( d->name, QString( QApplication::translate( "functions",
+        "function accepts 1 argument" ) ) );
+    else
+      setError( d->name, QString( QApplication::translate( "functions",
+        "function accepts %1 arguments" ) ).arg( d->argc ) );
     return HNumber(0);
   }
 
