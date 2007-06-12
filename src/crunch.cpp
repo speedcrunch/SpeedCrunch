@@ -706,6 +706,9 @@ void Crunch::applySettings()
 	  delete d->trayIcon;
     d->trayIcon = 0;
   }
+
+  // changed settings should trigger auto calc  
+  d->editor->stopAutoCalc();
 }
 
 bool Crunch::event( QEvent* e )
