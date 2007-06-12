@@ -26,6 +26,9 @@ fixed issue #33: exponential notation misnamed
 fixed issue #32: crash when inserting ( after variable
 added engineering notation
 added gcd function (with multiple arguments support)
+improved error system and messages
+added cot(x) function
+minor fixed tan(x)
 
 SpeedCrunch 0.7
 ---------------

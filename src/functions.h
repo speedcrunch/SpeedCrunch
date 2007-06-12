@@ -43,7 +43,7 @@ public:
   QString name() const;
   QString description() const;
   QString error() const;
-  void setError( const QString& );
+  void setError( const QString& context, const QString& error );
   HNumber exec( const Evaluator*, const FunctionArguments& args );
 
 private:

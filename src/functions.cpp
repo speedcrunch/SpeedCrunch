@@ -65,8 +65,8 @@ HNumber function_trunc( const Evaluator*, Function* fn, const FunctionArguments&
 
   if( nArgs != 1 && nArgs != 2 )
   {
-    fn->setError( QApplication::translate( "Error",
-      "Function trunc requires 1 or 2 parameters" ) );
+    fn->setError( fn->name(), QApplication::translate( "functions",
+      "function requires 1 or 2 parameters" ) );
     return HNumber::nan();
   }
 
@@ -79,8 +79,8 @@ HNumber function_trunc( const Evaluator*, Function* fn, const FunctionArguments&
 
   if( !prec.isInteger() )
   {
-    fn->setError( QApplication::translate( "Error",
-      "Function trunc requires integer second parameter" ) );
+    fn->setError( fn->name(), QApplication::translate( "functions",
+      "function requires integer second parameter" ) );
     return HNumber::nan();
   }
 
@@ -129,16 +129,16 @@ HNumber function_gcd( const Evaluator*, Function* fn, const FunctionArguments& a
 
   if ( nArgs < 2 )
   {
-    fn->setError( QApplication::translate( "Error",
-      "Function gcd requires at least 2 parameters" ) );
+    fn->setError( fn->name(), QApplication::translate( "functions",
+      "functio requires at least 2 parameters" ) );
     return HNumber::nan();
   }
 
   for ( int i = 0; i < args.count(); i++ )
     if ( !args[i].isInteger() )
     {
-      fn->setError( QApplication::translate( "Error",
-        "Function gcd requires integer parameters" ) );
+      fn->setError( fn->name(), QApplication::translate( "functions",
+        "funtion requires integer parameters" ) );
       return HNumber::nan();
     }
 
@@ -156,8 +156,8 @@ HNumber function_round( const Evaluator*, Function* fn, const FunctionArguments&
 
   if( nArgs != 1 && nArgs != 2 )
   {
-    fn->setError( QApplication::translate( "Error",
-      "Function round requires 1 or 2 parameters" ) );
+    fn->setError( fn->name(), QApplication::translate( "functions",
+      "function requires 1 or 2 parameters" ) );
     return HNumber::nan();
   }
 
@@ -171,8 +171,8 @@ HNumber function_round( const Evaluator*, Function* fn, const FunctionArguments&
 
   if( !prec.isInteger() )
   {
-    fn->setError( QApplication::translate( "Error",
-      "Function round requires integer second parameter" ) );
+    fn->setError( fn->name(), QApplication::translate( "functions",
+      "function requires integer second parameter" ) );
     return HNumber::nan();
   }
 
@@ -196,8 +196,8 @@ HNumber function_sqrt( const Evaluator*, Function* fn, const FunctionArguments& 
   HNumber num = args[0];
   if( num < HNumber(0) )
   {
-    fn->setError( QApplication::translate( "Error",
-      "Function sqrt expects positive argument" ) );
+    fn->setError( fn->name(), QApplication::translate( "functions",
+      "function undefined for specified parameter" ) );
     return HNumber::nan();
   }
 
@@ -230,8 +230,8 @@ HNumber function_ln( const Evaluator*, Function* fn, const FunctionArguments& ar
   HNumber num = args[0];
   if( num < HNumber(0) )
   {
-    fn->setError( QApplication::translate( "Error",
-      "Function ln expects positive argument" ) );
+    fn->setError( fn->name(), QApplication::translate( "functions",
+      "function undefined for specified parameter" ) );
     return HNumber( 0 );
   }
 
@@ -246,8 +246,8 @@ HNumber function_log( const Evaluator*, Function* fn, const FunctionArguments& a
   HNumber num = args[0];
   if( num < HNumber(0) )
   {
-    fn->setError( QApplication::translate( "Error",
-      "Function log expects positive argument" ) );
+    fn->setError( fn->name(), QApplication::translate( "functions",
+      "function undefined for specified parameter" ) );
     return HNumber( 0 );
   }
 
@@ -262,8 +262,8 @@ HNumber function_lg( const Evaluator*, Function* fn, const FunctionArguments& ar
   HNumber num = args[0];
   if( num < HNumber(0) )
   {
-    fn->setError( QApplication::translate( "Error",
-      "Function lg expects positive argument" ) );
+    fn->setError( fn->name(), QApplication::translate( "functions",
+      "function undefined for specified parameter" ) );
     return HNumber( 0 );
   }
 
@@ -278,6 +278,7 @@ HNumber function_sin( const Evaluator* eval, Function*, const FunctionArguments&
   HNumber angle = args[0];
   if( eval->angleMode() == Evaluator::Degree )
     angle = deg2rad( angle );
+
   return HMath::sin( angle );
 }
 
@@ -289,6 +290,7 @@ HNumber function_cos( const Evaluator* eval, Function*, const FunctionArguments&
   HNumber angle = args[0];
   if( eval->angleMode() == Evaluator::Degree )
     angle = deg2rad( angle );
+
   return HMath::cos( angle );
 }
 
@@ -301,15 +303,35 @@ HNumber function_tan( const Evaluator* eval, Function* fn, const FunctionArgumen
   if( eval->angleMode() == Evaluator::Degree )
     angle = deg2rad( angle );
 
-  HNumber halfpi = HMath::pi() / HNumber(2);
-  if( ( angle == halfpi ) || ( angle == halfpi*HNumber(3) ) )
+  HNumber result = HMath::tan( angle );
+  if ( result.isNan() )
   {
-    fn->setError( QApplication::translate( "Error",
-      "Invalid input to function tan" ) );
+    fn->setError( fn->name(), QApplication::translate( "functions",
+      "function undefined for specified parameter" ) );
     return HNumber::nan();
   }
 
-  return HMath::tan( angle );
+  return result;
+}
+
+HNumber function_cot( const Evaluator* eval, Function* fn, const FunctionArguments& args )
+{
+  if( args.count() != 1 )
+    return HNumber::nan();
+
+  HNumber angle = args[0];
+  if( eval->angleMode() == Evaluator::Degree )
+    angle = deg2rad( angle );
+
+  HNumber result = HMath::cot( angle );
+  if ( result.isNan() )
+  {
+    fn->setError( fn->name(), QApplication::translate( "functions",
+      "function undefined for specified parameter" ) );
+    return HNumber::nan();
+  }
+
+  return result;
 }
 
 HNumber function_asin( const Evaluator* eval, Function*, const FunctionArguments& args )
@@ -600,9 +622,9 @@ QString Function::error() const
   return d->error;
 }
 
-void Function::setError( const QString& e )
+void Function::setError( const QString& context, const QString& error )
 {
-  d->error = e;
+  d->error = context + ": " + error;
 }
 
 HNumber Function::exec( const Evaluator* eval, const FunctionArguments& args )
@@ -610,16 +632,16 @@ HNumber Function::exec( const Evaluator* eval, const FunctionArguments& args )
   d->error = QString();
   if( !d->ptr )
   {
-    setError( QString( QApplication::translate( "Error",
-      "Cannot execute function %1") ).arg( name() ) );
+    setError( QString("error"), QString( QApplication::translate( "functions",
+      "cannot execute function %1") ).arg( name() ) );
     return HNumber(0);
   }
 
   if( d->argc >= 0 )
   if( args.count() != d->argc )
   {
-    setError( QString( QApplication::translate( "Error",
-      "Function %1 accepts %2 argument" ) ).arg( d->name ).arg( d->argc ) );
+    setError( d->name, QString( QApplication::translate( "functions",
+      "function accepts %2 argument(s)" ) ).arg( d->name ).arg( d->argc ) );
     return HNumber(0);
   }
 
@@ -650,6 +672,7 @@ FunctionRepository::FunctionRepository()
   add( new Function( "ncr",     2, function_nCr,     QT_TR_NOOP("Combination (Binomial Coefficient)")  ) );
   add( new Function( "ceil",    1, function_ceil,    QT_TR_NOOP("Ceiling")                             ) );
   add( new Function( "cos",     1, function_cos,     QT_TR_NOOP("Cosine")                              ) );
+  add( new Function( "cot",     1, function_cot,     QT_TR_NOOP("Cotangent")                           ) );
   add( new Function( "cbrt",    1, function_cbrt,    QT_TR_NOOP("Cube Root")                           ) );
   add( new Function( "dec",        function_dec,     QT_TR_NOOP("Decimal Representation")              ) );
   add( new Function( "degrees", 1, function_degrees, QT_TR_NOOP("Degrees")                             ) );

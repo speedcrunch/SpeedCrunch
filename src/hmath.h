@@ -372,6 +372,11 @@ public:
   static HNumber tan( const HNumber& x );
 
   /*!
+   * Returns the cotangent of x. Note that x must be in radians.
+   */
+  static HNumber cot( const HNumber& x );
+
+  /*!
    * Returns the arc sine of x.
    */
   static HNumber asin( const HNumber& x );

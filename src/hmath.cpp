@@ -1676,18 +1676,38 @@ HNumber HMath::tan( const HNumber& x )
   if( x.isNan() )
     return HNumber::nan();
 
-  // tan(x) = cos(x)/sin(x)
+  // tan(x) = sin(x) / cos(x)
 
-  HNumber s = HMath::sin( x );
-  if( s.isZero() )
-    return s;
-
-  HNumber c = HMath::cos( x );
-  if( c.isZero() )
+  HNumber c = HMath::cos(x);
+  if( c == 0 )
     return HNumber::nan();
+
+  HNumber s = HMath::sin(x);
+  if( s == 0 )
+    return s;
 
   HNumber result = s / c;
   return result;
+}
+
+HNumber HMath::cot( const HNumber& x )
+{
+  if( x.isNan() )
+    return HNumber::nan();
+
+  // cot(x) = cos(x) / sin(x)
+
+  HNumber s = HMath::sin(x);
+  if( s == 0 )
+    return HNumber::nan();
+
+  HNumber c = HMath::cos(x);
+  if( c == 0 )
+    return c;
+
+  HNumber result = c / s;
+  return result;
+
 }
 
 HNumber HMath::atan( const HNumber& x )
