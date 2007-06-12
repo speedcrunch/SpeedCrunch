@@ -707,8 +707,9 @@ void Crunch::applySettings()
     d->trayIcon = 0;
   }
 
-  // changed settings should trigger auto calc  
+  // changed settings should trigger auto calc nor auto complete  
   d->editor->stopAutoCalc();
+  d->editor->stopAutoComplete();
 }
 
 bool Crunch::event( QEvent* e )
