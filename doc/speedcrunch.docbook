@@ -10,7 +10,9 @@
 
 <authorgroup>
 <author><firstname>Ariya</firstname> <surname>Hidayat</surname></author>
+<!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
+
 
 <copyright>
 <year>2007</year>
@@ -43,25 +45,25 @@
 <title>Installation</title>
 
 <sect1 id="installation-windows">
-<title>Installation for Microsoft Windows</title>
+<title>Installation for &Microsoft; &Windows;</title>
 
 </sect1>
 
 <sect1 id="installation-macos">
-<title>Installation for Mac OS X</title>
+<title>Installation for &Mac; OS X</title>
 </sect1>
 
 <sect1 id="installation-linux">
-<title>Installation for Linux</title>
+<title>Installation for &Linux;</title>
 
 <sect2 id="installation-suse">
 <title>Installation for OpenSUSE</title>
 </sect2>
 
 <sect2 id="installation-kubuntu">
-<title>Installation for Kubuntu</title>
+<title>Installation for &kubuntu;</title>
 
-<para>SpeedCrunch is part of default Kubuntu installation since Kubuntu 5.10.
+<para>SpeedCrunch is part of default &kubuntu; installation since &kubuntu; 5.10.
 It is located in the K Menu, Utility, Calculator (SpeedCrunch).</para>
 
 <para>If it is not available yet, SpeedCrunch can be installed using the following terminal command:</para>
@@ -74,7 +76,7 @@ It is located in the K Menu, Utility, Calculator (SpeedCrunch).</para>
 </sect2>
 
 <sect2 id="installation-ubuntu">
-<title>Installation for Ubuntu</title>
+<title>Installation for &ubuntu;</title>
 
 <para>SpeedCrunch can be installed using the following terminal command:</para>
 
@@ -118,19 +120,19 @@ required:</para>
 <para>CMake version 2.4 or newer</para>
 </listitem>
 <listitem>
-<para>Trolltech's Qt library version 4.2 or newer</para>
+<para>Trolltech's &Qt; library version 4.2 or newer</para>
 </listitem>
 <listitem>
 <para>C++ compiler</para>
 </listitem>
 </itemizedlist>
 
-<para>It is necessary to create a build directory which specifies the target
-location for the buid process. In this build directory, CMake should be
-invoked. The input for CMake will be the src directory in the source tree.
+<para>It is necessary to create a build folder which specifies the target
+location for the buid process. In this build folder, CMake should be
+invoked. The input for CMake will be the src folder in the source tree.
 The exact steps to do all these will depend on the operating system.</para>
 
-<para>As an example, to compile and build SpeedCrunch on Linux using GCC,
+<para>As an example, to compile and build SpeedCrunch on &Linux; using GCC,
 use the following commands:</para>
 
 <screen>
@@ -179,7 +181,7 @@ make
 <para>Program Copyright &copy; 2005-2006 Johan Thelin</para>
 
 <para>Documentation Copyright &copy; 2007 Ariya Hidayat.</para>
-
+<!-- TRANS:CREDIT_FOR_TRANSLATORS -->						
 &underFDL;
 &underGPL;
 
