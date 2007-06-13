@@ -334,6 +334,46 @@ HNumber function_cot( const Evaluator* eval, Function* fn, const FunctionArgumen
   return result;
 }
 
+HNumber function_sec( const Evaluator* eval, Function* fn, const FunctionArguments& args )
+{
+  if( args.count() != 1 )
+    return HNumber::nan();
+
+  HNumber angle = args[0];
+  if( eval->angleMode() == Evaluator::Degree )
+    angle = deg2rad( angle );
+
+  HNumber result = HMath::sec( angle );
+  if ( result.isNan() )
+  {
+    fn->setError( fn->name(), QApplication::translate( "functions",
+      "function undefined for specified parameter" ) );
+    return HNumber::nan();
+  }
+
+  return result;
+}
+
+HNumber function_csc( const Evaluator* eval, Function* fn, const FunctionArguments& args )
+{
+  if( args.count() != 1 )
+    return HNumber::nan();
+
+  HNumber angle = args[0];
+  if( eval->angleMode() == Evaluator::Degree )
+    angle = deg2rad( angle );
+
+  HNumber result = HMath::csc( angle );
+  if ( result.isNan() )
+  {
+    fn->setError( fn->name(), QApplication::translate( "functions",
+      "function undefined for specified parameter" ) );
+    return HNumber::nan();
+  }
+
+  return result;
+}
+
 HNumber function_asin( const Evaluator* eval, Function*, const FunctionArguments& args )
 {
   if( args.count() != 1 )
@@ -665,6 +705,7 @@ FunctionRepository::FunctionRepository()
 {
   d = new FunctionRepositoryPrivate;
 
+  // functions are sorted by description
   add( new Function( "abs",     1, function_abs,     QT_TR_NOOP("Absolute")                            ) );
   add( new Function( "acos",    1, function_acos,    QT_TR_NOOP("Arc Cosine")                          ) );
   add( new Function( "asin",    1, function_asin,    QT_TR_NOOP("Arc Sine")                            ) );
@@ -675,6 +716,7 @@ FunctionRepository::FunctionRepository()
   add( new Function( "bin",        function_bin,     QT_TR_NOOP("Binary Representation")               ) );
   add( new Function( "ncr",     2, function_nCr,     QT_TR_NOOP("Combination (Binomial Coefficient)")  ) );
   add( new Function( "ceil",    1, function_ceil,    QT_TR_NOOP("Ceiling")                             ) );
+  add( new Function( "csc",     1, function_csc,     QT_TR_NOOP("Cosecant")                            ) );
   add( new Function( "cos",     1, function_cos,     QT_TR_NOOP("Cosine")                              ) );
   add( new Function( "cot",     1, function_cot,     QT_TR_NOOP("Cotangent")                           ) );
   add( new Function( "cbrt",    1, function_cbrt,    QT_TR_NOOP("Cube Root")                           ) );
@@ -698,6 +740,7 @@ FunctionRepository::FunctionRepository()
   add( new Function( "product",    function_product, QT_TR_NOOP("Product")                             ) );
   add( new Function( "radians", 1, function_radians, QT_TR_NOOP("Radians")                             ) );
   add( new Function( "round",      function_round,   QT_TR_NOOP("Rounding")                            ) );
+  add( new Function( "sec",     1, function_sec,     QT_TR_NOOP("Secant")                              ) );
   add( new Function( "sign",    1, function_sign,    QT_TR_NOOP("Signum")                              ) );
   add( new Function( "sin",     1, function_sin,     QT_TR_NOOP("Sine")                                ) );
   add( new Function( "sqrt",    1, function_sqrt,    QT_TR_NOOP("Square Root")                         ) );

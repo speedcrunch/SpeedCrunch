@@ -377,6 +377,16 @@ public:
   static HNumber cot( const HNumber& x );
 
   /*!
+   * Returns the secant of x. Note that x must be in radians.
+   */
+  static HNumber sec( const HNumber& x );
+
+  /*!
+   * Returns the cosecant of x. Note that x must be in radians.
+   */
+  static HNumber csc( const HNumber& x );
+
+  /*!
    * Returns the arc sine of x.
    */
   static HNumber asin( const HNumber& x );
@@ -412,12 +422,12 @@ public:
   static HNumber sign( const HNumber& x );
 
    /*!
-   * Returns the binomial coefficient of n and k.
+   * Returns the combinations of n elements choosen k elements.
    */
-  static HNumber nCr( const HNumber& n, const HNumber& k );
+  static HNumber nCr( const HNumber& n, const HNumber& r );
 
    /*!
-   * Returns the permutation of n elements chosen r elements.
+   * Returns the permutations of n elements chosen r elements.
    */
   static HNumber nPr( const HNumber& n, const HNumber& r );
 

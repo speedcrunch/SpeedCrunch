@@ -1707,7 +1707,36 @@ HNumber HMath::cot( const HNumber& x )
 
   HNumber result = c / s;
   return result;
+}
 
+HNumber HMath::sec( const HNumber& x )
+{
+  if( x.isNan() )
+    return HNumber::nan();
+
+  // sec(x) = 1 / cos(x)
+
+  HNumber c = HMath::cos(x);
+  if( c == 0 )
+    return HNumber::nan();
+
+  HNumber result = HNumber(1) / c;
+  return result;
+}
+
+HNumber HMath::csc( const HNumber& x )
+{
+  if( x.isNan() )
+    return HNumber::nan();
+
+  // csc(x) = 1 / sin(x)
+
+  HNumber s = HMath::sin(x);
+  if( s == 0 )
+    return HNumber::nan();
+
+  HNumber result = HNumber(1) / s;
+  return result;
 }
 
 HNumber HMath::atan( const HNumber& x )
