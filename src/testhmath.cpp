@@ -24,26 +24,33 @@
 
 #include "hmath.h"
 
-static int hmath_total_tests = 0;
+
+using namespace std;
+
+
+static int hmath_total_tests  = 0;
 static int hmath_failed_tests = 0;
 static const HNumber PI = HMath::pi();
 
-#define CHECK(x,y)  check_value(__FILE__,__LINE__,#x,x,y)
+#define CHECK(x,y)            check_value(__FILE__,__LINE__,#x,x,y)
 #define CHECK_FORMAT(f,p,x,y) check_format(__FILE__,__LINE__,#x,x,f,p,y)
-#define CHECK_PRECISE(x,y)  check_precise(__FILE__,__LINE__,#x,x,y)
+#define CHECK_PRECISE(x,y)    check_precise(__FILE__,__LINE__,#x,x,y)
 
-static void check_value( const char *file, int line, const char* msg,
-const HNumber&n, const char* expected )
+static void check_value( const char    * file,
+		                 int             line,
+						 const char    * msg,
+                         const HNumber & n,
+						 const char    * expected )
 {
   hmath_total_tests++;
-  char* result = HMath::formatFixed( n );
-  if( strcmp( result, expected ) )
+  char * result = HMath::formatFixed( n );
+  if ( strcmp( result, expected ) )
   {
     hmath_failed_tests++;
-    std::cerr << file << "["<< line <<"]: " << msg << std::endl;
-    std::cerr << "  Result  : " << result  << std::endl;
-    std::cerr << "  Expected: " << expected  << std::endl;
-    std::cerr << std::endl;
+    cerr << file << "[" << line << "]: " << msg << endl
+         << "  Result  : " << result   << endl
+         << "  Expected: " << expected << endl
+         << endl;
   }
   free( result );
 }
@@ -52,14 +59,14 @@ static void check_format( const char *file, int line, const char* msg,
 const HNumber&n, char format, int prec, const char* expected )
 {
   hmath_total_tests++;
-  char* result = HMath::format( n, format, prec );
-  if( strcmp( result, expected ) )
+  char * result = HMath::format( n, format, prec );
+  if ( strcmp( result, expected ) )
   {
     hmath_failed_tests++;
-    std::cerr << file << "["<< line <<"]: " << msg << std::endl;
-    std::cerr << "  Result  : " << result  << std::endl;
-    std::cerr << "  Expected: " << expected  << std::endl;
-    std::cerr << std::endl;
+    cerr << file << "[" << line << "]: " << msg << endl
+         << "  Result  : " << result   << endl
+         << "  Expected: " << expected << endl
+         << endl;
   }
   free( result );
 }
@@ -68,29 +75,29 @@ static void check_precise( const char *file, int line, const char* msg,
 const HNumber&n, const char* expected )
 {
   hmath_total_tests++;
-  char* result = HMath::formatFixed( n, 50 );
-  if( strcmp( result, expected ) )
+  char * result = HMath::formatFixed( n, 50 );
+  if ( strcmp( result, expected ) )
   {
     hmath_failed_tests++;
-    std::cerr << file << "["<< line <<"]: " << msg << std::endl;
-    std::cerr << "  Result  : " << result  << std::endl;
-    std::cerr << "  Expected: " << expected  << std::endl;
-    std::cerr << std::endl;
+    cerr << file << "[" << line << "]: " << msg << endl
+         << "  Result  : " << result   << endl
+         << "  Expected: " << expected << endl
+         << endl;
   }
   free( result );
 }
 
 void test_create()
 {
-  CHECK( HNumber("1.0"), "1" );
-  CHECK( HNumber("2.0"), "2" );
-  CHECK( HNumber("1e-3"), "0.001" );
+  CHECK( HNumber( "1.0"  ), "1"     );
+  CHECK( HNumber( "2.0"  ), "2"     );
+  CHECK( HNumber( "1e-3" ), "0.001" );
 
   // too large or too small
-  CHECK( HNumber("1e200"), "NaN" );
-  CHECK( HNumber("1e-200"), "NaN" );
-  CHECK_FORMAT( 'e', 2, HNumber("1e200"), "NaN" );
-  CHECK_FORMAT( 'e', 2, HNumber("1e-200"), "NaN" );
+  CHECK( HNumber( "1e200"  ), "NaN" );
+  CHECK( HNumber( "1e-200" ), "NaN" );
+  CHECK_FORMAT( 'e', 2, HNumber( "1e200"  ), "NaN" );
+  CHECK_FORMAT( 'e', 2, HNumber( "1e-200" ), "NaN" );
 }
 
 void test_format()
@@ -231,6 +238,7 @@ void test_functions()
   CHECK( HMath::abs("100"), "100" );
   CHECK( HMath::abs("-100"), "100" );
   CHECK( HMath::abs("-3.14159"), "3.14159" );
+  CHECK( HMath::abs("-0.00000014159"), "0.00000014159" );
   CHECK( HMath::abs("NaN"), "NaN" );
 
   // floor
@@ -251,6 +259,7 @@ void test_functions()
   CHECK( HMath::ceil( "-0.000001" ), "0" );
   CHECK( HMath::ceil( "NaN" ), "NaN" );
 
+  // gcd
   CHECK( HMath::gcd( "0", "0" ), "0" );
   CHECK( HMath::gcd( "0", "5" ), "5" );
   CHECK( HMath::gcd( "5", "0" ), "5" );
@@ -264,6 +273,8 @@ void test_functions()
   CHECK( HMath::gcd( "NaN", "NaN" ), "NaN" );
 
   // round
+  CHECK( HMath::round( "NaN" ), "NaN" );
+  CHECK( HMath::round( "0.005", 2 ), "0.01" );
   CHECK( HMath::round( "3.14" ), "3" );
   CHECK( HMath::round( "1.77" ), "2" );
   CHECK( HMath::round( "3.14159", 4 ), "3.1416" );
@@ -276,9 +287,11 @@ void test_functions()
   CHECK( HMath::round( "-2.6041980", 2 ), "-2.6" );
   CHECK( HMath::round( "-2.6041980", 1 ), "-2.6" );
   CHECK( HMath::round( "-2.6041980", 0 ), "-3" );
-  CHECK( HMath::round( "NaN" ), "NaN" );
 
   // trunc
+  CHECK( HMath::trunc( "NaN" ), "NaN" );
+  CHECK( HMath::trunc( "0" ), "0" );
+  CHECK( HMath::trunc( "0.00013", 4 ), "0.0001" );
   CHECK( HMath::trunc( "3.14" ), "3" );
   CHECK( HMath::trunc( "1.77" ), "1" );
   CHECK( HMath::trunc( "3.14159", 4 ), "3.1415" );
@@ -293,9 +306,9 @@ void test_functions()
   CHECK( HMath::trunc( "-2.6041980", 0 ), "-2" );
   CHECK( HMath::trunc( "-2.6041980", 999 ), "-2.604198" );
   CHECK( HMath::trunc( "-2.6041980", -2 ), "-2" );
-  CHECK( HMath::trunc( "NaN" ), "NaN" );
 
   // integer
+  CHECK( HMath::integer( "NaN" ), "NaN" );
   CHECK( HMath::integer( "0" ), "0" );
   CHECK( HMath::integer( "0.25" ), "0" );
   CHECK( HMath::integer( "0.85" ), "0" );
@@ -303,7 +316,6 @@ void test_functions()
   CHECK( HMath::integer( "-0.25" ), "0" );
   CHECK( HMath::integer( "-0.85" ), "0" );
   CHECK( HMath::integer( "-14.0377" ), "-14" );
-  CHECK( HMath::integer( "NaN" ), "NaN" );
 
   // frac
   CHECK( HMath::frac( "0" ), "0" );
@@ -314,6 +326,8 @@ void test_functions()
   CHECK( HMath::frac( "NaN" ), "NaN" );
 
   // sqrt
+  CHECK( HMath::sqrt("NaN"), "NaN" );
+  CHECK( HMath::sqrt(0), "0" );
   CHECK( HMath::sqrt(1), "1" );
   CHECK( HMath::sqrt(4), "2" );
   CHECK( HMath::sqrt(9), "3" );
@@ -337,9 +351,10 @@ void test_functions()
   CHECK( HMath::sqrt("0.09"), "0.3" );
   CHECK( HMath::sqrt("0.16"), "0.4" );
   CHECK( HMath::sqrt(-1), "NaN" );
-  CHECK( HMath::sqrt("NaN"), "NaN" );
 
   // cbrt
+  CHECK( HMath::cbrt("NaN"), "NaN" );
+  CHECK( HMath::cbrt(0), "0" );
   CHECK( HMath::cbrt(1), "1" );
   CHECK( HMath::cbrt(-1), "-1" );
   CHECK( HMath::cbrt(8), "2" );
@@ -348,30 +363,18 @@ void test_functions()
   CHECK( HMath::cbrt(-27), "-3" );
   CHECK( HMath::cbrt(64), "4" );
   CHECK( HMath::cbrt(-64), "-4" );
-  //CHECK_PRECISE( HMath::cbrt(2), "" );
-  //CHECK_PRECISE( HMath::cbrt(3), "" );
-  //CHECK_PRECISE( HMath::cbrt(5), "" );
-  //CHECK_PRECISE( HMath::cbrt(7), "" );
-  //CHECK_PRECISE( HMath::cbrt(8), "" );
-  //CHECK_PRECISE( HMath::cbrt(10), "" );
-  //CHECK_PRECISE( HMath::cbrt(11), "" );
-  //CHECK_PRECISE( HMath::cbrt(12), "" );
-  //CHECK_PRECISE( HMath::cbrt(13), "" );
-  //CHECK_PRECISE( HMath::cbrt(14), "" );
-  //CHECK_PRECISE( HMath::cbrt(15), "" );
-  //CHECK_PRECISE( HMath::cbrt(17), "" );
-  //CHECK_PRECISE( HMath::cbrt(18), "" );
-  //CHECK_PRECISE( HMath::cbrt(19), "" );
-  //CHECK_PRECISE( HMath::cbrt(20), "" );
+  CHECK_PRECISE( HMath::cbrt(2), "1.25992104989487316476721060727822835057025146470151" );
+  CHECK_PRECISE( HMath::cbrt(3), "1.44224957030740838232163831078010958839186925349935" );
+  CHECK_PRECISE( HMath::cbrt(-20), "-2.71441761659490657151808946967948920480510776948910" );
   CHECK( HMath::cbrt("0.008"), "0.2" );
   CHECK( HMath::cbrt("-0.008"), "-0.2" );
   CHECK( HMath::cbrt("0.027"), "0.3" );
   CHECK( HMath::cbrt("-0.027"), "-0.3" );
   CHECK( HMath::cbrt("0.064"), "0.4" );
   CHECK( HMath::cbrt("-0.064"), "-0.4" );
-  CHECK( HMath::cbrt("NaN"), "NaN" );
 
   // sign
+  CHECK( HMath::sign("NaN"), "NaN");
   CHECK( HMath::sign(0), "0");
   CHECK( HMath::sign(1), "1");
   CHECK( HMath::sign(-1), "-1");
@@ -401,31 +404,37 @@ void test_functions()
   CHECK( HMath::factorial("-5"), "NaN" );
 
   // nCr
-  CHECK( HMath::nCr(21,-1), "NaN"  );
-  CHECK( HMath::nCr(21,0),  "1"    );
-  CHECK( HMath::nCr(21,1),  "21"   );
-  CHECK( HMath::nCr(21,2),  "210"  );
-  CHECK( HMath::nCr(21,3),  "1330" );
-  CHECK( HMath::nCr(21,19), "210"  );
-  CHECK( HMath::nCr(21,20), "21"   );
-  CHECK( HMath::nCr(21,21), "1"    );
-  CHECK( HMath::nCr(21,22), "NaN"  );
-  CHECK( HMath::nCr(-21,2), "NaN"  );
-  CHECK( HMath::nCr(0,0),   "1"    );
+  CHECK( HMath::nCr( "NaN", 5     ), "NaN"  );
+  CHECK( HMath::nCr( 5,     "NaN" ), "NaN"  );
+  CHECK( HMath::nCr( "NaN", "NaN" ), "NaN"  );
+  CHECK( HMath::nCr( 21,    -1    ), "NaN"  );
+  CHECK( HMath::nCr( 21,    0     ), "1"    );
+  CHECK( HMath::nCr( 21,    1     ), "21"   );
+  CHECK( HMath::nCr( 21,    2     ), "210"  );
+  CHECK( HMath::nCr( 21,    3     ), "1330" );
+  CHECK( HMath::nCr( 21,    19    ), "210"  );
+  CHECK( HMath::nCr( 21,    20    ), "21"   );
+  CHECK( HMath::nCr( 21,    21    ), "1"    );
+  CHECK( HMath::nCr( 21,    22    ), "NaN"  );
+  CHECK( HMath::nCr( -21,   2     ), "NaN"  );
+  CHECK( HMath::nCr( 0,     0     ), "1"    );
 
   // nPr
-  CHECK( HMath::nPr( 21,-1), "NaN"       );
-  CHECK( HMath::nPr( 21, 0), "1"         );
-  CHECK( HMath::nPr( 21, 1), "21"        );
-  CHECK( HMath::nPr( 21, 2), "420"       );
-  CHECK( HMath::nPr( 21, 3), "7980"      );
-  CHECK( HMath::nPr( 21, 4), "143640"    );
-  CHECK( HMath::nPr( 21, 5), "2441880"   );
-  CHECK( HMath::nPr( 21, 6), "39070080"  );
-  CHECK( HMath::nPr( 21, 7), "586051200" );
-  CHECK( HMath::nPr( 21,22), "NaN"       );
-  CHECK( HMath::nPr(-21, 2), "NaN"       );
-  CHECK( HMath::nPr(  0, 0), "1"         );
+  CHECK( HMath::nPr( "NaN", 5     ), "NaN"       );
+  CHECK( HMath::nPr( 5,     "NaN" ), "NaN"       );
+  CHECK( HMath::nPr( "NaN", "NaN" ), "NaN"       );
+  CHECK( HMath::nPr( 21,    -1    ), "NaN"       );
+  CHECK( HMath::nPr( 21,    0     ), "1"         );
+  CHECK( HMath::nPr( 21,    1     ), "21"        );
+  CHECK( HMath::nPr( 21,    2     ), "420"       );
+  CHECK( HMath::nPr( 21,    3     ), "7980"      );
+  CHECK( HMath::nPr( 21,    4     ), "143640"    );
+  CHECK( HMath::nPr( 21,    5     ), "2441880"   );
+  CHECK( HMath::nPr( 21,    6     ), "39070080"  );
+  CHECK( HMath::nPr( 21,    7     ), "586051200" );
+  CHECK( HMath::nPr( 21,    22    ), "NaN"       );
+  CHECK( HMath::nPr( -21,   2     ), "NaN"       );
+  CHECK( HMath::nPr( 0,     0     ), "1"         );
 
   // raise
   CHECK( HMath::raise(10,-3), "0.001" );
@@ -444,8 +453,11 @@ void test_functions()
   CHECK_PRECISE( HMath::raise("2","0.3"), "1.23114441334491628449939306916774310987613776110082" );
   CHECK( HMath::raise("NaN","0"), "NaN" );
   CHECK( HMath::raise("-1","NaN"), "NaN" );
+  CHECK( HMath::raise("NaN","NaN"), "NaN" );
 
   // exp
+  CHECK( HMath::exp( "NaN" ), "NaN" );
+  CHECK( HMath::exp( "0"   ), "1" );
   CHECK_PRECISE( HMath::exp("0.1"), "1.10517091807564762481170782649024666822454719473752" );
   CHECK_PRECISE( HMath::exp("0.2"), "1.22140275816016983392107199463967417030758094152050" );
   CHECK_PRECISE( HMath::exp("0.3"), "1.34985880757600310398374431332800733037829969735937" );
@@ -459,6 +471,9 @@ void test_functions()
   CHECK_PRECISE( HMath::exp("100"), "26881171418161354484126255515800135873611118.77374192241519160861528028703490956491415887109722" );
 
   // ln
+  CHECK( HMath::ln( "NaN" ), "NaN" );
+  CHECK( HMath::ln( "0"   ), "NaN" );
+  CHECK( HMath::ln( "0.00000000001"), "-25.3284360229345025242" );
   CHECK_PRECISE( HMath::ln("0.1"), "-2.30258509299404568401799145468436420760110148862877" );
   CHECK_PRECISE( HMath::ln("0.2"), "-1.60943791243410037460075933322618763952560135426852" );
   CHECK_PRECISE( HMath::ln("0.3"), "-1.20397280432593599262274621776183850295361093080602" );
@@ -499,6 +514,8 @@ void test_functions()
   CHECK( HMath::log("1e10"), "10" );
   CHECK( HMath::log("-1"), "NaN" );
   CHECK( HMath::log("NaN"), "NaN" );
+  CHECK( HMath::log("0"), "NaN" );
+  CHECK( HMath::log("0.00000000001"), "-11" );
 
   // lg
   CHECK( HMath::lg("1"), "0" );
@@ -509,19 +526,26 @@ void test_functions()
   CHECK( HMath::lg("32"), "5" );
   CHECK( HMath::lg("-1"), "NaN" );
   CHECK( HMath::lg("NaN"), "NaN" );
+  CHECK( HMath::lg("32"), "5" );
+  CHECK( HMath::lg("0"), "NaN" );
+  CHECK( HMath::lg("0.00000000001"), "-36.54120904376098582657" );
 
   // sin
-  CHECK( HMath::sin( "0" ), "0" );
-  CHECK( HMath::sin( PI/4 ), "0.7071067811865475244" );
-  CHECK( HMath::sin( PI/3 ), "0.86602540378443864676");
-  CHECK( HMath::sin( PI/2 ), "1" );
-  CHECK( HMath::sin( PI/1 ), "0" );
-  CHECK( HMath::sin( PI*2/3 ), "0.86602540378443864676");
-  CHECK( HMath::sin( PI*4/3 ), "-0.86602540378443864676");
-  CHECK( HMath::sin( PI*5/3 ), "-0.86602540378443864676");
-  CHECK( HMath::sin( PI*6/3 ), "0");
-  CHECK( HMath::sin( PI*7/3 ), "0.86602540378443864676");
-  CHECK( HMath::sin( PI*9/3 ), "0");
+  CHECK( HMath::sin( "NaN"   ), "NaN" );
+  CHECK( HMath::sin( "0"     ), "0"   );
+  CHECK( HMath::sin( PI/4    ), "0.7071067811865475244"   );
+  CHECK( HMath::sin( PI/3    ), "0.86602540378443864676"  );
+  CHECK( HMath::sin( PI/2    ), "1"   );
+  CHECK( HMath::sin( PI      ), "0"   );
+  CHECK( HMath::sin( PI*2    ), "0"   );
+  CHECK( HMath::sin( PI*(-1) ), "0"   );
+  CHECK( HMath::sin( PI*(-3) ), "0"   );
+  CHECK( HMath::sin( PI*2/3  ), "0.86602540378443864676"  );
+  CHECK( HMath::sin( PI*4/3  ), "-0.86602540378443864676" );
+  CHECK( HMath::sin( PI*5/3  ), "-0.86602540378443864676" );
+  CHECK( HMath::sin( PI*6/3  ), "0"   );
+  CHECK( HMath::sin( PI*7/3  ), "0.86602540378443864676"  );
+  CHECK( HMath::sin( PI*9/3  ), "0"   );
   CHECK_PRECISE( HMath::sin("0.0"), "0.00000000000000000000000000000000000000000000000000" );
   CHECK_PRECISE( HMath::sin("0.1"), "0.09983341664682815230681419841062202698991538801798" );
   CHECK_PRECISE( HMath::sin("0.2"), "0.19866933079506121545941262711838975037020672954021" );
@@ -539,11 +563,14 @@ void test_functions()
   CHECK_PRECISE( HMath::sin("5.0"), "-0.95892427466313846889315440615599397335246154396460" );
 
   // cos
+  CHECK( HMath::cos( "NaN" ), "NaN" );
   CHECK( HMath::cos( "0" ), "1" );
   CHECK( HMath::cos( PI/4 ), "0.7071067811865475244" );
   CHECK( HMath::cos( PI/3 ), "0.5");
   CHECK( HMath::cos( PI/2 ), "0" );
   CHECK( HMath::cos( PI/1 ), "-1" );
+  CHECK( HMath::cos( PI*3/2 ), "0");
+  CHECK( HMath::cos( PI/2*(-1)*9 ), "0");
   CHECK( HMath::cos( PI*2/3 ), "-0.5");
   CHECK( HMath::cos( PI*4/3 ), "-0.5");
   CHECK( HMath::cos( PI*5/3 ), "0.5");
@@ -571,16 +598,16 @@ void test_functions()
 
   // tan
   CHECK( HMath::tan( "NaN"     ), "NaN" );
-  CHECK( HMath::tan( PI/4      ), "1" );
-  CHECK( HMath::tan( PI/3      ), "1.73205080756887729353");
-  CHECK( HMath::tan( PI/1      ), "0" );
+  CHECK( HMath::tan( PI/4      ), "1"   );
+  CHECK( HMath::tan( PI/3      ), "1.73205080756887729353" );
+  CHECK( HMath::tan( PI/1      ), "0"   );
   CHECK( HMath::tan( PI/2      ), "NaN" );
   CHECK( HMath::tan( PI/2*3    ), "NaN" );
   CHECK( HMath::tan( PI/2*5    ), "NaN" );
   CHECK( HMath::tan( PI/2*(-3) ), "NaN" );
   CHECK( HMath::tan( PI/2*(-5) ), "NaN" );
-  CHECK( HMath::tan( PI*(-3)   ), "0" );
-  CHECK( HMath::tan( PI*11     ), "0" );
+  CHECK( HMath::tan( PI*(-3)   ), "0"   );
+  CHECK( HMath::tan( PI*11     ), "0"   );
   CHECK_PRECISE( HMath::tan("0.0"), "0.00000000000000000000000000000000000000000000000000" );
   CHECK_PRECISE( HMath::tan("0.1"), "0.10033467208545054505808004578111153681900480457644" );
   CHECK_PRECISE( HMath::tan("0.2"), "0.20271003550867248332135827164753448262687566965163" );
@@ -684,6 +711,7 @@ void test_functions()
   CHECK_PRECISE( HMath::csc("4.0"), "-1.32134870881090237769679175637286490993025203772967" );
 
   // atan
+  CHECK( HMath::atan( "NaN" ), "NaN" );
   CHECK_PRECISE( HMath::atan("0.0"), "0.00000000000000000000000000000000000000000000000000" );
   CHECK_PRECISE( HMath::atan("0.1"), "0.09966865249116202737844611987802059024327832250431" );
   CHECK_PRECISE( HMath::atan("0.2"), "0.19739555984988075837004976519479029344758510378785" );
@@ -701,6 +729,7 @@ void test_functions()
   CHECK_PRECISE( HMath::atan("-1.0"), "-0.78539816339744830961566084581987572104929234984378" );
 
   // asin
+  CHECK( HMath::asin( "NaN" ), "NaN" );
   CHECK_PRECISE( HMath::asin("0.0"), "0.00000000000000000000000000000000000000000000000000" );
   CHECK_PRECISE( HMath::asin("0.1"), "0.10016742116155979634552317945269331856867597222963" );
   CHECK_PRECISE( HMath::asin("0.2"), "0.20135792079033079145512555221762341024003808140223" );
@@ -708,6 +737,7 @@ void test_functions()
   CHECK_PRECISE( HMath::asin("0.4"), "0.41151684606748801938473789761733560485570113512703" );
 
   // acos
+  CHECK( HMath::acos( "NaN" ), "NaN" );
   CHECK_PRECISE( HMath::acos("0.1"), "1.47062890563333682288579851218705812352990872745792" );
   CHECK_PRECISE( HMath::acos("0.2"), "1.36943840600456582777619613942212803185854661828532" );
   CHECK_PRECISE( HMath::acos("0.3"), "1.26610367277949911125931873041222227514402466798078" );
@@ -736,6 +766,7 @@ void test_functions()
   CHECK( HMath::asin("0.71735609089952276162717461058138536619278523779142" ), "0.8");
 
   // sinh
+  CHECK( HMath::sinh( "NaN" ), "NaN" );
   CHECK_PRECISE( HMath::sinh("0.1"), "0.10016675001984402582372938352190502351492091687856" );
   CHECK_PRECISE( HMath::sinh("0.2"), "0.20133600254109398762556824301031737297449484262574" );
   CHECK_PRECISE( HMath::sinh("0.3"), "0.30452029344714261895843526700509522909802423268018" );
@@ -748,6 +779,7 @@ void test_functions()
   CHECK_PRECISE( HMath::sinh("1.0"), "1.17520119364380145688238185059560081515571798133410" );
 
   // cosh
+  CHECK( HMath::cosh( "NaN" ), "NaN" );
   CHECK_PRECISE( HMath::cosh("0.1"), "1.00500416805580359898797844296834164470962627785896" );
   CHECK_PRECISE( HMath::cosh("0.2"), "1.02006675561907584629550375162935679733308609889476" );
   CHECK_PRECISE( HMath::cosh("0.3"), "1.04533851412886048502530904632291210128027546467919" );
@@ -763,7 +795,7 @@ void test_functions()
 
 int main(int argc, char** argv)
 {
-  hmath_total_tests = 0;
+  hmath_total_tests  = 0;
   hmath_failed_tests = 0;
 
   test_create();
@@ -771,8 +803,9 @@ int main(int argc, char** argv)
   test_op();
   test_functions();
 
-  std::cerr << hmath_total_tests << " total, ";
-  std::cerr << hmath_failed_tests << " failed\n";
+  std::cerr << hmath_total_tests  << " total, "
+            << hmath_failed_tests << " failed"
+			<< endl;
 
   HMath::finalize();
   return hmath_failed_tests;
