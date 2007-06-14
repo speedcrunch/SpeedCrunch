@@ -10,8 +10,8 @@ New features:
  option to hide from taskbar and minimize to system tray
 
 New functions:
- MIN: get the minimum 
- MAX: get the minimum 
+ MIN: get the minimum
+ MAX: get the maximum
  SUM: sum of all numbers
  PRODUCT: product of all numbers
  AVERAGE: average or mean
