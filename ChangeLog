@@ -1,35 +1,52 @@
 SpeedCrunch post 0.7
 ---------------------
-binary is now relocatable (using BinReloc)
-support for different bases: hex, octal and binary
-new functions: MIN, MAX, SUM, PRODUCT, AVERAGE, GEOMEAN
-new functions: SIGN, DEGREES, RADIANS, LG
-postfix factorial operator (!)
-history, functions, variables, constants in docked/floated windows
-support inserting important physics constants
-fixed accuracy problem when calculating 10^x where x is integer
-fixed exp(x) when x is large
-shortcut Ctrl+Q to quit (ubuntu bug#102734)
-improved (and non-intrusive) autocalc tip
-color for error messages can be customized
-option to hide from taskbar and minimize to system tray
-"tip of the day" feature
-variable names are now case sensitive
-reserved variable names are now case sensitive "pi" and "ans"
-added shortcut key F6 to focus and select input
-added cbrt(x) function (cube root)
-added trunc(x) and trunc(x,y) functions (truncation)
-added floor(x) and ceil(x) functions
-added round(x,y) function (decimal digit precision)
-added ncr(n,r) and npr(n,r) functions (combination and permutation)
-fixed issue #33: exponential notation misnamed
-fixed issue #32: crash when inserting ( after variable
-added engineering notation
-added gcd function (with multiple arguments support)
-improved error system and messages
-added cot(x), sec(x) and csc(x) functions
-minor fixed tan(x)
-added shortcut key Esc to clear the input
+New features:
+ support for different bases: hex, octal and binary
+ postfix factorial operator (!)
+ support inserting important physics constants
+ history, functions, variables, constants in docked/floated windows
+ added engineering notation
+ "tip of the day"
+ option to hide from taskbar and minimize to system tray
+
+New functions:
+ MIN: get the minimum 
+ MAX: get the minimum 
+ SUM: sum of all numbers
+ PRODUCT: product of all numbers
+ AVERAGE: average or mean
+ GEOMEAN: geometrical mean
+ SIGN: signum
+ DEGREES: convert radian to degree
+ RADIANS: convert degree to radian
+ LG: base-2 logarithm
+ CBRT: cubic root
+ TRUNC: truncate digits
+ FLOOR: floor
+ CEIL: ceiling
+ ROUND: round number
+ NCR: combination
+ NPR: permutation
+ GCD: greatest common divisor
+ SEC: secant
+ CSC: cosecant
+ COT: cotangent
+
+Improvements and bug fixes:
+ fixed accuracy problem when calculating 10^x where x is integer
+ variable names are now case sensitive
+ shortcut Ctrl+Q to quit (ubuntu bug#102734)
+ shortcut key F6 to focus and select input
+ shortcut key Esc to clear the input
+ improved (and non-intrusive) autocalc tip
+ reserved variable names are now case sensitive "pi" and "ans"
+ color for error messages can be customized
+ fixed exp(x) when x is large
+ improved error system and messages
+ fixed issue #33: exponential notation misnamed
+ fixed issue #32: crash when inserting ( after variable
+ minor fixed for function tan(x)
+ binary is now relocatable (using BinReloc)
 
 SpeedCrunch 0.7
 ---------------
