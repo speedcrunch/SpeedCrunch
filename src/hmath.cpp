@@ -1953,6 +1953,23 @@ HNumber HMath::factorial( const HNumber& x, const HNumber& base )
   return result;
 }
 
+HNumber HMath::binomialDistribution( const HNumber & k,
+                                     const HNumber & n,
+                                     const HNumber & p  )
+{
+	if ( k.isNan() || n.isNan() || p.isNan()
+        || k < 0 || k > n
+        || n < 0 || ! n.isInteger()
+        || p < 0 || p > 1                  )
+  {
+    // invalid usage
+    return HNumber::nan();
+  }
+
+  return HMath::nCr( n, k ) * HMath::raise( p, k ) *
+           HMath::raise( HNumber(1)-p, n-k );
+}
+
 void HMath::finalize()
 {
   bc_free_num( &_zero_ );
