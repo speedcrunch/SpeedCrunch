@@ -605,51 +605,104 @@ HNumber function_bin( const Evaluator*, Function*, const FunctionArguments& args
   return result;
 }
 
-HNumber function_binomdist( const Evaluator *, Function * fn, const FunctionArguments & args )
+HNumber function_binomdist( const Evaluator         * evaluator,
+                                  Function          * function,
+                            const FunctionArguments & arguments  )
 {
-  if( args.count() != 3 )
+  if( arguments.count() != 3 )
     return HNumber::nan();
 
-  HNumber k = args[0];
-  HNumber n = args[1];
-  HNumber p = args[2];
+  HNumber k = arguments[0];
+  HNumber n = arguments[1];
+  HNumber p = arguments[2];
 
   if ( ! k.isInteger() )
   {
-    fn->setError( fn->name(), QApplication::translate( "functions",
-      "function requires integer first parameter" ) );
+    function->setError( function->name(),
+                        QApplication::translate( "functions",
+                          "function requires integer first parameter" ) );
     return HNumber::nan();
   }
 
   if ( ! n.isInteger() )
   {
-    fn->setError( fn->name(), QApplication::translate( "functions",
-      "function requires integer second parameter" ) );
+    function->setError( function->name(),
+                        QApplication::translate( "functions",
+                          "function requires integer second parameter" ) );
     return HNumber::nan();
   }
 
   if ( n < 0 )
   {
-    fn->setError( fn->name(), QApplication::translate( "functions",
+    function->setError( function->name(), QApplication::translate( "functions",
       "function requires non-negative second parameter" ) );
     return HNumber::nan();
   }
 
   if ( p < 0 || p > 1 )
   {
-    fn->setError( fn->name(), QApplication::translate( "functions",
+    function->setError( function->name(), QApplication::translate( "functions",
       "function requires third parameter in [0,1]" ) );
     return HNumber::nan();
   }
 
   if ( k < 0 || k > n )
   {
-    fn->setError( fn->name(), QApplication::translate( "functions",
+    function->setError( function->name(), QApplication::translate( "functions",
       "function requires first parameter in [0,<second parameter>]" ) );
     return HNumber::nan();
   }
 
   return HMath::binomialDistribution( k, n, p );
+}
+
+HNumber function_binomdistcumul( const Evaluator         * evaluator,
+                                       Function          * function,
+                                 const FunctionArguments & arguments  )
+{
+  if( arguments.count() != 3 )
+    return HNumber::nan();
+
+  HNumber k = arguments[0];
+  HNumber n = arguments[1];
+  HNumber p = arguments[2];
+
+  if ( ! k.isInteger() )
+  {
+    function->setError( function->name(), QApplication::translate( "functions",
+      "function requires integer first parameter" ) );
+    return HNumber::nan();
+  }
+
+  if ( ! n.isInteger() )
+  {
+    function->setError( function->name(), QApplication::translate( "functions",
+      "function requires integer second parameter" ) );
+    return HNumber::nan();
+  }
+
+  if ( n < 0 )
+  {
+    function->setError( function->name(), QApplication::translate( "functions",
+      "function requires non-negative second parameter" ) );
+    return HNumber::nan();
+  }
+
+  if ( p < 0 || p > 1 )
+  {
+    function->setError( function->name(), QApplication::translate( "functions",
+      "function requires third parameter in [0,1]" ) );
+    return HNumber::nan();
+  }
+
+  if ( k < 0 || k > n )
+  {
+    function->setError( function->name(), QApplication::translate( "functions",
+      "function requires first parameter in [0,<second parameter>]" ) );
+    return HNumber::nan();
+  }
+
+  return HMath::binomialDistributionCumulative( k, n, p );
 }
 
 class FunctionPrivate
@@ -785,13 +838,17 @@ FunctionRepository::FunctionRepository()
   add( new Function( "npr",  2, function_nPr, QT_TR_NOOP("Permutation (Arrangement)")          ) );
 
   // Mathematics / Probability
-  add( new Function( "binomdist",      3, function_binomdist, QT_TR_NOOP("Binomial Distribution") ) );
-  //add( new Function( "binomdistmean",  3, function_hypgeomdistsup, QT_TR_NOOP("Binomial Distribution Mean")       ) );
-  //add( new Function( "binomdistvar",   3, function_hypgeomdistsup, QT_TR_NOOP("Binomial Distribution Variance")   ) );
+  add( new Function( "binomdist", 3, function_binomdist,
+                     QT_TR_NOOP("Binomial Discrete Distribution") ) );
+  add( new Function( "binomdistcumul", 3, function_binomdistcumul,
+                     QT_TR_NOOP("Cumulative Binomial Discrete Distribution") ));
 
-  //add( new Function( "hypgeomdist",      4, function_hypgeomdist,    QT_TR_NOOP("Hypergeometric Distribution")            ) );
-  //add( new Function( "hypgeomdistmean",  4, function_hypgeomdistinf, QT_TR_NOOP("Hypergeometric Distribution Mean")       ) );
-  //add( new Function( "hypgeomdistvar",   4, function_hypgeomdistsup, QT_TR_NOOP("Hypergeometric Distribution Variance)")  ) );
+  //add( new Function( "binomdistmean",  3, function_binomdistmean, QT_TR_NOOP("Binomial Distribution Mean") ) );
+  //add( new Function( "binomdistvar",   3, function_binomdistvar, QT_TR_NOOP("Binomial Distribution Variance")   ) );
+
+  //add( new Function( "hyperdist",      4, function_hypgeomdist,    QT_TR_NOOP("Hypergeometric Distribution")            ) );
+  //add( new Function( "hyperdistmean",  4, function_hypgeomdistinf, QT_TR_NOOP("Hypergeometric Distribution Mean")       ) );
+  //add( new Function( "hyperdistvar",   4, function_hypgeomdistsup, QT_TR_NOOP("Hypergeometric Distribution Variance)")  ) );
 
   //add( new Function( "poisondist",      2, function_hypgeomdist,    QT_TR_NOOP("Poisson Distribution")            ) );
   //add( new Function( "poisondistmean",  2, function_hypgeomdistinf, QT_TR_NOOP("Poisson Distribution Mean")       ) );

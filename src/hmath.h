@@ -441,8 +441,7 @@ public:
                                    PROBABILITY
                                                                               */
   /**
-   * Calculates the probability of an exact number of successes of a random
-   * variable that follows a binomial discrete probability distribution:
+   * Calculates the binomial discrete distribution probability mass function:
    * \f[ X{\sim}B(n,p) \f]
    * \f[ f(k;n,p) = {\Pr}(X=k) = {n \choose k}p^{k}(1-p)^{n-k} \f]
    *
@@ -458,6 +457,22 @@ public:
                                        const HNumber & n,
                                        const HNumber & p  );
 
+  /**
+   * Calculates the binomial discrete distribution cumulative function:
+   * \f[ X{\sim}B(n,p) \f]
+   * \f[ f(k;n,p)={\Pr}(X \leq k)=\sum_{i=0}^{k}{n \choose i}p^{i}(1-p)^{n-i}\f]
+   *
+   * \param[in] k the number of probed exact successes
+   * \param[in] n the number of trials
+   * \param[in] p the probability of success in a single trial
+   *
+   * \return the probability of up to \p k successes (given \p n trials and
+   * \p probability of success in a single trial), otherwise \p NaN if the
+   * function is not defined for the specified parameters.
+   */
+  static HNumber binomialDistributionCumulative( const HNumber & k,
+                                                 const HNumber & n,
+                                                 const HNumber & p  );
 
   /*!
    * Releases all resources. After calling this function, you can not use

@@ -1970,6 +1970,26 @@ HNumber HMath::binomialDistribution( const HNumber & k,
            HMath::raise( HNumber(1)-p, n-k );
 }
 
+HNumber HMath::binomialDistributionCumulative( const HNumber & k,
+                                               const HNumber & n,
+                                               const HNumber & p  )
+{
+	if ( k.isNan() || n.isNan() || p.isNan()
+        || k < 0 || k > n
+        || n < 0 || ! n.isInteger()
+        || p < 0 || p > 1                  )
+  {
+    // invalid usage
+    return HNumber::nan();
+  }
+
+  HNumber result( 0 );
+  for ( HNumber i( 0 ); i <= floor( k ); i += 1 )
+    result += HMath::nCr( n, i ) * HMath::raise( p, i )
+                * HMath::raise( HNumber(1)-p, n-i );
+  return result;
+}
+
 void HMath::finalize()
 {
   bc_free_num( &_zero_ );
