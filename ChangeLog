@@ -36,6 +36,7 @@ New functions:
  BINOMMEAN: binomial distribution mean
  BINOMVAR: binomial distribution variance
  POIPMF: poissonian probability mass function
+ POICDF: poissonian cumulative distribution function
 
 Improvements and bug fixes:
  fixed accuracy problem when calculating 10^x where x is integer

@@ -517,6 +517,22 @@ public:
   static HNumber poissonPmf( const HNumber & k,
                              const HNumber & l  );
 
+  /**
+   * Calculates the poissonian cumulative distribution function:
+   * \f[X{\sim}P(\lambda)\f]
+   * \f[F(k;\lambda)={\Pr}(X \leq k)
+   *   =\sum_{i=0}^{k}\frac{e^{-\lambda}\lambda^k}{k!}\f]
+   *
+   * \param[in] k the number of event occurrences
+   * \param[in] l the expected number of occurrences that occur in an interval
+   *
+   * \return the probability of exactly \p k event occurrences (given \p l
+   * expected occurrences in a time interval), otherwise \p NaN if the
+   * function is not defined for the specified parameters.
+   */
+  static HNumber poissonCdf( const HNumber & k,
+                             const HNumber & l  );
+
   /*!
    * Releases all resources. After calling this function, you can not use
    * any other functions as well as class HNumber.

@@ -798,6 +798,41 @@ HNumber function_poipmf( const Evaluator         * evaluator,
   return HMath::poissonPmf( k, l );
 }
 
+HNumber function_poicdf( const Evaluator         * evaluator,
+                               Function          * function,
+                         const FunctionArguments & arguments  )
+{
+  if ( arguments.count() != 2 )
+    return HNumber::nan();
+
+  HNumber k = arguments[0];
+  HNumber l = arguments[1];
+
+  if ( ! k.isInteger() )
+  {
+    function->setError( function->name(),
+                        QApplication::translate( "functions",
+                          "function requires integer first parameter" ) );
+    return HNumber::nan();
+  }
+  if ( k < 0 )
+  {
+    function->setError( function->name(),
+                        QApplication::translate( "functions",
+                          "function requires non-negative first parameter" ) );
+    return HNumber::nan();
+  }
+  if ( l < 0 )
+  {
+    function->setError( function->name(),
+                        QApplication::translate( "functions",
+                          "function requires positive second parameter" ) );
+    return HNumber::nan();
+  }
+
+  return HMath::poissonCdf( k, l );
+}
+
 class FunctionPrivate
 {
 public:
@@ -901,7 +936,7 @@ FunctionRepository::FunctionRepository()
                                      ANALYSIS
                                                                               */
   add( new Function( "abs",     1, function_abs,
-                     QT_TR_NOOP("Absolute")                   ) );
+                     QT_TR_NOOP("Absolute Value")             ) );
   add( new Function( "average",    function_average,
                      QT_TR_NOOP("Average (Arithmetic Mean)")  ) );
   add( new Function( "log",     1, function_log,
@@ -917,17 +952,17 @@ FunctionRepository::FunctionRepository()
   add( new Function( "dec",        function_dec,
                      QT_TR_NOOP("Decimal Representation")     ) );
   add( new Function( "exp",     1, function_exp,
-                     QT_TR_NOOP("Exponent")                   ) );
+                     QT_TR_NOOP("Exponential")                ) );
   add( new Function( "floor",   1, function_floor,
                      QT_TR_NOOP("Floor")                      ) );
   add( new Function( "frac",    1, function_frac,
-                     QT_TR_NOOP("Fraction")                   ) );
+                     QT_TR_NOOP("Fractional Part")            ) );
   add( new Function( "geomean",    function_geomean,
                      QT_TR_NOOP("Geometric Mean")             ) );
   add( new Function( "hex",        function_hex,
                      QT_TR_NOOP("Hexadecimal Representation") ) );
   add( new Function( "int",     1, function_int,
-                     QT_TR_NOOP("Integer")                    ) );
+                     QT_TR_NOOP("Integer Part")               ) );
   add( new Function( "max",        function_max,
                      QT_TR_NOOP("Maximum")                    ) );
   add( new Function( "min",        function_min,
@@ -961,13 +996,13 @@ FunctionRepository::FunctionRepository()
                                     PROBABILITY
                                                                               */
   add( new Function( "binompmf",      3, function_binompmf,
-                     QT_TR_NOOP("Binomial Probability Mass Function") ) );
+                     QT_TR_NOOP("Binomial Probability Mass Function")        ));
   add( new Function( "binomcdf", 3, function_binomcdf,
                      QT_TR_NOOP("Binomial Cumulative Distribution Function") ));
   add( new Function( "binommean",  2, function_binommean,
-                     QT_TR_NOOP("Binomial Distribution Mean")       ) );
+                     QT_TR_NOOP("Binomial Distribution Mean")                ));
   add( new Function( "binomvar",   2, function_binomvar,
-                     QT_TR_NOOP("Binomial Distribution Variance")   ) );
+                     QT_TR_NOOP("Binomial Distribution Variance")            ));
   //add( new Function( "hyperpmf",  4, function_hyperpmf,
   //                   QT_TR_NOOP("Hypergeometric Probability Mass Function")));
   //add( new Function( "hypercdf",  4, function_hypercdf,
@@ -977,13 +1012,13 @@ FunctionRepository::FunctionRepository()
   //add( new Function( "hypervar",  4, function_hypervar,
   //                   QT_TR_NOOP("Hypergeometric Distribution Variance)")  ) );
   add( new Function( "poipmf", 2, function_poipmf,
-                     QT_TR_NOOP("Poisson Probability Mass Function")  ) );
-  //add( new Function( "poicdf", 2, function_poicdf,
-  //                   QT_TR_NOOP("Poisson Cumulative Distribution Function")));
+                     QT_TR_NOOP("Poissonian Probability Mass Function")     ) );
+  add( new Function( "poicdf", 2, function_poicdf,
+                    QT_TR_NOOP("Poissonian Cumulative Distribution Function")));
   //add( new Function( "poimean",  2, function_poimean,
-  //                   QT_TR_NOOP("Poisson Distribution Mean")       ) );
+  //                   QT_TR_NOOP("Poissonian Distribution Mean")       ) );
   //add( new Function( "poivar",   2, function_poivar,
-  //                   QT_TR_NOOP("Poisson Distribution Variance")   ) );
+  //                   QT_TR_NOOP("Poissonian Distribution Variance")   ) );
   /*
                                    TRIGONOMETRY
                                                                               */
@@ -1002,7 +1037,7 @@ FunctionRepository::FunctionRepository()
   add( new Function( "cosh",    1, function_cosh,
                      QT_TR_NOOP("Hyperbolic Cosine")  ) );
   add( new Function( "degrees", 1, function_degrees,
-                     QT_TR_NOOP("Degrees")            ) );
+                     QT_TR_NOOP("Degrees Of Arc")     ) );
   add( new Function( "radians", 1, function_radians,
                      QT_TR_NOOP("Radians")            ) );
   add( new Function( "sinh",    1, function_sinh,

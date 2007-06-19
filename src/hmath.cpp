@@ -1957,9 +1957,9 @@ HNumber HMath::binomialPmf( const HNumber & k,
                             const HNumber & n,
                             const HNumber & p  )
 {
-	if ( k.isNan() || k < 0 || k > n
+	if ( k.isNan() || ! k.isInteger() || k < 0 || k > n
         || n.isNan() || n < 0 || ! n.isInteger()
-        || p.isNan() || p < 0 || p > 1           )
+        || p.isNan() || p < 0 || p > 1 )
   {
     // invalid usage
     return HNumber::nan();
@@ -1973,16 +1973,16 @@ HNumber HMath::binomialCdf( const HNumber & k,
                             const HNumber & n,
                             const HNumber & p  )
 {
-	if ( k.isNan() || k < 0 || k > n
+	if ( k.isNan() || ! k.isInteger() || k < 0 || k > n
         || n.isNan() || n < 0 || ! n.isInteger()
-        || p.isNan() || p < 0 || p > 1           )
+        || p.isNan() || p < 0 || p > 1 )
   {
     // invalid usage
     return HNumber::nan();
   }
 
   HNumber result( 0 );
-  for ( HNumber i( 0 ); i <= floor( k ); i += 1 )
+  for ( HNumber i( 0 ); i <= k; i += 1 )
     result += HMath::nCr( n, i ) * HMath::raise( p, i )
                 * HMath::raise( HNumber(1)-p, n-i );
   return result;
@@ -1992,7 +1992,7 @@ HNumber HMath::binomialMean( const HNumber & n,
                              const HNumber & p  )
 {
 	if ( n.isNan() || n < 0 || ! n.isInteger()
-        || p.isNan() || p < 0 || p > 1       )
+        || p.isNan() || p < 0 || p > 1 )
   {
     // invalid usage
     return HNumber::nan();
@@ -2005,7 +2005,7 @@ HNumber HMath::binomialVariance( const HNumber & n,
                                  const HNumber & p  )
 {
 	if ( n.isNan() || n < 0 || ! n.isInteger()
-        || p.isNan() || p < 0 || p > 1       )
+        || p.isNan() || p < 0 || p > 1 )
   {
     // invalid usage
     return HNumber::nan();
@@ -2025,6 +2025,23 @@ HNumber HMath::poissonPmf( const HNumber & k,
   }
 
   return exp( l*(-1) ) * raise( l, k ) / factorial( k );
+}
+
+HNumber HMath::poissonCdf( const HNumber & k,
+                           const HNumber & l  )
+{
+	if ( k.isNan() || k < 0 || ! k.isInteger()
+        || l < 0 )
+  {
+    // invalid usage
+    return HNumber::nan();
+  }
+
+  HNumber result( 0 );
+  for ( HNumber i( 0 ); i <= k; i += 1 )
+    result += exp( l*(-1) ) * raise( l, i ) / factorial( i );
+
+  return result;
 }
 
 void HMath::finalize()
