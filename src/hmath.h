@@ -474,6 +474,34 @@ public:
                                                  const HNumber & n,
                                                  const HNumber & p  );
 
+  /**
+   * Calculates the expected value of a binomially distributed random variable:
+   * \f[ X{\sim}B(n,p) \f]
+   * \f[ E(x) = np
+   *
+   * \param[in] n the number of trials
+   * \param[in] p the probability of success in a single trial
+   *
+   * \return the expected value of the variable, otherwise \p NaN if the
+   * function is not defined for the specified parameters.
+   */
+  static HNumber binomialDistributionMean( const HNumber & n,
+                                           const HNumber & p  );
+
+  /**
+   * Calculates the variance of a binomially distributed random variable:
+   * \f[ X{\sim}B(n,p) \f]
+   * \f[ E(x) = np(1-p)
+   *
+   * \param[in] n the number of trials
+   * \param[in] p the probability of success in a single trial
+   *
+   * \return the variance of the variable, otherwise \p NaN if the
+   * function is not defined for the specified parameters.
+   */
+  static HNumber binomialDistributionVariance( const HNumber & n,
+                                               const HNumber & p  );
+
   /*!
    * Releases all resources. After calling this function, you can not use
    * any other functions as well as class HNumber.

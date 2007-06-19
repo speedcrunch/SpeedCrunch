@@ -1957,10 +1957,9 @@ HNumber HMath::binomialDistribution( const HNumber & k,
                                      const HNumber & n,
                                      const HNumber & p  )
 {
-	if ( k.isNan() || n.isNan() || p.isNan()
-        || k < 0 || k > n
-        || n < 0 || ! n.isInteger()
-        || p < 0 || p > 1                  )
+	if ( k.isNan() || k < 0 || k > n
+        || n.isNan() || n < 0 || ! n.isInteger()
+        || p.isNan() || p < 0 || p > 1           )
   {
     // invalid usage
     return HNumber::nan();
@@ -1974,10 +1973,9 @@ HNumber HMath::binomialDistributionCumulative( const HNumber & k,
                                                const HNumber & n,
                                                const HNumber & p  )
 {
-	if ( k.isNan() || n.isNan() || p.isNan()
-        || k < 0 || k > n
-        || n < 0 || ! n.isInteger()
-        || p < 0 || p > 1                  )
+	if ( k.isNan() || k < 0 || k > n
+        || n.isNan() || n < 0 || ! n.isInteger()
+        || p.isNan() || p < 0 || p > 1           )
   {
     // invalid usage
     return HNumber::nan();
@@ -1988,6 +1986,32 @@ HNumber HMath::binomialDistributionCumulative( const HNumber & k,
     result += HMath::nCr( n, i ) * HMath::raise( p, i )
                 * HMath::raise( HNumber(1)-p, n-i );
   return result;
+}
+
+HNumber HMath::binomialDistributionMean( const HNumber & n,
+                                         const HNumber & p  )
+{
+	if ( n.isNan() || n < 0 || ! n.isInteger()
+        || p.isNan() || p < 0 || p > 1       )
+  {
+    // invalid usage
+    return HNumber::nan();
+  }
+
+  return n * p;
+}
+
+HNumber HMath::binomialDistributionVariance( const HNumber & n,
+                                             const HNumber & p  )
+{
+	if ( n.isNan() || n < 0 || ! n.isInteger()
+        || p.isNan() || p < 0 || p > 1       )
+  {
+    // invalid usage
+    return HNumber::nan();
+  }
+
+  return n * p * ( HNumber(1) - p );
 }
 
 void HMath::finalize()

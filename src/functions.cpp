@@ -705,6 +705,76 @@ HNumber function_binomdistcumul( const Evaluator         * evaluator,
   return HMath::binomialDistributionCumulative( k, n, p );
 }
 
+HNumber function_binomdistmean( const Evaluator         * evaluator,
+                                      Function          * function,
+                                const FunctionArguments & arguments  )
+{
+  if( arguments.count() != 2 )
+    return HNumber::nan();
+
+  HNumber n = arguments[0];
+  HNumber p = arguments[1];
+
+  if ( ! n.isInteger() )
+  {
+    function->setError( function->name(),
+                        QApplication::translate( "functions",
+                          "function requires integer first parameter" ) );
+    return HNumber::nan();
+  }
+
+  if ( n < 0 )
+  {
+    function->setError( function->name(), QApplication::translate( "functions",
+      "function requires non-negative first parameter" ) );
+    return HNumber::nan();
+  }
+
+  if ( p < 0 || p > 1 )
+  {
+    function->setError( function->name(), QApplication::translate( "functions",
+      "function requires second parameter in [0,1]" ) );
+    return HNumber::nan();
+  }
+
+  return HMath::binomialDistributionMean( n, p );
+}
+
+HNumber function_binomdistvar( const Evaluator         * evaluator,
+                                     Function          * function,
+                               const FunctionArguments & arguments  )
+{
+  if( arguments.count() != 2 )
+    return HNumber::nan();
+
+  HNumber n = arguments[0];
+  HNumber p = arguments[1];
+
+  if ( ! n.isInteger() )
+  {
+    function->setError( function->name(),
+                        QApplication::translate( "functions",
+                          "function requires integer first parameter" ) );
+    return HNumber::nan();
+  }
+
+  if ( n < 0 )
+  {
+    function->setError( function->name(), QApplication::translate( "functions",
+      "function requires non-negative first parameter" ) );
+    return HNumber::nan();
+  }
+
+  if ( p < 0 || p > 1 )
+  {
+    function->setError( function->name(), QApplication::translate( "functions",
+      "function requires second parameter in [0,1]" ) );
+    return HNumber::nan();
+  }
+
+  return HMath::binomialDistributionVariance( n, p );
+}
+
 class FunctionPrivate
 {
 public:
@@ -804,8 +874,6 @@ FunctionRepository::FunctionRepository()
 {
   d = new FunctionRepositoryPrivate;
 
-  // functions are sorted by category and description
-
   // Mathematics / Analysis
   add( new Function( "abs",     1, function_abs,     QT_TR_NOOP("Absolute")                   ) );
   add( new Function( "average",    function_average, QT_TR_NOOP("Average (Arithmetic Mean)")  ) );
@@ -838,13 +906,14 @@ FunctionRepository::FunctionRepository()
   add( new Function( "npr",  2, function_nPr, QT_TR_NOOP("Permutation (Arrangement)")          ) );
 
   // Mathematics / Probability
-  add( new Function( "binomdist", 3, function_binomdist,
-                     QT_TR_NOOP("Binomial Discrete Distribution") ) );
+  add( new Function( "binomdist",      3, function_binomdist,
+                     QT_TR_NOOP("Binomial Distribution")            ) );
   add( new Function( "binomdistcumul", 3, function_binomdistcumul,
-                     QT_TR_NOOP("Cumulative Binomial Discrete Distribution") ));
-
-  //add( new Function( "binomdistmean",  3, function_binomdistmean, QT_TR_NOOP("Binomial Distribution Mean") ) );
-  //add( new Function( "binomdistvar",   3, function_binomdistvar, QT_TR_NOOP("Binomial Distribution Variance")   ) );
+                     QT_TR_NOOP("Cumulative Binomial Distribution") ) );
+  add( new Function( "binomdistmean",  2, function_binomdistmean,
+                     QT_TR_NOOP("Binomial Distribution Mean")       ) );
+  add( new Function( "binomdistvar",   2, function_binomdistvar,
+                     QT_TR_NOOP("Binomial Distribution Variance")   ) );
 
   //add( new Function( "hyperdist",      4, function_hypgeomdist,    QT_TR_NOOP("Hypergeometric Distribution")            ) );
   //add( new Function( "hyperdistmean",  4, function_hypgeomdistinf, QT_TR_NOOP("Hypergeometric Distribution Mean")       ) );

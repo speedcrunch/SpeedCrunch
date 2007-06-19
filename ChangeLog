@@ -20,7 +20,7 @@ New functions:
  DEGREES: convert radian to degree
  RADIANS: convert degree to radian
  LG: base-2 logarithm
- CBRT: cubic root
+ CBRT: cube root
  TRUNC: truncate digits
  FLOOR: floor
  CEIL: ceiling
@@ -31,6 +31,10 @@ New functions:
  SEC: secant
  CSC: cosecant
  COT: cotangent
+ BINOMDIST: binomial distribution
+ BINOMDISTCUMUL: cumulative binomial distribution
+ BINOMDISTMEAN: binomial distribution mean
+ BINOMDISTVAR: binomial distribution variance
 
 Improvements and bug fixes:
  fixed accuracy problem when calculating 10^x where x is integer
