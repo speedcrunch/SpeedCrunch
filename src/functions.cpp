@@ -605,11 +605,11 @@ HNumber function_bin( const Evaluator*, Function*, const FunctionArguments& args
   return result;
 }
 
-HNumber function_binomdist( const Evaluator         * evaluator,
-                                  Function          * function,
-                            const FunctionArguments & arguments  )
+HNumber function_binompmf( const Evaluator         * evaluator,
+                                 Function          * function,
+                           const FunctionArguments & arguments  )
 {
-  if( arguments.count() != 3 )
+  if ( arguments.count() != 3 )
     return HNumber::nan();
 
   HNumber k = arguments[0];
@@ -623,7 +623,6 @@ HNumber function_binomdist( const Evaluator         * evaluator,
                           "function requires integer first parameter" ) );
     return HNumber::nan();
   }
-
   if ( ! n.isInteger() )
   {
     function->setError( function->name(),
@@ -631,21 +630,18 @@ HNumber function_binomdist( const Evaluator         * evaluator,
                           "function requires integer second parameter" ) );
     return HNumber::nan();
   }
-
   if ( n < 0 )
   {
     function->setError( function->name(), QApplication::translate( "functions",
       "function requires non-negative second parameter" ) );
     return HNumber::nan();
   }
-
   if ( p < 0 || p > 1 )
   {
     function->setError( function->name(), QApplication::translate( "functions",
       "function requires third parameter in [0,1]" ) );
     return HNumber::nan();
   }
-
   if ( k < 0 || k > n )
   {
     function->setError( function->name(), QApplication::translate( "functions",
@@ -653,14 +649,14 @@ HNumber function_binomdist( const Evaluator         * evaluator,
     return HNumber::nan();
   }
 
-  return HMath::binomialDistribution( k, n, p );
+  return HMath::binomialPmf( k, n, p );
 }
 
-HNumber function_binomdistcumul( const Evaluator         * evaluator,
-                                       Function          * function,
-                                 const FunctionArguments & arguments  )
+HNumber function_binomcdf( const Evaluator         * evaluator,
+                                 Function          * function,
+                           const FunctionArguments & arguments  )
 {
-  if( arguments.count() != 3 )
+  if ( arguments.count() != 3 )
     return HNumber::nan();
 
   HNumber k = arguments[0];
@@ -673,28 +669,24 @@ HNumber function_binomdistcumul( const Evaluator         * evaluator,
       "function requires integer first parameter" ) );
     return HNumber::nan();
   }
-
   if ( ! n.isInteger() )
   {
     function->setError( function->name(), QApplication::translate( "functions",
       "function requires integer second parameter" ) );
     return HNumber::nan();
   }
-
   if ( n < 0 )
   {
     function->setError( function->name(), QApplication::translate( "functions",
       "function requires non-negative second parameter" ) );
     return HNumber::nan();
   }
-
   if ( p < 0 || p > 1 )
   {
     function->setError( function->name(), QApplication::translate( "functions",
       "function requires third parameter in [0,1]" ) );
     return HNumber::nan();
   }
-
   if ( k < 0 || k > n )
   {
     function->setError( function->name(), QApplication::translate( "functions",
@@ -702,14 +694,14 @@ HNumber function_binomdistcumul( const Evaluator         * evaluator,
     return HNumber::nan();
   }
 
-  return HMath::binomialDistributionCumulative( k, n, p );
+  return HMath::binomialCdf( k, n, p );
 }
 
-HNumber function_binomdistmean( const Evaluator         * evaluator,
-                                      Function          * function,
-                                const FunctionArguments & arguments  )
+HNumber function_binommean( const Evaluator         * evaluator,
+                                  Function          * function,
+                            const FunctionArguments & arguments  )
 {
-  if( arguments.count() != 2 )
+  if ( arguments.count() != 2 )
     return HNumber::nan();
 
   HNumber n = arguments[0];
@@ -722,14 +714,12 @@ HNumber function_binomdistmean( const Evaluator         * evaluator,
                           "function requires integer first parameter" ) );
     return HNumber::nan();
   }
-
   if ( n < 0 )
   {
     function->setError( function->name(), QApplication::translate( "functions",
       "function requires non-negative first parameter" ) );
     return HNumber::nan();
   }
-
   if ( p < 0 || p > 1 )
   {
     function->setError( function->name(), QApplication::translate( "functions",
@@ -737,14 +727,14 @@ HNumber function_binomdistmean( const Evaluator         * evaluator,
     return HNumber::nan();
   }
 
-  return HMath::binomialDistributionMean( n, p );
+  return HMath::binomialMean( n, p );
 }
 
-HNumber function_binomdistvar( const Evaluator         * evaluator,
-                                     Function          * function,
-                               const FunctionArguments & arguments  )
+HNumber function_binomvar( const Evaluator         * evaluator,
+                                 Function          * function,
+                           const FunctionArguments & arguments  )
 {
-  if( arguments.count() != 2 )
+  if ( arguments.count() != 2 )
     return HNumber::nan();
 
   HNumber n = arguments[0];
@@ -757,14 +747,12 @@ HNumber function_binomdistvar( const Evaluator         * evaluator,
                           "function requires integer first parameter" ) );
     return HNumber::nan();
   }
-
   if ( n < 0 )
   {
     function->setError( function->name(), QApplication::translate( "functions",
       "function requires non-negative first parameter" ) );
     return HNumber::nan();
   }
-
   if ( p < 0 || p > 1 )
   {
     function->setError( function->name(), QApplication::translate( "functions",
@@ -772,7 +760,42 @@ HNumber function_binomdistvar( const Evaluator         * evaluator,
     return HNumber::nan();
   }
 
-  return HMath::binomialDistributionVariance( n, p );
+  return HMath::binomialVariance( n, p );
+}
+
+HNumber function_poipmf( const Evaluator         * evaluator,
+                               Function          * function,
+                         const FunctionArguments & arguments  )
+{
+  if ( arguments.count() != 2 )
+    return HNumber::nan();
+
+  HNumber k = arguments[0];
+  HNumber l = arguments[1];
+
+  if ( ! k.isInteger() )
+  {
+    function->setError( function->name(),
+                        QApplication::translate( "functions",
+                          "function requires integer first parameter" ) );
+    return HNumber::nan();
+  }
+  if ( k < 0 )
+  {
+    function->setError( function->name(),
+                        QApplication::translate( "functions",
+                          "function requires non-negative first parameter" ) );
+    return HNumber::nan();
+  }
+  if ( l < 0 )
+  {
+    function->setError( function->name(),
+                        QApplication::translate( "functions",
+                          "function requires positive second parameter" ) );
+    return HNumber::nan();
+  }
+
+  return HMath::poissonPmf( k, l );
 }
 
 class FunctionPrivate
@@ -874,70 +897,124 @@ FunctionRepository::FunctionRepository()
 {
   d = new FunctionRepositoryPrivate;
 
-  // Mathematics / Analysis
-  add( new Function( "abs",     1, function_abs,     QT_TR_NOOP("Absolute")                   ) );
-  add( new Function( "average",    function_average, QT_TR_NOOP("Average (Arithmetic Mean)")  ) );
-  add( new Function( "log",     1, function_log,     QT_TR_NOOP("Base-10 Logarithm")          ) );
-  add( new Function( "lg",      1, function_lg,      QT_TR_NOOP("Base-2 Logarithm")           ) );
-  add( new Function( "bin",        function_bin,     QT_TR_NOOP("Binary Representation")      ) );
-  add( new Function( "ceil",    1, function_ceil,    QT_TR_NOOP("Ceiling")                    ) );
-  add( new Function( "cbrt",    1, function_cbrt,    QT_TR_NOOP("Cube Root")                  ) );
-  add( new Function( "dec",        function_dec,     QT_TR_NOOP("Decimal Representation")     ) );
-  add( new Function( "exp",     1, function_exp,     QT_TR_NOOP("Exponent")                   ) );
-  add( new Function( "floor",   1, function_floor,   QT_TR_NOOP("Floor")                      ) );
-  add( new Function( "frac",    1, function_frac,    QT_TR_NOOP("Fraction")                   ) );
-  add( new Function( "geomean",    function_geomean, QT_TR_NOOP("Geometric Mean")             ) );
-  add( new Function( "hex",        function_hex,     QT_TR_NOOP("Hexadecimal Representation") ) );
-  add( new Function( "int",     1, function_int,     QT_TR_NOOP("Integer")                    ) );
-  add( new Function( "max",        function_max,     QT_TR_NOOP("Maximum")                    ) );
-  add( new Function( "min",        function_min,     QT_TR_NOOP("Minimum")                    ) );
-  add( new Function( "ln",      1, function_ln,      QT_TR_NOOP("Natural Logarithm")          ) );
-  add( new Function( "oct",        function_oct,     QT_TR_NOOP("Octal Representation")       ) );
-  add( new Function( "product",    function_product, QT_TR_NOOP("Product")                    ) );
-  add( new Function( "round",      function_round,   QT_TR_NOOP("Rounding")                   ) );
-  add( new Function( "sign",    1, function_sign,    QT_TR_NOOP("Signum")                     ) );
-  add( new Function( "sqrt",    1, function_sqrt,    QT_TR_NOOP("Square Root")                ) );
-  add( new Function( "sum",        function_sum,     QT_TR_NOOP("Sum")                        ) );
-  add( new Function( "trunc",      function_trunc,   QT_TR_NOOP("Truncation")                 ) );
-
-  // Mathematics / Discrete
-  add( new Function( "gcd",     function_gcd, QT_TR_NOOP("Greatest Common Divisor")            ) );
-  add( new Function( "ncr",  2, function_nCr, QT_TR_NOOP("Combination (Binomial Coefficient)") ) );
-  add( new Function( "npr",  2, function_nPr, QT_TR_NOOP("Permutation (Arrangement)")          ) );
-
-  // Mathematics / Probability
-  add( new Function( "binomdist",      3, function_binomdist,
-                     QT_TR_NOOP("Binomial Distribution")            ) );
-  add( new Function( "binomdistcumul", 3, function_binomdistcumul,
-                     QT_TR_NOOP("Cumulative Binomial Distribution") ) );
-  add( new Function( "binomdistmean",  2, function_binomdistmean,
+  /*
+                                     ANALYSIS
+                                                                              */
+  add( new Function( "abs",     1, function_abs,
+                     QT_TR_NOOP("Absolute")                   ) );
+  add( new Function( "average",    function_average,
+                     QT_TR_NOOP("Average (Arithmetic Mean)")  ) );
+  add( new Function( "log",     1, function_log,
+                     QT_TR_NOOP("Base-10 Logarithm")          ) );
+  add( new Function( "lg",      1, function_lg,
+                     QT_TR_NOOP("Base-2 Logarithm")           ) );
+  add( new Function( "bin",        function_bin,
+                     QT_TR_NOOP("Binary Representation")      ) );
+  add( new Function( "ceil",    1, function_ceil,
+                     QT_TR_NOOP("Ceiling")                    ) );
+  add( new Function( "cbrt",    1, function_cbrt,
+                     QT_TR_NOOP("Cube Root")                  ) );
+  add( new Function( "dec",        function_dec,
+                     QT_TR_NOOP("Decimal Representation")     ) );
+  add( new Function( "exp",     1, function_exp,
+                     QT_TR_NOOP("Exponent")                   ) );
+  add( new Function( "floor",   1, function_floor,
+                     QT_TR_NOOP("Floor")                      ) );
+  add( new Function( "frac",    1, function_frac,
+                     QT_TR_NOOP("Fraction")                   ) );
+  add( new Function( "geomean",    function_geomean,
+                     QT_TR_NOOP("Geometric Mean")             ) );
+  add( new Function( "hex",        function_hex,
+                     QT_TR_NOOP("Hexadecimal Representation") ) );
+  add( new Function( "int",     1, function_int,
+                     QT_TR_NOOP("Integer")                    ) );
+  add( new Function( "max",        function_max,
+                     QT_TR_NOOP("Maximum")                    ) );
+  add( new Function( "min",        function_min,
+                     QT_TR_NOOP("Minimum")                    ) );
+  add( new Function( "ln",      1, function_ln,
+                     QT_TR_NOOP("Natural Logarithm")          ) );
+  add( new Function( "oct",        function_oct,
+                     QT_TR_NOOP("Octal Representation")       ) );
+  add( new Function( "product",    function_product,
+                     QT_TR_NOOP("Product")                    ) );
+  add( new Function( "round",      function_round,
+                     QT_TR_NOOP("Rounding")                   ) );
+  add( new Function( "sign",    1, function_sign,
+                     QT_TR_NOOP("Signum")                     ) );
+  add( new Function( "sqrt",    1, function_sqrt,
+                     QT_TR_NOOP("Square Root")                ) );
+  add( new Function( "sum",        function_sum,
+                     QT_TR_NOOP("Sum")                        ) );
+  add( new Function( "trunc",      function_trunc,
+                     QT_TR_NOOP("Truncation")                 ) );
+  /*
+                                     DISCRETE
+                                                                              */
+  add( new Function( "gcd",     function_gcd,
+                     QT_TR_NOOP("Greatest Common Divisor")            ) );
+  add( new Function( "ncr",  2, function_nCr,
+                     QT_TR_NOOP("Combination (Binomial Coefficient)") ) );
+  add( new Function( "npr",  2, function_nPr,
+                     QT_TR_NOOP("Permutation (Arrangement)")          ) );
+  /*
+                                    PROBABILITY
+                                                                              */
+  add( new Function( "binompmf",      3, function_binompmf,
+                     QT_TR_NOOP("Binomial Probability Mass Function") ) );
+  add( new Function( "binomcdf", 3, function_binomcdf,
+                     QT_TR_NOOP("Binomial Cumulative Distribution Function") ));
+  add( new Function( "binommean",  2, function_binommean,
                      QT_TR_NOOP("Binomial Distribution Mean")       ) );
-  add( new Function( "binomdistvar",   2, function_binomdistvar,
+  add( new Function( "binomvar",   2, function_binomvar,
                      QT_TR_NOOP("Binomial Distribution Variance")   ) );
-
-  //add( new Function( "hyperdist",      4, function_hypgeomdist,    QT_TR_NOOP("Hypergeometric Distribution")            ) );
-  //add( new Function( "hyperdistmean",  4, function_hypgeomdistinf, QT_TR_NOOP("Hypergeometric Distribution Mean")       ) );
-  //add( new Function( "hyperdistvar",   4, function_hypgeomdistsup, QT_TR_NOOP("Hypergeometric Distribution Variance)")  ) );
-
-  //add( new Function( "poisondist",      2, function_hypgeomdist,    QT_TR_NOOP("Poisson Distribution")            ) );
-  //add( new Function( "poisondistmean",  2, function_hypgeomdistinf, QT_TR_NOOP("Poisson Distribution Mean")       ) );
-  //add( new Function( "poisondistvar",   2, function_hypgeomdistsup, QT_TR_NOOP("Poisson Distribution Variance")   ) );
-
-  // Mathematics / Trigonometry
-  add( new Function( "acos",    1, function_acos,    QT_TR_NOOP("Arc Cosine")         ) );
-  add( new Function( "asin",    1, function_asin,    QT_TR_NOOP("Arc Sine")           ) );
-  add( new Function( "atan",    1, function_atan,    QT_TR_NOOP("Arc Tangent")        ) );
-  add( new Function( "csc",     1, function_csc,     QT_TR_NOOP("Cosecant")           ) );
-  add( new Function( "cos",     1, function_cos,     QT_TR_NOOP("Cosine")             ) );
-  add( new Function( "cot",     1, function_cot,     QT_TR_NOOP("Cotangent")          ) );
-  add( new Function( "cosh",    1, function_cosh,    QT_TR_NOOP("Hyperbolic Cosine")  ) );
-  add( new Function( "degrees", 1, function_degrees, QT_TR_NOOP("Degrees")            ) );
-  add( new Function( "radians", 1, function_radians, QT_TR_NOOP("Radians")            ) );
-  add( new Function( "sinh",    1, function_sinh,    QT_TR_NOOP("Hyperbolic Sine")    ) );
-  add( new Function( "tanh",    1, function_tanh,    QT_TR_NOOP("Hyperbolic Tangent") ) );
-  add( new Function( "sec",     1, function_sec,     QT_TR_NOOP("Secant")             ) );
-  add( new Function( "sin",     1, function_sin,     QT_TR_NOOP("Sine")               ) );
-  add( new Function( "tan",     1, function_tan,     QT_TR_NOOP("Tangent")            ) );
+  //add( new Function( "hyperpmf",  4, function_hyperpmf,
+  //                   QT_TR_NOOP("Hypergeometric Probability Mass Function")));
+  //add( new Function( "hypercdf",  4, function_hypercdf,
+  //            QT_TR_NOOP("Hypergeometric Cumulative Distribution Function")));
+  //add( new Function( "hypermean", 4, function_hypermean,
+  //                   QT_TR_NOOP("Hypergeometric Distribution Mean")       ) );
+  //add( new Function( "hypervar",  4, function_hypervar,
+  //                   QT_TR_NOOP("Hypergeometric Distribution Variance)")  ) );
+  add( new Function( "poipmf", 2, function_poipmf,
+                     QT_TR_NOOP("Poisson Probability Mass Function")  ) );
+  //add( new Function( "poicdf", 2, function_poicdf,
+  //                   QT_TR_NOOP("Poisson Cumulative Distribution Function")));
+  //add( new Function( "poimean",  2, function_poimean,
+  //                   QT_TR_NOOP("Poisson Distribution Mean")       ) );
+  //add( new Function( "poivar",   2, function_poivar,
+  //                   QT_TR_NOOP("Poisson Distribution Variance")   ) );
+  /*
+                                   TRIGONOMETRY
+                                                                              */
+  add( new Function( "acos",    1, function_acos,
+                     QT_TR_NOOP("Arc Cosine")         ) );
+  add( new Function( "asin",    1, function_asin,
+                     QT_TR_NOOP("Arc Sine")           ) );
+  add( new Function( "atan",    1, function_atan,
+                     QT_TR_NOOP("Arc Tangent")        ) );
+  add( new Function( "csc",     1, function_csc,
+                     QT_TR_NOOP("Cosecant")           ) );
+  add( new Function( "cos",     1, function_cos,
+                     QT_TR_NOOP("Cosine")             ) );
+  add( new Function( "cot",     1, function_cot,
+                     QT_TR_NOOP("Cotangent")          ) );
+  add( new Function( "cosh",    1, function_cosh,
+                     QT_TR_NOOP("Hyperbolic Cosine")  ) );
+  add( new Function( "degrees", 1, function_degrees,
+                     QT_TR_NOOP("Degrees")            ) );
+  add( new Function( "radians", 1, function_radians,
+                     QT_TR_NOOP("Radians")            ) );
+  add( new Function( "sinh",    1, function_sinh,
+                     QT_TR_NOOP("Hyperbolic Sine")    ) );
+  add( new Function( "tanh",    1, function_tanh,
+                     QT_TR_NOOP("Hyperbolic Tangent") ) );
+  add( new Function( "sec",     1, function_sec,
+                     QT_TR_NOOP("Secant")             ) );
+  add( new Function( "sin",     1, function_sin,
+                     QT_TR_NOOP("Sine")               ) );
+  add( new Function( "tan",     1, function_tan,
+                     QT_TR_NOOP("Tangent")            ) );
 }
 
 FunctionRepository::~FunctionRepository()

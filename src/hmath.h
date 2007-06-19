@@ -442,8 +442,8 @@ public:
                                                                               */
   /**
    * Calculates the binomial discrete distribution probability mass function:
-   * \f[ X{\sim}B(n,p) \f]
-   * \f[ f(k;n,p) = {\Pr}(X=k) = {n \choose k}p^{k}(1-p)^{n-k} \f]
+   * \f[X{\sim}B(n,p)\f]
+   * \f[f(k;n,p)={\Pr}(X=k)={n \choose k}p^{k}(1-p)^{n-k}\f]
    *
    * \param[in] k the number of probed exact successes
    * \param[in] n the number of trials
@@ -453,14 +453,14 @@ public:
    * \p probability of success in a single trial), otherwise \p NaN if the
    * function is not defined for the specified parameters.
    */
-  static HNumber binomialDistribution( const HNumber & k,
-                                       const HNumber & n,
-                                       const HNumber & p  );
+  static HNumber binomialPmf( const HNumber & k,
+                              const HNumber & n,
+                              const HNumber & p  );
 
   /**
-   * Calculates the binomial discrete distribution cumulative function:
-   * \f[ X{\sim}B(n,p) \f]
-   * \f[ f(k;n,p)={\Pr}(X \leq k)=\sum_{i=0}^{k}{n \choose i}p^{i}(1-p)^{n-i}\f]
+   * Calculates the binomial cumulative distribution function:
+   * \f[X{\sim}B(n,p)\f]
+   * \f[F(k;n,p)={\Pr}(X \leq k)=\sum_{i=0}^{k}{n \choose i}p^{i}(1-p)^{n-i}\f]
    *
    * \param[in] k the number of probed exact successes
    * \param[in] n the number of trials
@@ -470,14 +470,14 @@ public:
    * \p probability of success in a single trial), otherwise \p NaN if the
    * function is not defined for the specified parameters.
    */
-  static HNumber binomialDistributionCumulative( const HNumber & k,
-                                                 const HNumber & n,
-                                                 const HNumber & p  );
+  static HNumber binomialCdf( const HNumber & k,
+                              const HNumber & n,
+                              const HNumber & p  );
 
   /**
    * Calculates the expected value of a binomially distributed random variable:
-   * \f[ X{\sim}B(n,p) \f]
-   * \f[ E(x) = np
+   * \f[X{\sim}B(n,p)\f]
+   * \f[E(X)=np\f]
    *
    * \param[in] n the number of trials
    * \param[in] p the probability of success in a single trial
@@ -485,13 +485,13 @@ public:
    * \return the expected value of the variable, otherwise \p NaN if the
    * function is not defined for the specified parameters.
    */
-  static HNumber binomialDistributionMean( const HNumber & n,
-                                           const HNumber & p  );
+  static HNumber binomialMean( const HNumber & n,
+                               const HNumber & p  );
 
   /**
    * Calculates the variance of a binomially distributed random variable:
-   * \f[ X{\sim}B(n,p) \f]
-   * \f[ E(x) = np(1-p)
+   * \f[X{\sim}B(n,p)\f]
+   * \f[Var(X)=np(1-p)\f]
    *
    * \param[in] n the number of trials
    * \param[in] p the probability of success in a single trial
@@ -499,8 +499,23 @@ public:
    * \return the variance of the variable, otherwise \p NaN if the
    * function is not defined for the specified parameters.
    */
-  static HNumber binomialDistributionVariance( const HNumber & n,
-                                               const HNumber & p  );
+  static HNumber binomialVariance( const HNumber & n,
+                                   const HNumber & p  );
+
+  /**
+   * Calculates the poissonian discrete distribution probability mass function:
+   * \f[X{\sim}P(\lambda)\f]
+   * \f[f(k;\lambda)={\Pr}(X=k)=\frac{e^{-\lambda}\lambda^k}{k!}\f]
+   *
+   * \param[in] k the number of event occurrences
+   * \param[in] l the expected number of occurrences that occur in an interval
+   *
+   * \return the probability of exactly \p k event occurrences (given \p l
+   * expected occurrences in a time interval), otherwise \p NaN if the
+   * function is not defined for the specified parameters.
+   */
+  static HNumber poissonPmf( const HNumber & k,
+                             const HNumber & l  );
 
   /*!
    * Releases all resources. After calling this function, you can not use

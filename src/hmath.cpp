@@ -1953,9 +1953,9 @@ HNumber HMath::factorial( const HNumber& x, const HNumber& base )
   return result;
 }
 
-HNumber HMath::binomialDistribution( const HNumber & k,
-                                     const HNumber & n,
-                                     const HNumber & p  )
+HNumber HMath::binomialPmf( const HNumber & k,
+                            const HNumber & n,
+                            const HNumber & p  )
 {
 	if ( k.isNan() || k < 0 || k > n
         || n.isNan() || n < 0 || ! n.isInteger()
@@ -1969,9 +1969,9 @@ HNumber HMath::binomialDistribution( const HNumber & k,
            HMath::raise( HNumber(1)-p, n-k );
 }
 
-HNumber HMath::binomialDistributionCumulative( const HNumber & k,
-                                               const HNumber & n,
-                                               const HNumber & p  )
+HNumber HMath::binomialCdf( const HNumber & k,
+                            const HNumber & n,
+                            const HNumber & p  )
 {
 	if ( k.isNan() || k < 0 || k > n
         || n.isNan() || n < 0 || ! n.isInteger()
@@ -1988,8 +1988,8 @@ HNumber HMath::binomialDistributionCumulative( const HNumber & k,
   return result;
 }
 
-HNumber HMath::binomialDistributionMean( const HNumber & n,
-                                         const HNumber & p  )
+HNumber HMath::binomialMean( const HNumber & n,
+                             const HNumber & p  )
 {
 	if ( n.isNan() || n < 0 || ! n.isInteger()
         || p.isNan() || p < 0 || p > 1       )
@@ -2001,8 +2001,8 @@ HNumber HMath::binomialDistributionMean( const HNumber & n,
   return n * p;
 }
 
-HNumber HMath::binomialDistributionVariance( const HNumber & n,
-                                             const HNumber & p  )
+HNumber HMath::binomialVariance( const HNumber & n,
+                                 const HNumber & p  )
 {
 	if ( n.isNan() || n < 0 || ! n.isInteger()
         || p.isNan() || p < 0 || p > 1       )
@@ -2012,6 +2012,19 @@ HNumber HMath::binomialDistributionVariance( const HNumber & n,
   }
 
   return n * p * ( HNumber(1) - p );
+}
+
+HNumber HMath::poissonPmf( const HNumber & k,
+                           const HNumber & l  )
+{
+	if ( k.isNan() || k < 0 || ! k.isInteger()
+        || l < 0 )
+  {
+    // invalid usage
+    return HNumber::nan();
+  }
+
+  return exp( l*(-1) ) * raise( l, k ) / factorial( k );
 }
 
 void HMath::finalize()

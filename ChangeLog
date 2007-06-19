@@ -31,10 +31,11 @@ New functions:
  SEC: secant
  CSC: cosecant
  COT: cotangent
- BINOMDIST: binomial distribution
- BINOMDISTCUMUL: cumulative binomial distribution
- BINOMDISTMEAN: binomial distribution mean
- BINOMDISTVAR: binomial distribution variance
+ BINOMPMF: binomial probability mass function
+ BINOMCDF: binomial cumulative distribution function
+ BINOMMEAN: binomial distribution mean
+ BINOMVAR: binomial distribution variance
+ POIPMF: poissonian probability mass function
 
 Improvements and bug fixes:
  fixed accuracy problem when calculating 10^x where x is integer
