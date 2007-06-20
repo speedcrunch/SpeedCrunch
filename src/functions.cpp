@@ -607,7 +607,7 @@ HNumber function_bin( const Evaluator*, Function*, const FunctionArguments& args
 
 HNumber function_binompmf( const Evaluator         * evaluator,
                                  Function          * function,
-                           const FunctionArguments & arguments  )
+                           const FunctionArguments & arguments )
 {
   if ( arguments.count() != 3 )
     return HNumber::nan();
@@ -654,7 +654,7 @@ HNumber function_binompmf( const Evaluator         * evaluator,
 
 HNumber function_binomcdf( const Evaluator         * evaluator,
                                  Function          * function,
-                           const FunctionArguments & arguments  )
+                           const FunctionArguments & arguments )
 {
   if ( arguments.count() != 3 )
     return HNumber::nan();
@@ -699,7 +699,7 @@ HNumber function_binomcdf( const Evaluator         * evaluator,
 
 HNumber function_binommean( const Evaluator         * evaluator,
                                   Function          * function,
-                            const FunctionArguments & arguments  )
+                            const FunctionArguments & arguments )
 {
   if ( arguments.count() != 2 )
     return HNumber::nan();
@@ -732,7 +732,7 @@ HNumber function_binommean( const Evaluator         * evaluator,
 
 HNumber function_binomvar( const Evaluator         * evaluator,
                                  Function          * function,
-                           const FunctionArguments & arguments  )
+                           const FunctionArguments & arguments )
 {
   if ( arguments.count() != 2 )
     return HNumber::nan();
@@ -765,7 +765,7 @@ HNumber function_binomvar( const Evaluator         * evaluator,
 
 HNumber function_poipmf( const Evaluator         * evaluator,
                                Function          * function,
-                         const FunctionArguments & arguments  )
+                         const FunctionArguments & arguments )
 {
   if ( arguments.count() != 2 )
     return HNumber::nan();
@@ -791,7 +791,7 @@ HNumber function_poipmf( const Evaluator         * evaluator,
   {
     function->setError( function->name(),
                         QApplication::translate( "functions",
-                          "function requires positive second parameter" ) );
+                          "function requires non-negative second parameter" ) );
     return HNumber::nan();
   }
 
@@ -800,7 +800,7 @@ HNumber function_poipmf( const Evaluator         * evaluator,
 
 HNumber function_poicdf( const Evaluator         * evaluator,
                                Function          * function,
-                         const FunctionArguments & arguments  )
+                         const FunctionArguments & arguments )
 {
   if ( arguments.count() != 2 )
     return HNumber::nan();
@@ -826,11 +826,51 @@ HNumber function_poicdf( const Evaluator         * evaluator,
   {
     function->setError( function->name(),
                         QApplication::translate( "functions",
-                          "function requires positive second parameter" ) );
+                          "function requires non-negative second parameter" ) );
     return HNumber::nan();
   }
 
   return HMath::poissonCdf( k, l );
+}
+
+HNumber function_poimean( const Evaluator         * evaluator,
+                                Function          * function,
+                          const FunctionArguments & arguments )
+{
+  if ( arguments.count() != 1 )
+    return HNumber::nan();
+
+  HNumber l = arguments[0];
+
+  if ( l < 0 )
+  {
+    function->setError( function->name(),
+                        QApplication::translate( "functions",
+                          "function requires non-negative parameter" ) );
+    return HNumber::nan();
+  }
+
+  return HMath::poissonMean( l );
+}
+
+HNumber function_poivar( const Evaluator         * evaluator,
+                               Function          * function,
+                         const FunctionArguments & arguments )
+{
+  if ( arguments.count() != 1 )
+    return HNumber::nan();
+
+  HNumber l = arguments[0];
+
+  if ( l < 0 )
+  {
+    function->setError( function->name(),
+                        QApplication::translate( "functions",
+                          "function requires non-negative parameter" ) );
+    return HNumber::nan();
+  }
+
+  return HMath::poissonVariance( l );
 }
 
 class FunctionPrivate
@@ -1008,17 +1048,17 @@ FunctionRepository::FunctionRepository()
   //add( new Function( "hypercdf",  4, function_hypercdf,
   //            QT_TR_NOOP("Hypergeometric Cumulative Distribution Function")));
   //add( new Function( "hypermean", 4, function_hypermean,
-  //                   QT_TR_NOOP("Hypergeometric Distribution Mean")       ) );
+  //                   QT_TR_NOOP("Hypergeometric Distribution Mean")        ));
   //add( new Function( "hypervar",  4, function_hypervar,
-  //                   QT_TR_NOOP("Hypergeometric Distribution Variance)")  ) );
+  //                   QT_TR_NOOP("Hypergeometric Distribution Variance)")   ));
   add( new Function( "poipmf", 2, function_poipmf,
-                     QT_TR_NOOP("Poissonian Probability Mass Function")     ) );
+                     QT_TR_NOOP("Poissonian Probability Mass Function")      ));
   add( new Function( "poicdf", 2, function_poicdf,
                     QT_TR_NOOP("Poissonian Cumulative Distribution Function")));
-  //add( new Function( "poimean",  2, function_poimean,
-  //                   QT_TR_NOOP("Poissonian Distribution Mean")       ) );
-  //add( new Function( "poivar",   2, function_poivar,
-  //                   QT_TR_NOOP("Poissonian Distribution Variance")   ) );
+  add( new Function( "poimean",  1, function_poimean,
+                     QT_TR_NOOP("Poissonian Distribution Mean")              ));
+  add( new Function( "poivar",   1, function_poivar,
+                     QT_TR_NOOP("Poissonian Distribution Variance")          ));
   /*
                                    TRIGONOMETRY
                                                                               */

@@ -2018,7 +2018,7 @@ HNumber HMath::poissonPmf( const HNumber & k,
                            const HNumber & l  )
 {
 	if ( k.isNan() || k < 0 || ! k.isInteger()
-        || l < 0 )
+        || l.isNan() || l < 0 )
   {
     // invalid usage
     return HNumber::nan();
@@ -2031,7 +2031,7 @@ HNumber HMath::poissonCdf( const HNumber & k,
                            const HNumber & l  )
 {
 	if ( k.isNan() || k < 0 || ! k.isInteger()
-        || l < 0 )
+        || l.isNan() || l < 0 )
   {
     // invalid usage
     return HNumber::nan();
@@ -2042,6 +2042,28 @@ HNumber HMath::poissonCdf( const HNumber & k,
     result += exp( l*(-1) ) * raise( l, i ) / factorial( i );
 
   return result;
+}
+
+HNumber HMath::poissonMean( const HNumber & l )
+{
+	if ( l.isNan() || l < 0 )
+  {
+    // invalid usage
+    return HNumber::nan();
+  }
+
+  return l;
+}
+
+HNumber HMath::poissonVariance( const HNumber & l )
+{
+	if ( l.isNan() || l < 0 )
+  {
+    // invalid usage
+    return HNumber::nan();
+  }
+
+  return l;
 }
 
 void HMath::finalize()

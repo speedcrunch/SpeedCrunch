@@ -455,7 +455,7 @@ public:
    */
   static HNumber binomialPmf( const HNumber & k,
                               const HNumber & n,
-                              const HNumber & p  );
+                              const HNumber & p );
 
   /**
    * Calculates the binomial cumulative distribution function:
@@ -472,7 +472,7 @@ public:
    */
   static HNumber binomialCdf( const HNumber & k,
                               const HNumber & n,
-                              const HNumber & p  );
+                              const HNumber & p );
 
   /**
    * Calculates the expected value of a binomially distributed random variable:
@@ -486,7 +486,7 @@ public:
    * function is not defined for the specified parameters.
    */
   static HNumber binomialMean( const HNumber & n,
-                               const HNumber & p  );
+                               const HNumber & p );
 
   /**
    * Calculates the variance of a binomially distributed random variable:
@@ -500,7 +500,7 @@ public:
    * function is not defined for the specified parameters.
    */
   static HNumber binomialVariance( const HNumber & n,
-                                   const HNumber & p  );
+                                   const HNumber & p );
 
   /**
    * Calculates the poissonian discrete distribution probability mass function:
@@ -515,7 +515,7 @@ public:
    * function is not defined for the specified parameters.
    */
   static HNumber poissonPmf( const HNumber & k,
-                             const HNumber & l  );
+                             const HNumber & l );
 
   /**
    * Calculates the poissonian cumulative distribution function:
@@ -531,7 +531,31 @@ public:
    * function is not defined for the specified parameters.
    */
   static HNumber poissonCdf( const HNumber & k,
-                             const HNumber & l  );
+                             const HNumber & l );
+
+  /**
+   * Calculates the expected value of a Poisson distributed random variable:
+   * \f[X{\sim}P(\lambda)\f]
+   * \f[E(X)=\lambda\f]
+   *
+   * \param[in] l the expected number of occurrences that occur in an interval
+   *
+   * \return the expected value of the variable, otherwise \p NaN if the
+   * function is not defined for the specified parameter.
+   */
+  static HNumber poissonMean( const HNumber & l );
+
+  /**
+   * Calculates the variance of a Poisson distributed random variable:
+   * \f[X{\sim}P(n,p)\f]
+   * \f[Var(X)=\lambda\f]
+   *
+   * \param[in] l the expected number of occurrences that occur in an interval
+   *
+   * \return the variance of the variable, otherwise \p NaN if the
+   * function is not defined for the specified parameter.
+   */
+  static HNumber poissonVariance( const HNumber & l );
 
   /*!
    * Releases all resources. After calling this function, you can not use
