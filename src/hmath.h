@@ -269,6 +269,16 @@ public:
   static int compare( const HNumber& n1, const HNumber& n2 );
 
   /*!
+   * Returns the maximum of two numbers.
+   */
+  static HNumber max( const HNumber& n1, const HNumber& n2 );
+
+  /*!
+   * Returns the minimum of two numbers.
+   */
+  static HNumber min( const HNumber& n1, const HNumber& n2 );
+
+  /*!
    * Returns the absolute value of n.
    */
   static HNumber abs( const HNumber& n );
@@ -443,14 +453,13 @@ public:
   /**
    * Calculates the binomial discrete distribution probability mass function:
    * \f[X{\sim}B(n,p)\f]
-   * \f[f(k;n,p)={\Pr}(X=k)={n \choose k}p^{k}(1-p)^{n-k}\f]
+   * \f[\Pr(X=k|n,p)={n\choose k}p^{k}(1-p)^{n-k}\f]
    *
    * \param[in] k the number of probed exact successes
    * \param[in] n the number of trials
    * \param[in] p the probability of success in a single trial
    *
-   * \return the probability of exactly \p k successes (given \p n trials and
-   * \p probability of success in a single trial), otherwise \p NaN if the
+   * \return the probability of exactly \p k successes, otherwise \p NaN if the
    * function is not defined for the specified parameters.
    */
   static HNumber binomialPmf( const HNumber & k,
@@ -460,14 +469,13 @@ public:
   /**
    * Calculates the binomial cumulative distribution function:
    * \f[X{\sim}B(n,p)\f]
-   * \f[F(k;n,p)={\Pr}(X \leq k)=\sum_{i=0}^{k}{n \choose i}p^{i}(1-p)^{n-i}\f]
+   * \f[\Pr(X \leq k|n,p)=\sum_{i=0}^{k}{n\choose i}p^{i}(1-p)^{n-i}\f]
    *
-   * \param[in] k the number of probed exact successes
+   * \param[in] k the maximum number of probed exact successes
    * \param[in] n the number of trials
    * \param[in] p the probability of success in a single trial
    *
-   * \return the probability of up to \p k successes (given \p n trials and
-   * \p probability of success in a single trial), otherwise \p NaN if the
+   * \return the probability of up to \p k successes, otherwise \p NaN if the
    * function is not defined for the specified parameters.
    */
   static HNumber binomialCdf( const HNumber & k,
@@ -503,16 +511,34 @@ public:
                                    const HNumber & p );
 
   /**
+   * Calculates the hypergeometric discrete distribution probability mass
+   * function:
+   * \f[X{\sim}H(n,p)\f]
+   * \f[\Pr(X=k|N,M,n)=\frac{{M\choose k}{N-M\choose n-k}}{{N\choose n}}\f]
+   *
+   * \param[in] k the number of probed exact successes
+   * \param[in] N the number of total elements
+   * \param[in] M the number of success elements
+   * \param[in] n the number of selected elements
+   *
+   * \return the probability of exactly \p k successes, otherwise \p NaN if the
+   * function is not defined for the specified parameters.
+   */
+  static HNumber hypergeometricPmf( const HNumber & k,
+                                    const HNumber & N,
+                                    const HNumber & M,
+                                    const HNumber & n );
+
+  /**
    * Calculates the poissonian discrete distribution probability mass function:
    * \f[X{\sim}P(\lambda)\f]
-   * \f[f(k;\lambda)={\Pr}(X=k)=\frac{e^{-\lambda}\lambda^k}{k!}\f]
+   * \f[\Pr(X=k|\lambda)=\frac{e^{-\lambda}\lambda^k}{k!}\f]
    *
    * \param[in] k the number of event occurrences
    * \param[in] l the expected number of occurrences that occur in an interval
    *
-   * \return the probability of exactly \p k event occurrences (given \p l
-   * expected occurrences in a time interval), otherwise \p NaN if the
-   * function is not defined for the specified parameters.
+   * \return the probability of exactly \p k event occurrences, otherwise \p NaN
+   * if the function is not defined for the specified parameters.
    */
   static HNumber poissonPmf( const HNumber & k,
                              const HNumber & l );
@@ -520,15 +546,13 @@ public:
   /**
    * Calculates the poissonian cumulative distribution function:
    * \f[X{\sim}P(\lambda)\f]
-   * \f[F(k;\lambda)={\Pr}(X \leq k)
-   *   =\sum_{i=0}^{k}\frac{e^{-\lambda}\lambda^k}{k!}\f]
+   * \f[\Pr(X\leq k|\lambda)=\sum_{i=0}^{k}\frac{e^{-\lambda}\lambda^k}{k!}\f]
    *
-   * \param[in] k the number of event occurrences
+   * \param[in] k the maximum number of event occurrences
    * \param[in] l the expected number of occurrences that occur in an interval
    *
-   * \return the probability of exactly \p k event occurrences (given \p l
-   * expected occurrences in a time interval), otherwise \p NaN if the
-   * function is not defined for the specified parameters.
+   * \return the probability of up to \p k event occurrences, otherwise \p NaN
+   * if the function is not defined for the specified parameters.
    */
   static HNumber poissonCdf( const HNumber & k,
                              const HNumber & l );
@@ -552,8 +576,8 @@ public:
    *
    * \param[in] l the expected number of occurrences that occur in an interval
    *
-   * \return the variance of the variable, otherwise \p NaN if the
-   * function is not defined for the specified parameter.
+   * \return the variance of the variable, otherwise \p NaN if the function is
+   * not defined for the specified parameter.
    */
   static HNumber poissonVariance( const HNumber & l );
 

@@ -35,6 +35,7 @@ New functions:
  BINOMCDF: binomial cumulative distribution function
  BINOMMEAN: binomial distribution mean
  BINOMVAR: binomial distribution variance
+ HYPERPMF: hypergeometric probability mass function
  POIPMF: poissonian probability mass function
  POICDF: poissonian cumulative distribution function
  POIMEAN: poissonian distribution mean
@@ -50,7 +51,7 @@ Improvements and bug fixes:
  reserved variable names are now case sensitive "pi" and "ans"
  color for error messages can be customized
  fixed exp(x) when x is large
- improved error system and messages
+ improved error system and messages, introduced Px notation to refer parameters
  fixed issue #33: exponential notation misnamed
  fixed issue #32: crash when inserting ( after variable
  minor fixed for function tan(x)

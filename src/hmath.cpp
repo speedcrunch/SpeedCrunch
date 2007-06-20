@@ -1153,6 +1153,28 @@ int HMath::compare( const HNumber& n1, const HNumber& n2 )
   return  1;
 }
 
+HNumber HMath::max( const HNumber& n1, const HNumber& n2 )
+{
+  if ( n1.isNan() || n2.isNan() )
+    return HNumber::nan();
+
+  if ( n1 >= n2 )
+    return n1;
+  else
+    return n2;
+}
+
+HNumber HMath::min( const HNumber& n1, const HNumber& n2 )
+{
+  if ( n1.isNan() || n2.isNan() )
+    return HNumber::nan();
+
+  if ( n1 <= n2 )
+    return n1;
+  else
+    return n2;
+}
+
 HNumber HMath::abs( const HNumber& n )
 {
   HNumber r( n );
@@ -1955,11 +1977,11 @@ HNumber HMath::factorial( const HNumber& x, const HNumber& base )
 
 HNumber HMath::binomialPmf( const HNumber & k,
                             const HNumber & n,
-                            const HNumber & p  )
+                            const HNumber & p )
 {
 	if ( k.isNan() || ! k.isInteger() || k < 0 || k > n
-        || n.isNan() || n < 0 || ! n.isInteger()
-        || p.isNan() || p < 0 || p > 1 )
+        || n.isNan() || ! n.isInteger() || n < 0
+          || p.isNan() || p < 0 || p > 1 )
   {
     // invalid usage
     return HNumber::nan();
@@ -1971,11 +1993,11 @@ HNumber HMath::binomialPmf( const HNumber & k,
 
 HNumber HMath::binomialCdf( const HNumber & k,
                             const HNumber & n,
-                            const HNumber & p  )
+                            const HNumber & p )
 {
 	if ( k.isNan() || ! k.isInteger() || k < 0 || k > n
-        || n.isNan() || n < 0 || ! n.isInteger()
-        || p.isNan() || p < 0 || p > 1 )
+        || n.isNan() || ! n.isInteger() || n < 0
+          || p.isNan() || p < 0 || p > 1 )
   {
     // invalid usage
     return HNumber::nan();
@@ -1989,9 +2011,9 @@ HNumber HMath::binomialCdf( const HNumber & k,
 }
 
 HNumber HMath::binomialMean( const HNumber & n,
-                             const HNumber & p  )
+                             const HNumber & p )
 {
-	if ( n.isNan() || n < 0 || ! n.isInteger()
+	if ( n.isNan() || ! n.isInteger() || n < 0
         || p.isNan() || p < 0 || p > 1 )
   {
     // invalid usage
@@ -2002,9 +2024,9 @@ HNumber HMath::binomialMean( const HNumber & n,
 }
 
 HNumber HMath::binomialVariance( const HNumber & n,
-                                 const HNumber & p  )
+                                 const HNumber & p )
 {
-	if ( n.isNan() || n < 0 || ! n.isInteger()
+	if ( n.isNan() || ! n.isInteger() || n < 0
         || p.isNan() || p < 0 || p > 1 )
   {
     // invalid usage
@@ -2014,10 +2036,28 @@ HNumber HMath::binomialVariance( const HNumber & n,
   return n * p * ( HNumber(1) - p );
 }
 
-HNumber HMath::poissonPmf( const HNumber & k,
-                           const HNumber & l  )
+HNumber HMath::hypergeometricPmf( const HNumber & k,
+                                  const HNumber & N,
+                                  const HNumber & M,
+                                  const HNumber & n )
 {
-	if ( k.isNan() || k < 0 || ! k.isInteger()
+  HNumber minLim = M + n - N;
+	if ( k.isNan() || ! k.isInteger() || k < max( 0, minLim ) || k > min( M, n )
+        || N.isNan() || ! N.isInteger() || N < 0
+          || M.isNan() || ! M.isInteger() || M < 0 || M > N
+            || n.isNan() || ! n.isInteger() || n < 0 || n > N )
+  {
+    // invalid usage
+    return HNumber::nan();
+  }
+
+  return HMath::nCr( M, k ) * HMath::nCr( N-M, n-k ) / HMath::nCr( N, n );
+}
+
+HNumber HMath::poissonPmf( const HNumber & k,
+                           const HNumber & l )
+{
+	if ( k.isNan() || ! k.isInteger() || k < 0
         || l.isNan() || l < 0 )
   {
     // invalid usage
@@ -2028,9 +2068,9 @@ HNumber HMath::poissonPmf( const HNumber & k,
 }
 
 HNumber HMath::poissonCdf( const HNumber & k,
-                           const HNumber & l  )
+                           const HNumber & l )
 {
-	if ( k.isNan() || k < 0 || ! k.isInteger()
+	if ( k.isNan() || ! k.isInteger() || k < 0
         || l.isNan() || l < 0 )
   {
     // invalid usage
