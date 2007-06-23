@@ -2067,6 +2067,18 @@ HNumber HMath::hypergeometricMean( const HNumber & N,
   return n * M / N;
 }
 
+HNumber HMath::hypergeometricVariance( const HNumber & N,
+                                       const HNumber & M,
+                                       const HNumber & n )
+{
+  if ( N.isNan() || ! N.isInteger() || N < 0
+         || M.isNan() || ! M.isInteger() || M < 0 || M > N
+           || n.isNan() || ! n.isInteger() || n < 0 || n > N )
+    return HNumber::nan();
+
+  return (n * (M/N) * (HNumber(1) - M/N) * (N-n)) / (N - HNumber(1));
+}
+
 HNumber HMath::poissonPmf( const HNumber & k,
                            const HNumber & l )
 {

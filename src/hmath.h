@@ -549,9 +549,10 @@ public:
                                     const HNumber & n );
 
   /**
-   * Calculates the expected value of a hypergeometric distributed random variable:
+   * Calculates the expected value of a hypergeometrically distributed random
+   * variable:
    * \f[X{\sim}H(N,M,n)\f]
-   * \f[E(X)=\frac{nM}{N}\f]
+   * \f[E(X)=n\frac{M}{N}\f]
    *
    * \param[in] N the number of total elements
    * \param[in] M the number of success elements
@@ -563,6 +564,22 @@ public:
   static HNumber hypergeometricMean( const HNumber & N,
                                      const HNumber & M,
                                      const HNumber & n );
+
+  /**
+   * Calculates the variance of a hypergeometrically distributed random variable:
+   * \f[X{\sim}H(N,M,n)\f]
+   * \f[Var(X)=\frac{n\frac{M}{N}(1-\frac{M}{N})(N-n)}{N-1}\f]
+   *
+   * \param[in] N the number of total elements
+   * \param[in] M the number of success elements
+   * \param[in] n the number of selected elements
+   *
+   * \return the variance of the variable, otherwise \p NaN if the function is
+   * not defined for the specified parameter.
+   */
+  static HNumber hypergeometricVariance( const HNumber & N,
+                                         const HNumber & M,
+                                         const HNumber & n );
 
   /**
    * Calculates the poissonian discrete distribution probability mass function:
@@ -606,7 +623,7 @@ public:
 
   /**
    * Calculates the variance of a Poisson distributed random variable:
-   * \f[X{\sim}P(n,p)\f]
+   * \f[X{\sim}P(\lambda)\f]
    * \f[Var(X)=\lambda\f]
    *
    * \param[in] l the expected number of occurrences that occur in an interval

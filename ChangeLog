@@ -38,6 +38,7 @@ New functions:
  HYPERPMF: hypergeometric probability mass function
  HYPERCDF: hypergeometric cumulative distribution function
  HYPERMEAN: hypergeometric distribution mean
+ HYPERVAR: hypergeometric distribution variance
  POIPMF: poissonian probability mass function
  POICDF: poissonian cumulative distribution function
  POIMEAN: poissonian distribution mean
