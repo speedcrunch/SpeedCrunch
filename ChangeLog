@@ -46,7 +46,7 @@ New functions:
 
 Improvements and bug fixes:
  fixed accuracy problem when calculating 10^x where x is integer
- variable names are now case sensitive
+ variable names are now case sensitive in and between sessions
  shortcut Ctrl+Q to quit (ubuntu bug#102734)
  shortcut key F6 to focus and select input
  shortcut key Esc to clear the input

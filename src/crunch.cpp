@@ -778,10 +778,19 @@ void Crunch::saveSettings()
     for( int i=0; i<vars.count(); i++ )
       if( vars[i].name != "pi" )
       {
-        char* str = HMath::formatFixed( vars[i].value, 100 );
-        settings->variables.append( QString("%1=%2").arg( vars[i].name ).
-          arg( QString( str ) ) );
-        free( str );
+        QString name;
+	int length = vars[i].name.length();
+	for ( int c = 0; c < length; c++ )
+	{
+	  QChar letter = vars[i].name[c];
+	  if ( letter.isUpper() )
+	    name += '_'; // escape code meaning upper case letter
+	  name += vars[i].name[c].toLower();
+	}
+        char * value = HMath::formatFixed( vars[i].value, 100 );
+        settings->variables.append(
+	  QString("%1=%2").arg( name ).arg( QString( value ) ) );
+        free( value );
       }
   }
 

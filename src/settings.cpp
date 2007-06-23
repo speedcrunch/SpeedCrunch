@@ -1,7 +1,7 @@
 /* This file is part of the SpeedCrunch project
    Copyright (C) 2004, 2005, 2007 Ariya Hidayat <ariya@kde.org>
                  2005-2006 Johan Thelin <e8johan@gmail.com>
-								 2007 Helder Correia <helder.pereira.correia@gmail.com>
+                 2007 Helder Correia <helder.pereira.correia@gmail.com>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -134,7 +134,7 @@ void Settings::load()
   customBackgroundColor2.setNamedColor( settings.value( key + "/Appearance/CustomBackgroundColor2", "#eeeeee"          ).toString() );
   customErrorColor.setNamedColor( settings.value(       key + "/Appearance/CustomErrorColor",       "red"              ).toString() );
   mainWindowSize = QSize( settings.value( key + "/Appearance/WindowWidth",  0 ).toInt(),
-	                        settings.value( key + "/Appearance/WindowHeight", 0 ).toInt() );
+                          settings.value( key + "/Appearance/WindowHeight", 0 ).toInt() );
 
   key = SETTINGSKEY;
   key += "/MainWindow/";
@@ -171,7 +171,7 @@ void Settings::load()
 
   key = SETTINGSKEY;
 
-	// load history
+  // load history
   history.clear();
   int count = settings.value( key + "/History/Count", 0 ).toInt();
   for ( int i = 0; i < count; i++ )
@@ -188,7 +188,7 @@ void Settings::load()
     }
   }
 
-	// load variables
+  // load variables
   variables.clear();
   settings.beginGroup( key + "/Variables" );
   QStringList names = settings.childKeys();
@@ -197,8 +197,18 @@ void Settings::load()
   {
     QString keyname = QString( "%1/Variables/%2" ).arg( key ).arg( names[k] );
     QString value = settings.value( keyname ).toString();
-    if ( !value.isEmpty() )
-      variables.append( QString( "%1=%2" ).arg( names[k] ).arg( value ) );
+    // treat upper case escape code
+    QString name = names[k];
+    int length = name.length();
+    for ( int c = 0; c < length; c++ )
+      if ( name[c] == '_' )
+      {
+	name.remove( c, 1 );
+	name[c] = name[c].toUpper();
+      }
+    // load
+    if ( ! value.isEmpty() )
+      variables.append( QString( "%1=%2" ).arg( name ).arg( value ) );
   }
 }
 
@@ -276,7 +286,7 @@ void Settings::save()
   settings.setValue( key + "/MatchedParenthesisColor", matchedParenthesisColor.name() );
   key = SETTINGSKEY;
 
-	// save history
+  // save history
   QStringList realHistory = history;
   if ( history.count() > 100 )
   {
@@ -295,17 +305,18 @@ void Settings::save()
 
   settings.setValue( key + "/History/Count", (int)history.count() );
   for ( i = 0; i < realHistory.count(); i++ )
-    settings.setValue( QString("%1/History/Expression%2").arg(key).arg(i),realHistory[i] );
+    settings.setValue( QString("%1/History/Expression%2").arg(key).arg(i),
+                       realHistory[i] );
 
-	// save variables
+  // save variables
   settings.beginGroup( key + "/Variables" );
   QStringList vkeys = settings.childKeys();
   settings.endGroup();
 
   for ( k = 0; k < vkeys.count(); k++ )
-	    settings.remove( QString("%1/Variables/%2").arg(key).arg(vkeys[k]) );
+    settings.remove( QString("%1/Variables/%2").arg(key).arg(vkeys[k]) );
 
-	for ( i = 0; i < variables.count(); i++ )
+  for ( i = 0; i < variables.count(); i++ )
   {
     QStringList s = variables[i].split( '=' );
 
