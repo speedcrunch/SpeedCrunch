@@ -1982,10 +1982,7 @@ HNumber HMath::binomialPmf( const HNumber & k,
   if ( k.isNan() || ! k.isInteger() || k < 0 || k > n
          || n.isNan() || ! n.isInteger() || n < 0
            || p.isNan() || p < 0 || p > 1 )
-  {
-    // invalid usage
     return HNumber::nan();
-  }
 
   return HMath::nCr( n, k ) * HMath::raise( p, k ) *
            HMath::raise( HNumber(1)-p, n-k );
@@ -1998,10 +1995,7 @@ HNumber HMath::binomialCdf( const HNumber & k,
   if ( k.isNan() || ! k.isInteger() || k < 0 || k > n
          || n.isNan() || ! n.isInteger() || n < 0
            || p.isNan() || p < 0 || p > 1 )
-  {
-    // invalid usage
     return HNumber::nan();
-  }
 
   HNumber result( 0 );
   for ( HNumber i( 0 ); i <= k; i += 1 )
@@ -2015,10 +2009,7 @@ HNumber HMath::binomialMean( const HNumber & n,
 {
   if ( n.isNan() || ! n.isInteger() || n < 0
          || p.isNan() || p < 0 || p > 1 )
-  {
-    // invalid usage
     return HNumber::nan();
-  }
 
   return n * p;
 }
@@ -2028,10 +2019,7 @@ HNumber HMath::binomialVariance( const HNumber & n,
 {
   if ( n.isNan() || ! n.isInteger() || n < 0
          || p.isNan() || p < 0 || p > 1 )
-  {
-    // invalid usage
     return HNumber::nan();
-  }
 
   return n * p * ( HNumber(1) - p );
 }
@@ -2041,15 +2029,11 @@ HNumber HMath::hypergeometricPmf( const HNumber & k,
                                   const HNumber & M,
                                   const HNumber & n )
 {
-  HNumber minLim = M + n - N;
-  if ( k.isNan() || ! k.isInteger() || k < max( 0, minLim ) || k > min( M, n )
+  if ( k.isNan() || ! k.isInteger() || k < max( 0, M+n-N ) || k > min( M, n )
          || N.isNan() || ! N.isInteger() || N < 0
            || M.isNan() || ! M.isInteger() || M < 0 || M > N
              || n.isNan() || ! n.isInteger() || n < 0 || n > N )
-  {
-    // invalid usage
     return HNumber::nan();
-  }
 
   return HMath::nCr( M, k ) * HMath::nCr( N-M, n-k ) / HMath::nCr( N, n );
 }
@@ -2059,15 +2043,11 @@ HNumber HMath::hypergeometricCdf( const HNumber & k,
                                   const HNumber & M,
                                   const HNumber & n )
 {
-  HNumber minLim = M + n - N;
-  if ( k.isNan() || ! k.isInteger() || k < max( 0, minLim ) || k > min( M, n )
+  if ( k.isNan() || ! k.isInteger() || k < max( 0, M+n-N ) || k > min( M, n )
          || N.isNan() || ! N.isInteger() || N < 0
            || M.isNan() || ! M.isInteger() || M < 0 || M > N
              || n.isNan() || ! n.isInteger() || n < 0 || n > N )
-  {
-    // invalid usage
     return HNumber::nan();
-  }
 
   HNumber result( 0 );
   for ( HNumber i( 0 ); i <= k; i += 1 )
@@ -2075,15 +2055,24 @@ HNumber HMath::hypergeometricCdf( const HNumber & k,
   return result;
 }
 
+HNumber HMath::hypergeometricMean( const HNumber & N,
+                                   const HNumber & M,
+                                   const HNumber & n )
+{
+  if ( N.isNan() || ! N.isInteger() || N < 0
+         || M.isNan() || ! M.isInteger() || M < 0 || M > N
+           || n.isNan() || ! n.isInteger() || n < 0 || n > N )
+    return HNumber::nan();
+
+  return n * M / N;
+}
+
 HNumber HMath::poissonPmf( const HNumber & k,
                            const HNumber & l )
 {
   if ( k.isNan() || ! k.isInteger() || k < 0
          || l.isNan() || l < 0 )
-  {
-    // invalid usage
     return HNumber::nan();
-  }
 
   return exp( l*(-1) ) * raise( l, k ) / factorial( k );
 }
@@ -2093,10 +2082,7 @@ HNumber HMath::poissonCdf( const HNumber & k,
 {
   if ( k.isNan() || ! k.isInteger() || k < 0
          || l.isNan() || l < 0 )
-  {
-    // invalid usage
     return HNumber::nan();
-  }
 
   HNumber result( 0 );
   for ( HNumber i( 0 ); i <= k; i += 1 )
@@ -2107,22 +2093,16 @@ HNumber HMath::poissonCdf( const HNumber & k,
 
 HNumber HMath::poissonMean( const HNumber & l )
 {
-	if ( l.isNan() || l < 0 )
-  {
-    // invalid usage
+  if ( l.isNan() || l < 0 )
     return HNumber::nan();
-  }
 
   return l;
 }
 
 HNumber HMath::poissonVariance( const HNumber & l )
 {
-	if ( l.isNan() || l < 0 )
-  {
-    // invalid usage
+  if ( l.isNan() || l < 0 )
     return HNumber::nan();
-  }
 
   return l;
 }

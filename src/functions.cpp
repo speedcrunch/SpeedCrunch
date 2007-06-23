@@ -889,6 +889,57 @@ HNumber function_hypercdf( const Evaluator         * evaluator,
   return HMath::hypergeometricCdf( k, N, M, n );
 }
 
+HNumber function_hypermean( const Evaluator         * evaluator,
+                            Function                * function,
+                            const FunctionArguments & arguments )
+{
+  if ( arguments.count() != 3 )
+    return HNumber::nan();
+
+  HNumber N = arguments[0];
+  HNumber M = arguments[1];
+  HNumber n = arguments[2];
+
+  if ( ! N.isInteger() )
+  {
+    function->setError( function->name(), QApplication::translate( "functions",
+                          "requires integer P1" ) );
+    return HNumber::nan();
+  }
+  if ( ! M.isInteger() )
+  {
+    function->setError( function->name(), QApplication::translate( "functions",
+                          "requires integer P2" ) );
+    return HNumber::nan();
+  }
+  if ( ! n.isInteger() )
+  {
+    function->setError( function->name(), QApplication::translate( "functions",
+                          "requires integer P3" ) );
+    return HNumber::nan();
+  }
+  if ( N < 0 )
+  {
+    function->setError( function->name(), QApplication::translate( "functions",
+                          "requires non-negative P1" ) );
+    return HNumber::nan();
+  }
+  if ( M < 0 || M > N )
+  {
+    function->setError( function->name(), QApplication::translate( "functions",
+                          "requires P2 in [0,P1]" ) );
+    return HNumber::nan();
+  }
+  if ( n < 0 || n > N )
+  {
+    function->setError( function->name(), QApplication::translate( "functions",
+                          "requires P3 in [0,P1]" ) );
+    return HNumber::nan();
+  }
+
+  return HMath::hypergeometricMean( N, M, n );
+}
+
 HNumber function_poipmf( const Evaluator         * evaluator,
                          Function                * function,
                          const FunctionArguments & arguments )
@@ -1165,17 +1216,17 @@ FunctionRepository::FunctionRepository()
                      QT_TR_NOOP("Hypergeometric Probability Mass Function")  ));
   add( new Function( "hypercdf",  4, function_hypercdf,
                 QT_TR_NOOP("Hypergeometric Cumulative Distribution Function")));
-  //add( new Function( "hypermean", 4, function_hypermean,
-  //                   QT_TR_NOOP("Hypergeometric Distribution Mean")        ));
-  //add( new Function( "hypervar",  4, function_hypervar,
+  add( new Function( "hypermean", 3, function_hypermean,
+                     QT_TR_NOOP("Hypergeometric Distribution Mean")          ));
+  //add( new Function( "hypervar",  3, function_hypervar,
   //                   QT_TR_NOOP("Hypergeometric Distribution Variance)")   ));
-  add( new Function( "poipmf", 2, function_poipmf,
+  add( new Function( "poipmf",    2, function_poipmf,
                      QT_TR_NOOP("Poissonian Probability Mass Function")      ));
-  add( new Function( "poicdf", 2, function_poicdf,
+  add( new Function( "poicdf",    2, function_poicdf,
                     QT_TR_NOOP("Poissonian Cumulative Distribution Function")));
-  add( new Function( "poimean",  1, function_poimean,
+  add( new Function( "poimean",   1, function_poimean,
                      QT_TR_NOOP("Poissonian Distribution Mean")              ));
-  add( new Function( "poivar",   1, function_poivar,
+  add( new Function( "poivar",    1, function_poivar,
                      QT_TR_NOOP("Poissonian Distribution Variance")          ));
   /*
                                    TRIGONOMETRY
