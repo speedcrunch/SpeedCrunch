@@ -824,6 +824,71 @@ HNumber function_hyperpmf( const Evaluator         * evaluator,
   return HMath::hypergeometricPmf( k, N, M, n );
 }
 
+HNumber function_hypercdf( const Evaluator         * evaluator,
+                           Function                * function,
+                           const FunctionArguments & arguments )
+{
+  if ( arguments.count() != 4 )
+    return HNumber::nan();
+
+  HNumber k = arguments[0];
+  HNumber N = arguments[1];
+  HNumber M = arguments[2];
+  HNumber n = arguments[3];
+
+  if ( ! k.isInteger() )
+  {
+    function->setError( function->name(), QApplication::translate( "functions",
+                          "requires integer P1" ) );
+    return HNumber::nan();
+  }
+  if ( ! N.isInteger() )
+  {
+    function->setError( function->name(), QApplication::translate( "functions",
+                          "requires integer P2" ) );
+    return HNumber::nan();
+  }
+  if ( ! M.isInteger() )
+  {
+    function->setError( function->name(), QApplication::translate( "functions",
+                          "requires integer P3" ) );
+    return HNumber::nan();
+  }
+  if ( ! n.isInteger() )
+  {
+    function->setError( function->name(), QApplication::translate( "functions",
+                          "requires integer P4" ) );
+    return HNumber::nan();
+  }
+  HNumber minLim = M + n - N;
+  if ( k < HMath::max( 0, minLim ) || k > HMath::min( M, n ) )
+  {
+    function->setError( function->name(), QApplication::translate( "functions",
+                          "requires P1 in [max(0,P3+P4-P2),min(P3,P4)]" ) );
+    return HNumber::nan();
+  }
+  if ( N < 0 )
+  {
+    function->setError( function->name(), QApplication::translate( "functions",
+                          "requires non-negative P2" ) );
+    return HNumber::nan();
+  }
+  if ( M < 0 || M > N )
+  {
+    function->setError( function->name(), QApplication::translate( "functions",
+                          "requires P3 in [0,P2]" ) );
+    return HNumber::nan();
+  }
+  if ( n < 0 || n > N )
+  {
+    function->setError( function->name(), QApplication::translate( "functions",
+                          "requires P4 in [0,P2]" ) );
+    return HNumber::nan();
+  }
+
+  return HMath::hypergeometricCdf( k, N, M, n );
+}
+
 HNumber function_poipmf( const Evaluator         * evaluator,
                          Function                * function,
                          const FunctionArguments & arguments )
@@ -1088,18 +1153,18 @@ FunctionRepository::FunctionRepository()
   /*
                                     PROBABILITY
                                                                               */
-  add( new Function( "binompmf",      3, function_binompmf,
+  add( new Function( "binompmf",  3, function_binompmf,
                      QT_TR_NOOP("Binomial Probability Mass Function")        ));
-  add( new Function( "binomcdf", 3, function_binomcdf,
+  add( new Function( "binomcdf",  3, function_binomcdf,
                      QT_TR_NOOP("Binomial Cumulative Distribution Function") ));
-  add( new Function( "binommean",  2, function_binommean,
+  add( new Function( "binommean", 2, function_binommean,
                      QT_TR_NOOP("Binomial Distribution Mean")                ));
-  add( new Function( "binomvar",   2, function_binomvar,
+  add( new Function( "binomvar",  2, function_binomvar,
                      QT_TR_NOOP("Binomial Distribution Variance")            ));
   add( new Function( "hyperpmf",  4, function_hyperpmf,
                      QT_TR_NOOP("Hypergeometric Probability Mass Function")  ));
-  //add( new Function( "hypercdf",  4, function_hypercdf,
-  //            QT_TR_NOOP("Hypergeometric Cumulative Distribution Function")));
+  add( new Function( "hypercdf",  4, function_hypercdf,
+                QT_TR_NOOP("Hypergeometric Cumulative Distribution Function")));
   //add( new Function( "hypermean", 4, function_hypermean,
   //                   QT_TR_NOOP("Hypergeometric Distribution Mean")        ));
   //add( new Function( "hypervar",  4, function_hypervar,

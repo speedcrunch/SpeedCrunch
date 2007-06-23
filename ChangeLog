@@ -36,6 +36,7 @@ New functions:
  BINOMMEAN: binomial distribution mean
  BINOMVAR: binomial distribution variance
  HYPERPMF: hypergeometric probability mass function
+ HYPERCDF: hypergeometric cumulative distribution function
  POIPMF: poissonian probability mass function
  POICDF: poissonian cumulative distribution function
  POIMEAN: poissonian distribution mean

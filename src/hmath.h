@@ -471,7 +471,7 @@ public:
    * \f[X{\sim}B(n,p)\f]
    * \f[\Pr(X \leq k|n,p)=\sum_{i=0}^{k}{n\choose i}p^{i}(1-p)^{n-i}\f]
    *
-   * \param[in] k the maximum number of probed exact successes
+   * \param[in] k the maximum number of probed successes
    * \param[in] n the number of trials
    * \param[in] p the probability of success in a single trial
    *
@@ -525,6 +525,25 @@ public:
    * function is not defined for the specified parameters.
    */
   static HNumber hypergeometricPmf( const HNumber & k,
+                                    const HNumber & N,
+                                    const HNumber & M,
+                                    const HNumber & n );
+
+  /**
+   * Calculates the hypergeometric cumulative distribution function:
+   * \f[X{\sim}H(n,p)\f]
+   * \f[\Pr(X\leq k|N,M,n)=
+   *   \sum_{i=0}^{k}\frac{{M\choose k}{N-M\choose n-k}}{{N\choose n}}\f]
+   *
+   * \param[in] k the maximum number of probed successes
+   * \param[in] N the number of total elements
+   * \param[in] M the number of success elements
+   * \param[in] n the number of selected elements
+   *
+   * \return the probability of up to \p k successes, otherwise \p NaN if the
+   * function is not defined for the specified parameters.
+   */
+  static HNumber hypergeometricCdf( const HNumber & k,
                                     const HNumber & N,
                                     const HNumber & M,
                                     const HNumber & n );
