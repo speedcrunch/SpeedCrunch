@@ -1653,8 +1653,7 @@ HNumber HMath::sin( const HNumber& x )
     sum += s;
   }
 
-  HNumber result = sum;
-  return result;
+  return sum;
 }
 
 
@@ -1689,8 +1688,7 @@ HNumber HMath::cos( const HNumber& x )
     sum += s;
   }
 
-  HNumber result = sum;
-  return result;
+  return sum;
 }
 
 HNumber HMath::tan( const HNumber& x )

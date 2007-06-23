@@ -616,34 +616,12 @@ HNumber function_binompmf( const Evaluator         * evaluator,
   HNumber n = arguments[1];
   HNumber p = arguments[2];
 
-  if ( ! k.isInteger() )
+  if ( ! k.isInteger() || k < 0 || k > n
+         || ! n.isInteger() || n < 0
+           || p < 0 || p > 1 )
   {
     function->setError( function->name(), QApplication::translate( "functions",
-                          "requires integer P1" ) );
-    return HNumber::nan();
-  }
-  if ( ! n.isInteger() )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires integer P2" ) );
-    return HNumber::nan();
-  }
-  if ( n < 0 )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires non-negative P2" ) );
-    return HNumber::nan();
-  }
-  if ( p < 0 || p > 1 )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires P3 in [0,1]" ) );
-    return HNumber::nan();
-  }
-  if ( k < 0 || k > n )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires P1 in [0,P2]" ) );
+                          "function undefined for specified parameters" ) );
     return HNumber::nan();
   }
 
@@ -661,34 +639,12 @@ HNumber function_binomcdf( const Evaluator         * evaluator,
   HNumber n = arguments[1];
   HNumber p = arguments[2];
 
-  if ( ! k.isInteger() )
+  if ( ! k.isInteger() || k < 0 || k > n
+         || ! n.isInteger() || n < 0
+           || p < 0 || p > 1 )
   {
     function->setError( function->name(), QApplication::translate( "functions",
-                          "requires integer P1" ) );
-    return HNumber::nan();
-  }
-  if ( ! n.isInteger() )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires integer P2" ) );
-    return HNumber::nan();
-  }
-  if ( n < 0 )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires non-negative P2" ) );
-    return HNumber::nan();
-  }
-  if ( p < 0 || p > 1 )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires P3 in [0,1]" ) );
-    return HNumber::nan();
-  }
-  if ( k < 0 || k > n )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-      "                   requires P1 in [0,P2]" ) );
+                          "function undefined for specified parameters" ) );
     return HNumber::nan();
   }
 
@@ -705,22 +661,11 @@ HNumber function_binommean( const Evaluator         * evaluator,
   HNumber n = arguments[0];
   HNumber p = arguments[1];
 
-  if ( ! n.isInteger() )
+  if ( ! n.isInteger() || n < 0
+         || p < 0 || p > 1 )
   {
     function->setError( function->name(), QApplication::translate( "functions",
-                          "requires integer P1" ) );
-    return HNumber::nan();
-  }
-  if ( n < 0 )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires non-negative P1" ) );
-    return HNumber::nan();
-  }
-  if ( p < 0 || p > 1 )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires P2 in [0,1]" ) );
+                          "function undefined for specified parameters" ) );
     return HNumber::nan();
   }
 
@@ -737,22 +682,11 @@ HNumber function_binomvar( const Evaluator         * evaluator,
   HNumber n = arguments[0];
   HNumber p = arguments[1];
 
-  if ( ! n.isInteger() )
+  if ( ! n.isInteger() || n < 0
+         || p < 0 || p > 1 )
   {
     function->setError( function->name(), QApplication::translate( "functions",
-                          "requires integer P1" ) );
-    return HNumber::nan();
-  }
-  if ( n < 0 )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires non-negative P1" ) );
-    return HNumber::nan();
-  }
-  if ( p < 0 || p > 1 )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires P2 in [0,1]" ) );
+                          "function undefined for specified parameters" ) );
     return HNumber::nan();
   }
 
@@ -771,53 +705,13 @@ HNumber function_hyperpmf( const Evaluator         * evaluator,
   HNumber M = arguments[2];
   HNumber n = arguments[3];
 
-  if ( ! k.isInteger() )
+  if ( ! k.isInteger() || k < HMath::max( 0, M+n-N ) || k > HMath::min( M, n )
+         || ! N.isInteger() || N < 0
+           || ! M.isInteger() || M < 0 || M > N
+             || ! n.isInteger() || n < 0 || n > N )
   {
     function->setError( function->name(), QApplication::translate( "functions",
-                          "requires integer P1" ) );
-    return HNumber::nan();
-  }
-  if ( ! N.isInteger() )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires integer P2" ) );
-    return HNumber::nan();
-  }
-  if ( ! M.isInteger() )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires integer P3" ) );
-    return HNumber::nan();
-  }
-  if ( ! n.isInteger() )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires integer P4" ) );
-    return HNumber::nan();
-  }
-  HNumber minLim = M + n - N;
-  if ( k < HMath::max( 0, minLim ) || k > HMath::min( M, n ) )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires P1 in [max(0,P3+P4-P2),min(P3,P4)]" ) );
-    return HNumber::nan();
-  }
-  if ( N < 0 )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires non-negative P2" ) );
-    return HNumber::nan();
-  }
-  if ( M < 0 || M > N )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires P3 in [0,P2]" ) );
-    return HNumber::nan();
-  }
-  if ( n < 0 || n > N )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires P4 in [0,P2]" ) );
+                          "function undefined for specified parameters" ) );
     return HNumber::nan();
   }
 
@@ -836,53 +730,13 @@ HNumber function_hypercdf( const Evaluator         * evaluator,
   HNumber M = arguments[2];
   HNumber n = arguments[3];
 
-  if ( ! k.isInteger() )
+  if ( ! k.isInteger() || k < HMath::max( 0, M+n-N ) || k > HMath::min( M, n )
+         || ! N.isInteger() || N < 0
+           || ! M.isInteger() || M < 0 || M > N
+             || ! n.isInteger() || n < 0 || n > N )
   {
     function->setError( function->name(), QApplication::translate( "functions",
-                          "requires integer P1" ) );
-    return HNumber::nan();
-  }
-  if ( ! N.isInteger() )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires integer P2" ) );
-    return HNumber::nan();
-  }
-  if ( ! M.isInteger() )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires integer P3" ) );
-    return HNumber::nan();
-  }
-  if ( ! n.isInteger() )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires integer P4" ) );
-    return HNumber::nan();
-  }
-  HNumber minLim = M + n - N;
-  if ( k < HMath::max( 0, minLim ) || k > HMath::min( M, n ) )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires P1 in [max(0,P3+P4-P2),min(P3,P4)]" ) );
-    return HNumber::nan();
-  }
-  if ( N < 0 )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires non-negative P2" ) );
-    return HNumber::nan();
-  }
-  if ( M < 0 || M > N )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires P3 in [0,P2]" ) );
-    return HNumber::nan();
-  }
-  if ( n < 0 || n > N )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires P4 in [0,P2]" ) );
+                          "function undefined for specified parameters" ) );
     return HNumber::nan();
   }
 
@@ -900,40 +754,12 @@ HNumber function_hypermean( const Evaluator         * evaluator,
   HNumber M = arguments[1];
   HNumber n = arguments[2];
 
-  if ( ! N.isInteger() )
+  if ( ! N.isInteger() || N < 0
+         || ! M.isInteger() || M < 0 || M > N
+           || ! n.isInteger() || n < 0 || n > N )
   {
     function->setError( function->name(), QApplication::translate( "functions",
-                          "requires integer P1" ) );
-    return HNumber::nan();
-  }
-  if ( ! M.isInteger() )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires integer P2" ) );
-    return HNumber::nan();
-  }
-  if ( ! n.isInteger() )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires integer P3" ) );
-    return HNumber::nan();
-  }
-  if ( N < 0 )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires non-negative P1" ) );
-    return HNumber::nan();
-  }
-  if ( M < 0 || M > N )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires P2 in [0,P1]" ) );
-    return HNumber::nan();
-  }
-  if ( n < 0 || n > N )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires P3 in [0,P1]" ) );
+                          "function undefined for specified parameters" ) );
     return HNumber::nan();
   }
 
@@ -951,40 +777,12 @@ HNumber function_hypervar( const Evaluator         * evaluator,
   HNumber M = arguments[1];
   HNumber n = arguments[2];
 
-  if ( ! N.isInteger() )
+  if ( ! N.isInteger() || N < 0
+         || ! M.isInteger() || M < 0 || M > N
+           || ! n.isInteger() || n < 0 || n > N )
   {
     function->setError( function->name(), QApplication::translate( "functions",
-                          "requires integer P1" ) );
-    return HNumber::nan();
-  }
-  if ( ! M.isInteger() )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires integer P2" ) );
-    return HNumber::nan();
-  }
-  if ( ! n.isInteger() )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires integer P3" ) );
-    return HNumber::nan();
-  }
-  if ( N < 0 )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires non-negative P1" ) );
-    return HNumber::nan();
-  }
-  if ( M < 0 || M > N )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires P2 in [0,P1]" ) );
-    return HNumber::nan();
-  }
-  if ( n < 0 || n > N )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires P3 in [0,P1]" ) );
+                          "function undefined for specified parameters" ) );
     return HNumber::nan();
   }
 
@@ -1001,22 +799,11 @@ HNumber function_poipmf( const Evaluator         * evaluator,
   HNumber k = arguments[0];
   HNumber l = arguments[1];
 
-  if ( ! k.isInteger() )
+  if ( ! k.isInteger() || k < 0
+         || l < 0 )
   {
     function->setError( function->name(), QApplication::translate( "functions",
-                          "requires integer P1" ) );
-    return HNumber::nan();
-  }
-  if ( k < 0 )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires non-negative P1" ) );
-    return HNumber::nan();
-  }
-  if ( l < 0 )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires non-negative P2" ) );
+                          "function undefined for specified parameters" ) );
     return HNumber::nan();
   }
 
@@ -1033,22 +820,11 @@ HNumber function_poicdf( const Evaluator         * evaluator,
   HNumber k = arguments[0];
   HNumber l = arguments[1];
 
-  if ( ! k.isInteger() )
+  if ( ! k.isInteger() || k < 0
+         || l < 0 )
   {
     function->setError( function->name(), QApplication::translate( "functions",
-                          "requires integer P1" ) );
-    return HNumber::nan();
-  }
-  if ( k < 0 )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires non-negative P1" ) );
-    return HNumber::nan();
-  }
-  if ( l < 0 )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "requires non-negative P2" ) );
+                          "function undefined for specified parameters" ) );
     return HNumber::nan();
   }
 
@@ -1067,7 +843,7 @@ HNumber function_poimean( const Evaluator         * evaluator,
   if ( l < 0 )
   {
     function->setError( function->name(), QApplication::translate( "functions",
-                          "requires non-negative parameter" ) );
+                          "function undefined for specified parameters" ) );
     return HNumber::nan();
   }
 
@@ -1086,12 +862,13 @@ HNumber function_poivar( const Evaluator         * evaluator,
   if ( l < 0 )
   {
     function->setError( function->name(), QApplication::translate( "functions",
-                          "requires non-negative parameter" ) );
+                          "function undefined for specified parameters" ) );
     return HNumber::nan();
   }
 
   return HMath::poissonVariance( l );
 }
+
 
 class FunctionPrivate
 {
