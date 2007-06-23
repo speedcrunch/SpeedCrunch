@@ -470,6 +470,103 @@ void test_functions()
   CHECK_PRECISE( HMath::exp("1.0"), "2.71828182845904523536028747135266249775724709369996" );
   CHECK_PRECISE( HMath::exp("100"), "26881171418161354484126255515800135873611118.77374192241519160861528028703490956491415887109722" );
 
+  // binom*
+  CHECK( HMath::binomialPmf( "NaN", "NaN", "NaN" ), "NaN" );
+  CHECK( HMath::binomialPmf( "NaN", "NaN", "0.5" ), "NaN" );
+  CHECK( HMath::binomialPmf( "NaN", "10",  "NaN" ), "NaN" );
+  CHECK( HMath::binomialPmf( "NaN", "10",  "0.5" ), "NaN" );
+  CHECK( HMath::binomialPmf( "5",   "NaN", "NaN" ), "NaN" );
+  CHECK( HMath::binomialPmf( "5",   "NaN", "0.5" ), "NaN" );
+  CHECK( HMath::binomialPmf( "5",   "10",  "NaN" ), "NaN" );
+  CHECK( HMath::binomialPmf( "5",   "10",  "0.5" ), "0.24609375" );
+  CHECK( HMath::binomialPmf( "-5",  "10",  "0.5" ), "NaN" );
+  CHECK_PRECISE( HMath::binomialPmf( "5", "10", "0.5" ), "0.24609375000000000000000000000000000000000000000000" );
+
+  CHECK( HMath::binomialCdf( "NaN", "NaN", "NaN" ), "NaN" );
+  CHECK( HMath::binomialCdf( "NaN", "NaN", "0.5" ), "NaN" );
+  CHECK( HMath::binomialCdf( "NaN", "10",  "NaN" ), "NaN" );
+  CHECK( HMath::binomialCdf( "NaN", "10",  "0.5" ), "NaN" );
+  CHECK( HMath::binomialCdf( "5",   "NaN", "NaN" ), "NaN" );
+  CHECK( HMath::binomialCdf( "5",   "NaN", "0.5" ), "NaN" );
+  CHECK( HMath::binomialCdf( "5",   "10",  "NaN" ), "NaN" );
+  CHECK( HMath::binomialCdf( "5",   "10",  "0.5" ), "0.623046875" );
+  CHECK( HMath::binomialCdf( "-5",  "10",  "0.5" ), "NaN" );
+  CHECK_PRECISE( HMath::binomialCdf( "5", "10", "0.5" ), "0.62304687500000000000000000000000000000000000000000" );
+
+  CHECK( HMath::binomialMean( "NaN", "NaN" ), "NaN" );
+  CHECK( HMath::binomialMean( "NaN", "0.5" ), "NaN" );
+  CHECK( HMath::binomialMean( "10",  "NaN" ), "NaN" );
+  CHECK( HMath::binomialMean( "10",  "0.5" ), "5"   );
+  CHECK( HMath::binomialMean( "-10", "0.5" ), "NaN" );
+  CHECK_PRECISE( HMath::binomialMean( "10", "0.5" ), "5.00000000000000000000000000000000000000000000000000" );
+
+  CHECK( HMath::binomialVariance( "NaN", "NaN" ), "NaN" );
+  CHECK( HMath::binomialVariance( "NaN", "0.5" ), "NaN" );
+  CHECK( HMath::binomialVariance( "10",  "NaN" ), "NaN" );
+  CHECK( HMath::binomialVariance( "10",  "0.5" ), "2.5" );
+  CHECK( HMath::binomialVariance( "-10", "0.5" ), "NaN" );
+  CHECK_PRECISE( HMath::binomialVariance( "10", "0.5" ), "2.50000000000000000000000000000000000000000000000000" );
+
+  // hyper*
+  CHECK( HMath::hypergeometricPmf( "NaN", "NaN", "NaN", "NaN" ), "NaN" );
+  CHECK( HMath::hypergeometricPmf( "NaN", "NaN", "NaN", "5"   ), "NaN" );
+  CHECK( HMath::hypergeometricPmf( "NaN", "NaN", "10",  "NaN" ), "NaN" );
+  CHECK( HMath::hypergeometricPmf( "NaN", "NaN", "10",  "5"   ), "NaN" );
+  CHECK( HMath::hypergeometricPmf( "1",   "15",  "NaN", "NaN" ), "NaN" );
+  CHECK( HMath::hypergeometricPmf( "1",   "15",  "NaN", "5"   ), "NaN" );
+  CHECK( HMath::hypergeometricPmf( "1",   "15",  "10",  "NaN" ), "NaN" );
+  CHECK( HMath::hypergeometricPmf( "1",   "15",  "10",  "5"   ), "0.01665001665001665002" );
+  CHECK( HMath::hypergeometricPmf( "-1",  "15",  "10",  "5"   ), "NaN" );
+  CHECK_PRECISE( HMath::hypergeometricPmf( "1", "15", "10", "5" ), "0.01665001665001665001665001665001665001665001665002" );
+
+  CHECK( HMath::hypergeometricCdf( "NaN", "NaN", "NaN", "NaN" ), "NaN" );
+  CHECK( HMath::hypergeometricCdf( "NaN", "NaN", "NaN", "5"   ), "NaN" );
+  CHECK( HMath::hypergeometricCdf( "NaN", "NaN", "10",  "NaN" ), "NaN" );
+  CHECK( HMath::hypergeometricCdf( "NaN", "NaN", "10",  "5"   ), "NaN" );
+  CHECK( HMath::hypergeometricCdf( "1",   "15",  "NaN", "NaN" ), "NaN" );
+  CHECK( HMath::hypergeometricCdf( "1",   "15",  "NaN", "5"   ), "NaN" );
+  CHECK( HMath::hypergeometricCdf( "1",   "15",  "10",  "NaN" ), "NaN" );
+  CHECK( HMath::hypergeometricCdf( "1",   "15",  "10",  "5"   ), "0.01698301698301698302" );
+  CHECK( HMath::hypergeometricCdf( "-1",  "15",  "10",  "5"   ), "NaN" );
+  CHECK_PRECISE( HMath::hypergeometricCdf( "1", "15", "10", "5" ), "0.01698301698301698301698301698301698301698301698302" );
+
+  CHECK( HMath::hypergeometricMean( "NaN", "NaN", "NaN" ), "NaN" );
+  CHECK( HMath::hypergeometricMean( "NaN", "NaN", "5"   ), "NaN" );
+  CHECK( HMath::hypergeometricMean( "15",  "10",  "NaN" ), "NaN" );
+  CHECK( HMath::hypergeometricMean( "15",  "10",  "5"   ), "3.33333333333333333333" );
+  CHECK_PRECISE( HMath::hypergeometricMean( "15", "10", "5" ), "3.33333333333333333333333333333333333333333333333333" );
+
+  CHECK( HMath::hypergeometricVariance( "NaN", "NaN", "NaN" ), "NaN" );
+  CHECK( HMath::hypergeometricVariance( "NaN", "NaN", "5"   ), "NaN" );
+  CHECK( HMath::hypergeometricVariance( "15",  "10",  "NaN" ), "NaN" );
+  CHECK( HMath::hypergeometricVariance( "15",  "10",  "5"   ), "0.79365079365079365079" );
+  CHECK_PRECISE( HMath::hypergeometricVariance( "15", "10", "5" ), "0.79365079365079365079365079365079365079365079365079" );
+
+  // poi*
+  CHECK( HMath::poissonPmf( "NaN", "NaN" ), "NaN" );
+  CHECK( HMath::poissonPmf( "NaN", "5"   ), "NaN" );
+  CHECK( HMath::poissonPmf( "2",   "NaN" ), "NaN" );
+  CHECK( HMath::poissonPmf( "2",   "5"   ), "0.08422433748856833871" );
+  CHECK( HMath::poissonPmf( "-2",  "5"   ), "NaN" );
+  CHECK_PRECISE( HMath::poissonPmf( "2", "5" ), "0.08422433748856833870795060528935530311061981284194" );
+
+  CHECK( HMath::poissonCdf( "NaN", "NaN" ), "NaN" );
+  CHECK( HMath::poissonCdf( "NaN", "5"   ), "NaN" );
+  CHECK( HMath::poissonCdf( "2",   "NaN" ), "NaN" );
+  CHECK( HMath::poissonCdf( "2",   "5"   ), "0.12465201948308114129" );
+  CHECK( HMath::poissonCdf( "-2",  "5"   ), "NaN" );
+  CHECK_PRECISE( HMath::poissonCdf( "2", "5" ), "0.12465201948308114128776689582824584860371732300607" );
+
+  CHECK( HMath::poissonMean( "NaN" ), "NaN" );
+  CHECK( HMath::poissonMean( "5"   ), "5"   );
+  CHECK( HMath::poissonMean( "-5"  ), "NaN" );
+  CHECK_PRECISE( HMath::poissonMean( "5" ), "5.00000000000000000000000000000000000000000000000000" );
+
+  CHECK( HMath::poissonVariance( "NaN" ), "NaN" );
+  CHECK( HMath::poissonVariance( "5"   ), "5"   );
+  CHECK( HMath::poissonVariance( "-5"  ), "NaN" );
+  CHECK_PRECISE( HMath::poissonVariance( "5" ), "5.00000000000000000000000000000000000000000000000000" );
+
   // ln
   CHECK( HMath::ln( "NaN" ), "NaN" );
   CHECK( HMath::ln( "0"   ), "NaN" );
