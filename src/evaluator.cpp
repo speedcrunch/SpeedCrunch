@@ -1457,6 +1457,9 @@ QString Evaluator::autoFix( const QString& expr, const QString& decimalPoint )
       if( tokens[i].asOperator() == Token::LeftPar ) par++;
       else if( tokens[i].asOperator() == Token::RightPar ) par--;
 
+    if(par < 0)
+      par = 0;
+
     // if the scanner stops in the middle, do not bother to apply fix
     const Token& lastToken = tokens[tokens.count()-1];
     if(lastToken.pos()+lastToken.text().length() >= result.length())
