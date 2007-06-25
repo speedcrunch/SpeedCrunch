@@ -175,6 +175,12 @@ void test_binary()
   CHECK_EVAL( "1+1", "2" );
 }
 
+void test_divide_by_zero()
+{
+  CHECK_EVAL( "1/0", "NaN" );
+  CHECK_EVAL( "1/sin(pi)", "NaN" );
+}
+
 void test_function_basic()
 {
   CHECK_EVAL( "ABS(0)", "0" );
@@ -371,6 +377,8 @@ int main(int argc, char** argv)
   test_constants();
   test_unary();
   test_binary();
+
+  test_divide_by_zero();
 
   test_function_basic();
   test_function_trig();
