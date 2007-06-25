@@ -466,9 +466,8 @@ HNumber function_nPr( const Evaluator*, Function*, const FunctionArguments& args
 
 HNumber function_degrees( const Evaluator*, Function*, const FunctionArguments& args )
 {
-  if( args.count() != 1 )
+  if ( args.count() != 1 )
     return HNumber::nan();
-
 
   HNumber angle = args[0];
   return angle * HNumber(180) / HMath::pi();
@@ -476,37 +475,47 @@ HNumber function_degrees( const Evaluator*, Function*, const FunctionArguments& 
 
 HNumber function_radians( const Evaluator*, Function*, const FunctionArguments& args )
 {
-  if( args.count() != 1 )
+  if ( args.count() != 1 )
     return HNumber::nan();
-
 
   HNumber angle = args[0];
   return angle * HMath::pi() / HNumber(180);
 }
 
-
-HNumber function_max( const Evaluator*, Function*, const FunctionArguments& args )
+HNumber function_max( const Evaluator         * evaluator,
+                      Function                * function,
+                      const FunctionArguments & arguments )
 {
-  if( args.count() <= 0 )
+  if ( arguments.count() < 2 )
+  {
+    function->setError( function->name(), QApplication::translate( "functions",
+                          "function requires at least 2 parameters" ) );
     return HNumber::nan();
+  }
 
-  HNumber result = args[0];
-  for( int c = 1; c < args.count(); c++ )
-    if( HMath::compare( result, args[c] ) == -1 )
-      result = args[c];
+  int totalParams = arguments.count();
+  HNumber result = arguments[0];
+  for ( int i = 1; i < totalParams; i++ )
+    result = HMath::max( result, arguments[i] );
 
   return result;
 }
 
-HNumber function_min( const Evaluator*, Function*, const FunctionArguments& args )
+HNumber function_min( const Evaluator         * evaluator,
+                      Function                * function,
+                      const FunctionArguments & arguments )
 {
-  if( args.count() <= 0 )
+  if ( arguments.count() < 2 )
+  {
+    function->setError( function->name(), QApplication::translate( "functions",
+                          "function requires at least 2 parameters" ) );
     return HNumber::nan();
+  }
 
-  HNumber result = args[0];
-  for( int c = 1; c < args.count(); c++ )
-    if( HMath::compare( result, args[c] ) == 1 )
-      result = args[c];
+  int totalParams = arguments.count();
+  HNumber result = arguments[0];
+  for ( int i = 1; i < totalParams; i++ )
+    result = HMath::min( result, arguments[i] );
 
   return result;
 }
@@ -612,7 +621,6 @@ HNumber function_binompmf( const Evaluator         * evaluator,
   HNumber k = arguments[0];
   HNumber n = arguments[1];
   HNumber p = arguments[2];
-
   HNumber result = HMath::binomialPmf( k, n, p );
 
   if ( result.isNan() )
@@ -632,7 +640,6 @@ HNumber function_binomcdf( const Evaluator         * evaluator,
   HNumber k = arguments[0];
   HNumber n = arguments[1];
   HNumber p = arguments[2];
-
   HNumber result = HMath::binomialCdf( k, n, p );
 
   if ( result.isNan() )
@@ -651,7 +658,6 @@ HNumber function_binommean( const Evaluator         * evaluator,
 
   HNumber n = arguments[0];
   HNumber p = arguments[1];
-
   HNumber result = HMath::binomialMean( n, p );
 
   if ( result.isNan() )
@@ -670,7 +676,6 @@ HNumber function_binomvar( const Evaluator         * evaluator,
 
   HNumber n = arguments[0];
   HNumber p = arguments[1];
-
   HNumber result = HMath::binomialVariance( n, p );
 
   if ( result.isNan() )
@@ -691,7 +696,6 @@ HNumber function_hyperpmf( const Evaluator         * evaluator,
   HNumber N = arguments[1];
   HNumber M = arguments[2];
   HNumber n = arguments[3];
-
   HNumber result = HMath::hypergeometricPmf( k, N, M, n );
 
   if ( result.isNan() )
@@ -712,7 +716,6 @@ HNumber function_hypercdf( const Evaluator         * evaluator,
   HNumber N = arguments[1];
   HNumber M = arguments[2];
   HNumber n = arguments[3];
-
   HNumber result = HMath::hypergeometricCdf( k, N, M, n );
 
   if ( result.isNan() )
@@ -732,7 +735,6 @@ HNumber function_hypermean( const Evaluator         * evaluator,
   HNumber N = arguments[0];
   HNumber M = arguments[1];
   HNumber n = arguments[2];
-
   HNumber result = HMath::hypergeometricMean( N, M, n );
 
   if ( result.isNan() )
@@ -752,7 +754,6 @@ HNumber function_hypervar( const Evaluator         * evaluator,
   HNumber N = arguments[0];
   HNumber M = arguments[1];
   HNumber n = arguments[2];
-
   HNumber result = HMath::hypergeometricVariance( N, M, n );
 
   if ( result.isNan() )
@@ -771,7 +772,6 @@ HNumber function_poipmf( const Evaluator         * evaluator,
 
   HNumber k = arguments[0];
   HNumber l = arguments[1];
-
   HNumber result = HMath::poissonPmf( k, l );
 
   if ( result.isNan() )
@@ -790,7 +790,6 @@ HNumber function_poicdf( const Evaluator         * evaluator,
 
   HNumber k = arguments[0];
   HNumber l = arguments[1];
-
   HNumber result = HMath::poissonCdf( k, l );
 
   if ( result.isNan() )
@@ -808,7 +807,6 @@ HNumber function_poimean( const Evaluator         * evaluator,
     return HNumber::nan();
 
   HNumber l = arguments[0];
-
   HNumber result = HMath::poissonMean( l );
 
   if ( result.isNan() )
@@ -826,7 +824,6 @@ HNumber function_poivar( const Evaluator         * evaluator,
     return HNumber::nan();
 
   HNumber l = arguments[0];
-
   HNumber result = HMath::poissonVariance( l );
 
   if ( result.isNan() )
