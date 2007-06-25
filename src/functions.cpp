@@ -616,16 +616,13 @@ HNumber function_binompmf( const Evaluator         * evaluator,
   HNumber n = arguments[1];
   HNumber p = arguments[2];
 
-  if ( ! k.isInteger() || k < 0 || k > n
-         || ! n.isInteger() || n < 0
-           || p < 0 || p > 1 )
-  {
+  HNumber result = HMath::binomialPmf( k, n, p );
+
+  if ( result.isNan() )
     function->setError( function->name(), QApplication::translate( "functions",
                           "function undefined for specified parameters" ) );
-    return HNumber::nan();
-  }
 
-  return HMath::binomialPmf( k, n, p );
+  return result;
 }
 
 HNumber function_binomcdf( const Evaluator         * evaluator,
@@ -639,16 +636,13 @@ HNumber function_binomcdf( const Evaluator         * evaluator,
   HNumber n = arguments[1];
   HNumber p = arguments[2];
 
-  if ( ! k.isInteger() || k < 0 || k > n
-         || ! n.isInteger() || n < 0
-           || p < 0 || p > 1 )
-  {
+  HNumber result = HMath::binomialCdf( k, n, p );
+
+  if ( result.isNan() )
     function->setError( function->name(), QApplication::translate( "functions",
                           "function undefined for specified parameters" ) );
-    return HNumber::nan();
-  }
 
-  return HMath::binomialCdf( k, n, p );
+  return result;
 }
 
 HNumber function_binommean( const Evaluator         * evaluator,
@@ -661,15 +655,13 @@ HNumber function_binommean( const Evaluator         * evaluator,
   HNumber n = arguments[0];
   HNumber p = arguments[1];
 
-  if ( ! n.isInteger() || n < 0
-         || p < 0 || p > 1 )
-  {
+  HNumber result = HMath::binomialMean( n, p );
+
+  if ( result.isNan() )
     function->setError( function->name(), QApplication::translate( "functions",
                           "function undefined for specified parameters" ) );
-    return HNumber::nan();
-  }
 
-  return HMath::binomialMean( n, p );
+  return result;
 }
 
 HNumber function_binomvar( const Evaluator         * evaluator,
@@ -682,15 +674,13 @@ HNumber function_binomvar( const Evaluator         * evaluator,
   HNumber n = arguments[0];
   HNumber p = arguments[1];
 
-  if ( ! n.isInteger() || n < 0
-         || p < 0 || p > 1 )
-  {
+  HNumber result = HMath::binomialVariance( n, p );
+
+  if ( result.isNan() )
     function->setError( function->name(), QApplication::translate( "functions",
                           "function undefined for specified parameters" ) );
-    return HNumber::nan();
-  }
 
-  return HMath::binomialVariance( n, p );
+  return result;
 }
 
 HNumber function_hyperpmf( const Evaluator         * evaluator,
@@ -705,17 +695,13 @@ HNumber function_hyperpmf( const Evaluator         * evaluator,
   HNumber M = arguments[2];
   HNumber n = arguments[3];
 
-  if ( ! k.isInteger() || k < HMath::max( 0, M+n-N ) || k > HMath::min( M, n )
-         || ! N.isInteger() || N < 0
-           || ! M.isInteger() || M < 0 || M > N
-             || ! n.isInteger() || n < 0 || n > N )
-  {
+  HNumber result = HMath::hypergeometricPmf( k, N, M, n );
+
+  if ( result.isNan() )
     function->setError( function->name(), QApplication::translate( "functions",
                           "function undefined for specified parameters" ) );
-    return HNumber::nan();
-  }
 
-  return HMath::hypergeometricPmf( k, N, M, n );
+  return result;
 }
 
 HNumber function_hypercdf( const Evaluator         * evaluator,
@@ -730,17 +716,13 @@ HNumber function_hypercdf( const Evaluator         * evaluator,
   HNumber M = arguments[2];
   HNumber n = arguments[3];
 
-  if ( ! k.isInteger() || k < HMath::max( 0, M+n-N ) || k > HMath::min( M, n )
-         || ! N.isInteger() || N < 0
-           || ! M.isInteger() || M < 0 || M > N
-             || ! n.isInteger() || n < 0 || n > N )
-  {
+  HNumber result = HMath::hypergeometricCdf( k, N, M, n );
+
+  if ( result.isNan() )
     function->setError( function->name(), QApplication::translate( "functions",
                           "function undefined for specified parameters" ) );
-    return HNumber::nan();
-  }
 
-  return HMath::hypergeometricCdf( k, N, M, n );
+  return result;
 }
 
 HNumber function_hypermean( const Evaluator         * evaluator,
@@ -754,16 +736,13 @@ HNumber function_hypermean( const Evaluator         * evaluator,
   HNumber M = arguments[1];
   HNumber n = arguments[2];
 
-  if ( ! N.isInteger() || N < 0
-         || ! M.isInteger() || M < 0 || M > N
-           || ! n.isInteger() || n < 0 || n > N )
-  {
+  HNumber result = HMath::hypergeometricMean( N, M, n );
+
+  if ( result.isNan() )
     function->setError( function->name(), QApplication::translate( "functions",
                           "function undefined for specified parameters" ) );
-    return HNumber::nan();
-  }
 
-  return HMath::hypergeometricMean( N, M, n );
+  return result;
 }
 
 HNumber function_hypervar( const Evaluator         * evaluator,
@@ -777,16 +756,13 @@ HNumber function_hypervar( const Evaluator         * evaluator,
   HNumber M = arguments[1];
   HNumber n = arguments[2];
 
-  if ( ! N.isInteger() || N < 0
-         || ! M.isInteger() || M < 0 || M > N
-           || ! n.isInteger() || n < 0 || n > N )
-  {
+  HNumber result = HMath::hypergeometricVariance( N, M, n );
+
+  if ( result.isNan() )
     function->setError( function->name(), QApplication::translate( "functions",
                           "function undefined for specified parameters" ) );
-    return HNumber::nan();
-  }
 
-  return HMath::hypergeometricVariance( N, M, n );
+  return result;
 }
 
 HNumber function_poipmf( const Evaluator         * evaluator,
@@ -799,15 +775,13 @@ HNumber function_poipmf( const Evaluator         * evaluator,
   HNumber k = arguments[0];
   HNumber l = arguments[1];
 
-  if ( ! k.isInteger() || k < 0
-         || l < 0 )
-  {
+  HNumber result = HMath::poissonPmf( k, l );
+
+  if ( result.isNan() )
     function->setError( function->name(), QApplication::translate( "functions",
                           "function undefined for specified parameters" ) );
-    return HNumber::nan();
-  }
 
-  return HMath::poissonPmf( k, l );
+  return result;
 }
 
 HNumber function_poicdf( const Evaluator         * evaluator,
@@ -820,15 +794,13 @@ HNumber function_poicdf( const Evaluator         * evaluator,
   HNumber k = arguments[0];
   HNumber l = arguments[1];
 
-  if ( ! k.isInteger() || k < 0
-         || l < 0 )
-  {
+  HNumber result = HMath::poissonCdf( k, l );
+
+  if ( result.isNan() )
     function->setError( function->name(), QApplication::translate( "functions",
                           "function undefined for specified parameters" ) );
-    return HNumber::nan();
-  }
 
-  return HMath::poissonCdf( k, l );
+  return result;
 }
 
 HNumber function_poimean( const Evaluator         * evaluator,
@@ -840,14 +812,13 @@ HNumber function_poimean( const Evaluator         * evaluator,
 
   HNumber l = arguments[0];
 
-  if ( l < 0 )
-  {
+  HNumber result = HMath::poissonMean( l );
+
+  if ( result.isNan() )
     function->setError( function->name(), QApplication::translate( "functions",
                           "function undefined for specified parameters" ) );
-    return HNumber::nan();
-  }
 
-  return HMath::poissonMean( l );
+  return result;
 }
 
 HNumber function_poivar( const Evaluator         * evaluator,
@@ -859,14 +830,13 @@ HNumber function_poivar( const Evaluator         * evaluator,
 
   HNumber l = arguments[0];
 
-  if ( l < 0 )
-  {
+  HNumber result = HMath::poissonVariance( l );
+
+  if ( result.isNan() )
     function->setError( function->name(), QApplication::translate( "functions",
                           "function undefined for specified parameters" ) );
-    return HNumber::nan();
-  }
 
-  return HMath::poissonVariance( l );
+  return result;
 }
 
 
