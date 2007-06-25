@@ -227,15 +227,14 @@ HNumber function_ln( const Evaluator*, Function* fn, const FunctionArguments& ar
   if( args.count() != 1 )
     return HNumber::nan();
 
-  HNumber num = args[0];
-  if( num < HNumber(0) )
-  {
+  HNumber x = args[0];
+  HNumber result = HMath::ln( x );
+
+  if( result.isNan() )
     fn->setError( fn->name(), QApplication::translate( "functions",
       "function undefined for specified parameter" ) );
-    return HNumber( 0 );
-  }
 
-  return HMath::ln( num );
+  return result;
 }
 
 HNumber function_log( const Evaluator*, Function* fn, const FunctionArguments& args )
@@ -243,15 +242,14 @@ HNumber function_log( const Evaluator*, Function* fn, const FunctionArguments& a
   if( args.count() != 1 )
     return HNumber::nan();
 
-  HNumber num = args[0];
-  if( num < HNumber(0) )
-  {
+  HNumber x = args[0];
+  HNumber result = HMath::log( x );
+
+  if( result.isNan() )
     fn->setError( fn->name(), QApplication::translate( "functions",
       "function undefined for specified parameter" ) );
-    return HNumber( 0 );
-  }
 
-  return HMath::log( num );
+  return result;
 }
 
 HNumber function_lg( const Evaluator*, Function* fn, const FunctionArguments& args )
@@ -259,15 +257,14 @@ HNumber function_lg( const Evaluator*, Function* fn, const FunctionArguments& ar
   if( args.count() != 1 )
     return HNumber::nan();
 
-  HNumber num = args[0];
-  if( num < HNumber(0) )
-  {
+  HNumber x = args[0];
+  HNumber result = HMath::lg( x );
+
+  if( result.isNan() )
     fn->setError( fn->name(), QApplication::translate( "functions",
       "function undefined for specified parameter" ) );
-    return HNumber( 0 );
-  }
 
-  return HMath::lg( num );
+  return result;
 }
 
 HNumber function_sin( const Evaluator* eval, Function*, const FunctionArguments& args )

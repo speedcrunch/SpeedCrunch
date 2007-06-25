@@ -1504,10 +1504,7 @@ HNumber HMath::exp( const HNumber& x )
 
 HNumber HMath::ln( const HNumber& x )
 {
-  if( x.isNan() )
-    return HNumber::nan();
-
-  if( !x.isPositive() )
+  if ( x.isNan() || x <= 0 )
     return HNumber::nan();
 
   // short circuit
@@ -1562,26 +1559,18 @@ HNumber HMath::ln( const HNumber& x )
 
 HNumber HMath::log( const HNumber& x )
 {
-  if( x.isNan() )
+  if ( x.isNan() || x <= 0 )
     return HNumber::nan();
 
-  if( !x.isPositive() )
-    return HNumber::nan();
-
-  HNumber result = HMath::ln( x ) / HMath::ln(10);
-  return result;
+  return HMath::ln( x ) / HMath::ln(10);
 }
 
 HNumber HMath::lg( const HNumber& x )
 {
-  if( x.isNan() )
+  if ( x.isNan() || x <= 0 )
     return HNumber::nan();
 
-  if( !x.isPositive() )
-    return HNumber::nan();
-
-  HNumber result = HMath::ln( x ) / HMath::ln(2);
-  return result;
+  return HMath::ln( x ) / HMath::ln(2);
 }
 
 // ensure angle is within 0 to 2*pi
@@ -1655,7 +1644,6 @@ HNumber HMath::sin( const HNumber& x )
 
   return sum;
 }
-
 
 HNumber HMath::cos( const HNumber& x )
 {

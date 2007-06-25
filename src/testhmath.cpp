@@ -568,8 +568,9 @@ void test_functions()
   CHECK_PRECISE( HMath::poissonVariance( "5" ), "5.00000000000000000000000000000000000000000000000000" );
 
   // ln
-  CHECK( HMath::ln( "NaN" ), "NaN" );
-  CHECK( HMath::ln( "0"   ), "NaN" );
+  CHECK( HMath::ln( "NaN"  ), "NaN" );
+  CHECK( HMath::ln( "-0.1" ), "NaN" );
+  CHECK( HMath::ln( "0"    ), "NaN" );
   CHECK( HMath::ln( "0.00000000001"), "-25.3284360229345025242" );
   CHECK_PRECISE( HMath::ln("0.1"), "-2.30258509299404568401799145468436420760110148862877" );
   CHECK_PRECISE( HMath::ln("0.2"), "-1.60943791243410037460075933322618763952560135426852" );
