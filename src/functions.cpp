@@ -490,17 +490,18 @@ HNumber function_max( const Evaluator         * evaluator,
                       Function                * function,
                       const FunctionArguments & arguments )
 {
-  if ( arguments.count() < 2 )
+  if ( arguments.count() < 1 )
   {
     function->setError( function->name(), QApplication::translate( "functions",
-                          "function requires at least 2 arguments" ) );
+                          "function requires at least 1 argument" ) );
     return HNumber::nan();
   }
 
   int totalParams = arguments.count();
   HNumber result = arguments[0];
-  for ( int i = 1; i < totalParams; i++ )
-    result = HMath::max( result, arguments[i] );
+  if(totalParams > 1)
+    for ( int i = 1; i < totalParams; i++ )
+      result = HMath::max( result, arguments[i] );
 
   return result;
 }
@@ -509,17 +510,18 @@ HNumber function_min( const Evaluator         * evaluator,
                       Function                * function,
                       const FunctionArguments & arguments )
 {
-  if ( arguments.count() < 2 )
+  if ( arguments.count() < 1 )
   {
     function->setError( function->name(), QApplication::translate( "functions",
-                          "function requires at least 2 arguments" ) );
+                          "function requires at least 1 argument" ) );
     return HNumber::nan();
   }
 
   int totalParams = arguments.count();
   HNumber result = arguments[0];
-  for ( int i = 1; i < totalParams; i++ )
-    result = HMath::min( result, arguments[i] );
+  if(totalParams > 1)
+    for ( int i = 1; i < totalParams; i++ )
+      result = HMath::min( result, arguments[i] );
 
   return result;
 }
