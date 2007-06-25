@@ -59,28 +59,30 @@ HNumber function_int( const Evaluator*, Function*, const FunctionArguments& args
   return HMath::integer( num );
 }
 
-HNumber function_trunc( const Evaluator*, Function* fn, const FunctionArguments& args )
+HNumber function_trunc( const Evaluator         * evaluator,
+                        Function                * function,
+                        const FunctionArguments & arguments )
 {
-  int nArgs = args.count();
+  int nArgs = arguments.count();
 
   if( nArgs != 1 && nArgs != 2 )
   {
-    fn->setError( fn->name(), QApplication::translate( "functions",
-      "requires 1 or 2 parameters" ) );
+    function->setError( function->name(), QApplication::translate( "functions",
+      "function requires 1 or 2 arguments" ) );
     return HNumber::nan();
   }
 
-  HNumber num = args[0];
+  HNumber num = arguments[0];
   HNumber prec;
   HNumber zero(0);
   if( nArgs == 2)
-    prec = args[1];
+    prec = arguments[1];
   else prec = zero;
 
   if( !prec.isInteger() )
   {
-    fn->setError( fn->name(), QApplication::translate( "functions",
-      "requires integer P2" ) );
+    function->setError( function->name(), QApplication::translate( "functions",
+                          "function undefined for specified arguments" ) );
     return HNumber::nan();
   }
 
@@ -96,13 +98,15 @@ HNumber function_trunc( const Evaluator*, Function* fn, const FunctionArguments&
     return HMath::trunc( num, prec.toInt() );
 }
 
-HNumber function_frac( const Evaluator*, Function*, const FunctionArguments& args )
+HNumber function_frac( const Evaluator         * evaluator,
+                       Function                * function,
+                       const FunctionArguments & arguments )
 {
-  if( args.count() != 1 )
+  if ( arguments.count() != 1 )
     return HNumber::nan();
 
-  HNumber num = args[0];
-  return HMath::frac( num );
+  HNumber x = arguments[0];
+  return HMath::frac( x );
 }
 
 HNumber function_floor( const Evaluator*, Function*, const FunctionArguments& args )
@@ -130,7 +134,7 @@ HNumber function_gcd( const Evaluator*, Function* fn, const FunctionArguments& a
   if ( nArgs < 2 )
   {
     fn->setError( fn->name(), QApplication::translate( "functions",
-      "requires at least 2 parameters" ) );
+      "function requires at least 2 arguments" ) );
     return HNumber::nan();
   }
 
@@ -138,7 +142,7 @@ HNumber function_gcd( const Evaluator*, Function* fn, const FunctionArguments& a
     if ( !args[i].isInteger() )
     {
       fn->setError( fn->name(), QApplication::translate( "functions",
-        "requires integer parameters" ) );
+        "function requires integer arguments" ) );
       return HNumber::nan();
     }
 
@@ -157,7 +161,7 @@ HNumber function_round( const Evaluator*, Function* fn, const FunctionArguments&
   if( nArgs != 1 && nArgs != 2 )
   {
     fn->setError( fn->name(), QApplication::translate( "functions",
-      "requires 1 or 2 parameters" ) );
+      "function requires 1 or 2 arguments" ) );
     return HNumber::nan();
   }
 
@@ -172,7 +176,7 @@ HNumber function_round( const Evaluator*, Function* fn, const FunctionArguments&
   if( !prec.isInteger() )
   {
     fn->setError( fn->name(), QApplication::translate( "functions",
-      "requires integer P2" ) );
+      "function requires integer P2" ) );
     return HNumber::nan();
   }
 
@@ -197,7 +201,7 @@ HNumber function_sqrt( const Evaluator*, Function* fn, const FunctionArguments& 
   if( num < HNumber(0) )
   {
     fn->setError( fn->name(), QApplication::translate( "functions",
-      "function undefined for specified parameter" ) );
+      "function undefined for specified argument" ) );
     return HNumber::nan();
   }
 
@@ -232,7 +236,7 @@ HNumber function_ln( const Evaluator*, Function* fn, const FunctionArguments& ar
 
   if( result.isNan() )
     fn->setError( fn->name(), QApplication::translate( "functions",
-      "function undefined for specified parameter" ) );
+      "function undefined for specified argument" ) );
 
   return result;
 }
@@ -247,7 +251,7 @@ HNumber function_log( const Evaluator*, Function* fn, const FunctionArguments& a
 
   if( result.isNan() )
     fn->setError( fn->name(), QApplication::translate( "functions",
-      "function undefined for specified parameter" ) );
+      "function undefined for specified argument" ) );
 
   return result;
 }
@@ -262,7 +266,7 @@ HNumber function_lg( const Evaluator*, Function* fn, const FunctionArguments& ar
 
   if( result.isNan() )
     fn->setError( fn->name(), QApplication::translate( "functions",
-      "function undefined for specified parameter" ) );
+      "function undefined for specified argument" ) );
 
   return result;
 }
@@ -304,7 +308,7 @@ HNumber function_tan( const Evaluator* eval, Function* fn, const FunctionArgumen
   if ( result.isNan() )
   {
     fn->setError( fn->name(), QApplication::translate( "functions",
-      "function undefined for specified parameter" ) );
+      "function undefined for specified argument" ) );
     return HNumber::nan();
   }
 
@@ -324,7 +328,7 @@ HNumber function_cot( const Evaluator* eval, Function* fn, const FunctionArgumen
   if ( result.isNan() )
   {
     fn->setError( fn->name(), QApplication::translate( "functions",
-      "function undefined for specified parameter" ) );
+      "function undefined for specified argument" ) );
     return HNumber::nan();
   }
 
@@ -344,7 +348,7 @@ HNumber function_sec( const Evaluator* eval, Function* fn, const FunctionArgumen
   if ( result.isNan() )
   {
     fn->setError( fn->name(), QApplication::translate( "functions",
-      "function undefined for specified parameter" ) );
+      "function undefined for specified argument" ) );
     return HNumber::nan();
   }
 
@@ -364,7 +368,7 @@ HNumber function_csc( const Evaluator* eval, Function* fn, const FunctionArgumen
   if ( result.isNan() )
   {
     fn->setError( fn->name(), QApplication::translate( "functions",
-      "function undefined for specified parameter" ) );
+      "function undefined for specified argument" ) );
     return HNumber::nan();
   }
 
@@ -489,7 +493,7 @@ HNumber function_max( const Evaluator         * evaluator,
   if ( arguments.count() < 2 )
   {
     function->setError( function->name(), QApplication::translate( "functions",
-                          "function requires at least 2 parameters" ) );
+                          "function requires at least 2 arguments" ) );
     return HNumber::nan();
   }
 
@@ -508,7 +512,7 @@ HNumber function_min( const Evaluator         * evaluator,
   if ( arguments.count() < 2 )
   {
     function->setError( function->name(), QApplication::translate( "functions",
-                          "function requires at least 2 parameters" ) );
+                          "function requires at least 2 arguments" ) );
     return HNumber::nan();
   }
 
@@ -625,7 +629,7 @@ HNumber function_binompmf( const Evaluator         * evaluator,
 
   if ( result.isNan() )
     function->setError( function->name(), QApplication::translate( "functions",
-                          "function undefined for specified parameters" ) );
+                          "function undefined for specified arguments" ) );
 
   return result;
 }
@@ -644,7 +648,7 @@ HNumber function_binomcdf( const Evaluator         * evaluator,
 
   if ( result.isNan() )
     function->setError( function->name(), QApplication::translate( "functions",
-                          "function undefined for specified parameters" ) );
+                          "function undefined for specified arguments" ) );
 
   return result;
 }
@@ -662,7 +666,7 @@ HNumber function_binommean( const Evaluator         * evaluator,
 
   if ( result.isNan() )
     function->setError( function->name(), QApplication::translate( "functions",
-                          "function undefined for specified parameters" ) );
+                          "function undefined for specified arguments" ) );
 
   return result;
 }
@@ -680,7 +684,7 @@ HNumber function_binomvar( const Evaluator         * evaluator,
 
   if ( result.isNan() )
     function->setError( function->name(), QApplication::translate( "functions",
-                          "function undefined for specified parameters" ) );
+                          "function undefined for specified arguments" ) );
 
   return result;
 }
@@ -700,7 +704,7 @@ HNumber function_hyperpmf( const Evaluator         * evaluator,
 
   if ( result.isNan() )
     function->setError( function->name(), QApplication::translate( "functions",
-                          "function undefined for specified parameters" ) );
+                          "function undefined for specified arguments" ) );
 
   return result;
 }
@@ -720,7 +724,7 @@ HNumber function_hypercdf( const Evaluator         * evaluator,
 
   if ( result.isNan() )
     function->setError( function->name(), QApplication::translate( "functions",
-                          "function undefined for specified parameters" ) );
+                          "function undefined for specified arguments" ) );
 
   return result;
 }
@@ -739,7 +743,7 @@ HNumber function_hypermean( const Evaluator         * evaluator,
 
   if ( result.isNan() )
     function->setError( function->name(), QApplication::translate( "functions",
-                          "function undefined for specified parameters" ) );
+                          "function undefined for specified arguments" ) );
 
   return result;
 }
@@ -758,7 +762,7 @@ HNumber function_hypervar( const Evaluator         * evaluator,
 
   if ( result.isNan() )
     function->setError( function->name(), QApplication::translate( "functions",
-                          "function undefined for specified parameters" ) );
+                          "function undefined for specified arguments" ) );
 
   return result;
 }
@@ -776,7 +780,7 @@ HNumber function_poipmf( const Evaluator         * evaluator,
 
   if ( result.isNan() )
     function->setError( function->name(), QApplication::translate( "functions",
-                          "function undefined for specified parameters" ) );
+                          "function undefined for specified arguments" ) );
 
   return result;
 }
@@ -794,7 +798,7 @@ HNumber function_poicdf( const Evaluator         * evaluator,
 
   if ( result.isNan() )
     function->setError( function->name(), QApplication::translate( "functions",
-                          "function undefined for specified parameters" ) );
+                          "function undefined for specified arguments" ) );
 
   return result;
 }
@@ -811,7 +815,7 @@ HNumber function_poimean( const Evaluator         * evaluator,
 
   if ( result.isNan() )
     function->setError( function->name(), QApplication::translate( "functions",
-                          "function undefined for specified parameters" ) );
+                          "function undefined for specified arguments" ) );
 
   return result;
 }
@@ -828,7 +832,7 @@ HNumber function_poivar( const Evaluator         * evaluator,
 
   if ( result.isNan() )
     function->setError( function->name(), QApplication::translate( "functions",
-                          "function undefined for specified parameters" ) );
+                          "function undefined for specified arguments" ) );
 
   return result;
 }
