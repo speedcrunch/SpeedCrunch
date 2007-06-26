@@ -239,6 +239,11 @@ public:
   static char* formatBinary( const HNumber&n );
 
   /*!
+   * Returns the constant phi (golden number).
+   */
+  static HNumber phi();
+
+  /*!
    * Returns the constant pi.
    */
   static HNumber pi();

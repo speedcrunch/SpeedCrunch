@@ -6,6 +6,7 @@ New features:
  support inserting important physics constants
  history, functions, variables, constants in docked/floated windows
  added engineering notation
+ added unmutable variable "phi" (golden number = 1.6180339887498948482...)
  "tip of the day"
  option to hide from taskbar and minimize to system tray
 

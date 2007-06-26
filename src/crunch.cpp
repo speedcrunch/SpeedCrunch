@@ -776,7 +776,8 @@ void Crunch::saveSettings()
     settings->variables.clear();
     QVector<Variable> vars = d->eval->variables();
     for( int i=0; i<vars.count(); i++ )
-      if( vars[i].name != "pi" )
+      if(    vars[i].name != "pi"
+	  && vars[i].name != "phi" )
       {
         QString name;
 	int length = vars[i].name.length();

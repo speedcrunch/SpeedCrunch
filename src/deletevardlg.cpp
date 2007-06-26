@@ -117,7 +117,8 @@ void DeleteVariableDlg::updateList()
       str << formatValue( variables[k].value );
 
       if( str[0].toUpper() == "ANS" ) continue;
-      if( str[0].toUpper() == "PI" ) continue;
+      if( str[0].toUpper() == "PI"  ) continue;
+      if( str[0].toUpper() == "PHI" ) continue;
 
       QTreeWidgetItem* item = 0;
       item = new QTreeWidgetItem( d->list, str );

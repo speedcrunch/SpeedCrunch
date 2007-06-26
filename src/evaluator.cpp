@@ -1141,6 +1141,13 @@ HNumber Evaluator::eval()
        "variable cannot be overwritten" );
      return HNumber( 0 );
   }
+  // can not overwrite phi
+  if( d->assignId == QString("phi") )
+  {
+     d->error = d->assignId + ": " + qApp->translate( "evaluator",
+       "variable cannot be overwritten" );
+     return HNumber( 0 );
+  }
   // can not overwrite ans
   if( d->assignId == QString("ans") )
   {
@@ -1158,7 +1165,8 @@ HNumber Evaluator::eval()
   }
 
   // magic: always set here to avoid being overwritten by user
-  set( QString("pi"), HMath::pi() );
+  set( QString("pi"),  HMath::pi() );
+  set( QString("phi"), HMath::phi() );
 
   for( int pc = 0; pc < d->codes.count(); pc++ )
   {
@@ -1428,8 +1436,9 @@ QVector<Variable> Evaluator::variables() const
 void Evaluator::clearVariables()
 {
   d->variables.clear();
-  set( QString("pi"),  HMath::pi() );
-  set( QString("ans"), HNumber(0) );
+  set( QString("pi"),  HMath::pi()  );
+  set( QString("phi"), HMath::phi() );
+  set( QString("ans"), HNumber(0)   );
 }
 
 QString Evaluator::autoFix( const QString& expr, const QString& decimalPoint )

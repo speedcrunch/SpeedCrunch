@@ -131,7 +131,8 @@ void VariablesDock::filter()
       str << d->variables[k].name;
       str << formatValue( d->variables[k].value );
 
-      if( str[0] == "PI" )
+      if(    str[0] == "PI"
+	  || str[0] == "PHI" )
         continue;
 
       QTreeWidgetItem* item = 0;
