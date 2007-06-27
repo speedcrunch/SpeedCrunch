@@ -230,7 +230,8 @@ void test_op()
   CHECK( HNumber( 1 ) - HNumber( 2 ), "-1" );
 
   // division
-  CHECK( HNumber( 1 ) / HNumber( 2 ), "0.5" );
+  CHECK( HNumber( 1 ) / HNumber( 2 ),     "0.5"              );
+  CHECK( HNumber( 1 ) / HMath::sin( PI ), "division by zero" );
 
   CHECK_PRECISE( HNumber( 1 ) / HNumber( 3 ),
                  "0.33333333333333333333333333333333333333333333333333" );
