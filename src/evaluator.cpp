@@ -1009,10 +1009,12 @@ void Evaluator::compile( const Tokens& tokens ) const
          }
 
          // auxiliary rule for unary operator:  (op) X -> X
-         // conditions: op is unary, op is first in syntax stack, token is not '('
+         // conditions: op is unary, op is first in syntax stack, token is not '(' or '^' or '!'
          // action: push (op) to result
          if( !ruleFound )
          if( token.asOperator() != Token::LeftPar )
+         if( token.asOperator() != Token::Caret )
+         if( token.asOperator() != Token::Exclamation)
          if( syntaxStack.itemCount() == 2 )
          {
             Token x = syntaxStack.top();
