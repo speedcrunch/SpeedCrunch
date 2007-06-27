@@ -185,6 +185,20 @@ void test_unary()
 
   CHECK_EVAL( "(5-7)^2",  "4"  );
   CHECK_EVAL( "-(5-7)^2", "-4" );
+
+  CHECK_EVAL( "0!", "1");
+  CHECK_EVAL( "1!", "1");
+  CHECK_EVAL( "2!", "2");
+  CHECK_EVAL( "3!", "6");
+  CHECK_EVAL( "4!", "24");
+  CHECK_EVAL( "5!", "120");
+  CHECK_EVAL( "6!", "720");
+  CHECK_EVAL( "7!", "5040");
+
+  // factorial has higher precedence than unary minus
+  CHECK_EVAL( "-1!", "-1");
+  CHECK_EVAL( "-2!", "-2");
+  CHECK_EVAL( "-3!", "-6");
 }
 
 
