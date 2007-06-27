@@ -154,9 +154,10 @@ void test_unary()
   CHECK_EVAL( "1^2", "1" );
   CHECK_EVAL( "1^3", "1" );
 
-  CHECK_EVAL( "-1^0", "1"  );
+  // operator ^ has higher precedence than unary minus
+  CHECK_EVAL( "-1^0", "-1"  );
   CHECK_EVAL( "-1^1", "-1" );
-  CHECK_EVAL( "-1^2", "1"  );
+  CHECK_EVAL( "-1^2", "-1"  );
   CHECK_EVAL( "-1^3", "-1" );
 
   CHECK_EVAL( "2^0", "1"     );
