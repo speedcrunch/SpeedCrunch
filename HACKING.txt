@@ -106,7 +106,8 @@ This is a checklist of things that must be done to prepare a release:
 * For the first release of a version (e.g. version 0.8-beta, not version 0.8,
   0.8.1, 0.8.2), create a branch (e.g /branch/0.8).
 
-* Tag the repository with a good name, e.g /tags/0.8-beta
+* Tag the repository with a good name, e.g /tags/0.8-beta and change version
+  numbers in CMakeLists.txt and crunch.pro.
 
 * Create the source code package, e.g. speedcrunch-0.8-beta.tar.gz. Place it
   in the download location.
