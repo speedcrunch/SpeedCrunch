@@ -674,6 +674,7 @@ HNumber HNumber::operator/( const HNumber& num ) const
 {
   if( isNan() ) return HNumber( *this );
   if( num.isNan() ) return HNumber( num );
+  if( num == 0 ) return HNumber::nan();
 
   HNumber result;
   h_destroy( result.d->num );
@@ -1640,12 +1641,16 @@ HNumber HMath::sin( const HNumber& x )
   if( x.isNan() )
     return HNumber::nan();
 
-  // short circuit
-  if( x.isZero() )
-    return x;
-
   // adjust to small angle for speedup
   HNumber xs = simplifyAngle( x );
+
+  // limits shortcut
+  if ( x == 0 || x == HMath::pi() || x == HMath::pi() * 2 )
+    return HNumber( 0 );
+  else if( x == HMath::pi() / 2 )
+    return HNumber( 1 );
+  else if( x == HMath::pi() * 3 / 2 )
+    return HNumber( -1 );
 
   // Taylor expansion: sin(x) = x - x^3/3! + x^5/5! - x^7/7! ...
   HNumber xsq = xs*xs;
@@ -1674,12 +1679,16 @@ HNumber HMath::cos( const HNumber& x )
   if( x.isNan() )
     return HNumber::nan();
 
-  // short circuit
-  if( x.isZero() )
-    return HNumber( 1 );
-
   // adjust to small angle for speedup
   HNumber xs = simplifyAngle( x );
+
+  // limits shortcut
+  if ( x == 0 || x == HMath::pi() * 2 )
+    return HNumber( 1 );
+  else if( x == HMath::pi() / 2 || x == HMath::pi() * 3 / 2 )
+    return HNumber( 0 );
+  else if( x == HMath::pi() )
+    return HNumber( -1 );
 
   // Taylor expansion: cos(x) = 1 - x^2/2! + x^4/4! - x^6/6! ...
   HNumber xsq = xs*xs;
@@ -1705,70 +1714,22 @@ HNumber HMath::cos( const HNumber& x )
 
 HNumber HMath::tan( const HNumber& x )
 {
-  if( x.isNan() )
-    return HNumber::nan();
-
-  // tan(x) = sin(x) / cos(x)
-
-  HNumber c = HMath::cos(x);
-  if( c == 0 )
-    return HNumber::nan();
-
-  HNumber s = HMath::sin(x);
-  if( s == 0 )
-    return s;
-
-  HNumber result = s / c;
-  return result;
+  return HMath::sin(x) / HMath::cos(x);
 }
 
 HNumber HMath::cot( const HNumber& x )
 {
-  if( x.isNan() )
-    return HNumber::nan();
-
-  // cot(x) = cos(x) / sin(x)
-
-  HNumber s = HMath::sin(x);
-  if( s == 0 )
-    return HNumber::nan();
-
-  HNumber c = HMath::cos(x);
-  if( c == 0 )
-    return c;
-
-  HNumber result = c / s;
-  return result;
+  return HMath::cos(x) / HMath::sin(x);
 }
 
 HNumber HMath::sec( const HNumber& x )
 {
-  if( x.isNan() )
-    return HNumber::nan();
-
-  // sec(x) = 1 / cos(x)
-
-  HNumber c = HMath::cos(x);
-  if( c == 0 )
-    return HNumber::nan();
-
-  HNumber result = HNumber(1) / c;
-  return result;
+  return HNumber(1) / HMath::cos(x);
 }
 
 HNumber HMath::csc( const HNumber& x )
 {
-  if( x.isNan() )
-    return HNumber::nan();
-
-  // csc(x) = 1 / sin(x)
-
-  HNumber s = HMath::sin(x);
-  if( s == 0 )
-    return HNumber::nan();
-
-  HNumber result = HNumber(1) / s;
-  return result;
+  return HNumber(1) / HMath::sin(x);
 }
 
 HNumber HMath::atan( const HNumber& x )
