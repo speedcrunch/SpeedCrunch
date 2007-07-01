@@ -217,8 +217,8 @@ void test_divide_by_zero()
   CHECK_EVAL( "1/0",                 "NaN" );
   CHECK_EVAL( "1/sin(pi)",           "NaN" );
   CHECK_EVAL( "1/cos(pi/2)",         "NaN" );
-  CHECK_EVAL( "-1/trunc(0.123)",     "NaN" );
-  CHECK_EVAL( "1/round(0.456)",      "NaN" );
+  CHECK_EVAL( "-1/trunc(0,123)",     "NaN" );
+  CHECK_EVAL( "1/round(0,456)",      "NaN" );
   CHECK_EVAL( "-1/binompmf(1;10;0)", "NaN" );
 }
 
@@ -241,12 +241,12 @@ void test_function_basic()
   CHECK_EVAL( "INT(0)",         "0"  );
   CHECK_EVAL( "INT(1)",         "1"  );
   CHECK_EVAL( "INT(-1)",        "-1" );
-  CHECK_EVAL( "INT(0.5)",       "0"  );
-  CHECK_EVAL( "INT(-0.75)",     "0"  );
-  CHECK_EVAL( "INT(-0.9999*1)", "0"  );
-  CHECK_EVAL( "INT(0.9999*1)",  "0"  );
-  CHECK_EVAL( "INT(2.1)",       "2"  );
-  CHECK_EVAL( "INT(-3.4)",      "-3" );
+  CHECK_EVAL( "INT(0,5)",       "0"  );
+  CHECK_EVAL( "INT(-0,75)",     "0"  );
+  CHECK_EVAL( "INT(-0,9999*1)", "0"  );
+  CHECK_EVAL( "INT(0,9999*1)",  "0"  );
+  CHECK_EVAL( "INT(2,1)",       "2"  );
+  CHECK_EVAL( "INT(-3,4)",      "-3" );
 
   CHECK_EVAL_PRECISE( "exp((1)/2) + exp((1)/2)",
                       "3.29744254140025629369730157562832714330755220142030" );
@@ -288,14 +288,14 @@ void test_function_trig()
   CHECK_EVAL( "asin(sin(1))", "1" );
   CHECK_EVAL( "acos(cos(1))", "1" );
 
-  CHECK_EVAL( "degrees(0)", "0"        );
-  CHECK_EVAL( "degrees(pi/2)", "90"    );
-  CHECK_EVAL( "degrees(pi)", "180"     );
+  CHECK_EVAL( "degrees(0)",      "0"   );
+  CHECK_EVAL( "degrees(pi/2)",   "90"  );
+  CHECK_EVAL( "degrees(pi)",     "180" );
   CHECK_EVAL( "degrees(3*pi/2)", "270" );
-  CHECK_EVAL( "degrees(2*pi)", "360"   );
+  CHECK_EVAL( "degrees(2*pi)",   "360" );
 
-  CHECK_EVAL( "radians(0)", "0"        );
-  CHECK_EVAL( "radians(90)/pi", "0.5"  );
+  CHECK_EVAL( "radians(0)",      "0"   );
+  CHECK_EVAL( "radians(90)/pi",  "0.5" );
   CHECK_EVAL( "radians(180)/pi", "1"   );
   CHECK_EVAL( "radians(270)/pi", "1.5" );
   CHECK_EVAL( "radians(360)/pi", "2"   );
@@ -309,7 +309,7 @@ void test_function_stat()
   CHECK_EVAL( "MIN(0; 2)",            "0"     );
   CHECK_EVAL( "MIN(-1; 0)",           "-1"    );
   CHECK_EVAL( "MIN(-1; 1)",           "-1"    );
-  CHECK_EVAL( "MIN(-0.01; 0)",        "-0.01" );
+  CHECK_EVAL( "MIN(-0,01; 0)",        "-0.01" );
   CHECK_EVAL( "MIN(0; 1; 2)",         "0"     );
   CHECK_EVAL( "MIN(-1; 0; 1; 2)",     "-1"    );
   CHECK_EVAL( "MIN(-2; -1; 0; 1; 2)", "-2"    );
@@ -319,7 +319,7 @@ void test_function_stat()
   CHECK_EVAL( "MAX(0; 2)",            "2"    );
   CHECK_EVAL( "MAX(-1; 0)",           "0"    );
   CHECK_EVAL( "MAX(-1; 1)",           "1"    );
-  CHECK_EVAL( "MAX(0.01; 0)",         "0.01" );
+  CHECK_EVAL( "MAX(0,01; 0)",         "0.01" );
   CHECK_EVAL( "MAX(0; 1; 2)",         "2"    );
   CHECK_EVAL( "MAX(-1; 0; 1; 2)",     "2"    );
   CHECK_EVAL( "MAX(-2; -1; 0; 1; 2)", "2"    );
@@ -348,8 +348,8 @@ void test_function_stat()
   CHECK_EVAL( "AVERAGE(1;1;1)",     "1"   );
   CHECK_EVAL( "AVERAGE(2;2;2)",     "2"   );
   CHECK_EVAL( "AVERAGE(3;3;3)",     "3"   );
-  CHECK_EVAL( "AVERAGE(0.25;0.75)", "0.5" );
-  CHECK_EVAL( "AVERAGE(2.25;4.75)", "3.5" );
+  CHECK_EVAL( "AVERAGE(0,25;0,75)", "0.5" );
+  CHECK_EVAL( "AVERAGE(2,25;4,75)", "3.5" );
   CHECK_EVAL( "AVERAGE(1/3;2/3)",   "0.5" );
 
   CHECK_EVAL( "GEOMEAN()",          "NaN" );
