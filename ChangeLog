@@ -60,6 +60,7 @@ Improvements and bug fixes:
  fixed issue #32: crash when inserting ( after variable
  minor fixed for function tan(x)
  binary is now relocatable (using BinReloc)
+ all divisions by zero are now caught
 
 SpeedCrunch 0.7
 ---------------
