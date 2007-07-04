@@ -1091,6 +1091,9 @@ void test_functions()
 
   // acos
   CHECK( HMath::acos( "NaN" ), "NaN" );
+  CHECK( HMath::acos( "-1"  ), "3.14159265358979323846" );
+  CHECK( HMath::acos( "0"   ), "1.57079632679489661923" );
+  CHECK( HMath::acos( "1"   ), "0" );
   CHECK_PRECISE( HMath::acos( "0.1" ),
                  "1.47062890563333682288579851218705812352990872745792" );
   CHECK_PRECISE( HMath::acos( "0.2" ),

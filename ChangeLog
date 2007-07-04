@@ -58,9 +58,10 @@ Improvements and bug fixes:
  improved error system and messages, introduced Px notation to refer parameters
  fixed issue #33: exponential notation misnamed
  fixed issue #32: crash when inserting ( after variable
- minor fixed for function tan(x)
+ minor fixed function tan(x)
  binary is now relocatable (using BinReloc)
  all divisions by zero are now caught
+ fixed issue #63: incorrect acos(x) return value
 
 SpeedCrunch 0.7
 ---------------

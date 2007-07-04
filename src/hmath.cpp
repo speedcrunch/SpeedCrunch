@@ -1813,19 +1813,22 @@ HNumber HMath::asin( const HNumber& x )
   return result;
 };
 
-HNumber HMath::acos( const HNumber& x )
+HNumber HMath::acos( const HNumber & x )
 {
-  if( x.isNan() )
+  if ( x.isNan() )
     return HNumber::nan();
 
-  if( x.isZero() )
+  // shortcuts
+  if ( x == -1 )
+    return HMath::pi();
+  if ( x == 0 )
     return HMath::pi()/2;
+  if ( x == 1 )
+    return 0;
 
-  // acos(x) = atan(sqrt(1-x*x)/x);
-  HNumber n = HMath::sqrt( HNumber(1) - x*x );
-
-  HNumber result = HMath::atan( n / x );
-  return result;
+  // acos( x ) = atan(  sqrt( 1 - x * x ) / x );
+  HNumber n = HMath::sqrt( HNumber( 1 ) - x * x );
+  return HMath::atan( n / x );
 };
 
 HNumber HMath::sinh( const HNumber& x )
