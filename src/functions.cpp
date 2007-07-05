@@ -388,14 +388,25 @@ HNumber function_asin( const Evaluator* eval, Function*, const FunctionArguments
   return angle;
 }
 
-HNumber function_acos( const Evaluator* eval, Function*, const FunctionArguments& args )
+HNumber function_acos( const Evaluator         * evaluator,
+                             Function          * function,
+                       const FunctionArguments & arguments )
 {
-  if( args.count() != 1 )
+  if( arguments.count() != 1 )
     return HNumber::nan();
 
-  HNumber num = args[0];
-  HNumber angle = HMath::acos( num );
-  if( eval->angleMode() == Evaluator::Degree )
+  HNumber x = arguments[0];
+
+  HNumber angle = HMath::acos( x );
+
+  if ( angle.isNan() )
+  {
+    function->setError( function->name(), QApplication::translate( "functions",
+                        "function undefined for specified argument" ) );
+    return HNumber::nan();
+  }
+
+  if( evaluator->angleMode() == Evaluator::Degree )
     angle = rad2deg( angle );
 
   return angle;

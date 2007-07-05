@@ -1815,7 +1815,7 @@ HNumber HMath::asin( const HNumber& x )
 
 HNumber HMath::acos( const HNumber & x )
 {
-  if ( x.isNan() )
+  if ( x.isNan() || x < -1 || x > 1 )
     return HNumber::nan();
 
   // shortcuts
