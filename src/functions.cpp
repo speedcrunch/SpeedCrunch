@@ -483,11 +483,25 @@ HNumber function_nCr( const Evaluator*, Function*, const FunctionArguments& args
   return HMath::nCr( args[0], args[1] );
 }
 
-HNumber function_nPr( const Evaluator*, Function*, const FunctionArguments& args )
+HNumber function_nPr( const Evaluator         * evaluator,
+                            Function          * function,
+                      const FunctionArguments & arguments )
 {
-  if( args.count() != 2 )
+  // check number of arguments
+  if ( arguments.count() != 2 )
     return HNumber::nan();
-  return HMath::nPr( args[0], args[1] );
+
+  // compute result
+  // n = arguments[0]
+  // r = arguments[1]
+  HNumber result = HMath::nPr( arguments[0], arguments[1] );
+
+  // check invalid usage and set error accordingly
+  if ( result.isNan() )
+    function->setError( function->name(), QApplication::translate( "functions",
+                          "function undefined for specified arguments" ) );
+
+  return result;
 }
 
 HNumber function_degrees( const Evaluator*, Function*, const FunctionArguments& args )

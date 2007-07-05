@@ -486,7 +486,10 @@ void test_functions()
   CHECK( HMath::nPr( "NaN", "NaN" ), "NaN"       );
   CHECK( HMath::nPr( "NaN", 5     ), "NaN"       );
   CHECK( HMath::nPr( 5,     "NaN" ), "NaN"       );
+  CHECK( HMath::nPr( 21,    22    ), "NaN"       );
+  CHECK( HMath::nPr( -21,   2     ), "NaN"       );
   CHECK( HMath::nPr( 21,    -1    ), "NaN"       );
+  CHECK( HMath::nPr( 0,     0     ), "1"         );
   CHECK( HMath::nPr( 21,    0     ), "1"         );
   CHECK( HMath::nPr( 21,    1     ), "21"        );
   CHECK( HMath::nPr( 21,    2     ), "420"       );
@@ -495,9 +498,6 @@ void test_functions()
   CHECK( HMath::nPr( 21,    5     ), "2441880"   );
   CHECK( HMath::nPr( 21,    6     ), "39070080"  );
   CHECK( HMath::nPr( 21,    7     ), "586051200" );
-  CHECK( HMath::nPr( 21,    22    ), "NaN"       );
-  CHECK( HMath::nPr( -21,   2     ), "NaN"       );
-  CHECK( HMath::nPr( 0,     0     ), "1"         );
 
   // raise
   CHECK( HMath::raise( "NaN", "NaN" ), "NaN"   );

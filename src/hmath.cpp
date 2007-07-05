@@ -1911,21 +1911,22 @@ HNumber HMath::nCr( const HNumber& n, const HNumber& r )
       return factorial(n, (n-r+1)) / factorial(r, 1);
 }
 
-HNumber HMath::nPr( const HNumber& n, const HNumber& r )
+HNumber HMath::nPr( const HNumber & n, const HNumber & r )
 {
-  if( n.isNan() || r.isNan() || r > n)
+  if ( n.isNan() || n < 0 ||
+       r.isNan() || r < 0 || r > n )
     return HNumber::nan();
 
-  if (r == HNumber(0))
-    return HNumber(1);
-
-  if (r == HNumber(1))
+  // shortcuts
+  HNumber one = HNumber( 1 );
+  if ( r == HNumber( 0 ) )
+    return one;
+  if ( r == one )
     return n;
+  if ( r == n )
+    return factorial( n );
 
-  if (r == n)
-    return factorial(n);
-
-  return factorial(n, (n-r+1));
+  return factorial( n, n-r+1 );
 }
 
 HNumber HMath::factorial( const HNumber& x, const HNumber& base )
