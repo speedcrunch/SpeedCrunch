@@ -1894,27 +1894,33 @@ HNumber HMath::sign( const HNumber& x )
   return result;
 }
 
-HNumber HMath::nCr( const HNumber& n, const HNumber& r )
-{
-  if( n.isNan() || r.isNan() || r > n)
-    return HNumber::nan();
-
-   if (r == HNumber(0) || r == n)
-      return HNumber(1);
-
-   if (r == HNumber(1))
-      return HNumber(n);
-
-   if (r > n/2)
-      return factorial(n, r+1) / factorial((n-r), 1);
-   else
-      return factorial(n, (n-r+1)) / factorial(r, 1);
-}
-
-HNumber HMath::nPr( const HNumber & n, const HNumber & r )
+HNumber HMath::nCr( const HNumber & n,
+                    const HNumber & r )
 {
   if ( n.isNan() || n < 0 ||
-       r.isNan() || r < 0 || r > n )
+       r.isNan() || r < 0 ||
+       r > n )
+    return HNumber::nan();
+
+  // shortcuts
+  HNumber one = HNumber( 1 );
+  if ( r == HNumber( 0 ) || r == n )
+    return one;
+  if ( r == one )
+    return n;
+
+  if ( r > n/2 )
+    return factorial( n, r+1 ) / factorial( n-r, 1 );
+  else
+    return factorial( n, n-r+1  ) / factorial( r, 1 );
+}
+
+HNumber HMath::nPr( const HNumber & n,
+                    const HNumber & r )
+{
+  if ( n.isNan() || n < 0 ||
+       r.isNan() || r < 0 ||
+       r > n )
     return HNumber::nan();
 
   // shortcuts

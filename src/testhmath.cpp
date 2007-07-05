@@ -471,6 +471,7 @@ void test_functions()
   CHECK( HMath::nCr( "NaN", 5     ), "NaN"  );
   CHECK( HMath::nCr( 5,     "NaN" ), "NaN"  );
   CHECK( HMath::nCr( 21,    -1    ), "NaN"  );
+  CHECK( HMath::nCr( -21,   2     ), "NaN"  );
   CHECK( HMath::nCr( 21,    0     ), "1"    );
   CHECK( HMath::nCr( 21,    1     ), "21"   );
   CHECK( HMath::nCr( 21,    2     ), "210"  );
