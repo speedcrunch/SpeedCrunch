@@ -1794,23 +1794,30 @@ HNumber HMath::atan( const HNumber& x )
   return result;
 };
 
-HNumber HMath::asin( const HNumber& x )
+HNumber HMath::asin( const HNumber & x )
 {
-  if( x.isNan() )
+  if ( x.isNan() || x < -1 || x > 1 )
     return HNumber::nan();
 
-  // asin(x) = atan(x/sqrt(1-x*x));
-  HNumber d = HMath::sqrt( HNumber(1) - x*x );
-  if( d.isZero() )
+  // shortcuts
+  if ( x == -1  )
+    return HMath::pi() / 2 * (-1);
+  if ( x == 0 )
+    return HNumber( 0 );
+  if ( x == 1 )
+    return HMath::pi() / 2;
+
+  // asin( x ) = atan( x / sqrt( 1 - x * x ) );
+  HNumber d = HMath::sqrt( HNumber( 1 ) - x * x );
+  if ( d == 0 )
   {
-    HNumber result = HMath::pi()/2;
-    if( x.isNegative() )
-      result = HMath::negate( result );
+    HNumber result = HMath::pi() / 2;
+    if ( x < 0 )
+      result *= -1;
     return result;
   }
 
-  HNumber result = HMath::atan( x / d );
-  return result;
+  return HMath::atan( x / d );
 };
 
 HNumber HMath::acos( const HNumber & x )

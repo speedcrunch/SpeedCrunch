@@ -1061,7 +1061,10 @@ void test_functions()
                  "-0.78539816339744830961566084581987572104929234984378" );
 
   // asin
-  CHECK( HMath::asin( "NaN" ), "NaN" );
+  CHECK( HMath::asin( "NaN" ), "NaN"                     );
+  CHECK( HMath::asin( "-1"  ), "-1.57079632679489661923" );
+  CHECK( HMath::asin( "0"   ), "0"                       );
+  CHECK( HMath::asin( "1"   ), "1.57079632679489661923"  );
   CHECK( HMath::asin( "0.09983341664682815230681419841062202698991538801798" ),
          "0.1" );
   CHECK( HMath::asin( "0.19866933079506121545941262711838975037020672954021" ),
@@ -1090,10 +1093,10 @@ void test_functions()
                  "0.41151684606748801938473789761733560485570113512703" );
 
   // acos
-  CHECK( HMath::acos( "NaN" ), "NaN" );
+  CHECK( HMath::acos( "NaN" ), "NaN"                    );
   CHECK( HMath::acos( "-1"  ), "3.14159265358979323846" );
   CHECK( HMath::acos( "0"   ), "1.57079632679489661923" );
-  CHECK( HMath::acos( "1"   ), "0" );
+  CHECK( HMath::acos( "1"   ), "0"                      );
   CHECK_PRECISE( HMath::acos( "0.1" ),
                  "1.47062890563333682288579851218705812352990872745792" );
   CHECK_PRECISE( HMath::acos( "0.2" ),

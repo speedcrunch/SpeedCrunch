@@ -375,41 +375,52 @@ HNumber function_csc( const Evaluator* eval, Function* fn, const FunctionArgumen
   return result;
 }
 
-HNumber function_asin( const Evaluator* eval, Function*, const FunctionArguments& args )
-{
-  if( args.count() != 1 )
-    return HNumber::nan();
-
-  HNumber num = args[0];
-  HNumber angle = HMath::asin( num );
-  if( eval->angleMode() == Evaluator::Degree )
-    angle = rad2deg( angle );
-
-  return angle;
-}
-
-HNumber function_acos( const Evaluator         * evaluator,
+HNumber function_asin( const Evaluator         * evaluator,
                              Function          * function,
                        const FunctionArguments & arguments )
 {
-  if( arguments.count() != 1 )
+  if ( arguments.count() != 1 )
     return HNumber::nan();
 
   HNumber x = arguments[0];
 
-  HNumber angle = HMath::acos( x );
+  HNumber result = HMath::asin( x );
 
-  if ( angle.isNan() )
+  if ( result.isNan() )
   {
     function->setError( function->name(), QApplication::translate( "functions",
                         "function undefined for specified argument" ) );
     return HNumber::nan();
   }
 
-  if( evaluator->angleMode() == Evaluator::Degree )
-    angle = rad2deg( angle );
+  if ( evaluator->angleMode() == Evaluator::Degree )
+    result = rad2deg( result );
 
-  return angle;
+  return result;
+}
+
+HNumber function_acos( const Evaluator         * evaluator,
+                             Function          * function,
+                       const FunctionArguments & arguments )
+{
+  if ( arguments.count() != 1 )
+    return HNumber::nan();
+
+  HNumber x = arguments[0];
+
+  HNumber result = HMath::acos( x );
+
+  if ( result.isNan() )
+  {
+    function->setError( function->name(), QApplication::translate( "functions",
+                        "function undefined for specified argument" ) );
+    return HNumber::nan();
+  }
+
+  if ( evaluator->angleMode() == Evaluator::Degree )
+    result = rad2deg( result );
+
+  return result;
 }
 
 HNumber function_atan( const Evaluator* eval, Function*, const FunctionArguments& args )
