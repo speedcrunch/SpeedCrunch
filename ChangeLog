@@ -62,6 +62,7 @@ Improvements and bug fixes:
  binary is now relocatable (using BinReloc)
  all divisions by zero are now caught
  fixed issue #63: incorrect acos(x) return value
+ arrow keys now work to hide completion popup
 
 SpeedCrunch 0.7
 ---------------

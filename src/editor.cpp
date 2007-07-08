@@ -791,10 +791,9 @@ bool EditorCompletion::eventFilter( QObject *obj, QEvent *ev )
         doneCompletion();
         return true;
       }
-      else if ( ke->key() == Qt::Key_Left || ke->key() == Qt::Key_Right ||
-      ke->key() == Qt::Key_Up || ke->key() == Qt::Key_Down ||
-      ke->key() == Qt::Key_Home || ke->key() == Qt::Key_End ||
-      ke->key() == Qt::Key_PageUp || ke->key() == Qt::Key_PageDown )
+      else if ( ke->key() == Qt::Key_Up     || ke->key() == Qt::Key_Down ||
+                ke->key() == Qt::Key_Home   || ke->key() == Qt::Key_End  ||
+                ke->key() == Qt::Key_PageUp || ke->key() == Qt::Key_PageDown )
       {
         return false;
       }
