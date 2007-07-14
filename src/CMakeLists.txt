@@ -3,9 +3,9 @@ project(speedcrunch)
 IF( APPLE )
   set( PROGNAME Speedcrunch )
   set( MACOSX_BUNDLE_ICON_FILE Speedcrunch.icns )
-  set( MACOSX_BUNDLE_SHORT_VERSION_STRING 0.7-beta2 )
-  set( MACOSX_BUNDLE_VERSION 0.7-beta2 )
-  set( MACOSX_BUNDLE_LONG_VERSION_STRING Version 0.7-beta2 )
+  set( MACOSX_BUNDLE_SHORT_VERSION_STRING 0.8-alpha )
+  set( MACOSX_BUNDLE_VERSION 0.8-alpha )
+  set( MACOSX_BUNDLE_LONG_VERSION_STRING Version 0.8-alpha )
   set( CMAKE_OSX_ARCHITECTURES ppc;i386 ) #Comment out if not universal binary
 ELSE( APPLE )
   set( PROGNAME speedcrunch )
@@ -17,7 +17,7 @@ set(CMAKE_VERBOSE_MAKEFILE OFF)
 set(CMAKE_INCLUDE_CURRENT_DIR TRUE)
 
 # note: change this BEFORE making a release !!
-ADD_DEFINITIONS(-DSPEEDCRUNCH_VERSION=\"trunk\" )
+ADD_DEFINITIONS(-DSPEEDCRUNCH_VERSION=\"0.8-alpha\" )
 
 IF( NOT WIN32 )
 IF( NOT APPLE )
@@ -92,14 +92,19 @@ set(speedcrunch_RESOURCES crunch.qrc)
 set(speedcrunch_TRANSLATIONS
 crunch_cs.qm
 crunch_de.qm
+crunch_es_AR.qm
 crunch_es.qm
 crunch_fr.qm
+crunch_he.qm
 crunch_id.qm
 crunch_it.qm
-crunch_pl_PL.qm
+crunch_nb.qm
+crunch_nl.qm
+crunch_pl.qm
 crunch_pt_BR.qm
 crunch_pt.qm
 crunch_ru.qm
+crunch_se.qm
 crunch_sl.qm
 )
 
