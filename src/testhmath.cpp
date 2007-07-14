@@ -280,7 +280,9 @@ void test_functions()
 
   // floor
   CHECK( HMath::floor( "NaN"        ), "NaN" );
-  CHECK( HMath::floor( 0            ), "0"   );
+  CHECK( HMath::floor( "0"          ), "0"   );
+  CHECK( HMath::floor( "5"          ), "5"   );
+  CHECK( HMath::floor( "-5"         ), "-5"  );
   CHECK( HMath::floor( "3.14"       ), "3"   );
   CHECK( HMath::floor( "1.77"       ), "1"   );
   CHECK( HMath::floor( "-2.6041980" ), "-3"  );
@@ -290,6 +292,9 @@ void test_functions()
 
   // ceil
   CHECK( HMath::ceil( "NaN"        ), "NaN" );
+  CHECK( HMath::ceil( "0"          ), "0"   );
+  CHECK( HMath::ceil( "5"          ), "5"   );
+  CHECK( HMath::ceil( "-5"         ), "-5"  );
   CHECK( HMath::ceil( "3.14"       ), "4"   );
   CHECK( HMath::ceil( "1.77"       ), "2"   );
   CHECK( HMath::ceil( "-2.6041980" ), "-2"  );

@@ -1265,10 +1265,9 @@ HNumber HMath::floor( const HNumber& n )
   if( n.isNan() )
     return HNumber::nan();
 
-  if( n.isZero() )
-    return HNumber(0);
-
-  if( n.isPositive() )
+  if( n.isInteger() )
+    return n;
+  else if( n.isPositive() )
     return n - frac(n);
   else
     return n - HNumber(1) - frac(n);
@@ -1279,10 +1278,9 @@ HNumber HMath::ceil( const HNumber& n )
   if( n.isNan() )
     return HNumber::nan();
 
-  if( n.isZero() )
-    return HNumber(0);
-
-  if( n.isPositive() )
+  if( n.isInteger() )
+    return n;
+  else if( n.isPositive() )
     return n + HNumber(1) - frac(n);
   else
     return n - frac(n);
