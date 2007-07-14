@@ -852,7 +852,7 @@
     </message>
     <message>
         <location filename="" line="136225548"/>
-        <source>SpeedCrunch is minimized.
+        <source>SpeedCrunch is minimized. 
  Click on the icon to reactivate it</source>
         <translation>A SpeedCrunch foi minimizada.
 Clique no ícone para reactivar</translation>
