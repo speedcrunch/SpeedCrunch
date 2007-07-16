@@ -68,51 +68,51 @@ cimientos especiales a</translation>
     </message>
     <message>
         <source>http://www.speedcrunch.org</source>
-        <translation type="unfinished"></translation>
+        <translation>http://www.speedcrunch.org</translation>
     </message>
     <message>
         <source>Original author</source>
-        <translation type="unfinished"></translation>
+        <translation>Autor original</translation>
     </message>
     <message>
         <source>Current maintainer</source>
-        <translation type="unfinished"></translation>
+        <translation>Responsable actual</translation>
     </message>
     <message>
         <source>Previous maintainers</source>
-        <translation type="unfinished"></translation>
+        <translation>Responsables anteriores</translation>
     </message>
     <message>
         <source>Based on original idea from</source>
-        <translation type="unfinished"></translation>
+        <translation>Basado en una idea original de</translation>
     </message>
     <message>
         <source>Artworks</source>
-        <translation type="unfinished"></translation>
+        <translation>Arte</translation>
     </message>
     <message>
         <source>Thanks to</source>
-        <translation type="unfinished"></translation>
+        <translation>Gracias a</translation>
     </message>
     <message>
         <source>...and many others...</source>
-        <translation type="unfinished"></translation>
+        <translation>...y muchos otros...</translation>
     </message>
     <message>
         <source>Translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Traducciones</translation>
     </message>
     <message>
         <source>Brazilian Portuguese</source>
-        <translation type="unfinished"></translation>
+        <translation>Portugués Brasileño</translation>
     </message>
     <message>
         <source>Copyright (C)</source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (C)</translation>
     </message>
     <message>
         <source>Visit &lt;b&gt;http://www.speedcrunch.org&lt;/b&gt; for more information!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Para más información visite &lt;b&gt;http://www.speedcrunch.org&lt;/b&gt;!</translation>
     </message>
 </context>
 <context>
@@ -131,15 +131,15 @@ cimientos especiales a</translation>
     </message>
     <message>
         <source>&amp;General</source>
-        <translation type="unfinished">Ge&amp;neral</translation>
+        <translation>Ge&amp;neral</translation>
     </message>
     <message>
         <source>&amp;Appearance</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Apariencia</translation>
     </message>
     <message>
         <source>&amp;Syntax Highlight</source>
-        <translation type="unfinished"></translation>
+        <translation>Resaltar &amp;Sintaxis</translation>
     </message>
 </context>
 <context>
@@ -186,292 +186,292 @@ cimientos especiales a</translation>
     </message>
     <message>
         <source>Save &amp;history on exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar &amp;historial al salir</translation>
     </message>
     <message>
         <source>Save &amp;variables on exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar &amp;variables al salir</translation>
     </message>
     <message>
         <source>Automatic &amp;completion</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Completar automáticamente</translation>
     </message>
     <message>
         <source>Automatically calculate as you &amp;type</source>
-        <translation type="unfinished"></translation>
+        <translation>Calcular automáticamente mientras &amp;escribe</translation>
     </message>
     <message>
         <source>Minimi&amp;ze to system tray</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimi&amp;zar a la bandeja del sistema</translation>
     </message>
     <message>
         <source>Decimal point:</source>
-        <translation type="unfinished"></translation>
+        <translation>Punto decimal:</translation>
     </message>
     <message>
         <source>Auto detect</source>
-        <translation type="unfinished"></translation>
+        <translation>Autodetectar</translation>
     </message>
     <message>
         <source>Use dot (.)</source>
-        <translation type="unfinished"></translation>
+        <translation>Usar punto (.)</translation>
     </message>
     <message>
         <source>Use comma (,)</source>
-        <translation type="unfinished"></translation>
+        <translation>Usar coma (,)</translation>
     </message>
     <message>
         <source>S&amp;tandard</source>
-        <translation type="unfinished"></translation>
+        <translation>P&amp;redefinido</translation>
     </message>
     <message>
         <source>&amp;Custom</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Personalizado</translation>
     </message>
     <message>
         <source>C&amp;hoose...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Escoger...</translation>
     </message>
     <message>
         <source>Error Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Error del Color:</translation>
     </message>
     <message>
         <source>&amp;Enable syntax highlight</source>
-        <translation type="unfinished"></translation>
+        <translation>Habilitar r&amp;esaltado de sintaxis</translation>
     </message>
 </context>
 <context>
     <name>ConstantCompletion</name>
     <message>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Todo</translation>
     </message>
 </context>
 <context>
     <name>Constants</name>
     <message>
         <source>characteristic impedance of vacuum</source>
-        <translation type="unfinished"></translation>
+        <translation>Impedancia Característica del Vacío</translation>
     </message>
     <message>
         <source>General Physics</source>
-        <translation type="unfinished"></translation>
+        <translation>Física General</translation>
     </message>
     <message>
         <source>electric constant</source>
-        <translation type="unfinished"></translation>
+        <translation>Constante Eléctrica</translation>
     </message>
     <message>
         <source>magnetic constant</source>
-        <translation type="unfinished"></translation>
+        <translation>Constante Magnética</translation>
     </message>
     <message>
         <source>gravitation constant</source>
-        <translation type="unfinished"></translation>
+        <translation>Constante Gravitacional</translation>
     </message>
     <message>
         <source>Planck&apos;s constant</source>
-        <translation type="unfinished"></translation>
+        <translation>Constante de Planck</translation>
     </message>
     <message>
         <source>Dirac&apos;s constant</source>
-        <translation type="unfinished"></translation>
+        <translation>Constante de Dirac</translation>
     </message>
     <message>
         <source>speed of light in vacuum</source>
-        <translation type="unfinished"></translation>
+        <translation>Velocidad de la Luz en el Vacío</translation>
     </message>
     <message>
         <source>Bohr-Procopiu magneton</source>
-        <translation type="unfinished"></translation>
+        <translation>Magneto Bohr-Procopiu</translation>
     </message>
     <message>
         <source>Electromagnetic</source>
-        <translation type="unfinished"></translation>
+        <translation>Electromagnético</translation>
     </message>
     <message>
         <source>conductance quantum</source>
-        <translation type="unfinished"></translation>
+        <translation>Conductancia Cuántica</translation>
     </message>
     <message>
         <source>Coulomb&apos;s constant</source>
-        <translation type="unfinished"></translation>
+        <translation>Constante de Coulomb</translation>
     </message>
     <message>
         <source>elementary charge  </source>
-        <translation type="unfinished"></translation>
+        <translation>Carga Elemental</translation>
     </message>
     <message>
         <source>Josephson constant</source>
-        <translation type="unfinished"></translation>
+        <translation>Constante de Josephson</translation>
     </message>
     <message>
         <source>magnetic flux quantum</source>
-        <translation type="unfinished"></translation>
+        <translation>Flujo Magnético Cuántico</translation>
     </message>
     <message>
         <source>nuclear magneton</source>
-        <translation type="unfinished"></translation>
+        <translation>Magneto Nuclear</translation>
     </message>
     <message>
         <source>resistance quantum </source>
-        <translation type="unfinished"></translation>
+        <translation>Resistencia Cuántica</translation>
     </message>
     <message>
         <source>von Klitzing constant</source>
-        <translation type="unfinished"></translation>
+        <translation>Constante de von Klitzing</translation>
     </message>
     <message>
         <source>Bohr radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Radio de Bohr</translation>
     </message>
     <message>
         <source>Atomic &amp; Nuclear</source>
-        <translation type="unfinished"></translation>
+        <translation>Atómico &amp; Nuclear</translation>
     </message>
     <message>
         <source>Fermi coupling constant</source>
-        <translation type="unfinished"></translation>
+        <translation>Constante de Acoplamiento de Fermi</translation>
     </message>
     <message>
         <source>fine-structure constant</source>
-        <translation type="unfinished"></translation>
+        <translation>Constante de Estructura Fina</translation>
     </message>
     <message>
         <source>Hartree energy</source>
-        <translation type="unfinished"></translation>
+        <translation>Energía Hartree</translation>
     </message>
     <message>
         <source>quantum of circulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Cuanto de Circulación</translation>
     </message>
     <message>
         <source>Rydberg constant</source>
-        <translation type="unfinished"></translation>
+        <translation>Constante de Rydberg</translation>
     </message>
     <message>
         <source>Thomson cross section</source>
-        <translation type="unfinished"></translation>
+        <translation>Sección Eficaz de Thomson</translation>
     </message>
     <message>
         <source>weak mixing angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Ángulo de Weinberg</translation>
     </message>
     <message>
         <source>atomic mass unit</source>
-        <translation type="unfinished"></translation>
+        <translation>Unidad de Masa Atómica</translation>
     </message>
     <message>
         <source>Physico-chemical</source>
-        <translation type="unfinished"></translation>
+        <translation>Físico-químico</translation>
     </message>
     <message>
         <source>Avogadro&apos;s number</source>
-        <translation type="unfinished"></translation>
+        <translation>Número de Avogadro</translation>
     </message>
     <message>
         <source>Boltzmann constant</source>
-        <translation type="unfinished"></translation>
+        <translation>Constante de Boltzmann</translation>
     </message>
     <message>
         <source>Faraday constant</source>
-        <translation type="unfinished"></translation>
+        <translation>Constante de Faraday</translation>
     </message>
     <message>
         <source>first radiation constant</source>
-        <translation type="unfinished"></translation>
+        <translation>Primera Constante de Radiación</translation>
     </message>
     <message>
         <source>Loschmidt constant</source>
-        <translation type="unfinished"></translation>
+        <translation>Constante de Loschmidt</translation>
     </message>
     <message>
         <source>gas constant</source>
-        <translation type="unfinished"></translation>
+        <translation>Constante Universal de los Gases Ideales</translation>
     </message>
     <message>
         <source>molar Planck constant</source>
-        <translation type="unfinished"></translation>
+        <translation>Constante Molar de Planck</translation>
     </message>
     <message>
         <source>second radiation constant</source>
-        <translation type="unfinished"></translation>
+        <translation>Segunda Constante de Radiación</translation>
     </message>
     <message>
         <source>Stefan-Boltzmann constant</source>
-        <translation type="unfinished"></translation>
+        <translation>Constante de Stefan-Boltzmann</translation>
     </message>
     <message>
         <source>astronomical unit</source>
-        <translation type="unfinished"></translation>
+        <translation>Unidad Astronómica</translation>
     </message>
     <message>
         <source>Astronomy</source>
-        <translation type="unfinished"></translation>
+        <translation>Astronomía</translation>
     </message>
     <message>
         <source>light year</source>
-        <translation type="unfinished"></translation>
+        <translation>Año Luz</translation>
     </message>
     <message>
         <source>parsec</source>
-        <translation type="unfinished"></translation>
+        <translation>Pársec</translation>
     </message>
     <message>
         <source>sidereal year</source>
-        <translation type="unfinished"></translation>
+        <translation>Año Sideral</translation>
     </message>
     <message>
         <source>tropical year</source>
-        <translation type="unfinished"></translation>
+        <translation>Año Tropical</translation>
     </message>
     <message>
         <source>Gregorian year</source>
-        <translation type="unfinished"></translation>
+        <translation>Año Gregoriano</translation>
     </message>
     <message>
         <source>Earth mass</source>
-        <translation type="unfinished"></translation>
+        <translation>Masa Terrestre</translation>
     </message>
     <message>
         <source>Sun mass</source>
-        <translation type="unfinished"></translation>
+        <translation>Masa Solar</translation>
     </message>
     <message>
         <source>mean Earth radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Radio Terrestre</translation>
     </message>
     <message>
         <source>Sun radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Radio Solar</translation>
     </message>
     <message>
         <source>Sun luminosity</source>
-        <translation type="unfinished"></translation>
+        <translation>Luminosidad Solar</translation>
     </message>
 </context>
 <context>
     <name>ConstantsDock</name>
     <message>
         <source>Constants</source>
-        <translation type="unfinished"></translation>
+        <translation>Constantes</translation>
     </message>
     <message>
         <source>Category</source>
-        <translation type="unfinished"></translation>
+        <translation>Categoría</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Búsqueda</translation>
     </message>
     <message>
         <source>No match found</source>
-        <translation type="unfinished"></translation>
+        <translation>No se encontraron coincidencias</translation>
     </message>
     <message>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Todo</translation>
     </message>
 </context>
 <context>
@@ -542,11 +542,11 @@ cimientos especiales a</translation>
     </message>
     <message>
         <source>&amp;Fixed Decimal</source>
-        <translation>Punto decimal fi&amp;jo</translation>
+        <translation>Punto Decimal Fi&amp;jo</translation>
     </message>
     <message>
         <source>&amp;Automatic Precision</source>
-        <translation>Prec&amp;isión automática</translation>
+        <translation>Prec&amp;isión Automática</translation>
     </message>
     <message>
         <source>&amp;2 Decimal Digits</source>
@@ -570,11 +570,11 @@ cimientos especiales a</translation>
     </message>
     <message>
         <source>&amp;Show Clear Button</source>
-        <translation>&amp;Mostrar botón de Borrar</translation>
+        <translation>&amp;Mostrar Botón de Borrar</translation>
     </message>
     <message>
         <source>Show &amp;Evaluate Button</source>
-        <translation>Mostrar botón de Calcu&amp;lar</translation>
+        <translation>Mostrar Botón de Calcu&amp;lar</translation>
     </message>
     <message>
         <source>&amp;Configure...</source>
@@ -610,11 +610,11 @@ cimientos especiales a</translation>
     </message>
     <message>
         <source>Text Files (*.txt);; All Files (*.*)</source>
-        <translation>Archivos de texto (*.txt);; Todos los archivos (*.*)</translation>
+        <translation>Archivos de Texto (*.txt);;Todos los Archivos (*.*)</translation>
     </message>
     <message>
         <source>Save Session</source>
-        <translation>Guardar sesión</translation>
+        <translation>Guardar Sesión</translation>
     </message>
     <message>
         <source>Error</source>
@@ -634,96 +634,97 @@ cimientos especiales a</translation>
     </message>
     <message>
         <source>D&amp;elete Variable...</source>
-        <translation>&amp;Borrar variable...</translation>
+        <translation>&amp;Borrar Variable...</translation>
     </message>
     <message>
         <source>Show &amp;Key Pad</source>
-        <translation>Mostr&amp;ar teclado</translation>
+        <translation>Mostr&amp;ar Teclado</translation>
     </message>
     <message>
         <source>Hex</source>
-        <translation type="unfinished"></translation>
+        <translation>Hex</translation>
     </message>
     <message>
         <source>Dec</source>
-        <translation type="unfinished"></translation>
+        <translation>Dec</translation>
     </message>
     <message>
         <source>Oct</source>
-        <translation type="unfinished"></translation>
+        <translation>Oct</translation>
     </message>
     <message>
         <source>Bin</source>
-        <translation type="unfinished"></translation>
+        <translation>Bin</translation>
     </message>
     <message>
         <source>&amp;Hexadecimal</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Hexadecimal</translation>
     </message>
     <message>
         <source>&amp;Octal</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Octal</translation>
     </message>
     <message>
         <source>&amp;Binary</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Binario</translation>
     </message>
     <message>
         <source>Show Expression &amp;History</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar &amp;Historial de Expresiones</translation>
     </message>
     <message>
         <source>Show &amp;Functions List</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar Lista de &amp;Funciones</translation>
     </message>
     <message>
         <source>Show &amp;Variables List</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar Lista de &amp;Variables</translation>
     </message>
     <message>
         <source>SpeedCrunch &amp;Web Site...</source>
-        <translation type="unfinished"></translation>
+        <translation>Sitio &amp;Web SpeedCrunch...</translation>
     </message>
     <message>
         <source>SpeedCrunch is minimized. 
  Click on the icon to reactivate it</source>
-        <translation type="unfinished"></translation>
+        <translation>SpeedCrunch está minimizado.
+Haga clic en el icono para reactivarlo</translation>
     </message>
     <message>
         <source>&amp;Select Input</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Seleccionar Entrada</translation>
     </message>
     <message>
         <source>&amp;Engineering</source>
-        <translation type="unfinished"></translation>
+        <translation>Ing&amp;eniería</translation>
     </message>
     <message>
         <source>&amp;Scientific</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Científica</translation>
     </message>
     <message>
         <source>Show C&amp;onstants List</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar Lista de C&amp;onstantes</translation>
     </message>
     <message>
         <source>&amp;Tip of the Day</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Tip del Día</translation>
     </message>
     <message>
         <source>You can customize the syntax highlight colors. Use menu &lt;i&gt;Settings, Configure&lt;/i&gt;, and then from the configuration dialog, choose tab &lt;i&gt;Syntax Highlight&lt;i&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Usted puede personalizar los colores que realzan la sintaxis. Use en el menú &lt;i&gt;Settings, Configure&lt;/i&gt;, y después en la ventana de configuración, escoja &lt;i&gt;Syntax Highlight&lt;i&gt;.</translation>
     </message>
     <message>
         <source>To insert a function using keyboard, use Ctrl+F shorcut. From the dialog, you can choose the function you want to insert.</source>
-        <translation type="unfinished"></translation>
+        <translation>Para insertar una función usando el teclado, pulse Ctrl+F. Desde la ventana, usted puede escoger la función que quiera insertar.</translation>
     </message>
     <message>
         <source>To insert a variable using keyboard, use Ctrl+I shorcut. From the dialog, you can choose the variable you want to insert.</source>
-        <translation type="unfinished"></translation>
+        <translation>Para insertar una variable usando el teclado, pulse Ctrl+I. Desde la ventana, usted puede escoger la variable que quiera insertar.</translation>
     </message>
     <message>
         <source>Use variable &lt;i&gt;pi&lt;/i&gt; to use pi constant.</source>
-        <translation type="unfinished"></translation>
+        <translation>Use la variable &lt;i&gt;pi&lt;/i&gt; para usar la constante pi.</translation>
     </message>
 </context>
 <context>
@@ -808,189 +809,189 @@ cimientos especiales a</translation>
     </message>
     <message>
         <source>Base-2 Logarithm</source>
-        <translation type="unfinished">Logaritmo Base 10 {2 ?}</translation>
+        <translation>Logaritmo Binario</translation>
     </message>
     <message>
         <source>Signum</source>
-        <translation type="unfinished"></translation>
+        <translation>Signum</translation>
     </message>
     <message>
         <source>Radians</source>
-        <translation type="unfinished"></translation>
+        <translation>Radianes</translation>
     </message>
     <message>
         <source>Minimum</source>
-        <translation type="unfinished"></translation>
+        <translation>Mínimo</translation>
     </message>
     <message>
         <source>Maximum</source>
-        <translation type="unfinished"></translation>
+        <translation>Máximo</translation>
     </message>
     <message>
         <source>Sum</source>
-        <translation type="unfinished"></translation>
+        <translation>Suma</translation>
     </message>
     <message>
         <source>Product</source>
-        <translation type="unfinished"></translation>
+        <translation>Producto</translation>
     </message>
     <message>
         <source>Average (Arithmetic Mean)</source>
-        <translation type="unfinished"></translation>
+        <translation>Promedio (Media Aritmética)</translation>
     </message>
     <message>
         <source>Geometric Mean</source>
-        <translation type="unfinished"></translation>
+        <translation>Media Geométrica</translation>
     </message>
     <message>
         <source>Absolute Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Valor Absoluto</translation>
     </message>
     <message>
         <source>Binary Representation</source>
-        <translation type="unfinished"></translation>
+        <translation>Representación Binaria</translation>
     </message>
     <message>
         <source>Ceiling</source>
-        <translation type="unfinished"></translation>
+        <translation>Techo</translation>
     </message>
     <message>
         <source>Cube Root</source>
-        <translation type="unfinished"></translation>
+        <translation>Raiz Cúbica</translation>
     </message>
     <message>
         <source>Decimal Representation</source>
-        <translation type="unfinished"></translation>
+        <translation>Representación Decimal</translation>
     </message>
     <message>
         <source>Exponential</source>
-        <translation type="unfinished">Exponencial</translation>
+        <translation>Exponencial</translation>
     </message>
     <message>
         <source>Floor</source>
-        <translation type="unfinished"></translation>
+        <translation>Piso</translation>
     </message>
     <message>
         <source>Fractional Part</source>
-        <translation type="unfinished"></translation>
+        <translation>Parte Fraccional</translation>
     </message>
     <message>
         <source>Hexadecimal Representation</source>
-        <translation type="unfinished"></translation>
+        <translation>Representación Hexadecimal</translation>
     </message>
     <message>
         <source>Integer Part</source>
-        <translation type="unfinished"></translation>
+        <translation>Parte Entera</translation>
     </message>
     <message>
         <source>Octal Representation</source>
-        <translation type="unfinished"></translation>
+        <translation>Representación Octal</translation>
     </message>
     <message>
         <source>Rounding</source>
-        <translation type="unfinished"></translation>
+        <translation>Redondeo</translation>
     </message>
     <message>
         <source>Truncation</source>
-        <translation type="unfinished"></translation>
+        <translation>Truncar</translation>
     </message>
     <message>
         <source>Greatest Common Divisor</source>
-        <translation type="unfinished"></translation>
+        <translation>Mayor Común Divisor</translation>
     </message>
     <message>
         <source>Combination (Binomial Coefficient)</source>
-        <translation type="unfinished"></translation>
+        <translation>Combinación (Coeficiente Binomial)</translation>
     </message>
     <message>
         <source>Permutation (Arrangement)</source>
-        <translation type="unfinished"></translation>
+        <translation>Permutación (Reordenamiento)</translation>
     </message>
     <message>
         <source>Binomial Probability Mass Function</source>
-        <translation type="unfinished"></translation>
+        <translation>Función de Probabilidad de Masa Binomial</translation>
     </message>
     <message>
         <source>Binomial Cumulative Distribution Function</source>
-        <translation type="unfinished"></translation>
+        <translation>Función de Distribución Acumulada Binomial</translation>
     </message>
     <message>
         <source>Binomial Distribution Mean</source>
-        <translation type="unfinished"></translation>
+        <translation>Media de Distribución Binomial</translation>
     </message>
     <message>
         <source>Binomial Distribution Variance</source>
-        <translation type="unfinished"></translation>
+        <translation>Variación de Distribución Binomial</translation>
     </message>
     <message>
         <source>Hypergeometric Probability Mass Function</source>
-        <translation type="unfinished"></translation>
+        <translation>Función de Masa de Probabilidad Hipergeométrica</translation>
     </message>
     <message>
         <source>Hypergeometric Cumulative Distribution Function</source>
-        <translation type="unfinished"></translation>
+        <translation>Función de Distribución Acumulada Hipergeométrica</translation>
     </message>
     <message>
         <source>Hypergeometric Distribution Mean</source>
-        <translation type="unfinished"></translation>
+        <translation>Media de Distribución Hipergeométrica</translation>
     </message>
     <message>
         <source>Hypergeometric Distribution Variance)</source>
-        <translation type="unfinished"></translation>
+        <translation>Variación de Distribución Hipergeométrica</translation>
     </message>
     <message>
         <source>Poissonian Probability Mass Function</source>
-        <translation type="unfinished"></translation>
+        <translation>Función de Masa de Probabilidad de Poisson</translation>
     </message>
     <message>
         <source>Poissonian Cumulative Distribution Function</source>
-        <translation type="unfinished"></translation>
+        <translation>Función de Distribución Acumulada de Poisson</translation>
     </message>
     <message>
         <source>Poissonian Distribution Mean</source>
-        <translation type="unfinished"></translation>
+        <translation>Media de Distribución de Poisson</translation>
     </message>
     <message>
         <source>Poissonian Distribution Variance</source>
-        <translation type="unfinished"></translation>
+        <translation>Variación de Distribución de Poisson</translation>
     </message>
     <message>
         <source>Cosecant</source>
-        <translation type="unfinished"></translation>
+        <translation>Cosecante</translation>
     </message>
     <message>
         <source>Cotangent</source>
-        <translation type="unfinished"></translation>
+        <translation>Cotangente</translation>
     </message>
     <message>
         <source>Degrees Of Arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Grados de Arco</translation>
     </message>
     <message>
         <source>Secant</source>
-        <translation type="unfinished"></translation>
+        <translation>Secante</translation>
     </message>
 </context>
 <context>
     <name>FunctionsDock</name>
     <message>
         <source>Functions</source>
-        <translation type="unfinished"></translation>
+        <translation>Funciones</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Búsqueda</translation>
     </message>
     <message>
         <source>No match found</source>
-        <translation type="unfinished"></translation>
+        <translation>No se encontraron coincidencias</translation>
     </message>
 </context>
 <context>
     <name>HistoryDock</name>
     <message>
         <source>History</source>
-        <translation type="unfinished"></translation>
+        <translation>Historial</translation>
     </message>
 </context>
 <context>
@@ -1032,7 +1033,7 @@ cimientos especiales a</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Insert Variable</source>
@@ -1183,127 +1184,127 @@ cimientos especiales a</translation>
     </message>
     <message>
         <source>x</source>
-        <translation type="unfinished"></translation>
+        <translation>x</translation>
     </message>
     <message>
         <source>x=</source>
-        <translation type="unfinished"></translation>
+        <translation>x=</translation>
     </message>
     <message>
         <source>asin</source>
-        <translation type="unfinished"></translation>
+        <translation>asen</translation>
     </message>
     <message>
         <source>acos</source>
-        <translation type="unfinished"></translation>
+        <translation>acos</translation>
     </message>
     <message>
         <source>atan</source>
-        <translation type="unfinished"></translation>
+        <translation>atan</translation>
     </message>
     <message>
         <source>Evaluate the expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Evaluar la expresión</translation>
     </message>
     <message>
         <source>Inverse sine</source>
-        <translation type="unfinished"></translation>
+        <translation>Seno invertido</translation>
     </message>
     <message>
         <source>Inverse cosine</source>
-        <translation type="unfinished"></translation>
+        <translation>Coseno invertido</translation>
     </message>
     <message>
         <source>Inverse tangens</source>
-        <translation type="unfinished"></translation>
+        <translation>Tangente invertida</translation>
     </message>
 </context>
 <context>
     <name>TipWidget</name>
     <message>
         <source>&lt;b&gt;Tip of the day&lt;/b&gt;&lt;br&gt;%1</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Tip del día&lt;/b&gt;&lt;br&gt;%1</translation>
     </message>
 </context>
 <context>
     <name>VariablesDock</name>
     <message>
         <source>Variables</source>
-        <translation type="unfinished"></translation>
+        <translation>Variables</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Búsqueda</translation>
     </message>
     <message>
         <source>No match found</source>
-        <translation type="unfinished"></translation>
+        <translation>No se encontraron coincidencias</translation>
     </message>
 </context>
 <context>
     <name>evaluator</name>
     <message>
         <source>invalid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>expresión inválida</translation>
     </message>
     <message>
         <source>variable cannot be overwritten</source>
-        <translation type="unfinished"></translation>
+        <translation>la variable no puede sobreescribirse</translation>
     </message>
     <message>
         <source>identifier matches an existing function name</source>
-        <translation type="unfinished"></translation>
+        <translation>identificador idéntico a función ya existente</translation>
     </message>
     <message>
         <source>division by zero</source>
-        <translation type="unfinished"></translation>
+        <translation>división por cero</translation>
     </message>
     <message>
         <source>unknown function or variable</source>
-        <translation type="unfinished"></translation>
+        <translation>función o variable desconocida</translation>
     </message>
 </context>
 <context>
     <name>functions</name>
     <message>
         <source>function requires 1 or 2 arguments</source>
-        <translation type="unfinished"></translation>
+        <translation>la función requiere 1 ó 2 argumentos</translation>
     </message>
     <message>
         <source>function undefined for specified arguments</source>
-        <translation type="unfinished"></translation>
+        <translation>la función no está definida para los argumentos especificados</translation>
     </message>
     <message>
         <source>function requires at least 2 arguments</source>
-        <translation type="unfinished"></translation>
+        <translation>la función requiere al menos 2 argumentos</translation>
     </message>
     <message>
         <source>function requires integer arguments</source>
-        <translation type="unfinished"></translation>
+        <translation>la función requiere argumentos enteros</translation>
     </message>
     <message>
         <source>function requires integer P2</source>
-        <translation type="unfinished"></translation>
+        <translation>la función requiere entero P2</translation>
     </message>
     <message>
         <source>function undefined for specified argument</source>
-        <translation type="unfinished"></translation>
+        <translation>la función no está definida para el argumento especificado</translation>
     </message>
     <message>
         <source>function requires at least 1 argument</source>
-        <translation type="unfinished"></translation>
+        <translation>la función requiere al menos un argumento</translation>
     </message>
     <message>
         <source>cannot execute function %1</source>
-        <translation type="unfinished"></translation>
+        <translation>no es posible ejecutar función %1</translation>
     </message>
     <message>
         <source>function accepts 1 argument</source>
-        <translation type="unfinished"></translation>
+        <translation>la función acepta un argumento</translation>
     </message>
     <message>
         <source>function accepts %1 arguments</source>
-        <translation type="unfinished"></translation>
+        <translation>la función acepta %1 argumento</translation>
     </message>
 </context>
 </TS>

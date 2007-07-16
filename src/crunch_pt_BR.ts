@@ -185,7 +185,7 @@
     </message>
     <message>
         <source>Save &amp;history on exit</source>
-        <translation>Salvar o &amp;histórico ao sair</translation>
+        <translation>Salvar &amp;histórico ao sair</translation>
     </message>
     <message>
         <source>Save &amp;variables on exit</source>
@@ -225,7 +225,7 @@
     </message>
     <message>
         <source>&amp;Custom</source>
-        <translation>&amp;Customizado</translation>
+        <translation>&amp;Customizada</translation>
     </message>
     <message>
         <source>C&amp;hoose...</source>
@@ -233,7 +233,7 @@
     </message>
     <message>
         <source>Error Color:</source>
-        <translation>Cor de erro:</translation>
+        <translation>Cor de Erro:</translation>
     </message>
     <message>
         <source>&amp;Enable syntax highlight</source>
@@ -251,7 +251,7 @@
     <name>Constants</name>
     <message>
         <source>characteristic impedance of vacuum</source>
-        <translation>impedância característica do vácuo</translation>
+        <translation>Impedância Característica do Vácuo</translation>
     </message>
     <message>
         <source>General Physics</source>
@@ -259,151 +259,151 @@
     </message>
     <message>
         <source>electric constant</source>
-        <translation>permissividade do vácuo</translation>
+        <translation>Permissividade do Vácuo</translation>
     </message>
     <message>
         <source>magnetic constant</source>
-        <translation>permeabilidade do vácuo</translation>
+        <translation>Permeabilidade do Vácuo</translation>
     </message>
     <message>
         <source>gravitation constant</source>
-        <translation>constante gravitacional universal</translation>
+        <translation>Constante Gravitacional Universal</translation>
     </message>
     <message>
         <source>Planck&apos;s constant</source>
-        <translation>constante de Planck</translation>
+        <translation>Constante de Planck</translation>
     </message>
     <message>
         <source>Dirac&apos;s constant</source>
-        <translation>constante de Dirac</translation>
+        <translation>Constante de Dirac</translation>
     </message>
     <message>
         <source>speed of light in vacuum</source>
-        <translation>velocidade da luz no vácuo</translation>
+        <translation>Velocidade da Luz no Vácuo</translation>
     </message>
     <message>
         <source>Bohr-Procopiu magneton</source>
-        <translation>magnéton de Bohr</translation>
+        <translation>Magnéton de Bohr-Procopiu</translation>
     </message>
     <message>
         <source>Electromagnetic</source>
-        <translation>Eletromagnético</translation>
+        <translation>Eletromagnéticas</translation>
     </message>
     <message>
         <source>conductance quantum</source>
-        <translation>condutância quântica</translation>
+        <translation>Quantum de Condutância</translation>
     </message>
     <message>
         <source>Coulomb&apos;s constant</source>
-        <translation>constance de Coulomb</translation>
+        <translation>Constante de Coulomb</translation>
     </message>
     <message>
         <source>elementary charge  </source>
-        <translation>carga elétrica elementar  </translation>
+        <translation>Carga Elétrica Elementar  </translation>
     </message>
     <message>
         <source>Josephson constant</source>
-        <translation>constance de Josephson</translation>
+        <translation>Constante de Josephson</translation>
     </message>
     <message>
         <source>magnetic flux quantum</source>
-        <translation>fluxo magnético quântico</translation>
+        <translation>Quantum de Fluxo Magnético</translation>
     </message>
     <message>
         <source>nuclear magneton</source>
-        <translation>magnéton nuclear</translation>
+        <translation>Magnéton Nuclear</translation>
     </message>
     <message>
         <source>resistance quantum </source>
-        <translation>resistência quântica </translation>
+        <translation>Quantum de Resistência</translation>
     </message>
     <message>
         <source>von Klitzing constant</source>
-        <translation>constante de von Klitzing</translation>
+        <translation>Constante de von Klitzing</translation>
     </message>
     <message>
         <source>Bohr radius</source>
-        <translation>raio de Bohr</translation>
+        <translation>Raio de Bohr</translation>
     </message>
     <message>
         <source>Atomic &amp; Nuclear</source>
-        <translation>Atômico &amp; Nuclear</translation>
+        <translation>Atômicas &amp; Nucleares</translation>
     </message>
     <message>
         <source>Fermi coupling constant</source>
-        <translation>constante de acoplamento de Fermi</translation>
+        <translation>Constante de Acoplamento de Fermi</translation>
     </message>
     <message>
         <source>fine-structure constant</source>
-        <translation>constante de estrutura fina</translation>
+        <translation>Constante de Estrutura Fina</translation>
     </message>
     <message>
         <source>Hartree energy</source>
-        <translation>energia de Hartree</translation>
+        <translation>Energia de Hartree</translation>
     </message>
     <message>
         <source>quantum of circulation</source>
-        <translation>circulação quântica</translation>
+        <translation>Quantum de Circulação</translation>
     </message>
     <message>
         <source>Rydberg constant</source>
-        <translation>constante de Rydberg</translation>
+        <translation>Constante de Rydberg</translation>
     </message>
     <message>
         <source>Thomson cross section</source>
-        <translation>seção de choque de Thomson</translation>
+        <translation>Seção de Choque de Thomson</translation>
     </message>
     <message>
         <source>weak mixing angle</source>
-        <translation>ângulo de Weinberg</translation>
+        <translation>Ângulo de Weinberg</translation>
     </message>
     <message>
         <source>atomic mass unit</source>
-        <translation>unidade de massa atômica</translation>
+        <translation>Unidade de Massa Atômica</translation>
     </message>
     <message>
         <source>Physico-chemical</source>
-        <translation>Físico-química</translation>
+        <translation>Físico-Química</translation>
     </message>
     <message>
         <source>Avogadro&apos;s number</source>
-        <translation>constante de Avogadro</translation>
+        <translation>Constante de Avogadro</translation>
     </message>
     <message>
         <source>Boltzmann constant</source>
-        <translation>constante de Boltzmann</translation>
+        <translation>Constante de Boltzmann</translation>
     </message>
     <message>
         <source>Faraday constant</source>
-        <translation>constante de Faraday</translation>
+        <translation>Constante de Faraday</translation>
     </message>
     <message>
         <source>first radiation constant</source>
-        <translation>constante primária de radiação</translation>
+        <translation>Constante Primária de Radiação</translation>
     </message>
     <message>
         <source>Loschmidt constant</source>
-        <translation>constante de Loschmidt</translation>
+        <translation>Constante de Loschmidt</translation>
     </message>
     <message>
         <source>gas constant</source>
-        <translation>constante dos gases ideais</translation>
+        <translation>Constante dos Gases Ideais</translation>
     </message>
     <message>
         <source>molar Planck constant</source>
-        <translation>constante molar de Planck</translation>
+        <translation>Constante Molar de Planck</translation>
     </message>
     <message>
         <source>second radiation constant</source>
-        <translation>constante secundária de radiação</translation>
+        <translation>Constante Secundária de Radiação</translation>
     </message>
     <message>
         <source>Stefan-Boltzmann constant</source>
-        <translation>constante de Stefan-Boltzmann</translation>
+        <translation>Constante de Stefan-Boltzmann</translation>
     </message>
     <message>
         <source>astronomical unit</source>
-        <translation>unidade astronômica</translation>
+        <translation>Unidade Astronômica</translation>
     </message>
     <message>
         <source>Astronomy</source>
@@ -411,43 +411,43 @@
     </message>
     <message>
         <source>light year</source>
-        <translation>ano-luz</translation>
+        <translation>Ano-Luz</translation>
     </message>
     <message>
         <source>parsec</source>
-        <translation>parsec</translation>
+        <translation>Parsec</translation>
     </message>
     <message>
         <source>sidereal year</source>
-        <translation>ano sideral</translation>
+        <translation>Ano Sideral</translation>
     </message>
     <message>
         <source>tropical year</source>
-        <translation>ano tropical</translation>
+        <translation>Ano Tropical</translation>
     </message>
     <message>
         <source>Gregorian year</source>
-        <translation>ano gregoriano</translation>
+        <translation>Ano Gregoriano</translation>
     </message>
     <message>
         <source>Earth mass</source>
-        <translation>massa da Terra</translation>
+        <translation>Massa da Terra</translation>
     </message>
     <message>
         <source>Sun mass</source>
-        <translation>massa do sol</translation>
+        <translation>Massa do Sol</translation>
     </message>
     <message>
         <source>mean Earth radius</source>
-        <translation>raio médio da Terra</translation>
+        <translation>Raio Médio da Terra</translation>
     </message>
     <message>
         <source>Sun radius</source>
-        <translation>raio do sol</translation>
+        <translation>Raio do Sol</translation>
     </message>
     <message>
         <source>Sun luminosity</source>
-        <translation>luminosidade do sol</translation>
+        <translation>Luminosidade do Sol</translation>
     </message>
 </context>
 <context>
@@ -462,7 +462,7 @@
     </message>
     <message>
         <source>Search</source>
-        <translation>Busca</translation>
+        <translation>Pesquisar</translation>
     </message>
     <message>
         <source>No match found</source>
@@ -470,7 +470,7 @@
     </message>
     <message>
         <source>All</source>
-        <translation>Todos</translation>
+        <translation>Todas</translation>
     </message>
 </context>
 <context>
@@ -509,7 +509,7 @@
     </message>
     <message>
         <source>Copy &amp;Result</source>
-        <translation>Copiar o &amp;Resultado</translation>
+        <translation>Copiar &amp;Resultado</translation>
     </message>
     <message>
         <source>Insert &amp;Function...</source>
@@ -521,19 +521,19 @@
     </message>
     <message>
         <source>Clear &amp;Input</source>
-        <translation>Limpar a L&amp;inha de Comando</translation>
+        <translation>&amp;Limpar Expressão</translation>
     </message>
     <message>
         <source>Clear &amp;Display</source>
-        <translation>Lim&amp;par a Tela</translation>
+        <translation>Limpar Resulta&amp;dos</translation>
     </message>
     <message>
         <source>Clear &amp;History</source>
-        <translation>Limpar o &amp;Histórico</translation>
+        <translation>Limpar &amp;Histórico</translation>
     </message>
     <message>
         <source>Clear V&amp;ariables</source>
-        <translation>Limpar as V&amp;ariáveis</translation>
+        <translation>Limpar V&amp;ariáveis</translation>
     </message>
     <message>
         <source>&amp;General</source>
@@ -541,7 +541,7 @@
     </message>
     <message>
         <source>&amp;Fixed Decimal</source>
-        <translation>Decimal de Ponto &amp;Fixo</translation>
+        <translation>Ponto Decimal &amp;Fixo</translation>
     </message>
     <message>
         <source>&amp;Automatic Precision</source>
@@ -569,11 +569,11 @@
     </message>
     <message>
         <source>&amp;Show Clear Button</source>
-        <translation>Mostrar o botão &amp;Limpar</translation>
+        <translation>Mostrar &amp;Botão Limpar</translation>
     </message>
     <message>
         <source>Show &amp;Evaluate Button</source>
-        <translation>Mostrar o botão &amp;Calcular</translation>
+        <translation>Mostrar Botão &amp;Calcular</translation>
     </message>
     <message>
         <source>&amp;Configure...</source>
@@ -597,7 +597,7 @@
     </message>
     <message>
         <source>&amp;View</source>
-        <translation>&amp;Ver</translation>
+        <translation>&amp;Visualizar</translation>
     </message>
     <message>
         <source>Se&amp;ttings</source>
@@ -629,7 +629,7 @@
     </message>
     <message>
         <source>Clear input line</source>
-        <translation>Limpar a linha de comando</translation>
+        <translation>Limpar a expressão inserida</translation>
     </message>
     <message>
         <source>D&amp;elete Variable...</source>
@@ -637,7 +637,7 @@
     </message>
     <message>
         <source>Show &amp;Key Pad</source>
-        <translation>&amp;Mostrar teclas numéricas</translation>
+        <translation>&amp;Mostrar Teclas Numéricas</translation>
     </message>
     <message>
         <source>Hex</source>
@@ -681,7 +681,7 @@
     </message>
     <message>
         <source>SpeedCrunch &amp;Web Site...</source>
-        <translation>&amp;Web Site do SpeedCrunch...</translation>
+        <translation>&amp;Página do SpeedCrunch na Internet...</translation>
     </message>
     <message>
         <source>SpeedCrunch is minimized. 
@@ -711,7 +711,7 @@ Clique no ícone para reativá-lo</translation>
     </message>
     <message>
         <source>You can customize the syntax highlight colors. Use menu &lt;i&gt;Settings, Configure&lt;/i&gt;, and then from the configuration dialog, choose tab &lt;i&gt;Syntax Highlight&lt;i&gt;.</source>
-        <translation>Você pode customizar as cores do destaque de sintaxe. Navegue para o menu &lt;i&gt;Preferências, Configurar&lt;/i&gt; e, no diálogo de configuração, escolha a aba &lt;i&gt; Destaque de Sintaxe&lt;/i&gt;.</translation>
+        <translation>Você pode customizar as cores do destaque de sintaxe. Navegue para o menu &lt;i&gt;Preferências, Configurar&lt;/i&gt; e, no diálogo de configuração, escolha a aba &lt;i&gt;Destaque de Sintaxe&lt;/i&gt;.</translation>
     </message>
     <message>
         <source>To insert a function using keyboard, use Ctrl+F shorcut. From the dialog, you can choose the function you want to insert.</source>
@@ -812,7 +812,7 @@ Clique no ícone para reativá-lo</translation>
     </message>
     <message>
         <source>Signum</source>
-        <translation>Sinal de um número</translation>
+        <translation>Sinal</translation>
     </message>
     <message>
         <source>Radians</source>
@@ -979,7 +979,7 @@ Clique no ícone para reativá-lo</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation>Busca</translation>
+        <translation>Pesquisar</translation>
     </message>
     <message>
         <source>No match found</source>
@@ -1233,7 +1233,7 @@ Clique no ícone para reativá-lo</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation>Busca</translation>
+        <translation>Pesquisar</translation>
     </message>
     <message>
         <source>No match found</source>
