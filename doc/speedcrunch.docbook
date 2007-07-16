@@ -10,6 +10,7 @@
 
 <authorgroup>
 <author><firstname>Ariya</firstname> <surname>Hidayat</surname></author>
+<author><firstname>Jonathan</firstname><surname>Jesse</surname></author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
 
@@ -36,7 +37,7 @@
 <chapter id="introduction">
 <title>Introduction</title>
 
-<para>This document describes SpeedCrunch version 0.8.</para>
+<para>This document describes SpeedCrunch version 0.8, a multiplatform desktop calculator for power users.</para>
 
 <para>Have fun with SpeedCrunch!</para>
 </chapter>
@@ -46,16 +47,20 @@
 
 <sect1 id="installation-windows">
 <title>Installation for &Microsoft; &Windows;</title>
-
+<para>									
+To install &app; on &Microsoft; &Windows;, download the installer from the <ulink="http://speedcrunch.org/download.htm">Speedcrunch website</ulink>.  Once the installer is downloaded, launch the application to install &app;.  By default &app; is found in the Start Menu, under All Programs, Speedcrunch and is stored in C:\Program Files\Speedcrunch.			
+</para>
 </sect1>
 
 <sect1 id="installation-macos">
 <title>Installation for &Mac; OS X</title>
+<para>To install &app; on &Mac; OS X (10.3 (Panther), 10.4 (Tiger), and 10.5 (Leopard)), download the installer from the <ulink="speedcrunch.org/download.htm">Speedcrunch Website</ulink>.  Once the file is downloaded, click on the binary file, and then follow the step-by-step instructions.
+</para>
 </sect1>
 
 <sect1 id="installation-linux">
 <title>Installation for &Linux;</title>
-
+<para>To install &app; on &Linux; please follow the directions specific to the distribution you use.  If your distribution is not listed, then either find the appliacation in the package manager which your distribution uses or use the instructions to compile your own version.</para>
 <sect2 id="installation-suse">
 <title>Installation for OpenSUSE</title>
 </sect2>
@@ -64,7 +69,7 @@
 <title>Installation for &kubuntu;</title>
 
 <para>SpeedCrunch is part of default &kubuntu; installation since &kubuntu; 5.10.
-It is located in the K Menu, Utility, Calculator (SpeedCrunch).</para>
+It is located in the K Menu, Utilities, Calculator (SpeedCrunch).</para>
 
 <para>If it is not available yet, SpeedCrunch can be installed using the following terminal command:</para>
 
@@ -106,7 +111,13 @@ command:</para>
 </screen>
 
 </sect2>
-
+<sect2 id="installation-debian">
+<title>Installation for Debian</title>
+<para>Installation on Debian is as simple as:</para>
+<screen>
+<command>apt-get install speedcrunch</command>
+</screen>
+</sect2>
 </sect1>
 
 <sect1 id="compile">
@@ -181,7 +192,7 @@ make
 <para>Program Copyright &copy; 2005-2006 Johan Thelin</para>
 
 <para>Documentation Copyright &copy; 2007 Ariya Hidayat.</para>
-<!-- TRANS:CREDIT_FOR_TRANSLATORS -->						
+<!-- TRANS:CREDIT_FOR_TRANSLATORS -->
 &underFDL;
 &underGPL;
 
