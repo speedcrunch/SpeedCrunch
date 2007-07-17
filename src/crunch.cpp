@@ -55,6 +55,7 @@
 #include <QFileDialog>
 #include <QHBoxLayout>
 #include <QLabel>
+#include <QLocale>
 #include <QMainWindow>
 #include <QMenu>
 #include <QMenuBar>
@@ -1067,7 +1068,16 @@ void Crunch::constantSelected( const QString& c )
 {
   if( c.isEmpty() )
     return;
-  d->editor->insert( c );
+
+  // find set decimal separator
+  QString sep = d->eval->decimalPoint();
+  if ( sep.isEmpty() )
+    sep = QLocale().decimalPoint();
+  // replace constant dot separator
+  QString str( c );
+  str.replace( QChar( '.' ), sep );
+  // show final constant in the evaluator
+  d->editor->insert( str );
 
   QTimer::singleShot( 0, d->editor, SLOT(setFocus()) );
 
