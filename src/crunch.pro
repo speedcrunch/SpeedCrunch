@@ -2,7 +2,7 @@ TEMPLATE = app
 TARGET = speedcrunch
 
 # note: change this BEFORE making a release !
-DEFINES += SPEEDCRUNCH_VERSION="trunk"
+DEFINES += SPEEDCRUNCH_VERSION="0.8"
 
 HEADERS += crunch.h
 HEADERS += config.h
@@ -115,7 +115,7 @@ DISTFILES += crunch.png
 DISTFILES += clearinput.png
 DISTFILES += LISEZMOI
 #DISTFILES += crunch_cs.qm
-#DISTFILES += crunch_de.qm
+DISTFILES += crunch_de.qm
 DISTFILES += crunch_es.qm
 DISTFILES += crunch_es_AR.qm
 #DISTFILES += crunch_fr.qm
