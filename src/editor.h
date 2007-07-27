@@ -1,6 +1,7 @@
 /* This file is part of the SpeedCrunch project
    Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
    Copyright (C) 2004,2005 Ariya Hidayat <ariya@kde.org>
+   Copyright (C) 2007 Helder Correia <helder.pereira.correia@gmail.com>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -84,7 +85,7 @@ class Editor : public QTextEdit
   public slots:
     void insert( const QString& );
     void insertConstant( const QString& );
-
+    void evaluate();
     void appendHistory( const QString& text );
     void clearHistory();
 
@@ -135,6 +136,7 @@ class EditorCompletion : public QObject
     void selectedCompletion( const QString& item );
 
   public slots:
+    void selectItem( const QString& item ); // WORKAROUND 76
     void doneCompletion();
 
   private slots:

@@ -144,6 +144,12 @@ public:
   QSystemTrayIcon* trayIcon;
   bool trayNotify;
 
+  QMenu * sessionMenu;
+  QMenu * editMenu;
+  QMenu * viewMenu;
+  QMenu * settingsMenu;
+  QMenu * helpMenu;
+
   HistoryDock* historyDock;
   FunctionsDock* functionsDock;
   VariablesDock* variablesDock;
@@ -154,6 +160,8 @@ public:
   InsertVariableDlg* insertVariableDlg;
   DeleteVariableDlg* deleteVariableDlg;
 };
+
+static void setWidgetLayoutAccordingToLanguageDirection( QWidget * widget );
 
 Crunch::Crunch(): QMainWindow()
 {
@@ -216,8 +224,6 @@ Crunch::Crunch(): QMainWindow()
 
   outerBoxLayout->addLayout( topboxLayout );
 
-
-
   // Result list
 
   d->result = new Result( box );
@@ -248,6 +254,8 @@ Crunch::Crunch(): QMainWindow()
 
   outerBoxLayout->addLayout( inputBoxLayout );
 
+  // we need settings to be loaded before keypad and constants dock
+  Settings::self()->load();
 
   // Keypad
 
@@ -312,14 +320,12 @@ Crunch::Crunch(): QMainWindow()
   connect( d->functionsDock, SIGNAL( functionSelected( const QString& ) ), SLOT( functionSelected( const QString& ) ) );
   connect( d->variablesDock, SIGNAL( variableSelected( const QString& ) ), SLOT( variableSelected( const QString& ) ) );
   connect( d->constantsDock, SIGNAL( constantSelected( const QString& ) ), SLOT( constantSelected( const QString& ) ) );
-
-
   connect( d->keypad, SIGNAL( addText( const QString& ) ), SLOT( addKeyPadText( const QString& ) ) );
+  connect( d->keypad, SIGNAL( evaluate() ), d->editor, SLOT( evaluate() ) );
 
   // Initialize settings
 
-  d->configDlg = 0;
-  d->insertFunctionDlg = 0;
+  d->insertFunctionDlg = new InsertFunctionDlg( this );
   d->insertVariableDlg = 0;
   d->deleteVariableDlg = 0;
 
@@ -328,6 +334,13 @@ Crunch::Crunch(): QMainWindow()
   createUI();
   applySettings();
   restoreDocks();
+
+  d->configDlg = new ConfigDlg( this );
+  connect( d->configDlg, SIGNAL( settingsChanged() ), SLOT( applySettings() ) );
+  connect( d->configDlg, SIGNAL( settingsChanged() ), d->keypad, SLOT( settingsChanged() ) );
+  connect( this, SIGNAL( adaptToLanguageChange() ), d->configDlg, SLOT( adaptToLanguageChange() ) );
+
+  setWidgetsLayoutAccordingToLanguageDirection();
 
   QTimer::singleShot( 0, this, SLOT(activate()) );
 }
@@ -488,71 +501,69 @@ void Crunch::createUI()
 
   // construct the menu
 
-  QMenu *sessionMenu = new QMenu( tr("&Session"), this );
-  menuBar()->addMenu( sessionMenu );
-  sessionMenu->addAction( d->actions->sessionSave );
-  sessionMenu->addAction( d->actions->sessionQuit );
+  d->sessionMenu = new QMenu( tr("&Session"), this );
+  menuBar()->addMenu( d->sessionMenu );
+  d->sessionMenu->addAction( d->actions->sessionSave );
+  d->sessionMenu->addAction( d->actions->sessionQuit );
 
-  QMenu *editMenu = new QMenu( tr("&Edit"), this );
-  menuBar()->addMenu( editMenu );
-  editMenu->addAction( d->actions->editCopy );
-  editMenu->addAction( d->actions->editCopyResult );
-  editMenu->addAction( d->actions->editPaste );
-  editMenu->addSeparator();
-  editMenu->addAction( d->actions->insertFunction );
-  editMenu->addAction( d->actions->insertVariable );
-  editMenu->addSeparator();
-  editMenu->addAction( d->actions->deleteVariable );
-  editMenu->addSeparator();
-  editMenu->addAction( d->actions->clearInput );
-  editMenu->addAction( d->actions->clearDisplay );
-  editMenu->addAction( d->actions->clearHistory );
-  editMenu->addAction( d->actions->clearVariables );
-  editMenu->addSeparator();
-  editMenu->addAction( d->actions->focusAndSelectInput );
+  d->editMenu = new QMenu( tr("&Edit"), this );
+  menuBar()->addMenu( d->editMenu );
+  d->editMenu->addAction( d->actions->editCopy );
+  d->editMenu->addAction( d->actions->editCopyResult );
+  d->editMenu->addAction( d->actions->editPaste );
+  d->editMenu->addSeparator();
+  d->editMenu->addAction( d->actions->insertFunction );
+  d->editMenu->addAction( d->actions->insertVariable );
+  d->editMenu->addSeparator();
+  d->editMenu->addAction( d->actions->deleteVariable );
+  d->editMenu->addSeparator();
+  d->editMenu->addAction( d->actions->clearInput );
+  d->editMenu->addAction( d->actions->clearDisplay );
+  d->editMenu->addAction( d->actions->clearHistory );
+  d->editMenu->addAction( d->actions->clearVariables );
+  d->editMenu->addSeparator();
+  d->editMenu->addAction( d->actions->focusAndSelectInput );
 
-  QMenu *viewMenu = new QMenu( tr("&View"), this );
-  menuBar()->addMenu( viewMenu );
-  viewMenu->addAction( d->actions->viewGeneral );
-  viewMenu->addAction( d->actions->viewFixed );
-  viewMenu->addAction( d->actions->viewEngineering );
-  viewMenu->addAction( d->actions->viewScientific );
-  viewMenu->addAction( d->actions->viewHexadec );
-  viewMenu->addAction( d->actions->viewOctal );
-  viewMenu->addAction( d->actions->viewBinary );
-  viewMenu->addSeparator();
-  viewMenu->addAction( d->actions->digitsAuto );
-  viewMenu->addAction( d->actions->digits2 );
-  viewMenu->addAction( d->actions->digits3 );
-  viewMenu->addAction( d->actions->digits8 );
-  viewMenu->addAction( d->actions->digits15 );
-  viewMenu->addAction( d->actions->digits50 );
+  d->viewMenu = new QMenu( tr("&View"), this );
+  menuBar()->addMenu( d->viewMenu );
+  d->viewMenu->addAction( d->actions->viewGeneral );
+  d->viewMenu->addAction( d->actions->viewFixed );
+  d->viewMenu->addAction( d->actions->viewEngineering );
+  d->viewMenu->addAction( d->actions->viewScientific );
+  d->viewMenu->addAction( d->actions->viewHexadec );
+  d->viewMenu->addAction( d->actions->viewOctal );
+  d->viewMenu->addAction( d->actions->viewBinary );
+  d->viewMenu->addSeparator();
+  d->viewMenu->addAction( d->actions->digitsAuto );
+  d->viewMenu->addAction( d->actions->digits2 );
+  d->viewMenu->addAction( d->actions->digits3 );
+  d->viewMenu->addAction( d->actions->digits8 );
+  d->viewMenu->addAction( d->actions->digits15 );
+  d->viewMenu->addAction( d->actions->digits50 );
 
 
-  QMenu *settingsMenu = new QMenu( tr("Se&ttings"), this );
-  menuBar()->addMenu( settingsMenu );
-  settingsMenu->addAction( d->actions->showClearButton );
-  settingsMenu->addAction( d->actions->showEvalButton );
-  settingsMenu->addAction( d->actions->showKeyPad );
-  settingsMenu->addSeparator();
-  settingsMenu->addAction( d->actions->showHistory );
-  settingsMenu->addAction( d->actions->showFunctions );
-  settingsMenu->addAction( d->actions->showVariables );
-  settingsMenu->addAction( d->actions->showConstants );
-  settingsMenu->addSeparator();
-  settingsMenu->addAction( d->actions->configure );
+  d->settingsMenu = new QMenu( tr("Se&ttings"), this );
+  menuBar()->addMenu( d->settingsMenu );
+  d->settingsMenu->addAction( d->actions->showClearButton );
+  d->settingsMenu->addAction( d->actions->showEvalButton );
+  d->settingsMenu->addAction( d->actions->showKeyPad );
+  d->settingsMenu->addSeparator();
+  d->settingsMenu->addAction( d->actions->showHistory );
+  d->settingsMenu->addAction( d->actions->showFunctions );
+  d->settingsMenu->addAction( d->actions->showVariables );
+  d->settingsMenu->addAction( d->actions->showConstants );
+  d->settingsMenu->addSeparator();
+  d->settingsMenu->addAction( d->actions->configure );
 
-  QMenu *helpMenu = new QMenu( tr("&Help"), this );
-  menuBar()->addMenu( helpMenu );
-  helpMenu->addAction( d->actions->helpTipOfTheDay );
-  helpMenu->addAction( d->actions->helpGotoWebsite );
-  helpMenu->addSeparator();
-  helpMenu->addAction( d->actions->helpAbout );
-  helpMenu->addAction( d->actions->helpAboutQt );
+  d->helpMenu = new QMenu( tr("&Help"), this );
+  menuBar()->addMenu( d->helpMenu );
+  d->helpMenu->addAction( d->actions->helpTipOfTheDay );
+  d->helpMenu->addAction( d->actions->helpGotoWebsite );
+  d->helpMenu->addSeparator();
+  d->helpMenu->addAction( d->actions->helpAbout );
+  d->helpMenu->addAction( d->actions->helpAboutQt );
 
   setWindowIcon( QPixmap( ":/crunch.png" ) );
-
-  Settings::self()->load();
 }
 
 void Crunch::applySettings()
@@ -585,8 +596,16 @@ void Crunch::applySettings()
     d->radButton->setChecked( true );
   }
 
-  d->eval->setDecimalPoint( settings->decimalPoint );
-  d->result->setDecimalPoint( settings->decimalPoint );
+  if ( settings->decimalPoint == "" )
+  {
+    d->eval->setDecimalPoint( QLocale().decimalPoint() );
+    d->result->setDecimalPoint( QLocale().decimalPoint() );
+  }
+  else
+  {
+    d->eval->setDecimalPoint( settings->decimalPoint );
+    d->result->setDecimalPoint( settings->decimalPoint );
+  }
 
   d->historyDock->clear();
   if( settings->saveHistory )
@@ -738,7 +757,7 @@ void Crunch::closeEvent( QCloseEvent* e )
 
 void Crunch::saveSession()
 {
-  QString filters = tr( "Text Files (*.txt);; All Files (*.*)" );
+  QString filters = tr( "Text Files (*.txt);;All Files (*.*)" );
   QString fname = QFileDialog::getSaveFileName( this, tr("Save Session"),
     QString::null, filters );
   if( fname.isEmpty() ) return;
@@ -905,7 +924,7 @@ void Crunch::showTrayMessage()
 {
   if( d->trayIcon )
     d->trayIcon->showMessage( QString(),
-      tr("SpeedCrunch is minimized. \n Click on the icon to reactivate it"),
+      tr("SpeedCrunch is minimized.\nClick on the icon to reactivate it."),
       QSystemTrayIcon::NoIcon, 2000);
 }
 
@@ -1070,7 +1089,7 @@ void Crunch::constantSelected( const QString& c )
     return;
 
   // find set decimal separator
-  QString sep = d->eval->decimalPoint();
+  QString sep = Settings::self()->decimalPoint;
   if ( sep.isEmpty() )
     sep = QLocale().decimalPoint();
   // replace constant dot separator
@@ -1132,7 +1151,7 @@ void Crunch::copyResult()
 void Crunch::focusAndSelectInput()
 {
   d->editor->selectAll();
-  QTimer::singleShot(0, d->editor, SLOT( setFocus() ) );
+  d->editor->setFocus();
 }
 
 void Crunch::clearInput()
@@ -1149,10 +1168,6 @@ void Crunch::clearVariables()
 
 void Crunch::insertFunction()
 {
-  if( !d->insertFunctionDlg )
-    d->insertFunctionDlg = new InsertFunctionDlg( this );
-  //else    d->insertFunctionDlg->updateList();
-
   if( d->insertFunctionDlg->exec() == InsertFunctionDlg::Accepted )
   {
     QString fname = d->insertFunctionDlg->functionName();
@@ -1347,11 +1362,6 @@ void Crunch::showConstants( bool b)
 void Crunch::configure()
 {
   saveSettings();
-  if( !d->configDlg )
-  {
-    d->configDlg = new ConfigDlg( this );
-    connect( d->configDlg, SIGNAL( settingsChanged() ), SLOT( applySettings() ) );
-  }
   d->configDlg->exec();
 }
 
@@ -1368,7 +1378,7 @@ void Crunch::showTip()
     case 0:
       msg = tr("You can customize the syntax highlight colors. "
         "Use menu <i>Settings, Configure</i>, and then from the configuration dialog, "
-        "choose tab <i>Syntax Highlight<i>." );
+        "choose tab <i>Syntax Highlight</i>." );
       break;
     case 1:
       msg = tr("To insert a function using keyboard, use Ctrl+F shorcut. "
@@ -1431,4 +1441,43 @@ void Crunch::showAutoCalc( const QString& msg )
   d->autoCalcLabel->move( p );
 
   d->autoCalcLabel->showText( msg );
+}
+
+void Crunch::setWidgetsLayoutAccordingToLanguageDirection()
+{
+  // menu bar and menus
+  setWidgetLayoutAccordingToLanguageDirection( menuBar()        );
+  setWidgetLayoutAccordingToLanguageDirection( d->sessionMenu   );
+  setWidgetLayoutAccordingToLanguageDirection( d->editMenu      );
+  setWidgetLayoutAccordingToLanguageDirection( d->viewMenu      );
+  setWidgetLayoutAccordingToLanguageDirection( d->settingsMenu  );
+  setWidgetLayoutAccordingToLanguageDirection( d->helpMenu      );
+  // angle mode radio buttons
+  setWidgetLayoutAccordingToLanguageDirection( d->degButton     );
+  setWidgetLayoutAccordingToLanguageDirection( d->radButton     );
+  // radix radio buttons
+  setWidgetLayoutAccordingToLanguageDirection( d->hexButton     );
+  setWidgetLayoutAccordingToLanguageDirection( d->decButton     );
+  setWidgetLayoutAccordingToLanguageDirection( d->octButton     );
+  setWidgetLayoutAccordingToLanguageDirection( d->binButton     );
+  // tip of the day
+  setWidgetLayoutAccordingToLanguageDirection( d->tip           );
+  // docks
+  setWidgetLayoutAccordingToLanguageDirection( d->constantsDock );
+  setWidgetLayoutAccordingToLanguageDirection( d->functionsDock );
+  // insert function dialog
+  setWidgetLayoutAccordingToLanguageDirection( d->insertFunctionDlg );
+  // tip of the day
+  setWidgetLayoutAccordingToLanguageDirection( d->tip );
+
+  // speedcrunch made widgets
+  emit adaptToLanguageChange();
+}
+
+static void setWidgetLayoutAccordingToLanguageDirection( QWidget * widget )
+{
+  if ( QLocale().language() == QLocale::Hebrew )
+    widget->setLayoutDirection( Qt::RightToLeft );
+  else
+    widget->setLayoutDirection( Qt::LeftToRight );
 }

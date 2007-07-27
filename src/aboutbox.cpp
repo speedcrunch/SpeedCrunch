@@ -214,47 +214,67 @@ AboutBox::AboutBox( QWidget * parent ):
   msg += "</i></b><br></p>";
 
   const char * mainFmt = "<p><b>%1</b><br>%2";
-  msg += QString( mainFmt ).arg( tr("Original author")             ).arg( "Ariya Hidayat"       );
-  msg += QString( mainFmt ).arg( tr("Current maintainer")          ).arg( "Helder Correia"      );
-  msg += QString( mainFmt ).arg( tr("Previous maintainers")        ).arg( "Johan Thelin"        );
-  msg += QString( mainFmt ).arg( tr("Based on original idea from") ).arg( "Roberto Alsina"      );
-  msg += QString( mainFmt ).arg( tr("Special thanks to")           ).arg( "Michael Pyne"        );
-  msg += QString( mainFmt ).arg( tr("Artworks")                    ).arg( "Kuswanto (aka Zeus)" );
+  msg += QString( mainFmt ).arg( tr("Original author")             ).arg( "Ariya Hidayat"    );
+  msg += QString( mainFmt ).arg( tr("Current maintainer")          ).arg( "Helder Correia"   );
+  msg += QString( mainFmt ).arg( tr("Previous maintainers")        ).arg( "Johan Thelin"     );
+  msg += QString( mainFmt ).arg( tr("Based on original idea from") ).arg( "Roberto Alsina"   );
+  msg += QString( mainFmt ).arg( tr("Special thanks to")           ).arg( "Marco Wegner<br>"
+                                                                          "Michael Pyne<br>"
+                                                                          "Wolf Lammen<br>"
+                                                                          "Jonathan Avraham" );
+  msg += QString( mainFmt ).arg( tr("Artworks")                    ).arg( "Kuswanto (Zeus)"  );
 
   msg += "<p>";
-  msg += QString( "<br><b>%1</b><br><br>" ).arg( tr("Thanks to") );
-  msg += "Anders Lund<br>"
+  msg += QString( "<b>%1</b><br><br>" ).arg( tr("Thanks to") );
+  msg += "Alejandro Villarreal<br>"
+         "Alexey Kouznetsov<br>"
+         "Anders Lund<br>"
+	 "Bart Martens<br>"
          "Bernhard Schiffner<br>"
          "Damir Perisa<br>"
          "Derek O'Connor<br>"
+         "Francesco di Cugno<br>"
          "Gary Cramblitt<br>"
+         "Henrique Pinto<br>"
          "Jean-Remy Falleri<br>"
+         "Lars Ivar Igesund<br>"
          "Maciek Borowka<br>"
+	 "Matthew J Smith<br>"
          "Melchior Franz<br>"
          "Mohamed Eldesoky<br>"
          "Philippe Fremy<br>"
          "Pieter Pareit<br>"
+         "Roland \"liquidat\" Wolters<br>"
+	 "Sarah Hobbs<br>"
+	 "Stephan Binner<br>"
          "Thomas Luebking<br>"
          "Thomas Nagy<br>"
+	 "Vibet Alexis<br>"
          "Vladimir Pouzanov<br>"
+	 "Witold Wysota<br>"
+	 "Yolla Indria<br>"
          ;
   msg += QString( "<i>%1</i><br>" ).arg( tr("...and many others...") );
   msg += "</p>";
 
   msg += "<p>";
   msg += QString( "<b>%1</b><br><br>"  ).arg( tr("Translations") );
-  const char * i18nFmt = "<b>%1</b><br>%2<br><i>%3</i><br><br>";
-  msg += QString( i18nFmt ).arg( tr("Czech")                ).arg( "Blondak"              ).arg( "blondak@neser.cz"                 );
-  msg += QString( i18nFmt ).arg( tr("French")               ).arg( "Vibet Alexis"         ).arg( "bevi@netcourrier.com"             );
-  msg += QString( i18nFmt ).arg( tr("German")               ).arg( "Damir Perisa"         ).arg( "damir.perisa@solnet.ch"           );
-  msg += QString( i18nFmt ).arg( tr("Indonesian")           ).arg( "Yolla Indria"         ).arg( "yolla.indria@gmail.com"           );
-  msg += QString( i18nFmt ).arg( tr("Italian")              ).arg( "Francesco di Cugno"   ).arg( "fdicugno@gmail.com"               );
-  msg += QString( i18nFmt ).arg( tr("Norwegian")            ).arg( "Lars Ivar Igesund"    ).arg( "larsivar@igesund.net"             );
-  msg += QString( i18nFmt ).arg( tr("Polish")               ).arg( "Witold Wysota"        ).arg( "wysota@wysota.eu.org"             );
-  msg += QString( i18nFmt ).arg( tr("Portuguese")           ).arg( "Helder Correia"       ).arg( "helder.pereira.correia@gmail.com" );
-  msg += QString( i18nFmt ).arg( tr("Brazilian Portuguese") ).arg( "Henrique Pinto"       ).arg( "henrique.pinto@kdemail.net"       );
-  msg += QString( i18nFmt ).arg( tr("Russian")              ).arg( "Alexey Kouznetsov"    ).arg( "kouznetsov@phtf.stu.neva.ru"      );
-  msg += QString( i18nFmt ).arg( tr("Spanish")              ).arg( "Alejandro Villarreal" ).arg( "alexv86@gmail.com"                );
+  const char * i18nFmt = "<b>%1</b><br>%2<br><br>";
+  msg += QString( i18nFmt ).arg( tr("Argentinian Spanish")  ).arg( "Lucas Sallovitz"        );
+  msg += QString( i18nFmt ).arg( tr("Brazilian Portuguese") ).arg( "F&aacute;bio Margarido" );
+  msg += QString( i18nFmt ).arg( tr("Czech")                ).arg( "Blond'&aacute;k"        );
+  msg += QString( i18nFmt ).arg( tr("Dutch")                ).arg( "Maarten Fonville"       );
+  msg += QString( i18nFmt ).arg( tr("French")               ).arg( "Gr&eacute;gory Treiber" );
+  msg += QString( i18nFmt ).arg( tr("Finnish")              ).arg( "J-P Nurmi"              );
+  msg += QString( i18nFmt ).arg( tr("German")               ).arg( "Marco Wegner"           );
+  msg += QString( i18nFmt ).arg( tr("Hebrew")               ).arg( "Jonathan Avraham"       );
+  msg += QString( i18nFmt ).arg( tr("Italian")              ).arg( "Alessio Sclocco"        );
+  msg += QString( i18nFmt ).arg( tr("Norwegian")            ).arg( "Thomas Finneid"         );
+  msg += QString( i18nFmt ).arg( tr("Portuguese")           ).arg( "Helder Correia"         );
+  msg += QString( i18nFmt ).arg( tr("Romanian")             ).arg( "Eugeniu Plamadeala"     );
+  msg += QString( i18nFmt ).arg( tr("Russian")              ).arg( "Irek Khasyanov"         );
+  msg += QString( i18nFmt ).arg( tr("Spanish")              ).arg( "F Chris Carrera"        );
+  msg += QString( i18nFmt ).arg( tr("Swedish")              ).arg( "Johan Thelin"           );
   msg += "</p>";
 
   msg += "<p>";

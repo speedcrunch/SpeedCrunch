@@ -26,6 +26,7 @@
 #include <QApplication>
 #include <QClipboard>
 #include <QResizeEvent>
+#include <QScrollBar>
 #include <QTimer>
 
 class ResultPrivate
@@ -196,7 +197,7 @@ void Result::append( const QString& expr, const HNumber& value )
   new ExprItem( this, d->count, expr );
   new ResultItem( this, d->count, value );
 
-  scrollToItem( item(count()-1) );
+  QTimer::singleShot( 0, this, SLOT(scrollEnd()) );
 }
 
 void Result::appendError( const QString& expr, const QString&  msg )
@@ -206,7 +207,7 @@ void Result::appendError( const QString& expr, const QString&  msg )
   new ExprItem( this, d->count, expr );
   new ErrorItem( this, d->count, msg );
 
-  scrollToItem( item(count()-1) );
+  QTimer::singleShot( 0, this, SLOT(scrollEnd()) );
 }
 
 QString Result::asText() const
@@ -283,6 +284,15 @@ void Result::triggerUpdate()
 {
   for(int c = 0; c < count(); c++)
     dynamic_cast<BaseItem*>(item(c))->updateItem();
+}
+
+void Result::scrollEnd()
+{
+  scrollToItem( item( count()-1 ) );
+
+  // this should work even on right-to-left layout
+  QScrollBar* bar = horizontalScrollBar();
+  bar->setValue( bar->maximum() );
 }
 
 void Result::setCustomAppearance( bool custom )

@@ -1,71 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1" language="it">
+<!DOCTYPE TS><TS version="1.1" language="no">
 <context>
     <name>AboutBox</name>
     <message>
-        <location filename="aboutbox.cpp" line="221"/>
-        <source>Special thanks to</source>
-        <translation>Un ringraziamento particolare a</translation>
-    </message>
-    <message>
-        <location filename="aboutbox.cpp" line="305"/>
-        <source>OK</source>
-        <translation>OK</translation>
-    </message>
-    <message>
-        <location filename="aboutbox.cpp" line="267"/>
-        <source>French</source>
-        <translation>Francese</translation>
-    </message>
-    <message>
-        <location filename="aboutbox.cpp" line="269"/>
-        <source>German</source>
-        <translation>Tedesco</translation>
-    </message>
-    <message>
-        <location filename="aboutbox.cpp" line="273"/>
-        <source>Portuguese</source>
-        <translation>Portoghese</translation>
-    </message>
-    <message>
-        <location filename="aboutbox.cpp" line="275"/>
-        <source>Russian</source>
-        <translation>Russo</translation>
-    </message>
-    <message>
-        <location filename="aboutbox.cpp" line="271"/>
-        <source>Italian</source>
-        <translation>Italiano</translation>
-    </message>
-    <message>
-        <location filename="aboutbox.cpp" line="291"/>
-        <source>This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version</source>
-        <translation>Questo programma è software libero; può essere ridistribuito e/o modificato sotto i termini della GNU General Public License come pubblicata dalla Free Software Foundation; sia la versione 2 della licenza che, a vostra discrezione, qualsiasi versione successiva</translation>
-    </message>
-    <message>
-        <location filename="aboutbox.cpp" line="297"/>
-        <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.</source>
-        <translation>Questo programma è stato distribuito nella speranza che possa essere utile ma SENZA NESSSUNA GARANZIA; senza neanche l&apos;implicita garanzia di COMMERCIABILITÀ o IDONEITÀ PER UN PARTICOLARE SCOPO.  Consultare la GNU General Public License per maggiori dettagli.</translation>
-    </message>
-    <message>
-        <location filename="aboutbox.cpp" line="213"/>
-        <source>SpeedCrunch version %1</source>
-        <translation>SpeedCrunch versione %1</translation>
-    </message>
-    <message>
         <location filename="aboutbox.cpp" line="327"/>
         <source>About SpeedCrunch</source>
-        <translation>Informazioni su SpeedCrunch</translation>
-    </message>
-    <message>
-        <location filename="aboutbox.cpp" line="272"/>
-        <source>Norwegian</source>
-        <translation>Norvegese</translation>
-    </message>
-    <message>
-        <location filename="aboutbox.cpp" line="276"/>
-        <source>Spanish</source>
-        <translation>Spagnolo</translation>
+        <translation>Om SpeedCrunch</translation>
     </message>
     <message>
         <location filename="aboutbox.cpp" line="196"/>
@@ -73,49 +13,94 @@
         <translation>http://www.speedcrunch.org</translation>
     </message>
     <message>
+        <location filename="aboutbox.cpp" line="213"/>
+        <source>SpeedCrunch version %1</source>
+        <translation>SpeedCrunch versjon %1</translation>
+    </message>
+    <message>
         <location filename="aboutbox.cpp" line="217"/>
         <source>Original author</source>
-        <translation>Autore originale</translation>
+        <translation>Opprinnelig forfatter</translation>
     </message>
     <message>
         <location filename="aboutbox.cpp" line="218"/>
         <source>Current maintainer</source>
-        <translation>Sviluppatore attuale</translation>
+        <translation>Nåværende vedlikeholder</translation>
     </message>
     <message>
         <location filename="aboutbox.cpp" line="219"/>
         <source>Previous maintainers</source>
-        <translation>Sviluppatori precedenti</translation>
+        <translation>Tidligere vedlikeholdere</translation>
     </message>
     <message>
         <location filename="aboutbox.cpp" line="220"/>
         <source>Based on original idea from</source>
-        <translation>Basato su un&apos;idea originale di</translation>
+        <translation>Basert på en orginal idé av</translation>
+    </message>
+    <message>
+        <location filename="aboutbox.cpp" line="221"/>
+        <source>Special thanks to</source>
+        <translation>Spesiell takk til</translation>
     </message>
     <message>
         <location filename="aboutbox.cpp" line="225"/>
         <source>Artworks</source>
-        <translation>Illustrazioni</translation>
+        <translation>Grafikk</translation>
     </message>
     <message>
         <location filename="aboutbox.cpp" line="228"/>
         <source>Thanks to</source>
-        <translation>Grazie a</translation>
+        <translation>Takk til</translation>
     </message>
     <message>
         <location filename="aboutbox.cpp" line="257"/>
         <source>...and many others...</source>
-        <translation>...e molti altri...</translation>
+        <translation>...med flere...</translation>
     </message>
     <message>
         <location filename="aboutbox.cpp" line="261"/>
         <source>Translations</source>
-        <translation>Traduzioni</translation>
+        <translation>Oversettelser</translation>
+    </message>
+    <message>
+        <location filename="aboutbox.cpp" line="267"/>
+        <source>French</source>
+        <translation>Fransk</translation>
+    </message>
+    <message>
+        <location filename="aboutbox.cpp" line="269"/>
+        <source>German</source>
+        <translation>Tysk</translation>
+    </message>
+    <message>
+        <location filename="aboutbox.cpp" line="271"/>
+        <source>Italian</source>
+        <translation>Italiensk</translation>
+    </message>
+    <message>
+        <location filename="aboutbox.cpp" line="272"/>
+        <source>Norwegian</source>
+        <translation>Norsk</translation>
+    </message>
+    <message>
+        <location filename="aboutbox.cpp" line="273"/>
+        <source>Portuguese</source>
+        <translation>Portugisisk</translation>
     </message>
     <message>
         <location filename="aboutbox.cpp" line="264"/>
         <source>Brazilian Portuguese</source>
-        <translation>Portoghese brasiliano</translation>
+        <translation>Brasilliansk Portugisisk</translation>
+    </message>
+    <message>
+        <location filename="aboutbox.cpp" line="275"/>
+        <source>Russian</source>
+        <translation>Russisk</translation>
+    </message>
+    <message>
+        <location filename="aboutbox.cpp" line="276"/>
+        <source>Spanish</source>
+        <translation>Spansk</translation>
     </message>
     <message>
         <location filename="aboutbox.cpp" line="284"/>
@@ -123,44 +108,59 @@
         <translation>Copyright (C)</translation>
     </message>
     <message>
+        <location filename="aboutbox.cpp" line="291"/>
+        <source>This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="aboutbox.cpp" line="297"/>
+        <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="aboutbox.cpp" line="300"/>
         <source>Visit &lt;b&gt;http://www.speedcrunch.org&lt;/b&gt; for more information!</source>
-        <translation>Visita &lt;b&gt;http://www.speedcrunch.org&lt;/b&gt; per più informazioni!</translation>
+        <translation>Se &lt;b&gt;http://www.speedcrunch.org&lt;/b&gt; for mer informasjon!</translation>
+    </message>
+    <message>
+        <location filename="aboutbox.cpp" line="305"/>
+        <source>OK</source>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="aboutbox.cpp" line="263"/>
         <source>Argentinian Spanish</source>
-        <translation>Spagnolo Argentino</translation>
+        <translation>Argentisnsk Spansk</translation>
     </message>
     <message>
         <location filename="aboutbox.cpp" line="266"/>
         <source>Dutch</source>
-        <translation>Nederlandese</translation>
+        <translation>Nederlandsk</translation>
     </message>
     <message>
         <location filename="aboutbox.cpp" line="270"/>
         <source>Hebrew</source>
-        <translation>Ebraico</translation>
+        <translation>Hebraisk</translation>
     </message>
     <message>
         <location filename="aboutbox.cpp" line="277"/>
         <source>Swedish</source>
-        <translation>Svedese</translation>
+        <translation>Svensk</translation>
     </message>
     <message>
         <location filename="aboutbox.cpp" line="268"/>
         <source>Finnish</source>
-        <translation>Finlandese</translation>
+        <translation>Finsk</translation>
     </message>
     <message>
         <location filename="aboutbox.cpp" line="265"/>
         <source>Czech</source>
-        <translation>Ceco</translation>
+        <translation>Tsjekkisk</translation>
     </message>
     <message>
         <location filename="aboutbox.cpp" line="274"/>
         <source>Romanian</source>
-        <translation>Rumeno</translation>
+        <translation>Rumensk</translation>
     </message>
 </context>
 <context>
@@ -168,7 +168,22 @@
     <message>
         <location filename="configdlg.cpp" line="403"/>
         <source>Configure SpeedCrunch</source>
-        <translation>Configura SpeedCrunch</translation>
+        <translation>Sett opp SpeedCrunch</translation>
+    </message>
+    <message>
+        <location filename="configdlg.cpp" line="407"/>
+        <source>&amp;General</source>
+        <translation>&amp;Generellt</translation>
+    </message>
+    <message>
+        <location filename="configdlg.cpp" line="409"/>
+        <source>&amp;Appearance</source>
+        <translation>&amp;Utseende</translation>
+    </message>
+    <message>
+        <location filename="configdlg.cpp" line="411"/>
+        <source>&amp;Syntax Highlight</source>
+        <translation>&amp;Syntaksmerking</translation>
     </message>
     <message>
         <location filename="configdlg.cpp" line="418"/>
@@ -178,115 +193,55 @@
     <message>
         <location filename="configdlg.cpp" line="419"/>
         <source>Cancel</source>
-        <translation>Annulla</translation>
-    </message>
-    <message>
-        <location filename="configdlg.cpp" line="407"/>
-        <source>&amp;General</source>
-        <translation>&amp;Generale</translation>
-    </message>
-    <message>
-        <location filename="configdlg.cpp" line="409"/>
-        <source>&amp;Appearance</source>
-        <translation>&amp;Aspetto</translation>
-    </message>
-    <message>
-        <location filename="configdlg.cpp" line="411"/>
-        <source>&amp;Syntax Highlight</source>
-        <translation>&amp;Evidenziatore Sintattico</translation>
+        <translation>Avbryt</translation>
     </message>
 </context>
 <context>
     <name>ConfigDlgPrivate</name>
     <message>
-        <location filename="configdlg.cpp" line="227"/>
-        <source>Font:</source>
-        <translation>Carattere:</translation>
-    </message>
-    <message>
-        <location filename="configdlg.cpp" line="250"/>
-        <source>Text Color:</source>
-        <translation>Testo:</translation>
-    </message>
-    <message>
-        <location filename="configdlg.cpp" line="251"/>
-        <source>Background Color 1:</source>
-        <translation>Sfondo 1:</translation>
-    </message>
-    <message>
-        <location filename="configdlg.cpp" line="252"/>
-        <source>Background Color 2:</source>
-        <translation>Sfondo 2:</translation>
-    </message>
-    <message>
-        <location filename="configdlg.cpp" line="296"/>
-        <source>Highlight Colors</source>
-        <translation>Colori Evidenziatore</translation>
-    </message>
-    <message>
-        <location filename="configdlg.cpp" line="306"/>
-        <source>Number:</source>
-        <translation>Numero:</translation>
-    </message>
-    <message>
-        <location filename="configdlg.cpp" line="307"/>
-        <source>Function:</source>
-        <translation>Funzione:</translation>
-    </message>
-    <message>
-        <location filename="configdlg.cpp" line="308"/>
-        <source>Variable:</source>
-        <translation>Variabile:</translation>
-    </message>
-    <message>
-        <location filename="configdlg.cpp" line="309"/>
-        <source>Matched Parenthesis:</source>
-        <translation>Parentesi Abbinata:</translation>
-    </message>
-    <message>
         <location filename="configdlg.cpp" line="158"/>
         <source>Save &amp;history on exit</source>
-        <translation>Salva la &amp;cronologia in uscita</translation>
+        <translation>Lagre &amp;historie ved avslutning</translation>
     </message>
     <message>
         <location filename="configdlg.cpp" line="159"/>
         <source>Save &amp;variables on exit</source>
-        <translation>Salva le &amp;variabili in uscita</translation>
+        <translation>Lagre &amp;variabler ved avslutning</translation>
     </message>
     <message>
         <location filename="configdlg.cpp" line="160"/>
         <source>Automatic &amp;completion</source>
-        <translation>&amp;Completamento Automatico</translation>
+        <translation>Automatisk &amp;funksjonnavn</translation>
     </message>
     <message>
         <location filename="configdlg.cpp" line="161"/>
         <source>Automatically calculate as you &amp;type</source>
-        <translation>Calcola automaticamente durante la &amp;scrittura</translation>
+        <translation>Automatisk kalkulering ved &amp;skriving</translation>
     </message>
     <message>
         <location filename="configdlg.cpp" line="162"/>
         <source>Minimi&amp;ze to system tray</source>
-        <translation>Minimi&amp;zza nella barra di sistema</translation>
+        <translation>&amp;Minimer til systemkurv</translation>
     </message>
     <message>
         <location filename="configdlg.cpp" line="170"/>
         <source>Decimal point:</source>
-        <translation>Punto Decimale:</translation>
+        <translation>Desimal skilletegn:</translation>
     </message>
     <message>
         <location filename="configdlg.cpp" line="175"/>
         <source>Auto detect</source>
-        <translation>Rilevamento automatico</translation>
+        <translation>Autodetekter</translation>
     </message>
     <message>
         <location filename="configdlg.cpp" line="176"/>
         <source>Use dot (.)</source>
-        <translation>Usa il punto (.)</translation>
+        <translation>Bruk punktum (.)</translation>
     </message>
     <message>
         <location filename="configdlg.cpp" line="177"/>
         <source>Use comma (,)</source>
-        <translation>Usa la virgola (,)</translation>
+        <translation>Bruk komma (,)</translation>
     </message>
     <message>
         <location filename="configdlg.cpp" line="212"/>
@@ -296,22 +251,67 @@
     <message>
         <location filename="configdlg.cpp" line="213"/>
         <source>&amp;Custom</source>
-        <translation>&amp;Personalizzato</translation>
+        <translation>&amp;Tilpass</translation>
+    </message>
+    <message>
+        <location filename="configdlg.cpp" line="227"/>
+        <source>Font:</source>
+        <translation>Snitt:</translation>
     </message>
     <message>
         <location filename="configdlg.cpp" line="234"/>
         <source>C&amp;hoose...</source>
-        <translation>S&amp;cegli...</translation>
+        <translation>&amp;Velg...</translation>
+    </message>
+    <message>
+        <location filename="configdlg.cpp" line="250"/>
+        <source>Text Color:</source>
+        <translation>Tekstfarge:</translation>
+    </message>
+    <message>
+        <location filename="configdlg.cpp" line="251"/>
+        <source>Background Color 1:</source>
+        <translation>Bakgrunnsfarge 1:</translation>
+    </message>
+    <message>
+        <location filename="configdlg.cpp" line="252"/>
+        <source>Background Color 2:</source>
+        <translation>Bakgrunnsfarge 2:</translation>
     </message>
     <message>
         <location filename="configdlg.cpp" line="253"/>
         <source>Error Color:</source>
-        <translation>Colore d&apos;errore:</translation>
+        <translation>Feilfarge:</translation>
     </message>
     <message>
         <location filename="configdlg.cpp" line="293"/>
         <source>&amp;Enable syntax highlight</source>
-        <translation>&amp;Abilita l&apos;evidenziatore sintattico</translation>
+        <translation>&amp;Slå på syntaksmerking</translation>
+    </message>
+    <message>
+        <location filename="configdlg.cpp" line="296"/>
+        <source>Highlight Colors</source>
+        <translation>Fremhevingsfarge</translation>
+    </message>
+    <message>
+        <location filename="configdlg.cpp" line="306"/>
+        <source>Number:</source>
+        <translation>Nummer:</translation>
+    </message>
+    <message>
+        <location filename="configdlg.cpp" line="307"/>
+        <source>Function:</source>
+        <translation>Funksjon:</translation>
+    </message>
+    <message>
+        <location filename="configdlg.cpp" line="308"/>
+        <source>Variable:</source>
+        <translation>Variabel:</translation>
+    </message>
+    <message>
+        <location filename="configdlg.cpp" line="309"/>
+        <source>Matched Parenthesis:</source>
+        <translation>Matchene Paranteser:</translation>
     </message>
 </context>
 <context>
@@ -319,7 +319,7 @@
     <message>
         <location filename="editor.cpp" line="1024"/>
         <source>All</source>
-        <translation>Tutto</translation>
+        <translation>Alle</translation>
     </message>
 </context>
 <context>
@@ -327,207 +327,207 @@
     <message>
         <location filename="constants.cpp" line="45"/>
         <source>General Physics</source>
-        <translation>Fisica Generale</translation>
+        <translation>Generell Fysikk</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="56"/>
         <source>Electromagnetic</source>
-        <translation>Elettromagnetico</translation>
+        <translation>Elektromagnetisme</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="66"/>
         <source>Atomic &amp; Nuclear</source>
-        <translation>Atomico &amp; Nucleare</translation>
+        <translation>Atomisk &amp; Kjærne</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="78"/>
         <source>Physico-chemical</source>
-        <translation>Fisico-qhimica</translation>
+        <translation>Fysikk-kjemi</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="91"/>
         <source>Astronomy</source>
-        <translation>Astronomia</translation>
+        <translation>Astronomi</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="39"/>
         <source>Characteristic Impedance of Vacuum</source>
-        <translation>Impedenza Caratteristica del Vuoto</translation>
+        <translation>Karakteristisk impedans i vakuum</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="40"/>
         <source>Electric Constant</source>
-        <translation>Costante Elettrica</translation>
+        <translation>Elektrisk konstant</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="41"/>
         <source>Magnetic Constant</source>
-        <translation>Costante Magnetica</translation>
+        <translation>Magnetisk konstant</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="42"/>
         <source>Gravitation Constant</source>
-        <translation>Costante Gravitazionale</translation>
+        <translation>Tyngdekrafts konstant</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="43"/>
         <source>Planck&apos;s Constant</source>
-        <translation>Costante di Planck</translation>
+        <translation>Plancks konstant</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="44"/>
         <source>Dirac&apos;s Constant</source>
-        <translation>Costante di Dirac</translation>
+        <translation>Diracs konstant</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="45"/>
         <source>Speed of Light in Vacuum</source>
-        <translation>Velocità della Luce nel Vuoto</translation>
+        <translation>Lysets hastighet i vakuum</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="48"/>
         <source>Bohr-Procopiu Magneton</source>
-        <translation>Magnetone di Bohr-Procopiu</translation>
+        <translation>Bohr-Procopiu magneton</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="49"/>
         <source>Conductance Quantum</source>
-        <translation>Quanto di Conduttanza</translation>
+        <translation>Elektrisk ledningskvant</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="50"/>
         <source>Coulomb&apos;s Constant</source>
-        <translation>Costante di Coulomb</translation>
+        <translation>Coulombs konstant</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="51"/>
         <source>Elementary Charge</source>
-        <translation>Carica Elementare</translation>
+        <translation>Elementærladning</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="52"/>
         <source>Josephson Constant</source>
-        <translation>Costante di Josephson</translation>
+        <translation>Josephson konstant</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="53"/>
         <source>Magnetic Flux Quantum</source>
-        <translation>Quantizzazione del Flusso</translation>
+        <translation>Magnetisk flukskvant</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="54"/>
         <source>Nuclear Magneton</source>
-        <translation>Magnetone Nucleare</translation>
+        <translation>Nukleært magneton</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="55"/>
         <source>Resistance Quantum</source>
-        <translation>Quanto di Resistenza</translation>
+        <translation>Resistanskvant</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="56"/>
         <source>von Klitzing Constant</source>
-        <translation>Costante di von Klitzing</translation>
+        <translation>von Klitzings konstant</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="59"/>
         <source>Bohr Radius</source>
-        <translation>Raggio di Bohr</translation>
+        <translation>Bohrradius</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="60"/>
         <source>Fermi Coupling Constant</source>
-        <translation>Costante di Coppia di Fermi</translation>
+        <translation>Fermis koplingskonstant</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="61"/>
         <source>Fine-structure Constant</source>
-        <translation>Costante di Struttura Fine</translation>
+        <translation>Finstrukturkonstanten</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="62"/>
         <source>Hartree Energy</source>
-        <translation>Energia di Hartree</translation>
+        <translation>Hartrees energi</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="63"/>
         <source>Quantum of Circulation</source>
-        <translation>Quanto di Circolazione</translation>
+        <translation>Sirkulasjonskvant</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="64"/>
         <source>Rydberg Constant</source>
-        <translation>Costante di Rydberg</translation>
+        <translation>Rydbergs konstant</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="65"/>
         <source>Thomson Cross Section</source>
-        <translation>Sezione Trasversale di Thomson</translation>
+        <translation>Thomsons spredningstverrsnitt</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="66"/>
         <source>Weak Mixing Angle</source>
-        <translation>Angolo Debole di Miscelazione</translation>
+        <translation>Svak blandingsvinkel</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="69"/>
         <source>Atomic Mass Unit</source>
-        <translation>Unità di Massa Atomica</translation>
+        <translation>Atommasseenhet</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="70"/>
         <source>Avogadro&apos;s Number</source>
-        <translation>Numero di Avogadro</translation>
+        <translation>Avogadros tall</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="71"/>
         <source>Boltzmann Constant</source>
-        <translation>Costante di Boltzmann</translation>
+        <translation>Boltzmann konstant</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="72"/>
         <source>Faraday Constant</source>
-        <translation>Costante di Faraday</translation>
+        <translation>Faradays konstant</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="73"/>
         <source>First Radiation Constant</source>
-        <translation>Prima Costante di Radiazione</translation>
+        <translation>Først strålingskonstant</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="74"/>
         <source>Loschmidt Constant</source>
-        <translation>Costante di Loschmidt</translation>
+        <translation>Loschmidts konstant</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="75"/>
         <source>Gas Constant</source>
-        <translation>Costante del Gas</translation>
+        <translation>Gasskonstant</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="76"/>
         <source>Molar Planck Constant</source>
-        <translation>Costante Molar di Planck</translation>
+        <translation>Molar Plancks konstant</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="77"/>
         <source>Second Radiation Constant</source>
-        <translation>Seconda Costante di Radiazione</translation>
+        <translation>Andre strålingskonstant</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="78"/>
         <source>Stefan-Boltzmann Constant</source>
-        <translation>Costante di Stefan-Boltzmann</translation>
+        <translation>Stefan-Boltzmann konstant</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="81"/>
         <source>Astronomical Unit</source>
-        <translation>Unità Astronomica</translation>
+        <translation>Astronomisk målenhet</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="82"/>
         <source>Light Year</source>
-        <translation>Anno Luce</translation>
+        <translation>Lysår</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="83"/>
@@ -537,47 +537,47 @@
     <message>
         <location filename="constants.cpp" line="84"/>
         <source>Sidereal Year</source>
-        <translation>Anno Siderale</translation>
+        <translation>Siderisk år</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="86"/>
         <source>days</source>
-        <translation>giorni</translation>
+        <translation>dager</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="85"/>
         <source>Tropical Year</source>
-        <translation>Anno Tropicale</translation>
+        <translation>Tropisk år</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="86"/>
         <source>Gregorian Year</source>
-        <translation>Anno Gregoriano</translation>
+        <translation>Gregoriansk år</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="87"/>
         <source>Earth Mass</source>
-        <translation>Massa della Terra</translation>
+        <translation>Jordens masse</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="88"/>
         <source>Sun Mass</source>
-        <translation>Massa del Sole</translation>
+        <translation>Sols masse</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="89"/>
         <source>Mean Earth Radius</source>
-        <translation>Raggio Medio Terrestre</translation>
+        <translation>Gjennomsnittsolradius</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="90"/>
         <source>Sun Radius</source>
-        <translation>Raggio Solare</translation>
+        <translation>Sols radius</translation>
     </message>
     <message>
         <location filename="constants.cpp" line="91"/>
         <source>Sun Luminosity</source>
-        <translation>Luminosità Solare</translation>
+        <translation>Sollysstyrke</translation>
     </message>
 </context>
 <context>
@@ -585,45 +585,70 @@
     <message>
         <location filename="constantsdock.cpp" line="46"/>
         <source>Constants</source>
-        <translation>Costanti</translation>
+        <translation>Konstanter</translation>
     </message>
     <message>
         <location filename="constantsdock.cpp" line="51"/>
         <source>Category</source>
-        <translation>Categoria</translation>
+        <translation>Kategori</translation>
     </message>
     <message>
         <location filename="constantsdock.cpp" line="66"/>
         <source>Search</source>
-        <translation>Cerca</translation>
+        <translation>Søk</translation>
     </message>
     <message>
         <location filename="constantsdock.cpp" line="108"/>
         <source>No match found</source>
-        <translation>Nessuna corrispondenza trovata</translation>
+        <translation>Ingen treff funnet</translation>
     </message>
     <message>
         <location filename="constantsdock.cpp" line="169"/>
         <source>All</source>
-        <translation>Tutto</translation>
+        <translation>Alle</translation>
     </message>
 </context>
 <context>
     <name>Crunch</name>
     <message>
+        <location filename="crunch.cpp" line="194"/>
+        <source>Hex</source>
+        <translation>Hex</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="195"/>
+        <source>Dec</source>
+        <translation>Des</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="196"/>
+        <source>Oct</source>
+        <translation>Okt</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="197"/>
+        <source>Bin</source>
+        <translation>Bin</translation>
+    </message>
+    <message>
         <location filename="crunch.cpp" line="216"/>
         <source>&amp;Degrees</source>
-        <translation>&amp;Gradi</translation>
+        <translation>&amp;Grader</translation>
     </message>
     <message>
         <location filename="crunch.cpp" line="217"/>
         <source>&amp;Radians</source>
-        <translation>&amp;Radianti</translation>
+        <translation>&amp;Radianer</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="243"/>
+        <source>Clear input line</source>
+        <translation>Tøm innmatings linje</translation>
     </message>
     <message>
         <location filename="crunch.cpp" line="251"/>
         <source>Evaluate</source>
-        <translation>Valuta</translation>
+        <translation>Evaluer</translation>
     </message>
     <message>
         <location filename="crunch.cpp" line="718"/>
@@ -633,322 +658,297 @@
     <message>
         <location filename="crunch.cpp" line="358"/>
         <source>&amp;Save...</source>
-        <translation>&amp;Salva...</translation>
+        <translation>&amp;Lagre...</translation>
     </message>
     <message>
         <location filename="crunch.cpp" line="360"/>
         <source>&amp;Quit</source>
-        <translation>&amp;Esci</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="366"/>
-        <source>&amp;Copy</source>
-        <translation>&amp;Copia</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="368"/>
-        <source>&amp;Paste</source>
-        <translation>&amp;Incolla</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="370"/>
-        <source>Copy &amp;Result</source>
-        <translation>Copia il &amp;Risultato</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="372"/>
-        <source>Insert &amp;Function...</source>
-        <translation>Inserisci &amp;Funzione...</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="374"/>
-        <source>Insert &amp;Variable...</source>
-        <translation>Inserisci &amp;Variabile...</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="379"/>
-        <source>Clear &amp;Input</source>
-        <translation>Pulisci &amp;Input</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="381"/>
-        <source>Clear &amp;Display</source>
-        <translation>Pulisci il &amp;Display</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="382"/>
-        <source>Clear &amp;History</source>
-        <translation>Cancella la &amp;Cronologia</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="383"/>
-        <source>Clear V&amp;ariables</source>
-        <translation>Cancella le &amp;Variabili</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="385"/>
-        <source>&amp;General</source>
-        <translation>&amp;Generale</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="386"/>
-        <source>&amp;Fixed Decimal</source>
-        <translation>&amp;Decimale a Virgola Fissa</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="410"/>
-        <source>&amp;Automatic Precision</source>
-        <translation>Precisione &amp;Automatica</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="411"/>
-        <source>&amp;2 Decimal Digits</source>
-        <translation>&amp;2 Cifre Decimali</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="412"/>
-        <source>&amp;3 Decimal Digits</source>
-        <translation>&amp;3 Cifre Decimali</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="413"/>
-        <source>&amp;8 Decimal Digits</source>
-        <translation>&amp;8 Cifre Decimali</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="414"/>
-        <source>&amp;15 Decimal Digits</source>
-        <translation>&amp;15 Cifre Decimali</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="415"/>
-        <source>&amp;50 Decimal Digits</source>
-        <translation>&amp;50 Cifre Decimali</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="432"/>
-        <source>&amp;Show Clear Button</source>
-        <translation>&amp;Mostra il Pulsante Pulisci</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="433"/>
-        <source>Show &amp;Evaluate Button</source>
-        <translation>Mostra il Pulsante &amp;Valuta</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="448"/>
-        <source>&amp;Configure...</source>
-        <translation>&amp;Configura...</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="452"/>
-        <source>&amp;About</source>
-        <translation>&amp;Informazioni su</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="453"/>
-        <source>About &amp;Qt</source>
-        <translation>Informazioni su &amp;Qt</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="504"/>
-        <source>&amp;Session</source>
-        <translation>&amp;Sessione</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="509"/>
-        <source>&amp;Edit</source>
-        <translation>&amp;Modifica</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="527"/>
-        <source>&amp;View</source>
-        <translation>&amp;Visualizza</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="545"/>
-        <source>Se&amp;ttings</source>
-        <translation>Im&amp;postazioni</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="558"/>
-        <source>&amp;Help</source>
-        <translation>&amp;Aiuto</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="761"/>
-        <source>Save Session</source>
-        <translation>Salva la Sessione</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="768"/>
-        <source>Error</source>
-        <translation>Errore</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="768"/>
-        <source>Can&apos;t write to file %1</source>
-        <translation>Impossibile scrivere sul file %1</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="1415"/>
-        <source>About Qt</source>
-        <translation>Informazioni su Qt</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="243"/>
-        <source>Clear input line</source>
-        <translation>Pulisci la riga di input</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="376"/>
-        <source>D&amp;elete Variable...</source>
-        <translation>E&amp;limina la Variabile...</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="434"/>
-        <source>Show &amp;Key Pad</source>
-        <translation>Mostra il &amp;Tastierino</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="194"/>
-        <source>Hex</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="195"/>
-        <source>Dec</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="196"/>
-        <source>Oct</source>
-        <translation>Ott</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="197"/>
-        <source>Bin</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="389"/>
-        <source>&amp;Hexadecimal</source>
-        <translation>&amp;Esadecimale</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="390"/>
-        <source>&amp;Octal</source>
-        <translation>&amp;Ottale</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="391"/>
-        <source>&amp;Binary</source>
-        <translation>&amp;Binario</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="435"/>
-        <source>Show Expression &amp;History</source>
-        <translation>Mostra la &amp;Storia delle Espressioni</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="436"/>
-        <source>Show &amp;Functions List</source>
-        <translation>Mostra la Lista delle &amp;Funzioni</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="437"/>
-        <source>Show &amp;Variables List</source>
-        <translation>Mostra la Lista delle &amp;Variabili</translation>
-    </message>
-    <message>
-        <location filename="crunch.cpp" line="451"/>
-        <source>SpeedCrunch &amp;Web Site...</source>
-        <translation>Sito &amp;Web di SpeedCrunch...</translation>
+        <translation>&amp;Avslutt</translation>
     </message>
     <message>
         <location filename="crunch.cpp" line="363"/>
         <source>&amp;Select Input</source>
-        <translation>&amp;Seleziona Input</translation>
+        <translation>&amp;Velg Inntasting</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="366"/>
+        <source>&amp;Copy</source>
+        <translation>&amp;Kopier</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="368"/>
+        <source>&amp;Paste</source>
+        <translation>&amp;Lim inn</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="370"/>
+        <source>Copy &amp;Result</source>
+        <translation>Lim inn &amp;resultat</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="372"/>
+        <source>Insert &amp;Function...</source>
+        <translation>Sett inn &amp;funksjon...</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="374"/>
+        <source>Insert &amp;Variable...</source>
+        <translation>Sett inn &amp;variabel...</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="376"/>
+        <source>D&amp;elete Variable...</source>
+        <translation>&amp;Slett variabel...</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="379"/>
+        <source>Clear &amp;Input</source>
+        <translation>Slett &amp;inntasting</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="381"/>
+        <source>Clear &amp;Display</source>
+        <translation>&amp;Tøm skjerm</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="382"/>
+        <source>Clear &amp;History</source>
+        <translation>Slett &amp;Historie</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="383"/>
+        <source>Clear V&amp;ariables</source>
+        <translation>Slett V&amp;ariabler</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="385"/>
+        <source>&amp;General</source>
+        <translation>&amp;Generellt</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="386"/>
+        <source>&amp;Fixed Decimal</source>
+        <translation>&amp;Fast antall desimaler</translation>
     </message>
     <message>
         <location filename="crunch.cpp" line="387"/>
         <source>&amp;Engineering</source>
-        <translation>&amp;Ingegneristica</translation>
+        <translation>&amp;Ingeniør</translation>
     </message>
     <message>
         <location filename="crunch.cpp" line="388"/>
         <source>&amp;Scientific</source>
-        <translation>&amp;Scientifica</translation>
+        <translation>&amp;Vitenskapelig</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="389"/>
+        <source>&amp;Hexadecimal</source>
+        <translation>&amp;Hexadesimal</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="390"/>
+        <source>&amp;Octal</source>
+        <translation>&amp;Oktal</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="391"/>
+        <source>&amp;Binary</source>
+        <translation>&amp;Binær</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="410"/>
+        <source>&amp;Automatic Precision</source>
+        <translation>&amp;Automatisk desimal presisjon</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="411"/>
+        <source>&amp;2 Decimal Digits</source>
+        <translation>&amp;2 desimaler</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="412"/>
+        <source>&amp;3 Decimal Digits</source>
+        <translation>&amp;3 desimaler</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="413"/>
+        <source>&amp;8 Decimal Digits</source>
+        <translation>&amp;8 desimaler</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="414"/>
+        <source>&amp;15 Decimal Digits</source>
+        <translation>&amp;15 desimaler</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="415"/>
+        <source>&amp;50 Decimal Digits</source>
+        <translation>&amp;50 desimaler</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="432"/>
+        <source>&amp;Show Clear Button</source>
+        <translation>&amp;Vis tøm knapp</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="433"/>
+        <source>Show &amp;Evaluate Button</source>
+        <translation>Vis &amp;evaluer Knapp</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="434"/>
+        <source>Show &amp;Key Pad</source>
+        <translation>Vis &amp;numerisk tastatur</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="435"/>
+        <source>Show Expression &amp;History</source>
+        <translation>Vis uttryks&amp;historie</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="436"/>
+        <source>Show &amp;Functions List</source>
+        <translation>Vis &amp;funksjonsliste</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="437"/>
+        <source>Show &amp;Variables List</source>
+        <translation>Vis &amp;variableliste</translation>
     </message>
     <message>
         <location filename="crunch.cpp" line="438"/>
         <source>Show C&amp;onstants List</source>
-        <translation>Mostra la Lista delle C&amp;ostanti</translation>
+        <translation>Vis k&amp;onstantliste</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="448"/>
+        <source>&amp;Configure...</source>
+        <translation>&amp;Konfigurer...</translation>
     </message>
     <message>
         <location filename="crunch.cpp" line="450"/>
         <source>&amp;Tip of the Day</source>
-        <translation>&amp;Suggerimento del Giorno</translation>
+        <translation>&amp;Dagens tips</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="451"/>
+        <source>SpeedCrunch &amp;Web Site...</source>
+        <translation>SpeedCrunch &amp;Web Side...</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="452"/>
+        <source>&amp;About</source>
+        <translation>&amp;Om</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="453"/>
+        <source>About &amp;Qt</source>
+        <translation>Om &amp;Qt</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="504"/>
+        <source>&amp;Session</source>
+        <translation>&amp;Sessjon</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="509"/>
+        <source>&amp;Edit</source>
+        <translation>&amp;Editer</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="527"/>
+        <source>&amp;View</source>
+        <translation>&amp;Se</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="545"/>
+        <source>Se&amp;ttings</source>
+        <translation>Ko&amp;nfigurasjon</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="558"/>
+        <source>&amp;Help</source>
+        <translation>&amp;Hjelp</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="761"/>
+        <source>Save Session</source>
+        <translation>Lagre Sesjon</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="768"/>
+        <source>Error</source>
+        <translation>Feil</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="768"/>
+        <source>Can&apos;t write to file %1</source>
+        <translation>Kan ikke lagre filen %1</translation>
     </message>
     <message>
         <location filename="crunch.cpp" line="1385"/>
         <source>To insert a function using keyboard, use Ctrl+F shorcut. From the dialog, you can choose the function you want to insert.</source>
-        <translation>Per inserire una funzione usando la tastiera usa la scorciatoia Ctrl+F. È possibile scegliere dal pannello la funzione da inserire.</translation>
+        <translation>For å sette inn en funksjon vha. tastaturet, bruk Ctrl+F tastekombinasjonen. Fra dialogen kan du velge hvilken funksjon du vil sette inn.</translation>
     </message>
     <message>
         <location filename="crunch.cpp" line="1389"/>
         <source>To insert a variable using keyboard, use Ctrl+I shorcut. From the dialog, you can choose the variable you want to insert.</source>
-        <translation>Per inserire una variabile usando la tastiera usa la scorciatoia Ctrl+I. È possibile scegliere dal pannello la variabile da inserire.</translation>
+        <translation>For å sette inn en variabel vha. tastaturet, bruk Ctrl+I tastekombinasjonen. Fra dialogen kan du velge hvilken variabel du vil sette inn.</translation>
     </message>
     <message>
         <location filename="crunch.cpp" line="1392"/>
         <source>Use variable &lt;i&gt;pi&lt;/i&gt; to use pi constant.</source>
-        <translation>Usa la variabile &lt;i&gt;pi&lt;/i&gt; per la costante pi.</translation>
+        <translation>Bruk variabelen PI for å bruke pi konstanten.</translation>
+    </message>
+    <message>
+        <location filename="crunch.cpp" line="1415"/>
+        <source>About Qt</source>
+        <translation>Om Qt</translation>
     </message>
     <message>
         <location filename="crunch.cpp" line="760"/>
         <source>Text Files (*.txt);;All Files (*.*)</source>
-        <translation>Documenti di Testo Semplice (*.txt);;Tutti i File (*.*)</translation>
+        <translation>Tekstfiler (*.txt);;Alle Filer (*.*)</translation>
     </message>
     <message>
         <location filename="crunch.cpp" line="927"/>
         <source>SpeedCrunch is minimized.
 Click on the icon to reactivate it.</source>
-        <translation>SpeedCrunch è minimizzato.
-Fare clic sull&apos;icona per riattivarlo.</translation>
+        <translation>SpeedCrunch er minimert.
+Klikk på ikonet for å reaktivere det.</translation>
     </message>
     <message>
         <location filename="crunch.cpp" line="1381"/>
         <source>You can customize the syntax highlight colors. Use menu &lt;i&gt;Settings, Configure&lt;/i&gt;, and then from the configuration dialog, choose tab &lt;i&gt;Syntax Highlight&lt;/i&gt;.</source>
-        <translation>Puoi personalizzare i colori dell&apos;evidenziatore sintattico. Usa menu &lt;i&gt;Impostazioni, Configura&lt;/i&gt;, successivamente dal pannello di configurazione scegliere la tabella &lt;i&gt;Evidenziatore Sintattico&lt;/i&gt;.</translation>
+        <translation>Man kan tilpasse syntaksmerkings fargene. Bruk meny &lt;i&gt;Konfigurasjon, Konfigurer&lt;/i&gt; og velg &lt;i&gt;Syntaksmerking&lt;/i&gt;.</translation>
     </message>
 </context>
 <context>
     <name>DeleteVariableDlg</name>
     <message>
+        <location filename="deletevardlg.cpp" line="56"/>
+        <source>Delete Variable</source>
+        <translation>Slett variabel</translation>
+    </message>
+    <message>
         <location filename="deletevardlg.cpp" line="72"/>
         <source>Name</source>
-        <translation>Nome</translation>
+        <translation>Navn</translation>
     </message>
     <message>
         <location filename="deletevardlg.cpp" line="73"/>
         <source>Value</source>
-        <translation>Valore</translation>
+        <translation>Verdi</translation>
     </message>
     <message>
         <location filename="deletevardlg.cpp" line="77"/>
         <source>&amp;Delete</source>
-        <translation>&amp;Elimina</translation>
+        <translation>&amp;Slett</translation>
     </message>
     <message>
         <location filename="deletevardlg.cpp" line="81"/>
         <source>Close</source>
-        <translation>Chiudi</translation>
-    </message>
-    <message>
-        <location filename="deletevardlg.cpp" line="56"/>
-        <source>Delete Variable</source>
-        <translation>Elimina Variabile</translation>
+        <translation>Lukk</translation>
     </message>
 </context>
 <context>
@@ -956,275 +956,275 @@ Fare clic sull&apos;icona per riattivarlo.</translation>
     <message>
         <location filename="editor.cpp" line="572"/>
         <source>Result:</source>
-        <translation>Risultato:</translation>
+        <translation>Resultat:</translation>
     </message>
 </context>
 <context>
     <name>FunctionRepository</name>
     <message>
-        <location filename="functions.cpp" line="1038"/>
-        <source>Square Root</source>
-        <translation>Radice Quadrata</translation>
-    </message>
-    <message>
-        <location filename="functions.cpp" line="1028"/>
-        <source>Natural Logarithm</source>
-        <translation>Logaritmo Naturale</translation>
-    </message>
-    <message>
-        <location filename="functions.cpp" line="1000"/>
-        <source>Base-10 Logarithm</source>
-        <translation>Logaritmo in Base 10</translation>
-    </message>
-    <message>
-        <location filename="functions.cpp" line="1107"/>
-        <source>Sine</source>
-        <translation>Seno</translation>
-    </message>
-    <message>
-        <location filename="functions.cpp" line="1091"/>
-        <source>Cosine</source>
-        <translation>Coseno</translation>
-    </message>
-    <message>
-        <location filename="functions.cpp" line="1109"/>
-        <source>Tangent</source>
-        <translation>Tangente</translation>
-    </message>
-    <message>
-        <location filename="functions.cpp" line="1085"/>
-        <source>Arc Sine</source>
-        <translation>Arcoseno</translation>
-    </message>
-    <message>
-        <location filename="functions.cpp" line="1083"/>
-        <source>Arc Cosine</source>
-        <translation>Arcocoseno</translation>
-    </message>
-    <message>
-        <location filename="functions.cpp" line="1087"/>
-        <source>Arc Tangent</source>
-        <translation>Arcotangente</translation>
-    </message>
-    <message>
-        <location filename="functions.cpp" line="1101"/>
-        <source>Hyperbolic Sine</source>
-        <translation>Seno Iperbolico</translation>
-    </message>
-    <message>
-        <location filename="functions.cpp" line="1095"/>
-        <source>Hyperbolic Cosine</source>
-        <translation>Coseno Iperbolico</translation>
-    </message>
-    <message>
-        <location filename="functions.cpp" line="1103"/>
-        <source>Hyperbolic Tangent</source>
-        <translation>Tangente Iperbolica</translation>
-    </message>
-    <message>
-        <location filename="functions.cpp" line="1002"/>
-        <source>Base-2 Logarithm</source>
-        <translation>Logaritmo in Base 2</translation>
-    </message>
-    <message>
-        <location filename="functions.cpp" line="1036"/>
-        <source>Signum</source>
-        <translation>Segno</translation>
-    </message>
-    <message>
-        <location filename="functions.cpp" line="1099"/>
-        <source>Radians</source>
-        <translation>Radianti</translation>
-    </message>
-    <message>
-        <location filename="functions.cpp" line="1026"/>
-        <source>Minimum</source>
-        <translation>Minimo</translation>
-    </message>
-    <message>
-        <location filename="functions.cpp" line="1024"/>
-        <source>Maximum</source>
-        <translation>Massimo</translation>
-    </message>
-    <message>
-        <location filename="functions.cpp" line="1040"/>
-        <source>Sum</source>
-        <translation>Somma</translation>
-    </message>
-    <message>
-        <location filename="functions.cpp" line="1032"/>
-        <source>Product</source>
-        <translation>Prodotto</translation>
+        <location filename="functions.cpp" line="996"/>
+        <source>Absolute Value</source>
+        <translation>Absolutt verdi</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="998"/>
         <source>Average (Arithmetic Mean)</source>
-        <translation>Media Aritmetica</translation>
+        <translation>Gjennomsnitt (Aritmetisk)</translation>
     </message>
     <message>
-        <location filename="functions.cpp" line="1018"/>
-        <source>Geometric Mean</source>
-        <translation>Media Geometrica</translation>
+        <location filename="functions.cpp" line="1000"/>
+        <source>Base-10 Logarithm</source>
+        <translation>10-base logaritme</translation>
     </message>
     <message>
-        <location filename="functions.cpp" line="996"/>
-        <source>Absolute Value</source>
-        <translation>Valore Assoluto</translation>
+        <location filename="functions.cpp" line="1002"/>
+        <source>Base-2 Logarithm</source>
+        <translation>2 base logaritme</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="1004"/>
         <source>Binary Representation</source>
-        <translation>Rappresentazione Binaria</translation>
+        <translation>Binær representasjon</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="1006"/>
         <source>Ceiling</source>
-        <translation>Parte Intera Superiore</translation>
+        <translation>Takfunksjon</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="1008"/>
         <source>Cube Root</source>
-        <translation>Radice Cubica</translation>
+        <translation>Kubisk root</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="1010"/>
         <source>Decimal Representation</source>
-        <translation>Rappresentazione Decimale</translation>
+        <translation>Desimal representasjon</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="1012"/>
         <source>Exponential</source>
-        <translation>Esponenziale</translation>
+        <translation>Exponentiell</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="1014"/>
         <source>Floor</source>
-        <translation>Parte Intera Inferiore</translation>
+        <translation>Gulvfunksjon</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="1016"/>
         <source>Fractional Part</source>
-        <translation>Parte Frazionaria</translation>
+        <translation>Desimalfraksjon</translation>
+    </message>
+    <message>
+        <location filename="functions.cpp" line="1018"/>
+        <source>Geometric Mean</source>
+        <translation>Geometrisk gjennomsnitt</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="1020"/>
         <source>Hexadecimal Representation</source>
-        <translation>Rappresentazione Esadecimale</translation>
+        <translation>Hexadesimal representasjon</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="1022"/>
         <source>Integer Part</source>
-        <translation>Parte Intera</translation>
+        <translation>Heltallsfraksjon</translation>
+    </message>
+    <message>
+        <location filename="functions.cpp" line="1024"/>
+        <source>Maximum</source>
+        <translation>Maksimum</translation>
+    </message>
+    <message>
+        <location filename="functions.cpp" line="1026"/>
+        <source>Minimum</source>
+        <translation>Minimum</translation>
+    </message>
+    <message>
+        <location filename="functions.cpp" line="1028"/>
+        <source>Natural Logarithm</source>
+        <translation>Naturlig logaritme</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="1030"/>
         <source>Octal Representation</source>
-        <translation>Rappresentazione Ottale</translation>
+        <translation>Oktal representasjon</translation>
+    </message>
+    <message>
+        <location filename="functions.cpp" line="1032"/>
+        <source>Product</source>
+        <translation>Produkt</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="1034"/>
         <source>Rounding</source>
-        <translation>Arrotondamento</translation>
+        <translation>Avrunding</translation>
+    </message>
+    <message>
+        <location filename="functions.cpp" line="1036"/>
+        <source>Signum</source>
+        <translation>Signum</translation>
+    </message>
+    <message>
+        <location filename="functions.cpp" line="1038"/>
+        <source>Square Root</source>
+        <translation>Kvadratrot</translation>
+    </message>
+    <message>
+        <location filename="functions.cpp" line="1040"/>
+        <source>Sum</source>
+        <translation>Total</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="1042"/>
         <source>Truncation</source>
-        <translation>Troncamento</translation>
+        <translation>Trunkering</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="1047"/>
         <source>Greatest Common Divisor</source>
-        <translation>Massimo Comun Divisore</translation>
+        <translation>Minste felles multiplum</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="1049"/>
         <source>Combination (Binomial Coefficient)</source>
-        <translation>Coefficente Binomiale</translation>
+        <translation>Kombinasjon (Binomial kofisient)</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="1051"/>
         <source>Permutation (Arrangement)</source>
-        <translation>Permutazione</translation>
+        <translation>Arrangering</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="1056"/>
         <source>Binomial Probability Mass Function</source>
-        <translation>Variabile Aleatoria Binomiale</translation>
+        <translation>Binomial sannsynlighetsmengdefunksjon</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="1058"/>
         <source>Binomial Cumulative Distribution Function</source>
-        <translation>Funzione di Ripartizione Binomiale</translation>
+        <translation>Binomial oppsamlet distribusjonsfunksjon</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="1060"/>
         <source>Binomial Distribution Mean</source>
-        <translation>Speranza della Distribuzione Binomiale</translation>
+        <translation>Binomial distribusjoinssnitt</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="1062"/>
         <source>Binomial Distribution Variance</source>
-        <translation>Varianza della Distribuzione Binomiale</translation>
+        <translation>Binomial distriubusjons varianse</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="1064"/>
         <source>Hypergeometric Probability Mass Function</source>
-        <translation>Variabile Aleatoria Ipergeometrica</translation>
+        <translation>Hypergeometrisk sannsynlighetsmengdefunksjon</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="1066"/>
         <source>Hypergeometric Cumulative Distribution Function</source>
-        <translation>Funzione di Ripartizione Ipergeometrica</translation>
+        <translation>Hypergeometrisk oppsamlingsdistribusjonssnitt</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="1068"/>
         <source>Hypergeometric Distribution Mean</source>
-        <translation>Speranza della Distribuzione Ipergeometrica</translation>
+        <translation>Hypergeometrisk distribusjonssnitt</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="1072"/>
         <source>Poissonian Probability Mass Function</source>
-        <translation>Variabile Aleatoria di Poisson</translation>
+        <translation>Poissonian sannsynlighetsmengdefunksjon</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="1074"/>
         <source>Poissonian Cumulative Distribution Function</source>
-        <translation>Funzione di Ripartizione di Poisson</translation>
+        <translation>Poissonian kumjulative distribusjonsfunksjon</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="1076"/>
         <source>Poissonian Distribution Mean</source>
-        <translation>Speranza della Distribuzione di Poisson</translation>
+        <translation>Poissonian distribusjonssnitt</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="1078"/>
         <source>Poissonian Distribution Variance</source>
-        <translation>Varianza della Distribuzione di Poisson</translation>
+        <translation>Poissonian distribusjonsvarians</translation>
+    </message>
+    <message>
+        <location filename="functions.cpp" line="1083"/>
+        <source>Arc Cosine</source>
+        <translation>Arc kosinus</translation>
+    </message>
+    <message>
+        <location filename="functions.cpp" line="1085"/>
+        <source>Arc Sine</source>
+        <translation>Arc sinus</translation>
+    </message>
+    <message>
+        <location filename="functions.cpp" line="1087"/>
+        <source>Arc Tangent</source>
+        <translation>Sirkel tangens</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="1089"/>
         <source>Cosecant</source>
-        <translation>Cosecante</translation>
+        <translation>Kosekant</translation>
+    </message>
+    <message>
+        <location filename="functions.cpp" line="1091"/>
+        <source>Cosine</source>
+        <translation>Kosinus</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="1093"/>
         <source>Cotangent</source>
-        <translation>Cotangente</translation>
+        <translation>Kotangens</translation>
+    </message>
+    <message>
+        <location filename="functions.cpp" line="1095"/>
+        <source>Hyperbolic Cosine</source>
+        <translation>Hyperbolsk kosinus</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="1097"/>
         <source>Degrees Of Arc</source>
-        <translation>Gradi dell&apos;Arco</translation>
+        <translation>Grader av sirkel</translation>
+    </message>
+    <message>
+        <location filename="functions.cpp" line="1099"/>
+        <source>Radians</source>
+        <translation>Radianer</translation>
+    </message>
+    <message>
+        <location filename="functions.cpp" line="1101"/>
+        <source>Hyperbolic Sine</source>
+        <translation>Hyperbolsk sinus</translation>
+    </message>
+    <message>
+        <location filename="functions.cpp" line="1103"/>
+        <source>Hyperbolic Tangent</source>
+        <translation>Hyperbolisk tangent</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="1105"/>
         <source>Secant</source>
-        <translation>Secante</translation>
+        <translation>Sekant</translation>
+    </message>
+    <message>
+        <location filename="functions.cpp" line="1107"/>
+        <source>Sine</source>
+        <translation>Sinus</translation>
+    </message>
+    <message>
+        <location filename="functions.cpp" line="1109"/>
+        <source>Tangent</source>
+        <translation>Tangens</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="1070"/>
         <source>Hypergeometric Distribution Variance</source>
-        <translation>Varianza della Distribuzione Ipergeometrica</translation>
+        <translation>Hyperbolsk distribusjons tangens</translation>
     </message>
 </context>
 <context>
@@ -1232,17 +1232,17 @@ Fare clic sull&apos;icona per riattivarlo.</translation>
     <message>
         <location filename="functionsdock.cpp" line="43"/>
         <source>Functions</source>
-        <translation>Funzioni</translation>
+        <translation>Funksjoner</translation>
     </message>
     <message>
         <location filename="functionsdock.cpp" line="48"/>
         <source>Search</source>
-        <translation>Cerca</translation>
+        <translation>Søk</translation>
     </message>
     <message>
         <location filename="functionsdock.cpp" line="86"/>
         <source>No match found</source>
-        <translation>Nessuna corrispondenza trovata</translation>
+        <translation>Ingen treff funnet</translation>
     </message>
 </context>
 <context>
@@ -1250,136 +1250,136 @@ Fare clic sull&apos;icona per riattivarlo.</translation>
     <message>
         <location filename="historydock.cpp" line="30"/>
         <source>History</source>
-        <translation>Cronologia</translation>
+        <translation>Historie</translation>
     </message>
 </context>
 <context>
     <name>InsertFunctionDlg</name>
     <message>
+        <location filename="insertfunctiondlg.cpp" line="48"/>
+        <source>Insert Function</source>
+        <translation>Sett inn funksjon</translation>
+    </message>
+    <message>
         <location filename="insertfunctiondlg.cpp" line="62"/>
         <source>Name</source>
-        <translation>Nome</translation>
+        <translation>Navn</translation>
     </message>
     <message>
         <location filename="insertfunctiondlg.cpp" line="63"/>
         <source>Description</source>
-        <translation>Descrizione</translation>
+        <translation>Beskrivelse</translation>
     </message>
     <message>
         <location filename="insertfunctiondlg.cpp" line="67"/>
         <source>&amp;Insert</source>
-        <translation>&amp;Inserisci</translation>
+        <translation>&amp;Sett inn</translation>
     </message>
     <message>
         <location filename="insertfunctiondlg.cpp" line="71"/>
         <source>Cancel</source>
-        <translation>Annulla</translation>
-    </message>
-    <message>
-        <location filename="insertfunctiondlg.cpp" line="48"/>
-        <source>Insert Function</source>
-        <translation>Inserisci una funzione</translation>
+        <translation>Avbryt</translation>
     </message>
 </context>
 <context>
     <name>InsertVariableDlg</name>
     <message>
+        <location filename="insertvardlg.cpp" line="55"/>
+        <source>Insert Variable</source>
+        <translation>Sett inn variabel</translation>
+    </message>
+    <message>
         <location filename="insertvardlg.cpp" line="71"/>
         <source>Name</source>
-        <translation>Nome</translation>
+        <translation>Navn</translation>
     </message>
     <message>
         <location filename="insertvardlg.cpp" line="72"/>
         <source>Value</source>
-        <translation>Valore</translation>
+        <translation>Verdi</translation>
     </message>
     <message>
         <location filename="insertvardlg.cpp" line="76"/>
         <source>&amp;Insert</source>
-        <translation>&amp;Inserisci</translation>
+        <translation>&amp;Sett inn</translation>
     </message>
     <message>
         <location filename="insertvardlg.cpp" line="80"/>
         <source>Cancel</source>
-        <translation>Annulla</translation>
-    </message>
-    <message>
-        <location filename="insertvardlg.cpp" line="55"/>
-        <source>Insert Variable</source>
-        <translation>Inserisci una variabile</translation>
+        <translation>Avbryt</translation>
     </message>
 </context>
 <context>
     <name>KeyPad</name>
     <message>
+        <location filename="keypad.cpp" line="408"/>
+        <source>Evaluate the expression</source>
+        <translation>Evaluer uttrykket</translation>
+    </message>
+    <message>
         <location filename="keypad.cpp" line="409"/>
         <source>The result from the last expression</source>
-        <translation>Risultato dell&apos;espressione precedente</translation>
+        <translation>Resultatet fra siste uttrykk</translation>
     </message>
     <message>
         <location filename="keypad.cpp" line="410"/>
         <source>Logarithm</source>
-        <translation>Logaritmo</translation>
+        <translation>Logaritmisk</translation>
     </message>
     <message>
         <location filename="keypad.cpp" line="411"/>
         <source>Exponential</source>
-        <translation>Esponenziale</translation>
+        <translation>Exponentiell</translation>
     </message>
     <message>
         <location filename="keypad.cpp" line="412"/>
         <source>The variable X</source>
-        <translation>La variabile X</translation>
-    </message>
-    <message>
-        <location filename="keypad.cpp" line="416"/>
-        <source>The number pi</source>
-        <translation>Il numero pi</translation>
-    </message>
-    <message>
-        <location filename="keypad.cpp" line="417"/>
-        <source>Sine</source>
-        <translation>Seno</translation>
-    </message>
-    <message>
-        <location filename="keypad.cpp" line="418"/>
-        <source>Cosine</source>
-        <translation>Coseno</translation>
-    </message>
-    <message>
-        <location filename="keypad.cpp" line="420"/>
-        <source>Square root</source>
-        <translation>Radice quadrata</translation>
-    </message>
-    <message>
-        <location filename="keypad.cpp" line="421"/>
-        <source>Backspace</source>
-        <translation>Indietro e cancella</translation>
-    </message>
-    <message>
-        <location filename="keypad.cpp" line="408"/>
-        <source>Evaluate the expression</source>
-        <translation>Valuta l&apos;espressione</translation>
+        <translation>Variabelen X</translation>
     </message>
     <message>
         <location filename="keypad.cpp" line="413"/>
         <source>Inverse sine</source>
-        <translation>Seno inverso</translation>
+        <translation>Invers sinus</translation>
     </message>
     <message>
         <location filename="keypad.cpp" line="414"/>
         <source>Inverse cosine</source>
-        <translation>Coseno inverso</translation>
+        <translation>Invers kosinus</translation>
+    </message>
+    <message>
+        <location filename="keypad.cpp" line="416"/>
+        <source>The number pi</source>
+        <translation>Tallet pi</translation>
+    </message>
+    <message>
+        <location filename="keypad.cpp" line="417"/>
+        <source>Sine</source>
+        <translation>Sinus</translation>
+    </message>
+    <message>
+        <location filename="keypad.cpp" line="418"/>
+        <source>Cosine</source>
+        <translation>Kosinus</translation>
+    </message>
+    <message>
+        <location filename="keypad.cpp" line="420"/>
+        <source>Square root</source>
+        <translation>Kvadratrot</translation>
+    </message>
+    <message>
+        <location filename="keypad.cpp" line="421"/>
+        <source>Backspace</source>
+        <translation>Backsteg</translation>
     </message>
     <message>
         <location filename="keypad.cpp" line="415"/>
         <source>Inverse tangent</source>
-        <translation>Tangente inversa</translation>
+        <translation>Arc tangens</translation>
     </message>
     <message>
         <location filename="keypad.cpp" line="419"/>
         <source>Tangent</source>
-        <translation>Tangente</translation>
+        <translation>Tangens</translation>
     </message>
 </context>
 <context>
@@ -1387,7 +1387,7 @@ Fare clic sull&apos;icona per riattivarlo.</translation>
     <message>
         <location filename="tipwidget.cpp" line="85"/>
         <source>&lt;b&gt;Tip of the day&lt;/b&gt;&lt;br&gt;%1</source>
-        <translation>&lt;b&gt;Trucco del giorno&lt;/b&gt;&lt;br&gt;%1</translation>
+        <translation>&lt;b&gt;Dagens tips&lt;/b&gt;&lt;br&gt;%1</translation>
     </message>
 </context>
 <context>
@@ -1395,17 +1395,17 @@ Fare clic sull&apos;icona per riattivarlo.</translation>
     <message>
         <location filename="variablesdock.cpp" line="44"/>
         <source>Variables</source>
-        <translation>Variabili</translation>
+        <translation>Variabler</translation>
     </message>
     <message>
         <location filename="variablesdock.cpp" line="49"/>
         <source>Search</source>
-        <translation>Cerca</translation>
+        <translation>Søk</translation>
     </message>
     <message>
         <location filename="variablesdock.cpp" line="87"/>
         <source>No match found</source>
-        <translation>Nessuna corrispondenza trovata</translation>
+        <translation>Ingen treff funnet</translation>
     </message>
 </context>
 <context>
@@ -1413,27 +1413,27 @@ Fare clic sull&apos;icona per riattivarlo.</translation>
     <message>
         <location filename="evaluator.cpp" line="1393"/>
         <source>invalid expression</source>
-        <translation>espressione non valida</translation>
+        <translation>ugyldig uttrykk</translation>
     </message>
     <message>
         <location filename="evaluator.cpp" line="1172"/>
         <source>variable cannot be overwritten</source>
-        <translation>la variabile non può essere sovrascritta</translation>
+        <translation>variabel kan ikke endres</translation>
     </message>
     <message>
         <location filename="evaluator.cpp" line="1180"/>
         <source>identifier matches an existing function name</source>
-        <translation>l&apos;identificatore è già stato usato come nome di funzione precedentemente</translation>
+        <translation>navn er identisk med et eksisterende funksjonsnavn</translation>
     </message>
     <message>
         <location filename="evaluator.cpp" line="1321"/>
         <source>division by zero</source>
-        <translation>divisione per zero</translation>
+        <translation>deling ved null</translation>
     </message>
     <message>
         <location filename="evaluator.cpp" line="1362"/>
         <source>unknown function or variable</source>
-        <translation>funzione o variabile sconosciute</translation>
+        <translation>ukjent funksjon eller variabel</translation>
     </message>
 </context>
 <context>
@@ -1441,52 +1441,52 @@ Fare clic sull&apos;icona per riattivarlo.</translation>
     <message>
         <location filename="functions.cpp" line="164"/>
         <source>function requires 1 or 2 arguments</source>
-        <translation>la funzione richiede 1 o 2 parametri</translation>
+        <translation>funksjon krever ett eller to argumenter</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="887"/>
         <source>function undefined for specified arguments</source>
-        <translation>la funzione non è definita per i parametri specificati</translation>
+        <translation>ingen funksjon med spesifisert argumentliste eksisterer</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="137"/>
         <source>function requires at least 2 arguments</source>
-        <translation>la funzione richiede almeno 2 argomenti</translation>
+        <translation>funksjonen krever minst to argumenter</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="145"/>
         <source>function requires integer arguments</source>
-        <translation>la funzione richiede argomenti di tipo intero</translation>
+        <translation>funksjonen krever heltallsargumenter</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="179"/>
         <source>function requires integer P2</source>
-        <translation>la funzione richiede P2 intero</translation>
+        <translation>funksjonen krever heltall P2</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="416"/>
         <source>function undefined for specified argument</source>
-        <translation>la funzione non è definita per l&apos;argomento specificato</translation>
+        <translation>ingen funksjon med spesifisert argument eksisterer</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="566"/>
         <source>function requires at least 1 argument</source>
-        <translation>la funzione richiede almeno 1 parametro</translation>
+        <translation>funksjonen krever minst ett argument</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="960"/>
         <source>cannot execute function %1</source>
-        <translation>impossibile eseguire la funzione %1</translation>
+        <translation>kan ikke utføre funksjon %1</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="969"/>
         <source>function accepts 1 argument</source>
-        <translation>la funzione accetta 1 argomento</translation>
+        <translation>funksjon godtar bare ett argument</translation>
     </message>
     <message>
         <location filename="functions.cpp" line="972"/>
         <source>function accepts %1 arguments</source>
-        <translation>la funzione accetta %1 argomenti</translation>
+        <translation>funksjonen godtar %1 argumenter</translation>
     </message>
 </context>
 </TS>

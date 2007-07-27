@@ -58,7 +58,10 @@ FunctionsDock::FunctionsDock( QWidget* parent ): QDockWidget( tr("Functions"), p
   searchLayout->setMargin( 0 );
 
   d->list = new QTreeWidget( this );
-  d->list->setColumnCount( 2 );
+  d->list->setAutoScroll( true );
+  d->list->setHorizontalScrollBarPolicy( Qt::ScrollBarAsNeeded );
+  d->list->setHorizontalScrollMode( QAbstractItemView::ScrollPerPixel );
+  d->list->setColumnCount( 3 );
   d->list->setRootIsDecorated( false );
   d->list->header()->hide();
   d->list->setEditTriggers( QTreeWidget::NoEditTriggers );
@@ -127,6 +130,8 @@ void FunctionsDock::filter()
       QStringList str;
       str << d->functionNames[k];
       str << d->functionDesc[k];
+      str << QString( "" );
+
       if( term.isEmpty() )
         new QTreeWidgetItem( d->list, str );
       else
@@ -136,6 +141,10 @@ void FunctionsDock::filter()
           new QTreeWidgetItem( d->list, str );
       }
   }
+
+  d->list->resizeColumnToContents( 0 );
+  d->list->resizeColumnToContents( 1 );
+  d->list->resizeColumnToContents( 2 );
 
   if( d->list->topLevelItemCount() > 0 )
   {
@@ -150,6 +159,7 @@ void FunctionsDock::filter()
         QBrush c = ((int)(i/group))&1 ? palette().base() : palette().alternateBase();
         item->setBackground( 0, c );
         item->setBackground( 1, c );
+        item->setBackground( 2, c );
       }
   }
   else

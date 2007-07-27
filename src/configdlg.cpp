@@ -1,6 +1,7 @@
 /* This file is part of the SpeedCrunch project
    Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
    Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
+   Copyright (C) 2007 Helder Correia <helder.pereira.correia@gmail.com>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -32,6 +33,7 @@
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QLabel>
+#include <QLocale>
 #include <QPainter>
 #include <QPushButton>
 #include <QRadioButton>
@@ -82,8 +84,11 @@ public:
   void loadSettings();
   void saveSettings();
   QWidget* generalPage();
+  QWidget* generalPg;
   QWidget* appearancePage();
+  QWidget* appearancePg;
   QWidget* hilitePage();
+  QWidget* hilitePg;
 };
 
 void ConfigDlgPrivate::loadSettings()
@@ -108,7 +113,7 @@ void ConfigDlgPrivate::loadSettings()
 
   QString str = settings->customFont.family();
   str.append( " " );
-  str.append( qApp->translate("ConfigDlgPrivate", "%1pt").arg( settings->customFont.pointSizeF() ) );
+  str.append( QString("%1pt").arg( settings->customFont.pointSizeF() ) );
   fontLabel->setText( str );
 
   textColorButton->setColor( settings->customTextColor );
@@ -354,6 +359,22 @@ QColor ColorButton::color() const
   return d->color;
 }
 
+QSize ColorButton::sizeHint() const
+{
+  ensurePolished();
+
+  int w = 16;
+  int h = 16;
+  QStyleOptionButton opt;
+
+  opt.initFrom( this );
+  QSize sh = style()->sizeFromContents( QStyle::CT_PushButton, &opt,
+                                        QSize( w, h ), this);
+  sh = sh.expandedTo( QApplication::globalStrut() );
+
+  return sh;
+}
+
 void ColorButton::showColorPicker()
 {
   QColor newColor = QColorDialog::getColor( d->color, this );
@@ -382,9 +403,12 @@ QDialog( parent )
   setWindowTitle( tr("Configure SpeedCrunch" ) );
 
   d->centerWidget = new QTabWidget( this );
-  d->centerWidget->addTab( d->generalPage(), tr("&General") );
-  d->centerWidget->addTab( d->appearancePage(), tr("&Appearance") );
-  d->centerWidget->addTab( d->hilitePage(), tr("&Syntax Highlight") );
+  d->generalPg = d->generalPage();
+  d->centerWidget->addTab( d->generalPg, tr("&General") );
+  d->appearancePg = d->appearancePage();
+  d->centerWidget->addTab( d->appearancePg, tr("&Appearance") );
+  d->hilitePg = d->hilitePage();
+  d->centerWidget->addTab( d->hilitePg, tr("&Syntax Highlight") );
 
   QWidget* buttonBox = new QWidget( this );
   QHBoxLayout* buttonLayout = new QHBoxLayout;
@@ -414,6 +438,19 @@ QDialog( parent )
   initUI();
 }
 
+
+void ConfigDlg::adaptToLanguageChange()
+{
+  Qt::LayoutDirection ld;
+  if ( QLocale().language() == QLocale::Hebrew )
+    ld = Qt::RightToLeft;
+  else
+    ld = Qt::LeftToRight;
+
+  d->centerWidget->setLayoutDirection( ld );
+}
+
+
 void ConfigDlg::showEvent( QShowEvent* )
 {
 }
@@ -430,6 +467,7 @@ void ConfigDlg::initUI()
   d->loadSettings();
   setUpdatesEnabled( true );
   adjustSize();
+  emit settingsChanged();
 }
 
 

@@ -59,7 +59,10 @@ VariablesDock::VariablesDock( QWidget* parent ): QDockWidget( tr("Variables"), p
   searchLayout->setMargin( 0 );
 
   d->list = new QTreeWidget( this );
-  d->list->setColumnCount( 2 );
+  d->list->setAutoScroll( true );
+  d->list->setHorizontalScrollBarPolicy( Qt::ScrollBarAsNeeded );
+  d->list->setHorizontalScrollMode( QAbstractItemView::ScrollPerPixel );
+  d->list->setColumnCount( 3 );
   d->list->setRootIsDecorated( false );
   d->list->header()->hide();
   d->list->setEditTriggers( QTreeWidget::NoEditTriggers );
@@ -130,6 +133,7 @@ void VariablesDock::filter()
       QStringList str;
       str << d->variables[k].name;
       str << formatValue( d->variables[k].value );
+      str << QString( "" );
 
       if(    str[0] == "PI"
 	  || str[0] == "PHI" )
@@ -152,6 +156,10 @@ void VariablesDock::filter()
       }
   }
 
+  d->list->resizeColumnToContents( 0 );
+  d->list->resizeColumnToContents( 1 );
+  d->list->resizeColumnToContents( 2 );
+
   if( d->list->topLevelItemCount() > 0 )
   {
     d->noMatchLabel->hide();
@@ -165,6 +173,7 @@ void VariablesDock::filter()
         QBrush c = ((int)(i/group))&1 ? palette().base() : palette().alternateBase();
         item->setBackground( 0, c );
         item->setBackground( 1, c );
+        item->setBackground( 2, c );
       }
   }
   else

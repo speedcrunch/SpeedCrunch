@@ -1067,7 +1067,7 @@ FunctionRepository::FunctionRepository()
   add( new Function( "hypermean", 3, function_hypermean,
                      QT_TR_NOOP("Hypergeometric Distribution Mean")          ));
   add( new Function( "hypervar",  3, function_hypervar,
-                     QT_TR_NOOP("Hypergeometric Distribution Variance)")     ));
+                     QT_TR_NOOP("Hypergeometric Distribution Variance")      ));
   add( new Function( "poipmf",    2, function_poipmf,
                      QT_TR_NOOP("Poissonian Probability Mass Function")      ));
   add( new Function( "poicdf",    2, function_poicdf,

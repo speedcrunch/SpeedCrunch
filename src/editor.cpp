@@ -1,8 +1,8 @@
 /* This file is part of the SpeedCrunch project
    Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
    Copyright (C) 2004,2005 Ariya Hidayat <ariya@kde.org>
-                 2005-2006 Johan Thelin <e8johan@gmail.com>
-                 2007 Helder Correia <helder.pereira.correia@gmail.com>
+   Copyright (C) 2005-2006 Johan Thelin <e8johan@gmail.com>
+   Copyright (C) 2007 Helder Correia <helder.pereira.correia@gmail.com>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -33,6 +33,7 @@
 #include <QHeaderView>
 #include <QKeyEvent>
 #include <QLineEdit>
+#include <QLocale>
 #include <QStyle>
 #include <QSyntaxHighlighter>
 #include <QTimer>
@@ -142,7 +143,6 @@ Editor::Editor( Evaluator* e, QWidget* parent ):
     SLOT( autoComplete( const QString& ) ) );
   connect( this, SIGNAL( textChanged() ), SLOT( checkAutoComplete() ) );
   connect( d->completionTimer, SIGNAL( timeout() ), SLOT( triggerAutoComplete() ) );
-
   connect( d->constantCompletion, SIGNAL( selectedCompletion( const QString& ) ),
     SLOT( insertConstant( const QString& ) ) );
 
@@ -582,7 +582,20 @@ void Editor::autoCalc()
 
 void Editor::insertConstant( const QString& c )
 {
-  insert( c );
+  // find set decimal separator
+  QString sep = Settings::self()->decimalPoint;
+  if ( sep.isEmpty() )
+    sep = QLocale().decimalPoint();
+  // replace constant dot separator
+  QString str( c );
+  str.replace( QChar( '.' ), sep );
+  // show final constant in the evaluator
+  insert( str );
+}
+
+void Editor::evaluate()
+{
+    triggerEnter();
 }
 
 QString Editor::formatNumber( const HNumber& value ) const
@@ -724,6 +737,7 @@ void Editor::stopAutoCalc()
 void Editor::stopAutoComplete()
 {
   d->completionTimer->stop();
+  d->completion->selectItem(QString()); // WORKAROUND 76
   d->completion->doneCompletion();
   setFocus();
 }
@@ -835,6 +849,7 @@ void EditorCompletion::showCompletion( const QStringList& choices )
   for( int i = 0; i < choices.count(); i++ )
     new QTreeWidgetItem( d->popup, choices[i].split(':') );
   d->popup->sortItems( 0, Qt::AscendingOrder );
+  d->popup->sortItems( 1, Qt::AscendingOrder );
   d->popup->setCurrentItem( d->popup->topLevelItem(0) );
   d->popup->adjustSize();
   d->popup->setUpdatesEnabled( true );
@@ -862,6 +877,19 @@ void EditorCompletion::showCompletion( const QStringList& choices )
   d->popup->move( pos );
   d->popup->setFocus();
   d->popup->show();
+}
+
+void EditorCompletion::selectItem( const QString& item ) // WORKAROUND 76
+{
+  if( item.isNull() )
+    d->popup->setCurrentItem( 0 );
+  else
+  {
+    QList<QTreeWidgetItem*> targets
+      = d->popup->findItems( item, Qt::MatchExactly );
+    if( targets.count() > 0 )
+      d->popup->setCurrentItem( targets[0] );
+  }
 }
 
 void EditorCompletion::fade( int v )
@@ -952,7 +980,7 @@ ConstantCompletion::ConstantCompletion( Editor* editor ): QObject( editor )
   int h1 = d->constantList->sizeHintForRow(0) * qMin(7, d->constants.count()) + 3;
   int h2 = d->categoryList->sizeHintForRow(0) * qMin(7, ct->categoryList.count()) + 3;
   int hh = qMax( h1, h2 );
-  ww += 64; // extra space (FIXME scrollbar size?)
+  ww += 200; // extra space (FIXME scrollbar size?)
 
   // adjust dimensions
   d->popup->resize( ww, hh );

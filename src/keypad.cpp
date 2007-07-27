@@ -1,5 +1,6 @@
 /* This file is part of the SpeedCrunch project
    Copyright (C) 2005-2006 Johan Thelin <e8johan@gmail.com>
+   Copyright (C) 2007 Helder Correia <helder.pereira.correia@gmail.com>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -18,15 +19,19 @@
  */
 
 #include "keypad.h"
+#include "settings.h"
 
-#include <QPushButton>
-#include <QGridLayout>
-#include <QStyle>
 #include <QApplication>
+#include <QGridLayout>
+#include <QLocale>
+#include <QPushButton>
+#include <QStyle>
+
 
 class KeyPadPrivate
 {
   public:
+
     QPushButton* key0;
     QPushButton* key1;
     QPushButton* key2;
@@ -64,46 +69,57 @@ class KeyPadPrivate
     QPushButton* keyATan;
 };
 
+
 void KeyPad::createButtons()
 {
-  d->key0 = new QPushButton( tr("0"), this );
-  d->key1 = new QPushButton( tr("1"), this );
-  d->key2 = new QPushButton( tr("2"), this );
-  d->key3 = new QPushButton( tr("3"), this );
-  d->key4 = new QPushButton( tr("4"), this );
-  d->key5 = new QPushButton( tr("5"), this );
-  d->key6 = new QPushButton( tr("6"), this );
-  d->key7 = new QPushButton( tr("7"), this );
-  d->key8 = new QPushButton( tr("8"), this );
-  d->key9 = new QPushButton( tr("9"), this );
-  d->keyDot = new QPushButton( tr("."), this );
-  d->keyEq = new QPushButton( tr("="), this );
+  d->key0 = new QPushButton( "0", this );
+  d->key1 = new QPushButton( "1", this );
+  d->key2 = new QPushButton( "2", this );
+  d->key3 = new QPushButton( "3", this );
+  d->key4 = new QPushButton( "4", this );
+  d->key5 = new QPushButton( "5", this );
+  d->key6 = new QPushButton( "6", this );
+  d->key7 = new QPushButton( "7", this );
+  d->key8 = new QPushButton( "8", this );
+  d->key9 = new QPushButton( "9", this );
+
+  d->keyEq  = new QPushButton( "=", this );
+
+  if ( Settings::self()->decimalPoint == "" )
+    d->keyDot = new QPushButton( QString( QLocale().decimalPoint() ), this );
+  else
+    d->keyDot = new QPushButton( Settings::self()->decimalPoint, this );
 
   d->keySqrt = new QPushButton( this );
   d->keySqrt->setIcon( QPixmap( ":/math_sqrt.png" ) );
+
   d->keyBackspace = new QPushButton( this );
   d->keyBackspace->setIcon( QPixmap( ":/back.png" ) );
-  d->keyLParen = new QPushButton( tr("("), this );
-  d->keyRParen = new QPushButton( tr(")"), this );
-  d->keyAdd = new QPushButton( tr("+"), this );
-  d->keySub = new QPushButton( tr("-"), this );
-  d->keyMul = new QPushButton( tr("*"), this );
-  d->keyDiv = new QPushButton( tr("/"), this );
 
-  d->keyPi = new QPushButton( tr("pi"), this );
-  d->keyAns = new QPushButton( tr("ans"), this );
-  d->keyX = new QPushButton( tr("x"), this );
-  d->keyXEq = new QPushButton( tr("x="), this );
+  d->keyLParen = new QPushButton( "(", this );
+  d->keyRParen = new QPushButton( ")", this );
 
-  d->keyExp = new QPushButton( tr("exp"), this );
-  d->keyLog = new QPushButton( tr("log"), this );
-  d->keySin = new QPushButton( tr("sin"), this );
-  d->keyCos = new QPushButton( tr("cos"), this );
-  d->keyTan = new QPushButton( tr("tan"), this );
-  d->keyASin = new QPushButton( tr("asin"), this );
-  d->keyACos = new QPushButton( tr("acos"), this );
-  d->keyATan = new QPushButton( tr("atan"), this );
+  d->keyAdd = new QPushButton( "+", this );
+  d->keySub = new QPushButton( "-", this );
+  d->keyMul = new QPushButton( "*", this );
+  d->keyDiv = new QPushButton( "/", this );
+
+  d->keyPi  = new QPushButton( "pi",  this );
+  d->keyAns = new QPushButton( "ans", this );
+
+  d->keyX   = new QPushButton( "x",  this );
+  d->keyXEq = new QPushButton( "x=", this );
+
+  d->keyExp  = new QPushButton( "exp",  this );
+  d->keyLog  = new QPushButton( "log",  this );
+  d->keySin  = new QPushButton( "sin",  this );
+  d->keyCos  = new QPushButton( "cos",  this );
+  d->keyTan  = new QPushButton( "tan",  this );
+  d->keyASin = new QPushButton( "asin", this );
+  d->keyACos = new QPushButton( "acos", this );
+  d->keyATan = new QPushButton( "atan", this );
 }
+
 
 void KeyPad::polishButtons()
 {
@@ -143,6 +159,7 @@ void KeyPad::polishButtons()
   d->keyACos->ensurePolished();
   d->keyATan->ensurePolished();
 }
+
 
 void KeyPad::sizeButtons()
 {
@@ -236,6 +253,7 @@ void KeyPad::sizeButtons()
   d->keyATan->setMaximumSize( d->key0->maximumSize() );
 }
 
+
 void KeyPad::dontFocusButtons()
 {
   d->key0->setFocusPolicy( Qt::NoFocus );
@@ -274,6 +292,7 @@ void KeyPad::dontFocusButtons()
   d->keyACos->setFocusPolicy( Qt::NoFocus );
   d->keyATan->setFocusPolicy( Qt::NoFocus );
 }
+
 
 void KeyPad::layoutButtons()
 {
@@ -330,6 +349,7 @@ void KeyPad::layoutButtons()
   layout->addWidget( d->keyATan, 3, 10 );
 }
 
+
 void KeyPad::connectButtons()
 {
   connect( d->key0, SIGNAL(clicked()), SLOT(clicked0()) );
@@ -369,6 +389,7 @@ void KeyPad::connectButtons()
   connect( d->keyATan, SIGNAL(clicked()), SLOT(clickedATan()) );
 }
 
+
 KeyPad::KeyPad( QWidget* parent ) : QWidget( parent )
 {
   d = new KeyPadPrivate;
@@ -391,19 +412,21 @@ KeyPad::KeyPad( QWidget* parent ) : QWidget( parent )
   d->keyX->setToolTip( tr("The variable X") );
   d->keyASin->setToolTip( tr("Inverse sine") );
   d->keyACos->setToolTip( tr("Inverse cosine") );
-  d->keyATan->setToolTip( tr("Inverse tangens") );
+  d->keyATan->setToolTip( tr("Inverse tangent") );
   d->keyPi->setToolTip( tr("The number pi") );
   d->keySin->setToolTip( tr("Sine") );
   d->keyCos->setToolTip( tr("Cosine") );
-  d->keyTan->setToolTip( tr("Tangens") );
+  d->keyTan->setToolTip( tr("Tangent") );
   d->keySqrt->setToolTip( tr("Square root") );
   d->keyBackspace->setToolTip( tr("Backspace") );
 }
+
 
 KeyPad::~KeyPad()
 {
   delete d;
 }
+
 
 void KeyPad::clicked0() { emit addText( "0" ); }
 void KeyPad::clicked1() { emit addText( "1" ); }
@@ -415,28 +438,42 @@ void KeyPad::clicked6() { emit addText( "6" ); }
 void KeyPad::clicked7() { emit addText( "7" ); }
 void KeyPad::clicked8() { emit addText( "8" ); }
 void KeyPad::clicked9() { emit addText( "9" ); }
-void KeyPad::clickedDot() { emit addText( "." ); }
 void KeyPad::clickedEq() { emit evaluate(); }
 
-void KeyPad::clickedSqrt() { emit addText( "sqrt(" ); }
-void KeyPad::clickedBackspace() { emit addText( "<--" ); }
-void KeyPad::clickedLParen() { emit addText( "(" ); }
-void KeyPad::clickedRParen() { emit addText( ")" ); }
-void KeyPad::clickedAdd() { emit addText( "+" ); }
-void KeyPad::clickedSub() { emit addText( "-" ); }
-void KeyPad::clickedMul() { emit addText( "*" ); }
-void KeyPad::clickedDiv() { emit addText( "/" ); }
+void KeyPad::clickedDot()
+{
+  emit addText( d->keyDot->text().toLatin1() );
+}
 
-void KeyPad::clickedPi() { emit addText( "pi" ); }
-void KeyPad::clickedAns() { emit addText( "ans" ); }
-void KeyPad::clickedX() { emit addText( "x" ); }
-void KeyPad::clickedXEq() { emit addText( "x=" ); }
 
-void KeyPad::clickedExp() { emit addText( "exp(" ); }
-void KeyPad::clickedLog() { emit addText( "log(" ); }
-void KeyPad::clickedSin() { emit addText( "sin(" ); }
-void KeyPad::clickedCos() { emit addText( "cos(" ); }
-void KeyPad::clickedTan() { emit addText( "tan(" ); }
-void KeyPad::clickedASin() { emit addText( "asin(" ); }
-void KeyPad::clickedACos() { emit addText( "acos(" ); }
-void KeyPad::clickedATan() { emit addText( "atan(" ); }
+void KeyPad::clickedSqrt()      { emit addText( "sqrt(" ); }
+void KeyPad::clickedBackspace() { emit addText( "<--"   ); }
+void KeyPad::clickedLParen()    { emit addText( "("     ); }
+void KeyPad::clickedRParen()    { emit addText( ")"     ); }
+void KeyPad::clickedAdd()       { emit addText( "+"     ); }
+void KeyPad::clickedSub()       { emit addText( "-"     ); }
+void KeyPad::clickedMul()       { emit addText( "*"     ); }
+void KeyPad::clickedDiv()       { emit addText( "/"     ); }
+
+void KeyPad::clickedPi()        { emit addText( "pi"    ); }
+void KeyPad::clickedAns()       { emit addText( "ans"   ); }
+void KeyPad::clickedX()         { emit addText( "x"     ); }
+void KeyPad::clickedXEq()       { emit addText( "x="    ); }
+
+void KeyPad::clickedExp()       { emit addText( "exp("  ); }
+void KeyPad::clickedLog()       { emit addText( "log("  ); }
+void KeyPad::clickedSin()       { emit addText( "sin("  ); }
+void KeyPad::clickedCos()       { emit addText( "cos("  ); }
+void KeyPad::clickedTan()       { emit addText( "tan("  ); }
+void KeyPad::clickedASin()      { emit addText( "asin(" ); }
+void KeyPad::clickedACos()      { emit addText( "acos(" ); }
+void KeyPad::clickedATan()      { emit addText( "atan(" ); }
+
+
+void KeyPad::settingsChanged()
+{
+  if ( Settings::self()->decimalPoint == "" )
+    d->keyDot->setText( QLocale().decimalPoint() );
+  else
+    d->keyDot->setText( Settings::self()->decimalPoint );
+}

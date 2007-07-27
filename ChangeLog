@@ -1,4 +1,4 @@
-SpeedCrunch post 0.7
+SpeedCrunch 0.8
 ---------------------
 New features:
  support for different bases: hex, octal and binary
@@ -9,6 +9,8 @@ New features:
  added unmutable variable "phi" (golden number = 1.6180339887498948482...)
  "tip of the day"
  option to hide from taskbar and minimize to system tray
+ support for right-to-left languages (not perfect, but very close to it)
+ translations: de es es_AR fi fr he it nl no pt pt_BR ro ru sv (see TRANSLATORS)
 
 New functions:
  MIN: get the minimum

@@ -36,6 +36,9 @@ class Crunch : public QMainWindow
     ~Crunch();
     bool event( QEvent* );
 
+  signals:
+    void adaptToLanguageChange();
+
   public slots:
     void applySettings();
     void saveSession();
@@ -74,6 +77,7 @@ class Crunch : public QMainWindow
     void addKeyPadText( const QString& );
     void hideAutoCalc();
     void showAutoCalc( const QString& );
+    void setWidgetsLayoutAccordingToLanguageDirection();
 
   protected slots:
     void restoreDocks();

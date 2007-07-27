@@ -1,5 +1,6 @@
 /* This file is part of the SpeedCrunch project
    Copyright (C) 2005-2006 Johan Thelin <e8johan@gmail.com>
+   Copyright (C) 2007 Helder Correia <helder.pereira.correia@gmail.com>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -32,6 +33,13 @@ class KeyPad : public QWidget
     explicit KeyPad( QWidget* parent );
     ~KeyPad();
 
+  signals:
+    void addText( const QString& );
+    void evaluate();
+
+  public slots:
+    void settingsChanged();
+
   protected slots:
     void clicked0();
     void clicked1();
@@ -59,7 +67,7 @@ class KeyPad : public QWidget
     void clickedAns();
     void clickedX();
     void clickedXEq();
-		
+
     void clickedExp();
     void clickedLog();
     void clickedSin();
@@ -69,18 +77,14 @@ class KeyPad : public QWidget
     void clickedACos();
     void clickedATan();
 
-  signals:
-    void addText( const QString& );
-		void evaluate();
-
   private:
     void createButtons();
     void polishButtons();
     void sizeButtons();
     void dontFocusButtons();
     void layoutButtons();
-    void connectButtons();	
-	
+    void connectButtons();
+
     KeyPadPrivate*d;
     KeyPad( const KeyPad& );
     KeyPad& operator=( const KeyPad& );

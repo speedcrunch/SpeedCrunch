@@ -233,6 +233,17 @@ void test_op()
   CHECK( HNumber( 1 ) / HNumber( 2 ),     "0.5" );
   CHECK( HNumber( 1 ) / HMath::sin( PI ), "NaN" );
 
+  // division by zero
+  CHECK( HNumber( 1 ) / HNumber( 0 ),                   "NaN" );
+  CHECK( HNumber( 1 ) / HMath::sin( 0    ),             "NaN" );
+  CHECK( HNumber( 1 ) / HMath::sin( PI   ),             "NaN" );
+  CHECK( HNumber( 1 ) / HMath::cos( PI/2 ),             "NaN" );
+  CHECK( HNumber( 1 ) / HMath::tan( 0    ),             "NaN" );
+  CHECK( HNumber( 1 ) / HMath::tan( PI   ),             "NaN" );
+  CHECK( HNumber( 1 ) / HMath::trunc( "0.123" ),        "NaN" );
+  CHECK( HNumber( 1 ) / HMath::round( "0.456" ),        "NaN" );
+  CHECK( HNumber( 1 ) / HMath::binomialPmf( 1, 10, 0 ), "NaN" );
+
   CHECK_PRECISE( HNumber( 1 ) / HNumber( 3 ),
                  "0.33333333333333333333333333333333333333333333333333" );
   CHECK_PRECISE( HNumber( 2 ) / HNumber( 3 ),

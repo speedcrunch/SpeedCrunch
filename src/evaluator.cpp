@@ -374,11 +374,26 @@ Tokens Evaluator::scan( const QString& expr, const QString& settingsDecimal )
   Tokens tokens;
 
   // auto-detect, always dot, or always comma
+
   QChar decimalPoint;
+  QChar wrongDecimalPoint;
+
   if( settingsDecimal.length() == 1 )
     decimalPoint = settingsDecimal[0];
   else
     decimalPoint = QLocale().decimalPoint();
+
+  // sanity check for wrong decimal separator usage
+
+  if ( decimalPoint == ',' )
+    wrongDecimalPoint = '.';
+  else
+    wrongDecimalPoint = ',';
+
+  int size = expr.size();
+  for ( int i = 0; i < size; i++ )
+    if ( expr[i] == wrongDecimalPoint )
+      return tokens;
 
   // parsing state
   enum { Start, Finish, Bad, InNumber, InHexa, InOctal, InBinary, InDecimal, InExpIndicator,

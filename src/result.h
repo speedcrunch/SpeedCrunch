@@ -72,6 +72,7 @@ class Result : public QListWidget
   private slots:
     void copyToClipboard( QListWidgetItem* );
     void triggerUpdate();
+    void scrollEnd();
 
   private:
     ResultPrivate* d;

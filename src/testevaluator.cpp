@@ -36,9 +36,53 @@ static int eval_total_tests  = 0;
 static int eval_failed_tests = 0;
 
 
+#define CHECK_AUTOFIX(s,p)      checkAutoFix(__FILE__,__LINE__,#s,s,p)
+#define CHECK_DIV_BY_ZERO(s)    checkDivisionByZero(__FILE__,__LINE__,#s,s)
 #define CHECK_EVAL(x,y)         checkEval(__FILE__,__LINE__,#x,x,y)
 #define CHECK_EVAL_PRECISE(x,y) checkEvalPrecise(__FILE__,__LINE__,#x,x,y)
-#define CHECK_AUTOFIX(s,p)      checkAutoFix(__FILE__,__LINE__,#s,s,p)
+
+
+static void checkAutoFix( const char    * file,
+                                int       line,
+                          const char    * msg,
+                          const QString & expr,
+                          const QString & fixed )
+{
+  eval_total_tests++;
+
+  QString r = Evaluator::autoFix( expr, "." );
+  if ( r != fixed )
+  {
+    eval_failed_tests++;
+    cerr << file << "[" << line << "]: " << msg << endl
+         << "    Result: \"" << qPrintable(   r   ) << "\"" << endl
+         << "  Expected: \"" << qPrintable( fixed ) << "\"" << endl
+         << endl;
+  }
+}
+
+
+static void checkDivisionByZero( const char    * file,
+                                       int       line,
+                                 const char    * msg,
+                                 const QString & expr )
+{
+  eval_total_tests++;
+
+  Evaluator e;
+  e.setDecimalPoint( "." );
+  e.setAngleMode( Evaluator::Radian );
+  e.setExpression( expr );
+  HNumber rn = e.eval();
+
+  if ( e.error().isEmpty() )
+  {
+    eval_failed_tests++;
+    cerr << file << "[" << line << "]: " << msg
+         << "  Error: " << "division by zero not caught"
+         << endl;
+  }
+}
 
 
 static void checkEval( const char    * file,
@@ -105,26 +149,6 @@ static void checkEvalPrecise( const char    * file,
 }
 
 
-static void checkAutoFix( const char    * file,
-                                int       line,
-                          const char    * msg,
-                          const QString & expr,
-                          const QString & fixed )
-{
-  eval_total_tests++;
-
-  QString r = Evaluator::autoFix( expr, "." );
-  if ( r != fixed )
-  {
-    eval_failed_tests++;
-    cerr << file << "[" << line << "]: " << msg << endl
-         << "    Result: \"" << qPrintable(   r   ) << "\"" << endl
-         << "  Expected: \"" << qPrintable( fixed ) << "\"" << endl
-         << endl;
-  }
-}
-
-
 void test_constants()
 {
   CHECK_EVAL( "1", "1" );
@@ -187,19 +211,19 @@ void test_unary()
   CHECK_EVAL( "(5-7)^2",  "4"  );
   CHECK_EVAL( "-(5-7)^2", "-4" );
 
-  CHECK_EVAL( "0!", "1");
-  CHECK_EVAL( "1!", "1");
-  CHECK_EVAL( "2!", "2");
-  CHECK_EVAL( "3!", "6");
-  CHECK_EVAL( "4!", "24");
-  CHECK_EVAL( "5!", "120");
-  CHECK_EVAL( "6!", "720");
-  CHECK_EVAL( "7!", "5040");
+  CHECK_EVAL( "0!", "1"    );
+  CHECK_EVAL( "1!", "1"    );
+  CHECK_EVAL( "2!", "2"    );
+  CHECK_EVAL( "3!", "6"    );
+  CHECK_EVAL( "4!", "24"   );
+  CHECK_EVAL( "5!", "120"  );
+  CHECK_EVAL( "6!", "720"  );
+  CHECK_EVAL( "7!", "5040" );
 
   // factorial has higher precedence than unary minus
-  CHECK_EVAL( "-1!", "-1");
-  CHECK_EVAL( "-2!", "-2");
-  CHECK_EVAL( "-3!", "-6");
+  CHECK_EVAL( "-1!", "-1" );
+  CHECK_EVAL( "-2!", "-2" );
+  CHECK_EVAL( "-3!", "-6" );
 }
 
 
@@ -214,12 +238,20 @@ void test_binary()
 
 void test_divide_by_zero()
 {
-  CHECK_EVAL( "1/0",                 "NaN" );
-  CHECK_EVAL( "1/sin(pi)",           "NaN" );
-  CHECK_EVAL( "1/cos(pi/2)",         "NaN" );
-  CHECK_EVAL( "-1/trunc(0,123)",     "NaN" );
-  CHECK_EVAL( "1/round(0,456)",      "NaN" );
-  CHECK_EVAL( "-1/binompmf(1;10;0)", "NaN" );
+  CHECK_DIV_BY_ZERO( "1/0"                 );
+  CHECK_DIV_BY_ZERO( "1 / sin 0"           );
+  CHECK_DIV_BY_ZERO( "1/sin(pi)"           );
+  CHECK_DIV_BY_ZERO( "1/sin ( pi"          );
+  CHECK_DIV_BY_ZERO( "1/sin  pi"           );
+  CHECK_DIV_BY_ZERO( "1 / cos (pi/2)"      );
+  CHECK_DIV_BY_ZERO( "1 / cos(pi/2"        );
+  CHECK_DIV_BY_ZERO( "1/cos(pi/2)"         );
+  CHECK_DIV_BY_ZERO( "1/tan(0)"            );
+  CHECK_DIV_BY_ZERO( "1/tan 0 "            );
+  CHECK_DIV_BY_ZERO( "-1/trunc(0.123)"     );
+  CHECK_DIV_BY_ZERO( "1/round(0.456)"      );
+  CHECK_DIV_BY_ZERO( "-1/binompmf(1;10;0)" );
+  CHECK_DIV_BY_ZERO( "-345.3 /  binompmf (   1 ; 10 ;  0 )  " );
 }
 
 
@@ -383,6 +415,8 @@ void test_auto_fix_parentheses()
   CHECK_AUTOFIX( "x+(8-(2*1",   "x+(8-(2*1))" );
   CHECK_AUTOFIX( "x+(8-(2*1)",  "x+(8-(2*1))" );
   CHECK_AUTOFIX( "x+(8-(2*1))", "x+(8-(2*1))" );
+
+  CHECK_AUTOFIX( "x + sin ( pi", "x + sin ( pi)" );
 }
 
 
@@ -415,6 +449,7 @@ void test_auto_fix_untouch()
   CHECK_AUTOFIX( "sin(ans)",   "sin(ans)"   );
   CHECK_AUTOFIX( "tan(ans)",   "tan(ans)"   );
   CHECK_AUTOFIX( "x=1.2",      "x=1.2"      );
+  CHECK_AUTOFIX( "1/sin pi",   "1/sin pi"   );
 }
 
 

@@ -1,5 +1,6 @@
 /* This file is part of the SpeedCrunch project
    Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
+   Copyright (C) 2007 Helder Correia <helder.pereira.correia@gmail.com>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -26,6 +27,7 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QList>
+#include <QLocale>
 #include <QTimer>
 #include <QTreeWidget>
 #include <QVBoxLayout>
@@ -75,8 +77,11 @@ ConstantsDock::ConstantsDock( QWidget* parent ): QDockWidget( tr("Constants"), p
   searchLayout->setMargin( 0 );
 
   d->list = new QTreeWidget( this );
-  d->list->setColumnCount( 3 );
-  d->list->setColumnHidden( 2, true );
+  d->list->setAutoScroll( true );
+  d->list->setHorizontalScrollBarPolicy( Qt::ScrollBarAsNeeded );
+  d->list->setHorizontalScrollMode( QAbstractItemView::ScrollPerPixel );
+  d->list->setColumnCount( 5 );
+  d->list->setColumnHidden( 3, true );
   d->list->setRootIsDecorated( false );
   d->list->header()->hide();
   d->list->setMouseTracking( true );
@@ -148,8 +153,18 @@ void ConstantsDock::filter()
   {
       QStringList str;
       str << d->constants[k].name;
-      str << QString("%1 %2").arg(d->constants[k].value).arg(d->constants[k].unit);
+      if ( QLocale().language() == QLocale::Hebrew )
+      {
+	str << d->constants[k].unit;
+	str << d->constants[k].value;
+      }
+      else
+      {
+	str << d->constants[k].value;
+	str << d->constants[k].unit;
+      }
       str << d->constants[k].name.toUpper();
+      str << QString( "" );
 
       bool include = (chosenCategory == tr("All")) ? true:
         d->constants[k].categories.contains( chosenCategory );
@@ -167,31 +182,39 @@ void ConstantsDock::filter()
       }
       if( item )
       {
-        QString tip = QString("<b>%1</b><br> %2").arg(d->constants[k].name, d->constants[k].value );
+        QString tip = QString("<b>%1</b><br>%2").arg( d->constants[k].name,
+	                                              d->constants[k].value );
         if( !d->constants[k].unit.isEmpty() )
           tip.append( " " ).append( d->constants[k].unit );
         item->setToolTip( 0, tip );
         item->setToolTip( 1, tip );
-		item->setTextAlignment( 1, Qt::AlignRight );
+        item->setToolTip( 2, tip );
+
+	item->setTextAlignment( 1, Qt::AlignRight );
+	item->setTextAlignment( 2, Qt::AlignLeft  );
       }
   }
 
   d->list->resizeColumnToContents( 0 );
   d->list->resizeColumnToContents( 1 );
+  d->list->resizeColumnToContents( 2 );
 
   if( d->list->topLevelItemCount() > 0 )
   {
     d->noMatchLabel->hide();
-    d->list->sortItems( 2, Qt::AscendingOrder );
+    d->list->sortItems( 0, Qt::AscendingOrder );
 
     int group = 3;
     if( d->list->topLevelItemCount() >= 2*group )
       for(int i = 0; i < d->list->topLevelItemCount(); i++)
       {
         QTreeWidgetItem* item = d->list->topLevelItem(i);
-        QBrush c = ((int)(i/group))&1 ? palette().base() : palette().alternateBase();
+        QBrush c = ((int)(i / group)) & 1 ?
+	           palette().base() : palette().alternateBase();
         item->setBackground( 0, c );
         item->setBackground( 1, c );
+        item->setBackground( 2, c );
+        item->setBackground( 4, c );
       }
   }
   else
@@ -200,7 +223,6 @@ void ConstantsDock::filter()
     d->noMatchLabel->show();
     d->noMatchLabel->raise();
   }
-
 
   setUpdatesEnabled(true);
 }
@@ -211,4 +233,3 @@ void ConstantsDock::handleItem( QTreeWidgetItem* item )
     if( d->constants[k].name == item->text(0) )
       emit constantSelected( d->constants[k].value );
 }
-

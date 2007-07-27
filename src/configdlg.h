@@ -1,6 +1,7 @@
 /* This file is part of the SpeedCrunch project
    Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
    Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
+   Copyright (C) 2007 Helder Correia <helder.pereira.correia@gmail.com>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -41,6 +42,7 @@ class ColorButton : public QPushButton
     ~ColorButton();
     void setColor( QColor c );
     QColor color() const;
+    QSize sizeHint() const;
 
   protected slots:
     void showColorPicker();
@@ -66,6 +68,9 @@ class ConfigDlg : public QDialog
 
   signals:
     void settingsChanged();
+
+  public slots:
+    void adaptToLanguageChange();
 
   protected slots:
     virtual void showEvent( QShowEvent* );
