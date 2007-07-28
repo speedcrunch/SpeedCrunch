@@ -1150,6 +1150,7 @@ void Crunch::copyResult()
 
 void Crunch::focusAndSelectInput()
 {
+  activateWindow();
   d->editor->selectAll();
   d->editor->setFocus();
 }
