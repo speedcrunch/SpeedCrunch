@@ -171,7 +171,7 @@ void test_unary()
   CHECK_EVAL( "---ABS(-4)", "-4" );
 
   // see http://en.wikipedia.org/wiki/Empty_product
-  CHECK_EVAL( "0^0", "1" );
+  CHECK_EVAL( "0^0", "NaN" );
 
   CHECK_EVAL( "1^0", "1" );
   CHECK_EVAL( "1^1", "1" );

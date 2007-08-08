@@ -26,7 +26,16 @@
                 Computer Science Department, 9062
                 Western Washington University
                 Bellingham, WA 98226-9062
-       
+
+    !!!This is a patched file, the original file from bc 1.06 contains bugs
+    in (a) bc_divide and (b) bc_int2num. A patch is applied here by
+      Wolf Lammen, Oertzweg 45, 22307 Hamburg
+      email ookami1 <at> gmx <dot> de
+    One patched line fixes a nasty bug, where a division by 1 may fail
+    occasionly when an operand is overwritten by the result.
+    The other one lets a conversion of an integer succeed, even if
+    the most negative integer is passed as argument
+
 *************************************************************************/
 
 #include "number.h"
@@ -972,6 +981,7 @@ bc_divide (n1, n2, quot, scale)
 		  n1->n_len + MIN(n1->n_scale,scale));
 	  bc_free_num (quot);
 	  *quot = qval;
+          return 0;  /* bug fix Wolf Lammen */
 	}
     }
 
@@ -1642,8 +1652,8 @@ bc_int2num (num, val)
 
   /* Get things going. */
   bptr = buffer;
-  *bptr++ = val % BASE;
-  val = val / BASE;
+  *bptr++ = (unsigned)val % BASE; /* type cast to unsigned, bug fix Wolf Lammen */
+  val = (unsigned)val / BASE;     /* type cast to unsigned, bug fix Wolf Lammen */
 
   /* Extract remaining digits. */
   while (val != 0)

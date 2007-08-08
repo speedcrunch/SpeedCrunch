@@ -16,6 +16,8 @@
    along with this program; see the file COPYING.  If not, write to
    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA 02110-1301, USA.
+
+   Modified and extended by Wolf Lammen
  */
 
 #ifndef HMATH_H
@@ -172,6 +174,67 @@ public:
   bool operator!=( const HNumber& n ) const;
 
   /*!
+   * Bitwise ANDs the integral parts of both operands.
+   * Yields NaN, if any operand exeeds the logic range
+   */
+  HNumber operator&( const HNumber& ) const;
+
+  /*!
+   * Bitwise ANDs the integral parts of both operands.
+   * Yields NaN, if any operand exeeds the logic range
+   */
+  HNumber& operator&=( const HNumber& );
+
+  /*!
+   * Bitwise ORs the integral parts of both operands.
+   * Yields NaN, if any operand exeeds the logic range
+   */
+  HNumber operator|( const HNumber& ) const;
+
+  /*!
+   * Bitwise ORs the integral parts of both operands.
+   * Yields NaN, if any operand exeeds the logic range
+   */
+  HNumber& operator|=( const HNumber& );
+
+  /*!
+   * Bitwise XORs the integral parts of both operands.
+   * Yields NaN, if any operand exeeds the logic range
+   */
+  HNumber operator^( const HNumber& ) const;
+
+  /*!
+   * Bitwise XORs the integral parts of both operands.
+   * Yields NaN, if any operand exeeds the logic range
+   */
+  HNumber& operator^=( const HNumber& );
+
+  /*!
+   * Bitwise NOTs the integral part *this.
+   * Yields NaN, if *this exeeds the logic range
+   */
+  HNumber operator~() const;
+
+  /*!
+   * Shifts the integral part of <*this> to the right by
+   * the parameters value's bits. The most significand
+   * bit is duplicated to the left, shifted out bits are dropped
+   * (signed or arithmethic shift right).
+   * Yields NaN, if the operand exeeds the logic range,
+   * or the shift count is not a non-negative integer.
+   */
+  HNumber operator>>( const HNumber& ) const;
+
+  /*!
+   * Shifts the integral part of <*this> to the left by
+   * the parameters value's bits. Zeros are shifted in
+   * to the right, shifted out bits are dropped.
+   * Yields NaN, if the operand exeeds the logic range,
+   * or the shift count is not a non-negative integer.
+   */
+  HNumber operator<<( const HNumber& ) const;
+
+  /*!
    * Returns a NaN (Not a Number).
    */
   static HNumber nan();
@@ -197,12 +260,6 @@ public:
   static char* format( const HNumber&n, char format = 'g', int prec = -1 );
 
   /*!
-   * Formats the given number as string, in engineering notation.
-   * Note that the returned string must be freed.
-   */
-  static char* formatEngineering( const HNumber&n, int prec = -1 );
-
-  /*!
    * Formats the given number as string, using specified decimal digits.
    * Note that the returned string must be freed.
    */
@@ -213,6 +270,12 @@ public:
    * Note that the returned string must be freed.
    */
   static char* formatScientific( const HNumber&n, int prec = -1 );
+
+  /*!
+   * Formats the given number as string, in engineering notation.
+   * Note that the returned string must be freed.
+   */
+  static char* formatEngineering( const HNumber&n, int prec = -1 );
 
   /*!
    * Formats the given number as string, using specified decimal digits.
@@ -417,19 +480,34 @@ public:
   static HNumber atan( const HNumber& x );
 
   /*!
-   * Returns the hyperbolic sine of x. Note that x must be in radians.
+   * Returns the hyperbolic sine of x.
    */
   static HNumber sinh( const HNumber& x );
 
   /*!
-   * Returns the hyperbolic cosine of x. Note that x must be in radians.
+   * Returns the hyperbolic cosine of x.
    */
   static HNumber cosh( const HNumber& x );
 
   /*!
-   * Returns the hyperbolic tangent of x. Note that x must be in radians.
+   * Returns the hyperbolic tangent of x.
    */
   static HNumber tanh( const HNumber& x );
+
+  /*!
+   * Returns the area hyperbolic sine of x.
+   */
+  static HNumber arsinh( const HNumber& x );
+
+  /*!
+   * Returns the area hyperbolic cosine of x.
+   */
+  static HNumber arcosh( const HNumber& x );
+
+  /*!
+   * Returns the area hyperbolic tangent of x.
+   */
+  static HNumber artanh( const HNumber& x );
 
    /*!
    * Returns the sign of x.
@@ -437,20 +515,35 @@ public:
   static HNumber sign( const HNumber& x );
 
    /*!
-   * Returns the combinations of n elements choosen k elements.
+   * Returns the binomial coefficient of n and k.
    */
-  static HNumber nCr( const HNumber& n, const HNumber& r );
+  static HNumber nCr( const HNumber& n, const HNumber& k );
 
    /*!
-   * Returns the permutations of n elements chosen r elements.
+   * Returns the permutation of n elements chosen r elements.
    */
   static HNumber nPr( const HNumber& n, const HNumber& r );
 
    /*!
-   * Returns the factorial of x.
-   * If x is non integer, returns NaN.
+   * Returns the falling Pochhammer symbol x*(x-1)*..*base.
+   * For base == 1, this is the usual factorial x!, which this
+   * function is named after.
+   * This function has been extended using the Gamma function,
+   * so that actually Gamma(x+1)/Gamma(base) is computed, a
+   * value that equals the falling Pochhammer symbol, when
+   * x - base is an integer, but allows other differences as well.
    */
   static HNumber factorial( const HNumber& x, const HNumber& base = HNumber(1) );
+
+   /*!
+   * Returns the Gamma function.
+   */
+  static HNumber Gamma( const HNumber& x);
+
+   /*!
+   * Returns ln(abs(Gamma(x))).
+   */
+  static HNumber lnGamma( const HNumber& x);
 
   /*
                                    PROBABILITY

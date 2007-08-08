@@ -1,11 +1,11 @@
-project(speedcrunch)
+project(speedcrunch-floatnum)
 
 IF( APPLE )
   set( PROGNAME Speedcrunch )
   set( MACOSX_BUNDLE_ICON_FILE Speedcrunch.icns )
-  set( MACOSX_BUNDLE_SHORT_VERSION_STRING trunk )
-  set( MACOSX_BUNDLE_VERSION trunk )
-  set( MACOSX_BUNDLE_LONG_VERSION_STRING Version trunk )
+  set( MACOSX_BUNDLE_SHORT_VERSION_STRING 0.8 )
+  set( MACOSX_BUNDLE_VERSION 0.8 )
+  set( MACOSX_BUNDLE_LONG_VERSION_STRING Version post-0.8 )
   set( CMAKE_OSX_ARCHITECTURES ppc;i386 ) #Comment out if not universal binary
 ELSE( APPLE )
   set( PROGNAME speedcrunch )
@@ -17,7 +17,7 @@ set(CMAKE_VERBOSE_MAKEFILE OFF)
 set(CMAKE_INCLUDE_CURRENT_DIR TRUE)
 
 # note: change this BEFORE making a release !!
-ADD_DEFINITIONS(-DSPEEDCRUNCH_VERSION=\"trunk\" )
+ADD_DEFINITIONS(-DSPEEDCRUNCH_VERSION=\"post-0.8\" )
 
 IF( NOT WIN32 )
 IF( NOT APPLE )
@@ -41,6 +41,21 @@ crunch.cpp
 deletevardlg.cpp
 editor.cpp
 evaluator.cpp
+floatcommon.c
+floatconst.c
+floatconvert.c
+floatexp.c
+floatgamma.c
+floathmath.c
+floatio.c
+floatipower.c
+floatlog.c
+floatlogic.c
+floatlong.c
+floatnum.c
+floatpower.c
+floatseries.c
+floattrig.c
 functions.cpp
 functionsdock.cpp
 historydock.cpp
@@ -68,6 +83,22 @@ crunch.h
 deletevardlg.h
 editor.h
 evaluator.h
+floatcommon.h
+floatconfig.h
+floatconst.h
+floatconvert.h
+floatexp.h
+floatgamma.h
+floathmath.h
+floatio.h
+floatipower.h
+floatlog.h
+floatlogic.h
+floatlong.h
+floatnum.h
+floatpower.h
+floatseries.h
+floattrig.h
 functions.h
 functionsdock.h
 historydock.h
@@ -163,12 +194,26 @@ install(FILES ${speedcrunch_TRANSLATIONS} DESTINATION share/crunch)
 enable_testing()
 
 # regression test for HMath
-set(testhmath_SOURCES testhmath.cpp hmath.cpp number.c)
+set(testhmath_SOURCES testhmath.cpp hmath.cpp number.c floatnum.c floatlong.c
+  floatexp.c floatconst.c floatcommon.c floattrig.c floatseries.c
+  floathmath.c floatlogic.c floatconvert.c floatio.c floatipower.c floatgamma.c
+  floatlog.c floatpower.c)
 add_executable(testhmath ${testhmath_SOURCES})
 add_test(testhmath ${EXECUTABLE_OUTPUT_PATH}/testhmath)
 
 # regression test for Evaluator class
-set(testevaluator_SOURCES testevaluator.cpp evaluator.cpp functions.cpp hmath.cpp number.c)
+set(testevaluator_SOURCES testevaluator.cpp evaluator.cpp functions.cpp hmath.cpp number.c
+  floatnum.c floatlong.c floatexp.c floatconst.c floatcommon.c floattrig.c floatseries.c
+  floathmath.c floatlogic.c floatconvert.c floatio.c floatipower.c floatgamma.c
+  floatlog.c floatpower.c)
 add_executable(testevaluator ${testevaluator_SOURCES})
 target_link_libraries(testevaluator ${QT_LIBRARIES})
 add_test(testevaluator ${EXECUTABLE_OUTPUT_PATH}/testevaluator)
+
+# regression test for floatnum
+set(testfloatnum_SOURCES testfloatnum.c floatnum.c number.c floatcommon.c
+ floatconst.c floatseries.c floatlog.c floatexp.c floattrig.c floatlong.c
+ floatipower.c floatpower.c floathmath.c floatconvert.c floatgamma.c
+ floatlogic.c floatio.c)
+add_executable(testfloatnum ${testfloatnum_SOURCES})
+add_test(testfloatnum ${EXECUTABLE_OUTPUT_PATH}/testfloatnum)

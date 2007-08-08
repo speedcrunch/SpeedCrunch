@@ -1,3 +1,23 @@
+SpeedCrunch post-0.8
+---------------------
+New features:
+  greatly extended number range
+  factorials extended to real values
+
+Improvements and bug fixes:
+  replaced the math engine,
+    solving issue #53, #78, #98,
+    preparing a solution for issue #16, #62, #90,
+    better support for issue #47
+    uniform and predictable accuracy
+    stable algorithms covering the whole range of numbers
+    faster evaluation of higher mathematical function (factor 9 on the average)
+    supports stable evaluation of basic higher functions near poles and zeros
+    built-in support of conversion of all (integer, real, huge, tiny) values to other bases
+    built-in support of logic operations
+    built-in support of the missing area hyperbolic functions
+    built-in support of a new class of functions, Gamma and friends
+
 SpeedCrunch 0.8
 ---------------------
 New features:
