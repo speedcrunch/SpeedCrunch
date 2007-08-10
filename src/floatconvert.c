@@ -396,8 +396,8 @@ pack2floatnum(
 {
   floatstruct tmp;
   int digits;
-  int pwrexp;
   int saveerr;
+  int saverange;
   signed char base;
 
   if (!_pack2int(x, &n->intpart))
@@ -405,34 +405,34 @@ pack2floatnum(
   if (float_isnan(x))
     return 1;
   saveerr = float_error;
+  saverange = float_setrange(MAXEXP);
   float_create(&tmp);
   float_move(&tmp, x);
   float_setzero(x);
   digits = DECPRECISION - float_getexponent(&tmp);
   if (digits <= 0 || _pack2frac(x, &n->fracpart, digits))
     float_add(x, x, &tmp, DECPRECISION);
-  if (!float_getlength(x) == 0)
+  if (!float_getlength(x) == 0) /* no zero, no NaN? */
   {
-    base = n->intpart.seq.base;
-    if (base == IO_BASE_ZERO)
-      base = n->fracpart.seq.base;
+    base = n->prefix.base;
     float_setinteger(&tmp, base);
     if (n->exp >= 0)
     {
-      _raiseposi(&tmp, &pwrexp, n->exp, DECPRECISION + 2);
+      __raiseposi(&tmp, n->exp, DECPRECISION + 2);
       float_mul(x, x, &tmp, DECPRECISION + 2);
-      float_addexp(x, pwrexp);
     }
     else
     {
-      _raiseposi(&tmp, &pwrexp, -n->exp, DECPRECISION + 2);
+      __raiseposi(&tmp, -n->exp, DECPRECISION + 2);
       float_div(x, x, &tmp, DECPRECISION + 2);
-      float_addexp(x, -pwrexp);
     }
   }
   float_free(&tmp);
   float_setsign(x, n->prefix.sign == IO_SIGN_COMPLEMENT? -1 : n->prefix.sign);
   float_error = saveerr;
+  float_setrange(saverange);
+  if (!float_isvalidexp(float_getexponent(x)))
+    float_setnan(x);
   return !float_isnan(x);
 }
 

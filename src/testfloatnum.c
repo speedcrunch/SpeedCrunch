@@ -55,6 +55,17 @@
 
 #ifdef _FLOATNUMTEST
 
+#define msbu (1u << (sizeof(unsigned)*8-1))
+#define maxu (msbu + (msbu-1))
+#define msbi (1 << (sizeof(int)*8-2))
+#define maxi (msbi + (msbi -1))
+#define mini (-maxi - 1)
+
+static char istruenan(floatnum x)
+{
+  return x->exponent == EXPNAN && x->significand == NULL;
+}
+
 static signed char _cmp(floatnum v1, floatnum v2)
 {
   if (float_isnan(v1) && float_isnan(v2))
@@ -93,11 +104,14 @@ static char* minexp(char* buf, char* significand)
 static int tc_longadd(unsigned v1, unsigned v2,
                       unsigned r1, unsigned r2)
 {
-  unsigned x1, x2;
+  unsigned x1, x2, y1, y2;
   x1 = v1;
   x2 = v2;
+  y1 = v2;
+  y2 = v1;
   _longadd(&x1, &x2);
-  if (x1 != r1 || x2 != r2)
+  _longadd(&y1, &y2);
+  if (x1 != r1 || x2 != r2 || y1 != r1 || y2 != r2)
   {
     printf("test case %d + %d FAILED", v1, v2);
     return 0;
@@ -107,29 +121,39 @@ static int tc_longadd(unsigned v1, unsigned v2,
 
 static int test_longadd()
 {
-  int msb;
+
+  static struct{
+    unsigned v1; unsigned v2; unsigned r1; unsigned r2;
+  } testcases[] = {
+    {0, 0, 0, 0},
+    {1, 2, 3, 0},
+    {msbu, 2, msbu+2, 0},
+    {1, msbu, msbu+1, 0},
+    {maxu-1, 1, maxu, 0},
+    {maxu, 1, 0, 1},
+    {maxu, maxu, maxu-1, 1},
+  };
+
+  int i;
 
   printf("testing _longadd\n");
-  msb = 1 << (sizeof(unsigned)*8-1);
-  if (!tc_longadd(0,0,0,0)) return 0;
-  if (!tc_longadd(1,2,3,0)) return 0;
-  if (!tc_longadd(msb,2,msb+2,0)) return 0;
-  if (!tc_longadd(1,msb,msb+1,0)) return 0;
-  if (!tc_longadd(msb+(msb-2),1,msb+(msb-1),0)) return 0;
-  if (!tc_longadd(msb+(msb-1),1,0,1)) return 0;
-  if (!tc_longadd(1,msb+(msb-1),0,1)) return 0;
-  if (!tc_longadd(msb+(msb-1),msb+(msb-1),msb+(msb-2),1)) return 0;
+  for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
+    if(!tc_longadd(testcases[i].v1, testcases[i].v2,
+                   testcases[i].r1, testcases[i].r2)) return 0;
   return 1;
 }
 
 static int tc_longmul(unsigned v1, unsigned v2,
                       unsigned r1, unsigned r2)
 {
-  unsigned x1, x2;
+  unsigned x1, x2, y1, y2;
   x1 = v1;
   x2 = v2;
+  y1 = v2;
+  y2 = v1;
   _longmul(&x1, &x2);
-  if (x1 != r1 || x2 != r2)
+  _longmul(&y1, &y2);
+  if (x1 != r1 || x2 != r2 || y1 != r1 || y2 != r2)
   {
     printf("test case %d * %d FAILED", v1, v2);
     return 0;
@@ -139,18 +163,25 @@ static int tc_longmul(unsigned v1, unsigned v2,
 
 static int test_longmul()
 {
-  int msb;
+  static struct{
+    unsigned v1; unsigned v2; unsigned r1; unsigned r2;
+  } testcases[] = {
+    {0, 0, 0, 0},
+    {0, 1, 0, 0},
+    {1, 2, 2, 0},
+    {msbu, 2, 0, 1},
+    {1, msbu, msbu, 0},
+    {maxu-1, 1, maxu-1, 0},
+    {maxu, 2, maxu-1, 1},
+    {maxu, maxu, 1, maxu-1},
+  };
+
+  int i;
 
   printf("testing _longmul\n");
-  msb = 1 << (sizeof(unsigned)*8-1);
-  if (!tc_longmul(0,0,0,0)) return 0;
-  if (!tc_longmul(1,2,2,0)) return 0;
-  if (!tc_longmul(msb,2,0,1)) return 0;
-  if (!tc_longmul(1,msb,msb,0)) return 0;
-  if (!tc_longmul(msb+(msb-2),1,msb+(msb-2),0)) return 0;
-  if (!tc_longmul(msb+(msb-1),2,msb+(msb-2),1)) return 0;
-  if (!tc_longmul(2,msb+(msb-1),msb+(msb-2),1)) return 0;
-  if (!tc_longmul(msb+(msb-1),msb+(msb-1),1,msb+(msb-2))) return 0;
+  for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
+    if(!tc_longmul(testcases[i].v1, testcases[i].v2,
+        testcases[i].r1, testcases[i].r2)) return 0;
   return 1;
 }
 
@@ -169,20 +200,29 @@ static int tc_longshr(unsigned v1, unsigned v2, char shift,
 
 static int test_longshr()
 {
-  int msb;
+  static struct{
+    unsigned v1; unsigned v2; char shift; unsigned r;
+  } testcases[] = {
+    {0, 0, 5, 0},
+    {47, 12, 3, msbu+5},
+  };
+
+  int i;
 
   printf("testing _longshr\n");
-  msb = 1 << (sizeof(unsigned)*8-1);
-  if (!tc_longshr(0,0,5,0)) return 0;
-  if (!tc_longshr(15,12,3,msb+1)) return 0;
+  for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
+    if(!tc_longshr(testcases[i].v1, testcases[i].v2,
+        testcases[i].shift, testcases[i].r)) return 0;
   return 1;
 }
 
 static int tc_checkadd(int v1, int v2, char ok, int result)
 {
-  int x;
+  int x, y;
   x = v1;
-  if (_checkadd(&x, v2) != ok && x != result)
+  y = v2;
+  if (_checkadd(&x, v2) != ok || _checkadd(&y, v1) != ok
+      || x != result || y != result)
   {
     printf("test case %d + %d FAILED", v1, v2);
     return 0;
@@ -192,26 +232,33 @@ static int tc_checkadd(int v1, int v2, char ok, int result)
 
 static int test_checkadd()
 {
-  int max, min;
+  static struct{
+    int v1; int v2; char ok; int r;
+  } testcases[] = {
+    {0, 0, 1, 0},
+    {1, 0, 1, 1},
+    {maxi, 0, 1, maxi},
+    {0, mini, 1, mini},
+    {maxi, 1, 0, mini},
+    {mini, -1, 0, maxi},
+  };
+
+  int i;
 
   printf("testing _checkadd\n");
-  min = 1 << (sizeof(unsigned)*8-1);
-  max = ~min;
-  if (!tc_checkadd(0,0,1,0)) return 0;
-  if (!tc_checkadd(1,0,1,1)) return 0;
-  if (!tc_checkadd(0,1,1,1)) return 0;
-  if (!tc_checkadd(max,0,1,max)) return 0;
-  if (!tc_checkadd(0,min,1,min)) return 0;
-  if (!tc_checkadd(max,1,0,min)) return 0;
-  if (!tc_checkadd(min,-1,0,max)) return 0;
+  for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
+    if(!tc_checkadd(testcases[i].v1, testcases[i].v2,
+        testcases[i].ok, testcases[i].r)) return 0;
   return 1;
 }
 
 static int tc_checkmul(int v1, int v2, char ok, int result)
 {
-  int x;
+  int x, y;
   x = v1;
-  if (_checkmul(&x, v2) != ok && x != result)
+  y = v2;
+  if (_checkmul(&x, v2) != ok || _checkmul(&y, v1) != ok
+      || x != result || y != result)
   {
     printf("test case %d * %d FAILED", v1, v2);
     return 0;
@@ -221,26 +268,32 @@ static int tc_checkmul(int v1, int v2, char ok, int result)
 
 static int test_checkmul()
 {
-  int max, min;
+  int i;
+
+  static struct{
+    int v1; int v2; char ok; int r;
+  } testcases[] = {
+    {0, 0, 1, 0},
+    {1, 1, 1, 1},
+    {-1, 1, 1, -1},
+    {-1, -1, 1, 1},
+    {maxi, 1, 1, maxi},
+    {maxi, 2, 0, -2},
+    {1, mini, 1, mini},
+    {-1, mini, 0, mini},
+    {2, mini, 0, 0},
+  };
 
   printf("testing _checkmul\n");
-  min = 1 << (sizeof(unsigned)*8-1);
-  max = ~min;
-  if (!tc_checkmul(0,0,1,0)) return 0;
-  if (!tc_checkmul(1,1,1,1)) return 0;
-  if (!tc_checkmul(-1,1,1,-1)) return 0;
-  if (!tc_checkmul(1,-1,1,-1)) return 0;
-  if (!tc_checkmul(-1,-1,1,1)) return 0;
-  if (!tc_checkmul(max,1,1,max)) return 0;
-  if (!tc_checkmul(max,2,0,-2)) return 0;
-  if (!tc_checkmul(1,min,1,min)) return 0;
-  if (!tc_checkmul(-1,min,0,min)) return 0;
-  if (!tc_checkmul(2,min,0,0)) return 0;
+  for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
+    if(!tc_checkmul(testcases[i].v1, testcases[i].v2,
+        testcases[i].ok, testcases[i].r)) return 0;
   return 1;
 }
 
 static int tc_longarrayadd(unsigned x1, unsigned x2, unsigned x3,
- unsigned add, unsigned r1, unsigned r2, unsigned r3, unsigned r4)
+ unsigned smd, unsigned r1, unsigned r2, unsigned r3, unsigned r4,
+ int length)
 {
   unsigned a[3];
   unsigned r;
@@ -248,10 +301,10 @@ static int tc_longarrayadd(unsigned x1, unsigned x2, unsigned x3,
   a[0] = x1;
   a[1] = x2;
   a[2] = x3;
-  r = _longarrayadd(a, 3, add);
+  r = _longarrayadd(a, length, smd);
   if (a[0] != r1 || a[1] != r2 || a[2] != r3 || r != r4)
   {
-    printf("test case %d, %d, %d + %d FAILED", x1, x2, x3, add);
+    printf("test case %d, %d, %d + %d FAILED", x1, x2, x3, smd);
     return 0;
   }
   return 1;
@@ -259,20 +312,37 @@ static int tc_longarrayadd(unsigned x1, unsigned x2, unsigned x3,
 
 static int test_longarrayadd()
 {
-  int max;
+  int i;
+
+  static struct{
+    unsigned x1; unsigned x2; unsigned x3; unsigned smd;
+    unsigned r1; unsigned r2; unsigned r3; unsigned r4;
+    int lg;
+  } testcases[] = {
+    {0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,3},
+    {1,2,3,4,5,2,3,0,3},
+    {maxu,2,3,4,3,3,3,0,3},
+    {maxu,maxu,3,4,3,0,4,0,3},
+    {maxu,maxu,maxu,4,3,0,0,1,3},
+    {0,0,0,1,0,0,0,1,0},
+    {1,0,0,1,2,0,0,0,1},
+    {maxu,0,0,1,0,0,0,1,1},
+  };
 
   printf("testing _longarrayadd\n");
-  max = ~0;
-  if (!tc_longarrayadd(0,0,0,0,0,0,0,0)) return 0;
-  if (!tc_longarrayadd(1,2,3,4,5,2,3,0)) return 0;
-  if (!tc_longarrayadd(max,2,3,4,3,3,3,0)) return 0;
-  if (!tc_longarrayadd(max,max,3,4,3,0,4,0)) return 0;
-  if (!tc_longarrayadd(max,max,max,4,3,0,0,1)) return 0;
+  for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
+    if(!tc_longarrayadd(testcases[i].x1, testcases[i].x2,
+                        testcases[i].x3, testcases[i].smd,
+                        testcases[i].r1, testcases[i].r2,
+                        testcases[i].r3, testcases[i].r4,
+                        testcases[i].lg)) return 0;
   return 1;
 }
 
 static int tc_longarraymul(unsigned x1, unsigned x2, unsigned x3,
- unsigned factor, unsigned r1, unsigned r2, unsigned r3, unsigned r4)
+  unsigned factor, unsigned r1, unsigned r2, unsigned r3, unsigned r4,
+  int lg)
 {
   unsigned a[3];
   unsigned r;
@@ -280,7 +350,7 @@ static int tc_longarraymul(unsigned x1, unsigned x2, unsigned x3,
   a[0] = x1;
   a[1] = x2;
   a[2] = x3;
-  r = _longarraymul(a, 3, factor);
+  r = _longarraymul(a, lg, factor);
   if (a[0] != r1 || a[1] != r2 || a[2] != r3 || r != r4)
   {
     printf("test case %u, %u, %u * %u FAILED", x1, x2, x3, factor);
@@ -291,17 +361,61 @@ static int tc_longarraymul(unsigned x1, unsigned x2, unsigned x3,
 
 static int test_longarraymul()
 {
-  int max;
+  int i;
+
+  static struct{
+    unsigned x1; unsigned x2; unsigned x3; unsigned smd;
+    unsigned r1; unsigned r2; unsigned r3; unsigned r4;
+    int lg;
+  } testcases[] = {
+    {0,0,0,0,0,0,0,0,0},
+    {0,0,0,7,0,0,0,0,0},
+    {7,0,0,7,49,0,0,0,1},
+    {0,0,0,3,0,0,0,0,3},
+    {1,2,3,4,4,8,12,0,3},
+    {maxu,0,0,4,maxu-3,0,0,3,1},
+    {maxu,2,3,4,maxu-3,11,12,0,3},
+    {maxu,maxu,3,4,maxu-3,maxu,15,0,3},
+    {maxu,maxu,maxu,4,maxu-3,maxu,maxu,3,3},
+    {maxu,0,0,maxu,1,maxu-1,0,0,3},
+    {maxu,maxu,maxu,maxu,1,maxu,maxu,maxu-1,3},
+  };
 
   printf("testing _longarraymul\n");
-  max = ~0;
-  if (!tc_longarraymul(0,0,0,3,0,0,0,0)) return 0;
-  if (!tc_longarraymul(1,2,3,4,4,8,12,0)) return 0;
-  if (!tc_longarraymul(max,2,3,4,~3,11,12,0)) return 0;
-  if (!tc_longarraymul(max,max,3,4,~3,max,15,0)) return 0;
-  if (!tc_longarraymul(max,max,max,4,~3,max,max,3)) return 0;
-  if (!tc_longarraymul(max,0,0,max,1,~1,0,0)) return 0;
-  if (!tc_longarraymul(max,max,max,max,1,max,max,max-1)) return 0;
+  for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
+    if(!tc_longarraymul(testcases[i].x1, testcases[i].x2,
+        testcases[i].x3, testcases[i].smd,
+        testcases[i].r1, testcases[i].r2,
+        testcases[i].r3, testcases[i].r4,
+        testcases[i].lg)) return 0;
+  return 1;
+}
+
+static int tc_isnan(char* msg, floatnum f, char result)
+{
+  printf("%s", msg);
+  return float_isnan(f) == result;
+}
+
+static int test_isnan()
+{
+  floatstruct f;
+
+  printf("\ntesting float_isnan\n");
+
+  f.significand = NULL;
+  f.exponent = EXPNAN;
+  if (!tc_isnan("testing NaN\n", &f, 1)) return 0;
+
+  f.exponent = EXPZERO;
+  if (!tc_isnan("testing 0.0\n", &f, 0)) return 0;
+
+  f.exponent = 0;
+  if (!tc_isnan("testing invalid\n", &f, 1)) return 0;
+
+  f.significand = _one_;
+  if (!tc_isnan("testing 1.0\n", &f, 0)) return 0;
+
   return 1;
 }
 
@@ -316,36 +430,49 @@ static int test_create()
 
   float_create(&f);
 
-  return f.exponent == EXPNAN && f.significand == NULL?
-            TRUE : FALSE;
+  return istruenan(&f);
 }
 
 static int test_setnan()
 {
   floatstruct f;
+  int refs;
 
   printf("\ntesting float_setnan\n");
   float_create(&f);
-  int refs;
+
+  float_setnan(&f);
+  if (!istruenan(&f))
+    return 0;
+
+  f.exponent = EXPZERO;
+  float_setnan(&f);
+  if (!istruenan(&f))
+    return 0;
 
   refs = _one_->n_refs;
   f.significand = bc_copy_num(_one_);
   f.exponent = 0;
 
   float_setnan(&f);
-  return f.exponent == EXPNAN 
-         && f.significand == NULL
-         && refs == _one_->n_refs?
-            TRUE : FALSE;
+  return istruenan(&f) && refs == _one_->n_refs;
 }
 
 static int test_setzero()
 {
   floatstruct f;
+  int refs;
 
   printf("\ntesting float_setzero\n");
   float_create(&f);
-  int refs;
+
+  float_setzero(&f);
+  if (f.exponent != EXPZERO || f.significand != NULL)
+    return 0;
+
+  float_setzero(&f);
+  if (f.exponent != EXPZERO || f.significand != NULL)
+    return 0;
 
   refs = _one_->n_refs;
   f.significand = bc_copy_num(_one_);
@@ -354,41 +481,13 @@ static int test_setzero()
   float_setzero(&f);
   return f.exponent == EXPZERO 
          && f.significand == NULL
-         && refs == _one_->n_refs?
-            TRUE : FALSE;
+         && refs == _one_->n_refs;
 }
 
-static int tc_isnan(char* msg, floatnum f)
+static int tc_iszero(char* msg, floatnum f, char result)
 {
   printf("%s", msg);
-  return float_isnan(f);
-}
-
-static int test_isnan()
-{
-  floatstruct f;
-
-  printf("\ntesting float_isnan\n");
-
-  float_create(&f);
-
-  f.significand = bc_copy_num(_one_);
-  f.exponent = 0;
-  if (tc_isnan("testing 1.0\n", &f)) return FALSE;
-
-  float_setzero(&f);
-  if (tc_isnan("testing 0.0\n", &f)) return FALSE;
-
-  float_setnan(&f);
-  if (!tc_isnan("testing NaN\n", &f)) return FALSE;
-
-  return TRUE;
-}
-
-static int tc_iszero(char* msg, floatnum f)
-{
-  printf("%s", msg);
-  return float_iszero(f);
+  return float_iszero(f) == result;
 }
 
 static int test_iszero()
@@ -398,24 +497,24 @@ static int test_iszero()
   printf("\ntesting float_iszero\n");
   float_create(&f);
 
+  if (!tc_iszero("testing NaN\n", &f, 0)) return 0;
+
   f.significand = bc_copy_num(_one_);
   f.exponent = 0;
 
-  if (tc_iszero("testing 1.0\n", &f)) return FALSE;
+  if (!tc_iszero("testing 1.0\n", &f, 0)) return 0;
 
   float_setzero(&f);
-  if (!tc_iszero("testing 0.0\n", &f)) return FALSE;
+  if (!tc_iszero("testing 0.0\n", &f, 1)) return 0;
 
-  float_setnan(&f);
-  if (tc_iszero("testing NaN\n", &f)) return FALSE;
-
-  return TRUE;
+  float_free(&f);
+  return 1;
 }
 
 static int tc_getexponent(char* msg, int match, floatnum f)
 {
   printf("%s", msg);
-  return float_getexponent(f) == match? TRUE : FALSE;
+  return float_getexponent(f) == match;
 }
 
 static int test_getexponent()
@@ -431,23 +530,23 @@ static int test_getexponent()
 
   maxexp(buf, "");
   printf("%s%s%c", "testing 1e", buf, '\n');
-  if (!tc_getexponent("", EXPNAN-1, &f)) return FALSE;
+  if (!tc_getexponent("", EXPNAN-1, &f)) return 0;
 
   f.exponent = EXPZERO+1;
   minexp(buf, "");
   printf("%s%s%c", "testing 1e", buf, '\n');
-  if (!tc_getexponent("", EXPZERO+1, &f)) return FALSE;
+  if (!tc_getexponent("", EXPZERO+1, &f)) return 0;
 
   f.exponent = 0;
-  if (!tc_getexponent("testing 1.0\n", 0, &f)) return FALSE;
+  if (!tc_getexponent("testing 1.0\n", 0, &f)) return 0;
 
   float_setnan(&f);
-  if (!tc_getexponent("testing NAN\n", 0, &f)) return FALSE;
+  if (!tc_getexponent("testing NAN\n", 0, &f)) return 0;
 
   float_setzero(&f);
-  if (!tc_getexponent("testing 0.0\n", 0, &f)) return FALSE;
+  if (!tc_getexponent("testing 0.0\n", 0, &f)) return 0;
 
-  return TRUE;
+  return 1;
 }
 
 static int tc_getsignificand(char* msg, floatnum f, int bufsz, char* result)
@@ -5699,9 +5798,9 @@ int main(int argc, char** argv)
   maxscale = 15;
 
   if(!test_create()) return testfailed("float_create");
+  if(!test_isnan()) return testfailed("float_isnan");
   if(!test_setnan()) return testfailed("float_setnan");
   if(!test_setzero()) return testfailed("float_setero");
-  if(!test_isnan()) return testfailed("float_isnan");
   if(!test_iszero()) return testfailed("float_iszero");
   if(!test_getexponent()) return testfailed("float_getexponent");
   if(!test_getsignificand()) return testfailed("float_getsignificand");

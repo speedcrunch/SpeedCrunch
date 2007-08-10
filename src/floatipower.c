@@ -83,6 +83,20 @@ _raiseposi(
   return exponent == 0;
 }
 
+char
+__raiseposi(
+  floatnum x,
+  unsigned exponent,
+  int digits)
+{
+  int exp;
+  char result;
+
+  result = _raiseposi(x, &exp, exponent, digits);
+  float_setexponent(x, exp);
+  return result;
+}
+
 /* raises a non-zero x to the exponent-th power */
 char
 _raisei(

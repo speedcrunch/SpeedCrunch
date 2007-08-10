@@ -48,6 +48,8 @@ int maxscale = 150;
 #endif
 
 int float_error;
+int expmax = EXPMAX;
+int expmin = EXPMIN;
 
 /*  general helper routines  */
 
@@ -166,13 +168,6 @@ _is_special(
   return f->significand == NULL;
 }
 
-/* checking the limits on exponents */
-static char
-_is_exp_overflow(int exp)
-{
-  return (exp < EXPMIN || exp > EXPMAX);
-}
-
 /* creates a shallow working copy of <source> in <dest>,
    using b as a container for the significand.
    On return, <dest> is equal in value to <source>.
@@ -217,6 +212,27 @@ _limit_scale(
 }
 
 /*============================   floatnum routines  ===================*/
+
+int
+float_setrange(
+  int maxexp)
+{
+  int result;
+
+  maxexp = _max(_min(maxexp, MAXEXP), 1);
+  result = expmax;
+  expmax = maxexp;
+  expmin = -expmax - 1;
+  return result;
+}
+
+/* checking the limits on exponents */
+char
+float_isvalidexp(
+  int exp)
+{
+  return exp >= expmin && exp <= expmax;
+}
 
 int
 float_geterror()
@@ -715,7 +731,7 @@ float_setexponent(
   floatnum f,
   int exponent)
 {
-  if (_is_exp_overflow(exponent))
+  if (!float_isvalidexp(exponent))
     float_setnan(f);
   else if (!_is_special(f))
     f->exponent = exponent;
@@ -854,7 +870,7 @@ _normalize(
     _corr_overflow(f);
   if (f->significand != NULL)
     _corr_trailing_zeros(f);
-  if (f->significand != NULL && _is_exp_overflow(f->exponent))
+  if (f->significand != NULL && !float_isvalidexp(f->exponent))
   {
     float_error = FLOAT_UNDERFLOW;
     if (f->exponent > 0)
@@ -929,7 +945,7 @@ _roundup(
   {
     _setscale(f, 0);
     *_valueof(f) = 1;
-    if (_is_exp_overflow(++f->exponent))
+    if (!float_isvalidexp(++f->exponent))
       float_setnan(f);
 #ifdef FLOATDEBUG
     else

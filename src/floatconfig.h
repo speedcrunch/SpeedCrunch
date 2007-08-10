@@ -48,7 +48,7 @@
    of floatnum.
    Uncomment this if you want to run the standard regression test suite
    of floatnum */
-/* #define _FLOATNUMTEST */
+ #define _FLOATNUMTEST 
 
 /* floatnum uses bc's bc_num format to store and operate on data. Since
    bc_num is an arbitrary precision format, operands may grow to extreme
@@ -134,10 +134,13 @@
 #  define LOGICRANGE 96
 #endif
 
+#define MAXBITS_IN_EXP (sizeof(int)*8-2)
+#define MAXEXP ((1 << MAXBITS_IN_EXP) - 1)
+
 #ifndef BITS_IN_EXP
 /* we need 4 extra bits during conversion, so that the exponent
    does not overflow while computing a base 2 expression */
-# define BITS_IN_EXP (sizeof(int)*8-4)
+# define BITS_IN_EXP (MAXBITS_IN_EXP-2)
 #endif
 
 /* necessary width of an integer to hold all possible

@@ -81,6 +81,22 @@ void floatnum_init();
 /* gets the last error and clears the error afterwards */
 int float_geterror();
 
+/* sets the overflow/underflow limit. Results with exponents between
+   maxexp >= exponent >= -maxexp-1 are valid, all others trigger an
+   overflow/underflow error.
+   maxexp cannot be greater than MAXEXP and not less than 1.
+   The return value is the old overflow limit.
+   This function effects future results only. Current stored values are
+   not subject to overflow/underflow checking, even when they are used as
+   parameters to an operation.
+   This function never reports an error */
+int float_setrange(int maxexp);
+
+/* checks whether the submitted exponent is within the current overflow and
+   underflow limits.
+   This function never reports an error */
+char float_isvalidexp(int exp);
+
 /* initializes a new floatnum to NaN. Call this before
    the first use of a floatnum variable.
    The destructing function is float_setnan or its alias, float_free.
