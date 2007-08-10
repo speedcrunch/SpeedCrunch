@@ -48,7 +48,7 @@
    of floatnum.
    Uncomment this if you want to run the standard regression test suite
    of floatnum */
- #define _FLOATNUMTEST 
+/* #define _FLOATNUMTEST */
 
 /* floatnum uses bc's bc_num format to store and operate on data. Since
    bc_num is an arbitrary precision format, operands may grow to extreme
