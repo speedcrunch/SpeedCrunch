@@ -466,14 +466,17 @@ static int test_setzero()
   printf("\ntesting float_setzero\n");
   float_create(&f);
 
+  printf("setting NaN to zero\n");
   float_setzero(&f);
   if (f.exponent != EXPZERO || f.significand != NULL)
     return 0;
 
+  printf("setting zero to zero\n");
   float_setzero(&f);
   if (f.exponent != EXPZERO || f.significand != NULL)
     return 0;
 
+  printf("setting a value to zero\n");
   refs = _one_->n_refs;
   f.significand = bc_copy_num(_one_);
   f.exponent = 0;
@@ -523,19 +526,16 @@ static int test_getexponent()
 
   printf("\ntesting float_getexponent\n");
   float_create(&f);
-  char buf[20];
 
   f.significand = bc_copy_num(_one_);
-  f.exponent = EXPNAN-1;
+  f.exponent = EXPNAN;
 
-  maxexp(buf, "");
-  printf("%s%s%c", "testing 1e", buf, '\n');
-  if (!tc_getexponent("", EXPNAN-1, &f)) return 0;
+  printf("testing 1e%d%c", f.exponent, '\n');
+  if (!tc_getexponent("", EXPNAN, &f)) return 0;
 
-  f.exponent = EXPZERO+1;
-  minexp(buf, "");
-  printf("%s%s%c", "testing 1e", buf, '\n');
-  if (!tc_getexponent("", EXPZERO+1, &f)) return 0;
+  f.exponent = EXPZERO;
+  printf("testing 1e%d%c", f.exponent, '\n');
+  if (!tc_getexponent("", EXPZERO, &f)) return 0;
 
   f.exponent = 0;
   if (!tc_getexponent("testing 1.0\n", 0, &f)) return 0;

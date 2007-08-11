@@ -1,3 +1,9 @@
+2007-08-11
+extend test cases
+
+testfloatnum
+- extend tests of test_getexponent to extreme values
+
 2007-08-10
 refactor, extend test cases
 
