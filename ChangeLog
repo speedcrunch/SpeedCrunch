@@ -3,6 +3,7 @@ SpeedCrunch post-0.8
 New features:
   greatly extended number range
   factorials extended to real values
+  added arsinh, arcosh and artanh to repository
 
 Improvements and bug fixes:
   replaced the math engine,

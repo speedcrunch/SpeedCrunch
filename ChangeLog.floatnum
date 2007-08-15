@@ -8,7 +8,7 @@ testfloatnum
 refactor, extend test cases
 
 floatconvert
-    - pack2floatnum: simplify a bit, uses variable range limits now
+- pack2floatnum: simplify a bit, uses variable range limits now
 testfloatnum
 - started refactoring testcase handling
 - {long,check}{add,mul}: check reverse order of arguments automatically

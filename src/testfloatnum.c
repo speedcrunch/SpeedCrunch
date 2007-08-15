@@ -560,8 +560,7 @@ static int tc_getsignificand(char* msg, floatnum f, int bufsz, char* result)
   return float_getsignificand(buf+1, bufsz, f) == lg
          && buf[0] == '?'
          && buf[lg + 1] == '?'
-         && memcmp(buf + 1, result, lg) == 0?
-           TRUE : FALSE;
+         && memcmp(buf + 1, result, lg) == 0;
 }
 
 static int test_getsignificand()
@@ -574,46 +573,46 @@ static int test_getsignificand()
   f.significand = bc_copy_num(_one_);
   f.exponent = 0;
   if (!tc_getsignificand("testing negative buffer length\n",
-                      &f, -1,"")) return FALSE;
+                      &f, -1,"")) return 0;
   if (!tc_getsignificand("testing zero buffer length\n",
-                      &f, 0,"")) return FALSE;
+                      &f, 0,"")) return 0;
   if (!tc_getsignificand("testing matching buffer length\n",
-                      &f, 1,"1")) return FALSE;
+                      &f, 1,"1")) return 0;
   if (!tc_getsignificand("testing exceeding buffer length\n",
-                      &f, 2,"1")) return FALSE;
+                      &f, 2,"1")) return 0;
 
-  bc_free_num(&f.significand);
+  float_setnan(&f);
+  if (!tc_getsignificand("testing NaN, length 0\n",
+       &f, 0,"")) return 0;
+  if (!tc_getsignificand("testing NaN, length 1\n",
+       &f, 1,"N")) return 0;
+  if (!tc_getsignificand("testing NaN, length 2\n",
+       &f, 2,"N")) return 0;
+
+  f.exponent = 123;
   f.significand = bc_new_num(1, 10);
   memcpy(f.significand->n_value,"\1\2\3\4\5\6\7\10\11\0\1", 11);
 
   if (!tc_getsignificand("testing 1.2345678901, length 1\n",
-                      &f, 1,"1")) return FALSE;
+                      &f, 1,"1")) return 0;
   if (!tc_getsignificand("testing 1.2345678901, length 2\n",
-                      &f, 2,"12")) return FALSE;
+                      &f, 2,"12")) return 0;
   if (!tc_getsignificand("testing 1.2345678901, length 10\n",
-                      &f, 10,"1234567890")) return FALSE;
+                      &f, 10,"1234567890")) return 0;
   if (!tc_getsignificand("testing 1.2345678901, matching buffer\n",
-                      &f, 11,"12345678901")) return FALSE;
+                      &f, 11,"12345678901")) return 0;
   if (!tc_getsignificand("testing 1.2345678901, big buffer\n",
-                      &f, 12,"12345678901")) return FALSE;
+                      &f, 12,"12345678901")) return 0;
 
   float_setzero(&f);
   if (!tc_getsignificand("testing 0.0, length 0\n",
-                      &f, 0,"")) return FALSE;
+       &f, 0,"")) return 0;
   if (!tc_getsignificand("testing 0.0, length 1\n",
-                      &f, 1,"0")) return FALSE;
+       &f, 1,"0")) return 0;
   if (!tc_getsignificand("testing 0.0, length 2\n",
-                      &f, 2,"0")) return FALSE;
+       &f, 2,"0")) return 0;
 
-  float_setnan(&f);
-  if (!tc_getsignificand("testing NaN, length 0\n",
-                      &f, 0,"")) return FALSE;
-  if (!tc_getsignificand("testing NaN, length 1\n",
-                      &f, 1,"N")) return FALSE;
-  if (!tc_getsignificand("testing NaN, length 2\n",
-                      &f, 2,"N")) return FALSE;
-
-  return TRUE;
+  return 1;
 }
 
 static int tc_getscientific(char* msg, floatnum f, int sz, char* result)
@@ -627,13 +626,11 @@ static int tc_getscientific(char* msg, floatnum f, int sz, char* result)
   if (lg == 0)
     return float_getscientific(buf+1, sz, f) == -1
            && buf[0] == '?'
-           && buf[1] == '?'?
-             TRUE : FALSE;
+           && buf[1] == '?';
   return float_getscientific(buf+1, sz, f) == lg
          && buf[0] == '?'
          && buf[lg + 2] == '?'
-         && memcmp(buf + 1, result, lg) == 0?
-           TRUE : FALSE;
+         && memcmp(buf + 1, result, lg) == 0;
 }
 
 static int test_getscientific()
@@ -644,11 +641,11 @@ static int test_getscientific()
   float_create(&f);
 
   if (!tc_getscientific("testing NaN, length 3\n",
-                      &f, 3,"")) return FALSE;
+                      &f, 3,"")) return 0;
   if (!tc_getscientific("testing NaN, length 4\n",
-                      &f, 4,"NaN")) return FALSE;
+                      &f, 4,"NaN")) return 0;
   if (!tc_getscientific("testing NaN, length 5\n",
-                      &f, 5,"NaN")) return FALSE;
+                      &f, 5,"NaN")) return 0;
 
   float_setzero(&f);
 

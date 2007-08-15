@@ -469,6 +469,58 @@ HNumber function_tanh( const Evaluator* eval, Function*, const FunctionArguments
   return HMath::tanh( angle );
 }
 
+HNumber function_arsinh( const Evaluator         * evaluator,
+                               Function          * function,
+                         const FunctionArguments & arguments )
+{
+  if ( arguments.count() != 1 )
+    return HNumber::nan();
+
+  return HMath::arsinh( arguments[0] );
+}
+
+HNumber function_arcosh( const Evaluator         * evaluator,
+                               Function          * function,
+                         const FunctionArguments & arguments )
+{
+  if ( arguments.count() != 1 )
+    return HNumber::nan();
+
+  HNumber x = arguments[0];
+
+  HNumber result = HMath::arcosh( x );
+
+  if ( result.isNan() )
+  {
+    function->setError( function->name(), QApplication::translate( "functions",
+                        "function undefined for specified argument" ) );
+    return HNumber::nan();
+  }
+
+  return result;
+}
+
+HNumber function_artanh( const Evaluator         * evaluator,
+                               Function          * function,
+                         const FunctionArguments & arguments )
+{
+  if ( arguments.count() != 1 )
+    return HNumber::nan();
+
+  HNumber x = arguments[0];
+
+  HNumber result = HMath::artanh( x );
+
+  if ( result.isNan() )
+  {
+    function->setError( function->name(), QApplication::translate( "functions",
+                        "function undefined for specified argument" ) );
+    return HNumber::nan();
+  }
+
+  return result;
+}
+
 HNumber function_sign( const Evaluator*, Function*, const FunctionArguments& args )
 {
   if( args.count() != 1 )
@@ -1081,6 +1133,12 @@ FunctionRepository::FunctionRepository()
                                                                               */
   add( new Function( "acos",    1, function_acos,
                      QT_TR_NOOP("Arc Cosine")         ) );
+  add( new Function( "arcosh",  1, function_arcosh,
+                     QT_TR_NOOP("Area Hyperbolic Cosine") ) );
+  add( new Function( "arsinh",  1, function_arsinh,
+                     QT_TR_NOOP("Area Hyperbolic Sine") ) );
+  add( new Function( "artanh",  1, function_artanh,
+                     QT_TR_NOOP("Area Hyperbolic Tangent") ) );
   add( new Function( "asin",    1, function_asin,
                      QT_TR_NOOP("Arc Sine")           ) );
   add( new Function( "atan",    1, function_atan,
