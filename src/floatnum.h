@@ -81,10 +81,15 @@ void floatnum_init();
 /* gets the last error and clears the error afterwards */
 int float_geterror();
 
+/* returns the current overflow limit. It is the maximum possible
+   exponent. The smallest exponent is <return value> - 1.
+   This function never reports an error */
+int float_getrange();
+
 /* sets the overflow/underflow limit. Results with exponents between
-   maxexp >= exponent >= -maxexp-1 are valid, all others trigger an
+   <maxexp> >= exponent >= -<maxexp>-1 are valid, all others trigger an
    overflow/underflow error.
-   maxexp cannot be greater than MAXEXP and not less than 1.
+   <maxexp> cannot be greater than MAXEXP and not less than 1.
    The return value is the old overflow limit.
    This function effects future results only. Current stored values are
    not subject to overflow/underflow checking, even when they are used as

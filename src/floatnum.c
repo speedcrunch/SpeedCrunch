@@ -214,13 +214,19 @@ _limit_scale(
 /*============================   floatnum routines  ===================*/
 
 int
+float_getrange()
+{
+  return expmax;
+}
+
+int
 float_setrange(
   int maxexp)
 {
   int result;
 
-  maxexp = _max(_min(maxexp, MAXEXP), 1);
   result = expmax;
+  maxexp = _max(_min(maxexp, MAXEXP), 1);
   expmax = maxexp;
   expmin = -expmax - 1;
   return result;

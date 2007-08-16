@@ -101,6 +101,12 @@ static char* minexp(char* buf, char* significand)
   return buf;
 }
 
+static int tc_fail(int i)
+{
+  printf("test case %d failed", i + 1);
+  return 0;
+}
+
 static int tc_longadd(unsigned v1, unsigned v2,
                       unsigned r1, unsigned r2)
 {
@@ -111,12 +117,7 @@ static int tc_longadd(unsigned v1, unsigned v2,
   y2 = v1;
   _longadd(&x1, &x2);
   _longadd(&y1, &y2);
-  if (x1 != r1 || x2 != r2 || y1 != r1 || y2 != r2)
-  {
-    printf("test case %d + %d FAILED", v1, v2);
-    return 0;
-  };
-  return 1;
+  return x1 == r1 && x2 == r2 && y1 == r1 && y2 == r2;
 }
 
 static int test_longadd()
@@ -139,7 +140,7 @@ static int test_longadd()
   printf("testing _longadd\n");
   for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
     if(!tc_longadd(testcases[i].v1, testcases[i].v2,
-                   testcases[i].r1, testcases[i].r2)) return 0;
+                   testcases[i].r1, testcases[i].r2)) return tc_fail(i);
   return 1;
 }
 
@@ -153,12 +154,7 @@ static int tc_longmul(unsigned v1, unsigned v2,
   y2 = v1;
   _longmul(&x1, &x2);
   _longmul(&y1, &y2);
-  if (x1 != r1 || x2 != r2 || y1 != r1 || y2 != r2)
-  {
-    printf("test case %d * %d FAILED", v1, v2);
-    return 0;
-  };
-  return 1;
+  return x1 == r1 && x2 == r2 && y1 == r1 && y2 == r2;
 }
 
 static int test_longmul()
@@ -181,7 +177,7 @@ static int test_longmul()
   printf("testing _longmul\n");
   for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
     if(!tc_longmul(testcases[i].v1, testcases[i].v2,
-        testcases[i].r1, testcases[i].r2)) return 0;
+        testcases[i].r1, testcases[i].r2)) return tc_fail(i);
   return 1;
 }
 
@@ -190,12 +186,7 @@ static int tc_longshr(unsigned v1, unsigned v2, char shift,
 {
   unsigned r;
   r = _longshr(v1, v2, shift);
-  if (r != result)
-  {
-    printf("test case %d, %d shr %d FAILED", v1, v2, shift);
-    return 0;
-  };
-  return 1;
+  return r == result;
 }
 
 static int test_longshr()
@@ -212,7 +203,7 @@ static int test_longshr()
   printf("testing _longshr\n");
   for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
     if(!tc_longshr(testcases[i].v1, testcases[i].v2,
-        testcases[i].shift, testcases[i].r)) return 0;
+        testcases[i].shift, testcases[i].r)) return tc_fail(i);
   return 1;
 }
 
@@ -221,13 +212,8 @@ static int tc_checkadd(int v1, int v2, char ok, int result)
   int x, y;
   x = v1;
   y = v2;
-  if (_checkadd(&x, v2) != ok || _checkadd(&y, v1) != ok
-      || x != result || y != result)
-  {
-    printf("test case %d + %d FAILED", v1, v2);
-    return 0;
-  };
-  return 1;
+  return _checkadd(&x, v2) == ok && _checkadd(&y, v1) == ok
+      && x == result && y == result;
 }
 
 static int test_checkadd()
@@ -248,7 +234,7 @@ static int test_checkadd()
   printf("testing _checkadd\n");
   for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
     if(!tc_checkadd(testcases[i].v1, testcases[i].v2,
-        testcases[i].ok, testcases[i].r)) return 0;
+        testcases[i].ok, testcases[i].r)) return tc_fail(i);
   return 1;
 }
 
@@ -257,13 +243,8 @@ static int tc_checkmul(int v1, int v2, char ok, int result)
   int x, y;
   x = v1;
   y = v2;
-  if (_checkmul(&x, v2) != ok || _checkmul(&y, v1) != ok
-      || x != result || y != result)
-  {
-    printf("test case %d * %d FAILED", v1, v2);
-    return 0;
-  };
-  return 1;
+  return _checkmul(&x, v2) == ok && _checkmul(&y, v1) == ok
+      && x == result && y == result;
 }
 
 static int test_checkmul()
@@ -287,7 +268,7 @@ static int test_checkmul()
   printf("testing _checkmul\n");
   for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
     if(!tc_checkmul(testcases[i].v1, testcases[i].v2,
-        testcases[i].ok, testcases[i].r)) return 0;
+        testcases[i].ok, testcases[i].r)) return tc_fail(i);
   return 1;
 }
 
@@ -302,12 +283,7 @@ static int tc_longarrayadd(unsigned x1, unsigned x2, unsigned x3,
   a[1] = x2;
   a[2] = x3;
   r = _longarrayadd(a, length, smd);
-  if (a[0] != r1 || a[1] != r2 || a[2] != r3 || r != r4)
-  {
-    printf("test case %d, %d, %d + %d FAILED", x1, x2, x3, smd);
-    return 0;
-  }
-  return 1;
+  return a[0] == r1 && a[1] == r2 && a[2] == r3 && r == r4;
 }
 
 static int test_longarrayadd()
@@ -336,7 +312,7 @@ static int test_longarrayadd()
                         testcases[i].x3, testcases[i].smd,
                         testcases[i].r1, testcases[i].r2,
                         testcases[i].r3, testcases[i].r4,
-                        testcases[i].lg)) return 0;
+                        testcases[i].lg)) return tc_fail(i);
   return 1;
 }
 
@@ -351,12 +327,7 @@ static int tc_longarraymul(unsigned x1, unsigned x2, unsigned x3,
   a[1] = x2;
   a[2] = x3;
   r = _longarraymul(a, lg, factor);
-  if (a[0] != r1 || a[1] != r2 || a[2] != r3 || r != r4)
-  {
-    printf("test case %u, %u, %u * %u FAILED", x1, x2, x3, factor);
-    return 0;
-  }
-  return 1;
+  return a[0] == r1 && a[1] == r2 && a[2] == r3 && r == r4;
 }
 
 static int test_longarraymul()
@@ -387,231 +358,265 @@ static int test_longarraymul()
         testcases[i].x3, testcases[i].smd,
         testcases[i].r1, testcases[i].r2,
         testcases[i].r3, testcases[i].r4,
-        testcases[i].lg)) return 0;
+        testcases[i].lg)) return tc_fail(i);
   return 1;
 }
 
-static int tc_isnan(char* msg, floatnum f, char result)
+static int tc_isnan(void* s, int exp, char result)
 {
-  printf("%s", msg);
-  return float_isnan(f) == result;
+  floatstruct f;
+
+  f.significand = s;
+  f.exponent = exp;
+  return float_isnan(&f) == result;
 }
 
 static int test_isnan()
 {
-  floatstruct f;
+  static struct{
+    void* s; int exp; char result;
+  } testcases[] = {
+    {NULL, EXPNAN, 1},
+    {NULL, EXPZERO, 0},
+    {NULL, 0, 1},
+    {(void*)1, 0, 0},
+    {(void*)1, EXPNAN, 0},
+  };
+  int i;
 
-  printf("\ntesting float_isnan\n");
+  printf("testing float_isnan\n");
 
-  f.significand = NULL;
-  f.exponent = EXPNAN;
-  if (!tc_isnan("testing NaN\n", &f, 1)) return 0;
-
-  f.exponent = EXPZERO;
-  if (!tc_isnan("testing 0.0\n", &f, 0)) return 0;
-
-  f.exponent = 0;
-  if (!tc_isnan("testing invalid\n", &f, 1)) return 0;
-
-  f.significand = _one_;
-  if (!tc_isnan("testing 1.0\n", &f, 0)) return 0;
-
+  for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
+    if(!tc_isnan(testcases[i].s, testcases[i].exp,
+        testcases[i].result)) return tc_fail(i);
   return 1;
 }
 
-static int test_create()
+static int tc_iszero(void* s, int exp, char result)
 {
   floatstruct f;
 
-  printf("\ntesting float_create\n");
-
-  f.significand = (bc_num)(65432);
-  f.exponent = 12345;
-
-  float_create(&f);
-
-  return istruenan(&f);
-}
-
-static int test_setnan()
-{
-  floatstruct f;
-  int refs;
-
-  printf("\ntesting float_setnan\n");
-  float_create(&f);
-
-  float_setnan(&f);
-  if (!istruenan(&f))
-    return 0;
-
-  f.exponent = EXPZERO;
-  float_setnan(&f);
-  if (!istruenan(&f))
-    return 0;
-
-  refs = _one_->n_refs;
-  f.significand = bc_copy_num(_one_);
-  f.exponent = 0;
-
-  float_setnan(&f);
-  return istruenan(&f) && refs == _one_->n_refs;
-}
-
-static int test_setzero()
-{
-  floatstruct f;
-  int refs;
-
-  printf("\ntesting float_setzero\n");
-  float_create(&f);
-
-  printf("setting NaN to zero\n");
-  float_setzero(&f);
-  if (f.exponent != EXPZERO || f.significand != NULL)
-    return 0;
-
-  printf("setting zero to zero\n");
-  float_setzero(&f);
-  if (f.exponent != EXPZERO || f.significand != NULL)
-    return 0;
-
-  printf("setting a value to zero\n");
-  refs = _one_->n_refs;
-  f.significand = bc_copy_num(_one_);
-  f.exponent = 0;
-
-  float_setzero(&f);
-  return f.exponent == EXPZERO 
-         && f.significand == NULL
-         && refs == _one_->n_refs;
-}
-
-static int tc_iszero(char* msg, floatnum f, char result)
-{
-  printf("%s", msg);
-  return float_iszero(f) == result;
+  f.significand = s;
+  f.exponent = exp;
+  return float_iszero(&f) == result;
 }
 
 static int test_iszero()
 {
-  floatstruct f;
+  static struct{
+    void* s; int exp; char result;
+  } testcases[] = {
+    {NULL, EXPNAN, 0},
+    {NULL, EXPZERO, 1},
+    {NULL, 0, 0},
+    {(void*)1, 0, 0},
+    {(void*)1, EXPZERO, 0},
+  };
+  int i;
 
-  printf("\ntesting float_iszero\n");
-  float_create(&f);
+  printf("testing float_iszero\n");
 
-  if (!tc_iszero("testing NaN\n", &f, 0)) return 0;
-
-  f.significand = bc_copy_num(_one_);
-  f.exponent = 0;
-
-  if (!tc_iszero("testing 1.0\n", &f, 0)) return 0;
-
-  float_setzero(&f);
-  if (!tc_iszero("testing 0.0\n", &f, 1)) return 0;
-
-  float_free(&f);
+  for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
+    if(!tc_iszero(testcases[i].s, testcases[i].exp,
+        testcases[i].result)) return tc_fail(i);
   return 1;
 }
 
-static int tc_getexponent(char* msg, int match, floatnum f)
+static int tc_create(void* s, int exp)
 {
-  printf("%s", msg);
-  return float_getexponent(f) == match;
+  floatstruct f;
+
+  f.significand = s;
+  f.exponent = exp;
+  float_create(&f);
+  return istruenan(&f);
+}
+
+static int test_create()
+{
+  static struct{
+    void* s; int exp;
+  } testcases[] = {
+    {NULL, EXPNAN},
+    {NULL, EXPZERO},
+    {NULL, 0},
+    {(void*)1, 0},
+    {(void*)1, EXPNAN},
+    {(void*)1, EXPZERO},
+  };
+  int i;
+
+  printf("testing float_create\n");
+
+  for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
+    if(!tc_create(testcases[i].s, testcases[i].exp)) return tc_fail(i);
+  return 1;
+}
+
+static int tc_setnan(char one, int exp)
+{
+  floatstruct f;
+  int refs;
+
+  refs = _one_->n_refs;
+  f.significand = NULL;
+  if (one)
+    f.significand = bc_copy_num(_one_);
+  f.exponent = exp;
+  float_setnan(&f);
+  return istruenan(&f) && refs == _one_->n_refs;
+}
+
+static int test_setnan()
+{
+  static struct{
+    char one; int exp;
+  } testcases[] = {
+    {0, EXPNAN},
+    {0, EXPZERO},
+    {0, 0},
+    {1, 0},
+    {1, EXPNAN},
+    {1, EXPZERO},
+  };
+  int i;
+
+  printf("testing float_setnan\n");
+  for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
+    if(!tc_setnan(testcases[i].one, testcases[i].exp)) return tc_fail(i);
+  return 1;
+}
+
+static int tc_setzero(char one, int exp)
+{
+  floatstruct f;
+  int refs;
+
+  refs = _one_->n_refs;
+  f.significand = NULL;
+  if (one)
+    f.significand = bc_copy_num(_one_);
+  f.exponent = exp;
+  float_setzero(&f);
+  return float_iszero(&f) && refs == _one_->n_refs;
+}
+
+static int test_setzero()
+{
+  static struct{
+    char one; int exp;
+  } testcases[] = {
+    {0, EXPNAN},
+    {0, EXPZERO},
+    {0, 0},
+    {1, 0},
+    {1, EXPNAN},
+    {1, EXPZERO},
+  };
+  int i;
+
+  printf("testing float_setzero\n");
+  for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
+    if(!tc_setzero(testcases[i].one, testcases[i].exp)) return tc_fail(i);
+  return 1;
+}
+
+static int tc_getexponent(char one, int exp, int result)
+{
+  floatstruct f;
+
+  f.significand = NULL;
+  if (one)
+    f.significand = _one_;
+  f.exponent = exp;
+  return float_getexponent(&f) == result;
 }
 
 static int test_getexponent()
 {
-  floatstruct f;
+  static struct{
+    char one; int exp; int result;
+  } testcases[] = {
+    {0, EXPNAN, 0},
+    {0, EXPZERO, 0},
+    {0, 0, 0},
+    {0, 1, 0},
+    {0, -1, 0},
+    {1, 0, 0},
+    {1, 5, 5},
+    {1, -7, -7},
+    {1, EXPNAN, EXPNAN},
+    {1, EXPZERO, EXPZERO},
+  };
+  int i;
 
-  printf("\ntesting float_getexponent\n");
-  float_create(&f);
+  printf("testing float_getexponent\n");
 
-  f.significand = bc_copy_num(_one_);
-  f.exponent = EXPNAN;
-
-  printf("testing 1e%d%c", f.exponent, '\n');
-  if (!tc_getexponent("", EXPNAN, &f)) return 0;
-
-  f.exponent = EXPZERO;
-  printf("testing 1e%d%c", f.exponent, '\n');
-  if (!tc_getexponent("", EXPZERO, &f)) return 0;
-
-  f.exponent = 0;
-  if (!tc_getexponent("testing 1.0\n", 0, &f)) return 0;
-
-  float_setnan(&f);
-  if (!tc_getexponent("testing NAN\n", 0, &f)) return 0;
-
-  float_setzero(&f);
-  if (!tc_getexponent("testing 0.0\n", 0, &f)) return 0;
-
+  for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
+    if(!tc_getexponent(testcases[i].one, testcases[i].exp, testcases[i].result))
+      return tc_fail(i);
   return 1;
 }
 
-static int tc_getsignificand(char* msg, floatnum f, int bufsz, char* result)
+static int tc_getsignificand(const char* value, int exp, int bufsz, const char* result)
 {
   char buf[30];
   int lg;
+  floatstruct f;
+  char retvalue;
 
-  lg = strlen(result);
+  float_create(&f);
   memset(buf, '?', 30);
-  printf("%s", msg);
-  return float_getsignificand(buf+1, bufsz, f) == lg
-         && buf[0] == '?'
-         && buf[lg + 1] == '?'
-         && memcmp(buf + 1, result, lg) == 0;
+  if (value)
+  {
+    lg = value[0];
+    f.significand = bc_new_num(1, lg-1);
+    memcpy(f.significand->n_value, value+1, lg);
+    f.exponent = exp;
+  }
+  else if (exp == EXPZERO)
+    float_setzero(&f);
+  lg = strlen(result);
+  f.exponent = exp;
+  retvalue = float_getsignificand(buf+1, bufsz, &f) == lg
+      && buf[0] == '?'
+      && buf[lg + 1] == '?'
+      && memcmp(buf + 1, result, lg) == 0;
+  float_free(&f);
+  return retvalue;
 }
 
 static int test_getsignificand()
 {
-  floatstruct f;
+  static const char v1[] = "\1\1";
+  static const char v2[] = "\13\1\2\3\4\5\6\7\10\11\0\1";
+  static struct{
+    const char* value; int exp; int bufsz; const char* result;
+  } testcases[] = {
+    {v1, 0, -1, ""},
+    {v1, 0, 0, ""},
+    {v1, 0, 1, "1"},
+    {v1, 0, 2, "1"},
+    {NULL, EXPNAN, 0, ""},
+    {NULL, EXPNAN, 1, "N"},
+    {NULL, EXPNAN, 2, "N"},
+    {NULL, EXPZERO, 0, ""},
+    {NULL, EXPZERO, 1, "0"},
+    {NULL, EXPZERO, 2, "0"},
+    {v2, 123, 1, "1"},
+    {v2, -123, 2, "12"},
+    {v2, 0, 10, "1234567890"},
+    {v2, 1, 11, "12345678901"},
+    {v2, -1, 12, "12345678901"},
+  };
+  int i;
 
   printf("\ntesting float_getsignificand\n");
-  float_create(&f);
 
-  f.significand = bc_copy_num(_one_);
-  f.exponent = 0;
-  if (!tc_getsignificand("testing negative buffer length\n",
-                      &f, -1,"")) return 0;
-  if (!tc_getsignificand("testing zero buffer length\n",
-                      &f, 0,"")) return 0;
-  if (!tc_getsignificand("testing matching buffer length\n",
-                      &f, 1,"1")) return 0;
-  if (!tc_getsignificand("testing exceeding buffer length\n",
-                      &f, 2,"1")) return 0;
-
-  float_setnan(&f);
-  if (!tc_getsignificand("testing NaN, length 0\n",
-       &f, 0,"")) return 0;
-  if (!tc_getsignificand("testing NaN, length 1\n",
-       &f, 1,"N")) return 0;
-  if (!tc_getsignificand("testing NaN, length 2\n",
-       &f, 2,"N")) return 0;
-
-  f.exponent = 123;
-  f.significand = bc_new_num(1, 10);
-  memcpy(f.significand->n_value,"\1\2\3\4\5\6\7\10\11\0\1", 11);
-
-  if (!tc_getsignificand("testing 1.2345678901, length 1\n",
-                      &f, 1,"1")) return 0;
-  if (!tc_getsignificand("testing 1.2345678901, length 2\n",
-                      &f, 2,"12")) return 0;
-  if (!tc_getsignificand("testing 1.2345678901, length 10\n",
-                      &f, 10,"1234567890")) return 0;
-  if (!tc_getsignificand("testing 1.2345678901, matching buffer\n",
-                      &f, 11,"12345678901")) return 0;
-  if (!tc_getsignificand("testing 1.2345678901, big buffer\n",
-                      &f, 12,"12345678901")) return 0;
-
-  float_setzero(&f);
-  if (!tc_getsignificand("testing 0.0, length 0\n",
-       &f, 0,"")) return 0;
-  if (!tc_getsignificand("testing 0.0, length 1\n",
-       &f, 1,"0")) return 0;
-  if (!tc_getsignificand("testing 0.0, length 2\n",
-       &f, 2,"0")) return 0;
-
+  for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
+    if(!tc_getsignificand(testcases[i].value, testcases[i].exp,
+        testcases[i].bufsz, testcases[i].result))
+      return tc_fail(i);
   return 1;
 }
 
@@ -5779,6 +5784,7 @@ int main(int argc, char** argv)
 #ifdef _FLOATNUMTEST
   int scalesave;
 
+  printf("\ntestblock floatlong\n");
   floatmath_init();
   float_stdconvert();
   maxscale = 150;
@@ -5791,14 +5797,16 @@ int main(int argc, char** argv)
   if(!test_longarrayadd()) return testfailed("_longarrayadd");
   if(!test_longarraymul()) return testfailed("_longarrayadd");
 
+  printf("\ntestblock floatnum\n");
+
   scalesave = maxscale;
   maxscale = 15;
 
   if(!test_create()) return testfailed("float_create");
   if(!test_isnan()) return testfailed("float_isnan");
-  if(!test_setnan()) return testfailed("float_setnan");
-  if(!test_setzero()) return testfailed("float_setero");
   if(!test_iszero()) return testfailed("float_iszero");
+  if(!test_setnan()) return testfailed("float_setnan");
+  if(!test_setzero()) return testfailed("float_setzero");
   if(!test_getexponent()) return testfailed("float_getexponent");
   if(!test_getsignificand()) return testfailed("float_getsignificand");
   if(!test_getscientific()) return testfailed("float_getscientific");
