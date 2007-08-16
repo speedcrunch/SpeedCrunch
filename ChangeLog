@@ -3,7 +3,11 @@ SpeedCrunch post-0.8
 New features:
   greatly extended number range
   factorials extended to real values
-  added arsinh, arcosh and artanh to repository
+
+New functions:
+  ARSINH: area hyperbolic sine, the reverse of sinh
+  ARCOSH: area hyperbolic cosine, the reverse of cosh
+  ARTANH: area hyperbolic tangent, the reverse of tanh
 
 Improvements and bug fixes:
   replaced the math engine,
