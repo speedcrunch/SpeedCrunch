@@ -61,6 +61,37 @@
 #define maxi (msbi + (msbi -1))
 #define mini (-maxi - 1)
 
+static unsigned rol(unsigned u)
+{
+  return (u << 1) | (u >> (sizeof(unsigned)*8-1));
+}
+
+static unsigned hash(floatnum x)
+{
+  unsigned result;
+  bc_num bc;
+  char* p;
+  int i;
+
+  result = 0;
+  if (x)
+  {
+    bc = x->significand;
+    result = rol(x->exponent) ^ (unsigned)(bc);
+    if (bc)
+    {
+      result = rol(result) ^ bc->n_sign;
+      result = rol(result) ^ bc->n_len;
+      result = rol(result) ^ bc->n_scale;
+      p = bc->n_value;
+      result = rol(result) ^ (unsigned)p;
+      for (i = 0; i++ <= bc->n_scale;)
+        result = rol(result) ^ *(p++);
+    }
+  }
+  return result;
+}
+
 static char istruenan(floatnum x)
 {
   return x->exponent == EXPNAN && x->significand == NULL;
@@ -368,7 +399,8 @@ static int tc_isnan(void* s, int exp, char result)
 
   f.significand = s;
   f.exponent = exp;
-  return float_isnan(&f) == result;
+  return float_isnan(&f) == result && exp == f.exponent
+         && f.significand == s;
 }
 
 static int test_isnan()
@@ -398,7 +430,8 @@ static int tc_iszero(void* s, int exp, char result)
 
   f.significand = s;
   f.exponent = exp;
-  return float_iszero(&f) == result;
+  return float_iszero(&f) == result && exp == f.exponent
+      && f.significand == s;
 }
 
 static int test_iszero()
@@ -524,12 +557,14 @@ static int test_setzero()
 static int tc_getexponent(char one, int exp, int result)
 {
   floatstruct f;
+  unsigned h;
 
   f.significand = NULL;
   if (one)
     f.significand = _one_;
   f.exponent = exp;
-  return float_getexponent(&f) == result;
+  h = hash(&f);
+  return float_getexponent(&f) == result && hash(&f) == h;
 }
 
 static int test_getexponent()
@@ -562,6 +597,7 @@ static int tc_getsignificand(const char* value, int exp, int bufsz, const char* 
 {
   char buf[30];
   int lg;
+  unsigned h;
   floatstruct f;
   char retvalue;
 
@@ -576,12 +612,25 @@ static int tc_getsignificand(const char* value, int exp, int bufsz, const char* 
   }
   else if (exp == EXPZERO)
     float_setzero(&f);
+  h = hash(&f);
   lg = strlen(result);
   f.exponent = exp;
   retvalue = float_getsignificand(buf+1, bufsz, &f) == lg
       && buf[0] == '?'
       && buf[lg + 1] == '?'
-      && memcmp(buf + 1, result, lg) == 0;
+      && memcmp(buf + 1, result, lg) == 0
+      && h == hash(&f);
+  if (retvalue && f.significand)
+  {
+    memset(buf, '?', 30);
+    f.significand->n_sign = MINUS;
+    h = hash(&f);
+    retvalue = float_getsignificand(buf+1, bufsz, &f) == lg
+        && h == hash(&f)
+        && buf[0] == '?'
+        && buf[lg + 1] == '?'
+        && memcmp(buf + 1, result, lg) == 0;
+  }
   float_free(&f);
   return retvalue;
 }
@@ -611,11 +660,305 @@ static int test_getsignificand()
   };
   int i;
 
-  printf("\ntesting float_getsignificand\n");
+  printf("testing float_getsignificand\n");
 
   for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
     if(!tc_getsignificand(testcases[i].value, testcases[i].exp,
         testcases[i].bufsz, testcases[i].result))
+      return tc_fail(i);
+  return 1;
+}
+
+static int tc_setsignificand(const char* mant, int mlg,
+                             const char* result, int dot, int zeros)
+{
+  floatstruct f;
+  int refs;
+  int z, d;
+  int* pz;
+  char buf[30];
+  char retvalue;
+
+  z = -1;
+  pz = &z;
+  refs = _one_->n_refs;
+  f.exponent = 0;
+  f.significand = bc_copy_num(_one_);
+  d = float_setsignificand(&f, pz, mant, mlg);
+  buf[float_getsignificand(buf, 30, &f)] = '\0';
+  retvalue = refs == _one_->n_refs
+             && (f.significand == NULL || f.significand->n_len == 1)
+             && (f.significand == NULL || f.significand->n_sign == PLUS)
+             && strcmp(buf, result) == 0
+             && dot == d && z == zeros
+             && float_getexponent(&f) == 0;
+  if (retvalue)
+  {
+    d = float_setsignificand(&f, NULL, mant, mlg);
+    buf[float_getsignificand(buf, 30, &f)] = '\0';
+    retvalue = (f.significand == NULL || f.significand->n_len == 1)
+        && (f.significand == NULL || f.significand->n_sign == PLUS)
+        && strcmp(buf, result) == 0 && dot == d
+        && float_getexponent(&f) == 0;
+  }
+  float_setnan(&f);
+  return retvalue;
+}
+
+static int test_setsignificand()
+{
+  static const char v1[] = "1";
+  static const char v2[] = "12";
+  static struct{
+    const char* mant; int lg; const char* result; int dot; int zeros;
+  } testcases[] = {
+    {NULL, -1, "N", -1, 0},
+    {NULL, 0, "N", -1, 0},
+    {"", NULLTERMINATED, "N", -1, 0},
+    {".", NULLTERMINATED, "N", -1, 0},
+    {"x", NULLTERMINATED, "N", -1, 0},
+    {"-1", NULLTERMINATED, "N", -1, 0},
+    {"1E", NULLTERMINATED, "N", -1, 0},
+    {"1E1", NULLTERMINATED, "N", -1, 0},
+    {"1111111111111111111111E1", NULLTERMINATED, "N", -1, 0},
+    {"E1", NULLTERMINATED, "N", -1, 0},
+    {".e", NULLTERMINATED, "N", -1, 0},
+    {".1e", NULLTERMINATED, "N", -1, 0},
+    {"1.e1", NULLTERMINATED, "N", -1, 0},
+    {"e1.", NULLTERMINATED, "N", -1, 0},
+    {".1.", NULLTERMINATED, "N", -1, 0},
+    {"1..", NULLTERMINATED, "N", -1, 0},
+    {"1.000000000000000000.0", NULLTERMINATED, "N", -1, 0},
+    {"0", NULLTERMINATED, "0", -1, 0},
+    {"0.", NULLTERMINATED, "0", -1, 0},
+    {".0", NULLTERMINATED, "0", -1, 0},
+    {"000", NULLTERMINATED, "0", -1, 0},
+    {"00000000000", NULLTERMINATED, "0", -1, 0},
+    {".00000000000", NULLTERMINATED, "0", -1, 0},
+    {"00000000000.", NULLTERMINATED, "0", -1, 0},
+    {"000000.00000", NULLTERMINATED, "0", -1, 0},
+    {v1, -1, "N", -1, 0},
+    {v1, 0, "N", -1, 0},
+    {v1, 1, "1", -1, 0},
+    {v1, NULLTERMINATED, "1", -1, 0},
+    {v2, 1, "1", -1, 0},
+    {v2, NULLTERMINATED, "12", -1, 0},
+    {".1", NULLTERMINATED, "1", 0, 0},
+    {"1.", NULLTERMINATED, "1", 1, 0},
+    {"1.2", NULLTERMINATED, "12", 1, 0},
+    {"01.2", NULLTERMINATED, "12", 2, 1},
+    {"00.000000000000012", NULLTERMINATED, "12", 2, 15},
+    {"12.3456789000", NULLTERMINATED, "123456789", 2, 0},
+    {"12345678900.0", NULLTERMINATED, "123456789", 11, 0},
+    {"1234567890183456789", NULLTERMINATED, "12345678901", -1, 0},
+    {"12345678900123456789", NULLTERMINATED, "123456789", -1, 0},
+    {"12345678901234567.89", NULLTERMINATED, "12345678901", 17, 0},
+  };
+  int i, save;
+
+  printf("testing float_setsignificand\n");
+  save = maxscale;
+  maxscale = 11;
+  for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
+    if(!tc_setsignificand(testcases[i].mant, testcases[i].lg,
+        testcases[i].result, testcases[i].dot, testcases[i].zeros))
+      return tc_fail(i);
+  maxscale = save;
+  return 1;
+}
+
+static int tc_getsign(const char* value, signed char sign, signed char result)
+{
+  floatstruct f;
+  unsigned h;
+  char retvalue;
+
+  float_create(&f);
+  float_setsignificand(&f, NULL, value, NULLTERMINATED);
+  if (f.significand && sign == -1)
+    f.significand->n_sign = MINUS;
+  h = hash(&f);
+  retvalue = float_getsign(&f) == result && hash(&f) == h;
+  float_free(&f);
+  return retvalue;
+}
+
+static int test_getsign()
+{
+  int i;
+  static struct{
+    const char* mant; signed char sign; signed char result;
+  } testcases[] = {
+    {"N", 0, 0},
+    {"0", 0, 0},
+    {"1", 0, 1},
+    {"123", -1, -1},
+  };
+
+  printf("testing float_getsign\n");
+
+  for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
+    if(!tc_getsign(testcases[i].mant, testcases[i].sign,
+        testcases[i].result)) return tc_fail(i);
+  return 1;
+}
+
+static int tc_setsign(const char* value, int exp, signed char s)
+{
+  floatstruct f;
+  unsigned h, hm;
+  signed char sign;
+
+  float_create(&f);
+  float_setsignificand(&f, NULL, value, NULLTERMINATED);
+  if (f.significand)
+    f.exponent = exp;
+  if (s == 0)
+  {
+    h = hash(&f);
+    sign = float_getsign(&f);
+    if (f.significand)
+      f.significand->n_sign = MINUS;
+    hm = hash(&f);
+    float_setsign(&f, 0);
+    if (float_getsign(&f) != -sign || hm != hash(&f))
+      return 0;
+    float_setsign(&f, 1);
+    if (float_getsign(&f) != sign || h != hash(&f))
+      return 0;
+    float_setsign(&f, 0);
+    if (float_getsign(&f) != sign || h != hash(&f))
+      return 0;
+    float_setsign(&f, 1);
+    if (float_getsign(&f) != sign || h != hash(&f))
+      return 0;
+    float_setsign(&f, -1);
+    if (float_getsign(&f) != -sign || hm != hash(&f))
+      return 0;
+    float_setsign(&f, -1);
+    if (float_getsign(&f) != -sign || hm != hash(&f))
+      return 0;
+    s = 2;
+  }
+  float_setsign(&f, s);
+  return istruenan(&f);
+}
+
+static int test_setsign()
+{
+  int i;
+  static struct{
+    const char* value; int exp; signed char sign;
+  } testcases[] = {
+    {"N", 0, 0},
+    {"0", 0, 0},
+    {"1", 0, 0},
+    {"1", 12, 0},
+    {"1", -12, 0},
+    {"1", 0, -128},
+    {"1", 0, -127},
+    {"1", 0, -2},
+    {"1", 0, 2},
+    {"1", 0, 126},
+    {"1", 0, 127},
+  };
+
+  printf("testing float_setsign\n");
+
+  for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
+    if(!tc_setsign(testcases[i].value, testcases[i].exp,
+        testcases[i].sign)) return tc_fail(i);
+  return 1;
+}
+
+static int tc_setexponent(const char* value, int exp, int range,
+                          int result, char valid)
+{
+  floatstruct f;
+  int save;
+  char buf[30];
+  signed char sign;
+
+  save = float_setrange(range);
+  float_create(&f);
+  float_setsignificand(&f, NULL, value, NULLTERMINATED);
+  sign = float_getsign(&f);
+  float_setexponent(&f, exp);
+  if (valid)
+  {
+    buf[float_getsignificand(buf, 30, &f)] = '\0';
+    if (strcmp(buf, value) != 0 || f.exponent != result
+        || float_getsign(&f) != sign)
+      return 0;
+  }
+  else if(!istruenan(&f))
+    return 0;
+  if (sign)
+  {
+    float_setsignificand(&f, NULL, value, NULLTERMINATED);
+    float_setsign(&f, -1);
+    float_setexponent(&f, exp);
+    if (valid)
+    {
+      buf[float_getsignificand(buf, 30, &f)] = '\0';
+      if (strcmp(buf, value) != 0 || f.exponent != result
+          || float_getsign(&f) != -sign)
+        return 0;
+    }
+    else if(!istruenan(&f))
+      return 0;
+    float_setsignificand(&f, NULL, value, NULLTERMINATED);
+    f.exponent = -exp;
+    float_setexponent(&f, exp);
+    if (valid)
+    {
+      buf[float_getsignificand(buf, 30, &f)] = '\0';
+      if (strcmp(buf, value) != 0 || f.exponent != result
+          || float_getsign(&f) != sign)
+        return 0;
+    }
+    else if(!istruenan(&f))
+      return 0;
+  }
+  float_free(&f);
+  float_setrange(save);
+  return 1;
+}
+
+static int test_setexponent()
+{
+  int i;
+  static struct{
+    const char* mant; int exp; int range; int result; char valid;
+  } testcases[] = {
+    {"N", 0, 100, 0, 0},
+    {"N", 1, 100, 0, 0},
+    {"N", -1, 100, 0, 0},
+    {"N", EXPNAN, 100, 0, 0},
+    {"N", 100, 100, 0, 0},
+    {"N", EXPZERO, 100, 0, 0},
+    {"0", 0, 100, EXPZERO, 1},
+    {"0", 1, 100, EXPZERO, 1},
+    {"0", -1, 100, EXPZERO, 1},
+    {"0", EXPNAN, 100, 0, 0},
+    {"0", EXPNAN - 1, 100, 0, 0},
+    {"0", EXPZERO, 100, 0, 0},
+    {"1", 0, 100, 0, 1},
+    {"12", 100, 100, 100, 1},
+    {"12", 101, 100, 0, 0},
+    {"13", -101, 100, -101, 1},
+    {"121", -102, 100, 0, 0},
+    {"1432", EXPNAN, 100, 0, 0},
+    {"1432", EXPZERO, 100, 0, 0},
+    {"1432", MAXEXP, MAXEXP, MAXEXP, 1},
+    {"1432", -MAXEXP-1, MAXEXP, -MAXEXP-1, 1},
+  };
+
+  printf("testing float_setexponent\n");
+
+  for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
+    if(!tc_setexponent(testcases[i].mant, testcases[i].exp,
+        testcases[i].range, testcases[i].result, testcases[i].valid))
       return tc_fail(i);
   return 1;
 }
@@ -727,196 +1070,6 @@ static int test_getscientific()
                       &f, 18,"-1.2345678001e-10")) return FALSE;
 
   float_setnan(&f);
-  return TRUE;
-}
-
-static int tc_setsignificand(char* msg, char* mant, char* result, int dot, int zeros)
-{
-  floatstruct f;
-  int refs;
-  int z;
-  int lg;
-  char buf[30];
-
-  printf("%s", msg);
-  refs = _one_->n_refs;
-  f.exponent = 0;
-  f.significand = bc_copy_num(_one_);
-  dot -= float_setsignificand(&f, &z, mant, NULLTERMINATED);
-  float_getscientific(buf, 30, &f);
-  lg = strlen(result);
-  if(refs != _one_->n_refs || strlen(buf) != lg
-     || memcmp(buf, result, lg+1) != 0
-     || dot != 0 || z != zeros) return FALSE;
-  float_setnan(&f);
-  return TRUE;
-}
-
-static int test_setsignificand()
-{
-  floatstruct f;
-  int refs;
-  char buf[30];
-
-  printf("\ntesting float_setsignificand\n");
-  float_create(&f);
-
-  refs = _one_->n_refs;
-  f.exponent = 0;
-  f.significand = bc_copy_num(_one_);
-
-  printf("%s", "testing negative buffer size\n");
-  float_setsignificand(&f, NULL, buf, -1);
-  if (!float_isnan(&f) || refs != _one_->n_refs)
-    return FALSE;
-  float_setnan(&f);
-
-  if(!tc_setsignificand("testing empty buffer\n", "", "NaN", -1,0)) return FALSE;
-  if(!tc_setsignificand("testing .\n", ".", "NaN", -1,0)) return FALSE;
-  if(!tc_setsignificand("testing 000\n", "000", "0", -1,0)) return FALSE;
-  if(!tc_setsignificand("testing 00.0\n", "00.0", "0", -1,0)) return FALSE;
-  if(!tc_setsignificand("testing invalid character\n", "12E34", "NaN", -1,0)) return FALSE;
-  if(!tc_setsignificand("testing two dots\n", "12.3.4", "NaN", -1,0)) return FALSE;
-  if(!tc_setsignificand("testing 1\n", "1", "1.e0", -1,0)) return FALSE;
-  if(!tc_setsignificand("testing 12\n", "12", "1.2e0", -1,0)) return FALSE;
-  if(!tc_setsignificand("testing 1.\n", "1.", "1.e0", 1,0)) return FALSE;
-  if(!tc_setsignificand("testing .1\n", ".1", "1.e0", 0,0)) return FALSE;
-  if(!tc_setsignificand("testing .0\n", ".0", "0", -1,0)) return FALSE;
-  if(!tc_setsignificand("testing 1.2\n", "1.2", "1.2e0", 1,0)) return FALSE;
-  if(!tc_setsignificand("testing 01.2\n", "01.2", "1.2e0", 2,1)) return FALSE;
-  if(!tc_setsignificand("testing 00.000000000000012\n", "00.000000000000012", "1.2e0", 2,15)) return FALSE;
-  if(!tc_setsignificand("testing 12.3456789000\n", "12.3456789000", "1.23456789e0",2,0)) return FALSE;
-  if(!tc_setsignificand("testing 12345678900.0\n", "12345678900.0", "1.23456789e0", 11,0)) return FALSE;
-  if(!tc_setsignificand("testing truncation\n", "1234567890123456789", "1.23456789012345e0",-1,0)) return FALSE;
-  if(!tc_setsignificand("testing truncation with dot\n", "12345678901234567.89", "1.23456789012345e0",17,0)) return FALSE;
-  if(!tc_setsignificand("testing truncation with two dots\n", "12.345678901234567.89", "NaN",-1,0)) return FALSE;
-  if(!tc_setsignificand("testing truncation with invalid char\n", "12.345678901234567E89", "NaN",-1,0)) return FALSE;
-
-  return TRUE;
-}
-
-static int tc_setexponent(char* msg, floatnum f, int exp, char* result)
-{
-  char buf[30];
-  int lg;
-
-  printf("%s", msg);
-  float_setexponent(f, exp);
-  float_getscientific(buf, 30, f);
-  lg = strlen(result);
-  return lg == strlen(buf) && memcmp(buf, result, lg) == 0? TRUE: FALSE;
-}
-
-static int test_setexponent()
-{
-  floatstruct f;
-  char buf[30];
-
-  printf("\ntesting float_setexponent\n");
-  float_create(&f);
-
-  if (!tc_setexponent("changing exponent of NaN to 0\n", &f, 0, "NaN")) return FALSE;
-  if (!tc_setexponent("changing exponent of NaN to min\n", &f, EXPMIN, "NaN")) return FALSE;
-  if (!tc_setexponent("changing exponent of NaN to max\n", &f, EXPMAX, "NaN")) return FALSE;
-  if (!tc_setexponent("changing exponent of NaN to invalid, neg\n", &f, EXPMIN-1, "NaN")) return FALSE;
-  if (!tc_setexponent("changing exponent of NaN to invalid, pos\n", &f, EXPMAX+1, "NaN")) return FALSE;
-
-  float_setzero(&f);
-
-  if (!tc_setexponent("changing exponent of zero to 0\n", &f, 0, "0")) return FALSE;
-  if (!tc_setexponent("changing exponent of zero to min\n", &f, EXPMIN, "0")) return FALSE;
-  float_setzero(&f);
-  if (!tc_setexponent("changing exponent of zero to max\n", &f, EXPMAX, "0")) return FALSE;
-  if (!tc_setexponent("changing exponent of zero to invalid, neg\n", &f, EXPMIN-1, "NaN")) return FALSE;
-  if (!tc_setexponent("changing exponent of zero to invalid, pos\n", &f, EXPMAX+1, "NaN")) return FALSE;
-
-  float_setsignificand(&f, NULL, "123", NULLTERMINATED);
-
-  if (!tc_setexponent("changing exponent of 1.23 to -2\n", &f, -2, "1.23e-2")) return FALSE;
-  if (!tc_setexponent("changing exponent of 1.23 to min\n", &f, EXPMIN, minexp(buf, "1.23e"))) return FALSE;
-  float_setsignificand(&f, NULL, "123", NULLTERMINATED);
-  if (!tc_setexponent("changing exponent of 1.23 to max\n", &f, EXPMAX, maxexp(buf, "1.23e"))) return FALSE;
-  float_setsignificand(&f, NULL, "123", NULLTERMINATED);
-  if (!tc_setexponent("changing exponent of 1.23 to invalid, neg\n", &f, EXPMIN-1, "NaN")) return FALSE;
-  float_setsignificand(&f, NULL, "123", NULLTERMINATED);
-  if (!tc_setexponent("changing exponent of 1.23 to invalid, pos\n", &f, EXPMAX+1, "NaN")) return FALSE;
-
-  return TRUE;
-}
-
-static int tc_setsign(char* msg, floatnum f, signed char sign, char* result)
-{
-  char buf[30];
-  int lg;
-
-  printf("%s", msg);
-  float_setsign(f, sign);
-  float_getscientific(buf, 30, f);
-  lg = strlen(result);
-  return lg == strlen(buf) && memcmp(buf, result, lg) == 0? TRUE: FALSE;
-}
-
-static int test_setsign()
-{
-  floatstruct f;
-
-  printf("\ntesting float_setsign\n");
-
-  float_create(&f);
-
-  if (!tc_setsign("testing NaN +\n", &f, 1, "NaN")) return FALSE;
-  if (!tc_setsign("testing NaN -\n", &f, -1, "NaN")) return FALSE;
-  if (!tc_setsign("testing NaN 0\n", &f, 0, "NaN")) return FALSE;
-  float_setzero(&f);
-  if (!tc_setsign("testing 0 +\n", &f, 1, "0")) return FALSE;
-  if (!tc_setsign("testing 0 -\n", &f, -1, "0")) return FALSE;
-  if (!tc_setsign("testing 0 0\n", &f, 0, "0")) return FALSE;
-  float_setsignificand(&f, NULL, "1", NULLTERMINATED);
-  if (!tc_setsign("testing -128 (invalid)\n", &f, -128, "NaN")) return FALSE;
-  float_setsignificand(&f, NULL, "1", NULLTERMINATED);
-  if (!tc_setsign("testing -127 (invalid)\n", &f, -127, "NaN")) return FALSE;
-  float_setsignificand(&f, NULL, "1", NULLTERMINATED);
-  if (!tc_setsign("testing 127 (invalid)\n", &f, 127, "NaN")) return FALSE;
-  float_setsignificand(&f, NULL, "1", NULLTERMINATED);
-  if (!tc_setsign("testing 126 (invalid)\n", &f, 126, "NaN")) return FALSE;
-  float_setsignificand(&f, NULL, "1", NULLTERMINATED);
-  if (!tc_setsign("testing 2 (invalid)\n", &f, 2, "NaN")) return FALSE;
-  float_setsignificand(&f, NULL, "1", NULLTERMINATED);
-  if (!tc_setsign("testing -2 (invalid)\n", &f, -2, "NaN")) return FALSE;
-  float_setsignificand(&f, NULL, "1", NULLTERMINATED);
-  if (!tc_setsign("testing 0\n", &f, 0, "1.e0")) return FALSE;
-  if (!tc_setsign("testing + on a positive number\n", &f, 1, "1.e0")) return FALSE;
-  if (!tc_setsign("testing - on a positive number\n", &f, -1, "-1.e0")) return FALSE;
-  if (!tc_setsign("testing - on a negative number\n", &f, -1, "-1.e0")) return FALSE;
-  if (!tc_setsign("testing + on a negative number\n", &f, 1, "1.e0")) return FALSE;
-  float_free(&f);
-  return TRUE;
-}
-
-static int tc_getsign(char* msg, floatnum f, int result)
-{
-  printf("%s", msg);
-  return float_getsign(f) == result? TRUE:FALSE;
-}
-
-static int test_getsign()
-{
-  floatstruct f;
-
-  printf("\ntesting float_getsign\n");
-
-  float_create(&f);
-  if (!tc_getsign("testing NaN\n", &f, 0)) return FALSE;
-
-  float_setzero(&f);
-  if (!tc_getsign("testing zero\n", &f, 0)) return FALSE;
-
-  float_setsignificand(&f, NULL, "123", NULLTERMINATED);
-  if (!tc_getsign("testing 1.23\n", &f, 1)) return FALSE;
-
-  float_setsign(&f, -1);
-  if (!tc_getsign("testing -1.23\n", &f, -1)) return FALSE;
-
   return TRUE;
 }
 
@@ -5809,11 +5962,11 @@ int main(int argc, char** argv)
   if(!test_setzero()) return testfailed("float_setzero");
   if(!test_getexponent()) return testfailed("float_getexponent");
   if(!test_getsignificand()) return testfailed("float_getsignificand");
-  if(!test_getscientific()) return testfailed("float_getscientific");
   if(!test_setsignificand()) return testfailed("float_setsignificand");
-  if(!test_setexponent()) return testfailed("float_setexponent");
-  if(!test_setsign()) return testfailed("float_setsign");
   if(!test_getsign()) return testfailed("float_getsign");
+  if(!test_setsign()) return testfailed("float_setsign");
+  if(!test_setexponent()) return testfailed("float_setexponent");
+  if(!test_getscientific()) return testfailed("float_getscientific");
   if(!test_getlength()) return testfailed("float_getlength");
   if(!test_changesign()) return testfailed("float_changesign");
   if(!test_abs()) return testfailed("float_abs");

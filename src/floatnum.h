@@ -194,7 +194,7 @@ char float_getdigit(floatnum f, int ofs);
    The function searches the buffer for the first non-zero digit,
    and starts the encoding from there.
    <f> is set to NaN, if the buffer fails to fulfill the above conditions.
-   If the resulting significand exceeds MAXSCALE digits, it is truncated.
+   If the resulting significand exceeds MAXDIGITS digits, it is truncated.
    The exponent of <f> is set to 0, so the result is always NaN, 0 or a
    number between 1 and 9.99...
    If you want to set both the significand and the exponent of f,
