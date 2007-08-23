@@ -1067,7 +1067,7 @@ static int test_getlength()
     const char* mant; int result;
   } testcases[] = {
     {"N", 0},
-/*    {"0", 0},
+    {"0", 0},
     {"1", 1},
     {"12", 2},
     {"123", 3},
@@ -1075,15 +1075,73 @@ static int test_getlength()
     {"12345", 5},
     {"123456", 6},
     {"1234567", 7},
-    {"12345678", 8},*/
-//     {"123456789", 9},
+    {"12345678", 8},
+    {"123456789", 9},
   };
 
-  printf("\ntesting float_getlength\n");
+  printf("testing float_getlength\n");
 
   for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
     if(!tc_getlength(testcases[i].mant, testcases[i].result))
       return tc_fail(i);
+  return 1;
+}
+
+static int tc_getdigit(const char* value)
+{
+  floatstruct f;
+  int i, j, k, save, lg;
+  unsigned h;
+
+  static signed char sign[] = {1, -1};
+  static int exp[] = {0, -1, 1, MAXEXP, -MAXEXP-1};
+
+  float_create(&f);
+  float_setsignificand(&f, NULL, value, NULLTERMINATED);
+  if (float_getlength(&f) == 0)
+  {
+    h = hash(&f);
+    for (k = -5; ++k < 5;)
+      if (float_getdigit(&f, k) != 0 || h != hash(&f))
+        return 0;
+  }
+  else
+  {
+    lg = strlen(value);
+    save = float_setrange(MAXEXP);
+    for (i = sizeof(exp)/sizeof(exp[0]); --i >= 0;)
+      for (j = -1; ++j < 2;)
+      {
+        float_setexponent(&f, exp[i]);
+        float_setsign(&f, sign[j]);
+        h = hash(&f);
+        for (k = lg + 3; --k > -3;)
+          if (k < 0 || k >= lg)
+          {
+            if (float_getdigit(&f, k) != 0 || h != hash(&f))
+              return 0;
+          }
+          else if (float_getdigit(&f, k) != value[k] - '0' || h != hash(&f))
+            return 0;
+      }
+    float_setrange(save);
+  }
+  float_free(&f);
+  return 1;
+}
+
+static int test_getdigit()
+{
+  int i;
+  static struct{
+    const char* mant;
+  } testcases[] = {
+    {"N"},
+  };
+
+  printf("testing float_getdigit\n");
+  for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
+    if(!tc_getdigit(testcases[i].mant)) return tc_fail(i);
   return 1;
 }
 
@@ -6068,6 +6126,7 @@ int main(int argc, char** argv)
   if(!test_setsign()) return testfailed("float_setsign");
   if(!test_getsign()) return testfailed("float_getsign");
   if(!test_getlength()) return testfailed("float_getlength");
+  if(!test_getdigit()) return testfailed("float_getdigit");
   if(!test_getscientific()) return testfailed("float_getscientific");
   if(!test_changesign()) return testfailed("float_changesign");
   if(!test_abs()) return testfailed("float_abs");
