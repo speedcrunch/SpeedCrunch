@@ -43,9 +43,7 @@
 
 #define NOSPECIALVALUE 1
 
-#ifdef _USEMAXSCALEVAR
-int maxscale = 150;
-#endif
+int maxdigits = MAXDIGITS;
 
 int float_error;
 int expmax = EXPMAX;
@@ -684,13 +682,13 @@ float_setsignificand(
   bufsz -= b - buf;
 
   /* does the rest buffer contain a dot? */
-  lg = dot >= b && dot < b + bufsz? 1 : 0;
+  lg = dot >= b && dot - b < maxdigits? 1 : 0;
 
   /* points behind the last significant digit */
-  p = b + _min(MAXDIGITS + lg, bufsz);
+  p = b + _min(maxdigits + lg, bufsz);
 
   /* digits, limited by MAXDIGITS */
-  lg = _min(MAXDIGITS, bufsz - lg);
+  lg = _min(maxdigits, bufsz - lg);
 
   /* reduce lg by the number of trailing zeros */
   for (; *--p == '0'; --lg);
@@ -1205,7 +1203,7 @@ _addsub_normal(
       return float_clone(dest, summand1, digits+extradigit);
   }
 
-  if (digits > MAXDIGITS)
+  if (digits > maxdigits)
   {
     /* invalid scale value */
     float_error = FLOAT_INVALIDPARAM;
@@ -1600,7 +1598,7 @@ float_mul(
   if (digits == EXACT || scale > fullscale)
     scale = fullscale;
 
-  if (scale >= MAXDIGITS)
+  if (scale >= maxdigits)
   {
     /* scale too large */
     float_error = FLOAT_INVALIDPARAM;
@@ -1670,7 +1668,7 @@ float_div(
   }
 
   /* scale OK? */
-  if(digits > MAXDIGITS)
+  if(digits > maxdigits)
   {
     float_setnan(dest);
     return FALSE;
@@ -1712,11 +1710,11 @@ float_divmod(
 
   if (!_checkdigits(digits, INTQUOT) || _checknan(dividend)
       || _checknan(divisor) || quotient == remainder
-      || float_iszero(divisor) || float_getlength(divisor) > MAXDIGITS)
+      || float_iszero(divisor) || float_getlength(divisor) > maxdigits)
   {
     if (float_iszero(divisor))
       float_error = FLOAT_ZERODIVIDE;
-    if (quotient == remainder || float_getlength(divisor) > MAXDIGITS)
+    if (quotient == remainder || float_getlength(divisor) > maxdigits)
       float_error = FLOAT_INVALIDPARAM;
     float_setnan(quotient);
     float_setnan(remainder);
@@ -1742,7 +1740,7 @@ float_divmod(
     }
     digits = exp;
   }
-  if (digits > MAXDIGITS)
+  if (digits > maxdigits)
   {
     float_error = FLOAT_INVALIDPARAM;
     float_setnan(quotient);

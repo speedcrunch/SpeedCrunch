@@ -103,7 +103,7 @@ float_divi(
   floatstruct tmp;
   int result, expx;
 
-  if (!_chckparam(dividend, digits, MAXDIGITS, INTQUOT))
+  if (!_chckparam(dividend, digits, maxdigits, INTQUOT))
     return 0;
   if (digits != INTQUOT && (divisor == 1 || divisor == -1))
     return float_muli(quotient, dividend, divisor, digits);
@@ -134,7 +134,7 @@ float_addi(
   floatstruct tmp;
   int result;
 
-  if (!_chckparam(summand1, digits, MAXDIGITS, EXACT))
+  if (!_chckparam(summand1, digits, maxdigits, EXACT))
     return 0;
   if (summand2 == 0)
     return float_clone(sum, summand1, digits);
@@ -156,7 +156,7 @@ float_muli(
   int result;
   int expx;
 
-  if (!_chckparam(factor1, digits, MAXDIGITS, EXACT))
+  if (!_chckparam(factor1, digits, maxdigits, EXACT))
     return 0;
   switch(factor2)
   {

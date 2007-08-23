@@ -1,3 +1,17 @@
+2007-08-23
+bugfix, extend testcases
+a new set of test cases uncovered a bug in float_setsignificand
+
+floatconfig
+- MAXDIGITS is now used for initialization only
+floatcommon
+- refer to the variable maxdigits instead of the constant MAXDIGITS
+floatnum
+- make maxdigits mutable
+- bugfix in float_setsignificand
+testfloatnum
+- more test cases
+
 2007-08-11
 extend test cases
 

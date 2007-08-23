@@ -56,9 +56,7 @@
 extern "C" {
 #endif 
 
-#ifdef _USEMAXSCALEVAR
-extern int maxscale;
-#endif /* _USEMAXSCALEVAR */
+extern int maxdigits;
 
 extern int float_error;
 

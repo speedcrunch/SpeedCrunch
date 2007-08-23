@@ -128,8 +128,7 @@
 #  undef MATHPRECISION
 #  undef DECPRECISION
 #  undef LOGICRANGE
-#  define _USEMAXSCALEVAR
-#  define MAXDIGITS maxscale
+#  define MAXDIGITS 130
 #  define MATHPRECISION 130
 #  define LOGICRANGE 96
 #endif
