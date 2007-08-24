@@ -1137,6 +1137,12 @@ static int test_getdigit()
     const char* mant;
   } testcases[] = {
     {"N"},
+    {"0"},
+    {"1"},
+    {"12"},
+    {"123"},
+    {"123456789"},
+    {"104"},
   };
 
   printf("testing float_getdigit\n");
@@ -1145,165 +1151,132 @@ static int test_getdigit()
   return 1;
 }
 
-static int tc_getscientific(char* msg, floatnum f, int sz, char* result)
+static int tc_getscientific(const char* s, int exp, int sz, const char* result)
 {
+  floatstruct f;
+  char r[30];
   char buf[30];
   int lg;
+  unsigned h;
 
-  lg = strlen(result);
+  float_create(&f);
+  float_setsignificand(&f, NULL, s, NULLTERMINATED);
+  float_setexponent(&f, exp);
   memset(buf, '?', 30);
-  printf("%s", msg);
+  h = hash(&f);
+  lg = strlen(result);
+  r[0] = '\0';
   if (lg == 0)
-    return float_getscientific(buf+1, sz, f) == -1
-           && buf[0] == '?'
-           && buf[1] == '?';
-  return float_getscientific(buf+1, sz, f) == lg
-         && buf[0] == '?'
-         && buf[lg + 2] == '?'
-         && memcmp(buf + 1, result, lg) == 0;
+  {
+    if (float_getscientific(buf+1, sz, &f) != -1
+           || h != hash(&f)
+           || buf[0] != '?'
+           || buf[1] != '?')
+      return 0;
+  }
+  else
+  {
+    memcpy(r, result, lg+1);
+    if (float_getlength(&f) != 0)
+      sprintf(r + lg, "%d", exp);
+    lg = strlen(r);
+    if (float_getscientific(buf+1, sz, &f) != lg
+        || h != hash(&f)
+        || buf[0] != '?'
+        || buf[lg + 2] != '?'
+        || memcmp(buf + 1, r, lg) != 0)
+      return 0;
+    if (float_getlength(&f) != 0)
+    {
+      float_setsign(&f, -1);
+      h = hash(&f);
+      if (float_getscientific(buf+1, sz+1, &f) != lg+1
+          || h != hash(&f)
+          || buf[0] != '?'
+          || buf[lg + 3] != '?'
+          || buf[1] != '-'
+          || memcmp(buf + 2, r, lg) != 0)
+        return 0;
+    }
+  }
+  float_free(&f);
+  return 1;
 }
 
 static int test_getscientific()
 {
-  floatstruct f;
+  int i;
+  static struct{
+    const char* mant; int exp; int sz; const char* result;
+  } testcases[] = {
+    {"N", 0, -1, ""},
+    {"N", 0, 0, ""},
+    {"N", 0, 1, ""},
+    {"N", 0, 2, ""},
+    {"N", 0, 3, ""},
+    {"N", 0, 4, "NaN"},
+    {"N", 0, 5, "NaN"},
+    {"0", 0, -1, ""},
+    {"0", 0, 0, ""},
+    {"0", 0, 1, ""},
+    {"0", 0, 2, "0"},
+    {"0", 0, 3, "0"},
+    {"1", 0, -1, ""},
+    {"1", 0, 0, ""},
+    {"1", 0, 1, ""},
+    {"1", 0, 2, ""},
+    {"1", 0, 3, ""},
+    {"1", 0, 4, ""},
+    {"1", 0, 5, "1.e"},
+    {"1", 0, 6, "1.e"},
+    {"12", 0, 4, ""},
+    {"12", 0, 5, "1.e"},
+    {"12", 0, 6, "1.2e"},
+    {"12", 0, 7, "1.2e"},
+    {"12", 10, 5, ""},
+    {"12", 10, 6, "1.e"},
+    {"12", 10, 7, "1.2e"},
+    {"12", 10, 8, "1.2e"},
+    {"12345678001", 10, 12, "1.234567e"},
+    {"12345678001", 10, 13, "1.2345678e"},
+    {"12345678001", 10, 14, "1.23456780e"},
+    {"12345678001", 10, 15, "1.234567800e"},
+    {"12345678001", 10, 16, "1.2345678001e"},
+    {"12345678001", -10, 13, "1.234567e"},
+    {"12345678001", -10, 14, "1.2345678e"},
+    {"12345678001", -10, 15, "1.23456780e"},
+    {"12345678001", -10, 16, "1.234567800e"},
+    {"12345678001", -10, 17, "1.2345678001e"},
+    {"12", 1, 6, "1.2e"},
+    {"12", -1, 7, "1.2e"},
+    {"12", MAXEXP, 25, "1.2e"},
+    {"12", -MAXEXP-1, 25, "1.2e"},
+  };
+  int save;
 
-  printf("\ntesting float_getscientific\n");
-  float_create(&f);
-
-  if (!tc_getscientific("testing NaN, length 3\n",
-                      &f, 3,"")) return 0;
-  if (!tc_getscientific("testing NaN, length 4\n",
-                      &f, 4,"NaN")) return 0;
-  if (!tc_getscientific("testing NaN, length 5\n",
-                      &f, 5,"NaN")) return 0;
-
-  float_setzero(&f);
-
-  if (!tc_getscientific("testing 0.0, length 1\n",
-                      &f, 1,"")) return FALSE;
-  if (!tc_getscientific("testing 0.0, length 2\n",
-                      &f, 2,"0")) return FALSE;
-  if (!tc_getscientific("testing 0.0, length 3\n",
-                      &f, 3,"0")) return FALSE;
-
-  f.significand = bc_new_num(1, 10);
-  f.exponent = 0;
-  memcpy(f.significand->n_value, "\01\02\03\04\05\06\07\010\0\0\01", 11);
-  f.significand->n_scale = 0;
-
-  if (!tc_getscientific("testing 1e0, length 3\n",
-                      &f, 3,"")) return FALSE;
-  if (!tc_getscientific("testing 1e0, length 4\n",
-                      &f, 4,"")) return FALSE;
-  if (!tc_getscientific("testing 1e0, length 5\n",
-                      &f, 5,"1.e0")) return FALSE;
-  if (!tc_getscientific("testing 1e0, length 6\n",
-                      &f, 6,"1.e0")) return FALSE;
-
-  f.significand->n_scale = 1;
-
-  if (!tc_getscientific("testing 1.2e0, length 4\n",
-                      &f, 4,"")) return FALSE;
-  if (!tc_getscientific("testing 1.2e0, length 5\n",
-                      &f, 5,"1.e0")) return FALSE;
-  if (!tc_getscientific("testing 1.2e0, length 6\n",
-                      &f, 6,"1.2e0")) return FALSE;
-  if (!tc_getscientific("testing 1.2e0, length 7\n",
-                      &f, 7,"1.2e0")) return FALSE;
-
-  f.exponent = 10;
-
-  if (!tc_getscientific("testing 1.2e10, length 5\n",
-                      &f, 5,"")) return FALSE;
-  if (!tc_getscientific("testing 1.2e10, length 6\n",
-                      &f, 6,"1.e10")) return FALSE;
-  if (!tc_getscientific("testing 1.2e10, length 7\n",
-                      &f, 7,"1.2e10")) return FALSE;
-  if (!tc_getscientific("testing 1.2e10, length 8\n",
-                      &f, 8,"1.2e10")) return FALSE;
-
-  f.significand->n_sign = MINUS;
-
-  if (!tc_getscientific("testing -1.2e10, length 6\n",
-                      &f, 6,"")) return FALSE;
-  if (!tc_getscientific("testing -1.2e10, length 7\n",
-                      &f, 7,"-1.e10")) return FALSE;
-  if (!tc_getscientific("testing -1.2e10, length 8\n",
-                      &f, 8,"-1.2e10")) return FALSE;
-  if (!tc_getscientific("testing -1.2e10, length 9\n",
-                      &f, 9,"-1.2e10")) return FALSE;
-
-  f.significand->n_scale = 10;
-
-  if (!tc_getscientific("testing -1.2345678001e10, length 13\n",
-                      &f, 13,"-1.234567e10")) return FALSE;
-  if (!tc_getscientific("testing -1.2345678001e10, length 14\n",
-                      &f, 14,"-1.2345678e10")) return FALSE;
-  if (!tc_getscientific("testing -1.2345678001e10, length 15\n",
-                      &f, 15,"-1.23456780e10")) return FALSE;
-  if (!tc_getscientific("testing -1.2345678001e10, length 16\n",
-                      &f, 16,"-1.234567800e10")) return FALSE;
-  if (!tc_getscientific("testing -1.2345678001e10, length 17\n",
-                      &f, 17,"-1.2345678001e10")) return FALSE;
-
-  f.exponent = -10;
-
-  if (!tc_getscientific("testing -1.2345678001e-10, length 18\n",
-                      &f, 18,"-1.2345678001e-10")) return FALSE;
-
-  float_setnan(&f);
-  return TRUE;
+  printf("testing float_getscientific\n");
+  save = float_setrange(MAXEXP);
+  for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
+    if(!tc_getscientific(testcases[i].mant, testcases[i].exp,
+        testcases[i].sz, testcases[i].result)) return tc_fail(i);
+  float_setrange(save);
+  return 1;
 }
 
-static int tc_changesign(char* msg, floatnum f, signed char result)
-{
-  /* unused: char buf[30]; */
-  /* unused: int lg; */
-
-  printf("%s", msg);
-  float_changesign(f);
-  return result == float_getsign(f)? TRUE : FALSE;
-}
-
-static int test_changesign()
+/*static int tc_setscientific(const char* value, int sz, const char* result)
 {
   floatstruct f;
+  char buf[30];
+  int save;
 
-  printf("\ntesting float_changesign\n");
   float_create(&f);
-  if(!tc_changesign("testing NaN\n", &f, 0)) return FALSE;
-  float_setzero(&f);
-  if(!tc_changesign("testing zero\n", &f, 0)) return FALSE;
-  float_setsignificand(&f, NULL, "123", NULLTERMINATED);
-  if(!tc_changesign("testing 1.23\n", &f, -1)) return FALSE;
-  if(!tc_changesign("testing -1.23\n", &f, 1)) return FALSE;
-
-  return TRUE;
-}
-
-static int tc_abs(char* msg, floatnum f, signed char result)
-{
-  printf("%s", msg);
-  float_abs(f);
-  return result == float_getsign(f)? TRUE : FALSE;
-}
-
-static int test_abs()
-{
-  floatstruct f;
-
-  printf("\ntesting float_abs\n");
-  float_create(&f);
-  if(!tc_abs("testing NaN\n", &f, 0)) return FALSE;
-  float_setzero(&f);
-  if(!tc_abs("testing zero\n", &f, 0)) return FALSE;
-  float_setsignificand(&f, NULL, "123", NULLTERMINATED);
-  if(!tc_abs("testing 1.23\n", &f, 1)) return FALSE;
-  float_setsign(&f, -1);
-  if(!tc_abs("testing -1.23\n", &f, 1)) return FALSE;
-
-  return TRUE;
-}
+  float_setscientific(&f, value, sz);
+  float_getscientific(buf, sizeof(buf), &f);
+  if (strcmp(buf, result) != 0)
+    return 0;
+  float_free(&f);
+  return 1;
+}*/
 
 static int tc_setscientific(char* msg, char* value, char* result)
 {
@@ -1394,6 +1367,53 @@ static int test_setscientific()
   if (!tc_setscientific("testing exponent underflow limit\n", buf, "NaN")) return FALSE;
   if (!tc_setscientific("testing large underflow\n", "1E-3000000000000000000000000000000", "NaN")) return FALSE;
   float_setnan(&f);
+  return TRUE;
+}
+
+static int tc_changesign(char* msg, floatnum f, signed char result)
+{
+  printf("%s", msg);
+  float_changesign(f);
+  return result == float_getsign(f)? TRUE : FALSE;
+}
+
+static int test_changesign()
+{
+  floatstruct f;
+
+  printf("\ntesting float_changesign\n");
+  float_create(&f);
+  if(!tc_changesign("testing NaN\n", &f, 0)) return FALSE;
+  float_setzero(&f);
+  if(!tc_changesign("testing zero\n", &f, 0)) return FALSE;
+  float_setsignificand(&f, NULL, "123", NULLTERMINATED);
+  if(!tc_changesign("testing 1.23\n", &f, -1)) return FALSE;
+  if(!tc_changesign("testing -1.23\n", &f, 1)) return FALSE;
+
+  return TRUE;
+}
+
+static int tc_abs(char* msg, floatnum f, signed char result)
+{
+  printf("%s", msg);
+  float_abs(f);
+  return result == float_getsign(f)? TRUE : FALSE;
+}
+
+static int test_abs()
+{
+  floatstruct f;
+
+  printf("\ntesting float_abs\n");
+  float_create(&f);
+  if(!tc_abs("testing NaN\n", &f, 0)) return FALSE;
+  float_setzero(&f);
+  if(!tc_abs("testing zero\n", &f, 0)) return FALSE;
+  float_setsignificand(&f, NULL, "123", NULLTERMINATED);
+  if(!tc_abs("testing 1.23\n", &f, 1)) return FALSE;
+  float_setsign(&f, -1);
+  if(!tc_abs("testing -1.23\n", &f, 1)) return FALSE;
+
   return TRUE;
 }
 
@@ -6128,9 +6148,9 @@ int main(int argc, char** argv)
   if(!test_getlength()) return testfailed("float_getlength");
   if(!test_getdigit()) return testfailed("float_getdigit");
   if(!test_getscientific()) return testfailed("float_getscientific");
+  if(!test_setscientific()) return testfailed("float_setscientific");
   if(!test_changesign()) return testfailed("float_changesign");
   if(!test_abs()) return testfailed("float_abs");
-  if(!test_setscientific()) return testfailed("float_setscientific");
   if(!test_cmp()) return testfailed("float_cmp");
   if(!test_clone()) return testfailed("float_clone");
   if(!test_round()) return testfailed("float_round");
