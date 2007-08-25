@@ -125,12 +125,10 @@ static char mantcmp(bc_num b, const char* s)
 
 static int scmp(floatnum v, char* s)
 {
-  int lg;
   char buf[30];
 
   float_getscientific(buf, 30, v);
-  lg = strlen(s);
-  return lg = strlen(buf) && memcmp(buf, s, lg) == 0;
+  return strcmp(buf, s) == 0;
 }
 
 static char* maxexp(char* buf, char* significand)
@@ -138,7 +136,7 @@ static char* maxexp(char* buf, char* significand)
   int lg;
   lg = strlen(significand);
   memcpy(buf, significand, lg);
-  sprintf(buf + lg, "%d", EXPMAX);
+  sprintf(buf + lg, "%d", float_getrange());
   return buf;
 }
 
@@ -147,7 +145,7 @@ static char* minexp(char* buf, char* significand)
   int lg;
   lg = strlen(significand);
   memcpy(buf, significand, lg);
-  sprintf(buf+lg, "%d", EXPMIN);
+  sprintf(buf+lg, "%d", -float_getrange()-1);
   return buf;
 }
 
@@ -1263,111 +1261,132 @@ static int test_getscientific()
   return 1;
 }
 
-/*static int tc_setscientific(const char* value, int sz, const char* result)
+static int tc_setscientific(const char* value, const char* result)
 {
   floatstruct f;
+  char v[40];
   char buf[30];
-  int save;
+  int sz, refs;
+  signed char sign;
 
   float_create(&f);
-  float_setscientific(&f, value, sz);
+  refs = _one_->n_refs;
+  f.exponent = 12;
+  f.significand = bc_copy_num(_one_);
+  float_setscientific(&f, value, NULLTERMINATED);
+  float_getscientific(buf, sizeof(buf), &f);
+  if (refs != _one_->n_refs || strcmp(buf, result) != 0)
+    return 0;
+  sz = strlen(value);
+  memset(v, '1', sizeof(v));
+  memcpy(v+1, value, sz);
+  float_setscientific(&f, v+1, sz);
   float_getscientific(buf, sizeof(buf), &f);
   if (strcmp(buf, result) != 0)
     return 0;
+  v[0] = '+';
+  float_setscientific(&f, v, sz+1);
+  float_getscientific(buf, sizeof(buf), &f);
+  if (strcmp(buf, result) != 0)
+    return 0;
+  v[0] = '-';
+  float_setscientific(&f, v, sz+1);
+  sign = float_getsign(&f);
+  float_setsign(&f, 1);
+  float_getscientific(buf, sizeof(buf), &f);
+  if (sign > 0 || strcmp(buf, result) != 0)
+    return 0;
   float_free(&f);
   return 1;
-}*/
-
-static int tc_setscientific(char* msg, char* value, char* result)
-{
-  floatstruct f;
-  int lg;
-  char buf[30];
-
-  float_create(&f);
-  printf("%s", msg);
-  float_setscientific(&f, value, NULLTERMINATED);
-  lg = strlen(result);
-  float_getscientific(buf, 30, &f);
-  return lg == strlen(buf) && memcmp(buf, result, lg) == 0? TRUE : FALSE;
 }
 
 static int test_setscientific()
 {
-  floatstruct f;
+  int i;
+  static struct{
+    const char* value; const char* result;
+  } testcases[] = {
+    {"", "NaN"},
+    {"E", "NaN"},
+    {".", "NaN"},
+    {"x", "NaN"},
+    {"0Ex", "NaN"},
+    {"0xEx", "NaN"},
+    {"EE0", "NaN"},
+    {"00.0.0", "NaN"},
+    {"0", "0"},
+    {"0E0", "0"},
+    {"0E+0", "0"},
+    {"0E-0", "0"},
+    {"0E+999999999999999999999999999999", "0"},
+    {"0E-999999999999999999999999999999", "0"},
+    {"0000", "0"},
+    {".0000", "0"},
+    {"0000.", "0"},
+    {"00.00", "0"},
+    {"0000E1", "0"},
+    {".0000E-1", "0"},
+    {"0000.E+12", "0"},
+    {"00.00E-13", "0"},
+    {"1", "1.e0"},
+    {"9", "9.e0"},
+    {"1.", "1.e0"},
+    {"1.0", "1.e0"},
+    {"10", "1.e1"},
+    {"0.1", "1.e-1"},
+    {"100", "1.e2"},
+    {"0.01", "1.e-2"},
+    {"1E0", "1.e0"},
+    {"1e0", "1.e0"},
+    {"01e0", "1.e0"},
+    {"01.e0", "1.e0"},
+    {"1e1", "1.e1"},
+    {"1e-1", "1.e-1"},
+    {"1.e-1", "1.e-1"},
+    {"1.0e-1", "1.e-1"},
+    {"01.0e-1", "1.e-1"},
+    {"0.1e-1", "1.e-2"},
+    {"10e-1", "1.e0"},
+    {"100e-1", "1.e1"},
+    {"1e1000", "1.e1000"},
+    {"1e-1000", "1.e-1000"},
+    {"1.234567890123456789e0", "1.23456789012345e0"},
+    {"1E3000000000000000000000000000000", "NaN"},
+    {"1E-3000000000000000000000000000000", "NaN"},
+  };
+  int save;
   char buf[30];
 
-  printf("\ntesting float_setscientific\n");
-  float_create(&f);
-  if (!tc_setscientific("testing empty buffer\n", "", "NaN")) return FALSE;
-  if (!tc_setscientific("testing E\n", "E", "NaN")) return FALSE;
-  if (!tc_setscientific("testing .\n", ".", "NaN")) return FALSE;
-  if (!tc_setscientific("testing x\n", "x", "NaN")) return FALSE;
-  if (!tc_setscientific("testing 0Ex\n", "0Ex", "NaN")) return FALSE;
-  if (!tc_setscientific("testing 0xEx\n", "0xEx", "NaN")) return FALSE;
-  if (!tc_setscientific("testing EE0\n", "EE0", "NaN")) return FALSE;
-  if (!tc_setscientific("testing +EE0\n", "+EE0", "NaN")) return FALSE;
-  if (!tc_setscientific("testing 00.0.0\n", "00.0.0", "NaN")) return FALSE;
-  if (!tc_setscientific("testing 0\n", "0", "0")) return FALSE;
-  if (!tc_setscientific("testing +0\n", "+0", "0")) return FALSE;
-  if (!tc_setscientific("testing -0\n", "-0", "0")) return FALSE;
-  if (!tc_setscientific("testing 0E0\n", "0E0", "0")) return FALSE;
-  if (!tc_setscientific("testing 0E+0\n", "0E+0", "0")) return FALSE;
-  if (!tc_setscientific("testing 0E-0\n", "0E-0", "0")) return FALSE;
-  if (!tc_setscientific("testing 0E+99999999999\n", "0E+99999999999", "0")) return FALSE;
-  if (!tc_setscientific("testing 0E-99999999999\n", "0E-99999999999", "0")) return FALSE;
-  if (!tc_setscientific("testing 0000\n", "0000", "0")) return FALSE;
-  if (!tc_setscientific("testing .0000\n", ".0000", "0")) return FALSE;
-  if (!tc_setscientific("testing 0000.\n", "0000.", "0")) return FALSE;
-  if (!tc_setscientific("testing 00.00\n", "0000.", "0")) return FALSE;
-  if (!tc_setscientific("testing 1\n", "1", "1.e0")) return FALSE;
-  if (!tc_setscientific("testing 9\n", "9", "9.e0")) return FALSE;
-  if (!tc_setscientific("testing 1.\n", "1.", "1.e0")) return FALSE;
-  if (!tc_setscientific("testing 1.0\n", "1.0", "1.e0")) return FALSE;
-  if (!tc_setscientific("testing 10\n", "10", "1.e1")) return FALSE;
-  if (!tc_setscientific("testing 0.1\n", "0.1", "1.e-1")) return FALSE;
-  if (!tc_setscientific("testing 100\n", "100", "1.e2")) return FALSE;
-  if (!tc_setscientific("testing 0.01\n", "0.01", "1.e-2")) return FALSE;
-  if (!tc_setscientific("testing 1E0\n", "1E0", "1.e0")) return FALSE;
-  if (!tc_setscientific("testing 1e0\n", "1e0", "1.e0")) return FALSE;
-  if (!tc_setscientific("testing 01e0\n", "01e0", "1.e0")) return FALSE;
-  if (!tc_setscientific("testing 01.e0\n", "01.e0", "1.e0")) return FALSE;
-  if (!tc_setscientific("testing 1e1\n", "1e1", "1.e1")) return FALSE;
-  if (!tc_setscientific("testing 1e-1\n", "1e-1", "1.e-1")) return FALSE;
-  if (!tc_setscientific("testing 1.e-1\n", "1.e-1", "1.e-1")) return FALSE;
-  if (!tc_setscientific("testing 1.0e-1\n", "1.0e-1", "1.e-1")) return FALSE;
-  if (!tc_setscientific("testing 0.1e-1\n", "0.1e-1", "1.e-2")) return FALSE;
-  if (!tc_setscientific("testing 10e-1\n", "10e-1", "1.e0")) return FALSE;
-  if (!tc_setscientific("testing 100e-1\n", "100e-1", "1.e1")) return FALSE;
-  if (!tc_setscientific("testing 1e1000\n", "1e1000", "1.e1000")) return FALSE;
-  if (!tc_setscientific("testing 1e-1000\n", "1e-1000", "1.e-1000")) return FALSE;
-  if (!tc_setscientific("testing -1e1000\n", "-1e1000", "-1.e1000")) return FALSE;
-  if (!tc_setscientific("testing -1e-1000\n", "-1e-1000", "-1.e-1000")) return FALSE;
-  if (!tc_setscientific("testing +1e1000\n", "+1e1000", "1.e1000")) return FALSE;
-  if (!tc_setscientific("testing +1e-1000\n", "+1e-1000", "1.e-1000")) return FALSE;
-  if (!tc_setscientific("testing +1e+1000\n", "+1e+1000", "1.e1000")) return FALSE;
-  if (!tc_setscientific("testing +1e-1000\n", "+1e-1000", "1.e-1000")) return FALSE;
-  if (!tc_setscientific("testing truncation\n", "1.234567890123456789e0", "1.23456789012345e0")) return FALSE;
+  printf("testing float_setscientific, 1. block\n");
+  save = float_setrange(MAXEXP);
+  for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
+    if(!tc_setscientific(testcases[i].value, testcases[i].result))
+      return tc_fail(i);
+  float_setrange(save);
+  printf("testing float_setscientific, 2. block\n");
   maxexp(buf, "2.e");
-  if (!tc_setscientific("testing maximum exponent\n", buf, buf)) return FALSE;
+  /* maximum exponent 2.eMAXEXP */
+  if (!tc_setscientific(buf, buf)) return tc_fail(0);
   buf[1] = '0';
-  if (!tc_setscientific("testing combined overflow\n", buf, "NaN")) return FALSE;
+  /* combined overflow 20eMAXEXP */
+  if (!tc_setscientific(buf, "NaN")) return tc_fail(1);
   ++buf[strlen(buf)-1];
   buf[1] = '.';
-  if (!tc_setscientific("testing exponent overflow limit\n", buf, "NaN")) return FALSE;
-  if (!tc_setscientific("testing large overflow\n", "1E3000000000000000000000000000000", "NaN")) return FALSE;
+  /* overflow limit 2.e(MAXEXP+1) */
+  if (!tc_setscientific(buf, "NaN")) return tc_fail(2);
   minexp(buf, "1.e");
-  if (!tc_setscientific("testing minimum exponent\n", buf, buf)) return FALSE;
+  /* minimum exponent */
+  if (!tc_setscientific(buf, buf)) return tc_fail(3);
   buf[0] = '.';
   buf[1] = '1';
-  if (!tc_setscientific("testing combined underflow\n", buf, "NaN")) return FALSE;
+  /* combined underflow */
+  if (!tc_setscientific(buf, "NaN")) return tc_fail(4);
   buf[0] = '1';
   buf[1] = '.';
   ++buf[strlen(buf)-1];
-  if (!tc_setscientific("testing exponent underflow limit\n", buf, "NaN")) return FALSE;
-  if (!tc_setscientific("testing large underflow\n", "1E-3000000000000000000000000000000", "NaN")) return FALSE;
-  float_setnan(&f);
-  return TRUE;
+  /* underflow limit */
+  if (!tc_setscientific(buf, "NaN")) return tc_fail(5);
+  return 1;
 }
 
 static int tc_changesign(char* msg, floatnum f, signed char result)
