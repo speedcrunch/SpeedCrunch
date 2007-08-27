@@ -1,9 +1,24 @@
+2007-08-26
+allow modification of the precision limit
+get rid of float_setbcnum: do not expose too much of the
+  internals in the interface
+more tests
+
+floatnum
+- update comments
+- simplify float_setrange
+- new functions float_setprecision and float_getprecision
+- remove float_setbcnum
+- rewrite float_setinteger to not use float_setbcnum
+testfloatnum
+- remove test cases for float_setbcnum
+- rewrite test_divmod so it does not use float_setbcnum
+- more tests
+
 2007-08-23
 bugfix, extend testcases
 a new set of test cases uncovered a bug in float_setsignificand
 
-floatconfig
-- MAXDIGITS is now used for initialization only
 floatcommon
 - refer to the variable maxdigits instead of the constant MAXDIGITS
 floatnum

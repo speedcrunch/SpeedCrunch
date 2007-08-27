@@ -1389,6 +1389,49 @@ static int test_setscientific()
   return 1;
 }
 
+static int tc_setinteger(int value)
+{
+  floatstruct f, g;
+  char buf[50];
+  char r[50];
+
+  sprintf(r, "%d", value);
+  float_create(&f);
+  float_create(&g);
+  float_setinteger(&f, value);
+  float_setasciiz(&g, r);
+  float_getscientific(buf, 50, &f);
+  float_getscientific(r, 50, &g);
+  float_free(&f);
+  float_free(&g);
+  return strcmp(buf, r) == 0;
+}
+
+static int test_setinteger()
+{
+  int i;
+  static struct{
+    int value;
+  } testcases[] = {
+    {0},
+    {1},
+    {9},
+    {10},
+    {-1},
+    {-9},
+    {-10},
+    {maxi},
+    {mini},
+  };
+
+  printf("testing float_setinteger\n");
+
+  for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
+    if(!tc_setinteger(testcases[i].value))
+      return tc_fail(i);
+  return 1;
+}
+
 static int tc_changesign(char* msg, floatnum f, signed char result)
 {
   printf("%s", msg);
@@ -2134,83 +2177,6 @@ static int test_sqrt()
   return TRUE;
 }
 
-static int tc_setbcnum(char* msg, char* value, int scale, char* result)
-{
-  bc_num bc;
-  floatstruct f;
-  char buf[30];
-  int lg;
-
-  printf("%s", msg);
-  float_create(&f);
-  bc = NULL;
-  bc_str2num(&bc, value, scale);
-  float_setbcnum(&f, &bc);
-  float_getscientific(buf, 30, &f);
-  float_free(&f);
-  lg = strlen(result);
-  return bc == NULL && lg == strlen(buf) && memcmp(buf, result, lg) == 0? TRUE : FALSE;
-}
-
-static int test_setbcnum()
-{
-  bc_num bc;
-  floatstruct f;
-  int refs;
-  char buf[30];
-
-  printf("\ntesting float_setbcnum\n");
-  float_create(&f);
-  float_setzero(&f);
-  if (!tc_setbcnum("test 0\n", "0", 0, "0")) return FALSE;
-  if (!tc_setbcnum("test 0, lg 2\n", "0", 1, "0")) return FALSE;
-  if (!tc_setbcnum("test 1\n", "1", 0, "1.e0")) return FALSE;
-  if (!tc_setbcnum("test 1, lg 2\n", "1", 1, "1.e0")) return FALSE;
-  if (!tc_setbcnum("test 10\n", "10", 0, "1.e1")) return FALSE;
-  if (!tc_setbcnum("test 10, lg 2\n", "10", 1, "1.e1")) return FALSE;
-  if (!tc_setbcnum("test 12, lg 2\n", "12", 1, "1.2e1")) return FALSE;
-  if (!tc_setbcnum("test 0.1\n", "0.1", 1, "1.e-1")) return FALSE;
-  if (!tc_setbcnum("test 0.01\n", "0.01", 2, "1.e-2")) return FALSE;
-  if (!tc_setbcnum("test MAXSCALE\n", "12345678901234567890", 50, "1.234567890123456789e19")) return FALSE;
-  bc = NULL;
-  printf("%s\n", "test NULL");
-  float_setbcnum(&f, &bc);
-  bc_free_num(&bc);
-  if(!float_isnan(&f)) return FALSE;
-  printf("%s\n", "test refcount > 0");
-  refs = _one_->n_refs;
-  bc = bc_copy_num(_one_);
-  float_setbcnum(&f, &bc);
-  float_getscientific(buf, 30, &f);
-  if (memcmp(buf, "1.e0", 5) != 0 || _one_->n_refs != refs || bc != NULL) return FALSE;
-  float_free(&f);
-  return TRUE;
-}
-
-static int tc_setinteger(char* msg, int value, char* result)
-{
-  floatstruct f;
-  int lg;
-  char buf[30];
-
-  printf("%s", msg);
-  float_create(&f);
-  float_setinteger(&f, value);
-  float_getscientific(buf, 30, &f);
-  lg = strlen(result);
-  float_free(&f);
-  return (lg == strlen(buf) && memcmp(buf, result, lg) == 0);
-}
-
-static int test_setinteger()
-{
-  printf("\ntesting float_setinteger\n");
-
-  if (!tc_setinteger("test 0\n", 0, "0")) return FALSE;
-  if (!tc_setinteger("test -5\n", -5, "-5.e0")) return FALSE;
-  return TRUE;
-}
-
 static int tc_int(char* msg, char* value, char* result)
 {
   floatstruct f;
@@ -2320,18 +2286,15 @@ static int test_divmod()
   floatstruct f2;
   floatstruct f3;
   floatstruct vlg;
-  bc_num bcvlg;
+  int save;
   char nmb1[30];
   char nmb2[30];
 
   printf("\ntesting float_divmod\n");
-  bcvlg = NULL;
   float_create(&f1);
   float_create(&f2);
   float_create(&f3);
   float_create(&vlg);
-  bc_str2num(&bcvlg, "12345678901234567890", 0);
-  float_setbcnum(&vlg, &bcvlg);
 
   float_setinteger(&f1, 1);
   printf("%s", "test rem == quot\n");
@@ -2359,8 +2322,10 @@ static int test_divmod()
   printf("%s", "long divisor\n");
   float_setzero(&f1);
   float_setzero(&f2);
-  bc_str2num(&bcvlg, "12345678901234567890", 0);
-  float_setbcnum(&f3, &bcvlg);
+  save = float_setprecision(20);
+  float_setasciiz(&f3, "12345678901234567890");
+  float_clone(&vlg, &f3, EXACT);
+  float_setprecision(save);
   float_divmod(&f1, &f2, &f3, &f3, 3);
   if (!float_isnan(&f1) || !float_isnan(&f2) || float_cmp(&vlg, &f3) != 0) return FALSE;
   printf("%s", "dividend and divisor overwritten by quotient\n");
@@ -6135,7 +6100,7 @@ int main(int argc, char** argv)
 #ifdef _FLOATNUMTEST
   int scalesave;
 
-  printf("\ntestblock floatlong\n");
+  printf("\ntest of floatlong\n");
   floatmath_init();
   float_stdconvert();
   maxdigits = 150;
@@ -6148,7 +6113,7 @@ int main(int argc, char** argv)
   if(!test_longarrayadd()) return testfailed("_longarrayadd");
   if(!test_longarraymul()) return testfailed("_longarrayadd");
 
-  printf("\ntestblock floatnum\n");
+  printf("\ntest of setting/modifying values \n");
 
   scalesave = maxdigits;
   maxdigits = 15;
@@ -6168,6 +6133,9 @@ int main(int argc, char** argv)
   if(!test_getdigit()) return testfailed("float_getdigit");
   if(!test_getscientific()) return testfailed("float_getscientific");
   if(!test_setscientific()) return testfailed("float_setscientific");
+
+  printf("\ntest of basic arithmetic \n");
+
   if(!test_changesign()) return testfailed("float_changesign");
   if(!test_abs()) return testfailed("float_abs");
   if(!test_cmp()) return testfailed("float_cmp");
@@ -6178,7 +6146,6 @@ int main(int argc, char** argv)
   if(!test_mul()) return testfailed("float_mul");
   if(!test_div()) return testfailed("float_div");
   if(!test_sqrt()) return testfailed("float_sqrt");
-  if(!test_setbcnum()) return testfailed("float_setbcnum");
   if(!test_setinteger()) return testfailed("float_setinteger");
   if(!test_int()) return testfailed("float_int");
   if(!test_frac()) return testfailed("float_frac");

@@ -84,16 +84,29 @@ int float_geterror();
    This function never reports an error */
 int float_getrange();
 
-/* sets the overflow/underflow limit. Results with exponents between
-   <maxexp> >= exponent >= -<maxexp>-1 are valid, all others trigger an
-   overflow/underflow error.
-   <maxexp> cannot be greater than MAXEXP and not less than 1.
+/* sets the overflow/underflow limit. Subsequent arithmetic results with exponents
+   between <maxexp> >= exponent >= -<maxexp>-1 are considered valid, all others
+   trigger overflow/underflow errors.
+   <maxexp> cannot be greater than MAXEXP and not less than 1. Exceeding
+   argument6s are replaced by the respective limit.
    The return value is the old overflow limit.
-   This function effects future results only. Current stored values are
+   This function affects future results only. Current stored values are
    not subject to overflow/underflow checking, even when they are used as
    parameters to an operation.
    This function never reports an error */
 int float_setrange(int maxexp);
+
+/* returns the current precision limit. Arithmetic results may be cut off
+   after this number of decimal digits */
+int float_getprecision();
+
+/* sets the current precision (in decimal digits) that is used by basic
+   arithmetic operations. The precision is at least 1 and at most MAXDIGITS.
+   An exceeding argument is replaced by the respective limit.
+   Setting a new precision affects future operations only; currently set
+   variables are kept unmodified.
+   This function never reports an error */
+int float_setprecision(int digits);
 
 /* checks whether the submitted exponent is within the current overflow and
    underflow limits.
@@ -231,23 +244,6 @@ void float_setscientific(floatnum f, const char* buf, int bufsz);
    <f> == NaN or zero, or <s> == 0. f is set to NaN, if abs(s) > 1.
    This function never reports an error. */
 void float_setsign(floatnum f, signed char s);
-
-/* sets dest to the value in <value>. <value> is usually not copied,
-   but used directly. That is why this function tries to assume
-   ownership of <value>. Only, if it can't, because n_refs > 1, a copy
-   is created. If <value> == NULL, NaN is the result. In any case, <value>
-   is freed once, either reducing the reference count or deallocating
-   the number completely.
-   On success, dest contains a value numerically equal to the
-   original value in <value>.
-   This function is the only way to pass more than MAXSCALE
-   digits to a floatnum. There is no sense in doing so,
-   because almost all operations obey this limit and cut
-   the size of the result down. However, there are operations,
-   e.g. float_compare, that accept overly long operands and work
-   with them. The unwary may see unexpected results then.
-   This function never reports an error. */
-void float_setbcnum(floatnum dest, bc_num* value);
 
 /* sets dest to the value in <value>.
    This function never reports an error. */

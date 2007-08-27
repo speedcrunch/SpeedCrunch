@@ -218,15 +218,31 @@ float_getrange()
 }
 
 int
+float_getprecision()
+{
+  return maxdigits;
+}
+
+int
 float_setrange(
   int maxexp)
 {
   int result;
 
   result = expmax;
-  maxexp = _max(_min(maxexp, MAXEXP), 1);
-  expmax = maxexp;
+  expmax = _max(_min(maxexp, MAXEXP), 1);
   expmin = -expmax - 1;
+  return result;
+}
+
+int
+float_setprecision(
+  int digits)
+{
+  int result;
+
+  result = maxdigits;
+  maxdigits = _max(_min(digits, MAXDIGITS), 1);
   return result;
 }
 
@@ -889,52 +905,12 @@ _normalize(
 }
 
 void
-float_setbcnum(floatnum dest, bc_num* value)
-{
-  int exp;
-
-  float_setnan(dest);
-  if (*value == NULL)
-    return;
-  if (bc_is_zero(*value))
-    float_setzero(dest);
-  else 
-  {
-    if ((*value)->n_refs != 1)
-    {
-      dest->significand = bc_new_num((*value)->n_len, (*value)->n_scale);
-      memcpy(_valueof(dest), (*value)->n_value,
-             (*value)->n_len+ (*value)->n_scale);
-    }
-    else
-    {
-      dest->significand = *value;
-      *value = NULL;
-    }
-    exp = _lenof(dest) - 1;
-    _movepoint(dest, -exp);
-    dest->exponent = exp;
-    _normalize(dest);
-    for (; !float_isnan(dest) && exp != dest->exponent;)
-    {
-      exp = dest->exponent;
-      _corr_lead_zero(dest);
-    }
-#ifdef FLOATDEBUG
-    _setvalue_(dest);
-#endif
-  }
-  bc_free_num(value);
-}
-
-void
 float_setinteger(floatnum dest, int value)
 {
-  bc_num bc;
+  char buf[BITS_IN_UNSIGNED/3 + 1];
 
-  bc = NULL;
-  bc_int2num(&bc, value);
-  float_setbcnum(dest, &bc);
+  sprintf(buf, "%d", value);
+  float_setscientific(dest, buf, NULLTERMINATED);
 }
 
 /* rounding a value towards infinity */
