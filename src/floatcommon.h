@@ -52,7 +52,7 @@ int leadingdigits(floatnum x, int digits);
 
 /* convenience wrapper for float_setscientific, setting the last
    parameter to NULLTERMINATED */
-void float_setasciiz(floatnum x, char* asciiz);
+void float_setasciiz(floatnum x, const char* asciiz);
 
 /* convenience wrapper for float_add, adds a signed integer to <summand1>
    and places the result in <sum> */

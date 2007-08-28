@@ -88,7 +88,7 @@ logexp(
 void
 float_setasciiz(
   floatnum x,
-  char* asciiz)
+  const char* asciiz)
 {
   float_setscientific(x, asciiz, NULLTERMINATED);
 }

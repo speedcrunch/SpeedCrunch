@@ -1076,9 +1076,12 @@ float_clone(
   floatnum source,
   int digits)
 {
-  int scale, save;
+  int scale, save, srclg;
 
-  if (!_checkdigits(digits, EXACT))
+  srclg = float_getlength(source);
+  if (digits == EXACT || digits > srclg)
+    digits = _max(1, srclg);
+  if (!_checkdigits(digits, NOSPECIALVALUE))
   {
     float_setnan(dest);
     return FALSE;
@@ -1087,9 +1090,7 @@ float_clone(
     *dest = *source;
   else
   {
-    scale = _scaleof(source);
-    if (digits != EXACT)
-      scale = _min(digits - 1, scale);
+    scale = _min(digits - 1, _scaleof(source));
     save = _limit_scale(source, scale);
     _corr_trailing_zeros(source);
     _scaled_clone(dest, source, EXACT);

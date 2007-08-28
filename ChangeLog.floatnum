@@ -1,3 +1,12 @@
+2007-08-28
+start testing error behaviour
+more tests
+
+floatcommon
+- const modifier for parameter in setasciiz
+floatnum
+- float_clone consistently observes maxdigits now
+
 2007-08-26
 allow modification of the precision limit
 get rid of float_setbcnum: do not expose too much of the

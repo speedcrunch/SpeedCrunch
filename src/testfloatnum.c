@@ -61,6 +61,12 @@
 #define maxi (msbi + (msbi -1))
 #define mini (-maxi - 1)
 
+static char logequiv(int v1, int v2)
+{
+  return ((v1 == 0) && (v2 == 0))
+      || ((v1 != 0) && (v2 != 0));
+}
+
 static unsigned rol(unsigned u)
 {
   return (u << 1) | (u >> (sizeof(unsigned)*8-1));
@@ -414,10 +420,11 @@ static int tc_isnan(void* s, int exp, char result)
 {
   floatstruct f;
 
+  float_geterror();
   f.significand = s;
   f.exponent = exp;
   return float_isnan(&f) == result && exp == f.exponent
-         && f.significand == s;
+         && f.significand == s && float_geterror() == FLOAT_SUCCESS;
 }
 
 static int test_isnan()
@@ -445,10 +452,11 @@ static int tc_iszero(void* s, int exp, char result)
 {
   floatstruct f;
 
+  float_geterror();
   f.significand = s;
   f.exponent = exp;
   return float_iszero(&f) == result && exp == f.exponent
-      && f.significand == s;
+      && f.significand == s && float_geterror() == FLOAT_SUCCESS;
 }
 
 static int test_iszero()
@@ -476,10 +484,11 @@ static int tc_create(void* s, int exp)
 {
   floatstruct f;
 
+  float_geterror();
   f.significand = s;
   f.exponent = exp;
   float_create(&f);
-  return istruenan(&f);
+  return istruenan(&f) && float_geterror() == FLOAT_SUCCESS;
 }
 
 static int test_create()
@@ -508,13 +517,15 @@ static int tc_setnan(char one, int exp)
   floatstruct f;
   int refs;
 
+  float_geterror();
   refs = _one_->n_refs;
   f.significand = NULL;
   if (one)
     f.significand = bc_copy_num(_one_);
   f.exponent = exp;
   float_setnan(&f);
-  return istruenan(&f) && refs == _one_->n_refs;
+  return istruenan(&f) && refs == _one_->n_refs
+         && float_geterror() == FLOAT_SUCCESS;
 }
 
 static int test_setnan()
@@ -542,13 +553,15 @@ static int tc_setzero(char one, int exp)
   floatstruct f;
   int refs;
 
+  float_geterror();
   refs = _one_->n_refs;
   f.significand = NULL;
   if (one)
     f.significand = bc_copy_num(_one_);
   f.exponent = exp;
   float_setzero(&f);
-  return float_iszero(&f) && refs == _one_->n_refs;
+  return float_iszero(&f) && refs == _one_->n_refs
+        && float_geterror() == FLOAT_SUCCESS;
 }
 
 static int test_setzero()
@@ -581,6 +594,7 @@ static int tc_setsignificand(const char* mant, int mlg,
   char retvalue;
 
   retvalue = 1;
+  float_geterror();
   /* test zero or NaN cases */
   if (result == NULL || result[0] == '0')
   {
@@ -595,7 +609,7 @@ static int tc_setsignificand(const char* mant, int mlg,
     else if (result[0] == '0')
       retvalue = float_iszero(&f);
     retvalue = retvalue && refs == _one_->n_refs
-      && dot == d && z == zeros;
+      && dot == d && z == zeros && float_geterror() == FLOAT_SUCCESS;
   }
   if (retvalue)
   {
@@ -611,7 +625,7 @@ static int tc_setsignificand(const char* mant, int mlg,
           && f.significand->n_len == 1
           && f.significand->n_sign == PLUS
           && mantcmp(f.significand, result);
-      retvalue = retvalue && dot == d;
+    retvalue = retvalue && dot == d && float_geterror() == FLOAT_SUCCESS;
   }
   if (retvalue && result != NULL && result[0] != '0')
   {
@@ -631,7 +645,8 @@ static int tc_setsignificand(const char* mant, int mlg,
           && f.significand->n_sign == PLUS
           && mantcmp(f.significand, result)
           && dot == d && z == zeros
-          && f.exponent == 0;
+          && f.exponent == 0
+          && float_geterror() == FLOAT_SUCCESS;
     }
     maxdigits = save;
   }
@@ -739,6 +754,7 @@ static int tc_getsignificand(const char* value, int bufsz, const char* result)
 
   float_create(&f);
   float_setsignificand(&f, NULL, value, NULLTERMINATED);
+  float_geterror();
   if (float_isnan(&f) || float_iszero(&f))
   {
     memset(buf, '?', 30);
@@ -748,7 +764,8 @@ static int tc_getsignificand(const char* value, int bufsz, const char* result)
         && buf[0] == '?'
         && buf[lg + 1] == '?'
         && memcmp(buf + 1, result, lg) == 0
-        && h == hash(&f);
+        && h == hash(&f)
+        && float_geterror() == FLOAT_SUCCESS;
   }
   else
     for (i = sizeof(exp)/sizeof(int); --i >= 0;)
@@ -763,7 +780,8 @@ static int tc_getsignificand(const char* value, int bufsz, const char* result)
           && h == hash(&f)
           && buf[0] == '?'
           && buf[lg + 1] == '?'
-          && memcmp(buf + 1, result, lg) == 0;
+          && memcmp(buf + 1, result, lg) == 0
+          && float_geterror() == FLOAT_SUCCESS;
       }
   float_free(&f);
   return retvalue;
@@ -812,6 +830,7 @@ static int tc_setexponent(const char* value, int exp, int range,
   static int sign[] = {PLUS, MINUS};
 
   save = float_setrange(range);
+  float_geterror();
   float_create(&f);
   for (i = -1; ++i < 2;)
   {
@@ -834,7 +853,7 @@ static int tc_setexponent(const char* value, int exp, int range,
   }
   float_free(&f);
   float_setrange(save);
-  return 1;
+  return float_geterror() == FLOAT_SUCCESS;
 }
 
 static int test_setexponent()
@@ -886,7 +905,9 @@ static int tc_getexponent(const char* value, int exp, int result)
   if (!float_isnan(&f) && !float_iszero(&f))
     float_setexponent(&f, exp);
   h = hash(&f);
-  retvalue = float_getexponent(&f) == result && hash(&f) == h;
+  float_geterror();
+  retvalue = float_getexponent(&f) == result && hash(&f) == h
+             && float_geterror() == FLOAT_SUCCESS;
   float_free(&f);
   return retvalue;
 }
@@ -931,6 +952,7 @@ static int tc_setsign(const char* value, int exp)
   if (f.significand)
     f.significand->n_sign = MINUS;
   hm = hash(&f);
+  float_geterror();
   float_setsign(&f, 0);
   if ((f.significand && f.significand->n_sign != MINUS) || hm != hash(&f))
     return 0;
@@ -957,7 +979,7 @@ static int tc_setsign(const char* value, int exp)
     if (!istruenan(&f))
       return 0;
   }
-  return 1;
+  return float_geterror() == FLOAT_SUCCESS;
 }
 
 static int test_setsign()
@@ -992,7 +1014,9 @@ static int tc_getsign(const char* value, int exp, signed char sign, signed char 
   float_setsign(&f, sign);
   float_setexponent(&f, exp);
   h = hash(&f);
-  retvalue = float_getsign(&f) == result && hash(&f) == h;
+  float_geterror();
+  retvalue = float_getsign(&f) == result && hash(&f) == h
+             && float_geterror() == FLOAT_SUCCESS;
   float_free(&f);
   return retvalue;
 }
@@ -1033,10 +1057,11 @@ static int tc_getlength(const char* value, int result)
   save = float_setrange(MAXEXP);
   float_create(&f);
   float_setsignificand(&f, NULL, value, NULLTERMINATED);
+  float_geterror();
   if (float_isnan(&f) || float_iszero(&f))
   {
     h = hash(&f);
-    if (float_getlength(&f) != 0 && h != hash(&f))
+    if (float_getlength(&f) != 0 || h != hash(&f))
       return 0;
   }
   else
@@ -1055,7 +1080,7 @@ static int tc_getlength(const char* value, int result)
   }
   float_free(&f);
   float_setrange(save);
-  return 1;
+  return float_geterror() == FLOAT_SUCCESS;
 }
 
 static int test_getlength()
@@ -1096,6 +1121,7 @@ static int tc_getdigit(const char* value)
 
   float_create(&f);
   float_setsignificand(&f, NULL, value, NULLTERMINATED);
+  float_geterror();
   if (float_getlength(&f) == 0)
   {
     h = hash(&f);
@@ -1125,7 +1151,7 @@ static int tc_getdigit(const char* value)
     float_setrange(save);
   }
   float_free(&f);
-  return 1;
+  return float_geterror() == FLOAT_SUCCESS;
 }
 
 static int test_getdigit()
@@ -1162,6 +1188,7 @@ static int tc_getscientific(const char* s, int exp, int sz, const char* result)
   float_setexponent(&f, exp);
   memset(buf, '?', 30);
   h = hash(&f);
+  float_geterror();
   lg = strlen(result);
   r[0] = '\0';
   if (lg == 0)
@@ -1198,7 +1225,7 @@ static int tc_getscientific(const char* s, int exp, int sz, const char* result)
     }
   }
   float_free(&f);
-  return 1;
+  return float_geterror() == FLOAT_SUCCESS;
 }
 
 static int test_getscientific()
@@ -1270,6 +1297,7 @@ static int tc_setscientific(const char* value, const char* result)
   signed char sign;
 
   float_create(&f);
+  float_geterror();
   refs = _one_->n_refs;
   f.exponent = 12;
   f.significand = bc_copy_num(_one_);
@@ -1297,7 +1325,7 @@ static int tc_setscientific(const char* value, const char* result)
   if (sign > 0 || strcmp(buf, result) != 0)
     return 0;
   float_free(&f);
-  return 1;
+  return float_geterror() == FLOAT_SUCCESS;
 }
 
 static int test_setscientific()
@@ -1394,17 +1422,20 @@ static int tc_setinteger(int value)
   floatstruct f, g;
   char buf[50];
   char r[50];
+  int err;
 
   sprintf(r, "%d", value);
   float_create(&f);
   float_create(&g);
+  float_geterror();
   float_setinteger(&f, value);
+  err = float_geterror();
   float_setasciiz(&g, r);
   float_getscientific(buf, 50, &f);
   float_getscientific(r, 50, &g);
   float_free(&f);
   float_free(&g);
-  return strcmp(buf, r) == 0;
+  return strcmp(buf, r) == 0 && err == FLOAT_SUCCESS;
 }
 
 static int test_setinteger()
@@ -1432,120 +1463,165 @@ static int test_setinteger()
   return 1;
 }
 
-static int tc_changesign(char* msg, floatnum f, signed char result)
+static int tc_changesign(const char* value, signed char result, int error)
 {
-  printf("%s", msg);
-  float_changesign(f);
-  return result == float_getsign(f)? TRUE : FALSE;
+  floatstruct f;
+  unsigned h;
+  int errcode;
+  signed char sign;
+  char retvalue;
+  char err;
+
+  float_create(&f);
+  float_setasciiz(&f, value);
+  h = hash(&f);
+  float_geterror();
+  err = float_changesign(&f);
+  errcode = float_geterror();
+  sign = float_getsign(&f);
+  if (sign != 0)
+    float_changesign(&f);
+  retvalue = result == sign && h == hash(&f) && errcode == error
+             && logequiv(errcode, !err);
+  float_free(&f);
+  return retvalue;
 }
 
 static int test_changesign()
 {
-  floatstruct f;
+  int i;
+  static struct{
+    const char* value; signed char result; int error;
+  } testcases[] = {
+    {"NaN", 0, FLOAT_NANOPERAND},
+    {"0", 0, FLOAT_SUCCESS},
+    {"1.23", -1, FLOAT_SUCCESS},
+    {"-1.23", 1, FLOAT_SUCCESS},
+  };
 
-  printf("\ntesting float_changesign\n");
-  float_create(&f);
-  if(!tc_changesign("testing NaN\n", &f, 0)) return FALSE;
-  float_setzero(&f);
-  if(!tc_changesign("testing zero\n", &f, 0)) return FALSE;
-  float_setsignificand(&f, NULL, "123", NULLTERMINATED);
-  if(!tc_changesign("testing 1.23\n", &f, -1)) return FALSE;
-  if(!tc_changesign("testing -1.23\n", &f, 1)) return FALSE;
-
-  return TRUE;
+  printf("testing float_changesign\n");
+  for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
+    if(!tc_changesign(testcases[i].value, testcases[i].result,
+                      testcases[i].error))
+      return tc_fail(i);
+  return 1;
 }
 
-static int tc_abs(char* msg, floatnum f, signed char result)
+static int tc_abs(const char* value, int error)
 {
-  printf("%s", msg);
-  float_abs(f);
-  return result == float_getsign(f)? TRUE : FALSE;
+  floatstruct f;
+  unsigned h;
+  int errcode;
+  signed char sign;
+  char err, retvalue;
+
+  float_create(&f);
+  float_setasciiz(&f, value);
+  sign = float_getsign(&f);
+  h = hash(&f);
+  float_geterror();
+  err = float_abs(&f);
+  errcode = float_geterror();
+  if (sign)
+    retvalue = float_getsign(&f) == 1;
+  else
+    retvalue = float_getsign(&f) == 0;
+  float_setsign(&f, sign);
+  retvalue = retvalue && h == hash(&f) && error == errcode
+             && logequiv(!err, errcode);
+  float_free(&f);
+  return retvalue;
 }
 
 static int test_abs()
 {
-  floatstruct f;
+  int i;
+  static struct{
+    const char* value; int error;
+  } testcases[] = {
+    {"NaN", FLOAT_NANOPERAND},
+    {"0", FLOAT_SUCCESS},
+    {"1.23", FLOAT_SUCCESS},
+    {"-1.23", FLOAT_SUCCESS},
+  };
 
-  printf("\ntesting float_abs\n");
-  float_create(&f);
-  if(!tc_abs("testing NaN\n", &f, 0)) return FALSE;
-  float_setzero(&f);
-  if(!tc_abs("testing zero\n", &f, 0)) return FALSE;
-  float_setsignificand(&f, NULL, "123", NULLTERMINATED);
-  if(!tc_abs("testing 1.23\n", &f, 1)) return FALSE;
-  float_setsign(&f, -1);
-  if(!tc_abs("testing -1.23\n", &f, 1)) return FALSE;
-
-  return TRUE;
+  printf("testing float_abs\n");
+  for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
+    if(!tc_abs(testcases[i].value, testcases[i].error))
+      return tc_fail(i);
+  return 1;
 }
 
-static int tc_cmp(char* msg, char* val1, char* val2, int result)
+static int tc_cmp(const char* val1, const char* val2, signed char result)
 {
   floatstruct v1;
   floatstruct v2;
+  signed char revres, res;
 
   float_create(&v1);
   float_create(&v2);
-  printf("%s", msg);
   float_setscientific(&v1, val1, NULLTERMINATED);
   float_setscientific(&v2, val2, NULLTERMINATED);
-  result -= float_cmp(&v1, &v2);
+  float_geterror();
+  revres = float_cmp(&v2, &v1);
+  if (revres != UNORDERED)
+    revres = -revres;
+  else if (float_geterror() != FLOAT_NANOPERAND)
+    return 0;
+  res = float_cmp(&v1, &v2);
+  if (res == UNORDERED && float_geterror() != FLOAT_NANOPERAND)
+    return 0;
   float_free(&v1);
   float_free(&v2);
-  return result == 0? TRUE : FALSE;
+  return res == result && revres == result && float_geterror() == FLOAT_SUCCESS;
 }
 
 static int test_cmp()
 {
-  printf("\ntesting float_cmp\n");
+  int i;
+  static struct{
+    const char* value1; const char* value2; signed char result;
+  } testcases[] = {
+    {"NaN", "NaN", UNORDERED},
+    {"NaN", "0", UNORDERED},
+    {"NaN", "1", UNORDERED},
+    {"NaN", "-1", UNORDERED},
+    {"0", "0", 0},
+    {"1", "0", 1},
+    {"10", "0", 1},
+    {".1", "0", 1},
+    {"-1", "0", -1},
+    {"-10", "0", -1},
+    {"-.1", "0", -1},
+    {"1", "10", -1},
+    {"1", "1", 0},
+    {"1", ".1", 1},
+    {"1", "-10", 1},
+    {"1", "-1", 1},
+    {"1", "-.1", 1},
+    {"-1", "10", -1},
+    {"-1", ".1", -1},
+    {"-1", "-10", 1},
+    {"-1", "-.1", -1},
+    {"-1", "-1", 0},
+    {"1.01", "1", 1},
+    {"1.01", "1.02", -1},
+    {"1.021", "1.011", 1},
+    {"1.011", "1.01", 1},
+    {"1.011", "1.011", 0},
+    {"-1.01", "-1", -1},
+    {"-1.01", "-1.02", 1},
+    {"-1.021", "-1.011", -1},
+    {"-1.011", "-1.01", -1},
+    {"-1.011", "-1.011", 0},
+  };
 
-  if (!tc_cmp("testing NaN - NaN\n", "NaN", "NaN", UNORDERED)) return FALSE;
-  if (!tc_cmp("testing NaN - 0\n", "NaN", "0", UNORDERED)) return FALSE;
-  if (!tc_cmp("testing NaN - 1\n", "NaN", "1", UNORDERED)) return FALSE;
-  if (!tc_cmp("testing NaN - (-1)\n", "NaN", "-1", UNORDERED)) return FALSE;
-  if (!tc_cmp("testing 0 - NaN\n", "0", "NaN", UNORDERED)) return FALSE;
-  if (!tc_cmp("testing 1 - NaN\n", "1", "NaN", UNORDERED)) return FALSE;
-  if (!tc_cmp("testing (-1) - NaN\n", "-1", "NaN", UNORDERED)) return FALSE;
-  if (!tc_cmp("testing 0 - 0\n", "0", "0", 0)) return FALSE;
-  if (!tc_cmp("testing 1 - 0\n", "1", "0", 1)) return FALSE;
-  if (!tc_cmp("testing 10 - 0\n", "10", "0", 1)) return FALSE;
-  if (!tc_cmp("testing 0.1 - 0\n", "0.1", "0", 1)) return FALSE;
-  if (!tc_cmp("testing (-10) - 0\n", "-10", "0", -1)) return FALSE;
-  if (!tc_cmp("testing (-1) - 0\n", "-1", "0", -1)) return FALSE;
-  if (!tc_cmp("testing (-0.1) - 0\n", "-0.1", "0", -1)) return FALSE;
-  if (!tc_cmp("testing 0 - 10\n", "0", "10", -1)) return FALSE;
-  if (!tc_cmp("testing 0 - 1\n", "0", "1", -1)) return FALSE;
-  if (!tc_cmp("testing 0 - 0.1\n", "0", "0.1", -1)) return FALSE;
-  if (!tc_cmp("testing 0 - (-10)\n", "0", "-10", 1)) return FALSE;
-  if (!tc_cmp("testing 0 - (-1)\n", "0", "-1", 1)) return FALSE;
-  if (!tc_cmp("testing 0 - (-0.1)\n", "0", "-0.1", 1)) return FALSE;
-  if (!tc_cmp("testing 1 - 10\n", "1", "10", -1)) return FALSE;
-  if (!tc_cmp("testing 1 - 1\n", "1", "1", 0)) return FALSE;
-  if (!tc_cmp("testing 1 - 0.1\n", "1", "0.1", 1)) return FALSE;
-  if (!tc_cmp("testing 1 - (-10)\n", "1", "-10", 1)) return FALSE;
-  if (!tc_cmp("testing 1 - (-1)\n", "1", "-1", 1)) return FALSE;
-  if (!tc_cmp("testing 1 - (-0.1)\n", "1", "-0.1", 1)) return FALSE;
-  if (!tc_cmp("testing (-1) - 10\n", "-1", "10", -1)) return FALSE;
-  if (!tc_cmp("testing (-1) - 1\n", "-1", "1", -1)) return FALSE;
-  if (!tc_cmp("testing (-1) - 0.1\n", "-1", "0.1", -1)) return FALSE;
-  if (!tc_cmp("testing (-1) - (-10)\n", "-1", "-10", 1)) return FALSE;
-  if (!tc_cmp("testing (-1) - (-1)\n", "-1", "-1", 0)) return FALSE;
-  if (!tc_cmp("testing (-1) - (-0.1)\n", "-1", "-0.1", -1)) return FALSE;
-  if (!tc_cmp("testing 1.01 - 1\n", "1.01", "1", 1)) return FALSE;
-  if (!tc_cmp("testing 1.01 - 1.02\n", "1.01", "1.02", -1)) return FALSE;
-  if (!tc_cmp("testing 1.02 - 1.01\n", "1.02", "1.01", 1)) return FALSE;
-  if (!tc_cmp("testing 1.021 - 1.011\n", "1.021", "1.011", 1)) return FALSE;
-  if (!tc_cmp("testing 1.011 - 1.021\n", "1.011", "1.021", -1)) return FALSE;
-  if (!tc_cmp("testing 1.011 - 1.01\n", "1.011", "1.01", 1)) return FALSE;
-  if (!tc_cmp("testing 1.01 - 1.011\n", "1.01", "1.011", -1)) return FALSE;
-  if (!tc_cmp("testing (-1.01) - (-1)\n", "-1.01", "-1", -1)) return FALSE;
-  if (!tc_cmp("testing (-1.01) - (-1.02)\n", "-1.01", "-1.02", 1)) return FALSE;
-  if (!tc_cmp("testing (-1.02) - (-1.01)\n", "-1.02", "-1.01", -1)) return FALSE;
-  if (!tc_cmp("testing (-1.021) - (-1.011)\n", "-1.021", "-1.011", -1)) return FALSE;
-  if (!tc_cmp("testing (-1.011) - (-1.021)\n", "-1.011", "-1.021", 1)) return FALSE;
-  if (!tc_cmp("testing (-1.011) - (-1.01)\n", "-1.011", "-1.01", -1)) return FALSE;
-  if (!tc_cmp("testing (-1.01) - (-1.011)\n", "-1.01", "-1.011", 1)) return FALSE;
-  return TRUE;
+  printf("testing float_cmp\n");
+
+  for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
+    if(!tc_cmp(testcases[i].value1, testcases[i].value2, testcases[i].result))
+      return tc_fail(i);
+  return 1;
 }
 
 static int tc_clone(char* msg, char* source, int scale, char* result)
@@ -6133,6 +6209,7 @@ int main(int argc, char** argv)
   if(!test_getdigit()) return testfailed("float_getdigit");
   if(!test_getscientific()) return testfailed("float_getscientific");
   if(!test_setscientific()) return testfailed("float_setscientific");
+  if(!test_setinteger()) return testfailed("float_setinteger");
 
   printf("\ntest of basic arithmetic \n");
 
@@ -6146,7 +6223,6 @@ int main(int argc, char** argv)
   if(!test_mul()) return testfailed("float_mul");
   if(!test_div()) return testfailed("float_div");
   if(!test_sqrt()) return testfailed("float_sqrt");
-  if(!test_setinteger()) return testfailed("float_setinteger");
   if(!test_int()) return testfailed("float_int");
   if(!test_frac()) return testfailed("float_frac");
   if(!test_divmod()) return testfailed("float_divmod");

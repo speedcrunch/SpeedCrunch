@@ -43,11 +43,11 @@
 
 #define FLOAT_SUCCESS      0
 #define FLOAT_NANOPERAND   1
-#define FLOAT_OVERFLOW     2
+#define FLOAT_UNSTABLE     2
 #define FLOAT_UNDERFLOW    3
-#define FLOAT_ZERODIVIDE   4
-#define FLOAT_OUTOFDOMAIN  5
-#define FLOAT_UNSTABLE     6
+#define FLOAT_OVERFLOW     4
+#define FLOAT_ZERODIVIDE   5
+#define FLOAT_OUTOFDOMAIN  6
 #define FLOAT_INVALIDPARAM 100
 
 #define float_free(f) float_setnan(f)
@@ -322,9 +322,8 @@ char float_frac(floatnum f);
    This prevents unnecessary copying.
    If a copy has to be made, the allocated space is just big enough to hold
    the significand, so no memory is wasted.
-   float_clone is not subject to the MAXSCALE limit.
    A return value of 0 indicates an error.
-   errors: FLOAT_INVALIDPARAM */
+   errors: FLOAT_INVALIDPARAM, if the length of the copy exceeds <maxdigits> */
 char float_clone(floatnum dest, floatnum source, int digits);
 
 /* transfers the contents of source to dest. source is assigned NaN
@@ -345,7 +344,7 @@ void float_move(floatnum dest, floatnum source);
    NaN is returned, if
    - (at least) one operand is NaN;
    - the result overflows or underflows;
-   - <digits> is invalid, or the resulting digits exceed MAXSCALE.
+   - <digits> is invalid, or the resulting digits exceed <maxdigits>.
    A return value of 0 indicates an error.
    errors: FLOAT_NANOPERAND
            FLOAT_INVALIDPARAM
@@ -361,7 +360,7 @@ char float_add(floatnum dest, floatnum summand1, floatnum summand2,
    NaN is returned, if
    - (at least) one operand is NaN;
    - the result overflows or underflows;
-   - <digits> is invalid, or the resulting digits exceed MAXSCALE.
+   - <digits> is invalid, or the resulting digits exceed <maxdigits>.
    A return value of 0 indicates an error.
    errors: FLOAT_NANOPERAND
            FLOAT_INVALIDPARAM
@@ -377,7 +376,7 @@ char float_sub(floatnum dest, floatnum minuend, floatnum subtrahend,
    NaN is returned, if
    - (at least) one operand is NaN;
    - the result overflows or underflows;
-   - <digits> is invalid, or the resulting scale exceeds MAXSCALE.
+   - <digits> is invalid, or the resulting scale exceeds <maxdigits>.
    A return value of 0 indicates an error.
    errors: FLOAT_NANOPERAND
            FLOAT_INVALIDPARAM
@@ -396,7 +395,7 @@ char float_mul(floatnum dest, floatnum factor1, floatnum factor2,
    - (at least) one operand is NaN;
    - the result overflows or underflows;
    - the divisor is zero;
-   - <digits> is invalid, or the resulting scale exceeds MAXSCALE.
+   - <digits> is invalid, or the resulting scale exceeds <maxdigits>.
    A return value of 0 indicates an error.
    errors: FLOAT_NANOPERAND
            FLOAT_INVALIDPARAM
@@ -415,7 +414,7 @@ char float_div(floatnum dest, floatnum dividend, floatnum divisor,
    part of the quotient is calculated.
    This function is an exact operation anyway, so EXACT is not allowed
    here.
-   <digits> is subject to the MAXSCALE limit.
+   <digits> is subject to the <maxdigits> limit.
    <remainder> and <quotient> have to be different variables, but besides
    this, there are no other restrictions on the passed variables.
    If this function fails, both result variables are set to NaN.
@@ -432,7 +431,7 @@ char float_divmod(floatnum quotient, floatnum remainder, floatnum dividend,
    <digits> == EXACT is not allowed, even if the argument is a square.
    NaN is returned, if
    - the operand is NaN,
-   - <digits> exceed MAXSCALE
+   - <digits> exceeds <maxdigits>
    - the operand is negative.
    return value == 0 indicates an error.
    errors: FLOAT_NANOPERAND
