@@ -1624,75 +1624,90 @@ static int test_cmp()
   return 1;
 }
 
-static int tc_clone(char* msg, char* source, int scale, char* result)
+static int tc_clone(const char* source, int digits,
+                    int error, const char* result)
 {
-  floatstruct src;
-  floatstruct dest;
-  int lg;
-  char ok;
-  char save[30];
-  char buf[30];
+  floatstruct src, dest;
+  floatnum s, d;
+  int refs, save, code;
+  char err, retvalue;
+  char buf[60];
 
+  refs = _one_->n_refs;
   float_create(&src);
   float_create(&dest);
-
-  printf("%s", msg);
-  float_setscientific(&src, source, NULLTERMINATED);
-  float_getscientific(save, 30, &src);
-  float_clone(&dest, &src, scale);
-  float_getscientific(buf, 30, &dest);
-  lg = strlen(result);
-
-  ok = strlen(buf) == lg && memcmp(buf, result, lg) == 0? TRUE:FALSE;
-  float_getscientific(buf, 30, &src);
-  float_free(&src);
-  float_free(&dest);
-  return ok && strlen(buf) == strlen(save) && memcmp(buf, save, strlen(buf)) == 0;
+  s = &src;
+  d = &dest;
+  dest.significand = bc_copy_num(_one_);
+  dest.exponent = 12;
+  save = float_setprecision(50);
+  float_setasciiz(s, source);
+  float_setprecision(save);
+  float_geterror();
+  err = float_clone(d, s, digits);
+  code = float_geterror();
+  float_getscientific(buf, sizeof(buf), d);
+  retvalue = refs == _one_->n_refs 
+             && code == error
+             && logequiv(code, !err)
+             && strcmp(result, buf) == 0;
+  if (retvalue)
+  {
+    err = float_clone(s, s, digits);
+    code = float_geterror();
+    float_getscientific(buf, sizeof(buf), d);
+    retvalue = code == error
+        && logequiv(code, !err)
+        && strcmp(result, buf) == 0;
+  }
+  float_free(s);
+  float_free(d);
+  return retvalue;
 }
 
 static int test_clone()
 {
-  floatstruct f;
-  char buf[30];
+  int i;
+  static struct{
+    const char* src; int digits; const char* result; int error;
+  } testcases[] = {
+    {"NaN", -10, "NaN", FLOAT_INVALIDPARAM},
+    {"NaN", EXACT, "NaN", FLOAT_SUCCESS},
+    {"NaN", 0, "NaN", FLOAT_INVALIDPARAM},
+    {"NaN", 1, "NaN", FLOAT_SUCCESS},
+    {"NaN", 15, "NaN", FLOAT_SUCCESS},
+    {"NaN", 16, "NaN", FLOAT_INVALIDPARAM},
+    {"0", -10, "NaN", FLOAT_INVALIDPARAM},
+    {"0", EXACT, "0", FLOAT_SUCCESS},
+    {"0", 0, "NaN", FLOAT_INVALIDPARAM},
+    {"0", 1, "0", FLOAT_SUCCESS},
+    {"0", 15, "0", FLOAT_SUCCESS},
+    {"0", 16, "NaN", FLOAT_INVALIDPARAM},
+    {"12305", EXACT, "1.2305e4", FLOAT_SUCCESS},
+    {"12305", -1, "NaN", FLOAT_INVALIDPARAM},
+    {"12305", 0, "NaN", FLOAT_INVALIDPARAM},
+    {"12305", 1, "1.e4", FLOAT_SUCCESS},
+    {"12305", 2, "1.2e4", FLOAT_SUCCESS},
+    {"12305", 3, "1.23e4", FLOAT_SUCCESS},
+    {"12305", 4, "1.23e4", FLOAT_SUCCESS},
+    {"12305", 5, "1.2305e4", FLOAT_SUCCESS},
+    {"12305", 6, "1.2305e4", FLOAT_SUCCESS},
+    {"-12305", 5, "-1.2305e4", FLOAT_SUCCESS},
+    {"1.234567890123456789", 0, "NaN", FLOAT_INVALIDPARAM},
+    {"1.234567890123456789", 1, "1.e0", FLOAT_SUCCESS},
+    {"1.234567890123456789", 14, "1.2345678901234e0", FLOAT_SUCCESS},
+    {"1.234567890123456789", 15, "1.23456789012345e0", FLOAT_SUCCESS},
+    {"1.23456789012345006789", 16, "NaN", FLOAT_INVALIDPARAM},
+    {"1.23456789012345006789", EXACT, "NaN", FLOAT_INVALIDPARAM},
+  };
 
-  printf("\ntesting float_clone\n");
-  float_create(&f);
-  if (!tc_clone("copy NaN, length = -10\n", "NaN", -10, "NaN")) return FALSE;
-  if (!tc_clone("copy NaN, length = EXACT\n", "NaN", EXACT, "NaN")) return FALSE;
-  if (!tc_clone("copy NaN, length = 0\n", "NaN", 0, "NaN")) return FALSE;
-  if (!tc_clone("copy NaN, length = 1\n", "NaN", 1, "NaN")) return FALSE;
-  if (!tc_clone("copy NaN, length = 1000\n", "NaN", 1000, "NaN")) return FALSE;
-  if (!tc_clone("copy 0, length = EXACT\n", "0", EXACT, "0")) return FALSE;
-  if (!tc_clone("copy 0, length = -1\n", "0", -10, "NaN")) return FALSE;
-  if (!tc_clone("copy 0, length = 0\n", "0", 0, "NaN")) return FALSE;
-  if (!tc_clone("copy 0, length = 1\n", "0", 1, "0")) return FALSE;
-  if (!tc_clone("copy 0, length = 1000\n", "0", 1000, "0")) return FALSE;
-  if (!tc_clone("copy 1.2305E4, length = EXACT\n", "1.2305E4", EXACT, "1.2305e4")) return FALSE;
-  if (!tc_clone("copy 1.2305E4, length = -10\n", "1.2305E4", -10, "NaN")) return FALSE;
-  if (!tc_clone("copy 1.2305E4, length = 0\n", "1.2305E4", 0, "NaN")) return FALSE;
-  if (!tc_clone("copy 1.2305E4, length = 1\n", "1.2305E4", 1, "1.e4")) return FALSE;
-  if (!tc_clone("copy 1.2305E4, length = 2\n", "1.2305E4", 2, "1.2e4")) return FALSE;
-  if (!tc_clone("copy 1.2305E4, length = 3\n", "1.2305E4", 3, "1.23e4")) return FALSE;
-  if (!tc_clone("copy 1.2305E4, length = 4\n", "1.2305E4", 4, "1.23e4")) return FALSE;
-  if (!tc_clone("copy 1.2305E4, length = 5\n", "1.2305E4", 5, "1.2305e4")) return FALSE;
-  if (!tc_clone("copy 1.2305E4, length = 6\n", "1.2305E4", 6, "1.2305e4")) return FALSE;
-  if (!tc_clone("copy -1.2305E4, length = 5\n", "-1.2305E4", 5, "-1.2305e4")) return FALSE;
-  printf("%s", "in place copy, exact");
-  float_setscientific(&f, "-1.2345", NULLTERMINATED);
-  float_clone(&f, &f, EXACT);
-  float_getscientific(buf, 30, &f);
-  if(memcmp(buf, "-1.2345e0", 10) != 0) return FALSE;
-  printf("%s", "in place copy, exceed");
-  float_clone(&f, &f, 20);
-  float_getscientific(buf, 30, &f);
-  if(memcmp(buf, "-1.2345e0", 10) != 0) return FALSE;
-  printf("%s", "in place copy, truncating");
-  float_clone(&f, &f, 3);
-  float_getscientific(buf, 30, &f);
-  if(memcmp(buf, "-1.23e0", 8) != 0) return FALSE;
+  printf("testing float_clone\n");
 
-  float_free(&f);
-  return TRUE;
+  for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
+    if(!tc_clone(testcases[i].src, testcases[i].digits, testcases[i].error,
+                 testcases[i].result))
+      return tc_fail(i);
+  return 1;
 }
 
 static int tc_round(char* msg, char* value, int digits, roundmode mode, char* result)

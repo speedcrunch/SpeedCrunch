@@ -290,6 +290,13 @@ float_setnan (
   float_create(f);
 }
 
+static char _seterror(floatnum result, int code)
+{
+  float_setnan(result);
+  float_error = code;
+  return FALSE;
+}
+
 void
 float_setzero (
   floatnum f)
@@ -356,15 +363,15 @@ _checknan(
    If a function does not accept a special value,
    use NOSPECIALVALUE as a parameter for <specialval>.
    TRUE is returned if the check is passed.
-   The check for the limit MAXSCALE is not executed
+   The check for the limit MAXDIGITS is not executed
    here, because some intermediate operations have to succeed
-   on more than MAXSCALE digits */
+   on more than MAXDIGITS digits */
 static char
 _checkdigits(
   int digits, 
   int specialval)
 {
-  if (digits > 0 || digits == specialval)
+  if ((digits > 0 && digits <= maxdigits) || digits == specialval)
     return TRUE;
   float_error = FLOAT_INVALIDPARAM;
   return FALSE;
@@ -989,13 +996,8 @@ float_round(
 
   if (_checknan(f))
     return FALSE;
-  if (mode > TOMINUSINFINITY || digits <= 0)
-  {
-    float_setnan(f);
-    float_error = FLOAT_INVALIDPARAM;
-    return FALSE;
-  }
-
+  if (mode > TOMINUSINFINITY || !_checkdigits(digits, NOSPECIALVALUE))
+    return _seterror(f, FLOAT_INVALIDPARAM);
   sign = float_getsign(f);
   if(sign != 0 && float_getlength(f) > digits--)
   {
@@ -1012,7 +1014,7 @@ float_round(
       case TOPLUSINFINITY:
         sign = -sign; /* fall through */
       case TOMINUSINFINITY:
-        if(sign > 0)
+        if (sign > 0)
           _trunc(f, digits);
         else
           _roundup(f, digits);
@@ -1076,18 +1078,18 @@ float_clone(
   floatnum source,
   int digits)
 {
-  int scale, save, srclg;
+  int scale, save;
 
-  srclg = float_getlength(source);
-  if (digits == EXACT || digits > srclg)
-    digits = _max(1, srclg);
+  if (digits == EXACT)
+    digits = _max(1, float_getlength(source));
   if (!_checkdigits(digits, NOSPECIALVALUE))
-  {
-    float_setnan(dest);
-    return FALSE;
-  }
+    return _seterror(dest, FLOAT_INVALIDPARAM);
   if (_is_special(source))
+  {
+    if (dest != source)
+      float_free(dest);
     *dest = *source;
+  }
   else
   {
     scale = _min(digits - 1, _scaleof(source));
@@ -1181,12 +1183,7 @@ _addsub_normal(
   }
 
   if (digits > maxdigits)
-  {
-    /* invalid scale value */
-    float_error = FLOAT_INVALIDPARAM;
-    float_setnan(dest);
-    return FALSE;
-  }
+    return _seterror(dest, FLOAT_INVALIDPARAM);
 
   /* we cannot add the operands directly
      because of possibly different exponents.

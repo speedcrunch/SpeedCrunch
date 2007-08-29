@@ -1,3 +1,12 @@
+2007-08-29
+bugfix: new tests uncovered a memory leak
+more tests
+
+floatnum
+- fix memory leak in float_clone
+testfloatnum
+- better and more tests
+
 2007-08-28
 start testing error behaviour
 more tests
@@ -5,7 +14,7 @@ more tests
 floatcommon
 - const modifier for parameter in setasciiz
 floatnum
-- float_clone consistently observes maxdigits now
+- make float_clone sensitive to maxdigits
 
 2007-08-26
 allow modification of the precision limit
@@ -32,7 +41,8 @@ floatcommon
 - refer to the variable maxdigits instead of the constant MAXDIGITS
 floatnum
 - make maxdigits mutable
-- bugfix in float_setsignificand
+- bugfix in float_setsignificand (digit count could be off by one in
+    rare encountered special cases)
 testfloatnum
 - more test cases
 

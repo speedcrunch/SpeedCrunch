@@ -323,7 +323,8 @@ char float_frac(floatnum f);
    If a copy has to be made, the allocated space is just big enough to hold
    the significand, so no memory is wasted.
    A return value of 0 indicates an error.
-   errors: FLOAT_INVALIDPARAM, if the length of the copy exceeds <maxdigits> */
+   errors: FLOAT_INVALIDPARAM, if <digits>, or the length of the copy,
+                               exceeds <maxdigits> */
 char float_clone(floatnum dest, floatnum source, int digits);
 
 /* transfers the contents of source to dest. source is assigned NaN
