@@ -1463,7 +1463,7 @@ static int test_setinteger()
   return 1;
 }
 
-static int tc_changesign(const char* value, signed char result, int error)
+static int tc_neg(const char* value, signed char result, int error)
 {
   floatstruct f;
   unsigned h;
@@ -1476,18 +1476,18 @@ static int tc_changesign(const char* value, signed char result, int error)
   float_setasciiz(&f, value);
   h = hash(&f);
   float_geterror();
-  err = float_changesign(&f);
+  err = float_neg(&f);
   errcode = float_geterror();
   sign = float_getsign(&f);
   if (sign != 0)
-    float_changesign(&f);
+    float_neg(&f);
   retvalue = result == sign && h == hash(&f) && errcode == error
              && logequiv(errcode, !err);
   float_free(&f);
   return retvalue;
 }
 
-static int test_changesign()
+static int test_neg()
 {
   int i;
   static struct{
@@ -1501,8 +1501,8 @@ static int test_changesign()
 
   printf("testing float_changesign\n");
   for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
-    if(!tc_changesign(testcases[i].value, testcases[i].result,
-                      testcases[i].error))
+    if(!tc_neg(testcases[i].value, testcases[i].result,
+               testcases[i].error))
       return tc_fail(i);
   return 1;
 }
@@ -1624,7 +1624,7 @@ static int test_cmp()
   return 1;
 }
 
-static int tc_clone(const char* source, int digits,
+static int tc_copy(const char* source, int digits,
                     int error, const char* result)
 {
   floatstruct src, dest;
@@ -1644,7 +1644,7 @@ static int tc_clone(const char* source, int digits,
   float_setasciiz(s, source);
   float_setprecision(save);
   float_geterror();
-  err = float_clone(d, s, digits);
+  err = float_copy(d, s, digits);
   code = float_geterror();
   float_getscientific(buf, sizeof(buf), d);
   retvalue = refs == _one_->n_refs 
@@ -1653,7 +1653,7 @@ static int tc_clone(const char* source, int digits,
              && strcmp(result, buf) == 0;
   if (retvalue)
   {
-    err = float_clone(s, s, digits);
+    err = float_copy(s, s, digits);
     code = float_geterror();
     float_getscientific(buf, sizeof(buf), d);
     retvalue = code == error
@@ -1665,7 +1665,7 @@ static int tc_clone(const char* source, int digits,
   return retvalue;
 }
 
-static int test_clone()
+static int test_copy()
 {
   int i;
   static struct{
@@ -1701,124 +1701,224 @@ static int test_clone()
     {"1.23456789012345006789", EXACT, "NaN", FLOAT_INVALIDPARAM},
   };
 
-  printf("testing float_clone\n");
+  printf("testing float_copy\n");
 
   for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
-    if(!tc_clone(testcases[i].src, testcases[i].digits, testcases[i].error,
-                 testcases[i].result))
+    if(!tc_copy(testcases[i].src, testcases[i].digits, testcases[i].error,
+                testcases[i].result))
       return tc_fail(i);
   return 1;
 }
 
-static int tc_round(char* msg, char* value, int digits, roundmode mode, char* result)
+static int tc_move(const char* value)
 {
-  floatstruct f;
-  int lg;
-  char buf[30];
+  floatstruct f, g;
+  int save, refs, code;
+  char retvalue;
+  char buf[50];
 
   float_create(&f);
-
-  printf("%s", msg);
-  float_setscientific(&f, value, NULLTERMINATED);
-  float_round(&f, digits, mode);
-  float_getscientific(buf, 30, &f);
-  lg = strlen(result);
-  float_free(&f);
-  return strlen(buf) == lg && memcmp(buf, result, lg) == 0? TRUE:FALSE;
+  refs = _one_->n_refs;
+  g.significand = bc_copy_num(_one_);
+  g.exponent = 12;
+  save = float_setprecision(50);
+  float_setasciiz(&f, value);
+  float_setprecision(save);
+  float_geterror();
+  float_move(&g, &f);
+  code = float_geterror();
+  float_getscientific(buf, sizeof(buf), &g);
+  retvalue = refs == _one_->n_refs
+             && float_isnan(&f)
+             && strcmp(buf, value) == 0
+             && code == FLOAT_SUCCESS;
+  float_free(&g);
+  return retvalue;
 }
+
+static int test_move()
+{
+  int i;
+  static struct{
+    const char* value;
+  } testcases[] = {
+    {"NaN"},
+    {"0"},
+    {"1.e0"},
+    {"1.e-1"},
+    {"1.e1"},
+    {"-1.e1"},
+    {"1.234567890123456789e0"},
+  };
+
+  printf("testing float_move\n");
+
+  for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
+    if(!tc_move(testcases[i].value))
+      return tc_fail(i);
+  return 1;
+}
+
+static int tc_round(const char* value, int digits, const char* up,
+                    const char* down, int roundflags, int error)
+{
+  floatstruct f, g;
+  int flag, refs, save, code, cmp, cd;
+  char buf[50];
+  roundmode rm;
+  char err;
+
+  float_create(&f);
+  flag = 1;
+  refs = _one_->n_refs;
+  g.significand = bc_copy_num(_one_);
+  g.exponent = 0;
+  save = float_setprecision(50);
+  float_setasciiz(&f, value);
+  float_setprecision(save);
+  float_geterror();
+  err = float_round(&g, &f, digits, 5);
+  code = float_geterror();
+  if (err != 0 || code != FLOAT_INVALIDPARAM || !float_isnan(&g)
+      || refs != _one_->n_refs)
+    return 0;
+  for (rm = TONEAREST; rm <= TOMINUSINFINITY; ++rm)
+  {
+    refs = _one_->n_refs;
+    g.significand = bc_copy_num(_one_);
+    g.exponent = 0;
+    save = float_setprecision(50);
+    float_setasciiz(&f, value);
+    float_setprecision(save);
+    float_geterror();
+    err = float_round(&g, &f, digits, rm);
+    code = float_geterror();
+    float_getscientific(buf, sizeof(buf), &g);
+    cd = FLOAT_SUCCESS;
+    if ((flag & roundflags) != 0)
+    {
+      if (*up == 'N')
+        cd = error;
+      cmp = strcmp(buf, up);
+    }
+    else
+    {
+      if (*down == 'N')
+        cd = error;
+      cmp = strcmp(buf, down);
+    }
+    if (cmp != 0
+        || code != cd
+        || !logequiv(code, !err))
+      return 0;
+    float_geterror();
+    err = float_round(&f, &f, digits, rm);
+    code = float_geterror();
+    float_getscientific(buf, sizeof(buf), &f);
+    cd = FLOAT_SUCCESS;
+    if ((flag & roundflags) != 0)
+    {
+      if (*up == 'N')
+        cd = error;
+      cmp = strcmp(buf, up);
+    }
+    else
+    {
+      if (*down == 'N')
+        cd = error;
+      cmp = strcmp(buf, down);
+    }
+    if (cmp != 0
+        || code != cd
+        || !logequiv(code, !err))
+      return 0;
+    flag *=2;
+  }
+  float_free(&f);
+  float_free(&g);
+  return 1;
+}
+
+#define FN  1
+#define FZ  2
+#define FI  4
+#define FU  8
+#define FD 16
 
 static int test_round()
 {
-  char buf[30];
+  int i;
+  static struct{
+    const char* value; int digits; const char* up; const char* down;
+    int roundflags; int error;
+  } testcases[] = {
+    {"NaN", -1, "NaN", "NaN", 0, FLOAT_INVALIDPARAM},
+    {"NaN", 0, "NaN", "NaN", 0, FLOAT_INVALIDPARAM},
+    {"NaN", 16, "NaN", "NaN", 0, FLOAT_INVALIDPARAM},
+    {"NaN", 1, "NaN", "NaN", 0, FLOAT_NANOPERAND},
+    {"0", -1, "NaN", "NaN", 0, FLOAT_INVALIDPARAM},
+    {"0", 0, "NaN", "NaN", 0, FLOAT_INVALIDPARAM},
+    {"0", 16, "NaN", "NaN", 0, FLOAT_INVALIDPARAM},
+    {"0", 1, "0", "0", 0, FLOAT_SUCCESS},
+    {"1", -1, "NaN", "NaN", 0, FLOAT_INVALIDPARAM},
+    {"1", 0, "NaN", "NaN", 0, FLOAT_INVALIDPARAM},
+    {"1", 16, "NaN", "NaN", 0, FLOAT_INVALIDPARAM},
+    {"1", 1, "1.e0", "1.e0", 0, FLOAT_SUCCESS},
+    {"1", 2, "1.e0", "1.e0", 0, FLOAT_SUCCESS},
+    {"1", 15, "1.e0", "1.e0", 0, FLOAT_SUCCESS},
+    {"-1", -1, "NaN", "NaN", 0, FLOAT_INVALIDPARAM},
+    {"-1", 0, "NaN", "NaN", 0, FLOAT_INVALIDPARAM},
+    {"-1", 16, "NaN", "NaN", 0, FLOAT_INVALIDPARAM},
+    {"-1", 1, "-1.e0", "-1.e0", 0, FLOAT_SUCCESS},
+    {"-1", 2, "-1.e0", "-1.e0", 0, FLOAT_SUCCESS},
+    {"-1", 15, "-1.e0", "-1.e0", 0, FLOAT_SUCCESS},
+    {"1.903", 1, "2.e0", "1.e0", FN+FI+FU, FLOAT_SUCCESS},
+    {"1.903", 2, "2.e0", "1.9e0", FI+FU, FLOAT_SUCCESS},
+    {"1.903", 3, "1.91e0", "1.9e0", FI+FU, FLOAT_SUCCESS},
+    {"1.903", 4, "1.903e0", "1.903e0", 0, FLOAT_SUCCESS},
+    {"1.903", 5, "1.903e0", "1.903e0", 0, FLOAT_SUCCESS},
+    {"19.03", 1, "2.e1", "1.e1", FN+FI+FU, FLOAT_SUCCESS},
+    {"19.03", 2, "2.e1", "1.9e1", FI+FU, FLOAT_SUCCESS},
+    {"19.03", 3, "1.91e1", "1.9e1", FI+FU, FLOAT_SUCCESS},
+    {"19.03", 4, "1.903e1", "1.903e1", 0, FLOAT_SUCCESS},
+    {"19.03", 5, "1.903e1", "1.903e1", 0, FLOAT_SUCCESS},
+    {"0.1903", 1, "2.e-1", "1.e-1", FN+FI+FU, FLOAT_SUCCESS},
+    {"0.1903", 2, "2.e-1", "1.9e-1", FI+FU, FLOAT_SUCCESS},
+    {"0.1903", 3, "1.91e-1", "1.9e-1", FI+FU, FLOAT_SUCCESS},
+    {"0.1903", 4, "1.903e-1", "1.903e-1", 0, FLOAT_SUCCESS},
+    {"0.1903", 5, "1.903e-1", "1.903e-1", 0, FLOAT_SUCCESS},
+    {"-1.903", 1, "-1.e0", "-2.e0", FZ+FU, FLOAT_SUCCESS},
+    {"-1.903", 2, "-1.9e0", "-2.e0", FN+FZ+FU, FLOAT_SUCCESS},
+    {"-1.903", 3, "-1.9e0", "-1.91e0", FN+FZ+FU, FLOAT_SUCCESS},
+    {"-1.903", 4, "-1.903e0", "-1.903e0", 0, FLOAT_SUCCESS},
+    {"-1.903", 5, "-1.903e0", "-1.903e0", 0, FLOAT_SUCCESS},
+    {"1.29903", 1, "2.e0", "1.e0", FI+FU, FLOAT_SUCCESS},
+    {"1.29903", 2, "1.3e0", "1.2e0", FN+FI+FU, FLOAT_SUCCESS},
+    {"1.29903", 3, "1.3e0", "1.29e0", FN+FI+FU, FLOAT_SUCCESS},
+    {"1.29903", 4, "1.3e0", "1.299e0", FI+FU, FLOAT_SUCCESS},
+    {"1.29903", 5, "1.2991e0", "1.299e0", FI+FU, FLOAT_SUCCESS},
+    {"1.29903", 6, "1.29903e0", "1.29903e0", 0, FLOAT_SUCCESS},
+    {"9.99", 1, "1.e1", "9.e0", FN+FI+FU, FLOAT_SUCCESS},
+    {"9.99", 2, "1.e1", "9.9e0", FN+FI+FU, FLOAT_SUCCESS},
+    {"9.99", 3, "9.99e0", "9.99e0", 0, FLOAT_SUCCESS},
+    {"1.5", 1, "2.e0", "1.e0", FN+FI+FU, FLOAT_SUCCESS},
+    {"2.5", 1, "3.e0", "2.e0", FI+FU, FLOAT_SUCCESS},
+    {"9.99e100", 1, "NaN", "9.e100", FN+FI+FU, FLOAT_OVERFLOW},
+    {"9.99e100", 2, "NaN", "9.9e100", FN+FI+FU, FLOAT_OVERFLOW},
+    {"9.99e100", 3, "9.99e100", "9.99e100", 0, FLOAT_SUCCESS},
+    {"9.995e100", 3, "NaN", "9.99e100", FN+FI+FU, FLOAT_OVERFLOW},
+  };
+  int save;
 
-  printf("\ntesting float_round\n");
-  if (!tc_round("NaN, up, -1\n", "NaN", -1, TOPLUSINFINITY, "NaN")) return FALSE;
-  if (!tc_round("NaN, down, -1\n", "NaN", -1, TOMINUSINFINITY, "NaN")) return FALSE;
-  if (!tc_round("NaN, zero, -1\n", "NaN", -1, TOZERO, "NaN")) return FALSE;
-  if (!tc_round("NaN, infinity, -1\n", "NaN", -1, TOINFINITY, "NaN")) return FALSE;
-  if (!tc_round("NaN, nearest, -1\n", "NaN", -1, TONEAREST, "NaN")) return FALSE;
-  if (!tc_round("NaN, invalid, -1\n", "NaN", -1, (roundmode)100, "NaN")) return FALSE;
-  if (!tc_round("NaN, up, 0\n", "NaN", 0, TOPLUSINFINITY, "NaN")) return FALSE;
-  if (!tc_round("NaN, down, 0\n", "NaN", 0, TOMINUSINFINITY, "NaN")) return FALSE;
-  if (!tc_round("NaN, zero, 0\n", "NaN", 0, TOZERO, "NaN")) return FALSE;
-  if (!tc_round("NaN, infinity, 0\n", "NaN", 0, TOINFINITY, "NaN")) return FALSE;
-  if (!tc_round("NaN, nearest, 0\n", "NaN", 0, TONEAREST, "NaN")) return FALSE;
-  if (!tc_round("NaN, up, 1\n", "NaN", 1, TOPLUSINFINITY, "NaN")) return FALSE;
-  if (!tc_round("NaN, down, 1\n", "NaN", 1, TOMINUSINFINITY, "NaN")) return FALSE;
-  if (!tc_round("NaN, zero, 1\n", "NaN", 1, TOZERO, "NaN")) return FALSE;
-  if (!tc_round("NaN, infinity, 1\n", "NaN", 1, TOINFINITY, "NaN")) return FALSE;
-  if (!tc_round("NaN, nearest, 1\n", "NaN", 1, TONEAREST, "NaN")) return FALSE;
-  if (!tc_round("NaN, invalid, 1\n", "NaN", 1, (roundmode)100, "NaN")) return FALSE;
-  if (!tc_round("0, up, -1\n", "0", -1, TOPLUSINFINITY, "NaN")) return FALSE;
-  if (!tc_round("0, down, -1\n", "0", -1, TOMINUSINFINITY, "NaN")) return FALSE;
-  if (!tc_round("0, zero, -1\n", "0", -1, TOZERO, "NaN")) return FALSE;
-  if (!tc_round("0, infinity, -1\n", "0", -1, TOINFINITY, "NaN")) return FALSE;
-  if (!tc_round("0, nearest, -1\n", "0", -1, TONEAREST, "NaN")) return FALSE;
-  if (!tc_round("0, invalid, -1\n", "0", -1, (roundmode)100, "NaN")) return FALSE;
-  if (!tc_round("0, up, 0\n", "0", 0, TOPLUSINFINITY, "NaN")) return FALSE;
-  if (!tc_round("0, down, 0\n", "0", 0, TOMINUSINFINITY, "NaN")) return FALSE;
-  if (!tc_round("0, zero, 0\n", "0", 0, TOZERO, "NaN")) return FALSE;
-  if (!tc_round("0, infinity, 0\n", "0", 0, TOINFINITY, "NaN")) return FALSE;
-  if (!tc_round("0, nearest, 0\n", "0", 0, TONEAREST, "NaN")) return FALSE;
-  if (!tc_round("0, up, 1\n", "0", 1, TOPLUSINFINITY, "0")) return FALSE;
-  if (!tc_round("0, down, 1\n", "0", 1, TOMINUSINFINITY, "0")) return FALSE;
-  if (!tc_round("0, zero, 1\n", "0", 1, TOZERO, "0")) return FALSE;
-  if (!tc_round("0, infinity, 1\n", "0", 1, TOINFINITY, "0")) return FALSE;
-  if (!tc_round("0, nearest, 1\n", "0", 1, TONEAREST, "0")) return FALSE;
-  if (!tc_round("0, invalid, 1\n", "0", 1, (roundmode)100, "NaN")) return FALSE;
-  if (!tc_round("1, up, -1\n", "1", -1, TOPLUSINFINITY, "NaN")) return FALSE;
-  if (!tc_round("1, down, -1\n", "1", -1, TOMINUSINFINITY, "NaN")) return FALSE;
-  if (!tc_round("1, zero, -1\n", "1", -1, TOZERO, "NaN")) return FALSE;
-  if (!tc_round("1, infinity, -1\n", "1", -1, TOINFINITY, "NaN")) return FALSE;
-  if (!tc_round("1, nearest, -1\n", "1", -1, TONEAREST, "NaN")) return FALSE;
-  if (!tc_round("1, invalid, -1\n", "1", -1, (roundmode)100, "NaN")) return FALSE;
-  if (!tc_round("1, up, 0\n", "1", 0, TOPLUSINFINITY, "NaN")) return FALSE;
-  if (!tc_round("1, down, 0\n", "1", 0, TOMINUSINFINITY, "NaN")) return FALSE;
-  if (!tc_round("1, zero, 0\n", "1", 0, TOZERO, "NaN")) return FALSE;
-  if (!tc_round("1, infinity, 0\n", "1", 0, TOINFINITY, "NaN")) return FALSE;
-  if (!tc_round("1, nearest, 0\n", "1", 0, TONEAREST, "NaN")) return FALSE;
-  if (!tc_round("1, up, 1\n", "1", 1, TOPLUSINFINITY, "1.e0")) return FALSE;
-  if (!tc_round("1, down, 1\n", "1", 1, TOMINUSINFINITY, "1.e0")) return FALSE;
-  if (!tc_round("1, zero, 1\n", "1", 1, TOZERO, "1.e0")) return FALSE;
-  if (!tc_round("1, infinity, 1\n", "1", 1, TOINFINITY, "1.e0")) return FALSE;
-  if (!tc_round("1, nearest, 1\n", "1", 1, TONEAREST, "1.e0")) return FALSE;
-  if (!tc_round("1, invalid, 1\n", "1", 1, (roundmode)100, "NaN")) return FALSE;
-  if (!tc_round("1, up, 2\n", "1", 2, TOPLUSINFINITY, "1.e0")) return FALSE;
-  if (!tc_round("1, down, 2\n", "1", 2, TOMINUSINFINITY, "1.e0")) return FALSE;
-  if (!tc_round("1, zero, 2\n", "1", 2, TOZERO, "1.e0")) return FALSE;
-  if (!tc_round("1, infinity, 2\n", "1", 2, TOINFINITY, "1.e0")) return FALSE;
-  if (!tc_round("1, nearest, 2\n", "1", 2, TONEAREST, "1.e0")) return FALSE;
-  if (!tc_round("1.903, down, 1\n", "1.903", 1, TOMINUSINFINITY, "1.e0")) return FALSE;
-  if (!tc_round("1.903, down, 2\n", "1.903", 2, TOMINUSINFINITY, "1.9e0")) return FALSE;
-  if (!tc_round("1.903, down, 3\n", "1.903", 3, TOMINUSINFINITY, "1.9e0")) return FALSE;
-  if (!tc_round("1.903, down, 4\n", "1.903", 4, TOMINUSINFINITY, "1.903e0")) return FALSE;
-  if (!tc_round("-1.2, down, 1\n", "-1.2", 1, TOMINUSINFINITY, "-2.e0")) return FALSE;
-  if (!tc_round("1.29903, up, 1\n", "1.29903", 1, TOPLUSINFINITY, "2.e0")) return FALSE;
-  if (!tc_round("1.29903, up, 2\n", "1.29903", 2, TOPLUSINFINITY, "1.3e0")) return FALSE;
-  if (!tc_round("1.29903, up, 3\n", "1.29903", 3, TOPLUSINFINITY, "1.3e0")) return FALSE;
-  if (!tc_round("1.29903, up, 4\n", "1.29903", 4, TOPLUSINFINITY, "1.3e0")) return FALSE;
-  if (!tc_round("1.29903, up, 5\n", "1.29903", 5, TOPLUSINFINITY, "1.2991e0")) return FALSE;
-  if (!tc_round("1.29903, up, 6\n", "1.29903", 6, TOPLUSINFINITY, "1.29903e0")) return FALSE;
-  if (!tc_round("9.99, up, 1\n", "9.99", 1, TOPLUSINFINITY, "1.e1")) return FALSE;
-  if (!tc_round("9.99, up, 2\n", "9.99", 2, TOPLUSINFINITY, "1.e1")) return FALSE;
-  if (!tc_round("9.99, up, 3\n", "9.99", 3, TOPLUSINFINITY, "9.99e0")) return FALSE;
-  if (!tc_round("-1.2, up, 1\n", "-1.2", 1, TOPLUSINFINITY, "-1.e0")) return FALSE;
-  if (!tc_round("testing overflow, up\n", maxexp(buf, "+9.9E"), 1, TOPLUSINFINITY, "NaN")) return FALSE;
-  if (!tc_round("1.2, infinity, 1\n", "1.2", 1, TOINFINITY, "2.e0")) return FALSE;
-  if (!tc_round("-1.2, infinity, 1\n", "-1.2", 1, TOINFINITY, "-2.e0")) return FALSE;
-  if (!tc_round("testing overflow, infinity, pos\n", buf, 1, TOINFINITY, "NaN")) return FALSE;
-  buf[0] = '-'; /* -9.9Emaxint */
-  if (!tc_round("testing overflow, infinity, neg\n", buf, 1, TOINFINITY, "NaN")) return FALSE;
-  if (!tc_round("1.9, zero, 1\n", "1.9", 1, TOZERO, "1.e0")) return FALSE;
-  if (!tc_round("-1.9, zero, 1\n", "-1.9", 1, TOZERO, "-1.e0")) return FALSE;
-  if (!tc_round("1.26, nearest, 2\n", "1.26", 2, TONEAREST, "1.3e0")) return FALSE;
-  if (!tc_round("1.2501, nearest, 2\n", "1.2501", 2, TONEAREST, "1.3e0")) return FALSE;
-  if (!tc_round("1.2499, nearest, 2\n", "1.2499", 2, TONEAREST, "1.2e0")) return FALSE;
-  if (!tc_round("1.25, nearest, 2\n", "1.25", 2, TONEAREST, "1.2e0")) return FALSE;
-  if (!tc_round("1.35, nearest, 2\n", "1.35", 2, TONEAREST, "1.4e0")) return FALSE;
-  if (!tc_round("-1.26, nearest, 2\n", "-1.26", 2, TONEAREST, "-1.3e0")) return FALSE;
-  if (!tc_round("testing overflow, nearest, neg\n", buf, 1, TONEAREST, "NaN")) return FALSE;
-  return TRUE;
+  printf("testing float_round\n");
+
+  save = float_setrange(100);
+  for(i = -1; ++i < sizeof(testcases)/sizeof(testcases[0]);)
+    if(!tc_round(testcases[i].value, testcases[i].digits, testcases[i].up,
+        testcases[i].down, testcases[i].roundflags, testcases[i].error))
+      return tc_fail(i);
+  float_setrange(save);
+  return 1;
 }
 
 static int tc_add(char* msg, char* val1, char* val2, int digits, char* result)
@@ -1841,8 +1941,8 @@ static int tc_add(char* msg, char* val1, char* val2, int digits, char* result)
   printf("%s", msg);
   float_setscientific(&v1, val1, NULLTERMINATED);
   float_setscientific(&v2, val2, NULLTERMINATED);
-  float_clone(&b1, &v1, EXACT);
-  float_clone(&b2, &v2, EXACT);
+  float_copy(&b1, &v1, EXACT);
+  float_copy(&b2, &v2, EXACT);
   float_add(&sum, &v1, &v2, digits);
 
   float_getscientific(buf, 30, &sum);
@@ -1927,12 +2027,12 @@ static int test_add()
   printf("%s\n", "in place add, first");
   float_setscientific(&v1, "120", NULLTERMINATED);
   float_setscientific(&v2, "-3.4e-1", NULLTERMINATED);
-  float_clone(&save, &v2, EXACT);
+  float_copy(&save, &v2, EXACT);
   float_add(&v1, &v1, &v2, EXACT);
   float_getscientific(nmb, 30, &v1);
   if (memcmp("1.1966e2", nmb, 9) != 0 || _cmp(&v2, &save) != 0) return FALSE;
   printf("%s\n", "in place add, second");
-  float_clone(&save, &v1, EXACT);
+  float_copy(&save, &v1, EXACT);
   float_add(&v2, &v1, &v2, EXACT);
   float_getscientific(nmb, 30, &v2);
   if (memcmp("1.1932e2", nmb, 9) != 0 || _cmp(&v1, &save) != 0) return FALSE;
@@ -1967,8 +2067,8 @@ static int tc_sub(char* msg, char* val1, char* val2, int digits, char* result)
   printf("%s", msg);
   float_setscientific(&v1, val1, NULLTERMINATED);
   float_setscientific(&v2, val2, NULLTERMINATED);
-  float_clone(&b1, &v1, EXACT);
-  float_clone(&b2, &v2, EXACT);
+  float_copy(&b1, &v1, EXACT);
+  float_copy(&b2, &v2, EXACT);
   float_sub(&diff, &v1, &v2, digits);
 
   float_getscientific(buf, 30, &diff);
@@ -2011,12 +2111,12 @@ static int test_sub()
   printf("%s\n", "in place sub, first");
   float_setscientific(&v1, "120", NULLTERMINATED);
   float_setscientific(&v2, "-3.4e-1", NULLTERMINATED);
-  float_clone(&save, &v2, EXACT);
+  float_copy(&save, &v2, EXACT);
   float_sub(&v1, &v1, &v2, EXACT);
   float_getscientific(nmb, 30, &v1);
   if (memcmp("1.2034e2", nmb, 9) != 0 || _cmp(&v2, &save) != 0) return FALSE;
   printf("%s\n", "in place sub, second");
-  float_clone(&save, &v1, EXACT);
+  float_copy(&save, &v1, EXACT);
   float_sub(&v2, &v1, &v2, EXACT);
   float_getscientific(nmb, 30, &v2);
   if (memcmp("1.2068e2", nmb, 9) != 0 || _cmp(&v1, &save) != 0) return FALSE;
@@ -2049,8 +2149,8 @@ static int tc_mul(char* msg, char* val1, char* val2, int digits, char* result)
   printf("%s", msg);
   float_setscientific(&v1, val1, NULLTERMINATED);
   float_setscientific(&v2, val2, NULLTERMINATED);
-  float_clone(&b1, &v1, EXACT);
-  float_clone(&b2, &v2, EXACT);
+  float_copy(&b1, &v1, EXACT);
+  float_copy(&b2, &v2, EXACT);
   float_mul(&prod, &v1, &v2, digits);
 
   float_getscientific(buf, 30, &prod);
@@ -2108,12 +2208,12 @@ static int test_mul()
   printf("%s\n", "in place mul, first");
   float_setscientific(&v1, "2", NULLTERMINATED);
   float_setscientific(&v2, "-3", NULLTERMINATED);
-  float_clone(&save, &v2, EXACT);
+  float_copy(&save, &v2, EXACT);
   float_mul(&v1, &v1, &v2, EXACT);
   float_getscientific(nmb, 30, &v1);
   if (memcmp("-6.e0", nmb, 6) != 0 || _cmp(&v2, &save) != 0) return FALSE;
   printf("%s\n", "in place mul, second");
-  float_clone(&save, &v1, EXACT);
+  float_copy(&save, &v1, EXACT);
   float_mul(&v2, &v1, &v2, EXACT);
   float_getscientific(nmb, 30, &v2);
   if (memcmp("1.8e1", nmb, 6) != 0 || _cmp(&v1, &save) != 0) return FALSE;
@@ -2148,8 +2248,8 @@ static int tc_div(char* msg, char* val1, char* val2, int digits, char* result)
   float_setscientific(&quot, "1.823452", NULLTERMINATED);
   float_setscientific(&v1, val1, NULLTERMINATED);
   float_setscientific(&v2, val2, NULLTERMINATED);
-  float_clone(&b1, &v1, EXACT);
-  float_clone(&b2, &v2, EXACT);
+  float_copy(&b1, &v1, EXACT);
+  float_copy(&b2, &v2, EXACT);
   float_div(&quot, &v1, &v2, digits);
 
   float_getscientific(buf, 30, &quot);
@@ -2216,12 +2316,12 @@ static int test_div()
   printf("%s\n", "in place div, first");
   float_setscientific(&v1, "1", NULLTERMINATED);
   float_setscientific(&v2, "-2", NULLTERMINATED);
-  float_clone(&save, &v2, EXACT);
+  float_copy(&save, &v2, EXACT);
   float_div(&v1, &v1, &v2, 5);
   float_getscientific(nmb, 30, &v1);
   if (memcmp("-5.e-1", nmb, 7) != 0 || _cmp(&v2, &save) != 0) return FALSE;
   printf("%s\n", "in place div, second");
-  float_clone(&save, &v1, EXACT);
+  float_copy(&save, &v1, EXACT);
   float_div(&v2, &v1, &v2, 5);
   float_getscientific(nmb, 30, &v2);
   if (memcmp("2.5e-1", nmb, 7) != 0 || _cmp(&v1, &save) != 0) return FALSE;
@@ -2245,7 +2345,7 @@ static int tc_sqrt(char* msg, char* val, int digits, char* result)
   float_create(&v);
   float_setscientific(&v, val, NULLTERMINATED);
   float_sqrt(&v, digits);
-  float_round(&v, digits - 1, TONEAREST);
+  float_round(&v, &v, digits - 1, TONEAREST);
   float_getscientific(buf, 30, &v);
   float_free(&v);
   lg = strlen(result);
@@ -2308,7 +2408,7 @@ static int tc_frac(char* msg, char* value)
   float_create(&f);
   float_create(&r);
   float_setscientific(&f, value, NULLTERMINATED);
-  float_clone(&r, &f, EXACT);
+  float_copy(&r, &f, EXACT);
   float_int(&r);
   float_sub(&r, &f, &r, EXACT);
   float_frac(&f);
@@ -2355,8 +2455,8 @@ static int tc_divmod(char* msg, char* dvd, char* dvs, int dig, char* q, char* r)
   float_setscientific(&v1, dvd, NULLTERMINATED);
   float_setscientific(&v2, dvs, NULLTERMINATED);
 
-  float_clone(&b1, &v1, EXACT);
-  float_clone(&b2, &v2, EXACT);
+  float_copy(&b1, &v1, EXACT);
+  float_copy(&b2, &v2, EXACT);
 
   float_divmod(&r1, &r2, &v1, &v2, dig);
 
@@ -2415,7 +2515,7 @@ static int test_divmod()
   float_setzero(&f2);
   save = float_setprecision(20);
   float_setasciiz(&f3, "12345678901234567890");
-  float_clone(&vlg, &f3, EXACT);
+  float_copy(&vlg, &f3, EXACT);
   float_setprecision(save);
   float_divmod(&f1, &f2, &f3, &f3, 3);
   if (!float_isnan(&f1) || !float_isnan(&f2) || float_cmp(&vlg, &f3) != 0) return FALSE;
@@ -2519,13 +2619,13 @@ static int test_coshminus1near0()
   {
     float_muli(&x, &tmp, i, EXACT);
     _sub_ulp(&x, 101);
-    float_clone(&x1, &x, EXACT);
+    float_copy(&x1, &x, EXACT);
     coshminus1near0(&x,100);
     coshminus1near0(&x1, 110);
     _relerror(&x1, &x);
     if (float_cmp(&x1, &max) > 0)
     {
-      float_clone(&max, &x1, EXACT);
+      float_copy(&max, &x1, EXACT);
       if (float_getexponent(&x1) >= -99)
       {
         printf("exceeding error for test case %d: ", i);
@@ -2572,7 +2672,7 @@ static int test_artanhnear0()
 
   printf("small x handling:\n");
   float_setasciiz(&x, "6.7e-51");
-  float_clone(&x1, &x, EXACT);
+  float_copy(&x1, &x, EXACT);
   artanhnear0(&x, 100);
   artanhnear0(&x1, 110);
   if (!_cmprelerror(&x1, &x, -99))
@@ -2602,13 +2702,13 @@ static int test_artanhnear0()
   {
     float_muli(&x, &tmp, i, EXACT);
     _sub_ulp(&x, 101);
-    float_clone(&x1, &x, EXACT);
+    float_copy(&x1, &x, EXACT);
     artanhnear0(&x,100);
     artanhnear0(&x1, 110);
     _relerror(&x1, &x);
     if (float_cmp(&x1, &max) > 0)
     {
-      float_clone(&max, &x1, EXACT);
+      float_copy(&max, &x1, EXACT);
       if (float_getexponent(&x1) >= -99)
       {
         printf("exceeding error for test case %d: ", i);
@@ -2654,7 +2754,7 @@ static int test_arctannear0()
 
   printf("small x handling:\n");
   float_setasciiz(&x, "6.7e-51");
-  float_clone(&x1, &x, EXACT);
+  float_copy(&x1, &x, EXACT);
   arctannear0(&x, 100);
   arctannear0(&x1, 110);
   if (!_cmprelerror(&x1, &x, -99))
@@ -2683,13 +2783,13 @@ static int test_arctannear0()
   {
     float_muli(&x, &tmp, i, EXACT);
     _sub_ulp(&x, 101);
-    float_clone(&x1, &x, EXACT);
+    float_copy(&x1, &x, EXACT);
     arctannear0(&x,100);
     arctannear0(&x1, 110);
     _relerror(&x1, &x);
     if (float_cmp(&x1, &max) > 0)
     {
-      float_clone(&max, &x1, EXACT);
+      float_copy(&max, &x1, EXACT);
       if (float_getexponent(&x1) >= -99)
       {
         printf("exceeding error for test case %d: ", i);
@@ -2751,13 +2851,13 @@ static int test_cosminus1near0()
   {
     float_muli(&x, &tmp, i, EXACT);
     _sub_ulp(&x, 101);
-    float_clone(&x1, &x, EXACT);
+    float_copy(&x1, &x, EXACT);
     cosminus1near0(&x,100);
     cosminus1near0(&x1, 110);
     _relerror(&x1, &x);
     if (float_cmp(&x1, &max) > 0)
     {
-      float_clone(&max, &x1, EXACT);
+      float_copy(&max, &x1, EXACT);
       if (float_getexponent(&x1) >= -99)
       {
         printf("exceeding error for test case %d: ", i);
@@ -2819,13 +2919,13 @@ static int test_lnxplus1near0()
   {
     float_muli(&x, &tmp, i, EXACT);
     _sub_ulp(&x, 101);
-    float_clone(&x1, &x, EXACT);
+    float_copy(&x1, &x, EXACT);
     _lnxplus1near0(&x,100);
     _lnxplus1near0(&x1, 110);
     _relerror(&x1, &x);
     if (float_cmp(&x1, &max) > 0)
     {
-      float_clone(&max, &x1, EXACT);
+      float_copy(&max, &x1, EXACT);
       if (float_getexponent(&x1) >= -99)
       {
         printf("exceeding error for test case %d: ", i);
@@ -2894,7 +2994,7 @@ static int test_lnreduce()
     float_abs(&x);
     if(float_cmp(&x, &max) > 0)
     {
-      float_clone(&max, &x, EXACT);
+      float_copy(&max, &x, EXACT);
       if (float_cmp(&x, &cmp) > 0)
       {
         float_getscientific(buf, 50, &x);
@@ -2915,7 +3015,7 @@ static int test_lnreduce()
     float_abs(&x);
     if(float_cmp(&x, &max) > 0)
     {
-      float_clone(&max, &x, EXACT);
+      float_copy(&max, &x, EXACT);
       if (float_cmp(&x, &cmp) >0)
       {
         float_getscientific(buf, 50, &x);
@@ -2962,7 +3062,7 @@ static int test_lnxplus1lt1()
   }
 
   printf("verifying special argument x == -0.4:\n");
-  float_clone(&x, &cMinus0_4, EXACT);
+  float_copy(&x, &cMinus0_4, EXACT);
   _lnxplus1lt1(&x, 100);
   float_setasciiz(&x1, "-.510825623765990683205514096303661934878110"
                        "79644576827017795355783668469448904879775651"
@@ -2975,13 +3075,13 @@ static int test_lnxplus1lt1()
 
   printf("verifying function results\n");
   float_setasciiz(&step, "0.005");
-  float_clone(&ref, &step, EXACT);
-  float_clone(&x, &step, EXACT);
+  float_copy(&ref, &step, EXACT);
+  float_copy(&x, &step, EXACT);
   _lnxplus1near0(&ref, 130);
   i = 1;
   while(float_cmp(&x, &c1) < 0)
   {
-    float_clone(&x1, &x, EXACT);
+    float_copy(&x1, &x, EXACT);
     _lnxplus1lt1(&x, 100);
     float_muli(&tmp, &ref, i, 130);
     _relerror(&tmp, &x);
@@ -2998,13 +3098,13 @@ static int test_lnxplus1lt1()
     ++i;
   }
   float_setasciiz(&step, "-0.005");
-  float_clone(&ref, &step, EXACT);
-  float_clone(&x, &step, EXACT);
+  float_copy(&ref, &step, EXACT);
+  float_copy(&x, &step, EXACT);
   _lnxplus1near0(&ref, 130);
   i = 1;
   while(float_cmp(&x, &cMinus0_4) >= 0)
   {
-    float_clone(&x1, &x, EXACT);
+    float_copy(&x1, &x, EXACT);
     _lnxplus1lt1(&x, 100);
     float_muli(&tmp, &ref, i, 130);
     _relerror(&tmp, &x);
@@ -3032,13 +3132,13 @@ static int test_lnxplus1lt1()
     float_setinteger(&tmp, i);
     float_mul(&tmp, &tmp, &step, EXACT);
     float_add(&x, &tmp, &ofs, EXACT);
-    float_clone(&tmp, &x, EXACT);
+    float_copy(&tmp, &x, EXACT);
     _lnxplus1lt1(&x, 100);
     _lnxplus1lt1(&tmp, 110);
     _relerror(&x, &tmp);
     if (float_cmp(&x, &max) > 0)
     {
-      float_clone(&max, &x, EXACT);
+      float_copy(&max, &x, EXACT);
       if (float_getexponent(&x) >= -99)
       {
         printf("exceeding error in test case %d: ", i);
@@ -3074,7 +3174,7 @@ static int test_ln()
   float_create(&tmp);
 
   printf("verifying special argument x == 1:\n");
-  float_clone(&x, &c1, EXACT);
+  float_copy(&x, &c1, EXACT);
   _ln(&x, 100);
   if (!float_iszero(&x))
   {
@@ -3088,10 +3188,10 @@ static int test_ln()
     switch(i)
     {
     case 2:
-      float_clone(&tmp, &cLn2, 110);
+      float_copy(&tmp, &cLn2, 110);
       break;
     case 3:
-      float_clone(&tmp, &cLn3, 110);
+      float_copy(&tmp, &cLn3, 110);
       break;
     case 4:
       float_muli(&tmp, &cLn2, 2, 110);
@@ -3103,7 +3203,7 @@ static int test_ln()
       float_add(&tmp, &cLn2, &cLn3, 110);
       break;
     case 7:
-      float_clone(&tmp, &cLn7, 110);
+      float_copy(&tmp, &cLn7, 110);
       break;
     case 8:
       float_muli(&tmp, &cLn2, 3, 110);
@@ -3152,13 +3252,13 @@ static int test_ln()
     float_add(&x, &tmp, &ofs, EXACT);
     if (i > 63)
       float_setexponent(&tmp, -1);
-    float_clone(&tmp, &x, EXACT);
+    float_copy(&tmp, &x, EXACT);
     _ln(&x, 100);
     _ln(&tmp, 110);
     _relerror(&x, &tmp);
     if (float_cmp(&x, &max) > 0)
     {
-      float_clone(&max, &x, EXACT);
+      float_copy(&max, &x, EXACT);
       if (float_getexponent(&x) >= -99)
       {
         printf("exceeding error in test case %d: ", i);
@@ -3190,7 +3290,7 @@ static int test_lnxplus1()
 
   float_setasciiz(&x, "-.3");
   _lnxplus1(&x, 100);
-  float_clone(&x1, &cLn7, 110);
+  float_copy(&x1, &cLn7, 110);
   float_sub(&x1, &x1, &cLn10, 110);
   if (!_cmprelerror(&x1, &x, -99))
   {
@@ -3225,9 +3325,9 @@ static int test_artanh1minusx()
   float_create(&ofs);
   printf("verifying function results:\n");
 
-  float_clone(&x, &c1Div2, EXACT);
+  float_copy(&x, &c1Div2, EXACT);
   _artanh1minusx(&x, 100);
-  float_clone(&tmp, &cLn3, 110);
+  float_copy(&tmp, &cLn3, 110);
   float_mul(&tmp, &tmp, &c1Div2, 110);
   if (!_cmprelerror(&tmp, &x, -99))
   {
@@ -3245,13 +3345,13 @@ static int test_artanh1minusx()
   {
     float_muli(&tmp, &step, i, EXACT);
     float_add(&x, &tmp, &ofs, EXACT);
-    float_clone(&tmp, &x, EXACT);
+    float_copy(&tmp, &x, EXACT);
     _artanh1minusx(&x, 100);
     _artanh1minusx(&tmp, 110);
     _relerror(&x, &tmp);
     if (float_cmp(&x, &max) > 0)
     {
-      float_clone(&max, &x, EXACT);
+      float_copy(&max, &x, EXACT);
       if (float_getexponent(&x) >= -99)
       {
         printf("exceeding error in test case %d: ", i);
@@ -3287,9 +3387,9 @@ static int test_artanhlt0_5()
   float_create(&ofs);
   printf("verifying function results:\n");
 
-  float_clone(&x, &c1Div2, EXACT);
+  float_copy(&x, &c1Div2, EXACT);
   _artanhlt0_5(&x, 100);
-  float_clone(&tmp, &cLn3, 110);
+  float_copy(&tmp, &cLn3, 110);
   float_mul(&tmp, &tmp, &c1Div2, 110);
   if (!_cmprelerror(&tmp, &x, -99))
   {
@@ -3307,13 +3407,13 @@ static int test_artanhlt0_5()
   {
     float_muli(&tmp, &step, i, EXACT);
     float_add(&x, &tmp, &ofs, EXACT);
-    float_clone(&tmp, &x, EXACT);
+    float_copy(&tmp, &x, EXACT);
     _artanhlt0_5(&x, 100);
     _artanhlt0_5(&tmp, 110);
     _relerror(&x, &tmp);
     if (float_cmp(&x, &max) > 0)
     {
-      float_clone(&max, &x, EXACT);
+      float_copy(&max, &x, EXACT);
       if (float_getexponent(&x) >= -99)
       {
         printf("exceeding error in test case %d: ", i);
@@ -3357,7 +3457,7 @@ static int test_arsinh()
     return 0;
   }
   float_setasciiz(&x, "1e-1000");
-  float_clone(&tmp, &x, EXACT);
+  float_copy(&tmp, &x, EXACT);
   _arsinh(&x, 100);
   if (!_cmprelerror(&tmp, &x, -99))
   {
@@ -3403,13 +3503,13 @@ static int test_arsinh()
   {
     float_muli(&tmp, &step, i, EXACT);
     float_add(&x, &tmp, &ofs, EXACT);
-    float_clone(&tmp, &x, EXACT);
+    float_copy(&tmp, &x, EXACT);
     _arsinh(&x, 100);
     _arsinh(&tmp, 110);
     _relerror(&x, &tmp);
     if (float_cmp(&x, &max) > 0)
     {
-      float_clone(&max, &x, EXACT);
+      float_copy(&max, &x, EXACT);
       if (float_getexponent(&x) >= -99)
       {
         printf("exceeding error in test case %d: ", i);
@@ -3473,13 +3573,13 @@ static int test_arcoshxplus1()
   {
     float_muli(&tmp, &step, i, EXACT);
     float_add(&x, &tmp, &ofs, EXACT);
-    float_clone(&tmp, &x, EXACT);
+    float_copy(&tmp, &x, EXACT);
     _arcoshxplus1(&x, 100);
     _arcoshxplus1(&tmp, 110);
     _relerror(&x, &tmp);
     if (float_cmp(&x, &max) > 0)
     {
-      float_clone(&max, &x, EXACT);
+      float_copy(&max, &x, EXACT);
       if (float_getexponent(&x) >= -99)
       {
         printf("exceeding error in test case %d: ", i);
@@ -3493,13 +3593,13 @@ static int test_arcoshxplus1()
   {
     float_muli(&tmp, &step, i, EXACT);
     float_add(&x, &tmp, &ofs, EXACT);
-    float_clone(&tmp, &x, EXACT);
+    float_copy(&tmp, &x, EXACT);
     _arcoshxplus1(&x, 100);
     _arcoshxplus1(&tmp, 110);
     _relerror(&x, &tmp);
     if (float_cmp(&x, &max) > 0)
     {
-      float_clone(&max, &x, EXACT);
+      float_copy(&max, &x, EXACT);
       if (float_getexponent(&x) >= -99)
       {
         printf("exceeding error in test case %d: ", i);
@@ -3546,7 +3646,7 @@ static int test_coshminus1lt1()
   /* testing the validity of the reduction */
   printf("verifying result:\n");
   float_setasciiz(&x, "0.5");
-  float_clone(&tmp, &x, EXACT);
+  float_copy(&tmp, &x, EXACT);
   float_arcoshxplus1(&x, 110);
   _coshminus1lt1(&x, 100);
   if (!_cmprelerror(&tmp, &x, -99))
@@ -3562,13 +3662,13 @@ static int test_coshminus1lt1()
   {
     float_muli(&x, &tmp, i, EXACT);
     _sub_ulp(&x, 101);
-    float_clone(&x1, &x, EXACT);
+    float_copy(&x1, &x, EXACT);
     _coshminus1lt1(&x,100);
     _coshminus1lt1(&x1, 110);
     _relerror(&x1, &x);
     if (float_cmp(&x1, &max) > 0)
     {
-      float_clone(&max, &x1, EXACT);
+      float_copy(&max, &x1, EXACT);
       if (float_getexponent(&x1) >= -99)
       {
         printf("exceeding error for test case %d: ", i);
@@ -3613,7 +3713,7 @@ static int test_sinhlt1()
 
   printf("verifying positive result:\n");
   float_setasciiz(&x, "1");
-  float_clone(&tmp, &x, EXACT);
+  float_copy(&tmp, &x, EXACT);
   float_arsinh(&x, 110);
   _sinhlt1(&x, 100);
   if (!_cmprelerror(&tmp, &x, -99))
@@ -3623,7 +3723,7 @@ static int test_sinhlt1()
   }
   printf("verifying negative result:\n");
   float_setasciiz(&x, "-1");
-  float_clone(&tmp, &x, EXACT);
+  float_copy(&tmp, &x, EXACT);
   float_arsinh(&x, 110);
   _sinhlt1(&x, 100);
   if (!_cmprelerror(&tmp, &x, -99))
@@ -3639,13 +3739,13 @@ static int test_sinhlt1()
   {
     float_muli(&x, &tmp, i, EXACT);
     _sub_ulp(&x, 101);
-    float_clone(&x1, &x, EXACT);
+    float_copy(&x1, &x, EXACT);
     _sinhlt1(&x,100);
     _sinhlt1(&x1, 110);
     _relerror(&x1, &x);
     if (float_cmp(&x1, &max) > 0)
     {
-      float_clone(&max, &x1, EXACT);
+      float_copy(&max, &x1, EXACT);
       if (float_getexponent(&x1) >= -99)
       {
         printf("exceeding error for test case %d: ", i);
@@ -3690,7 +3790,7 @@ static int test_expminus1lt1()
 
   printf("verifying positive result:\n");
   float_setasciiz(&x, "1");
-  float_clone(&tmp, &x, EXACT);
+  float_copy(&tmp, &x, EXACT);
   float_lnxplus1(&x, 110);
   _expminus1lt1(&x, 100);
   if (!_cmprelerror(&tmp, &x, -99))
@@ -3699,7 +3799,7 @@ static int test_expminus1lt1()
     return 0;
   }
   printf("verifying negative result:\n");  float_setasciiz(&x, "-.5");
-  float_clone(&tmp, &x, EXACT);
+  float_copy(&tmp, &x, EXACT);
   float_lnxplus1(&x, 110);
   _expminus1lt1(&x, 100);
   if (!_cmprelerror(&tmp, &x, -99))
@@ -3715,13 +3815,13 @@ static int test_expminus1lt1()
   {
     float_muli(&x, &tmp, i, EXACT);
     _sub_ulp(&x, 101);
-    float_clone(&x1, &x, EXACT);
+    float_copy(&x1, &x, EXACT);
     _expminus1lt1(&x,100);
     _expminus1lt1(&x1, 110);
     _relerror(&x1, &x);
     if (float_cmp(&x1, &max) > 0)
     {
-      float_clone(&max, &x1, EXACT);
+      float_copy(&max, &x1, EXACT);
       if (float_getexponent(&x1) >= -99)
       {
         printf("exceeding error for test case %d: ", i);
@@ -3768,7 +3868,7 @@ static int test_expltln10()
   for (i = 0; ++i < 24;)
   {
     float_muli(&x1, &tmp, i, EXACT);
-    float_clone(&x, &x1, EXACT);
+    float_copy(&x, &x1, EXACT);
     _expltln10(&x, 100);
     float_ln(&x, 110);
     if(!_cmprelerror(&x, &x1, -99))
@@ -3786,13 +3886,13 @@ static int test_expltln10()
   {
     float_muli(&x, &tmp, i, EXACT);
     _sub_ulp(&x, 101);
-    float_clone(&x1, &x, EXACT);
+    float_copy(&x1, &x, EXACT);
     _expltln10(&x,100);
     _expltln10(&x1, 110);
     _relerror(&x1, &x);
     if (float_cmp(&x1, &max) > 0)
     {
-      float_clone(&max, &x1, EXACT);
+      float_copy(&max, &x1, EXACT);
       if (float_getexponent(&x1) >= -99)
       {
         printf("exceeding error for test case %d: ", i);
@@ -3840,7 +3940,7 @@ static int test_exp()
   for (i = -2; ++i < 9;)
   {
     float_setexponent(&tmp, i);
-    float_clone(&x, &tmp, EXACT);
+    float_copy(&x, &tmp, EXACT);
     _exp(&x, 100);
     float_ln(&x, 110);
     if(!_cmprelerror(&x, &tmp, -99))
@@ -3855,7 +3955,7 @@ static int test_exp()
   for (i = -2; ++i < 9;)
   {
     float_setexponent(&tmp, i);
-    float_clone(&x, &tmp, EXACT);
+    float_copy(&x, &tmp, EXACT);
     _exp(&x, 100);
     float_ln(&x, 110);
     if(!_cmprelerror(&x, &tmp, -99))
@@ -3873,13 +3973,13 @@ static int test_exp()
   {
     float_muli(&x, &tmp, i, EXACT);
     _sub_ulp(&x, 101);
-    float_clone(&x1, &x, EXACT);
+    float_copy(&x1, &x, EXACT);
     _exp(&x,100);
     _exp(&x1, 110);
     _relerror(&x1, &x);
     if (float_cmp(&x1, &max) > 0)
     {
-      float_clone(&max, &x1, EXACT);
+      float_copy(&max, &x1, EXACT);
       if (float_getexponent(&x1) >= -99)
       {
         printf("exceeding error for test case %d: ", i);
@@ -3890,13 +3990,13 @@ static int test_exp()
     }
   }
   float_muli(&x, &cLn10, EXPMAX, 110);
-  float_clone(&x1, &x, EXACT);
+  float_copy(&x1, &x, EXACT);
   _exp(&x,100);
   _exp(&x1, 110);
   _relerror(&x1, &x);
   if (float_cmp(&x1, &max) > 0)
   {
-    float_clone(&max, &x1, EXACT);
+    float_copy(&max, &x1, EXACT);
     if (float_getexponent(&x1) >= -99)
     {
       printf("exceeding error for near overflow case: ");
@@ -3952,7 +4052,7 @@ static int test_expminus1()
     return 0;
   }
   float_setasciiz(&x, "-1e-10");
-  float_clone(&tmp, &x, EXACT);
+  float_copy(&tmp, &x, EXACT);
   _expminus1(&x, 100);
   float_lnxplus1(&x, 110);
   if(!_cmprelerror(&x, &tmp, -99))
@@ -3961,7 +4061,7 @@ static int test_expminus1()
     return 0;
   }
   float_setasciiz(&x, "1e-10");
-  float_clone(&tmp, &x, EXACT);
+  float_copy(&tmp, &x, EXACT);
   _expminus1(&x, 100);
   float_lnxplus1(&x, 110);
   if(!_cmprelerror(&x, &tmp, -99))
@@ -3971,7 +4071,7 @@ static int test_expminus1()
   }
 
   float_setasciiz(&x, "1");
-  float_clone(&tmp, &x, EXACT);
+  float_copy(&tmp, &x, EXACT);
   _expminus1(&x, 100);
   float_lnxplus1(&x, 110);
   if(!_cmprelerror(&x, &tmp, -99))
@@ -3980,7 +4080,7 @@ static int test_expminus1()
     return 0;
   }
   float_setasciiz(&x, "100000");
-  float_clone(&tmp, &x, EXACT);
+  float_copy(&tmp, &x, EXACT);
   _expminus1(&x, 100);
   float_lnxplus1(&x, 110);
   if(!_cmprelerror(&x, &tmp, -99))
@@ -4017,7 +4117,7 @@ static int test_coshminus1()
   }
 
   float_setasciiz(&x, ".1");
-  float_clone(&tmp, &x, EXACT);
+  float_copy(&tmp, &x, EXACT);
   _coshminus1(&x, 100);
   float_arcoshxplus1(&x, 110);
   if(!_cmprelerror(&x, &tmp, -99))
@@ -4027,7 +4127,7 @@ static int test_coshminus1()
   }
 
   float_setasciiz(&x, "2");
-  float_clone(&tmp, &x, EXACT);
+  float_copy(&tmp, &x, EXACT);
   _coshminus1(&x, 100);
   float_arcoshxplus1(&x, 110);
   if(!_cmprelerror(&x, &tmp, -99))
@@ -4037,7 +4137,7 @@ static int test_coshminus1()
   }
 
   float_setasciiz(&x, "10000");
-  float_clone(&tmp, &x, EXACT);
+  float_copy(&tmp, &x, EXACT);
   _coshminus1(&x, 100);
   float_arcoshxplus1(&x, 110);
   if(!_cmprelerror(&x, &tmp, -99))
@@ -4053,13 +4153,13 @@ static int test_coshminus1()
   {
     float_muli(&x, &tmp, i, EXACT);
     _sub_ulp(&x, 101);
-    float_clone(&x1, &x, EXACT);
+    float_copy(&x1, &x, EXACT);
     _coshminus1(&x,100);
     _coshminus1(&x1, 110);
     _relerror(&x1, &x);
     if (float_cmp(&x1, &max) > 0)
     {
-      float_clone(&max, &x1, EXACT);
+      float_copy(&max, &x1, EXACT);
       if (float_getexponent(&x1) >= -99)
       {
         printf("exceeding error for test case %d: ", i);
@@ -4103,7 +4203,7 @@ static int test_tanhlt0_5()
   }
 
   float_setasciiz(&x, ".1");
-  float_clone(&tmp, &x, EXACT);
+  float_copy(&tmp, &x, EXACT);
   _tanhlt0_5(&x, 100);
   float_artanh(&x, 110);
   if(!_cmprelerror(&x, &tmp, -99))
@@ -4119,13 +4219,13 @@ static int test_tanhlt0_5()
   {
     float_muli(&x, &tmp, i, EXACT);
     _sub_ulp(&x, 101);
-    float_clone(&x1, &x, EXACT);
+    float_copy(&x1, &x, EXACT);
     _tanhlt0_5(&x,100);
     _tanhlt0_5(&x1, 110);
     _relerror(&x1, &x);
     if (float_cmp(&x1, &max) > 0)
     {
-      float_clone(&max, &x1, EXACT);
+      float_copy(&max, &x1, EXACT);
       if (float_getexponent(&x1) >= -99)
       {
         printf("exceeding error for test case %d: ", i);
@@ -4160,7 +4260,7 @@ static int test_tanhminus1gt0()
   float_setzero(&max);
 
   float_setasciiz(&x, "1");
-  float_clone(&tmp, &x, EXACT);
+  float_copy(&tmp, &x, EXACT);
   _tanhminus1gt0(&x, 100);
   float_artanhxplus1(&x, 110);
   if(!_cmprelerror(&x, &tmp, -99))
@@ -4176,13 +4276,13 @@ static int test_tanhminus1gt0()
   {
     float_muli(&x, &tmp, i, EXACT);
     _sub_ulp(&x, 101);
-    float_clone(&x1, &x, EXACT);
+    float_copy(&x1, &x, EXACT);
     _tanhminus1gt0(&x,100);
     _tanhminus1gt0(&x1, 110);
     _relerror(&x1, &x);
     if (float_cmp(&x1, &max) > 0)
     {
-      float_clone(&max, &x1, EXACT);
+      float_copy(&max, &x1, EXACT);
       if (float_getexponent(&x1) >= -99)
       {
         printf("exceeding error for test case %d: ", i);
@@ -4198,13 +4298,13 @@ static int test_tanhminus1gt0()
     _sub_ulp(&x, 101);
     float_setexponent(&x, i);
     i*=10;
-    float_clone(&x1, &x, EXACT);
+    float_copy(&x1, &x, EXACT);
     _tanhminus1gt0(&x,100);
     _tanhminus1gt0(&x1, 110);
     _relerror(&x1, &x);
     if (float_cmp(&x1, &max) > 0)
     {
-      float_clone(&max, &x1, EXACT);
+      float_copy(&max, &x1, EXACT);
       if (float_getexponent(&x1) >= -99)
       {
         printf("exceeding error for test case %d: ", i);
@@ -4267,13 +4367,13 @@ static int test_arctanlt1()
   {
     float_muli(&tmp, &step, i, EXACT);
     float_add(&x, &tmp, &ofs, EXACT);
-    float_clone(&tmp, &x, EXACT);
+    float_copy(&tmp, &x, EXACT);
     _arctanlt1(&x, 100);
     _arctanlt1(&tmp, 110);
     _relerror(&x, &tmp);
     if (float_cmp(&x, &max) > 0)
     {
-      float_clone(&max, &x, EXACT);
+      float_copy(&max, &x, EXACT);
       if (float_getexponent(&x) >= -99)
       {
         printf("exceeding error in test case %d: ", i);
@@ -4329,13 +4429,13 @@ static int test_arctan()
   {
     float_muli(&tmp, &step, i, EXACT);
     float_add(&x, &tmp, &ofs, EXACT);
-    float_clone(&tmp, &x, EXACT);
+    float_copy(&tmp, &x, EXACT);
     _arctan(&x, 100);
     _arctan(&tmp, 110);
     _relerror(&x, &tmp);
     if (float_cmp(&x, &max) > 0)
     {
-      float_clone(&max, &x, EXACT);
+      float_copy(&max, &x, EXACT);
       if (float_getexponent(&x) >= -99)
       {
         printf("exceeding error in test case %d: ", i);
@@ -4399,13 +4499,13 @@ static int test_arccosxplus1lt0_5()
   {
     float_muli(&tmp, &step, i, EXACT);
     float_add(&x, &tmp, &ofs, EXACT);
-    float_clone(&tmp, &x, EXACT);
+    float_copy(&tmp, &x, EXACT);
     _arccosxplus1lt0_5(&x, 100);
     _arccosxplus1lt0_5(&tmp, 110);
     _relerror(&x, &tmp);
     if (float_cmp(&x, &max) > 0)
     {
-      float_clone(&max, &x, EXACT);
+      float_copy(&max, &x, EXACT);
       if (float_getexponent(&x) >= -99)
       {
         printf("exceeding error in test case %d: ", i);
@@ -4469,13 +4569,13 @@ static int test_arcsinlt0_5()
   {
     float_muli(&tmp, &step, i, EXACT);
     float_add(&x, &tmp, &ofs, EXACT);
-    float_clone(&tmp, &x, EXACT);
+    float_copy(&tmp, &x, EXACT);
     _arcsinlt0_5(&x, 100);
     _arcsinlt0_5(&tmp, 110);
     _relerror(&x, &tmp);
     if (float_cmp(&x, &max) > 0)
     {
-      float_clone(&max, &x, EXACT);
+      float_copy(&max, &x, EXACT);
       if (float_getexponent(&x) >= -99)
       {
         printf("exceeding error in test case %d: ", i);
@@ -4553,13 +4653,13 @@ static int test_arccos()
   {
     float_muli(&tmp, &step, i, EXACT);
     float_add(&x, &tmp, &ofs, EXACT);
-    float_clone(&tmp, &x, EXACT);
+    float_copy(&tmp, &x, EXACT);
     _arccos(&x, 100);
     _arccos(&tmp, 110);
     _relerror(&x, &tmp);
     if (float_cmp(&x, &max) > 0)
     {
-      float_clone(&max, &x, EXACT);
+      float_copy(&max, &x, EXACT);
       if (float_getexponent(&x) >= -99)
       {
         printf("exceeding error in test case %d: ", i);
@@ -4621,7 +4721,7 @@ static int test_arcsin()
   }
   float_setinteger(&x, -1);
   _arcsin(&x, 100);
-  float_changesign(&x);
+  float_neg(&x);
   if (!_cmprelerror(&x, &cPiDiv2, -99))
   {
     printf("FAILED for x==-1\n");
@@ -4638,13 +4738,13 @@ static int test_arcsin()
   {
     float_muli(&tmp, &step, i, EXACT);
     float_add(&x, &tmp, &ofs, EXACT);
-    float_clone(&tmp, &x, EXACT);
+    float_copy(&tmp, &x, EXACT);
     _arcsin(&x, 100);
     _arcsin(&tmp, 110);
     _relerror(&x, &tmp);
     if (float_cmp(&x, &max) > 0)
     {
-      float_clone(&max, &x, EXACT);
+      float_copy(&max, &x, EXACT);
       if (float_getexponent(&x) >= -99)
       {
         printf("exceeding error in test case %d: ", i);
@@ -4708,13 +4808,13 @@ static int test_cosminus1ltPiDiv4()
   {
     float_muli(&tmp, &step, i, EXACT);
     float_add(&x, &tmp, &ofs, EXACT);
-    float_clone(&tmp, &x, EXACT);
+    float_copy(&tmp, &x, EXACT);
     _cosminus1ltPiDiv4(&x, 100);
     _cosminus1ltPiDiv4(&tmp, 110);
     _relerror(&x, &tmp);
     if (float_cmp(&x, &max) > 0)
     {
-      float_clone(&max, &x, EXACT);
+      float_copy(&max, &x, EXACT);
       if (float_getexponent(&x) >= -99)
       {
         printf("exceeding error in test case %d: ", i);
@@ -4778,13 +4878,13 @@ static int test_sinltPiDiv4()
   {
     float_muli(&tmp, &step, i, EXACT);
     float_add(&x, &tmp, &ofs, EXACT);
-    float_clone(&tmp, &x, EXACT);
+    float_copy(&tmp, &x, EXACT);
     _sinltPiDiv4(&x, 100);
     _sinltPiDiv4(&tmp, 110);
     _relerror(&x, &tmp);
     if (float_cmp(&x, &max) > 0)
     {
-      float_clone(&max, &x, EXACT);
+      float_copy(&max, &x, EXACT);
       if (float_getexponent(&x) >= -99)
       {
         printf("exceeding error in test case %d: ", i);
@@ -4848,13 +4948,13 @@ static int test_tanltPiDiv4()
   {
     float_muli(&tmp, &step, i, EXACT);
     float_add(&x, &tmp, &ofs, EXACT);
-    float_clone(&tmp, &x, EXACT);
+    float_copy(&tmp, &x, EXACT);
     _tanltPiDiv4(&x, 100);
     _tanltPiDiv4(&tmp, 110);
     _relerror(&x, &tmp);
     if (float_cmp(&x, &max) > 0)
     {
-      float_clone(&max, &x, EXACT);
+      float_copy(&max, &x, EXACT);
       if (float_getexponent(&x) >= -99)
       {
         printf("exceeding error in test case %d: ", i);
@@ -4924,13 +5024,13 @@ static int test_cos()
   {
     float_muli(&tmp, &step, i, EXACT);
     float_add(&x, &tmp, &ofs, EXACT);
-    float_clone(&tmp, &x, EXACT);
+    float_copy(&tmp, &x, EXACT);
     _cos(&x, 100);
     _cos(&tmp, 110);
     _relerror(&x, &tmp);
     if (float_cmp(&x, &max) > 0)
     {
-      float_clone(&max, &x, EXACT);
+      float_copy(&max, &x, EXACT);
       if (float_getexponent(&x) >= -99)
       {
         printf("exceeding error in test case %d: ", i);
@@ -4990,11 +5090,11 @@ static int test_sin()
   for (i = -7; ++i < 0;)
   {
     float_muli(&x, &step, i, EXACT);
-    float_clone(&tmp, &x, EXACT);
+    float_copy(&tmp, &x, EXACT);
     float_abs(&tmp);
     _sin(&x, 100);
     _sin(&tmp, 100);
-    float_changesign(&tmp);
+    float_neg(&tmp);
     if (!_cmprelerror(&tmp, &x, -95))
     {
       printf("FAILED for testcase %d\n", i);
@@ -5037,8 +5137,8 @@ static int test_tan()
     if (i == 0)
       continue;
     float_muli(&x, &step, i, EXACT);
-    float_clone(&tmp, &x, EXACT);
-    float_clone(&ofs, &x, EXACT);
+    float_copy(&tmp, &x, EXACT);
+    float_copy(&ofs, &x, EXACT);
     _sin(&x, 100);
     _cos(&tmp, 100);
     float_div(&tmp, &x, &tmp, 110);
@@ -5060,13 +5160,13 @@ static int test_tan()
   {
     float_muli(&tmp, &step, i, EXACT);
     float_add(&x, &tmp, &ofs, EXACT);
-    float_clone(&tmp, &x, EXACT);
+    float_copy(&tmp, &x, EXACT);
     _tan(&x, 100);
     _tan(&tmp, 110);
     _relerror(&x, &tmp);
     if (float_cmp(&x, &max) > 0)
     {
-      float_clone(&max, &x, EXACT);
+      float_copy(&max, &x, EXACT);
       if (float_getexponent(&x) >= -99)
       {
         printf("exceeding error in test case %d: ", i);
@@ -5156,7 +5256,7 @@ static int tc_raiseposi(char* base, unsigned exponent)
   float_create(&x);
   float_create(&y);
   float_setasciiz(&x, base);
-  float_clone(&y, &x, EXACT);
+  float_copy(&y, &x, EXACT);
   float_abs(&y);
   float_log(&y, 100);
   r = _raiseposi(&x, &expx, exponent, 100);
@@ -5213,13 +5313,13 @@ static int test_raiseposi()
     {
       float_muli(&tmp, &step, i, EXACT);
       float_add(&x, &tmp, &ofs, EXACT);
-      float_clone(&tmp, &x, EXACT);
+      float_copy(&tmp, &x, EXACT);
       _raiseposi(&x, &expx, (1 << j)-1, 100);
       _raiseposi(&tmp, &expx, (1 << j)-1, 110);
       _relerror(&x, &tmp);
       if (float_cmp(&x, &max) > 0)
       {
-        float_clone(&max, &x, EXACT);
+        float_copy(&max, &x, EXACT);
         if (float_getexponent(&x) >= -99)
         {
           printf("exceeding error in test case %d: ", i);
@@ -5247,7 +5347,7 @@ static int test_raisei()
   printf ("testing _raisei\n");
   float_create(&x);
   float_create(&y);
-  float_clone(&x, &c1, EXACT);
+  float_copy(&x, &c1, EXACT);
   _raisei(&x, 0, 100);
   if (float_cmp(&x, &c1) != 0)
   {
@@ -5266,14 +5366,14 @@ static int test_raisei()
     printf("test case 1^100 FAILED\n");
     return 0;
   }
-  float_clone(&x, &c2, EXACT);
+  float_copy(&x, &c2, EXACT);
   _raisei(&x, 0, 100);
   if (float_cmp(&x, &c1) != 0)
   {
     printf("test case 2^0 FAILED\n");
     return 0;
   }
-  float_clone(&x, &c2, EXACT);
+  float_copy(&x, &c2, EXACT);
   _raisei(&x, 1, 100);
   if (float_cmp(&x, &c2) != 0)
   {
@@ -5287,7 +5387,7 @@ static int test_raisei()
     printf("test case 2^2 FAILED\n");
     return 0;
   }
-  float_clone(&x, &c2, EXACT);
+  float_copy(&x, &c2, EXACT);
   _raisei(&x, -1, 100);
   if (float_cmp(&x, &c1Div2) != 0)
   {
@@ -5424,7 +5524,7 @@ static int test_lngamma()
   float_create(&ofs);
 
   printf("verifying results\n");
-  float_clone(&x, &c3, EXACT);
+  float_copy(&x, &c3, EXACT);
   _lngamma(&x, 100);
   if(!_cmprelerror(&x, &cLn2, -95))
   {
@@ -5441,13 +5541,13 @@ static int test_lngamma()
   {
     float_muli(&tmp, &step, i, EXACT);
     float_add(&x, &tmp, &ofs, EXACT);
-    float_clone(&tmp, &x, EXACT);
+    float_copy(&tmp, &x, EXACT);
     _lngamma(&x, 100);
     _lngamma(&tmp, 110);
     _relerror(&x, &tmp);
     if (float_cmp(&x, &max) > 0)
     {
-      float_clone(&max, &x, EXACT);
+      float_copy(&max, &x, EXACT);
       if (float_getexponent(&x) >= -99)
       {
         printf("exceeding error in test case %d: ", i);
@@ -5526,13 +5626,13 @@ static int test_gamma()
   {
     float_muli(&tmp, &step, i, EXACT);
     float_add(&x, &tmp, &ofs, EXACT);
-    float_clone(&tmp, &x, EXACT);
+    float_copy(&tmp, &x, EXACT);
     _gamma(&x, 100);
     _gamma(&tmp, 110);
     _relerror(&x, &tmp);
     if (float_cmp(&x, &max) > 0)
     {
-      float_clone(&max, &x, EXACT);
+      float_copy(&max, &x, EXACT);
       if (float_getexponent(&x) >= -99)
       {
         printf("exceeding error in test case %d: ", i);
@@ -5606,7 +5706,7 @@ static int tc_gamma0_5(char* value)
   float_create(&x);
   float_create(&y);
   float_setasciiz(&x, value);
-  float_clone(&y, &x, EXACT);
+  float_copy(&y, &x, EXACT);
   _gamma0_5(&x, 100);
   _gamma(&y, 100);
   if (!_cmprelerror(&x, &y, -95))
@@ -6228,10 +6328,11 @@ int main(int argc, char** argv)
 
   printf("\ntest of basic arithmetic \n");
 
-  if(!test_changesign()) return testfailed("float_changesign");
+  if(!test_neg()) return testfailed("float_changesign");
   if(!test_abs()) return testfailed("float_abs");
   if(!test_cmp()) return testfailed("float_cmp");
-  if(!test_clone()) return testfailed("float_clone");
+  if(!test_copy()) return testfailed("float_copy");
+  if(!test_move()) return testfailed("float_move");
   if(!test_round()) return testfailed("float_round");
   if(!test_add()) return testfailed("float_add");
   if(!test_sub()) return testfailed("float_sub");

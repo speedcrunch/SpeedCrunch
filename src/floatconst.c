@@ -292,7 +292,7 @@ floatmath_init()
     float_setscientific(&cBernoulliDen[i], sBernoulli[2*i+1], NULLTERMINATED);
   }
   float_create(&cUnsignedBound);
-  float_clone(&cUnsignedBound, &c1, EXACT);
+  float_copy(&cUnsignedBound, &c1, EXACT);
   for (i = -1; ++i < 2*sizeof(unsigned);)
     float_mul(&cUnsignedBound, &c16, &cUnsignedBound, EXACT);
 }

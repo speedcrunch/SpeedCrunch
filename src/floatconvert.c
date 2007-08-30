@@ -529,7 +529,7 @@ _extractexp(
     float_create(&fbase);
     float_setinteger(&fbase, base);
     float_create(&pwr);
-    float_clone(&pwr, &fbase, EXACT);
+    float_copy(&pwr, &fbase, EXACT);
     _raiseposi(&pwr, &pwrexp, exp < 0? -exp : exp, decprec);
     if (float_getexponent(x) < 0)
     {
@@ -621,7 +621,7 @@ _outfixpdec(
   if (digits <= 0)
     /* underflow */
     return 0;
-  float_round(x, digits, TONEAREST);
+  float_round(x, x, digits, TONEAREST);
   _setfndesc(n, x);
   n->expbase = IO_BASE_NAN;
   return desc2str(tokens, n, scale);
@@ -639,7 +639,7 @@ _outfixphex(
   char result;
 
   float_create(&tmp);
-  float_clone(&tmp, x, DECPRECISION+1);
+  float_copy(&tmp, x, DECPRECISION+1);
   if (!_fixp2longint(n, &l, x, scale) || l.length == 0)
     /* overflow or underflow */
     result = 0;

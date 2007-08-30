@@ -15,6 +15,7 @@ Improvements and bug fixes:
     preparing a solution for issue #16, #62, #90,
     better support for issue #47
     uniform and predictable accuracy
+    correct rounding (2.5 is rounded to 2 [even last digit rule])
     stable algorithms covering the whole range of numbers
     faster evaluation of higher mathematical function (factor 9 on the average)
     supports stable evaluation of basic higher functions near poles and zeros

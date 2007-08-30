@@ -103,7 +103,7 @@ _pochhammer_su(
   switch (n)
   {
   case 0:
-    float_clone(x, &c1, EXACT);
+    float_copy(x, &c1, EXACT);
   case 1: /* fall through */
     break;
   default:
@@ -220,7 +220,7 @@ _lngammabigx(
   float_create(&tmp1);
   float_create(&tmp2);
   /* compute (ln x-1) * (x-0.5) - 0.5 + ln(sqrt(2*pi)) */
-  float_clone(&tmp2, x, digits+1);
+  float_copy(&tmp2, x, digits+1);
   _ln(&tmp2, digits+1);
   float_sub(&tmp2, &tmp2, &c1, digits+2);
   float_sub(&tmp1, x, &c1Div2, digits+2);
@@ -246,7 +246,7 @@ _lngamma_prim_xgt0(
   int ofs;
 
   ofs = _ofs(x, digits);
-  float_clone(revfactor, x, digits+1);
+  float_copy(revfactor, x, digits+1);
   _pochhammer_su(revfactor, ofs, digits);
   float_addi(x, x, ofs, digits+2);
   return _lngammabigx(x, digits);
@@ -266,13 +266,13 @@ _lngamma_prim(
   *infinity = 0;
   if (float_getsign(x) > 0)
     return _lngamma_prim_xgt0(x, revfactor, digits);
-  float_clone(revfactor, x, digits + 2);
+  float_copy(revfactor, x, digits + 2);
   float_sub(x, &c1, x, digits+2);
   float_create(&tmp);
   result = _lngamma_prim_xgt0(x, &tmp, digits);
   if (result)
   {
-    float_changesign(x);
+    float_neg(x);
     odd = float_isodd(revfactor);
     _sinpix(revfactor, digits);
     if (float_iszero(revfactor))
@@ -330,7 +330,7 @@ _gammagtminus20(
 
   float_create(&factor);
   ofs = _ofs(x, digits+1);
-  float_clone(&factor, x, digits+1);
+  float_copy(&factor, x, digits+1);
   _pochhammer_su(&factor, ofs, digits);
   float_addi(x, x, ofs, digits+2);
   result = _lngammabigx(x, digits) 
@@ -379,7 +379,7 @@ _gammaint(
   if (float_getexponent(integer) >=2)
     return _gammagtminus20(integer, digits);
   ofs = float_asinteger(integer);
-  float_clone(integer, &c1, EXACT);
+  float_copy(integer, &c1, EXACT);
   return _pochhammer_su(integer, ofs-1, digits);
 }
 
@@ -399,7 +399,7 @@ _gamma0_5(
   float_free(&tmp);
   if (ofs >= 0)
   {
-    float_clone(x, &c1Div2, EXACT);
+    float_copy(x, &c1Div2, EXACT);
     if(!_pochhammer_su(x, ofs, digits))
       return 0;
     return float_mul(x, x, &cSqrtPi, digits);
@@ -475,11 +475,11 @@ _pochhammer_i(
   char result;
 
   if (float_iszero(n))
-    return float_clone(x, &c1, EXACT);
+    return float_copy(x, &c1, EXACT);
   if (float_isinteger(x))
   {
     result = -1;
-    float_changesign(n);
+    float_neg(n);
     if (float_getsign(x) <= 0 && float_cmp(x, n) > 0)
     {
       /* x and x+n have opposite signs, meaning 0 is
@@ -495,7 +495,7 @@ _pochhammer_i(
       float_setnan(x);
       result = 0;
     }
-    float_changesign(n);
+    float_neg(n);
     if (result >= 0)
       return result;
   }

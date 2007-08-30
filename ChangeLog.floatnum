@@ -1,3 +1,18 @@
+2007-08-30
+fix error reporting
+rename a couple of functions
+more and better tests
+
+floatnum
+- float_round takes a dest parameter
+- fix error reporting of float_round
+- fix error reporting of float_int
+- rename float_changesign -> float_neg
+- rename float_clone -> float_copy
+testfloatnum
+- added tests for float_move
+- new (extended) test routine for float_round
+
 2007-08-29
 bugfix: new tests uncovered a memory leak
 more tests

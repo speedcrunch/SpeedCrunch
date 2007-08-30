@@ -137,7 +137,7 @@ float_addi(
   if (!_chckparam(summand1, digits, maxdigits, EXACT))
     return 0;
   if (summand2 == 0)
-    return float_clone(sum, summand1, digits);
+    return float_copy(sum, summand1, digits);
   float_create(&tmp);
   float_setinteger(&tmp, summand2);
   result = float_add(sum, summand1, &tmp, digits);
@@ -177,16 +177,16 @@ float_muli(
         return 0;
       }
     }
-    result = float_clone(product, factor1, digits);
+    result = float_copy(product, factor1, digits);
     if (factor2 < 0)
-      float_changesign(product);
+      float_neg(product);
     float_setexponent(product, expx);
     return result;
   case 2:
   case -2:
     result = float_add(product, factor1, factor1, digits);
     if (factor2 < 0)
-      float_changesign(product);
+      float_neg(product);
     return result;
   }
   float_create(&tmp);
@@ -323,8 +323,7 @@ float_checkedround(
 
   saveerr = float_error;
   float_create(&tmp);
-  float_clone(&tmp, x, EXACT);
-  if (float_round(&tmp, digits, TONEAREST))
+  if (float_round(&tmp, x, digits, TONEAREST))
     float_move(x, &tmp);
   float_free(&tmp);
   float_error = saveerr;
@@ -357,7 +356,7 @@ float_roundtoint(
   if (float_isnan(x))
     return float_int(x); /* sets float_error */
   if (float_getexponent(x) >= 0)
-    return float_round(x, float_getexponent(x) + 1, mode);
+    return float_round(x, x, float_getexponent(x) + 1, mode);
   sign = float_getsign(x);
   switch (mode)
   {
@@ -387,10 +386,10 @@ float_roundtoint(
     float_setzero(x);
     break;
   case 1:
-    float_clone(x, &c1, EXACT);
+    float_copy(x, &c1, EXACT);
     break;
   case -1:
-    float_clone(x, &cMinus1, EXACT);
+    float_copy(x, &cMinus1, EXACT);
     break;
   }
   return 1;

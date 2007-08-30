@@ -119,7 +119,7 @@ float_artanhxplus1(
   }
   if (float_cmp(x, &c1Div2) < 0)
   {
-    float_changesign(x);
+    float_neg(x);
     _artanh1minusx(x, digits);
   }
   else
@@ -260,7 +260,7 @@ float_cosh(
   expx = float_getexponent(x);
   if (2*expx+2 <= -digits)
   {
-    float_clone(x, &c1, EXACT);
+    float_copy(x, &c1, EXACT);
     return 1;
   }
   if (_coshminus1(x, digits+2*expx))
@@ -522,7 +522,7 @@ float_raisei(
     float_setzero(power);
     return 1;
   }
-  float_clone(power, base, digits + 14);
+  float_copy(power, base, digits + 14);
   return _raisei(power, exponent, digits);
 }
 
@@ -574,7 +574,7 @@ float_raise(
       return 0;
     }
   }
-  float_clone(power, base, digits+1);
+  float_copy(power, base, digits+1);
   float_abs(power);
   if (!_raise(power, exponent, digits))
   {

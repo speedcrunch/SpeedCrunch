@@ -123,7 +123,7 @@ _expminus1lt1(
   float_create(&tmp);
   sgn = float_getsign(x);
   _coshminus1lt1(x, digits);
-  float_clone(&tmp, x, EXACT);
+  float_copy(&tmp, x, EXACT);
   _sinhfromcoshminus1(x, digits);
   float_setsign(x, sgn);
   float_add(x, x, &tmp, digits+1);
@@ -190,7 +190,7 @@ _exp(
 
   if (float_iszero(x))
   {
-    float_clone(x, &c1, EXACT);
+    float_copy(x, &c1, EXACT);
     return 1;
   }
   expx = float_getexponent(x);
@@ -386,7 +386,7 @@ _tanhgt0_5(
 
   expx = float_getexponent(x);
   if (5*expx >= digits)
-    float_clone(x, &c1, EXACT);
+    float_copy(x, &c1, EXACT);
   else
   {
     _tanhminus1gt0(x, digits - 5*expx);
@@ -404,7 +404,7 @@ _power10(
   if (float_isinteger(x))
   {
     exp = float_asinteger(x);
-    float_clone(x, &c1, EXACT);
+    float_copy(x, &c1, EXACT);
     if (float_iszero(x))
       return 1;
     float_setexponent(x, exp);

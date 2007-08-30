@@ -422,7 +422,7 @@ _trigreduce(
   if (odd)
     float_sub(x, x, &cPi, digits+1);
   if (sgn < 0)
-    float_changesign(x);
+    float_neg(x);
   float_free(&tmp);
   return 1;
 }
@@ -439,5 +439,5 @@ _sinpix(
   float_mul(x, &cPi, x, digits+1);
   _sin(x, digits);
   if (odd)
-    float_changesign(x);
+    float_neg(x);
 }

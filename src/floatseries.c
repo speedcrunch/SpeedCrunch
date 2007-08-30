@@ -94,7 +94,7 @@ arctanseries(
   float_mul(&xsqr, x, x, pwrsz);
   float_setsign(&xsqr, alternating? -1 : 1);
   expsqrx = float_getexponent(&xsqr);
-  float_clone(&pwr, x, pwrsz);
+  float_copy(&pwr, x, pwrsz);
   float_setzero(&sum);
 
   for(; pwrsz > 0; )
@@ -152,7 +152,7 @@ cosminus1series(
   addsz = pwrsz;
   float_create(&sum);
   float_create(&smd);
-  float_clone(&smd, x, pwrsz);
+  float_copy(&smd, x, pwrsz);
   float_setzero(&sum);
   i = 2;
   while (pwrsz > 0)
@@ -198,7 +198,7 @@ lngammaseries(
   float_create(&smd);
   float_create(&pwr);
 
-  float_clone(&pwr, &c1, EXACT); 
+  float_copy(&pwr, &c1, EXACT); 
   float_setzero(&sum);
   float_div(&smd, &c1, &c12, digits+1);
   workprec = digits - 2*float_getexponent(x)+3;

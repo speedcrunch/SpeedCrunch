@@ -261,10 +261,33 @@ char float_isnan(floatnum f);
    This function never reports an error. */
 char float_iszero(floatnum f);
 
+/* copies source to dest, limiting the significand to at most <digits> digits.
+   The parameter <digits> may assume the value EXACT, in which case a full
+   copy is made.
+   If source and dest coincide, float_clone tries to re-use the significand.
+   This prevents unnecessary copying.
+   If a copy has to be made, the allocated space is just big enough to hold
+   the significand, so no memory is wasted.
+   A return value of 0 indicates an error.
+   errors: FLOAT_INVALIDPARAM, if <digits>, or the length of the copy,
+                               exceeds <maxdigits> */
+char float_copy(floatnum dest, floatnum source, int digits);
+
+/* transfers the contents of source to dest. source is assigned NaN
+   afterwards.
+   In contrast to float_clone, float_move does not create a copy of
+   the significand (which employs memory allocation and copying),
+   instead it transfers simply the data from the source to the destination.
+   This function has been designed to implement, for example, swapping
+   of variables in a fast way.
+   If dest == source, nothing happens.
+   This function never reports an error */
+void float_move(floatnum dest, floatnum source);
+
 /* changes the value of <f> to -<f>. Has no effect, if, <f> is zero or NaN.
    A return value of 0 indicates an error.
    errors: FLOAT_NANOPERAND  */
-char float_changesign(floatnum f);
+char float_neg(floatnum f);
 
 /* changes the sign of <f>, if <f> is negative. Has no effect on a NaN.
    A return value of 0 indicates an error.
@@ -299,7 +322,7 @@ signed char float_cmp(floatnum val1, floatnum val2);
    errors: FLOAT_NANOPERAND
            FLOAT_INVALIDPARAM
            FLOAT_OVERFLOW */
-char float_round(floatnum f, int digits, roundmode mode);
+char float_round(floatnum dest, floatnum src, int digits, roundmode mode);
 
 /* cuts off the fractional part of <f>. The result is always less
    or equal in magnitude to the passed argument.
@@ -314,29 +337,6 @@ char float_int(floatnum f);
    A return value of 0 indicates an error.
    errors: FLOAT_NANOPERAND */
 char float_frac(floatnum f);
-
-/* copies source to dest, limiting the significand to at most <digits> digits.
-   The parameter <digits> may assume the value EXACT, in which case a full
-   copy is made.
-   If source and dest coincide, float_clone tries to re-use the significand.
-   This prevents unnecessary copying.
-   If a copy has to be made, the allocated space is just big enough to hold
-   the significand, so no memory is wasted.
-   A return value of 0 indicates an error.
-   errors: FLOAT_INVALIDPARAM, if <digits>, or the length of the copy,
-                               exceeds <maxdigits> */
-char float_clone(floatnum dest, floatnum source, int digits);
-
-/* transfers the contents of source to dest. source is assigned NaN
-   afterwards.
-   In contrast to float_clone, float_move does not create a copy of
-   the significand (which employs memory allocation and copying),
-   instead it transfers simply the data from the source to the destination.
-   This function has been designed to implement, for example, swapping
-   of variables in a fast way.
-   If dest == source, nothing happens.
-   This function never reports an error */
-void float_move(floatnum dest, floatnum source);
 
 /* adds the values in <summand1> and <summand2> and stores the result in
    <dest>. <dest> may coincide with either summand (or even both).

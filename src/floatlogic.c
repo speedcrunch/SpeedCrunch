@@ -106,7 +106,7 @@ _floatnum2logic(
 
     float_create(&tmp);
     /* floatnum2longint rounds, we have to truncate first */
-    float_clone(&tmp, x, digits);
+    float_copy(&tmp, x, digits);
     if (float_getsign(x) < 0)
       float_add(&tmp, &tmp, &c1, EXACT);
     _floatnum2longint(longint, &tmp);

@@ -66,7 +66,7 @@ static void
 roundResult( floatnum x )
 {
   if (!float_isnan(x)) /* avoids setting float_error */
-    float_round(x, HMATH_WORKING_PREC, TONEAREST);
+    float_round(x, x, HMATH_WORKING_PREC, TONEAREST);
 }
 
 static void
@@ -181,7 +181,7 @@ int HNumber::toInt()
 HNumber& HNumber::operator=( const HNumber& hn )
 {
   d->format = hn.format();
-  float_clone(&d->fnum, &hn.d->fnum, EXACT);
+  float_copy(&d->fnum, &hn.d->fnum, EXACT);
   return *this;
 }
 
@@ -420,7 +420,7 @@ _doFormat(
   tokens.fracpart.buf = fracbuf;
   tokens.exp.sz = sizeof(expbuf);
   tokens.exp.buf = expbuf;
-  float_clone(&tmp, x, DECPRECISION + 2);
+  float_copy(&tmp, x, DECPRECISION + 2);
   if (float_out(&tokens, &tmp, prec, base, expbase, outmode))
   {
     sz = cattokens(NULL, -1, &tokens, flags);
@@ -520,7 +520,7 @@ char* formathexfp( floatnum x, char base,
 
   float_create(&tmp);
   exp = float_getexponent(x);
-  float_clone(&tmp, x, exp <= 0? 1 : exp + 1);
+  float_copy(&tmp, x, exp <= 0? 1 : exp + 1);
   float_int(&tmp);
   result = _doFormat(&tmp, base, expbase, IO_MODE_FIXPOINT,
                      0, IO_FLAG_SUPPRESS_PLUS
@@ -581,7 +581,7 @@ HNumber HMath::pi()
 {
   HNumber value;
 
-  float_clone(&value.d->fnum, &cPi, HMATH_EVAL_PREC);
+  float_copy(&value.d->fnum, &cPi, HMATH_EVAL_PREC);
   return value;
 }
 
@@ -653,7 +653,7 @@ HNumber HMath::abs( const HNumber& n )
 HNumber HMath::negate( const HNumber& n )
 {
   HNumber result( n );
-  float_changesign(&result.d->fnum);
+  float_neg(&result.d->fnum);
   return result;
 }
 
@@ -778,7 +778,7 @@ HNumber HMath::cbrt( const HNumber& n )
 
   float_create(&a);
   float_create(&q);
-  float_clone(&a, &n.d->fnum, HMATH_EVAL_PREC);
+  float_copy(&a, &n.d->fnum, HMATH_EVAL_PREC);
   sign = float_getsign(&a);
   float_abs(&a);
   expn = float_getexponent(&a);
@@ -786,7 +786,7 @@ HNumber HMath::cbrt( const HNumber& n )
   expn /= 3;
 
   digits = 0;
-  float_clone(&q, &a, 2);
+  float_copy(&q, &a, 2);
   float_sqrt(&q, 2);
   while (!float_iszero(rnum) && digits < HMATH_EVAL_PREC/2 + 1)
   {
@@ -1030,8 +1030,8 @@ HNumber HMath::nCr( const HNumber& n, const HNumber& r )
 
     float_create(&fn);
     float_create(&fr);
-    float_clone(&fr, &r.d->fnum, HMATH_EVAL_PREC);
-    float_clone(&fn, rnum, EXACT);
+    float_copy(&fr, &r.d->fnum, HMATH_EVAL_PREC);
+    float_copy(&fn, rnum, EXACT);
     float_sub(rnum, rnum, &fr, HMATH_EVAL_PREC);
     float_add(&fn, &fn, &c1, HMATH_EVAL_PREC);
     float_add(&fr, &fr, &c1, HMATH_EVAL_PREC);

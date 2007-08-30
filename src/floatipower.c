@@ -56,12 +56,12 @@ _raiseposi(
   float_setexponent(&pwr, 0);
   if ((exponent & 1) != 0)
   {
-    float_clone(x, &pwr, digits+1);
+    float_copy(x, &pwr, digits+1);
     *expx = exppwr;
   }
   else
   {
-    float_clone(x, &c1, EXACT);
+    float_copy(x, &c1, EXACT);
     *expx = 0;
   }
   extra = _findfirstbit(exponent)/3+1;
@@ -111,7 +111,7 @@ _raisei(
   switch (exponent)
   {
   case 0:
-    float_clone(x, &c1, EXACT); /* fall through */
+    float_copy(x, &c1, EXACT); /* fall through */
   case 1:
     return 1;
   }

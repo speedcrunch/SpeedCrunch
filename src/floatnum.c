@@ -378,19 +378,20 @@ _checkdigits(
 }
 
 /* backward-scans the significand in <f>. Returns the number of
-   digits equal to <digit> at the end of f->significand->n_value. */
+   digits equal to <digit> beginning with the <scale>+1-th digit of
+   f->significand->n_value. */
 static int
 _bscandigit(
   floatnum f,
+  int scale,
   char digit)
 {
   char* p;
-  int i, lg;
+  char* ps;
 
-  lg = float_getlength(f);
-  p = _valueof(f) + lg;
-  for (i = lg; i-- > 0 && *--p == digit;);
-  return lg - i - 1;
+  ps = _valueof(f);
+  for (p = ps + scale + 1; p-- != ps && *p == digit;);
+  return scale - (p - ps);
 }
 
 /* scans two significands for the first occurence
@@ -459,7 +460,7 @@ float_setsign(
 }
 
 char
-float_changesign(
+float_neg(
   floatnum f)
 {
   float_setsign(f, -float_getsign(f));
@@ -471,7 +472,7 @@ float_abs(
   floatnum f)
 {
   if(float_getsign(f) == -1)
-    float_changesign(f);
+    float_neg(f);
   return !_checknan(f);
 }
 
@@ -533,7 +534,7 @@ static void
 _corr_trailing_zeros(
   floatnum f)
 {
-  _hidelast(f, _bscandigit(f, 0));
+  _hidelast(f, _bscandigit(f, _scaleof(f), 0));
 }
 
 static char hexdigits[] = "0123456789ABCDEF";
@@ -920,113 +921,17 @@ float_setinteger(floatnum dest, int value)
   float_setscientific(dest, buf, NULLTERMINATED);
 }
 
-/* rounding a value towards infinity */
-static void
-_roundup(
-  floatnum f,
-  int scale)
+void
+float_move(
+  floatnum dest,
+  floatnum source)
 {
-  _setscale(f, scale);
-  scale -= _bscandigit(f, 9);
-  if (scale < 0)
+  if (dest != source)
   {
-    _setscale(f, 0);
-    *_valueof(f) = 1;
-    if (!float_isvalidexp(++f->exponent))
-      float_setnan(f);
-#ifdef FLOATDEBUG
-    else
-      _setvalue_(f);
-#endif
+    float_setnan(dest);
+    *dest = *source;
+    float_create(source);
   }
-  else
-  {
-    ++*(_valueof(f) + scale);
-    _setscale(f, scale);
-#ifdef FLOATDEBUG
-    _setvalue_(f);
-#endif
-  }
-}
-
-/* rounding a value towards zero */
-static void
-_trunc(
-  floatnum f,
-  int scale)
-{
-  _setscale(f, scale);
-  _corr_trailing_zeros(f);
-#ifdef FLOATDEBUG
-  _setvalue_(f);
-#endif
-}
-
-/* round-to-nearest */
-static void
-_round(
-  floatnum f,
-  int scale)
-{
-  int scalediff;
-  char digit;
-
-  scalediff = _scaleof(f) - scale;
-  if (scalediff > 0)
-  {
-    digit = _digit(f, scale + 1);
-
-    if (digit < 5
-        || (digit == 5
-            && scalediff == 1
-            && (_digit(f, scale) & 1) == 0))
-      _trunc(f, scale);
-    else
-      _roundup(f, scale);
-  }
-}
-
-char
-float_round(
-  floatnum f,
-  int digits,
-  roundmode mode)
-{
-  signed char sign;
-
-  if (_checknan(f))
-    return FALSE;
-  if (mode > TOMINUSINFINITY || !_checkdigits(digits, NOSPECIALVALUE))
-    return _seterror(f, FLOAT_INVALIDPARAM);
-  sign = float_getsign(f);
-  if(sign != 0 && float_getlength(f) > digits--)
-  {
-    switch(mode)
-    {
-      case TONEAREST:
-        _round(f, digits);
-        break;
-      case TOZERO:
-        _trunc(f, digits);
-        break;
-      case TOINFINITY:
-        sign = 1; /* fall through */
-      case TOPLUSINFINITY:
-        sign = -sign; /* fall through */
-      case TOMINUSINFINITY:
-        if (sign > 0)
-          _trunc(f, digits);
-        else
-          _roundup(f, digits);
-        break;
-    }
-    if (float_isnan(f))
-    {
-      float_error = FLOAT_OVERFLOW;
-      return FALSE;
-    }
-  }
-  return TRUE;
 }
 
 /* creates a copy of <source> and assigns it to
@@ -1073,7 +978,7 @@ _scaled_clone(
 }
 
 char
-float_clone(
+float_copy(
   floatnum dest,
   floatnum source,
   int digits)
@@ -1102,29 +1007,121 @@ float_clone(
   return TRUE;
 }
 
-void
-float_move(
+/* rounding a value towards zero */
+static void
+_trunc(
   floatnum dest,
-  floatnum source)
+  floatnum x,
+  int scale)
 {
-  if (dest != source)
+  scale -= _bscandigit(x, scale, 0);
+  _scaled_clone(dest, x, scale);
+#ifdef FLOATDEBUG
+  _setvalue_(dest);
+#endif
+}
+
+/* rounding a value towards infinity */
+static char
+_roundup(
+  floatnum dest,
+  floatnum x,
+  int scale)
+{
+  scale -= _bscandigit(x, scale, 9);
+  _scaled_clone(dest, x, _max(0, scale));
+  if (scale < 0)
   {
-    float_setnan(dest);
-    *dest = *source;
-    float_create(source);
+    *_valueof(dest) = 1;
+    if (!float_isvalidexp(++dest->exponent))
+      return FALSE;
   }
+  else
+  {
+    ++*(_valueof(dest) + scale);
+  }
+#ifdef FLOATDEBUG
+  _setvalue_(dest);
+#endif
+  return TRUE;
+}
+
+char
+float_round(
+  floatnum dest,
+  floatnum src,
+  int digits,
+  roundmode mode)
+{
+  int scalediff, scale;
+  char digit;
+  signed char sign, updown;
+
+  if (mode > TOMINUSINFINITY || !_checkdigits(digits, NOSPECIALVALUE))
+    return _seterror(dest, FLOAT_INVALIDPARAM);
+  if (float_isnan(src))
+    return _seterror(dest, FLOAT_NANOPERAND);
+  updown = 0;
+  scale = digits - 1;
+  if (float_getlength(src) > digits)
+  {
+    sign = float_getsign(src);
+    switch(mode)
+    {
+      case TONEAREST:
+        scalediff = _scaleof(src) - scale;
+        if (scalediff > 0)
+        {
+          digit = _digit(src, digits);
+          if (digit < 5
+              || (digit == 5
+              && scalediff == 1
+              && (_digit(src, scale) & 1) == 0))
+            updown = -1;
+          else
+            updown = 1;
+        }
+        break;
+      case TOZERO:
+        updown = -1;
+        break;
+      case TOINFINITY:
+        updown = 1;
+        break;
+      case TOPLUSINFINITY:
+        updown = sign;
+        break;
+      case TOMINUSINFINITY:
+        updown = -sign;
+        break;
+    }
+  }
+  switch (updown)
+  {
+  case 1:
+    if (!_roundup(dest, src, scale))
+      return _seterror(dest, FLOAT_OVERFLOW);
+    break;
+  case 0:
+    float_copy(dest, src, digits);
+    break;
+  case -1:
+    _trunc(dest, src, scale);
+    break;
+  }
+  return TRUE;
 }
 
 char
 float_int(
   floatnum f)
 {
-  if (_checknan(f) || float_iszero(f))
+  if (_checknan(f))
     return FALSE;
   if (f->exponent < 0)
     float_setzero(f);
-  else
-    float_round(f, f->exponent+1, TOZERO);
+  else if (!float_iszero(f))
+    float_round(f, f, f->exponent+1, TOZERO);
   return TRUE;
 }
 
@@ -1179,7 +1176,7 @@ _addsub_normal(
       extradigit = 1; /* a true subtraction needs no space for a carry */
     if (expdiff > digits + extradigit)
       /* second operand underflows due to exponent diff */
-      return float_clone(dest, summand1, digits+extradigit);
+      return float_copy(dest, summand1, digits+extradigit);
   }
 
   if (digits > maxdigits)
@@ -1345,7 +1342,7 @@ _sub_expdiff0(
     eq += _scan_digit(_valueof(summand1) + eq,
                       float_getlength(summand1) - eq, 0);
     _hidefirst(summand1, eq);
-    result = float_clone(dest, summand1, digits);
+    result = float_copy(dest, summand1, digits);
     dest->exponent -= eq;
     return result != 0 && _normalize(dest);
   }
@@ -1473,7 +1470,7 @@ _addsub_ordered(
     return FALSE;
   }
   if (float_iszero(summand2))
-    return float_clone(dest, summand1, digits);
+    return float_copy(dest, summand1, digits);
 
   /* separate true addition from true subtraction */
   if (float_getsign(summand1) == float_getsign(summand2))
@@ -1706,7 +1703,7 @@ float_divmod(
   {
     if (exp < 0)
     {
-      if (float_clone(remainder, dividend, EXACT))
+      if (float_copy(remainder, dividend, EXACT))
         float_setzero(quotient);
       else
         float_setnan(quotient);
