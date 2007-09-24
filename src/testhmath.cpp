@@ -21,6 +21,7 @@
 
 #include <iostream>
 #include <string.h>
+#include <cstdlib>
 
 #include "hmath.h"
 
