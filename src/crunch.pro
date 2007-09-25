@@ -80,6 +80,7 @@ TRANSLATIONS += i18n/crunch_ro.ts
 TRANSLATIONS += i18n/crunch_ru.ts
 TRANSLATIONS += i18n/crunch_sv.ts
 TRANSLATIONS += i18n/crunch_sl.ts
+TRANSLATIONS += i18n/crunch_tr.ts
 
 RESOURCES = crunch.qrc
 
@@ -108,6 +109,7 @@ translations.files += i18n/crunch_ro.qm
 translations.files += i18n/crunch_ru.qm
 translations.files += i18n/crunch_sv.qm
 translations.files += i18n/crunch_sl.qm
+translations.files += i18n/crunch_tr.qm
 INSTALLS += translations
 
 DISTFILES += README
@@ -125,14 +127,15 @@ DISTFILES += i18n/crunch_es_AR.qm
 DISTFILES += i18n/crunch_fi.qm
 DISTFILES += i18n/crunch_fr.qm
 DISTFILES += i18n/crunch_he.qm
-#DISTFILES += i18n/crunch_id.qm
+DISTFILES += i18n/crunch_id.qm
 DISTFILES += i18n/crunch_it.qm
 DISTFILES += i18n/crunch_nl.qm
 DISTFILES += i18n/crunch_no.qm
-#DISTFILES += i18n/crunch_pl.qm
+DISTFILES += i18n/crunch_pl.qm
 DISTFILES += i18n/crunch_pt.qm
 DISTFILES += i18n/crunch_pt_BR.qm
 DISTFILES += i18n/crunch_ro.qm
 DISTFILES += i18n/crunch_ru.qm
 DISTFILES += i18n/crunch_sv.qm
-#DISTFILES += i18n/crunch_sl.qm
+DISTFILES += i18n/crunch_sl.qm
+DISTFILES += i18n/crunch_tr.qm
