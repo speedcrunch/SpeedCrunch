@@ -40,13 +40,14 @@ static void deleteGlobalSettings()
 
 Settings::Settings()
 {
-  angleMode      = "degree";
-  saveHistory    = true;
-  saveVariables  = true;
-  autoComplete   = true;
-  autoCalc       = true;
-  decimalPoint   = QString();
-  minimizeToTray = false;
+  angleMode       = "degree";
+  saveHistory     = true;
+  saveVariables   = true;
+  autoComplete    = true;
+  autoCalc        = true;
+  decimalPoint    = QString();
+  minimizeToTray  = false;
+  stayAlwaysOnTop = false;
 
   format        = 'g';
   decimalDigits = -1;
@@ -139,6 +140,7 @@ void Settings::load()
   key = SETTINGSKEY;
   key += "/MainWindow/";
   mainWindowState       = settings.value( key + "State"                        ).toByteArray();
+  stayAlwaysOnTop       = settings.value( key + "StayAlwaysOnTop",       false ).toBool();
   historyDockFloating   = settings.value( key + "HistoryDockFloating",   false ).toBool();
   historyDockTop        = settings.value( key + "HistoryDockTop",        0     ).toInt();
   historyDockLeft       = settings.value( key + "HistoryDockLeft",       0     ).toInt();
@@ -256,6 +258,7 @@ void Settings::save()
   settings.setValue( key + "/Appearance/WindowHeight",           mainWindowSize.height()       );
 
   settings.setValue( key + "/MainWindow/State",                 mainWindowState       );
+  settings.setValue( key + "/MainWindow/StayAlwaysOnTop",       stayAlwaysOnTop       );
   settings.setValue( key + "/MainWindow/HistoryDockFloating",   historyDockFloating   );
   settings.setValue( key + "/MainWindow/HistoryDockTop",        historyDockTop        );
   settings.setValue( key + "/MainWindow/HistoryDockLeft",       historyDockLeft       );

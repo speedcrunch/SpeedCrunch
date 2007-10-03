@@ -118,6 +118,8 @@ public:
 class CrunchPrivate
 {
 public:
+  Qt::WindowFlags flags;
+
   CrunchActions* actions;
   QActionGroup *digitsGroup;
   Evaluator* eval;
@@ -355,40 +357,60 @@ Crunch::~Crunch()
 void Crunch::createUI()
 {
   // create all the actions
-  d->actions->sessionSave = new QAction( tr("&Save..."), this );
-    d->actions->sessionSave->setShortcut( Qt::CTRL + Qt::Key_S );
-  d->actions->sessionQuit = new QAction( tr("&Quit"), this );
-    d->actions->sessionQuit->setShortcut( Qt::CTRL + Qt::Key_Q );
+  d->actions->sessionSave         = new QAction( tr("&Save..."),                 this );
+  d->actions->sessionQuit         = new QAction( tr("&Quit"),                    this );
 
-  d->actions->focusAndSelectInput = new QAction( tr("&Select Input"), this );
-    d->actions->focusAndSelectInput->setShortcut( Qt::Key_F6 );
+  d->actions->focusAndSelectInput = new QAction( tr("&Select Input"),            this );
+  d->actions->editCopy            = new QAction( tr("&Copy"),                    this );
+  d->actions->editPaste           = new QAction( tr("&Paste"),                   this );
+  d->actions->editCopyResult      = new QAction( tr("Copy &Result"),             this );
+  d->actions->insertFunction      = new QAction( tr("Insert &Function..."),      this );
+  d->actions->insertVariable      = new QAction( tr("Insert &Variable..."),      this );
+  d->actions->deleteVariable      = new QAction( tr("D&elete Variable..."),      this );
+  d->actions->clearInput          = new QAction( tr("Clear &Input"),             this );
+  d->actions->clearDisplay        = new QAction( tr("Clear &Display"),           this );
+  d->actions->clearHistory        = new QAction( tr("Clear &History"),           this );
+  d->actions->clearVariables      = new QAction( tr("Clear V&ariables"),         this );
 
-  d->actions->editCopy = new QAction( tr("&Copy"), this );
-    d->actions->editCopy->setShortcut( Qt::CTRL + Qt::Key_C );
-  d->actions->editPaste = new QAction( tr("&Paste"), this );
-    d->actions->editPaste->setShortcut( Qt::CTRL + Qt::Key_V );
-  d->actions->editCopyResult = new QAction( tr("Copy &Result"), this );
-    d->actions->editCopyResult->setShortcut( Qt::CTRL + Qt::Key_R );
-  d->actions->insertFunction = new QAction( tr("Insert &Function..."), this );
-    d->actions->insertFunction->setShortcut( Qt::CTRL + Qt::Key_F );
-  d->actions->insertVariable = new QAction( tr("Insert &Variable..."), this );
-    d->actions->insertVariable->setShortcut( Qt::CTRL + Qt::Key_I );
-  d->actions->deleteVariable = new QAction( tr("D&elete Variable..."), this );
-    d->actions->deleteVariable->setShortcut( Qt::CTRL + Qt::Key_D );
+  d->actions->viewGeneral         = new QAction( tr("&General"),                 0    );
+  d->actions->viewFixed           = new QAction( tr("&Fixed Decimal"),           0    );
+  d->actions->viewEngineering     = new QAction( tr("&Engineering"),             0    );
+  d->actions->viewScientific      = new QAction( tr("&Scientific"),              0    );
+  d->actions->viewHexadec         = new QAction( tr("&Hexadecimal"),             0    );
+  d->actions->viewOctal           = new QAction( tr("&Octal"),                   0    );
+  d->actions->viewBinary          = new QAction( tr("&Binary"),                  0    );
 
-  d->actions->clearInput = new QAction( tr("Clear &Input" ), this );
-    d->actions->clearInput->setShortcut( Qt::Key_Escape );
-  d->actions->clearDisplay = new QAction( tr("Clear &Display" ), this );
-  d->actions->clearHistory = new QAction( tr("Clear &History" ), this );
-  d->actions->clearVariables = new QAction( tr("Clear V&ariables" ), this );
+  d->actions->digitsAuto          = new QAction( tr("&Automatic Precision"),     0    );
+  d->actions->digits2             = new QAction( tr("&2 Decimal Digits"),        0    );
+  d->actions->digits3             = new QAction( tr("&3 Decimal Digits"),        0    );
+  d->actions->digits8             = new QAction( tr("&8 Decimal Digits"),        0    );
+  d->actions->digits15            = new QAction( tr("&15 Decimal Digits"),       0    );
+  d->actions->digits50            = new QAction( tr("&50 Decimal Digits"),       0    );
 
-  d->actions->viewGeneral = new QAction( tr("&General"), 0 );
-  d->actions->viewFixed = new QAction( tr("&Fixed Decimal"), 0 );
-  d->actions->viewEngineering = new QAction( tr("&Engineering"), 0 );
-  d->actions->viewScientific = new QAction( tr("&Scientific"), 0 );
-  d->actions->viewHexadec = new QAction( tr("&Hexadecimal"), 0 );
-  d->actions->viewOctal = new QAction( tr("&Octal"), 0 );
-  d->actions->viewBinary = new QAction( tr("&Binary"), 0 );
+  d->actions->showClearButton     = new QAction( tr("&Show Clear Button"),       this );
+  d->actions->showEvalButton      = new QAction( tr("Show &Evaluate Button"),    this );
+  d->actions->showKeyPad          = new QAction( tr("Show &Key Pad"),            this );
+  d->actions->showHistory         = new QAction( tr("Show Expression &History"), this );
+  d->actions->showFunctions       = new QAction( tr("Show &Functions List"),     this );
+  d->actions->showVariables       = new QAction( tr("Show &Variables List"),     this );
+  d->actions->showConstants       = new QAction( tr("Show C&onstants List"),     this );
+  d->actions->configure           = new QAction( tr("&Configure..."),            this );
+
+  d->actions->helpTipOfTheDay     = new QAction( tr("&Tip of the Day"),          this );
+  d->actions->helpGotoWebsite     = new QAction( tr("SpeedCrunch &Web Site..."), this );
+  d->actions->helpAbout           = new QAction( tr("&About"),                   this );
+  d->actions->helpAboutQt         = new QAction( tr("About &Qt"),                this );
+
+  d->actions->sessionSave->setShortcut( Qt::CTRL + Qt::Key_S );
+  d->actions->sessionQuit->setShortcut( Qt::CTRL + Qt::Key_Q );
+  d->actions->focusAndSelectInput->setShortcut( Qt::Key_F6 );
+  d->actions->editCopy->setShortcut( Qt::CTRL + Qt::Key_C );
+  d->actions->editPaste->setShortcut( Qt::CTRL + Qt::Key_V );
+  d->actions->editCopyResult->setShortcut( Qt::CTRL + Qt::Key_R );
+  d->actions->insertFunction->setShortcut( Qt::CTRL + Qt::Key_F );
+  d->actions->insertVariable->setShortcut( Qt::CTRL + Qt::Key_I );
+  d->actions->deleteVariable->setShortcut( Qt::CTRL + Qt::Key_D );
+  d->actions->clearInput->setShortcut( Qt::Key_Escape );
 
   QActionGroup *formatGroup = new QActionGroup( this );
   formatGroup->addAction( d->actions->viewGeneral );
@@ -399,21 +421,6 @@ void Crunch::createUI()
   formatGroup->addAction( d->actions->viewOctal );
   formatGroup->addAction( d->actions->viewBinary );
 
-  d->actions->viewGeneral->setCheckable( true );
-  d->actions->viewFixed->setCheckable( true );
-  d->actions->viewEngineering->setCheckable( true );
-  d->actions->viewScientific->setCheckable( true );
-  d->actions->viewHexadec->setCheckable( true );
-  d->actions->viewOctal->setCheckable( true );
-  d->actions->viewBinary->setCheckable( true );
-
-  d->actions->digitsAuto = new QAction( tr("&Automatic Precision"), 0 );
-  d->actions->digits2 = new QAction( tr("&2 Decimal Digits"), 0 );
-  d->actions->digits3 = new QAction( tr("&3 Decimal Digits"), 0 );
-  d->actions->digits8 = new QAction( tr("&8 Decimal Digits"), 0 );
-  d->actions->digits15 = new QAction( tr("&15 Decimal Digits"), 0 );
-  d->actions->digits50 = new QAction( tr("&50 Decimal Digits"), 0 );
-
   d->digitsGroup = new QActionGroup( this );
   d->digitsGroup->addAction( d->actions->digitsAuto );
   d->digitsGroup->addAction( d->actions->digits2 );
@@ -422,6 +429,14 @@ void Crunch::createUI()
   d->digitsGroup->addAction( d->actions->digits15 );
   d->digitsGroup->addAction( d->actions->digits50 );
 
+  d->actions->viewGeneral->setCheckable( true );
+  d->actions->viewFixed->setCheckable( true );
+  d->actions->viewEngineering->setCheckable( true );
+  d->actions->viewScientific->setCheckable( true );
+  d->actions->viewHexadec->setCheckable( true );
+  d->actions->viewOctal->setCheckable( true );
+  d->actions->viewBinary->setCheckable( true );
+
   d->actions->digitsAuto->setCheckable( true );
   d->actions->digits2->setCheckable( true );
   d->actions->digits3->setCheckable( true );
@@ -429,28 +444,14 @@ void Crunch::createUI()
   d->actions->digits15->setCheckable( true );
   d->actions->digits50->setCheckable( true );
 
-  d->actions->showClearButton = new QAction( tr("&Show Clear Button"), this );
-  d->actions->showEvalButton = new QAction( tr("Show &Evaluate Button"), this );
-  d->actions->showKeyPad = new QAction( tr("Show &Key Pad"), this );
-  d->actions->showHistory = new QAction( tr("Show Expression &History"), this );
-  d->actions->showFunctions = new QAction( tr("Show &Functions List"), this );
-  d->actions->showVariables = new QAction( tr("Show &Variables List"), this );
-  d->actions->showConstants = new QAction( tr("Show C&onstants List"), this );
 
   d->actions->showClearButton->setCheckable( true );
-  d->actions->showEvalButton->setCheckable( true );
+  d->actions->showEvalButton->setCheckable ( true );
   d->actions->showKeyPad->setCheckable( true );
   d->actions->showHistory->setCheckable( true );
   d->actions->showFunctions->setCheckable( true );
   d->actions->showVariables->setCheckable( true );
   d->actions->showConstants->setCheckable( true );
-
-  d->actions->configure = new QAction( tr("&Configure..."), this );
-
-  d->actions->helpTipOfTheDay = new QAction( tr("&Tip of the Day"), this );
-  d->actions->helpGotoWebsite = new QAction( tr("SpeedCrunch &Web Site..."), this );
-  d->actions->helpAbout = new QAction( tr("&About"), this );
-  d->actions->helpAboutQt = new QAction( tr("About &Qt"), this );
 
   // signal/slot
   connect( d->actions->sessionSave, SIGNAL( activated() ), this, SLOT( saveSession() ) );
@@ -540,7 +541,6 @@ void Crunch::createUI()
   d->viewMenu->addAction( d->actions->digits8 );
   d->viewMenu->addAction( d->actions->digits15 );
   d->viewMenu->addAction( d->actions->digits50 );
-
 
   d->settingsMenu = new QMenu( tr("Se&ttings"), this );
   menuBar()->addMenu( d->settingsMenu );
@@ -727,6 +727,12 @@ void Crunch::applySettings()
 	  delete d->trayIcon;
     d->trayIcon = 0;
   }
+
+  if( settings->stayAlwaysOnTop )
+    setWindowFlags( windowFlags() | Qt::WindowStaysOnTopHint );
+  else
+    setWindowFlags( windowFlags() & (~ Qt::WindowStaysOnTopHint) );
+  show();
 
   // changed settings should trigger auto calc nor auto complete
   d->editor->stopAutoCalc();

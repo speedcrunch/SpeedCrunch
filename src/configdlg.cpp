@@ -59,6 +59,7 @@ public:
   QCheckBox* autoCompleteCheck;
   QCheckBox* autoCalcCheck;
   QCheckBox* minimizeToTrayCheck;
+  QCheckBox* stayAlwaysOnTopCheck;
 
   QComboBox* decimalList;
 
@@ -100,6 +101,7 @@ void ConfigDlgPrivate::loadSettings()
   autoCompleteCheck->setChecked( settings->autoComplete );
   autoCalcCheck->setChecked( settings->autoCalc );
   minimizeToTrayCheck->setChecked( settings->minimizeToTray );
+  stayAlwaysOnTopCheck->setChecked( settings->stayAlwaysOnTop );
 
   decimalList->setCurrentIndex(0);
   if( settings->decimalPoint == "." )
@@ -136,6 +138,7 @@ void ConfigDlgPrivate::saveSettings()
   settings->autoComplete = autoCompleteCheck->isChecked();
   settings->autoCalc = autoCalcCheck->isChecked();
   settings->minimizeToTray = minimizeToTrayCheck->isChecked();
+  settings->stayAlwaysOnTop = stayAlwaysOnTopCheck->isChecked();
   settings->decimalPoint = decimalList->currentIndex()==1 ? QString('.') :
     decimalList->currentIndex()==2 ? QString(',') : QString();
   settings->customAppearance = customAppearanceCheck->isChecked();
@@ -160,6 +163,7 @@ QWidget* ConfigDlgPrivate::generalPage()
   autoCompleteCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Automatic &completion"), page );
   autoCalcCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Automatically calculate as you &type"), page );
   minimizeToTrayCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Minimi&ze to system tray"), page );
+  stayAlwaysOnTopCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Stay always-on-&top"), page );
 
   QWidget* box = new QWidget( page );
   QHBoxLayout* boxLayout = new QHBoxLayout;
@@ -187,6 +191,7 @@ QWidget* ConfigDlgPrivate::generalPage()
   layout->addWidget( autoCompleteCheck );
   layout->addWidget( autoCalcCheck );
   layout->addWidget( minimizeToTrayCheck );
+  layout->addWidget( stayAlwaysOnTopCheck );
   layout->addItem( new QSpacerItem( 0, 20, QSizePolicy::Minimum, QSizePolicy::Minimum ) );
   layout->addWidget( box );
 

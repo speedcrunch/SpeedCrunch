@@ -51,6 +51,7 @@ class Settings
     bool showFunctions;
     bool showVariables;
     bool showConstants;
+    bool stayAlwaysOnTop;
 
     bool customAppearance;
     QFont customFont;

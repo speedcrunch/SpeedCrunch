@@ -1,4 +1,4 @@
-project(speedcrunch-floatnum)
+project(speedcrunch)
 
 IF( APPLE )
   set( PROGNAME Speedcrunch )
