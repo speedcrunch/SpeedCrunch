@@ -3,6 +3,7 @@ SpeedCrunch post-0.8
 New features:
   greatly extended number range
   factorials extended to real values
+  stay always-on-top (#106)
 
 New functions:
   ARSINH: area hyperbolic sine, the reverse of sinh
