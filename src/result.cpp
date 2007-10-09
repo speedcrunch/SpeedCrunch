@@ -331,7 +331,7 @@ void Result::setCustomBackgroundColor( const QColor& bg1, const QColor& bg2 )
   if( d->customAppearance )
   {
     QPalette pal = palette();
-    pal.setColor( QPalette::Background, bg1);
+    pal.setColor( QPalette::Base, bg1);
     setPalette( pal );
   }
 
