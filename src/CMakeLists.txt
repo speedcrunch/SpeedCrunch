@@ -69,6 +69,9 @@ result.cpp
 settings.cpp
 tipwidget.cpp
 variablesdock.cpp
+3rdparty/wwwidgets/wwglobal_p.cpp
+3rdparty/wwwidgets/colormodel.cpp
+3rdparty/wwwidgets/qwwcolorbutton.cpp
 )
 
 # headers
@@ -111,6 +114,10 @@ result.h
 settings.h
 tipwidget.h
 variablesdock.h
+3rdparty/wwwidgets/wwglobal.h
+3rdparty/wwwidgets/wwglobal_p.h
+3rdparty/wwwidgets/colormodel.h
+3rdparty/wwwidgets/qwwcolorbutton.h
 )
 
 # forms
@@ -165,7 +172,7 @@ include(${QT_USE_FILE})
 qt4_add_RESOURCES( speedcrunch_RESOURCES_SOURCES ${speedcrunch_RESOURCES} )
 QT4_WRAP_UI( speedcrunch_FORMS_HEADERS ${speedcrunch_FORMS} )
 QT4_WRAP_CPP( speedcrunch_HEADERS_MOC ${speedcrunch_HEADERS} )
-INCLUDE_DIRECTORIES( ${CMAKE_BINARY_DIR} )
+INCLUDE_DIRECTORIES( ${CMAKE_BINARY_DIR} 3rdparty/wwwidgets)
 IF( APPLE )
   ADD_EXECUTABLE( ${PROGNAME} MACOSX_BUNDLE ${speedcrunch_SOURCES} ${speedcrunch_HEADERS_MOC} ${speedcrunch_RESOURCES_SOURCES} ${speedcruch_FORMS_HEADERS} )
   ADD_CUSTOM_COMMAND( TARGET ${PROGNAME} POST_BUILD

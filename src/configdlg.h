@@ -22,39 +22,11 @@
 #ifndef CONFIGDLG
 #define CONFIGDLG
 
-#include <QColor>
 #include <QDialog>
-#include <QPushButton>
 
 class Evaluator;
 class QPaintEvent;
 class ShowEvent;
-
-class ColorButtonPrivate;
-
-
-class ColorButton : public QPushButton
-{
-  Q_OBJECT
-
-  public:
-    ColorButton( QWidget* parent = 0 );
-    ~ColorButton();
-    void setColor( QColor c );
-    QColor color() const;
-    QSize sizeHint() const;
-
-  protected slots:
-    void showColorPicker();
-
-  protected:
-    void paintEvent( QPaintEvent* );
-
-  private:
-    ColorButtonPrivate* d;
-    ColorButton( const ColorButton& );
-    ColorButton& operator=( const ColorButton& );
-};
 
 class ConfigDlgPrivate;
 

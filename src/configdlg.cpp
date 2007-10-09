@@ -41,12 +41,7 @@
 #include <QTimer>
 #include <QVBoxLayout>
 
-
-class ColorButtonPrivate
-{
-public:
-  QColor color;
-};
+#include <qwwcolorbutton.h>
 
 
 class ConfigDlgPrivate
@@ -68,17 +63,17 @@ public:
   QWidget* customBox;
   QLabel* fontLabel;
   QPushButton* chooseFontButton;
-  ColorButton* textColorButton;
-  ColorButton* bg1ColorButton;
-  ColorButton* bg2ColorButton;
-  ColorButton* errorColorButton;
+  QwwColorButton* textColorButton;
+  QwwColorButton* bg1ColorButton;
+  QwwColorButton* bg2ColorButton;
+  QwwColorButton* errorColorButton;
 
   QCheckBox* enableHiliteCheck;
-  ColorButton* numberColorButton;
-  ColorButton* functionColorButton;
-  ColorButton* variableColorButton;
-  ColorButton* operatorColorButton;
-  ColorButton* matchParColorButton;
+  QwwColorButton* numberColorButton;
+  QwwColorButton* functionColorButton;
+  QwwColorButton* variableColorButton;
+  QwwColorButton* operatorColorButton;
+  QwwColorButton* matchParColorButton;
 
   QPushButton* okButton;
   QPushButton* cancelButton;
@@ -118,16 +113,16 @@ void ConfigDlgPrivate::loadSettings()
   str.append( QString("%1pt").arg( settings->customFont.pointSizeF() ) );
   fontLabel->setText( str );
 
-  textColorButton->setColor( settings->customTextColor );
-  bg1ColorButton->setColor( settings->customBackgroundColor1 );
-  bg2ColorButton->setColor( settings->customBackgroundColor2 );
-  errorColorButton->setColor( settings->customErrorColor );
+  textColorButton->setCurrentColor( settings->customTextColor );
+  bg1ColorButton->setCurrentColor( settings->customBackgroundColor1 );
+  bg2ColorButton->setCurrentColor( settings->customBackgroundColor2 );
+  errorColorButton->setCurrentColor( settings->customErrorColor );
 
   enableHiliteCheck->setChecked( settings->enableSyntaxHighlight );
-  numberColorButton->setColor( settings->highlightNumberColor );
-  functionColorButton->setColor( settings->highlightFunctionColor );
-  variableColorButton->setColor( settings->highlightVariableColor );
-  matchParColorButton->setColor( settings->matchedParenthesisColor );
+  numberColorButton->setCurrentColor( settings->highlightNumberColor );
+  functionColorButton->setCurrentColor( settings->highlightFunctionColor );
+  variableColorButton->setCurrentColor( settings->highlightVariableColor );
+  matchParColorButton->setCurrentColor( settings->matchedParenthesisColor );
 }
 
 void ConfigDlgPrivate::saveSettings()
@@ -142,15 +137,15 @@ void ConfigDlgPrivate::saveSettings()
   settings->decimalPoint = decimalList->currentIndex()==1 ? QString('.') :
     decimalList->currentIndex()==2 ? QString(',') : QString();
   settings->customAppearance = customAppearanceCheck->isChecked();
-  settings->customTextColor = textColorButton->color();
-  settings->customBackgroundColor1 = bg1ColorButton->color();
-  settings->customBackgroundColor2 = bg2ColorButton->color();
-  settings->customErrorColor = errorColorButton->color();
+  settings->customTextColor = textColorButton->currentColor();
+  settings->customBackgroundColor1 = bg1ColorButton->currentColor();
+  settings->customBackgroundColor2 = bg2ColorButton->currentColor();
+  settings->customErrorColor = errorColorButton->currentColor();
   settings->enableSyntaxHighlight = enableHiliteCheck->isChecked();
-  settings->highlightNumberColor = numberColorButton->color();
-  settings->highlightFunctionColor = functionColorButton->color();
-  settings->highlightVariableColor = variableColorButton->color();
-  settings->matchedParenthesisColor = matchParColorButton->color();
+  settings->highlightNumberColor = numberColorButton->currentColor();
+  settings->highlightFunctionColor = functionColorButton->currentColor();
+  settings->highlightVariableColor = variableColorButton->currentColor();
+  settings->matchedParenthesisColor = matchParColorButton->currentColor();
   settings->save();
 }
 
@@ -262,10 +257,10 @@ QWidget* ConfigDlgPrivate::appearancePage()
   label3->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
   label4->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
 
-  textColorButton = new ColorButton( colorGroup );
-  bg1ColorButton = new ColorButton( colorGroup );
-  bg2ColorButton = new ColorButton( colorGroup );
-  errorColorButton = new ColorButton( colorGroup );
+  textColorButton = new QwwColorButton( colorGroup );
+  bg1ColorButton = new QwwColorButton( colorGroup );
+  bg2ColorButton = new QwwColorButton( colorGroup );
+  errorColorButton = new QwwColorButton( colorGroup );
 
   colorLayout->addWidget( label1, 0, 0 );
   colorLayout->addWidget( textColorButton, 0, 1 );
@@ -318,10 +313,10 @@ QWidget* ConfigDlgPrivate::hilitePage()
   label3->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
   label4->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
 
-  numberColorButton = new ColorButton( colorGroup );
-  functionColorButton = new ColorButton( colorGroup );
-  variableColorButton = new ColorButton( colorGroup );
-  matchParColorButton = new ColorButton( colorGroup );
+  numberColorButton = new QwwColorButton( colorGroup );
+  functionColorButton = new QwwColorButton( colorGroup );
+  variableColorButton = new QwwColorButton( colorGroup );
+  matchParColorButton = new QwwColorButton( colorGroup );
 
   colorLayout->addWidget( label1, 0, 0 );
   colorLayout->addWidget( numberColorButton, 0, 1 );
@@ -339,66 +334,6 @@ QWidget* ConfigDlgPrivate::hilitePage()
   layout->addItem( new QSpacerItem( 0, 20, QSizePolicy::Minimum, QSizePolicy::MinimumExpanding ) );
 
   return page;
-}
-
-ColorButton::ColorButton( QWidget* parent ):
-QPushButton( parent )
-{
-  d = new ColorButtonPrivate;
-  connect( this, SIGNAL( clicked() ), SLOT( showColorPicker() ) );
-}
-
-ColorButton::~ColorButton()
-{
-  delete d;
-}
-
-void ColorButton::setColor( QColor c )
-{
-  d->color = c;
-  update();
-}
-
-QColor ColorButton::color() const
-{
-  return d->color;
-}
-
-QSize ColorButton::sizeHint() const
-{
-  ensurePolished();
-
-  int w = 16;
-  int h = 16;
-  QStyleOptionButton opt;
-
-  opt.initFrom( this );
-  QSize sh = style()->sizeFromContents( QStyle::CT_PushButton, &opt,
-                                        QSize( w, h ), this);
-  sh = sh.expandedTo( QApplication::globalStrut() );
-
-  return sh;
-}
-
-void ColorButton::showColorPicker()
-{
-  QColor newColor = QColorDialog::getColor( d->color, this );
-  if( newColor.isValid() )
-    setColor( newColor );
-}
-
-void ColorButton::paintEvent( QPaintEvent* e )
-{
-  QPushButton::paintEvent( e );
-  if( !isEnabled() ) return;
-
-  QRect r = rect();
-  r.adjust( 20, 5, -20, -5 );
-  QPainter painter( this );
-  painter.setPen( Qt::black );
-  painter.drawRect( r );
-  r.adjust( 1, 1, -1, -1 );
-  painter.fillRect( r, d->color );
 }
 
 ConfigDlg::ConfigDlg( QWidget* parent ):
