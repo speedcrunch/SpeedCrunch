@@ -261,6 +261,10 @@ QWidget* ConfigDlgPrivate::appearancePage()
   bg1ColorButton = new QwwColorButton( colorGroup );
   bg2ColorButton = new QwwColorButton( colorGroup );
   errorColorButton = new QwwColorButton( colorGroup );
+  textColorButton->setShowName(false);
+  bg1ColorButton->setShowName(false);
+  bg2ColorButton->setShowName(false);
+  errorColorButton->setShowName(false);
 
   colorLayout->addWidget( label1, 0, 0 );
   colorLayout->addWidget( textColorButton, 0, 1 );
@@ -317,6 +321,10 @@ QWidget* ConfigDlgPrivate::hilitePage()
   functionColorButton = new QwwColorButton( colorGroup );
   variableColorButton = new QwwColorButton( colorGroup );
   matchParColorButton = new QwwColorButton( colorGroup );
+  numberColorButton->setShowName(false);
+  functionColorButton->setShowName(false);
+  variableColorButton->setShowName(false);
+  matchParColorButton->setShowName(false);
 
   colorLayout->addWidget( label1, 0, 0 );
   colorLayout->addWidget( numberColorButton, 0, 1 );
