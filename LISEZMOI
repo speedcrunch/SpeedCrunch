@@ -52,19 +52,7 @@ Installation
 
 Rendez-vous sur le site officiel http://www.speedcrunch.org pour le téléchargement
 
-Vous aurez besoin de Qt (par Trolltech), avec au minimum une version 4.0 si vous désirez compiler SpeedCrunch. La plupart des distributions Linux ont normalement la dernière version de Qt, il n'y donc pas de quoi s'inquiéter si vous êtes dans ce cas de figure. En sus de cela, vous aurez aussi besoin du paquet de développement (appelé qt-devel ou qt3-devel, cela dépend des distributions).
-
-Pour compiler, extrayez les fichiers du fichier compressé et lancez:
-
-./configure
-make
-
-Pour installer, lancez cette commande avec l'utilisateur root:
-
-make install
-
-NB: Le nom de l'exécutable est crunch.
-
+Vous aurez besoin de Qt (par Trolltech), avec au minimum une version 4.2 si vous désirez compiler SpeedCrunch. La plupart des distributions Linux ont normalement la dernière version de Qt, il n'y donc pas de quoi s'inquiéter si vous êtes dans ce cas de figure. En sus de cela, vous aurez aussi besoin du paquet de développement (appelé qt-devel ou qt3-devel, cela dépend des distributions).
 
 Licence
 -------
