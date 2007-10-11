@@ -83,12 +83,19 @@ version of Qt, so it is likely that you need to worry about this. However,
 you need the development package as well (sometimes named as qt-devel or
 qt4-devel, it varies depends on the distributions).
 
-To compile, simply extract the source tarball and run:
-  cmake .
+You also need CMake (from Kitware) at least version 2.4.0. CMake is available 
+for Windows, Linux, and Mac OS X.
+
+To compile, simply extract the source tarball. Then create a build directory 
+(where the program will be compiled and linked). From the build directory, 
+first run:
+  cmake <path to source directory>\src
+
+and then:
   make
 
-To install, do this as root:
-  make install
+Note: the build directory can not be the same as the source directory.  
+
 
 License
 -------
