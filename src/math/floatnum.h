@@ -120,7 +120,7 @@ char float_isvalidexp(int exp);
 void float_create(floatnum f);
 
 /* finalizes a variable. To avoid memory leaks, call this before a floatnum
-   is freed. A special value (NaN = not a number) is loaded into f, so
+   is freed. A special value (NaN = not a number) is loaded into <f>, so
    any subsequent arithmetic operation on this variable will fail.
    However, a variable such finalized can still be re-used without prior
    initialization, by making it the destination of an operation.
@@ -241,7 +241,7 @@ void float_setexponent(floatnum f, int exponent);
 void float_setscientific(floatnum f, const char* buf, int bufsz);
 
 /* if <s> is 1 or -1, the sign of <f> is set accordingly. Has no effect, if
-   <f> == NaN or zero, or <s> == 0. f is set to NaN, if abs(s) > 1.
+   <f> == NaN or zero, or <s> == 0. f is set to NaN, if |s| > 1.
    This function never reports an error. */
 void float_setsign(floatnum f, signed char s);
 
@@ -264,7 +264,7 @@ char float_iszero(floatnum f);
 /* copies source to dest, limiting the significand to at most <digits> digits.
    The parameter <digits> may assume the value EXACT, in which case a full
    copy is made.
-   If source and dest coincide, float_clone tries to re-use the significand.
+   If source and dest coincide, float_copy tries to re-use the significand.
    This prevents unnecessary copying.
    If a copy has to be made, the allocated space is just big enough to hold
    the significand, so no memory is wasted.
@@ -275,7 +275,7 @@ char float_copy(floatnum dest, floatnum source, int digits);
 
 /* transfers the contents of source to dest. source is assigned NaN
    afterwards.
-   In contrast to float_clone, float_move does not create a copy of
+   In contrast to float_copy, float_move does not create a copy of
    the significand (which employs memory allocation and copying),
    instead it transfers simply the data from the source to the destination.
    This function has been designed to implement, for example, swapping
