@@ -26,137 +26,23 @@ IF( NOT APPLE )
 ENDIF( NOT APPLE )
 ENDIF( NOT WIN32 )
 
-
-# note: sort files alphabetically !
-
 # sources
-set(speedcrunch_SOURCES
-aboutbox.cpp
-autohidelabel.cpp
-binreloc.c
-configdlg.cpp
-constants.cpp
-constantsdock.cpp
-crunch.cpp
-deletevardlg.cpp
-editor.cpp
-evaluator.cpp
-floatcommon.c
-floatconst.c
-floatconvert.c
-floatexp.c
-floatgamma.c
-floathmath.c
-floatio.c
-floatipower.c
-floatlog.c
-floatlogic.c
-floatlong.c
-floatnum.c
-floatpower.c
-floatseries.c
-floattrig.c
-functions.cpp
-functionsdock.cpp
-historydock.cpp
-hmath.cpp
-insertfunctiondlg.cpp
-insertvardlg.cpp
-keypad.cpp
-main.cpp
-number.c
-result.cpp
-settings.cpp
-tipwidget.cpp
-variablesdock.cpp
-3rdparty/wwwidgets/wwglobal_p.cpp
-3rdparty/wwwidgets/colormodel.cpp
-3rdparty/wwwidgets/qwwcolorbutton.cpp
-)
-
-# headers
-set(speedcrunch_HEADERS
-aboutbox.h
-autohidelabel.h
-binreloc.h
-configdlg.h
-constants.h
-constantsdock.h
-crunch.h
-deletevardlg.h
-editor.h
-evaluator.h
-floatcommon.h
-floatconfig.h
-floatconst.h
-floatconvert.h
-floatexp.h
-floatgamma.h
-floathmath.h
-floatio.h
-floatipower.h
-floatlog.h
-floatlogic.h
-floatlong.h
-floatnum.h
-floatpower.h
-floatseries.h
-floattrig.h
-functions.h
-functionsdock.h
-historydock.h
-hmath.h
-insertfunctiondlg.h
-insertvardlg.h
-keypad.h
-number.h
-result.h
-settings.h
-tipwidget.h
-variablesdock.h
-3rdparty/wwwidgets/wwglobal.h
-3rdparty/wwwidgets/wwglobal_p.h
-3rdparty/wwwidgets/colormodel.h
-3rdparty/wwwidgets/qwwcolorbutton.h
-)
-
-# forms
-# set(speedcrunch_FORMS foobar.ui)
+INCLUDE(SourceFiles.cmake)
 
 # resources
-set(speedcrunch_RESOURCES crunch.qrc)
+set(speedcrunch_RESOURCES resources/crunch.qrc)
 
 # translations
-set(speedcrunch_TRANSLATIONS
-i18n/crunch_cs.qm
-i18n/crunch_de.qm
-i18n/crunch_es_AR.qm
-i18n/crunch_es.qm
-i18n/crunch_fi.qm
-i18n/crunch_fr.qm
-i18n/crunch_he.qm
-i18n/crunch_id.qm
-i18n/crunch_it.qm
-i18n/crunch_nl.qm
-i18n/crunch_no.qm
-i18n/crunch_pl.qm
-i18n/crunch_pt_BR.qm
-i18n/crunch_pt.qm
-i18n/crunch_ro.qm
-i18n/crunch_ru.qm
-i18n/crunch_sv.qm
-i18n/crunch_sl.qm
-i18n/crunch_tr.qm
-)
+INCLUDE(Translations.cmake)
 
 if( MINGW )
   # resource compilation for mingw
   ADD_CUSTOM_COMMAND( OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/crunchico.o
-                      COMMAND windres.exe -I${CMAKE_CURRENT_SOURCE_DIR} -i${CMAKE_CURRENT_SOURCE_DIR}/crunchico.rc -o ${CMAKE_CURRENT_BINARY_DIR}/crunchico.o )
+                      COMMAND windres.exe -I${CMAKE_CURRENT_SOURCE_DIR} -i${CMAKE_CURRENT_SOURCE_DIR}/resources/crunchico.rc -o ${CMAKE_CURRENT_BINARY_DIR}/crunchico.o )
   SET(speedcrunch_SOURCES ${speedcrunch_SOURCES} ${CMAKE_CURRENT_BINARY_DIR}/crunchico.o)
   SET(LINK_FLAGS -Wl,-subsystem,windows)
 else(MINGW)
-  SET(speedcrunch_SOURCES ${speedcrunch_SOURCES} crunchico.rc)
+  SET(speedcrunch_SOURCES ${speedcrunch_SOURCES} resources/crunchico.rc)
 endif(MINGW)
 
 # enable warnings
@@ -172,7 +58,6 @@ include(${QT_USE_FILE})
 qt4_add_RESOURCES( speedcrunch_RESOURCES_SOURCES ${speedcrunch_RESOURCES} )
 QT4_WRAP_UI( speedcrunch_FORMS_HEADERS ${speedcrunch_FORMS} )
 QT4_WRAP_CPP( speedcrunch_HEADERS_MOC ${speedcrunch_HEADERS} )
-INCLUDE_DIRECTORIES( ${CMAKE_BINARY_DIR} 3rdparty/wwwidgets)
 IF( APPLE )
   ADD_EXECUTABLE( ${PROGNAME} MACOSX_BUNDLE ${speedcrunch_SOURCES} ${speedcrunch_HEADERS_MOC} ${speedcrunch_RESOURCES_SOURCES} ${speedcruch_FORMS_HEADERS} )
   ADD_CUSTOM_COMMAND( TARGET ${PROGNAME} POST_BUILD
@@ -202,26 +87,77 @@ install(FILES ${speedcrunch_TRANSLATIONS} DESTINATION share/crunch)
 enable_testing()
 
 # regression test for HMath
-set(testhmath_SOURCES testhmath.cpp hmath.cpp number.c floatnum.c floatlong.c
-  floatexp.c floatconst.c floatcommon.c floattrig.c floatseries.c
-  floathmath.c floatlogic.c floatconvert.c floatio.c floatipower.c floatgamma.c
-  floatlog.c floatpower.c)
+set(testhmath_SOURCES
+math/floatcommon.c
+math/floatconst.c
+math/floatconvert.c
+math/floatexp.c
+math/floathmath.c
+math/floatgamma.c
+math/floatio.c
+math/floatipower.c
+math/floatlog.c
+math/floatlogic.c
+math/floatlong.c
+math/floatnum.c
+math/floatpower.c
+math/floatseries.c
+math/floattrig.c
+math/hmath.cpp
+math/number.c
+test/testhmath.cpp
+)
 add_executable(testhmath ${testhmath_SOURCES})
 add_test(testhmath ${EXECUTABLE_OUTPUT_PATH}/testhmath)
 
 # regression test for Evaluator class
-set(testevaluator_SOURCES testevaluator.cpp evaluator.cpp functions.cpp hmath.cpp number.c
-  floatnum.c floatlong.c floatexp.c floatconst.c floatcommon.c floattrig.c floatseries.c
-  floathmath.c floatlogic.c floatconvert.c floatio.c floatipower.c floatgamma.c
-  floatlog.c floatpower.c)
+set(testevaluator_SOURCES
+base/evaluator.cpp
+base/functions.cpp
+math/floatcommon.c
+math/floatconst.c
+math/floatconvert.c
+math/floatexp.c
+math/floathmath.c
+math/floatgamma.c
+math/floatio.c
+math/floatipower.c
+math/floatlog.c
+math/floatlogic.c
+math/floatlong.c
+math/floatnum.c
+math/floatpower.c
+math/floatseries.c
+math/floattrig.c
+math/hmath.cpp
+math/number.c
+test/testevaluator.cpp
+)
 add_executable(testevaluator ${testevaluator_SOURCES})
 target_link_libraries(testevaluator ${QT_LIBRARIES})
 add_test(testevaluator ${EXECUTABLE_OUTPUT_PATH}/testevaluator)
 
 # regression test for floatnum
-set(testfloatnum_SOURCES testfloatnum.c floatnum.c number.c floatcommon.c
- floatconst.c floatseries.c floatlog.c floatexp.c floattrig.c floatlong.c
- floatipower.c floatpower.c floathmath.c floatconvert.c floatgamma.c
- floatlogic.c floatio.c)
+set(testfloatnum_SOURCES
+math/floatcommon.c
+math/floatconst.c
+math/floatconvert.c
+math/floatexp.c
+math/floathmath.c
+math/floatgamma.c
+math/floatio.c
+math/floatipower.c
+math/floatlog.c
+math/floatlogic.c
+math/floatlong.c
+math/floatnum.c
+math/floatpower.c
+math/floatseries.c
+math/floattrig.c
+math/number.c
+test/testfloatnum.c
+)
 add_executable(testfloatnum ${testfloatnum_SOURCES})
 add_test(testfloatnum ${EXECUTABLE_OUTPUT_PATH}/testfloatnum)
+
+INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR} 3rdparty/gui/wwwidgets 3rdparty/util base gui main math)
