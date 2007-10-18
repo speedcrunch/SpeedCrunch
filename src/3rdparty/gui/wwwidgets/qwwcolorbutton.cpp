@@ -379,6 +379,9 @@ void QwwColorButton::mousePressEvent(QMouseEvent *ev) {
  * @internal
  */
 void QwwColorButton::mouseMoveEvent(QMouseEvent *ev) {
+
+// QDrag::exec method is only since Qt 4.3
+#if QT_VERSION >= 0x040300
     Q_D(QwwColorButton);
     QPushButton::mouseMoveEvent(ev);
     if ((ev->buttons() & Qt::LeftButton) && dragEnabled() && (ev->pos() - d->pressPos).manhattanLength() >= QApplication::startDragDistance()) {
@@ -386,7 +389,7 @@ void QwwColorButton::mouseMoveEvent(QMouseEvent *ev) {
         drag->exec();
         setDown(false); // Qt bug workaround ?
     }
-
+#endif
 
 }
 
