@@ -284,7 +284,7 @@ char float_copy(floatnum dest, floatnum source, int digits);
    This function never reports an error */
 void float_move(floatnum dest, floatnum source);
 
-/* changes the value of <f> to -<f>. Has no effect, if, <f> is zero or NaN.
+/* changes the value of <f> to -<f>. Has no effect on zero or NaN.
    A return value of 0 indicates an error.
    errors: FLOAT_NANOPERAND  */
 char float_neg(floatnum f);
@@ -416,7 +416,7 @@ char float_div(floatnum dest, floatnum dividend, floatnum divisor,
    This function is an exact operation anyway, so EXACT is not allowed
    here.
    <digits> is subject to the <maxdigits> limit.
-   <remainder> and <quotient> have to be different variables, but besides
+   <remainder> and <quotient> have to be different variables, but apart from
    this, there are no other restrictions on the passed variables.
    If this function fails, both result variables are set to NaN.
    A return value of 0 indicates an error.
