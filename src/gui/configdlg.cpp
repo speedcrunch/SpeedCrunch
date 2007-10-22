@@ -57,6 +57,7 @@ public:
   QCheckBox* stayAlwaysOnTopCheck;
 
   QComboBox* decimalList;
+  QComboBox* languageList;
 
   QRadioButton* standardAppearanceCheck;
   QRadioButton* customAppearanceCheck;
@@ -110,7 +111,7 @@ void ConfigDlgPrivate::loadSettings()
 
   QString str = settings->customFont.family();
   str.append( " " );
-  str.append( QString("%1pt").arg( settings->customFont.pointSizeF() ) );
+  str.append( QString("%1").arg( settings->customFont.pointSizeF() ) );
   fontLabel->setText( str );
 
   textColorButton->setCurrentColor( settings->customTextColor );
@@ -161,7 +162,7 @@ QWidget* ConfigDlgPrivate::generalPage()
   stayAlwaysOnTopCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Stay always-on-&top"), page );
 
   QWidget* box = new QWidget( page );
-  QHBoxLayout* boxLayout = new QHBoxLayout;
+  QVBoxLayout* boxLayout = new QVBoxLayout;
   box->setLayout( boxLayout );
   boxLayout->setMargin( 0 );
 
@@ -177,6 +178,19 @@ QWidget* ConfigDlgPrivate::generalPage()
 
   boxLayout->addWidget( decimalLabel );
   boxLayout->addWidget( decimalList );
+  boxLayout->addItem( new QSpacerItem( 10, 0, QSizePolicy::MinimumExpanding, QSizePolicy::Minimum ) );
+
+  QLabel* languageLabel = new QLabel( box );
+  languageLabel->setText( qApp->translate("ConfigDlgPrivate", "Language:") );
+
+  languageList = new QComboBox( box );
+  languageList->setEditable( false );
+  languageList->addItem( qApp->translate("ConfigDlgPrivate", "Auto detect") );
+  languageList->addItem( qApp->translate("ConfigDlgPrivate", "English") );
+  languageList->addItem( qApp->translate("ConfigDlgPrivate", "Portuguese") );
+
+  boxLayout->addWidget( languageLabel );
+  boxLayout->addWidget( languageList );
   boxLayout->addItem( new QSpacerItem( 10, 0, QSizePolicy::MinimumExpanding, QSizePolicy::Minimum ) );
 
   QVBoxLayout *layout = new QVBoxLayout;
