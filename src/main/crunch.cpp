@@ -608,6 +608,16 @@ void Crunch::applySettings()
     d->result->setDecimalPoint( settings->decimalPoint );
   }
 
+  QString l = settings->language;
+  if ( l == "" )
+  {
+    // autodetect
+  }
+  else
+  {
+    // load specified language
+  }
+
   d->historyDock->clear();
   if( settings->saveHistory )
   if( settings->history.count() )
