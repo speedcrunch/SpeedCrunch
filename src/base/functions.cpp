@@ -673,13 +673,20 @@ HNumber function_geomean( const Evaluator*, Function*, const FunctionArguments& 
     return HNumber("NaN");
 
   HNumber result = args[0];
+
   for( int c = 1; c < args.count(); c++ )
     result = result * args[c];
 
-  result = result / HNumber(args.count());
-
   if( result <= HNumber(0))
     return HNumber("NaN");
+
+  if (args.count() == 1)
+    return result;
+
+  if (args.count() == 2)
+    return HMath::sqrt(result);
+
+  result = HMath::exp(HMath::ln(result) / HNumber(args.count()));
 
   return result;
 }
