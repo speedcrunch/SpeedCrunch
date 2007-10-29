@@ -443,8 +443,6 @@ HNumber function_sinh( const Evaluator* eval, Function*, const FunctionArguments
     return HNumber::nan();
 
   HNumber angle = args[0];
-  if( eval->angleMode() == Evaluator::Degree )
-    angle = deg2rad( angle );
   return HMath::sinh( angle );
 }
 
@@ -454,8 +452,6 @@ HNumber function_cosh( const Evaluator* eval, Function*, const FunctionArguments
     return HNumber::nan();
 
   HNumber angle = args[0];
-  if( eval->angleMode() == Evaluator::Degree )
-    angle = deg2rad( angle );
   return HMath::cosh( angle );
 }
 
@@ -465,8 +461,6 @@ HNumber function_tanh( const Evaluator* eval, Function*, const FunctionArguments
     return HNumber::nan();
 
   HNumber angle = args[0];
-  if( eval->angleMode() == Evaluator::Degree )
-    angle = deg2rad( angle );
   return HMath::tanh( angle );
 }
 

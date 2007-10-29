@@ -24,7 +24,8 @@ Improvements and bug fixes:
     built-in support of logic operations
     built-in support of the missing area hyperbolic functions
     built-in support of a new class of functions, Gamma and friends
-  fixed a bug in GEOMEAN
+  fixed incorrect evaluation of GEOMEAN
+  fixed dependency of sinh, cosh, tanh on degree setting
 
 SpeedCrunch 0.8
 ---------------------
