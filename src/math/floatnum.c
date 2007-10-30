@@ -759,10 +759,13 @@ float_setexponent(
   floatnum f,
   int exponent)
 {
-  if (!float_isvalidexp(exponent))
-    float_setnan(f);
-  else if (!_is_special(f))
-    f->exponent = exponent;
+  if (!_is_special(f))
+  {
+    if (!float_isvalidexp(exponent))
+      float_setnan(f);
+    else
+      f->exponent = exponent;
+  }
 }
 
 void

@@ -1,7 +1,7 @@
 /* This file is part of the SpeedCrunch project
    Copyright (C) 2004-2006 Ariya Hidayat <ariya@kde.org>
                  2007 Helder Correia <helder.pereira.correia@gmail.com>
-   last update 2007-08-15 Wolf Lammen
+   last update 2007-10-30 Wolf Lammen
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -74,29 +74,27 @@ HNumber function_trunc( const Evaluator         * evaluator,
   }
 
   HNumber num = arguments[0];
-  HNumber prec;
+
   HNumber zero(0);
-  if( nArgs == 2)
-    prec = arguments[1];
-  else prec = zero;
+  if( nArgs == 2){
 
-  if( !prec.isInteger() )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                          "function undefined for specified arguments" ) );
-    return HNumber::nan();
+    int prec = 0;
+
+    HNumber argprec = arguments[1];
+    if (argprec != 0)
+    {
+      if( !argprec.isInteger() )
+      {
+        function->setError( function->name(), QApplication::translate( "functions",
+                            "function undefined for specified arguments" ) );
+        return HNumber::nan();
+      }
+      if (((prec = argprec.toInt()) == 0) && argprec < 0)
+        num = 0;
+    }
+    return HMath::trunc( num, prec );
   }
-
-  HNumber limit(150);
-  if( prec > limit )
-    prec = limit;
-  else if( prec < zero )
-    prec = zero;
-
-  if( nArgs == 1 )
-    return HMath::trunc( num );
-  else // nArgs == 2
-    return HMath::trunc( num, prec.toInt() );
+  return HMath::trunc( num );
 }
 
 HNumber function_frac( const Evaluator         * evaluator,

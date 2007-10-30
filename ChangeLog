@@ -1,4 +1,4 @@
-SpeedCrunch post-0.8
+SpeedCrunch 0.9
 ---------------------
 New features:
   greatly extended number range
@@ -26,6 +26,10 @@ Improvements and bug fixes:
     built-in support of a new class of functions, Gamma and friends
   fixed incorrect evaluation of GEOMEAN
   fixed dependency of sinh, cosh, tanh on degree setting
+  extended TRUNC to the new range of exponents. In addition, TRUNC accepts a negative
+    second parameter now: TRUNC(1234.56; -2) is 1200, so not only digits from the
+    fractional part can be cleared, but also the least significant digits from the
+    integer part.
 
 SpeedCrunch 0.8
 ---------------------

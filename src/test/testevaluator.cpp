@@ -393,13 +393,13 @@ void test_function_stat()
   CHECK_EVAL( "GEOMEAN(3)",         "3"   );
   CHECK_EVAL( "GEOMEAN(4)",         "4"   );
   CHECK_EVAL( "GEOMEAN(5)",         "5"   );
-  CHECK_EVAL( "GEOMEAN(1;1)",       "0.5" );
-  CHECK_EVAL( "GEOMEAN(1;2)",       "1"   );
-  CHECK_EVAL( "GEOMEAN(2;3)",       "3"   );
-  CHECK_EVAL( "GEOMEAN(3;4)",       "6"   );
-  CHECK_EVAL( "GEOMEAN(3;4;5)",     "20"  );
-  CHECK_EVAL( "GEOMEAN(1;1;1)*3",   "1"   );
-  CHECK_EVAL( "GEOMEAN(1;1;1;1)*4", "1"   );
+  CHECK_EVAL( "GEOMEAN(1;1)",       "1"   );
+  CHECK_EVAL( "GEOMEAN(1;4)",       "2"   );
+  CHECK_EVAL( "GEOMEAN(4;9)",       "6"   );
+  CHECK_EVAL( "GEOMEAN(3,6;8,1)",   "5.4" );
+  CHECK_EVAL( "GEOMEAN(3;4;18)",    "6"  );
+  CHECK_EVAL( "GEOMEAN(1;1;1)",     "1"   );
+  CHECK_EVAL( "GEOMEAN(1;1;1;1)",   "1"   );
   CHECK_EVAL( "GEOMEAN(1;1;1;-1)",  "NaN" );
 }
 

@@ -1,3 +1,13 @@
+2007-10-30
+relax behaviour of float_setexponent
+
+floatnum:
+- it's convenient if you can assign any exponent to a
+  zero (without effect), regardless of the valid exponent
+  range. Reworked float_setexponent accordingly.
+testfloatnum:
+- adjusted testfloatnum to reflect the change
+
 2007-08-30
 fix error reporting
 rename a couple of functions
