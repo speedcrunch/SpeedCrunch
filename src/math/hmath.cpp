@@ -665,7 +665,12 @@ HNumber HMath::round( const HNumber& n, int prec )
 
   rnum = &result.d->fnum;
   exp = float_getexponent(rnum);
-  if (exp + prec < HMATH_WORKING_PREC)
+  /* avoid exponent overflow later on */
+  if (prec > HMATH_WORKING_PREC && exp > 0)
+    prec = HMATH_WORKING_PREC;
+  if (prec < 0 && -exp-1 > prec)
+    float_setzero(rnum);
+  else if (exp + prec < HMATH_WORKING_PREC)
   {
     float_addexp(rnum, prec);
     float_roundtoint(rnum, TONEAREST);

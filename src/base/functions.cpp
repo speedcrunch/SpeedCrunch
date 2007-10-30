@@ -88,10 +88,13 @@ HNumber function_trunc( const Evaluator         * evaluator,
                             "function undefined for specified arguments" ) );
         return HNumber::nan();
       }
-      if (((prec = argprec.toInt()) == 0) && argprec < 0)
+      if ((prec = argprec.toInt()) != 0)
+        return HMath::trunc( num, prec );
+      // the 2. parameter exceeds the integer limits
+      if (argprec < 0)
         return HNumber(0);
+      return num;
     }
-    return HMath::trunc( num, prec );
   }
   return HMath::trunc( num );
 }
@@ -159,35 +162,34 @@ HNumber function_round( const Evaluator*, Function* fn, const FunctionArguments&
   if( nArgs != 1 && nArgs != 2 )
   {
     fn->setError( fn->name(), QApplication::translate( "functions",
-      "function requires 1 or 2 arguments" ) );
+                        "function requires 1 or 2 arguments" ) );
     return HNumber::nan();
   }
 
   HNumber num = args[0];
-  HNumber prec;
-  HNumber zero(0);
-  if( nArgs == 2)
-    prec = args[1];
-  else
-    prec = zero;
 
-  if( !prec.isInteger() )
-  {
-    fn->setError( fn->name(), QApplication::translate( "functions",
-      "function requires integer P2" ) );
-    return HNumber::nan();
+  if( nArgs == 2){
+
+    int prec = 0;
+
+    HNumber argprec = args[1];
+    if (argprec != 0)
+    {
+      if( !argprec.isInteger() )
+      {
+        fn->setError( fn->name(), QApplication::translate( "functions",
+                      "function undefined for specified arguments" ) );
+        return HNumber::nan();
+      }
+      if ((prec = argprec.toInt()) != 0)
+        return HMath::round( num, prec );
+      // the 2. parameter exceeds the integer limits
+      if (argprec < 0)
+        return HNumber(0);
+      return num;
+    }
   }
-
-  HNumber limit(150);
-  if( prec > limit )
-    prec = limit;
-  else if( prec < zero )
-    prec = zero;
-
-  if( nArgs == 1 )
-    return HMath::round( num );
-  else // nArgs == 2
-    return HMath::round( num, prec.toInt() );
+  return HMath::round( num );
 }
 
 HNumber function_sqrt( const Evaluator*, Function* fn, const FunctionArguments& args )

@@ -30,6 +30,7 @@ Improvements and bug fixes:
     second parameter now: TRUNC(1234.56; -2) is 1200, so not only digits from the
     fractional part can be cleared, but also the least significant digits from the
     integer part.
+  extended ROUND in a way similiar to TRUNC
 
 SpeedCrunch 0.8
 ---------------------
