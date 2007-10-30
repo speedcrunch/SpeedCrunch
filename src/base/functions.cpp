@@ -75,7 +75,6 @@ HNumber function_trunc( const Evaluator         * evaluator,
 
   HNumber num = arguments[0];
 
-  HNumber zero(0);
   if( nArgs == 2){
 
     int prec = 0;
@@ -90,7 +89,7 @@ HNumber function_trunc( const Evaluator         * evaluator,
         return HNumber::nan();
       }
       if (((prec = argprec.toInt()) == 0) && argprec < 0)
-        num = 0;
+        return HNumber(0);
     }
     return HMath::trunc( num, prec );
   }
