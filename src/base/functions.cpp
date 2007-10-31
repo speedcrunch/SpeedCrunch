@@ -441,8 +441,8 @@ HNumber function_sinh( const Evaluator* eval, Function*, const FunctionArguments
   if( args.count() != 1 )
     return HNumber::nan();
 
-  HNumber angle = args[0];
-  return HMath::sinh( angle );
+  HNumber x = args[0];
+  return HMath::sinh( x );
 }
 
 HNumber function_cosh( const Evaluator* eval, Function*, const FunctionArguments& args )
@@ -450,8 +450,8 @@ HNumber function_cosh( const Evaluator* eval, Function*, const FunctionArguments
   if( args.count() != 1 )
     return HNumber::nan();
 
-  HNumber angle = args[0];
-  return HMath::cosh( angle );
+  HNumber x = args[0];
+  return HMath::cosh( x );
 }
 
 HNumber function_tanh( const Evaluator* eval, Function*, const FunctionArguments& args )
@@ -459,8 +459,8 @@ HNumber function_tanh( const Evaluator* eval, Function*, const FunctionArguments
   if( args.count() != 1 )
     return HNumber::nan();
 
-  HNumber angle = args[0];
-  return HMath::tanh( angle );
+  HNumber x = args[0];
+  return HMath::tanh( x );
 }
 
 HNumber function_arsinh( const Evaluator         * evaluator,
@@ -536,6 +536,8 @@ HNumber function_nCr( const Evaluator         * evaluator,
   HNumber result = HMath::nCr( arguments[0], arguments[1] );
 
   // check invalid usage and set error accordingly
+  // FIX ME: overflow causes a NaN, too, so the message is sometimes
+  // misleading
   if ( result.isNan() )
     function->setError( function->name(), QApplication::translate( "functions",
                           "function undefined for specified arguments" ) );
@@ -557,6 +559,8 @@ HNumber function_nPr( const Evaluator         * evaluator,
   HNumber result = HMath::nPr( arguments[0], arguments[1] );
 
   // check invalid usage and set error accordingly
+  // FIX ME: overflow causes a NaN, too, so the message is sometimes
+  // misleading
   if ( result.isNan() )
     function->setError( function->name(), QApplication::translate( "functions",
                           "function undefined for specified arguments" ) );
@@ -570,7 +574,7 @@ HNumber function_degrees( const Evaluator*, Function*, const FunctionArguments& 
     return HNumber::nan();
 
   HNumber angle = args[0];
-  return angle * HNumber(180) / HMath::pi();
+  return rad2deg(angle);
 }
 
 HNumber function_radians( const Evaluator*, Function*, const FunctionArguments& args )
@@ -579,7 +583,7 @@ HNumber function_radians( const Evaluator*, Function*, const FunctionArguments& 
     return HNumber::nan();
 
   HNumber angle = args[0];
-  return angle * HMath::pi() / HNumber(180);
+  return deg2rad(angle);
 }
 
 HNumber function_max( const Evaluator         * evaluator,
