@@ -46,7 +46,7 @@ Settings::Settings()
   autoComplete    = true;
   autoCalc        = true;
   decimalPoint    = QString();
-  language        = QString();
+  //language        = QString();
   minimizeToTray  = false;
   stayAlwaysOnTop = false;
 
@@ -107,7 +107,7 @@ void Settings::load()
   autoComplete   = settings.value( key + "/General/AutoComplete",   true      ).toBool();
   autoCalc       = settings.value( key + "/General/AutoCalc",       true      ).toBool();
   decimalPoint   = settings.value( key + "/General/DecimalPoint",   QString() ).toString();
-  language       = settings.value( key + "/General/Language",       QString() ).toString();
+  //language       = settings.value( key + "/General/Language",       QString() ).toString();
   minimizeToTray = settings.value( key + "/General/MinimizeToTray", false     ).toBool();
 
   QString formatStr = settings.value( key + "/View/Format" ).toString();
@@ -229,7 +229,7 @@ void Settings::save()
   settings.setValue( key + "/General/AutoComplete",   autoComplete   );
   settings.setValue( key + "/General/AutoCalc",       autoCalc       );
   settings.setValue( key + "/General/DecimalPoint",   decimalPoint   );
-  settings.setValue( key + "/General/Language",       language       );
+  //settings.setValue( key + "/General/Language",       language       );
   settings.setValue( key + "/General/MinimizeToTray", minimizeToTray );
 
   QString formatStr;

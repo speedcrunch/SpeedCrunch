@@ -39,7 +39,7 @@ class Settings
     bool autoComplete;
     bool autoCalc;
     QString decimalPoint;
-    QString language;
+    //QString language;
     bool minimizeToTray;
 
     char format;

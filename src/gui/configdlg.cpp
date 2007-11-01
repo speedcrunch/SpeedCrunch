@@ -57,7 +57,7 @@ public:
   QCheckBox* stayAlwaysOnTopCheck;
 
   QComboBox* decimalList;
-  QComboBox* languageList;
+  //QComboBox* languageList;
 
   QRadioButton* standardAppearanceCheck;
   QRadioButton* customAppearanceCheck;
@@ -180,18 +180,18 @@ QWidget* ConfigDlgPrivate::generalPage()
   boxLayout->addWidget( decimalList );
   boxLayout->addItem( new QSpacerItem( 10, 0, QSizePolicy::MinimumExpanding, QSizePolicy::Minimum ) );
 
-  QLabel* languageLabel = new QLabel( box );
-  languageLabel->setText( qApp->translate("ConfigDlgPrivate", "Language:") );
+  //QLabel* languageLabel = new QLabel( box );
+  //languageLabel->setText( qApp->translate("ConfigDlgPrivate", "Language:") );
 
-  languageList = new QComboBox( box );
-  languageList->setEditable( false );
-  languageList->addItem( qApp->translate("ConfigDlgPrivate", "Auto detect") );
-  languageList->addItem( qApp->translate("ConfigDlgPrivate", "English") );
-  languageList->addItem( qApp->translate("ConfigDlgPrivate", "Portuguese") );
+  //languageList = new QComboBox( box );
+  //languageList->setEditable( false );
+  //languageList->addItem( qApp->translate("ConfigDlgPrivate", "Auto detect") );
+  //languageList->addItem( qApp->translate("ConfigDlgPrivate", "English") );
+  //languageList->addItem( qApp->translate("ConfigDlgPrivate", "Portuguese") );
 
-  boxLayout->addWidget( languageLabel );
-  boxLayout->addWidget( languageList );
-  boxLayout->addItem( new QSpacerItem( 10, 0, QSizePolicy::MinimumExpanding, QSizePolicy::Minimum ) );
+  //boxLayout->addWidget( languageLabel );
+  //boxLayout->addWidget( languageList );
+  //boxLayout->addItem( new QSpacerItem( 10, 0, QSizePolicy::MinimumExpanding, QSizePolicy::Minimum ) );
 
   QVBoxLayout *layout = new QVBoxLayout;
 
