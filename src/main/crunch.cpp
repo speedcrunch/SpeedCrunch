@@ -1389,25 +1389,31 @@ void Crunch::showTip()
   QPoint p = mapFromGlobal( d->result->mapToGlobal( QPoint(0, 0) ) ) += QPoint(4,4);
   d->tip->move( p );
 
-  int tipNo = rand() % 4;
+  int tipNo = rand() % 5;
   QString msg;
   switch( tipNo )
   {
     case 0:
       msg = tr("You can customize the syntax highlight colors. "
-        "Use menu <i>Settings, Configure</i>, and then from the configuration dialog, "
-        "choose tab <i>Syntax Highlight</i>." );
+               "Use menu <i>Settings, Configure</i>, and then from the "
+               "configuration dialog, choose tab <i>Syntax Highlight</i>." );
       break;
     case 1:
       msg = tr("To insert a function using keyboard, use Ctrl+F shorcut. "
-        "From the dialog, you can choose the function you want to insert." );
+               "From the dialog, you can choose the function you want to "
+               "insert." );
       break;
     case 2:
       msg = tr("To insert a variable using keyboard, use Ctrl+I shorcut. "
-        "From the dialog, you can choose the variable you want to insert." );
+               "From the dialog, you can choose the variable you want to "
+               "insert." );
       break;
     case 3:
       msg = tr("Use variable <i>pi</i> to use pi constant." );
+      break;
+    case 4:
+      msg = tr("Use <i>;</i> (semicolon) to separate the parameters in "
+               "functions." );
       break;
     default:
       break;
