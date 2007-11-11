@@ -6,7 +6,8 @@ Among its features are:
 - result shown in scrollable window
 - history of last expressions (use up and down arrow)
 - built-in functions: abs, sqrt, pi, log, exp, ln, sin, cos, tan, sinh,
-  cosh, tanh, asin, acos, atan
+  cosh, tanh, asin, acos, atan, arsinh, arcosh, artanh
+- postfix operator ! lets you compute factorials
 - support for variables, e.g try x=pi/3 and then sin(x)
 - special variable ans holds the last calculation result
 - percent operator, try e.g. 45%*75 or price/80%
@@ -24,7 +25,7 @@ copy the last calculation result to the clipboard using Ctrl+R.
 If you want to reuse again the expression which you typed before, then press up
 and down arrow to access the expression history.
 
-Beside standard algebraic operator like + (addition), - (substraction),
+Beside standard algebraic operators like + (addition), - (substraction),
 * (multiplication), * (division), ^ or ** (power), there is support for some
 functions, for example sin, log, abs, and many more. You do not need to memorize
 function names, use Ctrl+F to pop up a dialog where you can choose the function
