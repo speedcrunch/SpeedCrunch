@@ -57,8 +57,10 @@ Vous aurez besoin de Qt (par Trolltech), avec au minimum une version 4.2 si vous
 Licence
 -------
 
-Copyright © 2004-2005 Ariya Hidayat <ariya@kde.org> (site internet)
-            2005-2006 Johan Thelin <e8johan@gmail.com>
+Copyright © 2004-2005 Ariya Hidayat  <ariya@kde.org> (site internet)
+            2005-2006 Johan Thelin   <e8johan@gmail.com>
+            2007      Helder Correia <helder.pereira.correia@gmail.com>
+            2007      Wolf Lammen    <ookami1@gmx.de>
 Portions Copyright © 1991-1994, 1997, 2000 Free Software Foundation, Inc.
 French translation: Vibet Alexis <bevi@netcourrier.com>
 

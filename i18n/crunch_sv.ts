@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="sv">
+<defaultcodec></defaultcodec>
 <context>
     <name>AboutBox</name>
     <message>
@@ -165,22 +166,22 @@
     <message>
         <location filename="../src/gui/aboutbox.cpp" line="220"/>
         <source>Developers</source>
-        <translation type="unfinished"></translation>
+        <translation>Utvecklare</translation>
     </message>
     <message>
         <location filename="../src/gui/aboutbox.cpp" line="273"/>
         <source>Indonesian</source>
-        <translation type="unfinished"></translation>
+        <translation>Indonesiska</translation>
     </message>
     <message>
         <location filename="../src/gui/aboutbox.cpp" line="276"/>
         <source>Polish</source>
-        <translation type="unfinished"></translation>
+        <translation>Polska</translation>
     </message>
     <message>
         <location filename="../src/gui/aboutbox.cpp" line="282"/>
         <source>Turkish</source>
-        <translation type="unfinished"></translation>
+        <translation>Turkiska</translation>
     </message>
 </context>
 <context>
@@ -336,7 +337,7 @@
     <message>
         <location filename="../src/gui/configdlg.cpp" line="162"/>
         <source>Stay always-on-&amp;top</source>
-        <translation type="unfinished"></translation>
+        <translation>Förbi alltid övers&amp;t</translation>
     </message>
 </context>
 <context>
@@ -950,7 +951,7 @@ Klicka på ikonen för att återställa det.</translation>
     <message>
         <location filename="../src/main/crunch.cpp" line="1416"/>
         <source>Use &lt;i&gt;;&lt;/i&gt; (semicolon) to separate the parameters in functions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Använd -&lt;i&gt;;&lt;/i&gt; (semikolon) för att separera funktionsparametrar.</translation>
     </message>
 </context>
 <context>
@@ -1259,17 +1260,17 @@ Klicka på ikonen för att återställa det.</translation>
     <message>
         <location filename="../src/base/functions.cpp" line="1142"/>
         <source>Area Hyperbolic Cosine</source>
-        <translation type="unfinished"></translation>
+        <translation>Invers Hyperbolisk Cosinus</translation>
     </message>
     <message>
         <location filename="../src/base/functions.cpp" line="1144"/>
         <source>Area Hyperbolic Sine</source>
-        <translation type="unfinished"></translation>
+        <translation>Invers Hyperbolisk Sinus</translation>
     </message>
     <message>
         <location filename="../src/base/functions.cpp" line="1146"/>
         <source>Area Hyperbolic Tangent</source>
-        <translation type="unfinished"></translation>
+        <translation>Invers Hyperbolisk Tangent</translation>
     </message>
 </context>
 <context>
@@ -1432,7 +1433,7 @@ Klicka på ikonen för att återställa det.</translation>
     <message>
         <location filename="../src/3rdparty/gui/wwwidgets/qwwcolorbutton.cpp" line="332"/>
         <source>Custom color</source>
-        <translation type="unfinished"></translation>
+        <translation>Egen färg</translation>
     </message>
 </context>
 <context>
@@ -1440,7 +1441,7 @@ Klicka på ikonen för att återställa det.</translation>
     <message>
         <location filename="../src/3rdparty/gui/wwwidgets/qwwcolorbutton.cpp" line="84"/>
         <source>Other</source>
-        <translation type="unfinished"></translation>
+        <translation>Övrigt</translation>
     </message>
 </context>
 <context>

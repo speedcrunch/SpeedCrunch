@@ -165,22 +165,22 @@
     <message>
         <location filename="../src/gui/aboutbox.cpp" line="220"/>
         <source>Developers</source>
-        <translation type="unfinished"></translation>
+        <translation>Разработчики</translation>
     </message>
     <message>
         <location filename="../src/gui/aboutbox.cpp" line="273"/>
         <source>Indonesian</source>
-        <translation type="unfinished"></translation>
+        <translation>Индонезийский</translation>
     </message>
     <message>
         <location filename="../src/gui/aboutbox.cpp" line="276"/>
         <source>Polish</source>
-        <translation type="unfinished"></translation>
+        <translation>Польский</translation>
     </message>
     <message>
         <location filename="../src/gui/aboutbox.cpp" line="282"/>
         <source>Turkish</source>
-        <translation type="unfinished"></translation>
+        <translation>Турецкий</translation>
     </message>
 </context>
 <context>
@@ -337,7 +337,7 @@
     <message>
         <location filename="../src/gui/configdlg.cpp" line="162"/>
         <source>Stay always-on-&amp;top</source>
-        <translation type="unfinished"></translation>
+        <translation>Всегда на экране</translation>
     </message>
 </context>
 <context>
@@ -659,7 +659,7 @@
     <message>
         <location filename="../src/main/crunch.cpp" line="361"/>
         <source>&amp;Save...</source>
-        <translation>&amp;Сохранить</translation>
+        <translation>&amp;Сохранить...</translation>
     </message>
     <message>
         <location filename="../src/main/crunch.cpp" line="362"/>
@@ -684,12 +684,12 @@
     <message>
         <location filename="../src/main/crunch.cpp" line="368"/>
         <source>Insert &amp;Function...</source>
-        <translation>Вставить &amp;функцию</translation>
+        <translation>Вставить &amp;функцию...</translation>
     </message>
     <message>
         <location filename="../src/main/crunch.cpp" line="369"/>
         <source>Insert &amp;Variable...</source>
-        <translation>Вставить &amp;переменную</translation>
+        <translation>Вставить &amp;переменную...</translation>
     </message>
     <message>
         <location filename="../src/main/crunch.cpp" line="371"/>
@@ -764,7 +764,7 @@
     <message>
         <location filename="../src/main/crunch.cpp" line="398"/>
         <source>&amp;Configure...</source>
-        <translation>&amp;Настроить SpeedCrunch</translation>
+        <translation>&amp;Настроить SpeedCrunch...</translation>
     </message>
     <message>
         <location filename="../src/main/crunch.cpp" line="402"/>
@@ -951,7 +951,7 @@ Click on the icon to reactivate it.</source>
     <message>
         <location filename="../src/main/crunch.cpp" line="1416"/>
         <source>Use &lt;i&gt;;&lt;/i&gt; (semicolon) to separate the parameters in functions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Используйте &lt;i&gt;;&lt;/i&gt; (точку с запятой) для разделения параметров в функциях.</translation>
     </message>
 </context>
 <context>
@@ -1260,17 +1260,17 @@ Click on the icon to reactivate it.</source>
     <message>
         <location filename="../src/base/functions.cpp" line="1142"/>
         <source>Area Hyperbolic Cosine</source>
-        <translation type="unfinished"></translation>
+        <translation>Обратная гиперболическая косинуса</translation>
     </message>
     <message>
         <location filename="../src/base/functions.cpp" line="1144"/>
         <source>Area Hyperbolic Sine</source>
-        <translation type="unfinished"></translation>
+        <translation>Обратная гиперболическая синуса</translation>
     </message>
     <message>
         <location filename="../src/base/functions.cpp" line="1146"/>
         <source>Area Hyperbolic Tangent</source>
-        <translation type="unfinished"></translation>
+        <translation>Обратная гиперболическая тангенса</translation>
     </message>
 </context>
 <context>
@@ -1433,7 +1433,7 @@ Click on the icon to reactivate it.</source>
     <message>
         <location filename="../src/3rdparty/gui/wwwidgets/qwwcolorbutton.cpp" line="332"/>
         <source>Custom color</source>
-        <translation type="unfinished"></translation>
+        <translation>Другой цвет</translation>
     </message>
 </context>
 <context>
@@ -1441,7 +1441,7 @@ Click on the icon to reactivate it.</source>
     <message>
         <location filename="../src/3rdparty/gui/wwwidgets/qwwcolorbutton.cpp" line="84"/>
         <source>Other</source>
-        <translation type="unfinished"></translation>
+        <translation>Другой(е)</translation>
     </message>
 </context>
 <context>

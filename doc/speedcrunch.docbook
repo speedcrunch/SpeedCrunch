@@ -23,7 +23,7 @@
 <legalnotice>&FDLNotice;</legalnotice>
 
 <date>2007-04-30</date>
-<releaseinfo>0.8</releaseinfo>
+<releaseinfo>0.9</releaseinfo>
 
 <abstract><para>SpeedCrunch is a multiplatform desktop calculator for power users</para></abstract>
 
@@ -147,8 +147,8 @@ The exact steps to do all these will depend on the operating system.</para>
 use the following commands:</para>
 
 <screen>
-tar zxvf speedcrunch-0.8.tar.gz
-cd speedcrunch-0.8
+tar zxvf speedcrunch-0.9.tar.gz
+cd speedcrunch-0.9
 mkdir build
 cd build
 cmake ../src
@@ -188,8 +188,9 @@ make
 <title>Credits and License</title>
 
 <para>Program Copyright &copy; 2004-2007 Ariya Hidayat</para>
-<para>Program Copyright &copy; 2007 Helder Correia</para>
 <para>Program Copyright &copy; 2005-2006 Johan Thelin</para>
+<para>Program Copyright &copy; 2007 Helder Correia</para>
+<para>Program Copyright &copy; 2007 Wolf Lammen</para>
 
 <para>Documentation Copyright &copy; 2007 Ariya Hidayat.</para>
 <!-- TRANS:CREDIT_FOR_TRANSLATORS -->

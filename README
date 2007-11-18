@@ -101,8 +101,10 @@ Note: the build directory can not be the same as the source directory.
 License
 -------
 
-Copyright (C) 2004-2005 Ariya Hidayat <ariya@kde.org>
-              2005-2006 Johan Thelin <e8johan@gmail.com>
+Copyright (C) 2004-2005 Ariya Hidayat  <ariya@kde.org>
+              2005-2006 Johan Thelin   <e8johan@gmail.com>
+              2007      Helder Correia <helder.pereira.correia@gmail.com>
+              2007      Wolf Lammen    <ookami1@gmx.de>
 Portions Copyright (C) 1991-1994, 1997, 2000 Free Software Foundation, Inc.
 
 SpeedCrunch is free software; you can redistribute it and/or modify it under

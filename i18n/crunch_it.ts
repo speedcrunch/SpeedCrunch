@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="it">
+<defaultcodec></defaultcodec>
 <context>
     <name>AboutBox</name>
     <message>
@@ -165,17 +166,17 @@
     <message>
         <location filename="../src/gui/aboutbox.cpp" line="220"/>
         <source>Developers</source>
-        <translation type="unfinished"></translation>
+        <translation>Sviluppatori</translation>
     </message>
     <message>
         <location filename="../src/gui/aboutbox.cpp" line="273"/>
         <source>Indonesian</source>
-        <translation type="unfinished"></translation>
+        <translation>Indonesiano</translation>
     </message>
     <message>
         <location filename="../src/gui/aboutbox.cpp" line="276"/>
         <source>Polish</source>
-        <translation type="unfinished"></translation>
+        <translation>Polacco</translation>
     </message>
     <message>
         <location filename="../src/gui/aboutbox.cpp" line="282"/>
@@ -336,7 +337,7 @@
     <message>
         <location filename="../src/gui/configdlg.cpp" line="162"/>
         <source>Stay always-on-&amp;top</source>
-        <translation type="unfinished"></translation>
+        <translation>Sempre in primo &amp;piano</translation>
     </message>
 </context>
 <context>
@@ -935,22 +936,22 @@ Fare clic sull&apos;icona per riattivarlo.</translation>
     <message>
         <location filename="../src/main/crunch.cpp" line="197"/>
         <source>Hex</source>
-        <translation type="unfinished"></translation>
+        <translation>Esa</translation>
     </message>
     <message>
         <location filename="../src/main/crunch.cpp" line="198"/>
         <source>Dec</source>
-        <translation type="unfinished"></translation>
+        <translation>Dec</translation>
     </message>
     <message>
         <location filename="../src/main/crunch.cpp" line="200"/>
         <source>Bin</source>
-        <translation type="unfinished"></translation>
+        <translation>Bin</translation>
     </message>
     <message>
         <location filename="../src/main/crunch.cpp" line="1416"/>
         <source>Use &lt;i&gt;;&lt;/i&gt; (semicolon) to separate the parameters in functions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Usare &lt;i&gt;;&lt;/i&gt; (il punto e virgola) per separare i parametri nelle funzioni.</translation>
     </message>
 </context>
 <context>
@@ -1259,17 +1260,17 @@ Fare clic sull&apos;icona per riattivarlo.</translation>
     <message>
         <location filename="../src/base/functions.cpp" line="1142"/>
         <source>Area Hyperbolic Cosine</source>
-        <translation type="unfinished"></translation>
+        <translation>Area Coseno Iperbolico</translation>
     </message>
     <message>
         <location filename="../src/base/functions.cpp" line="1144"/>
         <source>Area Hyperbolic Sine</source>
-        <translation type="unfinished"></translation>
+        <translation>Area Seno Iperbolico</translation>
     </message>
     <message>
         <location filename="../src/base/functions.cpp" line="1146"/>
         <source>Area Hyperbolic Tangent</source>
-        <translation type="unfinished"></translation>
+        <translation>Area Tangente Iperbolica</translation>
     </message>
 </context>
 <context>
@@ -1432,7 +1433,7 @@ Fare clic sull&apos;icona per riattivarlo.</translation>
     <message>
         <location filename="../src/3rdparty/gui/wwwidgets/qwwcolorbutton.cpp" line="332"/>
         <source>Custom color</source>
-        <translation type="unfinished"></translation>
+        <translation>Colore personalizzato</translation>
     </message>
 </context>
 <context>
@@ -1440,7 +1441,7 @@ Fare clic sull&apos;icona per riattivarlo.</translation>
     <message>
         <location filename="../src/3rdparty/gui/wwwidgets/qwwcolorbutton.cpp" line="84"/>
         <source>Other</source>
-        <translation type="unfinished"></translation>
+        <translation>Altro</translation>
     </message>
 </context>
 <context>

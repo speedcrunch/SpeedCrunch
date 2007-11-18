@@ -214,15 +214,17 @@ AboutBox::AboutBox( QWidget * parent ):
   msg += "</i></b><br></p>";
 
   const char * mainFmt = "<p><b>%1</b><br>%2";
-  msg += QString( mainFmt ).arg( tr("Original author")             ).arg( "Ariya Hidayat"    );
-  msg += QString( mainFmt ).arg( tr("Current maintainer")          ).arg( "Helder Correia"   );
-  msg += QString( mainFmt ).arg( tr("Previous maintainers")        ).arg( "Johan Thelin"     );
-  msg += QString( mainFmt ).arg( tr("Based on original idea from") ).arg( "Roberto Alsina"   );
+  msg += QString( mainFmt ).arg( tr("Based on original idea from") ).arg( "Roberto Alsina"     );
+  msg += QString( mainFmt ).arg( tr("Original author")             ).arg( "Ariya Hidayat"      );
+  msg += QString( mainFmt ).arg( tr("Current maintainer")          ).arg( "Helder Correia"     );
+  msg += QString( mainFmt ).arg( tr("Developers")                  ).arg( "Ariya Hidayat<br>"
+                                                                          "Helder Correia<br>"
+                                                                          "Johan Thelin<br>"
+                                                                          "Wolf Lammen"       );
   msg += QString( mainFmt ).arg( tr("Special thanks to")           ).arg( "Marco Wegner<br>"
                                                                           "Michael Pyne<br>"
-                                                                          "Wolf Lammen<br>"
-                                                                          "Jonathan Avraham" );
-  msg += QString( mainFmt ).arg( tr("Artworks")                    ).arg( "Kuswanto (Zeus)"  );
+                                                                          "Jonathan Avraham"   );
+  msg += QString( mainFmt ).arg( tr("Artworks")                    ).arg( "Kuswanto (Zeus)"    );
 
   msg += "<p>";
   msg += QString( "<b>%1</b><br><br>" ).arg( tr("Thanks to") );
@@ -268,6 +270,7 @@ AboutBox::AboutBox( QWidget * parent ):
   msg += QString( i18nFmt ).arg( tr("Finnish")              ).arg( "J-P Nurmi"              );
   msg += QString( i18nFmt ).arg( tr("German")               ).arg( "Marco Wegner"           );
   msg += QString( i18nFmt ).arg( tr("Hebrew")               ).arg( "Jonathan Avraham"       );
+  msg += QString( i18nFmt ).arg( tr("Indonesian")           ).arg( "Ariya Hidayat"          );
   msg += QString( i18nFmt ).arg( tr("Italian")              ).arg( "Alessio Sclocco"        );
   msg += QString( i18nFmt ).arg( tr("Norwegian")            ).arg( "Thomas Finneid"         );
   msg += QString( i18nFmt ).arg( tr("Portuguese")           ).arg( "Helder Correia"         );
@@ -282,6 +285,7 @@ AboutBox::AboutBox( QWidget * parent ):
   msg += QString( copyFmt ).arg( tr("Copyright (C)") ).arg( "2004-2007" ).arg( "Ariya Hidayat"  ).arg( "ariya@kde.org"                    );
   msg += QString( copyFmt ).arg( tr("Copyright (C)") ).arg( "2005-2006" ).arg( "Johan Thelin"   ).arg( "e8johan@gmail.com"                );
   msg += QString( copyFmt ).arg( tr("Copyright (C)") ).arg( "2007"      ).arg( "Helder Correia" ).arg( "helder.pereira.correia@gmail.com" );
+  msg += QString( copyFmt ).arg( tr("Copyright (C)") ).arg( "2007"      ).arg( "Wolf Lammen"    ).arg( "ookami1@gmx.de" );
   msg += "</p>";
 
   msg += "<p>";

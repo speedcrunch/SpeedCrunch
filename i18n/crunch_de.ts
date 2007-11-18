@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="de">
+<defaultcodec></defaultcodec>
 <context>
     <name>AboutBox</name>
     <message>
@@ -165,22 +166,22 @@
     <message>
         <location filename="../src/gui/aboutbox.cpp" line="220"/>
         <source>Developers</source>
-        <translation type="unfinished"></translation>
+        <translation>Entwickler</translation>
     </message>
     <message>
         <location filename="../src/gui/aboutbox.cpp" line="273"/>
         <source>Indonesian</source>
-        <translation type="unfinished"></translation>
+        <translation>Indonesisch</translation>
     </message>
     <message>
         <location filename="../src/gui/aboutbox.cpp" line="276"/>
         <source>Polish</source>
-        <translation type="unfinished"></translation>
+        <translation>Polnisch</translation>
     </message>
     <message>
         <location filename="../src/gui/aboutbox.cpp" line="282"/>
         <source>Turkish</source>
-        <translation type="unfinished"></translation>
+        <translation>Türkisch</translation>
     </message>
 </context>
 <context>
@@ -336,7 +337,7 @@
     <message>
         <location filename="../src/gui/configdlg.cpp" line="162"/>
         <source>Stay always-on-&amp;top</source>
-        <translation type="unfinished"></translation>
+        <translation>Immer im &amp;Vordergrund</translation>
     </message>
 </context>
 <context>
@@ -950,7 +951,7 @@ Klicken Sie auf das Symbol, um das Programm wieder anzuzeigen.</translation>
     <message>
         <location filename="../src/main/crunch.cpp" line="1416"/>
         <source>Use &lt;i&gt;;&lt;/i&gt; (semicolon) to separate the parameters in functions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwenden Sie &lt;i&gt;;&lt;/i&gt; (Semikolon) um Parameter in Funktionen abzugrenzen.</translation>
     </message>
 </context>
 <context>
@@ -1259,17 +1260,17 @@ Klicken Sie auf das Symbol, um das Programm wieder anzuzeigen.</translation>
     <message>
         <location filename="../src/base/functions.cpp" line="1142"/>
         <source>Area Hyperbolic Cosine</source>
-        <translation type="unfinished"></translation>
+        <translation>Areakosinus Hyperbolicus</translation>
     </message>
     <message>
         <location filename="../src/base/functions.cpp" line="1144"/>
         <source>Area Hyperbolic Sine</source>
-        <translation type="unfinished"></translation>
+        <translation>Areasinus Hyperbolicus</translation>
     </message>
     <message>
         <location filename="../src/base/functions.cpp" line="1146"/>
         <source>Area Hyperbolic Tangent</source>
-        <translation type="unfinished"></translation>
+        <translation>Areatangens Hyperbolicus</translation>
     </message>
 </context>
 <context>
@@ -1432,7 +1433,7 @@ Klicken Sie auf das Symbol, um das Programm wieder anzuzeigen.</translation>
     <message>
         <location filename="../src/3rdparty/gui/wwwidgets/qwwcolorbutton.cpp" line="332"/>
         <source>Custom color</source>
-        <translation type="unfinished"></translation>
+        <translation>Benutzerdefinierte Farbe</translation>
     </message>
 </context>
 <context>
@@ -1440,7 +1441,7 @@ Klicken Sie auf das Symbol, um das Programm wieder anzuzeigen.</translation>
     <message>
         <location filename="../src/3rdparty/gui/wwwidgets/qwwcolorbutton.cpp" line="84"/>
         <source>Other</source>
-        <translation type="unfinished"></translation>
+        <translation>Andere</translation>
     </message>
 </context>
 <context>
