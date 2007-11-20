@@ -1,3 +1,9 @@
+2007-11-20
+comments
+
+floatnum.h
+- minor style change in comments
+
 2007-10-30
 relax behaviour of float_setexponent
 

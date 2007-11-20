@@ -366,6 +366,13 @@ HNumber HNumber::operator~() const
   return result;
 }
 
+HNumber HNumber::operator-() const
+{
+  HNumber result = HNumber(*this);
+  float_neg(&result.d->fnum);
+  return result;
+}
+
 HNumber HNumber::operator<<( const HNumber& num ) const
 {
   HNumber result;
@@ -510,8 +517,9 @@ char* formathexfp( floatnum x, char base,
                    char expbase, int scale )
 {
   char* result;
+  int tmpscale;
 
-#if 1
+#if 0
 
   // SpeedCrunch 0.8 behaviour
 
@@ -528,13 +536,16 @@ char* formathexfp( floatnum x, char base,
   float_free(&tmp);
 
 #else
-  // demo version
+  tmpscale = scale;
+  if (float_isinteger(x))
+    tmpscale = 0;
   result = _doFormat(x, base, expbase, IO_MODE_FIXPOINT,
-                     scale, IO_FLAG_SUPPRESS_PLUS
+                     tmpscale, IO_FLAG_SUPPRESS_PLUS
                      + IO_FLAG_SUPPRESS_DOT + IO_FLAG_SHOW_BASE);
 #endif
   if (result != NULL)
     return result;
+
   return _doFormat(x, base, expbase, IO_MODE_SCIENTIFIC,
                     scale,
                     IO_FLAG_SUPPRESS_PLUS + IO_FLAG_SUPPRESS_DOT
@@ -613,6 +624,20 @@ HNumber HMath::mul( const HNumber& n1, const HNumber& n2 )
 HNumber HMath::div( const HNumber& n1, const HNumber& n2 )
 {
   HNumber result = n1 / n2;
+  return result;
+}
+
+HNumber HMath::idiv( const HNumber& n1, const HNumber& n2 )
+{
+  floatstruct tmp;
+  int save;
+
+  save = float_setprecision(DECPRECISION);
+  HNumber result;
+  float_create(&tmp);
+  float_divmod(&result.d->fnum, &tmp, &n1.d->fnum, &n2.d->fnum, INTQUOT);
+  float_free(&tmp);
+  float_setprecision(save);
   return result;
 }
 
@@ -1232,6 +1257,32 @@ HNumber HMath::poissonVariance( const HNumber & l )
     return HNumber::nan();
 
   return l;
+}
+
+HNumber HMath::mask ( const HNumber & val, const HNumber & bits )
+{
+  if ( val.isNan() || bits == 0 || bits >= LOGICRANGE || ! bits.isInteger() )
+    return HNumber::nan();
+  return val & ~(HNumber(-1) << HNumber(bits));
+}
+
+HNumber HMath::sgnext( const HNumber & val, const HNumber & bits )
+{
+  if ( val.isNan() || bits == 0 || bits >= LOGICRANGE || ! bits.isInteger() )
+    return HNumber::nan();
+  HNumber ofs;
+  ofs = HNumber(LOGICRANGE) - bits;
+  return (val << ofs) >> ofs;
+}
+
+HNumber HMath::ashr( const HNumber & val, const HNumber & bits )
+{
+  if ( val.isNan() || bits <= -LOGICRANGE || bits >= LOGICRANGE
+       || ! bits.isInteger() )
+    return HNumber::nan();
+  if (bits >= 0)
+    return val >> bits;
+  return val << -bits;
 }
 
 void HMath::finalize()

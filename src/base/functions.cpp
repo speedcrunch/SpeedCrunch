@@ -946,6 +946,116 @@ HNumber function_poivar( const Evaluator         * evaluator,
   return result;
 }
 
+HNumber function_mask( const Evaluator         * evaluator,
+                       Function                * function,
+                       const FunctionArguments & arguments )
+{
+  HNumber val = arguments[0];
+  HNumber bits = arguments[1];
+  return HMath::mask(val, bits);
+}
+
+HNumber function_unmask( const Evaluator         * evaluator,
+                         Function                * function,
+                         const FunctionArguments & arguments )
+{
+  HNumber val = arguments[0];
+  HNumber bits = arguments[1];
+  return HMath::sgnext(val, bits);
+}
+
+HNumber function_not( const Evaluator         * evaluator,
+                      Function                * function,
+                      const FunctionArguments & arguments )
+{
+  HNumber val = arguments[0];
+  return ~val;
+}
+
+HNumber function_and( const Evaluator         * evaluator,
+                      Function                * function,
+                      const FunctionArguments & args )
+{
+  if( args.count() <= 0 )
+    return HNumber("NaN");
+
+  HNumber result = args[0];
+
+  for( int c = 1; c < args.count(); c++ )
+    result = result & args[c];
+
+  return result;
+}
+
+HNumber function_or( const Evaluator         * evaluator,
+                     Function                * function,
+                     const FunctionArguments & args )
+{
+  if( args.count() <= 0 )
+    return HNumber("NaN");
+
+  HNumber result = args[0];
+
+  for( int c = 1; c < args.count(); c++ )
+    result = result | args[c];
+
+  return result;
+}
+
+HNumber function_xor( const Evaluator         * evaluator,
+                      Function                * function,
+                      const FunctionArguments & args )
+{
+  if( args.count() <= 0 )
+    return HNumber("NaN");
+
+  HNumber result = args[0];
+
+  for( int c = 1; c < args.count(); c++ )
+    result = result ^ args[c];
+
+  return result;
+}
+
+HNumber function_ashl( const Evaluator         * evaluator,
+                       Function                * function,
+                       const FunctionArguments & args )
+{
+  HNumber bits = args[1];
+  HNumber val = args[0];
+
+  return HMath::ashr(val, bits*(-1));
+}
+
+HNumber function_ashr( const Evaluator         * evaluator,
+                       Function                * function,
+                       const FunctionArguments & args )
+{
+  HNumber bits = args[1];
+  HNumber val = args[0];
+
+  return HMath::ashr(val, bits);
+}
+
+HNumber function_idiv( const Evaluator         * evaluator,
+                       Function                * function,
+                       const FunctionArguments & args )
+{
+  HNumber dividend = args[0];
+  HNumber divisor = args[1];
+
+  return HMath::idiv(dividend, divisor);
+}
+
+HNumber function_mod( const Evaluator         * evaluator,
+                      Function                * function,
+                      const FunctionArguments & args )
+{
+  HNumber dividend = args[0];
+  HNumber divisor = args[1];
+
+  return dividend % divisor;
+}
 
 class FunctionPrivate
 {
@@ -1053,10 +1163,6 @@ FunctionRepository::FunctionRepository()
                      QT_TR_NOOP("Absolute Value")             ) );
   add( new Function( "average",    function_average,
                      QT_TR_NOOP("Average (Arithmetic Mean)")  ) );
-  add( new Function( "log",     1, function_log,
-                     QT_TR_NOOP("Base-10 Logarithm")          ) );
-  add( new Function( "lg",      1, function_lg,
-                     QT_TR_NOOP("Base-2 Logarithm")           ) );
   add( new Function( "bin",        function_bin,
                      QT_TR_NOOP("Binary Representation")      ) );
   add( new Function( "ceil",    1, function_ceil,
@@ -1065,8 +1171,6 @@ FunctionRepository::FunctionRepository()
                      QT_TR_NOOP("Cube Root")                  ) );
   add( new Function( "dec",        function_dec,
                      QT_TR_NOOP("Decimal Representation")     ) );
-  add( new Function( "exp",     1, function_exp,
-                     QT_TR_NOOP("Exponential")                ) );
   add( new Function( "floor",   1, function_floor,
                      QT_TR_NOOP("Floor")                      ) );
   add( new Function( "frac",    1, function_frac,
@@ -1081,8 +1185,6 @@ FunctionRepository::FunctionRepository()
                      QT_TR_NOOP("Maximum")                    ) );
   add( new Function( "min",        function_min,
                      QT_TR_NOOP("Minimum")                    ) );
-  add( new Function( "ln",      1, function_ln,
-                     QT_TR_NOOP("Natural Logarithm")          ) );
   add( new Function( "oct",        function_oct,
                      QT_TR_NOOP("Octal Representation")       ) );
   add( new Function( "product",    function_product,
@@ -1097,6 +1199,31 @@ FunctionRepository::FunctionRepository()
                      QT_TR_NOOP("Sum")                        ) );
   add( new Function( "trunc",      function_trunc,
                      QT_TR_NOOP("Truncation")                 ) );
+
+  /*
+                                     LOGARITHM
+                                                                              */
+  add( new Function( "log",     1, function_log,
+       QT_TR_NOOP("Base-10 Logarithm")          ) );
+  add( new Function( "lg",      1, function_lg,
+       QT_TR_NOOP("Base-2 Logarithm")           ) );
+  add( new Function( "ln",      1, function_ln,
+       QT_TR_NOOP("Natural Logarithm")          ) );
+  add( new Function( "exp",     1, function_exp,
+       QT_TR_NOOP("Exponential")                ) );
+  add( new Function( "arcosh",  1, function_arcosh,
+       QT_TR_NOOP("Area Hyperbolic Cosine") ) );
+  add( new Function( "arsinh",  1, function_arsinh,
+       QT_TR_NOOP("Area Hyperbolic Sine") ) );
+  add( new Function( "artanh",  1, function_artanh,
+       QT_TR_NOOP("Area Hyperbolic Tangent") ) );
+  add( new Function( "cosh",    1, function_cosh,
+       QT_TR_NOOP("Hyperbolic Cosine")  ) );
+  add( new Function( "sinh",    1, function_sinh,
+       QT_TR_NOOP("Hyperbolic Sine")    ) );
+  add( new Function( "tanh",    1, function_tanh,
+       QT_TR_NOOP("Hyperbolic Tangent") ) );
+
   /*
                                      DISCRETE
                                                                               */
@@ -1138,12 +1265,6 @@ FunctionRepository::FunctionRepository()
                                                                               */
   add( new Function( "acos",    1, function_acos,
                      QT_TR_NOOP("Arc Cosine")         ) );
-  add( new Function( "arcosh",  1, function_arcosh,
-                     QT_TR_NOOP("Area Hyperbolic Cosine") ) );
-  add( new Function( "arsinh",  1, function_arsinh,
-                     QT_TR_NOOP("Area Hyperbolic Sine") ) );
-  add( new Function( "artanh",  1, function_artanh,
-                     QT_TR_NOOP("Area Hyperbolic Tangent") ) );
   add( new Function( "asin",    1, function_asin,
                      QT_TR_NOOP("Arc Sine")           ) );
   add( new Function( "atan",    1, function_atan,
@@ -1154,22 +1275,40 @@ FunctionRepository::FunctionRepository()
                      QT_TR_NOOP("Cosine")             ) );
   add( new Function( "cot",     1, function_cot,
                      QT_TR_NOOP("Cotangent")          ) );
-  add( new Function( "cosh",    1, function_cosh,
-                     QT_TR_NOOP("Hyperbolic Cosine")  ) );
   add( new Function( "degrees", 1, function_degrees,
                      QT_TR_NOOP("Degrees Of Arc")     ) );
   add( new Function( "radians", 1, function_radians,
                      QT_TR_NOOP("Radians")            ) );
-  add( new Function( "sinh",    1, function_sinh,
-                     QT_TR_NOOP("Hyperbolic Sine")    ) );
-  add( new Function( "tanh",    1, function_tanh,
-                     QT_TR_NOOP("Hyperbolic Tangent") ) );
   add( new Function( "sec",     1, function_sec,
                      QT_TR_NOOP("Secant")             ) );
   add( new Function( "sin",     1, function_sin,
                      QT_TR_NOOP("Sine")               ) );
   add( new Function( "tan",     1, function_tan,
                      QT_TR_NOOP("Tangent")            ) );
+
+  /*
+                                    LOGIC
+                                                                              */
+  add( new Function( "mask",   2, function_mask,
+                     QT_TR_NOOP("mask to a bit size") ) );
+  add( new Function( "unmask",   2, function_unmask,
+                     QT_TR_NOOP("sign-extent a value")) );
+  add( new Function( "not",   1, function_not,
+                     QT_TR_NOOP("logical not")        ) );
+  add( new Function( "and",         function_and,
+                     QT_TR_NOOP("logical and")        ) );
+  add( new Function( "or",         function_or,
+                     QT_TR_NOOP("logical or")         ) );
+  add( new Function( "xor",         function_xor,
+                     QT_TR_NOOP("logical exclusive or")) );
+  add( new Function( "shl",   2, function_ashl,
+                     QT_TR_NOOP("arithmetic shift left")) );
+  add( new Function( "shr",   2, function_ashr,
+                     QT_TR_NOOP("arithmetic shift right")) );
+  add( new Function( "idiv",   2, function_idiv,
+                     QT_TR_NOOP("integer quotient")    ) );
+  add( new Function( "mod",   2, function_mod,
+                     QT_TR_NOOP("modulo")   ) );
 }
 
 FunctionRepository::~FunctionRepository()

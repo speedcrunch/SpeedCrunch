@@ -1,3 +1,10 @@
+SpeedCrunch post-0.9
+---------------------
+New features:
+  preliminary support of logic functions
+  extended output of real-valued numbers to non-dicimal modes
+  arithmetic integer divide and modulo
+
 SpeedCrunch 0.9
 ---------------------
 New features:

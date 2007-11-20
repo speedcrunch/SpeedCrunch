@@ -216,6 +216,11 @@ public:
   HNumber operator~() const;
 
   /*!
+   * Changes the sign
+   */
+  HNumber operator-() const;
+
+  /*!
    * Shifts the integral part of <*this> to the right by
    * the parameters value's bits. The most significand
    * bit is duplicated to the left, shifted out bits are dropped
@@ -330,6 +335,11 @@ public:
    * Divides two numbers.
    */
   static HNumber div( const HNumber& n1, const HNumber& n2 );
+
+  /*!
+   * Performs an integer divide
+   */
+  static HNumber idiv( const HNumber& n1, const HNumber& n2 );
 
   /*!
    * Returns -1, 0, 1 if n1 is less than, equal to, or more than n2.
@@ -526,7 +536,7 @@ public:
 
    /*!
    * Returns the falling Pochhammer symbol x*(x-1)*..*base.
-   * For base == 1, this is the usual factorial x!, which this
+   * For base == 1, this is the usual factorial x!, what this
    * function is named after.
    * This function has been extended using the Gamma function,
    * so that actually Gamma(x+1)/Gamma(base) is computed, a
@@ -730,6 +740,22 @@ public:
    * not defined for the specified parameter.
    */
   static HNumber poissonVariance( const HNumber & l );
+
+  /**
+   * Restricts a logic value to a given bit size
+   */
+  static HNumber mask ( const HNumber & val, const HNumber & bits);
+
+  /**
+   * sign-extends an unsigned value
+   */
+  static HNumber sgnext ( const HNumber & val, const HNumber & bits);
+
+  /**
+   * for bits >= 0 does an arithmetic shift right
+   * for bits < 0 a shift left
+   */
+  static HNumber ashr( const HNumber & val, const HNumber & bits );
 
   /*!
    * Releases all resources. After calling this function, you can not use
