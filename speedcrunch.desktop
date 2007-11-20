@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=SpeedCrunch
+GenericName=High precision calculator
+GenericName[pt]=Calculadora de alta precisão
+GenericName[tr]=Yüksek duyarlıklı hesap makinesi
+Exec=speedcrunch
+Icon=crunch.png
+Type=Application
+Categories=Qt;KDE;Utility
