@@ -1,7 +1,7 @@
 /* HMath: C++ high precision math routines
    Copyright (C) 2004 Ariya Hidayat <ariya.hidayat@gmail.com>
                  2007 Helder Correia <helder.pereira.correia@gmail.com>
-   Last update: May 24, 2007
+   Last update: November 20, 2007
    adapted to floatnum Wolf Lammen July 2007
 
    This program is free software; you can redistribute it and/or

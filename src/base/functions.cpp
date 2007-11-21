@@ -1,7 +1,7 @@
 /* This file is part of the SpeedCrunch project
    Copyright (C) 2004-2006 Ariya Hidayat <ariya@kde.org>
                  2007 Helder Correia <helder.pereira.correia@gmail.com>
-   last update 2007-10-30 Wolf Lammen
+   last update 2007-11-20 Wolf Lammen
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
