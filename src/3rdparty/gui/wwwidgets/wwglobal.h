@@ -15,11 +15,7 @@
 #include <QString>
 #include <QColor>
 
-#ifdef WW_BUILD_WWWIDGETS
-#define Q_WW_EXPORT Q_DECL_EXPORT
-#else
-#define Q_WW_EXPORT Q_DECL_IMPORT
-#endif
+#define Q_WW_EXPORT
 
 class QwwPrivate;
 /**
