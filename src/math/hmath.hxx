@@ -24,6 +24,7 @@
 #define HMATH_H
 
 #include <iostream>
+#include "math/floatconfig.h"
 
 class HMath;
 class HNumberPrivate;

@@ -825,7 +825,7 @@ void Crunch::saveSettings()
 	    name += '_'; // escape code meaning upper case letter
 	  name += vars[i].name[c].toLower();
 	}
-        char * value = HMath::formatFixed( vars[i].value, 100 );
+        char * value = HMath::formatScientific( vars[i].value, DECPRECISION );
         settings->variables.append(
 	  QString("%1=%2").arg( name ).arg( QString( value ) ) );
         free( value );

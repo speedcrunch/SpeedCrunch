@@ -1024,7 +1024,7 @@ HNumber function_ashl( const Evaluator         * evaluator,
   HNumber bits = args[1];
   HNumber val = args[0];
 
-  return HMath::ashr(val, bits*(-1));
+  return HMath::ashr(val, -bits);
 }
 
 HNumber function_ashr( const Evaluator         * evaluator,

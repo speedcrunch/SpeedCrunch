@@ -2,8 +2,11 @@ SpeedCrunch post-0.9
 ---------------------
 New features:
   preliminary support of logic functions
-  extended output of real-valued numbers to non-dicimal modes
+  extended output of real-valued numbers to non-decimal modes
   arithmetic integer divide and modulo
+
+Improvements and bug fixes:
+  Fixed loss of precision on variable saving.
 
 SpeedCrunch 0.9
 ---------------------
