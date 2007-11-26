@@ -70,6 +70,7 @@ public:
   Evaluator *evaluator;
   bool dirty;
   bool valid;
+  bool keepAnsMode;
   QString expression;
 
   QString error;
@@ -336,9 +337,9 @@ bool Evaluator::isValid() const
 
 void Evaluator::clear()
 {
-  d->expression = QString();
-  d->dirty      = true;
-  d->valid      = false;
+  d->expression  = QString();
+  d->dirty       = true;
+  d->valid       = false;
 
   d->error        = QString();
   d->angleMode    = Degree;
@@ -1116,7 +1117,7 @@ void Evaluator::setDecimalPoint( const QString& dp )
   d->decimalPoint = dp;
 }
 
-HNumber Evaluator::eval()
+HNumber Evaluator::eval(bool keepAns)
 {
   QStack<HNumber> stack;
   QStack<QString> refs;
@@ -1126,6 +1127,7 @@ HNumber Evaluator::eval()
   QString fname;
   Function* function;
 
+  d->keepAnsMode = keepAns;
   if( d->dirty )
   {
     Tokens tokens = scan( d->expression, d->decimalPoint );
@@ -1401,7 +1403,8 @@ HNumber Evaluator::eval()
     set( d->assignId, result );
 
   // "ans" is default variable to hold calculation result
-  set( QString("ans"), result );
+  if (!d->keepAnsMode)
+    set( QString("ans"), result );
 
   return result;
 }
@@ -1442,7 +1445,9 @@ QVector<Variable> Evaluator::variables() const
   for ( it = d->variables.begin(); it != d->variables.end(); ++it )
   {
     Variable var;
+    const char* ASCII;
     var.name = it.value().name;
+    ASCII = var.name.toLatin1();
     var.value = it.value().value;
     result.append( var );
   }

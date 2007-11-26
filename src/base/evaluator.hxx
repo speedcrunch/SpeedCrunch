@@ -117,7 +117,7 @@ class Evaluator
 
     void setAngleMode( AngleMode am );
     AngleMode angleMode() const;
-    HNumber eval();
+    HNumber eval(bool keepAns);
 
     void setDecimalPoint( const QString& d );
     QString decimalPoint() const;

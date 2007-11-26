@@ -26,6 +26,7 @@
 #include <QSettings>
 
 #include <stdlib.h>
+#include "floatconfig.h"
 
 #define SETTINGSKEY "SpeedCrunch"
 
@@ -119,7 +120,7 @@ void Settings::load()
   if ( formatStr == "Octal" )       format = 'o';
   if ( formatStr == "Binary" )      format = 'b';
   decimalDigits = settings.value( key + "/View/DecimalDigits", -1 ).toInt();
-  if ( decimalDigits > 70 )         decimalDigits = 70;
+  if ( decimalDigits > DECPRECISION )         decimalDigits = DECPRECISION;
 
   showClearInputButton = settings.value( key + "/Appearance/ShowClearInputButton", true ).toBool();
   showEvaluateButton   = settings.value( key + "/Appearance/ShowEvaluateButton",   true ).toBool();

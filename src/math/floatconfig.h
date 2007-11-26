@@ -40,7 +40,7 @@
    easily follow operations of floatnum in a debugger like ddd.
    Uncomment this, if you develop code based on floatnum, and if you want
    to look into floatnum variables during a debugger session. */
-/* #define FLOATDEBUG */
+ #define FLOATDEBUG
 
 /* enables a pre-defined set of macros so that a regression test suite
    of floatnum can be executed. These settings are such that corner cases

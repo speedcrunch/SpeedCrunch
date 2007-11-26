@@ -561,11 +561,11 @@ void Editor::autoCalc()
     str.remove( 0, tokens[1].pos()+1 );
 
   // same reason as above, do not update "ans"
-  HNumber oldAns = d->eval->get( QString("ans") );
+  //HNumber oldAns = d->eval->get( QString("ans") ); not needed any more
 
   d->eval->setExpression( str );
-  HNumber num = d->eval->eval();
-  d->eval->set( QString("ans"), oldAns );
+  HNumber num = d->eval->eval(true);
+  //d->eval->set( QString("ans"), oldAns ); not needed any more
 
   if( d->eval->error().isEmpty() )
   {

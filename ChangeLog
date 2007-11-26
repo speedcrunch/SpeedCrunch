@@ -6,7 +6,8 @@ New features:
   arithmetic integer divide and modulo
 
 Improvements and bug fixes:
-  Fixed loss of precision on variable saving.
+  Fixed loss of precision on variable saving
+  Fixed clobbering of ans on radix change
 
 SpeedCrunch 0.9
 ---------------------
