@@ -1259,6 +1259,14 @@ HNumber HMath::poissonVariance( const HNumber & l )
   return l;
 }
 
+HNumber HMath::erf( const HNumber & x )
+{
+  HNumber r(x);
+  float_erf(&r.d->fnum, HMATH_EVAL_PREC);
+  roundResult(&r.d->fnum);
+  return r;
+}
+
 HNumber HMath::mask ( const HNumber & val, const HNumber & bits )
 {
   if ( val.isNan() || bits == 0 || bits >= LOGICRANGE || ! bits.isInteger() )

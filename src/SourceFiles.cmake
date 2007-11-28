@@ -32,6 +32,7 @@ main/main.cpp
 math/floatcommon.c
 math/floatconst.c
 math/floatconvert.c
+math/floaterf.c
 math/floatexp.c
 math/floatgamma.c
 math/floathmath.c

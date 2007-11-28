@@ -742,6 +742,14 @@ public:
    */
   static HNumber poissonVariance( const HNumber & l );
 
+   /*!
+   * Returns the erf function (related to normal distribution).
+    */
+  static HNumber erf( const HNumber& x );
+
+  /*
+                                 LOGIC
+                                                                  */
   /**
    * Restricts a logic value to a given bit size
    */

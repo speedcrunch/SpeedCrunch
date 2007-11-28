@@ -37,6 +37,7 @@
 #include "floatpower.h"
 #include "floatipower.h"
 #include "floatgamma.h"
+#include "floaterf.h"
 #include "floatlogic.h"
 
 static char
@@ -679,6 +680,19 @@ float_pochhammer(
     return 0;
   }
   return _pochhammer(x, delta, digits);
+}
+
+char
+float_erf(floatnum x, int digits)
+{
+  if (!chckmathparam(x, digits))
+    return 0;
+  if (!_erf(x, digits))
+  {
+    float_error = FLOAT_OUTOFDOMAIN;
+    return 0;
+  }
+  return 1;
 }
 
 char

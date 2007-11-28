@@ -1,4 +1,4 @@
-/* floatseries.h: header file for basic series, based on floatnum. */
+/* floaterf.c: normal distribution integrals erf and the like */
 /*
     Copyright (C) 2007 Wolf Lammen.
 
@@ -26,29 +26,24 @@
               Oertzweg 45
               22307 Hamburg
               Germany
+
 *************************************************************************/
 
-#ifndef _FLOATSERIES_H
-#define _FLOATSERIES_H
+#include "floaterf.h"
+#include "floatconst.h"
 
-#include "floatnum.h"
-
-#define artanhnear0(x, digits) arctanseries(x, digits, 0)
-#define arctannear0(x, digits) arctanseries(x, digits, 1)
-#define coshminus1near0(x, digits) cosminus1series(x, digits, 0)
-#define cosminus1near0(x, digits) cosminus1series(x, digits, 1)
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void arctanseries(floatnum x, int digits, char alternating);
-char cosminus1series(floatnum x, int digits, char alternating);
-char lngammaseries(floatnum x, int digits);
-char erfseries(floatnum x, int digits);
-
-#ifdef __cplusplus
+char
+_erf(
+  floatnum x,
+  int digits)
+{
+  if (float_cmp(x, &c1Div2) > 0)
+  {
+    /* for the time being support for small x only */
+    float_setnan(x);
+    return 0;
+  }
+  erfnear0(x, digits);
+  float_mul(x, x, &c2DivSqrtPi, digits+1);
+  return 1;
 }
-#endif
-
-#endif /* _FLOATSERIES_H */

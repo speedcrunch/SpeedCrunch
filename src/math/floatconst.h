@@ -56,6 +56,7 @@ extern floatstruct cPiDiv2;
 extern floatstruct cPiDiv4;
 extern floatstruct cSqrtPi;
 extern floatstruct cLnSqrt2PiMinusHalf;
+extern floatstruct c2DivSqrtPi;
 extern floatstruct cMinus0_4;
 extern floatstruct cBernoulliNum[68];
 extern floatstruct cBernoulliDen[68];

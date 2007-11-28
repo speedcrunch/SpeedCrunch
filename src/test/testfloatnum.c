@@ -50,6 +50,7 @@
 #include <math/floatpower.h>
 #include <math/floatgamma.h>
 #include <math/floatlogic.h>
+#include <math/floaterf.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -6277,6 +6278,77 @@ static int test_in()
   return 1;
 }
 
+/*erf(ln(2.7)) ==
+    .7443248085801137476495167988933711046591685164758118184461636179213\
+    12059356598790281111307476902061005913670963660509168*/
+static int test_erfnear0()
+{
+    floatstruct x, x1, tmp, max;
+    int i;
+    char buf[50];
+
+    float_create(&x);
+    float_create(&x1);
+    float_create(&tmp);
+    float_create(&max);
+    float_setzero(&max);
+
+    printf("%s\n", "testing erfnear0");
+
+    printf("verifying special argument x == 0:\n");
+    float_setzero(&x);
+    erfnear0(&x, 100);
+    if (!float_iszero(&x))
+    {
+      printf("FAILED\n");
+      return 0;
+    }
+
+    /* testing the validity of the series evaluation */
+    printf("verifying result:\n");
+    float_setasciiz(&x, "2.7");
+    float_ln(&x, 100);
+    erfnear0(&x, 100);
+    float_setasciiz(&x1,".7443248085801137476495167988933711046591685164758118184461636179213"
+                        "12059356598790281111307476902061005913670963660509168");
+    if (!_cmprelerror(&x1, &x, -99))
+    {
+      printf("FAILED for x == ln 2.7\n");
+      return 0;
+    }
+
+    printf("testing error limit:\n");
+    /* overall scan for maximum relative error */
+    float_setscientific(&tmp, ".005", NULLTERMINATED);
+    for (i = -1; ++i <= 100;)
+    {
+      float_muli(&x, &tmp, i, EXACT);
+      _sub_ulp(&x, 101);
+      float_copy(&x1, &x, EXACT);
+      erfnear0(&x,100);
+      erfnear0(&x1, 110);
+      _relerror(&x1, &x);
+      if (float_cmp(&x1, &max) > 0)
+      {
+        float_copy(&max, &x1, EXACT);
+        if (float_getexponent(&x1) >= -99)
+        {
+          printf("exceeding error for test case %d: ", i);
+          float_getscientific(buf, 50, &max);
+          printf("%s\n", buf);
+          return 0;
+        }
+      }
+    }
+    float_getscientific(buf, 50, &max);
+    printf("max error erfnear0: %s\n", buf);
+    float_free(&tmp);
+    float_free(&x);
+    float_free(&x1);
+    float_free(&max);
+    return 1;
+}
+
 static int testfailed(char* msg)
 {
   printf("\n%s FAILED, tests aborted\n", msg);
@@ -6345,6 +6417,8 @@ int main(int argc, char** argv)
   printf("\nall floatnum tests PASSED\n\n");
   maxdigits = scalesave;
 
+  if(!test_erfnear0()) return testfailed("erfnear0");
+
   if(!test_floatnum2longint()) return testfailed("_floatnum2longint");
   if(!test_longint2floatnum()) return testfailed("_longint2floatnum");
   if(!test_out()) return testfailed("float_out");
@@ -6401,6 +6475,7 @@ int main(int argc, char** argv)
   if(!test_gamma()) return testfailed("_gamma");
   if(!test_gammaint()) return testfailed("_gammaint");
   if(!test_gamma0_5()) return testfailed("_gamma0_5");
+//  if(!test_erfnear0()) return testfailed("erfnear0");
 
   printf("\nall tests PASSED\n");
 #endif /* _FLOATNUMTEST */

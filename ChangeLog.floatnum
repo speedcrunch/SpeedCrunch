@@ -1,3 +1,18 @@
+2007-11-28
+started implementing the erf function:
+Taylor series for erf
+
+floaterf
+- new file containing erf related functions
+floatconst
+- new constant 2/sqrt(pi) used for the erf function
+floatseries
+- added Taylor series for sqrt(pi)*erf(x)/2
+floathmath
+- added float_erf
+hmath
+- wrapper for float_erf in HMath
+
 2007-11-20
 comments
 

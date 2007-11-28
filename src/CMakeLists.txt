@@ -91,6 +91,7 @@ set(testhmath_SOURCES
 math/floatcommon.c
 math/floatconst.c
 math/floatconvert.c
+math/floaterf.c
 math/floatexp.c
 math/floathmath.c
 math/floatgamma.c
@@ -117,6 +118,7 @@ base/functions.cpp
 math/floatcommon.c
 math/floatconst.c
 math/floatconvert.c
+math/floaterf.c
 math/floatexp.c
 math/floathmath.c
 math/floatgamma.c
@@ -142,6 +144,7 @@ set(testfloatnum_SOURCES
 math/floatcommon.c
 math/floatconst.c
 math/floatconvert.c
+math/floaterf.c
 math/floatexp.c
 math/floathmath.c
 math/floatgamma.c

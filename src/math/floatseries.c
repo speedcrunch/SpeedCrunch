@@ -169,7 +169,8 @@ cosminus1series(
   return 1;
 }
 
-/* for x >= 77 and a 100 digit computation, the
+/* asymptotic series for ln Gamma(x)
+   for x >= 77 and a 100 digit computation, the
    relative error is < 9e-100 */
 
 char
@@ -232,4 +233,44 @@ lngammaseries(
   float_free(&sum);
   float_free(&recsqr);
   return i <= MAXBERNOULLIIDX;
+}
+
+/*
+  The Taylor expansion of sqrt(pi)*erf(x)/2 around x = 0.
+  converges only for small |x| < 1 sufficiently.
+  erf(x) = SUM[i>=0] (x^(2*i+1)/(i! * (2*i+1)))
+*/
+
+char
+erfseries(
+  floatnum x,
+  int digits)
+{
+  floatstruct xsqr, smd, pwr;
+  int i, workprec, expsqr, expx;
+
+  expx = float_getexponent(x);
+  expsqr = 2 * expx + 2;
+  if (-expsqr > digits || float_iszero(x))
+    /* for tiny arguments approx. == x */
+    return 1;
+  float_create(&xsqr);
+  float_create(&smd);
+  float_create(&pwr);
+  float_mul(&xsqr, x, x, digits + expsqr);
+  workprec = digits + float_getexponent(&xsqr) + 1;
+  float_copy(&pwr, x, workprec);
+  i = 1;
+  while (workprec > 0)
+  {
+    float_mul(&pwr, &pwr, &xsqr, workprec);
+    float_divi(&pwr, &pwr, -i, workprec);
+    float_divi(&smd, &pwr, 2 * i++ + 1, workprec);
+    float_add(x, x, &smd, digits+2);
+    workprec = digits + float_getexponent(&smd) - expx;
+  }
+  float_free(&pwr);
+  float_free(&smd);
+  float_free(&xsqr);
+  return 1;
 }

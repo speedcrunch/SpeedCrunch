@@ -515,6 +515,27 @@ HNumber function_artanh( const Evaluator         * evaluator,
   return result;
 }
 
+HNumber function_erf( const Evaluator         * evaluator,
+                      Function                * function,
+                      const FunctionArguments & arguments )
+{
+  if ( arguments.count() != 1 )
+    return HNumber::nan();
+
+  HNumber x = arguments[0];
+
+  HNumber result = HMath::erf( x );
+
+  if ( result.isNan() )
+  {
+    function->setError( function->name(), QApplication::translate( "functions",
+                        "function undefined for specified argument" ) );
+    return HNumber::nan();
+  }
+
+  return result;
+}
+
 HNumber function_sign( const Evaluator*, Function*, const FunctionArguments& args )
 {
   if( args.count() != 1 )
@@ -1255,11 +1276,13 @@ FunctionRepository::FunctionRepository()
   add( new Function( "poipmf",    2, function_poipmf,
                      QT_TR_NOOP("Poissonian Probability Mass Function")      ));
   add( new Function( "poicdf",    2, function_poicdf,
-                    QT_TR_NOOP("Poissonian Cumulative Distribution Function")));
+                     QT_TR_NOOP("Poissonian Cumulative Distribution Function")));
   add( new Function( "poimean",   1, function_poimean,
                      QT_TR_NOOP("Poissonian Distribution Mean")              ));
   add( new Function( "poivar",    1, function_poivar,
                      QT_TR_NOOP("Poissonian Distribution Variance")          ));
+  add( new Function( "erf",    1, function_erf,
+                     QT_TR_NOOP("Error Function")                            ));
   /*
                                    TRIGONOMETRY
                                                                               */

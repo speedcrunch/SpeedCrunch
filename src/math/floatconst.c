@@ -78,6 +78,11 @@ static char sSqrtPi[] =
   "7128213807""7898529112""8459103218""1374950656""7385446654"
   "1622682362""4282570666";
 
+static char s2DivSqrtPi[] =
+"1.1283791670""9551257389""6158903121""5451716881""0125865799"
+  "7713688171""4434212849""3688298682""8973487320""4042147268"
+  "8605669581""2723414703";
+
 static char* sBernoulli[] =
 {
 "1",
@@ -238,6 +243,7 @@ floatstruct cPiDiv2;
 floatstruct cPiDiv4;
 floatstruct cSqrtPi;
 floatstruct cLnSqrt2PiMinusHalf;
+floatstruct c2DivSqrtPi;
 floatstruct cMinus0_4;
 floatstruct cUnsignedBound;
 
@@ -282,6 +288,8 @@ floatmath_init()
   float_create(&cLnSqrt2PiMinusHalf);
   float_setscientific(&cLnSqrt2PiMinusHalf, sLnSqrt2PiMinusHalf,
                       NULLTERMINATED);
+  float_create(&c2DivSqrtPi);
+  float_setscientific(&c2DivSqrtPi, s2DivSqrtPi, NULLTERMINATED);
   float_create(&cMinus0_4);
   float_setscientific(&cMinus0_4, "-.4", NULLTERMINATED);
   for (i = -1; ++i < MAXBERNOULLIIDX;)
