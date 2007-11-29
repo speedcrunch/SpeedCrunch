@@ -31,6 +31,19 @@
 
 #include "floaterf.h"
 #include "floatconst.h"
+#include "floatcommon.h"
+#include "floatexp.h"
+
+static int
+_guess_logerfc(
+  floatnum x)
+{
+  int result;
+
+  result = float_asinteger(x);
+  result = (result * result * 7) >> 4;
+  return -result;
+}
 
 char
 _erf(
@@ -46,4 +59,42 @@ _erf(
   erfnear0(x, digits);
   float_mul(x, x, &c2DivSqrtPi, digits+1);
   return 1;
+}
+
+char
+_erfc(
+  floatnum x,
+  int digits)
+{
+  floatstruct tmp;
+  int expx;
+  char result;
+
+  expx = float_getexponent(x);
+  if (expx < -digits || float_iszero(x))
+  {
+    float_copy(x, &c1, EXACT);
+    return 1;
+  }
+  if (float_cmp(x, &c1Div2) <= 0)
+  {
+    _erf(x, digits + expx);
+    float_sub(x, &c1, x, digits);
+    return 1;
+  }
+  result = 0;
+  if (expx > digits || _guess_logerfc(x) < -digits)
+  {
+    float_create(&tmp);
+    result = float_mul(&tmp, x, x, digits+1)
+             && _exp(&tmp, digits+1)
+             && float_mul(&tmp, &tmp, x, digits+1)
+             && float_div(&tmp, &c1DivSqrtPi, &tmp, digits)
+             && erfcbigx(x, digits)
+             && float_mul(x, x, &tmp, digits+1);
+    float_free(&tmp);
+  }
+  if (!result)
+    float_setnan(x);
+  return result;
 }

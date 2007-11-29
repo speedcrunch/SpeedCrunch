@@ -174,7 +174,7 @@ cosminus1series(
    relative error is < 9e-100 */
 
 char
-lngammaseries(
+lngammaasymptotic(
   floatnum x,
   int digits)
 {
@@ -273,4 +273,42 @@ erfseries(
   float_free(&smd);
   float_free(&xsqr);
   return 1;
+}
+
+char
+erfcasymptotic(
+  floatnum x,
+  int digits)
+{
+  floatstruct smd, fct;
+  int i, workprec, newprec;
+
+  float_create(&smd);
+  float_create(&fct);
+  workprec = digits - 2 * float_getexponent(x);
+  if (workprec < 0)
+  {
+    float_copy(x, &c1, EXACT);
+    return 1;
+  }
+  float_mul(&fct, x, x, workprec);
+  float_div(&fct, &c1Div2, &fct, workprec);
+  float_neg(&fct);
+  float_copy(&smd, &c1, EXACT);
+  float_setzero(x);
+  workprec = digits;
+  newprec = digits;
+  i = 1;
+  while (newprec > 0 && newprec <= workprec)
+  {
+    workprec = newprec;
+    float_add(x, x, &smd, digits);
+    float_muli(&smd, &smd, i, workprec);
+    float_mul(&smd, &smd, &fct, workprec);
+    newprec = digits + float_getexponent(&smd);
+    i += 2;
+  }
+  float_free(&fct);
+  float_free(&smd);
+  return newprec <= workprec;
 }

@@ -78,6 +78,11 @@ static char sSqrtPi[] =
   "7128213807""7898529112""8459103218""1374950656""7385446654"
   "1622682362""4282570666";
 
+static char s1DivSqrtPi[] =
+"0.5641895835""4775628694""8079451560""7725858440""5062932899"
+  "8856844085""7217106424""6844149341""4486743660""2021073634"
+  "4302834790""6361707352";
+
 static char s2DivSqrtPi[] =
 "1.1283791670""9551257389""6158903121""5451716881""0125865799"
   "7713688171""4434212849""3688298682""8973487320""4042147268"
@@ -243,6 +248,7 @@ floatstruct cPiDiv2;
 floatstruct cPiDiv4;
 floatstruct cSqrtPi;
 floatstruct cLnSqrt2PiMinusHalf;
+floatstruct c1DivSqrtPi;
 floatstruct c2DivSqrtPi;
 floatstruct cMinus0_4;
 floatstruct cUnsignedBound;
@@ -288,6 +294,8 @@ floatmath_init()
   float_create(&cLnSqrt2PiMinusHalf);
   float_setscientific(&cLnSqrt2PiMinusHalf, sLnSqrt2PiMinusHalf,
                       NULLTERMINATED);
+  float_create(&c1DivSqrtPi);
+  float_setscientific(&c1DivSqrtPi, s1DivSqrtPi, NULLTERMINATED);
   float_create(&c2DivSqrtPi);
   float_setscientific(&c2DivSqrtPi, s2DivSqrtPi, NULLTERMINATED);
   float_create(&cMinus0_4);

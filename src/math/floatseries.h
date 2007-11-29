@@ -44,8 +44,9 @@ extern "C" {
 
 void arctanseries(floatnum x, int digits, char alternating);
 char cosminus1series(floatnum x, int digits, char alternating);
-char lngammaseries(floatnum x, int digits);
+char lngammaasymptotic(floatnum x, int digits);
 char erfseries(floatnum x, int digits);
+char erfcasymptotic(floatnum x, int digits);
 
 #ifdef __cplusplus
 }

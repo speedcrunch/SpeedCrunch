@@ -55,6 +55,7 @@ extern floatstruct cPi;
 extern floatstruct cPiDiv2;
 extern floatstruct cPiDiv4;
 extern floatstruct cSqrtPi;
+extern floatstruct c1DivSqrtPi;
 extern floatstruct cLnSqrt2PiMinusHalf;
 extern floatstruct c2DivSqrtPi;
 extern floatstruct cMinus0_4;

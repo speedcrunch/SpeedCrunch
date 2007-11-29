@@ -1267,6 +1267,14 @@ HNumber HMath::erf( const HNumber & x )
   return r;
 }
 
+HNumber HMath::erfc( const HNumber & x )
+{
+  HNumber r(x);
+  float_erfc(&r.d->fnum, HMATH_EVAL_PREC);
+  roundResult(&r.d->fnum);
+  return r;
+}
+
 HNumber HMath::mask ( const HNumber & val, const HNumber & bits )
 {
   if ( val.isNan() || bits == 0 || bits >= LOGICRANGE || ! bits.isInteger() )

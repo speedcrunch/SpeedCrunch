@@ -536,6 +536,27 @@ HNumber function_erf( const Evaluator         * evaluator,
   return result;
 }
 
+HNumber function_erfc( const Evaluator         * evaluator,
+                       Function                * function,
+                       const FunctionArguments & arguments )
+{
+  if ( arguments.count() != 1 )
+    return HNumber::nan();
+
+  HNumber x = arguments[0];
+
+  HNumber result = HMath::erfc( x );
+
+  if ( result.isNan() )
+  {
+    function->setError( function->name(), QApplication::translate( "functions",
+                        "function undefined for specified argument" ) );
+    return HNumber::nan();
+  }
+
+  return result;
+}
+
 HNumber function_sign( const Evaluator*, Function*, const FunctionArguments& args )
 {
   if( args.count() != 1 )
@@ -1283,6 +1304,8 @@ FunctionRepository::FunctionRepository()
                      QT_TR_NOOP("Poissonian Distribution Variance")          ));
   add( new Function( "erf",    1, function_erf,
                      QT_TR_NOOP("Error Function")                            ));
+  add( new Function( "erfc",    1, function_erfc,
+                     QT_TR_NOOP("Complementary Error Function")              ));
   /*
                                    TRIGONOMETRY
                                                                               */

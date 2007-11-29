@@ -310,6 +310,14 @@ char float_pochhammer(floatnum x, floatnum delta, int digits);
            FLOAT_INVALIDPARAM (digits > MAXSCALE - 10) */
 char float_erf(floatnum x, int digits);
 
+/* currently supports small x only!!
+   evaluates erfc(x).
+           FLOAT_OUTOFDOMAIN (currently |x| < 0.5)
+           FLOAT_UNDERFLOW
+           FLOAT_NANOPERAND
+           FLOAT_INVALIDPARAM (digits > MAXSCALE - 10) */
+char float_erfc(floatnum x, int digits);
+
 /* cuts off the fraction part of <x> and complements the bits
    in the 2's complement representation of <x> then. The
    corresponding integer of the result is stored back in <x>.

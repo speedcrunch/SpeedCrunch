@@ -747,6 +747,10 @@ public:
     */
   static HNumber erf( const HNumber& x );
 
+   /*!
+   * Returns the complementary erf function (related to normal distribution).
+    */
+  static HNumber erfc( const HNumber& x );
   /*
                                  LOGIC
                                                                   */

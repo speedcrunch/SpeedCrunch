@@ -39,8 +39,10 @@ extern "C" {
 #endif
 
 #define erfnear0 erfseries
+#define erfcbigx erfcasymptotic
 
 char _erf(floatnum x, int digits);
+char _erfc(floatnum x, int digits);
 
 #ifdef __cplusplus
 }

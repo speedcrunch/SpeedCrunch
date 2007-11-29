@@ -696,6 +696,19 @@ float_erf(floatnum x, int digits)
 }
 
 char
+float_erfc(floatnum x, int digits)
+{
+  if (!chckmathparam(x, digits))
+    return 0;
+  if (!_erfc(x, digits))
+  {
+    float_error = FLOAT_UNDERFLOW;
+    return 0;
+  }
+  return 1;
+}
+
+char
 float_not(
   floatnum x)
 {
