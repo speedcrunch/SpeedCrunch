@@ -5,6 +5,12 @@ New features:
   extended output of real-valued numbers to non-decimal modes
   arithmetic integer divide and modulo
 
+New functions:
+  ERF: the normalized error function (related to normal distribution)
+  ERFC: the complementary error function
+  GAMMA: the extension of the factorials (x-1)!
+  LNGAMMA: ln(abs(Gamma(x)))
+
 Improvements and bug fixes:
   Fixed loss of precision on variable saving
   Fixed clobbering of ans on radix change

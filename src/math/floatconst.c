@@ -68,6 +68,16 @@ static char sPiDiv4[] =
   "6455243736""1480769541""0157155224""9657008706""3355292669"
   "9553702162""8320576662";
 
+static char s2Pi[] =
+"6.2831853071""7958647692""5286766559""0057683943""3879875021"
+  "1641949889""1846156328""1257241799""7256069650""6842341359"
+  "6429617302""6564613294";
+
+static char s1DivPi[] =
+"0.3183098861""8379067153""7767526745""0287240689""1929148091"
+  "2897495334""6881177935""9526845307""0180227605""5325061719"
+  "1214568545""3515916074";
+
 static char sLnSqrt2PiMinusHalf[] =
 "0.4189385332""0467274178""0329736405""6176398613""9747363778"
   "3412817151""5404827656""9592726039""7694743298""6359541976"
@@ -246,12 +256,20 @@ floatstruct cLn10;
 floatstruct cPi;
 floatstruct cPiDiv2;
 floatstruct cPiDiv4;
+floatstruct c2Pi;
+floatstruct c1DivPi;
 floatstruct cSqrtPi;
 floatstruct cLnSqrt2PiMinusHalf;
 floatstruct c1DivSqrtPi;
 floatstruct c2DivSqrtPi;
 floatstruct cMinus0_4;
 floatstruct cUnsignedBound;
+
+floatstruct erfccoeff[MAXERFCIDX];
+floatstruct erfcalpha;
+floatstruct erfcalphasqr;
+floatstruct erfct2;
+floatstruct erfct3;
 
 void
 floatmath_init()
@@ -289,6 +307,10 @@ floatmath_init()
   float_setscientific(&cPiDiv2, sPiDiv2, NULLTERMINATED);
   float_create(&cPiDiv4);
   float_setscientific(&cPiDiv4, sPiDiv4, NULLTERMINATED);
+  float_create(&c2Pi);
+  float_setscientific(&c2Pi, s2Pi, NULLTERMINATED);
+  float_create(&c1DivPi);
+  float_setscientific(&c1DivPi, s1DivPi, NULLTERMINATED);
   float_create(&cSqrtPi);
   float_setscientific(&cSqrtPi, sSqrtPi, NULLTERMINATED);
   float_create(&cLnSqrt2PiMinusHalf);
@@ -311,6 +333,12 @@ floatmath_init()
   float_copy(&cUnsignedBound, &c1, EXACT);
   for (i = -1; ++i < 2*sizeof(unsigned);)
     float_mul(&cUnsignedBound, &c16, &cUnsignedBound, EXACT);
+  for (i = -1; ++i < MAXERFCIDX;)
+    float_create(&erfccoeff[i]);
+  float_create(&erfcalpha);
+  float_create(&erfcalphasqr);
+  float_create(&erfct2);
+  float_create(&erfct3);
 }
 
 void
@@ -333,8 +361,12 @@ floatmath_exit()
   float_free(&cPi);
   float_free(&cPiDiv2);
   float_free(&cPiDiv4);
+  float_free(&c2Pi);
+  float_free(&c1DivPi);
   float_free(&cSqrtPi);
   float_free(&cLnSqrt2PiMinusHalf);
+  float_free(&c1DivSqrtPi);
+  float_free(&c2DivSqrtPi);
   float_free(&cMinus0_4);
   for (i = -1; ++i < MAXBERNOULLIIDX;)
   {
@@ -342,4 +374,10 @@ floatmath_exit()
     float_free(&cBernoulliDen[i]);
   }
   float_free(&cUnsignedBound);
+  for (i = -1; ++i < MAXERFCIDX;)
+    float_free(&erfccoeff[i]);
+  float_free(&erfcalpha);
+  float_free(&erfcalphasqr);
+  float_free(&erfct2);
+  float_free(&erfct3);
 }

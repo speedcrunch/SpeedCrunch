@@ -557,6 +557,46 @@ HNumber function_erfc( const Evaluator         * evaluator,
   return result;
 }
 
+HNumber function_Gamma( const Evaluator         * evaluator,
+                        Function                * function,
+                        const FunctionArguments & arguments )
+{
+  if ( arguments.count() != 1 )
+    return HNumber::nan();
+
+  HNumber x = arguments[0];
+
+  HNumber result = HMath::Gamma( x );
+
+  if ( result.isNan() )
+  {
+    function->setError( function->name(), QApplication::translate( "functions",
+                        "function undefined for specified argument" ) );
+    return HNumber::nan();
+  }
+  return result;
+}
+
+HNumber function_lnGamma( const Evaluator         * evaluator,
+                          Function                * function,
+                          const FunctionArguments & arguments )
+{
+  if ( arguments.count() != 1 )
+    return HNumber::nan();
+
+  HNumber x = arguments[0];
+
+  HNumber result = HMath::lnGamma( x );
+
+  if ( result.isNan() )
+  {
+    function->setError( function->name(), QApplication::translate( "functions",
+                        "function undefined for specified argument" ) );
+    return HNumber::nan();
+  }
+  return result;
+}
+
 HNumber function_sign( const Evaluator*, Function*, const FunctionArguments& args )
 {
   if( args.count() != 1 )
@@ -1241,6 +1281,10 @@ FunctionRepository::FunctionRepository()
                      QT_TR_NOOP("Sum")                        ) );
   add( new Function( "trunc",      function_trunc,
                      QT_TR_NOOP("Truncation")                 ) );
+  add( new Function( "gamma",      function_Gamma,
+                     QT_TR_NOOP("extension of factorials [= (x-1)!]")) );
+  add( new Function( "lngamma",      function_lnGamma,
+                     QT_TR_NOOP("ln(abs(Gamma))")             ) );
 
   /*
                                      LOGARITHM

@@ -47,6 +47,7 @@ char cosminus1series(floatnum x, int digits, char alternating);
 char lngammaasymptotic(floatnum x, int digits);
 char erfseries(floatnum x, int digits);
 char erfcasymptotic(floatnum x, int digits);
+char erfcsum(floatnum xsqr, int digits);
 
 #ifdef __cplusplus
 }

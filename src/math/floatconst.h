@@ -35,6 +35,7 @@
 #include "floatnum.h"
 
 #define MAXBERNOULLIIDX 68
+#define MAXERFCIDX 80
 
 #ifdef __cplusplus
 extern "C" {
@@ -54,6 +55,8 @@ extern floatstruct cLn10;
 extern floatstruct cPi;
 extern floatstruct cPiDiv2;
 extern floatstruct cPiDiv4;
+extern floatstruct c2Pi;
+extern floatstruct c1DivPi;
 extern floatstruct cSqrtPi;
 extern floatstruct c1DivSqrtPi;
 extern floatstruct cLnSqrt2PiMinusHalf;
@@ -62,6 +65,12 @@ extern floatstruct cMinus0_4;
 extern floatstruct cBernoulliNum[68];
 extern floatstruct cBernoulliDen[68];
 extern floatstruct cUnsignedBound;
+
+extern floatstruct erfccoeff[MAXERFCIDX];
+extern floatstruct erfcalpha;
+extern floatstruct erfcalphasqr;
+extern floatstruct erfct2;
+extern floatstruct erfct3;
 
 void floatmath_init();
 void floatmath_exit();
