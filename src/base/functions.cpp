@@ -1,7 +1,7 @@
 /* This file is part of the SpeedCrunch project
    Copyright (C) 2004-2006 Ariya Hidayat <ariya@kde.org>
                  2007 Helder Correia <helder.pereira.correia@gmail.com>
-   last update 2007-11-20 Wolf Lammen
+   last update 2007-11-29 Wolf Lammen
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -524,16 +524,7 @@ HNumber function_erf( const Evaluator         * evaluator,
 
   HNumber x = arguments[0];
 
-  HNumber result = HMath::erf( x );
-
-  if ( result.isNan() )
-  {
-    function->setError( function->name(), QApplication::translate( "functions",
-                        "function undefined for specified argument" ) );
-    return HNumber::nan();
-  }
-
-  return result;
+  return HMath::erf( x );
 }
 
 HNumber function_erfc( const Evaluator         * evaluator,
@@ -547,13 +538,11 @@ HNumber function_erfc( const Evaluator         * evaluator,
 
   HNumber result = HMath::erfc( x );
 
-  if ( result.isNan() )
+  if ( result.isNan() && !x.isNan() )
   {
     function->setError( function->name(), QApplication::translate( "functions",
-                        "function undefined for specified argument" ) );
-    return HNumber::nan();
+                        "underflow" ) );
   }
-
   return result;
 }
 

@@ -41,6 +41,8 @@ _guess_logerfc(
   int result;
 
   result = float_asinteger(x);
+  if (result == 0 || result > (1 << (4*sizeof(int) - 3)))
+    return -(1 << (7 * sizeof(int)));
   result = (result * result * 7) >> 4;
   return -result;
 }
