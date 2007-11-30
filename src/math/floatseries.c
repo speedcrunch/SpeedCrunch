@@ -276,6 +276,8 @@ erfseries(
   return 1;
 }
 
+/* the asymptotic expansion of erfc, the bigger x the better */
+
 char
 erfcasymptotic(
   floatnum x,
@@ -320,6 +322,10 @@ static int erfcdigits = 0;
    to Chiarella and Reichel.
    Found this in a paper from Borwein, Bailey and Girgensohn, and added
    minor improvements such as the adaptive working precision.
+   There is a restriction with this algorithm not mentioned in the paper:
+   x must not be too large, because the correcting term 2/(1-exp(2*pi*x/alpha))
+   becomes dominant and renders the result incorrect for large x. Fortunately,
+   the valid range seems to overlap with the range of the asymptotic formula.
 
    Picks a fixed alpha suitable for the desired precision and evaluates the sum
    f(t, alpha) = Sum[k>0](exp(-k*k*alpha*alpha)/(k*k*alpha*alpha + t)
@@ -373,7 +379,7 @@ erfcsum(
     Ei = &erfccoeff[i-1];
     if (float_isnan(Ei))
     {
-      /* if exp(-i*i*alpha*alpha) is not available, evaluate one from
+      /* if exp(-i*i*alpha*alpha) is not available, evaluate it from
          that of the last summand */
       float_mul(&erfct2, &erfct2, &erfct3, workprec);
       float_mul(Ei, &erfct2, &erfccoeff[i-2], workprec);
