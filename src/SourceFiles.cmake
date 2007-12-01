@@ -86,6 +86,7 @@ math/floatcommon.h
 math/floatconfig.h
 math/floatconst.h
 math/floatconvert.h
+math/floaterf.h
 math/floatexp.h
 math/floatgamma.h
 math/floathmath.h
