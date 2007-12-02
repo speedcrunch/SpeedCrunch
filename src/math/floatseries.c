@@ -276,7 +276,8 @@ erfseries(
   return 1;
 }
 
-/* the asymptotic expansion of erfc, the bigger x the better */
+/* the asymptotic expansion of erfc, the bigger x is, the better.
+   returns sum( (2*i+1)! /i! / x^(2*i) */
 
 char
 erfcasymptotic(
@@ -299,16 +300,16 @@ erfcasymptotic(
   float_neg(&fct);
   float_copy(&smd, &c1, EXACT);
   float_setzero(x);
-  workprec = digits;
-  newprec = digits;
+  newprec = digits+1;
+  workprec = newprec;
   i = 1;
   while (newprec > 0 && newprec <= workprec)
   {
     workprec = newprec;
-    float_add(x, x, &smd, digits);
+    float_add(x, x, &smd, digits+1);
     float_muli(&smd, &smd, i, workprec);
     float_mul(&smd, &smd, &fct, workprec);
-    newprec = digits + float_getexponent(&smd);
+    newprec = digits + float_getexponent(&smd)+1;
     i += 2;
   }
   float_free(&fct);

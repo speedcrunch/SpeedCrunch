@@ -5401,7 +5401,7 @@ static int test_raisei()
   return 1;
 }
 
-static int test_lngammaseries()
+static int test_lngammaasymptotic()
 {
   floatstruct x, y, tmp;
   int i;
@@ -5425,7 +5425,7 @@ static int test_lngammaseries()
   float_sub(&y, &y, &cLnSqrt2PiMinusHalf, 110);
   float_sub(&y, &y, &c1Div2, 110);
   float_setinteger(&x, 77);
-  lngammaseries(&x, 100);
+  lngammaasymptotic(&x, 100);
   if (!_cmprelerror(&y, &x, -95))
   {
     printf("verification FAILED\n");
@@ -6278,9 +6278,6 @@ static int test_in()
   return 1;
 }
 
-/*erf(ln(2.7)) ==
-    .7443248085801137476495167988933711046591685164758118184461636179213\
-    12059356598790281111307476902061005913670963660509168*/
 static int test_erfnear0()
 {
     floatstruct x, x1, tmp, max;
@@ -6349,6 +6346,34 @@ static int test_erfnear0()
     return 1;
 }
 
+//2.3284857515715306933648728545734425975343969480949480215164950955736952373779008061923833262539225625947297177370514127317944994655346211646086507803923993267130064685044829787060859113169875324401611231e-113
+static int test_erfcasymptotic()
+{
+  floatstruct x, x1;
+
+  float_create(&x);
+  float_create(&x1);
+  printf("%s\n", "testing erfcasymptotic");
+
+  /* testing the validity of the series evaluation */
+  printf("verifying result:\n");
+  float_setasciiz(&x, "16");
+  erfcasymptotic(&x, 100);
+  float_setasciiz(&x1,".99805820883474330725563527001359438444222962655197"
+                      "570407974747783849037252552071214598018034509890346"
+                      "673633987464964958201780044076702727433644232998947"
+                      "151419098605560850226039542578816264384967072263818");
+  if (!_cmprelerror(&x1, &x, -99))
+  {
+    printf("FAILED for x == 16\n");
+    return 0;
+  }
+
+  float_free(&x);
+  float_free(&x1);
+  return 1;
+}
+
 static int testfailed(char* msg)
 {
   printf("\n%s FAILED, tests aborted\n", msg);
@@ -6367,6 +6392,8 @@ int main(int argc, char** argv)
   floatmath_init();
   float_stdconvert();
   maxdigits = 150;
+
+  if(!test_erfcasymptotic()) return testfailed("erfcasymptotic");
 
   if(!test_longadd()) return testfailed("_longadd");
   if(!test_longmul()) return testfailed("_longmul");
@@ -6416,8 +6443,6 @@ int main(int argc, char** argv)
   if(!test_divmod()) return testfailed("float_divmod");
   printf("\nall floatnum tests PASSED\n\n");
   maxdigits = scalesave;
-
-  if(!test_erfnear0()) return testfailed("erfnear0");
 
   if(!test_floatnum2longint()) return testfailed("_floatnum2longint");
   if(!test_longint2floatnum()) return testfailed("_longint2floatnum");
@@ -6469,13 +6494,13 @@ int main(int argc, char** argv)
   if(!test_cos()) return testfailed("_cos");
   if(!test_sin()) return testfailed("_sin");
   if(!test_tan()) return testfailed("_tan");
-  if(!test_lngammaseries()) return testfailed("lngammaseries");
+  if(!test_lngammaasymptotic()) return testfailed("lngammaseries");
   if(!test_pochhammer()) return testfailed("_pochhammer");
   if(!test_lngamma()) return testfailed("_lngamma");
   if(!test_gamma()) return testfailed("_gamma");
   if(!test_gammaint()) return testfailed("_gammaint");
   if(!test_gamma0_5()) return testfailed("_gamma0_5");
-//  if(!test_erfnear0()) return testfailed("erfnear0");
+  if(!test_erfnear0()) return testfailed("erfnear0");
 
   printf("\nall tests PASSED\n");
 #endif /* _FLOATNUMTEST */

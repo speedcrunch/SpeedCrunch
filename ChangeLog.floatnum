@@ -1,3 +1,10 @@
+2007-12-02
+fine tuning
+
+floatseries:
+- the asymptotic series for erfc accumulated round-off
+  errors. increased the working precision in the loop by one.
+
 2007-11-30
 bug fix
 
