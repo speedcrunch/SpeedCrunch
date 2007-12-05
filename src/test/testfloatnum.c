@@ -6349,10 +6349,14 @@ static int test_erfnear0()
 //2.3284857515715306933648728545734425975343969480949480215164950955736952373779008061923833262539225625947297177370514127317944994655346211646086507803923993267130064685044829787060859113169875324401611231e-113
 static int test_erfcasymptotic()
 {
-  floatstruct x, x1;
+  floatstruct x, x1, tmp, max;
+  int i;
+  char buf[50];
 
   float_create(&x);
   float_create(&x1);
+  float_create(&tmp);
+  float_create(&max);
   printf("%s\n", "testing erfcasymptotic");
 
   /* testing the validity of the series evaluation */
@@ -6369,6 +6373,63 @@ static int test_erfcasymptotic()
     return 0;
   }
 
+  printf("testing error limit:\n");
+  /* overall scan for maximum relative error */
+  float_setzero(&max);
+  float_setscientific(&tmp, ".005", NULLTERMINATED);
+  for (i = -1; ++i <= 100;)
+  {
+    float_muli(&x, &tmp, i, EXACT);
+    float_addi(&x, &x, 16, EXACT);
+    _sub_ulp(&x, 101);
+    float_copy(&x1, &x, EXACT);
+    erfcasymptotic(&x,100);
+    erfcasymptotic(&x1, 110);
+    _relerror(&x1, &x);
+    if (float_cmp(&x1, &max) > 0)
+    {
+      float_copy(&max, &x1, EXACT);
+      if (float_getexponent(&x1) >= -99)
+      {
+        printf("exceeding error for test case %d: ", i);
+        float_getscientific(buf, 50, &max);
+        printf("%s\n", buf);
+        return 0;
+      }
+    }
+  }
+  float_getscientific(buf, 50, &max);
+  printf("max error erfcasymptotic: %s\n", buf);
+
+  printf("testing convergence:\n");
+  float_copy(&x, &c2, EXACT);
+  if (!erfcasymptotic(&x, 1))
+  {
+    printf("convergence failed for 1 digit");
+    return 0;
+  }
+  float_setasciiz(&max, "0.92");
+  float_copy(&tmp, &max, EXACT);
+  float_ln(&max, 100);
+  float_sub(&max, &c1, &max, 100);
+  float_mul(&max, &tmp, &max, 100);
+  float_mul(&x1, &c1Div2, &cLn2, 100);
+  for (i = 1; ++i <= 100;)
+  {
+    float_muli(&x, &cLn10, i, 100);
+    float_add(&x, &x, &x1, 100);
+    float_div(&x, &x, &max, 100);
+    float_sqrt(&x, 100);
+    if (!erfcasymptotic(&x, i))
+    {
+      printf("convergence failed for %d digits", i);
+      return 0;
+    }
+  }
+  printf("convergence ok");
+
+  float_free(&max);
+  float_free(&tmp);
   float_free(&x);
   float_free(&x1);
   return 1;
@@ -6393,7 +6454,6 @@ int main(int argc, char** argv)
   float_stdconvert();
   maxdigits = 150;
 
-  if(!test_erfcasymptotic()) return testfailed("erfcasymptotic");
 
   if(!test_longadd()) return testfailed("_longadd");
   if(!test_longmul()) return testfailed("_longmul");
@@ -6501,6 +6561,7 @@ int main(int argc, char** argv)
   if(!test_gammaint()) return testfailed("_gammaint");
   if(!test_gamma0_5()) return testfailed("_gamma0_5");
   if(!test_erfnear0()) return testfailed("erfnear0");
+  if(!test_erfcasymptotic()) return testfailed("erfcasymptotic");
 
   printf("\nall tests PASSED\n");
 #endif /* _FLOATNUMTEST */

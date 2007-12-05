@@ -172,7 +172,12 @@ cosminus1series(
 
 /* asymptotic series for ln Gamma(x)
    for x >= 77 and a 100 digit computation, the
-   relative error is < 9e-100 */
+   relative error is < 9e-100.
+   the series converges, if x and digits comply to
+     100 >= digits >= 2
+     x >= sqrt((digits*ln 10 + 0.5*ln 2)/1.0033).
+   As a special case, for digits == 1, convergence is guaranteed,
+   if x >= 1.8. */
 
 char
 lngammaasymptotic(
@@ -277,7 +282,9 @@ erfseries(
 }
 
 /* the asymptotic expansion of erfc, the bigger x is, the better.
-   returns sum( (2*i+1)! /i! / x^(2*i) */
+   returns sum( (2*i+1)! /i! / x^(2*i)
+   Relative error for x >= 16 and 100-digit evaluation is less than
+   9e-100-*/
 
 char
 erfcasymptotic(
@@ -295,7 +302,7 @@ erfcasymptotic(
     float_copy(x, &c1, EXACT);
     return 1;
   }
-  float_mul(&fct, x, x, workprec);
+  float_mul(&fct, x, x, workprec+1);
   float_div(&fct, &c1Div2, &fct, workprec);
   float_neg(&fct);
   float_copy(&smd, &c1, EXACT);
@@ -308,7 +315,7 @@ erfcasymptotic(
     workprec = newprec;
     float_add(x, x, &smd, digits+1);
     float_muli(&smd, &smd, i, workprec);
-    float_mul(&smd, &smd, &fct, workprec);
+    float_mul(&smd, &smd, &fct, workprec+1);
     newprec = digits + float_getexponent(&smd)+1;
     i += 2;
   }

@@ -1,3 +1,17 @@
+2007-12-05
+fine tuning
+
+floatseries:
+- adjusted the working precision such, that the relative error of
+  the asymptotic series of erfc is below 1e-99 for a 100-digit
+  evaluation
+floaterf
+- sharper evaluation of the lower bound for the asymptotic series
+  based on a theoretical analysis
+- correct error reporting in _erfc
+testfloatnum
+- added a test suite for erfcasymptotic
+
 2007-12-02
 fine tuning
 
@@ -12,7 +26,7 @@ floaterf
 - fixed wrong evaluation of erf for 0.5 < x < 1
 
 2007-11-29
-erf and erfc implemented, but rigorous tests and fine tuning
+erf and erfc implemented, but rigorous testing and fine tuning
 are not done
 
 floaterf

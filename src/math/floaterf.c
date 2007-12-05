@@ -34,18 +34,57 @@
 #include "floatcommon.h"
 #include "floatexp.h"
 
-static int
-_guess_logerfc(
-  floatnum x)
+/* checks the quality of the asymptotic series for erfc.
+   If the ratio of two subsequent summands from the series
+   (the convergence rate) should not fall below `ratio'
+   for a desired result precision (represented by digits), the number
+   of summands n must not be greater than
+    n <= (`digits'*ln 10 + 0.5 * ln 2)/(1 - ln `ratio')
+   and the parameter x has to fullfil
+    x >= sqrt(n/`ratio')
+   `ratio' must be a value < 1, If you pick a value close to
+   1, you finally have to add quite a lot of summands from the
+   series (in low precision), that affect a few digits at the low
+   end of the result only. On the other hand, choosing a good
+   convergence rate pushes the validity range of the series towards
+   larger x.
+   Here, the convergence rate is chosen to be 0.5, meaning that the
+   addition of a summand from the series at least halfs the magnitude
+   of the tail of the series.
+   The evaluation is carried out in low precision using interger
+   arithmetic rather than floating point data.
+   For a 100 digit result the lower boundary of the range of the
+   asymptotic series (truncated when the convergence rate falls below 0.5)
+   is x > approx. 16.5.
+   The above formulas estimate the limit x slightly too small, especially
+   when `digits' is small. So, to compensate for that, r should be at least
+   <= 0.92 */
+static char
+_asymptotic_good(
+  floatnum x,
+  int digits)
 {
-  int result;
+  /* all constants scaled by 10000 */
+  /* 1/ratio */
+#define RATIO 20000
+  /* (1 - ln ratio) */
+#define C_RATIO 16931
+  /* ln 10 */
+#define LN10 23026
+  /* 0.5*ln 2 */
+#define LN2DIV2 3466
 
-  result = float_asinteger(x);
-  if ((result == 0 && float_getexponent(x) > 0)
-       || result > (1 << (4*sizeof(int) - 3)))
-    return -(1 << (7 * sizeof(int)));
-  result = (result * result * 7) >> 4;
-  return -result;
+  int n, ix;
+
+  if (!float_isvalidexp(float_getexponent(x) + 2)
+      || (digits == 1 && float_cmp(x, &c2) >= 0))
+    return 1;
+  /* 10000 * n/ratio */
+  n = RATIO*((digits * LN10 + LN2DIV2) / C_RATIO);
+  float_addexp(x, 2);
+  ix = float_asinteger(x);
+  float_addexp(x, -2);
+  return ix == 0 || ix >= 0x10000 || ix * ix >= n;
 }
 
 char
@@ -53,7 +92,7 @@ _erf(
   floatnum x,
   int digits)
 {
-  int workprec;
+  int workprec, expx;
   signed char sign;
 
   sign = float_getsign(x);
@@ -61,11 +100,14 @@ _erf(
     float_abs(x);
   if (float_cmp(x, &c1Div2) > 0)
   {
-    workprec = digits + _guess_logerfc(x);
-    if (workprec < 0)
+    expx = float_getexponent(x);
+    if (expx >= 0x1000)
+      expx = 0x1000;
+    workprec = digits - ((expx * expx * 73) >> 5);
+    if (workprec > 0)
+      
+    if (workprec < 0 || !_erfc(x, workprec))
       float_setzero(x);
-    else if (!_erfc(x, workprec))
-      return 0;
     float_sub(x, &c1, x, digits);
   }
   else
@@ -99,7 +141,20 @@ _erfc(
     return 1;
   }
   float_create(&tmp);
-  if (expx < digits && _guess_logerfc(x) > -digits)
+  if (_asymptotic_good(x, digits))
+  {
+    result = float_mul(&tmp, x, x, digits+1)
+        && _exp(&tmp, digits+1)
+        && float_mul(&tmp, &tmp, x, digits+1)
+        && float_div(&tmp, &c1DivSqrtPi, &tmp, digits);
+    if (!result)
+      float_error = FLOAT_UNDERFLOW;
+    result = result && erfcbigx(x, digits);
+    if (!result)
+      float_error = FLOAT_UNSTABLE;
+    result = result && float_mul(x, x, &tmp, digits+1);
+  }
+  else
   {
     float_create(&t2);
     float_create(&t3);
@@ -135,13 +190,6 @@ _erfc(
     float_free(&t2);
     float_move(x, &t3);
   }
-  else
-    result = float_mul(&tmp, x, x, digits+1)
-        && _exp(&tmp, digits+1)
-        && float_mul(&tmp, &tmp, x, digits+1)
-        && float_div(&tmp, &c1DivSqrtPi, &tmp, digits)
-        && erfcbigx(x, digits)
-        && float_mul(x, x, &tmp, digits+1);
   float_free(&tmp);
   if (!result)
     float_setnan(x);
