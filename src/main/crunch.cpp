@@ -631,7 +631,7 @@ void Crunch::applySettings()
     for( int k=0; k<settings->variables.count(); k++ )
     {
       d->eval->setExpression( settings->variables[k] );
-      d->eval->eval(true);
+      d->eval->eval();
     }
     d->variablesDock->updateList( d->eval );
   }
@@ -1044,7 +1044,7 @@ void Crunch::returnPressed()
   d->editor->appendHistory( str );
   d->historyDock->setHistory( d->editor->history() );
 
-  HNumber result = d->eval->eval(false);
+  HNumber result = d->eval->evalUpdateAns();
   if( !d->eval->error().isEmpty() )
     d->result->appendError( str, d->eval->error() );
   else

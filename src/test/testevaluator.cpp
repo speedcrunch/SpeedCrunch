@@ -73,7 +73,7 @@ static void checkDivisionByZero( const char    * file,
   e.setDecimalPoint( "." );
   e.setAngleMode( Evaluator::Radian );
   e.setExpression( expr );
-  HNumber rn = e.eval(false);
+  HNumber rn = e.evalUpdateAns();
 
   if ( e.error().isEmpty() )
   {
@@ -96,7 +96,7 @@ static void checkEval( const char    * file,
   Evaluator e;
   e.setAngleMode( Evaluator::Radian );
   e.setExpression( expr );
-  HNumber rn = e.eval(false);
+  HNumber rn = e.evalUpdateAns();
 
   if ( ! e.error().isEmpty() )
   {
@@ -132,7 +132,7 @@ static void checkEvalPrecise( const char    * file,
 
   Evaluator e;
   e.setExpression( expr );
-  HNumber rn = e.eval(false);
+  HNumber rn = e.evalUpdateAns();
 
   // we compare up to 50 decimals, not exact number because it's often difficult
   // to represent the result as an irrational number, e.g. PI

@@ -70,7 +70,6 @@ public:
   Evaluator *evaluator;
   bool dirty;
   bool valid;
-  bool keepAnsMode;
   QString expression;
 
   QString error;
@@ -677,9 +676,6 @@ void Evaluator::compile( const Tokens& tokens ) const
     Token::Type tokenType = token.type();
 
 #ifdef EVALUATOR_DEBUG
-#endif
-
-#ifdef EVALUATOR_DEBUG
     dbg << "\n";
     dbg << "Token: " << token.description() << "\n";
 #endif
@@ -1082,6 +1078,7 @@ void Evaluator::compile( const Tokens& tokens ) const
 
 #ifdef EVALUATOR_DEBUG
     dbg << "Dump: " << dump() << "\n";
+    debugFile.close();
 #endif
 
   // bad parsing ? clean-up everything
@@ -1092,9 +1089,6 @@ void Evaluator::compile( const Tokens& tokens ) const
     d->identifiers.clear();
   }
 
-#ifdef EVALUATOR_DEBUG
-  debugFile.close();
-#endif
 }
 
 Evaluator::AngleMode Evaluator::angleMode() const
@@ -1117,7 +1111,7 @@ void Evaluator::setDecimalPoint( const QString& dp )
   d->decimalPoint = dp;
 }
 
-HNumber Evaluator::eval(bool keepAns)
+HNumber Evaluator::eval()
 {
   QStack<HNumber> stack;
   QStack<QString> refs;
@@ -1127,7 +1121,6 @@ HNumber Evaluator::eval(bool keepAns)
   QString fname;
   Function* function;
 
-  d->keepAnsMode = keepAns;
   if( d->dirty )
   {
     Tokens tokens = scan( d->expression, d->decimalPoint );
@@ -1402,10 +1395,15 @@ HNumber Evaluator::eval(bool keepAns)
   if( !d->assignId.isEmpty() )
     set( d->assignId, result );
 
-  // "ans" is default variable to hold calculation result
-  if (!d->keepAnsMode)
-    set( QString("ans"), result );
+  return result;
+}
 
+HNumber Evaluator::evalUpdateAns()
+{
+  HNumber result = eval();
+
+  // "ans" is default variable to hold calculation result
+  set( QString("ans"), result );
   return result;
 }
 
