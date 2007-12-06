@@ -1,3 +1,16 @@
+2007-12-06
+bug fixes
+fine tuning
+
+floaterf
+- recent changes introduced a bug in _erf for large x. Fixed
+floatseries
+- testing revealed: erfcsum could die if the working precision fell
+  below 1 before the final loop was executed. Fixed.
+- fine tuned the precision parameters in erfcsum
+testfloatnum
+- added a test suite for erfcsum
+
 2007-12-05
 fine tuning
 

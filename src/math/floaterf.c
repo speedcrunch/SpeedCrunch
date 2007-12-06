@@ -96,16 +96,13 @@ _erf(
   signed char sign;
 
   sign = float_getsign(x);
-  if (sign < 0)
-    float_abs(x);
+  float_abs(x);
   if (float_cmp(x, &c1Div2) > 0)
   {
     expx = float_getexponent(x);
     if (expx >= 0x1000)
       expx = 0x1000;
     workprec = digits - ((expx * expx * 73) >> 5);
-    if (workprec > 0)
-      
     if (workprec < 0 || !_erfc(x, workprec))
       float_setzero(x);
     float_sub(x, &c1, x, digits);

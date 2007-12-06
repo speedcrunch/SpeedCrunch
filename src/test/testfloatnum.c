@@ -6346,7 +6346,6 @@ static int test_erfnear0()
     return 1;
 }
 
-//2.3284857515715306933648728545734425975343969480949480215164950955736952373779008061923833262539225625947297177370514127317944994655346211646086507803923993267130064685044829787060859113169875324401611231e-113
 static int test_erfcasymptotic()
 {
   floatstruct x, x1, tmp, max;
@@ -6432,6 +6431,102 @@ static int test_erfcasymptotic()
   float_free(&tmp);
   float_free(&x);
   float_free(&x1);
+  return 1;
+}
+
+static int test_erfcsum()
+{
+  floatstruct x, x1, tmp, max;
+  int i, prec;
+  char  buf[50];
+
+  float_create(&x);
+  float_create(&x1);
+  float_create(&tmp);
+  float_create(&max);
+  printf("%s\n", "testing erfcsum");
+
+  printf("testing error limit:\n");
+  /* overall scan for maximum relative error */
+  float_setscientific(&tmp, ".4", NULLTERMINATED);
+  for (prec = 1; ++prec <= 100;)
+  {
+    float_muli(&tmp, &cLn10, prec, 4);
+    float_setasciiz(&x, "0.3466");
+    float_add(&tmp, &tmp, &x, 4);
+    float_setasciiz(&x, "0.9967");
+    float_div(&tmp, &tmp, &x, 4);
+    float_sqrt(&tmp, 4);
+    float_sub(&tmp, &tmp, &c1Div2, 4);
+    float_divi(&tmp, &tmp, 20, 4);
+    float_setzero(&max);
+    for (i = -1; ++i <= 20;)
+    {
+      float_muli(&x, &tmp, i, EXACT);
+      float_add(&x, &x, &c1Div2, EXACT);
+      _sub_ulp(&x, 101);
+      float_copy(&x1, &x, EXACT);
+      if (!erfcsum(&x1, prec+1) || !erfcsum(&x, prec))
+      {
+        printf("no convergence test case %d, prec %d: ", i, prec);
+        return 0;
+      }
+      _relerror(&x1, &x);
+      if (float_cmp(&x1, &max) > 0)
+      {
+        float_copy(&max, &x1, EXACT);
+        if (float_getexponent(&x1) >= -prec+1)
+        {
+          printf("exceeding error for test case %d, prec %d: ", i, prec);
+          float_getscientific(buf, 50, &max);
+          printf("%s\n", buf);
+          return 0;
+        }
+      }
+    }
+  }
+  float_getscientific(buf, 50, &max);
+  printf("max error erfcsum: %s\n", buf);
+
+  /* testing the validity of the series evaluation */
+  printf("verifying result:\n");
+  float_setasciiz(&tmp, "20");
+  float_divi(&tmp, &tmp, 7, 110);
+  float_mul(&x, &tmp, &tmp, 110);
+  erfcsum(&x, 100);
+  /* we cannot know the free parameter alpha earlier, as it might be changed
+  during the last series evaluation */
+  float_mul(&x1, &tmp, &c2Pi, 110);
+  float_div(&x1, &x1, &erfcalpha, 110);
+  _exp(&x1, 110);
+  float_sub(&x1, &c1, &x1, 110);
+  float_div(&x1, &c2, &x1, 110);
+  /* erfc (20/7) */
+  float_setasciiz(&max,"0.00005331231138832281466765963565935"
+                       "9917631684842756273950127577016997393"
+                       "623370565496031160355771016945224924345871");
+  float_sub(&x1, &max, &x1, 110);
+  float_div(&x1, &x1, &tmp, 110);
+  float_div(&x1, &x1, &erfcalpha, 110);
+  float_mul(&x1, &x1, &cPi, 110);
+  float_mul(&max, &tmp, &tmp, 110);
+  float_copy(&tmp, &max, EXACT);
+  _exp(&tmp, 110);
+  float_reciprocal(&max, 110);
+  float_mul(&x1, &x1, &tmp, 110);
+  float_sub(&x1, &x1, &max, 110);
+  float_mul(&x1, &x1, &c1Div2, 110);
+
+  if (!_cmprelerror(&x1, &x, -99))
+  {
+    printf("FAILED for x == 20/7\n");
+    return 0;
+  }
+
+  float_free(&x);
+  float_free(&x1);
+  float_free(&tmp);
+  float_free(&max);
   return 1;
 }
 
@@ -6562,6 +6657,7 @@ int main(int argc, char** argv)
   if(!test_gamma0_5()) return testfailed("_gamma0_5");
   if(!test_erfnear0()) return testfailed("erfnear0");
   if(!test_erfcasymptotic()) return testfailed("erfcasymptotic");
+  if(!test_erfcsum()) return testfailed("erfcsum");
 
   printf("\nall tests PASSED\n");
 #endif /* _FLOATNUMTEST */
