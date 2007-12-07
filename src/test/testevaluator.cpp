@@ -18,12 +18,14 @@
    Boston, MA 02110-1301, USA.
  */
 
+#define TARGET_TESTEVALUATOR
 
 #include <iostream>
 #include <string.h>
 
 #include <QtCore>
 
+#include <base/settings.hxx> //refdp
 #include <base/evaluator.hxx>
 #include <base/functions.hxx>
 #include <math/hmath.hxx>
@@ -50,7 +52,8 @@ static void checkAutoFix( const char    * file,
 {
   eval_total_tests++;
 
-  QString r = Evaluator::autoFix( expr, "." );
+//  QString r = Evaluator::autoFix( expr, "." ); //refdp
+  QString r = Evaluator::autoFix( expr );
   if ( r != fixed )
   {
     eval_failed_tests++;
@@ -70,7 +73,7 @@ static void checkDivisionByZero( const char    * file,
   eval_total_tests++;
 
   Evaluator e;
-  e.setDecimalPoint( "." );
+//  e.setDecimalPoint( "." ); //refdp
   e.setAngleMode( Evaluator::Radian );
   e.setExpression( expr );
   HNumber rn = e.evalUpdateAns();
@@ -273,12 +276,12 @@ void test_function_basic()
   CHECK_EVAL( "INT(0)",         "0"  );
   CHECK_EVAL( "INT(1)",         "1"  );
   CHECK_EVAL( "INT(-1)",        "-1" );
-  CHECK_EVAL( "INT(0,5)",       "0"  );
-  CHECK_EVAL( "INT(-0,75)",     "0"  );
-  CHECK_EVAL( "INT(-0,9999*1)", "0"  );
-  CHECK_EVAL( "INT(0,9999*1)",  "0"  );
-  CHECK_EVAL( "INT(2,1)",       "2"  );
-  CHECK_EVAL( "INT(-3,4)",      "-3" );
+  CHECK_EVAL( "INT(0.5)",       "0"  );
+  CHECK_EVAL( "INT(-0.75)",     "0"  );
+  CHECK_EVAL( "INT(-0.9999*1)", "0"  );
+  CHECK_EVAL( "INT(0.9999*1)",  "0"  );
+  CHECK_EVAL( "INT(2.1)",       "2"  );
+  CHECK_EVAL( "INT(-3.4)",      "-3" );
 
   CHECK_EVAL_PRECISE( "exp((1)/2) + exp((1)/2)",
                       "3.29744254140025629369730157562832714330755220142030" );
@@ -341,7 +344,7 @@ void test_function_stat()
   CHECK_EVAL( "MIN(0; 2)",            "0"     );
   CHECK_EVAL( "MIN(-1; 0)",           "-1"    );
   CHECK_EVAL( "MIN(-1; 1)",           "-1"    );
-  CHECK_EVAL( "MIN(-0,01; 0)",        "-0.01" );
+  CHECK_EVAL( "MIN(-0.01; 0)",        "-0.01" );
   CHECK_EVAL( "MIN(0; 1; 2)",         "0"     );
   CHECK_EVAL( "MIN(-1; 0; 1; 2)",     "-1"    );
   CHECK_EVAL( "MIN(-2; -1; 0; 1; 2)", "-2"    );
@@ -351,7 +354,7 @@ void test_function_stat()
   CHECK_EVAL( "MAX(0; 2)",            "2"    );
   CHECK_EVAL( "MAX(-1; 0)",           "0"    );
   CHECK_EVAL( "MAX(-1; 1)",           "1"    );
-  CHECK_EVAL( "MAX(0,01; 0)",         "0.01" );
+  CHECK_EVAL( "MAX(0.01; 0)",         "0.01" );
   CHECK_EVAL( "MAX(0; 1; 2)",         "2"    );
   CHECK_EVAL( "MAX(-1; 0; 1; 2)",     "2"    );
   CHECK_EVAL( "MAX(-2; -1; 0; 1; 2)", "2"    );
@@ -380,8 +383,8 @@ void test_function_stat()
   CHECK_EVAL( "AVERAGE(1;1;1)",     "1"   );
   CHECK_EVAL( "AVERAGE(2;2;2)",     "2"   );
   CHECK_EVAL( "AVERAGE(3;3;3)",     "3"   );
-  CHECK_EVAL( "AVERAGE(0,25;0,75)", "0.5" );
-  CHECK_EVAL( "AVERAGE(2,25;4,75)", "3.5" );
+  CHECK_EVAL( "AVERAGE(0.25;0.75)", "0.5" );
+  CHECK_EVAL( "AVERAGE(2.25;4.75)", "3.5" );
   CHECK_EVAL( "AVERAGE(1/3;2/3)",   "0.5" );
 
   CHECK_EVAL( "GEOMEAN()",          "NaN" );
@@ -396,7 +399,7 @@ void test_function_stat()
   CHECK_EVAL( "GEOMEAN(1;1)",       "1"   );
   CHECK_EVAL( "GEOMEAN(1;4)",       "2"   );
   CHECK_EVAL( "GEOMEAN(4;9)",       "6"   );
-  CHECK_EVAL( "GEOMEAN(3,6;8,1)",   "5.4" );
+  CHECK_EVAL( "GEOMEAN(3.6;8.1)",   "5.4" );
   CHECK_EVAL( "GEOMEAN(3;4;18)",    "6"  );
   CHECK_EVAL( "GEOMEAN(1;1;1)",     "1"   );
   CHECK_EVAL( "GEOMEAN(1;1;1;1)",   "1"   );
@@ -455,6 +458,7 @@ void test_auto_fix_untouch()
 
 int main( int argc, char * * argv)
 {
+  Settings::self()->setDecimalPoint("."); //refdp
   test_constants();
   test_unary();
   test_binary();

@@ -115,6 +115,7 @@ add_test(testhmath ${EXECUTABLE_OUTPUT_PATH}/testhmath)
 set(testevaluator_SOURCES
 base/evaluator.cpp
 base/functions.cpp
+base/settings.cpp
 math/floatcommon.c
 math/floatconst.c
 math/floatconvert.c

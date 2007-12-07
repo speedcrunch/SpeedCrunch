@@ -24,6 +24,7 @@
 #include <QApplication>
 #include <QDir>
 #include <QSettings>
+#include <QLocale> //refdp
 
 #include <stdlib.h>
 #include "floatconfig.h"
@@ -38,6 +39,17 @@ static void deleteGlobalSettings()
     s_global_settings = 0;
 }
 
+QChar Settings::decimalPoint() //refdp
+{
+  return self()->point;
+}
+
+void Settings::setDecimalPoint(const QString& val) //refdp
+{
+  autoPoint = (val.length() != 1);
+  point = autoPoint? QLocale().decimalPoint() : val[0];
+}
+
 
 Settings::Settings()
 {
@@ -46,7 +58,8 @@ Settings::Settings()
   saveVariables   = true;
   autoComplete    = true;
   autoCalc        = true;
-  decimalPoint    = QString();
+//  decimalPoint    = QString(); // refdp
+  setDecimalPoint(QString());
   //language        = QString();
   minimizeToTray  = false;
   stayAlwaysOnTop = false;
@@ -101,13 +114,14 @@ void Settings::load()
   QSettings settings( /*QSettings::IniFormat,*/ QSettings::UserScope, SETTINGSKEY, SETTINGSKEY );
 
   QString key = SETTINGSKEY;
+  QString tmp;
 
   angleMode      = settings.value( key + "/General/AngleMode",      "degree"  ).toString();
   saveHistory    = settings.value( key + "/General/SaveHistory",    true      ).toBool();
   saveVariables  = settings.value( key + "/General/SaveVariables",  true      ).toBool();
   autoComplete   = settings.value( key + "/General/AutoComplete",   true      ).toBool();
   autoCalc       = settings.value( key + "/General/AutoCalc",       true      ).toBool();
-  decimalPoint   = settings.value( key + "/General/DecimalPoint",   QString() ).toString();
+  setDecimalPoint(settings.value( key + "/General/DecimalPoint",   QString() ).toString());
   //language       = settings.value( key + "/General/Language",       QString() ).toString();
   minimizeToTray = settings.value( key + "/General/MinimizeToTray", false     ).toBool();
 
@@ -229,7 +243,7 @@ void Settings::save()
   settings.setValue( key + "/General/SaveVariables",  saveVariables  );
   settings.setValue( key + "/General/AutoComplete",   autoComplete   );
   settings.setValue( key + "/General/AutoCalc",       autoCalc       );
-  settings.setValue( key + "/General/DecimalPoint",   decimalPoint   );
+  settings.setValue( key + "/General/DecimalPoint",   autoPoint? QString(): decimalPoint() );
   //settings.setValue( key + "/General/Language",       language       );
   settings.setValue( key + "/General/MinimizeToTray", minimizeToTray );
 

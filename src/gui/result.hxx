@@ -47,8 +47,9 @@ class Result : public QListWidget
     void setDecimalDigits( int digits );
     int decimalDigits() const;
     QString formatNumber( const HNumber& value ) const;
-    QString decimalPoint() const;
-    void setDecimalPoint( const QString& dp );
+//     QString decimalPoint() const;
+//     void setDecimalPoint( const QString& dp ); //refdp
+    void NotifyDotChanged();
 
     void setCustomAppearance( bool custom );
     bool customAppearance() const;

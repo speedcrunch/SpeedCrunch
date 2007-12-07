@@ -18,7 +18,15 @@
    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA 02110-1301, USA.
  */
+
 #include <base/evaluator.hxx>
+
+#ifdef _BISON
+
+# include "bison/bisonparser.cpp"
+
+#else /* ! _BISON */
+
 #include <base/functions.hxx>
 #include <base/settings.hxx>
 
@@ -27,7 +35,7 @@
 #include <math.h>
 
 #include <QApplication>
-#include <QLocale>
+//#include <QLocale> //refdp
 #include <QMap>
 #include <QString>
 #include <QStringList>
@@ -75,7 +83,7 @@ public:
   QString error;
   QMap<QString,Variable> variables;
   Evaluator::AngleMode angleMode;
-  QString decimalPoint;
+//  QString decimalPoint; //refdp
 
   QString assignId;
   QVector<Opcode> codes;
@@ -323,7 +331,8 @@ bool Evaluator::isValid() const
 {
   if( d->dirty )
   {
-    Tokens tokens = scan( d->expression, d->decimalPoint );
+//    Tokens tokens = scan( d->expression, d->decimalPoint ); //refdp
+    Tokens tokens = scan( d->expression );
     if( !tokens.valid() )
       compile( tokens );
     else
@@ -342,7 +351,7 @@ void Evaluator::clear()
 
   d->error        = QString();
   d->angleMode    = Degree;
-  d->decimalPoint = QString();
+//  d->decimalPoint = QString(); //refdp
 
   d->constants.clear();
   d->codes.clear();
@@ -365,10 +374,12 @@ QString Evaluator::error() const
 
 Tokens Evaluator::tokens() const
 {
-  return scan( d->expression, d->decimalPoint );
+//  return scan( d->expression, d->decimalPoint ); // refdp
+  return scan( d->expression );
 }
 
-Tokens Evaluator::scan( const QString& expr, const QString& settingsDecimal )
+//Tokens Evaluator::scan( const QString& expr, const QString& settingsDecimal )//refdp
+Tokens Evaluator::scan( const QString& expr )
 {
   // to hold the result
   Tokens tokens;
@@ -378,10 +389,11 @@ Tokens Evaluator::scan( const QString& expr, const QString& settingsDecimal )
   QChar decimalPoint;
   QChar wrongDecimalPoint;
 
-  if( settingsDecimal.length() == 1 )
-    decimalPoint = settingsDecimal[0];
-  else
-    decimalPoint = QLocale().decimalPoint();
+//   if( settingsDecimal.length() == 1 )
+//     decimalPoint = settingsDecimal[0];
+//   else
+//     decimalPoint = QLocale().decimalPoint(); //refdp
+  decimalPoint = Settings::decimalPoint();
 
   // sanity check for wrong decimal separator usage
 
@@ -1101,15 +1113,15 @@ void Evaluator::setAngleMode( AngleMode am )
   d->angleMode = am;
 }
 
-QString Evaluator::decimalPoint() const
-{
-  return d->decimalPoint;
-}
-
-void Evaluator::setDecimalPoint( const QString& dp )
-{
-  d->decimalPoint = dp;
-}
+// QString Evaluator::decimalPoint() const //refdp
+// {
+//   return d->decimalPoint;
+// }
+// 
+// void Evaluator::setDecimalPoint( const QString& dp )
+// {
+//   d->decimalPoint = dp;
+// }
 
 HNumber Evaluator::eval()
 {
@@ -1123,7 +1135,8 @@ HNumber Evaluator::eval()
 
   if( d->dirty )
   {
-    Tokens tokens = scan( d->expression, d->decimalPoint );
+//    Tokens tokens = scan( d->expression, d->decimalPoint ); //refdp
+    Tokens tokens = scan( d->expression );
 
     // invalid expression ?
     if( !tokens.valid() )
@@ -1461,7 +1474,8 @@ void Evaluator::clearVariables()
   set( QString("ans"), HNumber(0)   );
 }
 
-QString Evaluator::autoFix( const QString& expr, const QString& decimalPoint )
+//QString Evaluator::autoFix( const QString& expr, const QString& decimalPoint )//refdp
+QString Evaluator::autoFix( const QString& expr )
 {
   int par = 0;
   QString result;
@@ -1479,7 +1493,8 @@ QString Evaluator::autoFix( const QString& expr, const QString& decimalPoint )
     result = result.left( result.length()-1 );
 
   // automagically close all parenthesis
-  Tokens tokens = Evaluator::scan( result, decimalPoint );
+//  Tokens tokens = Evaluator::scan( result, decimalPoint );//refdp
+  Tokens tokens = Evaluator::scan( result );
   if(tokens.count())
   {
     for( int i=0; i<tokens.count(); i++ )
@@ -1500,7 +1515,8 @@ QString Evaluator::autoFix( const QString& expr, const QString& decimalPoint )
   // e.g. "cos" is regarded as "cos(ans)"
   if( !result.isEmpty() )
   {
-    Tokens tokens = Evaluator::scan( result, decimalPoint );
+//    Tokens tokens = Evaluator::scan( result, decimalPoint );//refdp
+    Tokens tokens = Evaluator::scan( result );
     if( tokens.count() == 1 )
     {
       if( tokens[0].isIdentifier() )
@@ -1523,7 +1539,8 @@ QString Evaluator::dump() const
 
   if( d->dirty )
   {
-    Tokens tokens = scan( d->expression, d->decimalPoint );
+//    Tokens tokens = scan( d->expression, d->decimalPoint ); //refdp
+    Tokens tokens = scan( d->expression );
     compile( tokens );
   }
 
@@ -1571,3 +1588,5 @@ QString Evaluator::dump() const
 
   return result;
 }
+
+#endif /* ! _BISON */

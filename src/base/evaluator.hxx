@@ -20,10 +20,18 @@
 #ifndef EVALUATOR
 #define EVALUATOR
 
-#include <QString>
-#include <QVector>
+//#define _BISON
+
+#ifdef _BISON
+
+#include "bison/bisonparser.hxx"
+
+#else /* ! _BISON */
 
 #include <math/hmath.hxx>
+
+#include <QString>
+#include <QVector>
 
 class Token
 {
@@ -112,7 +120,8 @@ class Evaluator
     void clear();
     bool isValid() const;
     Tokens tokens() const;
-    static Tokens scan( const QString& expr, const QString& decimalPoint );
+//    static Tokens scan( const QString& expr, const QString& decimalPoint );//refdp
+    static Tokens scan( const QString& expr );
     QString error() const;
 
     void setAngleMode( AngleMode am );
@@ -120,8 +129,8 @@ class Evaluator
     HNumber eval();
     HNumber evalUpdateAns();
 
-    void setDecimalPoint( const QString& d );
-    QString decimalPoint() const;
+//     void setDecimalPoint( const QString& d );
+//     QString decimalPoint() const;
 
     void set( const QString& id, HNumber value );
     HNumber get( const QString& id );
@@ -130,7 +139,8 @@ class Evaluator
     QVector<Variable> variables() const;
     void clearVariables();
 
-    static QString autoFix( const QString& expr, const QString& decimalPoint );
+//    static QString autoFix( const QString& expr, const QString& decimalPoint );//refdp
+    static QString autoFix( const QString& expr );
 
     QString dump() const;
 
@@ -143,6 +153,8 @@ class Evaluator
     Evaluator( const Evaluator& );
     Evaluator& operator=( const Evaluator& );
 };
+
+#endif /* ! _BISON */
 
 
 #endif // EVALUATOR

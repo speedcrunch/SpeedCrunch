@@ -58,7 +58,8 @@ public:
       return;
     }
 
-    Tokens tokens = Evaluator::scan( text, Settings::self()->decimalPoint );
+//    Tokens tokens = Evaluator::scan( text, Settings::self()->decimalPoint ); //refdp
+    Tokens tokens = Evaluator::scan( text );
     for( int i = 0; i < tokens.count(); i++ )
     {
       Token& token = tokens[i];
@@ -321,7 +322,8 @@ void Editor::doMatchingLeft()
 
   // check for right par
   QString subtext = text().left( curPos );
-  Tokens tokens = Evaluator::scan( subtext, Settings::self()->decimalPoint );
+//   Tokens tokens = Evaluator::scan( subtext, Settings::self()->decimalPoint );//refdp
+  Tokens tokens = Evaluator::scan( subtext );
   if( !tokens.valid() ) return;
   if( tokens.count()<1 ) return;
   Token lastToken = tokens[ tokens.count()-1 ];
@@ -380,7 +382,8 @@ void Editor::doMatchingRight()
 
   // check for left par
   QString subtext = text().right( text().length() - curPos );
-  Tokens tokens = Evaluator::scan( subtext, Settings::self()->decimalPoint );
+//   Tokens tokens = Evaluator::scan( subtext, Settings::self()->decimalPoint );//refdp
+  Tokens tokens = Evaluator::scan( subtext );
   if( !tokens.valid() ) return;
   if( tokens.count()<1 ) return;
   Token firstToken = tokens[ 0 ];
@@ -439,7 +442,8 @@ void Editor::triggerAutoComplete()
   // tokenize the expression (don't worry, this is very fast)
   int curPos = textCursor().position();
   QString subtext = text().left( curPos );
-  Tokens tokens = Evaluator::scan( subtext, Settings::self()->decimalPoint );
+//   Tokens tokens = Evaluator::scan( subtext, Settings::self()->decimalPoint );//refdp
+  Tokens tokens = Evaluator::scan( subtext );
   if( !tokens.valid() ) return;
   if( tokens.count()<1 ) return;
 
@@ -515,7 +519,8 @@ void Editor::autoComplete( const QString& item )
 
   int curPos = textCursor().position();
   QString subtext = text().left( curPos );
-  Tokens tokens = Evaluator::scan( subtext, Settings::self()->decimalPoint );
+//   Tokens tokens = Evaluator::scan( subtext, Settings::self()->decimalPoint );//refdp
+  Tokens tokens = Evaluator::scan( subtext );
   if( !tokens.valid() ) return;
   if( tokens.count()<1 ) return;
 
@@ -537,19 +542,22 @@ void Editor::autoCalc()
 {
   if( !d->autoCalcEnabled ) return;
 
-  QString str = Evaluator::autoFix( text(), Settings::self()->decimalPoint );
+//   QString str = Evaluator::autoFix( text(), Settings::self()->decimalPoint );//refdp
+  QString str = Evaluator::autoFix( text() );
   if( str.isEmpty() ) return;
 
   // very short (just one token) and still no calculation, then skip
   if( !d->ansAvailable )
   {
-    Tokens tokens = Evaluator::scan( text(), Settings::self()->decimalPoint );
+//     Tokens tokens = Evaluator::scan( text(), Settings::self()->decimalPoint ); //refdp
+    Tokens tokens = Evaluator::scan( text() );
     if( tokens.count() < 2 )
       return;
   }
 
   // too short even after autofix ? do not bother either...
-  Tokens tokens = Evaluator::scan( str, Settings::self()->decimalPoint );
+//  Tokens tokens = Evaluator::scan( str, Settings::self()->decimalPoint ); //refdp
+  Tokens tokens = Evaluator::scan( str );
   if( tokens.count() < 2 ) return;
 
   // strip off assignment operator, e.g. "x=1+2" becomes "1+2" only
@@ -580,12 +588,14 @@ void Editor::autoCalc()
 void Editor::insertConstant( const QString& c )
 {
   // find set decimal separator
-  QString sep = Settings::self()->decimalPoint;
-  if ( sep.isEmpty() )
-    sep = QLocale().decimalPoint();
+//  QString sep = Settings::self()->decimalPoint; //refdp
+/*  if ( sep.isEmpty() )
+    sep = QLocale().decimalPoint();*/
+
   // replace constant dot separator
   QString str( c );
-  str.replace( QChar( '.' ), sep );
+//  str.replace( QChar( '.' ), sep ); //refdp
+  str.replace( QChar( '.' ), Settings::decimalPoint() );
   // show final constant in the evaluator
   insert( str );
 }

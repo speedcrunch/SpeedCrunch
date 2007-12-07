@@ -597,16 +597,17 @@ void Crunch::applySettings()
     d->radButton->setChecked( true );
   }
 
-  if ( settings->decimalPoint == "" )
-  {
-    d->eval->setDecimalPoint( QLocale().decimalPoint() );
-    d->result->setDecimalPoint( QLocale().decimalPoint() );
-  }
-  else
-  {
-    d->eval->setDecimalPoint( settings->decimalPoint );
-    d->result->setDecimalPoint( settings->decimalPoint );
-  }
+//   if ( settings->decimalPoint == "" )
+//   {
+//     d->eval->setDecimalPoint( QLocale().decimalPoint() );
+//     d->result->setDecimalPoint( QLocale().decimalPoint() );
+//   }
+//   else
+//   {
+//     d->eval->setDecimalPoint( settings->decimalPoint );
+//     d->result->setDecimalPoint( settings->decimalPoint );
+//   } //refdp
+  d->result->NotifyDotChanged();
 
   //QString l = settings->language;
   //if ( l == "" )
@@ -803,7 +804,7 @@ void Crunch::saveSettings()
   if( d->eval->angleMode()== Evaluator::Radian )
     settings->angleMode = "radian";
 
-  settings->decimalPoint = d->eval->decimalPoint();
+//  settings->decimalPoint = d->eval->decimalPoint(); //refdp
 
   if( settings->saveHistory )
     settings->history = d->editor->history();
@@ -1037,7 +1038,8 @@ void Crunch::radixChanged()
 
 void Crunch::returnPressed()
 {
-  QString str = Evaluator::autoFix( d->editor->text(), Settings::self()->decimalPoint );
+//   QString str = Evaluator::autoFix( d->editor->text(), Settings::self()->decimalPoint );//refdp
+  QString str = Evaluator::autoFix( d->editor->text() );
   if( str.isEmpty() ) return;
 
   d->eval->setExpression( str );
@@ -1106,12 +1108,15 @@ void Crunch::constantSelected( const QString& c )
     return;
 
   // find set decimal separator
-  QString sep = Settings::self()->decimalPoint;
+/*  QString sep = Settings::self()->decimalPoint;
   if ( sep.isEmpty() )
     sep = QLocale().decimalPoint();
   // replace constant dot separator
   QString str( c );
-  str.replace( QChar( '.' ), sep );
+  str.replace( QChar( '.' ), sep );//refdp*/
+  QString str( c );
+  str.replace( '.', Settings::decimalPoint() );
+
   // show final constant in the evaluator
   d->editor->insert( str );
 
@@ -1125,9 +1130,11 @@ void Crunch::textChanged()
 {
   if( d->autoAns )
   {
-    QString expr = Evaluator::autoFix( d->editor->text(), Settings::self()->decimalPoint );
+//    QString expr = Evaluator::autoFix( d->editor->text(), Settings::self()->decimalPoint );//refdp
+    QString expr = Evaluator::autoFix( d->editor->text() );
     if( expr.isEmpty() ) return;
-    Tokens tokens = Evaluator::scan( expr, Settings::self()->decimalPoint );
+//     Tokens tokens = Evaluator::scan( expr, Settings::self()->decimalPoint ); //refdp
+    Tokens tokens = Evaluator::scan( expr );
     if( tokens.count() == 1 )
     if( ( tokens[0].asOperator() == Token::Plus ) ||
         ( tokens[0].asOperator() == Token::Minus ) ||

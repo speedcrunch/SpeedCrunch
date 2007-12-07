@@ -100,10 +100,12 @@ void ConfigDlgPrivate::loadSettings()
   stayAlwaysOnTopCheck->setChecked( settings->stayAlwaysOnTop );
 
   decimalList->setCurrentIndex(0);
-  if( settings->decimalPoint == "." )
+//  if( settings->decimalPoint == "." ) //refdp
+  if( settings->decimalPoint() == '.' )
     decimalList->setCurrentIndex(1);
-  if( settings->decimalPoint == "," )
-    decimalList->setCurrentIndex(2);
+//  if( settings->decimalPoint() == "," ) //refdp
+  if( settings->decimalPoint() == ',' )
+  decimalList->setCurrentIndex(2);
 
   standardAppearanceCheck->setChecked( !settings->customAppearance );
   customAppearanceCheck->setChecked( settings->customAppearance );
@@ -135,8 +137,10 @@ void ConfigDlgPrivate::saveSettings()
   settings->autoCalc = autoCalcCheck->isChecked();
   settings->minimizeToTray = minimizeToTrayCheck->isChecked();
   settings->stayAlwaysOnTop = stayAlwaysOnTopCheck->isChecked();
-  settings->decimalPoint = decimalList->currentIndex()==1 ? QString('.') :
-    decimalList->currentIndex()==2 ? QString(',') : QString();
+/*  settings->decimalPoint = decimalList->currentIndex()==1 ? QString('.') : //refdp
+    decimalList->currentIndex()==2 ? QString(',') : QString();*/
+  settings->setDecimalPoint(decimalList->currentIndex()==1 ? "." : //refdp
+  decimalList->currentIndex()==2 ? "," : QString());
   settings->customAppearance = customAppearanceCheck->isChecked();
   settings->customTextColor = textColorButton->currentColor();
   settings->customBackgroundColor1 = bg1ColorButton->currentColor();

@@ -19,6 +19,7 @@
    Boston, MA 02110-1301, USA.
  */
 
+#include "base/settings.hxx" //refdp
 #include <base/functions.hxx>
 #include <gui/result.hxx>
 #include <math/hmath.hxx>
@@ -36,7 +37,7 @@ public:
   QStringList contents;
   char format;
   int decimalDigits;
-  QString decimalPoint;
+//  QString decimalPoint; //refdp
   bool customAppearance;
   QColor customTextColor;
   QColor customBackgroundColor1;
@@ -166,7 +167,7 @@ Result::Result( QWidget* parent, const char* name ): QListWidget( parent )
   d = new ResultPrivate;
   d->format = 'g';
   d->decimalDigits = -1;
-  d->decimalPoint = QString();
+//  d->decimalPoint = QString(); //refdp
   d->customAppearance = false;
   d->count = 0;
 
@@ -230,9 +231,14 @@ void Result::copyToClipboard( QListWidgetItem* item )
  emit textCopied( item->text() );
 }
 
-void Result::resizeEvent( QResizeEvent* )
+void Result::NotifyDotChanged() //refdp
 {
   triggerUpdate();
+}
+
+void Result::resizeEvent( QResizeEvent* )
+{
+   triggerUpdate();
 }
 
 void Result::setFormat( char format )
@@ -257,26 +263,29 @@ int Result::decimalDigits() const
   return d->decimalDigits;
 }
 
-void Result::setDecimalPoint( const QString& dp )
-{
-  d->decimalPoint = dp;
-  triggerUpdate();
-}
-
-QString Result::decimalPoint() const
-{
-  return d->decimalPoint;
-}
+// void Result::setDecimalPoint( const QString& dp )
+// {
+//   d->decimalPoint = dp;
+//   triggerUpdate();
+// }
+// 
+// QString Result::decimalPoint() const
+// {
+//   return d->decimalPoint;
+// } //refdp
 
 QString Result::formatNumber( const HNumber& value ) const
 {
   char* str = HMath::format( value, value.format() ? value.format() : d->format, d->decimalDigits );
   QString s = QString::fromLatin1( str );
   free( str );
-  if( d->decimalPoint.length() == 1 )
+/*  if( d->decimalPoint.length() == 1 )
     for( int i = 0; i < s.length(); i++ )
       if( s[i] == '.' )
-        s[i] = d->decimalPoint[0];
+        s[i] = d->decimalPoint[0];*/ //refdp
+  QChar dot = Settings::decimalPoint();
+  if (dot != '.')
+    s.replace( '.', dot);
   return s;
 }
 

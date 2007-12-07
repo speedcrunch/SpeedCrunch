@@ -23,7 +23,7 @@
 
 #include <QApplication>
 #include <QGridLayout>
-#include <QLocale>
+//#include <QLocale> //refdp
 #include <QPushButton>
 #include <QStyle>
 
@@ -85,10 +85,11 @@ void KeyPad::createButtons()
 
   d->keyEq  = new QPushButton( "=", this );
 
-  if ( Settings::self()->decimalPoint == "" )
+/*  if ( Settings::self()->decimalPoint == "" )
     d->keyDot = new QPushButton( QString( QLocale().decimalPoint() ), this );
   else
-    d->keyDot = new QPushButton( Settings::self()->decimalPoint, this );
+    d->keyDot = new QPushButton( Settings::self()->decimalPoint, this );//refdp */
+  d->keyDot = new QPushButton( Settings::decimalPoint(), this );
 
   d->keySqrt = new QPushButton( this );
   d->keySqrt->setIcon( QPixmap( ":/math_sqrt.png" ) );
@@ -472,8 +473,9 @@ void KeyPad::clickedATan()      { emit addText( "atan(" ); }
 
 void KeyPad::settingsChanged()
 {
-  if ( Settings::self()->decimalPoint == "" )
+/*  if ( Settings::self()->decimalPoint == "" )
     d->keyDot->setText( QLocale().decimalPoint() );
   else
-    d->keyDot->setText( Settings::self()->decimalPoint );
+    d->keyDot->setText( Settings::self()->decimalPoint ); //refdp*/
+  d->keyDot->setText( Settings::decimalPoint() );
 }

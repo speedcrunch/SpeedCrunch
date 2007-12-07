@@ -34,11 +34,14 @@ class Settings
   public:
 
     QString angleMode;
+//    QString decimalPoint; //refdp
+    static QChar decimalPoint();
+    void setDecimalPoint(const QString& val);
+
     bool saveHistory;
     bool saveVariables;
     bool autoComplete;
     bool autoCalc;
-    QString decimalPoint;
     //QString language;
     bool minimizeToTray;
 
@@ -99,6 +102,8 @@ class Settings
     void save();
 
   private:
+    bool autoPoint;
+    QChar point; //refdp
     Settings();
     Settings( const Settings& );
     Settings& operator=( const Settings& );
