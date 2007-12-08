@@ -583,16 +583,18 @@ void Crunch::applySettings()
   d->editor->setHighlightColor( Editor::Variable, settings->highlightVariableColor );
   d->editor->setHighlightColor( Editor::MatchedPar, settings->matchedParenthesisColor );
 
-  if( settings->angleMode == "degree" )
+//  if( settings->angleMode == "degree" ) //refan
+  if( Settings::angleMode == Settings::Degree )
   {
-    d->eval->setAngleMode( Evaluator::Degree );
+//    d->eval->setAngleMode( Evaluator::Degree ); //refan
     d->degButton->setChecked( true );
     d->radButton->setChecked( false );
   }
 
-  if( settings->angleMode == "radian" )
+//  if( settings->angleMode == "radian" ) //refan
+  if( Settings::angleMode == Settings::Radian )
   {
-    d->eval->setAngleMode( Evaluator::Radian );
+//    d->eval->setAngleMode( Evaluator::Radian ); //refan
     d->degButton->setChecked( false );
     d->radButton->setChecked( true );
   }
@@ -607,7 +609,7 @@ void Crunch::applySettings()
 //     d->eval->setDecimalPoint( settings->decimalPoint );
 //     d->result->setDecimalPoint( settings->decimalPoint );
 //   } //refdp
-  d->result->NotifyDotChanged();
+  d->result->NotifyDotChanged(); // FIXME should use the QT message handling "settingsChanged"
 
   //QString l = settings->language;
   //if ( l == "" )
@@ -799,10 +801,10 @@ void Crunch::saveSettings()
 
   settings->mainWindowSize = size();
 
-  if( d->eval->angleMode()== Evaluator::Degree )
-    settings->angleMode = "degree";
-  if( d->eval->angleMode()== Evaluator::Radian )
-    settings->angleMode = "radian";
+//   if( d->eval->angleMode()== Evaluator::Degree ) //refan
+//     settings->angleMode = "degree";
+//   if( d->eval->angleMode()== Evaluator::Radian )
+//     settings->angleMode = "radian";
 
 //  settings->decimalPoint = d->eval->decimalPoint(); //refdp
 
@@ -991,10 +993,11 @@ void Crunch::angleModeChanged()
     d->degButton->setChecked( !d->radButton->isChecked() );
   blockSignals( false );
 
-  if( d->degButton->isChecked() )
-    d->eval->setAngleMode( Evaluator::Degree );
-  if( d->radButton->isChecked() )
-    d->eval->setAngleMode( Evaluator::Radian );
+//   if( d->degButton->isChecked() ) // refan
+//     d->eval->setAngleMode( Evaluator::Degree );
+//   if( d->radButton->isChecked() )
+//     d->eval->setAngleMode( Evaluator::Radian );
+  Settings::angleMode = d->degButton->isChecked()? Settings::Degree : Settings::Radian;
 
   QTimer::singleShot(0, d->editor, SLOT( setFocus() ) );
 }

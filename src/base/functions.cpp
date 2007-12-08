@@ -19,7 +19,8 @@
    Boston, MA 02110-1301, USA.
  */
 
-#include <base/evaluator.hxx>
+//#include <base/evaluator.hxx> //refan
+#include "base/settings.hxx"
 #include <base/functions.hxx>
 #include <math/hmath.hxx>
 
@@ -32,14 +33,27 @@
 #include <float.h>
 #include <math.h>
 
-HNumber deg2rad( HNumber x )
+HNumber rad2deg( HNumber angle)
 {
-  return x * HMath::pi() / HNumber(180);
+  return HNumber(180) * angle / HMath::pi();
 }
 
-HNumber rad2deg( HNumber x )
+HNumber deg2rad( HNumber angle)
 {
-  return HNumber(180) * x / HMath::pi();
+  return angle * HMath::pi() / HNumber(180);
+}
+
+
+HNumber checkRad2Deg( HNumber angle )
+{
+  return Settings::angleMode == Settings::Degree?
+             rad2deg(angle) : angle;
+}
+
+HNumber checkDeg2Rad( HNumber angle)
+{
+  return Settings::angleMode == Settings::Degree?
+            deg2rad(angle) : angle;
 }
 
 HNumber function_abs( const Evaluator*, Function*, const FunctionArguments& args )
@@ -277,10 +291,11 @@ HNumber function_sin( const Evaluator* eval, Function*, const FunctionArguments&
     return HNumber::nan();
 
   HNumber angle = args[0];
-  if( eval->angleMode() == Evaluator::Degree )
-    angle = deg2rad( angle );
+//  if( eval->angleMode() == Evaluator::Degree ) refan
+//    angle = deg2rad( angle );
+//  return HMath::sin( angle );
 
-  return HMath::sin( angle );
+  return HMath::sin( checkDeg2Rad(angle) );
 }
 
 HNumber function_cos( const Evaluator* eval, Function*, const FunctionArguments& args )
@@ -289,10 +304,11 @@ HNumber function_cos( const Evaluator* eval, Function*, const FunctionArguments&
     return HNumber::nan();
 
   HNumber angle = args[0];
-  if( eval->angleMode() == Evaluator::Degree )
-    angle = deg2rad( angle );
+//  if( eval->angleMode() == Evaluator::Degree ) //refan
+//    angle = deg2rad( angle );
+//  return HMath::cos( angle );
 
-  return HMath::cos( angle );
+  return HMath::cos( checkDeg2Rad(angle) );
 }
 
 HNumber function_tan( const Evaluator* eval, Function* fn, const FunctionArguments& args )
@@ -301,10 +317,12 @@ HNumber function_tan( const Evaluator* eval, Function* fn, const FunctionArgumen
     return HNumber::nan();
 
   HNumber angle = args[0];
-  if( eval->angleMode() == Evaluator::Degree )
-    angle = deg2rad( angle );
+//  if( eval->angleMode() == Evaluator::Degree ) //refan
+//  if( Settings::angleMode() == Settings::Degree )
+//    angle = deg2rad( angle );
+//  HNumber result = HMath::tan( angle ); //refan
 
-  HNumber result = HMath::tan( angle );
+  HNumber result = HMath::tan( checkDeg2Rad(angle) );
   if ( result.isNan() )
   {
     fn->setError( fn->name(), QApplication::translate( "functions",
@@ -321,10 +339,11 @@ HNumber function_cot( const Evaluator* eval, Function* fn, const FunctionArgumen
     return HNumber::nan();
 
   HNumber angle = args[0];
-  if( eval->angleMode() == Evaluator::Degree )
+/*  if( eval->angleMode() == Evaluator::Degree ) //refan
     angle = deg2rad( angle );
 
-  HNumber result = HMath::cot( angle );
+  HNumber result = HMath::cot( angle );*/
+  HNumber result = HMath::cot( checkDeg2Rad(angle) );
   if ( result.isNan() )
   {
     fn->setError( fn->name(), QApplication::translate( "functions",
@@ -341,10 +360,11 @@ HNumber function_sec( const Evaluator* eval, Function* fn, const FunctionArgumen
     return HNumber::nan();
 
   HNumber angle = args[0];
-  if( eval->angleMode() == Evaluator::Degree )
+/*  if( eval->angleMode() == Evaluator::Degree ) //refan
     angle = deg2rad( angle );
 
-  HNumber result = HMath::sec( angle );
+  HNumber result = HMath::sec( angle );*/
+  HNumber result = HMath::sec( checkDeg2Rad(angle) );
   if ( result.isNan() )
   {
     fn->setError( fn->name(), QApplication::translate( "functions",
@@ -361,10 +381,11 @@ HNumber function_csc( const Evaluator* eval, Function* fn, const FunctionArgumen
     return HNumber::nan();
 
   HNumber angle = args[0];
-  if( eval->angleMode() == Evaluator::Degree )
+/*  if( eval->angleMode() == Evaluator::Degree ) //refan
     angle = deg2rad( angle );
 
-  HNumber result = HMath::csc( angle );
+  HNumber result = HMath::csc( angle );*/
+  HNumber result = HMath::csc( checkDeg2Rad(angle) );
   if ( result.isNan() )
   {
     fn->setError( fn->name(), QApplication::translate( "functions",
@@ -393,10 +414,11 @@ HNumber function_asin( const Evaluator         * evaluator,
     return HNumber::nan();
   }
 
-  if ( evaluator->angleMode() == Evaluator::Degree )
+/*  if ( evaluator->angleMode() == Evaluator::Degree ) //refan
     result = rad2deg( result );
 
-  return result;
+  return result;*/
+  return checkRad2Deg(result);
 }
 
 HNumber function_acos( const Evaluator         * evaluator,
@@ -417,10 +439,11 @@ HNumber function_acos( const Evaluator         * evaluator,
     return HNumber::nan();
   }
 
-  if ( evaluator->angleMode() == Evaluator::Degree )
+/*  if ( evaluator->angleMode() == Evaluator::Degree ) //refan
     result = rad2deg( result );
 
-  return result;
+  return result;*/
+  return checkRad2Deg(result);
 }
 
 HNumber function_atan( const Evaluator* eval, Function*, const FunctionArguments& args )
@@ -430,10 +453,11 @@ HNumber function_atan( const Evaluator* eval, Function*, const FunctionArguments
 
   HNumber num = args[0];
   HNumber angle = HMath::atan( num );
-  if( eval->angleMode() == Evaluator::Degree )
+/*  if( eval->angleMode() == Evaluator::Degree ) //refan
     angle = rad2deg( angle );
 
-  return angle;
+  return angle;*/
+  return checkRad2Deg(angle);
 }
 
 HNumber function_sinh( const Evaluator* eval, Function*, const FunctionArguments& args )

@@ -82,7 +82,7 @@ public:
 
   QString error;
   QMap<QString,Variable> variables;
-  Evaluator::AngleMode angleMode;
+//  Evaluator::AngleMode angleMode; //refan
 //  QString decimalPoint; //refdp
 
   QString assignId;
@@ -350,7 +350,7 @@ void Evaluator::clear()
   d->valid       = false;
 
   d->error        = QString();
-  d->angleMode    = Degree;
+//  d->angleMode    = Degree; //refan
 //  d->decimalPoint = QString(); //refdp
 
   d->constants.clear();
@@ -1103,7 +1103,7 @@ void Evaluator::compile( const Tokens& tokens ) const
 
 }
 
-Evaluator::AngleMode Evaluator::angleMode() const
+/*Evaluator::AngleMode Evaluator::angleMode() const
 {
   return d->angleMode;
 }
@@ -1112,7 +1112,7 @@ void Evaluator::setAngleMode( AngleMode am )
 {
   d->angleMode = am;
 }
-
+*/ //refan
 // QString Evaluator::decimalPoint() const //refdp
 // {
 //   return d->decimalPoint;

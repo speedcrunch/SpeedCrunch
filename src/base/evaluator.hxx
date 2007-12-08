@@ -111,7 +111,7 @@ class Evaluator
 {
   public:
 
-    typedef enum { Degree, Radian } AngleMode;
+//    typedef enum { Degree, Radian } AngleMode; //refan
 
     Evaluator();
     ~Evaluator();
@@ -124,12 +124,12 @@ class Evaluator
     static Tokens scan( const QString& expr );
     QString error() const;
 
-    void setAngleMode( AngleMode am );
-    AngleMode angleMode() const;
+//    void setAngleMode( AngleMode am ); //refan
+//    AngleMode angleMode() const;
     HNumber eval();
     HNumber evalUpdateAns();
 
-//     void setDecimalPoint( const QString& d );
+//     void setDecimalPoint( const QString& d ); //refdp
 //     QString decimalPoint() const;
 
     void set( const QString& id, HNumber value );

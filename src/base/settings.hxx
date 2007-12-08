@@ -33,7 +33,10 @@ class Settings
 {
   public:
 
-    QString angleMode;
+    typedef enum { Degree, Radian } AngleMode; //refan
+
+//    QString angleMode; //refan
+    static AngleMode angleMode;
 //    QString decimalPoint; //refdp
     static QChar decimalPoint();
     void setDecimalPoint(const QString& val);
@@ -102,8 +105,9 @@ class Settings
     void save();
 
   private:
-    bool autoPoint;
-    QChar point; //refdp
+    static bool autoDetectDot;
+    static QChar dot; //refdp
+
     Settings();
     Settings( const Settings& );
     Settings& operator=( const Settings& );

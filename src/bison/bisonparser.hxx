@@ -91,15 +91,11 @@ class Variable
 class Evaluator
 {
   public:
-    typedef enum { Degree, Radian } AngleMode;
-
     QString error() const;
 
     static Tokens scan( const QString& expr );
     static QString autoFix( const QString& expr );
 
-    AngleMode angleMode() const;
-    void setAngleMode( AngleMode am );
     QVector<Variable> variables() const;
     void clearVariables();
     void remove( const QString& id );

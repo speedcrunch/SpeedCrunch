@@ -33,6 +33,10 @@
 
 Settings* s_global_settings = 0;
 
+Settings::AngleMode Settings::angleMode; //refan
+QChar Settings::dot;                     //refdp
+bool Settings::autoDetectDot;
+
 static void deleteGlobalSettings()
 {
     delete s_global_settings;
@@ -41,19 +45,20 @@ static void deleteGlobalSettings()
 
 QChar Settings::decimalPoint() //refdp
 {
-  return self()->point;
+  return self()->dot;
 }
 
 void Settings::setDecimalPoint(const QString& val) //refdp
 {
-  autoPoint = (val.length() != 1);
-  point = autoPoint? QLocale().decimalPoint() : val[0];
+  autoDetectDot = (val.length() != 1);
+  dot = autoDetectDot? QLocale().decimalPoint() : val[0];
 }
 
 
 Settings::Settings()
 {
-  angleMode       = "degree";
+//  angleMode       = "degree"; //refan
+  angleMode       = Degree;
   saveHistory     = true;
   saveVariables   = true;
   autoComplete    = true;
@@ -114,9 +119,11 @@ void Settings::load()
   QSettings settings( /*QSettings::IniFormat,*/ QSettings::UserScope, SETTINGSKEY, SETTINGSKEY );
 
   QString key = SETTINGSKEY;
-  QString tmp;
 
-  angleMode      = settings.value( key + "/General/AngleMode",      "degree"  ).toString();
+//  angleMode      = settings.value( key + "/General/AngleMode",      "degree"  ).toString(); //refan
+  angleMode = Radian;
+  if (settings.value( key + "/General/AngleMode",      "degree"  ).toString() == "degree")
+    angleMode = Degree;
   saveHistory    = settings.value( key + "/General/SaveHistory",    true      ).toBool();
   saveVariables  = settings.value( key + "/General/SaveVariables",  true      ).toBool();
   autoComplete   = settings.value( key + "/General/AutoComplete",   true      ).toBool();
@@ -243,7 +250,7 @@ void Settings::save()
   settings.setValue( key + "/General/SaveVariables",  saveVariables  );
   settings.setValue( key + "/General/AutoComplete",   autoComplete   );
   settings.setValue( key + "/General/AutoCalc",       autoCalc       );
-  settings.setValue( key + "/General/DecimalPoint",   autoPoint? QString(): decimalPoint() );
+  settings.setValue( key + "/General/DecimalPoint",   autoDetectDot? QString(): decimalPoint() );
   //settings.setValue( key + "/General/Language",       language       );
   settings.setValue( key + "/General/MinimizeToTray", minimizeToTray );
 

@@ -18,8 +18,6 @@
    Boston, MA 02110-1301, USA.
  */
 
-#define TARGET_TESTEVALUATOR
-
 #include <iostream>
 #include <string.h>
 
@@ -74,7 +72,7 @@ static void checkDivisionByZero( const char    * file,
 
   Evaluator e;
 //  e.setDecimalPoint( "." ); //refdp
-  e.setAngleMode( Evaluator::Radian );
+//  e.setAngleMode( Evaluator::Radian ); //refan
   e.setExpression( expr );
   HNumber rn = e.evalUpdateAns();
 
@@ -97,7 +95,8 @@ static void checkEval( const char    * file,
   eval_total_tests++;
 
   Evaluator e;
-  e.setAngleMode( Evaluator::Radian );
+//  e.setAngleMode( Evaluator::Radian ); //refan
+  Settings::angleMode = Settings::Radian; //refan
   e.setExpression( expr );
   HNumber rn = e.evalUpdateAns();
 
@@ -459,6 +458,7 @@ void test_auto_fix_untouch()
 int main( int argc, char * * argv)
 {
   Settings::self()->setDecimalPoint("."); //refdp
+  Settings::angleMode = Settings::Radian; //refan
   test_constants();
   test_unary();
   test_binary();
