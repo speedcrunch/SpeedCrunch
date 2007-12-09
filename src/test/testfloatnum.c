@@ -6530,6 +6530,67 @@ static int test_erfcsum()
   return 1;
 }
 
+static int test_erfc()
+{
+  int prec, i;
+  floatstruct x, step1;
+  floatstruct results[40];
+
+  float_create(&x);
+  float_create(&step1);
+  for (i = -1; ++i < 40;)
+    float_create(&results[i]);
+  float_setasciiz(&step1, "0.1");
+  printf("precision test for erfc\n");
+  for (prec = 0; ++prec <= 101;)
+  {
+    printf("%d\n", prec-1);
+    /* clear all cached coefficients */
+    erfcdigits = 0;
+    for (i = 5; ++i <= 39;)
+    {
+      if (i < 10)
+        float_muli(&x, &step1, i, EXACT);
+      else if (i < 30)
+        float_setinteger(&x, i-9);
+      else
+        float_setinteger(&x, (i-25)*(i-25));
+      _sub_ulp(&x, prec);
+      if(!float_erfc(&x, prec))
+      {
+        printf("evaluation FAILED for case %d\n", i);
+        return 0;
+      }
+      float_move(&results[i], &x);
+    }
+    for (i = 5; ++i <= 39;)
+    {
+      if (i < 10)
+        float_muli(&x, &step1, i, EXACT);
+      else if (i < 30)
+        float_setinteger(&x, i-9);
+      else
+        float_setinteger(&x, (i-25)*(i-25));
+      _sub_ulp(&x, prec);
+      if(!float_erfc(&x, prec+4))
+      {
+        printf("evaluation FAILED for case %d\n", i);
+        return 0;
+      }
+      if (!_cmprelerror(&x, &results[i], -prec))
+      {
+        printf("evaluation IMPRECICE for case %d\n", i);
+        return 0;
+      }
+    }
+  }
+  float_free(&x);
+  float_free(&step1);
+  for (i = -1; ++i < 40;)
+    float_free(&results[i]);
+  return 1;
+}
+
 static int testfailed(char* msg)
 {
   printf("\n%s FAILED, tests aborted\n", msg);
@@ -6549,6 +6610,9 @@ int main(int argc, char** argv)
   float_stdconvert();
   maxdigits = 150;
 
+  if(!test_erfc()) return testfailed("erfc");
+
+  return 0;
 
   if(!test_longadd()) return testfailed("_longadd");
   if(!test_longmul()) return testfailed("_longmul");
@@ -6658,6 +6722,7 @@ int main(int argc, char** argv)
   if(!test_erfnear0()) return testfailed("erfnear0");
   if(!test_erfcasymptotic()) return testfailed("erfcasymptotic");
   if(!test_erfcsum()) return testfailed("erfcsum");
+  if(!test_erfc()) return testfailed("erfc");
 
   printf("\nall tests PASSED\n");
 #endif /* _FLOATNUMTEST */

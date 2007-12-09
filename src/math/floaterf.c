@@ -109,8 +109,8 @@ _erf(
   }
   else
   {
-    erfnear0(x, digits);
-    float_mul(x, x, &c2DivSqrtPi, digits+1);
+    erfnear0(x, digits+5);
+    float_mul(x, x, &c2DivSqrtPi, digits+5);
   }
   float_setsign(x, sign);
   return 1;
@@ -126,63 +126,67 @@ _erfc(
   char result;
 
   expx = float_getexponent(x);
-  if (expx < -digits || float_iszero(x))
+  prec = expx + digits;
+  if (prec < -1 || float_iszero(x))
   {
     float_copy(x, &c1, EXACT);
     return 1;
   }
   if (float_cmp(x, &c1Div2) <= 0)
   {
-    _erf(x, digits + expx);
-    float_sub(x, &c1, x, digits);
+    _erf(x, prec+2);
+    float_sub(x, &c1, x, digits+2);
     return 1;
   }
   float_create(&tmp);
   if (_asymptotic_good(x, digits))
   {
-    result = float_mul(&tmp, x, x, digits+1)
-        && _exp(&tmp, digits+1)
-        && float_mul(&tmp, &tmp, x, digits+1)
-        && float_div(&tmp, &c1DivSqrtPi, &tmp, digits);
-    if (!result)
+    result = 0;
+    if (float_mul(&tmp, x, x, digits + 5)
+        && _exp(&tmp, digits + 3)
+        && float_mul(&tmp, &tmp, x, digits + 3)
+        && float_div(&tmp, &c1DivSqrtPi, &tmp, digits + 3))
+    {
+      result = erfcbigx(x, digits);
+      if (!result)
+        float_error = FLOAT_UNSTABLE;
+    }
+    else
       float_error = FLOAT_UNDERFLOW;
-    result = result && erfcbigx(x, digits);
-    if (!result)
-      float_error = FLOAT_UNSTABLE;
-    result = result && float_mul(x, x, &tmp, digits+1);
+    result = result && float_mul(x, x, &tmp, digits + 4);
   }
   else
   {
+    result = 1;
     float_create(&t2);
     float_create(&t3);
-    float_mul(&t2, x, x, digits+1);
+    float_mul(&t2, x, x, digits + 2);
     float_copy(&tmp, &t2, EXACT);
     erfcsum(&tmp, digits);
-    float_add(&tmp, &tmp, &tmp, digits+1);
+    float_add(&tmp, &tmp, &tmp, digits + 1);
     float_copy(&t3, &t2, EXACT);
-    float_reciprocal(&t2, digits);
-    float_add(&tmp, &tmp, &t2, digits);
+    float_reciprocal(&t2, digits + 1);
+    float_add(&tmp, &tmp, &t2, digits + 2);
     float_neg(&t3);
-    _exp(&t3, digits+1);
-    float_mul(&t3, &t3, &tmp, digits);
-    float_mul(&tmp, &erfcalpha, x, digits);
-    float_mul(&t3, &tmp, &t3, digits);
-    float_mul(&t3, &c1DivPi, &t3, digits);
+    _exp(&t3, digits + 2);
+    float_mul(&t3, &t3, &tmp, digits + 2);
+    float_mul(&tmp, &erfcalpha, x, digits + 2);
+    float_mul(&t3, &tmp, &t3, digits + 3);
+    float_mul(&t3, &c1DivPi, &t3, digits + 2);
     /* quick estimate to find the right working precision */
     float_div(&tmp, x, &erfcalpha, 4);
     float_mul(&tmp, &tmp, &c2Pi, 4);
     float_div(&tmp, &tmp, &cLn10, 4);
     prec = digits - float_getexponent(&t3) - float_asinteger(&tmp) + 1;
     /* add correction term */
-    result = prec <= digits;
-    if (result && prec > 0)
+    if (prec > 0)
     {
-      float_div(&tmp, x, &erfcalpha, prec+2);
-      float_mul(&tmp, &tmp, &c2Pi, prec+2);
+      float_div(&tmp, x, &erfcalpha, prec + 3);
+      float_mul(&tmp, &tmp, &c2Pi, prec + 4);
       _exp(&tmp, prec);
       float_sub(&tmp, &c1, &tmp, prec);
       float_div(&tmp, &c2, &tmp, prec);
-      float_add(&t3, &t3, &tmp, digits);
+      float_add(&t3, &t3, &tmp, digits + 1);
     }
     float_free(&t2);
     float_move(x, &t3);

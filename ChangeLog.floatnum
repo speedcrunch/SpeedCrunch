@@ -1,3 +1,14 @@
+2007-12-08
+bug fix
+
+floaterf
+- _erfc could hang for tiny x. Fixed
+- tuned _erfc
+floatseries
+- adjusted working precisions to be best for _erfc
+testfloatnum
+- added test suite for float_erfc
+
 2007-12-06
 bug fixes
 fine tuning

@@ -265,6 +265,7 @@ floatstruct c2DivSqrtPi;
 floatstruct cMinus0_4;
 floatstruct cUnsignedBound;
 
+int erfcdigits = 0;
 floatstruct erfccoeff[MAXERFCIDX];
 floatstruct erfcalpha;
 floatstruct erfcalphasqr;

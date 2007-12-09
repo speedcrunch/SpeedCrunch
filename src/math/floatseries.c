@@ -257,6 +257,8 @@ erfseries(
   floatstruct xsqr, smd, pwr;
   int i, workprec, expsqr, expx;
 
+  if (digits <= 0)
+    digits = 1;
   expx = float_getexponent(x);
   expsqr = 2 * expx + 2;
   if (-expsqr > digits || float_iszero(x))
@@ -265,8 +267,8 @@ erfseries(
   float_create(&xsqr);
   float_create(&smd);
   float_create(&pwr);
-  float_mul(&xsqr, x, x, digits + expsqr);
-  workprec = digits + float_getexponent(&xsqr) + 1;
+  float_mul(&xsqr, x, x, digits + expsqr + 1);
+  workprec = digits + float_getexponent(&xsqr) + 2;
   float_copy(&pwr, x, workprec);
   i = 1;
   while (workprec > 0)
@@ -298,35 +300,33 @@ erfcasymptotic(
 
   float_create(&smd);
   float_create(&fct);
-  workprec = digits - 2 * float_getexponent(x);
-  if (workprec < 0)
+  workprec = digits - 2 * float_getexponent(x) + 1;
+  if (workprec <= 0)
   {
     float_copy(x, &c1, EXACT);
     return 1;
   }
-  float_mul(&fct, x, x, workprec+1);
-  float_div(&fct, &c1Div2, &fct, workprec);
+  float_mul(&fct, x, x, digits + 1);
+  float_div(&fct, &c1Div2, &fct, digits);
   float_neg(&fct);
   float_copy(&smd, &c1, EXACT);
   float_setzero(x);
-  newprec = digits+1;
+  newprec = digits;
   workprec = newprec;
   i = 1;
   while (newprec > 0 && newprec <= workprec)
   {
     workprec = newprec;
-    float_add(x, x, &smd, digits+1);
-    float_muli(&smd, &smd, i, workprec);
-    float_mul(&smd, &smd, &fct, workprec+1);
-    newprec = digits + float_getexponent(&smd)+1;
+    float_add(x, x, &smd, digits + 4);
+    float_muli(&smd, &smd, i, workprec + 1);
+    float_mul(&smd, &smd, &fct, workprec + 2);
+    newprec = digits + float_getexponent(&smd) + 1;
     i += 2;
   }
   float_free(&fct);
   float_free(&smd);
   return newprec <= workprec;
 }
-
-static int erfcdigits = 0;
 
 /* this algorithm is based on a paper from Crandall, who in turn attributes
    to Chiarella and Reichel.
@@ -341,6 +341,11 @@ static int erfcdigits = 0;
    f(t, alpha) = Sum[k>0](exp(-k*k*alpha*alpha)/(k*k*alpha*alpha + t)
    f(t, alpha) is used in the evaluation of erfc(sqrt(t))
 
+   alpha is dependent on the desired precision; For a precision of p
+   places, alpha should be < pi/sqrt(p*ln 10). Unfortunately, the
+   smaller alpha is, the worse is the convergence rate, so alpha is
+   usually approximately its upper limit.
+
    relative error for 100-digit evaluation < 5e-100 */
 
 char
@@ -348,17 +353,10 @@ erfcsum(
   floatnum x, /* should be the square of the parameter to erfc */
   int digits)
 {
-  int steps, i, workprec;
+  int i, workprec;
   floatstruct sum, smd;
   floatnum Ei;
 
-  steps = ((1501 * digits) >> 11) + 1;
-  if (steps > MAXERFCIDX)
-  {
-    /* not enough internal buffer for such a high precision */
-    float_setnan(x);
-    return 0;
-  }
   if (digits > erfcdigits)
   {
     /* cannot re-use last evaluation's intermediate results */
@@ -370,7 +368,7 @@ erfcsum(
     /* create new alpha appropriate for the desired precision
        This alpha need not be high precision, any alpha near the
        one evaluated here would do */
-    float_muli(&erfcalpha, &cLn10, digits, 3);
+    float_muli(&erfcalpha, &cLn10, digits + 4, 3);
     float_sqrt(&erfcalpha, 3);
     float_div(&erfcalpha, &cPi, &erfcalpha, 3);
     float_mul(&erfcalphasqr, &erfcalpha, &erfcalpha, EXACT);
@@ -378,34 +376,34 @@ erfcsum(
        Initiate the iteration here */
     float_copy(&erfct2, &erfcalphasqr, EXACT);
     float_neg(&erfct2);
-    _exp(&erfct2, digits); /* exp(-alpha*alpha) */
+    _exp(&erfct2, digits + 3); /* exp(-alpha*alpha) */
     float_copy(erfccoeff, &erfct2, EXACT); /* start value */
-    float_mul(&erfct3, &erfct2, &erfct2, digits); /* exp(-2*alpha*alpha) */
+    float_mul(&erfct3, &erfct2, &erfct2, digits + 3); /* exp(-2*alpha*alpha) */
   }
   float_create(&sum);
   float_create(&smd);
   float_setzero(&sum);
-  for (i = 0; ++i <= steps;)
+  for (i = 0; ++i < MAXERFCIDX;)
   {
     Ei = &erfccoeff[i-1];
     if (float_isnan(Ei))
     {
       /* if exp(-i*i*alpha*alpha) is not available, evaluate it from
          the coefficient of the last summand */
-      float_mul(&erfct2, &erfct2, &erfct3, workprec);
-      float_mul(Ei, &erfct2, &erfccoeff[i-2], workprec);
+      float_mul(&erfct2, &erfct2, &erfct3, workprec + 3);
+      float_mul(Ei, &erfct2, &erfccoeff[i-2], workprec + 3);
     }
     /* Ei finally decays rapidly. save some time by adjusting the
        working precision */
     workprec = digits + float_getexponent(Ei) + 1;
-    if (workprec <= 1)
+    if (workprec <= 0)
       break;
     /* evaluate the summand exp(-i*i*alpha*alpha)/(i*i*alpha*alpha+x) */
     float_muli(&smd, &erfcalphasqr, i*i, workprec);
-    float_add(&smd, x, &smd, workprec + 1);
-    float_div(&smd, Ei, &smd, workprec);
+    float_add(&smd, x, &smd, workprec + 2);
+    float_div(&smd, Ei, &smd, workprec + 1);
     /* add summand to the series */
-    float_add(&sum, &sum, &smd, digits + 2);
+    float_add(&sum, &sum, &smd, digits + 3);
   }
   float_move(x, &sum);
   float_free(&smd);

@@ -66,6 +66,7 @@ extern floatstruct cBernoulliNum[68];
 extern floatstruct cBernoulliDen[68];
 extern floatstruct cUnsignedBound;
 
+extern int erfcdigits;
 extern floatstruct erfccoeff[MAXERFCIDX];
 extern floatstruct erfcalpha;
 extern floatstruct erfcalphasqr;
