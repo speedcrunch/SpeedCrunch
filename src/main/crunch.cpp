@@ -664,20 +664,20 @@ void Crunch::applySettings()
   {
     d->result->setFont( settings->customFont );
     d->editor->setFont( settings->customFont );
-	d->editor->adjustSize();
-	d->editor->setFixedHeight( d->editor->sizeHint().height() );
+    //d->editor->adjustSize(); // causes issue #110
+    d->editor->setFixedHeight( d->editor->sizeHint().height() );
   }
   else
   {
     d->result->setFont( QApplication::font( d->result ) );
     d->editor->setFont( QApplication::font( d->editor ) );
-	d->editor->setFixedHeight( d->editor->sizeHint().height() );
+    d->editor->setFixedHeight( d->editor->sizeHint().height() );
   }
 
   d->result->setCustomAppearance( settings->customAppearance );
   d->result->setCustomTextColor( settings->customTextColor );
   d->result->setCustomBackgroundColor( settings->customBackgroundColor1,
-    settings->customBackgroundColor2 );
+                                       settings->customBackgroundColor2 );
   d->result->setCustomErrorColor( settings->customErrorColor );
 
   if( settings->format == 'g' ) d->actions->viewGeneral->setChecked( true );
