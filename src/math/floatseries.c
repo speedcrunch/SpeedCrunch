@@ -255,29 +255,27 @@ erfseries(
   int digits)
 {
   floatstruct xsqr, smd, pwr;
-  int i, workprec, expsqr, expx;
+  int i, workprec, expx;
 
-  if (digits <= 0)
-    digits = 1;
   expx = float_getexponent(x);
-  expsqr = 2 * expx + 2;
-  if (-expsqr > digits || float_iszero(x))
+  workprec = digits + 2*expx + 2;
+  if (workprec <= 0 || float_iszero(x))
     /* for tiny arguments approx. == x */
     return 1;
   float_create(&xsqr);
   float_create(&smd);
   float_create(&pwr);
-  float_mul(&xsqr, x, x, digits + expsqr + 1);
-  workprec = digits + float_getexponent(&xsqr) + 2;
-  float_copy(&pwr, x, workprec);
+  float_mul(&xsqr, x, x, workprec + 1);
+  workprec = digits + float_getexponent(&xsqr) + 1;
+  float_copy(&pwr, x, workprec + 1);
   i = 1;
   while (workprec > 0)
   {
-    float_mul(&pwr, &pwr, &xsqr, workprec);
-    float_divi(&pwr, &pwr, -i, workprec);
+    float_mul(&pwr, &pwr, &xsqr, workprec + 1);
+    float_divi(&pwr, &pwr, -i, workprec + 1);
     float_divi(&smd, &pwr, 2 * i++ + 1, workprec);
-    float_add(x, x, &smd, digits+2);
-    workprec = digits + float_getexponent(&smd) - expx;
+    float_add(x, x, &smd, digits + 3);
+    workprec = digits + float_getexponent(&smd) + expx + 2;
   }
   float_free(&pwr);
   float_free(&smd);

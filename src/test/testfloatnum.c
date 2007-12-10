@@ -6425,7 +6425,7 @@ static int test_erfcasymptotic()
       return 0;
     }
   }
-  printf("convergence ok");
+  printf("convergence ok\n");
 
   float_free(&max);
   float_free(&tmp);
@@ -6444,7 +6444,7 @@ static int test_erfcsum()
   float_create(&x1);
   float_create(&tmp);
   float_create(&max);
-  printf("%s\n", "testing erfcsum");
+  printf("testing erfcsum\n");
 
   printf("testing error limit:\n");
   /* overall scan for maximum relative error */
@@ -6533,21 +6533,86 @@ static int test_erfcsum()
 static int test_erfc()
 {
   int prec, i;
-  floatstruct x, step1;
+  floatstruct x, x1, step1;
   floatstruct results[40];
 
+  printf("testing erfc\n");
   float_create(&x);
+  float_create(&x1);
   float_create(&step1);
   for (i = -1; ++i < 40;)
     float_create(&results[i]);
+  printf("testing special values\n");
+  float_setzero(&x);
+  float_erfc(&x, 100);
+  if (float_cmp(&x, &c1) != 0)
+    return 0;
+  float_setasciiz(&x, "-1e1000000");
+  float_erfc(&x, 100);
+  if (float_cmp(&x, &c2) != 0)
+    return 0;
+  printf("verifying results\n");
+  float_setinteger(&x, 7);
+  float_reciprocal(&x, 110);
+  float_erfc(&x, 100);
+  float_setasciiz(&step1, "0.83989287327126887336609000468499807511227817903"
+                       "914160714981066604747285032020973498955714529213539694928510963");
+  if (!_cmprelerror(&step1, &x, -99))
+  {
+    printf("FAILED for x == 1/7\n");
+    return 0;
+  }
+  float_setinteger(&x, 20);
+  float_divi(&x, &x, 7, 110);
+  float_erfc(&x, 100);
+  float_setasciiz(&step1, "0.00005331231138832281466765963565935991763168484275"
+                          "6273950127577016997393623370565496031160355771016945224924345871");
+  if (!_cmprelerror(&step1, &x, -99))
+  {
+    printf("FAILED for x == 20/7\n");
+    return 0;
+  }
+  float_setinteger(&x, 93);
+  float_divi(&x, &x, 7, 110);
+  float_erfc(&x, 100);
+  float_setasciiz(&step1, "9.31989223711981967164397263120561981131962901479240254614838756"
+                          "73754394641320672442272563375006637085970867544e-79");
+  if (!_cmprelerror(&step1, &x, -98))
+  {
+    printf("FAILED for x == 93/7\n");
+    return 0;
+  }
+  float_setasciiz(&x, "283.6");
+  float_erfc(&x, 100);
+  float_setasciiz(&step1, "2.787423261346745115871691439975638770369249289940553698308352"
+                          "9939376478760274499258439317477920123004576049401e-34933");
+  if (!_cmprelerror(&step1, &x, -95))
+  {
+    printf("FAILED for x == 283.6\n");
+    return 0;
+  }
   float_setasciiz(&step1, "0.1");
   printf("precision test for erfc\n");
-  for (prec = 0; ++prec <= 101;)
+  for (prec = 0; ++prec <= 100;)
   {
-    printf("%d\n", prec-1);
+    printf("%d\n", prec);
     /* clear all cached coefficients */
     erfcdigits = 0;
-    for (i = 5; ++i <= 39;)
+    for (i = 0; ++i < 100;);
+    {
+      float_setinteger(&x, 1);
+      float_setexponent(&x, -i);
+      _sub_ulp(&x, prec);
+      float_copy(&x1, &x, EXACT);
+      float_erfc(&x, prec);
+      float_erfc(&x1, prec+4);
+      if (!_cmprelerror(&x, &x1, -prec))
+      {
+        printf("evaluation IMPRECICE for 1e-%d\n", i);
+        return 0;
+      }
+    }
+    for (i = 0; ++i <= 39;)
     {
       if (i < 10)
         float_muli(&x, &step1, i, EXACT);
@@ -6563,7 +6628,7 @@ static int test_erfc()
       }
       float_move(&results[i], &x);
     }
-    for (i = 5; ++i <= 39;)
+    for (i = 0; ++i <= 39;)
     {
       if (i < 10)
         float_muli(&x, &step1, i, EXACT);
@@ -6586,8 +6651,68 @@ static int test_erfc()
   }
   float_free(&x);
   float_free(&step1);
+  float_free(&x1);
   for (i = -1; ++i < 40;)
     float_free(&results[i]);
+  return 1;
+}
+
+static int test_erf()
+{
+  int prec, i;
+  floatstruct x, x1, step;
+
+  printf("testing erf\n");
+  float_create(&x);
+  float_create(&step);
+  float_create(&x1);
+  printf("verifying special x");
+  float_setzero(&x);
+  if (!float_erf(&x,100) || !float_iszero(&x))
+    return 0;
+  float_setasciiz(&x, "1e1000000");
+  if (!float_erf(&x, 100) || float_cmp(&x, &c1) != 0)
+    return 0;
+  float_copy(&x1, &c1, EXACT);
+  float_copy(&x, &cMinus1, EXACT);
+  if (!float_erf(&x, 100) || !float_erf(&x1, 100))
+    return 0;
+  float_neg(&x);
+  if (float_cmp(&x, &x1) != 0)
+    return 0;
+  float_setasciiz(&step, "0.05");
+  printf("precision test for erf\n");
+  for (prec = 0; ++prec <= 100;)
+  {
+    printf("%d\n", prec);
+    for (i = 0; ++i <= 39;)
+    {
+      if (i < 10)
+      {
+        float_copy(&x, &c1, EXACT);
+        float_setexponent(&x, -3-i*i);
+      }
+      else if (i < 30)
+        float_muli(&x, &step, i-9, EXACT);
+      else
+        float_setinteger(&x, 2 + (i-30)*(i-30));
+      _sub_ulp(&x, prec);
+      float_copy(&x1, &x, EXACT);
+      if(!float_erf(&x, prec) || !float_erf(&x1, prec+4))
+      {
+        printf("evaluation FAILED for case %d\n", i);
+        return 0;
+      }
+      if (!_cmprelerror(&x, &x1, -prec))
+      {
+        printf("evaluation IMPRECICE for case %d\n", i);
+        return 0;
+      }
+    }
+  }
+  float_free(&x);
+  float_free(&step);
+  float_free(&x1);
   return 1;
 }
 
@@ -6609,10 +6734,6 @@ int main(int argc, char** argv)
   floatmath_init();
   float_stdconvert();
   maxdigits = 150;
-
-  if(!test_erfc()) return testfailed("erfc");
-
-  return 0;
 
   if(!test_longadd()) return testfailed("_longadd");
   if(!test_longmul()) return testfailed("_longmul");
@@ -6723,6 +6844,7 @@ int main(int argc, char** argv)
   if(!test_erfcasymptotic()) return testfailed("erfcasymptotic");
   if(!test_erfcsum()) return testfailed("erfcsum");
   if(!test_erfc()) return testfailed("erfc");
+  if(!test_erf()) return testfailed("erf");
 
   printf("\nall tests PASSED\n");
 #endif /* _FLOATNUMTEST */

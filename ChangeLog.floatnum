@@ -1,3 +1,14 @@
+2007-12-09
+fine tuning
+fixes of minor bugs
+
+floaterf, floatseries
+- fine tuning of erf and the Taylor series
+- fixed a few glitches
+testfloatnum
+- added a test suite for float_erf
+- extended the suite of float_erfc to check more corner cases
+
 2007-12-08
 bug fix
 

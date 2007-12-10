@@ -87,30 +87,36 @@ _asymptotic_good(
   return ix == 0 || ix >= 0x10000 || ix * ix >= n;
 }
 
+static int _logexpxsqr(int exp)
+{
+  if (exp < 0)
+    exp = 0;
+  if (exp >= 0x1000)
+    exp = 0x1000;
+  return ((exp * exp * 73) >> 5);
+}
+
 char
 _erf(
   floatnum x,
   int digits)
 {
-  int workprec, expx;
+  int workprec;
   signed char sign;
 
   sign = float_getsign(x);
   float_abs(x);
   if (float_cmp(x, &c1Div2) > 0)
   {
-    expx = float_getexponent(x);
-    if (expx >= 0x1000)
-      expx = 0x1000;
-    workprec = digits - ((expx * expx * 73) >> 5);
+    workprec = digits - _logexpxsqr(float_getexponent(x));
     if (workprec < 0 || !_erfc(x, workprec))
       float_setzero(x);
-    float_sub(x, &c1, x, digits);
+    float_sub(x, &c1, x, digits + 1);
   }
   else
   {
-    erfnear0(x, digits+5);
-    float_mul(x, x, &c2DivSqrtPi, digits+5);
+    erfnear0(x, digits);
+    float_mul(x, x, &c2DivSqrtPi, digits + 2);
   }
   float_setsign(x, sign);
   return 1;
@@ -125,17 +131,23 @@ _erfc(
   int expx, prec;
   char result;
 
-  expx = float_getexponent(x);
-  prec = expx + digits;
-  if (prec < -1 || float_iszero(x))
-  {
-    float_copy(x, &c1, EXACT);
-    return 1;
-  }
   if (float_cmp(x, &c1Div2) <= 0)
   {
-    _erf(x, prec+2);
-    float_sub(x, &c1, x, digits+2);
+    /* use erfc(x) = 1 - erf(x) for small or negative x */
+    prec = digits; /* default for negative x, result is approx. 1 */
+    expx = float_getexponent(x);
+    if (expx < 0)
+    {
+      /* |x| < 1, but not 0 */
+      prec = expx + digits + 2;
+      if (prec <= 0)
+      {
+        float_copy(x, &c1, EXACT);
+        return 1;
+      }
+    }
+    _erf(x, prec);
+    float_sub(x, &c1, x, digits + 1);
     return 1;
   }
   float_create(&tmp);
