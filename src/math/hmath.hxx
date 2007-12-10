@@ -92,12 +92,12 @@ public:
    /*!
    * Returns the preferred format (base/precision), default is 0
    */
-   char format() const;
+  char format() const;
 
    /*!
    * Sets the preferred format (base/precision), default is 0
    */
-   void setFormat(char c = 0) const;
+  void setFormat(char c = 0) const;
 
   /*!
    * Adds another number.

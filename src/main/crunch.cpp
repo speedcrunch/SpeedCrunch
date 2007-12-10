@@ -1155,24 +1155,27 @@ void Crunch::textChanged()
 
 void Crunch::copyResult()
 {
-  QClipboard *cb = QApplication::clipboard();
-  HNumber num = d->eval->get("ans"); char *ss;
-  switch (num.format())
+  QClipboard * cb = QApplication::clipboard();
+  HNumber num = d->eval->get( "ans" );
+  char * strToCopy;
+
+  switch ( Settings::self()->format )
   {
-  case 'h':
-     ss = HMath::formatHexadec( num );
-     break;
-  case 'o':
-     ss = HMath::formatOctal( num );
-     break;
-  case 'b':
-     ss = HMath::formatBinary( num );
-     break;
-  default:
-     ss = HMath::formatFixed( num );
+    case 'h':
+      strToCopy = HMath::formatHexadec( num );
+      break;
+    case 'o':
+      strToCopy = HMath::formatOctal( num );
+      break;
+    case 'b':
+      strToCopy = HMath::formatBinary( num );
+      break;
+    default:
+      strToCopy = HMath::formatFixed( num );
   }
-  cb->setText( QString(ss), QClipboard::Clipboard );
-  free( ss );
+
+  cb->setText( QString(strToCopy), QClipboard::Clipboard );
+  free( strToCopy );
 }
 
 void Crunch::focusAndSelectInput()
