@@ -32,6 +32,7 @@
 #define _BISONPARSER_H
 
 #include "math/hmath.hxx"
+#include "symboltables/vars.h"
 #include <QString>
 #include <QVector>
 
@@ -81,14 +82,7 @@ class Tokens: public QVector<Token>
     bool m_valid;
 };
 
-class Variable
-{
-  public:
-    QString name;
-    HNumber value;
-};
-
-class Evaluator
+class Evaluator : public EvaluatorBase
 {
   public:
     QString error() const;
@@ -96,14 +90,9 @@ class Evaluator
     static Tokens scan( const QString& expr );
     static QString autoFix( const QString& expr );
 
-    QVector<Variable> variables() const;
-    void clearVariables();
-    void remove( const QString& id );
     void setExpression( const QString& expr );
     HNumber eval();
     HNumber evalUpdateAns();
-
-    HNumber get( const QString& id );
 
 };
 

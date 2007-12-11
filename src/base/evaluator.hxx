@@ -20,7 +20,21 @@
 #ifndef EVALUATOR
 #define EVALUATOR
 
+#include <QString>
+
 //#define _BISON
+
+class EvaluatorBase //refEv
+{
+  public:
+    static QString autoFix( const QString& expr );
+  protected:
+    EvaluatorBase();
+    ~EvaluatorBase();
+  private:
+    EvaluatorBase( const EvaluatorBase& );
+    EvaluatorBase& operator=( const EvaluatorBase& );
+};
 
 #ifdef _BISON
 
@@ -30,7 +44,6 @@
 
 #include <math/hmath.hxx>
 
-#include <QString>
 #include <QVector>
 
 class Token
@@ -107,7 +120,8 @@ class Variable
 
 class EvaluatorPrivate;
 
-class Evaluator
+//class Evaluator //refEv
+class Evaluator : public EvaluatorBase
 {
   public:
 
@@ -140,7 +154,6 @@ class Evaluator
     void clearVariables();
 
 //    static QString autoFix( const QString& expr, const QString& decimalPoint );//refdp
-    static QString autoFix( const QString& expr );
 
     QString dump() const;
 
@@ -150,12 +163,11 @@ class Evaluator
 
   private:
     EvaluatorPrivate *d;
-    Evaluator( const Evaluator& );
-    Evaluator& operator=( const Evaluator& );
+/*    EvaluatorBase( const EvaluatorBase& ); //refEv
+    EvaluatorBase& operator=( const EvaluatorBase& );*/
 };
 
 #endif /* ! _BISON */
-
 
 #endif // EVALUATOR
 

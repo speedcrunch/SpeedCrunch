@@ -21,6 +21,9 @@
 
 #include <base/evaluator.hxx>
 
+EvaluatorBase::EvaluatorBase(){};
+EvaluatorBase::~EvaluatorBase(){};
+
 #ifdef _BISON
 
 # include "bison/bisonparser.cpp"
@@ -1475,7 +1478,7 @@ void Evaluator::clearVariables()
 }
 
 //QString Evaluator::autoFix( const QString& expr, const QString& decimalPoint )//refdp
-QString Evaluator::autoFix( const QString& expr )
+QString EvaluatorBase::autoFix( const QString& expr )
 {
   int par = 0;
   QString result;
