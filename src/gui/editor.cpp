@@ -67,11 +67,11 @@ public:
       QColor color = Qt::black;
       switch( token.type() )
       {
-        case Token::Number:
+        case Token::stxNumber:
           color = editor->highlightColor( Editor::Number );
         break;
 
-        case Token::Identifier:
+        case Token::stxIdentifier:
           {
             color = editor->highlightColor( Editor::Variable );
             QStringList fnames = FunctionRepository::self()->functionNames();
@@ -81,7 +81,7 @@ public:
           }
           break;
 
-        case Token::Operator:
+        case Token::stxOperator:
           break;
 
         default: break;
@@ -329,8 +329,9 @@ void Editor::doMatchingLeft()
   Token lastToken = tokens[ tokens.count()-1 ];
 
   // right par ?
-  if( lastToken.isOperator() )
-  if( lastToken.asOperator() == Token::RightPar )
+/*  if( lastToken.isOperator() ) // refty
+  if( lastToken.asOperator() == Token::RightPar )*/
+  if( lastToken.type() == Token::stxClosePar )
   if( lastToken.pos() == curPos-1 )
   {
     // find the matching left par
@@ -339,7 +340,7 @@ void Editor::doMatchingLeft()
     Token matchToken;
     int matchPos = -1;
 
-    for( k = tokens.count()-2; k >= 0; k-- )
+/*    for( k = tokens.count()-2; k >= 0; k-- ) //refty
     {
       if( par < 1 ) break;
       Token matchToken = tokens[k];
@@ -351,9 +352,22 @@ void Editor::doMatchingLeft()
           par--;
         if( par == 0 ) matchPos = matchToken.pos();
       }
+    }*/
+
+    for( k = tokens.count()-2; k >= 0 && par > 0; k-- )
+    {
+      Token matchToken = tokens[k];
+      switch (matchToken.type())
+      {
+        case Token::stxOpenPar : --par; break;
+        case Token::stxClosePar: ++par; break;
+        default:;
+      }
+      matchPos = matchToken.pos();
     }
 
-    if( matchPos >= 0 )
+//    if( matchPos >= 0 ) //refty
+    if( par == 0 )
     {
       ExtraSelection hilite1;
       hilite1.cursor = textCursor();
@@ -389,8 +403,9 @@ void Editor::doMatchingRight()
   Token firstToken = tokens[ 0 ];
 
   // left par ?
-  if( firstToken.isOperator() )
-  if( firstToken.asOperator() == Token::LeftPar )
+/*  if( firstToken.isOperator() ) //refty
+  if( firstToken.asOperator() == Token::LeftPar )*/
+  if( firstToken.type() == Token::stxOpenPar )
   if( firstToken.pos() == 0 )
   {
     // find the matching right par
@@ -399,21 +414,34 @@ void Editor::doMatchingRight()
     Token matchToken;
     int matchPos = -1;
 
-    for( k = 1; k < tokens.count(); k++ )
+//     for( k = 1; k < tokens.count(); k++ ) //refty
+//     {
+//       if( par < 1 ) break;
+//       Token matchToken = tokens[k];
+//       if( matchToken.isOperator() )
+//       {
+//         if( matchToken.asOperator() == Token::LeftPar )
+//           par++;
+//         if( matchToken.asOperator() == Token::RightPar )
+//           par--;
+//         if( par == 0 ) matchPos = matchToken.pos();
+//       }
+//     }
+
+    for( k = 1; k < tokens.count() && par > 0; k++ ) //refty
     {
-      if( par < 1 ) break;
       Token matchToken = tokens[k];
-      if( matchToken.isOperator() )
+      switch (matchToken.type())
       {
-        if( matchToken.asOperator() == Token::LeftPar )
-          par++;
-        if( matchToken.asOperator() == Token::RightPar )
-          par--;
-        if( par == 0 ) matchPos = matchToken.pos();
+        case Token::stxOpenPar : ++par; break;
+        case Token::stxClosePar: --par; break;
+        default:;
       }
+      matchPos = matchToken.pos();
     }
 
-    if( matchPos >= 0 )
+//    if( matchPos >= 0 ) //refty
+    if( par == 0 )
     {
       ExtraSelection hilite1;
       hilite1.cursor = textCursor();

@@ -39,33 +39,23 @@
 class Token
 {
   public:
+    // syntactical classification
     typedef enum
     {
-      Unknown,
-      Number,
-      Operator,
-      Identifier
+      stxUnknown,
+      stxNumber,
+      stxIdentifier,
+      stxOperator,
+      stxOpenPar,  //refty
+      stxClosePar,
+      stxSep,
     } Type;
 
-    typedef enum
-    {
-      InvalidOp = 0,
-      Plus,           //  + (addition)
-      Minus,          //  - (substraction, negation)
-      Asterisk,       //  * (multiplication)
-      Slash,          //  / (division)
-      Caret,          //  ^ (power)
-      RightPar,       //  )
-      LeftPar,        //  (
-      Equal,          // variable assignment
-    } Op;
 
     QString text() const { return m_text; }
     Type type() const { return m_type; }
     int pos() const { return m_pos; };
-    bool isOperator() const { return m_type == Operator; }
-    Op asOperator() const;
-    bool isIdentifier() const { return m_type == Identifier; }
+    bool isIdentifier() const { return m_type == stxIdentifier; }
 
   private:
     QString m_text;

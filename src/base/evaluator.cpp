@@ -224,10 +224,13 @@ QString Token::description() const
 
   switch (m_type )
   {
-    case Number     : desc = "Number"    ; break;
-    case Identifier : desc = "Identifier"; break;
-    case Operator   : desc = "Operator"  ; break;
-    default         : desc = "Unknown"   ; break;
+    case stxNumber     : desc = "Number"    ; break;
+    case stxIdentifier : desc = "Identifier"; break;
+    case stxOpenPar    : //refty
+    case stxClosePar   :
+    case stxSep        :
+    case stxOperator   : desc = "Operator"  ; break;
+    default            : desc = "Unknown"   ; break;
   }
 
   while( desc.length() < 10 )
@@ -420,6 +423,7 @@ Tokens Evaluator::scan( const QString& expr )
   QString ex = expr;
   QString tokenText;
   int tokenStart = 0;
+  Token::Type type;
 
   // force a terminator
   ex.append( QChar() );
@@ -492,9 +496,17 @@ Tokens Evaluator::scan( const QString& expr )
          // any matched operator ?
          if( op != Token::InvalidOp )
          {
+           switch(op) //refty
+           {
+             case Token::LeftPar:   type = Token::stxOpenPar; break;
+             case Token::RightPar:  type = Token::stxClosePar; break;
+             case Token::Semicolon: type = Token::stxSep; break;
+             default: type = Token::stxOperator;
+           }
            int len = s.length();
            i += len;
-           tokens.append( Token( Token::Operator, s.left( len ), tokenStart ) );
+//           tokens.append( Token( Token::stxOperator, s.left( len ), tokenStart ) ); //refty
+           tokens.append( Token( type, s.left( len ), tokenStart ) );
          }
          else state = Bad;
         }
@@ -516,7 +528,7 @@ Tokens Evaluator::scan( const QString& expr )
        // we're done with identifier
        else
        {
-         tokens.append( Token( Token::Identifier, tokenText, tokenStart ) );
+         tokens.append( Token( Token::stxIdentifier, tokenText, tokenStart ) );
          tokenStart = i;
          tokenText = "";
          state = Start;
@@ -565,7 +577,7 @@ Tokens Evaluator::scan( const QString& expr )
        // we're done with integer number
        else
        {
-         tokens.append( Token( Token::Number, tokenText, tokenStart ) );
+         tokens.append( Token( Token::stxNumber, tokenText, tokenStart ) );
          tokenText = ""; state = Start;
        }
        break;
@@ -575,7 +587,7 @@ Tokens Evaluator::scan( const QString& expr )
           tokenText.append( ex.at(i++).toUpper() );
        else // we're done with hexa number
        {
-         tokens.append( Token( Token::Number, tokenText, tokenStart ) );
+         tokens.append( Token( Token::stxNumber, tokenText, tokenStart ) );
          tokenText = ""; state = Start;
        }
        break;
@@ -584,7 +596,7 @@ Tokens Evaluator::scan( const QString& expr )
           tokenText.append( ex.at(i++) );
        else // we're done with binary number
        {
-         tokens.append( Token( Token::Number, tokenText, tokenStart ) );
+         tokens.append( Token( Token::stxNumber, tokenText, tokenStart ) );
          tokenText = "";
          state = Start;
        }
@@ -594,7 +606,7 @@ Tokens Evaluator::scan( const QString& expr )
           tokenText.append( ex.at(i++) );
        else // we're done with octal number
        {
-         tokens.append( Token( Token::Number, tokenText, tokenStart ) );
+         tokens.append( Token( Token::stxNumber, tokenText, tokenStart ) );
          tokenText = ""; state = Start;
        }
        break;
@@ -615,7 +627,7 @@ Tokens Evaluator::scan( const QString& expr )
        // we're done with floating-point number
        else
        {
-         tokens.append( Token( Token::Number, tokenText, tokenStart ) );
+         tokens.append( Token( Token::stxNumber, tokenText, tokenStart ) );
          tokenText = "";
          state = Start;
        };
@@ -642,7 +654,7 @@ Tokens Evaluator::scan( const QString& expr )
        // we're done with floating-point number
        else
        {
-         tokens.append( Token( Token::Number, tokenText, tokenStart ) );
+         tokens.append( Token( Token::stxNumber, tokenText, tokenStart ) );
          tokenText = "";
          state = Start;
        };
@@ -687,8 +699,10 @@ void Evaluator::compile( const Tokens& tokens ) const
   for( int i = 0; i <= tokens.count(); i++ )
   {
     // helper token: InvalidOp is end-of-expression
-    Token token =  ( i < tokens.count() ) ? tokens[i] : Token( Token::Operator );
+    Token token =  ( i < tokens.count() ) ? tokens[i] : Token( Token::stxOperator );
     Token::Type tokenType = token.type();
+    if (tokenType >= Token::stxOperator) //refty
+      tokenType = Token::stxOperator;
 
 #ifdef EVALUATOR_DEBUG
     dbg << "\n";
@@ -696,11 +710,11 @@ void Evaluator::compile( const Tokens& tokens ) const
 #endif
 
     // unknown token is invalid
-    if( tokenType == Token::Unknown ) break;
+    if( tokenType == Token::stxUnknown ) break;
 
     // for constants, push immediately to stack
     // generate code to load from a constant
-    if ( tokenType == Token::Number )
+    if ( tokenType == Token::stxNumber )
     {
       syntaxStack.push( token );
       d->constants.append( token.asNumber() );
@@ -712,7 +726,7 @@ void Evaluator::compile( const Tokens& tokens ) const
 
     // for identifier, push immediately to stack
     // generate code to load from reference
-    if( tokenType == Token::Identifier )
+    if( tokenType == Token::stxIdentifier )
     {
       syntaxStack.push( token );
       d->identifiers.append( token.text() );
@@ -723,7 +737,7 @@ void Evaluator::compile( const Tokens& tokens ) const
     }
 
     // special case for percentage
-    if( tokenType == Token::Operator )
+    if( tokenType == Token::stxOperator )
     if( token.asOperator() == Token::Percent )
     if( syntaxStack.itemCount() >= 1 )
     if( !syntaxStack.top().isOperator() )
@@ -737,7 +751,7 @@ void Evaluator::compile( const Tokens& tokens ) const
     }
 
     // for any other operator, try to apply all parsing rules
-    if( tokenType == Token::Operator )
+    if( tokenType == Token::stxOperator )
     if( token.asOperator() != Token::Percent )
     {
 #ifdef EVALUATOR_DEBUG
@@ -781,7 +795,7 @@ void Evaluator::compile( const Tokens& tokens ) const
         // if token is operator, and stack already has: id ( arg
         if( !ruleFound )
         if( !argHandled )
-        if( tokenType == Token::Operator )
+        if( tokenType == Token::stxOperator )
         if( syntaxStack.itemCount() >= 3 )
         {
             Token arg = syntaxStack.top();
@@ -882,7 +896,7 @@ void Evaluator::compile( const Tokens& tokens ) const
         if( !ruleFound )
         if( syntaxStack.itemCount() >= 5 )
         if( ( token.asOperator() == Token::RightPar ) ||
-        ( token.asOperator() == Token::Semicolon ) )
+            ( token.asOperator() == Token::Semicolon ) )
         {
           Token arg2 = syntaxStack.top();
           Token sep = syntaxStack.top( 1 );
@@ -922,7 +936,7 @@ void Evaluator::compile( const Tokens& tokens ) const
             syntaxStack.pop();
             syntaxStack.pop();
             syntaxStack.pop();
-            syntaxStack.push( Token( Token::Number ) );
+            syntaxStack.push( Token( Token::stxNumber ) );
             d->codes.append( Opcode( Opcode::Function, 0 ) );
 #ifdef EVALUATOR_DEBUG
           dbg << "    Rule for function call with parentheses, but without argument" << "\n";

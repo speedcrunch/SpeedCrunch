@@ -49,12 +49,16 @@ class EvaluatorBase //refEv
 class Token
 {
   public:
+    // syntactical classification
     typedef enum
     {
-      Unknown,
-      Number,
-      Operator,
-      Identifier
+      stxUnknown,
+      stxNumber,
+      stxIdentifier,
+      stxOperator,
+      stxOpenPar,  //refty
+      stxClosePar,
+      stxSep,
     } Type;
 
     typedef enum
@@ -65,7 +69,7 @@ class Token
       Asterisk,       //  * (multiplication)
       Slash,          //  / (division)
       Caret,          //  ^ (power)
-      LeftPar,        //  (
+      LeftPar,        //  ( //refty
       RightPar,       //  )
       Semicolon,      // argument separator
       Percent,        // %
@@ -75,7 +79,7 @@ class Token
       Div             // integer division
     } Op;
 
-    Token( Type type = Unknown, const QString& text = QString::null, int pos = -1 );
+    Token( Type type = stxUnknown, const QString& text = QString::null, int pos = -1 );
 
     Token( const Token& );
     Token& operator=( const Token& );
@@ -83,9 +87,10 @@ class Token
     Type type() const { return m_type; }
     QString text() const { return m_text; }
     int pos() const { return m_pos; };
-    bool isNumber() const { return m_type == Number; }
-    bool isOperator() const { return m_type == Operator; }
-    bool isIdentifier() const { return m_type == Identifier; }
+    bool isNumber() const { return m_type == stxNumber; }
+//    bool isOperator() const { return m_type == stxOperator; } //refty
+    bool isOperator() const { return m_type >= stxOperator; }
+    bool isIdentifier() const { return m_type == stxIdentifier; }
     HNumber asNumber() const;
     Op asOperator() const;
     QString description() const;
