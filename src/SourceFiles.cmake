@@ -11,6 +11,9 @@ base/evaluator.cpp
 base/functions.cpp
 base/settings.cpp
 
+symboltables/symbols.cpp
+symboltables/tables.cpp
+
 gui/aboutbox.cpp
 gui/autohidelabel.cpp
 gui/configdlg.cpp
@@ -64,6 +67,9 @@ base/constants.hxx
 base/evaluator.hxx
 base/functions.hxx
 base/settings.hxx
+
+symboltables/symbols.hxx
+symboltables/tables.hxx
 
 gui/aboutbox.hxx
 gui/autohidelabel.hxx

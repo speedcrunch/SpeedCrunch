@@ -21,8 +21,19 @@
 #define EVALUATOR
 
 #include <QString>
+#include "symboltables/symbols.hxx"
 
 //#define _BISON
+
+class TokenBase //reftk
+{
+  public:
+    TokenBase( const QString& text = QString::null, int pos = -1 );
+  protected:
+    Symbol* symbol;
+    QString m_text;
+    int m_pos;
+};
 
 class EvaluatorBase //refEv
 {
@@ -46,7 +57,8 @@ class EvaluatorBase //refEv
 
 #include <QVector>
 
-class Token
+//class Token //reftk
+class Token: protected TokenBase
 {
   public:
     // syntactical classification
@@ -69,7 +81,7 @@ class Token
       Asterisk,       //  * (multiplication)
       Slash,          //  / (division)
       Caret,          //  ^ (power)
-      LeftPar,        //  ( //refty
+      LeftPar,        //  (
       RightPar,       //  )
       Semicolon,      // argument separator
       Percent,        // %
@@ -100,9 +112,6 @@ class Token
   protected:
 
     Type m_type;
-    QString m_text;
-    int m_pos;
-
 };
 
 

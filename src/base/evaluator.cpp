@@ -21,8 +21,14 @@
 
 #include <base/evaluator.hxx>
 
-EvaluatorBase::EvaluatorBase(){};
+EvaluatorBase::EvaluatorBase(){}; //refEv
 EvaluatorBase::~EvaluatorBase(){};
+
+TokenBase::TokenBase(const QString& text, int pos) //reftk
+  : m_text(text), m_pos(pos)
+{
+  symbol = 0;
+}
 
 #ifdef _BISON
 
@@ -179,10 +185,11 @@ static int opPrecedence( Token::Op op )
 
 // creates a token
 Token::Token( Type type, const QString& text, int pos )
+  :TokenBase(text, pos)
 {
   m_type = type;
-  m_text = text;
-  m_pos = pos;
+/*  m_text = text; //reftk
+  m_pos = pos;*/
 }
 
 // copy constructor
