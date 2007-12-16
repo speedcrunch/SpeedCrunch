@@ -264,11 +264,19 @@ float_geterror()
   return tmp; 
 }
 
+void
+float_seterror(
+  int code)
+{
+  if (float_error == FLOAT_SUCCESS)
+    float_error = code;
+}
+
 void 
 floatnum_init()
 {
   bc_init_numbers();
-  float_error = FLOAT_SUCCESS;
+  float_geterror();
 }
 
 void
@@ -293,7 +301,7 @@ float_setnan (
 static char _seterror(floatnum result, int code)
 {
   float_setnan(result);
-  float_error = code;
+  float_seterror(code);
   return FALSE;
 }
 
@@ -350,7 +358,7 @@ _checknan(
 {
   if (!float_isnan(f))
     return FALSE;
-  float_error = FLOAT_NANOPERAND;
+  float_seterror(FLOAT_NANOPERAND);
   return TRUE;
 }
 
@@ -373,7 +381,7 @@ _checkdigits(
 {
   if ((digits > 0 && digits <= maxdigits) || digits == specialval)
     return TRUE;
-  float_error = FLOAT_INVALIDPARAM;
+  float_seterror(FLOAT_INVALIDPARAM);
   return FALSE;
 }
 
@@ -903,9 +911,9 @@ _normalize(
     _corr_trailing_zeros(f);
   if (f->significand != NULL && !float_isvalidexp(f->exponent))
   {
-    float_error = FLOAT_UNDERFLOW;
+    float_seterror(FLOAT_UNDERFLOW);
     if (f->exponent > 0)
-      float_error = FLOAT_OVERFLOW;
+      float_seterror(FLOAT_OVERFLOW);
     float_setnan(f);
   }
 #ifdef FLOATDEBUG
@@ -1575,7 +1583,7 @@ float_mul(
   if (scale >= maxdigits)
   {
     /* scale too large */
-    float_error = FLOAT_INVALIDPARAM;
+    float_seterror(FLOAT_INVALIDPARAM);
     float_setnan(dest);
     return FALSE;
   }
@@ -1617,7 +1625,7 @@ float_div(
   }
   if (float_iszero(divisor))
   {
-    float_error = FLOAT_ZERODIVIDE;
+    float_seterror(FLOAT_ZERODIVIDE);
     float_setnan(dest);
     return FALSE;
   }
@@ -1687,9 +1695,9 @@ float_divmod(
       || float_iszero(divisor) || float_getlength(divisor) > maxdigits)
   {
     if (float_iszero(divisor))
-      float_error = FLOAT_ZERODIVIDE;
+      float_seterror(FLOAT_ZERODIVIDE);
     if (quotient == remainder || float_getlength(divisor) > maxdigits)
-      float_error = FLOAT_INVALIDPARAM;
+      float_seterror(FLOAT_INVALIDPARAM);
     float_setnan(quotient);
     float_setnan(remainder);
     return FALSE;
@@ -1716,7 +1724,7 @@ float_divmod(
   }
   if (digits > maxdigits)
   {
-    float_error = FLOAT_INVALIDPARAM;
+    float_seterror(FLOAT_INVALIDPARAM);
     float_setnan(quotient);
     float_setnan(remainder);
     return FALSE;
@@ -1762,7 +1770,7 @@ float_sqrt(floatnum value, int digits)
   switch (float_getsign(value))
   {
     case -1:
-      float_error = FLOAT_OUTOFDOMAIN;
+      float_seterror(FLOAT_OUTOFDOMAIN);
       float_setnan(value);
       return FALSE;
     case 0:

@@ -47,12 +47,12 @@ _chckparam(
 {
   if (float_isnan(x))
   {
-    float_error = FLOAT_NANOPERAND;
+    float_seterror(FLOAT_NANOPERAND);
     return 0;
   }
   if ((digits <= 0 && digits != specialval) || digits > limit)
   {
-    float_error = FLOAT_INVALIDPARAM;
+    float_seterror(FLOAT_INVALIDPARAM);
     float_setnan(x);
     return 0;
   }
@@ -113,7 +113,7 @@ float_divi(
     if (expx < EXPMIN)
     {
       float_setnan(quotient);
-      float_error = FLOAT_UNDERFLOW;
+      float_seterror(FLOAT_UNDERFLOW);
       return 0;
     }
   }
@@ -173,7 +173,7 @@ float_muli(
       if (++expx > EXPMAX)
       {
         float_setnan(product);
-        float_error = FLOAT_OVERFLOW;
+        float_seterror(FLOAT_OVERFLOW);
         return 0;
       }
     }
@@ -321,12 +321,13 @@ float_checkedround(
   floatstruct tmp;
   int saveerr;
 
-  saveerr = float_error;
+  saveerr = float_geterror();
   float_create(&tmp);
   if (float_round(&tmp, x, digits, TONEAREST))
     float_move(x, &tmp);
   float_free(&tmp);
-  float_error = saveerr;
+  float_geterror();
+  float_seterror(saveerr);
 }
 
 void

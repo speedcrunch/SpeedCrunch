@@ -259,6 +259,7 @@ private:
 class HMath
 {
 public:
+  static const char* getError();
   /*!
    * Formats the given number as string, using specified decimal digits.
    * Note that the returned string must be freed.

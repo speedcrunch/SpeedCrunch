@@ -47,12 +47,12 @@ _cvtlogic(
 {
   if (float_isnan(x))
   {
-    float_error = FLOAT_NANOPERAND;
+    float_seterror(FLOAT_NANOPERAND);
     return 0;
   }
   if (_floatnum2logic(lx, x))
     return 1;
-  float_error = FLOAT_OUTOFDOMAIN;
+  float_seterror(FLOAT_OUTOFDOMAIN);
   return 0;
 }
 
@@ -65,7 +65,7 @@ float_lnxplus1(
     return 0;
   if (float_getsign(x) < 0 && float_getexponent(x) >= 0)
   {
-    float_error = FLOAT_OUTOFDOMAIN;
+    float_seterror(FLOAT_OUTOFDOMAIN);
     float_setnan(x);
     return 0;
   }
@@ -80,7 +80,7 @@ float_ln(floatnum x, int digits)
     return 0;
   if (float_getsign(x) <= 0)
   {
-    float_error = FLOAT_OUTOFDOMAIN;
+    float_seterror(FLOAT_OUTOFDOMAIN);
     float_setnan(x);
     return 0;
   }
@@ -97,7 +97,7 @@ float_artanh(
     return 0;
   if (float_getexponent(x) >= 0)
   {
-    float_error = FLOAT_OUTOFDOMAIN;
+    float_seterror(FLOAT_OUTOFDOMAIN);
     float_setnan(x);
     return 0;
   }
@@ -114,7 +114,7 @@ float_artanhxplus1(
     return 0;
   if (float_getsign(x) >= 0 || float_cmp(x, &c2) >= 0)
   {
-    float_error = FLOAT_OUTOFDOMAIN;
+    float_seterror(FLOAT_OUTOFDOMAIN);
     float_setnan(x);
     return 0;
   }
@@ -151,7 +151,7 @@ float_arcoshxplus1(
     return 0;
   if (float_getsign(x) < 0)
   {
-    float_error = FLOAT_OUTOFDOMAIN;
+    float_seterror(FLOAT_OUTOFDOMAIN);
     float_setnan(x);
     return 0;
   }
@@ -182,7 +182,7 @@ float_log(
     return 0;
   if (float_getsign(x) <= 0)
   {
-    float_error = FLOAT_OUTOFDOMAIN;
+    float_seterror(FLOAT_OUTOFDOMAIN);
     float_setnan(x);
     return 0;
   }
@@ -206,7 +206,7 @@ float_lg(
     return 0;
   if (float_getsign(x) <= 0)
   {
-    float_error = FLOAT_OUTOFDOMAIN;
+    float_seterror(FLOAT_OUTOFDOMAIN);
     float_setnan(x);
     return 0;
   }
@@ -229,9 +229,9 @@ float_exp(
     return 1;
   float_setnan(x);
   if (sgn < 0)
-    float_error = FLOAT_UNDERFLOW;
+    float_seterror(FLOAT_UNDERFLOW);
   else
-    float_error = FLOAT_OVERFLOW;
+    float_seterror(FLOAT_OVERFLOW);
   return 0;
 }
 
@@ -245,7 +245,7 @@ float_expminus1(
   if (_expminus1(x, digits))
     return 1;
   float_setnan(x);
-  float_error = FLOAT_OVERFLOW;
+  float_seterror(FLOAT_OVERFLOW);
   return 0;
 }
 
@@ -268,9 +268,9 @@ float_cosh(
     return float_add(x, x, &c1, digits);
   float_setnan(x);
   if (expx < 0)
-    float_error = FLOAT_UNDERFLOW;
+    float_seterror(FLOAT_UNDERFLOW);
   else
-    float_error = FLOAT_OVERFLOW;
+    float_seterror(FLOAT_OVERFLOW);
   return 0;
 }
 
@@ -288,9 +288,9 @@ float_coshminus1(
     return 1;
   float_setnan(x);
   if (expx < 0)
-    float_error = FLOAT_UNDERFLOW;
+    float_seterror(FLOAT_UNDERFLOW);
   else
-    float_error = FLOAT_OVERFLOW;
+    float_seterror(FLOAT_OVERFLOW);
   return 0;
 }
 
@@ -304,7 +304,7 @@ float_sinh(
   if (_sinh(x, digits))
     return 1;
   float_setnan(x);
-  float_error = FLOAT_OVERFLOW;
+  float_seterror(FLOAT_OVERFLOW);
   return 0;
 }
 
@@ -344,7 +344,7 @@ float_tanhminus1(
     if (!_tanhminus1gt0(x, digits))
     {
       float_setnan(x);
-      float_error = FLOAT_UNDERFLOW;
+      float_seterror(FLOAT_UNDERFLOW);
       return 0;
     }
     return 1;
@@ -382,7 +382,7 @@ float_arcsin(
   if (float_abscmp(x, &c1) > 0)
   {
     float_setnan(x);
-    float_error = FLOAT_OUTOFDOMAIN;
+    float_seterror(FLOAT_OUTOFDOMAIN);
     return 0;
   }
   _arcsin(x, digits);
@@ -399,7 +399,7 @@ float_arccos(
   if (float_abscmp(x, &c1) > 0)
   {
     float_setnan(x);
-    float_error = FLOAT_OUTOFDOMAIN;
+    float_seterror(FLOAT_OUTOFDOMAIN);
     return 0;
   }
   _arccos(x, digits);
@@ -416,7 +416,7 @@ float_arccosxplus1(
   if (float_getsign(x) > 0 || float_abscmp(x, &c2) > 0)
   {
     float_setnan(x);
-    float_error = FLOAT_OUTOFDOMAIN;
+    float_seterror(FLOAT_OUTOFDOMAIN);
     return 0;
   }
   _arccosxplus1(x, digits);
@@ -433,7 +433,7 @@ float_cos(
   if (float_getexponent(x) >= DECPRECISION - 1 || !_trigreduce(x, digits))
   {
     float_setnan(x);
-    float_error = FLOAT_UNSTABLE;
+    float_seterror(FLOAT_UNSTABLE);
     return 0;
   }
   _cos(x, digits);
@@ -450,13 +450,13 @@ float_cosminus1(
   if (!_trigreduce(x, digits))
   {
     float_setnan(x);
-    float_error = FLOAT_UNSTABLE;
+    float_seterror(FLOAT_UNSTABLE);
     return 0;
   }
   if (!_cosminus1(x, digits))
   {
     float_setnan(x);
-    float_error = FLOAT_UNDERFLOW;
+    float_seterror(FLOAT_UNDERFLOW);
     return 0;
   }
   return 1;
@@ -472,7 +472,7 @@ float_sin(
   if (float_getexponent(x) >= DECPRECISION - 1 || !_trigreduce(x, digits))
   {
     float_setnan(x);
-    float_error = FLOAT_UNSTABLE;
+    float_seterror(FLOAT_UNSTABLE);
     return 0;
   }
   _sin(x, digits);
@@ -491,7 +491,7 @@ float_tan(
       || !_tan(x, digits))
   {
     float_setnan(x);
-    float_error = FLOAT_UNSTABLE;
+    float_seterror(FLOAT_UNSTABLE);
     return 0;
   }
   return 1;
@@ -511,13 +511,13 @@ float_raisei(
     if (exponent == 0)
     {
       float_setnan(power);
-      float_error = FLOAT_OUTOFDOMAIN;
+      float_seterror(FLOAT_OUTOFDOMAIN);
       return 0;
     }
     if (exponent < 0)
     {
       float_setnan(power);
-      float_error = FLOAT_ZERODIVIDE;
+      float_seterror(FLOAT_ZERODIVIDE);
       return 0;
     }
     float_setzero(power);
@@ -539,7 +539,7 @@ float_raise(
   if (float_isnan(exponent))
   {
     float_setnan(power);
-    float_error = FLOAT_NANOPERAND;
+    float_seterror(FLOAT_NANOPERAND);
     return 0;
   }
   if (!chckmathparam(base, digits))
@@ -550,11 +550,11 @@ float_raise(
     {
     case 0:
       float_setnan(power);
-      float_error = FLOAT_OUTOFDOMAIN;
+      float_seterror(FLOAT_OUTOFDOMAIN);
       return 0;
     case -1:
       float_setnan(power);
-      float_error = FLOAT_ZERODIVIDE;
+      float_seterror(FLOAT_ZERODIVIDE);
       return 0;
     }
     float_setzero(power);
@@ -571,7 +571,7 @@ float_raise(
     else
     {
       float_setnan(power);
-      float_error = FLOAT_OUTOFDOMAIN;
+      float_seterror(FLOAT_OUTOFDOMAIN);
       return 0;
     }
   }
@@ -579,9 +579,9 @@ float_raise(
   float_abs(power);
   if (!_raise(power, exponent, digits))
   {
-    float_error = FLOAT_OVERFLOW;
+    float_seterror(FLOAT_OVERFLOW);
     if (float_getexponent(base) * float_getsign(exponent) < 0)
-      float_error = FLOAT_UNDERFLOW;
+      float_seterror(FLOAT_UNDERFLOW);
     float_setnan(power);
     return 0;
   }
@@ -602,9 +602,9 @@ float_power10(
   if (_power10(x, digits))
     return 1;
   float_setnan(x);
-  float_error = FLOAT_UNDERFLOW;
+  float_seterror(FLOAT_UNDERFLOW);
   if (sign > 0)
-    float_error = FLOAT_OVERFLOW;
+    float_seterror(FLOAT_OVERFLOW);
   return 0;
 }
 
@@ -624,7 +624,7 @@ float_gamma(
     if (sign <= 0)
     {
       float_setnan(x);
-      float_error = FLOAT_ZERODIVIDE;
+      float_seterror(FLOAT_ZERODIVIDE);
       return 0;
     }
     result = _gammaint(x, digits);
@@ -636,9 +636,10 @@ float_gamma(
     result = _gamma(x, digits);
   if (!result)
   {
-    float_error = FLOAT_OVERFLOW;
     if (sign < 0)
-      float_error = FLOAT_UNDERFLOW;
+      float_seterror(FLOAT_UNDERFLOW);
+    else
+      float_seterror(FLOAT_OVERFLOW);
     float_setnan(x);
   }
   return result;
@@ -675,7 +676,7 @@ float_pochhammer(
     return 0;
   if (float_isnan(delta))
   {
-    float_error = FLOAT_NANOPERAND;
+    float_seterror(FLOAT_NANOPERAND);
     float_setnan(x);
     return 0;
   }
@@ -689,7 +690,7 @@ float_erf(floatnum x, int digits)
     return 0;
   if (!_erf(x, digits))
   {
-    float_error = FLOAT_OUTOFDOMAIN;
+    float_seterror(FLOAT_OUTOFDOMAIN);
     return 0;
   }
   return 1;
@@ -702,7 +703,7 @@ float_erfc(floatnum x, int digits)
     return 0;
   if (!_erfc(x, digits))
   {
-    float_error = FLOAT_UNDERFLOW;
+    float_seterror(FLOAT_UNDERFLOW);
     return 0;
   }
   return 1;
@@ -787,12 +788,12 @@ _chkshift(
 {
   if (float_isnan(shift))
   {
-    float_error = FLOAT_NANOPERAND;
+    float_seterror(FLOAT_NANOPERAND);
     return 0;
   }
   if (!float_isinteger(shift) || float_getsign(shift) < 0)
   {
-    float_error = FLOAT_OUTOFDOMAIN;
+    float_seterror(FLOAT_OUTOFDOMAIN);
     return 0;
   }
   if(!_cvtlogic(lx, x))

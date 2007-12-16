@@ -29,6 +29,8 @@ class TokenBase //reftk
 {
   public:
     TokenBase( const QString& text = QString::null, int pos = -1 );
+    QString text() const { return m_text; }
+    int pos() const { return m_pos; };
   protected:
     Symbol* symbol;
     QString m_text;
@@ -58,7 +60,7 @@ class EvaluatorBase //refEv
 #include <QVector>
 
 //class Token //reftk
-class Token: protected TokenBase
+class Token: public TokenBase
 {
   public:
     // syntactical classification
@@ -97,8 +99,8 @@ class Token: protected TokenBase
     Token& operator=( const Token& );
 
     Type type() const { return m_type; }
-    QString text() const { return m_text; }
-    int pos() const { return m_pos; };
+//    QString text() const { return m_text; } //reftk
+//    int pos() const { return m_pos; }; //reftk
     bool isNumber() const { return m_type == stxNumber; }
 //    bool isOperator() const { return m_type == stxOperator; } //refty
     bool isOperator() const { return m_type >= stxOperator; }
@@ -112,6 +114,8 @@ class Token: protected TokenBase
   protected:
 
     Type m_type;
+/*    QString m_text; //reftk
+    int m_pos;*/
 };
 
 
@@ -154,6 +158,7 @@ class Evaluator : public EvaluatorBase
 
 //    void setAngleMode( AngleMode am ); //refan
 //    AngleMode angleMode() const;
+    HNumber evalNoAssign();
     HNumber eval();
     HNumber evalUpdateAns();
 

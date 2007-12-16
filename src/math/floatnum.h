@@ -48,7 +48,7 @@
 #define FLOAT_OVERFLOW     4
 #define FLOAT_ZERODIVIDE   5
 #define FLOAT_OUTOFDOMAIN  6
-#define FLOAT_INVALIDPARAM 100
+#define FLOAT_INVALIDPARAM 10
 
 #define float_free(f) float_setnan(f)
 
@@ -57,8 +57,6 @@ extern "C" {
 #endif 
 
 extern int maxdigits;
-
-extern int float_error;
 
 typedef struct {
   bc_num significand;
@@ -75,6 +73,9 @@ typedef enum {TONEAREST, TOZERO, TOINFINITY, TOPLUSINFINITY, TOMINUSINFINITY} ro
 /* initializes this module. Has to be called prior to the first
    use of any of the following functions */
 void floatnum_init();
+
+/* sets the error to `code' unless it is already set */
+void float_seterror(int code);
 
 /* gets the last error and clears the error afterwards */
 int float_geterror();

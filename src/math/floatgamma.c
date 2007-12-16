@@ -312,7 +312,7 @@ _lngamma(
     result = float_sub(x, x, &factor, digits+1);
   }
   if (infinity != 0)
-    float_error = FLOAT_ZERODIVIDE;
+    float_seterror(FLOAT_ZERODIVIDE);
   float_free(&factor);
   if (!result)
     float_setnan(x);
@@ -359,7 +359,7 @@ _gamma(
              && _exp(x, digits)
              && float_div(x, x, &tmp, digits + 1);
     if (infinity != 0)
-      float_error = FLOAT_ZERODIVIDE;
+      float_seterror(FLOAT_ZERODIVIDE);
     float_free(&tmp);
     if (!result)
       float_setnan(x);
@@ -442,7 +442,7 @@ _pochhammer_g(
            && (inf2 -= inf1) <= 0;
   if (inf2 > 0)
   {
-    float_error = FLOAT_ZERODIVIDE;
+    float_seterror(FLOAT_ZERODIVIDE);
     float_setnan(x);
   }
   if (result)
@@ -491,7 +491,7 @@ _pochhammer_i(
     {
       /* x and x+n have opposite signs, meaning at one point
       you have to divide by 0 */
-      float_error = FLOAT_ZERODIVIDE;
+      float_seterror(FLOAT_ZERODIVIDE);
       float_setnan(x);
       result = 0;
     }

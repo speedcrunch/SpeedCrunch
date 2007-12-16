@@ -1147,7 +1147,7 @@ void Evaluator::setAngleMode( AngleMode am )
 //   d->decimalPoint = dp;
 // }
 
-HNumber Evaluator::eval()
+HNumber Evaluator::evalNoAssign()
 {
   QStack<HNumber> stack;
   QStack<QString> refs;
@@ -1182,40 +1182,6 @@ HNumber Evaluator::eval()
 
     compile( tokens );
   }
-
-  // can not overwrite pi
-  if( d->assignId == QString("pi") )
-  {
-     d->error = d->assignId + ": " + qApp->translate( "evaluator",
-       "variable cannot be overwritten" );
-     return HNumber( 0 );
-  }
-  // can not overwrite phi
-  if( d->assignId == QString("phi") )
-  {
-     d->error = d->assignId + ": " + qApp->translate( "evaluator",
-       "variable cannot be overwritten" );
-     return HNumber( 0 );
-  }
-  // can not overwrite ans
-  if( d->assignId == QString("ans") )
-  {
-     d->error = d->assignId + ": " + qApp->translate( "evaluator",
-       "variable cannot be overwritten" );
-     return HNumber( 0 );
-  }
-
-  // variable can't have the same name as function
-  if( FunctionRepository::self()->function( d->assignId ) )
-  {
-     d->error = d->assignId + ": " +  qApp->translate( "evaluator",
-       "identifier matches an existing function name" );
-     return HNumber( 0 );
-  }
-
-  // magic: always set here to avoid being overwritten by user
-  set( QString("pi"),  HMath::pi() );
-  set( QString("phi"), HMath::phi() );
 
   for( int pc = 0; pc < d->codes.count(); pc++ )
   {
@@ -1428,9 +1394,51 @@ HNumber Evaluator::eval()
 
   HNumber result = stack.pop();
 
+  return result;
+}
+
+HNumber Evaluator::eval()
+{
+  HNumber result = evalNoAssign(); // this sets d->assignId
+
   // handle variable assignment, e.g. "x=2*4"
   if( !d->assignId.isEmpty() )
     set( d->assignId, result );
+
+  // can not overwrite pi
+  if( d->assignId == QString("pi") )
+  {
+    d->error = d->assignId + ": " + qApp->translate( "evaluator",
+        "variable cannot be overwritten" );
+    return HNumber( 0 );
+  }
+  // can not overwrite phi
+  if( d->assignId == QString("phi") )
+  {
+    d->error = d->assignId + ": " + qApp->translate( "evaluator",
+        "variable cannot be overwritten" );
+    return HNumber( 0 );
+  }
+  // can not overwrite ans
+  if( d->assignId == QString("ans") )
+  {
+    d->error = d->assignId + ": " + qApp->translate( "evaluator",
+        "variable cannot be overwritten" );
+    return HNumber( 0 );
+  }
+
+  // variable can't have the same name as function
+  if( FunctionRepository::self()->function( d->assignId ) )
+  {
+    d->error = d->assignId + ": " +  qApp->translate( "evaluator",
+        "identifier matches an existing function name" );
+    return HNumber( 0 );
+  }
+
+  // FIXME why that??
+  // magic: always set here to avoid being overwritten by user
+  set( QString("pi"),  HMath::pi() );
+  set( QString("phi"), HMath::phi() );
 
   return result;
 }

@@ -1,4 +1,4 @@
-/* parser.h: lexical analyzers and parsers */
+/* bisonparser.h: lexical analyzers and parsers */
 /*
     Copyright (C) 2007 Wolf Lammen.
 
@@ -32,11 +32,30 @@
 #define _BISONPARSER_H
 
 #include "math/hmath.hxx"
-#include "symboltables/vars.h"
 #include <QString>
 #include <QVector>
 
-class Token
+/*==========================================================*/
+
+/* to minimize effects on other modules make Evaluator
+   keep the old Evaluator interface. This is not
+   necessary for the parsing process, and should not be
+   implemented here */
+
+/*client(s):
+  deletevardlg
+*/
+class Variable
+{
+  public:
+    QString name;
+    HNumber value;
+};
+
+/*client(s):
+  editor
+*/
+class Token: public TokenBase
 {
   public:
     // syntactical classification
@@ -46,44 +65,43 @@ class Token
       stxNumber,
       stxIdentifier,
       stxOperator,
-      stxOpenPar,  //refty
+      stxOpenPar,
       stxClosePar,
       stxSep,
     } Type;
-
-
-    QString text() const { return m_text; }
     Type type() const { return m_type; }
-    int pos() const { return m_pos; };
     bool isIdentifier() const { return m_type == stxIdentifier; }
+  protected:
 
-  private:
-    QString m_text;
     Type m_type;
-    int m_pos;
-
 };
 
+/*client(s):
+  editor
+*/
 class Tokens: public QVector<Token>
 {
   public:
     bool valid() const { return m_valid; }
-  private:
+  protected:
     bool m_valid;
 };
 
 class Evaluator : public EvaluatorBase
 {
   public:
-    QString error() const;
-
+/*client(s):
+    editor
+*/
     static Tokens scan( const QString& expr );
-    static QString autoFix( const QString& expr );
-
-    void setExpression( const QString& expr );
-    HNumber eval();
-    HNumber evalUpdateAns();
-
+/*client(s):
+    deletevardlg
+*/
+    QVector<Variable> variables() const;
+/*client(s):
+    deletevardlg
+*/
+    void remove( const QString& id );
 };
 
 #endif /* _BISONPARSER_H */

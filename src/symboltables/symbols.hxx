@@ -1,4 +1,4 @@
-/* symbols.h: symbols of the parser/lexical analyzer */
+/* symbols.hxx: symbols of the parser/lexical analyzer */
 /*
     Copyright (C) 2007 Wolf Lammen.
 
@@ -35,6 +35,45 @@
 #include <QVector>
 #include "math/hmath.hxx"
 
+const int unaryOp = 1;
+const int binaryOp = 2;
+const int fctinterfaces = 6;
+
+typedef HNumber (*Func0)();
+typedef HNumber (*Func1)(const HNumber&);
+typedef HNumber (*Func2)(const HNumber&, const HNumber&);
+typedef HNumber (*Func3)(const HNumber&, const HNumber&, const HNumber&);
+typedef HNumber (*Func4)(const HNumber&, const HNumber&, const HNumber&, const HNumber&);
+typedef HNumber (*Funcl)(const QVector<HNumber>&);
+
+typedef union
+{
+  Func0 f0;
+  Func1 f1;
+  Func2 f2;
+  Func3 f3;
+  Func4 f4;
+  Funcl fl;
+} Func;
+
+typedef struct
+{
+  Func0 f0;
+  Func1 f1;
+  Func2 f2;
+  Func3 f3;
+  Func4 f4;
+  Funcl fl;
+} FuncList;
+
+typedef Func FuncArray[fctinterfaces];
+
+struct FunctionResult
+{
+  HNumber value;
+  QString msg;
+};
+
 class Symbol
 {
   public:
@@ -44,21 +83,22 @@ class Symbol
     virtual ~Symbol();
 
     virtual bool isMatching(QString match) const;
+    virtual bool isPostfix() const;
     virtual signed char pairType() const;
     QString getKey(QString lookupkey) const;
     SyntaxClass getClass() const { return syntaxClass; };
-    int getHelp() const { return helpidx; };
+    int getSymidx() const { return symidx; };
 
   protected:
     virtual QString getKey() const;
     SyntaxClass syntaxClass;
-    int helpidx;
+    int symidx;
 };
 
 class SyntaxSymbol: public Symbol
 {
   public:
-    SyntaxSymbol(signed char levelchange);
+    SyntaxSymbol(int idx, signed char levelchange);
     signed char pairType() const;
   protected:
     signed char parlevel;
@@ -81,7 +121,7 @@ class ConstSymbol: public Symbol
 {
   public:
     ConstSymbol(HNumber x);
-    ConstSymbol(HNumber x, int help);
+    ConstSymbol(HNumber x, int idx);
     HNumber get() const { return value; };
 
   protected:
@@ -104,12 +144,22 @@ class AnsSymbol: public VarSymbol
 class FunctionSymbol: public Symbol
 {
   public:
-    FunctionSymbol(int help);
-    HNumber eval(QVector<HNumber> params);
+    FunctionSymbol(int idx, int minParam, int maxParam);
+    FunctionResult eval(const QVector<HNumber>& params);
+    void addFunc(int paramCount, Func aFunc);
+  protected:
+    FuncArray func;
+    int minParamCount;
+    int maxParamCount;
 };
 
 class OperatorSymbol: public FunctionSymbol
 {
+  public:
+    OperatorSymbol(int idx, int opflags, bool postfixop);
+    bool isPostfix() const;
+  protected:
+    bool postfix;
 };
 
 #endif /* _SYMBOLS_H */

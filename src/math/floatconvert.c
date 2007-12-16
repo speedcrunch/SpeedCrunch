@@ -404,7 +404,7 @@ pack2floatnum(
     return 0;
   if (float_isnan(x))
     return 1;
-  saveerr = float_error;
+  saveerr = float_geterror();
   saverange = float_setrange(MAXEXP);
   float_create(&tmp);
   float_move(&tmp, x);
@@ -429,7 +429,8 @@ pack2floatnum(
   }
   float_free(&tmp);
   float_setsign(x, n->prefix.sign == IO_SIGN_COMPLEMENT? -1 : n->prefix.sign);
-  float_error = saveerr;
+  float_geterror();
+  float_seterror(saveerr);
   float_setrange(saverange);
   if (!float_isvalidexp(float_getexponent(x)))
     float_setnan(x);

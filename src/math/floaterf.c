@@ -161,10 +161,10 @@ _erfc(
     {
       result = erfcbigx(x, digits);
       if (!result)
-        float_error = FLOAT_UNSTABLE;
+        float_seterror(FLOAT_UNSTABLE);
     }
     else
-      float_error = FLOAT_UNDERFLOW;
+      float_seterror(FLOAT_UNDERFLOW);
     result = result && float_mul(x, x, &tmp, digits + 4);
   }
   else

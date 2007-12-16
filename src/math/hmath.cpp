@@ -83,7 +83,7 @@ checkpoleorzero( floatnum result, floatnum x )
   else if (expr >= -expx)
   {
     float_setnan(result);
-    float_error = FLOAT_UNSTABLE;
+    float_seterror(FLOAT_UNSTABLE);
   }
 }
 
@@ -169,8 +169,7 @@ void HNumber::setFormat(char c) const
 
 HNumber HNumber::nan()
 {
-  HNumber n;
-  return n;
+  return HNumber();
 }
 
 int HNumber::toInt()
@@ -436,6 +435,21 @@ _doFormat(
   }
   float_free(&tmp);
   return str;
+}
+
+const char* HMath::getError()
+{
+  switch(float_geterror())
+  {
+    case FLOAT_NANOPERAND: return "NaN not accepted as a parameter"; break;
+    case FLOAT_UNSTABLE: return "cannot compute a reliable result"; break;
+    case FLOAT_UNDERFLOW: return "underflow: result too small"; break;
+    case FLOAT_OVERFLOW: return "overflow: result too big"; break;
+    case FLOAT_ZERODIVIDE: return "divide by zero, or infinite result"; break;
+    case FLOAT_OUTOFDOMAIN: return "function not defined for parameter(s)"; break;
+    case FLOAT_INVALIDPARAM: return "bug: internal error"; break;
+    default: return "";
+  }
 }
 
 // format number with fixed number of decimal digits

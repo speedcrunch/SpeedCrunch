@@ -591,14 +591,14 @@ void Editor::autoCalc()
   // strip off assignment operator, e.g. "x=1+2" becomes "1+2" only
   // the reason is that we want only to evaluate (on the fly) the expression,
   // not to update (put the result in) the variable
-  if( tokens.count() > 2 )
-  if( tokens[0].isIdentifier() )
-  if( tokens[1].asOperator() == Token::Equal )
-    str.remove( 0, tokens[1].pos()+1 );
+//   if( tokens.count() > 2 ) // reftk
+//   if( tokens[0].isIdentifier() )
+//   if( tokens[1].asOperator() == Token::Equal )
+//     str.remove( 0, tokens[1].pos()+1 );
 
   // same reason as above, do not update "ans"
   d->eval->setExpression( str );
-  HNumber num = d->eval->eval();
+  HNumber num = d->eval->evalNoAssign();
 
   if( d->eval->error().isEmpty() )
   {

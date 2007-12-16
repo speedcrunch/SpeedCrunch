@@ -22,18 +22,19 @@
 
 #include <QString>
 #include <QMap>
+#include <QVector>
 #include "symboltables/symbols.hxx"
-#include "symboltables/help.h"
+#include "symboltables/symindex.hxx"
 
 class Table: protected QMap<QString, Symbol*>
 {
   public:
-    ~Table();
+    virtual ~Table();
     bool put(QString key, Symbol* symbol);
     bool putAlias(QString key, QString alias);
-    bool remove(QString key);
     Symbol* get(QString key);
-    void clear();
+    virtual bool remove(QString key);
+    virtual void clear();
 
     // a FI-LO queue 
     static void addTable(Table* newTable);
@@ -43,6 +44,17 @@ class Table: protected QMap<QString, Symbol*>
   private:
     Table* next;
     static Table* head;
+};
+
+class BuiltinTable: public Table
+{
+  private:
+    bool destructing;
+  public:
+    BuiltinTable();
+    ~BuiltinTable();
+    bool remove(QString key);
+    void clear();
 };
 
 #endif /* _TABLES_H */
