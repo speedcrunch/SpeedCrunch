@@ -32,9 +32,26 @@ void yyerror(const char*);
    The scale might be given to a different base and needs its own tag. The default
    is 'decimal encoding'. */
 %token HEXTAG
-
-%token CMPLTAG DOT
-       OPENPAR CLOSEPAR DECDIGIT BINDIGIT OCTDIGIT HEXDIGIT SIGN NUMWS SEP PERCENT
+/* a token indicating a two's complement that has to be sign-extend by the input parser
+*/
+%token CMPLTAG
+/* token representing the decimal dot */
+%token DOT
+/* token representing an open (left) parenthesis */
+%token OPENPAR
+/* token representing a closing (right) parenthesis */
+%token CLOSEPAR
+/* token representing a sequence of 1 or more decimal digits (0-9) */
+%token DECSEQ
+/* token representing a sequence of 1 or more binary digits (0-1) */
+%token BINSEQ
+/* token representing a sequence of 1 or more octal digits (0-7) */
+%token OCTSEQ
+/* token representing a sequence of 1 or more hexagesimal digits (0-9,A-F) */
+%token HEXSEQ
+/* token representing a sign (+, -) */
+%token SIGN
+%token NUMWS SEP PERCENT
        VARIABLE CONSTANT POSTFIXOP PREFIXOP FUNCTION ASSIGN
 
 %left L0OP
@@ -87,7 +104,6 @@ prefixopseq: PREFIXOP
     | prefixopseq PREFIXOP
     ;
 simpleexpr: literal
-    | VARIABLE
     | CONSTANT
     | functioncall
     | OPENPAR expr CLOSEPAR
@@ -121,8 +137,8 @@ number: decvalue
 decvalue: decseq optdecdotfrac optdecscale
     | DOT decseq optdecscale
     ;
-decseq: DECDIGIT
-    | decseq optnumws DECDIGIT
+decseq: DECSEQ
+    | decseq optnumws DECSEQ
     ;
 optdecscale: /* empty */
     | decscale
@@ -176,14 +192,14 @@ optoctseq: /* empty */
 opthexseq: /* empty */
     | hexseq
     ;
-binseq: BINDIGIT
-    | binseq optnumws BINDIGIT
+binseq: BINSEQ
+    | binseq optnumws BINSEQ
     ;
-octseq: OCTDIGIT
-    | octseq optnumws OCTDIGIT
+octseq: OCTSEQ
+    | octseq optnumws OCTSEQ
     ;
-hexseq: HEXDIGIT
-    | hexseq optnumws HEXDIGIT
+hexseq: HEXSEQ
+    | hexseq optnumws HEXSEQ
     ;
 optbase2scale: /* empty */
     | base2scale
