@@ -1,4 +1,4 @@
-/* bison.h: C interface to bison parser */
+/* bison.c: C interface to bison parser */
 /*
     Copyright (C) 2007 Wolf Lammen.
 
@@ -28,63 +28,22 @@
 
 *************************************************************************/
 
-#ifndef _BISON_H
-#define _BISON_H
+#include "bison.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-typedef struct String
+DigitSeq appendStr(DigitSeq tail, String* next)
 {
-  char* s;
-  int lg;
-  struct String* prev;
-} String;
-
-typedef struct DigitSeq
-{
-  String* digits;
-  char  base;
-  char  complement;
-  signed char sign;
-} DigitSeq;
-
-typedef struct NumLiteral
-{
-  DigitSeq intpart;
-  String* fracpart;
-  DigitSeq exp;
-} NumLiteral;
-
-typedef struct NumValue
-{
-  void* val;
-  char* text;
-} NumValue;
-
-typedef void* Params;
-
-typedef void* Postfix;
-typedef void* Function;
-
-typedef struct Var
-{
-  void* write;
-  NumValue d;
-} Var;
-
-DigitSeq appendStr(DigitSeq tail, String* next);
-DigitSeq initStr(String* head, char base);
-NumValue convertStr(NumLiteral text);
-Params addParam(Params list, NumValue val);
-Postfix addPostfix(Postfix list, Postfix op);
-NumValue callFunction(Function f, Params params);
-NumValue callPostfix(Postfix list, NumValue val);
-NumValue callBinOperator(Function op, NumValue p1, NumValue p2);
-
-#ifdef __cplusplus
+  DigitSeq result = tail;
+  next->prev = tail.digits;
+  result.digits = next;
+  return result;
 }
-#endif 
 
-#endif /* _BISON_H */
+DigitSeq initStr(String* head, char base)
+{
+  DigitSeq result;
+  result.digits = head;
+  result.base = base;
+  result.complement = 0;
+  result.sign = 0;
+  return result;
+}

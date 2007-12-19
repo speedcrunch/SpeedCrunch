@@ -1,9 +1,9 @@
 /* speedcrunch single line expression grammar, expressed as LALR(1) grammar
    in bison style.
-   See the comment at the PERCENT token, when the syntax rules do not
+   Note the comment at the PERCENT token, where syntax rules do not
    exactly match the semantics of the expression, and where conflicts
    emerging from a co-existence of percent postfix operator and percent encoded
-   modulo operator cannot be resolved sufficiently in a LR(1) grammar.
+   modulo operator cannot be solved sufficiently in a LR(1) grammar.
    Although the extensions of bison could resolve these conflicts, this was not
    strived for in this first step.
    The scanner need not have much knowledge about the syntax (mostly about the
@@ -13,12 +13,29 @@
 */
 
 %{
-int yylex(void)
+#include "bison.h"
+int yylex(void);
 void yyerror(const char*);
 %}
 
+%defines
+%output="singlelineparser.c"
+%union
+{
+  char*      text;
+  int        sign;
+  String*    string;
+  DigitSeq   seq;
+  NumLiteral numliteral;
+  NumValue   numvalue;
+  Params     params;
+  Postfix    postfix;
+  Var        var;
+  Function   func;
+}
+
 /* a token that represents a string */
-%token TEXT
+%token <text>TEXT
 /* token that starts a scale (exponent) in a bin, oct or hex encoded scientific
    number. Note that 'e' is not generally available, because it might be mistaken
    for a hexagesimal digit */
@@ -45,8 +62,7 @@ void yyerror(const char*);
    is 'decimal encoding'. */
 %token HEXTAG
 /* a token indicating a two's complement that has to be sign-extended by the
-   input parser
-*/
+   input parser */
 %token CMPLTAG
 /* token representing the decimal dot. In most countries this is '.' */
 %token DOT
@@ -55,13 +71,13 @@ void yyerror(const char*);
 /* token representing a closing (right) parenthesis */
 %token CLOSEPAR
 /* token representing a sequence of 1 or more decimal digits (0-9) */
-%token DECSEQ
+%token <string>DECSEQ
 /* token representing a sequence of 1 or more binary digits (0-1) */
-%token BINSEQ
+%token <string>BINSEQ
 /* token representing a sequence of 1 or more octal digits (0-7) */
-%token OCTSEQ
+%token <string>OCTSEQ
 /* token representing a sequence of 1 or more hexagesimal digits (0-9,A-F) */
-%token HEXSEQ
+%token <string>HEXSEQ
 /* token for a grouping char that makes large numbers more readable.
    In most countries this is a comma (,).
    This token has no semantics; the parser just checks its correct
@@ -73,29 +89,28 @@ void yyerror(const char*);
    This token has no semantics, but it is syntactically necessary to keep
    expressions unambiguous */
 %token SEP
-/* the percent operator is really an obnoxity. It is used in expressions
+/* the percent operator is really problematic. It is used in expressions
    like 12+13%. Typical pocket calculators evaluate this to 12*(1+13/100);
-   in contrast, Speedcrunch currently takes an even simpler approach and computes
-   12+13/100, which is near to complete uselessness. So I am much in favour of
-   changing this.
-   Percent calculation is vastly used in price calculations, where
+   in contrast, you will find Speedcrunch computing 12+13/100, which is
+   almost useless. So I am much in favour of changing this.
+   Percent arithmetic is vastly used in price calculations, where
    traders add VAT to net prices (+19%), or grant discounts (-5%). In
    conjunction with operators other than + and -, pocket calculators
    usually simply divide the tagged operand by 100, assuming users know
    what they are doing.
-   Now let's see how this can integrate with Speedcrunch's grammar.
+   Now let's see how this can integrate into Speedcrunch's grammar.
    Actually, the percent operator introduces 3 different operations:
    - a binary operation '+%' equivalent to op1*(1+op2/100)
    - a binary operation '-%' equivalent to op1*(1-op2/100)
    - a unary postfix operation (divide by 100) used elsewhere,
      as in 12*13%
-   This shows the difficulty: One time an operand is modified, the other
-   time an operation, and the syntax looks very much the same. So it is
+   This shows the difficulty: One time an operand is modified, next time an
+   operation, and the syntax looks very much the same. That's why it is
    hard for a parser to tell the difference based on syntactical rules only.
-   You have to single out the + and - operation, which breaks the uniformity
+   You have to treat the + and - operation specially, which breaks the uniformity
    of operation handling, and makes the parser more complex. Even worse,
-   to tell an ordinary addition (expr+expr) from a percent addition
-   (expr+expr%), the parser needs a 2-element look-ahead buffer, which
+   to distinguish between an ordinary addition (expr+expr) and a percent
+   addition (expr+expr%), the parser needs a 2-element look-ahead buffer, which
    makes the underlying grammar finally LR(2).
    One remedy to this is making the % operator syntactically always a unary
    postfix operator. Then, on reduction, the operand is merely tagged as being
@@ -105,7 +120,7 @@ void yyerror(const char*);
    the actions (evaluator). And that will make the parser harder to maintain.
    The cleanest solution would be to introduce two new operations +% and -%, so the
    user tells the parser directly what he/she wants. This, on the other hand, is
-   non-standard.
+   non-standard behaviour.
    So, what shall we do, make the parser overly complex and inflexible, or
    instead, violate clean programming style by scattering syntax handling code
    around, or, maybe, present a user interface not known outside of
@@ -115,17 +130,31 @@ void yyerror(const char*);
    the modulo operator in several program languages. This ambiguity is not
    supported by this grammar, so the scanner has to resolve this (best solved by
    simply assigning a different identifier to the modulo operation) */
-%token PERCENT
+%token <postfix>PERCENT
+/* when the scanner detects an operator token, it delivers three tokens in
+   succession: One describing the precedence of the operator when seen as an
+   infix operator; the next describing the precedence when the operator is a
+   prefix operator, and a third telling whether the operator indicates a sign
+   (+ or -).
+   If an operator cannot be used as a prefix operator, this token is returned in
+   the second position */
+%token NOPREFIX
+/* when the scanner detects an operator token, it delivers three tokens in
+   succession: One describing the precedence of the operator when seen as an
+   infix operator; the next describing the precedence when the operator is a
+   prefix operator, and a third telling whether the operator indicates a sign
+   (+ or -).
+   If an operator can be used as a sign, this token is returned in
+   the third position */
+%token <sign>SIGN
 /* token for a variable identifier, can be read and written to. */
-%token VARIABLE
+%token <var>VARIABLE
 /* token for a constant identifier that only can be read */
-%token CONSTANT
+%token <numvalue>CONSTANT
 /* any postfix operand like the factorial (!), except the %-operator */
-%token POSTFIXOP
-/* any prefix operator except + or - */
-%token PREFIXOP
+%token <postfix>POSTFIXOP
 /* a token for a function identifier */
-%token FUNCTION
+%token <func>FUNCTION
 /* the token for the binary operator (=) expressing an assignment */
 %token ASSIGN
 
@@ -142,253 +171,333 @@ void yyerror(const char*);
    the token L6OP, if it finds out, it has encountered a level 6, left-to-right
    operator.
 */
-%left L0OP PLUSMINUS0
-%right R1OP
-%left L2OP PLUSMINUS2
-%right R3OP
-%left L4OP PLUSMINUS4
-%right R5OP
-%left L6OP PLUSMINUS6
-%right R7OP
-%left L8OP PLUSMINUS8
-%right R9OP
-%left L10OP PLUSMINUS10
-%right R11OP
-%left L12OP PLUSMINUS12
-%right R13OP
-%left L14OP PLUSMINUS14
+%left <func>L0
+%right <func>R1
+%left <func>L2
+%right <func>R3
+%left <func>L4
+%right <func>R5
+%left <func>L6
+%right <func>R7
+%left <func>L8
+%right <func>R9
+%left <func>L10 PREFIX10
+%right <func>R11
+%left <func>L12 PREFIX12
+%right <func>R13
+%left <func>L14 PREFIX14
+
+%type <seq> decseq binseq octseq hexseq taggedbase2seq taggedseq uint taggedint
+%type <seq> exponent optbase2scale optdecscale opthexseq optoctseq optbinseq optdecseq
+%type <seq> opthexdotfrac optoctdotfrac optbindotfrac optdecdotfrac
+%type <numliteral> hexvalue octvalue binvalue decvalue taggednumber
+%type <numvalue> number literal expr simpleval primval prefixval
+%type <params> paramlist params
+%type <postfix> optpostfix postfix postfixop
+%type <func> prefixop
+
+%start input
 
 %%
 /* the start symbol, a line containing an expression or an assignment
    to a variable */
-input: /* empty */
+input:
+      /* empty */
     | expr
     | VARIABLE ASSIGN expr
     ;
 /* on top level, an expression is either a binary operation of two
-   operands, or a primary expression with possible prefixes and postfixes.
+   operands, or a primary expression with possible prefixes (and postfixes).
    Do not try to be too clever here! Defining a rule 'binaryop', that
-   takes a list of all binary operations, and simplifying this rule
+   takes a list of all binary operations, and simplifying alternatives
    to:
-   expr: primexpr | expr binaryop expr;
-   will break LALR(1)!
+   | expr binaryop expr;
+   will be beyond LALR(1)!
 */
-expr: primexpr
-    | expr L0OP expr
-    | expr R1OP expr
-    | expr L2OP expr
-    | expr R3OP expr
-    | expr L4OP expr
-    | expr R5OP expr
-    | expr L6OP expr
-    | expr R7OP expr
-    | expr L8OP expr
-    | expr R9OP expr
-    | expr L10OP expr
-    | expr R11OP expr
-    | expr L12OP expr
-    | expr R13OP expr
-    | expr L14OP expr
-    | expr PLUSMINUS0 expr
-    | expr PLUSMINUS2 expr
-    | expr PLUSMINUS4 expr
-    | expr PLUSMINUS6 expr
-    | expr PLUSMINUS8 expr
-    | expr PLUSMINUS10 expr
-    | expr PLUSMINUS12 expr
-    | expr PLUSMINUS14 expr
-    ;
-/* a single value, together with optional prefix and postfix
-   operators */
-primexpr: prefix postfixval
-    | postfixval
-    ;
-/* a sequence of 1 or more prefix operators */
-prefix: prefixop
-    | prefix prefixop
-    ;
-/* a single prefix operand */
-prefixop: PREFIXOP
-    | sign
-    ;
-/* a single value with optional postfix operators */
-postfixval: primval optpostfix
+expr:
+      primval optpostfix                      { callPostfix($2, $1); }
+    | expr L0 prefixprec SIGN expr %prec L0   { callBinOperator($2, $1, $5); }
+    | expr R1 expr                            { callBinOperator($2, $1, $3); }
+    | expr L2 prefixprec SIGN expr %prec L2   { callBinOperator($2, $1, $5); }
+    | expr R3 expr                            { callBinOperator($2, $1, $3); }
+    | expr L4 prefixprec SIGN expr %prec L4   { callBinOperator($2, $1, $5); }
+    | expr R5 expr                            { callBinOperator($2, $1, $3); }
+    | expr L6 prefixprec SIGN expr %prec L6   { callBinOperator($2, $1, $5); }
+    | expr R7 expr                            { callBinOperator($2, $1, $3); }
+    | expr L8 prefixprec SIGN expr %prec L8   { callBinOperator($2, $1, $5); }
+    | expr R9 expr                            { callBinOperator($2, $1, $3); }
+    | expr L10 prefixprec SIGN expr %prec L10 { callBinOperator($2, $1, $5); }
+    | expr R11 expr                           { callBinOperator($2, $1, $3); }
+    | expr L12 prefixprec SIGN expr %prec L12 { callBinOperator($2, $1, $5); }
+    | expr R13 expr                           { callBinOperator($2, $1, $3); }
+    | expr L14 prefixprec SIGN expr %prec L14 { callBinOperator($2, $1, $5); }
+    | L0 PREFIX14 SIGN expr %prec PREFIX14    { callFunction($2, addParam(0, $4)); }
+    | L2 PREFIX14 SIGN expr %prec PREFIX14    { callFunction($2, addParam(0, $4)); }
+    | L4 PREFIX14 SIGN expr %prec PREFIX14    { callFunction($2, addParam(0, $4)); }
+    | L6 PREFIX14 SIGN expr %prec PREFIX14    { callFunction($2, addParam(0, $4)); }
+    | L8 PREFIX14 SIGN expr %prec PREFIX14    { callFunction($2, addParam(0, $4)); }
+    | L10 PREFIX14 SIGN expr %prec PREFIX14   { callFunction($2, addParam(0, $4)); }
+    | L12 PREFIX14 SIGN expr %prec PREFIX14   { callFunction($2, addParam(0, $4)); }
+    | L14 PREFIX14 SIGN expr %prec PREFIX14   { callFunction($2, addParam(0, $4)); }
+    | L0 PREFIX12 SIGN expr %prec PREFIX12    { callFunction($2, addParam(0, $4)); }
+    | L2 PREFIX12 SIGN expr %prec PREFIX12    { callFunction($2, addParam(0, $4)); }
+    | L4 PREFIX12 SIGN expr %prec PREFIX12    { callFunction($2, addParam(0, $4)); }
+    | L6 PREFIX12 SIGN expr %prec PREFIX12    { callFunction($2, addParam(0, $4)); }
+    | L8 PREFIX12 SIGN expr %prec PREFIX12    { callFunction($2, addParam(0, $4)); }
+    | L10 PREFIX12 SIGN expr %prec PREFIX12   { callFunction($2, addParam(0, $4)); }
+    | L12 PREFIX12 SIGN expr %prec PREFIX12   { callFunction($2, addParam(0, $4)); }
+    | L14 PREFIX12 SIGN expr %prec PREFIX12   { callFunction($2, addParam(0, $4)); }
+    | L0 PREFIX10 SIGN expr %prec PREFIX10    { callFunction($2, addParam(0, $4)); }
+    | L2 PREFIX10 SIGN expr %prec PREFIX10    { callFunction($2, addParam(0, $4)); }
+    | L4 PREFIX10 SIGN expr %prec PREFIX10    { callFunction($2, addParam(0, $4)); }
+    | L6 PREFIX10 SIGN expr %prec PREFIX10    { callFunction($2, addParam(0, $4)); }
+    | L8 PREFIX10 SIGN expr %prec PREFIX10    { callFunction($2, addParam(0, $4)); }
+    | L10 PREFIX10 SIGN expr %prec PREFIX10   { callFunction($2, addParam(0, $4)); }
+    | L12 PREFIX10 SIGN expr %prec PREFIX10   { callFunction($2, addParam(0, $4)); }
+    | L14 PREFIX10 SIGN expr %prec PREFIX10   { callFunction($2, addParam(0, $4)); }
     ;
 /* a single value, not being a group */
-simpleval: literal
-    | VARIABLE
-    | CONSTANT
-    | FUNCTION param
+simpleval:
+      literal                            { $$ = $1; }
+    | VARIABLE                           { $$ = $1.d; }
+    | CONSTANT                           { $$ = $1; }
+    | FUNCTION params                    { $$ = callFunction($1, $2); }
     ;
 /* A single value, possibly being a group like '(expression)'. */
-primval: simpleval
-    | OPENPAR expr CLOSEPAR
+primval:
+      simpleval                          { $$ = $1; }
+    | OPENPAR expr CLOSEPAR              { $$ = $2; }
     ;
 /* a possibly empty sequence of postfix operators */
-optpostfix: /* empty */
-    | postfix
+optpostfix:
+      /* empty */                        { $$ = 0; }
+    | postfix                            { $$ = $1; }
     ;
 /* a sequence of 1 or more postfix operators */
-postfix: postfixop
-    | postfix postfixop
+postfix:
+      postfixop                          { $$ = $1; }
+    | postfix postfixop                  { $$ = addPostfix($1, $2); }
     ;
 /* a single postfix operator */
-postfixop: POSTFIXOP
-    | PERCENT
+postfixop:
+      POSTFIXOP                          { $$ = $1; }
+    | PERCENT                            { $$ = $1; }
+    ;
+prefixval:
+      simpleval                          { $$ = $1; }
+    | infixprec prefixop SIGN prefixval  { $$ = callFunction($2, addParam(0, $4)); }
     ;
 /* a possibly empty parameter list enclosed in parenthesis, or a
    single parameter without parenthesis */
-param: OPENPAR paramlist CLOSEPAR
-    | simpleval
+params:
+      OPENPAR paramlist CLOSEPAR         { $$ = $2; }
+    | prefixval                          { addParam(0, $1); }
     ;
 /* parameter list separated by ';', but without the enclosing parenthesis */
-paramlist: /* empty */
-    | expr
-    | paramlist SEP expr
+paramlist:
+      /* empty */                        { $$ = 0; }
+    | expr                               { $$ = addParam(0, $1); }
+    | paramlist SEP expr                 { $$ = addParam($1, $3); }
     ;
 /* a literal (= constant expression), either being a string or a numeric
    constant */
-literal: TEXT
-    | number
+literal:
+      TEXT                               { $$.text = $1;
+                                           $$.val = 0; }
+    | number                             { $$ = $1; }
     ;
 /* a numeric constant, either being a usual decimal encoded value, or
    a constant having a radix tag like 0x */
-number: decvalue
-    | taggednumber
+number:
+      decvalue                           { $$ = convertStr($1); }
+    | taggednumber                       { $$ = convertStr($1); }
+    ;
+/* a numeric constant with a radix tag */
+taggednumber:
+      DECTAG decvalue                    { $$ = $2; }
+    | BINTAG binvalue                    { $$ = $2; }
+    | OCTTAG octvalue                    { $$ = $2; }
+    | HEXTAG hexvalue                    { $$ = $2; }
+    | CMPLTAG taggedbase2seq             { $$.intpart = $2;
+                                           $$.intpart.complement = 1;
+                                           $$.fracpart = 0;
+                                           $$.exp = initStr(0, 0); }
     ;
 /* a decimal encoded value, with optional fraction and/or scale. If a scale
    is present, its meaning is *10^scale */
-decvalue: decseq optdecdotfrac optdecscale
-    | DOT decseq optdecscale
-    ;
-/* a sequence of decimal digits, possibly interspersed with digit
-   grouping characters */
-decseq: DECSEQ
-    | decseq optgroupchar DECSEQ
-    ;
-/* a possibly missing grouping char */
-optgroupchar: /* empty */
-    | GROUPCHAR
-    ;
-/* a possibly missing scale, together with a scale indicator (E10, or E-2)
-   used with decimal encoded values */
-optdecscale: /* empty */
-    | DECSCALECHAR exponent
-    ;
-/* a possibly missing fractional part of a significand. The fractional part
-   may reduce to a dot only */
-optdecdotfrac: /* empty */
-    | DOT optdecseq
-    ;
-/* a possibly missing sequence of digits, together with grouping characters */
-optdecseq: /* empty */
-    | decseq
-    ;
-/* a numeric constant having a radix tag */
-taggednumber: DECTAG decvalue
-    | BINTAG binvalue
-    | OCTTAG octvalue
-    | HEXTAG hexvalue
-    | cmplint
+decvalue:
+      decseq optdecdotfrac optdecscale   { $$.intpart = $1;
+                                           $$.fracpart = $2.digits;
+                                           $$.exp = $3; }
+    | DOT decseq optdecscale             { $$.intpart = initStr(0, 16);
+                                           $$.fracpart = $2.digits;
+                                           $$.exp = $3; }
     ;
 /* a binary encoded number, with optional fraction and/or scale, but without
    radix tag. If a scale is present, its semantics is *2^scale. */
-binvalue: binseq optbindotfrac optbase2scale
-    | DOT binseq optbase2scale
+binvalue:
+      binseq optbindotfrac optbase2scale { $$.intpart = $1;
+                                           $$.fracpart = $2.digits;
+                                           $$.exp = $3; }
+    | DOT binseq optbase2scale           { $$.intpart = initStr(0, 16);
+                                           $$.fracpart = $2.digits;
+                                           $$.exp = $3; }
     ;
 /* an octal encoded number, with optional fraction and/or scale, but without
    radix tag. If a scale is present, its semantics is *8^scale. */
-octvalue: octseq optoctdotfrac optbase2scale
-    | DOT octseq optbase2scale
+octvalue:
+      octseq optoctdotfrac optbase2scale { $$.intpart = $1;
+                                           $$.fracpart = $2.digits;
+                                           $$.exp = $3; }
+    | DOT octseq optbase2scale           { $$.intpart = initStr(0, 16);
+                                           $$.fracpart = $2.digits;
+                                           $$.exp = $3; }
     ;
 /* a hexagesimal encoded number, with optional fraction and/or scale, but without
    radix tag. If a scale is present, its semantics is *16^scale. */
-hexvalue: hexseq opthexdotfrac optbase2scale
-    | DOT hexseq optbase2scale
+hexvalue:
+      hexseq opthexdotfrac optbase2scale { $$.intpart = $1;
+                                           $$.fracpart = $2.digits;
+                                           $$.exp = $3; }
+    | DOT hexseq optbase2scale           { $$.intpart = initStr(0, 16);
+                                           $$.fracpart = $2.digits;
+                                           $$.exp = $3; }
+    ;
+/* a possibly missing fractional part of a significand. The fractional part
+   may reduce to a dot only */
+optdecdotfrac:
+      /* empty */                        { $$ = initStr(0, 10); }
+    | DOT optdecseq                      { $$ = $2; }
     ;
 /* a possibly missing fractional part of a binary encoded constant */
-optbindotfrac: /* empty */
-    | DOT optbinseq
+optbindotfrac:
+      /* empty */                        { $$ = initStr(0, 2); }
+    | DOT optbinseq                      { $$ = $2; }
     ;
 /* a possibly missing fractional part of an octal encoded constant */
-optoctdotfrac: /* empty */
-    | DOT optoctseq
+optoctdotfrac:
+      /* empty */                        { $$ = initStr(0, 8); }
+    | DOT optoctseq                      { $$ = $2; }
     ;
 /* a possibly missing fractional part of a hexagesimal encoded constant */
-opthexdotfrac: /* empty */
-    | DOT opthexseq
+opthexdotfrac:
+      /* empty */                        { $$ = initStr(0, 16); }
+    | DOT opthexseq                      { $$ = $2; }
     ;
-/* a possibly empty sequence of binary digits together with grouping
-   characters */
-optbinseq: /* empty */
-    | binseq
-    ;
-/* a possibly empty sequence of octal digits together with grouping
-   characters */
-optoctseq: /* empty */
-    | octseq
-    ;
-/* a possibly empty sequence of hexagesimal digits together with grouping
-   characters */
-opthexseq: /* empty */
-    | hexseq
-    ;
-/* a sequence of 1 or more binary digits, possibly with interspersing
-   grouping characters */
-binseq: BINSEQ
-    | binseq optgroupchar BINSEQ
-    ;
-/* a sequence of 1 or more octal digits, possibly with interspersing
-   grouping characters */
-octseq: OCTSEQ
-    | octseq optgroupchar OCTSEQ
-    ;
-/* a sequence of 1 or more hexagesimal digits, possibly with interspersing
-   grouping characters */
-hexseq: HEXSEQ
-    | hexseq optgroupchar HEXSEQ
+/* a possibly missing scale, together with a scale indicator (E10, or E-2)
+   used with decimal encoded values */
+optdecscale:
+      /* empty */                        { initStr(0, 0); }
+    | DECSCALECHAR exponent              { $$ = $2; }
+    | SCALECHAR exponent                 { $$ = $2; }
     ;
 /* a possibly missing scale part of a constant given to a non-decimal base,
    together with an introducing scale character, e.g. p+33, p0xAA, p-0o72.
    If the scale carries no radix tag, a decimal encoding is assumed, regardless
    of the radix the significand is encoded to. */
-optbase2scale: /* empty */
-    | SCALECHAR exponent
+optbase2scale:
+      /* empty */                        { initStr(0, 0); }
+    | SCALECHAR exponent                 { $$ = $2; }
     ;
 /* the signed integer representing a scale */
-exponent: sign uint
-    | decseq
-    | taggedint
-    ;
-/* a sign, + or - */
-sign: PLUSMINUS0
-    | PLUSMINUS2
-    | PLUSMINUS4
-    | PLUSMINUS6
-    | PLUSMINUS8
-    | PLUSMINUS10
-    | PLUSMINUS12
-    | PLUSMINUS14
+exponent:
+      infixprec prefixprec SIGN uint     { $$ = $4;
+                                           $$.sign = $3; }
+    | decseq                             { $$ = $1; }
+    | taggedint                          { $$ = $1; }
     ;
 /* an unsigned integer, given to any base */
-uint: decseq
-    | taggedseq
+uint: decseq                             { $$ = $1; }
+    | taggedseq                          { $$ = $1; }
     ;
 /* an unsigned integer, together with a radix tag */
-taggedseq: DECTAG decseq
-    | taggedbase2seq
+taggedseq:
+      DECTAG decseq                      { $$ = $2; }
+    | taggedbase2seq                     { $$ = $1; }
     ;
 /* a non-decimal encoded unsigned integer */
-taggedbase2seq: BINTAG binseq
-    | OCTTAG octseq
-    | HEXTAG hexseq
+taggedbase2seq:
+      BINTAG binseq                      { $$ = $2; }
+    | OCTTAG octseq                      { $$ = $2; }
+    | HEXTAG hexseq                      { $$ = $2; }
     ;
-/* a signed integer, given in two's complement notation */
-cmplint: CMPLTAG taggedbase2seq
+/* an integer with a tags, but without a sign character */
+taggedint:
+      CMPLTAG taggedbase2seq             { $$ = $2;
+                                           $$.complement = 1; }
+    | taggedseq                          { $$ = $1; }
     ;
-/* an integer with a radix tag, but without a sign character */
-taggedint: cmplint
-    | taggedseq
+/* a possibly missing sequence of digits, together with grouping characters */
+optdecseq:
+      /* empty */                        { $$ = initStr(0, 10); }
+    | decseq                             { $$ = $1; }
     ;
-
+/* a possibly empty sequence of binary digits together with grouping
+   characters */
+optbinseq:
+      /* empty */                        { $$ = initStr(0, 2); }
+    | binseq                             { $$ = $1; }
+    ;
+/* a possibly empty sequence of octal digits together with grouping
+   characters */
+optoctseq:
+      /* empty */                        { $$ = initStr(0, 8); }
+    | octseq                             { $$ = $1; }
+    ;
+/* a possibly empty sequence of hexagesimal digits together with grouping
+   characters */
+opthexseq:
+      /* empty */                        { $$ = initStr(0, 16); }
+    | hexseq                             { $$ = $1; }
+    ;
+/* a sequence of decimal digits, possibly interspersed with digit
+   grouping characters */
+decseq:
+      DECSEQ                             { $$ = initStr($1, 10); }
+    | decseq optgroupchar DECSEQ         { $$ = appendStr($1, $3); }
+    ;
+/* a sequence of 1 or more binary digits, possibly with interspersing
+   grouping characters */
+binseq:
+      BINSEQ                             { $$ = initStr($1, 2); }
+    | binseq optgroupchar BINSEQ         { $$ = appendStr($1, $3); }
+    ;
+/* a sequence of 1 or more octal digits, possibly with interspersing
+   grouping characters */
+octseq:
+      OCTSEQ                             { $$ = initStr($1, 8); }
+    | octseq optgroupchar OCTSEQ         { $$ = appendStr($1, $3); }
+    ;
+/* a sequence of 1 or more hexagesimal digits, possibly with interspersing
+   grouping characters */
+hexseq:
+      HEXSEQ                             { $$ = initStr($1, 16); }
+    | hexseq optgroupchar HEXSEQ         { $$ = appendStr($1, $3); }
+    ;
+/* the precedence of an operator when used as a unary prefix operator */
+prefixprec:
+      NOPREFIX
+    | prefixop
+    ;
+prefixop:
+      PREFIX10                           { $$ = $1; }
+    | PREFIX12                           { $$ = $1; }
+    | PREFIX14                           { $$ = $1; }
+    ;
+/* a possibly missing grouping char */
+optgroupchar:
+      /* empty */
+    | GROUPCHAR
+    ;
+/* the precedence of an operator when used as an infix operator */
+infixprec:
+      L0
+    | L2
+    | L4
+    | L6
+    | L8
+    | L10
+    | L12
+    | L14
+    ;
 %%
