@@ -31,77 +31,39 @@
 #ifndef _BISONPARSER_H
 #define _BISONPARSER_H
 
-#include "math/hmath.hxx"
-#include <QString>
-#include <QVector>
+#include "bison.h"
 
-/*==========================================================*/
-
-/* to minimize effects on other modules make Evaluator
-   keep the old Evaluator interface. This is not
-   necessary for the parsing process, and should not be
-   implemented here */
-
-/*client(s):
-  deletevardlg
-*/
-class Variable
+class SglExprLex
 {
   public:
-    QString name;
-    HNumber value;
+    bool autoFix();
+  private:
+    const int syschar = 1;
+    const int sot = 2;
+    const int eot = 3;
+    const int ans = 4;
+    const int whitespace = ' ';
+
+    QString expr;
+    QString systag;
+
+    enum { inWhitespace
+    } state;
+    int pos;
+    int start;
+    int end;
+
+    void setExpression(const QString& newexpr);
+    int size() { return expr.size(); };
+    char at(int i) { return expr.at(i); };
+    int getNextToken();
+    QString revLookup(int token);
+    void reset();
+    int getTopLevelToken();
+    int getSysToken();
+    int getIdentifier();
+    int getNumeric();
+    int getSpecialCharToken();
+    void skip(QChar c);
+    int lookup(const QString& identifier);
 };
-
-/*client(s):
-  editor
-*/
-class Token: public TokenBase
-{
-  public:
-    // syntactical classification
-    typedef enum
-    {
-      stxUnknown,
-      stxNumber,
-      stxIdentifier,
-      stxOperator,
-      stxOpenPar,
-      stxClosePar,
-      stxSep,
-    } Type;
-    Type type() const { return m_type; }
-    bool isIdentifier() const { return m_type == stxIdentifier; }
-  protected:
-
-    Type m_type;
-};
-
-/*client(s):
-  editor
-*/
-class Tokens: public QVector<Token>
-{
-  public:
-    bool valid() const { return m_valid; }
-  protected:
-    bool m_valid;
-};
-
-class Evaluator : public EvaluatorBase
-{
-  public:
-/*client(s):
-    editor
-*/
-    static Tokens scan( const QString& expr );
-/*client(s):
-    deletevardlg
-*/
-    QVector<Variable> variables() const;
-/*client(s):
-    deletevardlg
-*/
-    void remove( const QString& id );
-};
-
-#endif /* _BISONPARSER_H */

@@ -35,16 +35,16 @@
 extern "C" {
 #endif
 
-typedef struct String
-{
-  char* s;
-  int lg;
-  struct String* prev;
-} String;
+/* return values of parse */
+#define PARSE_OK          0
+#define PARSE_SYNTAXERROR 1
+#define PARSE_OUTOFMEM    2
+
+typedef char* String;
 
 typedef struct DigitSeq
 {
-  String* digits;
+  String digits;
   char  base;
   char  complement;
   signed char sign;
@@ -53,7 +53,7 @@ typedef struct DigitSeq
 typedef struct NumLiteral
 {
   DigitSeq intpart;
-  String* fracpart;
+  String fracpart;
   DigitSeq exp;
 } NumLiteral;
 
@@ -61,11 +61,11 @@ typedef struct NumValue
 {
   void* val;
   char* text;
+  char percent;
 } NumValue;
 
 typedef void* Params;
 
-typedef void* Postfix;
 typedef void* Function;
 
 typedef struct Var
@@ -74,17 +74,37 @@ typedef struct Var
   NumValue d;
 } Var;
 
-DigitSeq appendStr(DigitSeq tail, String* next);
-DigitSeq initStr(String* head, char base);
-NumValue convertStr(NumLiteral text);
-Params addParam(Params list, NumValue val);
-Postfix addPostfix(Postfix list, Postfix op);
-NumValue callFunction(Function f, Params params);
-NumValue callPostfix(Postfix list, NumValue val);
-NumValue callBinOperator(Function op, NumValue p1, NumValue p2);
+#ifndef YYSTYPE_IS_DECLARED
+# include "exprparser.h"
+#endif
+
+/* call backs */
+
+typedef DigitSeq (*FAppendStr)(DigitSeq seq, String s);
+typedef DigitSeq (*FInitStr)(String s, char base);
+typedef NumValue (*FConvertStr)(NumLiteral text);
+typedef Params (*FAddParam)(Params list, NumValue val);
+typedef NumValue (*FCallFunction)(Function f, Params params);
+typedef NumValue (*FAssignVar)(Var variable, NumValue val);
+/* return values and YYSTYPE are defined in exprparser.h */
+typedef int (*FGetToken)(YYSTYPE* val, int* pos, int* lg);
+
+typedef struct CallBacks
+{
+  FAppendStr    appendStr;
+  FInitStr      initStr;
+  FConvertStr   convertStr;
+  FAddParam     addParam;
+  FCallFunction callFunction;
+  FAssignVar    assignVar;
+  FGetToken     getToken;
+} CallBacks;
+
+/* parser. return values are defined above as PARSE_... */
+extern int parseexpr(CallBacks callbacks, NumValue* result, int* pos, int* lg);
 
 #ifdef __cplusplus
 }
-#endif 
+#endif
 
 #endif /* _BISON_H */
