@@ -116,7 +116,7 @@ static FGetToken getToken;
 %token OPENPAR
 /* token representing a closing (right) parenthesis */
 %token CLOSEPAR
-/* token representing a sequence of 1 or more decimal digits (0-9) */
+/* token representing a sequence of 1 or more (not necessarily decimal) digits */
 %token <string>DECSEQ
 /* token representing a sequence of 1 or more binary digits (0-1) */
 %token <string>BINSEQ
@@ -373,7 +373,7 @@ decvalue:
       decseq optdecdotfrac optdecscale   { $$.intpart = $1;
                                            $$.fracpart = $2.digits;
                                            $$.exp = $3; }
-    | DOT decseq optdecscale             { $$.intpart = initStr(0, 16);
+    | DOT decseq optdecscale             { $$.intpart = initStr(0, 10);
                                            $$.fracpart = $2.digits;
                                            $$.exp = $3; }
     ;
@@ -383,7 +383,7 @@ binvalue:
       binseq optbindotfrac optbase2scale { $$.intpart = $1;
                                            $$.fracpart = $2.digits;
                                            $$.exp = $3; }
-    | DOT binseq optbase2scale           { $$.intpart = initStr(0, 16);
+    | DOT binseq optbase2scale           { $$.intpart = initStr(0, 2);
                                            $$.fracpart = $2.digits;
                                            $$.exp = $3; }
     ;
@@ -393,7 +393,7 @@ octvalue:
       octseq optoctdotfrac optbase2scale { $$.intpart = $1;
                                            $$.fracpart = $2.digits;
                                            $$.exp = $3; }
-    | DOT octseq optbase2scale           { $$.intpart = initStr(0, 16);
+    | DOT octseq optbase2scale           { $$.intpart = initStr(0, 8);
                                            $$.fracpart = $2.digits;
                                            $$.exp = $3; }
     ;

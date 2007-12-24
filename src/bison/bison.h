@@ -40,7 +40,7 @@ extern "C" {
 #define PARSE_SYNTAXERROR 1
 #define PARSE_OUTOFMEM    2
 
-typedef char* String;
+typedef void* String;
 
 typedef struct DigitSeq
 {
@@ -60,7 +60,7 @@ typedef struct NumLiteral
 typedef struct NumValue
 {
   void* val;
-  char* text;
+  void* text;
   char percent;
 } NumValue;
 
@@ -80,8 +80,8 @@ typedef struct Var
 
 /* call backs */
 
-typedef DigitSeq (*FAppendStr)(DigitSeq seq, String s);
 typedef DigitSeq (*FInitStr)(String s, char base);
+typedef DigitSeq (*FAppendStr)(DigitSeq seq, String s);
 typedef NumValue (*FConvertStr)(NumLiteral text);
 typedef Params (*FAddParam)(Params list, NumValue val);
 typedef NumValue (*FCallFunction)(Function f, Params params);
@@ -91,8 +91,8 @@ typedef int (*FGetToken)(YYSTYPE* val, int* pos, int* lg);
 
 typedef struct CallBacks
 {
-  FAppendStr    appendStr;
   FInitStr      initStr;
+  FAppendStr    appendStr;
   FConvertStr   convertStr;
   FAddParam     addParam;
   FCallFunction callFunction;

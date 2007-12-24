@@ -33,37 +33,78 @@
 
 #include "bison.h"
 
+#include <QString>
+#include <QChar>
+#include <QQueue>
+#include <QStack>
+#include <QList>
+
+class Token
+{
+  public:
+    Token(const QString expr, int pos, int size, int type);
+    int pos() const { return m_pos; };
+    int size() const { return m_str.size(); };
+    int type() const { return m_type; };
+    QString str() const { return m_expr.mid(pos(), size()); };
+  private:
+    QString m_expr;
+    int m_pos;
+    int m.size;
+    int m_type;
+};
+
 class SglExprLex
 {
   public:
     bool autoFix();
+    QList<Token> scan();
+    void setExpression(const QString& newexpr);
   private:
-    const int syschar = 1;
-    const int sot = 2;
-    const int eot = 3;
-    const int ans = 4;
-    const int whitespace = ' ';
-
     QString expr;
-    QString systag;
+    QString escapetag;
 
-    enum { inWhitespace
-    } state;
-    int pos;
+    int index;
     int start;
     int end;
+    int size;
+    int escsize;
+    QQueue<int> pendingToken;
+    QStack<QString> closePar;
+    QList<QByteArray>memlist;
+    enum
+    {
+      stTopLevel, stNumber, stScale, stText
+    } state;
+    char radix;
 
-    void setExpression(const QString& newexpr);
-    int size() { return expr.size(); };
-    char at(int i) { return expr.at(i); };
-    int getNextToken();
-    QString revLookup(int token);
+    char current() const { return expr.at(index); };
+    bool atEnd() const { return index == size; };
+    QString currentSubStr() const;
+    int lookup() const;
+    int numLookup() const;
+    int escLookup() const;
+    int greedyLookup();
+    int doLookup() const;
+    int getNextTokenType();
+    void scanLetters();
+    bool isLetter() const;
+    bool isDigit() const;
+    bool isWhitespace() const;
+    bool isSpecial() const;
+    bool isAlphaNum() const
+    bool matchesClosePar() const;
+    bool matchesEscape() const;
+    int scanNextToken();
+    int getCloseChar();
+    int scanTextToken();
+    int scanSysToken();
+    int scanWhitespaceToken();
+    int scanDigitsToken();
+    int scanTagToken();
+    int scanIdentifierToken();
+    int scanMidNumberToken();
+    void updateState(int token);
     void reset();
-    int getTopLevelToken();
-    int getSysToken();
-    int getIdentifier();
-    int getNumeric();
-    int getSpecialCharToken();
-    void skip(QChar c);
-    int lookup(const QString& identifier);
+    Token createToken(int type);
 };
