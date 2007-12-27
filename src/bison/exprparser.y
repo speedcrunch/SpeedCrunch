@@ -46,8 +46,8 @@
 
 #include "bison.h"
 
-static NumValue callBinOperator(Function op, NumValue p1, NumValue p2);
-static NumValue callUnaryOperator(Function op, NumValue p);
+static NumValue callBinOperator(Func op, NumValue p1, NumValue p2);
+static NumValue callUnaryOperator(Func op, NumValue p);
 
 static void yyerror(char const*);
 static int yylex();
@@ -75,7 +75,7 @@ static FGetToken getToken;
   NumValue   numvalue;
   Params     params;
   Var        var;
-  Function   func;
+  Func       func;
 }
 
 /* a token that cannot be resolved by the scanner */
@@ -116,7 +116,7 @@ static FGetToken getToken;
 %token OPENPAR
 /* token representing a closing (right) parenthesis */
 %token CLOSEPAR
-/* token representing a sequence of 1 or more (not necessarily decimal) digits */
+/* token representing a sequence of 1 or more digits (0-9) */
 %token <string>DECSEQ
 /* token representing a sequence of 1 or more binary digits (0-1) */
 %token <string>BINSEQ
@@ -551,12 +551,12 @@ infixprec:
 
 /* convenience functions */
 
-static NumValue callBinOperator(Function op, NumValue p1, NumValue p2)
+static NumValue callBinOperator(Func op, NumValue p1, NumValue p2)
 {
   return callFunction(op, addParam(addParam(0, p1), p2));
 }
 
-static NumValue callUnaryOperator(Function op, NumValue p)
+static NumValue callUnaryOperator(Func op, NumValue p)
 {
   return callFunction(op, addParam(0, p));
 }

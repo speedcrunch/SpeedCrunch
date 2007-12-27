@@ -32,6 +32,7 @@
 #define _BISONPARSER_H
 
 #include "bison.h"
+#include "math/hmath.hxx"
 
 #include <QString>
 #include <QChar>
@@ -39,72 +40,119 @@
 #include <QStack>
 #include <QList>
 
-class Token
+class Symbol
 {
   public:
-    Token(const QString expr, int pos, int size, int type);
-    int pos() const { return m_pos; };
-    int size() const { return m_str.size(); };
-    int type() const { return m_type; };
-    QString str() const { return m_expr.mid(pos(), size()); };
-  private:
-    QString m_expr;
-    int m_pos;
-    int m.size;
-    int m_type;
+    virtual int type();
+    virtual ~Symbol();
 };
+
+typedef Symbol* PSymbol;
 
 class SglExprLex
 {
   public:
-    bool autoFix();
-    QList<Token> scan();
+#if 0
+
+    class Token
+    {
+      public:
+        Token(const QString expr, int pos, int size, int type);
+        int pos() const { return m_pos; };
+        int size() const { return m_str.size(); };
+        int type() const { return m_type; };
+        QString str() const { return m_expr.mid(pos(), size()); };
+      private:
+        QString m_expr;
+        int m_pos;
+        int m.size;
+        int m_type;
+    };
+#endif
+    bool autoFix(const QString& newexpr);
+//     QList<Token> scan();
     void setExpression(const QString& newexpr);
+    static SglExprLex& self();
   private:
+    static SglExprLex* instance;
     QString expr;
     QString escapetag;
+
+    typedef enum
+    {
+      whitespace = ' ',
+      eol        = '\0',
+    };
 
     int index;
     int start;
     int end;
     int size;
     int escsize;
-    QQueue<int> pendingToken;
-    QStack<QString> closePar;
-    QList<QByteArray>memlist;
+    PSymbol symbol;
+//     int lastTokenType;
+    QQueue<PSymbol> pendingSymbol;
+/*    QStack<QString> closePar;
+    QList<QByteArray>strlist;
+    QList<HNumber>numlist;
+    QList<QList<NumValue> >paramlists; */
     enum
     {
       stTopLevel, stNumber, stScale, stText
-    } state;
+    } state; 
     char radix;
 
-    char current() const { return expr.at(index); };
+    QChar current() const { return expr.at(index); };
     bool atEnd() const { return index == size; };
+    int symbolType() const;
     QString currentSubStr() const;
+#if 0
     int lookup() const;
     int numLookup() const;
-    int escLookup() const;
-    int greedyLookup();
-    int doLookup() const;
+#endif
+    int escLookup();
+//     int greedyLookup();
+    int doLookup(const QString&) const;
     int getNextTokenType();
+#if 0
+#endif
     void scanLetters();
     bool isLetter() const;
     bool isDigit() const;
     bool isWhitespace() const;
+#if 0
     bool isSpecial() const;
     bool isAlphaNum() const
     bool matchesClosePar() const;
+#endif
     bool matchesEscape() const;
     int scanNextToken();
+#if 0
     int getCloseChar();
     int scanTextToken();
+#endif
     int scanSysToken();
     int scanWhitespaceToken();
     int scanDigitsToken();
+#if 0
     int scanTagToken();
     int scanIdentifierToken();
     int scanMidNumberToken();
+#endif
     void updateState(int token);
     void reset();
+#if 0
     Token createToken(int type);
+    DigitSeq initStr(String s, char base);
+    DigitSeq appendStr(DigitSeq seq, String s);
+    NumValue convertStr(NumLiteral literal);
+    static QByteArray basePrefix(char base);
+#endif
+  private:
+    SglExprLex( const SglExprLex& );
+    SglExprLex& operator=( const SglExprLex& );
+    SglExprLex();
+    ~SglExprLex();
 };
+
+#endif /* _BISONPARSER_H */

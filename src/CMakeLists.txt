@@ -47,7 +47,7 @@ endif(MINGW)
 
 # enable warnings
 if(CMAKE_COMPILER_IS_GNUCXX )
-  ADD_DEFINITIONS( -g -Wall )
+  ADD_DEFINITIONS( -Wall )
 endif(CMAKE_COMPILER_IS_GNUCXX )
 
 # setup for Qt4
@@ -116,8 +116,6 @@ set(testevaluator_SOURCES
 base/evaluator.cpp
 base/functions.cpp
 base/settings.cpp
-symboltables/symbols.cpp
-symboltables/tables.cpp
 math/floatcommon.c
 math/floatconst.c
 math/floatconvert.c

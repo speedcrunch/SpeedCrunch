@@ -96,7 +96,7 @@ static void checkEval( const char    * file,
 
   Evaluator e;
 //  e.setAngleMode( Evaluator::Radian ); //refan
-  Settings::angleMode = Settings::Radian; //refan
+  Settings::self()->angleMode = Settings::Radian; //refan
   e.setExpression( expr );
   HNumber rn = e.evalUpdateAns();
 
@@ -458,7 +458,7 @@ void test_auto_fix_untouch()
 int main( int argc, char * * argv)
 {
   Settings::self()->setDecimalPoint("."); //refdp
-  Settings::angleMode = Settings::Radian; //refan
+  Settings::self()->angleMode = Settings::Radian; //refan
   test_constants();
   test_unary();
   test_binary();

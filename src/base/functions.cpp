@@ -46,13 +46,13 @@ HNumber deg2rad( HNumber angle)
 
 HNumber checkRad2Deg( HNumber angle )
 {
-  return Settings::angleMode == Settings::Degree?
+  return Settings::self()->angleMode == Settings::Degree?
              rad2deg(angle) : angle;
 }
 
 HNumber checkDeg2Rad( HNumber angle)
 {
-  return Settings::angleMode == Settings::Degree?
+  return Settings::self()->angleMode == Settings::Degree?
             deg2rad(angle) : angle;
 }
 

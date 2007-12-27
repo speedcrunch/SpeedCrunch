@@ -584,7 +584,7 @@ void Crunch::applySettings()
   d->editor->setHighlightColor( Editor::MatchedPar, settings->matchedParenthesisColor );
 
 //  if( settings->angleMode == "degree" ) //refan
-  if( Settings::angleMode == Settings::Degree )
+  if( Settings::self()->angleMode == Settings::Degree )
   {
 //    d->eval->setAngleMode( Evaluator::Degree ); //refan
     d->degButton->setChecked( true );
@@ -592,7 +592,7 @@ void Crunch::applySettings()
   }
 
 //  if( settings->angleMode == "radian" ) //refan
-  if( Settings::angleMode == Settings::Radian )
+  if( Settings::self()->angleMode == Settings::Radian )
   {
 //    d->eval->setAngleMode( Evaluator::Radian ); //refan
     d->degButton->setChecked( false );
@@ -997,7 +997,7 @@ void Crunch::angleModeChanged()
 //     d->eval->setAngleMode( Evaluator::Degree );
 //   if( d->radButton->isChecked() )
 //     d->eval->setAngleMode( Evaluator::Radian );
-  Settings::angleMode = d->degButton->isChecked()? Settings::Degree : Settings::Radian;
+  Settings::self()->angleMode = d->degButton->isChecked()? Settings::Degree : Settings::Radian;
 
   QTimer::singleShot(0, d->editor, SLOT( setFocus() ) );
 }

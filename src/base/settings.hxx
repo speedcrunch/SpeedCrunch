@@ -36,10 +36,11 @@ class Settings
     typedef enum { Degree, Radian } AngleMode; //refan
 
 //    QString angleMode; //refan
-    static AngleMode angleMode;
+    AngleMode angleMode;
 //    QString decimalPoint; //refdp
     static QChar decimalPoint();
     void setDecimalPoint(const QString& val);
+    QString escape; //reftbl
 
     bool saveHistory;
     bool saveVariables;

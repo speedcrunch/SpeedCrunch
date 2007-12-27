@@ -33,7 +33,6 @@
 
 Settings* s_global_settings = 0;
 
-Settings::AngleMode Settings::angleMode; //refan
 QChar Settings::dot;                     //refdp
 bool Settings::autoDetectDot;
 
@@ -116,6 +115,7 @@ Settings::Settings()
 
 void Settings::load()
 {
+  escape = "@@"; //reftbl
   QSettings settings( /*QSettings::IniFormat,*/ QSettings::UserScope, SETTINGSKEY, SETTINGSKEY );
 
   QString key = SETTINGSKEY;

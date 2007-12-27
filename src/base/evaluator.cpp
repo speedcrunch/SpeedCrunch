@@ -20,28 +20,12 @@
  */
 
 #include <base/evaluator.hxx>
-
-EvaluatorBase::EvaluatorBase(){}; //refEv
-EvaluatorBase::~EvaluatorBase(){};
-
-TokenBase::TokenBase(const QString& text, int pos) //reftk
-  : m_text(text), m_pos(pos)
-{
-  symbol = 0;
-}
-
-#ifdef _BISON
-
-# include "bison/bisonparser.cpp"
-
-#else /* ! _BISON */
-
 #include <base/functions.hxx>
 #include <base/settings.hxx>
 
-#include <float.h>
-#include <limits.h>
-#include <math.h>
+//#include <float.h> //refintf
+//#include <limits.h>
+//#include <math.h>
 
 #include <QApplication>
 //#include <QLocale> //refdp
@@ -50,6 +34,10 @@ TokenBase::TokenBase(const QString& text, int pos) //reftk
 #include <QStringList>
 #include <QVector>
 #include <QStack>
+
+#ifdef _BISON
+# include "bison/bisonparser.cpp"
+#endif
 
 // #define EVALUATOR_DEBUG
 
@@ -185,11 +173,10 @@ static int opPrecedence( Token::Op op )
 
 // creates a token
 Token::Token( Type type, const QString& text, int pos )
-  :TokenBase(text, pos)
 {
   m_type = type;
-/*  m_text = text; //reftk
-  m_pos = pos;*/
+  m_text = text;
+  m_pos = pos;
 }
 
 // copy constructor
@@ -324,6 +311,9 @@ Evaluator::~Evaluator()
 
 void Evaluator::setExpression( const QString& expr )
 {
+#ifdef _BISON
+  SglExprLex::self().setExpression(expr);
+#endif
   d->expression = expr;
   d->dirty      = true;
   d->valid      = false;
@@ -1507,8 +1497,13 @@ void Evaluator::clearVariables()
 }
 
 //QString Evaluator::autoFix( const QString& expr, const QString& decimalPoint )//refdp
-QString EvaluatorBase::autoFix( const QString& expr )
+QString Evaluator::autoFix( const QString& expr )
 {
+
+#ifdef _BISON
+  SglExprLex::self().autoFix(expr);
+#endif
+
   int par = 0;
   QString result;
 
@@ -1620,5 +1615,3 @@ QString Evaluator::dump() const
 
   return result;
 }
-
-#endif /* ! _BISON */

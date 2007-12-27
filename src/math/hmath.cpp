@@ -25,7 +25,7 @@
 #include <math/floatconst.h>
 #include <math/floatconvert.h>
 #include <math/floatcommon.h>
-#include <math/floatio.h>
+#include "math/floatio.h"
 #include <math/floathmath.h>
 
 #include <ctype.h>

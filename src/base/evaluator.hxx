@@ -20,61 +20,19 @@
 #ifndef EVALUATOR
 #define EVALUATOR
 
+#define _BISON
+
 #include <QString>
-#include "symboltables/symbols.hxx"
-
-//#define _BISON
-
-class TokenBase //reftk
-{
-  public:
-    TokenBase( const QString& text = QString::null, int pos = -1 );
-    QString text() const { return m_text; }
-    int pos() const { return m_pos; };
-  protected:
-    Symbol* symbol;
-    QString m_text;
-    int m_pos;
-};
-
-class EvaluatorBase //refEv
-{
-  public:
-    static QString autoFix( const QString& expr );
-  protected:
-    EvaluatorBase();
-    ~EvaluatorBase();
-  private:
-    EvaluatorBase( const EvaluatorBase& );
-    EvaluatorBase& operator=( const EvaluatorBase& );
-};
-
-#ifdef _BISON
-
-#include "bison/bisonparser.hxx"
-
-#else /* ! _BISON */
-
 #include <math/hmath.hxx>
 
 #include <QVector>
+#ifdef _BISON
+# include "bison/bisonparser.hxx"
+#endif
 
-//class Token //reftk
-class Token: public TokenBase
+class Token
 {
   public:
-    // syntactical classification
-    typedef enum
-    {
-      stxUnknown,
-      stxNumber,
-      stxIdentifier,
-      stxOperator,
-      stxOpenPar,  //refty
-      stxClosePar,
-      stxSep,
-    } Type;
-
     typedef enum
     {
       InvalidOp = 0,
@@ -93,14 +51,28 @@ class Token: public TokenBase
       Div             // integer division
     } Op;
 
+  public:
+    // syntactical classification
+    typedef enum
+    {
+      stxUnknown,
+      stxNumber,
+      stxIdentifier,
+      stxOperator,
+      stxOpenPar,  //refty
+      stxClosePar,
+      stxSep,
+    } Type;
+
+
     Token( Type type = stxUnknown, const QString& text = QString::null, int pos = -1 );
 
     Token( const Token& );
     Token& operator=( const Token& );
 
     Type type() const { return m_type; }
-//    QString text() const { return m_text; } //reftk
-//    int pos() const { return m_pos; }; //reftk
+    QString text() const { return m_text; }
+    int pos() const { return m_pos; };
     bool isNumber() const { return m_type == stxNumber; }
 //    bool isOperator() const { return m_type == stxOperator; } //refty
     bool isOperator() const { return m_type >= stxOperator; }
@@ -114,10 +86,9 @@ class Token: public TokenBase
   protected:
 
     Type m_type;
-/*    QString m_text; //reftk
-    int m_pos;*/
+    QString m_text;
+    int m_pos;
 };
-
 
 class Tokens: public QVector<Token>
 {
@@ -138,8 +109,7 @@ class Variable
 
 class EvaluatorPrivate;
 
-//class Evaluator //refEv
-class Evaluator : public EvaluatorBase
+class Evaluator
 {
   public:
 
@@ -173,6 +143,7 @@ class Evaluator : public EvaluatorBase
     void clearVariables();
 
 //    static QString autoFix( const QString& expr, const QString& decimalPoint );//refdp
+    static QString autoFix( const QString& expr );
 
     QString dump() const;
 
@@ -182,11 +153,9 @@ class Evaluator : public EvaluatorBase
 
   private:
     EvaluatorPrivate *d;
-/*    EvaluatorBase( const EvaluatorBase& ); //refEv
-    EvaluatorBase& operator=( const EvaluatorBase& );*/
+    Evaluator( const Evaluator& );
+    Evaluator& operator=( const Evaluator& );
 };
-
-#endif /* ! _BISON */
 
 #endif // EVALUATOR
 
