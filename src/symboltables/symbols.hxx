@@ -32,134 +32,38 @@
 #define _SYMBOLS_H
 
 #include <QString>
-#include <QVector>
-#include "math/hmath.hxx"
-
-const int unaryOp = 1;
-const int binaryOp = 2;
-const int fctinterfaces = 6;
-
-typedef HNumber (*Func0)();
-typedef HNumber (*Func1)(const HNumber&);
-typedef HNumber (*Func2)(const HNumber&, const HNumber&);
-typedef HNumber (*Func3)(const HNumber&, const HNumber&, const HNumber&);
-typedef HNumber (*Func4)(const HNumber&, const HNumber&, const HNumber&, const HNumber&);
-typedef HNumber (*Funcl)(const QVector<HNumber>&);
-
-typedef union
-{
-  Func0 f0;
-  Func1 f1;
-  Func2 f2;
-  Func3 f3;
-  Func4 f4;
-  Funcl fl;
-} Func;
-
-typedef struct
-{
-  Func0 f0;
-  Func1 f1;
-  Func2 f2;
-  Func3 f3;
-  Func4 f4;
-  Funcl fl;
-} FuncList;
-
-typedef Func FuncArray[fctinterfaces];
-
-struct FunctionResult
-{
-  HNumber value;
-  QString msg;
-};
 
 class Symbol
 {
   public:
-    typedef enum { SyntaxElement, Const, Ans, Var, Function, Operator } SyntaxClass;
-
-    Symbol();
+    virtual int type();
     virtual ~Symbol();
-
-    virtual bool isMatching(QString match) const;
-    virtual bool isPostfix() const;
-    virtual signed char pairType() const;
-    QString getKey(QString lookupkey) const;
-    SyntaxClass getClass() const { return syntaxClass; };
-    int getSymidx() const { return symidx; };
-
-  protected:
-    virtual QString getKey() const;
-    SyntaxClass syntaxClass;
-    int symidx;
 };
+
+typedef Symbol* PSymbol;
 
 class SyntaxSymbol: public Symbol
 {
   public:
-    SyntaxSymbol(int idx, signed char levelchange);
-    signed char pairType() const;
-  protected:
-    signed char parlevel;
+    int type();
+    SyntaxSymbol(int aType);
+  private:
+    int m_type;
 };
 
-class AliasSymbol: public Symbol
+class OpenSymbol: public SyntaxSymbol
 {
   public:
-    Symbol* alias;
-    QString key;
-
-    AliasSymbol(QString key, Symbol* symbol);
-    bool isMatching(QString match) const;
-    signed char pairType() const;
-  protected:
-    QString getKey() const;
+    OpenSymbol(int aType, const QString& end);
+    ~OpenSymbol();
+    const QString& closeToken() const { return m_end; };
+  private:
+    QString m_end;
+    SyntaxSymbol* closeSymbol;
 };
 
-class ConstSymbol: public Symbol
+class FunctionSymbol: public SyntaxSymbol
 {
-  public:
-    ConstSymbol(HNumber x);
-    ConstSymbol(HNumber x, int idx);
-    HNumber get() const { return value; };
-
-  protected:
-    HNumber value;
-};
-
-class VarSymbol: public ConstSymbol
-{
-  public:
-    VarSymbol(HNumber x);
-    void set(HNumber x) { value = x; };
-};
-
-class AnsSymbol: public VarSymbol
-{
-  public:
-    AnsSymbol();
-};
-
-class FunctionSymbol: public Symbol
-{
-  public:
-    FunctionSymbol(int idx, int minParam, int maxParam);
-    FunctionResult eval(const QVector<HNumber>& params);
-    void addFunc(int paramCount, Func aFunc);
-  protected:
-    FuncArray func;
-    int minParamCount;
-    int maxParamCount;
-};
-
-class OperatorSymbol: public FunctionSymbol
-{
-  public:
-    OperatorSymbol(int idx, int opflags, bool postfixop);
-    bool isPostfix() const;
-  protected:
-    bool postfix;
 };
 
 #endif /* _SYMBOLS_H */

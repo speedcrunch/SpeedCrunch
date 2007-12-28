@@ -20,41 +20,46 @@
 #ifndef _TABLES_H
 #define _TABLES_H
 
-#include <QString>
-#include <QMap>
-#include <QVector>
 #include "symboltables/symbols.hxx"
-#include "symboltables/symindex.hxx"
+#include <QMap>
+#include <QString>
+#include <QList>
+#include <QStringList>
 
-class Table: protected QMap<QString, Symbol*>
+class Table: protected QMap<QString, PSymbol>
 {
+  friend class Tables;
   public:
-    virtual ~Table();
-    bool put(QString key, Symbol* symbol);
-    bool putAlias(QString key, QString alias);
-    Symbol* get(QString key);
-    virtual bool remove(QString key);
-    virtual void clear();
-
-    // a FI-LO queue 
-    static void addTable(Table* newTable);
-    static void deleteTable();
-    static void init();
-    static void exit();
-  private:
-    Table* next;
-    static Table* head;
+    ~Table();
+    void clear();
 };
 
-class BuiltinTable: public Table
+class Tables
 {
-  private:
-    bool destructing;
   public:
-    BuiltinTable();
-    ~BuiltinTable();
-    bool remove(QString key);
-    void clear();
+    static PSymbol builtinLookup(const QString& key);
+    static void addCloseSymbol(const QString& key, PSymbol symbol);
+    static void removeCloseSymbol(PSymbol symbol);
+    static int defSymbol(QStringList params);
+  private:
+
+    enum
+    {
+      closeSymbols,
+      builtinSymbols,
+      globalSymbols,
+    };
+
+    static Tables& self();
+    static Table& closeTable() { return self().tableList[closeSymbols]; };
+    static Table& builtinTable() { return self().tableList[builtinSymbols]; };
+    PSymbol lookup(const QString& key, int firstTable);
+    QList<Table> tableList;
+    static Tables* tables;
+    Tables( const Tables& );
+    Tables& operator=( const Tables& );
+    Tables();
+    void init();
 };
 
 #endif /* _TABLES_H */

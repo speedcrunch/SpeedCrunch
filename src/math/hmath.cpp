@@ -27,6 +27,7 @@
 #include <math/floatcommon.h>
 #include "math/floatio.h"
 #include <math/floathmath.h>
+#include "main/errors.h"
 
 #include <ctype.h>
 #include <stdlib.h>
@@ -49,6 +50,7 @@ class HNumberPrivate
 public:
   floatstruct fnum;
   char format;
+  int error;
 };
 
 static void h_init()
@@ -62,11 +64,17 @@ static void h_init()
   }
 }
 
-static void
+static int propagateError(int code1, int code2)
+{
+  return code1? code1 : (code2? code2 : 0);
+}
+
+static char
 roundResult( floatnum x )
 {
-  if (!float_isnan(x)) /* avoids setting float_error */
-    float_round(x, x, HMATH_WORKING_PREC, TONEAREST);
+  if (float_isnan(x)) /* avoids setting float_error */
+    return 0;
+  return float_round(x, x, HMATH_WORKING_PREC, TONEAREST);
 }
 
 static void
@@ -92,6 +100,7 @@ HNumber::HNumber(): d(0)
   h_init();
   d = new HNumberPrivate;
   d->format = 0;
+  d->error = FLOAT_SUCCESS;
   float_create(&d->fnum);
 }
 
@@ -108,6 +117,7 @@ HNumber::HNumber( int i ): d(0)
   h_init();
   d = new HNumberPrivate;
   d->format = 0;
+  d->error = FLOAT_SUCCESS;
   float_create(&d->fnum);
   float_setinteger(&d->fnum, i);
 }
@@ -122,8 +132,8 @@ HNumber::HNumber( const char* str ): d(0)
   d->format = 0;
   float_create(&d->fnum);
   s = str;
-  if (parse(&tokens, &s) == IO_NO_ERROR && *s == 0)
-    float_in(&d->fnum, &tokens);
+  if ((d->error = parse(&tokens, &s)) == IO_NO_ERROR && *s == 0)
+    d->error = float_in(&d->fnum, &tokens);
 }
 
 HNumber::~HNumber()
@@ -180,6 +190,7 @@ int HNumber::toInt()
 HNumber& HNumber::operator=( const HNumber& hn )
 {
   d->format = hn.format();
+  d->error = hn.d->error;
   float_copy(&d->fnum, &hn.d->fnum, EXACT);
   return *this;
 }
@@ -201,78 +212,88 @@ HNumber HNumber::operator+( const HNumber& num ) const
 {
   floatnum op1, op2, r;
   HNumber result;
-  op1 = &d->fnum;
-  op2 = &num.d->fnum;
-  r = &result.d->fnum;
-  float_add(r, op1, op2, HMATH_EVAL_PREC);
-  if (float_getsign(op1) + float_getsign(op2) == 0
-      && checkfullcancellation(op1, op2, r))
-    /* underflow due to cancellation */
-    float_setzero(r);
-  else
-    roundResult(&result.d->fnum);
+  result.d->error = propagateError(d->error, num.d->error);
+  if (result.d->error == 0)
+  {
+    op1 = &d->fnum;
+    op2 = &num.d->fnum;
+    r = &result.d->fnum;
+    if (float_add(r, op1, op2, HMATH_EVAL_PREC)
+        && float_getsign(op1) + float_getsign(op2) == 0
+        && checkfullcancellation(op1, op2, r))
+        /* underflow due to cancellation */
+      float_setzero(r);
+    if (!roundResult(r))
+      result.d->error = float_geterror();
+  }
   return result;
 }
 
 HNumber& HNumber::operator+=( const HNumber& num )
 {
-  HNumber n = HNumber(*this) + num;
-  operator=( n );
-  return *this;
+  return operator=( *this + num );
 }
 
 HNumber HNumber::operator-( const HNumber& num ) const
 {
   floatnum op1, op2, r;
   HNumber result;
-  op1 = &d->fnum;
-  op2 = &num.d->fnum;
-  r = &result.d->fnum;
-  float_sub(r, op1, op2, HMATH_EVAL_PREC);
-  if (float_getsign(op1) - float_getsign(op2) == 0
-      && checkfullcancellation(op1, op2, r))
-    /* underflow due to cancellation */
-    float_setzero(r);
-  else
-    roundResult(r);
+  result.d->error = propagateError(d->error, num.d->error);
+  if (result.d->error == 0)
+  {
+    op1 = &d->fnum;
+    op2 = &num.d->fnum;
+    r = &result.d->fnum;
+    if (float_sub(r, op1, op2, HMATH_EVAL_PREC)
+        && float_getsign(op1) - float_getsign(op2) == 0
+        && checkfullcancellation(op1, op2, r))
+      /* underflow due to cancellation */
+      float_setzero(r);
+    if (!roundResult(r))
+      result.d->error = float_geterror();
+  }
   return result;
 }
 
 HNumber& HNumber::operator-=( const HNumber& num )
 {
-  HNumber n = HNumber(*this) - num;
-  operator=( n );
-  return *this;
+  return operator=( *this - num );
 }
 
 HNumber HNumber::operator*( const HNumber& num ) const
 {
   HNumber result;
-  float_mul(&result.d->fnum, &d->fnum, &num.d->fnum, HMATH_EVAL_PREC);
-  roundResult(&result.d->fnum);
+  result.d->error = propagateError(d->error, num.d->error);
+  if (result.d->error == 0)
+  {
+    float_mul(&result.d->fnum, &d->fnum, &num.d->fnum, HMATH_EVAL_PREC);
+    if (!roundResult(&result.d->fnum))
+      result.d->error = float_geterror();
+  }
   return result;
 }
 
 HNumber& HNumber::operator*=( const HNumber& num )
 {
-  HNumber n = HNumber(*this) * num;
-  operator=( n );
-  return *this;
+  return operator=( *this * num );
 }
 
 HNumber HNumber::operator/( const HNumber& num ) const
 {
   HNumber result;
-  float_div(&result.d->fnum, &d->fnum, &num.d->fnum, HMATH_EVAL_PREC);
-  roundResult(&result.d->fnum);
+  result.d->error = propagateError(d->error, num.d->error);
+  if (result.d->error == 0)
+  {
+    float_div(&result.d->fnum, &d->fnum, &num.d->fnum, HMATH_EVAL_PREC);
+    if (!roundResult(&result.d->fnum))
+      result.d->error = float_geterror();
+  }
   return result;
 }
 
 HNumber& HNumber::operator/=( const HNumber& num )
 {
-  HNumber n = HNumber(*this) / num;
-  operator=( n );
-  return *this;
+  return operator=( *this / num );
 }
 
 HNumber HNumber::operator%( const HNumber& num ) const
@@ -280,9 +301,14 @@ HNumber HNumber::operator%( const HNumber& num ) const
   floatstruct tmp;
 
   HNumber result;
-  float_create(&tmp);
-  float_divmod(&tmp, &result.d->fnum, &d->fnum, &num.d->fnum, INTQUOT);
-  float_free(&tmp);
+  result.d->error = propagateError(d->error, num.d->error);
+  if (result.d->error == 0)
+  {
+    float_create(&tmp);
+    float_divmod(&tmp, &result.d->fnum, &d->fnum, &num.d->fnum, INTQUOT);
+    float_free(&tmp);
+    result.d->error = float_geterror();
+  }
   return result;
 }
 
@@ -319,15 +345,18 @@ bool HNumber::operator!=( const HNumber& n ) const
 HNumber HNumber::operator&( const HNumber& num ) const
 {
   HNumber result;
-  float_and(&result.d->fnum, &d->fnum, &num.d->fnum);
+  result.d->error = propagateError(d->error, num.d->error);
+  if (result.d->error == 0)
+  {
+    float_and(&result.d->fnum, &d->fnum, &num.d->fnum);
+    result.d->error = float_geterror();
+  }
   return result;
 }
 
 HNumber& HNumber::operator&=( const HNumber& num )
 {
-  HNumber n = HNumber(*this) & num;
-  operator=( n );
-  return *this;
+  return operator=( *this & num );
 }
 
 HNumber HNumber::operator|( const HNumber& num ) const

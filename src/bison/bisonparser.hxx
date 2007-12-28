@@ -33,21 +33,13 @@
 
 #include "bison.h"
 #include "math/hmath.hxx"
+#include "symboltables/tables.hxx"
 
 #include <QString>
 #include <QChar>
 #include <QQueue>
 #include <QStack>
 #include <QList>
-
-class Symbol
-{
-  public:
-    virtual int type();
-    virtual ~Symbol();
-};
-
-typedef Symbol* PSymbol;
 
 class SglExprLex
 {
@@ -82,6 +74,8 @@ class SglExprLex
     {
       whitespace = ' ',
       eol        = '\0',
+      sot        = '`',
+      eot        = '\'',
     };
 
     int index;
@@ -92,8 +86,8 @@ class SglExprLex
     PSymbol symbol;
 //     int lastTokenType;
     QQueue<PSymbol> pendingSymbol;
-/*    QStack<QString> closePar;
-    QList<QByteArray>strlist;
+    QStack<QString> closePar;
+/*    QList<QByteArray>strlist;
     QList<HNumber>numlist;
     QList<QList<NumValue> >paramlists; */
     enum
@@ -112,10 +106,8 @@ class SglExprLex
 #endif
     int escLookup();
 //     int greedyLookup();
-    int doLookup(const QString&) const;
     int getNextTokenType();
-#if 0
-#endif
+    QString checkEscape(const QString& s);
     void scanLetters();
     bool isLetter() const;
     bool isDigit() const;
@@ -123,14 +115,12 @@ class SglExprLex
 #if 0
     bool isSpecial() const;
     bool isAlphaNum() const
-    bool matchesClosePar() const;
 #endif
+    bool matchesClosePar() const;
     bool matchesEscape() const;
     int scanNextToken();
-#if 0
-    int getCloseChar();
+    int getClosePar();
     int scanTextToken();
-#endif
     int scanSysToken();
     int scanWhitespaceToken();
     int scanDigitsToken();

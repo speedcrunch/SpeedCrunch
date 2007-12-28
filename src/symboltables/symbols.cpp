@@ -29,162 +29,37 @@
 *************************************************************************/
 
 #include "symboltables/symbols.hxx"
-
-const int maxfctidx = fctinterfaces - 1;
-
-Symbol::Symbol()
-{
-  syntaxClass = SyntaxElement;
-  symidx = 0;
-}
+#include "symboltables/tables.hxx"
 
 Symbol::~Symbol()
 {
 }
 
-QString Symbol::getKey(QString lookupkey) const
+int Symbol::type()
 {
-  QString result = getKey();
-  return result.isEmpty()? lookupkey : result;
+  return UNKNOWNTOKEN;
 }
 
-QString Symbol::getKey() const
+OpenSymbol::OpenSymbol(int aType, const QString& end)
+  : SyntaxSymbol(aType)
 {
-  return QString();
+  m_end = end;
+  closeSymbol = new SyntaxSymbol(-aType);
+  Tables::addCloseSymbol(end, closeSymbol);
 }
 
-bool Symbol::isMatching(QString match) const
+OpenSymbol::~OpenSymbol()
 {
-  return false;
+  // the tables own all symbols, so do not free it here
+  Tables::removeCloseSymbol(closeSymbol);
 }
 
-bool Symbol::isPostfix() const
+SyntaxSymbol::SyntaxSymbol(int aType)
+  : m_type(aType)
 {
-  return false;
 }
 
-signed char Symbol::pairType() const
+int SyntaxSymbol::type()
 {
-  return 0;
-}
-
-SyntaxSymbol::SyntaxSymbol(int idx, signed char levelchange)
-  : parlevel(levelchange)
-{
-  symidx = idx;
-}
-
-signed char SyntaxSymbol::pairType() const
-{
-  return parlevel;
-}
-
-AliasSymbol::AliasSymbol(QString aliaskey, Symbol* symbol)
-  : alias(symbol)
-{
-  syntaxClass = symbol->getClass();
-  key = alias->getKey(aliaskey);
-  symidx = alias->getSymidx();
-}
-
-QString AliasSymbol::getKey() const
-{
-  return key;
-}
-
-bool AliasSymbol::isMatching(QString match) const
-{
-  return alias->isMatching(match);
-}
-
-signed char AliasSymbol::pairType() const
-{
-  return alias->pairType();
-}
-
-ConstSymbol::ConstSymbol(HNumber x)
-  : value(x)
-{
-  syntaxClass = Const;
-}
-
-ConstSymbol::ConstSymbol(HNumber x, int idx)
-  : value(x)
-{
-  syntaxClass = Const;
-  symidx = idx;
-}
-
-VarSymbol::VarSymbol(HNumber x)
-  : ConstSymbol(x)
-{
-  syntaxClass = Var;
-}
-
-AnsSymbol::AnsSymbol()
-  : VarSymbol(HNumber())
-{
-  syntaxClass = Ans;
-}
-
-FunctionSymbol::FunctionSymbol(int idx, int minParam, int maxParam)
-  : minParamCount(minParam), maxParamCount(maxParam)
-{
-  syntaxClass = Function;
-  symidx = idx;
-  for (int i = 0; i < fctinterfaces; ++i)
-    func[i].f0 = 0;
-}
-
-void FunctionSymbol::addFunc(int paramCount, Func aFunc)
-{
-  if (paramCount < maxfctidx-1)
-    func[paramCount] = aFunc;
-  else if (paramCount == -1)
-    func[maxfctidx] = aFunc;
-}
-
-FunctionResult FunctionSymbol::eval(const QVector<HNumber>& params)
-{
-  FunctionResult result;
-  int fctidx;
-
-  HMath::getError();
-  fctidx = params.size();
-  if (fctidx < minParamCount || fctidx > maxParamCount)
-    fctidx = -1;
-  if (fctidx > maxfctidx)
-    fctidx = maxfctidx;
-  if (fctidx >= 0 && !func[fctidx].f0)
-    fctidx = -1;
-  switch(fctidx)
-  {
-    case 0: result.value = func[0].f0(); break;
-    case 1: result.value = func[1].f1(params[0]); break;
-    case 2: result.value = func[2].f2(params[0], params[1]); break;
-    case 3: result.value = func[3].f3(params[0], params[1], params[2]); break;
-    case 4: result.value = func[4].f4(params[0], params[1], params[2], params[3]); break;
-    case maxfctidx: result.value = func[maxfctidx].fl(params); break;
-    default:;
-  }
-  if (result.value.isNan())
-    if (fctidx < 0)
-      result.msg = "invalid number of parameters";
-    else
-      result.msg = HMath::getError();
-  return result;
-}
-
-OperatorSymbol::OperatorSymbol(int idx, int opflags, bool postfixop)
-  : FunctionSymbol(idx, 1, 2),postfix(postfixop)
-{
-  if ((opflags & unaryOp) == 0)
-    minParamCount = 2;
-  if ((opflags & binaryOp) == 0)
-    maxParamCount = 1;
-}
-
-bool OperatorSymbol::isPostfix() const
-{
-  return postfix;
+  return m_type;
 }

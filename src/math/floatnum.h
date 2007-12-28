@@ -34,21 +34,13 @@
 #include "number.h"
 #include "floatconfig.h"
 #include "floatio.h"
+#include "main/errors.h"
 
 #define NULLTERMINATED (-20)
 #define UNORDERED (-2)
 
 #define EXACT (-101)
 #define INTQUOT (-102)
-
-#define FLOAT_SUCCESS      0
-#define FLOAT_NANOPERAND   1
-#define FLOAT_UNSTABLE     2
-#define FLOAT_UNDERFLOW    3
-#define FLOAT_OVERFLOW     4
-#define FLOAT_ZERODIVIDE   5
-#define FLOAT_OUTOFDOMAIN  6
-#define FLOAT_INVALIDPARAM 10
 
 #define float_free(f) float_setnan(f)
 

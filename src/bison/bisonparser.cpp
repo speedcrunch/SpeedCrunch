@@ -32,120 +32,8 @@
 #include "bison/bisonparser.hxx"
 #include "settings.hxx"
 
-/*====================================   Symbol   ========================*/
-
-Symbol::~Symbol()
-{
-}
-
-int Symbol::type()
-{
-  return UNKNOWNTOKEN;
-}
-
-class SyntaxSymbol: public Symbol
-{
-  public:
-    int type();
-    SyntaxSymbol(int aType);
-  private:
-    int m_type;
-};
-
-class PairSymbol: public SyntaxSymbol
-{
-  public:
-    PairSymbol(int aType, const QString& end);
-    const QString& closeToken() const { return m_end; };
-  private:
-    QString m_end;
-};
-
-SyntaxSymbol::SyntaxSymbol(int aType)
-  : m_type(aType)
-{
-}
-
-int SyntaxSymbol::type()
-{
-  return m_type;
-}
-
-/*====================================   Tables   ========================*/
-
-#include <QMap>
-
-struct CSyntaxSymbol
-{
-  const char* key;
-  int tokenValue;
-} CSyntaxSymbols[] =
-{
-  { "DOT", DOT },
-};
-static const int cnt1 = sizeof(CSyntaxSymbols)/sizeof(struct CSyntaxSymbol);
-
-class Table: protected QMap<QString, PSymbol>
-{
-  friend class Tables;
-  public:
-    ~Table();
-    void clear();
-};
-
-class Tables
-{
-  public:
-    PSymbol builtinLookup(const QString& key);
-    static Tables& self();
-  private:
-    Table builtin;
-    static Tables* tables;
-    Tables( const Tables& );
-    Tables& operator=( const Tables& );
-    Tables();
-};
-
-Tables* Tables::tables = 0;
-
-Tables& Tables::self()
-{
-  if ( !tables )
-    tables = new Tables;
-  return *tables;
-}
-
-Tables::Tables()
-{
-  for (int i = -1; ++i < cnt1; )
-  {
-    struct CSyntaxSymbol* ps = CSyntaxSymbols + i;
-    builtin.insert(ps->key, new SyntaxSymbol(ps->tokenValue));
-  }
-}
-
-PSymbol Tables::builtinLookup(const QString& key)
-{
-  QMap<QString, PSymbol>::const_iterator item = builtin.constFind(key);
-  if ( item != builtin.constEnd() )
-    return item.value();
-  return 0;
-}
-
-Table::~Table()
-{
-  clear();
-}
-
-void Table::clear()
-{
-  Table::const_iterator i = begin();
-  for (; i != constEnd(); ++i)
-    delete i.value();
-  QMap<QString, PSymbol>::clear();
-}
-
-/*====================================   Lexxer   ========================*/
+#include "symboltables/symbols.cpp"
+#include "symboltables/tables.cpp" // for the time being do not update CMakeList
 
 /*-------------------------   singleton   -----------------------------*/
 
@@ -198,7 +86,7 @@ bool SglExprLex::autoFix(const QString& newexpr)
     {
       case eol:
       case whitespace: continue;
-//      case ASSIGN: if (assignpos < 0) assignpos = curpos; continue;
+      case ASSIGN: if (assignseqpos < 0) assignseqpos = start; continue;
       case UNKNOWNTOKEN: return false;
       default: assignseqpos = -1; break;
     }
@@ -206,16 +94,16 @@ bool SglExprLex::autoFix(const QString& newexpr)
     ++tokencount; */
   } while ( type != eol );
   // remove trailing '='
-/*  if ( assignseqpos >= 0 )
+  if ( assignseqpos >= 0 )
     expr.truncate(assignseqpos);
   // supply 'ans' as parameter, if just a function name is given
-  if ( tokencnt == 1 && lasttoken == FUNCTION )
+/*  if ( tokencnt == 1 && lasttoken == FUNCTION )
     expr.append(revLookup(ans));
   // close all unmatched left paranthesis
   if ( state == stText )
-    expr.append(closePar.pop());
+    expr.append(closePar.pop());*/
   while ( !closePar.isEmpty() )
-    expr.append(' ' + closePar.pop());*/
+    expr.append(' ' + closePar.pop());
   return true;
 }
 #if 0
@@ -295,8 +183,9 @@ void SglExprLex::reset()
   state = stTopLevel;
   escapetag = Settings::self()->escape;
   escsize = escapetag.size();
+  pendingSymbol.clear();
+  closePar.clear();
 /*  lastTokenType = whitespace;
-  pendingToken.clear();
   strlist.clear();
   numlist.clear();
   paramlists.clear();*/
@@ -304,10 +193,25 @@ void SglExprLex::reset()
 
 /*------------------------   lexical analyzing   -----------------------*/
 
+QString SglExprLex::checkEscape(const QString& s)
+{
+  if (s.size() > 1 && s.at(0) == ' ')
+    return escapetag + s.mid(1);
+  return s;
+}
+
 int SglExprLex::symbolType() const
 {
   if ( symbol )
-    return symbol->type();
+    switch( symbol->type() )
+    {
+      case '.': return DOT;
+      case '(': return OPENPAR;
+      case '=': return ASSIGN;
+      case ';': return SEP;
+      case '"': return sot;
+      default : return CLOSEPAR;
+    };
   return UNKNOWNTOKEN;
 }
 
@@ -315,13 +219,13 @@ bool SglExprLex::matchesEscape() const
 {
   return escsize != 0 && expr.mid(start, escsize) == escapetag;
 }
-#if 0
+
 bool SglExprLex::matchesClosePar() const
 {
-  return !closePar.isEmpty() 
-         && expr.mid(start, closePar.top.size()) == closePar.top();
+  return !closePar.isEmpty()
+         && expr.mid(start, closePar.top().size()) == closePar.top();
 }
-#endif
+
 int SglExprLex::getNextTokenType()
 {
   int result;
@@ -346,10 +250,10 @@ int SglExprLex::scanNextToken()
   end = size;
   if (index == end )
     result = eol;
-/*  else if ( state == stText )
+  else if ( state == stText )
     result = scanTextToken();
   else if ( matchesClosePar() )
-    result = getClosePar();*/
+    result = getClosePar();
   else if ( matchesEscape() )
     result = scanSysToken();
   else if ( isWhitespace() )
@@ -364,8 +268,8 @@ int SglExprLex::scanNextToken()
     result = greedyLookup();*/
   return result;
 }
-#if 0
-int SglExprLex::getCloseChar()
+
+int SglExprLex::getClosePar()
 {
   closePar.pop();
   return state == stText? eot : CLOSEPAR;
@@ -381,7 +285,7 @@ int SglExprLex::scanTextToken()
   }
   return UNKNOWNTOKEN;
 }
-#endif
+
 int SglExprLex::scanSysToken()
 {
   int result;
@@ -469,9 +373,8 @@ void SglExprLex::updateState(int token)
   if ( state != stNumber ) radix = 10;
   switch (token)
   {
-/*    case sot: state = stText; break;
-    case eot: state = stTopLevel; break;
-    case HEXTAG: radix += 8; // fall through
+    case sot: state = stText; break;
+/*    case HEXTAG: radix += 8; // fall through
     case OCTTAG: redix += 6; // fall through
     case BINTAG: radix -= 8; // fall through
     case DECTAG:
@@ -484,6 +387,11 @@ void SglExprLex::updateState(int token)
 /*    case DECSCALE:
     case SCALE: state = stScale; break;
     case GROUPCHAR: break;*/
+    case TEXT: break;
+    case OPENPAR:
+      closePar.push(
+          checkEscape(
+              dynamic_cast<OpenSymbol*>(symbol)->closeToken())); //fall through
     default: if ( state != stScale ) state = stTopLevel;
   }
 }
@@ -508,7 +416,7 @@ int SglExprLex::numLookup() const
 int SglExprLex::escLookup()
 {
   int begin = start + escsize;
-  symbol = Tables::self().builtinLookup(expr.mid(begin, end - begin));
+  symbol = Tables::builtinLookup(expr.mid(begin, end - begin));
   return symbolType();
 }
 #if 0

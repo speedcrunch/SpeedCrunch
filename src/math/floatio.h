@@ -43,13 +43,6 @@
 #define IO_SIGN_MINUS      (-1)
 #define IO_SIGN_COMPLEMENT (-2)
 
-#define IO_NO_ERROR            0
-#define IO_ERROR_NO_BASE       1
-#define IO_ERROR_SIGN_CONFLICT 2
-#define IO_ERROR_NO_DIGIT      3
-#define IO_ERROR_EXP           4
-#define IO_OVERFLOW            5
-
 #define IO_FLAG_SUPPRESS_PLUS       0x001
 #define IO_FLAG_SUPPRESS_BASETAG    0x002
 #define IO_FLAG_SUPPRESS_CMPL       0x004

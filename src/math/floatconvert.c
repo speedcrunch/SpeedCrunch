@@ -34,6 +34,7 @@
 #include "floatconfig.h"
 #include "floatconst.h"
 #include "floatipower.h"
+#include "main/errors.h"
 #include <stdlib.h>
 
 typedef struct{
@@ -222,7 +223,7 @@ _setfndesc(
   n->fracpart.getdigit = _getfnfracdigit;
 }
 
-static char
+static int
 _pack2longint(
   t_longint* l,
   p_ext_seq_desc n)
@@ -238,13 +239,13 @@ _pack2longint(
     --ofs;
   bitofs = (n->seq.digits - ofs) * logbase;
   if (!_longintsetsize(l, bitofs))
-    return 0;
+    return IO_BUFFER_OVERFLOW;
   for (; bitofs > 0;)
   {
     bitofs -= logbase;
     _orsubstr(l->value, bitofs, n->getdigit(ofs++, &n->seq));
   }
-  return 1;
+  return IO_NO_ERROR;
 }
 
 static char
@@ -294,7 +295,7 @@ _setlongintdesc(
   n->getdigit = _getlongintdigit;
 }
 
-static char
+static int
 _packdec2int(
   floatnum x,
   p_ext_seq_desc n)
@@ -310,7 +311,7 @@ _packdec2int(
   exp = n->seq.trailing0;
   bufsz = n->seq.digits - ofs - exp;
   if (bufsz > DECPRECISION)
-    return 0;
+    return IO_BUFFER_OVERFLOW;
   if (bufsz == 0)
     float_setzero(x);
   else
@@ -318,24 +319,25 @@ _packdec2int(
       buf[i] = n->getdigit(ofs++, &n->seq) + '0';
   float_setsignificand(x, NULL, buf, bufsz);
   float_setexponent(x, exp + bufsz - 1);
-  return 1;
+  return IO_NO_ERROR;
 }
 
-static char
+static int
 _packbin2int(
   floatnum x,
   p_ext_seq_desc n)
 {
   t_longint l;
+  int result;
 
   float_setnan(x);
-  if (!_pack2longint(&l, n))
-    return 0;
+  if ((result = _pack2longint(&l, n)) != IO_NO_ERROR)
+    return result;
   _longint2floatnum(x, &l);
-  return 1;
+  return IO_NO_ERROR;
 }
 
-static char
+static int
 _pack2int(
   floatnum x,
   p_ext_seq_desc n)
@@ -353,10 +355,10 @@ _pack2int(
   default:
     return _packbin2int(x, n);
   }
-  return 1;
+  return IO_NO_ERROR;
 }
 
-static char
+static int
 _pack2frac(
   floatnum x,
   p_ext_seq_desc n,
@@ -364,6 +366,7 @@ _pack2frac(
 {
   floatstruct tmp;
   int exp;
+  int result;
 
   n->seq.digits -= n->seq.trailing0;
   n->seq.trailing0 = 0;
@@ -376,8 +379,8 @@ _pack2frac(
     float_setzero(x);
     break;
   default:
-    if (!_pack2int(x, n))
-      return 0;
+    if ((result = _pack2int(x, n)) != IO_NO_ERROR)
+      return result;
     float_create(&tmp);
     float_setinteger(&tmp, n->seq.base);
     _raiseposi(&tmp, &exp, n->seq.digits, digits+2);
@@ -386,10 +389,10 @@ _pack2frac(
     float_free(&tmp);
   }
   n->seq.digits += n->seq.trailing0;
-  return 1;
+  return IO_NO_ERROR;
 }
 
-char
+int
 pack2floatnum(
   floatnum x,
   p_number_desc n)
@@ -398,20 +401,24 @@ pack2floatnum(
   int digits;
   int saveerr;
   int saverange;
+  int result;
   signed char base;
 
-  if (!_pack2int(x, &n->intpart))
-    return 0;
+  if ((result = _pack2int(x, &n->intpart)) != IO_NO_ERROR)
+    return result;
   if (float_isnan(x))
-    return 1;
+    return IO_NO_ERROR;
   saveerr = float_geterror();
   saverange = float_setrange(MAXEXP);
   float_create(&tmp);
   float_move(&tmp, x);
   float_setzero(x);
   digits = DECPRECISION - float_getexponent(&tmp);
-  if (digits <= 0 || _pack2frac(x, &n->fracpart, digits))
+  if (digits <= 0
+      || (result = _pack2frac(x, &n->fracpart, digits)) == IO_NO_ERROR)
     float_add(x, x, &tmp, DECPRECISION);
+  if (result != IO_NO_ERROR)
+    return result;
   if (!float_getlength(x) == 0) /* no zero, no NaN? */
   {
     base = n->prefix.base;
@@ -434,7 +441,7 @@ pack2floatnum(
   float_setrange(saverange);
   if (!float_isvalidexp(float_getexponent(x)))
     float_setnan(x);
-  return !float_isnan(x);
+  return float_isnan(x)? IO_ERROR_EXP_RANGE : IO_NO_ERROR;
 }
 
 static char
@@ -778,15 +785,20 @@ char float_out(
   }
 }
 
-void
+int
 float_in(
   floatnum x,
   p_itokens tokens)
 {
   t_number_desc n;
+  int result;
 
-  if (str2desc(&n, tokens) != IO_NO_ERROR)
+  if ((result = str2desc(&n, tokens)) == IO_NO_ERROR)
+    result = pack2floatnum(x, &n);
+  if (result != IO_NO_ERROR)
+  {
+    float_seterror(FLOAT_BADLITERAL);
     float_setnan(x);
-  else
-    pack2floatnum(x, &n);
+  }
+  return result;
 }

@@ -53,7 +53,8 @@ void _longint2floatnum(floatnum f, t_longint* longint);
 
 char float_out(p_otokens tokens, floatnum x, int digits, signed char base,
                signed char expbase, char outmode);
-void float_in(floatnum x, p_itokens tokens);
+/* returns one of the IO_ERROR... codes */
+int float_in(floatnum x, p_itokens tokens);
 
 #ifdef __cplusplus
 }

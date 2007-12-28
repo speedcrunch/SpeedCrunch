@@ -31,6 +31,7 @@
 
 #include "floatio.h"
 #include "floatlong.h"
+#include "main/errors.h"
 #include <string.h>
 
 #define NORMALBASE (-1)
@@ -570,7 +571,7 @@ _exp2desc(
       n->expbase = prefix.base;
       if (prefix.base != IO_BASE_ZERO
                && !_seq2value(&n->exp, &digits, prefix.sign))
-        result = IO_OVERFLOW;
+        result = IO_ERROR_EXP_RANGE;
     }
   }
   return result;
