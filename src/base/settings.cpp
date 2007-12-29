@@ -115,7 +115,7 @@ Settings::Settings()
 
 void Settings::load()
 {
-  escape = "@@"; //reftbl
+  escape = "\\"; //reftbl
   QSettings settings( /*QSettings::IniFormat,*/ QSettings::UserScope, SETTINGSKEY, SETTINGSKEY );
 
   QString key = SETTINGSKEY;

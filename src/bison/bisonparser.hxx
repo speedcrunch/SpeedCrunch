@@ -104,18 +104,16 @@ class SglExprLex
     int lookup() const;
     int numLookup() const;
 #endif
-    int escLookup();
 //     int greedyLookup();
     int getNextTokenType();
     QString checkEscape(const QString& s);
     void scanLetters();
+    void scanSpecial();
     bool isLetter() const;
     bool isDigit() const;
     bool isWhitespace() const;
-#if 0
     bool isSpecial() const;
-    bool isAlphaNum() const
-#endif
+    bool isAlphaNum() const;
     bool matchesClosePar() const;
     bool matchesEscape() const;
     int scanNextToken();

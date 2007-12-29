@@ -362,56 +362,80 @@ HNumber& HNumber::operator&=( const HNumber& num )
 HNumber HNumber::operator|( const HNumber& num ) const
 {
   HNumber result;
-  float_or(&result.d->fnum, &d->fnum, &num.d->fnum);
+  result.d->error = propagateError(d->error, num.d->error);
+  if (result.d->error == 0)
+  {
+    float_or(&result.d->fnum, &d->fnum, &num.d->fnum);
+    result.d->error = float_geterror();
+  }
   return result;
 }
 
 HNumber& HNumber::operator|=( const HNumber& num )
 {
-  HNumber n = HNumber(*this) | num;
-  operator=( n );
-  return *this;
+  return operator=( *this | num );
 }
 
 HNumber HNumber::operator^( const HNumber& num ) const
 {
   HNumber result;
-  float_xor(&result.d->fnum, &d->fnum, &num.d->fnum);
+  result.d->error = propagateError(d->error, num.d->error);
+  if (result.d->error == 0)
+  {
+    float_xor(&result.d->fnum, &d->fnum, &num.d->fnum);
+    result.d->error = float_geterror();
+  }
   return result;
 }
 
 HNumber& HNumber::operator^=( const HNumber& num )
 {
-  HNumber n = HNumber(*this) ^ num;
-  operator=( n );
-  return *this;
+  return operator=( *this ^ num );
 }
 
 HNumber HNumber::operator~() const
 {
-  HNumber result = HNumber(*this);
-  float_not(&result.d->fnum);
+  HNumber result = *this;
+  if (result.d->error == 0)
+  {
+    float_not(&result.d->fnum);
+    result.d->error = float_geterror();
+  }
   return result;
 }
 
 HNumber HNumber::operator-() const
 {
-  HNumber result = HNumber(*this);
-  float_neg(&result.d->fnum);
+  HNumber result = *this;
+  if (result.d->error == 0)
+  {
+    float_neg(&result.d->fnum);
+    result.d->error = float_geterror();
+  }
   return result;
 }
 
 HNumber HNumber::operator<<( const HNumber& num ) const
 {
   HNumber result;
-  float_shl(&result.d->fnum, &d->fnum, &num.d->fnum);
+  result.d->error = propagateError(d->error, num.d->error);
+  if (result.d->error == 0)
+  {
+    float_shl(&result.d->fnum, &d->fnum, &num.d->fnum);
+    result.d->error = float_geterror();
+  }
   return result;
 }
 
 HNumber HNumber::operator>>( const HNumber& num ) const
 {
   HNumber result;
-  float_shr(&result.d->fnum, &d->fnum, &num.d->fnum);
+  result.d->error = propagateError(d->error, num.d->error);
+  if (result.d->error == 0)
+  {
+    float_shr(&result.d->fnum, &d->fnum, &num.d->fnum);
+    result.d->error = float_geterror();
+  }
   return result;
 }
 
@@ -648,26 +672,22 @@ HNumber HMath::phi()
 
 HNumber HMath::add( const HNumber& n1, const HNumber& n2 )
 {
-  HNumber result = n1 + n2;
-  return result;
+  return n1 + n2;
 }
 
 HNumber HMath::sub( const HNumber& n1, const HNumber& n2 )
 {
-  HNumber result = n1 - n2;
-  return result;
+  return n1 - n2;
 }
 
 HNumber HMath::mul( const HNumber& n1, const HNumber& n2 )
 {
-  HNumber result = n1 * n2;
-  return result;
+  return n1 * n2;
 }
 
 HNumber HMath::div( const HNumber& n1, const HNumber& n2 )
 {
-  HNumber result = n1 / n2;
-  return result;
+  return n1 / n2;
 }
 
 HNumber HMath::idiv( const HNumber& n1, const HNumber& n2 )
@@ -675,12 +695,18 @@ HNumber HMath::idiv( const HNumber& n1, const HNumber& n2 )
   floatstruct tmp;
   int save;
 
-  save = float_setprecision(DECPRECISION);
   HNumber result;
-  float_create(&tmp);
-  float_divmod(&result.d->fnum, &tmp, &n1.d->fnum, &n2.d->fnum, INTQUOT);
-  float_free(&tmp);
-  float_setprecision(save);
+  result.d->error = propagateError(n1.d->error, n2.d->error);
+  if (result.d->error == 0)
+  {
+    save = float_setprecision(DECPRECISION);
+    float_create(&tmp);
+    float_divmod(&result.d->fnum, &tmp, &n1.d->fnum, &n2.d->fnum, INTQUOT);
+    if ((result.d->error = float_geterror()) == FLOAT_INVALIDPARAM)
+      result.d->error = HMATH_INTEGER_OVERFLOW;
+    float_free(&tmp);
+    float_setprecision(save);
+  }
   return result;
 }
 

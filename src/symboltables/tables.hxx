@@ -32,12 +32,14 @@ class Table: protected QMap<QString, PSymbol>
   public:
     ~Table();
     void clear();
+    Table::const_iterator matchBest(const QString& key) const;
 };
 
 class Tables
 {
   public:
-    static PSymbol builtinLookup(const QString& key);
+    static PSymbol builtinLookup(const QString& key, bool exact = true);
+    static PSymbol lookup(const QString& key, bool exact = true);
     static void addCloseSymbol(const QString& key, PSymbol symbol);
     static void removeCloseSymbol(PSymbol symbol);
     static int defSymbol(QStringList params);
@@ -53,7 +55,7 @@ class Tables
     static Tables& self();
     static Table& closeTable() { return self().tableList[closeSymbols]; };
     static Table& builtinTable() { return self().tableList[builtinSymbols]; };
-    PSymbol lookup(const QString& key, int firstTable);
+    PSymbol doLookup(const QString& key, bool exact, int firstTable = -1);
     QList<Table> tableList;
     static Tables* tables;
     Tables( const Tables& );

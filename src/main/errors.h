@@ -18,6 +18,7 @@
  */
 
 /*======================   math engine   ==========================*/
+/* FIXME convert this into an enum with continuous values */
 
 #define FLOAT_SUCCESS       0
 
@@ -84,3 +85,9 @@
    level conversion routines should set up a proper limit for the
    low level routines */
 #define IO_BUFFER_OVERFLOW     30
+
+//=============================   hmath   ============================*/
+
+/* returned when an integer result cannot be represented without
+   loss of digits */
+#define HMATH_INTEGER_OVERFLOW 40

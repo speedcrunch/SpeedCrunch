@@ -25,9 +25,9 @@ struct CSyntaxSymbol
   int tokenValue;
 } CSyntaxSymbols[] =
 {
-  { " DOT", '.' },
-  { " ASSIGN", '=' },
-  { " SEP", ';' },
+  { " .", '.' },
+  { " =", '=' },
+  { " ;", ';' },
 };
 static const int cnt1 = sizeof(CSyntaxSymbols)/sizeof(struct CSyntaxSymbol);
 
@@ -38,8 +38,8 @@ struct CParSymbol
   int tokenValue;
 } CParSymbols[] =
 {
-  { " LPAR", " RPAR", '(' },
-  { " SOT", " EOT", '"' },
+  { " (", " )", '(' },
+  { " \"", " \"", '"' },
 };
 static const int cnt2 = sizeof(CParSymbols)/sizeof(struct CParSymbol);
 
@@ -78,24 +78,40 @@ void Tables::init()
   }
 }
 
-PSymbol Tables::lookup(const QString& key, int tblindex = -1)
+PSymbol Tables::doLookup(const QString& key, bool exact, int tblindex)
 {
+  PSymbol result = 0;
+  int matchsize = 0;
+  int itemsize;
   if ( tblindex < 0 )
     // default: search all tables
     tblindex = tableList.size() - 1;
-  for (; tblindex >= 0; --tblindex)
+  for (; tblindex >= 0 && matchsize < key.size(); --tblindex)
   {
     const Table& tbl = tableList.at(tblindex);
-    QMap<QString, PSymbol>::const_iterator item = tbl.constFind(key);
-    if ( item != tbl.constEnd() )
-      return item.value();
+    Table::const_iterator item;
+    if ( exact )
+      item = tbl.constFind(key);
+    else
+      item = tbl.matchBest(key);
+    if ( item != tbl.constEnd() 
+         && (itemsize = item.key().size()) > matchsize )
+    {
+      result = item.value();
+      matchsize = itemsize;
+    }
   }
-  return 0;
+  return result;
 }
 
-PSymbol Tables::builtinLookup(const QString& key)
+PSymbol Tables::builtinLookup(const QString& key, bool exact)
 {
-  return self().lookup(' ' + key, builtinSymbols);
+  return self().doLookup(' ' + key, exact, builtinSymbols);
+}
+
+PSymbol Tables::lookup(const QString& key, bool exact)
+{
+  return self().doLookup(key, exact);
 }
 
 void Tables::addCloseSymbol(const QString& key, PSymbol symbol)
@@ -120,8 +136,27 @@ Table::~Table()
 
 void Table::clear()
 {
-  Table::const_iterator i = begin();
+  Table::const_iterator i = constBegin();
   for (; i != constEnd(); ++i)
     delete i.value();
   QMap<QString, PSymbol>::clear();
+}
+
+Table::const_iterator Table::matchBest(const QString& key) const
+{
+  int matchedChars = 0;
+  Table::const_iterator bestMatch;
+  Table::const_iterator item = lowerBound(key);
+  for (; item != constEnd() && key.startsWith(item.key()); ++item)
+  {
+    if ( item.key().size() <= matchedChars )
+      continue;
+    if ( key == item.key() )
+      return item;
+    matchedChars = item.key().size();
+    bestMatch = item;
+  }
+  if ( matchedChars > 0 )
+    return bestMatch;
+  return constEnd();
 }

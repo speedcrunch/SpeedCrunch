@@ -156,22 +156,34 @@ bool SglExprLex::isWhitespace() const
 {
   return current() <= ' ';
 }
-#if 0
+
 bool SglExprLex::isSpecial() const
 {
-  return !isWhitespace() && !isAlphaNum;
+  return !isWhitespace() && !isAlphaNum();
 }
 
 bool SglExprLex::isAlphaNum() const
 {
   return isLetter() || isDigit();
 }
-#endif
+
 void SglExprLex::scanLetters()
 {
   while ( !atEnd() && isLetter() )
     ++index;
   end = index;
+}
+
+void SglExprLex::scanSpecial()
+{
+  int from;
+
+  from = index;
+  while ( !atEnd() && isSpecial() )
+    ++index;
+  end = expr.indexOf(escapetag, from);
+  if ( end < 0 || index < end )
+    end = index;
 }
 
 /*------------------------   initialization/finalization   -----------------------*/
@@ -288,13 +300,15 @@ int SglExprLex::scanTextToken()
 
 int SglExprLex::scanSysToken()
 {
-  int result;
-  index += escapetag.size();
-  scanLetters();
-  result = escLookup();
-  if ( !atEnd() && isWhitespace() )
-    ++index;
-  return result;
+  index += escsize;
+  int begin = index;
+  bool exactMatch = index < size && isLetter();
+  if ( exactMatch )
+    scanLetters();
+  else
+    scanSpecial();
+  symbol = Tables::builtinLookup(expr.mid(begin, end - begin), exactMatch);
+  return symbolType();
 }
 
 int SglExprLex::scanWhitespaceToken()
@@ -412,14 +426,6 @@ int SglExprLex::numLookup() const
 {
   return doLookup('0' + currentSubStr());
 }
-#endif
-int SglExprLex::escLookup()
-{
-  int begin = start + escsize;
-  symbol = Tables::builtinLookup(expr.mid(begin, end - begin));
-  return symbolType();
-}
-#if 0
 int SglExprLex::greedyLookup()
 {
   //set end
