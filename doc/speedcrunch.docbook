@@ -83,7 +83,7 @@ It is located in the K Menu, Utilities, Calculator (SpeedCrunch).</para>
 <sect2 id="installation-ubuntu">
 <title>Installation for &ubuntu;</title>
 
-<para>SpeedCrunch can be installed using the following terminal command:</para>
+<para>Speedcrunch is installed by default as a part of &kubuntu;, however in &ubuntu;, it is as simple as sudo apt-get install speedcrunch.</para>
 
 <screen>
 <command>apt-get install speedcrunch</command>
