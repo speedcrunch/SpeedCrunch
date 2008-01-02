@@ -25,6 +25,7 @@
 
 #include <iostream>
 #include "math/floatconfig.h"
+#include <QList>
 
 class HMath;
 class HNumberPrivate;
@@ -266,6 +267,8 @@ public:
 private:
   HNumberPrivate* d;
 };
+
+typedef QList<const HNumber*> HNumberList;
 
 class HMath
 {

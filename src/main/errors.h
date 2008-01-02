@@ -20,81 +20,91 @@
 /*======================   math engine   ==========================*/
 /* FIXME convert this into an enum with continuous values */
 
-#define FLOAT_SUCCESS       0
+#define FLOAT_SUCCESS              0
 
 /* a NaN was submitted as a parameter. Only a few functions in
    the math engine accept such a value. All arithmetic functions
    fail on such an operand */
-#define FLOAT_NANOPERAND    1
+#define FLOAT_NANOPERAND           1
 
 /* This error is returned if a result is mathematically defined, but
    cannot be computed reliably without extending the working precision
    considerably and/or requiring considerable computing time */
-#define FLOAT_UNSTABLE      2
+#define FLOAT_UNSTABLE             2
 
 /* the result is in absolute value smaller than the smallest non-zero
    value the math engine can produce */
-#define FLOAT_UNDERFLOW     3
+#define FLOAT_UNDERFLOW            3
 
 /* the result is in absolute value bigger than the biggest number
    the math engine can produce */
-#define FLOAT_OVERFLOW      4
+#define FLOAT_OVERFLOW             4
 
 /* operation requests a division by zero, or a function was evaluated
    at a pole */
-#define FLOAT_ZERODIVIDE    5
+#define FLOAT_ZERODIVIDE           5
 
 /* One or more parameters to a function lie outside of the function's
    domain */
-#define FLOAT_OUTOFDOMAIN   6
+#define FLOAT_OUTOFDOMAIN          6
 
 /* This error indicates a failed conversion from an ASCII string */
-#define FLOAT_BADLITERAL    7
+#define FLOAT_BADLITERAL           7
 
 /* A parameter exceeds the bounds of the engine, or is completely
    meaningless, like the request to evaluate something to 0 decimal
    places. This error indicates a bug, because the calling program
    should never submit such a parameter */
-#define FLOAT_INVALIDPARAM 10
+#define FLOAT_INVALIDPARAM         10
 
 /*---------------   low level ASCII conversion errors   ------------------*/
-#define IO_NO_ERROR            0
+#define IO_NO_ERROR                0
 
 /* For correct conversion of a digit sequence, the IO routines need information
    about the radix to use. This error is returned if none was specified.
    This error indicates a bug, because a calling routine should always
    supply this information */
-#define IO_ERROR_NO_BASE       20
+#define IO_ERROR_NO_BASE           20
 
 /* This error occurs if you request a two's complement conversion, and either
    additionally specify a sign, or gave a non-zero fraction */
-#define IO_ERROR_SIGN_CONFLICT 21
+#define IO_ERROR_SIGN_CONFLICT     21
 
 /* You must specify at least one digit of the significant */
-#define IO_ERROR_NO_DIGIT      22
+#define IO_ERROR_NO_DIGIT          22
 
 /* unknown characters in exponent, e.g. a two's complement tag */
-#define IO_ERROR_EXP           23
+#define IO_ERROR_EXP               23
 
 /* the exponent exceeds the possible range */
-#define IO_ERROR_EXP_RANGE     24
+#define IO_ERROR_EXP_RANGE         24
 
 /*---------------  high level ASCII conversion errors   ------------*/
 
 /* internal buffer overflow. This indicates a bug, because the high
    level conversion routines should set up a proper limit for the
    low level routines */
-#define IO_BUFFER_OVERFLOW     30
+#define IO_BUFFER_OVERFLOW         30
 
 //=============================   hmath   ============================*/
 
 /* returned when an integer result cannot be represented without
    loss of digits */
-#define HMATH_INTEGER_OVERFLOW 40
+#define HMATH_INTEGER_OVERFLOW     40
 
 /* returned when a non-integer is passed as an integer-only parameter */
-#define HMATH_INTEGER_REQUIRED 41
+#define HMATH_INTEGER_REQUIRED     41
 
 /* returned when an operation request is mathematically valid, but
    would need too much time */
-#define HMATH_TOO_EXPENSIVE    42
+#define HMATH_TOO_EXPENSIVE        42
+
+//=============================   symbols   ==========================*/
+
+/* a function was called with the wrong count of parameters
+   e.g. sin(12;13) (sin takes only 1 parameter) */
+#define SYMBOLS_INVALID_PARAMCOUNT 60
+
+/* returned when a function was called with a wron parameter
+   type */
+#define SYMBOLS_INVALID_PARAMTYPE  61

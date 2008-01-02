@@ -61,20 +61,14 @@ void SglExprLex::setExpression(const QString& newexpr)
 {
   expr = newexpr;
   size = expr.size();
-
-  // replace all funny characters
-  for (index = -1; ++index < size ;)
-    if (current() < ' ')
-      expr[index] = ' ';
 }
 
 bool SglExprLex::autoFix(const QString& newexpr)
 {
-//   int tokencnt = 0;
+  int tokencnt = 0;
   int assignseqpos = -1;
-//   int lasttype = 0;
+  int lasttype = 0;
   int type;
-//  QString close;
 
   setExpression(newexpr);
   reset();
@@ -90,8 +84,8 @@ bool SglExprLex::autoFix(const QString& newexpr)
       case UNKNOWNTOKEN: return false;
       default: assignseqpos = -1; break;
     }
-/*    lasttype = type;
-    ++tokencount; */
+    lasttype = type;
+    ++tokencnt;
   } while ( type != eol );
   // remove trailing '='
   if ( assignseqpos >= 0 )
@@ -107,7 +101,6 @@ bool SglExprLex::autoFix(const QString& newexpr)
   return true;
 }
 #if 0
-
 
 QList<Token> SglExprLex::scan()
 {
@@ -405,7 +398,7 @@ void SglExprLex::updateState(int token)
     case OPENPAR:
       closePar.push(
           checkEscape(
-              dynamic_cast<OpenSymbol*>(symbol)->closeToken())); //fall through
+              static_cast<OpenSymbol*>(symbol)->closeToken())); //fall through
     default: if ( state != stScale ) state = stTopLevel;
   }
 }

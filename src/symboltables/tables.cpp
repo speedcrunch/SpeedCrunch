@@ -18,6 +18,7 @@
  */
 
 #include "symboltables/tables.hxx"
+#include "math/hmath.hxx"
 
 struct CSyntaxSymbol
 {
@@ -42,6 +43,11 @@ struct CParSymbol
   { " \"", " \"", '"' },
 };
 static const int cnt2 = sizeof(CParSymbols)/sizeof(struct CParSymbol);
+
+struct CNumFctSymbol
+{
+  const char* key;
+};
 
 Tables* Tables::tables = 0;
 

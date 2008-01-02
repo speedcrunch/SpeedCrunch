@@ -39,17 +39,30 @@
 
 typedef enum
 {
-  TVariant,
+  TEmpty,
+  TError,
   TNumeric,
   TText,
 } BuiltinType;
 
-typedef struct
+class Variant: protected HNumber
+// FIXME do not subclass from HNumber
 {
-  BuiltinType type;
-  HNumber num;
-  QString text;
-} Variant;
+  public:
+    Variant();
+    Variant(const HNumber& val) { operator=(val); };
+    Variant(int error) { operator=(error); };
+    void operator=(const HNumber& val);
+    void operator=(int error);
+    operator const HNumber& () const { return *this; };
+    operator const HNumber* () const { return this; };
+    operator int () const { return error(); };
+    bool isNum() const;
+    BuiltinType type() const { return m_type; };
+  private:
+    BuiltinType m_type;
+    QString text;
+};
 
 typedef QList<Variant> ParamList;
 
@@ -60,19 +73,19 @@ typedef HNumber (*Nfct3)(const HNumber& p1, const HNumber& p2,
                          const HNumber& p3);
 typedef HNumber (*Nfct4)(const HNumber& p1, const HNumber& p2,
                          const HNumber& p3, const HNumber& p4);
-typedef HNumber (*Nfct) (const FunctionArguments& param);
+typedef HNumber (*Nfct) (const HNumberList& param);
 
-typedef QString (*Tfct0)();
-
-class FctDef: protected QByteArray
+class FctList
 {
   public:
-    FctDef(int minCount = 0, int maxCount = -1);
-    void setParamType(int idx, BuiltinType aType/*, name, default*/);
-    int matchParams(const ParamList& params);
-  private:
-    int minParamCount;
-    int maxParamCount;
+    Nfct0 nfct0;
+    Nfct1 nfct1;
+    Nfct2 nfct2;
+    Nfct3 nfct3;
+    Nfct4 nfct4;
+    Nfct  nfct;
+    bool matchParams(const ParamList& params);
+    Variant eval(const ParamList& params);
 };
 
 class Symbol
@@ -102,6 +115,57 @@ class OpenSymbol: public SyntaxSymbol
   private:
     QString m_end;
     SyntaxSymbol* closeSymbol;
+};
+
+class FunctionSymbol: public Symbol
+{
+  public:
+    int type();
+    FunctionSymbol(const FctList&, int minCount = 0, int maxCount = -1);
+    bool matchParams(const ParamList& params);
+    Variant eval(const ParamList& params);
+  protected:
+    int minParamCount;
+    int maxParamCount;
+  private:
+    bool checkCount(const ParamList& params);
+    FctList fcts;
+};
+
+class OperatorSymbol: public FunctionSymbol
+{
+  public:
+    OperatorSymbol(const FctList&, int paramCount, int prec);
+    int type();
+    bool isUnary() { return minParamCount == 1; };
+    int precedence;
+};
+
+class ConstSymbol: public Symbol
+{
+  public:
+    ConstSymbol(const Variant& val);
+    int type();
+    Variant value() { return m_value; };
+  protected:
+    ConstSymbol(){};
+    Variant m_value;
+};
+
+class AnsSymbol: public ConstSymbol
+{
+  public:
+    AnsSymbol() {};
+    int type();
+    void setAns(const Variant& val) { m_value = val; };
+};
+
+class VarSymbol: public ConstSymbol
+{
+  public:
+    VarSymbol() {};
+    int type();
+    void operator=(const Variant& val) { m_value = val; };
 };
 
 #endif /* _SYMBOLS_H */

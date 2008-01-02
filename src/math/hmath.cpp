@@ -1198,6 +1198,8 @@ HNumber HMath::binomialCdf( const HNumber & k,
                             const HNumber & n,
                             const HNumber & p )
 {
+  // FIXME use the regularized incomplete Beta function to avoid
+  // the possibly very expensive loop
   if ( k.isNan() || ! k.isInteger() || k < 0 || k > n
          || n.isNan() || ! n.isInteger() || n < 0
            || p.isNan() || p < 0 || p > 1 )
