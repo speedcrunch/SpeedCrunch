@@ -26,13 +26,14 @@
 #include <QList>
 #include <QStringList>
 
-class Table: protected QMap<QString, PSymbol>
+class Table: private QMap<QString, PSymbol>
 {
   friend class Tables;
   public:
     ~Table();
+  private:
     void clear();
-    Table::const_iterator matchBest(const QString& key) const;
+    Table::const_iterator lookup(const QString& key, bool exact = true) const;
 };
 
 class Tables
@@ -42,7 +43,6 @@ class Tables
     static PSymbol lookup(const QString& key, bool exact = true);
     static void addCloseSymbol(const QString& key, PSymbol symbol);
     static void removeCloseSymbol(PSymbol symbol);
-    static int defSymbol(QStringList params);
   private:
 
     enum

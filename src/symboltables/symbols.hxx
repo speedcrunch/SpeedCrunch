@@ -31,7 +31,49 @@
 #ifndef _SYMBOLS_H
 #define _SYMBOLS_H
 
+#include "math/hmath.hxx"
+#include "base/functions.hxx" // FIXME this should not be necessary
 #include <QString>
+#include <QList>
+#include <QByteArray>
+
+typedef enum
+{
+  TVariant,
+  TNumeric,
+  TText,
+} BuiltinType;
+
+typedef struct
+{
+  BuiltinType type;
+  HNumber num;
+  QString text;
+} Variant;
+
+typedef QList<Variant> ParamList;
+
+typedef HNumber (*Nfct0)();
+typedef HNumber (*Nfct1)(const HNumber& p1);
+typedef HNumber (*Nfct2)(const HNumber& p1, const HNumber& p2);
+typedef HNumber (*Nfct3)(const HNumber& p1, const HNumber& p2,
+                         const HNumber& p3);
+typedef HNumber (*Nfct4)(const HNumber& p1, const HNumber& p2,
+                         const HNumber& p3, const HNumber& p4);
+typedef HNumber (*Nfct) (const FunctionArguments& param);
+
+typedef QString (*Tfct0)();
+
+class FctDef: protected QByteArray
+{
+  public:
+    FctDef(int minCount = 0, int maxCount = -1);
+    void setParamType(int idx, BuiltinType aType/*, name, default*/);
+    int matchParams(const ParamList& params);
+  private:
+    int minParamCount;
+    int maxParamCount;
+};
 
 class Symbol
 {
@@ -60,10 +102,6 @@ class OpenSymbol: public SyntaxSymbol
   private:
     QString m_end;
     SyntaxSymbol* closeSymbol;
-};
-
-class FunctionSymbol: public SyntaxSymbol
-{
 };
 
 #endif /* _SYMBOLS_H */

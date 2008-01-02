@@ -59,6 +59,7 @@ typedef struct {
 } floatstruct;
 
 typedef floatstruct* floatnum;
+typedef const floatstruct* cfloatnum;
 
 typedef enum {TONEAREST, TOZERO, TOINFINITY, TOPLUSINFINITY, TOMINUSINFINITY} roundmode;
 
@@ -128,7 +129,7 @@ void float_setnan(floatnum f);
 /* returns the base 10 exponent of the value in `f'. If `f' is zero or
    NaN, the returned exponent is 0.
    This function never reports an error. */
-int float_getexponent(floatnum f);
+int float_getexponent(cfloatnum f);
 
 /* fills the buffer `buf' of size `bufsz' with an ASCII string
    representing the significand of `f'.
@@ -144,16 +145,16 @@ int float_getexponent(floatnum f);
    No '\0' character is appended to the right.
    The return value are the number of characters written to the buffer.
    This function never reports an error. */
-int float_getsignificand(char* buf, int bufsz, floatnum f);
+int float_getsignificand(char* buf, int bufsz, cfloatnum f);
 
 /* returns the number of digits in the significand, or 0 for NaN and zero.
    This function never reports an error. */
-int float_getlength(floatnum f);
+int float_getlength(cfloatnum f);
 
 /* returns 1, if `f' is positive, -1, if `f' is negative, and 0 if `f' is
    zero or NaN.
    This function never reports an error. */
-signed char float_getsign(floatnum f);
+signed char float_getsign(cfloatnum f);
 
 /* writes the value stored in `f' as an ASCIIZ string into a buffer of
    size `bufsz'. If the buffer is too small to hold the full value,
@@ -181,7 +182,7 @@ signed char float_getsign(floatnum f);
    output. If no reasonable output is possible, the complete buffer
    is left unchanged, not even the final \0 character is written.
    This function never reports an error. */
-int float_getscientific(char* buf, int bufsz, floatnum f);
+int float_getscientific(char* buf, int bufsz, cfloatnum f);
 
 /* gets the `ofs'-th digit from the decimal representation
    of the significand of `f'. If `ofs' is negative or greater
@@ -189,7 +190,7 @@ int float_getscientific(char* buf, int bufsz, floatnum f);
    The return value is between 0 and 9 (not the ASCII representation
    of these digits (0x30 - 0x39)).
    This function never returns an error */
-char float_getdigit(floatnum f, int ofs);
+char float_getdigit(cfloatnum f, int ofs);
 
 /* sets the significand according to the the ASCII text in buffer buf
    of size `bufsz'.
@@ -249,11 +250,11 @@ void float_setzero (floatnum f);
 
 /* returns 1, if f contains the special NaN value, 0 otherwise.
    This function never reports an error. */
-char float_isnan(floatnum f);
+char float_isnan(cfloatnum f);
 
 /* returns 1, if f contains the value zero, 0 otherwise.
    This function never reports an error. */
-char float_iszero(floatnum f);
+char float_iszero(cfloatnum f);
 
 /* copies source to dest, limiting the significand to at most `digits' digits.
    The parameter `digits' may assume the value EXACT, in which case a full
@@ -293,7 +294,7 @@ char float_abs(floatnum f);
    This function is not intended to be used with NaN's. If you
    pass it as an argument, UNORDERED is returned to indicate an error.
    errors: FLOAT_NANOPERAND */
-signed char float_cmp(floatnum val1, floatnum val2);
+signed char float_cmp(cfloatnum val1, cfloatnum val2);
 
 /* rounds `f' to `digits' digits according to the submitted mode.
    If `digits' <= 0 or mode is not recognized, `f' is changed into a NaN.

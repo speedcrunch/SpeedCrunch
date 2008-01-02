@@ -145,6 +145,11 @@ public:
   HNumber operator%( const HNumber& ) const;
 
   /*!
+   * Performs an integer divide
+   */
+  static HNumber idiv( const HNumber& n1, const HNumber& n2 );
+
+  /*!
    * Returns true if this number is greater than n.
    */
   bool operator>( const HNumber& n ) const;
@@ -241,16 +246,22 @@ public:
   HNumber operator<<( const HNumber& ) const;
 
   /*!
-   * Returns a NaN (Not a Number).
+   * Returns a NaN (Not a Number) with error set to
+   * passed parameter.
    */
-  static HNumber nan();
+  static HNumber nan(int error = 0);
 
   /*!
    * Returns the number as an int.
    * It is meant to convert small (integer) numbers only and no
    * checking is done whatsoever.
    */
-  int toInt();
+  int toInt() const;
+
+  /*!
+   * Returns the error code kept with a NaN
+   */
+  int error() const;
 
 private:
   HNumberPrivate* d;
@@ -259,7 +270,6 @@ private:
 class HMath
 {
 public:
-  static const char* getError();
   /*!
    * Formats the given number as string, using specified decimal digits.
    * Note that the returned string must be freed.
@@ -319,29 +329,14 @@ public:
   static HNumber pi();
 
   /*!
-   * Adds two numbers.
+   * converts Radians to Degrees.
    */
-  static HNumber add( const HNumber& n1, const HNumber& n2 );
+  static HNumber rad2deg( const HNumber& angle );
 
   /*!
-   * Subtracts two numbers.
+   * converts Degrees to Radians.
    */
-  static HNumber sub( const HNumber& n1, const HNumber& n2 );
-
-  /*!
-   * Multiplies two numbers.
-   */
-  static HNumber mul( const HNumber& n1, const HNumber& n2 );
-
-  /*!
-   * Divides two numbers.
-   */
-  static HNumber div( const HNumber& n1, const HNumber& n2 );
-
-  /*!
-   * Performs an integer divide
-   */
-  static HNumber idiv( const HNumber& n1, const HNumber& n2 );
+  static HNumber deg2rad( const HNumber& angle );
 
   /*!
    * Returns -1, 0, 1 if n1 is less than, equal to, or more than n2.
@@ -362,11 +357,6 @@ public:
    * Returns the absolute value of n.
    */
   static HNumber abs( const HNumber& n );
-
-  /*!
-   * Returns the negative of n.
-   */
-  static HNumber negate( const HNumber& n );
 
   /*!
    * Returns the integer part of n.

@@ -86,14 +86,11 @@ PSymbol Tables::doLookup(const QString& key, bool exact, int tblindex)
   if ( tblindex < 0 )
     // default: search all tables
     tblindex = tableList.size() - 1;
+  Table::const_iterator item;
   for (; tblindex >= 0 && matchsize < key.size(); --tblindex)
   {
     const Table& tbl = tableList.at(tblindex);
-    Table::const_iterator item;
-    if ( exact )
-      item = tbl.constFind(key);
-    else
-      item = tbl.matchBest(key);
+    item = tbl.lookup(key, exact);
     if ( item != tbl.constEnd() 
          && (itemsize = item.key().size()) > matchsize )
     {
@@ -142,21 +139,19 @@ void Table::clear()
   QMap<QString, PSymbol>::clear();
 }
 
-Table::const_iterator Table::matchBest(const QString& key) const
+Table::const_iterator Table::lookup(const QString& key, bool exact) const
 {
-  int matchedChars = 0;
-  Table::const_iterator bestMatch;
-  Table::const_iterator item = lowerBound(key);
+  if ( exact )
+    return constFind(key);
+  int resultsz = 0;
+  Table::const_iterator result = constEnd();
+  Table::const_iterator item = lowerBound(key.left(1));
   for (; item != constEnd() && key.startsWith(item.key()); ++item)
   {
-    if ( item.key().size() <= matchedChars )
-      continue;
     if ( key == item.key() )
       return item;
-    matchedChars = item.key().size();
-    bestMatch = item;
+    result = item;
+    resultsz = result.key().size();
   }
-  if ( matchedChars > 0 )
-    return bestMatch;
-  return constEnd();
+  return result;
 }

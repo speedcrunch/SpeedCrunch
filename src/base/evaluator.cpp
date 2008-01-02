@@ -1197,7 +1197,7 @@ HNumber Evaluator::evalNoAssign()
           return HNumber( 0 );
         }
         val1 = stack.pop();
-        val1 = HMath::negate( val1 );
+        val1 = -val1;
         stack.push( val1 );
         break;
 

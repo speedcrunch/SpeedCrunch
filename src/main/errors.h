@@ -91,3 +91,10 @@
 /* returned when an integer result cannot be represented without
    loss of digits */
 #define HMATH_INTEGER_OVERFLOW 40
+
+/* returned when a non-integer is passed as an integer-only parameter */
+#define HMATH_INTEGER_REQUIRED 41
+
+/* returned when an operation request is mathematically valid, but
+   would need too much time */
+#define HMATH_TOO_EXPENSIVE    42

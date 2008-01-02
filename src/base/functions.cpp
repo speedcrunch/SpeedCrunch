@@ -33,27 +33,16 @@
 #include <float.h>
 #include <math.h>
 
-HNumber rad2deg( HNumber angle)
-{
-  return HNumber(180) * angle / HMath::pi();
-}
-
-HNumber deg2rad( HNumber angle)
-{
-  return angle * HMath::pi() / HNumber(180);
-}
-
-
 HNumber checkRad2Deg( HNumber angle )
 {
   return Settings::self()->angleMode == Settings::Degree?
-             rad2deg(angle) : angle;
+             HMath::rad2deg(angle) : angle;
 }
 
 HNumber checkDeg2Rad( HNumber angle)
 {
   return Settings::self()->angleMode == Settings::Degree?
-            deg2rad(angle) : angle;
+             HMath::deg2rad(angle) : angle;
 }
 
 HNumber function_abs( const Evaluator*, Function*, const FunctionArguments& args )
@@ -669,7 +658,7 @@ HNumber function_degrees( const Evaluator*, Function*, const FunctionArguments& 
     return HNumber::nan();
 
   HNumber angle = args[0];
-  return rad2deg(angle);
+  return HMath::rad2deg(angle);
 }
 
 HNumber function_radians( const Evaluator*, Function*, const FunctionArguments& args )
@@ -678,7 +667,7 @@ HNumber function_radians( const Evaluator*, Function*, const FunctionArguments& 
     return HNumber::nan();
 
   HNumber angle = args[0];
-  return deg2rad(angle);
+  return HMath::deg2rad(angle);
 }
 
 HNumber function_max( const Evaluator         * evaluator,
@@ -1139,7 +1128,7 @@ HNumber function_idiv( const Evaluator         * evaluator,
   HNumber dividend = args[0];
   HNumber divisor = args[1];
 
-  return HMath::idiv(dividend, divisor);
+  return HNumber::idiv(dividend, divisor);
 }
 
 HNumber function_mod( const Evaluator         * evaluator,

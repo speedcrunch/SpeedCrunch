@@ -64,8 +64,7 @@ _min(int x, int y)
 }
 
 /* the return value points to the first character different
-   from both accept1 and accept2.
-   Similiar to strspn, but with a limiting end pointer. */
+   from accept. */
 const char*
 memskip(
   const char* buf,
@@ -161,7 +160,7 @@ _movepoint(
 /* a quick check for NaN and 0 */
 static char
 _is_special(
-  floatnum f)
+  cfloatnum f)
 {
   return f->significand == NULL;
 }
@@ -319,28 +318,28 @@ float_setzero (
 
 char
 float_isnan(
-  floatnum f)
+  cfloatnum f)
 {
   return _is_special(f) && f->exponent != EXPZERO;
 }
 
 char
 float_iszero(
-  floatnum f)
+  cfloatnum f)
 {
   return _is_special(f) && f->exponent == EXPZERO;
 }
 
 int
 float_getlength(
-  floatnum f)
+  cfloatnum f)
 {
   return _is_special(f)? 0 : _scaleof(f) + 1;
 }
 
 char
 float_getdigit(
-  floatnum f,
+  cfloatnum f,
   int ofs)
 {
   if (ofs >= float_getlength(f) || ofs < 0)
@@ -354,7 +353,7 @@ float_getdigit(
    TRUE is returned if a NaN is encountered. */
 static char
 _checknan(
-  floatnum f)
+  cfloatnum f)
 {
   if (!float_isnan(f))
     return FALSE;
@@ -390,7 +389,7 @@ _checkdigits(
    f->significand->n_value. */
 static int
 _bscandigit(
-  floatnum f,
+  cfloatnum f,
   int scale,
   char digit)
 {
@@ -446,7 +445,7 @@ _scan_09pairs(
 
 signed char
 float_getsign(
-  floatnum f)
+  cfloatnum f)
 {
   if(_is_special(f))
     return 0;
@@ -486,8 +485,8 @@ float_abs(
 
 signed char
 float_cmp(
-  floatnum val1,
-  floatnum val2)
+  cfloatnum val1,
+  cfloatnum val2)
 {
   signed char sgn1;
 
@@ -551,7 +550,7 @@ int
 float_getsignificand(
   char* buf,
   int bufsz,
-  floatnum f)
+  cfloatnum f)
 {
   int idx, lg;
 
@@ -576,7 +575,7 @@ float_getsignificand(
 
 int
 float_getexponent(
-  floatnum f)
+  cfloatnum f)
 {
   if (_is_special(f))
     return 0;
@@ -586,7 +585,7 @@ float_getexponent(
 int float_getscientific(
   char* buf,
   int bufsz,
-  floatnum f)
+  cfloatnum f)
 {
   char b[42]; /* supports exponents encoded in up to 128 bits */
   int sgnlg, explg, mlg;
@@ -957,7 +956,7 @@ float_move(
 static void
 _scaled_clone(
   floatnum dest,
-  floatnum source,
+  cfloatnum source,
   int scale)
 {
   /* dest == source allowed! */
@@ -1036,7 +1035,7 @@ _trunc(
 static char
 _roundup(
   floatnum dest,
-  floatnum x,
+  cfloatnum x,
   int scale)
 {
   scale -= _bscandigit(x, scale, 9);
