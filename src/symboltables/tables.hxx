@@ -43,6 +43,7 @@ class Tables
     static PSymbol lookup(const QString& key, bool exact = true);
     static void addCloseSymbol(const QString& key, PSymbol symbol);
     static void removeCloseSymbol(PSymbol symbol);
+    static Variant escape(const ParamList& params);
   private:
 
     enum

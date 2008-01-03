@@ -23,12 +23,14 @@
 struct CSyntaxSymbol
 {
   const char* key;
-  int tokenValue;
+  SymType symtype;
 } CSyntaxSymbols[] =
 {
-  { " .", '.' },
-  { " =", '=' },
-  { " ;", ';' },
+  { " .", dot },
+  { " =", assign },
+  { " ;", separator },
+  { " pos", signPlus },
+  { " neg", signMinus },
 };
 static const int cnt1 = sizeof(CSyntaxSymbols)/sizeof(struct CSyntaxSymbol);
 
@@ -36,17 +38,22 @@ struct CParSymbol
 {
   const char* key;
   const char* closeKey;
-  int tokenValue;
+  SymType symtype;
 } CParSymbols[] =
 {
-  { " (", " )", '(' },
-  { " \"", " \"", '"' },
+  { " (", " )", openPar },
+  { " \"", " \"", quote },
 };
 static const int cnt2 = sizeof(CParSymbols)/sizeof(struct CParSymbol);
 
-struct CNumFctSymbol
+struct CVFctSymbol
 {
   const char* key;
+  Vfct fct;
+  VariantType paramtype;
+} CVFct1Symbols[] = 
+{
+  { " escape", Tables::escape, TText },
 };
 
 Tables* Tables::tables = 0;
@@ -75,12 +82,12 @@ void Tables::init()
   for (int i = -1; ++i < cnt1; )
   {
     struct CSyntaxSymbol* ps = CSyntaxSymbols + i;
-    builtinTable().insert(ps->key, new SyntaxSymbol(ps->tokenValue));
+    builtinTable().insert(ps->key, new SyntaxSymbol(ps->symtype));
   }
   for (int i = -1; ++i < cnt2; )
   {
     struct CParSymbol* ps = CParSymbols + i;
-    builtinTable().insert(ps->key, new OpenSymbol(ps->tokenValue, ps->closeKey));
+    builtinTable().insert(ps->key, new OpenSymbol(ps->symtype, ps->closeKey));
   }
 }
 
@@ -130,6 +137,11 @@ void Tables::removeCloseSymbol(PSymbol symbol)
     ++i;
   closeTable().erase(i);
   delete symbol;
+}
+
+Variant Tables::escape(const ParamList& params)
+{
+  return 0;
 }
 
 Table::~Table()

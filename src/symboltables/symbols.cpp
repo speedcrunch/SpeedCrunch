@@ -59,68 +59,110 @@ bool Variant::isNum() const
   return m_type == TNumeric || m_type == TError || !isNan();
 }
 
-bool FctList::matchParams(const ParamList& params)
+bool ParamList::allNums() const
 {
-  for (int i = 0; i < params.size(); ++i)
-    if (!params.at(i).isNum())
+  for (int i = 0; i < size(); ++i)
+    if (!at(i).isNum())
       return false;
   return true;
 }
 
-Variant FctList::eval(const ParamList& params)
+bool TypeList::match(const ParamList& params) const
 {
-  if (!matchParams(params))
-    return SYMBOLS_INVALID_PARAMTYPE;
-  switch (params.size())
-  {
-    case 0:
-      if (nfct0)
-        return nfct0();
-      break;
-    case 1:
-      if (nfct1)
-        return nfct1((const HNumber&)params.at(0));
-      break;
-    case 2:
-      if (nfct2)
-        return nfct2((const HNumber&)params.at(0),
-                     (const HNumber&)params.at(1));
-      break;
-    case 3:
-      if (nfct3)
-        return nfct3((const HNumber&)params.at(0),
-                     (const HNumber&)params.at(1),
-                     (const HNumber&)params.at(2));
-      break;
-    case 4:
-      if (nfct4)
-        return nfct4((const HNumber&)params.at(0),
-                     (const HNumber&)params.at(1),
-                     (const HNumber&)params.at(2),
-                     (const HNumber&)params.at(3));
-    default: break;
-  }
-  HNumberList hnumbers;
-  for (int i = 0; i < params.size(); ++i)
-    hnumbers.append((const HNumber*)params.at(i));
-  return nfct(hnumbers);
+  if (params.size() < size()) return false;
+  for (int i = 0; i < size();)
+    if (at(i) != params.at(i).type())
+      switch (at(i))
+      {
+        case TEmpty: continue;
+        case TNumeric: if (params.at(i).isNum()) continue; // fall through
+        default: return false;
+      };
+  return true;
 }
 
+bool FctList::match(const ParamList& params) const
+{
+  if (vfct) return true;
+  int sz = params.size();
+  return params.allNums()
+         && (nfct
+             || (nfct0 && sz == 0)
+             || (nfct1 && sz == 1)
+             || (nfct2 && sz == 2)
+             || (nfct3 && sz == 3)
+             || (nfct4 && sz == 4));
+}
+
+Variant FctList::eval(const ParamList& params) const
+{
+  if (params.allNums())
+    switch (params.size())
+    {
+      case 0:
+        if (nfct0)
+          return nfct0();
+      case 1:
+        if (nfct1)
+          return nfct1((const HNumber&)params.at(0));
+      case 2:
+        if (nfct2)
+          return nfct2((const HNumber&)params.at(0),
+                      (const HNumber&)params.at(1));
+      case 3:
+        if (nfct3)
+          return nfct3((const HNumber&)params.at(0),
+                      (const HNumber&)params.at(1),
+                      (const HNumber&)params.at(2));
+      case 4:
+        if (nfct4)
+          return nfct4((const HNumber&)params.at(0),
+                      (const HNumber&)params.at(1),
+                      (const HNumber&)params.at(2),
+                      (const HNumber&)params.at(3));
+      default:
+        if (nfct)
+        {
+          HNumberList hnumbers;
+          for (int i = 0; i < params.size(); ++i)
+            hnumbers.append((const HNumber*)params.at(i));
+          return nfct(hnumbers);
+        }
+    }
+    if (vfct)
+      return vfct(params);
+    return SYMBOLS_INVALID_PARAMTYPE;
+}
 
 Symbol::~Symbol()
 {
 }
 
-int Symbol::type()
+SymType Symbol::type() const
 {
-  return UNKNOWNTOKEN;
+  return unknownSym;
 }
 
-OpenSymbol::OpenSymbol(int aType, const QString& end)
+SyntaxSymbol::SyntaxSymbol(SymType aType)
+  : m_type(aType)
+{
+}
+
+SymType SyntaxSymbol::type() const
+{
+  return m_type;
+}
+
+SymType CloseSymbol::type() const
+{
+  return closeSym;
+}
+
+OpenSymbol::OpenSymbol(SymType aType, const QString& end)
   : SyntaxSymbol(aType)
 {
   m_end = end;
-  closeSymbol = new SyntaxSymbol(-aType);
+  closeSymbol = new CloseSymbol(aType);
   Tables::addCloseSymbol(end, closeSymbol);
 }
 
@@ -130,61 +172,58 @@ OpenSymbol::~OpenSymbol()
   Tables::removeCloseSymbol(closeSymbol);
 }
 
-SyntaxSymbol::SyntaxSymbol(int aType)
-  : m_type(aType)
-{
-}
-
-int SyntaxSymbol::type()
-{
-  return m_type;
-}
-
-FunctionSymbol::FunctionSymbol(const FctList& list, int minCount, int maxCount)
+FunctionSymbol::FunctionSymbol(const TypeList& tlist, const FctList& flist,
+                               int minCount, int maxCount)
 {
   if (maxCount < 0)
     maxCount = minCount;
   maxParamCount = maxCount;
   minParamCount = minCount;
-  fcts = list;
+  fcts = flist;
+  types = tlist;
 }
 
-bool FunctionSymbol::checkCount(const ParamList& params)
+bool FunctionSymbol::checkCount(const ParamList& params) const
 {
   return params.size() >= minParamCount
       && params.size() <= maxParamCount;
 }
 
-int FunctionSymbol::type()
+SymType FunctionSymbol::type() const
 {
-  return 'f';
+  return functionSym;
 }
 
-bool FunctionSymbol::matchParams(const ParamList& params)
+bool FunctionSymbol::match(const ParamList& params) const
 {
-  return checkCount(params) && fcts.matchParams(params);
+  return checkCount(params)
+         && fcts.match(params)
+         && types.match(params);
 }
 
-OperatorSymbol::OperatorSymbol(const FctList& list, int paramCount, int prec)
-  : FunctionSymbol(list, paramCount, paramCount), precedence(prec)
-{
-}
-
-int OperatorSymbol::type()
-{
-  return 'o';
-}
-
-Variant FunctionSymbol::eval(const ParamList& params)
+Variant FunctionSymbol::eval(const ParamList& params) const
 {
   if (!checkCount(params))
     return SYMBOLS_INVALID_PARAMCOUNT;
+  if (!types.match(params))
+    return SYMBOLS_INVALID_PARAMTYPE;
   return fcts.eval(params);
 }
 
-int ConstSymbol::type()
+OperatorSymbol::OperatorSymbol(const TypeList& tlist, const FctList& flist,
+                               int paramCount, int prec)
+  : FunctionSymbol(tlist, flist, paramCount, paramCount), precedence(prec)
 {
-  return 'c';
+}
+
+SymType OperatorSymbol::type() const
+{
+  return operatorSym;
+}
+
+SymType ConstSymbol::type() const
+{
+  return constSym;
 }
 
 ConstSymbol::ConstSymbol(const Variant& val)
@@ -192,12 +231,43 @@ ConstSymbol::ConstSymbol(const Variant& val)
   m_value = val;
 }
 
-int AnsSymbol::type()
+SymType AnsSymbol::type() const
 {
-  return 'a';
+  return ansSym;
 }
 
-int VarSymbol::type()
+SymType VarSymbol::type() const
 {
-  return 'v';
+  return varSym;
+}
+
+SymType ReferenceSymbol::type() const
+{
+  return referenceSym;
+}
+
+ReferenceSymbol::ReferenceSymbol()
+{
+  for (unsigned i = 0; i < sizeof(symbols); ++i)
+    symbols[i] = 0;
+}
+
+const Symbol* ReferenceSymbol::operator[](int index) const
+{
+  if (index < 0 || (unsigned)index >= sizeof(symbols)/sizeof(symbols[0]))
+    return 0;
+  return symbols[index];
+}
+
+void ReferenceSymbol::operator=(const Symbol& other)
+{
+  unsigned firstFree = 0;
+  while (firstFree < maxindex && symbols[firstFree])
+    ++firstFree;
+  if (firstFree >= maxindex) return;
+  if (other.type() == referenceSym)
+    for (int i = 0; firstFree < maxindex; ++firstFree, ++i)
+      symbols[firstFree] = (static_cast<const ReferenceSymbol&>(other))[i];
+  else
+    symbols[firstFree] = &other;
 }

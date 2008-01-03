@@ -35,7 +35,25 @@
 #include "base/functions.hxx" // FIXME this should not be necessary
 #include <QString>
 #include <QList>
-#include <QByteArray>
+
+typedef enum
+{
+  unknownSym = 'X',
+  functionSym = 'F',
+  operatorSym = 'O',
+  constSym = 'C',
+  ansSym = 'A',
+  varSym = 'V',
+  referenceSym = 'R',
+  closeSym = ')',
+  dot = '.',
+  assign = '=',
+  separator = ';',
+  signPlus = 'P',
+  signMinus = 'M',
+  openPar = '(',
+  quote = '"',
+} SymType;
 
 typedef enum
 {
@@ -43,7 +61,7 @@ typedef enum
   TError,
   TNumeric,
   TText,
-} BuiltinType;
+} VariantType;
 
 class Variant: protected HNumber
 // FIXME do not subclass from HNumber
@@ -58,13 +76,25 @@ class Variant: protected HNumber
     operator const HNumber* () const { return this; };
     operator int () const { return error(); };
     bool isNum() const;
-    BuiltinType type() const { return m_type; };
+    bool isText() const { return type() == TText; };
+    VariantType type() const { return m_type; };
   private:
-    BuiltinType m_type;
+    VariantType m_type;
     QString text;
 };
 
-typedef QList<Variant> ParamList;
+class ParamList: public QList<Variant>
+{
+  public:
+    bool allNums() const;
+};
+
+class TypeList: protected QList<VariantType>
+{
+  public:
+    void appendType(VariantType t) { QList<VariantType>::append(t); };
+    bool match(const ParamList&) const;
+};
 
 typedef HNumber (*Nfct0)();
 typedef HNumber (*Nfct1)(const HNumber& p1);
@@ -74,6 +104,7 @@ typedef HNumber (*Nfct3)(const HNumber& p1, const HNumber& p2,
 typedef HNumber (*Nfct4)(const HNumber& p1, const HNumber& p2,
                          const HNumber& p3, const HNumber& p4);
 typedef HNumber (*Nfct) (const HNumberList& param);
+typedef Variant (*Vfct) (const ParamList& params);
 
 class FctList
 {
@@ -84,14 +115,15 @@ class FctList
     Nfct3 nfct3;
     Nfct4 nfct4;
     Nfct  nfct;
-    bool matchParams(const ParamList& params);
-    Variant eval(const ParamList& params);
+    Vfct  vfct;
+    Variant eval(const ParamList& params) const;
+    bool match(const ParamList& params) const;
 };
 
 class Symbol
 {
   public:
-    virtual int type();
+    virtual SymType type() const;
     virtual ~Symbol();
 };
 
@@ -100,44 +132,55 @@ typedef Symbol* PSymbol;
 class SyntaxSymbol: public Symbol
 {
   public:
-    int type();
-    SyntaxSymbol(int aType);
+    SymType type() const;
+    SyntaxSymbol(SymType aType);
   private:
-    int m_type;
+    SymType m_type;
+};
+
+class CloseSymbol: public Symbol
+{
+  public:
+    CloseSymbol(SymType open) { m_openType = open; };
+    SymType openType() const { return m_openType; };
+    SymType type() const;
+  private:
+    SymType m_openType;
 };
 
 class OpenSymbol: public SyntaxSymbol
 {
   public:
-    OpenSymbol(int aType, const QString& end);
+    OpenSymbol(SymType aType, const QString& end);
     ~OpenSymbol();
     const QString& closeToken() const { return m_end; };
   private:
     QString m_end;
-    SyntaxSymbol* closeSymbol;
+    CloseSymbol* closeSymbol;
 };
 
 class FunctionSymbol: public Symbol
 {
   public:
-    int type();
-    FunctionSymbol(const FctList&, int minCount = 0, int maxCount = -1);
-    bool matchParams(const ParamList& params);
-    Variant eval(const ParamList& params);
+    SymType type() const;
+    FunctionSymbol(const TypeList&, const FctList&, int minCount = 0, int maxCount = -1);
+    bool match(const ParamList& params) const;
+    Variant eval(const ParamList& params) const;
   protected:
     int minParamCount;
     int maxParamCount;
   private:
-    bool checkCount(const ParamList& params);
+    bool checkCount(const ParamList& params) const;
     FctList fcts;
+    TypeList types;
 };
 
 class OperatorSymbol: public FunctionSymbol
 {
   public:
-    OperatorSymbol(const FctList&, int paramCount, int prec);
-    int type();
-    bool isUnary() { return minParamCount == 1; };
+    OperatorSymbol(const TypeList&, const FctList&, int paramCount, int prec);
+    SymType type() const;
+    bool isUnary() const { return minParamCount == 1; };
     int precedence;
 };
 
@@ -145,8 +188,8 @@ class ConstSymbol: public Symbol
 {
   public:
     ConstSymbol(const Variant& val);
-    int type();
-    Variant value() { return m_value; };
+    SymType type() const;
+    const Variant& value() const { return m_value; };
   protected:
     ConstSymbol(){};
     Variant m_value;
@@ -156,7 +199,7 @@ class AnsSymbol: public ConstSymbol
 {
   public:
     AnsSymbol() {};
-    int type();
+    SymType type() const;
     void setAns(const Variant& val) { m_value = val; };
 };
 
@@ -164,8 +207,20 @@ class VarSymbol: public ConstSymbol
 {
   public:
     VarSymbol() {};
-    int type();
+    SymType type() const;
     void operator=(const Variant& val) { m_value = val; };
+};
+
+class ReferenceSymbol: public Symbol
+{
+  public:
+    ReferenceSymbol();
+    SymType type() const;
+    const Symbol* operator[](int index) const;
+    void operator=(const Symbol& other);
+  private:
+    static const unsigned maxindex = 3;
+    const Symbol* symbols[maxindex];
 };
 
 #endif /* _SYMBOLS_H */
