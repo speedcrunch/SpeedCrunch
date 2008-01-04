@@ -772,6 +772,7 @@ void Crunch::closeEvent( QCloseEvent* e )
     d->trayIcon->hide();
   saveSettings();
   saveDocks();
+  emit quitApplication();
   QMainWindow::closeEvent( e );
 }
 

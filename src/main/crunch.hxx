@@ -38,6 +38,7 @@ class Crunch : public QMainWindow
 
   signals:
     void adaptToLanguageChange();
+    void quitApplication();
 
   public slots:
     void applySettings();

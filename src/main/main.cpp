@@ -1,5 +1,6 @@
 /* This file is part of the SpeedCrunch project
    Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
+                 2007 Helder Correia <helder.pereira.correia@gmail.com>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -153,6 +154,7 @@ int main( int argc, char ** argv )
   Crunch* v = new Crunch();
   v->show();
 
-  a.connect( &a, SIGNAL(lastWindowClosed()), &a, SLOT(quit()) );
+  //a.connect( &a, SIGNAL(lastWindowClosed()), &a, SLOT(quit()) );
+  a.connect( v, SIGNAL( quitApplication() ), &a, SLOT( quit() ) );
   return a.exec();
 }
