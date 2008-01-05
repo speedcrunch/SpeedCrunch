@@ -1,6 +1,6 @@
 /* bisonparser.h: lexical analyzers and parsers */
 /*
-    Copyright (C) 2007 Wolf Lammen.
+    Copyright (C) 2007, 2008 Wolf Lammen.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -31,11 +31,12 @@
 #ifndef _BISONPARSER_H
 #define _BISONPARSER_H
 
-#include "bison.h"
 #include "math/hmath.hxx"
+#include "bison.h"
 #include "symboltables/tables.hxx"
 
 #include <QString>
+#include <QStringList>
 #include <QChar>
 #include <QQueue>
 #include <QStack>
@@ -44,28 +45,35 @@
 class SglExprLex
 {
   public:
-#if 0
 
     class Token
     {
       public:
-        Token(const QString expr, int pos, int size, int type);
+        Token(const QString& expr, int pos, int size, int type, PSymbol);
         int pos() const { return m_pos; };
-        int size() const { return m_str.size(); };
+        int size() const { return m_size; };
         int type() const { return m_type; };
         QString str() const { return m_expr.mid(pos(), size()); };
+        PSymbol symbol() const { return m_symbol; }
       private:
         QString m_expr;
         int m_pos;
-        int m.size;
+        int m_size;
         int m_type;
+        PSymbol m_symbol;
     };
-#endif
     bool autoFix(const QString& newexpr);
-//     QList<Token> scan();
+    Variant eval();
+    bool run(const QStringList& script);
+    const QList<Token>& scan();
     void setExpression(const QString& newexpr);
     static SglExprLex& self();
   private:
+    typedef struct
+    {
+      int type;
+      PSymbol symbol;
+    } ScanResult;
     static SglExprLex* instance;
     QString expr;
     QString escapetag;
@@ -83,13 +91,14 @@ class SglExprLex
     int end;
     int size;
     int escsize;
-    PSymbol symbol;
-//     int lastTokenType;
+    ScanResult lastScanResult;
     QQueue<PSymbol> pendingSymbol;
     QStack<QString> closePar;
-/*    QList<QByteArray>strlist;
-    QList<HNumber>numlist;
-    QList<QList<NumValue> >paramlists; */
+    QList<Token> tokens;
+    QList<QString>strlist;
+    QList<Variant>numlist;
+    QList<ParamList>paramlists;
+
     enum
     {
       stTopLevel, stNumber, stScale, stText
@@ -98,14 +107,14 @@ class SglExprLex
 
     QChar current() const { return expr.at(index); };
     bool atEnd() const { return index == size; };
-    int symbolType() const;
+    static int symbolType(SymType t);
     QString currentSubStr() const;
 #if 0
     int lookup() const;
     int numLookup() const;
 #endif
 //     int greedyLookup();
-    int getNextTokenType();
+    void getNextScanResult();
     QString checkEscape(const QString& s);
     void scanLetters();
     void scanSpecial();
@@ -114,29 +123,43 @@ class SglExprLex
     bool isWhitespace() const;
     bool isSpecial() const;
     bool isAlphaNum() const;
+    static ScanResult searchResult2scanResult(SearchResult);
     bool matchesClosePar() const;
     bool matchesEscape() const;
-    int scanNextToken();
+    ScanResult scanNextToken();
     int getClosePar();
     int scanTextToken();
-    int scanSysToken();
+    ScanResult scanSysToken();
     int scanWhitespaceToken();
     int scanDigitsToken();
+    ScanResult scanSpecialCharToken();
 #if 0
     int scanTagToken();
     int scanIdentifierToken();
     int scanMidNumberToken();
 #endif
-    void updateState(int token);
+    void updateState();
     void reset();
+
+    Variant* allocNumber(const Variant& n);
+    QString* allocString(const QString&);
+    static NumValue variant2numValue(Variant*);
+    static Variant numValue2variant(NumValue);
+    static int getToken(YYSTYPE* val, int* pos, int* lg);
+    int mGetToken(YYSTYPE* val, int* pos, int* lg);
+    static Params addParam(Params list, NumValue val);
+    Params mAddParam(Params list, NumValue val);
+    static NumValue callFunction(Func f, Params params);
+    NumValue mCallFunction(Func f, Params params);
+    static NumValue str2Val(QString*);
+    NumValue mStr2Val(QString*);
+
 #if 0
-    Token createToken(int type);
     DigitSeq initStr(String s, char base);
     DigitSeq appendStr(DigitSeq seq, String s);
     NumValue convertStr(NumLiteral literal);
     static QByteArray basePrefix(char base);
 #endif
-  private:
     SglExprLex( const SglExprLex& );
     SglExprLex& operator=( const SglExprLex& );
     SglExprLex();

@@ -1,5 +1,5 @@
 /* errors.h global list of error codes
-   Copyright (C) 2007 Wolf Lammen ookami1 <at> gmx <dot> de
+   Copyright (C) 2007, 2008 Wolf Lammen ookami1 <at> gmx <dot> de
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -96,7 +96,7 @@
 #define HMATH_INTEGER_REQUIRED     41
 
 /* returned when an operation request is mathematically valid, but
-   would need too much time */
+   would require too much time */
 #define HMATH_TOO_EXPENSIVE        42
 
 //=============================   symbols   ==========================*/
@@ -105,6 +105,26 @@
    e.g. sin(12;13) (sin takes only 1 parameter) */
 #define SYMBOLS_INVALID_PARAMCOUNT 60
 
-/* returned when a function was called with a wron parameter
-   type */
+/* parameter type mismatch */
 #define SYMBOLS_INVALID_PARAMTYPE  61
+
+/* a symbol could not be cloned, most probably because it
+   was of a special type, like a close parenthesis */
+#define SYMBOLS_CLONE_ERROR        62
+
+//=============================   scanner   ==========================*/
+
+#define SCANNER_NO_INPUT           80
+
+#define SCANNER_SYNTAX_ERROR       81
+
+//================================   table   ========================*/
+
+/* could not retrieve a symbol from the submitted key */
+#define TABLE_SYMBOL_NOT_FOUND     100
+
+/* cannot overwrite an existing key */
+#define TABLE_KEY_EXISTS    101
+
+/* missed a closing token for an opening token */
+#define TABLE_MISSING_CLOSE        102

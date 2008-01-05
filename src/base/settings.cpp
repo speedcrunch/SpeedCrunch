@@ -111,11 +111,12 @@ Settings::Settings()
   constantsDockTop      = 0;
   constantsDockWidth    = 150;
   constantsDockHeight   = 400;
+
+  escape = "\\"; //reftbl
 }
 
 void Settings::load()
 {
-  escape = "\\"; //reftbl
   QSettings settings( /*QSettings::IniFormat,*/ QSettings::UserScope, SETTINGSKEY, SETTINGSKEY );
 
   QString key = SETTINGSKEY;

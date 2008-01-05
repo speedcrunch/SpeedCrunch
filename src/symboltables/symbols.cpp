@@ -49,9 +49,16 @@ void Variant::operator=(const HNumber& val)
 
 void Variant::operator=(int error)
 {
-  operator=(HNumber::nan(error));
+  *this = HNumber::nan(error);
   if (error == 0)
     m_type = TEmpty;
+}
+
+void Variant::operator=(const QString& str)
+{
+  *this = 0;
+  text = str;
+  m_type = TText;
 }
 
 bool Variant::isNum() const
@@ -59,25 +66,31 @@ bool Variant::isNum() const
   return m_type == TNumeric || m_type == TError || !isNan();
 }
 
-bool ParamList::allNums() const
+void TypeList::appendType(VariantType t, int cnt)
 {
-  for (int i = 0; i < size(); ++i)
-    if (!at(i).isNum())
-      return false;
-  return true;
+  while (--cnt >= 0)
+    QList<VariantType>::append(t);
 }
 
 bool TypeList::match(const ParamList& params) const
 {
   if (params.size() < size()) return false;
-  for (int i = 0; i < size();)
+  for (int i = -1; ++i < size();)
     if (at(i) != params.at(i).type())
       switch (at(i))
-      {
-        case TEmpty: continue;
-        case TNumeric: if (params.at(i).isNum()) continue; // fall through
-        default: return false;
-      };
+  {
+    case TEmpty: continue;
+    case TNumeric: if (params.at(i).isNum()) continue; // fall through
+    default: return false;
+  };
+  return true;
+}
+
+bool ParamList::allNums() const
+{
+  for (int i = 0; i < size(); ++i)
+    if (!at(i).isNum())
+      return false;
   return true;
 }
 
@@ -92,6 +105,17 @@ bool FctList::match(const ParamList& params) const
              || (nfct2 && sz == 2)
              || (nfct3 && sz == 3)
              || (nfct4 && sz == 4));
+}
+
+void FctList::clear()
+{
+  nfct0 = 0;
+  nfct1 = 0;
+  nfct2 = 0;
+  nfct3 = 0;
+  nfct4 = 0;
+  nfct  = 0;
+  vfct  = 0;
 }
 
 Variant FctList::eval(const ParamList& params) const
@@ -143,8 +167,15 @@ SymType Symbol::type() const
   return unknownSym;
 }
 
-SyntaxSymbol::SyntaxSymbol(SymType aType)
-  : m_type(aType)
+PSymbol Symbol::clone(void* aOwner) const
+{
+  ReferenceSymbol* s = new ReferenceSymbol(aOwner);
+  *s = *this;
+  return s;
+}
+
+SyntaxSymbol::SyntaxSymbol(void* aOwner, SymType aType)
+  : Symbol(aOwner), m_type(aType)
 {
 }
 
@@ -153,27 +184,49 @@ SymType SyntaxSymbol::type() const
   return m_type;
 }
 
+PSymbol SyntaxSymbol::clone(void* aOwner) const
+{
+  return new SyntaxSymbol(aOwner, type());
+}
+
+CloseSymbol::CloseSymbol(void* aOwner, SymType open)
+  : Symbol(aOwner), m_opentype(open)
+{
+}
+
+PSymbol CloseSymbol::clone(void* aOwner) const
+{
+  return 0;
+}
+
 SymType CloseSymbol::type() const
 {
   return closeSym;
 }
 
-OpenSymbol::OpenSymbol(SymType aType, const QString& end)
-  : SyntaxSymbol(aType)
+OpenSymbol::OpenSymbol(void* aOwner, SymType aType, const QString& end)
+  : SyntaxSymbol(aOwner, aType), closeSymbol(0)
 {
   m_end = end;
-  closeSymbol = new CloseSymbol(aType);
-  Tables::addCloseSymbol(end, closeSymbol);
+  closeSymbol = new CloseSymbol(this, aType);
+  Tables::addCloseSymbol(end, this);
 }
 
 OpenSymbol::~OpenSymbol()
 {
-  // the tables own all symbols, so do not free it here
   Tables::removeCloseSymbol(closeSymbol);
+  if (closeSymbol->owner() == this)
+    delete closeSymbol;
 }
 
-FunctionSymbol::FunctionSymbol(const TypeList& tlist, const FctList& flist,
-                               int minCount, int maxCount)
+PSymbol OpenSymbol::clone(void* aOwner) const
+{
+  return 0;
+}
+
+FunctionSymbol::FunctionSymbol(void* aOwner, const TypeList& tlist,
+      const FctList& flist, int minCount, int maxCount)
+  : FunctionSymbolIntf(aOwner)
 {
   if (maxCount < 0)
     maxCount = minCount;
@@ -210,9 +263,10 @@ Variant FunctionSymbol::eval(const ParamList& params) const
   return fcts.eval(params);
 }
 
-OperatorSymbol::OperatorSymbol(const TypeList& tlist, const FctList& flist,
-                               int paramCount, int prec)
-  : FunctionSymbol(tlist, flist, paramCount, paramCount), precedence(prec)
+OperatorSymbol::OperatorSymbol(void* aOwner, const TypeList& tlist,
+        const FctList& flist, int paramCount, int prec)
+  : FunctionSymbol(aOwner, tlist, flist, paramCount, paramCount),
+    OperatorSymbolIntf(prec)
 {
 }
 
@@ -221,14 +275,9 @@ SymType OperatorSymbol::type() const
   return operatorSym;
 }
 
-SymType ConstSymbol::type() const
+bool OperatorSymbol::isUnary() const
 {
-  return constSym;
-}
-
-ConstSymbol::ConstSymbol(const Variant& val)
-{
-  m_value = val;
+  return minParamCount == 1;
 }
 
 SymType AnsSymbol::type() const
@@ -246,9 +295,10 @@ SymType ReferenceSymbol::type() const
   return referenceSym;
 }
 
-ReferenceSymbol::ReferenceSymbol()
+ReferenceSymbol::ReferenceSymbol(void* aOwner)
+  : Symbol(aOwner)
 {
-  for (unsigned i = 0; i < sizeof(symbols); ++i)
+  for (unsigned i = 0; i < sizeof(symbols)/sizeof(symbols[0]); ++i)
     symbols[i] = 0;
 }
 
@@ -270,4 +320,42 @@ void ReferenceSymbol::operator=(const Symbol& other)
       symbols[firstFree] = (static_cast<const ReferenceSymbol&>(other))[i];
   else
     symbols[firstFree] = &other;
+}
+
+ConstSymbol::ConstSymbol(void* aOwner)
+  : Symbol(aOwner)
+{
+}
+
+ConstSymbol::ConstSymbol(void* aOwner, const Variant& val)
+  : Symbol(aOwner)
+{
+  m_value = val;
+}
+
+SymType ConstSymbol::type() const
+{
+  return constSym;
+}
+
+OpRefSymbol::OpRefSymbol(void* aOwner, const OperatorSymbol& alias)
+  : FunctionSymbolIntf(aOwner),
+    OperatorSymbolIntf(alias.precedence()),
+    m_alias(alias)
+{
+}
+
+bool OpRefSymbol::isUnary() const
+{
+  return m_alias.isUnary();
+}
+
+bool OpRefSymbol::match(const ParamList& params) const
+{
+  return m_alias.match(params);
+}
+
+Variant OpRefSymbol::eval(const ParamList& params) const
+{
+  return m_alias.eval(params);
 }

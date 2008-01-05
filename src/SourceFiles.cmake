@@ -48,6 +48,7 @@ math/floattrig.c
 math/hmath.cpp
 math/number.c
 
+bison/exprparser.c
 )
 
 
@@ -102,4 +103,5 @@ math/floattrig.h
 math/hmath.hxx
 math/number.h
 
+bison/exprparser.h
 )

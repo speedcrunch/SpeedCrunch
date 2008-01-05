@@ -116,6 +116,7 @@ set(testevaluator_SOURCES
 base/evaluator.cpp
 base/functions.cpp
 base/settings.cpp
+bison/exprparser.c
 math/floatcommon.c
 math/floatconst.c
 math/floatconvert.c

@@ -164,7 +164,6 @@
 /* Copy the first part of user declarations.  */
 #line 45 "exprparser.y"
 
-
 #include "bison.h"
 
 static NumValue callBinOperator(Func op, NumValue p1, NumValue p2);
@@ -175,6 +174,7 @@ static int yylex();
 
 static NumValue result;
 
+static FStr2Val str2Val;
 static FAppendStr appendStr;
 static FInitStr initStr;
 static FConvertStr convertStr;
@@ -577,14 +577,14 @@ static const yytype_uint16 yyrline[] =
      292,   293,   294,   295,   296,   297,   298,   299,   300,   301,
      302,   303,   304,   305,   309,   310,   314,   315,   319,   320,
      321,   322,   326,   327,   331,   332,   337,   338,   342,   343,
-     344,   349,   351,   356,   357,   361,   362,   363,   364,   365,
-     373,   376,   383,   386,   393,   396,   403,   406,   413,   414,
-     418,   419,   423,   424,   428,   429,   434,   435,   436,   443,
-     444,   448,   450,   451,   454,   455,   459,   460,   464,   465,
-     466,   470,   472,   476,   477,   482,   483,   488,   489,   494,
-     495,   500,   501,   506,   507,   512,   513,   518,   519,   523,
-     524,   528,   529,   530,   533,   535,   539,   540,   541,   542,
-     543,   544,   545,   546
+     344,   349,   350,   355,   356,   360,   361,   362,   363,   364,
+     372,   375,   382,   385,   392,   395,   402,   405,   412,   413,
+     417,   418,   422,   423,   427,   428,   433,   434,   435,   442,
+     443,   447,   449,   450,   453,   454,   458,   459,   463,   464,
+     465,   469,   471,   475,   476,   481,   482,   487,   488,   493,
+     494,   499,   500,   505,   506,   511,   512,   517,   518,   522,
+     523,   527,   528,   529,   532,   534,   538,   539,   540,   541,
+     542,   543,   544,   545
 };
 #endif
 
@@ -1986,47 +1986,46 @@ yyreduce:
 
   case 61:
 #line 349 "exprparser.y"
-    { (yyval.numvalue).text = (yyvsp[(1) - (1)].string);
-                                           (yyval.numvalue).val = 0; ;}
+    { (yyval.numvalue) = str2Val((yyvsp[(1) - (1)].string)); ;}
     break;
 
   case 62:
-#line 351 "exprparser.y"
+#line 350 "exprparser.y"
     { (yyval.numvalue) = (yyvsp[(1) - (1)].numvalue); ;}
     break;
 
   case 63:
-#line 356 "exprparser.y"
+#line 355 "exprparser.y"
     { (yyval.numvalue) = convertStr((yyvsp[(1) - (1)].numliteral)); ;}
     break;
 
   case 64:
-#line 357 "exprparser.y"
+#line 356 "exprparser.y"
     { (yyval.numvalue) = convertStr((yyvsp[(1) - (1)].numliteral)); ;}
     break;
 
   case 65:
-#line 361 "exprparser.y"
+#line 360 "exprparser.y"
     { (yyval.numliteral) = (yyvsp[(2) - (2)].numliteral); ;}
     break;
 
   case 66:
-#line 362 "exprparser.y"
+#line 361 "exprparser.y"
     { (yyval.numliteral) = (yyvsp[(2) - (2)].numliteral); ;}
     break;
 
   case 67:
-#line 363 "exprparser.y"
+#line 362 "exprparser.y"
     { (yyval.numliteral) = (yyvsp[(2) - (2)].numliteral); ;}
     break;
 
   case 68:
-#line 364 "exprparser.y"
+#line 363 "exprparser.y"
     { (yyval.numliteral) = (yyvsp[(2) - (2)].numliteral); ;}
     break;
 
   case 69:
-#line 365 "exprparser.y"
+#line 364 "exprparser.y"
     { (yyval.numliteral).intpart = (yyvsp[(2) - (2)].seq);
                                            (yyval.numliteral).intpart.complement = 1;
                                            (yyval.numliteral).fracpart = 0;
@@ -2034,286 +2033,286 @@ yyreduce:
     break;
 
   case 70:
-#line 373 "exprparser.y"
+#line 372 "exprparser.y"
     { (yyval.numliteral).intpart = (yyvsp[(1) - (3)].seq);
                                            (yyval.numliteral).fracpart = (yyvsp[(2) - (3)].seq).digits;
                                            (yyval.numliteral).exp = (yyvsp[(3) - (3)].seq); ;}
     break;
 
   case 71:
-#line 376 "exprparser.y"
+#line 375 "exprparser.y"
     { (yyval.numliteral).intpart = initStr(0, 10);
                                            (yyval.numliteral).fracpart = (yyvsp[(2) - (3)].seq).digits;
                                            (yyval.numliteral).exp = (yyvsp[(3) - (3)].seq); ;}
     break;
 
   case 72:
-#line 383 "exprparser.y"
+#line 382 "exprparser.y"
     { (yyval.numliteral).intpart = (yyvsp[(1) - (3)].seq);
                                            (yyval.numliteral).fracpart = (yyvsp[(2) - (3)].seq).digits;
                                            (yyval.numliteral).exp = (yyvsp[(3) - (3)].seq); ;}
     break;
 
   case 73:
-#line 386 "exprparser.y"
+#line 385 "exprparser.y"
     { (yyval.numliteral).intpart = initStr(0, 2);
                                            (yyval.numliteral).fracpart = (yyvsp[(2) - (3)].seq).digits;
                                            (yyval.numliteral).exp = (yyvsp[(3) - (3)].seq); ;}
     break;
 
   case 74:
-#line 393 "exprparser.y"
+#line 392 "exprparser.y"
     { (yyval.numliteral).intpart = (yyvsp[(1) - (3)].seq);
                                            (yyval.numliteral).fracpart = (yyvsp[(2) - (3)].seq).digits;
                                            (yyval.numliteral).exp = (yyvsp[(3) - (3)].seq); ;}
     break;
 
   case 75:
-#line 396 "exprparser.y"
+#line 395 "exprparser.y"
     { (yyval.numliteral).intpart = initStr(0, 8);
                                            (yyval.numliteral).fracpart = (yyvsp[(2) - (3)].seq).digits;
                                            (yyval.numliteral).exp = (yyvsp[(3) - (3)].seq); ;}
     break;
 
   case 76:
-#line 403 "exprparser.y"
+#line 402 "exprparser.y"
     { (yyval.numliteral).intpart = (yyvsp[(1) - (3)].seq);
                                            (yyval.numliteral).fracpart = (yyvsp[(2) - (3)].seq).digits;
                                            (yyval.numliteral).exp = (yyvsp[(3) - (3)].seq); ;}
     break;
 
   case 77:
-#line 406 "exprparser.y"
+#line 405 "exprparser.y"
     { (yyval.numliteral).intpart = initStr(0, 16);
                                            (yyval.numliteral).fracpart = (yyvsp[(2) - (3)].seq).digits;
                                            (yyval.numliteral).exp = (yyvsp[(3) - (3)].seq); ;}
     break;
 
   case 78:
-#line 413 "exprparser.y"
+#line 412 "exprparser.y"
     { (yyval.seq) = initStr(0, 10); ;}
     break;
 
   case 79:
-#line 414 "exprparser.y"
+#line 413 "exprparser.y"
     { (yyval.seq) = (yyvsp[(2) - (2)].seq); ;}
     break;
 
   case 80:
-#line 418 "exprparser.y"
+#line 417 "exprparser.y"
     { (yyval.seq) = initStr(0, 2); ;}
     break;
 
   case 81:
-#line 419 "exprparser.y"
+#line 418 "exprparser.y"
     { (yyval.seq) = (yyvsp[(2) - (2)].seq); ;}
     break;
 
   case 82:
-#line 423 "exprparser.y"
+#line 422 "exprparser.y"
     { (yyval.seq) = initStr(0, 8); ;}
     break;
 
   case 83:
-#line 424 "exprparser.y"
+#line 423 "exprparser.y"
     { (yyval.seq) = (yyvsp[(2) - (2)].seq); ;}
     break;
 
   case 84:
-#line 428 "exprparser.y"
+#line 427 "exprparser.y"
     { (yyval.seq) = initStr(0, 16); ;}
     break;
 
   case 85:
-#line 429 "exprparser.y"
+#line 428 "exprparser.y"
     { (yyval.seq) = (yyvsp[(2) - (2)].seq); ;}
     break;
 
   case 86:
-#line 434 "exprparser.y"
+#line 433 "exprparser.y"
     { initStr(0, 0); ;}
     break;
 
   case 87:
-#line 435 "exprparser.y"
+#line 434 "exprparser.y"
     { (yyval.seq) = (yyvsp[(2) - (2)].seq); ;}
     break;
 
   case 88:
-#line 436 "exprparser.y"
+#line 435 "exprparser.y"
     { (yyval.seq) = (yyvsp[(2) - (2)].seq); ;}
     break;
 
   case 89:
-#line 443 "exprparser.y"
+#line 442 "exprparser.y"
     { initStr(0, 0); ;}
     break;
 
   case 90:
-#line 444 "exprparser.y"
+#line 443 "exprparser.y"
     { (yyval.seq) = (yyvsp[(2) - (2)].seq); ;}
     break;
 
   case 91:
-#line 448 "exprparser.y"
+#line 447 "exprparser.y"
     { (yyval.seq) = (yyvsp[(4) - (4)].seq);
                                            (yyval.seq).sign = (yyvsp[(3) - (4)].sign); ;}
     break;
 
   case 92:
-#line 450 "exprparser.y"
+#line 449 "exprparser.y"
     { (yyval.seq) = (yyvsp[(1) - (1)].seq); ;}
     break;
 
   case 93:
-#line 451 "exprparser.y"
+#line 450 "exprparser.y"
     { (yyval.seq) = (yyvsp[(1) - (1)].seq); ;}
     break;
 
   case 94:
-#line 454 "exprparser.y"
+#line 453 "exprparser.y"
     { (yyval.seq) = (yyvsp[(1) - (1)].seq); ;}
     break;
 
   case 95:
-#line 455 "exprparser.y"
+#line 454 "exprparser.y"
     { (yyval.seq) = (yyvsp[(1) - (1)].seq); ;}
     break;
 
   case 96:
-#line 459 "exprparser.y"
+#line 458 "exprparser.y"
     { (yyval.seq) = (yyvsp[(2) - (2)].seq); ;}
     break;
 
   case 97:
-#line 460 "exprparser.y"
+#line 459 "exprparser.y"
     { (yyval.seq) = (yyvsp[(1) - (1)].seq); ;}
     break;
 
   case 98:
-#line 464 "exprparser.y"
+#line 463 "exprparser.y"
     { (yyval.seq) = (yyvsp[(2) - (2)].seq); ;}
     break;
 
   case 99:
-#line 465 "exprparser.y"
+#line 464 "exprparser.y"
     { (yyval.seq) = (yyvsp[(2) - (2)].seq); ;}
     break;
 
   case 100:
-#line 466 "exprparser.y"
+#line 465 "exprparser.y"
     { (yyval.seq) = (yyvsp[(2) - (2)].seq); ;}
     break;
 
   case 101:
-#line 470 "exprparser.y"
+#line 469 "exprparser.y"
     { (yyval.seq) = (yyvsp[(2) - (2)].seq);
                                            (yyval.seq).complement = 1; ;}
     break;
 
   case 102:
-#line 472 "exprparser.y"
+#line 471 "exprparser.y"
     { (yyval.seq) = (yyvsp[(1) - (1)].seq); ;}
     break;
 
   case 103:
-#line 476 "exprparser.y"
+#line 475 "exprparser.y"
     { (yyval.seq) = initStr(0, 10); ;}
     break;
 
   case 104:
-#line 477 "exprparser.y"
+#line 476 "exprparser.y"
     { (yyval.seq) = (yyvsp[(1) - (1)].seq); ;}
     break;
 
   case 105:
-#line 482 "exprparser.y"
+#line 481 "exprparser.y"
     { (yyval.seq) = initStr(0, 2); ;}
     break;
 
   case 106:
-#line 483 "exprparser.y"
+#line 482 "exprparser.y"
     { (yyval.seq) = (yyvsp[(1) - (1)].seq); ;}
     break;
 
   case 107:
-#line 488 "exprparser.y"
+#line 487 "exprparser.y"
     { (yyval.seq) = initStr(0, 8); ;}
     break;
 
   case 108:
-#line 489 "exprparser.y"
+#line 488 "exprparser.y"
     { (yyval.seq) = (yyvsp[(1) - (1)].seq); ;}
     break;
 
   case 109:
-#line 494 "exprparser.y"
+#line 493 "exprparser.y"
     { (yyval.seq) = initStr(0, 16); ;}
     break;
 
   case 110:
-#line 495 "exprparser.y"
+#line 494 "exprparser.y"
     { (yyval.seq) = (yyvsp[(1) - (1)].seq); ;}
     break;
 
   case 111:
-#line 500 "exprparser.y"
+#line 499 "exprparser.y"
     { (yyval.seq) = initStr((yyvsp[(1) - (1)].string), 10); ;}
     break;
 
   case 112:
-#line 501 "exprparser.y"
+#line 500 "exprparser.y"
     { (yyval.seq) = appendStr((yyvsp[(1) - (3)].seq), (yyvsp[(3) - (3)].string)); ;}
     break;
 
   case 113:
-#line 506 "exprparser.y"
+#line 505 "exprparser.y"
     { (yyval.seq) = initStr((yyvsp[(1) - (1)].string), 2); ;}
     break;
 
   case 114:
-#line 507 "exprparser.y"
+#line 506 "exprparser.y"
     { (yyval.seq) = appendStr((yyvsp[(1) - (3)].seq), (yyvsp[(3) - (3)].string)); ;}
     break;
 
   case 115:
-#line 512 "exprparser.y"
+#line 511 "exprparser.y"
     { (yyval.seq) = initStr((yyvsp[(1) - (1)].string), 8); ;}
     break;
 
   case 116:
-#line 513 "exprparser.y"
+#line 512 "exprparser.y"
     { (yyval.seq) = appendStr((yyvsp[(1) - (3)].seq), (yyvsp[(3) - (3)].string)); ;}
     break;
 
   case 117:
-#line 518 "exprparser.y"
+#line 517 "exprparser.y"
     { (yyval.seq) = initStr((yyvsp[(1) - (1)].string), 16); ;}
     break;
 
   case 118:
-#line 519 "exprparser.y"
+#line 518 "exprparser.y"
     { (yyval.seq) = appendStr((yyvsp[(1) - (3)].seq), (yyvsp[(3) - (3)].string)); ;}
     break;
 
   case 121:
-#line 528 "exprparser.y"
+#line 527 "exprparser.y"
     { (yyval.func) = (yyvsp[(1) - (1)].func); ;}
     break;
 
   case 122:
-#line 529 "exprparser.y"
+#line 528 "exprparser.y"
     { (yyval.func) = (yyvsp[(1) - (1)].func); ;}
     break;
 
   case 123:
-#line 530 "exprparser.y"
+#line 529 "exprparser.y"
     { (yyval.func) = (yyvsp[(1) - (1)].func); ;}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 2317 "exprparser.c"
+#line 2316 "exprparser.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2527,7 +2526,7 @@ yyreturn:
 }
 
 
-#line 548 "exprparser.y"
+#line 547 "exprparser.y"
 
 
 /* internal stuff */
@@ -2562,6 +2561,7 @@ int parseexpr(CallBacks callbacks, NumValue* r, int* pos, int* lg)
 {
   int errcode;
 
+  str2Val = callbacks.str2Val;
   appendStr = callbacks.appendStr;
   initStr = callbacks.initStr;
   convertStr = callbacks.convertStr;

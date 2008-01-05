@@ -1,5 +1,5 @@
 /* tables.hxx containers for symbols
-   Copyright (C) 2007 Wolf Lammen ookami1 <at> gmx <dot> de
+   Copyright (C) 2007, 2008 Wolf Lammen ookami1 <at> gmx <dot> de
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -26,12 +26,26 @@
 #include <QList>
 #include <QStringList>
 
+typedef struct
+{
+  PSymbol symbol;
+  int keyused;
+} SearchResult;
+
 class Table: private QMap<QString, PSymbol>
 {
   friend class Tables;
   public:
     ~Table();
+    void removeSymbol(PSymbol symbol);
+    bool addSyntaxSymbol(const QString& key, SymType aType);
+    bool addOpenSymbol(const QString& key, SymType aType, const QString& close);
+    bool addFunctionSymbol(const QString& key, const TypeList&, const FctList&,
+                           int minParamCount, int maxParamCount);
+    bool addSymbol(const QString& key, PSymbol symbol);
+    bool cloneSymbol(const QString& key, PSymbol symbol);
   private:
+    void checkDelete(PSymbol symbol);
     void clear();
     Table::const_iterator lookup(const QString& key, bool exact = true) const;
 };
@@ -39,11 +53,12 @@ class Table: private QMap<QString, PSymbol>
 class Tables
 {
   public:
-    static PSymbol builtinLookup(const QString& key, bool exact = true);
-    static PSymbol lookup(const QString& key, bool exact = true);
+    static SearchResult builtinLookup(const QString& key, bool exact = true);
+    static SearchResult lookup(const QString& key, bool exact = true);
     static void addCloseSymbol(const QString& key, PSymbol symbol);
     static void removeCloseSymbol(PSymbol symbol);
     static Variant escape(const ParamList& params);
+    static Variant define(const ParamList& params);
   private:
 
     enum
@@ -53,16 +68,20 @@ class Tables
       globalSymbols,
     };
 
+    QList<Table> tableList;
+    static Tables* tables;
+
     static Tables& self();
     static Table& closeTable() { return self().tableList[closeSymbols]; };
     static Table& builtinTable() { return self().tableList[builtinSymbols]; };
-    PSymbol doLookup(const QString& key, bool exact, int firstTable = -1);
-    QList<Table> tableList;
-    static Tables* tables;
+    static Table& globalTable() { return self().tableList[globalSymbols]; };
+    SearchResult doLookup(const QString& key, bool exact, int firstTable = -1,
+                          int lastTable = 0);
+    void init();
+
     Tables( const Tables& );
     Tables& operator=( const Tables& );
     Tables();
-    void init();
 };
 
 #endif /* _TABLES_H */

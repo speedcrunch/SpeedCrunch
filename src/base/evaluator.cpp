@@ -296,6 +296,15 @@ Evaluator::Evaluator()
 {
   d = new EvaluatorPrivate;
   clear();
+#ifdef _BISON
+  QStringList script;
+  script << "\\escape \\(\\'@ \\)"
+         << "@def @(@'\" @;@'\" @;@'\" @)"
+         << "@def @(\"(\"@;\"(\"@;\")\"@)"
+         << "@def (\";\"@;\";\")"
+         << "@def (\"def\";\"def\")";
+  SglExprLex::self().run(script);
+#endif
 }
 
 // Destructor

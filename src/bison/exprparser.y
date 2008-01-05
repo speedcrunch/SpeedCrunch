@@ -43,7 +43,6 @@
 */
 
 %{
-
 #include "bison.h"
 
 static NumValue callBinOperator(Func op, NumValue p1, NumValue p2);
@@ -54,6 +53,7 @@ static int yylex();
 
 static NumValue result;
 
+static FStr2Val str2Val;
 static FAppendStr appendStr;
 static FInitStr initStr;
 static FConvertStr convertStr;
@@ -346,8 +346,7 @@ paramlist:
 /* a literal (= constant expression), either being a string or a numeric
    constant */
 literal:
-      TEXT                               { $$.text = $1;
-                                           $$.val = 0; }
+      TEXT                               { $$ = str2Val($1); }
     | number                             { $$ = $1; }
     ;
 /* a numeric constant, either being a usual decimal encoded value, or
@@ -579,6 +578,7 @@ int parseexpr(CallBacks callbacks, NumValue* r, int* pos, int* lg)
 {
   int errcode;
 
+  str2Val = callbacks.str2Val;
   appendStr = callbacks.appendStr;
   initStr = callbacks.initStr;
   convertStr = callbacks.convertStr;

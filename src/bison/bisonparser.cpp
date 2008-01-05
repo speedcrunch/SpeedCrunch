@@ -1,6 +1,6 @@
 /* parser.cpp: lexical analyzers and parsers */
 /*
-    Copyright (C) 2007 Wolf Lammen.
+    Copyright (C) 2007, 2008 Wolf Lammen.
     Partly based on ideas from Ariya Hidayat
 
     This program is free software; you can redistribute it and/or modify
@@ -32,8 +32,14 @@
 #include "bison/bisonparser.hxx"
 #include "settings.hxx"
 
-#include "symboltables/symbols.cpp"
+#include "symboltables/symbols.cpp" // for the time being do not update CMakeList
 #include "symboltables/tables.cpp" // for the time being do not update CMakeList
+#include "main/errors.h"
+
+SglExprLex::Token::Token(const QString& expr, int pos, int size, int type, PSymbol symbol)
+  : m_expr(expr), m_pos(pos), m_size(size), m_type(type), m_symbol(symbol)
+{
+}
 
 /*-------------------------   singleton   -----------------------------*/
 
@@ -51,7 +57,7 @@ SglExprLex& SglExprLex::self()
 SglExprLex::SglExprLex()
 {
   // necessary, because the editor does not call Evaluator.setExpression, when
-  // enter is the first key pressed in a freshly launched program
+  // ENTER is the first key pressed in a freshly launched program
   size = 0;
 }
 
@@ -67,16 +73,16 @@ bool SglExprLex::autoFix(const QString& newexpr)
 {
   int tokencnt = 0;
   int assignseqpos = -1;
-  int lasttype = 0;
-  int type;
+  int lastToken;
+  ScanResult current;
 
   setExpression(newexpr);
   reset();
 //  inText = false;
   do
   {
-    type = getNextTokenType();
-    switch (type)
+    getNextScanResult();
+    switch (lastScanResult.type)
     {
       case eol:
       case whitespace: continue;
@@ -84,9 +90,9 @@ bool SglExprLex::autoFix(const QString& newexpr)
       case UNKNOWNTOKEN: return false;
       default: assignseqpos = -1; break;
     }
-    lasttype = type;
+    lastToken = lastScanResult.type;
     ++tokencnt;
-  } while ( type != eol );
+  } while ( current.type != eol );
   // remove trailing '='
   if ( assignseqpos >= 0 )
     expr.truncate(assignseqpos);
@@ -100,28 +106,63 @@ bool SglExprLex::autoFix(const QString& newexpr)
     expr.append(' ' + closePar.pop());
   return true;
 }
-#if 0
 
-QList<Token> SglExprLex::scan()
+Variant SglExprLex::eval()
 {
-  QList<Token> tokenList;
-  int type;
+  CallBacks cb;
+  NumValue pResult;
+  int errorpos;
+  int errortokenlg;
+  Variant result;
 
+  scan();
+  cb.str2Val = str2Val;
+  cb.initStr = 0;
+  cb.appendStr = 0;
+  cb.convertStr = 0;
+  cb.addParam = addParam;
+  cb.callFunction = callFunction;
+  cb.assignVar = 0;
+  cb.getToken = getToken;
+  index = -1;
+  if (parseexpr(cb, &pResult, &errorpos, &errortokenlg) == PARSE_OK)
+    result = numValue2variant(pResult);
+  else 
+    result = SCANNER_SYNTAX_ERROR;
+  strlist.clear();
+  numlist.clear();
+  paramlists.clear();
+  tokens.clear();
+  return result;
+}
+
+bool SglExprLex::run(const QStringList& script)
+{
+  int i = -1;
+  bool result = true;
+  while (result && ++i < script.size())
+  {
+    setExpression(script.at(i));
+    result = eval().type() != TError;
+  }
+  return result;
+}
+
+const QList<SglExprLex::Token>& SglExprLex::scan()
+{
+  int type;
   reset();
   do
   {
-    type = getNextTokenType();
-    tokenList.append(createToken(type));
+    getNextScanResult();
+    type = lastScanResult.type;
+    if (type != eol)
+      tokens.append(Token(expr, start, end - start, type,
+                          lastScanResult.symbol));
   } while ( type != eol );
-  return tokenList;
+  return tokens;
 }
 
-Token SglExprLex::createToken(int type)
-{
-  // FIXME supply a symbol
-  return Token(expr, start, end - start, type);
-}
-#endif
 /*------------------------   character classes   -----------------------*/
 
 bool SglExprLex::isLetter() const
@@ -183,17 +224,16 @@ void SglExprLex::scanSpecial()
 
 void SglExprLex::reset()
 {
-  index = 0;
+  end = 0;
   radix = 10;
   state = stTopLevel;
   escapetag = Settings::self()->escape;
   escsize = escapetag.size();
   pendingSymbol.clear();
   closePar.clear();
-/*  lastTokenType = whitespace;
-  strlist.clear();
-  numlist.clear();
-  paramlists.clear();*/
+  lastScanResult.type = whitespace;
+  lastScanResult.symbol = 0;
+  tokens.clear();
 }
 
 /*------------------------   lexical analyzing   -----------------------*/
@@ -205,19 +245,26 @@ QString SglExprLex::checkEscape(const QString& s)
   return s;
 }
 
-int SglExprLex::symbolType() const
+int SglExprLex::symbolType(SymType t)
 {
-  if ( symbol )
-    switch( symbol->type() )
-    {
-      case '.': return DOT;
-      case '(': return OPENPAR;
-      case '=': return ASSIGN;
-      case ';': return SEP;
-      case '"': return sot;
-      default : return CLOSEPAR;
-    };
-  return UNKNOWNTOKEN;
+  switch( t )
+  {
+    case dot        : return DOT;
+    case openPar    : return OPENPAR;
+    case assign     : return ASSIGN;
+    case separator  : return SEP;
+    case quote      : return sot;
+    case functionSym: return FUNCTION;
+    default         : return UNKNOWNTOKEN;
+  };
+}
+
+SglExprLex::ScanResult SglExprLex::searchResult2scanResult(SearchResult sr)
+{
+  ScanResult result;
+  result.symbol = sr.symbol;
+  result.type = symbolType(result.symbol? sr.symbol->type() : unassigned);
+  return result;
 }
 
 bool SglExprLex::matchesEscape() const
@@ -231,53 +278,51 @@ bool SglExprLex::matchesClosePar() const
          && expr.mid(start, closePar.top().size()) == closePar.top();
 }
 
-int SglExprLex::getNextTokenType()
+void SglExprLex::getNextScanResult()
 {
-  int result;
-
   if ( !pendingSymbol.isEmpty() )
   {
-    symbol = pendingSymbol.dequeue();
-    result = symbol->type();
+    lastScanResult.symbol = pendingSymbol.dequeue();
+    lastScanResult.type = lastScanResult.symbol->type();
   }
   else
-    result = scanNextToken();
-  updateState(result);
-  return result;
+    lastScanResult = scanNextToken();
+  updateState();
 }
 
-int SglExprLex::scanNextToken()
+SglExprLex::ScanResult SglExprLex::scanNextToken()
 {
-  int result = UNKNOWNTOKEN;
-
-  symbol = 0;
-  start = index;
+  ScanResult result;
+  result.type = UNKNOWNTOKEN;
+  result.symbol = 0;
+  start = end;
+  index = start;
   end = size;
   if (index == end )
-    result = eol;
+    result.type = eol;
   else if ( state == stText )
-    result = scanTextToken();
+    result.type = scanTextToken();
   else if ( matchesClosePar() )
-    result = getClosePar();
+    result.type = getClosePar();
   else if ( matchesEscape() )
     result = scanSysToken();
   else if ( isWhitespace() )
-    result = scanWhitespaceToken();
+    result.type = scanWhitespaceToken();
   else if ( isDigit() )
-    result = scanDigitsToken();
+    result.type = scanDigitsToken();
 /*  else if ( state == stNumber || state == stScale )
     result = scanMidNumberToken();
   else if ( isLetter() )
     result = scanIdentifierToken();*/
-/*  else
-    result = greedyLookup();*/
+  else
+    result = scanSpecialCharToken();
   return result;
 }
 
 int SglExprLex::getClosePar()
 {
-  closePar.pop();
-  return state == stText? eot : CLOSEPAR;
+  end = start + closePar.pop().size();
+  return lastScanResult.type == TEXT? eot : CLOSEPAR;
 }
 
 int SglExprLex::scanTextToken()
@@ -291,8 +336,9 @@ int SglExprLex::scanTextToken()
   return UNKNOWNTOKEN;
 }
 
-int SglExprLex::scanSysToken()
+SglExprLex::ScanResult SglExprLex::scanSysToken()
 {
+  SearchResult r;
   index += escsize;
   int begin = index;
   bool exactMatch = index < size && isLetter();
@@ -300,8 +346,15 @@ int SglExprLex::scanSysToken()
     scanLetters();
   else
     scanSpecial();
-  symbol = Tables::builtinLookup(expr.mid(begin, end - begin), exactMatch);
-  return symbolType();
+  r = Tables::builtinLookup(expr.mid(begin, end - begin), exactMatch);
+  if (r.symbol)
+  {
+    // set 'end' according to the characters used in the lookup
+    end = begin + r.keyused;
+    if (exactMatch && index < size && isWhitespace())
+      ++end;
+  }
+  return searchResult2scanResult(r);
 }
 
 int SglExprLex::scanWhitespaceToken()
@@ -331,6 +384,18 @@ int SglExprLex::scanDigitsToken()
     default: return DECSEQ;
   }
 }
+
+SglExprLex::ScanResult SglExprLex::scanSpecialCharToken()
+{
+  SearchResult r;
+  scanSpecial();
+  r = Tables::lookup(currentSubStr(), false);
+  if (r.symbol)
+    // set 'end' according to the characters used in the lookup
+    end = start + r.keyused;
+  return searchResult2scanResult(r);
+}
+
 #if 0
 int SglExprLex::scanTagToken()
 {
@@ -375,12 +440,11 @@ int SglExprLex::scanMidNumberToken()
   return numLookup();
 }
 #endif
-void SglExprLex::updateState(int token)
+void SglExprLex::updateState()
 {
   if ( state != stNumber ) radix = 10;
-  switch (token)
+  switch (lastScanResult.type)
   {
-    case sot: state = stText; break;
 /*    case HEXTAG: radix += 8; // fall through
     case OCTTAG: redix += 6; // fall through
     case BINTAG: radix -= 8; // fall through
@@ -394,12 +458,13 @@ void SglExprLex::updateState(int token)
 /*    case DECSCALE:
     case SCALE: state = stScale; break;
     case GROUPCHAR: break;*/
-    case TEXT: break;
+    case TEXT: state = stTopLevel; break;
+    case sot: state = stText; // fall through
     case OPENPAR:
       closePar.push(
           checkEscape(
-              static_cast<OpenSymbol*>(symbol)->closeToken())); //fall through
-    default: if ( state != stScale ) state = stTopLevel;
+              static_cast<OpenSymbol*>(lastScanResult.symbol)->closeToken())); //fall through
+    default: if ( state != stScale && state != stText ) state = stTopLevel;
   }
 }
 
@@ -419,18 +484,121 @@ int SglExprLex::numLookup() const
 {
   return doLookup('0' + currentSubStr());
 }
-int SglExprLex::greedyLookup()
-{
-  //set end
-}
-
 int SglExprLex::doLookup(const QString& token) const
 {
   return UNKNOWNTOKEN;
 }
-
+#endif
 /*------------------------   parser interface   -----------------------*/
 
+QString* SglExprLex::allocString(const QString& s)
+{
+  strlist.append(s);
+  return &strlist.last();
+}
+
+Variant* SglExprLex::allocNumber(const Variant& n)
+{
+  numlist.append(n);
+  return &numlist.last();
+}
+
+NumValue SglExprLex::variant2numValue(Variant* v)
+{
+  NumValue result;
+  result.percent = 0;
+  result.val = v;
+  return result;
+}
+
+Variant SglExprLex::numValue2variant(NumValue n)
+{
+  Variant result;
+  if (n.percent)
+    result = (const HNumber&)(*n.val) / HNumber(100);
+  else
+    result = *n.val;
+  return result;
+}
+
+int SglExprLex::getToken(YYSTYPE* val, int* pos, int* lg)
+{
+  return instance->mGetToken(val, pos, lg);
+}
+
+int SglExprLex::mGetToken(YYSTYPE* val, int* pos, int* lg)
+{
+  while (++index < tokens.size())
+  {
+    bool skip;
+    switch (tokens.at(index).type())
+    {
+      case eot:
+      case sot:
+      case whitespace: skip = true; break;
+      default: skip = false; break;
+    }
+    if (!skip)
+      break;
+  }
+  if (index >= tokens.size())
+    return 0;
+  const Token& token = tokens.at(index);
+  *pos = token.pos();
+  *lg = token.size();
+  switch (token.type())
+  {
+    case FUNCTION: val->func = token.symbol(); break;
+    case TEXT    : val->string = allocString(token.str()); break;
+    default      : ;
+  }
+  return token.type();
+}
+
+Params SglExprLex::addParam(Params list, NumValue val)
+{
+  return instance->mAddParam(list, val);
+}
+
+Params SglExprLex::mAddParam(Params list, NumValue val)
+{
+  if (!list)
+  {
+    ParamList newList;
+    paramlists.append(newList);
+    list = &paramlists.last();
+  }
+  list->append(numValue2variant(val));
+  return list;
+}
+
+NumValue SglExprLex::callFunction(Func f, Params params)
+{
+  return instance->mCallFunction(f, params);
+}
+
+NumValue SglExprLex::mCallFunction(Func f, Params params)
+{
+  return variant2numValue(
+           allocNumber(
+             dynamic_cast<FunctionSymbolIntf*>(f)->eval(*params)));
+}
+
+NumValue SglExprLex::str2Val(QString* s)
+{
+  return instance->mStr2Val(s);
+}
+
+NumValue SglExprLex::mStr2Val(QString* s)
+{
+  NumValue result;
+  Variant v = *s;
+  result.percent = 0;
+  result.val = allocNumber(v);
+  return result;
+}
+
+#if 0
 QByteArray SglExprLex::basePrefix(base)
 {
   // FIXME this actually belongs to hmath
@@ -506,15 +674,4 @@ NumValue SglExprLex::convertStr(NumLiteral literal)
   return result;
 }
 
-Params SglExprLex::addParam(Params list, NumValue val)
-{
-  if ( !list )
-  {
-    QList<NumValue> newparams;
-    paramlists.prepend(newparams);
-    list = &paramlists.first();
-  }
-  static_cast< QList<NumValue> >(list).append(val);
-  return list;
-}
 #endif

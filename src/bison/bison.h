@@ -32,19 +32,29 @@
 #define _BISON_H
 
 #ifdef __cplusplus
+
+# include "symboltables/symbols.hxx"
 extern "C" {
-#endif
+
+#else
+
+# define Variant void
+# define ParamList void
+# define Symbol void
+# define QString void
+
+#endif /* __cplusplus */
 
 /* return values of parse */
 #define PARSE_OK          0
 #define PARSE_SYNTAXERROR 1
 #define PARSE_OUTOFMEM    2
 
-typedef const char* String;
+typedef QString* String;
 
 typedef struct DigitSeq
 {
-  String digits;
+  QString* digits;
   char  base;
   char  complement;
   signed char sign;
@@ -53,19 +63,19 @@ typedef struct DigitSeq
 typedef struct NumLiteral
 {
   DigitSeq intpart;
-  String fracpart;
+  QString* fracpart;
   DigitSeq exp;
 } NumLiteral;
 
 typedef struct NumValue
 {
-  void* val;
+  Variant* val;
   char percent;
 } NumValue;
 
-typedef void* Params;
+typedef ParamList* Params;
 
-typedef void* Func;
+typedef Symbol* Func;
 
 typedef struct Var
 {
@@ -79,14 +89,15 @@ typedef struct Var
 
 /* call backs */
 
+typedef NumValue (*FStr2Val)(String s);
 typedef DigitSeq (*FInitStr)(String s, char base);
 typedef DigitSeq (*FAppendStr)(DigitSeq seq, String s);
 typedef NumValue (*FConvertStr)(NumLiteral text);
-typedef Params (*FAddParam)(Params list, NumValue val);
+typedef Params   (*FAddParam)(Params list, NumValue val);
 typedef NumValue (*FCallFunction)(Func f, Params params);
 typedef NumValue (*FAssignVar)(Var variable, NumValue val);
 /* return values and YYSTYPE are defined in exprparser.h */
-typedef int (*FGetToken)(YYSTYPE* val, int* pos, int* lg);
+typedef int      (*FGetToken)(YYSTYPE* val, int* pos, int* lg);
 
 typedef struct CallBacks
 {
@@ -97,10 +108,11 @@ typedef struct CallBacks
   FCallFunction callFunction;
   FAssignVar    assignVar;
   FGetToken     getToken;
+  FStr2Val      str2Val;
 } CallBacks;
 
 /* parser. return values are defined above as PARSE_... */
-extern int parseexpr(CallBacks callbacks, NumValue* result, int* pos, int* lg);
+int parseexpr(CallBacks callbacks, NumValue* result, int* pos, int* lg);
 
 #ifdef __cplusplus
 }
