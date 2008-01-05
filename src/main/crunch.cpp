@@ -742,6 +742,7 @@ void Crunch::applySettings()
     d->trayIcon = 0;
   }
 
+  // treat stay-always-on-top preference
   if( settings->stayAlwaysOnTop )
     setWindowFlags( windowFlags() | Qt::WindowStaysOnTopHint );
   else
@@ -761,6 +762,13 @@ bool Crunch::event( QEvent* e )
     if( Settings::self()->minimizeToTray )
       QTimer::singleShot( 100, this, SLOT(minimizeToTray()) );
   }
+
+  // ensure dock windows keep their state after minimize / screen switch
+  Settings* s = Settings::self();
+  if ( s->showConstants ) QTimer::singleShot( 0, d->constantsDock, SLOT(show()) );
+  if ( s->showFunctions ) QTimer::singleShot( 0, d->functionsDock, SLOT(show()) );
+  if ( s->showHistory   ) QTimer::singleShot( 0, d->historyDock,   SLOT(show()) );
+  if ( s->showVariables ) QTimer::singleShot( 0, d->variablesDock, SLOT(show()) );
 
   return QMainWindow::event( e );
 }
