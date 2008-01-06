@@ -161,10 +161,12 @@ static int checkNaNParam(const HNumberPrivate& v1,
 
 void roundSetError(HNumberPrivate* dest)
 {
+  dest->error = float_geterror();
   floatnum dfnum = &dest->fnum;
+  if (dest->error != 0)
+    float_setnan(dfnum);
   if (!float_isnan(dfnum))
     float_round(dfnum, dfnum, HMATH_WORKING_PREC, TONEAREST);
-  dest->error = float_geterror();
 }
 
 void call2Args(HNumberPrivate* dest, HNumberPrivate* n1,
@@ -276,6 +278,7 @@ HNumber::HNumber( const char* str )
   d = new HNumberPrivate;
   if ((d->error = parse(&tokens, &str)) == IO_NO_ERROR && *str == 0)
     d->error = float_in(&d->fnum, &tokens);
+  float_geterror();
 }
 
 HNumber::~HNumber()
@@ -1008,7 +1011,7 @@ HNumber HMath::tan( const HNumber& x )
 
 HNumber HMath::cot( const HNumber& x )
 {
-  return HNumber(1) / tan(x);
+  return cos(x) / sin(x);
 }
 
 HNumber HMath::sec( const HNumber& x )
