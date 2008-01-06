@@ -136,7 +136,7 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 70 "exprparser.y"
+#line 71 "exprparser.y"
 {
   int        sign;
   String     string;

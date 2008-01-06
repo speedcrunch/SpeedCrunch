@@ -49,18 +49,18 @@ class SglExprLex
     class Token
     {
       public:
-        Token(const QString& expr, int pos, int size, int type, PSymbol);
+        Token(const QString& expr, int pos, int size, int type, const Symbol*);
         int pos() const { return m_pos; };
         int size() const { return m_size; };
         int type() const { return m_type; };
         QString str() const { return m_expr.mid(pos(), size()); };
-        PSymbol symbol() const { return m_symbol; }
+        const Symbol* symbol() const { return m_symbol; }
       private:
         QString m_expr;
         int m_pos;
         int m_size;
         int m_type;
-        PSymbol m_symbol;
+        const Symbol* m_symbol;
     };
     bool autoFix(const QString& newexpr);
     Variant eval();
@@ -72,7 +72,7 @@ class SglExprLex
     typedef struct
     {
       int type;
-      PSymbol symbol;
+      const Symbol* symbol;
     } ScanResult;
     static SglExprLex* instance;
     QString expr;
@@ -123,7 +123,7 @@ class SglExprLex
     bool isWhitespace() const;
     bool isSpecial() const;
     bool isAlphaNum() const;
-    static ScanResult searchResult2scanResult(SearchResult);
+    ScanResult searchResult2scanResult(Tables::SearchResult);
     bool matchesClosePar() const;
     bool matchesEscape() const;
     ScanResult scanNextToken();
@@ -133,17 +133,15 @@ class SglExprLex
     int scanWhitespaceToken();
     int scanDigitsToken();
     ScanResult scanSpecialCharToken();
-#if 0
-    int scanTagToken();
-    int scanIdentifierToken();
-    int scanMidNumberToken();
-#endif
+//    int scanTagToken();
+    ScanResult scanIdentifierToken();
+//    int scanMidNumberToken();
     void updateState();
     void reset();
 
-    Variant* allocNumber(const Variant& n);
-    QString* allocString(const QString&);
-    static NumValue variant2numValue(Variant*);
+    SafeVariant* allocNumber(const Variant& n);
+    SafeQString* allocString(const QString&);
+    NumValue variant2numValue(const Variant&);
     static Variant numValue2variant(NumValue);
     static int getToken(YYSTYPE* val, int* pos, int* lg);
     int mGetToken(YYSTYPE* val, int* pos, int* lg);
@@ -151,8 +149,10 @@ class SglExprLex
     Params mAddParam(Params list, NumValue val);
     static NumValue callFunction(Func f, Params params);
     NumValue mCallFunction(Func f, Params params);
-    static NumValue str2Val(QString*);
-    NumValue mStr2Val(QString*);
+    static NumValue str2Val(SafeQString*);
+    NumValue mStr2Val(SafeQString*);
+    static NumValue convertStr(NumLiteral literal);
+    NumValue mConvertStr(NumLiteral literal);
 
 #if 0
     DigitSeq initStr(String s, char base);

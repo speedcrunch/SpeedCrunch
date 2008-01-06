@@ -72,25 +72,35 @@ void TypeList::appendType(VariantType t, int cnt)
     QList<VariantType>::append(t);
 }
 
-bool TypeList::match(const ParamList& params) const
-{
-  if (params.size() < size()) return false;
-  for (int i = -1; ++i < size();)
-    if (at(i) != params.at(i).type())
-      switch (at(i))
-  {
-    case TEmpty: continue;
-    case TNumeric: if (params.at(i).isNum()) continue; // fall through
-    default: return false;
-  };
-  return true;
-}
-
 bool ParamList::allNums() const
 {
   for (int i = 0; i < size(); ++i)
     if (!at(i).isNum())
       return false;
+  return true;
+}
+
+bool ParamList::isType(int index, VariantType t) const
+{
+  return index <= size() && at(index).type() == t;
+}
+
+bool ParamList::isNum(int index) const
+{
+  return index <= size() && at(index).isNum();
+}
+
+bool TypeList::match(const ParamList& params) const
+{
+  if (params.size() < size()) return false;
+  for (int i = -1; ++i < size();)
+    if (!params.isType(i, at(i)))
+      switch (at(i))
+      {
+        case TEmpty: continue;
+        case TNumeric: if (params.isNum(i)) continue; // fall through
+        default: return false;
+      };
   return true;
 }
 

@@ -302,7 +302,11 @@ Evaluator::Evaluator()
          << "@def @(@'\" @;@'\" @;@'\" @)"
          << "@def @(\"(\"@;\"(\"@;\")\"@)"
          << "@def (\";\"@;\";\")"
-         << "@def (\"def\";\"def\")";
+         << "@def (\"def\";\"def\")"
+         << "def(\"escape\";\"esc\")"
+         << "esc \"\\\""
+         << "\\undef (\"esc\"; 0)"
+      ;
   SglExprLex::self().run(script);
 #endif
 }
@@ -1510,7 +1514,8 @@ QString Evaluator::autoFix( const QString& expr )
 {
 
 #ifdef _BISON
-  SglExprLex::self().autoFix(expr);
+  // FIXME autofix is currently broken
+//  SglExprLex::self().autoFix(expr);
 #endif
 
   int par = 0;

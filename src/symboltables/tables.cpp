@@ -67,6 +67,7 @@ struct CVFctSymbol
 } CVFctSymbols[] =
 {
   { " def", Tables::define, 2, 3 },
+  { " undef", Tables::undefine, 1, 2 },
 };
 static const int cnt4 = sizeof(CVFctSymbols)/sizeof(struct CVFctSymbol);
 
@@ -124,12 +125,13 @@ void Tables::init()
   }
 }
 
-SearchResult Tables::doLookup(const QString& key, bool exact, int index,
-                              int lastindex)
+Tables::SearchResult Tables::doLookup(const QString& key, bool exact,
+                                      int index, int lastindex)
 {
   SearchResult result;
   result.symbol = 0;
   result.keyused = 0;
+  result.table = 0;
   int itemsize;
   if ( index < 0 )
     // default: search all tables
@@ -140,11 +142,12 @@ SearchResult Tables::doLookup(const QString& key, bool exact, int index,
   Table::const_iterator item;
   for (; index >= lastindex && result.keyused < key.size(); --index)
   {
-    const Table& tbl = tableList.at(index);
+    Table& tbl = tableList[index];
     item = tbl.lookup(key, exact);
     if ( item != tbl.constEnd() 
          && (itemsize = item.key().size()) > result.keyused )
     {
+      result.table = &tbl;
       result.symbol = item.value();
       result.keyused = itemsize;
     }
@@ -152,7 +155,7 @@ SearchResult Tables::doLookup(const QString& key, bool exact, int index,
   return result;
 }
 
-SearchResult Tables::builtinLookup(const QString& key, bool exact)
+Tables::SearchResult Tables::builtinLookup(const QString& key, bool exact)
 {
   SearchResult r = self().doLookup(' ' + key, exact, builtinSymbols, -1);
   if (r.keyused > 0)
@@ -160,7 +163,7 @@ SearchResult Tables::builtinLookup(const QString& key, bool exact)
   return r;
 }
 
-SearchResult Tables::lookup(const QString& key, bool exact)
+Tables::SearchResult Tables::lookup(const QString& key, bool exact)
 {
   return self().doLookup(key, exact);
 }
@@ -198,13 +201,37 @@ Variant Tables::define(const ParamList& params)
   {
     if (params.size() != 3)
       return TABLE_MISSING_CLOSE;
-    if (params.at(2).type() != TText)
+    if (!params.isType(2, TText))
       return SYMBOLS_INVALID_PARAMTYPE;
     ok = globalTable().addOpenSymbol(key, symbol->type(), params.at(2));
   }
   else
     ok = globalTable().cloneSymbol(key, symbol);
   return ok? 0 : SYMBOLS_CLONE_ERROR;
+}
+
+Variant Tables::undefine(const ParamList& params)
+{
+  if (!params.isType(0, TText)
+      || (params.size() == 2 && !params.isType(1, TNumeric)))
+    return SYMBOLS_INVALID_PARAMTYPE;
+  int firstindex =  -1;
+  if (params.size() == 2)
+  {
+    HNumber p2 = (const HNumber&)params.at(1);
+    if (p2.isNan())
+      return FLOAT_NANOPERAND;
+    if (p2 != 0 && p2 != 1)
+      return FLOAT_OUTOFDOMAIN;
+    if (p2 == 1)
+      firstindex = globalSymbols;
+  }
+  SearchResult sr = Tables::self().doLookup(params.at(0), true,
+                                            firstindex, globalSymbols);
+  if (!sr.symbol)
+    return TABLE_SYMBOL_NOT_FOUND;
+  sr.table->removeSymbol(sr.symbol);
+  return 0;
 }
 
 Table::~Table()

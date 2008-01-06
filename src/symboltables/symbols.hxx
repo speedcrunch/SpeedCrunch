@@ -91,6 +91,8 @@ class ParamList: public QList<Variant>
 {
   public:
     bool allNums() const;
+    bool isType(int index, VariantType) const;
+    bool isNum(int index) const;
 };
 
 class TypeList: protected QList<VariantType>

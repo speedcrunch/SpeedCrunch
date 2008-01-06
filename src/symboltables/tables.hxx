@@ -26,12 +26,6 @@
 #include <QList>
 #include <QStringList>
 
-typedef struct
-{
-  PSymbol symbol;
-  int keyused;
-} SearchResult;
-
 class Table: private QMap<QString, PSymbol>
 {
   friend class Tables;
@@ -53,12 +47,20 @@ class Table: private QMap<QString, PSymbol>
 class Tables
 {
   public:
+    typedef struct
+    {
+      PSymbol symbol;
+      int keyused;
+      Table* table;
+    } SearchResult;
+
     static SearchResult builtinLookup(const QString& key, bool exact = true);
     static SearchResult lookup(const QString& key, bool exact = true);
     static void addCloseSymbol(const QString& key, PSymbol symbol);
     static void removeCloseSymbol(PSymbol symbol);
     static Variant escape(const ParamList& params);
     static Variant define(const ParamList& params);
+    static Variant undefine(const ParamList& params);
   private:
 
     enum
@@ -76,7 +78,7 @@ class Tables
     static Table& builtinTable() { return self().tableList[builtinSymbols]; };
     static Table& globalTable() { return self().tableList[globalSymbols]; };
     SearchResult doLookup(const QString& key, bool exact, int firstTable = -1,
-                          int lastTable = 0);
+                          int lastTable = closeSymbols);
     void init();
 
     Tables( const Tables& );

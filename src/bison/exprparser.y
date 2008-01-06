@@ -53,9 +53,10 @@ static int yylex();
 
 static NumValue result;
 
+static DigitSeq initStr(String s, char base);
+
 static FStr2Val str2Val;
 static FAppendStr appendStr;
-static FInitStr initStr;
 static FConvertStr convertStr;
 static FAddParam addParam;
 static FCallFunction callFunction;
@@ -264,45 +265,45 @@ input:
 */
 expr:
       postfixval                              { $$ = $1; }
-    | expr L0 prefixprec SIGN expr %prec L0   { callBinOperator($2, $1, $5); }
-    | expr R1 expr                            { callBinOperator($2, $1, $3); }
-    | expr L2 prefixprec SIGN expr %prec L2   { callBinOperator($2, $1, $5); }
-    | expr R3 expr                            { callBinOperator($2, $1, $3); }
-    | expr L4 prefixprec SIGN expr %prec L4   { callBinOperator($2, $1, $5); }
-    | expr R5 expr                            { callBinOperator($2, $1, $3); }
-    | expr L6 prefixprec SIGN expr %prec L6   { callBinOperator($2, $1, $5); }
-    | expr R7 expr                            { callBinOperator($2, $1, $3); }
-    | expr L8 prefixprec SIGN expr %prec L8   { callBinOperator($2, $1, $5); }
-    | expr R9 expr                            { callBinOperator($2, $1, $3); }
-    | expr L10 prefixprec SIGN expr %prec L10 { callBinOperator($2, $1, $5); }
-    | expr R11 expr                           { callBinOperator($2, $1, $3); }
-    | expr L12 prefixprec SIGN expr %prec L12 { callBinOperator($2, $1, $5); }
-    | expr R13 expr                           { callBinOperator($2, $1, $3); }
-    | expr L14 prefixprec SIGN expr %prec L14 { callBinOperator($2, $1, $5); }
-    | L0 PREFIX14 SIGN expr %prec PREFIX14    { callUnaryOperator($2, $4); }
-    | L2 PREFIX14 SIGN expr %prec PREFIX14    { callUnaryOperator($2, $4); }
-    | L4 PREFIX14 SIGN expr %prec PREFIX14    { callUnaryOperator($2, $4); }
-    | L6 PREFIX14 SIGN expr %prec PREFIX14    { callUnaryOperator($2, $4); }
-    | L8 PREFIX14 SIGN expr %prec PREFIX14    { callUnaryOperator($2, $4); }
-    | L10 PREFIX14 SIGN expr %prec PREFIX14   { callUnaryOperator($2, $4); }
-    | L12 PREFIX14 SIGN expr %prec PREFIX14   { callUnaryOperator($2, $4); }
-    | L14 PREFIX14 SIGN expr %prec PREFIX14   { callUnaryOperator($2, $4); }
-    | L0 PREFIX12 SIGN expr %prec PREFIX12    { callUnaryOperator($2, $4); }
-    | L2 PREFIX12 SIGN expr %prec PREFIX12    { callUnaryOperator($2, $4); }
-    | L4 PREFIX12 SIGN expr %prec PREFIX12    { callUnaryOperator($2, $4); }
-    | L6 PREFIX12 SIGN expr %prec PREFIX12    { callUnaryOperator($2, $4); }
-    | L8 PREFIX12 SIGN expr %prec PREFIX12    { callUnaryOperator($2, $4); }
-    | L10 PREFIX12 SIGN expr %prec PREFIX12   { callUnaryOperator($2, $4); }
-    | L12 PREFIX12 SIGN expr %prec PREFIX12   { callUnaryOperator($2, $4); }
-    | L14 PREFIX12 SIGN expr %prec PREFIX12   { callUnaryOperator($2, $4); }
-    | L0 PREFIX10 SIGN expr %prec PREFIX10    { callUnaryOperator($2, $4); }
-    | L2 PREFIX10 SIGN expr %prec PREFIX10    { callUnaryOperator($2, $4); }
-    | L4 PREFIX10 SIGN expr %prec PREFIX10    { callUnaryOperator($2, $4); }
-    | L6 PREFIX10 SIGN expr %prec PREFIX10    { callUnaryOperator($2, $4); }
-    | L8 PREFIX10 SIGN expr %prec PREFIX10    { callUnaryOperator($2, $4); }
-    | L10 PREFIX10 SIGN expr %prec PREFIX10   { callUnaryOperator($2, $4); }
-    | L12 PREFIX10 SIGN expr %prec PREFIX10   { callUnaryOperator($2, $4); }
-    | L14 PREFIX10 SIGN expr %prec PREFIX10   { callUnaryOperator($2, $4); }
+    | expr L0 prefixprec SIGN expr %prec L0   { $$ = callBinOperator($2, $1, $5); }
+    | expr R1 expr                            { $$ = callBinOperator($2, $1, $3); }
+    | expr L2 prefixprec SIGN expr %prec L2   { $$ = callBinOperator($2, $1, $5); }
+    | expr R3 expr                            { $$ = callBinOperator($2, $1, $3); }
+    | expr L4 prefixprec SIGN expr %prec L4   { $$ = callBinOperator($2, $1, $5); }
+    | expr R5 expr                            { $$ = callBinOperator($2, $1, $3); }
+    | expr L6 prefixprec SIGN expr %prec L6   { $$ = callBinOperator($2, $1, $5); }
+    | expr R7 expr                            { $$ = callBinOperator($2, $1, $3); }
+    | expr L8 prefixprec SIGN expr %prec L8   { $$ = callBinOperator($2, $1, $5); }
+    | expr R9 expr                            { $$ = callBinOperator($2, $1, $3); }
+    | expr L10 prefixprec SIGN expr %prec L10 { $$ = callBinOperator($2, $1, $5); }
+    | expr R11 expr                           { $$ = callBinOperator($2, $1, $3); }
+    | expr L12 prefixprec SIGN expr %prec L12 { $$ = callBinOperator($2, $1, $5); }
+    | expr R13 expr                           { $$ = callBinOperator($2, $1, $3); }
+    | expr L14 prefixprec SIGN expr %prec L14 { $$ = callBinOperator($2, $1, $5); }
+    | L0 PREFIX14 SIGN expr %prec PREFIX14    { $$ = callUnaryOperator($2, $4); }
+    | L2 PREFIX14 SIGN expr %prec PREFIX14    { $$ = callUnaryOperator($2, $4); }
+    | L4 PREFIX14 SIGN expr %prec PREFIX14    { $$ = callUnaryOperator($2, $4); }
+    | L6 PREFIX14 SIGN expr %prec PREFIX14    { $$ = callUnaryOperator($2, $4); }
+    | L8 PREFIX14 SIGN expr %prec PREFIX14    { $$ = callUnaryOperator($2, $4); }
+    | L10 PREFIX14 SIGN expr %prec PREFIX14   { $$ = callUnaryOperator($2, $4); }
+    | L12 PREFIX14 SIGN expr %prec PREFIX14   { $$ = callUnaryOperator($2, $4); }
+    | L14 PREFIX14 SIGN expr %prec PREFIX14   { $$ = callUnaryOperator($2, $4); }
+    | L0 PREFIX12 SIGN expr %prec PREFIX12    { $$ = callUnaryOperator($2, $4); }
+    | L2 PREFIX12 SIGN expr %prec PREFIX12    { $$ = callUnaryOperator($2, $4); }
+    | L4 PREFIX12 SIGN expr %prec PREFIX12    { $$ = callUnaryOperator($2, $4); }
+    | L6 PREFIX12 SIGN expr %prec PREFIX12    { $$ = callUnaryOperator($2, $4); }
+    | L8 PREFIX12 SIGN expr %prec PREFIX12    { $$ = callUnaryOperator($2, $4); }
+    | L10 PREFIX12 SIGN expr %prec PREFIX12   { $$ = callUnaryOperator($2, $4); }
+    | L12 PREFIX12 SIGN expr %prec PREFIX12   { $$ = callUnaryOperator($2, $4); }
+    | L14 PREFIX12 SIGN expr %prec PREFIX12   { $$ = callUnaryOperator($2, $4); }
+    | L0 PREFIX10 SIGN expr %prec PREFIX10    { $$ = callUnaryOperator($2, $4); }
+    | L2 PREFIX10 SIGN expr %prec PREFIX10    { $$ = callUnaryOperator($2, $4); }
+    | L4 PREFIX10 SIGN expr %prec PREFIX10    { $$ = callUnaryOperator($2, $4); }
+    | L6 PREFIX10 SIGN expr %prec PREFIX10    { $$ = callUnaryOperator($2, $4); }
+    | L8 PREFIX10 SIGN expr %prec PREFIX10    { $$ = callUnaryOperator($2, $4); }
+    | L10 PREFIX10 SIGN expr %prec PREFIX10   { $$ = callUnaryOperator($2, $4); }
+    | L12 PREFIX10 SIGN expr %prec PREFIX10   { $$ = callUnaryOperator($2, $4); }
+    | L14 PREFIX10 SIGN expr %prec PREFIX10   { $$ = callUnaryOperator($2, $4); }
     ;
 /* a value with postfixoperators */
 postfixval:
@@ -335,7 +336,7 @@ prefixval:
    single parameter without parenthesis */
 params:
       OPENPAR paramlist CLOSEPAR         { $$ = $2; }
-    | prefixval                          { addParam(0, $1); }
+    | prefixval                          { $$ = addParam(0, $1); }
     ;
 /* parameter list separated by ';', but without the enclosing parenthesis */
 paramlist:
@@ -572,6 +573,17 @@ static void yyerror(char const *msg)
   /* FIXME provide error diagnostics */
 }
 
+DigitSeq initStr(String s, char base)
+{
+  DigitSeq result;
+
+  result.base = base;
+  result.digits = s;
+  result.complement = 0;
+  result.sign = 0;
+  return result;
+}
+
 /* exports */
 
 int parseexpr(CallBacks callbacks, NumValue* r, int* pos, int* lg)
@@ -580,7 +592,6 @@ int parseexpr(CallBacks callbacks, NumValue* r, int* pos, int* lg)
 
   str2Val = callbacks.str2Val;
   appendStr = callbacks.appendStr;
-  initStr = callbacks.initStr;
   convertStr = callbacks.convertStr;
   addParam = callbacks.addParam;
   callFunction = callbacks.callFunction;

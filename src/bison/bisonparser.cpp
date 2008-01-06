@@ -36,7 +36,8 @@
 #include "symboltables/tables.cpp" // for the time being do not update CMakeList
 #include "main/errors.h"
 
-SglExprLex::Token::Token(const QString& expr, int pos, int size, int type, PSymbol symbol)
+SglExprLex::Token::Token(const QString& expr, int pos, int size,
+                         int type, const Symbol* symbol)
   : m_expr(expr), m_pos(pos), m_size(size), m_type(type), m_symbol(symbol)
 {
 }
@@ -74,11 +75,9 @@ bool SglExprLex::autoFix(const QString& newexpr)
   int tokencnt = 0;
   int assignseqpos = -1;
   int lastToken;
-  ScanResult current;
 
   setExpression(newexpr);
   reset();
-//  inText = false;
   do
   {
     getNextScanResult();
@@ -92,16 +91,14 @@ bool SglExprLex::autoFix(const QString& newexpr)
     }
     lastToken = lastScanResult.type;
     ++tokencnt;
-  } while ( current.type != eol );
+  } while ( lastScanResult.type != eol );
   // remove trailing '='
   if ( assignseqpos >= 0 )
     expr.truncate(assignseqpos);
   // supply 'ans' as parameter, if just a function name is given
 /*  if ( tokencnt == 1 && lasttoken == FUNCTION )
-    expr.append(revLookup(ans));
+    expr.append(revLookup(ans));*/
   // close all unmatched left paranthesis
-  if ( state == stText )
-    expr.append(closePar.pop());*/
   while ( !closePar.isEmpty() )
     expr.append(' ' + closePar.pop());
   return true;
@@ -117,9 +114,8 @@ Variant SglExprLex::eval()
 
   scan();
   cb.str2Val = str2Val;
-  cb.initStr = 0;
   cb.appendStr = 0;
-  cb.convertStr = 0;
+  cb.convertStr = convertStr;
   cb.addParam = addParam;
   cb.callFunction = callFunction;
   cb.assignVar = 0;
@@ -249,21 +245,28 @@ int SglExprLex::symbolType(SymType t)
 {
   switch( t )
   {
-    case dot        : return DOT;
-    case openPar    : return OPENPAR;
-    case assign     : return ASSIGN;
-    case separator  : return SEP;
-    case quote      : return sot;
-    case functionSym: return FUNCTION;
-    default         : return UNKNOWNTOKEN;
+    case dot         : return DOT;
+    case openPar     : return OPENPAR;
+    case assign      : return ASSIGN;
+    case separator   : return SEP;
+    case quote       : return sot;
+    case functionSym : return FUNCTION;
+    default          : return UNKNOWNTOKEN;
   };
 }
 
-SglExprLex::ScanResult SglExprLex::searchResult2scanResult(SearchResult sr)
+SglExprLex::ScanResult SglExprLex::searchResult2scanResult(Tables::SearchResult sr)
 {
   ScanResult result;
   result.symbol = sr.symbol;
-  result.type = symbolType(result.symbol? sr.symbol->type() : unassigned);
+  SymType symtype = result.symbol? sr.symbol->type() : unassigned;
+  if (symtype == referenceSym)
+  {
+    const ReferenceSymbol* rf = dynamic_cast<const ReferenceSymbol*>(result.symbol);
+    result.symbol = (*rf)[0];
+    symtype = result.symbol->type();
+  }
+  result.type = symbolType(symtype);
   return result;
 }
 
@@ -311,9 +314,9 @@ SglExprLex::ScanResult SglExprLex::scanNextToken()
   else if ( isDigit() )
     result.type = scanDigitsToken();
 /*  else if ( state == stNumber || state == stScale )
-    result = scanMidNumberToken();
+    result = scanMidNumberToken();*/
   else if ( isLetter() )
-    result = scanIdentifierToken();*/
+    result = scanIdentifierToken();
   else
     result = scanSpecialCharToken();
   return result;
@@ -338,7 +341,7 @@ int SglExprLex::scanTextToken()
 
 SglExprLex::ScanResult SglExprLex::scanSysToken()
 {
-  SearchResult r;
+  Tables::SearchResult r;
   index += escsize;
   int begin = index;
   bool exactMatch = index < size && isLetter();
@@ -387,7 +390,7 @@ int SglExprLex::scanDigitsToken()
 
 SglExprLex::ScanResult SglExprLex::scanSpecialCharToken()
 {
-  SearchResult r;
+  Tables::SearchResult r;
   scanSpecial();
   r = Tables::lookup(currentSubStr(), false);
   if (r.symbol)
@@ -418,15 +421,16 @@ int SglExprLex::scanTagToken()
   pendingToken.enqueue(tag);
   return CMPLTAG;
 }
-
-int SglExprLex::scanIdentifierToken()
+#endif
+SglExprLex::ScanResult SglExprLex::scanIdentifierToken()
 {
   while ( !atEnd() && isAlphaNum() )
     ++index;
   end = index;
-  return lookup();
+  Tables::SearchResult r = Tables::lookup(currentSubStr());
+  return searchResult2scanResult(r);
 }
-
+#if 0
 int SglExprLex::scanMidNumberToken()
 {
   if ( isLetter() )
@@ -463,7 +467,7 @@ void SglExprLex::updateState()
     case OPENPAR:
       closePar.push(
           checkEscape(
-              static_cast<OpenSymbol*>(lastScanResult.symbol)->closeToken())); //fall through
+              static_cast<const OpenSymbol*>(lastScanResult.symbol)->closeToken())); //fall through
     default: if ( state != stScale && state != stText ) state = stTopLevel;
   }
 }
@@ -491,33 +495,35 @@ int SglExprLex::doLookup(const QString& token) const
 #endif
 /*------------------------   parser interface   -----------------------*/
 
-QString* SglExprLex::allocString(const QString& s)
+SafeQString* SglExprLex::allocString(const QString& s)
 {
   strlist.append(s);
-  return &strlist.last();
+  return reinterpret_cast<SafeQString*>(&strlist.last());
 }
 
-Variant* SglExprLex::allocNumber(const Variant& n)
+SafeVariant* SglExprLex::allocNumber(const Variant& n)
 {
   numlist.append(n);
-  return &numlist.last();
+  return reinterpret_cast<SafeVariant*>(&numlist.last());
 }
 
-NumValue SglExprLex::variant2numValue(Variant* v)
+NumValue SglExprLex::variant2numValue(const Variant& v)
 {
   NumValue result;
   result.percent = 0;
-  result.val = v;
+  result.val = allocNumber(v);
   return result;
 }
 
 Variant SglExprLex::numValue2variant(NumValue n)
 {
   Variant result;
+  Variant* v;
+  v = reinterpret_cast<Variant*>(n.val);
   if (n.percent)
-    result = (const HNumber&)(*n.val) / HNumber(100);
+    result = *(const HNumber*)v / HNumber(100);
   else
-    result = *n.val;
+    result = *v;
   return result;
 }
 
@@ -549,6 +555,7 @@ int SglExprLex::mGetToken(YYSTYPE* val, int* pos, int* lg)
   switch (token.type())
   {
     case FUNCTION: val->func = token.symbol(); break;
+    case DECSEQ  :
     case TEXT    : val->string = allocString(token.str()); break;
     default      : ;
   }
@@ -566,9 +573,9 @@ Params SglExprLex::mAddParam(Params list, NumValue val)
   {
     ParamList newList;
     paramlists.append(newList);
-    list = &paramlists.last();
+    list = reinterpret_cast<Params>(&paramlists.last());
   }
-  list->append(numValue2variant(val));
+  reinterpret_cast<ParamList*>(list)->append(numValue2variant(val));
   return list;
 }
 
@@ -580,21 +587,70 @@ NumValue SglExprLex::callFunction(Func f, Params params)
 NumValue SglExprLex::mCallFunction(Func f, Params params)
 {
   return variant2numValue(
-           allocNumber(
-             dynamic_cast<FunctionSymbolIntf*>(f)->eval(*params)));
+           dynamic_cast<const FunctionSymbolIntf*>(f)->eval(
+             *reinterpret_cast<const ParamList*>(params)));
 }
 
-NumValue SglExprLex::str2Val(QString* s)
+NumValue SglExprLex::str2Val(SafeQString* s)
 {
   return instance->mStr2Val(s);
 }
 
-NumValue SglExprLex::mStr2Val(QString* s)
+NumValue SglExprLex::mStr2Val(SafeQString* s)
 {
   NumValue result;
-  Variant v = *s;
+  Variant v = *reinterpret_cast<const QString*>(s);
   result.percent = 0;
   result.val = allocNumber(v);
+  return result;
+}
+
+NumValue SglExprLex::convertStr(NumLiteral literal)
+{
+  return instance->mConvertStr(literal);
+}
+
+NumValue SglExprLex::mConvertStr(NumLiteral literal)
+{
+  // FIXME most of this should really be part of hmath
+/*  char base = literal.intpart.base;
+  char expbase = literal.exp.base;*/
+  QByteArray str;
+  if (literal.intpart.digits)
+    str = reinterpret_cast<QString*>(literal.intpart.digits)->toLatin1();
+  NumValue result;
+//   QByteArray str = basePrefix(base);
+//   int bias = 0;
+
+/*  if ( literal.intpart.complement 
+       && literal.intpart.digits[0] - '0' >= base >> 1 )
+    bias = qstrlen(literal.intpart.digits);
+  if ( qstrlen(literal.intpart.digits) )
+    str.append(literal.intpart.digits);
+  if ( qstrlen(literal.intpart.fracpart) )
+  {
+    str.append('.');
+    str.append(literal.intpart.fracpart);
+  }*/
+  HNumber value(str.data());
+/*  if ( bias )
+    value -= raise(HNumber(base), bias);
+  if ( qstrlen(literal.exp.digits) )
+  {
+    str = basePrefix(expbase);
+    bias = 0;
+    if ( literal.exp.complement
+         && literal.exp.digits[0] - '0' >= base >> 1 )
+      bias = qstrlen(literal.exp.digits);
+    HNumber exp = HNumber(literal.exp.digits);
+    if ( bias )
+      exp -= raise(HNumber(expbase), bias);
+    if ( literal.exp.sign < 0 )
+      exp = - exp;
+    value *= raise(HNumber(base), exp);
+  }*/
+  result.val = allocNumber(value);
+  result.percent = false;
   return result;
 }
 
@@ -611,18 +667,7 @@ QByteArray SglExprLex::basePrefix(base)
     case 16: result = "0x"; break;
     default:;
   }
-}
-
-DigitSeq SglExprLex::initStr(String s, char base)
-{
-  DigitSeq result;
-
-  result.base = base;
-  result.digits = s;
-  result.complement = false;
-  result.sign = 0;
-  return result;
-}
+  }
 
 DigitSeq SglExprLex::appendStr(DigitSeq seq, String s)
 {
@@ -631,47 +676,4 @@ DigitSeq SglExprLex::appendStr(DigitSeq seq, String s)
   seq.digits = (const char*)strlist.first();
   return seq;
 }
-
-NumValue SglExprLex::convertStr(NumLiteral literal)
-{
-  // FIXME most of this should really be part of hmath
-  char base = literal.intpart.base;
-  char expbase = literal.exp.base;
-  NumValue result;
-  QByteArray str = basePrefix(base);
-  int bias = 0;
-
-  if ( literal.intpart.complement 
-       && literal.intpart.digits[0] - '0' >= base >> 1 )
-    bias = qstrlen(literal.intpart.digits);
-  if ( qstrlen(literal.intpart.digits) )
-    str.append(literal.intpart.digits);
-  if ( qstrlen(literal.intpart.fracpart) )
-  {
-    str.append('.');
-    str.append(literal.intpart.fracpart);
-  }
-  HNumber value(str);
-  if ( bias )
-    value -= raise(HNumber(base), bias);
-  if ( qstrlen(literal.exp.digits) )
-  {
-    str = basePrefix(expbase);
-    bias = 0;
-    if ( literal.exp.complement
-         && literal.exp.digits[0] - '0' >= base >> 1 )
-      bias = qstrlen(literal.exp.digits);
-    HNumber exp = HNumber(literal.exp.digits);
-    if ( bias )
-      exp -= raise(HNumber(expbase), bias);
-    if ( literal.exp.sign < 0 )
-      exp = - exp;
-    value *= raise(HNumber(base), exp);
-  }
-  numList.prepend(value);
-  result.val = &numList.first();
-  result.percent = false;
-  return result;
-}
-
 #endif

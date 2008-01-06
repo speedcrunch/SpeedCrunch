@@ -33,15 +33,19 @@
 
 #ifdef __cplusplus
 
-# include "symboltables/symbols.hxx"
+class SafeVariant;
+class SafeQString;
+class SafeParamList;
+class Symbol;
+
 extern "C" {
 
 #else
 
-# define Variant void
-# define ParamList void
+# define SafeVariant void
+# define SafeParamList void
 # define Symbol void
-# define QString void
+# define SafeQString void
 
 #endif /* __cplusplus */
 
@@ -50,11 +54,11 @@ extern "C" {
 #define PARSE_SYNTAXERROR 1
 #define PARSE_OUTOFMEM    2
 
-typedef QString* String;
+typedef SafeQString* String;
 
 typedef struct DigitSeq
 {
-  QString* digits;
+  String digits;
   char  base;
   char  complement;
   signed char sign;
@@ -63,19 +67,19 @@ typedef struct DigitSeq
 typedef struct NumLiteral
 {
   DigitSeq intpart;
-  QString* fracpart;
+  String fracpart;
   DigitSeq exp;
 } NumLiteral;
 
 typedef struct NumValue
 {
-  Variant* val;
+  SafeVariant* val;
   char percent;
 } NumValue;
 
-typedef ParamList* Params;
+typedef SafeParamList* Params;
 
-typedef Symbol* Func;
+typedef const Symbol* Func;
 
 typedef struct Var
 {
@@ -90,7 +94,6 @@ typedef struct Var
 /* call backs */
 
 typedef NumValue (*FStr2Val)(String s);
-typedef DigitSeq (*FInitStr)(String s, char base);
 typedef DigitSeq (*FAppendStr)(DigitSeq seq, String s);
 typedef NumValue (*FConvertStr)(NumLiteral text);
 typedef Params   (*FAddParam)(Params list, NumValue val);
@@ -101,7 +104,6 @@ typedef int      (*FGetToken)(YYSTYPE* val, int* pos, int* lg);
 
 typedef struct CallBacks
 {
-  FInitStr      initStr;
   FAppendStr    appendStr;
   FConvertStr   convertStr;
   FAddParam     addParam;
