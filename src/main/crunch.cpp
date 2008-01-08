@@ -149,7 +149,8 @@ public:
 
   QMenu * sessionMenu;
   QMenu * editMenu;
-  QMenu * viewMenu;
+  QMenu * baseMenu;
+  QMenu * decimalBaseSubmenu;
   QMenu * settingsMenu;
   QMenu * helpMenu;
 
@@ -194,36 +195,36 @@ Crunch::Crunch(): QMainWindow()
   QHBoxLayout *radixLayout = new QHBoxLayout();
   radixLayout->setMargin( 0 );
   radixBox->setLayout( radixLayout );
-  d->hexButton = new QRadioButton( tr( "Hex" ), radixBox );
-  d->decButton = new QRadioButton( tr( "Dec" ), radixBox );
-  d->octButton = new QRadioButton( tr( "Oct" ), radixBox );
   d->binButton = new QRadioButton( tr( "Bin" ), radixBox );
-  d->hexButton->setFocusPolicy( Qt::ClickFocus );
-  d->decButton->setFocusPolicy( Qt::ClickFocus );
-  d->octButton->setFocusPolicy( Qt::ClickFocus );
+  d->octButton = new QRadioButton( tr( "Oct" ), radixBox );
+  d->decButton = new QRadioButton( tr( "Dec" ), radixBox );
+  d->hexButton = new QRadioButton( tr( "Hex" ), radixBox );
   d->binButton->setFocusPolicy( Qt::ClickFocus );
-  connect( d->hexButton, SIGNAL( toggled( bool ) ), SLOT( radixChanged() ) );
-  connect( d->decButton, SIGNAL( toggled( bool ) ), SLOT( radixChanged() ) );
-  connect( d->octButton, SIGNAL( toggled( bool ) ), SLOT( radixChanged() ) );
+  d->octButton->setFocusPolicy( Qt::ClickFocus );
+  d->decButton->setFocusPolicy( Qt::ClickFocus );
+  d->hexButton->setFocusPolicy( Qt::ClickFocus );
   connect( d->binButton, SIGNAL( toggled( bool ) ), SLOT( radixChanged() ) );
-  radixLayout->addWidget( d->hexButton );
-  radixLayout->addWidget( d->decButton );
-  radixLayout->addWidget( d->octButton );
+  connect( d->octButton, SIGNAL( toggled( bool ) ), SLOT( radixChanged() ) );
+  connect( d->decButton, SIGNAL( toggled( bool ) ), SLOT( radixChanged() ) );
+  connect( d->hexButton, SIGNAL( toggled( bool ) ), SLOT( radixChanged() ) );
   radixLayout->addWidget( d->binButton );
+  radixLayout->addWidget( d->octButton );
+  radixLayout->addWidget( d->decButton );
+  radixLayout->addWidget( d->hexButton );
 
   QSpacerItem *spacer = new QSpacerItem( 50, 0, QSizePolicy::MinimumExpanding, QSizePolicy::Minimum );
   topboxLayout->addWidget( radixBox );
   topboxLayout->addItem( spacer );
 
   QWidget* angleBox = new QWidget( this );
-  d->degButton = new QRadioButton( tr( "&Degrees" ), angleBox );
   d->radButton = new QRadioButton( tr( "&Radians" ), angleBox );
-  d->degButton->setFocusPolicy( Qt::ClickFocus );
+  d->degButton = new QRadioButton( tr( "&Degrees" ), angleBox );
   d->radButton->setFocusPolicy( Qt::ClickFocus );
-  connect( d->degButton, SIGNAL( toggled( bool ) ), SLOT( angleModeChanged() ) );
+  d->degButton->setFocusPolicy( Qt::ClickFocus );
   connect( d->radButton, SIGNAL( toggled( bool ) ), SLOT( angleModeChanged() ) );
-  topboxLayout->addWidget( d->degButton );
+  connect( d->degButton, SIGNAL( toggled( bool ) ), SLOT( angleModeChanged() ) );
   topboxLayout->addWidget( d->radButton );
+  topboxLayout->addWidget( d->degButton );
 
   outerBoxLayout->addLayout( topboxLayout );
 
@@ -402,25 +403,30 @@ void Crunch::createUI()
   d->actions->helpAbout           = new QAction( tr("&About"),                   this );
   d->actions->helpAboutQt         = new QAction( tr("About &Qt"),                this );
 
-  d->actions->sessionSave->setShortcut( Qt::CTRL + Qt::Key_S );
-  d->actions->sessionQuit->setShortcut( Qt::CTRL + Qt::Key_Q );
-  d->actions->focusAndSelectInput->setShortcut( Qt::Key_F6 );
-  d->actions->editCopy->setShortcut( Qt::CTRL + Qt::Key_C );
-  d->actions->editPaste->setShortcut( Qt::CTRL + Qt::Key_V );
-  d->actions->editCopyResult->setShortcut( Qt::CTRL + Qt::Key_R );
-  d->actions->insertFunction->setShortcut( Qt::CTRL + Qt::Key_F );
-  d->actions->insertVariable->setShortcut( Qt::CTRL + Qt::Key_I );
-  d->actions->deleteVariable->setShortcut( Qt::CTRL + Qt::Key_D );
-  d->actions->clearInput->setShortcut( Qt::Key_Escape );
+  d->actions->sessionSave->setShortcut(         Qt::CTRL + Qt::Key_S );
+  d->actions->sessionQuit->setShortcut(         Qt::CTRL + Qt::Key_Q );
+  d->actions->focusAndSelectInput->setShortcut( Qt::CTRL + Qt::Key_A );
+  d->actions->editCopy->setShortcut(            Qt::CTRL + Qt::Key_C );
+  d->actions->editPaste->setShortcut(           Qt::CTRL + Qt::Key_V );
+  d->actions->editCopyResult->setShortcut(      Qt::CTRL + Qt::Key_R );
+  d->actions->insertFunction->setShortcut(      Qt::CTRL + Qt::Key_F );
+  d->actions->insertVariable->setShortcut(      Qt::CTRL + Qt::Key_I );
+  d->actions->deleteVariable->setShortcut(      Qt::CTRL + Qt::Key_D );
+  d->actions->clearInput->setShortcut(          Qt::Key_Escape       );
+  d->actions->viewBinary->setShortcut(          Qt::Key_F5           );
+  d->actions->viewOctal->setShortcut(           Qt::Key_F6           );
+  d->actions->viewGeneral->setShortcut(         Qt::Key_F7           );
+  d->actions->viewHexadec->setShortcut(         Qt::Key_F8           );
+  d->actions->viewHexadec->setShortcut(         Qt::Key_F8           );
 
   QActionGroup *formatGroup = new QActionGroup( this );
-  formatGroup->addAction( d->actions->viewGeneral );
-  formatGroup->addAction( d->actions->viewFixed );
-  formatGroup->addAction( d->actions->viewEngineering );
-  formatGroup->addAction( d->actions->viewScientific );
-  formatGroup->addAction( d->actions->viewHexadec );
-  formatGroup->addAction( d->actions->viewOctal );
   formatGroup->addAction( d->actions->viewBinary );
+  formatGroup->addAction( d->actions->viewGeneral );
+    formatGroup->addAction( d->actions->viewFixed );
+    formatGroup->addAction( d->actions->viewEngineering );
+    formatGroup->addAction( d->actions->viewScientific );
+  formatGroup->addAction( d->actions->viewOctal );
+  formatGroup->addAction( d->actions->viewHexadec );
 
   d->digitsGroup = new QActionGroup( this );
   d->digitsGroup->addAction( d->actions->digitsAuto );
@@ -444,7 +450,6 @@ void Crunch::createUI()
   d->actions->digits8->setCheckable( true );
   d->actions->digits15->setCheckable( true );
   d->actions->digits50->setCheckable( true );
-
 
   d->actions->showClearButton->setCheckable( true );
   d->actions->showEvalButton->setCheckable ( true );
@@ -526,22 +531,23 @@ void Crunch::createUI()
   d->editMenu->addSeparator();
   d->editMenu->addAction( d->actions->focusAndSelectInput );
 
-  d->viewMenu = new QMenu( tr("&View"), this );
-  menuBar()->addMenu( d->viewMenu );
-  d->viewMenu->addAction( d->actions->viewGeneral );
-  d->viewMenu->addAction( d->actions->viewFixed );
-  d->viewMenu->addAction( d->actions->viewEngineering );
-  d->viewMenu->addAction( d->actions->viewScientific );
-  d->viewMenu->addAction( d->actions->viewHexadec );
-  d->viewMenu->addAction( d->actions->viewOctal );
-  d->viewMenu->addAction( d->actions->viewBinary );
-  d->viewMenu->addSeparator();
-  d->viewMenu->addAction( d->actions->digitsAuto );
-  d->viewMenu->addAction( d->actions->digits2 );
-  d->viewMenu->addAction( d->actions->digits3 );
-  d->viewMenu->addAction( d->actions->digits8 );
-  d->viewMenu->addAction( d->actions->digits15 );
-  d->viewMenu->addAction( d->actions->digits50 );
+  d->baseMenu = new QMenu( tr("&Base"), this );
+  menuBar()->addMenu( d->baseMenu );
+  d->baseMenu->addAction( d->actions->viewBinary );
+  d->baseMenu->addAction( d->actions->viewOctal );
+  d->decimalBaseSubmenu = d->baseMenu->addMenu( tr("Decimal") );
+    d->decimalBaseSubmenu->addAction( d->actions->viewGeneral );
+    d->decimalBaseSubmenu->addAction( d->actions->viewFixed );
+    d->decimalBaseSubmenu->addAction( d->actions->viewEngineering );
+    d->decimalBaseSubmenu->addAction( d->actions->viewScientific );
+    d->decimalBaseSubmenu->addSeparator();
+    d->decimalBaseSubmenu->addAction( d->actions->digitsAuto );
+    d->decimalBaseSubmenu->addAction( d->actions->digits2 );
+    d->decimalBaseSubmenu->addAction( d->actions->digits3 );
+    d->decimalBaseSubmenu->addAction( d->actions->digits8 );
+    d->decimalBaseSubmenu->addAction( d->actions->digits15 );
+    d->decimalBaseSubmenu->addAction( d->actions->digits50 );
+  d->baseMenu->addAction( d->actions->viewHexadec );
 
   d->settingsMenu = new QMenu( tr("Se&ttings"), this );
   menuBar()->addMenu( d->settingsMenu );
@@ -1495,7 +1501,7 @@ void Crunch::setWidgetsLayoutAccordingToLanguageDirection()
   setWidgetLayoutAccordingToLanguageDirection( menuBar()        );
   setWidgetLayoutAccordingToLanguageDirection( d->sessionMenu   );
   setWidgetLayoutAccordingToLanguageDirection( d->editMenu      );
-  setWidgetLayoutAccordingToLanguageDirection( d->viewMenu      );
+  setWidgetLayoutAccordingToLanguageDirection( d->baseMenu      );
   setWidgetLayoutAccordingToLanguageDirection( d->settingsMenu  );
   setWidgetLayoutAccordingToLanguageDirection( d->helpMenu      );
   // angle mode radio buttons
