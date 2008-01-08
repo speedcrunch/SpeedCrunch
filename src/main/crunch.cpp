@@ -2,7 +2,7 @@
    Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
    Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
                  2005-2006 Johan Thelin <e8johan@gmail.com>
-                 2007 Helder Correia <helder.pereira.correia@gmail.com>
+                 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -788,17 +788,17 @@ void Crunch::saveSession()
 {
   QString filters = tr( "Text Files (*.txt);;All Files (*.*)" );
   QString fname = QFileDialog::getSaveFileName( this, tr("Save Session"),
-    QString::null, filters );
+                                                QString::null, filters );
   if( fname.isEmpty() ) return;
 
   QFile file( fname );
-  if( !file.open( QIODevice::WriteOnly ) )
+  if ( ! file.open( QIODevice::WriteOnly ) )
   {
     QMessageBox::critical( this, tr("Error"), tr("Can't write to file %1").arg( fname ) );
     return;
   }
 
-  QTextStream stream( &file );
+  QTextStream stream( & file );
   stream << d->result->asText();
 
   file.close();

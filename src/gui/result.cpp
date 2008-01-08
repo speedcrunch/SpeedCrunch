@@ -2,6 +2,7 @@
    Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
    Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
                  2005-2006 Johan Thelin <e8johan@gmail.com>
+                 2008 Helder Correia <helder.pereira.correia@gmail.com>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -198,15 +199,21 @@ void Result::append( const QString& expr, const HNumber& value )
   new ExprItem( this, d->count, expr );
   new ResultItem( this, d->count, value );
 
+  d->contents.append( expr );
+  d->contents.append( HMath::format( value ) );
+
   QTimer::singleShot( 0, this, SLOT(scrollEnd()) );
 }
 
-void Result::appendError( const QString& expr, const QString&  msg )
+void Result::appendError( const QString& expr, const QString& msg )
 {
   d->count++;
 
   new ExprItem( this, d->count, expr );
   new ErrorItem( this, d->count, msg );
+
+  d->contents.append( expr );
+  d->contents.append( msg );
 
   QTimer::singleShot( 0, this, SLOT(scrollEnd()) );
 }
@@ -268,7 +275,7 @@ int Result::decimalDigits() const
 //   d->decimalPoint = dp;
 //   triggerUpdate();
 // }
-// 
+//
 // QString Result::decimalPoint() const
 // {
 //   return d->decimalPoint;
