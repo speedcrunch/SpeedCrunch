@@ -505,9 +505,9 @@ void test_functions()
   CHECK( HMath::nPr( "NaN", "NaN" ), "NaN"       );
   CHECK( HMath::nPr( "NaN", 5     ), "NaN"       );
   CHECK( HMath::nPr( 5,     "NaN" ), "NaN"       );
-  CHECK( HMath::nPr( 21,    22    ), "NaN"       );
-  CHECK( HMath::nPr( -21,   2     ), "NaN"       );
-  CHECK( HMath::nPr( 21,    -1    ), "NaN"       );
+  CHECK( HMath::nPr( 21,    22    ), "0"         );
+  CHECK( HMath::nPr( -21,   2     ), "462"       );
+  CHECK( HMath::nPr( 21,    -1    ), "0.04545454545454545455" );
   CHECK( HMath::nPr( 0,     0     ), "1"         );
   CHECK( HMath::nPr( 21,    0     ), "1"         );
   CHECK( HMath::nPr( 21,    1     ), "21"        );
