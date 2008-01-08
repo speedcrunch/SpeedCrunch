@@ -176,10 +176,17 @@ bool SglExprLex::isDigit() const
   if ( c <= '7' ) return true;
   if ( radix == 8 ) return false;
   if ( c <= '9' ) return true;
-  if ( radix == 10 || radix == 0 ) return false;
+  if ( radix == 10 ) return false;
   if ( c < 'A' ) return false;
   if ( c >= 'a' ) c -= 'a' - 'A';
   return  c <= 'F';
+}
+
+bool SglExprLex::isHexChar() const
+{
+  char c = current().toAscii();
+  if ( c >= 'a' ) c -= 'a' - 'A';
+  return  c >= 'A' && c <= 'F';
 }
 
 bool SglExprLex::isWhitespace() const
@@ -251,23 +258,52 @@ int SglExprLex::symbolType(SymType t)
     case separator   : return SEP;
     case quote       : return sot;
     case functionSym : return FUNCTION;
+    case scale       : return SCALE;
+    case decscale    : return DECSCALE;
     case group       : return GROUPCHAR;
     default          : return UNKNOWNTOKEN;
   };
 }
 
+int SglExprLex::baseTag(const Symbol* symbol)
+{
+  switch(static_cast<const TagSymbol*>(symbol)->base())
+  {
+    case 16: return HEXTAG;
+    case 8 : return OCTTAG;
+    case 2 : return BINTAG;
+    default: return DECTAG;
+  }
+}
+
 SglExprLex::ScanResult SglExprLex::searchResult2scanResult(Tables::SearchResult sr)
 {
+  const ReferenceSymbol* rf;
+  const TagSymbol* tag;
   ScanResult result;
   result.symbol = sr.symbol;
+  result.type = 0;
   SymType symtype = result.symbol? sr.symbol->type() : unassigned;
-  if (symtype == referenceSym)
+  switch (symtype)
   {
-    const ReferenceSymbol* rf = dynamic_cast<const ReferenceSymbol*>(result.symbol);
-    result.symbol = (*rf)[0];
-    symtype = result.symbol->type();
+    case referenceSym:
+      rf = static_cast<const ReferenceSymbol*>(result.symbol);
+      result.symbol = (*rf)[0];
+      symtype = result.symbol->type();
+      break;
+    case tagSym:
+      tag = static_cast<const TagSymbol*>(result.symbol);
+      if (tag->complement())
+      {
+        pendingSymbol.enqueue(sr.symbol);
+        result.type = CMPLTAG;
+      }
+      else
+        result.type = baseTag(result.symbol);
+    default: ;
   }
-  result.type = symbolType(symtype);
+  if (result.type == 0)
+    result.type = symbolType(symtype);
   return result;
 }
 
@@ -287,7 +323,13 @@ void SglExprLex::getNextScanResult()
   if ( !pendingSymbol.isEmpty() )
   {
     lastScanResult.symbol = pendingSymbol.dequeue();
-    lastScanResult.type = lastScanResult.symbol->type();
+    switch (lastScanResult.symbol->type())
+    {
+      case tagSym:
+        lastScanResult.type = baseTag(lastScanResult.symbol);
+        break;
+      default: ;
+    }
   }
   else
     lastScanResult = scanNextToken();
@@ -314,8 +356,8 @@ SglExprLex::ScanResult SglExprLex::scanNextToken()
     result.type = scanWhitespaceToken();
   else if ( isDigit() )
     result.type = scanDigitsToken();
-/*  else if ( state == stNumber || state == stScale )
-    result = scanMidNumberToken();*/
+  else if ( state == stNumber || state == stScale )
+    result = scanMidNumberToken();
   else if ( isLetter() )
     result = scanIdentifierToken();
   else
@@ -345,11 +387,7 @@ SglExprLex::ScanResult SglExprLex::scanSysToken()
   Tables::SearchResult r;
   index += escsize;
   int begin = index;
-  bool exactMatch = index < size && isLetter();
-  if ( exactMatch )
-    scanLetters();
-  else
-    scanSpecial();
+  bool exactMatch = checkExact();
   r = Tables::builtinLookup(expr.mid(begin, end - begin), exactMatch);
   if (r.symbol)
   {
@@ -371,98 +409,79 @@ int SglExprLex::scanWhitespaceToken()
 
 int SglExprLex::scanDigitsToken()
 {
-/*  if ( state != stNumber )
+  int result = UNKNOWNTOKEN;
+  if ( state != stNumber )
   {
-    result = scanTagToken();
-    if ( result != UNKNOWNTOKEN )
-      return result;
-  }*/
-  while ( !atEnd() && isDigit() )
-    ++index;
-  end = index;
-  switch ( radix )
-  {
-    case 16: return HEXSEQ;
-    case 8 : return OCTSEQ;
-    case 2 : return BINSEQ;
-    default: return DECSEQ;
+    radix = 10;
+    result = tryScanTagToken();
   }
+  if ( result == UNKNOWNTOKEN )
+  {
+    while ( !atEnd() && isDigit() )
+      ++index;
+    end = index;
+    switch ( radix )
+    {
+      case 16: result = HEXSEQ; break;
+      case 8 : result = OCTSEQ; break;
+      case 2 : result = BINSEQ; break;
+      default: result = DECSEQ; break;
+    }
+  }
+  return result;
 }
 
 SglExprLex::ScanResult SglExprLex::scanSpecialCharToken()
 {
-  Tables::SearchResult r;
   scanSpecial();
-  r = Tables::lookup(currentSubStr(), false);
-  if (r.symbol)
-    // set 'end' according to the characters used in the lookup
-    end = start + r.keyused;
-  return searchResult2scanResult(r);
+  return lookup(false);
 }
 
-#if 0
-int SglExprLex::scanTagToken()
+int SglExprLex::tryScanTagToken()
 {
-  int tag;
-  bool compltag = false;
-
-  switch ( scanInNumber() )
+  if (current() == '0')
   {
-    case 'h': compltag = true; //fall through
-    case 'H': tag = HEXTAG; break;
-    case 'o': compltag = true; //fall through
-    case 'O': tag = OCTTAG; break;
-    case 'b': compltag = true; //fall through
-    case 'B': tag = BINTAG; break;
-    case 'D': tag = DECTAG; break;
-    default: return UNKNOWNTOKEN;
+    ++index;
+    while ( !atEnd() && isLetter() && !isHexChar() )
+      ++index;
+    end = index;
+    ScanResult sr = lookup();
+    if (sr.symbol && sr.symbol->type() == tagSym)
+      return sr.type;
   }
-  if (!compltag)
-    return tag;
-  pendingToken.enqueue(tag);
-  return CMPLTAG;
+  return UNKNOWNTOKEN;
 }
-#endif
+
 SglExprLex::ScanResult SglExprLex::scanIdentifierToken()
 {
   while ( !atEnd() && isAlphaNum() )
     ++index;
   end = index;
-  Tables::SearchResult r = Tables::lookup(currentSubStr());
-  return searchResult2scanResult(r);
+  return lookup();
 }
-#if 0
-int SglExprLex::scanMidNumberToken()
+
+SglExprLex::ScanResult SglExprLex::scanMidNumberToken()
 {
-  if ( isLetter() )
-  {
-    scanLetters();
-    return numLookup();
-  }
-  while ( !atEnd() && isSpecial() )
-    ++index;
-  end = index;
-  return numLookup();
+  return lookup(checkExact(), '0');
 }
-#endif
+
 void SglExprLex::updateState()
 {
-  if ( state != stNumber ) radix = 10;
   switch (lastScanResult.type)
   {
-/*    case HEXTAG: radix += 8; // fall through
-    case OCTTAG: redix += 6; // fall through
+    case HEXTAG: radix += 8; // fall through
+    case OCTTAG: radix += 6; // fall through
     case BINTAG: radix -= 8; // fall through
     case DECTAG:
-    case CMPLTAG: */
+    case CMPLTAG:
     case DOT:
     case DECSEQ:
     case HEXSEQ:
     case OCTSEQ:
     case BINSEQ: state = stNumber; break;
-/*    case DECSCALE:
+    case DECSCALE:
     case SCALE: state = stScale; break;
-    case GROUPCHAR: break;*/
+    case GROUPCHAR: break;
     case TEXT: state = stTopLevel; break;
     case sot: state = stText; // fall through
     case OPENPAR:
@@ -479,21 +498,30 @@ QString SglExprLex::currentSubStr() const
 {
   return expr.mid(start, end - start);
 }
-#if 0
-int SglExprLex::lookup() const
+
+SglExprLex::ScanResult SglExprLex::lookup(bool exact, char prefix)
 {
-  return doLookup(currentSubStr());
+  Tables::SearchResult r;
+  QString key = currentSubStr();
+  if (prefix)
+    key = prefix + key;
+  r = Tables::lookup(key , exact);
+  if (r.symbol)
+    // set 'end' according to the characters used in the lookup
+    end = start + r.keyused - (prefix == 0? 0: 1);
+  return searchResult2scanResult(r);
 }
 
-int SglExprLex::numLookup() const
+bool SglExprLex::checkExact()
 {
-  return doLookup('0' + currentSubStr());
+  bool exactMatch = index < size && isLetter();
+  if (exactMatch)
+    scanLetters();
+  else
+    scanSpecial();
+  return exactMatch;
 }
-int SglExprLex::doLookup(const QString& token) const
-{
-  return UNKNOWNTOKEN;
-}
-#endif
+
 /*------------------------   parser interface   -----------------------*/
 
 static inline const QString* getQString(SafeQString* s)
@@ -571,6 +599,9 @@ int SglExprLex::mGetToken(YYSTYPE* val, int* pos, int* lg)
   {
     case FUNCTION: val->func = token.symbol(); break;
     case DECSEQ  :
+    case HEXSEQ  :
+    case OCTSEQ  :
+    case BINSEQ  :
     case TEXT    : val->string = allocString(token.str()); break;
     default      : ;
   }
@@ -640,67 +671,57 @@ NumValue SglExprLex::convertStr(NumLiteral literal)
 NumValue SglExprLex::mConvertStr(NumLiteral literal)
 {
   // FIXME most of this should really be part of hmath
-/*  char base = literal.intpart.base;
-  char expbase = literal.exp.base;*/
+  NumValue result;
+  char base = literal.intpart.base;
+  char expbase = literal.exp.base;
   QByteArray str;
   if (literal.intpart.digits)
     str = getQString(literal.intpart.digits)->toLatin1();
-  NumValue result;
-//   QByteArray str = basePrefix(base);
-//   int bias = 0;
 
-/*  if ( literal.intpart.complement 
-       && literal.intpart.digits[0] - '0' >= base >> 1 )
-    bias = qstrlen(literal.intpart.digits);
-  if ( qstrlen(literal.intpart.digits) )
-    str.append(literal.intpart.digits);*/
+  int bias = 0;
+  if ( literal.intpart.complement
+       && str[0] - '0' >= base >> 1 )
+    bias = str.size();
+  if (base != 10)
+    str = basePrefix(base) + str;
   if (literal.fracpart)
   {
     str.append('.');
     str.append(getQString(literal.fracpart)->toLatin1());
   }
   HNumber value(str.data());
-/*  if ( bias )
-    value -= raise(HNumber(base), bias);
-  if ( qstrlen(literal.exp.digits) )
+  if (bias)
+    value -= HMath::raise(HNumber(base), bias);
+  if (literal.exp.digits)
   {
-    str = basePrefix(expbase);
-    bias = 0;
-    if ( literal.exp.complement
+    str = basePrefix(expbase) + getQString(literal.exp.digits)->toLatin1();
+//    bias = 0;
+/*    if ( literal.exp.complement
          && literal.exp.digits[0] - '0' >= base >> 1 )
-      bias = qstrlen(literal.exp.digits);
-    HNumber exp = HNumber(literal.exp.digits);
-    if ( bias )
+      bias = qstrlen(literal.exp.digits);*/
+    HNumber exp(str.data());
+/*    if ( bias )
       exp -= raise(HNumber(expbase), bias);
     if ( literal.exp.sign < 0 )
-      exp = - exp;
-    value *= raise(HNumber(base), exp);
-  }*/
+      exp = - exp;*/
+    value *= HMath::raise(HNumber(base), exp);
+  }
   result.val = allocNumber(value);
   result.percent = false;
   return result;
 }
 
-#if 0
-QByteArray SglExprLex::basePrefix(base)
+const char* SglExprLex::basePrefix(char base)
 {
   // FIXME this actually belongs to hmath
-  QByteArray result;
 
+  const char* result;
   switch (base)
   {
     case 2 : result = "0b"; break;
     case 8 : result = "0o"; break;
     case 16: result = "0x"; break;
-    default:;
+    default: result = "0d"; break;
   }
-  }
-
-DigitSeq SglExprLex::appendStr(DigitSeq seq, String s)
-{
-  strlist.prepend(seq.digits);
-  strlist.first().append(s);
-  seq.digits = (const char*)strlist.first();
-  return seq;
+  return result;
 }
-#endif

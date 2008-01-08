@@ -32,11 +32,13 @@ class Table: private QMap<QString, PSymbol>
   public:
     ~Table();
     void removeSymbol(PSymbol symbol);
+    bool addTagSymbol(const QString& key, char base, bool complement);
     bool addSyntaxSymbol(const QString& key, SymType aType);
     bool addOpenSymbol(const QString& key, SymType aType, const QString& close);
     bool addFunctionSymbol(const QString& key, const TypeList&, const FctList&,
                            int minParamCount, int maxParamCount);
     bool addSymbol(const QString& key, PSymbol symbol);
+    bool overloadSymbol(const QString& key, PSymbol symbol);
     bool cloneSymbol(const QString& key, PSymbol symbol);
   private:
     void checkDelete(PSymbol symbol);

@@ -108,18 +108,18 @@ class SglExprLex
     QChar current() const { return expr.at(index); };
     bool atEnd() const { return index == size; };
     static int symbolType(SymType t);
+    static int baseTag(const Symbol* symbol);
     QString currentSubStr() const;
-#if 0
-    int lookup() const;
-    int numLookup() const;
-#endif
-//     int greedyLookup();
+    bool checkExact();
+    ScanResult lookup(bool exact = true, char prefix = 0);
+
     void getNextScanResult();
     QString checkEscape(const QString& s);
     void scanLetters();
     void scanSpecial();
     bool isLetter() const;
     bool isDigit() const;
+    bool isHexChar() const;
     bool isWhitespace() const;
     bool isSpecial() const;
     bool isAlphaNum() const;
@@ -133,9 +133,9 @@ class SglExprLex
     int scanWhitespaceToken();
     int scanDigitsToken();
     ScanResult scanSpecialCharToken();
-//    int scanTagToken();
+    int tryScanTagToken();
     ScanResult scanIdentifierToken();
-//    int scanMidNumberToken();
+    ScanResult scanMidNumberToken();
     void updateState();
     void reset();
 
@@ -156,12 +156,7 @@ class SglExprLex
     static NumValue convertStr(NumLiteral literal);
     NumValue mConvertStr(NumLiteral literal);
 
-#if 0
-    DigitSeq initStr(String s, char base);
-    DigitSeq appendStr(DigitSeq seq, String s);
-    NumValue convertStr(NumLiteral literal);
-    static QByteArray basePrefix(char base);
-#endif
+    static const char* basePrefix(char base);
     SglExprLex( const SglExprLex& );
     SglExprLex& operator=( const SglExprLex& );
     SglExprLex();

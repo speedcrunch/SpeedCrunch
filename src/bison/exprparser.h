@@ -41,8 +41,8 @@
    enum yytokentype {
      UNKNOWNTOKEN = 258,
      TEXT = 259,
-     SCALECHAR = 260,
-     DECSCALECHAR = 261,
+     SCALE = 260,
+     DECSCALE = 261,
      DECTAG = 262,
      BINTAG = 263,
      OCTTAG = 264,
@@ -88,8 +88,8 @@
 /* Tokens.  */
 #define UNKNOWNTOKEN 258
 #define TEXT 259
-#define SCALECHAR 260
-#define DECSCALECHAR 261
+#define SCALE 260
+#define DECSCALE 261
 #define DECTAG 262
 #define BINTAG 263
 #define OCTTAG 264

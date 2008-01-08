@@ -86,9 +86,9 @@ static FGetToken getToken;
 /* token that starts a scale (exponent) in a bin, oct or hex encoded scientific
    number. Note that 'e' is not generally available, because it might be mistaken
    for a hexagesimal digit */
-%token SCALECHAR
+%token SCALE
 /* token that starts a scale (exponent) in decimal encoded scientific number, e.g 'E'. */
-%token DECSCALECHAR
+%token DECSCALE
 /* token that designates decimal encoding, e.g. '0d'. It is redundant, because
    this grammar automatically assumes a decimal number when a radix tag is missing.
 */
@@ -365,7 +365,7 @@ taggednumber:
     | CMPLTAG taggedbase2seq             { $$.intpart = $2;
                                            $$.intpart.complement = 1;
                                            $$.fracpart = 0;
-                                           $$.exp = initStr(0, 0); }
+                                           $$.exp = initStr(0, 10); }
     ;
 /* a decimal encoded value, with optional fraction and/or scale. If a scale
    is present, its meaning is *10^scale */
@@ -431,17 +431,17 @@ opthexdotfrac:
 /* a possibly missing scale, together with a scale indicator (E10, or E-2)
    used with decimal encoded values */
 optdecscale:
-      /* empty */                        { initStr(0, 0); }
-    | DECSCALECHAR exponent              { $$ = $2; }
-    | SCALECHAR exponent                 { $$ = $2; }
+      /* empty */                        { $$ = initStr(0, 10); }
+    | DECSCALE exponent                  { $$ = $2; }
+    | SCALE exponent                     { $$ = $2; }
     ;
 /* a possibly missing scale part of a constant given to a non-decimal base,
    together with an introducing scale character, e.g. p+33, p0xAA, p-0o72.
    If the scale carries no radix tag, a decimal encoding is assumed, regardless
    of the radix the significand is encoded to. */
 optbase2scale:
-      /* empty */                        { initStr(0, 0); }
-    | SCALECHAR exponent                 { $$ = $2; }
+      /* empty */                        { $$ = initStr(0, 10); }
+    | SCALE exponent                     { $$ = $2; }
     ;
 /* the signed integer representing a scale */
 exponent:

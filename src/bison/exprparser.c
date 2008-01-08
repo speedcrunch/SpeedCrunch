@@ -68,8 +68,8 @@
    enum yytokentype {
      UNKNOWNTOKEN = 258,
      TEXT = 259,
-     SCALECHAR = 260,
-     DECSCALECHAR = 261,
+     SCALE = 260,
+     DECSCALE = 261,
      DECTAG = 262,
      BINTAG = 263,
      OCTTAG = 264,
@@ -115,8 +115,8 @@
 /* Tokens.  */
 #define UNKNOWNTOKEN 258
 #define TEXT 259
-#define SCALECHAR 260
-#define DECSCALECHAR 261
+#define SCALE 260
+#define DECSCALE 261
 #define DECTAG 262
 #define BINTAG 263
 #define OCTTAG 264
@@ -594,8 +594,8 @@ static const yytype_uint16 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "UNKNOWNTOKEN", "TEXT", "SCALECHAR",
-  "DECSCALECHAR", "DECTAG", "BINTAG", "OCTTAG", "HEXTAG", "CMPLTAG", "DOT",
+  "$end", "error", "$undefined", "UNKNOWNTOKEN", "TEXT", "SCALE",
+  "DECSCALE", "DECTAG", "BINTAG", "OCTTAG", "HEXTAG", "CMPLTAG", "DOT",
   "OPENPAR", "CLOSEPAR", "DECSEQ", "BINSEQ", "OCTSEQ", "HEXSEQ",
   "GROUPCHAR", "SEP", "PERCENT", "NOPREFIX", "SIGN", "VARIABLE",
   "CONSTANT", "POSTFIXOP", "FUNCTION", "ASSIGN", "L0", "R1", "L2", "R3",
@@ -2030,7 +2030,7 @@ yyreduce:
     { (yyval.numliteral).intpart = (yyvsp[(2) - (2)].seq);
                                            (yyval.numliteral).intpart.complement = 1;
                                            (yyval.numliteral).fracpart = 0;
-                                           (yyval.numliteral).exp = initStr(0, 0); ;}
+                                           (yyval.numliteral).exp = initStr(0, 10); ;}
     break;
 
   case 70:
@@ -2131,7 +2131,7 @@ yyreduce:
 
   case 86:
 #line 434 "exprparser.y"
-    { initStr(0, 0); ;}
+    { (yyval.seq) = initStr(0, 10); ;}
     break;
 
   case 87:
@@ -2146,7 +2146,7 @@ yyreduce:
 
   case 89:
 #line 443 "exprparser.y"
-    { initStr(0, 0); ;}
+    { (yyval.seq) = initStr(0, 10); ;}
     break;
 
   case 90:

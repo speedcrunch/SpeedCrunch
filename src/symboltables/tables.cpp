@@ -30,6 +30,8 @@ struct CSyntaxSymbol
   { " =", assign },
   { " ;", separator },
   { " ,", group },
+  { " p", scale },
+  { " e", decscale },
   { " posscale", signPlus },
   { " negscale", signMinus },
 };
@@ -81,6 +83,21 @@ struct CNFct1Symbol
   { " sin", HMath::sin },
 };
 static const int cnt5 = sizeof(CNFct1Symbols)/sizeof(struct CNFct1Symbol);
+
+struct CTagSymbol
+{
+  const char* key;
+  char base;
+  bool cmpl;
+} CTagSymbols[] =
+{
+  { " x", 16, false },
+  { " xs", 16, true },
+  { " d", 10, false },
+  { " o",  8, false },
+  { " b",  2, false },
+};
+static const int cnt6 = sizeof(CTagSymbols)/sizeof(struct CTagSymbol);
 
 Tables* Tables::tables = 0;
 
@@ -141,6 +158,11 @@ void Tables::init()
     TypeList paramType("n");
     fcts.nfct1 = ps->fct;
     builtinTable().addFunctionSymbol(ps->key, paramType, fcts, 1, 1);
+  }
+  for (int i = -1; ++i < cnt6; )
+  {
+    struct CTagSymbol* ps = CTagSymbols + i;
+    builtinTable().addTagSymbol(ps->key, ps->base, ps->cmpl);
   }
 }
 
@@ -272,6 +294,23 @@ bool Table::addSymbol(const QString& key, PSymbol symbol)
   return true;
 }
 
+bool Table::overloadSymbol(const QString& key, PSymbol symbol)
+{
+  if (!symbol)
+    return false;
+  const_iterator p = lookup(key);
+  if (p == constEnd())
+  {
+    ReferenceSymbol* rf = new ReferenceSymbol(this);
+    *rf = *symbol;
+    return addSymbol(key, rf);
+  }
+  if (p.value()->type() != referenceSym)
+    return false;
+  *static_cast<ReferenceSymbol*>(p.value()) = *symbol;
+  return true;
+}
+
 bool Table::cloneSymbol(const QString& key, PSymbol symbol)
 {
   return addSymbol(key, symbol->clone(this));
@@ -300,6 +339,11 @@ bool Table::addFunctionSymbol(const QString& key, const TypeList& t,
                const FctList& f, int minParamCount, int maxParamCount)
 {
   return addSymbol(key, new FunctionSymbol(this, t, f, minParamCount, maxParamCount));
+}
+
+bool Table::addTagSymbol(const QString& key, char base, bool complement)
+{
+  return addSymbol(key, new TagSymbol(this, base, complement));
 }
 
 void Table::clear()

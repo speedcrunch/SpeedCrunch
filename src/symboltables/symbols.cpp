@@ -240,6 +240,21 @@ CloseSymbol::CloseSymbol(void* aOwner, SymType open)
 {
 }
 
+TagSymbol::TagSymbol(void* aOwner, char aBase, bool iscomplement)
+  : Symbol(aOwner), m_base(aBase), m_compl(iscomplement)
+{
+}
+
+SymType TagSymbol::type() const
+{
+  return tagSym;
+}
+
+PSymbol TagSymbol::clone(void* aOwner) const
+{
+  return new TagSymbol(aOwner, m_base, m_compl);
+}
+
 PSymbol CloseSymbol::clone(void* aOwner) const
 {
   return 0;

@@ -46,6 +46,7 @@ typedef enum
   ansSym = 'A',
   varSym = 'V',
   referenceSym = 'R',
+  tagSym = 'T',
   closeSym = ')',
   dot = '.',
   assign = '=',
@@ -55,6 +56,8 @@ typedef enum
   openPar = '(',
   quote = '"',
   group = ',',
+  scale = 'S',
+  decscale = 'E',
 } SymType;
 
 typedef enum
@@ -151,8 +154,6 @@ class Symbol
     void* m_owner;
 };
 
-typedef const Symbol* cPSymbol;
-
 class SyntaxSymbol: public Symbol
 {
   public:
@@ -184,6 +185,19 @@ class OpenSymbol: public SyntaxSymbol
   private:
     QString m_end;
     CloseSymbol* closeSymbol;
+};
+
+class TagSymbol: public Symbol
+{
+  public:
+    TagSymbol(void* aOwner, char aBase, bool iscomplement);
+    char base() const { return m_base; };
+    bool complement() const { return m_compl; };
+    SymType type() const;
+    PSymbol clone(void* aOwner) const;
+  private:
+    char m_base;
+    bool m_compl;
 };
 
 class FunctionSymbolIntf: public Symbol
