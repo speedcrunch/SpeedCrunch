@@ -151,6 +151,8 @@ class SglExprLex
     NumValue mCallFunction(Func f, Params params);
     static NumValue str2Val(SafeQString*);
     NumValue mStr2Val(SafeQString*);
+    static DigitSeq appendStr(DigitSeq ds, SafeQString* seq);
+    DigitSeq mAppendStr(DigitSeq ds, SafeQString* seq);
     static NumValue convertStr(NumLiteral literal);
     NumValue mConvertStr(NumLiteral literal);
 

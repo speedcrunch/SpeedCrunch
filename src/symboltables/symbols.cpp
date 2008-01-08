@@ -61,15 +61,38 @@ void Variant::operator=(const QString& str)
   m_type = TText;
 }
 
+int Variant::match(VariantType t) const
+{
+  switch (t)
+  {
+    case TEmpty: return 0;
+    case TInteger:
+      if (type() == TNumeric && isInteger())
+        return 0; // fall through
+    case TNumeric:
+      if (type() == TError || (type() == TNumeric && isNan()))
+        return FLOAT_NANOPERAND; // fall through
+    default:
+      if (type() != t)
+        return SYMBOLS_TYPE_MISMATCH;
+  }
+  return 0;
+}
+
 bool Variant::isNum() const
 {
-  return m_type == TNumeric || m_type == TError || !isNan();
+  switch (match(TNumeric))
+  {
+    case 0:
+    case FLOAT_NANOPERAND: return true;
+    default: return false;
+  }
 }
 
 void TypeList::appendType(VariantType t, int cnt)
 {
   while (--cnt >= 0)
-    QList<VariantType>::append(t);
+    append(t);
 }
 
 bool ParamList::allNums() const
@@ -82,7 +105,7 @@ bool ParamList::allNums() const
 
 bool ParamList::isType(int index, VariantType t) const
 {
-  return index <= size() && at(index).type() == t;
+  return index <= size() && at(index).match(t) == 0;
 }
 
 bool ParamList::isNum(int index) const
@@ -90,18 +113,31 @@ bool ParamList::isNum(int index) const
   return index <= size() && at(index).isNum();
 }
 
-bool TypeList::match(const ParamList& params) const
+TypeCheck ParamList::match(const TypeList& types) const
 {
-  if (params.size() < size()) return false;
-  for (int i = -1; ++i < size();)
-    if (!params.isType(i, at(i)))
-      switch (at(i))
-      {
-        case TEmpty: continue;
-        case TNumeric: if (params.isNum(i)) continue; // fall through
-        default: return false;
-      };
-  return true;
+  TypeCheck result;
+  result.error = 0;
+  int limit = qMin(types.size(), size());
+  for (result.index = -1; ++result.index < limit && result.error == 0;)
+    result.error = at(result.index).match(types.at(result.index));
+  return result;
+}
+
+TypeList::TypeList(const char* s)
+{
+  for (const char* p = s; *p != 0; ++p)
+  {
+    VariantType t;
+    switch(*p)
+    {
+      case 't': t = TText; break;
+      case 'e': t = TError; break;
+      case 'i': t = TInteger; break;
+      case 'n': t = TNumeric; break;
+      default : t = TEmpty;
+    }
+    appendType(t);
+  }
 }
 
 bool FctList::match(const ParamList& params) const
@@ -165,7 +201,7 @@ Variant FctList::eval(const ParamList& params) const
     }
     if (vfct)
       return vfct(params);
-    return SYMBOLS_INVALID_PARAMTYPE;
+    return SYMBOLS_TYPE_MISMATCH;
 }
 
 Symbol::~Symbol()
@@ -259,17 +295,24 @@ SymType FunctionSymbol::type() const
 
 bool FunctionSymbol::match(const ParamList& params) const
 {
-  return checkCount(params)
-         && fcts.match(params)
-         && types.match(params);
+  if (!checkCount(params)
+      || !fcts.match(params))
+    return false;
+  switch (params.match(types).error)
+  {
+    case 0:
+    case FLOAT_NANOPERAND: return true;
+    default: return false;
+  }
 }
 
 Variant FunctionSymbol::eval(const ParamList& params) const
 {
   if (!checkCount(params))
     return SYMBOLS_INVALID_PARAMCOUNT;
-  if (!types.match(params))
-    return SYMBOLS_INVALID_PARAMTYPE;
+  TypeCheck tc = params.match(types);
+  if (tc.error != 0)
+    return tc.error;
   return fcts.eval(params);
 }
 

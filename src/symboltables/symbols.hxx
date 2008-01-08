@@ -54,12 +54,14 @@ typedef enum
   signMinus = 'M',
   openPar = '(',
   quote = '"',
+  group = ',',
 } SymType;
 
 typedef enum
 {
   TEmpty,
   TError,
+  TInteger,
   TNumeric,
   TText,
 } VariantType;
@@ -79,13 +81,27 @@ class Variant: protected HNumber
     operator const HNumber* () const { return this; };
     operator int () const { return error(); };
     operator const QString& () const { return text; };
+    int match(VariantType) const;
     bool isNum() const;
-    bool isText() const { return type() == TText; };
     VariantType type() const { return m_type; };
   private:
     VariantType m_type;
     QString text;
 };
+
+class TypeList: public QList<VariantType>
+{
+  public:
+    TypeList(){};
+    TypeList(const char* desc);
+    void appendType(VariantType t, int count = 1);
+};
+
+typedef struct
+{
+  int index;
+  int error;
+} TypeCheck;
 
 class ParamList: public QList<Variant>
 {
@@ -93,13 +109,7 @@ class ParamList: public QList<Variant>
     bool allNums() const;
     bool isType(int index, VariantType) const;
     bool isNum(int index) const;
-};
-
-class TypeList: protected QList<VariantType>
-{
-  public:
-    void appendType(VariantType t, int count = 1);
-    bool match(const ParamList&) const;
+    TypeCheck match(const TypeList&) const;
 };
 
 typedef HNumber (*Nfct0)();

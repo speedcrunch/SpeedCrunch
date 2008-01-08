@@ -29,6 +29,7 @@ struct CSyntaxSymbol
   { " .", dot },
   { " =", assign },
   { " ;", separator },
+  { " ,", group },
   { " posscale", signPlus },
   { " negscale", signMinus },
 };
@@ -43,7 +44,6 @@ struct CParSymbol
 {
   { " (", " )", openPar },
   { " \"", " \"", quote },
-  { " '", " ", quote },
 };
 static const int cnt2 = sizeof(CParSymbols)/sizeof(struct CParSymbol);
 
@@ -62,14 +62,25 @@ struct CVFctSymbol
 {
   const char* key;
   Vfct fct;
+  const char* paramtypes;
   int mincount;
   int maxcount;
 } CVFctSymbols[] =
 {
-  { " def", Tables::define, 2, 3 },
-  { " undef", Tables::undefine, 1, 2 },
+  { " def", Tables::define, "ttt", 2, 3 },
+  { " undef", Tables::undefine, "ti", 1, 2 },
 };
 static const int cnt4 = sizeof(CVFctSymbols)/sizeof(struct CVFctSymbol);
+
+struct CNFct1Symbol
+{
+  const char* key;
+  Nfct1 fct;
+} CNFct1Symbols[] =
+{
+  { " sin", HMath::sin },
+};
+static const int cnt5 = sizeof(CNFct1Symbols)/sizeof(struct CNFct1Symbol);
 
 Tables* Tables::tables = 0;
 
@@ -118,10 +129,18 @@ void Tables::init()
   for (int i = -1; ++i < cnt4; )
   {
     struct CVFctSymbol* ps = CVFctSymbols + i;
-    TypeList paramType;
+    TypeList paramType(ps->paramtypes);
     fcts.vfct = ps->fct;
     builtinTable().addFunctionSymbol(ps->key, paramType, fcts,
                                      ps->mincount, ps->maxcount);
+  }
+  fcts.clear();
+  for (int i = -1; ++i < cnt5; )
+  {
+    struct CNFct1Symbol* ps = CNFct1Symbols + i;
+    TypeList paramType("n");
+    fcts.nfct1 = ps->fct;
+    builtinTable().addFunctionSymbol(ps->key, paramType, fcts, 1, 1);
   }
 }
 
@@ -186,10 +205,6 @@ Variant Tables::escape(const ParamList& params)
 
 Variant Tables::define(const ParamList& params)
 {
-  TypeList t;
-  t.appendType(TText, 2);
-  if (!t.match(params))
-    return SYMBOLS_INVALID_PARAMTYPE;
   PSymbol symbol = builtinLookup(params.at(0)).symbol;
   if (!symbol)
     return TABLE_SYMBOL_NOT_FOUND;
@@ -201,20 +216,19 @@ Variant Tables::define(const ParamList& params)
   {
     if (params.size() != 3)
       return TABLE_MISSING_CLOSE;
-    if (!params.isType(2, TText))
-      return SYMBOLS_INVALID_PARAMTYPE;
     ok = globalTable().addOpenSymbol(key, symbol->type(), params.at(2));
   }
   else
+  {
+    if (params.size() != 2)
+      return SYMBOLS_INVALID_PARAMCOUNT;
     ok = globalTable().cloneSymbol(key, symbol);
+  }
   return ok? 0 : SYMBOLS_CLONE_ERROR;
 }
 
 Variant Tables::undefine(const ParamList& params)
 {
-  if (!params.isType(0, TText)
-      || (params.size() == 2 && !params.isType(1, TNumeric)))
-    return SYMBOLS_INVALID_PARAMTYPE;
   int firstindex =  -1;
   if (params.size() == 2)
   {

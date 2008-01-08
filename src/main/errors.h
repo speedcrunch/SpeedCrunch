@@ -106,7 +106,7 @@
 #define SYMBOLS_INVALID_PARAMCOUNT 60
 
 /* parameter type mismatch */
-#define SYMBOLS_INVALID_PARAMTYPE  61
+#define SYMBOLS_TYPE_MISMATCH      61
 
 /* a symbol could not be cloned, most probably because it
    was of a special type, like a close parenthesis */

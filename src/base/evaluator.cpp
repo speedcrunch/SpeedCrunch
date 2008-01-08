@@ -298,14 +298,17 @@ Evaluator::Evaluator()
   clear();
 #ifdef _BISON
   QStringList script;
-  script << "\\escape \\(\\'@ \\)"
-         << "@def @(@'\" @;@'\" @;@'\" @)"
+  script << "\\escape \\(\\\"@\\\"\\)"
+         << "@def @(@\"\"@\"@;@\"\"@\"@;@\"\"@\"@)"
          << "@def @(\"(\"@;\"(\"@;\")\"@)"
          << "@def (\";\"@;\";\")"
          << "@def (\"def\";\"def\")"
          << "def(\"escape\";\"esc\")"
          << "esc \"\\\""
-         << "\\undef (\"esc\"; 0)"
+         << "def(\",\";\",\")"
+         << "\\undef (\"esc\"; 0,00)"
+         << "\\def (\".\";\".\")"
+         << "\\sin 0.3"
       ;
   SglExprLex::self().run(script);
 #endif
@@ -1514,7 +1517,6 @@ QString Evaluator::autoFix( const QString& expr )
 {
 
 #ifdef _BISON
-  // FIXME autofix is currently broken
 //  SglExprLex::self().autoFix(expr);
 #endif
 
