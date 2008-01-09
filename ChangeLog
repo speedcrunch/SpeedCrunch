@@ -4,6 +4,7 @@ New features:
   preliminary support of logic functions
   extended output of real-valued numbers to non-decimal modes
   arithmetic integer divide and modulo
+  allow nPr for real-valued arguments
 
 New functions:
   ERF: the normalized error function (related to normal distribution)
@@ -17,6 +18,8 @@ Improvements and bug fixes:
   improved binomCdf evaluation allows n to be around 20000 now
   testevaluator independent of locale (does not use ',' any more)
   bugfix in the math engine (float_frac) that could cause memory corruption
+  bugfix in the pochhammer symbol evaluating routine, effecting nPr
+    when n and r are negative integers, and n == r-1 holds
 
 SpeedCrunch 0.9
 ---------------------

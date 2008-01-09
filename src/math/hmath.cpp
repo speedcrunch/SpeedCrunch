@@ -1154,13 +1154,6 @@ HNumber HMath::nCr( const HNumber& n, const HNumber& r )
 
 HNumber HMath::nPr( const HNumber& n, const HNumber& r )
 {
-/*  if( !n.isInteger() || !r.isInteger() )
-  {
-    int error = checkNaNParam(*n.d, r.d);
-    if (error != 0)
-      return HNumber::nan(error);
-    return HNumber::nan(HMATH_INTEGER_REQUIRED);
-  }*/
   return factorial(n, (n-r+1));
 }
 

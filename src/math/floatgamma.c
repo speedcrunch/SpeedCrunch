@@ -1,6 +1,6 @@
 /* floatgamma.c: Gamma function, based on floatnum. */
 /*
-    Copyright (C) 2007 Wolf Lammen.
+    Copyright (C) 2007, 2008 Wolf Lammen.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -104,7 +104,7 @@ _pochhammer_su(
   {
   case 0:
     float_copy(x, &c1, EXACT);
-  case 1: /* fall through */
+  case 1:
     break;
   default:
     float_create(&factor);
@@ -116,93 +116,6 @@ _pochhammer_su(
   }
   return result;
 }
-
-#if 0
-static char
-_lnpochhammerbigx(
-  floatnum x,
-  floatnum delta,
-  int digits)
-{
-  floatstruct tmp1, tmp2, tmp3;
-  char result;
-
-  if (float_getexponent(delta) < -digits)
-  {
-    _ln(x, 5);
-    return float_mul(x, x, delta, 5);
-  }
-  float_create(&tmp1);
-  float_create(&tmp2);
-  float_div(&tmp1, delta, x, digits);
-  _lnxplus1(&tmp1, digits);
-  float_sub(&tmp2, x, &c1Div2, digits+2);
-  float_mul(&tmp2, &tmp2, &tmp1, digits);
-  if (float_getexponent(x) < digits)
-  {
-    float_create(&tmp3);
-    float_add(&tmp3, x, delta, digits+2);
-    lngammaseries(&tmp3, digits);
-    float_add(&tmp2, &tmp3, &tmp2, digits+1);
-    float_clone(&tmp3, x, digits+2);
-    lngammaseries(&tmp3, digits);
-    float_sub(&tmp2, &tmp2, &tmp3, digits);
-    float_free(&tmp3);
-  }
-  _ln(x, digits);
-  float_add(x, x, &tmp1, digits+2);
-  float_sub(x, x, &c1, digits+2);
-  result = float_mul(x, x, delta, digits+2)
-           && float_add(x, x, &tmp1, digits+2);
-  float_free(&tmp1);
-  float_free(&tmp2);
-  return result;
-}
-
-static int
-_shiftarg(
-  floatnum x,
-  floatnum revfactor,
-  int digits)
-{
-  int ofs;
-
-  ofs = _ofs(x, digits);
-  if (ofs > 0)
-  {
-    float_clone(revfactor, x, digits+2);
-    _pochhammer_su(revfactor, ofs+1, digits);
-    addi(x, x, ofs+1, digits+2);
-  }
-  else
-    float_clone(revfactor, &c1, EXACT);
-  return ofs;
-}
-
-static char
-_pochhammergt0deltalt1(
-  floatnum x,
-  floatnum delta,
-  int digits)
-{
-  floatstruct tmp1, tmp2;
-  int ofs;
-  char result;
-
-  float_create(&tmp1);
-  float_create(&tmp2);
-  ofs = _shiftarg(x, &tmp1, digits);
-  float_add(&tmp2, x, delta, digits+2);
-  _pochhammer_su(&tmp2, ofs, digits);
-  result = _lnpochhammerbigx(x, delta, digits);
-  if (result)
-    float_div(delta, &tmp1, &tmp2, digits);
-  float_free(&tmp2);
-  float_free(&tmp1);
-  return result;
-}
-
-#endif
 
 /* evaluates ln(Gamma(x)) for all those x big
    enough to let the asymptotic series converge directly.
@@ -487,7 +400,7 @@ _pochhammer_i(
       float_setzero(x);
       result = 1;
     }
-    else if (float_getsign(x) >= 0 && float_cmp(x, n) <= 0)
+    else if (float_getsign(x) > 0 && float_cmp(x, n) <= 0)
     {
       /* x and x+n have opposite signs, meaning at one point
       you have to divide by 0 */
