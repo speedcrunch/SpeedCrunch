@@ -1,7 +1,7 @@
 /* This file is part of the SpeedCrunch project
    Copyright (C) 2004, 2005, 2007 Ariya Hidayat <ariya@kde.org>
                  2005-2006 Johan Thelin <e8johan@gmail.com>
-                 2007 Helder Correia <helder.pereira.correia@gmail.com>
+                 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -56,15 +56,12 @@ void Settings::setDecimalPoint(const QString& val) //refdp
 
 Settings::Settings()
 {
-//  angleMode       = "degree"; //refan
-  angleMode       = Degree;
+  angleMode       = Radian;
   saveHistory     = true;
   saveVariables   = true;
   autoComplete    = true;
   autoCalc        = true;
-//  decimalPoint    = QString(); // refdp
-  setDecimalPoint(QString());
-  //language        = QString();
+  setDecimalPoint( QString() );
   minimizeToTray  = false;
   stayAlwaysOnTop = false;
 
@@ -121,28 +118,27 @@ void Settings::load()
 
   QString key = SETTINGSKEY;
 
-//  angleMode      = settings.value( key + "/General/AngleMode",      "degree"  ).toString(); //refan
   angleMode = Radian;
-  if (settings.value( key + "/General/AngleMode",      "degree"  ).toString() == "degree")
+  if (settings.value( key + "/General/AngleMode", "Radian" ).toString() == "Degree")
     angleMode = Degree;
   saveHistory    = settings.value( key + "/General/SaveHistory",    true      ).toBool();
   saveVariables  = settings.value( key + "/General/SaveVariables",  true      ).toBool();
   autoComplete   = settings.value( key + "/General/AutoComplete",   true      ).toBool();
   autoCalc       = settings.value( key + "/General/AutoCalc",       true      ).toBool();
-  setDecimalPoint(settings.value( key + "/General/DecimalPoint",   QString() ).toString());
+  setDecimalPoint( settings.value( key + "/General/DecimalPoint",   QString() ).toString());
   //language       = settings.value( key + "/General/Language",       QString() ).toString();
   minimizeToTray = settings.value( key + "/General/MinimizeToTray", false     ).toBool();
 
   QString formatStr = settings.value( key + "/View/Format" ).toString();
   if ( formatStr == "Fixed" )       format = 'f';
   if ( formatStr == "Engineering" ) format = 'n';
-  if ( formatStr == "Exp" )         format = 'e';
+  if ( formatStr == "Scientific" )  format = 'e';
   if ( formatStr == "General" )     format = 'g';
   if ( formatStr == "Hexadecimal" ) format = 'h';
   if ( formatStr == "Octal" )       format = 'o';
   if ( formatStr == "Binary" )      format = 'b';
   decimalDigits = settings.value( key + "/View/DecimalDigits", -1 ).toInt();
-  if ( decimalDigits > DECPRECISION )         decimalDigits = DECPRECISION;
+  if ( decimalDigits > DECPRECISION ) decimalDigits = DECPRECISION;
 
   showClearInputButton = settings.value( key + "/Appearance/ShowClearInputButton", true ).toBool();
   showEvaluateButton   = settings.value( key + "/Appearance/ShowEvaluateButton",   true ).toBool();
@@ -210,7 +206,7 @@ void Settings::load()
       QString expr;
       for ( int c = 0; c < str.length(); c++ )
         if ( str[c] >= 32 )
-					expr.append( str[c] );
+          expr.append( str[c] );
       history.append( expr );
     }
   }
@@ -246,23 +242,26 @@ void Settings::save()
 
   QString key = SETTINGSKEY;
 
-  settings.setValue( key + "/General/AngleMode",      angleMode      );
-  settings.setValue( key + "/General/SaveHistory",    saveHistory    );
-  settings.setValue( key + "/General/SaveVariables",  saveVariables  );
-  settings.setValue( key + "/General/AutoComplete",   autoComplete   );
-  settings.setValue( key + "/General/AutoCalc",       autoCalc       );
+  QString angleStr;
+  if      ( angleMode == Settings::Radian ) angleStr = "Radian";
+  else if ( angleMode == Settings::Degree ) angleStr = "Degree";
+  settings.setValue( key + "/General/AngleMode",      angleStr      );
+  settings.setValue( key + "/General/SaveHistory",    saveHistory   );
+  settings.setValue( key + "/General/SaveVariables",  saveVariables );
+  settings.setValue( key + "/General/AutoComplete",   autoComplete  );
+  settings.setValue( key + "/General/AutoCalc",       autoCalc      );
   settings.setValue( key + "/General/DecimalPoint",   autoDetectDot? QString(): decimalPoint() );
-  //settings.setValue( key + "/General/Language",       language       );
+  //settings.setValue( key + "/General/Language",       language      );
   settings.setValue( key + "/General/MinimizeToTray", minimizeToTray );
 
   QString formatStr;
-  if ( format == 'f' ) formatStr = "Fixed";
-  if ( format == 'n' ) formatStr = "Engineering";
-  if ( format == 'e' ) formatStr = "Exp";
-  if ( format == 'g' ) formatStr = "General";
-  if ( format == 'h' ) formatStr = "Hexadecimal";
-  if ( format == 'o' ) formatStr = "Octal";
-  if ( format == 'b' ) formatStr = "Binary";
+  if      ( format == 'f' ) formatStr = "Fixed";
+  else if ( format == 'n' ) formatStr = "Engineering";
+  else if ( format == 'e' ) formatStr = "Scientific";
+  else if ( format == 'g' ) formatStr = "General";
+  else if ( format == 'h' ) formatStr = "Hexadecimal";
+  else if ( format == 'o' ) formatStr = "Octal";
+  else if ( format == 'b' ) formatStr = "Binary";
   settings.setValue( key + "/View/Format",        formatStr     );
   settings.setValue( key + "/View/DecimalDigits", decimalDigits );
 

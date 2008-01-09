@@ -100,6 +100,8 @@ public:
   QAction* digits8;
   QAction* digits15;
   QAction* digits50;
+  QAction* radian;
+  QAction* degree;
   QAction* focusAndSelectInput;
   QAction* showClearButton;
   QAction* showEvalButton;
@@ -121,48 +123,50 @@ class CrunchPrivate
 public:
   Qt::WindowFlags flags;
 
-  CrunchActions* actions;
-  QActionGroup *digitsGroup;
-  Evaluator* eval;
+  CrunchActions * actions;
+  QActionGroup  * digitsGroup;
+  QActionGroup  * angleGroup;
 
-  Editor *editor;
-  AutoHideLabel* autoCalcLabel;
-  TipWidget* tip;
+  Evaluator * eval;
+  Editor    * editor;
+  Result    * result;
+  KeyPad    * keypad;
 
-  Result* result;
-  KeyPad* keypad;
-  QPushButton* clearInputButton;
+  bool            autoAns;
+  AutoHideLabel * autoCalcLabel;
+  TipWidget     * tip;
 
-  QPushButton* evalButton;
-  QRadioButton* degButton;
-  QRadioButton* radButton;
+  QPushButton * clearInputButton;
+  QPushButton * evalButton;
 
-  QRadioButton* hexButton;
-  QRadioButton* decButton;
-  QRadioButton* octButton;
-  QRadioButton* binButton;
+  //QRadioButton * binButton;
+  //QRadioButton * octButton;
+  //QRadioButton * decButton;
+  //QRadioButton * hexButton;
 
-  bool autoAns;
+  //QRadioButton * radButton;
+  //QRadioButton * degButton;
 
-  QSystemTrayIcon* trayIcon;
-  bool trayNotify;
+  QSystemTrayIcon * trayIcon;
+  bool              trayNotify;
 
   QMenu * sessionMenu;
   QMenu * editMenu;
   QMenu * baseMenu;
   QMenu * decimalBaseSubmenu;
+  QMenu * angleMenu;
   QMenu * settingsMenu;
   QMenu * helpMenu;
 
-  HistoryDock* historyDock;
-  FunctionsDock* functionsDock;
-  VariablesDock* variablesDock;
-  ConstantsDock* constantsDock;
+  HistoryDock   * historyDock;
+  FunctionsDock * functionsDock;
+  VariablesDock * variablesDock;
+  ConstantsDock * constantsDock;
 
-  ConfigDlg* configDlg;
-  InsertFunctionDlg* insertFunctionDlg;
-  InsertVariableDlg* insertVariableDlg;
-  DeleteVariableDlg* deleteVariableDlg;
+  ConfigDlg         * configDlg;
+  InsertFunctionDlg * insertFunctionDlg;
+  InsertVariableDlg * insertVariableDlg;
+  DeleteVariableDlg * deleteVariableDlg;
 };
 
 static void setWidgetLayoutAccordingToLanguageDirection( QWidget * widget );
@@ -179,7 +183,6 @@ Crunch::Crunch(): QMainWindow()
   d->trayNotify = true;
 
   // Outer widget and layout
-
   QWidget *box = new QWidget( this );
   setCentralWidget( box );
 
@@ -187,54 +190,11 @@ Crunch::Crunch(): QMainWindow()
   outerBoxLayout->setMargin( 5 );
   outerBoxLayout->setSpacing( 0 );
 
-  // Top layout for deg/rad buttons
-
-  QHBoxLayout *topboxLayout = new QHBoxLayout();
-
-  QWidget* radixBox = new QWidget( this );
-  QHBoxLayout *radixLayout = new QHBoxLayout();
-  radixLayout->setMargin( 0 );
-  radixBox->setLayout( radixLayout );
-  d->binButton = new QRadioButton( tr( "Bin" ), radixBox );
-  d->octButton = new QRadioButton( tr( "Oct" ), radixBox );
-  d->decButton = new QRadioButton( tr( "Dec" ), radixBox );
-  d->hexButton = new QRadioButton( tr( "Hex" ), radixBox );
-  d->binButton->setFocusPolicy( Qt::ClickFocus );
-  d->octButton->setFocusPolicy( Qt::ClickFocus );
-  d->decButton->setFocusPolicy( Qt::ClickFocus );
-  d->hexButton->setFocusPolicy( Qt::ClickFocus );
-  connect( d->binButton, SIGNAL( toggled( bool ) ), SLOT( radixChanged() ) );
-  connect( d->octButton, SIGNAL( toggled( bool ) ), SLOT( radixChanged() ) );
-  connect( d->decButton, SIGNAL( toggled( bool ) ), SLOT( radixChanged() ) );
-  connect( d->hexButton, SIGNAL( toggled( bool ) ), SLOT( radixChanged() ) );
-  radixLayout->addWidget( d->binButton );
-  radixLayout->addWidget( d->octButton );
-  radixLayout->addWidget( d->decButton );
-  radixLayout->addWidget( d->hexButton );
-
-  QSpacerItem *spacer = new QSpacerItem( 50, 0, QSizePolicy::MinimumExpanding, QSizePolicy::Minimum );
-  topboxLayout->addWidget( radixBox );
-  topboxLayout->addItem( spacer );
-
-  QWidget* angleBox = new QWidget( this );
-  d->radButton = new QRadioButton( tr( "&Radians" ), angleBox );
-  d->degButton = new QRadioButton( tr( "&Degrees" ), angleBox );
-  d->radButton->setFocusPolicy( Qt::ClickFocus );
-  d->degButton->setFocusPolicy( Qt::ClickFocus );
-  connect( d->radButton, SIGNAL( toggled( bool ) ), SLOT( angleModeChanged() ) );
-  connect( d->degButton, SIGNAL( toggled( bool ) ), SLOT( angleModeChanged() ) );
-  topboxLayout->addWidget( d->radButton );
-  topboxLayout->addWidget( d->degButton );
-
-  outerBoxLayout->addLayout( topboxLayout );
-
   // Result list
-
   d->result = new Result( box );
   outerBoxLayout->addWidget( d->result );
 
   // Layout for editor and evaluation button
-
   QHBoxLayout *inputBoxLayout = new QHBoxLayout();
   inputBoxLayout->setMargin( 5 );
   inputBoxLayout->setSpacing( 5 );
@@ -262,7 +222,6 @@ Crunch::Crunch(): QMainWindow()
   Settings::self()->load();
 
   // Keypad
-
   QHBoxLayout *keypadLayout = new QHBoxLayout();
 
   d->keypad = new KeyPad( box );
@@ -276,7 +235,6 @@ Crunch::Crunch(): QMainWindow()
   outerBoxLayout->addLayout( keypadLayout );
 
   // Docks
-
   d->historyDock = new HistoryDock( this );
   d->historyDock->setObjectName( "HistoryWindow" );
   addDockWidget( Qt::RightDockWidgetArea, d->historyDock );
@@ -311,7 +269,6 @@ Crunch::Crunch(): QMainWindow()
   d->tip->hide();
 
   // Connect signals and slots
-
   connect( d->clearInputButton, SIGNAL( clicked() ), SLOT( clearInput() ) );
   connect( d->evalButton, SIGNAL( clicked() ), SLOT( returnPressed() ) );
   connect( d->editor, SIGNAL( returnPressed() ), SLOT( returnPressed() ) );
@@ -328,13 +285,11 @@ Crunch::Crunch(): QMainWindow()
   connect( d->keypad, SIGNAL( evaluate() ), d->editor, SLOT( evaluate() ) );
 
   // Initialize settings
-
   d->insertFunctionDlg = new InsertFunctionDlg( this );
   d->insertVariableDlg = 0;
   d->deleteVariableDlg = 0;
 
   setWindowTitle( tr( "SpeedCrunch" ) );
-  d->degButton->setChecked( true );
   createUI();
   applySettings();
   restoreDocks();
@@ -346,6 +301,7 @@ Crunch::Crunch(): QMainWindow()
 
   setWidgetsLayoutAccordingToLanguageDirection();
 
+  resize( 300, 400 );
   QTimer::singleShot( 0, this, SLOT(activate()) );
 }
 
@@ -361,7 +317,6 @@ void Crunch::createUI()
   // create all the actions
   d->actions->sessionSave         = new QAction( tr("&Save..."),                 this );
   d->actions->sessionQuit         = new QAction( tr("&Quit"),                    this );
-
   d->actions->focusAndSelectInput = new QAction( tr("&Select Input"),            this );
   d->actions->editCopy            = new QAction( tr("&Copy"),                    this );
   d->actions->editPaste           = new QAction( tr("&Paste"),                   this );
@@ -373,22 +328,21 @@ void Crunch::createUI()
   d->actions->clearDisplay        = new QAction( tr("Clear &Display"),           this );
   d->actions->clearHistory        = new QAction( tr("Clear &History"),           this );
   d->actions->clearVariables      = new QAction( tr("Clear V&ariables"),         this );
-
-  d->actions->viewGeneral         = new QAction( tr("&General"),                 0    );
-  d->actions->viewFixed           = new QAction( tr("&Fixed Decimal"),           0    );
-  d->actions->viewEngineering     = new QAction( tr("&Engineering"),             0    );
-  d->actions->viewScientific      = new QAction( tr("&Scientific"),              0    );
-  d->actions->viewHexadec         = new QAction( tr("&Hexadecimal"),             0    );
-  d->actions->viewOctal           = new QAction( tr("&Octal"),                   0    );
-  d->actions->viewBinary          = new QAction( tr("&Binary"),                  0    );
-
-  d->actions->digitsAuto          = new QAction( tr("&Automatic Precision"),     0    );
-  d->actions->digits2             = new QAction( tr("&2 Decimal Digits"),        0    );
-  d->actions->digits3             = new QAction( tr("&3 Decimal Digits"),        0    );
-  d->actions->digits8             = new QAction( tr("&8 Decimal Digits"),        0    );
-  d->actions->digits15            = new QAction( tr("&15 Decimal Digits"),       0    );
-  d->actions->digits50            = new QAction( tr("&50 Decimal Digits"),       0    );
-
+  d->actions->viewGeneral         = new QAction( tr("&General"),                 this );
+  d->actions->viewFixed           = new QAction( tr("&Fixed Decimal"),           this );
+  d->actions->viewEngineering     = new QAction( tr("&Engineering"),             this );
+  d->actions->viewScientific      = new QAction( tr("&Scientific"),              this );
+  d->actions->viewHexadec         = new QAction( tr("&Hexadecimal"),             this );
+  d->actions->viewOctal           = new QAction( tr("&Octal"),                   this );
+  d->actions->viewBinary          = new QAction( tr("&Binary"),                  this );
+  d->actions->digitsAuto          = new QAction( tr("&Automatic Precision"),     this );
+  d->actions->digits2             = new QAction( tr("&2 Decimal Digits"),        this );
+  d->actions->digits3             = new QAction( tr("&3 Decimal Digits"),        this );
+  d->actions->digits8             = new QAction( tr("&8 Decimal Digits"),        this );
+  d->actions->digits15            = new QAction( tr("&15 Decimal Digits"),       this );
+  d->actions->digits50            = new QAction( tr("&50 Decimal Digits"),       this );
+  d->actions->radian              = new QAction( tr("&Radian"),                  this );
+  d->actions->degree              = new QAction( tr("&Degree"),                  this );
   d->actions->showClearButton     = new QAction( tr("&Show Clear Button"),       this );
   d->actions->showEvalButton      = new QAction( tr("Show &Evaluate Button"),    this );
   d->actions->showKeyPad          = new QAction( tr("Show &Key Pad"),            this );
@@ -397,31 +351,32 @@ void Crunch::createUI()
   d->actions->showVariables       = new QAction( tr("Show &Variables List"),     this );
   d->actions->showConstants       = new QAction( tr("Show C&onstants List"),     this );
   d->actions->configure           = new QAction( tr("&Configure..."),            this );
-
   d->actions->helpTipOfTheDay     = new QAction( tr("&Tip of the Day"),          this );
   d->actions->helpGotoWebsite     = new QAction( tr("SpeedCrunch &Web Site..."), this );
   d->actions->helpAbout           = new QAction( tr("&About"),                   this );
   d->actions->helpAboutQt         = new QAction( tr("About &Qt"),                this );
 
-  d->actions->sessionSave->setShortcut(         Qt::CTRL + Qt::Key_S );
-  d->actions->sessionQuit->setShortcut(         Qt::CTRL + Qt::Key_Q );
+  d->actions->sessionSave->setShortcut        ( Qt::CTRL + Qt::Key_S );
+  d->actions->sessionQuit->setShortcut        ( Qt::CTRL + Qt::Key_Q );
+  d->actions->editCopy->setShortcut           ( Qt::CTRL + Qt::Key_C );
+  d->actions->editPaste->setShortcut          ( Qt::CTRL + Qt::Key_V );
+  d->actions->editCopyResult->setShortcut     ( Qt::CTRL + Qt::Key_R );
+  d->actions->insertFunction->setShortcut     ( Qt::CTRL + Qt::Key_F );
+  d->actions->insertVariable->setShortcut     ( Qt::CTRL + Qt::Key_I );
+  d->actions->deleteVariable->setShortcut     ( Qt::CTRL + Qt::Key_D );
+  d->actions->clearInput->setShortcut         ( Qt::Key_Escape       );
   d->actions->focusAndSelectInput->setShortcut( Qt::CTRL + Qt::Key_A );
-  d->actions->editCopy->setShortcut(            Qt::CTRL + Qt::Key_C );
-  d->actions->editPaste->setShortcut(           Qt::CTRL + Qt::Key_V );
-  d->actions->editCopyResult->setShortcut(      Qt::CTRL + Qt::Key_R );
-  d->actions->insertFunction->setShortcut(      Qt::CTRL + Qt::Key_F );
-  d->actions->insertVariable->setShortcut(      Qt::CTRL + Qt::Key_I );
-  d->actions->deleteVariable->setShortcut(      Qt::CTRL + Qt::Key_D );
-  d->actions->clearInput->setShortcut(          Qt::Key_Escape       );
-  d->actions->viewBinary->setShortcut(          Qt::Key_F5           );
-  d->actions->viewOctal->setShortcut(           Qt::Key_F6           );
-  d->actions->viewGeneral->setShortcut(         Qt::Key_F7           );
-  d->actions->viewHexadec->setShortcut(         Qt::Key_F8           );
-  d->actions->viewHexadec->setShortcut(         Qt::Key_F8           );
+  d->actions->viewBinary->setShortcut         ( Qt::Key_F5           );
+  d->actions->viewOctal->setShortcut          ( Qt::Key_F6           );
+  d->actions->viewGeneral->setShortcut        ( Qt::Key_F7           );
+  d->actions->viewHexadec->setShortcut        ( Qt::Key_F8           );
+  d->actions->radian->setShortcut             ( Qt::Key_F9           );
+  d->actions->degree->setShortcut             ( Qt::Key_F10          );
 
   QActionGroup *formatGroup = new QActionGroup( this );
   formatGroup->addAction( d->actions->viewBinary );
-  formatGroup->addAction( d->actions->viewGeneral );
+  // decimal submenu
+    formatGroup->addAction( d->actions->viewGeneral );
     formatGroup->addAction( d->actions->viewFixed );
     formatGroup->addAction( d->actions->viewEngineering );
     formatGroup->addAction( d->actions->viewScientific );
@@ -436,6 +391,10 @@ void Crunch::createUI()
   d->digitsGroup->addAction( d->actions->digits15 );
   d->digitsGroup->addAction( d->actions->digits50 );
 
+  d->angleGroup = new QActionGroup( this );
+  d->angleGroup->addAction( d->actions->radian );
+  d->angleGroup->addAction( d->actions->degree );
+
   d->actions->viewGeneral->setCheckable( true );
   d->actions->viewFixed->setCheckable( true );
   d->actions->viewEngineering->setCheckable( true );
@@ -443,14 +402,14 @@ void Crunch::createUI()
   d->actions->viewHexadec->setCheckable( true );
   d->actions->viewOctal->setCheckable( true );
   d->actions->viewBinary->setCheckable( true );
-
   d->actions->digitsAuto->setCheckable( true );
   d->actions->digits2->setCheckable( true );
   d->actions->digits3->setCheckable( true );
   d->actions->digits8->setCheckable( true );
   d->actions->digits15->setCheckable( true );
   d->actions->digits50->setCheckable( true );
-
+  d->actions->radian->setCheckable( true );
+  d->actions->degree->setCheckable( true );
   d->actions->showClearButton->setCheckable( true );
   d->actions->showEvalButton->setCheckable ( true );
   d->actions->showKeyPad->setCheckable( true );
@@ -487,6 +446,8 @@ void Crunch::createUI()
   connect( d->actions->digits8, SIGNAL( activated() ), this, SLOT( digits8() ) );
   connect( d->actions->digits15, SIGNAL( activated() ), this, SLOT( digits15() ) );
   connect( d->actions->digits50, SIGNAL( activated() ), this, SLOT( digits50() ) );
+  connect( d->actions->radian, SIGNAL( activated() ), this, SLOT( radian() ) );
+  connect( d->actions->degree, SIGNAL( activated() ), this, SLOT( degree() ) );
   connect( d->actions->showClearButton, SIGNAL( toggled(bool) ), this, SLOT( showClearButton(bool) ) );
   connect( d->actions->showEvalButton, SIGNAL( toggled(bool) ), this, SLOT( showEvalButton(bool) ) );
   connect( d->actions->showKeyPad, SIGNAL( toggled(bool) ), this, SLOT( showKeyPad(bool) ) );
@@ -507,7 +468,6 @@ void Crunch::createUI()
   connect( d->constantsDock->toggleViewAction(), SIGNAL( toggled( bool ) ), d->actions->showConstants, SLOT( setChecked( bool ) ) );
 
   // construct the menu
-
   d->sessionMenu = new QMenu( tr("&Session"), this );
   menuBar()->addMenu( d->sessionMenu );
   d->sessionMenu->addAction( d->actions->sessionSave );
@@ -531,7 +491,7 @@ void Crunch::createUI()
   d->editMenu->addSeparator();
   d->editMenu->addAction( d->actions->focusAndSelectInput );
 
-  d->baseMenu = new QMenu( tr("&Base"), this );
+  d->baseMenu = new QMenu( tr("&Format"), this );
   menuBar()->addMenu( d->baseMenu );
   d->baseMenu->addAction( d->actions->viewBinary );
   d->baseMenu->addAction( d->actions->viewOctal );
@@ -548,6 +508,11 @@ void Crunch::createUI()
     d->decimalBaseSubmenu->addAction( d->actions->digits15 );
     d->decimalBaseSubmenu->addAction( d->actions->digits50 );
   d->baseMenu->addAction( d->actions->viewHexadec );
+
+  d->angleMenu = new QMenu( tr("&Angle"), this );
+  menuBar()->addMenu( d->angleMenu );
+  d->angleMenu->addAction( d->actions->radian );
+  d->angleMenu->addAction( d->actions->degree );
 
   d->settingsMenu = new QMenu( tr("Se&ttings"), this );
   menuBar()->addMenu( d->settingsMenu );
@@ -589,32 +554,17 @@ void Crunch::applySettings()
   d->editor->setHighlightColor( Editor::Variable, settings->highlightVariableColor );
   d->editor->setHighlightColor( Editor::MatchedPar, settings->matchedParenthesisColor );
 
-//  if( settings->angleMode == "degree" ) //refan
-  if( Settings::self()->angleMode == Settings::Degree )
-  {
-//    d->eval->setAngleMode( Evaluator::Degree ); //refan
-    d->degButton->setChecked( true );
-    d->radButton->setChecked( false );
-  }
-
-//  if( settings->angleMode == "radian" ) //refan
   if( Settings::self()->angleMode == Settings::Radian )
   {
-//    d->eval->setAngleMode( Evaluator::Radian ); //refan
-    d->degButton->setChecked( false );
-    d->radButton->setChecked( true );
+    d->actions->radian->setChecked( true );
+    d->actions->degree->setChecked( false );
+  }
+  else if( Settings::self()->angleMode == Settings::Degree )
+  {
+    d->actions->radian->setChecked( false );
+    d->actions->degree->setChecked( true );
   }
 
-//   if ( settings->decimalPoint == "" )
-//   {
-//     d->eval->setDecimalPoint( QLocale().decimalPoint() );
-//     d->result->setDecimalPoint( QLocale().decimalPoint() );
-//   }
-//   else
-//   {
-//     d->eval->setDecimalPoint( settings->decimalPoint );
-//     d->result->setDecimalPoint( settings->decimalPoint );
-//   } //refdp
   d->result->NotifyDotChanged(); // FIXME should use the QT message handling "settingsChanged"
 
   //QString l = settings->language;
@@ -643,22 +593,6 @@ void Crunch::applySettings()
       d->eval->eval();
     }
     d->variablesDock->updateList( d->eval );
-  }
-
-  switch( settings->format )
-  {
-    case 'h':
-      d->hexButton->setChecked( true ); break;
-    case 'o':
-      d->octButton->setChecked( true ); break;
-    case 'b':
-      d->binButton->setChecked( true ); break;
-    case 'f':
-    case 'n':
-    case 'e':
-    case 'g':
-    default:
-      d->decButton->setChecked( true ); break;
   }
 
   d->result->setFormat( settings->format );
@@ -995,68 +929,18 @@ void Crunch::trayIconActivated()
 #endif
 }
 
-void Crunch::angleModeChanged()
+void Crunch::radian()
 {
-  const QObject* s = sender();
-  if( !s ) return;
-  if( !s->inherits( "QRadioButton" ) ) return;
-
-  blockSignals( true );
-  if( s == static_cast<QObject*>( d->degButton ) )
-    d->radButton->setChecked( !d->degButton->isChecked() );
-  if( s == static_cast<QObject*>( d->radButton ) )
-    d->degButton->setChecked( !d->radButton->isChecked() );
-  blockSignals( false );
-
-//   if( d->degButton->isChecked() ) // refan
-//     d->eval->setAngleMode( Evaluator::Degree );
-//   if( d->radButton->isChecked() )
-//     d->eval->setAngleMode( Evaluator::Radian );
-  Settings::self()->angleMode = d->degButton->isChecked()? Settings::Degree : Settings::Radian;
-
-  QTimer::singleShot(0, d->editor, SLOT( setFocus() ) );
+  Settings::self()->angleMode = Settings::Radian;
 }
 
-void Crunch::radixChanged()
+void Crunch::degree()
 {
-  const QObject* s = sender();
-  if( !s ) return;
-  if( !s->inherits( "QRadioButton" ) ) return;
-
-  Settings* settings = Settings::self();
-
-  if( d->hexButton->isChecked() && settings->format != 'h')
-  {
-    d->digitsGroup->setDisabled(true);
-    setView('h');
-  }
-
-  if( d->decButton->isChecked() && settings->format != 'g' &&
-    settings->format != 'e'  && settings->format != 'f' &&
-	settings->format != 'n')
-  {
-    d->digitsGroup->setDisabled(false);
-    setView('g');
-  }
-
-  if( d->octButton->isChecked()  && settings->format != 'o')
-  {
-    d->digitsGroup->setDisabled(true);
-    setView('o');
-  }
-
-  if( d->binButton->isChecked()  &&  settings->format != 'b')
-  {
-    d->digitsGroup->setDisabled(true);
-    setView('b');
-  }
-
-  QTimer::singleShot(0, d->editor, SLOT( setFocus() ) );
+  Settings::self()->angleMode = Settings::Degree;
 }
 
 void Crunch::returnPressed()
 {
-//   QString str = Evaluator::autoFix( d->editor->text(), Settings::self()->decimalPoint );//refdp
   QString str = Evaluator::autoFix( d->editor->text() );
   if( str.isEmpty() ) return;
 
@@ -1125,17 +1009,8 @@ void Crunch::constantSelected( const QString& c )
   if( c.isEmpty() )
     return;
 
-  // find set decimal separator
-/*  QString sep = Settings::self()->decimalPoint;
-  if ( sep.isEmpty() )
-    sep = QLocale().decimalPoint();
-  // replace constant dot separator
-  QString str( c );
-  str.replace( QChar( '.' ), sep );//refdp*/
   QString str( c );
   str.replace( '.', Settings::decimalPoint() );
-
-  // show final constant in the evaluator
   d->editor->insert( str );
 
   QTimer::singleShot( 0, d->editor, SLOT(setFocus()) );
@@ -1148,10 +1023,8 @@ void Crunch::textChanged()
 {
   if( d->autoAns )
   {
-//    QString expr = Evaluator::autoFix( d->editor->text(), Settings::self()->decimalPoint );//refdp
     QString expr = Evaluator::autoFix( d->editor->text() );
     if( expr.isEmpty() ) return;
-//     Tokens tokens = Evaluator::scan( expr, Settings::self()->decimalPoint ); //refdp
     Tokens tokens = Evaluator::scan( expr );
     if( tokens.count() == 1 )
     if( ( tokens[0].asOperator() == Token::Plus ) ||
@@ -1259,51 +1132,42 @@ void Crunch::setView(char c)
 void Crunch::viewGeneral()
 {
   d->digitsGroup->setEnabled(true);
-  blockSignals(true);
-  d->decButton->setChecked(true);
-  blockSignals(true);
   setView('g');
 }
 
 void Crunch::viewFixed()
 {
   d->digitsGroup->setEnabled(true);
-  d->decButton->setChecked(true);
   setView('f');
 }
 
 void Crunch::viewEngineering()
 {
   d->digitsGroup->setEnabled(true);
-  d->decButton->setChecked(true);
   setView('n');
 }
 
 void Crunch::viewScientific()
 {
   d->digitsGroup->setEnabled(true);
-  d->decButton->setChecked(true);
   setView('e');
 }
 
 void Crunch::viewHexadec()
 {
   d->digitsGroup->setDisabled(true);
-  d->hexButton->setChecked(true);
   setView('h');
 }
 
 void Crunch::viewOctal()
 {
   d->digitsGroup->setDisabled(true);
-  d->octButton->setChecked(true);
   setView('o');
 }
 
 void Crunch::viewBinary()
 {
   d->digitsGroup->setDisabled(true);
-  d->binButton->setChecked(true);
   setView('b');
 }
 
@@ -1413,7 +1277,6 @@ void Crunch::configure()
 
 void Crunch::showTip()
 {
-  // DEBUG: test tip of the day
   QPoint p = mapFromGlobal( d->result->mapToGlobal( QPoint(0, 0) ) ) += QPoint(4,4);
   d->tip->move( p );
 
@@ -1504,14 +1367,6 @@ void Crunch::setWidgetsLayoutAccordingToLanguageDirection()
   setWidgetLayoutAccordingToLanguageDirection( d->baseMenu      );
   setWidgetLayoutAccordingToLanguageDirection( d->settingsMenu  );
   setWidgetLayoutAccordingToLanguageDirection( d->helpMenu      );
-  // angle mode radio buttons
-  setWidgetLayoutAccordingToLanguageDirection( d->degButton     );
-  setWidgetLayoutAccordingToLanguageDirection( d->radButton     );
-  // radix radio buttons
-  setWidgetLayoutAccordingToLanguageDirection( d->hexButton     );
-  setWidgetLayoutAccordingToLanguageDirection( d->decButton     );
-  setWidgetLayoutAccordingToLanguageDirection( d->octButton     );
-  setWidgetLayoutAccordingToLanguageDirection( d->binButton     );
   // tip of the day
   setWidgetLayoutAccordingToLanguageDirection( d->tip           );
   // docks

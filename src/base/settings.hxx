@@ -1,6 +1,7 @@
 /* This file is part of the SpeedCrunch project
    Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
                  2005-2006 Johan Thelin <e8johan@gmail.com>
+                 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -35,13 +36,12 @@ class Settings
 
     typedef enum { Degree, Radian } AngleMode; //refan
 
-//    QString angleMode; //refan
     AngleMode angleMode;
-//    QString decimalPoint; //refdp
     static QChar decimalPoint();
     void setDecimalPoint(const QString& val);
     QString escape; //reftbl
 
+    static bool autoDetectDot;
     bool saveHistory;
     bool saveVariables;
     bool autoComplete;
@@ -106,7 +106,6 @@ class Settings
     void save();
 
   private:
-    static bool autoDetectDot;
     static QChar dot; //refdp
 
     Settings();

@@ -1,7 +1,7 @@
 /* This file is part of the SpeedCrunch project
    Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
    Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
-   Copyright (C) 2007 Helder Correia <helder.pereira.correia@gmail.com>
+   Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -100,12 +100,9 @@ void ConfigDlgPrivate::loadSettings()
   stayAlwaysOnTopCheck->setChecked( settings->stayAlwaysOnTop );
 
   decimalList->setCurrentIndex(0);
-//  if( settings->decimalPoint == "." ) //refdp
-  if( settings->decimalPoint() == '.' )
-    decimalList->setCurrentIndex(1);
-//  if( settings->decimalPoint() == "," ) //refdp
-  if( settings->decimalPoint() == ',' )
-  decimalList->setCurrentIndex(2);
+  if      ( settings->autoDetectDot         ) decimalList->setCurrentIndex(0);
+  else if ( settings->decimalPoint() == '.' ) decimalList->setCurrentIndex(1);
+  else if ( settings->decimalPoint() == ',' ) decimalList->setCurrentIndex(2);
 
   standardAppearanceCheck->setChecked( !settings->customAppearance );
   customAppearanceCheck->setChecked( settings->customAppearance );
