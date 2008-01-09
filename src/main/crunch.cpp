@@ -218,6 +218,8 @@ Crunch::Crunch(): QMainWindow()
 
   outerBoxLayout->addLayout( inputBoxLayout );
 
+  resize( 300, 400 );
+
   // we need settings to be loaded before keypad and constants dock
   Settings::self()->load();
 
@@ -301,7 +303,6 @@ Crunch::Crunch(): QMainWindow()
 
   setWidgetsLayoutAccordingToLanguageDirection();
 
-  resize( 300, 400 );
   QTimer::singleShot( 0, this, SLOT(activate()) );
 }
 
