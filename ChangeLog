@@ -16,6 +16,7 @@ Improvements and bug fixes:
   Fixed clobbering of ans on radix change
   improved binomCdf evaluation allows n to be around 20000 now
   testevaluator independent of locale (does not use ',' any more)
+  bugfix in the math engine (float_frac) that could cause memory corruption
 
 SpeedCrunch 0.9
 ---------------------

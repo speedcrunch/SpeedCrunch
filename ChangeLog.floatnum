@@ -1,3 +1,10 @@
+2008-01-09
+bugfix in float_frac
+
+floatnum.c
+- float_frac could cause memory corruption, when the fractional
+  part had many leading zeros
+
 2008-01-01
 introduced a few const attributes
 

@@ -40,7 +40,7 @@
    easily follow operations of floatnum in a debugger like ddd.
    Uncomment this, if you develop code based on floatnum, and if you want
    to look into floatnum variables during a debugger session. */
-/* #define FLOATDEBUG */
+// #define FLOATDEBUG
 
 /* enables a pre-defined set of macros so that a regression test suite
    of floatnum can be executed. These settings are such that corner cases
@@ -48,7 +48,7 @@
    of floatnum.
    Uncomment this if you want to run the standard regression test suite
    of floatnum */
-/* #define _FLOATNUMTEST */
+// #define _FLOATNUMTEST
 
 /* floatnum uses bc's bc_num format to store and operate on data. Since
    bc_num is an arbitrary precision format, operands may grow to extreme

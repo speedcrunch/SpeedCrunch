@@ -1154,13 +1154,13 @@ HNumber HMath::nCr( const HNumber& n, const HNumber& r )
 
 HNumber HMath::nPr( const HNumber& n, const HNumber& r )
 {
-  if( !n.isInteger() || !r.isInteger() )
+/*  if( !n.isInteger() || !r.isInteger() )
   {
     int error = checkNaNParam(*n.d, r.d);
     if (error != 0)
       return HNumber::nan(error);
     return HNumber::nan(HMATH_INTEGER_REQUIRED);
-  }
+  }*/
   return factorial(n, (n-r+1));
 }
 
@@ -1202,7 +1202,7 @@ HNumber HMath::binomialCdf( const HNumber & k,
                             const HNumber & p )
 {
   // FIXME use the regularized incomplete Beta function to avoid
-  // the possibly very expensive loop
+  // the potentially very expensive loop
   if ( k.isNan() || ! k.isInteger() || k < 0 || k > n
          || n.isNan() || ! n.isInteger() || n < 0
            || p.isNan() || p < 0 || p > 1 )
