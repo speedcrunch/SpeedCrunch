@@ -1,7 +1,7 @@
 /* This file is part of the SpeedCrunch project
    Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
                  2005-2006 Johan Thelin <e8johan@gmail.com>
-                 2007 Helder Correia <helder.pereira.correia@gmail.com>
+                 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -23,12 +23,7 @@
 #include <base/functions.hxx>
 #include <base/settings.hxx>
 
-//#include <float.h> //refintf
-//#include <limits.h>
-//#include <math.h>
-
 #include <QApplication>
-//#include <QLocale> //refdp
 #include <QMap>
 #include <QString>
 #include <QStringList>
@@ -79,8 +74,6 @@ public:
 
   QString error;
   QMap<QString,Variable> variables;
-//  Evaluator::AngleMode angleMode; //refan
-//  QString decimalPoint; //refdp
 
   QString assignId;
   QVector<Opcode> codes;
@@ -414,18 +407,10 @@ Tokens Evaluator::scan( const QString& expr )
   Tokens tokens;
 
   // auto-detect, always dot, or always comma
-
   QChar decimalPoint;
   QChar wrongDecimalPoint;
-
-//   if( settingsDecimal.length() == 1 )
-//     decimalPoint = settingsDecimal[0];
-//   else
-//     decimalPoint = QLocale().decimalPoint(); //refdp
   decimalPoint = Settings::decimalPoint();
-
   // sanity check for wrong decimal separator usage
-
   if ( decimalPoint == ',' )
     wrongDecimalPoint = '.';
   else
@@ -1143,26 +1128,6 @@ void Evaluator::compile( const Tokens& tokens ) const
 
 }
 
-/*Evaluator::AngleMode Evaluator::angleMode() const
-{
-  return d->angleMode;
-}
-
-void Evaluator::setAngleMode( AngleMode am )
-{
-  d->angleMode = am;
-}
-*/ //refan
-// QString Evaluator::decimalPoint() const //refdp
-// {
-//   return d->decimalPoint;
-// }
-// 
-// void Evaluator::setDecimalPoint( const QString& dp )
-// {
-//   d->decimalPoint = dp;
-// }
-
 HNumber Evaluator::evalNoAssign()
 {
   QStack<HNumber> stack;
@@ -1175,7 +1140,6 @@ HNumber Evaluator::evalNoAssign()
 
   if( d->dirty )
   {
-//    Tokens tokens = scan( d->expression, d->decimalPoint ); //refdp
     Tokens tokens = scan( d->expression );
 
     // invalid expression ?
@@ -1417,44 +1381,27 @@ HNumber Evaluator::eval()
 {
   HNumber result = evalNoAssign(); // this sets d->assignId
 
-  // handle variable assignment, e.g. "x=2*4"
-  if( !d->assignId.isEmpty() )
-    set( d->assignId, result );
-
-  // can not overwrite pi
-  if( d->assignId == QString("pi") )
+  // can not overwrite built-in variables
+  if (   d->assignId == QString("pi")
+      || d->assignId == QString("phi")
+      || d->assignId == QString("ans") )
   {
-    d->error = d->assignId + ": " + qApp->translate( "evaluator",
-        "variable cannot be overwritten" );
-    return HNumber( 0 );
-  }
-  // can not overwrite phi
-  if( d->assignId == QString("phi") )
-  {
-    d->error = d->assignId + ": " + qApp->translate( "evaluator",
-        "variable cannot be overwritten" );
-    return HNumber( 0 );
-  }
-  // can not overwrite ans
-  if( d->assignId == QString("ans") )
-  {
-    d->error = d->assignId + ": " + qApp->translate( "evaluator",
-        "variable cannot be overwritten" );
-    return HNumber( 0 );
+    d->error = d->assignId + ": " + qApp->translate( "evaluator", "variable cannot be overwritten" );
+    set( QString("pi"),  HMath::pi() );
+    set( QString("phi"), HMath::phi() );
+    return get( QString("ans") );
   }
 
   // variable can't have the same name as function
-  if( FunctionRepository::self()->function( d->assignId ) )
+  if ( FunctionRepository::self()->function( d->assignId ) )
   {
-    d->error = d->assignId + ": " +  qApp->translate( "evaluator",
-        "identifier matches an existing function name" );
-    return HNumber( 0 );
+    d->error = d->assignId + ": " +  qApp->translate( "evaluator", "identifier matches an existing function name" );
+    return get( QString("ans") );
   }
 
-  // FIXME why that??
-  // magic: always set here to avoid being overwritten by user
-  set( QString("pi"),  HMath::pi() );
-  set( QString("phi"), HMath::phi() );
+  // handle variable assignment, e.g. "x=2*4"
+  if( !d->assignId.isEmpty() )
+    set( d->assignId, result );
 
   return result;
 }
