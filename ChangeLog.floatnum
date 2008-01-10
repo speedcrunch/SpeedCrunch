@@ -1,9 +1,14 @@
 2008-01-09
-bugfix in float_frac
+bugfixes in float_frac, float_gamma
 
 floatnum.c
 - float_frac could cause memory corruption, when the fractional
-  part had many leading zeros
+  part had leading zeros
+floatgamma.c
+- pochhammer_i reported a series of poles for x == 0 and n >= 0,
+  where it should be regular, actually.
+testfloatnum
+- added a testcase checking correct handling of tiny fractional parts
 
 2008-01-01
 introduced a few const attributes
@@ -83,7 +88,7 @@ are not done
 floaterf
 - completed functions _erf and _erfc
 floatconst
-- several new constants and working space for the erfc function
+- several new constants and a working space for the erfc function
 
 2007-11-28
 started implementing the erf function:

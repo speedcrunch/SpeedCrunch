@@ -1,6 +1,6 @@
 /* exprparser.y: grammar for a single line input */
 /*
-    Copyright (C) 2007 Wolf Lammen.
+    Copyright (C) 2007, 2008 Wolf Lammen
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -40,6 +40,19 @@
    structure of numeric literals), and can be kept simple, reading an input string
    in a single pass, one character look-ahead, provided the encoding of tokens is
    not too messy.
+   A special problem are overloaded operators, like - for instance, that has
+   3 meanings in a usual grammar: (1) subtraction; (2) negation; (3) in a scale:
+   indicating a negative integer constant. Since LALR(1) is a look-ahead algorithm,
+   the lexical analyzer has to deliver a symbol in advance, without knowing
+   which of the several meanings will turn out to be the correct one later on.
+   This is especially troublesome, if the operator precedence is not fixed,
+   but user definable, and thus, cannot be hard coded in this grammar file.
+   As a solution, the lexical analyzer simply delivers all meanings in succession,
+   and let the parser find the correct one.
+   In order to resolve an otherwise present ambiguity, binary operator tokens must
+   be followed by a token representing an overloaded unary operator. If
+   no such overloaded operator exists, the lexical analyzer can deliver a special
+   token NOPREFIX instead.
 */
 
 %{
@@ -219,18 +232,18 @@ static FGetToken getToken;
    The indirect syntax declaration here has the advantage, that users can setup
    their own precedence order or associativeness.
    So the scanner reads out the current precedence from a table or so, and returns
-   the token L6OP, if it finds out, it has encountered a level 6, left-to-right
+   the token L6, if it finds out, it has encountered a level 6, left-to-right
    operator.
 */
-%left <func>L0
+%left <func>L0 PREFIX0
 %right <func>R1
-%left <func>L2
+%left <func>L2 PREFIX2
 %right <func>R3
-%left <func>L4
+%left <func>L4 PREFIX4
 %right <func>R5
-%left <func>L6
+%left <func>L6 PREFIX6
 %right <func>R7
-%left <func>L8
+%left <func>L8 PREFIX8
 %right <func>R9
 %left <func>L10 PREFIX10
 %right <func>R11
@@ -238,13 +251,16 @@ static FGetToken getToken;
 %right <func>R13
 %left <func>L14 PREFIX14
 
-%type <seq> decseq binseq octseq hexseq taggedbase2seq taggedseq uint taggedint
-    exponent optbase2scale optdecscale opthexseq optoctseq optbinseq optdecseq
-    opthexdotfrac optoctdotfrac optbindotfrac optdecdotfrac
-%type <numliteral> hexvalue octvalue binvalue decvalue taggednumber
-%type <numvalue> number literal expr simpleval primval prefixval postfixval
-%type <params> paramlist params
+%type <seq> decseq binseq octseq hexseq
+      optdecdotfrac optbindotfrac optoctdotfrac opthexdotfrac
+      optdecscale optbase2scale exponent
+      taggedbase2seq taggedseq optdecseq optbinseq optoctseq opthexseq
+      uint taggedint
+%type <numliteral> decvalue binvalue octvalue hexvalue taggednumber
+%type <numvalue> expr postfixval primval simpleval literal prefixval number
+%type <params> params paramlist
 %type <func> prefixop postfixop
+%type <sign> optsign
 
 %start input
 
@@ -256,54 +272,32 @@ input:
     | VARIABLE ASSIGN expr                    { result = assignVar($1, $3); }
     ;
 /* on top level, an expression is either a binary operation of two
-   operands, or a primary expression with possible prefixes (and postfixes).
-   Do not try to be too clever here! Defining a rule 'binaryop', that
-   takes a list of all binary operations, and simplifying alternatives
-   to:
-   | expr binaryop expr;
-   will be beyond LALR(1)!
-*/
+   operands, or a primary expression with possible prefixes (and postfixes). */
 expr:
-      postfixval                              { $$ = $1; }
-    | expr L0 prefixprec SIGN expr %prec L0   { $$ = callBinOperator($2, $1, $5); }
-    | expr R1 expr                            { $$ = callBinOperator($2, $1, $3); }
-    | expr L2 prefixprec SIGN expr %prec L2   { $$ = callBinOperator($2, $1, $5); }
-    | expr R3 expr                            { $$ = callBinOperator($2, $1, $3); }
-    | expr L4 prefixprec SIGN expr %prec L4   { $$ = callBinOperator($2, $1, $5); }
-    | expr R5 expr                            { $$ = callBinOperator($2, $1, $3); }
-    | expr L6 prefixprec SIGN expr %prec L6   { $$ = callBinOperator($2, $1, $5); }
-    | expr R7 expr                            { $$ = callBinOperator($2, $1, $3); }
-    | expr L8 prefixprec SIGN expr %prec L8   { $$ = callBinOperator($2, $1, $5); }
-    | expr R9 expr                            { $$ = callBinOperator($2, $1, $3); }
-    | expr L10 prefixprec SIGN expr %prec L10 { $$ = callBinOperator($2, $1, $5); }
-    | expr R11 expr                           { $$ = callBinOperator($2, $1, $3); }
-    | expr L12 prefixprec SIGN expr %prec L12 { $$ = callBinOperator($2, $1, $5); }
-    | expr R13 expr                           { $$ = callBinOperator($2, $1, $3); }
-    | expr L14 prefixprec SIGN expr %prec L14 { $$ = callBinOperator($2, $1, $5); }
-    | L0 PREFIX14 SIGN expr %prec PREFIX14    { $$ = callUnaryOperator($2, $4); }
-    | L2 PREFIX14 SIGN expr %prec PREFIX14    { $$ = callUnaryOperator($2, $4); }
-    | L4 PREFIX14 SIGN expr %prec PREFIX14    { $$ = callUnaryOperator($2, $4); }
-    | L6 PREFIX14 SIGN expr %prec PREFIX14    { $$ = callUnaryOperator($2, $4); }
-    | L8 PREFIX14 SIGN expr %prec PREFIX14    { $$ = callUnaryOperator($2, $4); }
-    | L10 PREFIX14 SIGN expr %prec PREFIX14   { $$ = callUnaryOperator($2, $4); }
-    | L12 PREFIX14 SIGN expr %prec PREFIX14   { $$ = callUnaryOperator($2, $4); }
-    | L14 PREFIX14 SIGN expr %prec PREFIX14   { $$ = callUnaryOperator($2, $4); }
-    | L0 PREFIX12 SIGN expr %prec PREFIX12    { $$ = callUnaryOperator($2, $4); }
-    | L2 PREFIX12 SIGN expr %prec PREFIX12    { $$ = callUnaryOperator($2, $4); }
-    | L4 PREFIX12 SIGN expr %prec PREFIX12    { $$ = callUnaryOperator($2, $4); }
-    | L6 PREFIX12 SIGN expr %prec PREFIX12    { $$ = callUnaryOperator($2, $4); }
-    | L8 PREFIX12 SIGN expr %prec PREFIX12    { $$ = callUnaryOperator($2, $4); }
-    | L10 PREFIX12 SIGN expr %prec PREFIX12   { $$ = callUnaryOperator($2, $4); }
-    | L12 PREFIX12 SIGN expr %prec PREFIX12   { $$ = callUnaryOperator($2, $4); }
-    | L14 PREFIX12 SIGN expr %prec PREFIX12   { $$ = callUnaryOperator($2, $4); }
-    | L0 PREFIX10 SIGN expr %prec PREFIX10    { $$ = callUnaryOperator($2, $4); }
-    | L2 PREFIX10 SIGN expr %prec PREFIX10    { $$ = callUnaryOperator($2, $4); }
-    | L4 PREFIX10 SIGN expr %prec PREFIX10    { $$ = callUnaryOperator($2, $4); }
-    | L6 PREFIX10 SIGN expr %prec PREFIX10    { $$ = callUnaryOperator($2, $4); }
-    | L8 PREFIX10 SIGN expr %prec PREFIX10    { $$ = callUnaryOperator($2, $4); }
-    | L10 PREFIX10 SIGN expr %prec PREFIX10   { $$ = callUnaryOperator($2, $4); }
-    | L12 PREFIX10 SIGN expr %prec PREFIX10   { $$ = callUnaryOperator($2, $4); }
-    | L14 PREFIX10 SIGN expr %prec PREFIX10   { $$ = callUnaryOperator($2, $4); }
+      postfixval                                    { $$ = $1; }
+    | expr L0 prefix optsign expr %prec L0          { $$ = callBinOperator($2, $1, $5); }
+    | expr R1 expr                                  { $$ = callBinOperator($2, $1, $3); }
+    | expr L2 prefix optsign expr %prec L2          { $$ = callBinOperator($2, $1, $5); }
+    | expr R3 expr                                  { $$ = callBinOperator($2, $1, $3); }
+    | expr L4 prefix optsign expr %prec L4          { $$ = callBinOperator($2, $1, $5); }
+    | expr R5 expr                                  { $$ = callBinOperator($2, $1, $3); }
+    | expr L6 prefix optsign expr %prec L6          { $$ = callBinOperator($2, $1, $5); }
+    | expr R7 expr                                  { $$ = callBinOperator($2, $1, $3); }
+    | expr L8 prefix optsign expr %prec L8          { $$ = callBinOperator($2, $1, $5); }
+    | expr R9 expr                                  { $$ = callBinOperator($2, $1, $3); }
+    | expr L10 prefix optsign expr %prec L10        { $$ = callBinOperator($2, $1, $5); }
+    | expr R11 expr                                 { $$ = callBinOperator($2, $1, $3); }
+    | expr L12 prefix optsign expr %prec L12        { $$ = callBinOperator($2, $1, $5); }
+    | expr R13 expr                                 { $$ = callBinOperator($2, $1, $3); }
+    | expr L14 prefix optsign expr %prec L14        { $$ = callBinOperator($2, $1, $5); }
+    | optinfix PREFIX14 optsign expr %prec PREFIX14 { $$ = callUnaryOperator($2, $4); }
+    | optinfix PREFIX12 optsign expr %prec PREFIX12 { $$ = callUnaryOperator($2, $4); }
+    | optinfix PREFIX10 optsign expr %prec PREFIX10 { $$ = callUnaryOperator($2, $4); }
+    | optinfix PREFIX8 optsign expr %prec PREFIX8   { $$ = callUnaryOperator($2, $4); }
+    | optinfix PREFIX6 optsign expr %prec PREFIX6   { $$ = callUnaryOperator($2, $4); }
+    | optinfix PREFIX4 optsign expr %prec PREFIX4   { $$ = callUnaryOperator($2, $4); }
+    | optinfix PREFIX2 optsign expr %prec PREFIX2   { $$ = callUnaryOperator($2, $4); }
+    | optinfix PREFIX0 optsign expr %prec PREFIX0   { $$ = callUnaryOperator($2, $4); }
     ;
 /* a value with postfixoperators */
 postfixval:
@@ -330,7 +324,7 @@ postfixop:
 /* a simpleval with optional prefixes */
 prefixval:
       simpleval                          { $$ = $1; }
-    | infixprec prefixop SIGN prefixval  { $$ = callUnaryOperator($2, $4); }
+    | optinfix prefixop optsign prefixval{ $$ = callUnaryOperator($2, $4); }
     ;
 /* a possibly empty parameter list enclosed in parenthesis, or a
    single parameter without parenthesis */
@@ -445,13 +439,20 @@ optbase2scale:
     ;
 /* the signed integer representing a scale */
 exponent:
-      infixprec prefixprec SIGN uint     { $$ = $4;
-                                           $$.sign = $3; }
-    | decseq                             { $$ = $1; }
+      decseq                             { $$ = $1; }
+    | optoverload SIGN uint              { $$ = $3;
+                                           $$.sign = $2; }
     | taggedint                          { $$ = $1; }
     ;
+/* the + or - is usually overloaded, so the scanner might present
+   overloaded meanings as well */
+optoverload:
+      /* empty */
+    | optinfix prefix
+    ;
 /* an unsigned integer, given to any base */
-uint: decseq                             { $$ = $1; }
+uint:
+      decseq                             { $$ = $1; }
     | taggedseq                          { $$ = $1; }
     ;
 /* an unsigned integer, together with a radix tag */
@@ -519,13 +520,18 @@ hexseq:
     | hexseq optgroupchar HEXSEQ         { $$ = appendStr($1, $3); }
     ;
 /* the precedence of an operator when used as a unary prefix operator */
-prefixprec:
+prefix:
       NOPREFIX
     | prefixop
     ;
 /* prefix operators */
 prefixop:
-      PREFIX10                           { $$ = $1; }
+      PREFIX0                            { $$ = $1; }
+    | PREFIX2                            { $$ = $1; }
+    | PREFIX4                            { $$ = $1; }
+    | PREFIX6                            { $$ = $1; }
+    | PREFIX8                            { $$ = $1; }
+    | PREFIX10                           { $$ = $1; }
     | PREFIX12                           { $$ = $1; }
     | PREFIX14                           { $$ = $1; }
     ;
@@ -534,9 +540,10 @@ optgroupchar:
       /* empty */
     | GROUPCHAR
     ;
-/* the precedence of an operator when used as an infix operator */
-infixprec:
-      L0
+/* overloaded symbol, not used */
+optinfix:
+      /* empty */
+    | L0
     | L2
     | L4
     | L6
@@ -545,7 +552,11 @@ infixprec:
     | L12
     | L14
     ;
-%%
+optsign:
+      /* empty */                        { $$ = 0   }
+    | SIGN                               { $$ = $1; }
+    ;
+    %%
 
 /* internal stuff */
 

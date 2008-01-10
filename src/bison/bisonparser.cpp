@@ -241,6 +241,15 @@ void SglExprLex::reset()
 
 /*------------------------   lexical analyzing   -----------------------*/
 
+int SglExprLex::findSymbolType(SymType* types, SymType match)
+{
+  int result = -1;
+  for (; ++result < maxOverloadSymbols && *(types + result) != match;);
+  if (result == maxOverloadSymbols)
+    result = -1;
+  return result;
+}
+
 QString SglExprLex::checkEscape(const QString& s)
 {
   if (s.size() > 1 && s.at(0) == ' ')
@@ -278,32 +287,39 @@ int SglExprLex::baseTag(const Symbol* symbol)
 
 SglExprLex::ScanResult SglExprLex::searchResult2scanResult(Tables::SearchResult sr)
 {
-  const ReferenceSymbol* rf;
-  const TagSymbol* tag;
+  const Symbol* symbols[maxOverloadSymbols];
+  SymType types[maxOverloadSymbols];
+//  int tokens[maxOverloadSymbols];
   ScanResult result;
-  result.symbol = sr.symbol;
-  result.type = 0;
-  SymType symtype = result.symbol? sr.symbol->type() : unassigned;
-  switch (symtype)
+  const TagSymbol* tag;
+
+  if (sr.count > maxOverloadSymbols)
+    sr.count = 0;
+  for (int i = -1; ++i < sr.count;)
   {
-    case referenceSym:
-      rf = static_cast<const ReferenceSymbol*>(result.symbol);
-      result.symbol = (*rf)[0];
-      symtype = result.symbol->type();
-      break;
+    symbols[i] = follow(sr.pt.value());
+    types[i] = symbols[i]? symbols[i]->type() : unassigned;
+    ++sr.pt;
+  }
+  //FIXME order symbols here
+  result.symbol = symbols[0];
+  result.type = 0;
+  switch (types[0])
+  {
     case tagSym:
-      tag = static_cast<const TagSymbol*>(result.symbol);
+      tag = static_cast<const TagSymbol*>(symbols[0]);
       if (tag->complement())
       {
-        pendingSymbol.enqueue(sr.symbol);
+        pendingSymbol.enqueue(symbols[0]);
         result.type = CMPLTAG;
       }
       else
         result.type = baseTag(result.symbol);
+      break;
     default: ;
   }
   if (result.type == 0)
-    result.type = symbolType(symtype);
+    result.type = symbolType(types[0]);
   return result;
 }
 
@@ -389,7 +405,7 @@ SglExprLex::ScanResult SglExprLex::scanSysToken()
   int begin = index;
   bool exactMatch = checkExact();
   r = Tables::builtinLookup(expr.mid(begin, end - begin), exactMatch);
-  if (r.symbol)
+  if (r.pt.value())
   {
     // set 'end' according to the characters used in the lookup
     end = begin + r.keyused;
@@ -442,12 +458,16 @@ int SglExprLex::tryScanTagToken()
   if (current() == '0')
   {
     ++index;
-    while ( !atEnd() && isLetter() && !isHexChar() )
+    if (!atEnd() && isLetter())
+    {
       ++index;
-    end = index;
-    ScanResult sr = lookup();
-    if (sr.symbol && sr.symbol->type() == tagSym)
-      return sr.type;
+      while ( !atEnd() && isLetter() && !isHexChar() )
+        ++index;
+      end = index;
+      ScanResult sr = lookup();
+      if (sr.symbol && sr.symbol->type() == tagSym)
+        return sr.type;
+    }
   }
   return UNKNOWNTOKEN;
 }
@@ -494,6 +514,13 @@ void SglExprLex::updateState()
 
 /*------------------------   table lookup   -----------------------*/
 
+const Symbol* SglExprLex::follow(const Symbol* symbol)
+{
+  if (symbol->type() == linkSym)
+    symbol = static_cast<const LinkSymbol*>(symbol)->alias();
+  return symbol;
+}
+
 QString SglExprLex::currentSubStr() const
 {
   return expr.mid(start, end - start);
@@ -506,7 +533,7 @@ SglExprLex::ScanResult SglExprLex::lookup(bool exact, char prefix)
   if (prefix)
     key = prefix + key;
   r = Tables::lookup(key , exact);
-  if (r.symbol)
+  if (r.count != 0)
     // set 'end' according to the characters used in the lookup
     end = start + r.keyused - (prefix == 0? 0: 1);
   return searchResult2scanResult(r);

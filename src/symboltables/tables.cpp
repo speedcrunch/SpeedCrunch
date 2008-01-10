@@ -170,7 +170,7 @@ Tables::SearchResult Tables::doLookup(const QString& key, bool exact,
                                       int index, int lastindex)
 {
   SearchResult result;
-  result.symbol = 0;
+  result.count = 0;
   result.keyused = 0;
   result.table = 0;
   int itemsize;
@@ -180,16 +180,21 @@ Tables::SearchResult Tables::doLookup(const QString& key, bool exact,
   if (lastindex < 0)
     // a negative lastindex is a relative offset to index
     lastindex = index + lastindex + 1;
-  Table::const_iterator item;
   for (; index >= lastindex && result.keyused < key.size(); --index)
   {
     Table& tbl = tableList[index];
-    item = tbl.lookup(key, exact);
+    Table::const_iterator item = tbl.lookup(key, exact);
     if ( item != tbl.constEnd() 
          && (itemsize = item.key().size()) > result.keyused )
     {
+      result.pt = item++;
+      result.count = 1;
+      while (item != tbl.constEnd() && item.key() == result.pt.key())
+      {
+        ++result.count;
+        ++item;
+      }
       result.table = &tbl;
-      result.symbol = item.value();
       result.keyused = itemsize;
     }
   }
@@ -227,7 +232,7 @@ Variant Tables::escape(const ParamList& params)
 
 Variant Tables::define(const ParamList& params)
 {
-  PSymbol symbol = builtinLookup(params.at(0)).symbol;
+  PSymbol symbol = builtinLookup(params.at(0)).pt.value();
   if (!symbol)
     return TABLE_SYMBOL_NOT_FOUND;
   QString key = (const QString&)params.at(1);
@@ -264,9 +269,9 @@ Variant Tables::undefine(const ParamList& params)
   }
   SearchResult sr = Tables::self().doLookup(params.at(0), true,
                                             firstindex, globalSymbols);
-  if (!sr.symbol)
+  if (sr.count == 0)
     return TABLE_SYMBOL_NOT_FOUND;
-  sr.table->removeSymbol(sr.symbol);
+  sr.table->removeSymbol(sr.pt.value());
   return 0;
 }
 
@@ -298,16 +303,7 @@ bool Table::overloadSymbol(const QString& key, PSymbol symbol)
 {
   if (!symbol)
     return false;
-  const_iterator p = lookup(key);
-  if (p == constEnd())
-  {
-    ReferenceSymbol* rf = new ReferenceSymbol(this);
-    *rf = *symbol;
-    return addSymbol(key, rf);
-  }
-  if (p.value()->type() != referenceSym)
-    return false;
-  *static_cast<ReferenceSymbol*>(p.value()) = *symbol;
+  insertMulti(key, symbol);
   return true;
 }
 

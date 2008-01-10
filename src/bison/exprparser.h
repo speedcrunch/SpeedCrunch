@@ -65,24 +65,29 @@
      POSTFIXOP = 281,
      FUNCTION = 282,
      ASSIGN = 283,
-     L0 = 284,
-     R1 = 285,
-     L2 = 286,
-     R3 = 287,
-     L4 = 288,
-     R5 = 289,
-     L6 = 290,
-     R7 = 291,
-     L8 = 292,
-     R9 = 293,
-     PREFIX10 = 294,
-     L10 = 295,
-     R11 = 296,
-     PREFIX12 = 297,
-     L12 = 298,
-     R13 = 299,
-     PREFIX14 = 300,
-     L14 = 301
+     PREFIX0 = 284,
+     L0 = 285,
+     R1 = 286,
+     PREFIX2 = 287,
+     L2 = 288,
+     R3 = 289,
+     PREFIX4 = 290,
+     L4 = 291,
+     R5 = 292,
+     PREFIX6 = 293,
+     L6 = 294,
+     R7 = 295,
+     PREFIX8 = 296,
+     L8 = 297,
+     R9 = 298,
+     PREFIX10 = 299,
+     L10 = 300,
+     R11 = 301,
+     PREFIX12 = 302,
+     L12 = 303,
+     R13 = 304,
+     PREFIX14 = 305,
+     L14 = 306
    };
 #endif
 /* Tokens.  */
@@ -112,31 +117,36 @@
 #define POSTFIXOP 281
 #define FUNCTION 282
 #define ASSIGN 283
-#define L0 284
-#define R1 285
-#define L2 286
-#define R3 287
-#define L4 288
-#define R5 289
-#define L6 290
-#define R7 291
-#define L8 292
-#define R9 293
-#define PREFIX10 294
-#define L10 295
-#define R11 296
-#define PREFIX12 297
-#define L12 298
-#define R13 299
-#define PREFIX14 300
-#define L14 301
+#define PREFIX0 284
+#define L0 285
+#define R1 286
+#define PREFIX2 287
+#define L2 288
+#define R3 289
+#define PREFIX4 290
+#define L4 291
+#define R5 292
+#define PREFIX6 293
+#define L6 294
+#define R7 295
+#define PREFIX8 296
+#define L8 297
+#define R9 298
+#define PREFIX10 299
+#define L10 300
+#define R11 301
+#define PREFIX12 302
+#define L12 303
+#define R13 304
+#define PREFIX14 305
+#define L14 306
 
 
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 71 "exprparser.y"
+#line 84 "exprparser.y"
 {
   int        sign;
   String     string;
@@ -148,7 +158,7 @@ typedef union YYSTYPE
   Func       func;
 }
 /* Line 1529 of yacc.c.  */
-#line 152 "exprparser.h"
+#line 162 "exprparser.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

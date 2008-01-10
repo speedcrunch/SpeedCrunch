@@ -215,9 +215,7 @@ SymType Symbol::type() const
 
 PSymbol Symbol::clone(void* aOwner) const
 {
-  ReferenceSymbol* s = new ReferenceSymbol(aOwner);
-  *s = *this;
-  return s;
+  return new LinkSymbol(aOwner, *this);
 }
 
 SyntaxSymbol::SyntaxSymbol(void* aOwner, SymType aType)
@@ -248,11 +246,6 @@ TagSymbol::TagSymbol(void* aOwner, char aBase, bool iscomplement)
 SymType TagSymbol::type() const
 {
   return tagSym;
-}
-
-PSymbol TagSymbol::clone(void* aOwner) const
-{
-  return new TagSymbol(aOwner, m_base, m_compl);
 }
 
 PSymbol CloseSymbol::clone(void* aOwner) const
@@ -358,36 +351,18 @@ SymType VarSymbol::type() const
   return varSym;
 }
 
-SymType ReferenceSymbol::type() const
+SymType LinkSymbol::type() const
 {
-  return referenceSym;
+  return linkSym;
 }
 
-ReferenceSymbol::ReferenceSymbol(void* aOwner)
+LinkSymbol::LinkSymbol(void* aOwner, const Symbol& linkTo)
   : Symbol(aOwner)
 {
-  for (unsigned i = 0; i < sizeof(symbols)/sizeof(symbols[0]); ++i)
-    symbols[i] = 0;
-}
-
-const Symbol* ReferenceSymbol::operator[](int index) const
-{
-  if (index < 0 || (unsigned)index >= sizeof(symbols)/sizeof(symbols[0]))
-    return 0;
-  return symbols[index];
-}
-
-void ReferenceSymbol::operator=(const Symbol& other)
-{
-  unsigned firstFree = 0;
-  while (firstFree < maxindex && symbols[firstFree])
-    ++firstFree;
-  if (firstFree >= maxindex) return;
-  if (other.type() == referenceSym)
-    for (int i = 0; firstFree < maxindex; ++firstFree, ++i)
-      symbols[firstFree] = (static_cast<const ReferenceSymbol&>(other))[i];
+  if (linkTo.type() == linkSym)
+    refSymbol = static_cast<const LinkSymbol&>(linkTo).alias();
   else
-    symbols[firstFree] = &other;
+    refSymbol = &linkTo;
 }
 
 ConstSymbol::ConstSymbol(void* aOwner)

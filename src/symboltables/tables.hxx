@@ -41,9 +41,9 @@ class Table: private QMap<QString, PSymbol>
     bool overloadSymbol(const QString& key, PSymbol symbol);
     bool cloneSymbol(const QString& key, PSymbol symbol);
   private:
+    Table::const_iterator lookup(const QString& key, bool exact = true) const;
     void checkDelete(PSymbol symbol);
     void clear();
-    Table::const_iterator lookup(const QString& key, bool exact = true) const;
 };
 
 class Tables
@@ -51,7 +51,8 @@ class Tables
   public:
     typedef struct
     {
-      PSymbol symbol;
+      Table::const_iterator pt;
+      int count;
       int keyused;
       Table* table;
     } SearchResult;

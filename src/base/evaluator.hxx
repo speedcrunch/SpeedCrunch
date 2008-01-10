@@ -20,7 +20,7 @@
 #ifndef EVALUATOR
 #define EVALUATOR
 
-// #define _BISON
+#define _BISON
 
 #include <QString>
 #include <math/hmath.hxx>

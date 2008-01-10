@@ -45,7 +45,7 @@ typedef enum
   constSym = 'C',
   ansSym = 'A',
   varSym = 'V',
-  referenceSym = 'R',
+  linkSym = 'L',
   tagSym = 'T',
   closeSym = ')',
   dot = '.',
@@ -194,7 +194,6 @@ class TagSymbol: public Symbol
     char base() const { return m_base; };
     bool complement() const { return m_compl; };
     SymType type() const;
-    PSymbol clone(void* aOwner) const;
   private:
     char m_base;
     bool m_compl;
@@ -285,17 +284,14 @@ class VarSymbol: public ConstSymbol
     void operator=(const Variant& val) { m_value = val; };
 };
 
-class ReferenceSymbol: public Symbol
+class LinkSymbol: public Symbol
 {
   public:
-    ReferenceSymbol(void* aOwner);
+    LinkSymbol(void* aOwner, const Symbol& linkTo);
     SymType type() const;
-    const Symbol* operator[](int index) const;
-    void operator=(const Symbol& other);
-  protected:
-    static const unsigned maxindex = 3;
+    const Symbol* alias() const { return refSymbol; };
   private:
-    const Symbol* symbols[maxindex];
+    const Symbol* refSymbol;
 };
 
 #endif /* _SYMBOLS_H */

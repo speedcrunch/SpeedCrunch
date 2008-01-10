@@ -24,7 +24,7 @@
 #include <QApplication>
 #include <QDir>
 #include <QSettings>
-#include <QLocale> //refdp
+#include <QLocale>
 
 #include <stdlib.h>
 #include "floatconfig.h"
@@ -33,7 +33,7 @@
 
 Settings* s_global_settings = 0;
 
-QChar Settings::dot;                     //refdp
+QChar Settings::dot;
 bool Settings::autoDetectDot;
 
 static void deleteGlobalSettings()
@@ -42,12 +42,12 @@ static void deleteGlobalSettings()
     s_global_settings = 0;
 }
 
-QChar Settings::decimalPoint() //refdp
+QChar Settings::decimalPoint()
 {
   return self()->dot;
 }
 
-void Settings::setDecimalPoint(const QString& val) //refdp
+void Settings::setDecimalPoint(const QString& val)
 {
   autoDetectDot = (val.length() != 1);
   dot = autoDetectDot? QLocale().decimalPoint() : val[0];

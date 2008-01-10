@@ -78,13 +78,14 @@ class SglExprLex
     QString expr;
     QString escapetag;
 
-    typedef enum
+    enum
     {
       whitespace = ' ',
       eol        = '\0',
       sot        = '`',
       eot        = '\'',
     };
+    enum { maxOverloadSymbols = 4 };
 
     int index;
     int start;
@@ -92,7 +93,7 @@ class SglExprLex
     int size;
     int escsize;
     ScanResult lastScanResult;
-    QQueue<PSymbol> pendingSymbol;
+    QQueue<const Symbol*> pendingSymbol;
     QStack<QString> closePar;
     QList<Token> tokens;
     QList<QString>strlist;
@@ -112,6 +113,8 @@ class SglExprLex
     QString currentSubStr() const;
     bool checkExact();
     ScanResult lookup(bool exact = true, char prefix = 0);
+    static const Symbol* follow(const Symbol* symbol);
+    static int findSymbolType(SymType* types, SymType match);
 
     void getNextScanResult();
     QString checkEscape(const QString& s);

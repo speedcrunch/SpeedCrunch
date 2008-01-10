@@ -1,6 +1,6 @@
 /* testfloatnum.c: regression test for floatnum. */
 /*
-    Copyright (C) 2007 Wolf Lammen.
+    Copyright (C) 2007, 2008 Wolf Lammen.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -2429,6 +2429,7 @@ static int test_frac()
   if (!tc_frac("-10\n", "-10")) return FALSE;
   if (!tc_frac("-10.1\n", "-10.1")) return FALSE;
   if (!tc_frac("-0.1\n", "-0.1")) return FALSE;
+  if (!tc_frac("10.000000001\n", ".000000001")) return FALSE;
   return TRUE;
 }
 

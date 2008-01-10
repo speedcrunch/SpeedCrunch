@@ -328,6 +328,9 @@ _pochhammer_si(
   int n,
   int digits)
 {
+  /* this extends the rising Pochhammer symbol to negative integer offsets
+     following the formula pochhammer(x,n-1) = pochhammer(x,n)/(x-n+1) */
+
   if (n >= 0)
     return _pochhammer_su(x, n, digits);
   return float_addi(x, x, n, digits)
@@ -341,6 +344,8 @@ _pochhammer_g(
   floatnum n,
   int digits)
 {
+  /* this generalizes the rising Pochhammer symbol using the
+     formula pochhammer(x,n) = Gamma(x+1)/Gamma(x-n+1) */
   floatstruct tmp, factor1, factor2;
   int inf1, inf2;
   char result;
@@ -383,6 +388,8 @@ _pochhammer_i(
   floatnum n,
   int digits)
 {
+  /* do not use the expensive Gamma function when a few
+     multiplications do the same */
   /* pre: n is an integer */
   int ni;
   char result;
