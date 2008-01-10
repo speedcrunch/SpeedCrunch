@@ -170,4 +170,3 @@ DISTFILES += ../i18n/crunch_sv.qm
 DISTFILES += ../i18n/crunch_sl.qm
 DISTFILES += ../i18n/crunch_tr.qm
 DISTFILES += resources/crunch.png
-DISTFILES += resources/clearinput.png

@@ -1,6 +1,6 @@
 /* This file is part of the SpeedCrunch project
    Copyright (C) 2005-2006 Johan Thelin <e8johan@gmail.com>
-   Copyright (C) 2007 Helder Correia <helder.pereira.correia@gmail.com>
+   Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -52,24 +52,25 @@ class KeyPad : public QWidget
     void clicked8();
     void clicked9();
     void clickedDot();
-    void clickedEq();
-
     void clickedSqrt();
-    void clickedBackspace();
+    void clickedRaise();
+    void clickedPerc();
+    void clickedFact();
+    void clickedBs();
     void clickedLParen();
+    void clickedSemic();
     void clickedRParen();
+    void clickedAvg();
     void clickedAdd();
     void clickedSub();
     void clickedMul();
     void clickedDiv();
-
     void clickedPi();
     void clickedAns();
     void clickedX();
     void clickedXEq();
-
     void clickedExp();
-    void clickedLog();
+    void clickedLn();
     void clickedSin();
     void clickedCos();
     void clickedTan();

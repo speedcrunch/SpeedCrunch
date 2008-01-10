@@ -139,14 +139,6 @@ public:
   QPushButton * clearInputButton;
   QPushButton * evalButton;
 
-  //QRadioButton * binButton;
-  //QRadioButton * octButton;
-  //QRadioButton * decButton;
-  //QRadioButton * hexButton;
-
-  //QRadioButton * radButton;
-  //QRadioButton * degButton;
-
   QSystemTrayIcon * trayIcon;
   bool              trayNotify;
 
@@ -212,13 +204,13 @@ Crunch::Crunch(): QMainWindow()
   inputBoxLayout->addWidget( d->editor );
 
   d->evalButton = new QPushButton( box );
-  d->evalButton->setText( tr("Evaluate" ) );
+  d->evalButton->setIcon( QPixmap( ":/calculate.png" ) );
+  d->evalButton->setToolTip( tr("Evaluate") );
+  //d->evalButton->setText( tr("Evaluate" ) );
   d->evalButton->hide();
   inputBoxLayout->addWidget( d->evalButton );
 
   outerBoxLayout->addLayout( inputBoxLayout );
-
-  resize( 300, 400 );
 
   // we need settings to be loaded before keypad and constants dock
   Settings::self()->load();
@@ -566,7 +558,8 @@ void Crunch::applySettings()
     d->actions->degree->setChecked( true );
   }
 
-  d->result->NotifyDotChanged(); // FIXME should use the QT message handling "settingsChanged"
+  // FIXME should use the QT message handling "settingsChanged"
+  d->result->notifyDotChanged();
 
   //QString l = settings->language;
   //if ( l == "" )

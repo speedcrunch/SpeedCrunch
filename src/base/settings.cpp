@@ -75,13 +75,12 @@ Settings::Settings()
   showFunctions        = false;
   showVariables        = false;
   showConstants        = false;
+  customAppearance     = true;
 
-  customAppearance       = false;
-  customTextColor        = Qt::black;
-  customBackgroundColor1 = Qt::white;
-  customBackgroundColor2 = Qt::white;
-  customErrorColor       = Qt::red;
-
+  customTextColor         = QColor( 154, 205,  50 );
+  customBackgroundColor1  = QColor(   0,   0,   0 );
+  customBackgroundColor2  = QColor(  17,  20,  23 );
+  customErrorColor        = QColor( 242,  89,  13 );
   highlightNumberColor    = QColor(   0,   0, 127 );
   highlightFunctionColor  = QColor(  85,   0,   0 );
   highlightVariableColor  = QColor(   0,  85,   0 );
@@ -91,23 +90,23 @@ Settings::Settings()
   historyDockFloating   = false;
   historyDockLeft       = 0;
   historyDockTop        = 0;
-  historyDockWidth      = 150;
-  historyDockHeight     = 400;
+  historyDockWidth      = 200;
+  historyDockHeight     = 350;
   functionsDockFloating = false;
   functionsDockLeft     = 0;
   functionsDockTop      = 0;
-  functionsDockWidth    = 150;
-  functionsDockHeight   = 400;
+  functionsDockWidth    = 200;
+  functionsDockHeight   = 350;
   variablesDockFloating = false;
   variablesDockLeft     = 0;
   variablesDockTop      = 0;
-  variablesDockWidth    = 150;
-  variablesDockHeight   = 400;
+  variablesDockWidth    = 200;
+  variablesDockHeight   = 350;
   constantsDockFloating = false;
   constantsDockLeft     = 0;
   constantsDockTop      = 0;
-  constantsDockWidth    = 150;
-  constantsDockHeight   = 400;
+  constantsDockWidth    = 200;
+  constantsDockHeight   = 350;
 
   escape = "\\"; //reftbl
 }
@@ -149,14 +148,14 @@ void Settings::load()
   showVariables = settings.value( key + "/Appearance/ShowVariables", false ).toBool();
   showConstants = settings.value( key + "/Appearance/ShowConstants", false ).toBool();
 
-  customAppearance = settings.value(                    key + "/Appearance/CustomAppearance",       false              ).toBool();
+  customAppearance = settings.value(                    key + "/Appearance/CustomAppearance",       true               ).toBool();
   customFont.fromString( settings.value(                key + "/Appearance/CustomFont",             QFont().toString() ).toString() );
-  customTextColor.setNamedColor( settings.value(        key + "/Appearance/CustomTextColor",        "#000000"          ).toString() );
-  customBackgroundColor1.setNamedColor( settings.value( key + "/Appearance/CustomBackgroundColor1", "#ffffff"          ).toString() );
-  customBackgroundColor2.setNamedColor( settings.value( key + "/Appearance/CustomBackgroundColor2", "#eeeeee"          ).toString() );
-  customErrorColor.setNamedColor( settings.value(       key + "/Appearance/CustomErrorColor",       "red"              ).toString() );
-  mainWindowSize = QSize( settings.value( key + "/Appearance/WindowWidth",  0 ).toInt(),
-                          settings.value( key + "/Appearance/WindowHeight", 0 ).toInt() );
+  customTextColor.setNamedColor( settings.value(        key + "/Appearance/CustomTextColor",        "#9acd32"          ).toString() );
+  customBackgroundColor1.setNamedColor( settings.value( key + "/Appearance/CustomBackgroundColor1", "#000000"          ).toString() );
+  customBackgroundColor2.setNamedColor( settings.value( key + "/Appearance/CustomBackgroundColor2", "#111417"          ).toString() );
+  customErrorColor.setNamedColor( settings.value(       key + "/Appearance/CustomErrorColor",       "#f2590d"          ).toString() );
+  mainWindowSize = QSize( settings.value( key + "/Appearance/WindowWidth",  350 ).toInt(),
+                          settings.value( key + "/Appearance/WindowHeight", 400 ).toInt() );
 
   key = SETTINGSKEY;
   key += "/MainWindow/";
@@ -166,22 +165,22 @@ void Settings::load()
   historyDockTop        = settings.value( key + "HistoryDockTop",        0     ).toInt();
   historyDockLeft       = settings.value( key + "HistoryDockLeft",       0     ).toInt();
   historyDockWidth      = settings.value( key + "HistoryDockWidth",      150   ).toInt();
-  historyDockHeight     = settings.value( key + "HistoryDockHeight",     400   ).toInt();
+  historyDockHeight     = settings.value( key + "HistoryDockHeight",     350   ).toInt();
   functionsDockFloating = settings.value( key + "FunctionsDockFloating", false ).toBool();
   functionsDockTop      = settings.value( key + "FunctionsDockTop",      0     ).toInt();
   functionsDockLeft     = settings.value( key + "FunctionsDockLeft",     0     ).toInt();
   functionsDockWidth    = settings.value( key + "FunctionsDockWidth",    150   ).toInt();
-  functionsDockHeight   = settings.value( key + "FunctionsDockHeight",   400   ).toInt();
+  functionsDockHeight   = settings.value( key + "FunctionsDockHeight",   350   ).toInt();
   variablesDockFloating = settings.value( key + "VariablesDockFloating", false ).toBool();
   variablesDockTop      = settings.value( key + "VariablesDockTop",      0     ).toInt();
   variablesDockLeft     = settings.value( key + "VariablesDockLeft",     0     ).toInt();
   variablesDockWidth    = settings.value( key + "VariablesDockWidth",    150   ).toInt();
-  variablesDockHeight   = settings.value( key + "VariablesDockHeight",   400   ).toInt();
+  variablesDockHeight   = settings.value( key + "VariablesDockHeight",   350   ).toInt();
   constantsDockFloating = settings.value( key + "ConstantsDockFloating", false ).toBool();
   constantsDockTop      = settings.value( key + "ConstantsDockTop",      0     ).toInt();
   constantsDockLeft     = settings.value( key + "ConstantsDockLeft",     0     ).toInt();
   constantsDockWidth    = settings.value( key + "ConstantsDockWidth",    150   ).toInt();
-  constantsDockHeight   = settings.value( key + "ConstantsDockHeight",   400   ).toInt();
+  constantsDockHeight   = settings.value( key + "ConstantsDockHeight",   350   ).toInt();
 
   key = SETTINGSKEY;
   key += "/SyntaxHighlight/";

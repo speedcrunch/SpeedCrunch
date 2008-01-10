@@ -38,7 +38,6 @@ public:
   QStringList contents;
   char format;
   int decimalDigits;
-//  QString decimalPoint; //refdp
   bool customAppearance;
   QColor customTextColor;
   QColor customBackgroundColor1;
@@ -168,14 +167,13 @@ Result::Result( QWidget* parent, const char* name ): QListWidget( parent )
   d = new ResultPrivate;
   d->format = 'g';
   d->decimalDigits = -1;
-//  d->decimalPoint = QString(); //refdp
   d->customAppearance = false;
   d->count = 0;
 
-  d->customTextColor = Qt::black;
-  d->customBackgroundColor1 = QColor( 255, 255, 255 );
-  d->customBackgroundColor2 = QColor( 200, 200, 200 );
-  d->customErrorColor = Qt::red;
+  d->customTextColor        = QColor( 255, 255, 255 );
+  d->customBackgroundColor1 = QColor(   0,   0,   0 );
+  d->customBackgroundColor2 = QColor(  21,  21,  21 );
+  d->customErrorColor       = QColor( 255,   0,   0 );
 
   setObjectName( name );
   setBackgroundRole(QPalette::Base);
@@ -238,7 +236,7 @@ void Result::copyToClipboard( QListWidgetItem* item )
  emit textCopied( item->text() );
 }
 
-void Result::NotifyDotChanged() //refdp
+void Result::notifyDotChanged() //refdp
 {
   triggerUpdate();
 }
@@ -270,26 +268,11 @@ int Result::decimalDigits() const
   return d->decimalDigits;
 }
 
-// void Result::setDecimalPoint( const QString& dp )
-// {
-//   d->decimalPoint = dp;
-//   triggerUpdate();
-// }
-//
-// QString Result::decimalPoint() const
-// {
-//   return d->decimalPoint;
-// } //refdp
-
 QString Result::formatNumber( const HNumber& value ) const
 {
   char* str = HMath::format( value, value.format() ? value.format() : d->format, d->decimalDigits );
   QString s = QString::fromLatin1( str );
   free( str );
-/*  if( d->decimalPoint.length() == 1 )
-    for( int i = 0; i < s.length(); i++ )
-      if( s[i] == '.' )
-        s[i] = d->decimalPoint[0];*/ //refdp
   QChar dot = Settings::decimalPoint();
   if (dot != '.')
     s.replace( '.', dot);

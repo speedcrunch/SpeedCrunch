@@ -1,5 +1,6 @@
 /* This file is part of the SpeedCrunch project
    Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
+                 2008 Helder Correia <helder.pereira.correia@gmail.com>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -47,9 +48,7 @@ class Result : public QListWidget
     void setDecimalDigits( int digits );
     int decimalDigits() const;
     QString formatNumber( const HNumber& value ) const;
-//     QString decimalPoint() const;
-//     void setDecimalPoint( const QString& dp ); //refdp
-    void NotifyDotChanged();
+    void notifyDotChanged();
 
     void setCustomAppearance( bool custom );
     bool customAppearance() const;
