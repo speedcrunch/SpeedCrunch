@@ -312,6 +312,10 @@ Evaluator::Evaluator()
          << "\\sin 0.3e1"
          << "0x2Fp2"
          << "0xsF0"
+         << "\\def (\"posscale\"; \"0+\")"
+         << "\\def (\"negscale\"; \"0-\")"
+
+         << "2e-1"
       ;
   SglExprLex::self().run(script);
 #endif

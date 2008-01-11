@@ -31,6 +31,7 @@ class Table: private QMap<QString, PSymbol>
   friend class Tables;
   public:
     ~Table();
+    void removeSymbols(const QString& key);
     void removeSymbol(PSymbol symbol);
     bool addTagSymbol(const QString& key, char base, bool complement);
     bool addSyntaxSymbol(const QString& key, SymType aType);
@@ -39,7 +40,8 @@ class Table: private QMap<QString, PSymbol>
                            int minParamCount, int maxParamCount);
     bool addSymbol(const QString& key, PSymbol symbol);
     bool overloadSymbol(const QString& key, PSymbol symbol);
-    bool cloneSymbol(const QString& key, PSymbol symbol);
+    bool cloneSymbol(const QString& key, PSymbol symbol, bool overload = false);
+    bool keysContainChar(QChar c);
   private:
     Table::const_iterator lookup(const QString& key, bool exact = true) const;
     void checkDelete(PSymbol symbol);
@@ -64,6 +66,8 @@ class Tables
     static Variant escape(const ParamList& params);
     static Variant define(const ParamList& params);
     static Variant undefine(const ParamList& params);
+    static Variant overload(const ParamList& params);
+    static bool keysContainChar(QChar c);
   private:
 
     enum

@@ -93,7 +93,7 @@ class SglExprLex
     int size;
     int escsize;
     ScanResult lastScanResult;
-    QQueue<const Symbol*> pendingSymbol;
+    QQueue<ScanResult> pending;
     QStack<QString> closePar;
     QList<Token> tokens;
     QList<QString>strlist;
@@ -115,6 +115,7 @@ class SglExprLex
     ScanResult lookup(bool exact = true, char prefix = 0);
     static const Symbol* follow(const Symbol* symbol);
     static int findSymbolType(SymType* types, SymType match);
+    static QString addDelim(const QString&);
 
     void getNextScanResult();
     QString checkEscape(const QString& s);

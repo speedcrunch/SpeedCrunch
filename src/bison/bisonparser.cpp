@@ -75,6 +75,7 @@ bool SglExprLex::autoFix(const QString& newexpr)
   int tokencnt = 0;
   int assignseqpos = -1;
   int lastToken;
+  bool inText = false;
 
   setExpression(newexpr);
   reset();
@@ -84,6 +85,8 @@ bool SglExprLex::autoFix(const QString& newexpr)
     switch (lastScanResult.type)
     {
       case eol:
+      case sot:
+      case eot: inText = !inText;
       case whitespace: continue;
       case ASSIGN: if (assignseqpos < 0) assignseqpos = start; continue;
       case UNKNOWNTOKEN: return false;
@@ -99,8 +102,10 @@ bool SglExprLex::autoFix(const QString& newexpr)
 /*  if ( tokencnt == 1 && lasttoken == FUNCTION )
     expr.append(revLookup(ans));*/
   // close all unmatched left paranthesis
+  if (inText)
+    expr.append(closePar.pop());
   while ( !closePar.isEmpty() )
-    expr.append(' ' + closePar.pop());
+    expr.append(addDelim(closePar.pop()));
   return true;
 }
 
@@ -223,6 +228,16 @@ void SglExprLex::scanSpecial()
     end = index;
 }
 
+/*------------------------   table lookup   -----------------------*/
+
+QString SglExprLex::addDelim(const QString& closekey)
+{
+  if (closekey.size() == 1 && !Tables::keysContainChar(closekey.at(0)))
+    return closekey;
+  return ' ' + closekey;
+}
+
+
 /*------------------------   initialization/finalization   -----------------------*/
 
 void SglExprLex::reset()
@@ -232,7 +247,7 @@ void SglExprLex::reset()
   state = stTopLevel;
   escapetag = Settings::self()->escape;
   escsize = escapetag.size();
-  pendingSymbol.clear();
+  pending.clear();
   closePar.clear();
   lastScanResult.type = whitespace;
   lastScanResult.symbol = 0;
@@ -269,6 +284,8 @@ int SglExprLex::symbolType(SymType t)
     case functionSym : return FUNCTION;
     case scale       : return SCALE;
     case decscale    : return DECSCALE;
+    case signPlus    :
+    case signMinus   : return SIGN;
     case group       : return GROUPCHAR;
     default          : return UNKNOWNTOKEN;
   };
@@ -291,7 +308,6 @@ SglExprLex::ScanResult SglExprLex::searchResult2scanResult(Tables::SearchResult 
   SymType types[maxOverloadSymbols];
 //  int tokens[maxOverloadSymbols];
   ScanResult result;
-  const TagSymbol* tag;
 
   if (sr.count > maxOverloadSymbols)
     sr.count = 0;
@@ -307,14 +323,12 @@ SglExprLex::ScanResult SglExprLex::searchResult2scanResult(Tables::SearchResult 
   switch (types[0])
   {
     case tagSym:
-      tag = static_cast<const TagSymbol*>(symbols[0]);
-      if (tag->complement())
+      result.type = baseTag(result.symbol);
+      if (static_cast<const TagSymbol*>(symbols[0])->complement())
       {
-        pendingSymbol.enqueue(symbols[0]);
+        pending.enqueue(result);
         result.type = CMPLTAG;
       }
-      else
-        result.type = baseTag(result.symbol);
       break;
     default: ;
   }
@@ -336,17 +350,8 @@ bool SglExprLex::matchesClosePar() const
 
 void SglExprLex::getNextScanResult()
 {
-  if ( !pendingSymbol.isEmpty() )
-  {
-    lastScanResult.symbol = pendingSymbol.dequeue();
-    switch (lastScanResult.symbol->type())
-    {
-      case tagSym:
-        lastScanResult.type = baseTag(lastScanResult.symbol);
-        break;
-      default: ;
-    }
-  }
+  if ( !pending.isEmpty() )
+    lastScanResult = pending.dequeue();
   else
     lastScanResult = scanNextToken();
   updateState();
@@ -501,6 +506,7 @@ void SglExprLex::updateState()
     case BINSEQ: state = stNumber; break;
     case DECSCALE:
     case SCALE: state = stScale; break;
+    case SIGN:
     case GROUPCHAR: break;
     case TEXT: state = stTopLevel; break;
     case sot: state = stText; // fall through
@@ -630,6 +636,7 @@ int SglExprLex::mGetToken(YYSTYPE* val, int* pos, int* lg)
     case OCTSEQ  :
     case BINSEQ  :
     case TEXT    : val->string = allocString(token.str()); break;
+    case SIGN    : val->sign = token.symbol()->type() == 'M'? -1 : 1; break;
     default      : ;
   }
   return token.type();
