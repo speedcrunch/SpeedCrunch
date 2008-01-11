@@ -23,7 +23,6 @@
 
 #include <QApplication>
 #include <QGridLayout>
-//#include <QLocale> //refdp
 #include <QPushButton>
 #include <QStyle>
 
@@ -43,7 +42,7 @@ class KeyPadPrivate
     QPushButton* key8;
     QPushButton* key9;
     QPushButton* keyDot;
-    QPushButton* keyBs;
+    QPushButton* keyEE;
     QPushButton* keySqrt;
     QPushButton* keyFact;
     QPushButton* keyPerc;
@@ -87,7 +86,7 @@ void KeyPad::createButtons()
   d->keyRaise  = new QPushButton( "^",    this );
   d->keyPerc   = new QPushButton( "%",    this );
   d->keyFact   = new QPushButton( "!",    this );
-  d->keyBs     = new QPushButton(         this );
+  d->keyEE     = new QPushButton(         this );
   d->keyLParen = new QPushButton( "(",    this );
   d->keySemic  = new QPushButton( ";",    this );
   d->keyRParen = new QPushButton( ")",    this );
@@ -111,7 +110,7 @@ void KeyPad::createButtons()
   d->keyDot    = new QPushButton( Settings::decimalPoint(), this );
 
   d->keyAvg->setIcon ( QPixmap( ":/average.png" ) );
-  d->keyBs->setIcon  ( QPixmap( ":/back.png"    ) );
+  d->keyEE->setIcon  ( QPixmap( ":/ee.png"      ) );
   d->keyExp->setIcon ( QPixmap( ":/exp.png"     ) );
   d->keyPi->setIcon  ( QPixmap( ":/pi.png"      ) );
   d->keySqrt->setIcon( QPixmap( ":/sqrt.png"    ) );
@@ -131,7 +130,7 @@ void KeyPad::polishButtons()
   d->key8->ensurePolished();
   d->key9->ensurePolished();
   d->keyDot->ensurePolished();
-  d->keyBs->ensurePolished();
+  d->keyEE->ensurePolished();
   d->keySqrt->ensurePolished();
   d->keyRaise->ensurePolished();
   d->keyPerc->ensurePolished();
@@ -184,7 +183,7 @@ void KeyPad::sizeButtons()
   if( fm.width( d->keyRaise->text()  ) > maxWidth ) maxWidth = fm.width( d->keyRaise->text()  );
   if( fm.width( d->keyPerc->text()   ) > maxWidth ) maxWidth = fm.width( d->keyPerc->text()   );
   if( fm.width( d->keyFact->text()   ) > maxWidth ) maxWidth = fm.width( d->keyFact->text()   );
-  if( fm.width( d->keyBs->text()     ) > maxWidth ) maxWidth = fm.width( d->keyBs->text()     );
+  if( fm.width( d->keyEE->text()     ) > maxWidth ) maxWidth = fm.width( d->keyEE->text()     );
   if( fm.width( d->keyLParen->text() ) > maxWidth ) maxWidth = fm.width( d->keyLParen->text() );
   if( fm.width( d->keySemic->text()  ) > maxWidth ) maxWidth = fm.width( d->keySemic->text()  );
   if( fm.width( d->keyRParen->text() ) > maxWidth ) maxWidth = fm.width( d->keyRParen->text() );
@@ -230,7 +229,7 @@ void KeyPad::sizeButtons()
   d->keyRaise->setMaximumSize ( d->key0->maximumSize() ); d->keyRaise->setMinimumSize ( d->key0->maximumSize() );
   d->keyPerc->setMaximumSize  ( d->key0->maximumSize() ); d->keyPerc->setMinimumSize  ( d->key0->maximumSize() );
   d->keyFact->setMaximumSize  ( d->key0->maximumSize() ); d->keyFact->setMinimumSize  ( d->key0->maximumSize() );
-  d->keyBs->setMaximumSize    ( d->key0->maximumSize() ); d->keyBs->setMinimumSize    ( d->key0->maximumSize() );
+  d->keyEE->setMaximumSize    ( d->key0->maximumSize() ); d->keyEE->setMinimumSize    ( d->key0->maximumSize() );
   d->keyLParen->setMaximumSize( d->key0->maximumSize() ); d->keyLParen->setMinimumSize( d->key0->maximumSize() );
   d->keySemic->setMaximumSize ( d->key0->maximumSize() ); d->keySemic->setMinimumSize ( d->key0->maximumSize() );
   d->keyRParen->setMaximumSize( d->key0->maximumSize() ); d->keyRParen->setMinimumSize( d->key0->maximumSize() );
@@ -271,7 +270,7 @@ void KeyPad::dontFocusButtons()
   d->keyRaise->setFocusPolicy ( Qt::NoFocus );
   d->keyPerc->setFocusPolicy  ( Qt::NoFocus );
   d->keyFact->setFocusPolicy  ( Qt::NoFocus );
-  d->keyBs->setFocusPolicy    ( Qt::NoFocus );
+  d->keyEE->setFocusPolicy    ( Qt::NoFocus );
   d->keyLParen->setFocusPolicy( Qt::NoFocus );
   d->keySemic->setFocusPolicy ( Qt::NoFocus );
   d->keyRParen->setFocusPolicy( Qt::NoFocus );
@@ -302,10 +301,10 @@ void KeyPad::layoutButtons()
   layout->setMargin( 3 );
   layout->setSpacing( 3 );
 
-  //   7    8    9     /   sqrt    ^    pi   exp   ln
-  //   4    5    6     *     (     )   ans   sin  asin
-  //   1    2    3     -     %     !    x    cos  acos
-  //   0    .   <--    *                x=   tan  atan
+  //   7    8    9     /   sqrt    ^     pi   exp   ln
+  //   4    5    6     *     (     )    ans   sin  asin
+  //   1    2    3     -     ;    avg    x    cos  acos
+  //   0    .    E     +     %     !     x=   tan  atan
 
   layout->addWidget( d->key7,         0, 0 );
   layout->addWidget( d->key4,         1, 0 );
@@ -318,7 +317,7 @@ void KeyPad::layoutButtons()
   layout->addWidget( d->key9,         0, 2 );
   layout->addWidget( d->key6,         1, 2 );
   layout->addWidget( d->key3,         2, 2 );
-  layout->addWidget( d->keyBs,        3, 2 );
+  layout->addWidget( d->keyEE,        3, 2 );
   layout->addWidget( d->keyDiv,       0, 3 );
   layout->addWidget( d->keyMul,       1, 3 );
   layout->addWidget( d->keySub,       2, 3 );
@@ -363,7 +362,7 @@ void KeyPad::connectButtons()
   connect( d->keyRaise,     SIGNAL(clicked()), SLOT(clickedRaise())  );
   connect( d->keyPerc,      SIGNAL(clicked()), SLOT(clickedPerc())   );
   connect( d->keyFact,      SIGNAL(clicked()), SLOT(clickedFact())   );
-  connect( d->keyBs,        SIGNAL(clicked()), SLOT(clickedBs())     );
+  connect( d->keyEE,        SIGNAL(clicked()), SLOT(clickedEE())     );
   connect( d->keyLParen,    SIGNAL(clicked()), SLOT(clickedLParen()) );
   connect( d->keySemic,     SIGNAL(clicked()), SLOT(clickedSemic())  );
   connect( d->keyRParen,    SIGNAL(clicked()), SLOT(clickedRParen()) );
@@ -412,7 +411,6 @@ KeyPad::KeyPad( QWidget* parent ) : QWidget( parent )
   d->keyCos->setToolTip ( tr("Cosine") );
   d->keyTan->setToolTip ( tr("Tangent") );
   d->keySqrt->setToolTip( tr("Square root") );
-  d->keyBs->setToolTip  ( tr("Backspace") );
 }
 
 
@@ -436,7 +434,7 @@ void KeyPad::clickedSqrt()   { emit addText( "sqrt("    ); }
 void KeyPad::clickedRaise()  { emit addText( "^"        ); }
 void KeyPad::clickedPerc()   { emit addText( "%"        ); }
 void KeyPad::clickedFact()   { emit addText( "!"        ); }
-void KeyPad::clickedBs()     { emit addText( "<--"      ); }
+void KeyPad::clickedEE()     { emit addText( "e"        ); }
 void KeyPad::clickedLParen() { emit addText( "("        ); }
 void KeyPad::clickedSemic()  { emit addText( ";"        ); }
 void KeyPad::clickedRParen() { emit addText( ")"        ); }

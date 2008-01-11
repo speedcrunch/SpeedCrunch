@@ -56,7 +56,7 @@ class KeyPad : public QWidget
     void clickedRaise();
     void clickedPerc();
     void clickedFact();
-    void clickedBs();
+    void clickedEE();
     void clickedLParen();
     void clickedSemic();
     void clickedRParen();
