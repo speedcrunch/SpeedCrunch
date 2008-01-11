@@ -91,14 +91,11 @@ class Crunch : public QMainWindow
     void variableSelected( const QString & );
     void constantSelected( const QString & );
     void textChanged();
-    //void angleModeChanged();
-    //void radixChanged();
     void minimizeToTray();
     void showTrayMessage();
     void trayIconActivated();
 
   protected:
-    void saveDocks();
     virtual void closeEvent( QCloseEvent* );
 
   private:

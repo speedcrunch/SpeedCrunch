@@ -209,7 +209,7 @@ QString Token::description() const
 {
   QString desc;
 
-  switch (m_type )
+  switch ( m_type )
   {
     case stxNumber     : desc = "Number"    ; break;
     case stxIdentifier : desc = "Identifier"; break;
@@ -318,7 +318,6 @@ Evaluator::Evaluator()
 }
 
 // Destructor
-
 Evaluator::~Evaluator()
 {
   delete d;
@@ -327,7 +326,6 @@ Evaluator::~Evaluator()
 // Sets a new expression
 // note that both the real lex and parse processes will happen later on
 // when needed (i.e. "lazy parse"), for example during evaluation.
-
 void Evaluator::setExpression( const QString& expr )
 {
 #ifdef _BISON
@@ -340,7 +338,6 @@ void Evaluator::setExpression( const QString& expr )
 }
 
 // Returns the expression
-
 QString Evaluator::expression() const
 {
   return d->expression;
@@ -348,12 +345,10 @@ QString Evaluator::expression() const
 
 // Returns the validity
 // note: empty expression is always invalid.
-
 bool Evaluator::isValid() const
 {
   if( d->dirty )
   {
-//    Tokens tokens = scan( d->expression, d->decimalPoint ); //refdp
     Tokens tokens = scan( d->expression );
     if( !tokens.valid() )
       compile( tokens );
@@ -364,26 +359,19 @@ bool Evaluator::isValid() const
 }
 
 // Clears everything, also mark it as invalid.
-
 void Evaluator::clear()
 {
   d->expression  = QString();
   d->dirty       = true;
   d->valid       = false;
-
-  d->error        = QString();
-//  d->angleMode    = Degree; //refan
-//  d->decimalPoint = QString(); //refdp
-
+  d->error       = QString();
   d->constants.clear();
   d->codes.clear();
-  d->assignId = QString();
-
+  d->assignId    = QString();
   clearVariables();
 }
 
 // Returns error message
-
 QString Evaluator::error() const
 {
   return d->error;
@@ -393,14 +381,11 @@ QString Evaluator::error() const
 // this triggers again the lexical analysis step. it is however preferable
 // (even when there's small performance penalty) because otherwise we need to
 // store parsed tokens all the time which serves no good purpose.
-
 Tokens Evaluator::tokens() const
 {
-//  return scan( d->expression, d->decimalPoint ); // refdp
   return scan( d->expression );
 }
 
-//Tokens Evaluator::scan( const QString& expr, const QString& settingsDecimal )//refdp
 Tokens Evaluator::scan( const QString& expr )
 {
   // to hold the result
@@ -513,7 +498,6 @@ Tokens Evaluator::scan( const QString& expr )
            }
            int len = s.length();
            i += len;
-//           tokens.append( Token( Token::stxOperator, s.left( len ), tokenStart ) ); //refty
            tokens.append( Token( type, s.left( len ), tokenStart ) );
          }
          else state = Bad;
@@ -549,7 +533,7 @@ Tokens Evaluator::scan( const QString& expr )
        // consume as long as it's digit
        if( ch.isDigit() ) tokenText.append( ex.at(i++) );
 
-	   // convert decimal separator to '.'
+       // convert decimal separator to '.'
        else if( ch == decimalPoint )
        {
          tokenText.append( '.' );
@@ -1387,16 +1371,14 @@ HNumber Evaluator::eval()
       || d->assignId == QString("ans") )
   {
     d->error = d->assignId + ": " + qApp->translate( "evaluator", "variable cannot be overwritten" );
-    set( QString("pi"),  HMath::pi() );
-    set( QString("phi"), HMath::phi() );
-    return get( QString("ans") );
+    return HNumber::nan();
   }
 
   // variable can't have the same name as function
   if ( FunctionRepository::self()->function( d->assignId ) )
   {
-    d->error = d->assignId + ": " +  qApp->translate( "evaluator", "identifier matches an existing function name" );
-    return get( QString("ans") );
+    d->error = d->assignId + ": " + qApp->translate( "evaluator", "identifier matches an existing function name" );
+    return HNumber::nan();
   }
 
   // handle variable assignment, e.g. "x=2*4"
@@ -1411,7 +1393,9 @@ HNumber Evaluator::evalUpdateAns()
   HNumber result = eval();
 
   // "ans" is default variable to hold calculation result
-  set( QString("ans"), result );
+  if ( d->error.isEmpty() )
+    set( QString("ans"), result );
+
   return result;
 }
 
@@ -1466,13 +1450,10 @@ void Evaluator::clearVariables()
   d->variables.clear();
   set( QString("pi"),  HMath::pi()  );
   set( QString("phi"), HMath::phi() );
-  set( QString("ans"), HNumber(0)   );
 }
 
-//QString Evaluator::autoFix( const QString& expr, const QString& decimalPoint )//refdp
 QString Evaluator::autoFix( const QString& expr )
 {
-
 #ifdef _BISON
 //  SglExprLex::self().autoFix(expr);
 #endif
@@ -1493,7 +1474,6 @@ QString Evaluator::autoFix( const QString& expr )
     result = result.left( result.length()-1 );
 
   // automagically close all parenthesis
-//  Tokens tokens = Evaluator::scan( result, decimalPoint );//refdp
   Tokens tokens = Evaluator::scan( result );
   if(tokens.count())
   {
@@ -1515,7 +1495,6 @@ QString Evaluator::autoFix( const QString& expr )
   // e.g. "cos" is regarded as "cos(ans)"
   if( !result.isEmpty() )
   {
-//    Tokens tokens = Evaluator::scan( result, decimalPoint );//refdp
     Tokens tokens = Evaluator::scan( result );
     if( tokens.count() == 1 )
     {
@@ -1531,7 +1510,6 @@ QString Evaluator::autoFix( const QString& expr )
 }
 
 // Debugging aid
-
 QString Evaluator::dump() const
 {
   QString result;
@@ -1539,7 +1517,6 @@ QString Evaluator::dump() const
 
   if( d->dirty )
   {
-//    Tokens tokens = scan( d->expression, d->decimalPoint ); //refdp
     Tokens tokens = scan( d->expression );
     compile( tokens );
   }

@@ -118,7 +118,7 @@ void Settings::load()
   QString key = SETTINGSKEY;
 
   angleMode = Radian;
-  if (settings.value( key + "/General/AngleMode", "Radian" ).toString() == "Degree")
+  if ( settings.value( key + "/General/AngleMode", "Radian" ).toString() == "Degree")
     angleMode = Degree;
   saveHistory    = settings.value( key + "/General/SaveHistory",    true      ).toBool();
   saveVariables  = settings.value( key + "/General/SaveVariables",  true      ).toBool();
@@ -186,9 +186,9 @@ void Settings::load()
   key += "/SyntaxHighlight/";
   enableSyntaxHighlight = settings.value( key + "EnableSyntaxHighlight", true ).toBool();
 
-  highlightNumberColor.setNamedColor(    settings.value( key + "NumberColor",             "#00007f" ).toString() );
-  highlightFunctionColor.setNamedColor(  settings.value( key + "FunctionColor",           "#550000" ).toString() );
-  highlightVariableColor.setNamedColor(  settings.value( key + "VariableColor",           "#005500" ).toString() );
+  highlightNumberColor.setNamedColor   ( settings.value( key + "NumberColor",             "#00007f" ).toString() );
+  highlightFunctionColor.setNamedColor ( settings.value( key + "FunctionColor",           "#550000" ).toString() );
+  highlightVariableColor.setNamedColor ( settings.value( key + "VariableColor",           "#005500" ).toString() );
   matchedParenthesisColor.setNamedColor( settings.value( key + "MatchedParenthesisColor", "#ffffb7" ).toString() );
 
   key = SETTINGSKEY;
@@ -198,7 +198,7 @@ void Settings::load()
   int count = settings.value( key + "/History/Count", 0 ).toInt();
   for ( int i = 0; i < count; i++ )
   {
-    QString keyname = QString( "%1/History/Expression%2" ).arg( key ).arg( i );
+    QString keyname = QString( key + "/History/Expression%1" ).arg( i );
     QString str = settings.value( keyname ).toString();
     if ( !str.isEmpty() )
     {
@@ -217,19 +217,22 @@ void Settings::load()
   settings.endGroup();
   for ( int k = 0; k < names.count(); k++ )
   {
-    QString keyname = QString( "%1/Variables/%2" ).arg( key ).arg( names[k] );
+    QString name = names[k];
+    QString keyname = QString( key + "/Variables/%1" ).arg( name );
     QString value = settings.value( keyname ).toString();
     // treat upper case escape code
-    QString name = names[k];
     int length = name.length();
     for ( int c = 0; c < length; c++ )
+    {
       if ( name[c] == '_' )
       {
 	name.remove( c, 1 );
 	name[c] = name[c].toUpper();
       }
+    }
+    qDebug( "LOAD > %s=%s", qPrintable( name ), qPrintable( value ) );
     // load
-    if ( ! value.isEmpty() )
+    if ( ! value.isEmpty() && name != "pi" && name != "phi" )
       variables.append( QString( "%1=%2" ).arg( name ).arg( value ) );
   }
 }
@@ -328,11 +331,11 @@ void Settings::save()
   settings.endGroup();
 
   for ( k = 0; k < hkeys.count(); k++ )
-    settings.remove( QString("%1/History/Expression%2").arg(key).arg(k) );
+    settings.remove( QString( key + "/History/Expression%1" ).arg( k ) );
 
   settings.setValue( key + "/History/Count", (int)history.count() );
   for ( i = 0; i < realHistory.count(); i++ )
-    settings.setValue( QString("%1/History/Expression%2").arg(key).arg(i),
+    settings.setValue( QString( key + "/History/Expression%1" ).arg( i ),
                        realHistory[i] );
 
   // save variables
@@ -341,14 +344,17 @@ void Settings::save()
   settings.endGroup();
 
   for ( k = 0; k < vkeys.count(); k++ )
-    settings.remove( QString("%1/Variables/%2").arg(key).arg(vkeys[k]) );
+    settings.remove( QString( key + "/Variables/%1" ).arg( vkeys[k] ) );
 
   for ( i = 0; i < variables.count(); i++ )
   {
     QStringList s = variables[i].split( '=' );
 
-    if ( s.count() == 2 )
-      settings.setValue( QString("%1/Variables/%2").arg(key).arg(s[0]), s[1] );
+    if ( s.count() == 2 && s[0] != "pi" && s[0] != "phi" )
+    {
+      settings.setValue( QString( key + "/Variables/%1").arg( s[0] ), s[1] );
+      qDebug( "SAVE < %s=%s", qPrintable( s[0] ), qPrintable( s[1] ) );
+    }
   }
 }
 

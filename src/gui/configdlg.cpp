@@ -134,8 +134,6 @@ void ConfigDlgPrivate::saveSettings()
   settings->autoCalc = autoCalcCheck->isChecked();
   settings->minimizeToTray = minimizeToTrayCheck->isChecked();
   settings->stayAlwaysOnTop = stayAlwaysOnTopCheck->isChecked();
-/*  settings->decimalPoint = decimalList->currentIndex()==1 ? QString('.') : //refdp
-    decimalList->currentIndex()==2 ? QString(',') : QString();*/
   settings->setDecimalPoint(decimalList->currentIndex()==1 ? "." : //refdp
   decimalList->currentIndex()==2 ? "," : QString());
   settings->customAppearance = customAppearanceCheck->isChecked();
@@ -426,7 +424,7 @@ ConfigDlg::~ConfigDlg()
 
 void ConfigDlg::initUI()
 {
-  setUpdatesEnabled( true );
+  setUpdatesEnabled( false );
   d->loadSettings();
   setUpdatesEnabled( true );
   adjustSize();

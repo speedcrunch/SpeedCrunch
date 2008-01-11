@@ -534,7 +534,7 @@ void Crunch::createUI()
 void Crunch::applySettings()
 {
   Settings* settings = Settings::self();
-  settings->load();
+  //settings->load();
 
   if( settings->mainWindowSize != QSize( 0, 0 ) )
     resize( settings->mainWindowSize );
@@ -585,6 +585,8 @@ void Crunch::applySettings()
     {
       d->eval->setExpression( settings->variables[k] );
       d->eval->eval();
+      QStringList s = settings->variables[k].split( "=" );
+      d->eval->set( s[0], HNumber( s[1].toAscii().data() ) );
     }
     d->variablesDock->updateList( d->eval );
   }
@@ -713,7 +715,6 @@ void Crunch::closeEvent( QCloseEvent* e )
   if(d->trayIcon)
     d->trayIcon->hide();
   saveSettings();
-  saveDocks();
   emit quitApplication();
   QMainWindow::closeEvent( e );
 }
@@ -744,47 +745,31 @@ void Crunch::saveSettings()
 
   settings->mainWindowSize = size();
 
-//   if( d->eval->angleMode()== Evaluator::Degree ) //refan
-//     settings->angleMode = "degree";
-//   if( d->eval->angleMode()== Evaluator::Radian )
-//     settings->angleMode = "radian";
-
-//  settings->decimalPoint = d->eval->decimalPoint(); //refdp
-
   if( settings->saveHistory )
     settings->history = d->editor->history();
 
   if( settings->saveVariables )
   {
-    settings->variables.clear();
+    //settings->variables.clear();
     QVector<Variable> vars = d->eval->variables();
     for( int i=0; i<vars.count(); i++ )
-      if(    vars[i].name != "pi"
-	  && vars[i].name != "phi" )
+    {
+      QString name;
+      int length = vars[i].name.length();
+      for ( int c = 0; c < length; c++ )
       {
-        QString name;
-	int length = vars[i].name.length();
-	for ( int c = 0; c < length; c++ )
-	{
-	  QChar letter = vars[i].name[c];
-	  if ( letter.isUpper() )
-	    name += '_'; // escape code meaning upper case letter
-	  name += vars[i].name[c].toLower();
-	}
-        char * value = HMath::formatScientific( vars[i].value, DECPRECISION );
-        settings->variables.append(
-	  QString("%1=%2").arg( name ).arg( QString( value ) ) );
-        free( value );
+        QChar letter = vars[i].name[c];
+        if ( letter.isUpper() )
+          name += '_'; // escape code meaning upper case letter
+        name += vars[i].name[c].toLower();
       }
+      char * value = HMath::formatScientific( vars[i].value, DECPRECISION );
+      settings->variables.append( QString("%1=%2").arg( name ).arg( QString( value ) ) );
+      free( value );
+    }
   }
 
-  settings->save();
-}
-
-void Crunch::saveDocks()
-{
-  Settings* settings = Settings::self();
-
+  // docks
   settings->mainWindowState = saveState();
 
   settings->historyDockFloating = d->historyDock->isFloating();
@@ -1119,7 +1104,7 @@ void Crunch::setView(char c)
 {
   Settings* settings = Settings::self();
   settings->format = c;
-  saveSettings();
+  //saveSettings();
   applySettings();
 }
 
@@ -1169,7 +1154,7 @@ void Crunch::setDigits(int i)
 {
   Settings* settings = Settings::self();
   settings->decimalDigits = i;
-  saveSettings();
+  //saveSettings();
   applySettings();
 }
 
@@ -1207,7 +1192,7 @@ void Crunch::showClearButton( bool b )
 {
   Settings* settings = Settings::self();
   settings->showClearInputButton = b;
-  saveSettings();
+  //saveSettings();
   applySettings();
 }
 
@@ -1215,7 +1200,7 @@ void Crunch::showEvalButton( bool b )
 {
   Settings* settings = Settings::self();
   settings->showEvaluateButton = b;
-  saveSettings();
+  //saveSettings();
   applySettings();
 }
 
@@ -1223,7 +1208,7 @@ void Crunch::showKeyPad( bool b )
 {
   Settings* settings = Settings::self();
   settings->showKeyPad = b;
-  saveSettings();
+  //saveSettings();
   applySettings();
 }
 
@@ -1231,7 +1216,7 @@ void Crunch::showHistory( bool b )
 {
   Settings* settings = Settings::self();
   settings->showHistory = b;
-  saveSettings();
+  //saveSettings();
   applySettings();
   d->historyDock->raise();
 }
@@ -1240,7 +1225,7 @@ void Crunch::showFunctions( bool b)
 {
   Settings* settings = Settings::self();
   settings->showFunctions = b;
-  saveSettings();
+  //saveSettings();
   applySettings();
   d->functionsDock->raise();
 }
@@ -1249,7 +1234,7 @@ void Crunch::showVariables( bool b)
 {
   Settings* settings = Settings::self();
   settings->showVariables = b;
-  saveSettings();
+  //saveSettings();
   applySettings();
   d->variablesDock->raise();
 }
@@ -1258,14 +1243,14 @@ void Crunch::showConstants( bool b)
 {
   Settings* settings = Settings::self();
   settings->showConstants = b;
-  saveSettings();
+  //saveSettings();
   applySettings();
   d->constantsDock->raise();
 }
 
 void Crunch::configure()
 {
-  saveSettings();
+  //saveSettings();
   d->configDlg->exec();
 }
 
