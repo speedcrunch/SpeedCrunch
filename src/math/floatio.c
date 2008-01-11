@@ -775,6 +775,11 @@ float_stdconvert()
   setdefaultbase(10);
 }
 
+const char* basePrefix(char base)
+{
+  return getioparams(base)->basetag;
+}
+
 static signed char
 _parsesign(
   const char** buf)

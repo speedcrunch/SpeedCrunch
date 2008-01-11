@@ -25,6 +25,7 @@
 
 #include <iostream>
 #include "math/floatconfig.h"
+#include "math/floatio.h"
 #include <QList>
 
 class HMath;
@@ -33,6 +34,7 @@ class HNumberPrivate;
 class HNumber
 {
 friend class HMath;
+friend HNumber operator-(const HNumber&);
 
 public:
   /*!
@@ -113,7 +115,7 @@ public:
   /*!
    * Subtract from another number.
    */
-  HNumber operator-( const HNumber& ) const;
+  HNumber operator-(const HNumber&) const;
 
   /*!
    * Subtract from another number.
@@ -223,11 +225,6 @@ public:
   HNumber operator~() const;
 
   /*!
-   * Changes the sign
-   */
-  HNumber operator-() const;
-
-  /*!
    * Shifts the integral part of <*this> to the right by
    * the parameters value's bits. The most significand
    * bit is duplicated to the left, shifted out bits are dropped
@@ -268,11 +265,17 @@ private:
   HNumberPrivate* d;
 };
 
+/*!
+ * Changes the sign
+ */
+HNumber operator-(const HNumber&);
+
 typedef QList<const HNumber*> HNumberList;
 
 class HMath
 {
 public:
+
   /*!
    * Formats the given number as string, using specified decimal digits.
    * Note that the returned string must be freed.

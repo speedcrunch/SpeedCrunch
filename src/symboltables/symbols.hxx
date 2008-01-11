@@ -39,7 +39,6 @@
 typedef enum
 {
   unassigned = 0,
-  unknownSym = 'X',
   functionSym = 'F',
   operatorSym = 'O',
   constSym = 'C',
@@ -239,8 +238,7 @@ class FunctionSymbol: public FunctionSymbolIntf
 class OperatorSymbol: public FunctionSymbol, public OperatorSymbolIntf
 {
   public:
-    OperatorSymbol(void* aOwner, const TypeList&, const FctList&,
-                   int paramCount, int prec);
+    OperatorSymbol(void* aOwner, const TypeList&, const FctList&, int prec);
     SymType type() const;
     bool isUnary() const;
 };
@@ -251,6 +249,7 @@ class OpRefSymbol: public FunctionSymbolIntf, public OperatorSymbolIntf
     OpRefSymbol(void* aOwner, const OperatorSymbol& alias);
     void SetPrecedence(int newPrecedence) { m_prec = newPrecedence; };
     bool isUnary() const;
+    SymType type() const;
     bool match(const ParamList& params) const;
     Variant eval(const ParamList& params) const;
   private:

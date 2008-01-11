@@ -228,16 +228,6 @@ void SglExprLex::scanSpecial()
     end = index;
 }
 
-/*------------------------   table lookup   -----------------------*/
-
-QString SglExprLex::addDelim(const QString& closekey)
-{
-  if (closekey.size() == 1 && !Tables::keysContainChar(closekey.at(0)))
-    return closekey;
-  return ' ' + closekey;
-}
-
-
 /*------------------------   initialization/finalization   -----------------------*/
 
 void SglExprLex::reset()
@@ -272,69 +262,45 @@ QString SglExprLex::checkEscape(const QString& s)
   return s;
 }
 
-int SglExprLex::symbolType(SymType t)
-{
-  switch( t )
-  {
-    case dot         : return DOT;
-    case openPar     : return OPENPAR;
-    case assign      : return ASSIGN;
-    case separator   : return SEP;
-    case quote       : return sot;
-    case functionSym : return FUNCTION;
-    case scale       : return SCALE;
-    case decscale    : return DECSCALE;
-    case signPlus    :
-    case signMinus   : return SIGN;
-    case group       : return GROUPCHAR;
-    default          : return UNKNOWNTOKEN;
-  };
-}
-
-int SglExprLex::baseTag(const Symbol* symbol)
-{
-  switch(static_cast<const TagSymbol*>(symbol)->base())
-  {
-    case 16: return HEXTAG;
-    case 8 : return OCTTAG;
-    case 2 : return BINTAG;
-    default: return DECTAG;
-  }
-}
-
 SglExprLex::ScanResult SglExprLex::searchResult2scanResult(Tables::SearchResult sr)
 {
-  const Symbol* symbols[maxOverloadSymbols];
-  SymType types[maxOverloadSymbols];
-//  int tokens[maxOverloadSymbols];
-  ScanResult result;
+  ScanResult tokens[maxOverloadSymbols];
+  SymType stype;
+  const Symbol* symbol;
 
   if (sr.count > maxOverloadSymbols)
     sr.count = 0;
   for (int i = -1; ++i < sr.count;)
   {
-    symbols[i] = follow(sr.pt.value());
-    types[i] = symbols[i]? symbols[i]->type() : unassigned;
+    symbol = follow(sr.pt.value());
+    tokens[i].symbol = symbol;
+    stype = symbol? symbol->type() : unassigned;
+    switch(stype)
+    {
+      case tagSym:
+        tokens[i].type = baseTag(symbol);
+        break;
+      case operatorSym:
+        tokens[i].type = opToken(symbol);
+        break;
+      default:
+        tokens[i].type = symbolType(stype);
+    }
     ++sr.pt;
   }
   //FIXME order symbols here
-  result.symbol = symbols[0];
-  result.type = 0;
-  switch (types[0])
+  switch (tokens[0].type)
   {
     case tagSym:
-      result.type = baseTag(result.symbol);
-      if (static_cast<const TagSymbol*>(symbols[0])->complement())
+      if (static_cast<const TagSymbol*>(tokens[0].symbol)->complement())
       {
-        pending.enqueue(result);
-        result.type = CMPLTAG;
+        pending.enqueue(tokens[0]);
+        tokens[0].type = CMPLTAG;
       }
       break;
     default: ;
   }
-  if (result.type == 0)
-    result.type = symbolType(types[0]);
-  return result;
+  return tokens[0];
 }
 
 bool SglExprLex::matchesEscape() const
@@ -520,6 +486,80 @@ void SglExprLex::updateState()
 
 /*------------------------   table lookup   -----------------------*/
 
+int SglExprLex::symbolType(SymType t)
+{
+  switch( t )
+  {
+    case dot         : return DOT;
+    case openPar     : return OPENPAR;
+    case assign      : return ASSIGN;
+    case separator   : return SEP;
+    case quote       : return sot;
+    case functionSym : return FUNCTION;
+    case scale       : return SCALE;
+    case decscale    : return DECSCALE;
+    case signPlus    :
+    case signMinus   : return SIGN;
+    case group       : return GROUPCHAR;
+    default          : return UNKNOWNTOKEN;
+  };
+}
+
+int SglExprLex::baseTag(const Symbol* symbol)
+{
+  switch(static_cast<const TagSymbol*>(symbol)->base())
+  {
+    case 16: return HEXTAG;
+    case 8 : return OCTTAG;
+    case 2 : return BINTAG;
+    default: return DECTAG;
+  }
+}
+
+int SglExprLex::opToken(const Symbol* symbol)
+{
+  const OperatorSymbol* os = static_cast<const OperatorSymbol*>(symbol);
+  if (os->isUnary())
+    switch (os->precedence())
+    {
+      case 0 : return PREFIX0;
+      case 2 : return PREFIX2;
+      case 4 : return PREFIX4;
+      case 6 : return PREFIX6;
+      case 8 : return PREFIX8;
+      case 10: return PREFIX10;
+      case 12: return PREFIX12;
+      case 14: return PREFIX14;
+      default: return UNKNOWNTOKEN;
+    }
+  switch (os->precedence())
+  {
+    case 0 : return L0;
+    case 1 : return R1;
+    case 2 : return L2;
+    case 3 : return R3;
+    case 4 : return L4;
+    case 5 : return R5;
+    case 6 : return L6;
+    case 7 : return R7;
+    case 8 : return L8;
+    case 9 : return R9;
+    case 10: return L10;
+    case 11: return R11;
+    case 12: return L12;
+    case 13: return R13;
+    case 14: return L14;
+    default: return UNKNOWNTOKEN;
+  }
+}
+
+QString SglExprLex::addDelim(const QString& closekey)
+{
+  if (closekey.size() == 1 && !Tables::keysContainChar(closekey.at(0)))
+    return closekey;
+  return ' ' + closekey;
+}
+
 const Symbol* SglExprLex::follow(const Symbol* symbol)
 {
   if (symbol->type() == linkSym)
@@ -702,60 +742,33 @@ NumValue SglExprLex::convertStr(NumLiteral literal)
   return instance->mConvertStr(literal);
 }
 
-NumValue SglExprLex::mConvertStr(NumLiteral literal)
+static HNumber cvtNumber(const DigitSeq& descriptor, SafeQString* frac = 0)
 {
-  // FIXME most of this should really be part of hmath
-  NumValue result;
-  char base = literal.intpart.base;
-  char expbase = literal.exp.base;
   QByteArray str;
-  if (literal.intpart.digits)
-    str = getQString(literal.intpart.digits)->toLatin1();
-
-  int bias = 0;
-  if ( literal.intpart.complement
-       && str[0] - '0' >= base >> 1 )
-    bias = str.size();
-  if (base != 10)
-    str = basePrefix(base) + str;
-  if (literal.fracpart)
+  HNumber bias(0);
+  if (descriptor.digits)
+    str = getQString(descriptor.digits)->toLatin1();
+  if (descriptor.complement && str[0] - '0' >= descriptor.base >> 1)
+    bias = HMath::raise(HNumber(descriptor.base), str.size());
+  if (descriptor.base != 10)
+    str.prepend(basePrefix(descriptor.base));
+  if (frac)
   {
     str.append('.');
-    str.append(getQString(literal.fracpart)->toLatin1());
+    str.append(getQString(frac)->toLatin1());
   }
-  HNumber value(str.data());
-  if (bias)
-    value -= HMath::raise(HNumber(base), bias);
-  if (literal.exp.digits)
-  {
-    str = basePrefix(expbase) + getQString(literal.exp.digits)->toLatin1();
-//    bias = 0;
-/*    if ( literal.exp.complement
-         && literal.exp.digits[0] - '0' >= base >> 1 )
-      bias = qstrlen(literal.exp.digits);*/
-    HNumber exp(str.data());
-/*    if ( bias )
-      exp -= raise(HNumber(expbase), bias);
-    if ( literal.exp.sign < 0 )
-      exp = - exp;*/
-    value *= HMath::raise(HNumber(base), exp);
-  }
-  result.val = allocNumber(value);
-  result.percent = false;
-  return result;
+  if (descriptor.sign >= 0)
+    return HNumber(str.data()) - bias;
+  return bias - HNumber(str.data());
 }
 
-const char* SglExprLex::basePrefix(char base)
+NumValue SglExprLex::mConvertStr(NumLiteral literal)
 {
-  // FIXME this actually belongs to hmath
-
-  const char* result;
-  switch (base)
-  {
-    case 2 : result = "0b"; break;
-    case 8 : result = "0o"; break;
-    case 16: result = "0x"; break;
-    default: result = "0d"; break;
-  }
+  NumValue result;
+  HNumber value = cvtNumber(literal.intpart, literal.fracpart);
+  if (literal.exp.digits)
+    value *= HMath::raise(HNumber(literal.intpart.base), cvtNumber(literal.exp));
+  result.val = allocNumber(value);
+  result.percent = false;
   return result;
 }

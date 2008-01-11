@@ -59,7 +59,7 @@ struct CVFctSymbol
 } CVFctSymbols[] =
 {
   { " escape", Tables::escape, "t", 1, 1 },
-  { " def", Tables::define, "ttt", 2, 3 },
+  { " def", Tables::define, "tt*", 2, 3 },
   { " undef", Tables::undefine, "ti", 1, 2 },
   { " overload", Tables::overload, "tt", 2, 2 },
 };
@@ -91,6 +91,17 @@ struct CTagSymbol
   { " bs",  2, true },
 };
 static const int cnt5 = sizeof(CTagSymbols)/sizeof(struct CTagSymbol);
+
+struct CNPrefixSymbol
+{
+  const char* key;
+  Nfct1 fct;
+  char  precedence;
+} CNPrefixSymbols[] =
+{
+  { " -", operator-, 12 },
+};
+static const int cnt6 = sizeof(CNPrefixSymbols)/sizeof(struct CNPrefixSymbol);
 
 Tables* Tables::tables = 0;
 
@@ -147,6 +158,13 @@ void Tables::init()
   {
     struct CTagSymbol* ps = CTagSymbols + i;
     builtinTable().addTagSymbol(ps->key, ps->base, ps->cmpl);
+  }
+  fcts.clear();
+  for (int i = -1; ++i < cnt6; )
+  {
+    struct CNPrefixSymbol* ps = CNPrefixSymbols + i;
+    fcts.nfct1 = ps->fct;
+    builtinTable().addPrefixSymbol(ps->key, TNumeric, fcts, ps->precedence);
   }
 }
 
@@ -353,6 +371,14 @@ bool Table::addFunctionSymbol(const QString& key, const TypeList& t,
 bool Table::addTagSymbol(const QString& key, char base, bool complement)
 {
   return addSymbol(key, new TagSymbol(this, base, complement));
+}
+
+bool Table::addPrefixSymbol(const QString key, VariantType t, const FctList& f,
+                            char precedence)
+{
+  TypeList tl;
+  tl.append(t);
+  return addSymbol(key, new OperatorSymbol(this, tl, f, precedence));
 }
 
 void Table::clear()

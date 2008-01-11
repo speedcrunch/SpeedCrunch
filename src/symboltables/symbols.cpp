@@ -210,7 +210,7 @@ Symbol::~Symbol()
 
 SymType Symbol::type() const
 {
-  return unknownSym;
+  return unassigned;
 }
 
 PSymbol Symbol::clone(void* aOwner) const
@@ -325,8 +325,8 @@ Variant FunctionSymbol::eval(const ParamList& params) const
 }
 
 OperatorSymbol::OperatorSymbol(void* aOwner, const TypeList& tlist,
-        const FctList& flist, int paramCount, int prec)
-  : FunctionSymbol(aOwner, tlist, flist, paramCount, paramCount),
+        const FctList& flist, int prec)
+  : FunctionSymbol(aOwner, tlist, flist, tlist.size(), tlist.size()),
     OperatorSymbolIntf(prec)
 {
 }
@@ -386,6 +386,11 @@ OpRefSymbol::OpRefSymbol(void* aOwner, const OperatorSymbol& alias)
     OperatorSymbolIntf(alias.precedence()),
     m_alias(alias)
 {
+}
+
+SymType OpRefSymbol::type() const
+{
+  return operatorSym;
 }
 
 bool OpRefSymbol::isUnary() const

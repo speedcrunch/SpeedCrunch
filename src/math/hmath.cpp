@@ -485,10 +485,10 @@ HNumber HNumber::operator~() const
   return result;
 }
 
-HNumber HNumber::operator-() const
+HNumber operator-(const HNumber& x)
 {
   HNumber result;
-  call1ArgND(result.d, d, float_neg);
+  call1ArgND(result.d, x.d, float_neg);
   return result;
 }
 

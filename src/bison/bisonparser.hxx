@@ -110,6 +110,7 @@ class SglExprLex
     bool atEnd() const { return index == size; };
     static int symbolType(SymType t);
     static int baseTag(const Symbol* symbol);
+    static int opToken(const Symbol* symbol);
     QString currentSubStr() const;
     bool checkExact();
     ScanResult lookup(bool exact = true, char prefix = 0);
@@ -160,7 +161,6 @@ class SglExprLex
     static NumValue convertStr(NumLiteral literal);
     NumValue mConvertStr(NumLiteral literal);
 
-    static const char* basePrefix(char base);
     SglExprLex( const SglExprLex& );
     SglExprLex& operator=( const SglExprLex& );
     SglExprLex();

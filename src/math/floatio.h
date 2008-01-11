@@ -96,22 +96,6 @@ int _significantdigits(p_seq_desc n);
    find the data structure where the digits are encoded in */
 typedef char (*t_getdigit)(int ofs, p_seq_desc param);
 
-/* t_ioparams is a data structure that contains all necessary information
-   to convert an ASCII character encoded number into a t_token and vice versa.
-   Most information is grammar related like dot, basetag and so on. Others
-   like maxdigits describe general limits of floatnums. */
-typedef struct{
-  signed char base;
-  signed char expbase;
-  char dot;
-  char* basetag;
-  char* expbegin;
-  char* expend;
-  char* cmpltag;
-  unsigned maxdigits;
-} t_ioparams;
-typedef t_ioparams* p_ioparams;
-
 /* list of tokens that are created in an output process.
    Instead of returning a single ASCII string, all parts
    of a number are kept in separate places, so a post-processor
@@ -172,6 +156,24 @@ int str2desc(p_number_desc n, p_itokens tokens);
 char desc2str(p_otokens tokens, p_number_desc n, int scale);
 
 /*------------   additional stuff   ------------------*/
+
+/* t_ioparams is a data structure that contains all necessary information
+   to convert an ASCII character encoded number into a t_token and vice versa.
+   Most information is grammar related like dot, basetag and so on. Others
+   like maxdigits describe general limits of floatnums. */
+typedef struct{
+  signed char base;
+  signed char expbase;
+  char dot;
+  char* basetag;
+  char* expbegin;
+  char* expend;
+  char* cmpltag;
+  unsigned maxdigits;
+} t_ioparams;
+typedef t_ioparams* p_ioparams;
+
+const char* basePrefix(char base);
 int parse(p_itokens tokens, const char** buf);
 int cattokens(char* buf, int bufsz, p_otokens tokens, unsigned flags);
 void float_stdconvert();

@@ -38,6 +38,8 @@ class Table: private QMap<QString, PSymbol>
     bool addOpenSymbol(const QString& key, SymType aType, const QString& close);
     bool addFunctionSymbol(const QString& key, const TypeList&, const FctList&,
                            int minParamCount, int maxParamCount);
+    bool addPrefixSymbol(const QString key, VariantType t, const FctList& f,
+                         char precedence);
     bool addSymbol(const QString& key, PSymbol symbol);
     bool overloadSymbol(const QString& key, PSymbol symbol);
     bool cloneSymbol(const QString& key, PSymbol symbol, bool overload = false);
