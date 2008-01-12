@@ -285,8 +285,12 @@ Crunch::Crunch(): QMainWindow()
   setWindowTitle( tr( "SpeedCrunch" ) );
   createUI();
   Settings::self()->load();
-  if ( Settings::self()->saveHistory )
-    restoreLastSession();
+
+/***************    the following call to restoreLastSession contain a bug    ***************/
+/*  if ( Settings::self()->saveHistory )
+    restoreLastSession();*/
+
+
   applySettings();
   restoreDocks();
 
