@@ -1,7 +1,7 @@
 /* This file is part of the SpeedCrunch project
    Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
    Copyright (C) 2004,2005 Ariya Hidayat <ariya@kde.org>
-   Copyright (C) 2007 Helder Correia <helder.pereira.correia@gmail.com>
+   Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -62,7 +62,9 @@ class Editor : public QTextEdit
     QSize xminimumSizeHint() const;
 
     QStringList history() const;
+    QStringList historyResults() const;
     void setHistory( const QStringList& history );
+    void setHistoryResults( const QStringList& results );
 
     bool autoCompleteEnabled() const;
     void setAutoCompleteEnabled( bool enable );
@@ -83,10 +85,10 @@ class Editor : public QTextEdit
     void stopAutoComplete();
 
   public slots:
-    void insert( const QString& );
-    void insertConstant( const QString& );
+    void insert( const QString & );
+    void insertConstant( const QString & );
     void evaluate();
-    void appendHistory( const QString& text );
+    void appendHistory( const QString & result, const QString & expression );
     void clearHistory();
 
   protected slots:

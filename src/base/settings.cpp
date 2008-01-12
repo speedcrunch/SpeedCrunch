@@ -200,7 +200,7 @@ void Settings::load()
   {
     QString keyname = QString( key + "/History/Expression%1" ).arg( i );
     QString str = settings.value( keyname ).toString();
-    if ( !str.isEmpty() )
+    if ( ! str.isEmpty() )
     {
       QString expr;
       for ( int c = 0; c < str.length(); c++ )
@@ -208,6 +208,15 @@ void Settings::load()
           expr.append( str[c] );
       history.append( expr );
     }
+  }
+  // load results
+  historyResults.clear();
+  for ( int i = 0; i < count; i++ )
+  {
+    QString keyname = QString( key + "/History/Expression%1Result" ).arg( i );
+    QString str = settings.value( keyname ).toString();
+    if ( ! str.isEmpty() )
+      historyResults.append( str );
   }
 
   // load variables
@@ -230,7 +239,6 @@ void Settings::load()
 	name[c] = name[c].toUpper();
       }
     }
-    qDebug( "LOAD > %s=%s", qPrintable( name ), qPrintable( value ) );
     // load
     if ( ! value.isEmpty() && name != "pi" && name != "phi" )
       variables.append( QString( "%1=%2" ).arg( name ).arg( value ) );
@@ -318,12 +326,17 @@ void Settings::save()
 
   // save history
   QStringList realHistory = history;
+  QStringList realHistoryResults = historyResults;
   if ( history.count() > 100 )
   {
     realHistory.clear();
+    realHistoryResults.clear();
     unsigned start = history.count() - 100;
     for ( int j = start; j < history.count(); j++ )
+    {
       realHistory.append( history[j] );
+      realHistoryResults.append( historyResults[j] );
+    }
   }
 
   settings.beginGroup( key + "/History" );
@@ -331,12 +344,17 @@ void Settings::save()
   settings.endGroup();
 
   for ( k = 0; k < hkeys.count(); k++ )
+  {
     settings.remove( QString( key + "/History/Expression%1" ).arg( k ) );
+    settings.remove( QString( key + "/History/Expression%1Result" ).arg( k ) );
+  }
 
-  settings.setValue( key + "/History/Count", (int)history.count() );
+  settings.setValue( key + "/History/Count", (int) history.count() );
   for ( i = 0; i < realHistory.count(); i++ )
-    settings.setValue( QString( key + "/History/Expression%1" ).arg( i ),
-                       realHistory[i] );
+  {
+    settings.setValue( QString( key + "/History/Expression%1" ).arg( i ), realHistory[i] );
+    settings.setValue( QString( key + "/History/Expression%1Result" ).arg( i ), realHistoryResults[i] );
+  }
 
   // save variables
   settings.beginGroup( key + "/Variables" );
@@ -351,10 +369,7 @@ void Settings::save()
     QStringList s = variables[i].split( '=' );
 
     if ( s.count() == 2 && s[0] != "pi" && s[0] != "phi" )
-    {
       settings.setValue( QString( key + "/Variables/%1").arg( s[0] ), s[1] );
-      qDebug( "SAVE < %s=%s", qPrintable( s[0] ), qPrintable( s[1] ) );
-    }
   }
 }
 

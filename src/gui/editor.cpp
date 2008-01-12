@@ -2,7 +2,7 @@
    Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
    Copyright (C) 2004,2005 Ariya Hidayat <ariya@kde.org>
    Copyright (C) 2005-2006 Johan Thelin <e8johan@gmail.com>
-   Copyright (C) 2007 Helder Correia <helder.pereira.correia@gmail.com>
+   Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -98,6 +98,7 @@ class EditorPrivate
 public:
   Evaluator* eval;
   QStringList history;
+  QStringList historyResults;
   int index;
   bool autoCompleteEnabled;
   EditorCompletion* completion;
@@ -219,10 +220,20 @@ QStringList Editor::history() const
   return d->history;
 }
 
-void Editor::setHistory( const QStringList& h )
+QStringList Editor::historyResults() const
+{
+  return d->historyResults;
+}
+
+void Editor::setHistory( const QStringList & h )
 {
   d->history = h;
   d->index = d->history.count();
+}
+
+void Editor::setHistoryResults( const QStringList & results )
+{
+  d->historyResults = results;
 }
 
 bool Editor::autoCompleteEnabled() const
@@ -255,17 +266,13 @@ void Editor::setDecimalDigits( int digits )
   d->decimalDigits = digits;
 }
 
-void Editor::appendHistory( const QString& text )
+void Editor::appendHistory( const QString & expression, const QString & result )
 {
-  if( text.isEmpty() ) return;
+  if ( expression.isEmpty() || result.isEmpty() ) return;
 
-  QString lastText;
-  if( d->history.count() )
-    lastText = d->history[ d->history.count()-1 ];
-  if( text == lastText ) return;
-
-  d->history.append( text );
-  d->index = d->history.count()-1;
+  d->history.append( expression );
+  d->historyResults.append( result );
+  d->index = d->history.count() - 1;
 }
 
 void Editor::clearHistory()

@@ -75,6 +75,7 @@ class Settings
     QColor matchedParenthesisColor;
 
     QStringList history;
+    QStringList historyResults;
     QStringList variables;
 
     QSize mainWindowSize;

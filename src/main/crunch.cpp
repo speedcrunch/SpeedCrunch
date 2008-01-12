@@ -206,14 +206,13 @@ Crunch::Crunch(): QMainWindow()
   d->evalButton = new QPushButton( box );
   d->evalButton->setIcon( QPixmap( ":/calculate.png" ) );
   d->evalButton->setToolTip( tr("Evaluate") );
-  //d->evalButton->setText( tr("Evaluate" ) );
   d->evalButton->hide();
   inputBoxLayout->addWidget( d->evalButton );
 
   outerBoxLayout->addLayout( inputBoxLayout );
 
   // we need settings to be loaded before keypad and constants dock
-  Settings::self()->load();
+  //Settings::self()->load();
 
   // Keypad
   QHBoxLayout *keypadLayout = new QHBoxLayout();
@@ -285,6 +284,9 @@ Crunch::Crunch(): QMainWindow()
 
   setWindowTitle( tr( "SpeedCrunch" ) );
   createUI();
+  Settings::self()->load();
+  if ( Settings::self()->saveHistory )
+    restoreLastSession();
   applySettings();
   restoreDocks();
 
@@ -303,6 +305,20 @@ Crunch::~Crunch()
   delete d->actions;
   delete d->eval;
   delete d;
+}
+
+void Crunch::restoreLastSession()
+{
+  Settings * set = Settings::self();
+  for ( int i = 0 ; i < set->history.count(); i++ )
+  {
+    const char * resultStr = set->historyResults[i].toAscii().data();
+    HNumber result( resultStr );
+    if ( ! result.isNan() )
+      d->result->append( set->history[i], result );
+    else
+      d->result->appendError( set->history[i], resultStr );
+  }
 }
 
 void Crunch::createUI()
@@ -576,6 +592,7 @@ void Crunch::applySettings()
   if( settings->history.count() )
   {
     d->editor->setHistory( settings->history );
+    d->editor->setHistoryResults( settings->historyResults );
     d->historyDock->setHistory( settings->history );
   }
 
@@ -746,11 +763,14 @@ void Crunch::saveSettings()
   settings->mainWindowSize = size();
 
   if( settings->saveHistory )
+  {
     settings->history = d->editor->history();
+    settings->historyResults = d->editor->historyResults();
+  }
 
   if( settings->saveVariables )
   {
-    //settings->variables.clear();
+    settings->variables.clear();
     QVector<Variable> vars = d->eval->variables();
     for( int i=0; i<vars.count(); i++ )
     {
@@ -924,15 +944,18 @@ void Crunch::returnPressed()
   if( str.isEmpty() ) return;
 
   d->eval->setExpression( str );
-  d->editor->appendHistory( str );
   d->historyDock->setHistory( d->editor->history() );
 
   HNumber result = d->eval->evalUpdateAns();
   if( !d->eval->error().isEmpty() )
+  {
     d->result->appendError( str, d->eval->error() );
+    d->editor->appendHistory( str, d->eval->error() );
+  }
   else
   {
     d->result->append( str, result );
+    d->editor->appendHistory( str, HMath::format( result ) );
     d->editor->setAnsAvailable( true );
     d->variablesDock->updateList( d->eval );
   }
