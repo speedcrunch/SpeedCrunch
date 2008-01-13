@@ -381,6 +381,7 @@ void Crunch::createUI()
   d->actions->insertVariable->setShortcut     ( Qt::CTRL + Qt::Key_I );
   d->actions->deleteVariable->setShortcut     ( Qt::CTRL + Qt::Key_D );
   d->actions->clearInput->setShortcut         ( Qt::Key_Escape       );
+  d->actions->clearDisplay->setShortcut       ( Qt::CTRL + Qt::Key_Y );
   d->actions->focusAndSelectInput->setShortcut( Qt::CTRL + Qt::Key_A );
   d->actions->viewBinary->setShortcut         ( Qt::Key_F5           );
   d->actions->viewOctal->setShortcut          ( Qt::Key_F6           );
@@ -388,6 +389,8 @@ void Crunch::createUI()
   d->actions->viewHexadec->setShortcut        ( Qt::Key_F8           );
   d->actions->radian->setShortcut             ( Qt::Key_F9           );
   d->actions->degree->setShortcut             ( Qt::Key_F10          );
+  d->actions->showKeyPad->setShortcut         ( Qt::CTRL + Qt::Key_K );
+  d->actions->helpTipOfTheDay->setShortcut    ( Qt::CTRL + Qt::Key_T );
 
   QActionGroup *formatGroup = new QActionGroup( this );
   formatGroup->addAction( d->actions->viewBinary );
