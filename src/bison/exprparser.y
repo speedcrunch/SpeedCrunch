@@ -74,6 +74,7 @@ static FConvertStr convertStr;
 static FAddParam addParam;
 static FCallFunction callFunction;
 static FAssignVar assignVar;
+static FCreateVar createVar;
 static FGetToken getToken;
 
 %}
@@ -584,6 +585,7 @@ int parseexpr(CallBacks callbacks, NumValue* r, int* pos, int* lg)
   addParam = callbacks.addParam;
   callFunction = callbacks.callFunction;
   assignVar = callbacks.assignVar;
+  createVar = callbacks.createVar;
   getToken = callbacks.getToken;
 
   *pos = -1;

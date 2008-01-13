@@ -61,7 +61,7 @@ void Variant::operator=(const QString& str)
   m_type = TText;
 }
 
-int Variant::match(VariantType t) const
+int Variant::matchType(VariantType t) const
 {
   switch (t)
   {
@@ -81,7 +81,7 @@ int Variant::match(VariantType t) const
 
 bool Variant::isNum() const
 {
-  switch (match(TNumeric))
+  switch (matchType(TNumeric))
   {
     case 0:
     case FLOAT_NANOPERAND: return true;
@@ -105,7 +105,7 @@ bool ParamList::allNums() const
 
 bool ParamList::isType(int index, VariantType t) const
 {
-  return index <= size() && at(index).match(t) == 0;
+  return index <= size() && at(index).matchType(t) == 0;
 }
 
 bool ParamList::isNum(int index) const
@@ -119,7 +119,7 @@ TypeCheck ParamList::match(const TypeList& types) const
   result.error = 0;
   int limit = qMin(types.size(), size());
   for (result.index = -1; ++result.index < limit && result.error == 0;)
-    result.error = at(result.index).match(types.at(result.index));
+    result.error = at(result.index).matchType(types.at(result.index));
   return result;
 }
 
@@ -241,6 +241,16 @@ const OperatorSymbol* Symbol::asOp() const
 OperatorSymbol* Symbol::asOp()
 {
   return dynamic_cast<OperatorSymbol*>(this);
+}
+
+const ConstSymbol* Symbol::asConst() const
+{
+  return dynamic_cast<const ConstSymbol*>(this);
+}
+
+const VarSymbol* Symbol::asVar() const
+{
+  return dynamic_cast<const VarSymbol*>(this);
 }
 
 SyntaxSymbol::SyntaxSymbol(void* aOwner, SymType aType)
@@ -394,9 +404,63 @@ SymType OperatorSymbol::type() const
   return operatorSym;
 }
 
+ConstSymbol::ConstSymbol(void* aOwner, const Variant& val)
+  : VarSymbolIntf(aOwner), m_value(val)
+{
+}
+
+SymType ConstSymbol::type() const
+{
+  return constSym;
+}
+
+PSymbol ConstSymbol::clone(void* aOwner) const
+{
+  return new ConstSymbol(aOwner, m_value);
+}
+
+Variant AnsSymbol::ansVar;
+
+AnsSymbol::AnsSymbol(void* aOwner)
+  : VarSymbolIntf(aOwner)
+{
+}
+
 SymType AnsSymbol::type() const
 {
   return ansSym;
+}
+
+PSymbol AnsSymbol::clone(void* aOwner) const
+{
+  return new AnsSymbol(aOwner);
+}
+
+VarSymbol::VarSymbol(void* aOwner, iterator vd)
+  : VarSymbolIntf(aOwner), m_var(vd)
+{
+  (m_var->refcount)++;
+}
+
+VarSymbol::VarSymbol(void* aOwner)
+  : VarSymbolIntf(aOwner), m_var(newVar())
+{
+  (m_var->refcount)++;
+}
+
+VarSymbol::~VarSymbol()
+{
+  if (--(m_var->refcount) == 0)
+    variables.erase(m_var);
+}
+
+QLinkedList<VarSymbol::VariableData> VarSymbol::variables;
+
+VarSymbol::iterator VarSymbol::newVar()
+{
+  VariableData vd;
+  vd.refcount = 0;
+  return variables.insert(variables.end(), vd);
 }
 
 SymType VarSymbol::type() const
@@ -404,18 +468,7 @@ SymType VarSymbol::type() const
   return varSym;
 }
 
-ConstSymbol::ConstSymbol(void* aOwner)
-  : Symbol(aOwner)
+PSymbol VarSymbol::clone(void* aOwner) const
 {
-}
-
-ConstSymbol::ConstSymbol(void* aOwner, const Variant& val)
-  : Symbol(aOwner)
-{
-  m_value = val;
-}
-
-SymType ConstSymbol::type() const
-{
-  return constSym;
+  return new VarSymbol(aOwner, m_var);
 }

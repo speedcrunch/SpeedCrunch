@@ -21,6 +21,12 @@
 #include "math/hmath.hxx"
 
 // FIXME move the initialization to another object
+
+static HNumber wrapFactorial(const HNumber& x)
+{
+  return HMath::factorial(x);
+}
+
 struct CSyntaxSymbol
 {
   const char* key;
@@ -93,16 +99,17 @@ struct CTagSymbol
 };
 static const int cnt5 = sizeof(CTagSymbols)/sizeof(struct CTagSymbol);
 
-struct CNPrefixSymbol
+struct CNUnOpSymbol
 {
   const char* key;
   Nfct1 fct;
   char  precedence;
-} CNPrefixSymbols[] =
+} CNUnOpSymbols[] =
 {
   { " -", operator-, 12 },
+  { " !", wrapFactorial, 13 },
 };
-static const int cnt6 = sizeof(CNPrefixSymbols)/sizeof(struct CNPrefixSymbol);
+static const int cnt6 = sizeof(CNUnOpSymbols)/sizeof(struct CNUnOpSymbol);
 
 struct CNBinOpSymbol
 {
@@ -114,6 +121,16 @@ struct CNBinOpSymbol
   { " add", operator-, 6 },
 };
 static const int cnt7 = sizeof(CNBinOpSymbols)/sizeof(struct CNBinOpSymbol);
+
+struct CConstSymbol
+{
+  const char* key;
+  const Variant value;
+} CConstSymbols[] =
+{
+  { " pi", HMath::pi() },
+};
+static const int cnt8 = sizeof(CConstSymbols)/sizeof(struct CConstSymbol);
 
 Tables* Tables::tables = 0;
 
@@ -129,11 +146,12 @@ Tables& Tables::self()
 
 Tables::Tables()
 {
-  Table builtin, close, global;
+  Table builtin, close, global, user;
 
   tableList.append(close);
   tableList.append(builtin);
   tableList.append(global);
+  tableList.append(user);
 }
 
 void Tables::init()
@@ -174,9 +192,9 @@ void Tables::init()
   fcts.clear();
   for (int i = -1; ++i < cnt6; )
   {
-    struct CNPrefixSymbol* ps = CNPrefixSymbols + i;
+    struct CNUnOpSymbol* ps = CNUnOpSymbols + i;
     fcts.nfct1 = ps->fct;
-    builtinTable().addPrefixSymbol(ps->key, TNumeric, fcts, ps->precedence);
+    builtinTable().addUnOpSymbol(ps->key, TNumeric, fcts, ps->precedence);
   }
   fcts.clear();
   for (int i = -1; ++i < cnt7; )
@@ -184,6 +202,11 @@ void Tables::init()
     struct CNBinOpSymbol* ps = CNBinOpSymbols + i;
     fcts.nfct2 = ps->fct;
     builtinTable().addBinOpSymbol(ps->key, TNumeric, TNumeric, fcts, ps->precedence);
+  }
+  for (int i = -1; ++i < cnt8; )
+  {
+    struct CConstSymbol* ps = CConstSymbols + i;
+    builtinTable().addConstSymbol(ps->key, ps->value);
   }
 }
 
@@ -235,6 +258,12 @@ Tables::SearchResult Tables::lookup(const QString& key, bool exact)
   return self().doLookup(key, exact);
 }
 
+VarSymbol* Tables::createVarSymbol(const QString& key)
+{
+  return userTable().createVarSymbol(key);
+}
+
+
 void Tables::addCloseSymbol(const QString& key, PSymbol symbol)
 {
   closeTable().insertMulti(key, symbol);
@@ -279,7 +308,7 @@ Variant Tables::overload(const ParamList& params)
   {
     if (params.size() == 3)
     {
-      if (params.at(2).match(TInteger) != 0)
+      if (params.isType(2, TInteger))
         return SYMBOLS_TYPE_MISMATCH;
       prec = ((const HNumber&)(params.at(2))).toInt();
     }
@@ -390,8 +419,8 @@ bool Table::addTagSymbol(const QString& key, char base, bool complement)
   return addSymbol(key, new TagSymbol(this, base, complement));
 }
 
-bool Table::addPrefixSymbol(const QString key, VariantType t, const FctList& f,
-                            char precedence)
+bool Table::addUnOpSymbol(const QString key, VariantType t, const FctList& f,
+                          char precedence)
 {
   TypeList tl;
   tl.append(t);
@@ -405,6 +434,17 @@ bool Table::addBinOpSymbol(const QString key, VariantType t1, VariantType t2,
   tl.append(t1);
   tl.append(t2);
   return addSymbol(key, new OperatorSymbol(this, tl, f, precedence));
+}
+
+bool Table::addConstSymbol(const QString key, const Variant& value)
+{
+  return addSymbol(key, new ConstSymbol(this, value));
+}
+
+VarSymbol* Table::createVarSymbol(const QString key)
+{
+  VarSymbol* result = new VarSymbol(this);
+  return addSymbol(key, result)? result : 0;
 }
 
 void Table::clear()
@@ -424,9 +464,12 @@ Table::const_iterator Table::lookup(const QString& key, bool exact) const
     Table::const_iterator item = lowerBound(key);
     if ( item != constEnd() && item.key() == key )
       return item;
-    --item;
-    if ( key.startsWith(item.key()) )
-      return item;
+    if ( item != constBegin() )
+    {
+      --item;
+      if ( key.startsWith(item.key()) )
+        return item;
+    }
   }
   return constEnd();
 }

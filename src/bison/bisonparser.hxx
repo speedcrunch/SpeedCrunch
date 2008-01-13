@@ -160,6 +160,8 @@ class SglExprLex
     DigitSeq mAppendStr(DigitSeq ds, SafeQString* seq);
     static NumValue convertStr(NumLiteral literal);
     NumValue mConvertStr(NumLiteral literal);
+    static NumValue assignVar(Var variable, NumValue val);
+    static Var createVar(SafeQString* s);
 
     SglExprLex( const SglExprLex& );
     SglExprLex& operator=( const SglExprLex& );

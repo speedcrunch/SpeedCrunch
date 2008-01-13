@@ -38,10 +38,12 @@ class Table: private QMap<QString, PSymbol>
     bool addOpenSymbol(const QString& key, SymType aType, const QString& close);
     bool addFunctionSymbol(const QString& key, const TypeList&, const FctList&,
                            int minParamCount, int maxParamCount);
-    bool addPrefixSymbol(const QString key, VariantType t, const FctList& f,
-                         char precedence);
+    bool addUnOpSymbol(const QString key, VariantType t, const FctList& f,
+                       char precedence);
     bool addBinOpSymbol(const QString key, VariantType t1, VariantType t2,
                         const FctList& f, char precedence);
+    bool addConstSymbol(const QString key, const Variant& value);
+    VarSymbol* createVarSymbol(const QString key);
     bool addSymbol(const QString& key, PSymbol symbol);
     bool cloneSymbol(const QString& key, PSymbol symbol, bool overload = false);
     bool keysContainChar(QChar c);
@@ -65,6 +67,7 @@ class Tables
     static SearchResult builtinLookup(const QString& key, bool exact = true);
     static SearchResult lookup(const QString& key, bool exact = true);
     static void addCloseSymbol(const QString& key, PSymbol symbol);
+    static VarSymbol* createVarSymbol(const QString& key);
     static void removeCloseSymbol(PSymbol symbol);
     static Variant escape(const ParamList& params);
     static Variant define(const ParamList& params);
@@ -78,6 +81,7 @@ class Tables
       closeSymbols,
       builtinSymbols,
       globalSymbols,
+      userSymbols,
     };
 
     QList<Table> tableList;
@@ -87,6 +91,7 @@ class Tables
     static Table& closeTable() { return self().tableList[closeSymbols]; };
     static Table& builtinTable() { return self().tableList[builtinSymbols]; };
     static Table& globalTable() { return self().tableList[globalSymbols]; };
+    static Table& userTable() { return self().tableList.last(); };
     SearchResult doLookup(const QString& key, bool exact, int firstTable = -1,
                           int lastTable = closeSymbols);
     void init();

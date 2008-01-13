@@ -123,7 +123,7 @@ Variant SglExprLex::eval()
   cb.convertStr = convertStr;
   cb.addParam = addParam;
   cb.callFunction = callFunction;
-  cb.assignVar = 0;
+  cb.assignVar = assignVar;
   cb.getToken = getToken;
   index = -1;
   if (parseexpr(cb, &pResult, &errorpos, &errortokenlg) == PARSE_OK)
@@ -560,6 +560,9 @@ int SglExprLex::symbolType(SymType t)
     case signPlus    :
     case signMinus   : return SIGN;
     case group       : return GROUPCHAR;
+    case varSym      : return VARIABLE;
+    case ansSym      :
+    case constSym    : return CONSTANT;
     default          : return UNKNOWNTOKEN;
   };
 }
@@ -589,6 +592,13 @@ int SglExprLex::opToken(const Symbol* symbol)
       case 10: return PREFIX10;
       case 12: return PREFIX12;
       case 14: return PREFIX14;
+      case 1 :
+      case 3 :
+      case 5 :
+      case 7 :
+      case 9 :
+      case 11:
+      case 13: return POSTFIXOP;
       default: return UNKNOWNTOKEN;
     }
   switch (os->precedence())
@@ -722,37 +732,44 @@ int SglExprLex::mGetToken(YYSTYPE* val, int* pos, int* lg)
   *lg = token.size();
   switch (token.type())
   {
-    case L0       :
-    case R1       :
-    case L2       :
-    case R3       :
-    case L4       :
-    case R5       :
-    case L6       :
-    case R7       :
-    case L8       :
-    case R9       :
-    case L10      :
-    case R11      :
-    case L12      :
-    case R13      :
-    case L14      :
-    case PREFIX0  :
-    case PREFIX2  :
-    case PREFIX4  :
-    case PREFIX6  :
-    case PREFIX8  :
-    case PREFIX10 :
-    case PREFIX12 :
-    case PREFIX14 :
-    case FUNCTION : val->func = token.symbol(); break;
-    case DECSEQ   :
-    case HEXSEQ   :
-    case OCTSEQ   :
-    case BINSEQ   :
-    case TEXT     : val->string = allocString(token.str()); break;
-    case SIGN     : val->sign = token.symbol()->type() == 'M'? -1 : 1; break;
-    default       : ;
+    case L0        :
+    case R1        :
+    case L2        :
+    case R3        :
+    case L4        :
+    case R5        :
+    case L6        :
+    case R7        :
+    case L8        :
+    case R9        :
+    case L10       :
+    case R11       :
+    case L12       :
+    case R13       :
+    case L14       :
+    case PREFIX0   :
+    case PREFIX2   :
+    case PREFIX4   :
+    case PREFIX6   :
+    case PREFIX8   :
+    case PREFIX10  :
+    case PREFIX12  :
+    case PREFIX14  :
+    case POSTFIXOP :
+    case FUNCTION  : val->func = token.symbol(); break;
+    case DECSEQ    :
+    case HEXSEQ    :
+    case OCTSEQ    :
+    case BINSEQ    :
+    case TEXT      : val->string = allocString(token.str()); break;
+    case SIGN      : val->sign = token.symbol()->type() == 'M'? -1 : 1; break;
+    case CONSTANT  : 
+      val->numvalue = variant2numValue(token.symbol()->asConst()->value()); break;
+    case VARIABLE  :
+      val->var.v = token.symbol()->asVar()->writePtr();
+      val->var.d = variant2numValue(token.symbol()->asConst()->value());
+      break;
+    default        : ;
   }
   return token.type();
 }
@@ -843,5 +860,21 @@ NumValue SglExprLex::mConvertStr(NumLiteral literal)
     value *= HMath::raise(HNumber(literal.intpart.base), cvtNumber(literal.exp));
   result.val = allocNumber(value);
   result.percent = false;
+  return result;
+}
+
+NumValue SglExprLex::assignVar(Var variable, NumValue val)
+{
+  *variable.v = numValue2variant(val);
+  variable.d = val;
+  return val;
+}
+
+Var SglExprLex::createVar(SafeQString* s)
+{
+  Var result;
+  result.v = Tables::createVarSymbol(*getQString(s))->writePtr();
+  result.d.val = 0;
+  result.d.percent = false;
   return result;
 }

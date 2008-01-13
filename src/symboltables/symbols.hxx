@@ -35,6 +35,7 @@
 #include "base/functions.hxx" // FIXME this should not be necessary
 #include <QString>
 #include <QList>
+#include <QLinkedList>
 
 typedef enum
 {
@@ -82,7 +83,7 @@ class Variant: protected HNumber
     operator const HNumber* () const { return this; };
     operator int () const { return error(); };
     operator const QString& () const { return text; };
-    int match(VariantType) const;
+    int matchType(VariantType) const;
     bool isNum() const;
     VariantType type() const { return m_type; };
   private:
@@ -143,6 +144,8 @@ class TagSymbol;
 class FunctionSymbol;
 class OperatorSymbol;
 class OpenSymbol;
+class ConstSymbol;
+class VarSymbol;
 
 typedef Symbol* PSymbol;
 
@@ -159,6 +162,8 @@ class Symbol
     const OpenSymbol* asOpen() const;
     OperatorSymbol* asOp();
     const OperatorSymbol* asOp() const;
+    const ConstSymbol* asConst() const;
+    const VarSymbol* asVar() const;
   private:
     void* m_owner;
 };
@@ -241,31 +246,57 @@ class OperatorSymbol: public FunctionSymbol
     int m_prec;
 };
 
-class ConstSymbol: public Symbol
+class VarSymbolIntf: public Symbol
+{
+  public:
+    VarSymbolIntf(void* aOwner): Symbol(aOwner){};
+    virtual const Variant& value() const = 0;
+};
+
+class ConstSymbol: public VarSymbolIntf
 {
   public:
     ConstSymbol(void* aOwner, const Variant& val);
     SymType type() const;
     const Variant& value() const { return m_value; };
+    PSymbol clone(void* aOwner) const;
   protected:
-    ConstSymbol(void* aOwner);
-    Variant m_value;
+    const Variant& m_value;
 };
 
-class AnsSymbol: public ConstSymbol
+class AnsSymbol: public VarSymbolIntf
 {
   public:
     AnsSymbol(void* aOwner);
     SymType type() const;
-    void setAns(const Variant& val) { m_value = val; };
+    PSymbol clone(void* aOwner) const;
+    void setAns(const Variant& val) { ansVar = val; };
+    const Variant& value() const { return ansVar; };
+  protected:
+    static Variant ansVar;
 };
 
-class VarSymbol: public ConstSymbol
+class VarSymbol: public VarSymbolIntf
 {
   public:
     VarSymbol(void* aOwner);
+    ~VarSymbol();
     SymType type() const;
-    void operator=(const Variant& val) { m_value = val; };
+    PSymbol clone(void* aOwner) const;
+    const Variant& value() const { return m_var->v; };
+    Variant* writePtr() const { return &m_var->v; };
+  private:
+    typedef struct
+    {
+      unsigned refcount;
+      Variant v;
+    } VariableData;
+    typedef QLinkedList<VariableData>::iterator iterator;
+
+    VarSymbol(void* aOwner, iterator);
+    static QLinkedList<VariableData> variables;
+    static iterator newVar();
+    iterator m_var;
 };
 
 #endif /* _SYMBOLS_H */

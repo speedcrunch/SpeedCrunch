@@ -37,6 +37,7 @@ class SafeVariant;
 class SafeQString;
 class SafeParamList;
 class Symbol;
+class Variant;
 
 extern "C" {
 
@@ -46,6 +47,7 @@ extern "C" {
 # define SafeParamList void
 # define Symbol void
 # define SafeQString void
+# define Variant void
 
 #endif /* __cplusplus */
 
@@ -74,6 +76,7 @@ typedef struct NumLiteral
 typedef struct NumValue
 {
   SafeVariant* val;
+  int token;
   char percent;
 } NumValue;
 
@@ -83,7 +86,7 @@ typedef const Symbol* Func;
 
 typedef struct Var
 {
-  void* write;
+  Variant* v;
   NumValue d;
 } Var;
 
@@ -99,6 +102,7 @@ typedef NumValue (*FConvertStr)(NumLiteral text);
 typedef Params   (*FAddParam)(Params list, NumValue val);
 typedef NumValue (*FCallFunction)(Func f, Params params);
 typedef NumValue (*FAssignVar)(Var variable, NumValue val);
+typedef Var      (*FCreateVar)(String s);
 /* return values and YYSTYPE are defined in exprparser.h */
 typedef int      (*FGetToken)(YYSTYPE* val, int* pos, int* lg);
 
@@ -109,6 +113,7 @@ typedef struct CallBacks
   FAddParam     addParam;
   FCallFunction callFunction;
   FAssignVar    assignVar;
+  FCreateVar    createVar;
   FGetToken     getToken;
   FStr2Val      str2Val;
 } CallBacks;
