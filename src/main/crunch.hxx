@@ -42,6 +42,7 @@ class Crunch : public QMainWindow
 
   public slots:
     void applySettings();
+    void loadSession();
     void saveSession();
     void copyResult();
     void focusAndSelectInput();

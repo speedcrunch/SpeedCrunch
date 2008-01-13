@@ -75,6 +75,7 @@
 class CrunchActions
 {
 public:
+  QAction* sessionLoad;
   QAction* sessionSave;
   QAction* sessionQuit;
   QAction* editPaste;
@@ -281,7 +282,7 @@ Crunch::Crunch(): QMainWindow()
   d->insertVariableDlg = 0;
   d->deleteVariableDlg = 0;
 
-  setWindowTitle( tr( "SpeedCrunch" ) );
+  setWindowTitle( "SpeedCrunch" );
   createUI();
   Settings::self()->load();
 
@@ -329,7 +330,8 @@ void Crunch::restoreLastSession()
 void Crunch::createUI()
 {
   // create all the actions
-  d->actions->sessionSave         = new QAction( tr("&Save..."),                 this );
+  d->actions->sessionLoad         = new QAction( tr("&Load..."),                 this );
+  d->actions->sessionSave         = new QAction( tr("&Save As..."),              this );
   d->actions->sessionQuit         = new QAction( tr("&Quit"),                    this );
   d->actions->focusAndSelectInput = new QAction( tr("&Select Expression"),       this );
   d->actions->editCopy            = new QAction( tr("&Copy"),                    this );
@@ -369,6 +371,7 @@ void Crunch::createUI()
   d->actions->helpAbout           = new QAction( tr("&About"),                   this );
   d->actions->helpAboutQt         = new QAction( tr("About &Qt"),                this );
 
+  d->actions->sessionLoad->setShortcut        ( Qt::CTRL + Qt::Key_L );
   d->actions->sessionSave->setShortcut        ( Qt::CTRL + Qt::Key_S );
   d->actions->sessionQuit->setShortcut        ( Qt::CTRL + Qt::Key_Q );
   d->actions->editCopy->setShortcut           ( Qt::CTRL + Qt::Key_C );
@@ -432,6 +435,7 @@ void Crunch::createUI()
   d->actions->showConstants->setCheckable( true );
 
   // signals and slots
+  connect( d->actions->sessionLoad,         SIGNAL(activated()    ), this,           SLOT(loadSession()          ) );
   connect( d->actions->sessionSave,         SIGNAL(activated()    ), this,           SLOT(saveSession()          ) );
   connect( d->actions->sessionQuit,         SIGNAL(activated()    ), this,           SLOT(close()                ) );
   connect( d->actions->editPaste,           SIGNAL(activated()    ), d->editor,      SLOT(paste()                ) );
@@ -481,7 +485,9 @@ void Crunch::createUI()
   // construct the menu
   d->sessionMenu = new QMenu( tr("&Session"), this );
   menuBar()->addMenu( d->sessionMenu );
+  d->sessionMenu->addAction( d->actions->sessionLoad );
   d->sessionMenu->addAction( d->actions->sessionSave );
+  d->sessionMenu->addSeparator();
   d->sessionMenu->addAction( d->actions->sessionQuit );
 
   d->editMenu = new QMenu( tr("&Edit"), this );
@@ -489,6 +495,7 @@ void Crunch::createUI()
   d->editMenu->addAction( d->actions->editCopy );
   d->editMenu->addAction( d->actions->editCopyResult );
   d->editMenu->addAction( d->actions->editPaste );
+  d->editMenu->addAction( d->actions->focusAndSelectInput );
   d->editMenu->addSeparator();
   d->editMenu->addAction( d->actions->insertFunction );
   d->editMenu->addAction( d->actions->insertVariable );
@@ -498,8 +505,6 @@ void Crunch::createUI()
   d->editMenu->addSeparator();
   d->editMenu->addAction( d->actions->clearInput );
   d->editMenu->addAction( d->actions->clearDisplay );
-  d->editMenu->addSeparator();
-  d->editMenu->addAction( d->actions->focusAndSelectInput );
 
   d->baseMenu = new QMenu( tr("&Format"), this );
   menuBar()->addMenu( d->baseMenu );
@@ -737,10 +742,10 @@ void Crunch::closeEvent( QCloseEvent* e )
   QMainWindow::closeEvent( e );
 }
 
-void Crunch::saveSession()
+void Crunch::loadSession()
 {
-  QString filters = tr( "Text Files (*.txt);;All Files (*.*)" );
-  QString fname = QFileDialog::getSaveFileName( this, tr("Save Session"), QString::null, filters );
+  QString filters = tr( "SpeedCrunch Sessions (*.sch);;All Files (*)" );
+  QString fname = QFileDialog::getSaveFileName( this, tr("Load Session"), QString::null, filters );
   if ( fname.isEmpty() )
     return;
 
@@ -753,6 +758,25 @@ void Crunch::saveSession()
 
   QTextStream stream( & file );
   stream << d->result->asText();
+
+  file.close();
+}
+
+void Crunch::saveSession()
+{
+  QString filters = tr( "SpeedCrunch Sessions (*.sch);;All Files (*)" );
+  QString fname = QFileDialog::getSaveFileName( this, tr("Save Session"), QString::null, filters );
+  if ( fname.isEmpty() )
+    return;
+
+  QFile file( fname );
+  if ( ! file.open( QIODevice::ReadOnly ) )
+  {
+    QMessageBox::critical( this, tr("Error"), tr("Can't write to file %1").arg( fname ) );
+    return;
+  }
+
+  QTextStream stream( & file );
 
   file.close();
 }
