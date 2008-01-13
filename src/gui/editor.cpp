@@ -275,12 +275,6 @@ void Editor::appendHistory( const QString & expression, const QString & result )
   d->index = d->history.count() - 1;
 }
 
-void Editor::clearHistory()
-{
-  d->history.clear();
-  d->index = 0;
-}
-
 void Editor::checkAutoComplete()
 {
   if( !d->autoCompleteEnabled ) return;

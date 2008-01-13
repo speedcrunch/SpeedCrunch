@@ -57,7 +57,7 @@ void Settings::setDecimalPoint(const QString& val)
 Settings::Settings()
 {
   angleMode       = Radian;
-  saveHistory     = true;
+  saveSession     = true;
   saveVariables   = true;
   autoComplete    = true;
   autoCalc        = true;
@@ -120,7 +120,7 @@ void Settings::load()
   angleMode = Radian;
   if ( settings.value( key + "/General/AngleMode", "Radian" ).toString() == "Degree")
     angleMode = Degree;
-  saveHistory    = settings.value( key + "/General/SaveHistory",    true      ).toBool();
+  saveSession    = settings.value( key + "/General/SaveSession",    true      ).toBool();
   saveVariables  = settings.value( key + "/General/SaveVariables",  true      ).toBool();
   autoComplete   = settings.value( key + "/General/AutoComplete",   true      ).toBool();
   autoCalc       = settings.value( key + "/General/AutoCalc",       true      ).toBool();
@@ -256,7 +256,7 @@ void Settings::save()
   if      ( angleMode == Settings::Radian ) angleStr = "Radian";
   else if ( angleMode == Settings::Degree ) angleStr = "Degree";
   settings.setValue( key + "/General/AngleMode",      angleStr      );
-  settings.setValue( key + "/General/SaveHistory",    saveHistory   );
+  settings.setValue( key + "/General/SaveSession",    saveSession   );
   settings.setValue( key + "/General/SaveVariables",  saveVariables );
   settings.setValue( key + "/General/AutoComplete",   autoComplete  );
   settings.setValue( key + "/General/AutoCalc",       autoCalc      );

@@ -1455,7 +1455,11 @@ QVector<Variable> Evaluator::variables() const
 
 void Evaluator::clearVariables()
 {
+  HNumber ans = get( QString("ans") );
+
   d->variables.clear();
+
+  set( QString("ans"), ans          );
   set( QString("pi"),  HMath::pi()  );
   set( QString("phi"), HMath::phi() );
 }

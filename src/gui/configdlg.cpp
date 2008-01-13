@@ -49,7 +49,7 @@ class ConfigDlgPrivate
 public:
   QTabWidget* centerWidget;
 
-  QCheckBox* saveHistoryCheck;
+  QCheckBox* saveSessionCheck;
   QCheckBox* saveVariablesCheck;
   QCheckBox* autoCompleteCheck;
   QCheckBox* autoCalcCheck;
@@ -92,7 +92,7 @@ void ConfigDlgPrivate::loadSettings()
 {
   Settings* settings = Settings::self();
 
-  saveHistoryCheck->setChecked( settings->saveHistory );
+  saveSessionCheck->setChecked( settings->saveSession );
   saveVariablesCheck->setChecked( settings->saveVariables );
   autoCompleteCheck->setChecked( settings->autoComplete );
   autoCalcCheck->setChecked( settings->autoCalc );
@@ -128,7 +128,7 @@ void ConfigDlgPrivate::loadSettings()
 void ConfigDlgPrivate::saveSettings()
 {
   Settings* settings = Settings::self();
-  settings->saveHistory = saveHistoryCheck->isChecked();
+  settings->saveSession = saveSessionCheck->isChecked();
   settings->saveVariables = saveVariablesCheck->isChecked();
   settings->autoComplete = autoCompleteCheck->isChecked();
   settings->autoCalc = autoCalcCheck->isChecked();
@@ -153,8 +153,8 @@ QWidget* ConfigDlgPrivate::generalPage()
 {
   QWidget *page = new QWidget( centerWidget );
 
-  saveHistoryCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Save &history on exit"), page );
-  saveVariablesCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Save &variables on exit"), page );
+  saveSessionCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Restore last &session on start-up"), page );
+  saveVariablesCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Restore last session &variables on start-up"), page );
   autoCompleteCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Automatic &completion"), page );
   autoCalcCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Automatically calculate as you &type"), page );
   minimizeToTrayCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Minimi&ze to system tray"), page );
@@ -194,7 +194,7 @@ QWidget* ConfigDlgPrivate::generalPage()
 
   QVBoxLayout *layout = new QVBoxLayout;
 
-  layout->addWidget( saveHistoryCheck );
+  layout->addWidget( saveSessionCheck );
   layout->addWidget( saveVariablesCheck );
   layout->addWidget( autoCompleteCheck );
   layout->addWidget( autoCalcCheck );

@@ -42,7 +42,7 @@ class Settings
     QString escape; //reftbl
 
     static bool autoDetectDot;
-    bool saveHistory;
+    bool saveSession;
     bool saveVariables;
     bool autoComplete;
     bool autoCalc;

@@ -46,7 +46,7 @@ class Crunch : public QMainWindow
     void copyResult();
     void focusAndSelectInput();
     void clearInput();
-    void clearVariables();
+    void deleteAllVariables();
     void insertVariable();
     void deleteVariable();
     void insertFunction();

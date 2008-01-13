@@ -89,7 +89,6 @@ class Editor : public QTextEdit
     void insertConstant( const QString & );
     void evaluate();
     void appendHistory( const QString & result, const QString & expression );
-    void clearHistory();
 
   protected slots:
     void checkAutoComplete();
