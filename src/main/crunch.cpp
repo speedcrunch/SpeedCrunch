@@ -311,6 +311,10 @@ Crunch::~Crunch()
 void Crunch::restoreLastSession()
 {
   Settings * set = Settings::self();
+
+  if ( set->historyResults.count() != set->history.count() )
+      return;
+
   for ( int i = 0 ; i < set->history.count(); i++ )
   {
     const char * resultStr = set->historyResults[i].toAscii().data();
@@ -736,9 +740,9 @@ void Crunch::closeEvent( QCloseEvent* e )
 void Crunch::saveSession()
 {
   QString filters = tr( "Text Files (*.txt);;All Files (*.*)" );
-  QString fname = QFileDialog::getSaveFileName( this, tr("Save Session"),
-                                                QString::null, filters );
-  if( fname.isEmpty() ) return;
+  QString fname = QFileDialog::getSaveFileName( this, tr("Save Session"), QString::null, filters );
+  if ( fname.isEmpty() )
+    return;
 
   QFile file( fname );
   if ( ! file.open( QIODevice::WriteOnly ) )
@@ -1121,7 +1125,7 @@ void Crunch::setView(char c)
 {
   Settings* settings = Settings::self();
   settings->format = c;
-  //saveSettings();
+  saveSettings();
   applySettings();
 }
 
@@ -1171,7 +1175,7 @@ void Crunch::setDigits(int i)
 {
   Settings* settings = Settings::self();
   settings->decimalDigits = i;
-  //saveSettings();
+  saveSettings();
   applySettings();
 }
 
@@ -1209,7 +1213,7 @@ void Crunch::showClearButton( bool b )
 {
   Settings* settings = Settings::self();
   settings->showClearInputButton = b;
-  //saveSettings();
+  saveSettings();
   applySettings();
 }
 
@@ -1217,7 +1221,7 @@ void Crunch::showEvalButton( bool b )
 {
   Settings* settings = Settings::self();
   settings->showEvaluateButton = b;
-  //saveSettings();
+  saveSettings();
   applySettings();
 }
 
@@ -1225,7 +1229,7 @@ void Crunch::showKeyPad( bool b )
 {
   Settings* settings = Settings::self();
   settings->showKeyPad = b;
-  //saveSettings();
+  saveSettings();
   applySettings();
 }
 
@@ -1233,7 +1237,7 @@ void Crunch::showHistory( bool b )
 {
   Settings* settings = Settings::self();
   settings->showHistory = b;
-  //saveSettings();
+  saveSettings();
   applySettings();
   d->historyDock->raise();
 }
@@ -1242,7 +1246,7 @@ void Crunch::showFunctions( bool b)
 {
   Settings* settings = Settings::self();
   settings->showFunctions = b;
-  //saveSettings();
+  saveSettings();
   applySettings();
   d->functionsDock->raise();
 }
@@ -1251,7 +1255,7 @@ void Crunch::showVariables( bool b)
 {
   Settings* settings = Settings::self();
   settings->showVariables = b;
-  //saveSettings();
+  saveSettings();
   applySettings();
   d->variablesDock->raise();
 }
@@ -1260,14 +1264,14 @@ void Crunch::showConstants( bool b)
 {
   Settings* settings = Settings::self();
   settings->showConstants = b;
-  //saveSettings();
+  saveSettings();
   applySettings();
   d->constantsDock->raise();
 }
 
 void Crunch::configure()
 {
-  //saveSettings();
+  saveSettings();
   d->configDlg->exec();
 }
 

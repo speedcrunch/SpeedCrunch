@@ -120,13 +120,13 @@ void Settings::load()
   angleMode = Radian;
   if ( settings.value( key + "/General/AngleMode", "Radian" ).toString() == "Degree")
     angleMode = Degree;
-  saveSession    = settings.value( key + "/General/SaveSession",    true      ).toBool();
-  saveVariables  = settings.value( key + "/General/SaveVariables",  true      ).toBool();
-  autoComplete   = settings.value( key + "/General/AutoComplete",   true      ).toBool();
-  autoCalc       = settings.value( key + "/General/AutoCalc",       true      ).toBool();
-  setDecimalPoint( settings.value( key + "/General/DecimalPoint",   QString() ).toString());
-  //language       = settings.value( key + "/General/Language",       QString() ).toString();
-  minimizeToTray = settings.value( key + "/General/MinimizeToTray", false     ).toBool();
+  saveSession    = settings.value( key + "/General/RestoreLastSession", true      ).toBool();
+  saveVariables  = settings.value( key + "/General/SaveVariables",      true      ).toBool();
+  autoComplete   = settings.value( key + "/General/AutoComplete",       true      ).toBool();
+  autoCalc       = settings.value( key + "/General/AutoCalc",           true      ).toBool();
+  setDecimalPoint( settings.value( key + "/General/DecimalPoint",       QString() ).toString());
+  //language       = settings.value( key + "/General/Language",           QString() ).toString();
+  minimizeToTray = settings.value( key + "/General/MinimizeToTray",     false     ).toBool();
 
   QString formatStr = settings.value( key + "/View/Format" ).toString();
   if ( formatStr == "Fixed" )       format = 'f';
@@ -218,6 +218,12 @@ void Settings::load()
     if ( ! str.isEmpty() )
       historyResults.append( str );
   }
+  if ( history.count() != historyResults.count() )
+  {
+    // avoid application crash because of new features with old settings files
+    history.clear();
+    historyResults.clear();
+  }
 
   // load variables
   variables.clear();
@@ -255,14 +261,14 @@ void Settings::save()
   QString angleStr;
   if      ( angleMode == Settings::Radian ) angleStr = "Radian";
   else if ( angleMode == Settings::Degree ) angleStr = "Degree";
-  settings.setValue( key + "/General/AngleMode",      angleStr      );
-  settings.setValue( key + "/General/SaveSession",    saveSession   );
-  settings.setValue( key + "/General/SaveVariables",  saveVariables );
-  settings.setValue( key + "/General/AutoComplete",   autoComplete  );
-  settings.setValue( key + "/General/AutoCalc",       autoCalc      );
-  settings.setValue( key + "/General/DecimalPoint",   autoDetectDot? QString(): decimalPoint() );
-  //settings.setValue( key + "/General/Language",       language      );
-  settings.setValue( key + "/General/MinimizeToTray", minimizeToTray );
+  settings.setValue( key + "/General/AngleMode",          angleStr      );
+  settings.setValue( key + "/General/RestoreLastSession", saveSession   );
+  settings.setValue( key + "/General/SaveVariables",      saveVariables );
+  settings.setValue( key + "/General/AutoComplete",       autoComplete  );
+  settings.setValue( key + "/General/AutoCalc",           autoCalc      );
+  settings.setValue( key + "/General/DecimalPoint",       autoDetectDot? QString(): decimalPoint() );
+  //settings.setValue( key + "/General/Language",           language      );
+  settings.setValue( key + "/General/MinimizeToTray",     minimizeToTray );
 
   QString formatStr;
   if      ( format == 'f' ) formatStr = "Fixed";
