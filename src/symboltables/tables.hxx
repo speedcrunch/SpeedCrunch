@@ -40,8 +40,9 @@ class Table: private QMap<QString, PSymbol>
                            int minParamCount, int maxParamCount);
     bool addPrefixSymbol(const QString key, VariantType t, const FctList& f,
                          char precedence);
+    bool addBinOpSymbol(const QString key, VariantType t1, VariantType t2,
+                        const FctList& f, char precedence);
     bool addSymbol(const QString& key, PSymbol symbol);
-    bool overloadSymbol(const QString& key, PSymbol symbol);
     bool cloneSymbol(const QString& key, PSymbol symbol, bool overload = false);
     bool keysContainChar(QChar c);
   private:

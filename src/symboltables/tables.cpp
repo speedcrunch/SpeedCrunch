@@ -20,6 +20,7 @@
 #include "symboltables/tables.hxx"
 #include "math/hmath.hxx"
 
+// FIXME move the initialization to another object
 struct CSyntaxSymbol
 {
   const char* key;
@@ -44,7 +45,7 @@ struct CParSymbol
   SymType symtype;
 } CParSymbols[] =
 {
-  { " (", " )", openPar },
+  { " (", " )", openSym },
   { " \"", " \"", quote },
 };
 static const int cnt2 = sizeof(CParSymbols)/sizeof(struct CParSymbol);
@@ -102,6 +103,17 @@ struct CNPrefixSymbol
   { " -", operator-, 12 },
 };
 static const int cnt6 = sizeof(CNPrefixSymbols)/sizeof(struct CNPrefixSymbol);
+
+struct CNBinOpSymbol
+{
+  const char* key;
+  Nfct2 fct;
+  char  precedence;
+} CNBinOpSymbols[] =
+{
+  { " add", operator-, 6 },
+};
+static const int cnt7 = sizeof(CNBinOpSymbols)/sizeof(struct CNBinOpSymbol);
 
 Tables* Tables::tables = 0;
 
@@ -165,6 +177,13 @@ void Tables::init()
     struct CNPrefixSymbol* ps = CNPrefixSymbols + i;
     fcts.nfct1 = ps->fct;
     builtinTable().addPrefixSymbol(ps->key, TNumeric, fcts, ps->precedence);
+  }
+  fcts.clear();
+  for (int i = -1; ++i < cnt7; )
+  {
+    struct CNBinOpSymbol* ps = CNBinOpSymbols + i;
+    fcts.nfct2 = ps->fct;
+    builtinTable().addBinOpSymbol(ps->key, TNumeric, TNumeric, fcts, ps->precedence);
   }
 }
 
@@ -243,17 +262,39 @@ Variant Tables::escape(const ParamList& params)
 
 Variant Tables::define(const ParamList& params)
 {
+  if (globalTable().contains((const QString&)params.at(1)))
+    return TABLE_KEY_EXISTS;
+  return overload(params);
+}
+
+Variant Tables::overload(const ParamList& params)
+{
+  int prec;
   PSymbol symbol = builtinLookup(params.at(0)).pt.value();
   if (!symbol)
     return TABLE_SYMBOL_NOT_FOUND;
   QString key = (const QString&)params.at(1);
-  if (globalTable().contains(key))
-    return TABLE_KEY_EXISTS;
   bool ok;
-  if (dynamic_cast<OpenSymbol*>(symbol))
+  if (symbol->asOp())
+  {
+    if (params.size() == 3)
+    {
+      if (params.at(2).match(TInteger) != 0)
+        return SYMBOLS_TYPE_MISMATCH;
+      prec = ((const HNumber&)(params.at(2))).toInt();
+    }
+    else
+      prec = symbol->asOp()->precedence();
+    ok = globalTable().addSymbol(
+             key,
+             symbol->clone(&globalTable())->asOp()->setPrecedence(prec));
+  }
+  else if (symbol->asOpen())
   {
     if (params.size() != 3)
       return TABLE_MISSING_CLOSE;
+    if (!params.isType(2, TText))
+      return SYMBOLS_TYPE_MISMATCH;
     ok = globalTable().addOpenSymbol(key, symbol->type(), params.at(2));
   }
   else
@@ -263,14 +304,6 @@ Variant Tables::define(const ParamList& params)
     ok = globalTable().cloneSymbol(key, symbol);
   }
   return ok? 0 : SYMBOLS_CLONE_ERROR;
-}
-
-Variant Tables::overload(const ParamList& params)
-{
-  PSymbol symbol = builtinLookup(params.at(0)).pt.value();
-  if (!symbol)
-    return TABLE_SYMBOL_NOT_FOUND;
-  return globalTable().cloneSymbol(params.at(1), symbol, true)? 0 : SYMBOLS_CLONE_ERROR;
 }
 
 Variant Tables::undefine(const ParamList& params)
@@ -308,19 +341,6 @@ void Table::checkDelete(PSymbol symbol)
 
 bool Table::addSymbol(const QString& key, PSymbol symbol)
 {
-  if(!symbol)
-    return false;
-  if (contains(key))
-  {
-    checkDelete(symbol);
-    return false;
-  }
-  insert(key, symbol);
-  return true;
-}
-
-bool Table::overloadSymbol(const QString& key, PSymbol symbol)
-{
   if (!symbol)
     return false;
   insertMulti(key, symbol);
@@ -329,10 +349,7 @@ bool Table::overloadSymbol(const QString& key, PSymbol symbol)
 
 bool Table::cloneSymbol(const QString& key, PSymbol symbol, bool overload)
 {
-  symbol = symbol->clone(this);
-  if (overload)
-    return overloadSymbol(key, symbol);
-  return addSymbol(key, symbol);
+  return addSymbol(key, symbol->clone(this));
 }
 
 void Table::removeSymbols(const QString& key)
@@ -378,6 +395,15 @@ bool Table::addPrefixSymbol(const QString key, VariantType t, const FctList& f,
 {
   TypeList tl;
   tl.append(t);
+  return addSymbol(key, new OperatorSymbol(this, tl, f, precedence));
+}
+
+bool Table::addBinOpSymbol(const QString key, VariantType t1, VariantType t2,
+                           const FctList& f, char precedence)
+{
+  TypeList tl;
+  tl.append(t1);
+  tl.append(t2);
   return addSymbol(key, new OperatorSymbol(this, tl, f, precedence));
 }
 

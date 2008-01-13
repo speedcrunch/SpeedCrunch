@@ -215,7 +215,32 @@ SymType Symbol::type() const
 
 PSymbol Symbol::clone(void* aOwner) const
 {
-  return new LinkSymbol(aOwner, *this);
+  return 0;
+}
+
+const OpenSymbol* Symbol::asOpen() const
+{
+  return dynamic_cast<const OpenSymbol*>(this);
+}
+
+const TagSymbol* Symbol::asTag() const
+{
+  return dynamic_cast<const TagSymbol*>(this);
+}
+
+const FunctionSymbol* Symbol::asFunc() const
+{
+  return dynamic_cast<const FunctionSymbol*>(this);
+}
+
+const OperatorSymbol* Symbol::asOp() const
+{
+  return dynamic_cast<const OperatorSymbol*>(this);
+}
+
+OperatorSymbol* Symbol::asOp()
+{
+  return dynamic_cast<OperatorSymbol*>(this);
 }
 
 SyntaxSymbol::SyntaxSymbol(void* aOwner, SymType aType)
@@ -248,6 +273,11 @@ SymType TagSymbol::type() const
   return tagSym;
 }
 
+PSymbol TagSymbol::clone(void* aOwner) const
+{
+  return new TagSymbol(aOwner, base(), complement());
+}
+
 PSymbol CloseSymbol::clone(void* aOwner) const
 {
   return 0;
@@ -261,26 +291,39 @@ SymType CloseSymbol::type() const
 OpenSymbol::OpenSymbol(void* aOwner, SymType aType, const QString& end)
   : SyntaxSymbol(aOwner, aType), closeSymbol(0)
 {
-  m_end = end;
-  closeSymbol = new CloseSymbol(this, aType);
-  Tables::addCloseSymbol(end, this);
+  setCloseSymbolKey(end);
 }
 
 OpenSymbol::~OpenSymbol()
 {
-  Tables::removeCloseSymbol(closeSymbol);
-  if (closeSymbol->owner() == this)
-    delete closeSymbol;
+  setCloseSymbolKey(QString());
+}
+
+PSymbol OpenSymbol::setCloseSymbolKey(const QString& key)
+{
+  if (closeSymbol)
+  {
+    Tables::removeCloseSymbol(closeSymbol);
+    if (closeSymbol->owner() == this)
+      delete closeSymbol;
+  }
+  m_end = key;
+  if (!key.isEmpty())
+  {
+    closeSymbol = new CloseSymbol(this, type());
+    Tables::addCloseSymbol(key, this);
+  }
+  return this;
 }
 
 PSymbol OpenSymbol::clone(void* aOwner) const
 {
-  return 0;
+  return new OpenSymbol(aOwner, type(), closeToken());
 }
 
 FunctionSymbol::FunctionSymbol(void* aOwner, const TypeList& tlist,
       const FctList& flist, int minCount, int maxCount)
-  : FunctionSymbolIntf(aOwner)
+  : Symbol(aOwner)
 {
   if (maxCount < 0)
     maxCount = minCount;
@@ -288,6 +331,11 @@ FunctionSymbol::FunctionSymbol(void* aOwner, const TypeList& tlist,
   minParamCount = minCount;
   fcts = flist;
   types = tlist;
+}
+
+PSymbol FunctionSymbol::clone(void* aOwner) const
+{
+  return new FunctionSymbol(aOwner, types, fcts, minParamCount, maxParamCount);
 }
 
 bool FunctionSymbol::checkCount(const ParamList& params) const
@@ -325,20 +373,25 @@ Variant FunctionSymbol::eval(const ParamList& params) const
 }
 
 OperatorSymbol::OperatorSymbol(void* aOwner, const TypeList& tlist,
-        const FctList& flist, int prec)
+                               const FctList& flist, int prec)
   : FunctionSymbol(aOwner, tlist, flist, tlist.size(), tlist.size()),
-    OperatorSymbolIntf(prec)
+    m_prec(prec)
 {
 }
 
-SymType OperatorSymbol::type() const
+PSymbol OperatorSymbol::clone(void* aOwner) const
 {
-  return operatorSym;
+  return new OperatorSymbol(aOwner, types, fcts, m_prec);
 }
 
 bool OperatorSymbol::isUnary() const
 {
   return minParamCount == 1;
+}
+
+SymType OperatorSymbol::type() const
+{
+  return operatorSym;
 }
 
 SymType AnsSymbol::type() const
@@ -349,20 +402,6 @@ SymType AnsSymbol::type() const
 SymType VarSymbol::type() const
 {
   return varSym;
-}
-
-SymType LinkSymbol::type() const
-{
-  return linkSym;
-}
-
-LinkSymbol::LinkSymbol(void* aOwner, const Symbol& linkTo)
-  : Symbol(aOwner)
-{
-  if (linkTo.type() == linkSym)
-    refSymbol = static_cast<const LinkSymbol&>(linkTo).alias();
-  else
-    refSymbol = &linkTo;
 }
 
 ConstSymbol::ConstSymbol(void* aOwner)
@@ -379,31 +418,4 @@ ConstSymbol::ConstSymbol(void* aOwner, const Variant& val)
 SymType ConstSymbol::type() const
 {
   return constSym;
-}
-
-OpRefSymbol::OpRefSymbol(void* aOwner, const OperatorSymbol& alias)
-  : FunctionSymbolIntf(aOwner),
-    OperatorSymbolIntf(alias.precedence()),
-    m_alias(alias)
-{
-}
-
-SymType OpRefSymbol::type() const
-{
-  return operatorSym;
-}
-
-bool OpRefSymbol::isUnary() const
-{
-  return m_alias.isUnary();
-}
-
-bool OpRefSymbol::match(const ParamList& params) const
-{
-  return m_alias.match(params);
-}
-
-Variant OpRefSymbol::eval(const ParamList& params) const
-{
-  return m_alias.eval(params);
 }

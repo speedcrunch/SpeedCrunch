@@ -290,8 +290,8 @@ Evaluator::Evaluator()
   d = new EvaluatorPrivate;
   clear();
 #ifdef _BISON
-  QStringList script;
-  script << "\\escape \\(\\\"@\\\"\\)"
+ QStringList script;
+ script << "\\escape \\(\\\"@\\\"\\)"
          << "@def @(@\"\"@\"@;@\"\"@\"@;@\"\"@\"@)"
          << "@def @(\"(\"@;\"(\"@;\")\"@)"
          << "@def (\";\"@;\";\")"
@@ -312,11 +312,15 @@ Evaluator::Evaluator()
          << "\\sin 0.3e1"
          << "0x2Fp2"
          << "0xsF0"
-         << "\\def (\"posscale\"; \"0+\")"
-         << "\\def (\"negscale\"; \"0-\")"
+         << "\\def (\"posscale\"; \"1+\")"
+         << "\\def (\"negscale\"; \"1-\")"
 
          << "2e-1"
-      ;
+         << "\\def (\"-\";\"-\")"
+         << "-1"
+         << "\\overload (\"add\";\"-\")"
+         << "-1-2"
+     ;
   SglExprLex::self().run(script);
 #endif
 }

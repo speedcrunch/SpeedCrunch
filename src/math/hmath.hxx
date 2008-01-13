@@ -35,6 +35,7 @@ class HNumber
 {
 friend class HMath;
 friend HNumber operator-(const HNumber&);
+friend HNumber operator-(const HNumber&, const HNumber&);
 
 public:
   /*!
@@ -111,11 +112,6 @@ public:
    * Adds another number.
    */
   HNumber& operator+=( const HNumber& );
-
-  /*!
-   * Subtract from another number.
-   */
-  HNumber operator-(const HNumber&) const;
 
   /*!
    * Subtract from another number.
@@ -269,6 +265,12 @@ private:
  * Changes the sign
  */
 HNumber operator-(const HNumber&);
+
+/*!
+ * Subtract from another number.
+ */
+HNumber operator-(const HNumber&, const HNumber&);
+
 
 typedef QList<const HNumber*> HNumberList;
 

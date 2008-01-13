@@ -358,10 +358,10 @@ HNumber& HNumber::operator+=( const HNumber& num )
   return operator=( *this + num );
 }
 
-HNumber HNumber::operator-( const HNumber& num ) const
+HNumber operator-( const HNumber& n1, const HNumber& n2 )
 {
   HNumber result;
-  call2Args(result.d, d, num.d, checkSub);
+  call2Args(result.d, n1.d, n2.d, checkSub);
   return result;
 }
 

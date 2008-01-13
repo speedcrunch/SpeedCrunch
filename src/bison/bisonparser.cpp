@@ -262,43 +262,93 @@ QString SglExprLex::checkEscape(const QString& s)
   return s;
 }
 
+static int tokenOrder(int token)
+{
+  switch(token)
+  {
+    case L0       :
+    case R1       :
+    case L2       :
+    case R3       :
+    case L4       :
+    case R5       :
+    case L6       :
+    case R7       :
+    case L8       :
+    case R9       :
+    case L10      :
+    case R11      :
+    case L12      :
+    case R13      :
+    case L14      : return 2;
+    case PREFIX0  :
+    case PREFIX2  :
+    case PREFIX4  :
+    case PREFIX6  :
+    case PREFIX8  :
+    case PREFIX10 :
+    case PREFIX12 :
+    case PREFIX14 : return 1;
+    default       : return 0;
+  }
+}
+
 SglExprLex::ScanResult SglExprLex::searchResult2scanResult(Tables::SearchResult sr)
 {
   ScanResult tokens[maxOverloadSymbols];
+  ScanResult tmp;
   SymType stype;
-  const Symbol* symbol;
 
+  tokens[0].type = UNKNOWNTOKEN;
+  tokens[0].symbol = 0;
   if (sr.count > maxOverloadSymbols)
     sr.count = 0;
-  for (int i = -1; ++i < sr.count;)
+  for (int i = -1; ++i < sr.count; ++sr.pt)
   {
-    symbol = follow(sr.pt.value());
-    tokens[i].symbol = symbol;
-    stype = symbol? symbol->type() : unassigned;
+    tmp.symbol = sr.pt.value();
+    stype = tmp.symbol? tmp.symbol->type() : unassigned;
     switch(stype)
     {
       case tagSym:
-        tokens[i].type = baseTag(symbol);
+        tmp.type = baseTag(tmp.symbol);
         break;
       case operatorSym:
-        tokens[i].type = opToken(symbol);
+        tmp.type = opToken(tmp.symbol);
         break;
       default:
-        tokens[i].type = symbolType(stype);
+        tmp.type = symbolType(stype);
     }
-    ++sr.pt;
+    // sort overloaded symbols (insertion sort)
+    int j = i;
+    for (; --j >= 0 && tokenOrder(tokens[j].type) < tokenOrder(tmp.type);)
+      tokens[j+1] = tokens[j];
+    tokens[j+1] = tmp;
   }
-  //FIXME order symbols here
-  switch (tokens[0].type)
+  for (int i = sr.count; --i > 0;)
+    pending.enqueue(tokens[i]);
+  if (sr.count == 1)
   {
-    case tagSym:
-      if (static_cast<const TagSymbol*>(tokens[0].symbol)->complement())
-      {
-        pending.enqueue(tokens[0]);
-        tokens[0].type = CMPLTAG;
-      }
-      break;
-    default: ;
+    switch (stype)
+    {
+      case operatorSym:
+        if (!tmp.symbol->asOp()->isUnary())
+        {
+          // append a NOPREFIX token for not overloaded binary operators
+          tmp.type = NOPREFIX;
+          tmp.symbol = 0;
+          pending.enqueue(tmp);
+        }
+        break;
+      case tagSym:
+        if (tmp.symbol->asTag()->complement())
+        {
+          // split a complement tag into a base token and a complement token
+          pending.enqueue(tmp);
+          tokens[0].type = CMPLTAG;
+        }
+        break;
+      default: ;
+    }
   }
   return tokens[0];
 }
@@ -316,11 +366,14 @@ bool SglExprLex::matchesClosePar() const
 
 void SglExprLex::getNextScanResult()
 {
-  if ( !pending.isEmpty() )
-    lastScanResult = pending.dequeue();
-  else
-    lastScanResult = scanNextToken();
-  updateState();
+  do
+  {
+    if ( !pending.isEmpty() )
+      lastScanResult = pending.dequeue();
+    else
+      lastScanResult = scanNextToken();
+    updateState();
+  } while (lastScanResult.type == leaveState);
 }
 
 SglExprLex::ScanResult SglExprLex::scanNextToken()
@@ -453,7 +506,13 @@ SglExprLex::ScanResult SglExprLex::scanIdentifierToken()
 
 SglExprLex::ScanResult SglExprLex::scanMidNumberToken()
 {
-  return lookup(checkExact(), '0');
+  ScanResult result = lookup(checkExact(), state == stNumber? '0' : '1');
+  if (result.type == UNKNOWNTOKEN)
+  {
+    result.type = leaveState;
+    end = start;
+  }
+  return result;
 }
 
 void SglExprLex::updateState()
@@ -465,21 +524,21 @@ void SglExprLex::updateState()
     case BINTAG: radix -= 8; // fall through
     case DECTAG:
     case CMPLTAG:
-    case DOT:
     case DECSEQ:
     case HEXSEQ:
     case OCTSEQ:
-    case BINSEQ: state = stNumber; break;
+    case BINSEQ: if (state != stScale) state = stNumber; break;
+    case DOT: state = stNumber; break;
     case DECSCALE:
     case SCALE: state = stScale; break;
     case SIGN:
     case GROUPCHAR: break;
+    case leaveState:
     case TEXT: state = stTopLevel; break;
     case sot: state = stText; // fall through
     case OPENPAR:
       closePar.push(
-          checkEscape(
-              static_cast<const OpenSymbol*>(lastScanResult.symbol)->closeToken())); //fall through
+          checkEscape(lastScanResult.symbol->asOpen()->closeToken())); //fall through
     default: if ( state != stScale && state != stText ) state = stTopLevel;
   }
 }
@@ -491,7 +550,7 @@ int SglExprLex::symbolType(SymType t)
   switch( t )
   {
     case dot         : return DOT;
-    case openPar     : return OPENPAR;
+    case openSym     : return OPENPAR;
     case assign      : return ASSIGN;
     case separator   : return SEP;
     case quote       : return sot;
@@ -507,7 +566,7 @@ int SglExprLex::symbolType(SymType t)
 
 int SglExprLex::baseTag(const Symbol* symbol)
 {
-  switch(static_cast<const TagSymbol*>(symbol)->base())
+  switch(symbol->asTag()->base())
   {
     case 16: return HEXTAG;
     case 8 : return OCTTAG;
@@ -558,13 +617,6 @@ QString SglExprLex::addDelim(const QString& closekey)
   if (closekey.size() == 1 && !Tables::keysContainChar(closekey.at(0)))
     return closekey;
   return ' ' + closekey;
-}
-
-const Symbol* SglExprLex::follow(const Symbol* symbol)
-{
-  if (symbol->type() == linkSym)
-    symbol = static_cast<const LinkSymbol*>(symbol)->alias();
-  return symbol;
 }
 
 QString SglExprLex::currentSubStr() const
@@ -670,14 +722,37 @@ int SglExprLex::mGetToken(YYSTYPE* val, int* pos, int* lg)
   *lg = token.size();
   switch (token.type())
   {
-    case FUNCTION: val->func = token.symbol(); break;
-    case DECSEQ  :
-    case HEXSEQ  :
-    case OCTSEQ  :
-    case BINSEQ  :
-    case TEXT    : val->string = allocString(token.str()); break;
-    case SIGN    : val->sign = token.symbol()->type() == 'M'? -1 : 1; break;
-    default      : ;
+    case L0       :
+    case R1       :
+    case L2       :
+    case R3       :
+    case L4       :
+    case R5       :
+    case L6       :
+    case R7       :
+    case L8       :
+    case R9       :
+    case L10      :
+    case R11      :
+    case L12      :
+    case R13      :
+    case L14      :
+    case PREFIX0  :
+    case PREFIX2  :
+    case PREFIX4  :
+    case PREFIX6  :
+    case PREFIX8  :
+    case PREFIX10 :
+    case PREFIX12 :
+    case PREFIX14 :
+    case FUNCTION : val->func = token.symbol(); break;
+    case DECSEQ   :
+    case HEXSEQ   :
+    case OCTSEQ   :
+    case BINSEQ   :
+    case TEXT     : val->string = allocString(token.str()); break;
+    case SIGN     : val->sign = token.symbol()->type() == 'M'? -1 : 1; break;
+    default       : ;
   }
   return token.type();
 }
@@ -706,9 +781,7 @@ NumValue SglExprLex::callFunction(Func f, Params params)
 
 NumValue SglExprLex::mCallFunction(Func f, Params params)
 {
-  return variant2numValue(
-           dynamic_cast<const FunctionSymbolIntf*>(f)->eval(
-             *getParams(params)));
+  return variant2numValue(f->asFunc()->eval(*getParams(params)));
 }
 
 NumValue SglExprLex::str2Val(SafeQString* s)

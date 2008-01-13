@@ -44,15 +44,14 @@ typedef enum
   constSym = 'C',
   ansSym = 'A',
   varSym = 'V',
-  linkSym = 'L',
   tagSym = 'T',
+  openSym = '(',
   closeSym = ')',
   dot = '.',
   assign = '=',
   separator = ';',
   signPlus = 'P',
   signMinus = 'M',
-  openPar = '(',
   quote = '"',
   group = ',',
   scale = 'S',
@@ -140,7 +139,13 @@ class FctList
 };
 
 class Symbol;
+class TagSymbol;
+class FunctionSymbol;
+class OperatorSymbol;
+class OpenSymbol;
+
 typedef Symbol* PSymbol;
+
 class Symbol
 {
   public:
@@ -149,6 +154,11 @@ class Symbol
     virtual SymType type() const;
     virtual PSymbol clone(void* aOwner) const;
     void* owner() const { return m_owner; };
+    const TagSymbol* asTag() const;
+    const FunctionSymbol* asFunc() const;
+    const OpenSymbol* asOpen() const;
+    OperatorSymbol* asOp();
+    const OperatorSymbol* asOp() const;
   private:
     void* m_owner;
 };
@@ -181,6 +191,7 @@ class OpenSymbol: public SyntaxSymbol
     ~OpenSymbol();
     const QString& closeToken() const { return m_end; };
     PSymbol clone(void* aOwner) const;
+    PSymbol setCloseSymbolKey(const QString& key);
   private:
     QString m_end;
     CloseSymbol* closeSymbol;
@@ -193,32 +204,13 @@ class TagSymbol: public Symbol
     char base() const { return m_base; };
     bool complement() const { return m_compl; };
     SymType type() const;
+    PSymbol clone(void* aOwner) const;
   private:
     char m_base;
     bool m_compl;
 };
 
-class FunctionSymbolIntf: public Symbol
-{
-  public:
-    FunctionSymbolIntf(void* aOwner) : Symbol(aOwner) {};
-    virtual ~FunctionSymbolIntf(){};
-    virtual bool match(const ParamList& params) const = 0;
-    virtual Variant eval(const ParamList& params) const = 0;
-};
-
-class OperatorSymbolIntf
-{
-  public:
-    OperatorSymbolIntf(int prec) { m_prec = prec; };
-    virtual ~OperatorSymbolIntf() {};
-    virtual bool isUnary() const = 0;
-    int precedence() const { return m_prec; };
-  protected:
-    int m_prec;
-};
-
-class FunctionSymbol: public FunctionSymbolIntf
+class FunctionSymbol: public Symbol
 {
   public:
     SymType type() const;
@@ -226,34 +218,27 @@ class FunctionSymbol: public FunctionSymbolIntf
                    int minCount = 0, int maxCount = -1);
     bool match(const ParamList& params) const;
     Variant eval(const ParamList& params) const;
+    PSymbol clone(void* aOwner) const;
   protected:
     int minParamCount;
     int maxParamCount;
-  private:
-    bool checkCount(const ParamList& params) const;
     FctList fcts;
     TypeList types;
+  private:
+    bool checkCount(const ParamList& params) const;
 };
 
-class OperatorSymbol: public FunctionSymbol, public OperatorSymbolIntf
+class OperatorSymbol: public FunctionSymbol
 {
   public:
     OperatorSymbol(void* aOwner, const TypeList&, const FctList&, int prec);
-    SymType type() const;
-    bool isUnary() const;
-};
-
-class OpRefSymbol: public FunctionSymbolIntf, public OperatorSymbolIntf
-{
-  public:
-    OpRefSymbol(void* aOwner, const OperatorSymbol& alias);
-    void SetPrecedence(int newPrecedence) { m_prec = newPrecedence; };
     bool isUnary() const;
     SymType type() const;
-    bool match(const ParamList& params) const;
-    Variant eval(const ParamList& params) const;
-  private:
-    const OperatorSymbol& m_alias;
+    int precedence() const { return m_prec; };
+    PSymbol setPrecedence(int prec) { m_prec = prec; return this;};
+    PSymbol clone(void* aOwner) const;
+  protected:
+    int m_prec;
 };
 
 class ConstSymbol: public Symbol
@@ -281,16 +266,6 @@ class VarSymbol: public ConstSymbol
     VarSymbol(void* aOwner);
     SymType type() const;
     void operator=(const Variant& val) { m_value = val; };
-};
-
-class LinkSymbol: public Symbol
-{
-  public:
-    LinkSymbol(void* aOwner, const Symbol& linkTo);
-    SymType type() const;
-    const Symbol* alias() const { return refSymbol; };
-  private:
-    const Symbol* refSymbol;
 };
 
 #endif /* _SYMBOLS_H */

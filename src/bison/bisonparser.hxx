@@ -84,6 +84,7 @@ class SglExprLex
       eol        = '\0',
       sot        = '`',
       eot        = '\'',
+      leaveState = '\1',
     };
     enum { maxOverloadSymbols = 4 };
 
@@ -114,7 +115,6 @@ class SglExprLex
     QString currentSubStr() const;
     bool checkExact();
     ScanResult lookup(bool exact = true, char prefix = 0);
-    static const Symbol* follow(const Symbol* symbol);
     static int findSymbolType(SymType* types, SymType match);
     static QString addDelim(const QString&);
 
