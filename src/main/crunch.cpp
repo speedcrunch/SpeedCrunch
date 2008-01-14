@@ -242,7 +242,6 @@ Crunch::Crunch(): QMainWindow()
 
   d->constantsDock = new ConstantsDock( this );
   d->constantsDock->setObjectName( "ConstantsList" );
-  d->constantsDock->update( Constants::self() );
   addDockWidget( Qt::RightDockWidgetArea, d->constantsDock );
 
   tabifyDockWidget( d->functionsDock, d->historyDock );
@@ -293,10 +292,10 @@ Crunch::Crunch(): QMainWindow()
   restoreDocks();
 
   d->configDlg = new ConfigDlg( this );
-  connect( d->configDlg, SIGNAL( settingsChanged() ), SLOT( applySettings() ) );
-  connect( d->configDlg, SIGNAL( settingsChanged() ), d->keypad, SLOT( settingsChanged() ) );
-  connect( d->configDlg, SIGNAL( settingsChanged() ), d->constantsDock, SLOT( update() ) );
-  connect( this, SIGNAL( adaptToLanguageChange() ), d->configDlg, SLOT( adaptToLanguageChange() ) );
+  connect( d->configDlg, SIGNAL( settingsChanged()       ),                   SLOT(applySettings())         );
+  connect( d->configDlg, SIGNAL( settingsChanged()       ), d->keypad,        SLOT(settingsChanged())       );
+  connect( d->configDlg, SIGNAL( settingsChanged()       ), d->constantsDock, SLOT(settingsChanged())       );
+  connect( this,         SIGNAL( adaptToLanguageChange() ), d->configDlg,     SLOT(adaptToLanguageChange()) );
 
   setWidgetsLayoutAccordingToLanguageDirection();
 

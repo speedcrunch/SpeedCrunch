@@ -1,22 +1,23 @@
-/* This file is part of the SpeedCrunch project
-   Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-                 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
+// This file is part of the SpeedCrunch project
+// Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
+//               2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; see the file COPYING.  If not, write to
+// the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+// Boston, MA 02110-1301, USA.
+//
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public License
-   as published by the Free Software Foundation; either version 2
-   of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
- */
 
 #include <base/constants.hxx>
 #include <base/settings.hxx>
@@ -33,45 +34,46 @@
 #include <QTreeWidget>
 #include <QVBoxLayout>
 
+
 class ConstantsDockPrivate
 {
   public:
-    QList<Constant> constants;
-    QComboBox* category;
-    QTreeWidget* list;
-    QLineEdit* filter;
-    QTimer* filterTimer;
-    QLabel* noMatchLabel;
+    QComboBox   * category;
+    QLineEdit   * filter;
+    QTimer      * filterTimer;
+    QTreeWidget * list;
+    QLabel      * noMatchLabel;
 };
 
-ConstantsDock::ConstantsDock( QWidget* parent ): QDockWidget( tr("Constants"), parent )
+
+ConstantsDock::ConstantsDock( QWidget * parent ): QDockWidget( tr("Constants"), parent )
 {
   d = new ConstantsDockPrivate;
 
-  QLabel* categorylabel = new QLabel( this );
+  QLabel * categorylabel = new QLabel( this );
   categorylabel->setText( tr("Category") );
 
   d->category = new QComboBox( this );
   d->category->setEditable( false );
   d->category->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
-  connect( d->category, SIGNAL( activated( int ) ), SLOT( filter() ) );
+  connect( d->category, SIGNAL(activated( int )), SLOT(filter()) );
 
-  QWidget* categoryBox = new QWidget( this );
-  QHBoxLayout* categoryLayout = new QHBoxLayout;
+  QWidget     * categoryBox    = new QWidget( this );
+  QHBoxLayout * categoryLayout = new QHBoxLayout;
   categoryBox->setLayout( categoryLayout );
   categoryLayout->addWidget( categorylabel );
   categoryLayout->addWidget( d->category );
   categoryLayout->setMargin( 0 );
 
-  QLabel* label = new QLabel( this );
+  QLabel * label = new QLabel( this );
   label->setText( tr("Search") );
 
   d->filter = new QLineEdit( this );
-  d->filter->setMinimumWidth( fontMetrics().width('X')*10 );
-  connect( d->filter, SIGNAL( textChanged( const QString& ) ), SLOT( triggerFilter() ) );
+  d->filter->setMinimumWidth( fontMetrics().width('X') * 10 );
+  connect( d->filter, SIGNAL(textChanged( const QString& )), SLOT(triggerFilter()) );
 
-  QWidget* searchBox = new QWidget( this );
-  QHBoxLayout* searchLayout = new QHBoxLayout;
+  QWidget     * searchBox    = new QWidget( this );
+  QHBoxLayout * searchLayout = new QHBoxLayout;
   searchBox->setLayout( searchLayout );
   searchLayout->addWidget( label );
   searchLayout->addWidget( d->filter );
@@ -88,11 +90,10 @@ ConstantsDock::ConstantsDock( QWidget* parent ): QDockWidget( tr("Constants"), p
   d->list->setMouseTracking( true );
   d->list->setEditTriggers( QTreeWidget::NoEditTriggers );
   d->list->setSelectionBehavior( QTreeWidget::SelectRows );
-  connect( d->list, SIGNAL( itemDoubleClicked( QTreeWidgetItem*, int ) ),
-    SLOT( handleItem( QTreeWidgetItem* ) ) );
+  connect( d->list, SIGNAL(itemDoubleClicked( QTreeWidgetItem*, int )), SLOT(handleItem( QTreeWidgetItem* )) );
 
-  QWidget* widget = new QWidget( this );
-  QVBoxLayout* layout = new QVBoxLayout;
+  QWidget     * widget = new QWidget( this );
+  QVBoxLayout * layout = new QVBoxLayout;
   widget->setLayout( layout );
   setWidget( widget );
   layout->setMargin( 3 );
@@ -103,7 +104,7 @@ ConstantsDock::ConstantsDock( QWidget* parent ): QDockWidget( tr("Constants"), p
   d->filterTimer = new QTimer( this );
   d->filterTimer->setInterval( 500 );
   d->filterTimer->setSingleShot( true );
-  connect( d->filterTimer, SIGNAL( timeout() ), SLOT( filter() ) );
+  connect( d->filterTimer, SIGNAL(timeout()), SLOT(filter()) );
 
   d->noMatchLabel = new QLabel( this );
   d->noMatchLabel->setText( tr("No match found") );
@@ -114,7 +115,10 @@ ConstantsDock::ConstantsDock( QWidget* parent ): QDockWidget( tr("Constants"), p
   setMinimumWidth( 200 );
   setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
   setWindowIcon( QIcon() ); // no icon
+
+  updateConstants();
 }
+
 
 ConstantsDock::~ConstantsDock()
 {
@@ -122,19 +126,25 @@ ConstantsDock::~ConstantsDock()
   delete d;
 }
 
-void ConstantsDock::update( const Constants* c )
+
+void ConstantsDock::settingsChanged()
 {
-  d->constants = c->constantList;
+  updateConstants();
+}
+
+
+void ConstantsDock::updateConstants()
+{
+  Constants * c = Constants::self();
 
   d->category->clear();
   d->category->addItems( c->categoryList );
   d->category->insertItem( 0, tr("All") );
   d->category->setCurrentIndex( 0 );
 
-  qDebug( "**************" );
   filter();
-  qDebug( "**************" );
 }
+
 
 void ConstantsDock::triggerFilter()
 {
@@ -142,9 +152,12 @@ void ConstantsDock::triggerFilter()
   d->filterTimer->start();
 }
 
+
 void ConstantsDock::filter()
 {
-  QString term = d->filter->text();
+  qDebug( "**************" );
+  Constants * c    = Constants::self();
+  QString     term = d->filter->text();
 
   d->filterTimer->stop();
   setUpdatesEnabled(false);
@@ -152,47 +165,46 @@ void ConstantsDock::filter()
   QString chosenCategory = d->category->currentText();
 
   d->list->clear();
-  for( int k = 0; k < d->constants.count(); k++ )
+  for ( int k = 0; k < c->constantList.count(); k++ )
   {
       QStringList str;
-      str << d->constants[k].name;
+      str << c->constantList[k].name;
       if ( QLocale().language() == QLocale::Hebrew )
       {
-	str << d->constants[k].unit;
+	str << c->constantList[k].unit;
 	str << (Settings::decimalPoint() == '.' ?
-                d->constants[k].value.replace( ',', '.' )
-                : d->constants[k].value.replace( '.', ',' ) );
+                  c->constantList[k].value.replace( ',', '.' )
+                : c->constantList[k].value.replace( '.', ',' ) );
       }
       else
       {
 	str << (Settings::decimalPoint() == '.' ?
-                d->constants[k].value.replace( ',', '.' )
-                : d->constants[k].value.replace( '.', ',' ) );
-	str << d->constants[k].unit;
+                  c->constantList[k].value.replace( ',', '.' )
+                : c->constantList[k].value.replace( '.', ',' ) );
+	str << c->constantList[k].unit;
       }
-      str << d->constants[k].name.toUpper();
+      str << c->constantList[k].name.toUpper();
       str << QString( "" );
 
       bool include = (chosenCategory == tr("All")) ? true:
-        d->constants[k].categories.contains( chosenCategory );
+        c->constantList[k].categories.contains( chosenCategory );
 
-      if( !include )
+      if ( ! include )
         continue;
 
-      QTreeWidgetItem* item = 0;
-      if( term.isEmpty() )
+      QTreeWidgetItem * item = 0;
+      if ( term.isEmpty() )
         item = new QTreeWidgetItem( d->list, str );
       else
       {
-        if( str[0].contains(term, Qt::CaseInsensitive) )
+        if ( str[0].contains( term, Qt::CaseInsensitive ) )
           item = new QTreeWidgetItem( d->list, str );
       }
-      if( item )
+      if ( item )
       {
-        QString tip = QString("<b>%1</b><br>%2").arg( d->constants[k].name,
-	                                              d->constants[k].value );
-        if( !d->constants[k].unit.isEmpty() )
-          tip.append( " " ).append( d->constants[k].unit );
+        QString tip = QString("<b>%1</b><br>%2").arg( c->constantList[k].name, c->constantList[k].value );
+        if ( !c->constantList[k].unit.isEmpty() )
+          tip.append( " " ).append( c->constantList[k].unit );
         item->setToolTip( 0, tip );
         item->setToolTip( 1, tip );
         item->setToolTip( 2, tip );
@@ -206,18 +218,17 @@ void ConstantsDock::filter()
   d->list->resizeColumnToContents( 1 );
   d->list->resizeColumnToContents( 2 );
 
-  if( d->list->topLevelItemCount() > 0 )
+  if ( d->list->topLevelItemCount() > 0 )
   {
     d->noMatchLabel->hide();
     d->list->sortItems( 0, Qt::AscendingOrder );
 
     int group = 3;
-    if( d->list->topLevelItemCount() >= 2*group )
-      for(int i = 0; i < d->list->topLevelItemCount(); i++)
+    if ( d->list->topLevelItemCount() >= 2 * group )
+      for ( int i = 0; i < d->list->topLevelItemCount(); i++ )
       {
-        QTreeWidgetItem* item = d->list->topLevelItem(i);
-        QBrush c = ((int)(i / group)) & 1 ?
-	           palette().base() : palette().alternateBase();
+        QTreeWidgetItem * item = d->list->topLevelItem( i );
+        QBrush c = ((int)(i / group)) & 1 ? palette().base() : palette().alternateBase();
         item->setBackground( 0, c );
         item->setBackground( 1, c );
         item->setBackground( 2, c );
@@ -231,12 +242,14 @@ void ConstantsDock::filter()
     d->noMatchLabel->raise();
   }
 
-  setUpdatesEnabled(true);
+  setUpdatesEnabled( true );
 }
 
-void ConstantsDock::handleItem( QTreeWidgetItem* item )
+
+void ConstantsDock::handleItem( QTreeWidgetItem * item )
 {
-  for( int k = 0; k < d->constants.count(); k++ )
-    if( d->constants[k].name == item->text(0) )
-      emit constantSelected( d->constants[k].value );
+  Constants * c = Constants::self();
+  for ( int k = 0; k < c->constantList.count(); k++ )
+    if ( c->constantList[k].name == item->text( 0 ) )
+      emit constantSelected( c->constantList[k].value );
 }

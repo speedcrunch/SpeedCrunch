@@ -36,15 +36,16 @@ class ConstantsDock : public QDockWidget
     ~ConstantsDock();
 
   public slots:
-    void update( const Constants* constants );
+    void settingsChanged();
 
   signals:
     void constantSelected( const QString& c );
 
   protected slots:
-    void triggerFilter();
     void filter();
     void handleItem( QTreeWidgetItem* item );
+    void triggerFilter();
+    void updateConstants();
 
   private:
     ConstantsDockPrivate*d;
