@@ -1,5 +1,6 @@
 /* This file is part of the SpeedCrunch project
    Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
+                 2008 Helder Correia <helder.pereira.correia@gmail.com>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -74,7 +75,6 @@ class Token
     QString text() const { return m_text; }
     int pos() const { return m_pos; };
     bool isNumber() const { return m_type == stxNumber; }
-//    bool isOperator() const { return m_type == stxOperator; } //refty
     bool isOperator() const { return m_type >= stxOperator; }
     bool isIdentifier() const { return m_type == stxIdentifier; }
     HNumber asNumber() const;
@@ -113,8 +113,6 @@ class Evaluator
 {
   public:
 
-//    typedef enum { Degree, Radian } AngleMode; //refan
-
     Evaluator();
     ~Evaluator();
     void setExpression( const QString& expr );
@@ -122,18 +120,12 @@ class Evaluator
     void clear();
     bool isValid() const;
     Tokens tokens() const;
-//    static Tokens scan( const QString& expr, const QString& decimalPoint );//refdp
     static Tokens scan( const QString& expr );
     QString error() const;
 
-//    void setAngleMode( AngleMode am ); //refan
-//    AngleMode angleMode() const;
     HNumber evalNoAssign();
     HNumber eval();
     HNumber evalUpdateAns();
-
-//     void setDecimalPoint( const QString& d ); //refdp
-//     QString decimalPoint() const;
 
     void set( const QString& id, HNumber value );
     HNumber get( const QString& id );
@@ -142,7 +134,6 @@ class Evaluator
     QVector<Variable> variables() const;
     void clearVariables();
 
-//    static QString autoFix( const QString& expr, const QString& decimalPoint );//refdp
     static QString autoFix( const QString& expr );
 
     QString dump() const;
@@ -152,6 +143,7 @@ class Evaluator
     void compile( const Tokens& tokens ) const;
 
   private:
+
     EvaluatorPrivate *d;
     Evaluator( const Evaluator& );
     Evaluator& operator=( const Evaluator& );

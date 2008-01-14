@@ -221,6 +221,11 @@ QString Result::asText() const
   return d->contents.join( "\n" );
 }
 
+int Result::count() const
+{
+  return d->count;
+}
+
 void Result::clear()
 {
   d->count = 0;

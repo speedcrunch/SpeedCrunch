@@ -65,6 +65,7 @@ class Editor : public QTextEdit
     QStringList historyResults() const;
     void setHistory( const QStringList& history );
     void setHistoryResults( const QStringList& results );
+    void clearHistory();
 
     bool autoCompleteEnabled() const;
     void setAutoCompleteEnabled( bool enable );

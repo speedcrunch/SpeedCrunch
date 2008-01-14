@@ -42,6 +42,7 @@ class Result : public QListWidget
     void append( const QString& expr, const HNumber& value );
     void appendError( const QString& expr, const QString& msg );
     QString asText() const;
+    int count() const;
 
     void setFormat( char format );
     char format() const;

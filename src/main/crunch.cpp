@@ -331,7 +331,7 @@ void Crunch::createUI()
 {
   // create all the actions
   d->actions->sessionLoad         = new QAction( tr("&Load..."),                 this );
-  d->actions->sessionSave         = new QAction( tr("&Save As..."),              this );
+  d->actions->sessionSave         = new QAction( tr("&Save..."),                 this );
   d->actions->sessionQuit         = new QAction( tr("&Quit"),                    this );
   d->actions->focusAndSelectInput = new QAction( tr("&Select Expression"),       this );
   d->actions->editCopy            = new QAction( tr("&Copy"),                    this );
@@ -747,8 +747,107 @@ void Crunch::closeEvent( QCloseEvent* e )
 
 void Crunch::loadSession()
 {
+  const char * errMsg= "File %1 is not a valid session";
   QString filters = tr( "SpeedCrunch Sessions (*.sch);;All Files (*)" );
-  QString fname = QFileDialog::getSaveFileName( this, tr("Load Session"), QString::null, filters );
+  QString fname = QFileDialog::getOpenFileName( this, tr("Load Session"), QString::null, filters );
+  if ( fname.isEmpty() )
+    return;
+
+  QFile file( fname );
+  if ( ! file.open( QIODevice::ReadOnly ) )
+  {
+    QMessageBox::critical( this, tr("Error"), tr("Can't read from file %1").arg( fname ) );
+    return;
+  }
+
+  QTextStream stream( & file );
+
+  // version of the format
+  QString version = stream.readLine();
+  if ( version != "0.10" )
+  {
+    QMessageBox::critical( this, tr("Error"), tr(errMsg).arg( fname ) );
+    return;
+  }
+
+  // number of calculations
+  bool ok;
+  int noCalcs = stream.readLine().toInt( &ok );
+  if ( ok == false || noCalcs < 0 )
+  {
+    QMessageBox::critical( this, tr("Error"), tr(errMsg).arg( fname ) );
+    return;
+  }
+
+  // ask for merge with current session
+  QMessageBox::StandardButton but =
+    QMessageBox::question( this, tr("Question"),
+                           tr("Merge session being loaded with current session?\n"
+                              "If no, current variables and display will be cleared."),
+                           QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel,
+                           QMessageBox::Yes );
+  if ( but == QMessageBox::Cancel )
+    return;
+  else if ( but == QMessageBox::No )
+  {
+    d->result->clear();
+    //Settings * set = Settings::self();
+    //set->history.clear();
+    //set->historyResults.clear();
+    deleteAllVariables();
+    clearHistory();
+    saveSettings();
+    applySettings();
+  }
+
+  // expressions and results
+  for ( int i = 0; i < noCalcs; i++ )
+  {
+    QString exp = stream.readLine();
+    QString res = stream.readLine();
+    if ( exp.isNull() || res.isNull() )
+    {
+      QMessageBox::critical( this, tr("Error"), tr(errMsg).arg( fname ) );
+      return;
+    }
+    HNumber num( res.toAscii().data() );
+    if ( ! num.isNan() )
+      d->result->append( exp, num );
+    else
+      d->result->appendError( exp, res );
+  }
+
+  // variables
+  int noVars = stream.readLine().toInt( &ok );
+  if ( ok == false || noVars < 0 )
+  {
+    QMessageBox::critical( this, tr("Error"), tr(errMsg).arg( fname ) );
+    return;
+  }
+  for ( int i = 0; i < noVars; i++ )
+  {
+    QString var = stream.readLine();
+    QString val = stream.readLine();
+    if ( var.isNull() || val.isNull() )
+    {
+      QMessageBox::critical( this, tr("Error"), tr(errMsg).arg( fname ) );
+      return;
+    }
+    HNumber num( val.toAscii().data() );
+    if (  num != HNumber::nan() )
+      d->eval->set( var, num );
+  }
+
+  file.close();
+
+  saveSettings();
+  applySettings();
+}
+
+void Crunch::saveSession()
+{
+  QString filters = tr( "SpeedCrunch Sessions (*.sch);;All Files (*)" );
+  QString fname = QFileDialog::getSaveFileName( this, tr("Save Session"), QString::null, filters );
   if ( fname.isEmpty() )
     return;
 
@@ -760,26 +859,27 @@ void Crunch::loadSession()
   }
 
   QTextStream stream( & file );
-  stream << d->result->asText();
 
-  file.close();
-}
+  // version of the format
+  stream << "0.10" << "\n";
 
-void Crunch::saveSession()
-{
-  QString filters = tr( "SpeedCrunch Sessions (*.sch);;All Files (*)" );
-  QString fname = QFileDialog::getSaveFileName( this, tr("Save Session"), QString::null, filters );
-  if ( fname.isEmpty() )
-    return;
+  // number of calculations
+  stream << d->result->count() << "\n";
 
-  QFile file( fname );
-  if ( ! file.open( QIODevice::ReadOnly ) )
+  // expressions and results
+  stream << d->result->asText() << "\n";
+
+  // number of variables
+  int noVars = d->eval->variables().count();
+  stream << noVars - 2 << "\n"; // exclude pi and phi
+
+  // variables
+  for ( int i = 0; i < noVars; i++ )
   {
-    QMessageBox::critical( this, tr("Error"), tr("Can't write to file %1").arg( fname ) );
-    return;
+    Variable var = d->eval->variables()[i];
+    if ( var.name != "pi" && var.name != "phi" )
+      stream << var.name << "\n" << HMath::format( var.value ) << "\n";
   }
-
-  QTextStream stream( & file );
 
   file.close();
 }
@@ -1103,6 +1203,13 @@ void Crunch::focusAndSelectInput()
 void Crunch::clearInput()
 {
   d->editor->clear();
+  QTimer::singleShot(0, d->editor, SLOT( setFocus() ) );
+}
+
+void Crunch::clearHistory()
+{
+  d->editor->clearHistory();
+  d->historyDock->clear();
   QTimer::singleShot(0, d->editor, SLOT( setFocus() ) );
 }
 

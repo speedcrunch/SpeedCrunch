@@ -236,6 +236,12 @@ void Editor::setHistoryResults( const QStringList & results )
   d->historyResults = results;
 }
 
+void Editor::clearHistory()
+{
+  d->history.clear();
+  d->historyResults.clear();
+}
+
 bool Editor::autoCompleteEnabled() const
 {
   return d->autoCompleteEnabled;
