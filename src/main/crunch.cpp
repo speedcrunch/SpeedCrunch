@@ -212,7 +212,7 @@ Crunch::Crunch(): QMainWindow()
   outerBoxLayout->addLayout( inputBoxLayout );
 
   // we need settings to be loaded before keypad and constants dock
-  //Settings::self()->load();
+  Settings::self()->load();
 
   // Keypad
   QHBoxLayout *keypadLayout = new QHBoxLayout();
@@ -295,6 +295,7 @@ Crunch::Crunch(): QMainWindow()
   d->configDlg = new ConfigDlg( this );
   connect( d->configDlg, SIGNAL( settingsChanged() ), SLOT( applySettings() ) );
   connect( d->configDlg, SIGNAL( settingsChanged() ), d->keypad, SLOT( settingsChanged() ) );
+  connect( d->configDlg, SIGNAL( settingsChanged() ), d->constantsDock, SLOT( update() ) );
   connect( this, SIGNAL( adaptToLanguageChange() ), d->configDlg, SLOT( adaptToLanguageChange() ) );
 
   setWidgetsLayoutAccordingToLanguageDirection();

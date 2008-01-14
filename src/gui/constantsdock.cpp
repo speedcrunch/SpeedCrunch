@@ -1,6 +1,6 @@
 /* This file is part of the SpeedCrunch project
    Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-   Copyright (C) 2007 Helder Correia <helder.pereira.correia@gmail.com>
+                 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -19,6 +19,7 @@
  */
 
 #include <base/constants.hxx>
+#include <base/settings.hxx>
 #include <gui/constantsdock.hxx>
 
 #include <QComboBox>
@@ -130,7 +131,9 @@ void ConstantsDock::update( const Constants* c )
   d->category->insertItem( 0, tr("All") );
   d->category->setCurrentIndex( 0 );
 
+  qDebug( "**************" );
   filter();
+  qDebug( "**************" );
 }
 
 void ConstantsDock::triggerFilter()
@@ -156,11 +159,15 @@ void ConstantsDock::filter()
       if ( QLocale().language() == QLocale::Hebrew )
       {
 	str << d->constants[k].unit;
-	str << d->constants[k].value;
+	str << (Settings::decimalPoint() == '.' ?
+                d->constants[k].value.replace( ',', '.' )
+                : d->constants[k].value.replace( '.', ',' ) );
       }
       else
       {
-	str << d->constants[k].value;
+	str << (Settings::decimalPoint() == '.' ?
+                d->constants[k].value.replace( ',', '.' )
+                : d->constants[k].value.replace( '.', ',' ) );
 	str << d->constants[k].unit;
       }
       str << d->constants[k].name.toUpper();

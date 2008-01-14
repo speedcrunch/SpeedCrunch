@@ -1,5 +1,6 @@
 /* This file is part of the SpeedCrunch project
    Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
+                 2008 Helder Correia <helder.pereira.correia@gmail.com>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -34,6 +35,7 @@ class ConstantsDock : public QDockWidget
     explicit ConstantsDock( QWidget* parent );
     ~ConstantsDock();
 
+  public slots:
     void update( const Constants* constants );
 
   signals:
