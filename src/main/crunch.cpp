@@ -562,7 +562,8 @@ void Crunch::copyResult()
   HNumber num = d->eval->get( "ans" );
   char * strToCopy;
 
-  switch ( Settings::self()->format )
+  Settings * set = Settings::self();
+  switch ( set->format )
   {
     case 'h':
       strToCopy = HMath::formatHexadec( num );
@@ -574,10 +575,14 @@ void Crunch::copyResult()
       strToCopy = HMath::formatBinary( num );
       break;
     default:
-      strToCopy = HMath::formatFixed( num );
+      strToCopy = HMath::formatFixed( num, set->decimalDigits );
   }
 
-  cb->setText( QString(strToCopy), QClipboard::Clipboard );
+  QString final( strToCopy );
+  if ( Settings::decimalPoint() == ',' )
+    final.replace( '.', ',' );
+
+  cb->setText( final, QClipboard::Clipboard );
   free( strToCopy );
 }
 
