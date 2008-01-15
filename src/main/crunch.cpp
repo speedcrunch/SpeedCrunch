@@ -74,7 +74,7 @@
 class CrunchActions
 {
   public:
-    QAction * clearDisplay;
+    QAction * clearHistory;
     QAction * clearInput;
     QAction * configure;
     QAction * degree;
@@ -533,9 +533,13 @@ void Crunch::applySettings()
 
 void Crunch::clearHistory()
 {
+  d->result->clear();
   d->editor->clearHistory();
   d->historyDock->clear();
-  QTimer::singleShot(0, d->editor, SLOT( setFocus() ) );
+  Settings * set = Settings::self();
+  set->history.clear();
+  set->historyResults.clear();
+  QTimer::singleShot( 0, d->editor, SLOT( setFocus() ) );
 }
 
 
@@ -727,20 +731,18 @@ void Crunch::loadSession()
   }
 
   // ask for merge with current session
-  QMessageBox::StandardButton but =
-    QMessageBox::question( this, tr("Question"),
-                           tr("Merge session being loaded with current session?\n"
-                              "If no, current variables and display will be cleared."),
-                           QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel,
-                           QMessageBox::Yes );
+  const char * mergeMsg = "Merge session being loaded with current session?\n"
+                          "If no, current variables and display will be cleared.";
+  QMessageBox::StandardButton but = QMessageBox::question( this, tr("Question"), tr(mergeMsg),
+                                                           QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel,
+                                                           QMessageBox::Yes );
   if ( but == QMessageBox::Cancel )
+  {
     return;
+  }
   else if ( but == QMessageBox::No )
   {
     d->result->clear();
-    //Settings * set = Settings::self();
-    //set->history.clear();
-    //set->historyResults.clear();
     deleteAllVariables();
     clearHistory();
     saveSettings();
@@ -1303,7 +1305,7 @@ void Crunch::createUI()
   d->actions->deleteVariable      = new QAction( tr("D&elete Variable..."),      this );
   d->actions->deleteAllVariables  = new QAction( tr("Delete All V&ariables"),    this );
   d->actions->clearInput          = new QAction( tr("Clear E&xpression"),        this );
-  d->actions->clearDisplay        = new QAction( tr("Clear &Display"),           this );
+  d->actions->clearHistory        = new QAction( tr("Clear &History"),           this );
   d->actions->viewGeneral         = new QAction( tr("&General"),                 this );
   d->actions->viewFixed           = new QAction( tr("&Fixed Decimal"),           this );
   d->actions->viewEngineering     = new QAction( tr("&Engineering"),             this );
@@ -1342,7 +1344,7 @@ void Crunch::createUI()
   d->actions->insertVariable->setShortcut     ( Qt::CTRL + Qt::Key_I );
   d->actions->deleteVariable->setShortcut     ( Qt::CTRL + Qt::Key_D );
   d->actions->clearInput->setShortcut         ( Qt::Key_Escape       );
-  d->actions->clearDisplay->setShortcut       ( Qt::CTRL + Qt::Key_Y );
+  d->actions->clearHistory->setShortcut       ( Qt::CTRL + Qt::Key_Y );
   d->actions->focusAndSelectInput->setShortcut( Qt::CTRL + Qt::Key_A );
   d->actions->viewBinary->setShortcut         ( Qt::Key_F5           );
   d->actions->viewOctal->setShortcut          ( Qt::Key_F6           );
@@ -1407,7 +1409,7 @@ void Crunch::createUI()
   connect( d->actions->editCopyResult,      SIGNAL(activated()    ), this,           SLOT(copyResult()           ) );
   connect( d->actions->focusAndSelectInput, SIGNAL(activated()    ), this,           SLOT(focusAndSelectInput()  ) );
   connect( d->actions->clearInput,          SIGNAL(activated()    ), this,           SLOT(clearInput()           ) );
-  connect( d->actions->clearDisplay,        SIGNAL(activated()    ), d->result,      SLOT(clear()                ) );
+  connect( d->actions->clearHistory,        SIGNAL(activated()    ), this,           SLOT(clearHistory()         ) );
   connect( d->actions->deleteAllVariables,  SIGNAL(activated()    ), this,           SLOT(deleteAllVariables()   ) );
   connect( d->actions->insertFunction,      SIGNAL(activated()    ), this,           SLOT(insertFunction()       ) );
   connect( d->actions->insertVariable,      SIGNAL(activated()    ), this,           SLOT(insertVariable()       ) );
@@ -1468,7 +1470,7 @@ void Crunch::createUI()
   d->editMenu->addAction( d->actions->deleteAllVariables );
   d->editMenu->addSeparator();
   d->editMenu->addAction( d->actions->clearInput );
-  d->editMenu->addAction( d->actions->clearDisplay );
+  d->editMenu->addAction( d->actions->clearHistory );
 
   d->baseMenu = new QMenu( tr("&Format"), this );
   menuBar()->addMenu( d->baseMenu );
