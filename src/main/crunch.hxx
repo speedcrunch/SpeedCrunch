@@ -112,7 +112,7 @@ class Crunch : public QMainWindow
 
     CrunchPrivate * d;
     Crunch( const Crunch & );
-    Crunch& operator=( const Crunch & );
+    Crunch & operator=( const Crunch & );
 };
 
 

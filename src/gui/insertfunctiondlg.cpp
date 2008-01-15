@@ -1,23 +1,23 @@
-/* This file is part of the SpeedCrunch project
-   Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-   Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
-   Copyright (C) 2006 Johan Thelin <e8johan@gmail.com>
+// This file is part of the SpeedCrunch project
+// Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
+// Copyright (C) 2006 Johan Thelin <e8johan@gmail.com>
+// Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; see the file COPYING.  If not, write to
+// the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+// Boston, MA 02110-1301, USA.
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public License
-   as published by the Free Software Foundation; either version 2
-   of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
- */
 
 #include <base/functions.hxx>
 #include <base/settings.hxx>
@@ -32,16 +32,20 @@
 #include <QTreeWidget>
 #include <QVBoxLayout>
 
+
 class InsertFunctionDlgPrivate
 {
-public:
-  QTreeWidget* list;
-  QPushButton* insertButton;
-  QPushButton* cancelButton;
+  public:
+    QPushButton * cancelButton;
+    QPushButton * insertButton;
+    QTreeWidget * list;
 };
 
-InsertFunctionDlg::InsertFunctionDlg( QWidget* parent ):
-QDialog( parent )
+
+// public
+
+InsertFunctionDlg::InsertFunctionDlg( QWidget * parent )
+  : QDialog( parent )
 {
   d = new InsertFunctionDlgPrivate;
 
@@ -70,8 +74,8 @@ QDialog( parent )
   d->cancelButton = new QPushButton( this );
   d->cancelButton->setText( tr("Cancel") );
 
-  QWidget* box = new QWidget( this );
-  QHBoxLayout* boxLayout = new QHBoxLayout;
+  QWidget * box = new QWidget( this );
+  QHBoxLayout * boxLayout = new QHBoxLayout;
   boxLayout->setMargin( 0 );
   box->setLayout( boxLayout );
 
@@ -82,33 +86,38 @@ QDialog( parent )
   layout->addWidget( d->list );
   layout->addWidget( box );
 
-  connect( d->insertButton, SIGNAL( clicked() ), this, SLOT( accept() ) );
-  connect( d->cancelButton, SIGNAL( clicked() ), this, SLOT( reject() ) );
-  connect( d->list, SIGNAL( itemActivated( QTreeWidgetItem*, int ) ), this, SLOT( accept() ) );
-  connect( d->list, SIGNAL( itemDoubleClicked( QTreeWidgetItem*, int ) ), this, SLOT( accept() ) );
+  connect( d->insertButton, SIGNAL(clicked()), this, SLOT(accept()) );
+  connect( d->cancelButton, SIGNAL(clicked()), this, SLOT(reject()) );
+  connect( d->list, SIGNAL(itemActivated( QTreeWidgetItem *, int )),     this, SLOT(accept()) );
+  connect( d->list, SIGNAL(itemDoubleClicked( QTreeWidgetItem *, int )), this, SLOT(accept()) );
 
-  QTimer::singleShot( 0, this, SLOT( initUI() ) );
+  QTimer::singleShot( 0, this, SLOT(initUI()) );
 }
+
+
+QString InsertFunctionDlg::functionName() const
+{
+  QTreeWidgetItem * item = d->list->currentItem();
+  return item ? item->text(0).toLower() : QString();
+}
+
 
 InsertFunctionDlg::~InsertFunctionDlg()
 {
   delete d;
 }
 
-QString InsertFunctionDlg::functionName() const
-{
-  QTreeWidgetItem* item = d->list->currentItem();
-  return item ? item->text(0).toLower() : QString();
-}
+
+// private slots
 
 void InsertFunctionDlg::initUI()
 {
   QStringList functionNames = FunctionRepository::self()->functionNames();
   int k = 0;
-  for( int i = 0; i < functionNames.count(); i++ )
+  for ( int i = 0; i < functionNames.count(); i++ )
   {
-    Function* f = FunctionRepository::self()->function( functionNames[i] );
-    if( f )
+    Function * f = FunctionRepository::self()->function( functionNames[i] );
+    if ( f )
     {
       QStringList str;
       str << f->name();

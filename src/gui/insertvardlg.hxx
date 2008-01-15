@@ -36,7 +36,7 @@ class InsertVariableDlg : public QDialog
 
   public:
     InsertVariableDlg( Evaluator * eval, QWidget * parent );
-    void updateList();
+    void    updateList();
     QString variableName() const;
     ~InsertVariableDlg();
 
@@ -46,7 +46,7 @@ class InsertVariableDlg : public QDialog
   private:
     InsertVariableDlgPrivate * d;
     InsertVariableDlg( const InsertVariableDlg & );
-    InsertVariableDlg& operator=( const InsertVariableDlg & );
+    InsertVariableDlg & operator=( const InsertVariableDlg & );
 };
 
 

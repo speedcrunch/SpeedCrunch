@@ -301,11 +301,11 @@ Crunch::Crunch() : QMainWindow()
   restoreDocks();
 
   d->configDlg = new ConfigDlg( this );
-  connect( d->configDlg, SIGNAL( settingsChanged()       ),                   SLOT(applySettings())         );
-  connect( d->configDlg, SIGNAL( settingsChanged()       ), d->keypad,        SLOT(settingsChanged())       );
-  connect( d->configDlg, SIGNAL( settingsChanged()       ), d->constantsDock, SLOT(settingsChanged())       );
-  connect( d->configDlg, SIGNAL( settingsChanged()       ), d->variablesDock, SLOT(settingsChanged())       );
-  connect( this,         SIGNAL( adaptToLanguageChange() ), d->configDlg,     SLOT(adaptToLanguageChange()) );
+  connect( d->configDlg, SIGNAL(settingsChanged()),                         SLOT(applySettings())         );
+  connect( d->configDlg, SIGNAL(settingsChanged()),       d->constantsDock, SLOT(settingsChanged())       );
+  connect( d->configDlg, SIGNAL(settingsChanged()),       d->keypad,        SLOT(settingsChanged())       );
+  connect( d->configDlg, SIGNAL(settingsChanged()),       d->variablesDock, SLOT(settingsChanged())       );
+  connect( this,         SIGNAL(adaptToLanguageChange()), d->configDlg,     SLOT(adaptToLanguageChange()) );
 
   setWidgetsLayoutAccordingToLanguageDirection();
 
@@ -399,9 +399,6 @@ void Crunch::applySettings()
     d->actions->radian->setChecked( false );
     d->actions->degree->setChecked( true );
   }
-
-  // FIXME should use the QT message handling "settingsChanged"
-  d->result->notifyDotChanged();
 
   //QString l = settings->language;
   //if ( l == "" )
@@ -681,16 +678,16 @@ void Crunch::insertFunction()
 
 void Crunch::insertVariable()
 {
-  if( !d->insertVariableDlg )
+  if ( ! d->insertVariableDlg )
     d->insertVariableDlg = new InsertVariableDlg( d->eval, this );
   else
     d->insertVariableDlg->updateList();
 
-  if( d->insertVariableDlg->exec() == InsertVariableDlg::Accepted )
+  if ( d->insertVariableDlg->exec() == InsertVariableDlg::Accepted )
   {
-    QString varname = d->insertVariableDlg->variableName();
-    if( !varname.isEmpty() )
-      d->editor->insert( varname );
+    QString varName = d->insertVariableDlg->variableName();
+    if ( ! varName.isEmpty() )
+      d->editor->insert( varName );
   }
 }
 
@@ -1166,13 +1163,14 @@ void Crunch::restoreLastSession()
 void Crunch::returnPressed()
 {
   QString str = Evaluator::autoFix( d->editor->text() );
-  if( str.isEmpty() ) return;
+  if ( str.isEmpty() )
+    return;
 
   d->eval->setExpression( str );
   d->historyDock->setHistory( d->editor->history() );
 
   HNumber result = d->eval->evalUpdateAns();
-  if( !d->eval->error().isEmpty() )
+  if ( ! d->eval->error().isEmpty() )
   {
     d->result->appendError( str, d->eval->error() );
     d->editor->appendHistory( str, d->eval->error() );
@@ -1193,7 +1191,7 @@ void Crunch::returnPressed()
 
   QTimer::singleShot( 0, d->editor, SLOT(setFocus()) );
 
-  if( !isActiveWindow () )
+  if ( ! isActiveWindow() )
     activateWindow();
 }
 

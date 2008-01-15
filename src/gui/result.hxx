@@ -1,84 +1,83 @@
-/* This file is part of the SpeedCrunch project
-   Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
-                 2008 Helder Correia <helder.pereira.correia@gmail.com>
+// This file is part of the SpeedCrunch project
+// Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
+// Copyright (C) 2008 Helder Correia <helder.pereira.correia@gmail.com>
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; see the file COPYING.  If not, write to
+// the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+// Boston, MA 02110-1301, USA.
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public License
-   as published by the Free Software Foundation; either version 2
-   of the License, or (at your option) any later version.
 
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+#ifndef RESULT_HXX
+#define RESULT_HXX
 
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
- */
-
-
-#ifndef RESULT
-#define RESULT
 
 #include <math/hmath.hxx>
 
 #include <QListWidget>
 #include <QResizeEvent>
 
-class QListWidgetItem;
 
 class ResultPrivate;
+
+class QListWidgetItem;
+
 
 class Result : public QListWidget
 {
   Q_OBJECT
 
   public:
-    Result( QWidget* parent = 0, const char* name = 0 );
+    Result( QWidget * parent = 0, const char * name = 0 );
+    QString asText() const;
+    void    append( const QString & expr, const HNumber & value );
+    void    appendError( const QString & expr, const QString & msg );
+    int     count() const;
+    bool    customAppearance() const;
+    QColor  customBackgroundColor1() const;
+    QColor  customBackgroundColor2() const;
+    QColor  customErrorColor() const;
+    QColor  customTextColor() const;
+    int     decimalDigits() const;
+    char    format() const;
+    QString formatNumber( const HNumber & value ) const;
+    void    setCustomAppearance( bool custom );
+    void    setCustomBackgroundColor( const QColor & bg1, const QColor & bg2 );
+    void    setCustomErrorColor( const QColor & e );
+    void    setCustomTextColor( const QColor & textColor );
+    void    setDecimalDigits( int digits );
+    void    setFormat( char format );
     ~Result();
 
-    void append( const QString& expr, const HNumber& value );
-    void appendError( const QString& expr, const QString& msg );
-    QString asText() const;
-    int count() const;
-
-    void setFormat( char format );
-    char format() const;
-    void setDecimalDigits( int digits );
-    int decimalDigits() const;
-    QString formatNumber( const HNumber& value ) const;
-    void notifyDotChanged();
-
-    void setCustomAppearance( bool custom );
-    bool customAppearance() const;
-    void setCustomTextColor( const QColor& textColor );
-    QColor customTextColor() const;
-    void setCustomBackgroundColor( const QColor& bg1, const QColor& bg2 );
-    QColor customBackgroundColor1() const;
-    QColor customBackgroundColor2() const;
-    void setCustomErrorColor( const QColor& e );
-    QColor customErrorColor() const;
-
   signals:
-    void textCopied( const QString& text );
+    void textCopied( const QString & text );
 
   public slots:
     void clear();
 
   protected:
-    virtual void resizeEvent( QResizeEvent* );
+    virtual void resizeEvent( QResizeEvent * );
 
   private slots:
-    void copyToClipboard( QListWidgetItem* );
-    void triggerUpdate();
+    void copyToClipboard( QListWidgetItem * );
     void scrollEnd();
+    void triggerUpdate();
 
   private:
-    ResultPrivate* d;
-    Result( const Result& );
-    Result& operator=( const Result& );
+    ResultPrivate * d;
+    Result( const Result & );
+    Result & operator=( const Result & );
 };
 
-#endif // RESULT
+
+#endif

@@ -118,7 +118,7 @@ void InsertVariableDlg::updateList()
 
   d->list->clear();
   QVector<Variable> variables = d->eval->variables();
-  for( int k = 0; k < variables.count(); k++ )
+  for ( int k = 0; k < variables.count(); k++ )
   {
       QStringList str;
       str << variables[k].name;
@@ -126,7 +126,7 @@ void InsertVariableDlg::updateList()
 
       QTreeWidgetItem* item = 0;
       item = new QTreeWidgetItem( d->list, str );
-      item->setTextAlignment( 0, Qt::AlignLeft | Qt::AlignVCenter );
+      item->setTextAlignment( 0, Qt::AlignLeft  | Qt::AlignVCenter );
       item->setTextAlignment( 1, Qt::AlignRight | Qt::AlignVCenter );
   }
   d->list->sortItems( 0, Qt::AscendingOrder );
