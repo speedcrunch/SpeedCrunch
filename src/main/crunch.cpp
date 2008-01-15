@@ -1146,9 +1146,11 @@ void Crunch::restoreDocks()
 void Crunch::restoreLastSession()
 {
   Settings * set = Settings::self();
-
   if ( set->historyResults.count() != set->history.count() )
-      return;
+  {
+    clearHistory();
+    return;
+  }
 
   for ( int i = 0 ; i < set->history.count(); i++ )
   {

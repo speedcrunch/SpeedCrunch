@@ -1,27 +1,26 @@
-/* This file is part of the SpeedCrunch project
-   Copyright (C) 2004-2006 Ariya Hidayat <ariya@kde.org>
-                 2007 Helder Correia <helder.pereira.correia@gmail.com>
-   last update 2007-11-29 Wolf Lammen
+// This file is part of the SpeedCrunch project
+// Copyright (C) 2004-2006 Ariya Hidayat <ariya@kde.org>
+// Copyright (C) 2007 Wolf Lammen
+// Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; see the file COPYING.  If not, write to
+// the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+// Boston, MA 02110-1301, USA.
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public License
-   as published by the Free Software Foundation; either version 2
-   of the License, or (at your option) any later version.
 
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
- */
-
-//#include <base/evaluator.hxx> //refan
-#include "base/settings.hxx"
 #include <base/functions.hxx>
+#include <base/settings.hxx>
 #include <math/hmath.hxx>
 
 #include <QApplication>
@@ -33,35 +32,40 @@
 #include <float.h>
 #include <math.h>
 
+
 HNumber checkRad2Deg( HNumber angle )
 {
-  return Settings::self()->angleMode == Settings::Degree?
-             HMath::rad2deg(angle) : angle;
+  return Settings::self()->angleMode == Settings::Degree ?
+    HMath::rad2deg(angle) : angle;
 }
 
-HNumber checkDeg2Rad( HNumber angle)
+
+HNumber checkDeg2Rad( HNumber angle )
 {
-  return Settings::self()->angleMode == Settings::Degree?
-             HMath::deg2rad(angle) : angle;
+  return Settings::self()->angleMode == Settings::Degree ?
+    HMath::deg2rad( angle ) : angle;
 }
 
-HNumber function_abs( const Evaluator*, Function*, const FunctionArguments& args )
+
+HNumber function_abs( const Evaluator *, Function *, const FunctionArguments & args )
 {
-  if( args.count() != 1 )
+  if ( args.count() != 1 )
     return HNumber::nan();
 
   HNumber num = args[0];
   return HMath::abs( num );
 }
 
-HNumber function_int( const Evaluator*, Function*, const FunctionArguments& args )
+
+HNumber function_int( const Evaluator *, Function *, const FunctionArguments & args )
 {
-  if( args.count() != 1 )
+  if ( args.count() != 1 )
     return HNumber::nan();
 
   HNumber num = args[0];
   return HMath::integer( num );
 }
+
 
 HNumber function_trunc( const Evaluator         * evaluator,
                         Function                * function,
@@ -88,7 +92,7 @@ HNumber function_trunc( const Evaluator         * evaluator,
       if( !argprec.isInteger() )
       {
         function->setError( function->name(), QApplication::translate( "functions",
-                            "function undefined for specified arguments" ) );
+                              "function undefined for specified arguments" ) );
         return HNumber::nan();
       }
       if ((prec = argprec.toInt()) != 0)
@@ -102,6 +106,7 @@ HNumber function_trunc( const Evaluator         * evaluator,
   return HMath::trunc( num );
 }
 
+
 HNumber function_frac( const Evaluator         * evaluator,
                        Function                * function,
                        const FunctionArguments & arguments )
@@ -113,6 +118,7 @@ HNumber function_frac( const Evaluator         * evaluator,
   return HMath::frac( x );
 }
 
+
 HNumber function_floor( const Evaluator*, Function*, const FunctionArguments& args )
 {
   if( args.count() != 1 )
@@ -121,6 +127,7 @@ HNumber function_floor( const Evaluator*, Function*, const FunctionArguments& ar
   HNumber num = args[0];
   return HMath::floor( num );
 }
+
 
 HNumber function_ceil( const Evaluator*, Function*, const FunctionArguments& args )
 {
@@ -131,6 +138,7 @@ HNumber function_ceil( const Evaluator*, Function*, const FunctionArguments& arg
   return HMath::ceil( num );
 }
 
+
 HNumber function_gcd( const Evaluator*, Function* fn, const FunctionArguments& args )
 {
   int nArgs = args.count();
@@ -138,7 +146,7 @@ HNumber function_gcd( const Evaluator*, Function* fn, const FunctionArguments& a
   if ( nArgs < 2 )
   {
     fn->setError( fn->name(), QApplication::translate( "functions",
-      "function requires at least 2 arguments" ) );
+                    "function requires at least 2 arguments" ) );
     return HNumber::nan();
   }
 
@@ -146,7 +154,7 @@ HNumber function_gcd( const Evaluator*, Function* fn, const FunctionArguments& a
     if ( !args[i].isInteger() )
     {
       fn->setError( fn->name(), QApplication::translate( "functions",
-        "function requires integer arguments" ) );
+                      "function requires integer arguments" ) );
       return HNumber::nan();
     }
 
@@ -158,6 +166,7 @@ HNumber function_gcd( const Evaluator*, Function* fn, const FunctionArguments& a
   return result;
 }
 
+
 HNumber function_round( const Evaluator*, Function* fn, const FunctionArguments& args )
 {
   int nArgs = args.count();
@@ -165,7 +174,7 @@ HNumber function_round( const Evaluator*, Function* fn, const FunctionArguments&
   if( nArgs != 1 && nArgs != 2 )
   {
     fn->setError( fn->name(), QApplication::translate( "functions",
-                        "function requires 1 or 2 arguments" ) );
+                    "function requires 1 or 2 arguments" ) );
     return HNumber::nan();
   }
 
@@ -181,7 +190,7 @@ HNumber function_round( const Evaluator*, Function* fn, const FunctionArguments&
       if( !argprec.isInteger() )
       {
         fn->setError( fn->name(), QApplication::translate( "functions",
-                      "function undefined for specified arguments" ) );
+                        "function undefined for specified arguments" ) );
         return HNumber::nan();
       }
       if ((prec = argprec.toInt()) != 0)
@@ -195,6 +204,7 @@ HNumber function_round( const Evaluator*, Function* fn, const FunctionArguments&
   return HMath::round( num );
 }
 
+
 HNumber function_sqrt( const Evaluator*, Function* fn, const FunctionArguments& args )
 {
   if( args.count() != 1 )
@@ -204,12 +214,13 @@ HNumber function_sqrt( const Evaluator*, Function* fn, const FunctionArguments& 
   if( num < HNumber(0) )
   {
     fn->setError( fn->name(), QApplication::translate( "functions",
-      "function undefined for specified argument" ) );
+                    "function undefined for specified argument" ) );
     return HNumber::nan();
   }
 
   return HMath::sqrt( num );
 }
+
 
 HNumber function_cbrt( const Evaluator*, Function*, const FunctionArguments& args )
 {
@@ -220,6 +231,7 @@ HNumber function_cbrt( const Evaluator*, Function*, const FunctionArguments& arg
   return HMath::cbrt( num );
 }
 
+
 HNumber function_exp( const Evaluator*, Function*, const FunctionArguments& args )
 {
   if( args.count() != 1 )
@@ -228,6 +240,7 @@ HNumber function_exp( const Evaluator*, Function*, const FunctionArguments& args
   HNumber num = args[0];
   return HMath::exp( num );
 }
+
 
 HNumber function_ln( const Evaluator*, Function* fn, const FunctionArguments& args )
 {
@@ -239,10 +252,11 @@ HNumber function_ln( const Evaluator*, Function* fn, const FunctionArguments& ar
 
   if( result.isNan() )
     fn->setError( fn->name(), QApplication::translate( "functions",
-      "function undefined for specified argument" ) );
+                    "function undefined for specified argument" ) );
 
   return result;
 }
+
 
 HNumber function_log( const Evaluator*, Function* fn, const FunctionArguments& args )
 {
@@ -254,10 +268,11 @@ HNumber function_log( const Evaluator*, Function* fn, const FunctionArguments& a
 
   if( result.isNan() )
     fn->setError( fn->name(), QApplication::translate( "functions",
-      "function undefined for specified argument" ) );
+                    "function undefined for specified argument" ) );
 
   return result;
 }
+
 
 HNumber function_lg( const Evaluator*, Function* fn, const FunctionArguments& args )
 {
@@ -269,125 +284,108 @@ HNumber function_lg( const Evaluator*, Function* fn, const FunctionArguments& ar
 
   if( result.isNan() )
     fn->setError( fn->name(), QApplication::translate( "functions",
-      "function undefined for specified argument" ) );
+                    "function undefined for specified argument" ) );
 
   return result;
 }
 
-HNumber function_sin( const Evaluator* eval, Function*, const FunctionArguments& args )
+
+HNumber function_sin( const Evaluator* eval, Function *, const FunctionArguments & args )
 {
-  if( args.count() != 1 )
+  if ( args.count() != 1 )
     return HNumber::nan();
 
   HNumber angle = args[0];
-//  if( eval->angleMode() == Evaluator::Degree ) refan
-//    angle = deg2rad( angle );
-//  return HMath::sin( angle );
 
-  return HMath::sin( checkDeg2Rad(angle) );
+  return HMath::sin( checkDeg2Rad( angle ) );
 }
 
-HNumber function_cos( const Evaluator* eval, Function*, const FunctionArguments& args )
+
+HNumber function_cos( const Evaluator * eval, Function *, const FunctionArguments & args )
 {
-  if( args.count() != 1 )
+  if ( args.count() != 1 )
     return HNumber::nan();
 
   HNumber angle = args[0];
-//  if( eval->angleMode() == Evaluator::Degree ) //refan
-//    angle = deg2rad( angle );
-//  return HMath::cos( angle );
 
-  return HMath::cos( checkDeg2Rad(angle) );
+  return HMath::cos( checkDeg2Rad( angle ) );
 }
 
-HNumber function_tan( const Evaluator* eval, Function* fn, const FunctionArguments& args )
+
+HNumber function_tan( const Evaluator * eval, Function * fn, const FunctionArguments & args )
 {
-  if( args.count() != 1 )
+  if ( args.count() != 1 )
     return HNumber::nan();
 
   HNumber angle = args[0];
-//  if( eval->angleMode() == Evaluator::Degree ) //refan
-//  if( Settings::angleMode() == Settings::Degree )
-//    angle = deg2rad( angle );
-//  HNumber result = HMath::tan( angle ); //refan
 
   HNumber result = HMath::tan( checkDeg2Rad(angle) );
   if ( result.isNan() )
   {
     fn->setError( fn->name(), QApplication::translate( "functions",
-      "function undefined for specified argument" ) );
+                    "function undefined for specified argument" ) );
     return HNumber::nan();
   }
 
   return result;
 }
 
-HNumber function_cot( const Evaluator* eval, Function* fn, const FunctionArguments& args )
+
+HNumber function_cot( const Evaluator * eval, Function * fn, const FunctionArguments & args )
 {
-  if( args.count() != 1 )
+  if ( args.count() != 1 )
     return HNumber::nan();
 
   HNumber angle = args[0];
-/*  if( eval->angleMode() == Evaluator::Degree ) //refan
-    angle = deg2rad( angle );
-
-  HNumber result = HMath::cot( angle );*/
-  HNumber result = HMath::cot( checkDeg2Rad(angle) );
+  HNumber result = HMath::cot( checkDeg2Rad( angle ) );
   if ( result.isNan() )
   {
     fn->setError( fn->name(), QApplication::translate( "functions",
-      "function undefined for specified argument" ) );
+                    "function undefined for specified argument" ) );
     return HNumber::nan();
   }
 
   return result;
 }
 
-HNumber function_sec( const Evaluator* eval, Function* fn, const FunctionArguments& args )
+
+HNumber function_sec( const Evaluator * eval, Function * fn, const FunctionArguments & args )
 {
-  if( args.count() != 1 )
+  if ( args.count() != 1 )
     return HNumber::nan();
 
   HNumber angle = args[0];
-/*  if( eval->angleMode() == Evaluator::Degree ) //refan
-    angle = deg2rad( angle );
-
-  HNumber result = HMath::sec( angle );*/
   HNumber result = HMath::sec( checkDeg2Rad(angle) );
   if ( result.isNan() )
   {
     fn->setError( fn->name(), QApplication::translate( "functions",
-      "function undefined for specified argument" ) );
+                    "function undefined for specified argument" ) );
     return HNumber::nan();
   }
 
   return result;
 }
 
-HNumber function_csc( const Evaluator* eval, Function* fn, const FunctionArguments& args )
+
+HNumber function_csc( const Evaluator * eval, Function * fn, const FunctionArguments & args )
 {
-  if( args.count() != 1 )
+  if ( args.count() != 1 )
     return HNumber::nan();
 
   HNumber angle = args[0];
-/*  if( eval->angleMode() == Evaluator::Degree ) //refan
-    angle = deg2rad( angle );
-
-  HNumber result = HMath::csc( angle );*/
   HNumber result = HMath::csc( checkDeg2Rad(angle) );
   if ( result.isNan() )
   {
     fn->setError( fn->name(), QApplication::translate( "functions",
-      "function undefined for specified argument" ) );
+                    "function undefined for specified argument" ) );
     return HNumber::nan();
   }
 
   return result;
 }
 
-HNumber function_asin( const Evaluator         * evaluator,
-                             Function          * function,
-                       const FunctionArguments & arguments )
+
+HNumber function_asin( const Evaluator * evaluator, Function * function, const FunctionArguments & arguments )
 {
   if ( arguments.count() != 1 )
     return HNumber::nan();
@@ -399,20 +397,15 @@ HNumber function_asin( const Evaluator         * evaluator,
   if ( result.isNan() )
   {
     function->setError( function->name(), QApplication::translate( "functions",
-                        "function undefined for specified argument" ) );
+                          "function undefined for specified argument" ) );
     return HNumber::nan();
   }
 
-/*  if ( evaluator->angleMode() == Evaluator::Degree ) //refan
-    result = rad2deg( result );
-
-  return result;*/
   return checkRad2Deg(result);
 }
 
-HNumber function_acos( const Evaluator         * evaluator,
-                             Function          * function,
-                       const FunctionArguments & arguments )
+
+HNumber function_acos( const Evaluator * evaluator, Function * function, const FunctionArguments & arguments )
 {
   if ( arguments.count() != 1 )
     return HNumber::nan();
@@ -428,57 +421,52 @@ HNumber function_acos( const Evaluator         * evaluator,
     return HNumber::nan();
   }
 
-/*  if ( evaluator->angleMode() == Evaluator::Degree ) //refan
-    result = rad2deg( result );
-
-  return result;*/
-  return checkRad2Deg(result);
+  return checkRad2Deg( result );
 }
 
-HNumber function_atan( const Evaluator* eval, Function*, const FunctionArguments& args )
+
+HNumber function_atan( const Evaluator * eval, Function *, const FunctionArguments & args )
 {
-  if( args.count() != 1 )
+  if ( args.count() != 1 )
     return HNumber::nan();
 
   HNumber num = args[0];
   HNumber angle = HMath::atan( num );
-/*  if( eval->angleMode() == Evaluator::Degree ) //refan
-    angle = rad2deg( angle );
-
-  return angle;*/
   return checkRad2Deg(angle);
 }
 
-HNumber function_sinh( const Evaluator* eval, Function*, const FunctionArguments& args )
+
+HNumber function_sinh( const Evaluator * eval, Function *, const FunctionArguments & args )
 {
-  if( args.count() != 1 )
+  if ( args.count() != 1 )
     return HNumber::nan();
 
   HNumber x = args[0];
   return HMath::sinh( x );
 }
 
-HNumber function_cosh( const Evaluator* eval, Function*, const FunctionArguments& args )
+
+HNumber function_cosh( const Evaluator * eval, Function *, const FunctionArguments & args )
 {
-  if( args.count() != 1 )
+  if ( args.count() != 1 )
     return HNumber::nan();
 
   HNumber x = args[0];
   return HMath::cosh( x );
 }
 
-HNumber function_tanh( const Evaluator* eval, Function*, const FunctionArguments& args )
+
+HNumber function_tanh( const Evaluator * eval, Function *, const FunctionArguments & args )
 {
-  if( args.count() != 1 )
+  if ( args.count() != 1 )
     return HNumber::nan();
 
   HNumber x = args[0];
   return HMath::tanh( x );
 }
 
-HNumber function_arsinh( const Evaluator         * evaluator,
-                               Function          * function,
-                         const FunctionArguments & arguments )
+
+HNumber function_arsinh( const Evaluator * evaluator, Function * function, const FunctionArguments & arguments )
 {
   if ( arguments.count() != 1 )
     return HNumber::nan();
@@ -486,140 +474,128 @@ HNumber function_arsinh( const Evaluator         * evaluator,
   return HMath::arsinh( arguments[0] );
 }
 
-HNumber function_arcosh( const Evaluator         * evaluator,
-                               Function          * function,
-                         const FunctionArguments & arguments )
+
+HNumber function_arcosh( const Evaluator * evaluator, Function * function, const FunctionArguments & arguments )
 {
   if ( arguments.count() != 1 )
     return HNumber::nan();
 
   HNumber x = arguments[0];
-
   HNumber result = HMath::arcosh( x );
 
   if ( result.isNan() )
   {
     function->setError( function->name(), QApplication::translate( "functions",
-                        "function undefined for specified argument" ) );
+                          "function undefined for specified argument" ) );
     return HNumber::nan();
   }
 
   return result;
 }
 
-HNumber function_artanh( const Evaluator         * evaluator,
-                               Function          * function,
-                         const FunctionArguments & arguments )
+
+HNumber function_artanh( const Evaluator * evaluator, Function * function, const FunctionArguments & arguments )
 {
   if ( arguments.count() != 1 )
     return HNumber::nan();
 
   HNumber x = arguments[0];
-
   HNumber result = HMath::artanh( x );
 
   if ( result.isNan() )
   {
     function->setError( function->name(), QApplication::translate( "functions",
-                        "function undefined for specified argument" ) );
+                          "function undefined for specified argument" ) );
     return HNumber::nan();
   }
 
   return result;
 }
 
-HNumber function_erf( const Evaluator         * evaluator,
-                      Function                * function,
-                      const FunctionArguments & arguments )
+
+HNumber function_erf( const Evaluator * evaluator, Function * function, const FunctionArguments & arguments )
 {
   if ( arguments.count() != 1 )
     return HNumber::nan();
 
   HNumber x = arguments[0];
-
   return HMath::erf( x );
 }
 
-HNumber function_erfc( const Evaluator         * evaluator,
-                       Function                * function,
-                       const FunctionArguments & arguments )
+
+HNumber function_erfc( const Evaluator * evaluator, Function * function, const FunctionArguments & arguments )
 {
   if ( arguments.count() != 1 )
     return HNumber::nan();
 
   HNumber x = arguments[0];
-
   HNumber result = HMath::erfc( x );
 
   if ( result.isNan() && !x.isNan() )
   {
     function->setError( function->name(), QApplication::translate( "functions",
-                        "underflow" ) );
+                          "underflow" ) );
   }
+
   return result;
 }
 
-HNumber function_Gamma( const Evaluator         * evaluator,
-                        Function                * function,
-                        const FunctionArguments & arguments )
+
+HNumber function_Gamma( const Evaluator * evaluator, Function * function, const FunctionArguments & arguments )
 {
   if ( arguments.count() != 1 )
     return HNumber::nan();
 
   HNumber x = arguments[0];
-
   HNumber result = HMath::Gamma( x );
 
   if ( result.isNan() )
   {
     function->setError( function->name(), QApplication::translate( "functions",
-                        "function undefined for specified argument" ) );
+                          "function undefined for specified argument" ) );
     return HNumber::nan();
   }
+
   return result;
 }
 
-HNumber function_lnGamma( const Evaluator         * evaluator,
-                          Function                * function,
-                          const FunctionArguments & arguments )
+
+HNumber function_lnGamma( const Evaluator * evaluator, Function * function, const FunctionArguments & arguments )
 {
   if ( arguments.count() != 1 )
     return HNumber::nan();
 
   HNumber x = arguments[0];
-
   HNumber result = HMath::lnGamma( x );
 
   if ( result.isNan() )
   {
     function->setError( function->name(), QApplication::translate( "functions",
-                        "function undefined for specified argument" ) );
+                          "function undefined for specified argument" ) );
     return HNumber::nan();
   }
+
   return result;
 }
 
-HNumber function_sign( const Evaluator*, Function*, const FunctionArguments& args )
+
+HNumber function_sign( const Evaluator *, Function *, const FunctionArguments & args )
 {
-  if( args.count() != 1 )
+  if ( args.count() != 1 )
     return HNumber::nan();
+
   return HMath::sign( args[0] );
 }
 
-HNumber function_nCr( const Evaluator         * evaluator,
-                            Function          * function,
-                      const FunctionArguments & arguments )
+
+HNumber function_nCr( const Evaluator * evaluator, Function * function, const FunctionArguments & arguments )
 {
-  // check number of arguments
   if ( arguments.count() != 2 )
     return HNumber::nan();
 
-  // compute result
-  // n = arguments[0]
-  // r = arguments[1]
+  // n = arguments[0]; r = arguments[1]
   HNumber result = HMath::nCr( arguments[0], arguments[1] );
 
-  // check invalid usage and set error accordingly
   // FIX ME: overflow causes a NaN, too, so the message is sometimes
   // misleading
   if ( result.isNan() )
@@ -629,20 +605,15 @@ HNumber function_nCr( const Evaluator         * evaluator,
   return result;
 }
 
-HNumber function_nPr( const Evaluator         * evaluator,
-                            Function          * function,
-                      const FunctionArguments & arguments )
+
+HNumber function_nPr( const Evaluator * evaluator, Function * function, const FunctionArguments & arguments )
 {
-  // check number of arguments
   if ( arguments.count() != 2 )
     return HNumber::nan();
 
-  // compute result
-  // n = arguments[0]
-  // r = arguments[1]
+  // n = arguments[0]; r = arguments[1]
   HNumber result = HMath::nPr( arguments[0], arguments[1] );
 
-  // check invalid usage and set error accordingly
   // FIX ME: overflow causes a NaN, too, so the message is sometimes
   // misleading
   if ( result.isNan() )
@@ -652,7 +623,8 @@ HNumber function_nPr( const Evaluator         * evaluator,
   return result;
 }
 
-HNumber function_degrees( const Evaluator*, Function*, const FunctionArguments& args )
+
+HNumber function_degrees( const Evaluator *, Function *, const FunctionArguments & args )
 {
   if ( args.count() != 1 )
     return HNumber::nan();
@@ -661,7 +633,8 @@ HNumber function_degrees( const Evaluator*, Function*, const FunctionArguments& 
   return HMath::rad2deg(angle);
 }
 
-HNumber function_radians( const Evaluator*, Function*, const FunctionArguments& args )
+
+HNumber function_radians( const Evaluator *, Function *, const FunctionArguments & args )
 {
   if ( args.count() != 1 )
     return HNumber::nan();
@@ -670,9 +643,8 @@ HNumber function_radians( const Evaluator*, Function*, const FunctionArguments& 
   return HMath::deg2rad(angle);
 }
 
-HNumber function_max( const Evaluator         * evaluator,
-                      Function                * function,
-                      const FunctionArguments & arguments )
+
+HNumber function_max( const Evaluator * evaluator, Function * function, const FunctionArguments & arguments )
 {
   if ( arguments.count() < 1 )
   {
@@ -683,16 +655,15 @@ HNumber function_max( const Evaluator         * evaluator,
 
   int totalParams = arguments.count();
   HNumber result = arguments[0];
-  if(totalParams > 1)
+  if ( totalParams > 1 )
     for ( int i = 1; i < totalParams; i++ )
       result = HMath::max( result, arguments[i] );
 
   return result;
 }
 
-HNumber function_min( const Evaluator         * evaluator,
-                      Function                * function,
-                      const FunctionArguments & arguments )
+
+HNumber function_min( const Evaluator * evaluator, Function * function, const FunctionArguments & arguments )
 {
   if ( arguments.count() < 1 )
   {
@@ -703,114 +674,124 @@ HNumber function_min( const Evaluator         * evaluator,
 
   int totalParams = arguments.count();
   HNumber result = arguments[0];
-  if(totalParams > 1)
+  if ( totalParams > 1 )
     for ( int i = 1; i < totalParams; i++ )
       result = HMath::min( result, arguments[i] );
 
   return result;
 }
 
-HNumber function_sum( const Evaluator*, Function*, const FunctionArguments& args )
+
+HNumber function_sum( const Evaluator *, Function *, const FunctionArguments & args )
 {
-  if( args.count() <= 0 )
+  if ( args.count() <= 0 )
     return HNumber(0);
 
   HNumber result = args[0];
-  for( int c = 1; c < args.count(); c++ )
+  for ( int c = 1; c < args.count(); c++ )
     result = result + args[c];
 
   return result;
 }
 
-HNumber function_product( const Evaluator*, Function*, const FunctionArguments& args )
+
+HNumber function_product( const Evaluator *, Function *, const FunctionArguments & args )
 {
-  if( args.count() <= 0 )
+  if ( args.count() <= 0 )
     return HNumber(0);
 
   HNumber result = args[0];
-  for( int c = 1; c < args.count(); c++ )
+  for ( int c = 1; c < args.count(); c++ )
     result = result * args[c];
 
   return result;
 }
 
-HNumber function_average( const Evaluator*, Function*, const FunctionArguments& args )
+
+HNumber function_average( const Evaluator *, Function *, const FunctionArguments & args )
 {
-  if( args.count() <= 0 )
+  if ( args.count() <= 0 )
     return HNumber("NaN");
 
   HNumber result = args[0];
-  for( int c = 1; c < args.count(); c++ )
+  for ( int c = 1; c < args.count(); c++ )
     result = result + args[c];
-
   result = result / HNumber(args.count());
 
   return result;
 }
 
-HNumber function_geomean( const Evaluator*, Function*, const FunctionArguments& args )
+
+HNumber function_geomean( const Evaluator *, Function *, const FunctionArguments & args )
 {
-  if( args.count() <= 0 )
+  if ( args.count() <= 0 )
     return HNumber("NaN");
 
   HNumber result = args[0];
 
-  for( int c = 1; c < args.count(); c++ )
+  for ( int c = 1; c < args.count(); c++ )
     result = result * args[c];
 
-  if( result <= HNumber(0))
+  if ( result <= HNumber(0))
     return HNumber("NaN");
 
-  if (args.count() == 1)
+  if ( args.count() == 1 )
     return result;
 
-  if (args.count() == 2)
-    return HMath::sqrt(result);
+  if ( args.count() == 2 )
+    return HMath::sqrt( result );
 
-  result = HMath::exp(HMath::ln(result) / HNumber(args.count()));
+  result = HMath::exp( HMath::ln(result) / HNumber(args.count()) );
 
   return result;
 }
 
-HNumber function_dec( const Evaluator*, Function*, const FunctionArguments& args )
+
+HNumber function_dec( const Evaluator *, Function *, const FunctionArguments & args )
+{
+  if ( args.count() < 1 )
+    return HNumber("NaN");
+
+  HNumber result = args[0];
+  result.setFormat( 'g' );
+  return result;
+}
+
+
+HNumber function_hex( const Evaluator *, Function *, const FunctionArguments & args )
+{
+  if ( args.count() < 1 )
+    return HNumber("NaN");
+
+  HNumber result = args[0];
+  result.setFormat( 'h' );
+  return result;
+}
+
+
+HNumber function_oct( const Evaluator *, Function *, const FunctionArguments & args )
 {
   if( args.count() < 1 )
     return HNumber("NaN");
+
   HNumber result = args[0];
-  result.setFormat('g');
+  result.setFormat( 'o' );
   return result;
 }
 
-HNumber function_hex( const Evaluator*, Function*, const FunctionArguments& args )
+
+HNumber function_bin( const Evaluator *, Function *, const FunctionArguments & args )
 {
-  if( args.count() < 1 )
+  if ( args.count() < 1 )
     return HNumber("NaN");
+
   HNumber result = args[0];
-  result.setFormat('h');
+  result.setFormat( 'b' );
   return result;
 }
 
-HNumber function_oct( const Evaluator*, Function*, const FunctionArguments& args )
-{
-  if( args.count() < 1 )
-    return HNumber("NaN");
-  HNumber result = args[0];
-  result.setFormat('o');
-  return result;
-}
 
-HNumber function_bin( const Evaluator*, Function*, const FunctionArguments& args )
-{
-  if( args.count() < 1 )
-    return HNumber("NaN");
-  HNumber result = args[0];
-  result.setFormat('b');
-  return result;
-}
-
-HNumber function_binompmf( const Evaluator         * evaluator,
-                           Function                * function,
-                           const FunctionArguments & arguments )
+HNumber function_binompmf( const Evaluator * evaluator, Function * function, const FunctionArguments & arguments )
 {
   if ( arguments.count() != 3 )
     return HNumber::nan();
@@ -827,9 +808,8 @@ HNumber function_binompmf( const Evaluator         * evaluator,
   return result;
 }
 
-HNumber function_binomcdf( const Evaluator         * evaluator,
-                                 Function          * function,
-                           const FunctionArguments & arguments )
+
+HNumber function_binomcdf( const Evaluator * evaluator, Function * function, const FunctionArguments & arguments )
 {
   if ( arguments.count() != 3 )
     return HNumber::nan();
@@ -846,9 +826,8 @@ HNumber function_binomcdf( const Evaluator         * evaluator,
   return result;
 }
 
-HNumber function_binommean( const Evaluator         * evaluator,
-                            Function                * function,
-                            const FunctionArguments & arguments )
+
+HNumber function_binommean( const Evaluator * evaluator, Function * function, const FunctionArguments & arguments )
 {
   if ( arguments.count() != 2 )
     return HNumber::nan();
@@ -864,9 +843,8 @@ HNumber function_binommean( const Evaluator         * evaluator,
   return result;
 }
 
-HNumber function_binomvar( const Evaluator         * evaluator,
-                           Function                * function,
-                           const FunctionArguments & arguments )
+
+HNumber function_binomvar( const Evaluator * evaluator, Function * function, const FunctionArguments & arguments )
 {
   if ( arguments.count() != 2 )
     return HNumber::nan();
@@ -882,9 +860,8 @@ HNumber function_binomvar( const Evaluator         * evaluator,
   return result;
 }
 
-HNumber function_hyperpmf( const Evaluator         * evaluator,
-                           Function                * function,
-                           const FunctionArguments & arguments )
+
+HNumber function_hyperpmf( const Evaluator * evaluator, Function * function, const FunctionArguments & arguments )
 {
   if ( arguments.count() != 4 )
     return HNumber::nan();
@@ -902,9 +879,8 @@ HNumber function_hyperpmf( const Evaluator         * evaluator,
   return result;
 }
 
-HNumber function_hypercdf( const Evaluator         * evaluator,
-                           Function                * function,
-                           const FunctionArguments & arguments )
+
+HNumber function_hypercdf( const Evaluator * evaluator, Function * function, const FunctionArguments & arguments )
 {
   if ( arguments.count() != 4 )
     return HNumber::nan();
@@ -922,9 +898,8 @@ HNumber function_hypercdf( const Evaluator         * evaluator,
   return result;
 }
 
-HNumber function_hypermean( const Evaluator         * evaluator,
-                            Function                * function,
-                            const FunctionArguments & arguments )
+
+HNumber function_hypermean( const Evaluator * evaluator, Function * function, const FunctionArguments & arguments )
 {
   if ( arguments.count() != 3 )
     return HNumber::nan();
@@ -941,9 +916,8 @@ HNumber function_hypermean( const Evaluator         * evaluator,
   return result;
 }
 
-HNumber function_hypervar( const Evaluator         * evaluator,
-                           Function                * function,
-                           const FunctionArguments & arguments )
+
+HNumber function_hypervar( const Evaluator * evaluator, Function * function, const FunctionArguments & arguments )
 {
   if ( arguments.count() != 3 )
     return HNumber::nan();
@@ -960,9 +934,8 @@ HNumber function_hypervar( const Evaluator         * evaluator,
   return result;
 }
 
-HNumber function_poipmf( const Evaluator         * evaluator,
-                         Function                * function,
-                         const FunctionArguments & arguments )
+
+HNumber function_poipmf( const Evaluator * evaluator, Function * function, const FunctionArguments & arguments )
 {
   if ( arguments.count() != 2 )
     return HNumber::nan();
@@ -978,9 +951,8 @@ HNumber function_poipmf( const Evaluator         * evaluator,
   return result;
 }
 
-HNumber function_poicdf( const Evaluator         * evaluator,
-                         Function                * function,
-                         const FunctionArguments & arguments )
+
+HNumber function_poicdf( const Evaluator * evaluator, Function * function, const FunctionArguments & arguments )
 {
   if ( arguments.count() != 2 )
     return HNumber::nan();
@@ -996,9 +968,8 @@ HNumber function_poicdf( const Evaluator         * evaluator,
   return result;
 }
 
-HNumber function_poimean( const Evaluator         * evaluator,
-                          Function                * function,
-                          const FunctionArguments & arguments )
+
+HNumber function_poimean( const Evaluator * evaluator, Function * function, const FunctionArguments & arguments )
 {
   if ( arguments.count() != 1 )
     return HNumber::nan();
@@ -1013,9 +984,8 @@ HNumber function_poimean( const Evaluator         * evaluator,
   return result;
 }
 
-HNumber function_poivar( const Evaluator         * evaluator,
-                         Function                * function,
-                         const FunctionArguments & arguments )
+
+HNumber function_poivar( const Evaluator * evaluator, Function * function, const FunctionArguments & arguments )
 {
   if ( arguments.count() != 1 )
     return HNumber::nan();
@@ -1030,90 +1000,79 @@ HNumber function_poivar( const Evaluator         * evaluator,
   return result;
 }
 
-HNumber function_mask( const Evaluator         * evaluator,
-                       Function                * function,
-                       const FunctionArguments & arguments )
+
+HNumber function_mask( const Evaluator * evaluator, Function * function, const FunctionArguments & arguments )
 {
   HNumber val = arguments[0];
   HNumber bits = arguments[1];
-  return HMath::mask(val, bits);
+  return HMath::mask( val, bits );
 }
 
-HNumber function_unmask( const Evaluator         * evaluator,
-                         Function                * function,
-                         const FunctionArguments & arguments )
+
+HNumber function_unmask( const Evaluator * evaluator, Function * function, const FunctionArguments & arguments )
 {
   HNumber val = arguments[0];
   HNumber bits = arguments[1];
-  return HMath::sgnext(val, bits);
+  return HMath::sgnext( val, bits );
 }
 
-HNumber function_not( const Evaluator         * evaluator,
-                      Function                * function,
-                      const FunctionArguments & arguments )
+
+HNumber function_not( const Evaluator * evaluator, Function * function, const FunctionArguments & arguments )
 {
   HNumber val = arguments[0];
   return ~val;
 }
 
-HNumber function_and( const Evaluator         * evaluator,
-                      Function                * function,
-                      const FunctionArguments & args )
+
+HNumber function_and( const Evaluator * evaluator, Function * function, const FunctionArguments & args )
 {
-  if( args.count() <= 0 )
+  if ( args.count() <= 0 )
     return HNumber("NaN");
 
   HNumber result = args[0];
-
   for( int c = 1; c < args.count(); c++ )
     result = result & args[c];
 
   return result;
 }
 
-HNumber function_or( const Evaluator         * evaluator,
-                     Function                * function,
-                     const FunctionArguments & args )
+
+HNumber function_or( const Evaluator * evaluator, Function * function, const FunctionArguments & args )
 {
-  if( args.count() <= 0 )
+  if ( args.count() <= 0 )
     return HNumber("NaN");
 
   HNumber result = args[0];
-
-  for( int c = 1; c < args.count(); c++ )
+  for ( int c = 1; c < args.count(); c++ )
     result = result | args[c];
 
   return result;
 }
 
-HNumber function_xor( const Evaluator         * evaluator,
-                      Function                * function,
-                      const FunctionArguments & args )
+
+HNumber function_xor( const Evaluator * evaluator, Function * function, const FunctionArguments & args )
 {
-  if( args.count() <= 0 )
+  if ( args.count() <= 0 )
     return HNumber("NaN");
 
   HNumber result = args[0];
-
-  for( int c = 1; c < args.count(); c++ )
+  for ( int c = 1; c < args.count(); c++ )
     result = result ^ args[c];
 
   return result;
 }
 
-HNumber function_ashl( const Evaluator         * evaluator,
-                       Function                * function,
-                       const FunctionArguments & args )
+
+HNumber function_ashl( const Evaluator * evaluator, Function * function, const FunctionArguments & args )
 {
   HNumber bits = args[1];
   HNumber val = args[0];
 
-  return HMath::ashr(val, -bits);
+  return HMath::ashr( val, -bits );
 }
 
-HNumber function_ashr( const Evaluator         * evaluator,
-                       Function                * function,
-                       const FunctionArguments & args )
+
+HNumber function_ashr( const Evaluator * evaluator, Function * function, const FunctionArguments & args )
 {
   HNumber bits = args[1];
   HNumber val = args[0];
@@ -1121,9 +1080,8 @@ HNumber function_ashr( const Evaluator         * evaluator,
   return HMath::ashr(val, bits);
 }
 
-HNumber function_idiv( const Evaluator         * evaluator,
-                       Function                * function,
-                       const FunctionArguments & args )
+
+HNumber function_idiv( const Evaluator * evaluator, Function * function, const FunctionArguments & args )
 {
   HNumber dividend = args[0];
   HNumber divisor = args[1];
@@ -1131,9 +1089,8 @@ HNumber function_idiv( const Evaluator         * evaluator,
   return HNumber::idiv(dividend, divisor);
 }
 
-HNumber function_mod( const Evaluator         * evaluator,
-                      Function                * function,
-                      const FunctionArguments & args )
+
+HNumber function_mod( const Evaluator * evaluator, Function * function, const FunctionArguments & args )
 {
   HNumber dividend = args[0];
   HNumber divisor = args[1];
@@ -1141,26 +1098,31 @@ HNumber function_mod( const Evaluator         * evaluator,
   return dividend % divisor;
 }
 
+
 class FunctionPrivate
 {
-public:
-  QString name;
-  int argc;
-  QString desc;
-  QString error;
-  FunctionPtr ptr;
+  public:
+    int         argc;
+    QString     desc;
+    QString     error;
+    QString     name;
+    FunctionPtr ptr;
 
-  FunctionPrivate(): name(), argc(0), desc(), error(), ptr(0) {}
+    FunctionPrivate() : argc( 0 ), desc(), error(), name(), ptr( 0 ) {}
 };
+
 
 class FunctionRepositoryPrivate
 {
-public:
-  QHash<QString, Function*> functions;
+  public:
+    QHash<QString, Function*> functions;
 };
 
-Function::Function( const QString& name, int argc, FunctionPtr ptr, const QString& desc ):
-d( new FunctionPrivate )
+
+// public (Function)
+
+Function::Function( const QString & name, int argc, FunctionPtr ptr, const QString & desc )
+  : d( new FunctionPrivate )
 {
   d->name = name;
   d->argc = argc;
@@ -1168,8 +1130,9 @@ d( new FunctionPrivate )
   d->ptr = ptr;
 }
 
-Function::Function( const QString& name, FunctionPtr ptr, const QString& desc ):
-d( new FunctionPrivate )
+
+Function::Function( const QString& name, FunctionPtr ptr, const QString& desc )
+  : d( new FunctionPrivate )
 {
   d->name = name;
   d->argc = -1;
@@ -1177,262 +1140,201 @@ d( new FunctionPrivate )
   d->ptr = ptr;
 }
 
-Function::~Function()
-{
-  delete d;
-}
-
-QString Function::name() const
-{
-  return d->name;
-}
 
 QString Function::description() const
 {
   return d->desc;
 }
 
+
 QString Function::error() const
 {
   return d->error;
 }
 
-void Function::setError( const QString& context, const QString& error )
+
+QString Function::name() const
 {
-  d->error = context + ": " + error;
+  return d->name;
 }
 
-HNumber Function::exec( const Evaluator* eval, const FunctionArguments& args )
+
+HNumber Function::exec( const Evaluator * eval, const FunctionArguments & args )
 {
   d->error = QString();
-  if( !d->ptr )
+  if ( ! d->ptr )
   {
     setError( QString("error"), QString( QApplication::translate( "functions",
-      "cannot execute function %1") ).arg( name() ) );
+                "cannot execute function %1") ).arg( name() ) );
     return HNumber(0);
   }
 
-  if( d->argc >= 0 )
-  if( args.count() != d->argc )
+  if ( d->argc >= 0 )
+  if ( args.count() != d->argc )
   {
     if ( d->argc == 1 )
       setError( d->name, QString( QApplication::translate( "functions",
-        "function accepts 1 argument" ) ) );
+                  "function accepts 1 argument" ) ) );
     else
       setError( d->name, QString( QApplication::translate( "functions",
-        "function accepts %1 arguments" ) ).arg( d->argc ) );
+                  "function accepts %1 arguments" ) ).arg( d->argc ) );
+
     return HNumber(0);
   }
 
   return (*d->ptr)( eval, this, args );
 }
 
-FunctionRepository* FunctionRepository::s_self = 0;
 
-FunctionRepository* FunctionRepository::self()
+void Function::setError( const QString & context, const QString & error )
 {
-  if( !s_self )
-    s_self = new FunctionRepository();
-  return s_self;
+  d->error = context + ": " + error;
 }
+
+
+Function::~Function()
+{
+  delete d;
+}
+
+
+FunctionRepository * FunctionRepository::s_self = 0;
+
+
+// public (FunctionRepository)
 
 FunctionRepository::FunctionRepository()
 {
   d = new FunctionRepositoryPrivate;
 
-  /*
-                                     ANALYSIS
-                                                                              */
-  add( new Function( "abs",     1, function_abs,
-                     QT_TR_NOOP("Absolute Value")             ) );
-  add( new Function( "average",    function_average,
-                     QT_TR_NOOP("Average (Arithmetic Mean)")  ) );
-  add( new Function( "bin",        function_bin,
-                     QT_TR_NOOP("Binary Representation")      ) );
-  add( new Function( "ceil",    1, function_ceil,
-                     QT_TR_NOOP("Ceiling")                    ) );
-  add( new Function( "cbrt",    1, function_cbrt,
-                     QT_TR_NOOP("Cube Root")                  ) );
-  add( new Function( "dec",        function_dec,
-                     QT_TR_NOOP("Decimal Representation")     ) );
-  add( new Function( "floor",   1, function_floor,
-                     QT_TR_NOOP("Floor")                      ) );
-  add( new Function( "frac",    1, function_frac,
-                     QT_TR_NOOP("Fractional Part")            ) );
-  add( new Function( "geomean",    function_geomean,
-                     QT_TR_NOOP("Geometric Mean")             ) );
-  add( new Function( "hex",        function_hex,
-                     QT_TR_NOOP("Hexadecimal Representation") ) );
-  add( new Function( "int",     1, function_int,
-                     QT_TR_NOOP("Integer Part")               ) );
-  add( new Function( "max",        function_max,
-                     QT_TR_NOOP("Maximum")                    ) );
-  add( new Function( "min",        function_min,
-                     QT_TR_NOOP("Minimum")                    ) );
-  add( new Function( "oct",        function_oct,
-                     QT_TR_NOOP("Octal Representation")       ) );
-  add( new Function( "product",    function_product,
-                     QT_TR_NOOP("Product")                    ) );
-  add( new Function( "round",      function_round,
-                     QT_TR_NOOP("Rounding")                   ) );
-  add( new Function( "sign",    1, function_sign,
-                     QT_TR_NOOP("Signum")                     ) );
-  add( new Function( "sqrt",    1, function_sqrt,
-                     QT_TR_NOOP("Square Root")                ) );
-  add( new Function( "sum",        function_sum,
-                     QT_TR_NOOP("Sum")                        ) );
-  add( new Function( "trunc",      function_trunc,
-                     QT_TR_NOOP("Truncation")                 ) );
-  add( new Function( "gamma",      function_Gamma,
-                     QT_TR_NOOP("extension of factorials [= (x-1)!]")) );
-  add( new Function( "lngamma",      function_lnGamma,
-                     QT_TR_NOOP("ln(abs(Gamma))")             ) );
+  // ANALYSIS
+  add( new Function( "abs",     1, function_abs,     QT_TR_NOOP("Absolute Value")                     ) );
+  add( new Function( "average",    function_average, QT_TR_NOOP("Average (Arithmetic Mean)")          ) );
+  add( new Function( "bin",        function_bin,     QT_TR_NOOP("Binary Representation")              ) );
+  add( new Function( "cbrt",    1, function_cbrt,    QT_TR_NOOP("Cube Root")                          ) );
+  add( new Function( "ceil",    1, function_ceil,    QT_TR_NOOP("Ceiling")                            ) );
+  add( new Function( "dec",        function_dec,     QT_TR_NOOP("Decimal Representation")             ) );
+  add( new Function( "floor",   1, function_floor,   QT_TR_NOOP("Floor")                              ) );
+  add( new Function( "frac",    1, function_frac,    QT_TR_NOOP("Fractional Part")                    ) );
+  add( new Function( "gamma",      function_Gamma,   QT_TR_NOOP("Extension of Factorials [= (x-1)!]") ) );
+  add( new Function( "geomean",    function_geomean, QT_TR_NOOP("Geometric Mean")                     ) );
+  add( new Function( "hex",        function_hex,     QT_TR_NOOP("Hexadecimal Representation")         ) );
+  add( new Function( "int",     1, function_int,     QT_TR_NOOP("Integer Part")                       ) );
+  add( new Function( "lngamma",    function_lnGamma, QT_TR_NOOP("ln(abs(Gamma))")                     ) );
+  add( new Function( "max",        function_max,     QT_TR_NOOP("Maximum")                            ) );
+  add( new Function( "min",        function_min,     QT_TR_NOOP("Minimum")                            ) );
+  add( new Function( "oct",        function_oct,     QT_TR_NOOP("Octal Representation")               ) );
+  add( new Function( "product",    function_product, QT_TR_NOOP("Product")                            ) );
+  add( new Function( "round",      function_round,   QT_TR_NOOP("Rounding")                           ) );
+  add( new Function( "sign",    1, function_sign,    QT_TR_NOOP("Signum")                             ) );
+  add( new Function( "sqrt",    1, function_sqrt,    QT_TR_NOOP("Square Root")                        ) );
+  add( new Function( "sum",        function_sum,     QT_TR_NOOP("Sum")                                ) );
+  add( new Function( "trunc",      function_trunc,   QT_TR_NOOP("Truncation")                         ) );
 
-  /*
-                                     LOGARITHM
-                                                                              */
-  add( new Function( "log",     1, function_log,
-       QT_TR_NOOP("Base-10 Logarithm")          ) );
-  add( new Function( "lg",      1, function_lg,
-       QT_TR_NOOP("Base-2 Logarithm")           ) );
-  add( new Function( "ln",      1, function_ln,
-       QT_TR_NOOP("Natural Logarithm")          ) );
-  add( new Function( "exp",     1, function_exp,
-       QT_TR_NOOP("Exponential")                ) );
-  add( new Function( "arcosh",  1, function_arcosh,
-       QT_TR_NOOP("Area Hyperbolic Cosine") ) );
-  add( new Function( "arsinh",  1, function_arsinh,
-       QT_TR_NOOP("Area Hyperbolic Sine") ) );
-  add( new Function( "artanh",  1, function_artanh,
-       QT_TR_NOOP("Area Hyperbolic Tangent") ) );
-  add( new Function( "cosh",    1, function_cosh,
-       QT_TR_NOOP("Hyperbolic Cosine")  ) );
-  add( new Function( "sinh",    1, function_sinh,
-       QT_TR_NOOP("Hyperbolic Sine")    ) );
-  add( new Function( "tanh",    1, function_tanh,
-       QT_TR_NOOP("Hyperbolic Tangent") ) );
+  // LOGARITHM
+  add( new Function( "arcosh", 1, function_arcosh, QT_TR_NOOP("Area Hyperbolic Cosine")  ) );
+  add( new Function( "arsinh", 1, function_arsinh, QT_TR_NOOP("Area Hyperbolic Sine")    ) );
+  add( new Function( "artanh", 1, function_artanh, QT_TR_NOOP("Area Hyperbolic Tangent") ) );
+  add( new Function( "cosh",   1, function_cosh,   QT_TR_NOOP("Hyperbolic Cosine")       ) );
+  add( new Function( "exp",    1, function_exp,    QT_TR_NOOP("Exponential")             ) );
+  add( new Function( "lg",     1, function_lg,     QT_TR_NOOP("Base-2 Logarithm")        ) );
+  add( new Function( "ln",     1, function_ln,     QT_TR_NOOP("Natural Logarithm")       ) );
+  add( new Function( "log",    1, function_log,    QT_TR_NOOP("Base-10 Logarithm")       ) );
+  add( new Function( "sinh",   1, function_sinh,   QT_TR_NOOP("Hyperbolic Sine")         ) );
+  add( new Function( "tanh",   1, function_tanh,   QT_TR_NOOP("Hyperbolic Tangent")      ) );
 
-  /*
-                                     DISCRETE
-                                                                              */
-  add( new Function( "gcd",     function_gcd,
-                     QT_TR_NOOP("Greatest Common Divisor")            ) );
-  add( new Function( "ncr",  2, function_nCr,
-                     QT_TR_NOOP("Combination (Binomial Coefficient)") ) );
-  add( new Function( "npr",  2, function_nPr,
-                     QT_TR_NOOP("Permutation (Arrangement)")          ) );
-  /*
-                                    PROBABILITY
-                                                                              */
-  add( new Function( "binompmf",  3, function_binompmf,
-                     QT_TR_NOOP("Binomial Probability Mass Function")        ));
-  add( new Function( "binomcdf",  3, function_binomcdf,
-                     QT_TR_NOOP("Binomial Cumulative Distribution Function") ));
-  add( new Function( "binommean", 2, function_binommean,
-                     QT_TR_NOOP("Binomial Distribution Mean")                ));
-  add( new Function( "binomvar",  2, function_binomvar,
-                     QT_TR_NOOP("Binomial Distribution Variance")            ));
-  add( new Function( "hyperpmf",  4, function_hyperpmf,
-                     QT_TR_NOOP("Hypergeometric Probability Mass Function")  ));
-  add( new Function( "hypercdf",  4, function_hypercdf,
-                QT_TR_NOOP("Hypergeometric Cumulative Distribution Function")));
-  add( new Function( "hypermean", 3, function_hypermean,
-                     QT_TR_NOOP("Hypergeometric Distribution Mean")          ));
-  add( new Function( "hypervar",  3, function_hypervar,
-                     QT_TR_NOOP("Hypergeometric Distribution Variance")      ));
-  add( new Function( "poipmf",    2, function_poipmf,
-                     QT_TR_NOOP("Poissonian Probability Mass Function")      ));
-  add( new Function( "poicdf",    2, function_poicdf,
-                     QT_TR_NOOP("Poissonian Cumulative Distribution Function")));
-  add( new Function( "poimean",   1, function_poimean,
-                     QT_TR_NOOP("Poissonian Distribution Mean")              ));
-  add( new Function( "poivar",    1, function_poivar,
-                     QT_TR_NOOP("Poissonian Distribution Variance")          ));
-  add( new Function( "erf",    1, function_erf,
-                     QT_TR_NOOP("Error Function")                            ));
-  add( new Function( "erfc",    1, function_erfc,
-                     QT_TR_NOOP("Complementary Error Function")              ));
-  /*
-                                   TRIGONOMETRY
-                                                                              */
-  add( new Function( "acos",    1, function_acos,
-                     QT_TR_NOOP("Arc Cosine")         ) );
-  add( new Function( "asin",    1, function_asin,
-                     QT_TR_NOOP("Arc Sine")           ) );
-  add( new Function( "atan",    1, function_atan,
-                     QT_TR_NOOP("Arc Tangent")        ) );
-  add( new Function( "csc",     1, function_csc,
-                     QT_TR_NOOP("Cosecant")           ) );
-  add( new Function( "cos",     1, function_cos,
-                     QT_TR_NOOP("Cosine")             ) );
-  add( new Function( "cot",     1, function_cot,
-                     QT_TR_NOOP("Cotangent")          ) );
-  add( new Function( "degrees", 1, function_degrees,
-                     QT_TR_NOOP("Degrees Of Arc")     ) );
-  add( new Function( "radians", 1, function_radians,
-                     QT_TR_NOOP("Radians")            ) );
-  add( new Function( "sec",     1, function_sec,
-                     QT_TR_NOOP("Secant")             ) );
-  add( new Function( "sin",     1, function_sin,
-                     QT_TR_NOOP("Sine")               ) );
-  add( new Function( "tan",     1, function_tan,
-                     QT_TR_NOOP("Tangent")            ) );
+  // DISCRETE
+  add( new Function( "gcd",    function_gcd, QT_TR_NOOP("Greatest Common Divisor")            ) );
+  add( new Function( "ncr", 2, function_nCr, QT_TR_NOOP("Combination (Binomial Coefficient)") ) );
+  add( new Function( "npr", 2, function_nPr, QT_TR_NOOP("Permutation (Arrangement)")          ) );
 
-  /*
-                                    LOGIC
-                                                                              */
-  add( new Function( "mask",   2, function_mask,
-                     QT_TR_NOOP("mask to a bit size") ) );
-  add( new Function( "unmask",   2, function_unmask,
-                     QT_TR_NOOP("sign-extent a value")) );
-  add( new Function( "not",   1, function_not,
-                     QT_TR_NOOP("logical not")        ) );
-  add( new Function( "and",         function_and,
-                     QT_TR_NOOP("logical and")        ) );
-  add( new Function( "or",         function_or,
-                     QT_TR_NOOP("logical or")         ) );
-  add( new Function( "xor",         function_xor,
-                     QT_TR_NOOP("logical exclusive or")) );
-  add( new Function( "shl",   2, function_ashl,
-                     QT_TR_NOOP("arithmetic shift left")) );
-  add( new Function( "shr",   2, function_ashr,
-                     QT_TR_NOOP("arithmetic shift right")) );
-  add( new Function( "idiv",   2, function_idiv,
-                     QT_TR_NOOP("integer quotient")    ) );
-  add( new Function( "mod",   2, function_mod,
-                     QT_TR_NOOP("modulo")   ) );
+  // PROBABILITY
+  add( new Function( "binomcdf",  3, function_binomcdf,  QT_TR_NOOP("Binomial Cumulative Distribution Function")       ) );
+  add( new Function( "binommean", 2, function_binommean, QT_TR_NOOP("Binomial Distribution Mean")                      ) );
+  add( new Function( "binompmf",  3, function_binompmf,  QT_TR_NOOP("Binomial Probability Mass Function")              ) );
+  add( new Function( "binomvar",  2, function_binomvar,  QT_TR_NOOP("Binomial Distribution Variance")                  ) );
+  add( new Function( "erf",       1, function_erf,       QT_TR_NOOP("Error Function")                                  ) );
+  add( new Function( "erfc",      1, function_erfc,      QT_TR_NOOP("Complementary Error Function")                    ) );
+  add( new Function( "hypercdf",  4, function_hypercdf,  QT_TR_NOOP("Hypergeometric Cumulative Distribution Function") ) );
+  add( new Function( "hypermean", 3, function_hypermean, QT_TR_NOOP("Hypergeometric Distribution Mean")                ) );
+  add( new Function( "hyperpmf",  4, function_hyperpmf,  QT_TR_NOOP("Hypergeometric Probability Mass Function")        ) );
+  add( new Function( "hypervar",  3, function_hypervar,  QT_TR_NOOP("Hypergeometric Distribution Variance")            ) );
+  add( new Function( "poicdf",    2, function_poicdf,    QT_TR_NOOP("Poissonian Cumulative Distribution Function")     ) );
+  add( new Function( "poimean",   1, function_poimean,   QT_TR_NOOP("Poissonian Distribution Mean")                    ) );
+  add( new Function( "poipmf",    2, function_poipmf,    QT_TR_NOOP("Poissonian Probability Mass Function")            ) );
+  add( new Function( "poivar",    1, function_poivar,    QT_TR_NOOP("Poissonian Distribution Variance")                ) );
+
+  // TRIGONOMETRY
+  add( new Function( "acos",    1, function_acos,    QT_TR_NOOP("Arc Cosine")     ) );
+  add( new Function( "asin",    1, function_asin,    QT_TR_NOOP("Arc Sine")       ) );
+  add( new Function( "atan",    1, function_atan,    QT_TR_NOOP("Arc Tangent")    ) );
+  add( new Function( "cos",     1, function_cos,     QT_TR_NOOP("Cosine")         ) );
+  add( new Function( "cot",     1, function_cot,     QT_TR_NOOP("Cotangent")      ) );
+  add( new Function( "csc",     1, function_csc,     QT_TR_NOOP("Cosecant")       ) );
+  add( new Function( "degrees", 1, function_degrees, QT_TR_NOOP("Degrees of Arc") ) );
+  add( new Function( "radians", 1, function_radians, QT_TR_NOOP("Radians")        ) );
+  add( new Function( "sec",     1, function_sec,     QT_TR_NOOP("Secant")         ) );
+  add( new Function( "sin",     1, function_sin,     QT_TR_NOOP("Sine")           ) );
+  add( new Function( "tan",     1, function_tan,     QT_TR_NOOP("Tangent")        ) );
+
+  // LOGIC
+  add( new Function( "mask",   2, function_mask,   QT_TR_NOOP("Mask to a bit size")     ) );
+  add( new Function( "unmask", 2, function_unmask, QT_TR_NOOP("Sign-extent a value")    ) );
+  add( new Function( "not",    1, function_not,    QT_TR_NOOP("Logical NOT")            ) );
+  add( new Function( "and",       function_and,    QT_TR_NOOP("Logical AND")            ) );
+  add( new Function( "or",        function_or,     QT_TR_NOOP("Logical OR")             ) );
+  add( new Function( "xor",       function_xor,    QT_TR_NOOP("Logical XOR")            ) );
+  add( new Function( "shl",   2,  function_ashl,   QT_TR_NOOP("Arithmetic Shift Left")  ) );
+  add( new Function( "shr",   2,  function_ashr,   QT_TR_NOOP("Arithmetic Shift Right") ) );
+  add( new Function( "idiv",  2,  function_idiv,   QT_TR_NOOP("Integer Quotient")       ) );
+  add( new Function( "mod",   2,  function_mod,    QT_TR_NOOP("Modulo")                 ) );
 }
+
+
+FunctionRepository * FunctionRepository::self()
+{
+  if ( ! s_self )
+    s_self = new FunctionRepository();
+  return s_self;
+}
+
+
+void FunctionRepository::add( Function * function )
+{
+  if ( ! function )
+    return;
+
+  d->functions.insert( function->name().toUpper(), function );
+}
+
+
+Function * FunctionRepository::function( const QString & name )
+{
+  return d->functions.value( name.toUpper() );
+}
+
+
+QStringList FunctionRepository::functionNames() const
+{
+  QStringList result;
+  QHashIterator<QString, Function *> it( d->functions );
+  while ( it.hasNext() )
+  {
+    it.next();
+    result.append( it.key().toLower() );
+  }
+
+  return result;
+}
+
 
 FunctionRepository::~FunctionRepository()
 {
-  while( d->functions.size() > 0 )
+  while ( d->functions.size() > 0 )
   {
     delete d->functions[ 0 ];
     d->functions.remove( 0 );
   }
 
   delete d;
-}
-
-void FunctionRepository::add( Function* function )
-{
-  if( !function ) return;
-  d->functions.insert( function->name().toUpper(), function );
-}
-
-Function* FunctionRepository::function( const QString& name )
-{
-  return d->functions.value( name.toUpper() );
-}
-
-QStringList FunctionRepository::functionNames() const
-{
-  QStringList result;
-  QHashIterator<QString, Function*> it( d->functions );
-  while( it.hasNext() )
-  {
-    it.next();
-    result.append( it.key().toLower() );
-  }
-  return result;
 }
