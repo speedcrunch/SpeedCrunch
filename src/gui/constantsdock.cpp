@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-//               2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -16,7 +16,6 @@
 // along with this program; see the file COPYING.  If not, write to
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
-//
 
 
 #include <base/constants.hxx>
@@ -24,8 +23,8 @@
 #include <gui/constantsdock.hxx>
 
 #include <QComboBox>
-#include <QHeaderView>
 #include <QHBoxLayout>
+#include <QHeaderView>
 #include <QLabel>
 #include <QLineEdit>
 #include <QList>
@@ -45,6 +44,8 @@ class ConstantsDockPrivate
     QLabel      * noMatchLabel;
 };
 
+
+// public
 
 ConstantsDock::ConstantsDock( QWidget * parent ): QDockWidget( tr("Constants"), parent )
 {
@@ -116,7 +117,7 @@ ConstantsDock::ConstantsDock( QWidget * parent ): QDockWidget( tr("Constants"), 
   setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
   setWindowIcon( QIcon() ); // no icon
 
-  updateConstants();
+  updateList();
 }
 
 
@@ -127,35 +128,18 @@ ConstantsDock::~ConstantsDock()
 }
 
 
+// public slots
+
 void ConstantsDock::settingsChanged()
 {
-  updateConstants();
+  updateList();
 }
 
 
-void ConstantsDock::updateConstants()
-{
-  Constants * c = Constants::self();
-
-  d->category->clear();
-  d->category->addItems( c->categoryList );
-  d->category->insertItem( 0, tr("All") );
-  d->category->setCurrentIndex( 0 );
-
-  filter();
-}
-
-
-void ConstantsDock::triggerFilter()
-{
-  d->filterTimer->stop();
-  d->filterTimer->start();
-}
-
+// protected slots
 
 void ConstantsDock::filter()
 {
-  qDebug( "**************" );
   Constants * c    = Constants::self();
   QString     term = d->filter->text();
 
@@ -252,4 +236,24 @@ void ConstantsDock::handleItem( QTreeWidgetItem * item )
   for ( int k = 0; k < c->constantList.count(); k++ )
     if ( c->constantList[k].name == item->text( 0 ) )
       emit constantSelected( c->constantList[k].value );
+}
+
+
+void ConstantsDock::triggerFilter()
+{
+  d->filterTimer->stop();
+  d->filterTimer->start();
+}
+
+
+void ConstantsDock::updateList()
+{
+  Constants * c = Constants::self();
+
+  d->category->clear();
+  d->category->addItems( c->categoryList );
+  d->category->insertItem( 0, tr("All") );
+  d->category->setCurrentIndex( 0 );
+
+  filter();
 }

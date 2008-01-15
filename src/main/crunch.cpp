@@ -1,24 +1,24 @@
-/* This file is part of the SpeedCrunch project
-   Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-   Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
-                 2005-2006 Johan Thelin <e8johan@gmail.com>
-                 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
+// This file is part of the SpeedCrunch project
+// Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
+// Copyright (C) 2005-2006 Johan Thelin <e8johan@gmail.com>
+// Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
+// Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; see the file COPYING.  If not, write to
+// the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+// Boston, MA 02110-1301, USA.
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public License
-   as published by the Free Software Foundation; either version 2
-   of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
- */
 
 #include <main/crunch.hxx>
 
@@ -26,7 +26,6 @@
 #include <base/evaluator.hxx>
 #include <base/functions.hxx>
 #include <base/settings.hxx>
-
 #include <gui/aboutbox.hxx>
 #include <gui/autohidelabel.hxx>
 #include <gui/configdlg.hxx>
@@ -35,16 +34,13 @@
 #include <gui/editor.hxx>
 #include <gui/functionsdock.hxx>
 #include <gui/historydock.hxx>
-#include <gui/result.hxx>
-#include <gui/tipwidget.hxx>
-#include <gui/variablesdock.hxx>
 #include <gui/insertfunctiondlg.hxx>
 #include <gui/insertvardlg.hxx>
 #include <gui/keypad.hxx>
-
+#include <gui/result.hxx>
+#include <gui/tipwidget.hxx>
+#include <gui/variablesdock.hxx>
 #include <math/hmath.hxx>
-
-#include <stdlib.h> // rand()
 
 #include <QAction>
 #include <QActionGroup>
@@ -72,98 +68,111 @@
 #include <QVBoxLayout>
 #include <QWidget>
 
+#include <stdlib.h> // rand()
+
+
 class CrunchActions
 {
-public:
-  QAction* sessionLoad;
-  QAction* sessionSave;
-  QAction* sessionQuit;
-  QAction* editPaste;
-  QAction* editCopy;
-  QAction* editCopyResult;
-  QAction* insertFunction;
-  QAction* insertVariable;
-  QAction* deleteVariable;
-  QAction* clearInput;
-  QAction* clearDisplay;
-  QAction* deleteAllVariables;
-  QAction* viewGeneral;
-  QAction* viewFixed;
-  QAction* viewEngineering;
-  QAction* viewScientific;
-  QAction* viewHexadec;
-  QAction* viewOctal;
-  QAction* viewBinary;
-  QAction* digitsAuto;
-  QAction* digits2;
-  QAction* digits3;
-  QAction* digits8;
-  QAction* digits15;
-  QAction* digits50;
-  QAction* radian;
-  QAction* degree;
-  QAction* focusAndSelectInput;
-  QAction* showClearButton;
-  QAction* showEvalButton;
-  QAction* showKeyPad;
-  QAction* showHistory;
-  QAction* showFunctions;
-  QAction* showVariables;
-  QAction* showConstants;
-  QAction* configure;
-  QAction* helpTipOfTheDay;
-  QAction* helpGotoWebsite;
-  QAction* helpAboutQt;
-  QAction* helpAbout;
+  public:
+    QAction * clearDisplay;
+    QAction * clearInput;
+    QAction * configure;
+    QAction * degree;
+    QAction * deleteAllVariables;
+    QAction * deleteVariable;
+    QAction * digits15;
+    QAction * digits2;
+    QAction * digits3;
+    QAction * digits50;
+    QAction * digits8;
+    QAction * digitsAuto;
+    QAction * editCopy;
+    QAction * editCopyResult;
+    QAction * editPaste;
+    QAction * focusAndSelectInput;
+    QAction * helpAbout;
+    QAction * helpAboutQt;
+    QAction * helpGotoWebsite;
+    QAction * helpTipOfTheDay;
+    QAction * insertFunction;
+    QAction * insertVariable;
+    QAction * radian;
+    QAction * sessionLoad;
+    QAction * sessionQuit;
+    QAction * sessionSave;
+    QAction * showClearButton;
+    QAction * showConstants;
+    QAction * showEvalButton;
+    QAction * showFunctions;
+    QAction * showHistory;
+    QAction * showKeyPad;
+    QAction * showVariables;
+    QAction * viewBinary;
+    QAction * viewEngineering;
+    QAction * viewFixed;
+    QAction * viewGeneral;
+    QAction * viewHexadec;
+    QAction * viewOctal;
+    QAction * viewScientific;
 };
 
 
 class CrunchPrivate
 {
-public:
-  Qt::WindowFlags flags;
+  public:
+    Qt::WindowFlags flags;
 
-  CrunchActions * actions;
-  QActionGroup  * digitsGroup;
-  QActionGroup  * angleGroup;
+    CrunchActions * actions;
+    QActionGroup  * angleGroup;
+    QActionGroup  * digitsGroup;
 
-  Evaluator * eval;
-  Editor    * editor;
-  Result    * result;
-  KeyPad    * keypad;
+    Editor    * editor;
+    Evaluator * eval;
+    KeyPad    * keypad;
+    Result    * result;
 
-  bool            autoAns;
-  AutoHideLabel * autoCalcLabel;
-  TipWidget     * tip;
+    bool            autoAns;
+    AutoHideLabel * autoCalcLabel;
+    TipWidget     * tip;
 
-  QPushButton * clearInputButton;
-  QPushButton * evalButton;
+    QPushButton * clearInputButton;
+    QPushButton * evalButton;
 
-  QSystemTrayIcon * trayIcon;
-  bool              trayNotify;
+    QSystemTrayIcon * trayIcon;
+    bool              trayNotify;
 
-  QMenu * sessionMenu;
-  QMenu * editMenu;
-  QMenu * baseMenu;
-  QMenu * decimalBaseSubmenu;
-  QMenu * angleMenu;
-  QMenu * settingsMenu;
-  QMenu * helpMenu;
+    QMenu * angleMenu;
+    QMenu * baseMenu;
+    QMenu * decimalBaseSubmenu;
+    QMenu * editMenu;
+    QMenu * helpMenu;
+    QMenu * sessionMenu;
+    QMenu * settingsMenu;
 
-  HistoryDock   * historyDock;
-  FunctionsDock * functionsDock;
-  VariablesDock * variablesDock;
-  ConstantsDock * constantsDock;
+    ConstantsDock * constantsDock;
+    FunctionsDock * functionsDock;
+    HistoryDock   * historyDock;
+    VariablesDock * variablesDock;
 
-  ConfigDlg         * configDlg;
-  InsertFunctionDlg * insertFunctionDlg;
-  InsertVariableDlg * insertVariableDlg;
-  DeleteVariableDlg * deleteVariableDlg;
+    ConfigDlg         * configDlg;
+    DeleteVariableDlg * deleteVariableDlg;
+    InsertFunctionDlg * insertFunctionDlg;
+    InsertVariableDlg * insertVariableDlg;
 };
 
-static void setWidgetLayoutAccordingToLanguageDirection( QWidget * widget );
 
-Crunch::Crunch(): QMainWindow()
+static void setWidgetLayoutAccordingToLanguageDirection( QWidget * widget )
+{
+  if ( QLocale().language() == QLocale::Hebrew )
+    widget->setLayoutDirection( Qt::RightToLeft );
+  else
+    widget->setLayoutDirection( Qt::LeftToRight );
+}
+
+
+// public
+
+Crunch::Crunch() : QMainWindow()
 {
   d = new CrunchPrivate;
   d->actions = new CrunchActions;
@@ -295,6 +304,7 @@ Crunch::Crunch(): QMainWindow()
   connect( d->configDlg, SIGNAL( settingsChanged()       ),                   SLOT(applySettings())         );
   connect( d->configDlg, SIGNAL( settingsChanged()       ), d->keypad,        SLOT(settingsChanged())       );
   connect( d->configDlg, SIGNAL( settingsChanged()       ), d->constantsDock, SLOT(settingsChanged())       );
+  connect( d->configDlg, SIGNAL( settingsChanged()       ), d->variablesDock, SLOT(settingsChanged())       );
   connect( this,         SIGNAL( adaptToLanguageChange() ), d->configDlg,     SLOT(adaptToLanguageChange()) );
 
   setWidgetsLayoutAccordingToLanguageDirection();
@@ -302,12 +312,832 @@ Crunch::Crunch(): QMainWindow()
   QTimer::singleShot( 0, this, SLOT(activate()) );
 }
 
+
+bool Crunch::event( QEvent* e )
+{
+  if( e->type() == QEvent::WindowStateChange )
+  {
+    if( windowState() & Qt::WindowMinimized )
+    if( Settings::self()->minimizeToTray )
+      QTimer::singleShot( 100, this, SLOT(minimizeToTray()) );
+  }
+
+  // ensure dock windows keep their state after minimize / screen switch
+  Settings* s = Settings::self();
+  if ( s->showConstants ) QTimer::singleShot( 0, d->constantsDock, SLOT(show()) );
+  if ( s->showFunctions ) QTimer::singleShot( 0, d->functionsDock, SLOT(show()) );
+  if ( s->showHistory   ) QTimer::singleShot( 0, d->historyDock,   SLOT(show()) );
+  if ( s->showVariables ) QTimer::singleShot( 0, d->variablesDock, SLOT(show()) );
+
+  return QMainWindow::event( e );
+}
+
+
 Crunch::~Crunch()
 {
   delete d->actions;
   delete d->eval;
   delete d;
 }
+
+
+// public slots
+
+void Crunch::about()
+{
+  AboutBox* aboutBox = new AboutBox( this );
+  aboutBox->exec();
+  delete aboutBox;
+}
+
+
+void Crunch::aboutQt()
+{
+  QMessageBox::aboutQt( this, tr("About Qt") );
+}
+
+
+void Crunch::addKeyPadText( const QString& text )
+{
+  if( text == "<--" ) // Special case: backspace
+    d->editor->doBackspace();
+  else
+  {
+    bool wasAns = d->editor->toPlainText().startsWith( "ans", Qt::CaseInsensitive );
+    d->editor->insertPlainText( text );
+    if( !wasAns && d->editor->toPlainText().startsWith( "ans", Qt::CaseInsensitive ) )
+      d->editor->setCursorPosition( d->editor->text().length() );
+  }
+
+  d->editor->setFocus();
+}
+
+
+void Crunch::applySettings()
+{
+  Settings* settings = Settings::self();
+  //settings->load();
+
+  if( settings->mainWindowSize != QSize( 0, 0 ) )
+    resize( settings->mainWindowSize );
+
+  d->editor->setAutoCompleteEnabled( settings->autoComplete );
+  d->editor->setAutoCalcEnabled( settings->autoCalc );
+  d->editor->setSyntaxHighlight( settings->enableSyntaxHighlight );
+  d->editor->setHighlightColor( Editor::Number, settings->highlightNumberColor );
+  d->editor->setHighlightColor( Editor::FunctionName, settings->highlightFunctionColor );
+  d->editor->setHighlightColor( Editor::Variable, settings->highlightVariableColor );
+  d->editor->setHighlightColor( Editor::MatchedPar, settings->matchedParenthesisColor );
+
+  if( Settings::self()->angleMode == Settings::Radian )
+  {
+    d->actions->radian->setChecked( true );
+    d->actions->degree->setChecked( false );
+  }
+  else if( Settings::self()->angleMode == Settings::Degree )
+  {
+    d->actions->radian->setChecked( false );
+    d->actions->degree->setChecked( true );
+  }
+
+  // FIXME should use the QT message handling "settingsChanged"
+  d->result->notifyDotChanged();
+
+  //QString l = settings->language;
+  //if ( l == "" )
+  //{
+  //  // autodetect
+  //}
+  //else
+  //{
+  //  // load specified language
+  //}
+
+  d->historyDock->clear();
+  if ( settings->saveSession && settings->history.count() > 0 )
+  {
+    d->editor->setHistory( settings->history );
+    d->editor->setHistoryResults( settings->historyResults );
+  }
+  if ( settings->history.count() > 0 )
+    d->historyDock->setHistory( settings->history );
+
+  if( settings->saveVariables )
+  {
+    for( int k=0; k<settings->variables.count(); k++ )
+    {
+      d->eval->setExpression( settings->variables[k] );
+      d->eval->eval();
+      QStringList s = settings->variables[k].split( "=" );
+      d->eval->set( s[0], HNumber( s[1].toAscii().data() ) );
+    }
+    d->variablesDock->updateList( d->eval );
+  }
+
+  d->result->setFormat( settings->format );
+  d->result->setDecimalDigits( settings->decimalDigits );
+  d->editor->setFormat( settings->format );
+  d->editor->setDecimalDigits( settings->decimalDigits );
+
+  if( settings->customAppearance )
+  {
+    d->result->setFont( settings->customFont );
+    d->editor->setFont( settings->customFont );
+    //d->editor->adjustSize(); // causes issue #110
+    d->editor->setFixedHeight( d->editor->sizeHint().height() );
+  }
+  else
+  {
+    d->result->setFont( QApplication::font( d->result ) );
+    d->editor->setFont( QApplication::font( d->editor ) );
+    d->editor->setFixedHeight( d->editor->sizeHint().height() );
+  }
+
+  d->result->setCustomAppearance( settings->customAppearance );
+  d->result->setCustomTextColor( settings->customTextColor );
+  d->result->setCustomBackgroundColor( settings->customBackgroundColor1,
+                                       settings->customBackgroundColor2 );
+  d->result->setCustomErrorColor( settings->customErrorColor );
+
+  if( settings->format == 'g' ) d->actions->viewGeneral->setChecked( true );
+  if( settings->format == 'f' ) d->actions->viewFixed->setChecked( true );
+  if( settings->format == 'n' ) d->actions->viewEngineering->setChecked( true );
+  if( settings->format == 'e' ) d->actions->viewScientific->setChecked( true );
+  if( settings->format == 'h' ) d->actions->viewHexadec->setChecked( true );
+  if( settings->format == 'o' ) d->actions->viewOctal->setChecked( true );
+  if( settings->format == 'b' ) d->actions->viewBinary->setChecked( true );
+
+  if( settings->decimalDigits < 0 ) d->actions->digitsAuto->setChecked( true );
+  if( settings->decimalDigits == 2 ) d->actions->digits2->setChecked( true );
+  if( settings->decimalDigits == 3 ) d->actions->digits3->setChecked( true );
+  if( settings->decimalDigits == 8 ) d->actions->digits8->setChecked( true );
+  if( settings->decimalDigits == 15 ) d->actions->digits15->setChecked( true );
+  if( settings->decimalDigits == 50 ) d->actions->digits50->setChecked( true );
+
+  if( settings->showClearInputButton )
+    d->clearInputButton->show();
+  else
+    d->clearInputButton->hide();
+  d->actions->showClearButton->setChecked( settings->showClearInputButton );
+
+  if( settings->showEvaluateButton )
+    d->evalButton->show();
+  else
+    d->evalButton->hide();
+  d->actions->showEvalButton->setChecked( settings->showEvaluateButton );
+
+  if( settings->showKeyPad )
+    d->keypad->show();
+  else
+    d->keypad->hide();
+  d->actions->showKeyPad->setChecked( settings->showKeyPad );
+
+  d->actions->showHistory->setChecked( settings->showHistory );
+  d->actions->showFunctions->setChecked( settings->showFunctions );
+  d->actions->showVariables->setChecked( settings->showVariables );
+  d->actions->showConstants->setChecked( settings->showConstants );
+
+  d->historyDock->setVisible( settings->showHistory );
+  d->functionsDock->setVisible( settings->showFunctions );
+  d->variablesDock->setVisible( settings->showVariables );
+  d->constantsDock->setVisible( settings->showConstants );
+
+  if( settings->minimizeToTray )
+  {
+    if( !d->trayIcon && QSystemTrayIcon::isSystemTrayAvailable() )
+    {
+      d->trayNotify = true;
+      d->trayIcon = new QSystemTrayIcon( this );
+      d->trayIcon->setToolTip( tr("SpeedCrunch") );
+      d->trayIcon->setIcon( QPixmap( ":/crunch.png" ) );
+      connect( d->trayIcon, SIGNAL( activated(QSystemTrayIcon::ActivationReason) ),
+        SLOT( trayIconActivated() ) );
+    }
+  }
+  else
+  {
+    if( d->trayIcon )
+	  delete d->trayIcon;
+    d->trayIcon = 0;
+  }
+
+  // treat stay-always-on-top preference
+  if( settings->stayAlwaysOnTop )
+    setWindowFlags( windowFlags() | Qt::WindowStaysOnTopHint );
+  else
+    setWindowFlags( windowFlags() & (~ Qt::WindowStaysOnTopHint) );
+  show();
+
+  // changed settings should trigger auto calc nor auto complete
+  d->editor->stopAutoCalc();
+  d->editor->stopAutoComplete();
+}
+
+
+void Crunch::clearHistory()
+{
+  d->editor->clearHistory();
+  d->historyDock->clear();
+  QTimer::singleShot(0, d->editor, SLOT( setFocus() ) );
+}
+
+
+void Crunch::clearInput()
+{
+  d->editor->clear();
+  QTimer::singleShot(0, d->editor, SLOT( setFocus() ) );
+}
+
+
+void Crunch::configure()
+{
+  saveSettings();
+  d->configDlg->exec();
+}
+
+
+void Crunch::copyResult()
+{
+  QClipboard * cb = QApplication::clipboard();
+  HNumber num = d->eval->get( "ans" );
+  char * strToCopy;
+
+  switch ( Settings::self()->format )
+  {
+    case 'h':
+      strToCopy = HMath::formatHexadec( num );
+      break;
+    case 'o':
+      strToCopy = HMath::formatOctal( num );
+      break;
+    case 'b':
+      strToCopy = HMath::formatBinary( num );
+      break;
+    default:
+      strToCopy = HMath::formatFixed( num );
+  }
+
+  cb->setText( QString(strToCopy), QClipboard::Clipboard );
+  free( strToCopy );
+}
+
+
+void Crunch::degree()
+{
+  Settings::self()->angleMode = Settings::Degree;
+}
+
+
+void Crunch::deleteAllVariables()
+{
+  d->eval->clearVariables();
+  d->variablesDock->updateList( d->eval );
+}
+
+
+void Crunch::deleteVariable()
+{
+  if( !d->deleteVariableDlg )
+    d->deleteVariableDlg = new DeleteVariableDlg( d->eval, this );
+  else
+    d->deleteVariableDlg->updateList();
+
+  d->deleteVariableDlg->exec();
+  d->variablesDock->updateList( d->eval );
+}
+
+
+void Crunch::digits2()
+{
+  setDigits(2);
+}
+
+
+void Crunch::digits3()
+{
+  setDigits(3);
+}
+
+
+void Crunch::digits8()
+{
+  setDigits(8);
+}
+
+
+void Crunch::digits15()
+{
+  setDigits(15);
+}
+
+
+void Crunch::digits50()
+{
+  setDigits(50);
+}
+
+
+void Crunch::digitsAuto()
+{
+  setDigits(-1);
+}
+
+
+void Crunch::focusAndSelectInput()
+{
+  activateWindow();
+  d->editor->selectAll();
+  d->editor->setFocus();
+}
+
+
+void Crunch::gotoWebsite()
+{
+  QDesktopServices::openUrl( QUrl(QString::fromLatin1("http://www.speedcrunch.org")) );
+}
+
+
+void Crunch::hideAutoCalc()
+{
+  d->autoCalcLabel->hideText();
+}
+
+
+void Crunch::insertFunction()
+{
+  if( d->insertFunctionDlg->exec() == InsertFunctionDlg::Accepted )
+  {
+    QString fname = d->insertFunctionDlg->functionName();
+    if( !fname.isEmpty() )
+      d->editor->insert( fname );
+  }
+}
+
+
+void Crunch::insertVariable()
+{
+  if( !d->insertVariableDlg )
+    d->insertVariableDlg = new InsertVariableDlg( d->eval, this );
+  else
+    d->insertVariableDlg->updateList();
+
+  if( d->insertVariableDlg->exec() == InsertVariableDlg::Accepted )
+  {
+    QString varname = d->insertVariableDlg->variableName();
+    if( !varname.isEmpty() )
+      d->editor->insert( varname );
+  }
+}
+
+
+void Crunch::loadSession()
+{
+  const char * errMsg= "File %1 is not a valid session";
+  QString filters = tr( "SpeedCrunch Sessions (*.sch);;All Files (*)" );
+  QString fname = QFileDialog::getOpenFileName( this, tr("Load Session"), QString::null, filters );
+  if ( fname.isEmpty() )
+    return;
+
+  QFile file( fname );
+  if ( ! file.open( QIODevice::ReadOnly ) )
+  {
+    QMessageBox::critical( this, tr("Error"), tr("Can't read from file %1").arg( fname ) );
+    return;
+  }
+
+  QTextStream stream( & file );
+
+  // version of the format
+  QString version = stream.readLine();
+  if ( version != "0.10" )
+  {
+    QMessageBox::critical( this, tr("Error"), tr(errMsg).arg( fname ) );
+    return;
+  }
+
+  // number of calculations
+  bool ok;
+  int noCalcs = stream.readLine().toInt( &ok );
+  if ( ok == false || noCalcs < 0 )
+  {
+    QMessageBox::critical( this, tr("Error"), tr(errMsg).arg( fname ) );
+    return;
+  }
+
+  // ask for merge with current session
+  QMessageBox::StandardButton but =
+    QMessageBox::question( this, tr("Question"),
+                           tr("Merge session being loaded with current session?\n"
+                              "If no, current variables and display will be cleared."),
+                           QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel,
+                           QMessageBox::Yes );
+  if ( but == QMessageBox::Cancel )
+    return;
+  else if ( but == QMessageBox::No )
+  {
+    d->result->clear();
+    //Settings * set = Settings::self();
+    //set->history.clear();
+    //set->historyResults.clear();
+    deleteAllVariables();
+    clearHistory();
+    saveSettings();
+    applySettings();
+  }
+
+  // expressions and results
+  for ( int i = 0; i < noCalcs; i++ )
+  {
+    QString exp = stream.readLine();
+    QString res = stream.readLine();
+    if ( exp.isNull() || res.isNull() )
+    {
+      QMessageBox::critical( this, tr("Error"), tr(errMsg).arg( fname ) );
+      return;
+    }
+    HNumber num( res.toAscii().data() );
+    if ( ! num.isNan() )
+      d->result->append( exp, num );
+    else
+      d->result->appendError( exp, res );
+  }
+
+  // variables
+  int noVars = stream.readLine().toInt( &ok );
+  if ( ok == false || noVars < 0 )
+  {
+    QMessageBox::critical( this, tr("Error"), tr(errMsg).arg( fname ) );
+    return;
+  }
+  for ( int i = 0; i < noVars; i++ )
+  {
+    QString var = stream.readLine();
+    QString val = stream.readLine();
+    if ( var.isNull() || val.isNull() )
+    {
+      QMessageBox::critical( this, tr("Error"), tr(errMsg).arg( fname ) );
+      return;
+    }
+    HNumber num( val.toAscii().data() );
+    if (  num != HNumber::nan() )
+      d->eval->set( var, num );
+  }
+
+  file.close();
+
+  saveSettings();
+  applySettings();
+}
+
+
+void Crunch::radian()
+{
+  Settings::self()->angleMode = Settings::Radian;
+}
+
+
+void Crunch::saveSession()
+{
+  QString filters = tr( "SpeedCrunch Sessions (*.sch);;All Files (*)" );
+  QString fname = QFileDialog::getSaveFileName( this, tr("Save Session"), QString::null, filters );
+  if ( fname.isEmpty() )
+    return;
+
+  QFile file( fname );
+  if ( ! file.open( QIODevice::WriteOnly ) )
+  {
+    QMessageBox::critical( this, tr("Error"), tr("Can't write to file %1").arg( fname ) );
+    return;
+  }
+
+  QTextStream stream( & file );
+
+  // version of the format
+  stream << "0.10" << "\n";
+
+  // number of calculations
+  stream << d->result->count() << "\n";
+
+  // expressions and results
+  stream << d->result->asText() << "\n";
+
+  // number of variables
+  int noVars = d->eval->variables().count();
+  stream << noVars - 2 << "\n"; // exclude pi and phi
+
+  // variables
+  for ( int i = 0; i < noVars; i++ )
+  {
+    Variable var = d->eval->variables()[i];
+    if ( var.name != "pi" && var.name != "phi" )
+      stream << var.name << "\n" << HMath::format( var.value ) << "\n";
+  }
+
+  file.close();
+}
+
+
+void Crunch::setWidgetsLayoutAccordingToLanguageDirection()
+{
+  // menu bar and menus
+  setWidgetLayoutAccordingToLanguageDirection( menuBar()        );
+  setWidgetLayoutAccordingToLanguageDirection( d->sessionMenu   );
+  setWidgetLayoutAccordingToLanguageDirection( d->editMenu      );
+  setWidgetLayoutAccordingToLanguageDirection( d->baseMenu      );
+  setWidgetLayoutAccordingToLanguageDirection( d->settingsMenu  );
+  setWidgetLayoutAccordingToLanguageDirection( d->helpMenu      );
+  // tip of the day
+  setWidgetLayoutAccordingToLanguageDirection( d->tip           );
+  // docks
+  setWidgetLayoutAccordingToLanguageDirection( d->constantsDock );
+  setWidgetLayoutAccordingToLanguageDirection( d->functionsDock );
+  // insert function dialog
+  setWidgetLayoutAccordingToLanguageDirection( d->insertFunctionDlg );
+  // tip of the day
+  setWidgetLayoutAccordingToLanguageDirection( d->tip );
+
+  // speedcrunch made widgets
+  emit adaptToLanguageChange();
+}
+
+
+void Crunch::showAutoCalc( const QString& msg )
+{
+  QPoint p = d->editor->mapToParent( QPoint(0, 0) );
+  d->autoCalcLabel->move( p );
+
+  d->autoCalcLabel->showText( msg );
+}
+
+
+void Crunch::showClearButton( bool b )
+{
+  Settings* settings = Settings::self();
+  settings->showClearInputButton = b;
+  saveSettings();
+  applySettings();
+}
+
+
+void Crunch::showConstants( bool b)
+{
+  Settings* settings = Settings::self();
+  settings->showConstants = b;
+  saveSettings();
+  applySettings();
+  d->constantsDock->raise();
+}
+
+
+void Crunch::showEvalButton( bool b )
+{
+  Settings* settings = Settings::self();
+  settings->showEvaluateButton = b;
+  saveSettings();
+  applySettings();
+}
+
+
+void Crunch::showFunctions( bool b)
+{
+  Settings* settings = Settings::self();
+  settings->showFunctions = b;
+  saveSettings();
+  applySettings();
+  d->functionsDock->raise();
+}
+
+
+void Crunch::showHistory( bool b )
+{
+  Settings* settings = Settings::self();
+  settings->showHistory = b;
+  saveSettings();
+  applySettings();
+  d->historyDock->raise();
+}
+
+
+void Crunch::showKeyPad( bool b )
+{
+  Settings* settings = Settings::self();
+  settings->showKeyPad = b;
+  saveSettings();
+  applySettings();
+}
+
+
+void Crunch::showTip()
+{
+  QPoint p = mapFromGlobal( d->result->mapToGlobal( QPoint(0, 0) ) ) += QPoint(4,4);
+  d->tip->move( p );
+
+  int tipNo = rand() % 5;
+  QString msg;
+  switch( tipNo )
+  {
+    case 0:
+      msg = tr("You can customize the syntax highlight colors. "
+               "Use menu <i>Settings, Configure</i>, and then from the "
+               "configuration dialog, choose tab <i>Syntax Highlight</i>." );
+      break;
+    case 1:
+      msg = tr("To insert a function using keyboard, use Ctrl+F shorcut. "
+               "From the dialog, you can choose the function you want to "
+               "insert." );
+      break;
+    case 2:
+      msg = tr("To insert a variable using keyboard, use Ctrl+I shorcut. "
+               "From the dialog, you can choose the variable you want to "
+               "insert." );
+      break;
+    case 3:
+      msg = tr("Use variable <i>pi</i> to use pi constant." );
+      break;
+    case 4:
+      msg = tr("Use <i>;</i> (semicolon) to separate the parameters in "
+               "functions." );
+      break;
+    default:
+      break;
+  }
+
+  d->tip->showText( msg );
+}
+
+
+void Crunch::showVariables( bool b)
+{
+  Settings* settings = Settings::self();
+  settings->showVariables = b;
+  saveSettings();
+  applySettings();
+  d->variablesDock->raise();
+}
+
+
+void Crunch::viewBinary()
+{
+  d->digitsGroup->setDisabled(true);
+  setView('b');
+}
+
+
+void Crunch::viewEngineering()
+{
+  d->digitsGroup->setEnabled(true);
+  setView('n');
+}
+
+
+void Crunch::viewFixed()
+{
+  d->digitsGroup->setEnabled(true);
+  setView('f');
+}
+
+
+void Crunch::viewGeneral()
+{
+  d->digitsGroup->setEnabled(true);
+  setView('g');
+}
+
+
+void Crunch::viewHexadec()
+{
+  d->digitsGroup->setDisabled(true);
+  setView('h');
+}
+
+
+void Crunch::viewOctal()
+{
+  d->digitsGroup->setDisabled(true);
+  setView('o');
+}
+
+
+void Crunch::viewScientific()
+{
+  d->digitsGroup->setEnabled(true);
+  setView('e');
+}
+
+
+// protected slots
+
+void Crunch::activate()
+{
+  activateWindow();
+  d->editor->setFocus();
+}
+
+
+void Crunch::constantSelected( const QString& c )
+{
+  if( c.isEmpty() )
+    return;
+
+  QString str( c );
+  str.replace( '.', Settings::decimalPoint() );
+  d->editor->insert( str );
+
+  QTimer::singleShot( 0, d->editor, SLOT(setFocus()) );
+
+  if( !isActiveWindow () )
+    activateWindow();
+}
+
+
+void Crunch::expressionSelected( const QString& e )
+{
+  d->editor->setText( e );
+  returnPressed();
+
+  if( !isActiveWindow () )
+    activateWindow();
+}
+
+
+void Crunch::functionSelected( const QString& e )
+{
+  if( e.isEmpty() )
+    return;
+  d->editor->insert( e );
+  d->editor->insert( "(" );
+
+  QTimer::singleShot( 0, d->editor, SLOT(setFocus()) );
+
+  if( !isActiveWindow () )
+    activateWindow();
+}
+
+
+void Crunch::minimizeToTray()
+{
+  if( d->trayIcon )
+  {
+    hide();
+    d->trayIcon->show();
+    if( d->trayNotify )
+      QTimer::singleShot( 500, this, SLOT(showTrayMessage()) );
+    d->trayNotify = false;
+  }
+}
+
+
+void Crunch::restoreDocks()
+{
+  Settings* settings = Settings::self();
+
+  restoreState( settings->mainWindowState );
+
+  if( settings->showHistory )
+  if( settings->historyDockFloating )
+  if( !d->historyDock->isFloating() )
+  {
+    d->historyDock->hide();
+    d->historyDock->setFloating( true );
+    d->historyDock->move( settings->historyDockLeft, settings->historyDockTop );
+    d->historyDock->resize( settings->historyDockWidth, settings->historyDockHeight );
+    QTimer::singleShot(0, d->historyDock, SLOT(show()));
+  }
+
+  if( settings->showFunctions )
+  if( settings->functionsDockFloating )
+  if( !d->functionsDock->isFloating() )
+  {
+    d->functionsDock->hide();
+    d->functionsDock->setFloating( true );
+    d->functionsDock->move( settings->functionsDockLeft, settings->functionsDockTop );
+    d->functionsDock->resize( settings->functionsDockWidth, settings->functionsDockHeight );
+    QTimer::singleShot(0, d->functionsDock, SLOT(show()));
+  }
+
+  if( settings->showVariables )
+  if( settings->variablesDockFloating )
+  if( !d->variablesDock->isFloating() )
+  {
+    d->variablesDock->hide();
+    d->variablesDock->setFloating( true );
+    d->variablesDock->move( settings->variablesDockLeft, settings->variablesDockTop );
+    d->variablesDock->resize( settings->variablesDockWidth, settings->variablesDockHeight );
+    QTimer::singleShot(0, d->variablesDock, SLOT(show()));
+  }
+
+  if( settings->showConstants )
+  if( settings->constantsDockFloating )
+  if( !d->constantsDock->isFloating() )
+  {
+    d->constantsDock->hide();
+    d->constantsDock->setFloating( true );
+    d->constantsDock->move( settings->constantsDockLeft, settings->constantsDockTop );
+    d->constantsDock->resize( settings->constantsDockWidth, settings->constantsDockHeight );
+    QTimer::singleShot(0, d->constantsDock, SLOT(show()));
+  }
+}
+
 
 void Crunch::restoreLastSession()
 {
@@ -326,6 +1156,134 @@ void Crunch::restoreLastSession()
       d->result->appendError( set->history[i], resultStr );
   }
 }
+
+
+void Crunch::returnPressed()
+{
+  QString str = Evaluator::autoFix( d->editor->text() );
+  if( str.isEmpty() ) return;
+
+  d->eval->setExpression( str );
+  d->historyDock->setHistory( d->editor->history() );
+
+  HNumber result = d->eval->evalUpdateAns();
+  if( !d->eval->error().isEmpty() )
+  {
+    d->result->appendError( str, d->eval->error() );
+    d->editor->appendHistory( str, d->eval->error() );
+  }
+  else
+  {
+    d->result->append( str, result );
+    d->editor->appendHistory( str, HMath::format( result ) );
+    d->editor->setAnsAvailable( true );
+    d->variablesDock->updateList( d->eval );
+  }
+
+  d->editor->setText( str );
+  d->editor->selectAll();
+  d->editor->stopAutoCalc();
+  d->editor->stopAutoComplete();
+  d->autoAns = true;
+
+  QTimer::singleShot( 0, d->editor, SLOT(setFocus()) );
+
+  if( !isActiveWindow () )
+    activateWindow();
+}
+
+
+void Crunch::showTrayMessage()
+{
+  const char * msg = "SpeedCrunch is minimized.\nClick on the icon to reactivate it.";
+  if ( d->trayIcon )
+    d->trayIcon->showMessage( QString(), tr(msg), QSystemTrayIcon::NoIcon, 2000 );
+}
+
+
+void Crunch::textChanged()
+{
+  if ( d->autoAns )
+  {
+    QString expr = Evaluator::autoFix( d->editor->text() );
+    if ( expr.isEmpty() )
+	return;
+    Tokens tokens = Evaluator::scan( expr );
+    if ( tokens.count() == 1 )
+    if (    tokens[0].asOperator() == Token::Plus
+         || tokens[0].asOperator() == Token::Minus
+         || tokens[0].asOperator() == Token::Asterisk
+         || tokens[0].asOperator() == Token::Slash
+         || tokens[0].asOperator() == Token::Caret )
+     {
+       d->autoAns = false;
+       expr.prepend( "ans" );
+       d->editor->setText( expr );
+       d->editor->setCursorPosition( expr.length() );
+     }
+  }
+}
+
+
+void Crunch::trayIconActivated()
+{
+  showNormal();
+  activateWindow();
+  d->editor->setFocus();
+  QTimer::singleShot( 0, d->trayIcon, SLOT(hide()) );
+
+  // work around docks does not reappear (under KDE/Linux)
+#ifdef Q_OS_UNIX
+  if ( d->historyDock->isFloating() )
+  {
+    d->historyDock->hide();
+    QTimer::singleShot( 0, d->historyDock, SLOT(show()) );
+  }
+  if ( d->functionsDock->isFloating() )
+  {
+    d->functionsDock->hide();
+    QTimer::singleShot( 0, d->functionsDock, SLOT(show()) );
+  }
+  if ( d->variablesDock->isFloating() )
+  {
+    d->variablesDock->hide();
+    QTimer::singleShot( 0, d->variablesDock, SLOT(show()) );
+  }
+  if ( d->constantsDock->isFloating() )
+  {
+    d->constantsDock->hide();
+    QTimer::singleShot( 0, d->constantsDock, SLOT(show()) );
+  }
+#endif
+}
+
+
+void Crunch::variableSelected( const QString & v )
+{
+  if ( v.isEmpty() )
+    return;
+  d->editor->insert( v );
+
+  QTimer::singleShot( 0, d->editor, SLOT(setFocus()) );
+
+  if ( ! isActiveWindow () )
+    activateWindow();
+}
+
+
+// protected
+
+void Crunch::closeEvent( QCloseEvent * e )
+{
+  if ( d->trayIcon )
+    d->trayIcon->hide();
+  saveSettings();
+  emit quitApplication();
+  QMainWindow::closeEvent( e );
+}
+
+
+// private
 
 void Crunch::createUI()
 {
@@ -556,337 +1514,10 @@ void Crunch::createUI()
   setWindowIcon( QPixmap( ":/crunch.png" ) );
 }
 
-void Crunch::applySettings()
-{
-  Settings* settings = Settings::self();
-  //settings->load();
-
-  if( settings->mainWindowSize != QSize( 0, 0 ) )
-    resize( settings->mainWindowSize );
-
-  d->editor->setAutoCompleteEnabled( settings->autoComplete );
-  d->editor->setAutoCalcEnabled( settings->autoCalc );
-  d->editor->setSyntaxHighlight( settings->enableSyntaxHighlight );
-  d->editor->setHighlightColor( Editor::Number, settings->highlightNumberColor );
-  d->editor->setHighlightColor( Editor::FunctionName, settings->highlightFunctionColor );
-  d->editor->setHighlightColor( Editor::Variable, settings->highlightVariableColor );
-  d->editor->setHighlightColor( Editor::MatchedPar, settings->matchedParenthesisColor );
-
-  if( Settings::self()->angleMode == Settings::Radian )
-  {
-    d->actions->radian->setChecked( true );
-    d->actions->degree->setChecked( false );
-  }
-  else if( Settings::self()->angleMode == Settings::Degree )
-  {
-    d->actions->radian->setChecked( false );
-    d->actions->degree->setChecked( true );
-  }
-
-  // FIXME should use the QT message handling "settingsChanged"
-  d->result->notifyDotChanged();
-
-  //QString l = settings->language;
-  //if ( l == "" )
-  //{
-  //  // autodetect
-  //}
-  //else
-  //{
-  //  // load specified language
-  //}
-
-  d->historyDock->clear();
-  if ( settings->saveSession && settings->history.count() > 0 )
-  {
-    d->editor->setHistory( settings->history );
-    d->editor->setHistoryResults( settings->historyResults );
-  }
-  if ( settings->history.count() > 0 )
-    d->historyDock->setHistory( settings->history );
-
-  if( settings->saveVariables )
-  {
-    for( int k=0; k<settings->variables.count(); k++ )
-    {
-      d->eval->setExpression( settings->variables[k] );
-      d->eval->eval();
-      QStringList s = settings->variables[k].split( "=" );
-      d->eval->set( s[0], HNumber( s[1].toAscii().data() ) );
-    }
-    d->variablesDock->updateList( d->eval );
-  }
-
-  d->result->setFormat( settings->format );
-  d->result->setDecimalDigits( settings->decimalDigits );
-  d->editor->setFormat( settings->format );
-  d->editor->setDecimalDigits( settings->decimalDigits );
-
-  if( settings->customAppearance )
-  {
-    d->result->setFont( settings->customFont );
-    d->editor->setFont( settings->customFont );
-    //d->editor->adjustSize(); // causes issue #110
-    d->editor->setFixedHeight( d->editor->sizeHint().height() );
-  }
-  else
-  {
-    d->result->setFont( QApplication::font( d->result ) );
-    d->editor->setFont( QApplication::font( d->editor ) );
-    d->editor->setFixedHeight( d->editor->sizeHint().height() );
-  }
-
-  d->result->setCustomAppearance( settings->customAppearance );
-  d->result->setCustomTextColor( settings->customTextColor );
-  d->result->setCustomBackgroundColor( settings->customBackgroundColor1,
-                                       settings->customBackgroundColor2 );
-  d->result->setCustomErrorColor( settings->customErrorColor );
-
-  if( settings->format == 'g' ) d->actions->viewGeneral->setChecked( true );
-  if( settings->format == 'f' ) d->actions->viewFixed->setChecked( true );
-  if( settings->format == 'n' ) d->actions->viewEngineering->setChecked( true );
-  if( settings->format == 'e' ) d->actions->viewScientific->setChecked( true );
-  if( settings->format == 'h' ) d->actions->viewHexadec->setChecked( true );
-  if( settings->format == 'o' ) d->actions->viewOctal->setChecked( true );
-  if( settings->format == 'b' ) d->actions->viewBinary->setChecked( true );
-
-  if( settings->decimalDigits < 0 ) d->actions->digitsAuto->setChecked( true );
-  if( settings->decimalDigits == 2 ) d->actions->digits2->setChecked( true );
-  if( settings->decimalDigits == 3 ) d->actions->digits3->setChecked( true );
-  if( settings->decimalDigits == 8 ) d->actions->digits8->setChecked( true );
-  if( settings->decimalDigits == 15 ) d->actions->digits15->setChecked( true );
-  if( settings->decimalDigits == 50 ) d->actions->digits50->setChecked( true );
-
-  if( settings->showClearInputButton )
-    d->clearInputButton->show();
-  else
-    d->clearInputButton->hide();
-  d->actions->showClearButton->setChecked( settings->showClearInputButton );
-
-  if( settings->showEvaluateButton )
-    d->evalButton->show();
-  else
-    d->evalButton->hide();
-  d->actions->showEvalButton->setChecked( settings->showEvaluateButton );
-
-  if( settings->showKeyPad )
-    d->keypad->show();
-  else
-    d->keypad->hide();
-  d->actions->showKeyPad->setChecked( settings->showKeyPad );
-
-  d->actions->showHistory->setChecked( settings->showHistory );
-  d->actions->showFunctions->setChecked( settings->showFunctions );
-  d->actions->showVariables->setChecked( settings->showVariables );
-  d->actions->showConstants->setChecked( settings->showConstants );
-
-  d->historyDock->setVisible( settings->showHistory );
-  d->functionsDock->setVisible( settings->showFunctions );
-  d->variablesDock->setVisible( settings->showVariables );
-  d->constantsDock->setVisible( settings->showConstants );
-
-  if( settings->minimizeToTray )
-  {
-    if( !d->trayIcon && QSystemTrayIcon::isSystemTrayAvailable() )
-    {
-      d->trayNotify = true;
-      d->trayIcon = new QSystemTrayIcon( this );
-      d->trayIcon->setToolTip( tr("SpeedCrunch") );
-      d->trayIcon->setIcon( QPixmap( ":/crunch.png" ) );
-      connect( d->trayIcon, SIGNAL( activated(QSystemTrayIcon::ActivationReason) ),
-        SLOT( trayIconActivated() ) );
-    }
-  }
-  else
-  {
-    if( d->trayIcon )
-	  delete d->trayIcon;
-    d->trayIcon = 0;
-  }
-
-  // treat stay-always-on-top preference
-  if( settings->stayAlwaysOnTop )
-    setWindowFlags( windowFlags() | Qt::WindowStaysOnTopHint );
-  else
-    setWindowFlags( windowFlags() & (~ Qt::WindowStaysOnTopHint) );
-  show();
-
-  // changed settings should trigger auto calc nor auto complete
-  d->editor->stopAutoCalc();
-  d->editor->stopAutoComplete();
-}
-
-bool Crunch::event( QEvent* e )
-{
-  if( e->type() == QEvent::WindowStateChange )
-  {
-    if( windowState() & Qt::WindowMinimized )
-    if( Settings::self()->minimizeToTray )
-      QTimer::singleShot( 100, this, SLOT(minimizeToTray()) );
-  }
-
-  // ensure dock windows keep their state after minimize / screen switch
-  Settings* s = Settings::self();
-  if ( s->showConstants ) QTimer::singleShot( 0, d->constantsDock, SLOT(show()) );
-  if ( s->showFunctions ) QTimer::singleShot( 0, d->functionsDock, SLOT(show()) );
-  if ( s->showHistory   ) QTimer::singleShot( 0, d->historyDock,   SLOT(show()) );
-  if ( s->showVariables ) QTimer::singleShot( 0, d->variablesDock, SLOT(show()) );
-
-  return QMainWindow::event( e );
-}
-
-
-void Crunch::closeEvent( QCloseEvent* e )
-{
-  if(d->trayIcon)
-    d->trayIcon->hide();
-  saveSettings();
-  emit quitApplication();
-  QMainWindow::closeEvent( e );
-}
-
-void Crunch::loadSession()
-{
-  const char * errMsg= "File %1 is not a valid session";
-  QString filters = tr( "SpeedCrunch Sessions (*.sch);;All Files (*)" );
-  QString fname = QFileDialog::getOpenFileName( this, tr("Load Session"), QString::null, filters );
-  if ( fname.isEmpty() )
-    return;
-
-  QFile file( fname );
-  if ( ! file.open( QIODevice::ReadOnly ) )
-  {
-    QMessageBox::critical( this, tr("Error"), tr("Can't read from file %1").arg( fname ) );
-    return;
-  }
-
-  QTextStream stream( & file );
-
-  // version of the format
-  QString version = stream.readLine();
-  if ( version != "0.10" )
-  {
-    QMessageBox::critical( this, tr("Error"), tr(errMsg).arg( fname ) );
-    return;
-  }
-
-  // number of calculations
-  bool ok;
-  int noCalcs = stream.readLine().toInt( &ok );
-  if ( ok == false || noCalcs < 0 )
-  {
-    QMessageBox::critical( this, tr("Error"), tr(errMsg).arg( fname ) );
-    return;
-  }
-
-  // ask for merge with current session
-  QMessageBox::StandardButton but =
-    QMessageBox::question( this, tr("Question"),
-                           tr("Merge session being loaded with current session?\n"
-                              "If no, current variables and display will be cleared."),
-                           QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel,
-                           QMessageBox::Yes );
-  if ( but == QMessageBox::Cancel )
-    return;
-  else if ( but == QMessageBox::No )
-  {
-    d->result->clear();
-    //Settings * set = Settings::self();
-    //set->history.clear();
-    //set->historyResults.clear();
-    deleteAllVariables();
-    clearHistory();
-    saveSettings();
-    applySettings();
-  }
-
-  // expressions and results
-  for ( int i = 0; i < noCalcs; i++ )
-  {
-    QString exp = stream.readLine();
-    QString res = stream.readLine();
-    if ( exp.isNull() || res.isNull() )
-    {
-      QMessageBox::critical( this, tr("Error"), tr(errMsg).arg( fname ) );
-      return;
-    }
-    HNumber num( res.toAscii().data() );
-    if ( ! num.isNan() )
-      d->result->append( exp, num );
-    else
-      d->result->appendError( exp, res );
-  }
-
-  // variables
-  int noVars = stream.readLine().toInt( &ok );
-  if ( ok == false || noVars < 0 )
-  {
-    QMessageBox::critical( this, tr("Error"), tr(errMsg).arg( fname ) );
-    return;
-  }
-  for ( int i = 0; i < noVars; i++ )
-  {
-    QString var = stream.readLine();
-    QString val = stream.readLine();
-    if ( var.isNull() || val.isNull() )
-    {
-      QMessageBox::critical( this, tr("Error"), tr(errMsg).arg( fname ) );
-      return;
-    }
-    HNumber num( val.toAscii().data() );
-    if (  num != HNumber::nan() )
-      d->eval->set( var, num );
-  }
-
-  file.close();
-
-  saveSettings();
-  applySettings();
-}
-
-void Crunch::saveSession()
-{
-  QString filters = tr( "SpeedCrunch Sessions (*.sch);;All Files (*)" );
-  QString fname = QFileDialog::getSaveFileName( this, tr("Save Session"), QString::null, filters );
-  if ( fname.isEmpty() )
-    return;
-
-  QFile file( fname );
-  if ( ! file.open( QIODevice::WriteOnly ) )
-  {
-    QMessageBox::critical( this, tr("Error"), tr("Can't write to file %1").arg( fname ) );
-    return;
-  }
-
-  QTextStream stream( & file );
-
-  // version of the format
-  stream << "0.10" << "\n";
-
-  // number of calculations
-  stream << d->result->count() << "\n";
-
-  // expressions and results
-  stream << d->result->asText() << "\n";
-
-  // number of variables
-  int noVars = d->eval->variables().count();
-  stream << noVars - 2 << "\n"; // exclude pi and phi
-
-  // variables
-  for ( int i = 0; i < noVars; i++ )
-  {
-    Variable var = d->eval->variables()[i];
-    if ( var.name != "pi" && var.name != "phi" )
-      stream << var.name << "\n" << HMath::format( var.value ) << "\n";
-  }
-
-  file.close();
-}
 
 void Crunch::saveSettings()
 {
-  Settings* settings = Settings::self();
+  Settings * settings = Settings::self();
 
   settings->mainWindowSize = size();
 
@@ -897,7 +1528,7 @@ void Crunch::saveSettings()
   {
     settings->variables.clear();
     QVector<Variable> vars = d->eval->variables();
-    for( int i=0; i<vars.count(); i++ )
+    for ( int i = 0; i < vars.count(); i++ )
     {
       QString name;
       int length = vars[i].name.length();
@@ -944,581 +1575,20 @@ void Crunch::saveSettings()
   settings->save();
 }
 
-void Crunch::restoreDocks()
+
+void Crunch::setDigits( int i )
 {
-  Settings* settings = Settings::self();
-
-  restoreState( settings->mainWindowState );
-
-  if( settings->showHistory )
-  if( settings->historyDockFloating )
-  if( !d->historyDock->isFloating() )
-  {
-    d->historyDock->hide();
-    d->historyDock->setFloating( true );
-    d->historyDock->move( settings->historyDockLeft, settings->historyDockTop );
-    d->historyDock->resize( settings->historyDockWidth, settings->historyDockHeight );
-    QTimer::singleShot(0, d->historyDock, SLOT(show()));
-  }
-
-  if( settings->showFunctions )
-  if( settings->functionsDockFloating )
-  if( !d->functionsDock->isFloating() )
-  {
-    d->functionsDock->hide();
-    d->functionsDock->setFloating( true );
-    d->functionsDock->move( settings->functionsDockLeft, settings->functionsDockTop );
-    d->functionsDock->resize( settings->functionsDockWidth, settings->functionsDockHeight );
-    QTimer::singleShot(0, d->functionsDock, SLOT(show()));
-  }
-
-  if( settings->showVariables )
-  if( settings->variablesDockFloating )
-  if( !d->variablesDock->isFloating() )
-  {
-    d->variablesDock->hide();
-    d->variablesDock->setFloating( true );
-    d->variablesDock->move( settings->variablesDockLeft, settings->variablesDockTop );
-    d->variablesDock->resize( settings->variablesDockWidth, settings->variablesDockHeight );
-    QTimer::singleShot(0, d->variablesDock, SLOT(show()));
-  }
-
-  if( settings->showConstants )
-  if( settings->constantsDockFloating )
-  if( !d->constantsDock->isFloating() )
-  {
-    d->constantsDock->hide();
-    d->constantsDock->setFloating( true );
-    d->constantsDock->move( settings->constantsDockLeft, settings->constantsDockTop );
-    d->constantsDock->resize( settings->constantsDockWidth, settings->constantsDockHeight );
-    QTimer::singleShot(0, d->constantsDock, SLOT(show()));
-  }
-}
-
-void Crunch::activate()
-{
-  activateWindow();
-  d->editor->setFocus();
-}
-
-void Crunch::minimizeToTray()
-{
-  if( d->trayIcon )
-  {
-    hide();
-    d->trayIcon->show();
-    if( d->trayNotify )
-      QTimer::singleShot( 500, this, SLOT(showTrayMessage()) );
-    d->trayNotify = false;
-  }
-}
-
-void Crunch::showTrayMessage()
-{
-  if( d->trayIcon )
-    d->trayIcon->showMessage( QString(),
-      tr("SpeedCrunch is minimized.\nClick on the icon to reactivate it."),
-      QSystemTrayIcon::NoIcon, 2000);
-}
-
-void Crunch::trayIconActivated()
-{
-  showNormal();
-  activateWindow();
-  d->editor->setFocus();
-  QTimer::singleShot( 0, d->trayIcon, SLOT(hide()) );
-
-  // work around docks does not reappear (under KDE/Linux)
-#ifdef Q_OS_UNIX
-  if( d->historyDock->isFloating() )
-  {
-    d->historyDock->hide();
-    QTimer::singleShot( 0, d->historyDock, SLOT(show()) );
-  }
-  if( d->functionsDock->isFloating() )
-  {
-    d->functionsDock->hide();
-    QTimer::singleShot( 0, d->functionsDock, SLOT(show()) );
-  }
-  if( d->variablesDock->isFloating() )
-  {
-    d->variablesDock->hide();
-    QTimer::singleShot( 0, d->variablesDock, SLOT(show()) );
-  }
-  if( d->constantsDock->isFloating() )
-  {
-    d->constantsDock->hide();
-    QTimer::singleShot( 0, d->constantsDock, SLOT(show()) );
-  }
-#endif
-}
-
-void Crunch::radian()
-{
-  Settings::self()->angleMode = Settings::Radian;
-}
-
-void Crunch::degree()
-{
-  Settings::self()->angleMode = Settings::Degree;
-}
-
-void Crunch::returnPressed()
-{
-  QString str = Evaluator::autoFix( d->editor->text() );
-  if( str.isEmpty() ) return;
-
-  d->eval->setExpression( str );
-  d->historyDock->setHistory( d->editor->history() );
-
-  HNumber result = d->eval->evalUpdateAns();
-  if( !d->eval->error().isEmpty() )
-  {
-    d->result->appendError( str, d->eval->error() );
-    d->editor->appendHistory( str, d->eval->error() );
-  }
-  else
-  {
-    d->result->append( str, result );
-    d->editor->appendHistory( str, HMath::format( result ) );
-    d->editor->setAnsAvailable( true );
-    d->variablesDock->updateList( d->eval );
-  }
-
-  d->editor->setText( str );
-  d->editor->selectAll();
-  d->editor->stopAutoCalc();
-  d->editor->stopAutoComplete();
-  d->autoAns = true;
-
-  QTimer::singleShot( 0, d->editor, SLOT(setFocus()) );
-
-  if( !isActiveWindow () )
-    activateWindow();
-}
-
-void Crunch::expressionSelected( const QString& e )
-{
-  d->editor->setText( e );
-  returnPressed();
-
-  if( !isActiveWindow () )
-    activateWindow();
-}
-
-void Crunch::functionSelected( const QString& e )
-{
-  if( e.isEmpty() )
-    return;
-  d->editor->insert( e );
-  d->editor->insert( "(" );
-
-  QTimer::singleShot( 0, d->editor, SLOT(setFocus()) );
-
-  if( !isActiveWindow () )
-    activateWindow();
-}
-
-void Crunch::variableSelected( const QString& v )
-{
-  if( v.isEmpty() )
-    return;
-  d->editor->insert( v );
-
-  QTimer::singleShot( 0, d->editor, SLOT(setFocus()) );
-
-  if( !isActiveWindow () )
-    activateWindow();
-}
-
-void Crunch::constantSelected( const QString& c )
-{
-  if( c.isEmpty() )
-    return;
-
-  QString str( c );
-  str.replace( '.', Settings::decimalPoint() );
-  d->editor->insert( str );
-
-  QTimer::singleShot( 0, d->editor, SLOT(setFocus()) );
-
-  if( !isActiveWindow () )
-    activateWindow();
-}
-
-void Crunch::textChanged()
-{
-  if( d->autoAns )
-  {
-    QString expr = Evaluator::autoFix( d->editor->text() );
-    if( expr.isEmpty() ) return;
-    Tokens tokens = Evaluator::scan( expr );
-    if( tokens.count() == 1 )
-    if( ( tokens[0].asOperator() == Token::Plus ) ||
-        ( tokens[0].asOperator() == Token::Minus ) ||
-        ( tokens[0].asOperator() == Token::Asterisk ) ||
-        ( tokens[0].asOperator() == Token::Slash ) ||
-        ( tokens[0].asOperator() == Token::Caret ) )
-     {
-       d->autoAns = false;
-       expr.prepend( "ans" );
-       d->editor->setText( expr );
-       d->editor->setCursorPosition( expr.length() );
-     }
-  }
-}
-
-void Crunch::copyResult()
-{
-  QClipboard * cb = QApplication::clipboard();
-  HNumber num = d->eval->get( "ans" );
-  char * strToCopy;
-
-  switch ( Settings::self()->format )
-  {
-    case 'h':
-      strToCopy = HMath::formatHexadec( num );
-      break;
-    case 'o':
-      strToCopy = HMath::formatOctal( num );
-      break;
-    case 'b':
-      strToCopy = HMath::formatBinary( num );
-      break;
-    default:
-      strToCopy = HMath::formatFixed( num );
-  }
-
-  cb->setText( QString(strToCopy), QClipboard::Clipboard );
-  free( strToCopy );
-}
-
-void Crunch::focusAndSelectInput()
-{
-  activateWindow();
-  d->editor->selectAll();
-  d->editor->setFocus();
-}
-
-void Crunch::clearInput()
-{
-  d->editor->clear();
-  QTimer::singleShot(0, d->editor, SLOT( setFocus() ) );
-}
-
-void Crunch::clearHistory()
-{
-  d->editor->clearHistory();
-  d->historyDock->clear();
-  QTimer::singleShot(0, d->editor, SLOT( setFocus() ) );
-}
-
-void Crunch::deleteAllVariables()
-{
-  d->eval->clearVariables();
-  d->variablesDock->updateList( d->eval );
-}
-
-void Crunch::insertFunction()
-{
-  if( d->insertFunctionDlg->exec() == InsertFunctionDlg::Accepted )
-  {
-    QString fname = d->insertFunctionDlg->functionName();
-    if( !fname.isEmpty() )
-      d->editor->insert( fname );
-  }
-}
-
-void Crunch::insertVariable()
-{
-  if( !d->insertVariableDlg )
-    d->insertVariableDlg = new InsertVariableDlg( d->eval, this );
-  else
-    d->insertVariableDlg->updateList();
-
-  if( d->insertVariableDlg->exec() == InsertVariableDlg::Accepted )
-  {
-    QString varname = d->insertVariableDlg->variableName();
-    if( !varname.isEmpty() )
-      d->editor->insert( varname );
-  }
-}
-
-void Crunch::deleteVariable()
-{
-  if( !d->deleteVariableDlg )
-    d->deleteVariableDlg = new DeleteVariableDlg( d->eval, this );
-  else
-    d->deleteVariableDlg->updateList();
-
-  d->deleteVariableDlg->exec();
-  d->variablesDock->updateList( d->eval );
-}
-
-void Crunch::setView(char c)
-{
-  Settings* settings = Settings::self();
-  settings->format = c;
-  saveSettings();
-  applySettings();
-}
-
-void Crunch::viewGeneral()
-{
-  d->digitsGroup->setEnabled(true);
-  setView('g');
-}
-
-void Crunch::viewFixed()
-{
-  d->digitsGroup->setEnabled(true);
-  setView('f');
-}
-
-void Crunch::viewEngineering()
-{
-  d->digitsGroup->setEnabled(true);
-  setView('n');
-}
-
-void Crunch::viewScientific()
-{
-  d->digitsGroup->setEnabled(true);
-  setView('e');
-}
-
-void Crunch::viewHexadec()
-{
-  d->digitsGroup->setDisabled(true);
-  setView('h');
-}
-
-void Crunch::viewOctal()
-{
-  d->digitsGroup->setDisabled(true);
-  setView('o');
-}
-
-void Crunch::viewBinary()
-{
-  d->digitsGroup->setDisabled(true);
-  setView('b');
-}
-
-void Crunch::setDigits(int i)
-{
-  Settings* settings = Settings::self();
+  Settings * settings = Settings::self();
   settings->decimalDigits = i;
   saveSettings();
   applySettings();
 }
 
-void Crunch::digitsAuto()
-{
-  setDigits(-1);
-}
 
-void Crunch::digits2()
+void Crunch::setView( char c )
 {
-  setDigits(2);
-}
-
-void Crunch::digits3()
-{
-  setDigits(3);
-}
-
-void Crunch::digits8()
-{
-  setDigits(8);
-}
-
-void Crunch::digits15()
-{
-  setDigits(15);
-}
-
-void Crunch::digits50()
-{
-  setDigits(50);
-}
-
-void Crunch::showClearButton( bool b )
-{
-  Settings* settings = Settings::self();
-  settings->showClearInputButton = b;
+  Settings * settings = Settings::self();
+  settings->format = c;
   saveSettings();
   applySettings();
-}
-
-void Crunch::showEvalButton( bool b )
-{
-  Settings* settings = Settings::self();
-  settings->showEvaluateButton = b;
-  saveSettings();
-  applySettings();
-}
-
-void Crunch::showKeyPad( bool b )
-{
-  Settings* settings = Settings::self();
-  settings->showKeyPad = b;
-  saveSettings();
-  applySettings();
-}
-
-void Crunch::showHistory( bool b )
-{
-  Settings* settings = Settings::self();
-  settings->showHistory = b;
-  saveSettings();
-  applySettings();
-  d->historyDock->raise();
-}
-
-void Crunch::showFunctions( bool b)
-{
-  Settings* settings = Settings::self();
-  settings->showFunctions = b;
-  saveSettings();
-  applySettings();
-  d->functionsDock->raise();
-}
-
-void Crunch::showVariables( bool b)
-{
-  Settings* settings = Settings::self();
-  settings->showVariables = b;
-  saveSettings();
-  applySettings();
-  d->variablesDock->raise();
-}
-
-void Crunch::showConstants( bool b)
-{
-  Settings* settings = Settings::self();
-  settings->showConstants = b;
-  saveSettings();
-  applySettings();
-  d->constantsDock->raise();
-}
-
-void Crunch::configure()
-{
-  saveSettings();
-  d->configDlg->exec();
-}
-
-void Crunch::showTip()
-{
-  QPoint p = mapFromGlobal( d->result->mapToGlobal( QPoint(0, 0) ) ) += QPoint(4,4);
-  d->tip->move( p );
-
-  int tipNo = rand() % 5;
-  QString msg;
-  switch( tipNo )
-  {
-    case 0:
-      msg = tr("You can customize the syntax highlight colors. "
-               "Use menu <i>Settings, Configure</i>, and then from the "
-               "configuration dialog, choose tab <i>Syntax Highlight</i>." );
-      break;
-    case 1:
-      msg = tr("To insert a function using keyboard, use Ctrl+F shorcut. "
-               "From the dialog, you can choose the function you want to "
-               "insert." );
-      break;
-    case 2:
-      msg = tr("To insert a variable using keyboard, use Ctrl+I shorcut. "
-               "From the dialog, you can choose the variable you want to "
-               "insert." );
-      break;
-    case 3:
-      msg = tr("Use variable <i>pi</i> to use pi constant." );
-      break;
-    case 4:
-      msg = tr("Use <i>;</i> (semicolon) to separate the parameters in "
-               "functions." );
-      break;
-    default:
-      break;
-  }
-
-  d->tip->showText( msg );
-}
-
-void Crunch::gotoWebsite()
-{
-  QDesktopServices::openUrl( QUrl(QString::fromLatin1("http://www.speedcrunch.org")) );
-}
-
-void Crunch::about()
-{
-  AboutBox* aboutBox = new AboutBox( this );
-  aboutBox->exec();
-  delete aboutBox;
-}
-
-void Crunch::aboutQt()
-{
-  QMessageBox::aboutQt( this, tr("About Qt") );
-}
-
-void Crunch::addKeyPadText( const QString& text )
-{
-  if( text == "<--" ) // Special case: backspace
-    d->editor->doBackspace();
-  else
-  {
-    bool wasAns = d->editor->toPlainText().startsWith( "ans", Qt::CaseInsensitive );
-    d->editor->insertPlainText( text );
-    if( !wasAns && d->editor->toPlainText().startsWith( "ans", Qt::CaseInsensitive ) )
-      d->editor->setCursorPosition( d->editor->text().length() );
-  }
-
-  d->editor->setFocus();
-}
-
-void Crunch::hideAutoCalc()
-{
-  d->autoCalcLabel->hideText();
-}
-
-void Crunch::showAutoCalc( const QString& msg )
-{
-  QPoint p = d->editor->mapToParent( QPoint(0, 0) );
-  d->autoCalcLabel->move( p );
-
-  d->autoCalcLabel->showText( msg );
-}
-
-void Crunch::setWidgetsLayoutAccordingToLanguageDirection()
-{
-  // menu bar and menus
-  setWidgetLayoutAccordingToLanguageDirection( menuBar()        );
-  setWidgetLayoutAccordingToLanguageDirection( d->sessionMenu   );
-  setWidgetLayoutAccordingToLanguageDirection( d->editMenu      );
-  setWidgetLayoutAccordingToLanguageDirection( d->baseMenu      );
-  setWidgetLayoutAccordingToLanguageDirection( d->settingsMenu  );
-  setWidgetLayoutAccordingToLanguageDirection( d->helpMenu      );
-  // tip of the day
-  setWidgetLayoutAccordingToLanguageDirection( d->tip           );
-  // docks
-  setWidgetLayoutAccordingToLanguageDirection( d->constantsDock );
-  setWidgetLayoutAccordingToLanguageDirection( d->functionsDock );
-  // insert function dialog
-  setWidgetLayoutAccordingToLanguageDirection( d->insertFunctionDlg );
-  // tip of the day
-  setWidgetLayoutAccordingToLanguageDirection( d->tip );
-
-  // speedcrunch made widgets
-  emit adaptToLanguageChange();
-}
-
-static void setWidgetLayoutAccordingToLanguageDirection( QWidget * widget )
-{
-  if ( QLocale().language() == QLocale::Hebrew )
-    widget->setLayoutDirection( Qt::RightToLeft );
-  else
-    widget->setLayoutDirection( Qt::LeftToRight );
 }

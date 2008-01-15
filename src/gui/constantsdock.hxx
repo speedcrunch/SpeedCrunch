@@ -1,54 +1,59 @@
-/* This file is part of the SpeedCrunch project
-   Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-                 2008 Helder Correia <helder.pereira.correia@gmail.com>
+// This file is part of the SpeedCrunch project
+// Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
+// Copyright (C) 2008 Helder Correia <helder.pereira.correia@gmail.com>
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; see the file COPYING.  If not, write to
+// the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+// Boston, MA 02110-1301, USA.
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public License
-   as published by the Free Software Foundation; either version 2
-   of the License, or (at your option) any later version.
 
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+#ifndef CONSTANTSDOCK_HXX
+#define CONSTANTSDOCK_HXX
 
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
- */
-
-#ifndef CONSTANTSDOCK
-#define CONSTANTSDOCK
 
 #include <QDockWidget>
 
-class ConstantsDockPrivate;
-class QTreeWidgetItem;
+
 class Constants;
+class ConstantsDockPrivate;
+
+class QTreeWidgetItem;
+
 
 class ConstantsDock : public QDockWidget
 {
   Q_OBJECT
 
   public:
-    explicit ConstantsDock( QWidget* parent );
+    explicit ConstantsDock( QWidget * parent );
     ~ConstantsDock();
+
+  signals:
+    void constantSelected( const QString & c );
 
   public slots:
     void settingsChanged();
 
-  signals:
-    void constantSelected( const QString& c );
-
   protected slots:
     void filter();
-    void handleItem( QTreeWidgetItem* item );
+    void handleItem( QTreeWidgetItem * item );
     void triggerFilter();
-    void updateConstants();
+    void updateList();
 
   private:
-    ConstantsDockPrivate*d;
+    ConstantsDockPrivate * d;
 };
 
-#endif // CONSTANTSDOCK
+
+#endif

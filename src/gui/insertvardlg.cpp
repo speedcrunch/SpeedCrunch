@@ -1,25 +1,27 @@
-/* This file is part of the SpeedCrunch project
-   Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-   Copyright (C) 2006 Johan Thelin <e8johan@gmail.com>
-   Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
+// This file is part of the SpeedCrunch project
+// Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
+// Copyright (C) 2006 Johan Thelin <e8johan@gmail.com>
+// Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
+// Copyright (C) 2008 Helder Correia <helder.pereira.correia@gmail.com>
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; see the file COPYING.  If not, write to
+// the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+// Boston, MA 02110-1301, USA.
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public License
-   as published by the Free Software Foundation; either version 2
-   of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
- */
 
 #include <base/evaluator.hxx>
+#include <base/settings.hxx>
 #include <gui/insertvardlg.hxx>
 
 #include <QDialog>
@@ -31,26 +33,35 @@
 #include <QTreeWidget>
 #include <QVBoxLayout>
 
+
 class InsertVariableDlgPrivate
 {
-public:
-  Evaluator* eval;
-  QTreeWidget* list;
-  QPushButton* insertButton;
-  QPushButton* cancelButton;
+  public:
+    QPushButton * cancelButton;
+    Evaluator   * eval;
+    QPushButton * insertButton;
+    QTreeWidget * list;
 };
 
 
-static QString formatValue( const HNumber& value )
+static QString formatValue( const HNumber & value )
 {
-  char* str = HMath::format( value, 'g' );
-  QString s = QString::fromLatin1( str );
+  char * str = HMath::format( value, 'g' );
+  QString s;
+  if ( Settings::decimalPoint() == '.' )
+    s = QString::fromLatin1( str );
+  else
+    s = QString::fromLatin1( str ).replace( '.', ',' );
   free( str );
   return s;
 }
 
-InsertVariableDlg::InsertVariableDlg( Evaluator* eval, QWidget* parent ):
-QDialog( parent ), d( new InsertVariableDlgPrivate )
+
+// public
+
+InsertVariableDlg::InsertVariableDlg( Evaluator * eval, QWidget * parent )
+  : QDialog( parent ),
+    d( new InsertVariableDlgPrivate )
 {
   setWindowTitle( tr("Insert Variable") );
   setModal( true );
@@ -100,16 +111,6 @@ QDialog( parent ), d( new InsertVariableDlgPrivate )
   adjustSize();
 }
 
-InsertVariableDlg::~InsertVariableDlg()
-{
-  delete d;
-}
-
-QString InsertVariableDlg::variableName() const
-{
-  QTreeWidgetItem* item = d->list->currentItem();
-  return item ? item->text(0) : QString();
-}
 
 void InsertVariableDlg::updateList()
 {
@@ -131,4 +132,25 @@ void InsertVariableDlg::updateList()
   d->list->sortItems( 0, Qt::AscendingOrder );
 
   d->list->setUpdatesEnabled( true );
+}
+
+
+QString InsertVariableDlg::variableName() const
+{
+  QTreeWidgetItem* item = d->list->currentItem();
+  return item ? item->text(0) : QString();
+}
+
+
+InsertVariableDlg::~InsertVariableDlg()
+{
+  delete d;
+}
+
+
+// public slots
+
+void InsertVariableDlg::settingsChanged()
+{
+  updateList();
 }
