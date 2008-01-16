@@ -81,11 +81,11 @@ memskip(
    matching byte, or <count>, if none was found */
 static int
 _scan_digit(
-  char*p,
+  const char*p,
   int count,
   char digit)
 {
-  char* ps;
+  const char* ps;
 
   ps = p;
   for (; count-- > 0 && *p == digit; ++p);
@@ -179,7 +179,7 @@ _is_special(
 static void
 _copyfn(
   floatnum dest,
-  floatnum source,
+  cfloatnum source,
   bc_num b)
 {
   *dest = *source;

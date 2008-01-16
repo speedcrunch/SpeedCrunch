@@ -284,7 +284,7 @@ class VarSymbol: public VarSymbolIntf
     SymType type() const;
     PSymbol clone(void* aOwner) const;
     const Variant& value() const { return m_var->v; };
-    Variant* writePtr() const { return &m_var->v; };
+    Variant* leftVal() const { return &m_var->v; };
   private:
     typedef struct
     {

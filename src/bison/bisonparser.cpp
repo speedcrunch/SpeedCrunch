@@ -659,31 +659,36 @@ bool SglExprLex::checkExact()
 
 /*------------------------   parser interface   -----------------------*/
 
-static inline const QString* getQString(SafeQString* s)
-{
-  return reinterpret_cast<QString*>(s);
-}
-
-static inline const Variant* getVariant(SafeVariant* v)
-{
-  return reinterpret_cast<const Variant*>(v);
-}
-
-static inline ParamList* getParams(Params p)
-{
-  return reinterpret_cast<ParamList*>(p);
-}
-
-SafeQString* SglExprLex::allocString(const QString& s)
+String SglExprLex::allocString(const QString& s)
 {
   strlist.append(s);
-  return reinterpret_cast<SafeQString*>(&strlist.last());
+  return strlist.size() - 1;
 }
 
-SafeVariant* SglExprLex::allocNumber(const Variant& n)
+VariantIdx SglExprLex::allocNumber(const Variant& n)
 {
   numlist.append(n);
-  return reinterpret_cast<SafeVariant*>(&numlist.last());
+  return numlist.size() - 1;
+}
+
+HNumber SglExprLex::cvtNumber(const DigitSeq& descriptor, String frac)
+{
+  QByteArray str;
+  HNumber bias(0);
+  if (descriptor.digits)
+    str = strlist.at(descriptor.digits).toLatin1();
+  if (descriptor.complement && str[0] - '0' >= descriptor.base >> 1)
+    bias = HMath::raise(HNumber(descriptor.base), str.size());
+  if (descriptor.base != 10)
+    str.prepend(basePrefix(descriptor.base));
+  if (frac >= 0)
+  {
+    str.append('.');
+    str.append(strlist.at(frac).toLatin1());
+  }
+  if (descriptor.sign >= 0)
+    return HNumber(str.data()) - bias;
+  return bias - HNumber(str.data());
 }
 
 NumValue SglExprLex::variant2numValue(const Variant& v)
@@ -697,7 +702,7 @@ NumValue SglExprLex::variant2numValue(const Variant& v)
 Variant SglExprLex::numValue2variant(NumValue n)
 {
   Variant result;
-  const Variant* v = getVariant(n.val);
+  const Variant* v = &numlist.at(n.val);
   if (n.percent)
     result = *(const HNumber*)v / HNumber(100);
   else
@@ -756,17 +761,17 @@ int SglExprLex::mGetToken(YYSTYPE* val, int* pos, int* lg)
     case PREFIX12  :
     case PREFIX14  :
     case POSTFIXOP :
-    case FUNCTION  : val->func = token.symbol(); break;
+    case FUNCTION  : val->func = index; break;
     case DECSEQ    :
     case HEXSEQ    :
     case OCTSEQ    :
     case BINSEQ    :
     case TEXT      : val->string = allocString(token.str()); break;
     case SIGN      : val->sign = token.symbol()->type() == 'M'? -1 : 1; break;
-    case CONSTANT  : 
+    case CONSTANT  :
       val->numvalue = variant2numValue(token.symbol()->asConst()->value()); break;
     case VARIABLE  :
-      val->var.v = token.symbol()->asVar()->writePtr();
+      val->var.v = index;
       val->var.d = variant2numValue(token.symbol()->asConst()->value());
       break;
     default        : ;
@@ -785,9 +790,9 @@ Params SglExprLex::mAddParam(Params list, NumValue val)
   {
     ParamList newList;
     paramlists.append(newList);
-    list = reinterpret_cast<Params>(&paramlists.last());
+    list = paramlists.size() - 1;
   }
-  getParams(list)->append(numValue2variant(val));
+  paramlists[list].append(numValue2variant(val));
   return list;
 }
 
@@ -798,58 +803,39 @@ NumValue SglExprLex::callFunction(Func f, Params params)
 
 NumValue SglExprLex::mCallFunction(Func f, Params params)
 {
-  return variant2numValue(f->asFunc()->eval(*getParams(params)));
+  return variant2numValue(tokens.at(f).symbol()
+                          ->asFunc()->eval(paramlists.at(params)));
 }
 
-NumValue SglExprLex::str2Val(SafeQString* s)
+NumValue SglExprLex::str2Val(String s)
 {
   return instance->mStr2Val(s);
 }
 
-NumValue SglExprLex::mStr2Val(SafeQString* s)
+NumValue SglExprLex::mStr2Val(String s)
 {
   NumValue result;
-  Variant v = *getQString(s);
+  Variant v = strlist.at(s);
   result.percent = 0;
   result.val = allocNumber(v);
   return result;
 }
 
-DigitSeq SglExprLex::appendStr(DigitSeq ds, SafeQString* seq)
+DigitSeq SglExprLex::appendStr(DigitSeq ds, String seq)
 {
   return instance->mAppendStr(ds, seq);
 }
 
-DigitSeq SglExprLex::mAppendStr(DigitSeq ds, SafeQString* seq)
+DigitSeq SglExprLex::mAppendStr(DigitSeq ds, String seq)
 {
   DigitSeq result = ds;
-  ds.digits = allocString(*getQString(ds.digits) + *getQString(seq));
+  ds.digits = allocString(strlist.at(ds.digits) + strlist.at(seq));
   return result;
 }
 
 NumValue SglExprLex::convertStr(NumLiteral literal)
 {
   return instance->mConvertStr(literal);
-}
-
-static HNumber cvtNumber(const DigitSeq& descriptor, SafeQString* frac = 0)
-{
-  QByteArray str;
-  HNumber bias(0);
-  if (descriptor.digits)
-    str = getQString(descriptor.digits)->toLatin1();
-  if (descriptor.complement && str[0] - '0' >= descriptor.base >> 1)
-    bias = HMath::raise(HNumber(descriptor.base), str.size());
-  if (descriptor.base != 10)
-    str.prepend(basePrefix(descriptor.base));
-  if (frac)
-  {
-    str.append('.');
-    str.append(getQString(frac)->toLatin1());
-  }
-  if (descriptor.sign >= 0)
-    return HNumber(str.data()) - bias;
-  return bias - HNumber(str.data());
 }
 
 NumValue SglExprLex::mConvertStr(NumLiteral literal)
@@ -865,16 +851,21 @@ NumValue SglExprLex::mConvertStr(NumLiteral literal)
 
 NumValue SglExprLex::assignVar(Var variable, NumValue val)
 {
-  *variable.v = numValue2variant(val);
+  return instance->mAssignVar(variable, val);
+}
+
+NumValue SglExprLex::mAssignVar(Var variable, NumValue val)
+{
+  *(tokens.at(variable.v).symbol()->asVar()->leftVal()) = numValue2variant(val);
   variable.d = val;
   return val;
 }
 
-Var SglExprLex::createVar(SafeQString* s)
+Var SglExprLex::createVar(String s)
 {
   Var result;
-  result.v = Tables::createVarSymbol(*getQString(s))->writePtr();
+/*  result.v = Tables::createVarSymbol(*getQString(s))->writePtr();
   result.d.val = 0;
-  result.d.percent = false;
+  result.d.percent = false;*/
   return result;
 }

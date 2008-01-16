@@ -32,23 +32,7 @@
 #define _BISON_H
 
 #ifdef __cplusplus
-
-class SafeVariant;
-class SafeQString;
-class SafeParamList;
-class Symbol;
-class Variant;
-
 extern "C" {
-
-#else
-
-# define SafeVariant void
-# define SafeParamList void
-# define Symbol void
-# define SafeQString void
-# define Variant void
-
 #endif /* __cplusplus */
 
 /* return values of parse */
@@ -56,7 +40,8 @@ extern "C" {
 #define PARSE_SYNTAXERROR 1
 #define PARSE_OUTOFMEM    2
 
-typedef SafeQString* String;
+typedef int String;
+typedef int VariantIdx;
 
 typedef struct DigitSeq
 {
@@ -75,18 +60,18 @@ typedef struct NumLiteral
 
 typedef struct NumValue
 {
-  SafeVariant* val;
+  VariantIdx val;
   int token;
   char percent;
 } NumValue;
 
-typedef SafeParamList* Params;
+typedef int Params;
 
-typedef const Symbol* Func;
+typedef int Func;
 
 typedef struct Var
 {
-  Variant* v;
+  int v;
   NumValue d;
 } Var;
 

@@ -94,7 +94,7 @@ static FGetToken getToken;
 }
 
 /* a token that cannot be resolved by the scanner */
-%token UNKNOWNTOKEN
+%token <string>UNKNOWNTOKEN
 /* a token that represents a string */
 %token <string>TEXT
 /* token that starts a scale (exponent) in a bin, oct or hex encoded scientific
@@ -214,7 +214,7 @@ static FGetToken getToken;
 /* a token for a function identifier */
 %token <func>FUNCTION
 /* the token for the binary operator (=) expressing an assignment */
-%token ASSIGN
+%token <Var>ASSIGN
 
 /* list of binary operators ordered by precedence and left-to-right or
    right-to-left associativeness. 0 has lowest precedence, 14 highest.

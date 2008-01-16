@@ -144,24 +144,26 @@ class SglExprLex
     void updateState();
     void reset();
 
-    SafeVariant* allocNumber(const Variant& n);
-    SafeQString* allocString(const QString&);
+    HNumber cvtNumber(const DigitSeq& descriptor, String frac = -1);
+    VariantIdx allocNumber(const Variant& n);
+    String allocString(const QString&);
     NumValue variant2numValue(const Variant&);
-    static Variant numValue2variant(NumValue);
+    Variant numValue2variant(NumValue);
     static int getToken(YYSTYPE* val, int* pos, int* lg);
     int mGetToken(YYSTYPE* val, int* pos, int* lg);
     static Params addParam(Params list, NumValue val);
     Params mAddParam(Params list, NumValue val);
     static NumValue callFunction(Func f, Params params);
     NumValue mCallFunction(Func f, Params params);
-    static NumValue str2Val(SafeQString*);
-    NumValue mStr2Val(SafeQString*);
-    static DigitSeq appendStr(DigitSeq ds, SafeQString* seq);
-    DigitSeq mAppendStr(DigitSeq ds, SafeQString* seq);
+    static NumValue str2Val(String);
+    NumValue mStr2Val(String);
+    static DigitSeq appendStr(DigitSeq ds, String seq);
+    DigitSeq mAppendStr(DigitSeq ds, String seq);
     static NumValue convertStr(NumLiteral literal);
     NumValue mConvertStr(NumLiteral literal);
     static NumValue assignVar(Var variable, NumValue val);
-    static Var createVar(SafeQString* s);
+    NumValue mAssignVar(Var variable, NumValue val);
+    static Var createVar(String s);
 
     SglExprLex( const SglExprLex& );
     SglExprLex& operator=( const SglExprLex& );
