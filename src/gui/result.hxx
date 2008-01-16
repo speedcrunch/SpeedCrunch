@@ -39,6 +39,7 @@ class Result : public QListWidget
 
   public:
     Result( QWidget * parent = 0, const char * name = 0 );
+    ~Result();
     QString asText() const;
     void    append( const QString & expr, const HNumber & value );
     void    appendError( const QString & expr, const QString & msg );
@@ -57,7 +58,6 @@ class Result : public QListWidget
     void    setCustomTextColor( const QColor & textColor );
     void    setDecimalDigits( int digits );
     void    setFormat( char format );
-    ~Result();
 
   signals:
     void textCopied( const QString & text );

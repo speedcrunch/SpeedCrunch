@@ -75,8 +75,7 @@ class ExprItem : public BaseItem
       if ( result->customAppearance() )
       {
         setForeground( result->customTextColor() );
-        setBackground( (index & 1) ? result->customBackgroundColor1() :
-        result->customBackgroundColor2() );
+        setBackground( (index & 1) ?  result->customBackgroundColor1() : result->customBackgroundColor2() );
       }
       else
       {
@@ -195,6 +194,11 @@ Result::Result( QWidget * parent, const char * name )
   setMinimumWidth( 150 );
 
   connect( this, SIGNAL(itemClicked( QListWidgetItem * )), this, SLOT(copyToClipboard( QListWidgetItem * )) );
+
+  setFocusPolicy( Qt::NoFocus );
+
+  setHorizontalScrollMode( QAbstractItemView::ScrollPerPixel );
+  setVerticalScrollMode(   QAbstractItemView::ScrollPerPixel );
 }
 
 
@@ -314,7 +318,7 @@ void Result::setCustomBackgroundColor( const QColor & bg1, const QColor & bg2 )
   if( d->customAppearance )
   {
     QPalette pal = palette();
-    pal.setColor( QPalette::Base, bg1);
+    pal.setColor( QPalette::Base, bg1 );
     setPalette( pal );
   }
   triggerUpdate();
@@ -379,6 +383,7 @@ void Result::copyToClipboard( QListWidgetItem* item )
 {
   if ( ! item )
     return;
+
   QClipboard * cb = QApplication::clipboard();
   cb->setText( item->text(), QClipboard::Clipboard );
   emit textCopied( item->text() );
@@ -387,11 +392,9 @@ void Result::copyToClipboard( QListWidgetItem* item )
 
 void Result::scrollEnd()
 {
-  scrollToItem( item(count() - 1) );
-
-  // this should work even on right-to-left layout
-  QScrollBar * bar = horizontalScrollBar();
-  bar->setValue( bar->maximum() );
+  QScrollBar * hBar = horizontalScrollBar();
+  hBar->setValue( hBar->maximum() );
+  scrollToBottom();
 }
 
 
