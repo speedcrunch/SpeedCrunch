@@ -60,6 +60,8 @@
 #include <QPixmap>
 #include <QPushButton>
 #include <QRadioButton>
+#include <QScrollBar>
+#include <QShortcut>
 #include <QSystemTrayIcon>
 #include <QTextStream>
 #include <QTimer>
@@ -112,6 +114,9 @@ class CrunchActions
     QAction * viewHexadec;
     QAction * viewOctal;
     QAction * viewScientific;
+
+    QShortcut * scrollDown;
+    QShortcut * scrollUp  ;
 };
 
 
@@ -861,6 +866,22 @@ void Crunch::setWidgetsLayoutAccordingToLanguageDirection()
 }
 
 
+void Crunch::scrollDown()
+{
+  QScrollBar * sb = d->result->verticalScrollBar();
+  int value = sb->value() + 40;
+  sb->setValue( value );
+}
+
+
+void Crunch::scrollUp()
+{
+  QScrollBar * sb = d->result->verticalScrollBar();
+  int value = sb->value() - 40;
+  sb->setValue( value );
+}
+
+
 void Crunch::showAutoCalc( const QString & msg )
 {
   QPoint p = d->editor->mapToParent( QPoint(0, 0) );
@@ -1296,67 +1317,70 @@ void Crunch::closeEvent( QCloseEvent * e )
 void Crunch::createUI()
 {
   // create all the actions
-  d->actions->sessionLoad        = new QAction( tr("&Load..."),                 this );
-  d->actions->sessionSave        = new QAction( tr("&Save..."),                 this );
-  d->actions->sessionQuit        = new QAction( tr("&Quit"),                    this );
-  d->actions->selectExpression   = new QAction( tr("&Select Expression"),       this );
-  d->actions->editCopy           = new QAction( tr("&Copy"),                    this );
-  d->actions->editPaste          = new QAction( tr("&Paste"),                   this );
-  d->actions->editCopyResult     = new QAction( tr("Copy &Result"),             this );
-  d->actions->insertFunction     = new QAction( tr("Insert &Function..."),      this );
-  d->actions->insertVariable     = new QAction( tr("Insert &Variable..."),      this );
-  d->actions->deleteVariable     = new QAction( tr("D&elete Variable..."),      this );
-  d->actions->deleteAllVariables = new QAction( tr("Delete All V&ariables"),    this );
   d->actions->clearExpression    = new QAction( tr("Clear E&xpression"),        this );
   d->actions->clearHistory       = new QAction( tr("Clear &History"),           this );
-  d->actions->viewGeneral        = new QAction( tr("&General"),                 this );
-  d->actions->viewFixed          = new QAction( tr("&Fixed Decimal"),           this );
-  d->actions->viewEngineering    = new QAction( tr("&Engineering"),             this );
-  d->actions->viewScientific     = new QAction( tr("&Scientific"),              this );
-  d->actions->viewHexadec        = new QAction( tr("&Hexadecimal"),             this );
-  d->actions->viewOctal          = new QAction( tr("&Octal"),                   this );
-  d->actions->viewBinary         = new QAction( tr("&Binary"),                  this );
-  d->actions->digitsAuto         = new QAction( tr("&Automatic Precision"),     this );
+  d->actions->configure          = new QAction( tr("&Configure..."),            this );
+  d->actions->degree             = new QAction( tr("&Degree"),                  this );
+  d->actions->deleteAllVariables = new QAction( tr("Delete All V&ariables"),    this );
+  d->actions->deleteVariable     = new QAction( tr("D&elete Variable..."),      this );
+  d->actions->digits15           = new QAction( tr("&15 Decimal Digits"),       this );
   d->actions->digits2            = new QAction( tr("&2 Decimal Digits"),        this );
   d->actions->digits3            = new QAction( tr("&3 Decimal Digits"),        this );
-  d->actions->digits8            = new QAction( tr("&8 Decimal Digits"),        this );
-  d->actions->digits15           = new QAction( tr("&15 Decimal Digits"),       this );
   d->actions->digits50           = new QAction( tr("&50 Decimal Digits"),       this );
-  d->actions->radian             = new QAction( tr("&Radian"),                  this );
-  d->actions->degree             = new QAction( tr("&Degree"),                  this );
-  d->actions->showKeypad         = new QAction( tr("Show &Keypad"),               this );
-  d->actions->showHistory        = new QAction( tr("Show &History"),            this );
-  d->actions->showFunctions      = new QAction( tr("Show &Functions"),          this );
-  d->actions->showVariables      = new QAction( tr("Show &Variables"),          this );
-  d->actions->showConstants      = new QAction( tr("Show C&onstants"),          this );
-  d->actions->configure          = new QAction( tr("&Configure..."),            this );
-  d->actions->helpTipOfTheDay    = new QAction( tr("&Tip of the Day"),          this );
-  d->actions->helpGotoWebsite    = new QAction( tr("SpeedCrunch &Web Site..."), this );
+  d->actions->digits8            = new QAction( tr("&8 Decimal Digits"),        this );
+  d->actions->digitsAuto         = new QAction( tr("&Automatic Precision"),     this );
+  d->actions->editCopy           = new QAction( tr("&Copy"),                    this );
+  d->actions->editCopyResult     = new QAction( tr("Copy &Result"),             this );
+  d->actions->editPaste          = new QAction( tr("&Paste"),                   this );
   d->actions->helpAbout          = new QAction( tr("&About"),                   this );
   d->actions->helpAboutQt        = new QAction( tr("About &Qt"),                this );
+  d->actions->helpGotoWebsite    = new QAction( tr("SpeedCrunch &Web Site..."), this );
+  d->actions->helpTipOfTheDay    = new QAction( tr("&Tip of the Day"),          this );
+  d->actions->insertFunction     = new QAction( tr("Insert &Function..."),      this );
+  d->actions->insertVariable     = new QAction( tr("Insert &Variable..."),      this );
+  d->actions->radian             = new QAction( tr("&Radian"),                  this );
+  d->actions->selectExpression   = new QAction( tr("&Select Expression"),       this );
+  d->actions->sessionLoad        = new QAction( tr("&Load..."),                 this );
+  d->actions->sessionQuit        = new QAction( tr("&Quit"),                    this );
+  d->actions->sessionSave        = new QAction( tr("&Save..."),                 this );
+  d->actions->showConstants      = new QAction( tr("Show C&onstants"),          this );
+  d->actions->showFunctions      = new QAction( tr("Show &Functions"),          this );
+  d->actions->showHistory        = new QAction( tr("Show &History"),            this );
+  d->actions->showKeypad         = new QAction( tr("Show &Keypad"),               this );
+  d->actions->showVariables      = new QAction( tr("Show &Variables"),          this );
+  d->actions->viewBinary         = new QAction( tr("&Binary"),                  this );
+  d->actions->viewEngineering    = new QAction( tr("&Engineering"),             this );
+  d->actions->viewFixed          = new QAction( tr("&Fixed Decimal"),           this );
+  d->actions->viewGeneral        = new QAction( tr("&General"),                 this );
+  d->actions->viewHexadec        = new QAction( tr("&Hexadecimal"),             this );
+  d->actions->viewOctal          = new QAction( tr("&Octal"),                   this );
+  d->actions->viewScientific     = new QAction( tr("&Scientific"),              this );
 
-  d->actions->sessionLoad->setShortcut     ( Qt::CTRL + Qt::Key_L );
-  d->actions->sessionSave->setShortcut     ( Qt::CTRL + Qt::Key_S );
-  d->actions->sessionQuit->setShortcut     ( Qt::CTRL + Qt::Key_Q );
-  d->actions->editCopy->setShortcut        ( Qt::CTRL + Qt::Key_C );
-  d->actions->editPaste->setShortcut       ( Qt::CTRL + Qt::Key_V );
-  d->actions->editCopyResult->setShortcut  ( Qt::CTRL + Qt::Key_R );
-  d->actions->insertFunction->setShortcut  ( Qt::CTRL + Qt::Key_F );
-  d->actions->insertVariable->setShortcut  ( Qt::CTRL + Qt::Key_I );
-  d->actions->deleteVariable->setShortcut  ( Qt::CTRL + Qt::Key_D );
-  d->actions->clearExpression->setShortcut ( Qt::Key_Escape       );
-  d->actions->clearHistory->setShortcut    ( Qt::CTRL + Qt::Key_Y );
-  d->actions->selectExpression->setShortcut( Qt::CTRL + Qt::Key_A );
-  d->actions->viewBinary->setShortcut      ( Qt::Key_F5           );
-  d->actions->viewOctal->setShortcut       ( Qt::Key_F6           );
-  d->actions->viewGeneral->setShortcut     ( Qt::Key_F7           );
-  d->actions->viewHexadec->setShortcut     ( Qt::Key_F8           );
-  d->actions->radian->setShortcut          ( Qt::Key_F9           );
-  d->actions->degree->setShortcut          ( Qt::Key_F10          );
-  d->actions->showKeypad->setShortcut      ( Qt::CTRL + Qt::Key_K );
-  d->actions->helpTipOfTheDay->setShortcut ( Qt::CTRL + Qt::Key_T );
+  d->actions->clearExpression->setShortcut ( Qt::Key_Escape               );
+  d->actions->clearHistory->setShortcut    ( Qt::CTRL + Qt::Key_Y         );
+  d->actions->degree->setShortcut          ( Qt::Key_F10                  );
+  d->actions->deleteVariable->setShortcut  ( Qt::CTRL + Qt::Key_D         );
+  d->actions->editCopyResult->setShortcut  ( Qt::CTRL + Qt::Key_R         );
+  d->actions->editCopy->setShortcut        ( Qt::CTRL + Qt::Key_C         );
+  d->actions->editPaste->setShortcut       ( Qt::CTRL + Qt::Key_V         );
+  d->actions->helpTipOfTheDay->setShortcut ( Qt::CTRL + Qt::Key_T         );
+  d->actions->insertFunction->setShortcut  ( Qt::CTRL + Qt::Key_F         );
+  d->actions->insertVariable->setShortcut  ( Qt::CTRL + Qt::Key_I         );
+  d->actions->radian->setShortcut          ( Qt::Key_F9                   );
+  d->actions->selectExpression->setShortcut( Qt::CTRL + Qt::Key_A         );
+  d->actions->sessionLoad->setShortcut     ( Qt::CTRL + Qt::Key_L         );
+  d->actions->sessionQuit->setShortcut     ( Qt::CTRL + Qt::Key_Q         );
+  d->actions->sessionSave->setShortcut     ( Qt::CTRL + Qt::Key_S         );
+  d->actions->showKeypad->setShortcut      ( Qt::CTRL + Qt::Key_K         );
+  d->actions->viewBinary->setShortcut      ( Qt::Key_F5                   );
+  d->actions->viewGeneral->setShortcut     ( Qt::Key_F7                   );
+  d->actions->viewHexadec->setShortcut     ( Qt::Key_F8                   );
+  d->actions->viewOctal->setShortcut       ( Qt::Key_F6                   );
 
-  QActionGroup *formatGroup = new QActionGroup( this );
+  d->actions->scrollDown = new QShortcut( /*Qt::SHIFT +*/ Qt::Key_PageDown, this );
+  d->actions->scrollUp   = new QShortcut( /*Qt::SHIFT +*/ Qt::Key_PageUp,   this );
+
+  QActionGroup * formatGroup = new QActionGroup( this );
   formatGroup->addAction( d->actions->viewBinary );
   // decimal submenu
     formatGroup->addAction( d->actions->viewGeneral );
@@ -1423,6 +1447,8 @@ void Crunch::createUI()
   connect( d->actions->insertFunction,     SIGNAL(activated()),     this,      SLOT(insertFunction())      );
   connect( d->actions->insertVariable,     SIGNAL(activated()),     this,      SLOT(insertVariable())      );
   connect( d->actions->radian,             SIGNAL(activated()),     this,      SLOT(radian())              );
+  connect( d->actions->scrollDown,         SIGNAL(activated()),     this,      SLOT(scrollDown())          );
+  connect( d->actions->scrollUp,           SIGNAL(activated()),     this,      SLOT(scrollUp())            );
   connect( d->actions->sessionLoad,        SIGNAL(activated()),     this,      SLOT(loadSession())         );
   connect( d->actions->sessionQuit,        SIGNAL(activated()),     this,      SLOT(close())               );
   connect( d->actions->sessionSave,        SIGNAL(activated()),     this,      SLOT(saveSession())         );

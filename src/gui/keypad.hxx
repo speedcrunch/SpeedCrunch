@@ -84,7 +84,7 @@ class Keypad : public QWidget
   private:
     void connectButtons();
     void createButtons();
-    void dontFocusButtons();
+    void deactivateButtonFocus();
     void layoutButtons();
     void polishButtons();
     void sizeButtons();

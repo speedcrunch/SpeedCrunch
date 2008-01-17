@@ -77,6 +77,8 @@ class Crunch : public QMainWindow
     void showKeypad( bool );
     void showTip();
     void showVariables( bool );
+    void scrollDown();
+    void scrollUp();
     void viewBinary();
     void viewEngineering();
     void viewFixed();
