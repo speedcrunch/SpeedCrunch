@@ -204,11 +204,12 @@ Crunch::Crunch() : QMainWindow()
   inputBoxLayout->setSpacing( 3 );
 
   d->clearExpressionButton = new QPushButton( box );
+  d->clearExpressionButton->hide();
   d->clearExpressionButton->setMaximumWidth( 25 );
   d->clearExpressionButton->setFlat( true );
   d->clearExpressionButton->setIcon( QPixmap(":/clearinput.png") );
-  d->clearExpressionButton->hide();
   d->clearExpressionButton->setToolTip( tr("Clear input line") );
+  d->clearExpressionButton->setFocusPolicy( Qt::NoFocus );
   inputBoxLayout->addWidget( d->clearExpressionButton );
 
   d->editor = new Editor( d->eval, box );
@@ -216,9 +217,12 @@ Crunch::Crunch() : QMainWindow()
   inputBoxLayout->addWidget( d->editor );
 
   d->evalButton = new QPushButton( box );
+  d->evalButton->hide();
+  d->evalButton->setMinimumWidth( 75 );
+  d->evalButton->setMaximumHeight( d->editor->height() );
   d->evalButton->setIcon( QPixmap( ":/calculate.png" ) );
   d->evalButton->setToolTip( tr("Evaluate") );
-  d->evalButton->hide();
+  d->evalButton->setFocusPolicy( Qt::NoFocus );
   inputBoxLayout->addWidget( d->evalButton );
 
   outerBoxLayout->addLayout( inputBoxLayout );
@@ -474,21 +478,7 @@ void Crunch::applySettings()
   if ( settings->decimalDigits == 15 ) d->actions->digits15->setChecked( true );
   if ( settings->decimalDigits == 50 ) d->actions->digits50->setChecked( true );
 
-  if ( settings->showKeypad )
-    d->clearExpressionButton->show();
-  else
-    d->clearExpressionButton->hide();
-
-  if ( settings->showKeypad )
-    d->evalButton->show();
-  else
-    d->evalButton->hide();
-
-  if ( settings->showKeypad )
-    d->keypad->show();
-  else
-    d->keypad->hide();
-  d->actions->showKeypad->setChecked( settings->showKeypad );
+  showKeypad( settings->showKeypad );
 
   d->actions->showConstants->setChecked( settings->showConstants );
   d->actions->showFunctions->setChecked( settings->showFunctions );
@@ -933,8 +923,11 @@ void Crunch::showKeypad( bool b )
 {
   Settings * settings = Settings::self();
   settings->showKeypad = b;
-  saveSettings();
-  applySettings();
+  d->keypad->setVisible( b );
+  d->clearExpressionButton->setVisible( b );
+  d->evalButton->setVisible( b );
+  d->actions->showKeypad->setChecked( b );
+  d->result->scrollEnd();
 }
 
 
@@ -1319,7 +1312,7 @@ void Crunch::createUI()
   // create all the actions
   d->actions->clearExpression    = new QAction( tr("Clear E&xpression"),        this );
   d->actions->clearHistory       = new QAction( tr("Clear &History"),           this );
-  d->actions->configure          = new QAction( tr("&Configure..."),            this );
+  d->actions->configure          = new QAction( tr("Confi&gure..."),            this );
   d->actions->degree             = new QAction( tr("&Degree"),                  this );
   d->actions->deleteAllVariables = new QAction( tr("Delete All V&ariables"),    this );
   d->actions->deleteVariable     = new QAction( tr("D&elete Variable..."),      this );
@@ -1343,7 +1336,7 @@ void Crunch::createUI()
   d->actions->sessionLoad        = new QAction( tr("&Load..."),                 this );
   d->actions->sessionQuit        = new QAction( tr("&Quit"),                    this );
   d->actions->sessionSave        = new QAction( tr("&Save..."),                 this );
-  d->actions->showConstants      = new QAction( tr("Show C&onstants"),          this );
+  d->actions->showConstants      = new QAction( tr("Show &Constants"),          this );
   d->actions->showFunctions      = new QAction( tr("Show &Functions"),          this );
   d->actions->showHistory        = new QAction( tr("Show &History"),            this );
   d->actions->showKeypad         = new QAction( tr("Show &Keypad"),               this );

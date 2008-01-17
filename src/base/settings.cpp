@@ -91,14 +91,14 @@ void Settings::load()
   showVariables = settings.value( key + "/Appearance/ShowVariables", false ).toBool();
   showConstants = settings.value( key + "/Appearance/ShowConstants", false ).toBool();
 
-  customAppearance = settings.value(                    key + "/Appearance/CustomAppearance",       true               ).toBool();
-  customFont.fromString( settings.value(                key + "/Appearance/CustomFont",             QFont().toString() ).toString() );
-  customTextColor.setNamedColor( settings.value(        key + "/Appearance/CustomTextColor",        "#9acd32"          ).toString() );
+  customAppearance = settings.value                   ( key + "/Appearance/CustomAppearance",       true               ).toBool();
+  customFont.fromString( settings.value               ( key + "/Appearance/CustomFont",             QFont().toString() ).toString() );
+  customTextColor.setNamedColor( settings.value       ( key + "/Appearance/CustomTextColor",        "#9acd32"          ).toString() );
   customBackgroundColor1.setNamedColor( settings.value( key + "/Appearance/CustomBackgroundColor1", "#000000"          ).toString() );
   customBackgroundColor2.setNamedColor( settings.value( key + "/Appearance/CustomBackgroundColor2", "#111417"          ).toString() );
-  customErrorColor.setNamedColor( settings.value(       key + "/Appearance/CustomErrorColor",       "#f2590d"          ).toString() );
-  mainWindowSize = QSize( settings.value( key + "/Appearance/WindowWidth",  350 ).toInt(),
-                          settings.value( key + "/Appearance/WindowHeight", 400 ).toInt() );
+  customErrorColor.setNamedColor( settings.value      ( key + "/Appearance/CustomErrorColor",       "#ff8c00"          ).toString() );
+  mainWindowSize = QSize( settings.value              ( key + "/Appearance/WindowWidth",            350                ).toInt(),
+                          settings.value              ( key + "/Appearance/WindowHeight",           400                ).toInt() );
 
   key = SETTINGSKEY;
   key += "/MainWindow/";
@@ -388,7 +388,7 @@ Settings::Settings()
   customTextColor         = QColor( 154, 205,  50 );
   customBackgroundColor1  = QColor(   0,   0,   0 );
   customBackgroundColor2  = QColor(  17,  20,  23 );
-  customErrorColor        = QColor( 242,  89,  13 );
+  customErrorColor        = QColor( 255, 140,   0 );
   highlightNumberColor    = QColor(   0,   0, 127 );
   highlightFunctionColor  = QColor(  85,   0,   0 );
   highlightVariableColor  = QColor(   0,  85,   0 );

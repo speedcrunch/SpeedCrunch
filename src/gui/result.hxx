@@ -64,13 +64,10 @@ class Result : public QListWidget
 
   public slots:
     void clear();
-
-  protected:
-    virtual void resizeEvent( QResizeEvent * );
+    void scrollEnd();
 
   private slots:
     void copyToClipboard( QListWidgetItem * );
-    void scrollEnd();
     void triggerUpdate();
 
   private:

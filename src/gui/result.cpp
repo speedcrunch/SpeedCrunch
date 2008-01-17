@@ -173,8 +173,7 @@ class ErrorItem: public BaseItem
 
 // public
 
-Result::Result( QWidget * parent, const char * name )
-  : QListWidget( parent )
+Result::Result( QWidget * parent, const char * name ) : QListWidget( parent )
 {
   d = new ResultPrivate;
   d->format = 'g';
@@ -199,6 +198,8 @@ Result::Result( QWidget * parent, const char * name )
 
   setHorizontalScrollMode( QAbstractItemView::ScrollPerPixel );
   setVerticalScrollMode(   QAbstractItemView::ScrollPerPixel );
+
+  setResizeMode( QListView::Adjust );
 }
 
 
@@ -369,17 +370,17 @@ void Result::clear()
 }
 
 
-// protected
-
-void Result::resizeEvent( QResizeEvent * )
+void Result::scrollEnd()
 {
-   triggerUpdate();
+  QScrollBar * hBar = horizontalScrollBar();
+  hBar->setValue( hBar->maximum() );
+  scrollToBottom();
 }
 
 
 // private slots
 
-void Result::copyToClipboard( QListWidgetItem* item )
+void Result::copyToClipboard( QListWidgetItem * item )
 {
   if ( ! item )
     return;
@@ -387,14 +388,6 @@ void Result::copyToClipboard( QListWidgetItem* item )
   QClipboard * cb = QApplication::clipboard();
   cb->setText( item->text(), QClipboard::Clipboard );
   emit textCopied( item->text() );
-}
-
-
-void Result::scrollEnd()
-{
-  QScrollBar * hBar = horizontalScrollBar();
-  hBar->setValue( hBar->maximum() );
-  scrollToBottom();
 }
 
 
