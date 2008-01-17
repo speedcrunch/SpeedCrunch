@@ -1,40 +1,42 @@
-/* This file is part of the SpeedCrunch project
-   Copyright (C) 2004, 2005, 2007 Ariya Hidayat <ariya@kde.org>
-                 2005-2006 Johan Thelin <e8johan@gmail.com>
-                 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
+// This file is part of the SpeedCrunch project
+// Copyright (C) 2004, 2005, 2007 Ariya Hidayat <ariya@kde.org>
+// Copyright (C) 2005-2006 Johan Thelin <e8johan@gmail.com>
+// Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; see the file COPYING.  If not, write to
+// the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+// Boston, MA 02110-1301, USA.
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public License
-   as published by the Free Software Foundation; either version 2
-   of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
- */
 
 #include <base/settings.hxx>
+#include <math/floatconfig.h>
 
 #include <QApplication>
 #include <QDir>
-#include <QSettings>
 #include <QLocale>
+#include <QSettings>
 
 #include <stdlib.h>
-#include "floatconfig.h"
+
 
 #define SETTINGSKEY "SpeedCrunch"
 
-Settings* s_global_settings = 0;
 
-QChar Settings::dot;
-bool Settings::autoDetectDot;
+Settings * s_global_settings = 0;
+QChar      Settings::dot;
+bool       Settings::autoDetectDot;
+
 
 static void deleteGlobalSettings()
 {
@@ -42,74 +44,14 @@ static void deleteGlobalSettings()
     s_global_settings = 0;
 }
 
+
+// public
+
 QChar Settings::decimalPoint()
 {
   return self()->dot;
 }
 
-void Settings::setDecimalPoint(const QString& val)
-{
-  autoDetectDot = (val.length() != 1);
-  dot = autoDetectDot? QLocale().decimalPoint() : val[0];
-}
-
-
-Settings::Settings()
-{
-  angleMode       = Radian;
-  saveSession     = true;
-  saveVariables   = true;
-  autoComplete    = true;
-  autoCalc        = true;
-  setDecimalPoint( QString() );
-  minimizeToTray  = false;
-  stayAlwaysOnTop = false;
-
-  format        = 'g';
-  decimalDigits = -1;
-
-  showClearInputButton = true;
-  showEvaluateButton   = true;
-  showKeyPad           = true;
-  showHistory          = false;
-  showFunctions        = false;
-  showVariables        = false;
-  showConstants        = false;
-  customAppearance     = true;
-
-  customTextColor         = QColor( 154, 205,  50 );
-  customBackgroundColor1  = QColor(   0,   0,   0 );
-  customBackgroundColor2  = QColor(  17,  20,  23 );
-  customErrorColor        = QColor( 242,  89,  13 );
-  highlightNumberColor    = QColor(   0,   0, 127 );
-  highlightFunctionColor  = QColor(  85,   0,   0 );
-  highlightVariableColor  = QColor(   0,  85,   0 );
-  matchedParenthesisColor = QColor( 255, 255, 183 );
-
-  mainWindowSize        = QSize( 0, 0 );
-  historyDockFloating   = false;
-  historyDockLeft       = 0;
-  historyDockTop        = 0;
-  historyDockWidth      = 200;
-  historyDockHeight     = 350;
-  functionsDockFloating = false;
-  functionsDockLeft     = 0;
-  functionsDockTop      = 0;
-  functionsDockWidth    = 200;
-  functionsDockHeight   = 350;
-  variablesDockFloating = false;
-  variablesDockLeft     = 0;
-  variablesDockTop      = 0;
-  variablesDockWidth    = 200;
-  variablesDockHeight   = 350;
-  constantsDockFloating = false;
-  constantsDockLeft     = 0;
-  constantsDockTop      = 0;
-  constantsDockWidth    = 200;
-  constantsDockHeight   = 350;
-
-  escape = "\\"; //reftbl
-}
 
 void Settings::load()
 {
@@ -137,7 +79,8 @@ void Settings::load()
   if ( formatStr == "Octal" )       format = 'o';
   if ( formatStr == "Binary" )      format = 'b';
   decimalDigits = settings.value( key + "/View/DecimalDigits", -1 ).toInt();
-  if ( decimalDigits > DECPRECISION ) decimalDigits = DECPRECISION;
+  if ( decimalDigits > DECPRECISION )
+    decimalDigits = DECPRECISION;
 
   showClearInputButton = settings.value( key + "/Appearance/ShowClearInputButton", true ).toBool();
   showEvaluateButton   = settings.value( key + "/Appearance/ShowEvaluateButton",   true ).toBool();
@@ -242,7 +185,8 @@ void Settings::load()
       if ( name[c] == '_' )
       {
 	name.remove( c, 1 );
-	name[c] = name[c].toUpper();
+        if ( name[c] != '_' )
+	  name[c] = name[c].toUpper();
       }
     }
     // load
@@ -250,6 +194,7 @@ void Settings::load()
       variables.append( QString( "%1=%2" ).arg( name ).arg( value ) );
   }
 }
+
 
 void Settings::save()
 {
@@ -375,16 +320,101 @@ void Settings::save()
     QStringList s = variables[i].split( '=' );
 
     if ( s.count() == 2 && s[0] != "pi" && s[0] != "phi" )
-      settings.setValue( QString( key + "/Variables/%1").arg( s[0] ), s[1] );
+    {
+      QString name  = "";
+      QString value = s[1];
+      int length = s[0].length();
+      for ( int c = 0; c < length; c++ )
+      {
+        if ( s[0][c].isUpper() || s[0][c] == '_' )
+        {
+          name += '_';
+          name += s[0][c].toLower();
+        }
+	else
+        {
+          name += s[0][c];
+        }
+      }
+      settings.setValue( QString( key + "/Variables/%1").arg( name ), value );
+    }
   }
 }
 
+
 Settings* Settings::self()
 {
-  if ( !s_global_settings )
+  if ( ! s_global_settings )
   {
     s_global_settings = new Settings();
     qAddPostRoutine( deleteGlobalSettings );
   }
   return s_global_settings;
+}
+
+
+void Settings::setDecimalPoint( const QString & val )
+{
+  autoDetectDot = (val.length() != 1);
+  dot = autoDetectDot? QLocale().decimalPoint() : val[0];
+}
+
+
+// private
+
+Settings::Settings()
+{
+  angleMode       = Radian;
+  saveSession     = true;
+  saveVariables   = true;
+  autoComplete    = true;
+  autoCalc        = true;
+  setDecimalPoint( QString() );
+  minimizeToTray  = false;
+  stayAlwaysOnTop = false;
+
+  format        = 'g';
+  decimalDigits = -1;
+
+  showClearInputButton = true;
+  showEvaluateButton   = true;
+  showKeyPad           = true;
+  showHistory          = false;
+  showFunctions        = false;
+  showVariables        = false;
+  showConstants        = false;
+  customAppearance     = true;
+
+  customTextColor         = QColor( 154, 205,  50 );
+  customBackgroundColor1  = QColor(   0,   0,   0 );
+  customBackgroundColor2  = QColor(  17,  20,  23 );
+  customErrorColor        = QColor( 242,  89,  13 );
+  highlightNumberColor    = QColor(   0,   0, 127 );
+  highlightFunctionColor  = QColor(  85,   0,   0 );
+  highlightVariableColor  = QColor(   0,  85,   0 );
+  matchedParenthesisColor = QColor( 255, 255, 183 );
+
+  mainWindowSize        = QSize( 0, 0 );
+  historyDockFloating   = false;
+  historyDockLeft       = 0;
+  historyDockTop        = 0;
+  historyDockWidth      = 200;
+  historyDockHeight     = 350;
+  functionsDockFloating = false;
+  functionsDockLeft     = 0;
+  functionsDockTop      = 0;
+  functionsDockWidth    = 200;
+  functionsDockHeight   = 350;
+  variablesDockFloating = false;
+  variablesDockLeft     = 0;
+  variablesDockTop      = 0;
+  variablesDockWidth    = 200;
+  variablesDockHeight   = 350;
+  constantsDockFloating = false;
+  constantsDockLeft     = 0;
+  constantsDockTop      = 0;
+  constantsDockWidth    = 200;
+  constantsDockHeight   = 350;
+
+  escape = "\\"; //reftbl
 }
