@@ -82,7 +82,7 @@ class Settings
     bool         showEvaluateButton;
     bool         showFunctions;
     bool         showHistory;
-    bool         showKeyPad;
+    bool         showKeypad;
     bool         showVariables;
     bool         stayAlwaysOnTop;
     QStringList  variables;

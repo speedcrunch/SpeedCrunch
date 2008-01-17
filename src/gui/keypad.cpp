@@ -1,22 +1,22 @@
-/* This file is part of the SpeedCrunch project
-   Copyright (C) 2005-2006 Johan Thelin <e8johan@gmail.com>
-   Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
+// This file is part of the SpeedCrunch project
+// Copyright (C) 2005-2006 Johan Thelin <e8johan@gmail.com>
+// Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; see the file COPYING.  If not, write to
+// the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+// Boston, MA 02110-1301, USA.
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public License
-   as published by the Free Software Foundation; either version 2
-   of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
- */
 
 #include <base/settings.hxx>
 #include <gui/keypad.hxx>
@@ -27,51 +27,52 @@
 #include <QStyle>
 
 
-class KeyPadPrivate
+class KeypadPrivate
 {
   public:
-
-    QPushButton* key0;
-    QPushButton* key1;
-    QPushButton* key2;
-    QPushButton* key3;
-    QPushButton* key4;
-    QPushButton* key5;
-    QPushButton* key6;
-    QPushButton* key7;
-    QPushButton* key8;
-    QPushButton* key9;
-    QPushButton* keyDot;
-    QPushButton* keyEE;
-    QPushButton* keySqrt;
-    QPushButton* keyFact;
-    QPushButton* keyPerc;
-    QPushButton* keyRaise;
-    QPushButton* keyLParen;
-    QPushButton* keySemic;
-    QPushButton* keyRParen;
-    QPushButton* keyAvg;
-    QPushButton* keyAdd;
-    QPushButton* keySub;
-    QPushButton* keyMul;
-    QPushButton* keyDiv;
-    QPushButton* keyPi;
-    QPushButton* keyAns;
-    QPushButton* keyX;
-    QPushButton* keyXEq;
-    QPushButton* keyExp;
-    QPushButton* keyLn;
-    QPushButton* keySin;
-    QPushButton* keyCos;
-    QPushButton* keyTan;
-    QPushButton* keyASin;
-    QPushButton* keyACos;
-    QPushButton* keyATan;
+    QPushButton * key0;
+    QPushButton * key1;
+    QPushButton * key2;
+    QPushButton * key3;
+    QPushButton * key4;
+    QPushButton * key5;
+    QPushButton * key6;
+    QPushButton * key7;
+    QPushButton * key8;
+    QPushButton * key9;
+    QPushButton * keyACos;
+    QPushButton * keyAdd;
+    QPushButton * keyAns;
+    QPushButton * keyASin;
+    QPushButton * keyATan;
+    QPushButton * keyAvg;
+    QPushButton * keyCos;
+    QPushButton * keyDiv;
+    QPushButton * keyDot;
+    QPushButton * keyEE;
+    QPushButton * keyExp;
+    QPushButton * keyFact;
+    QPushButton * keyLn;
+    QPushButton * keyLParen;
+    QPushButton * keyMul;
+    QPushButton * keyPerc;
+    QPushButton * keyPi;
+    QPushButton * keyRaise;
+    QPushButton * keyRParen;
+    QPushButton * keySemic;
+    QPushButton * keySin;
+    QPushButton * keySqrt;
+    QPushButton * keySub;
+    QPushButton * keyTan;
+    QPushButton * keyX;
+    QPushButton * keyXEq;
 };
 
 
-void KeyPad::createButtons()
+void Keypad::createButtons()
 {
+  QChar dot = Settings::decimalPoint();
+
   d->key0      = new QPushButton( "0",    this );
   d->key1      = new QPushButton( "1",    this );
   d->key2      = new QPushButton( "2",    this );
@@ -82,32 +83,32 @@ void KeyPad::createButtons()
   d->key7      = new QPushButton( "7",    this );
   d->key8      = new QPushButton( "8",    this );
   d->key9      = new QPushButton( "9",    this );
-  d->keySqrt   = new QPushButton(         this );
-  d->keyRaise  = new QPushButton( "^",    this );
-  d->keyPerc   = new QPushButton( "%",    this );
-  d->keyFact   = new QPushButton( "!",    this );
-  d->keyEE     = new QPushButton(         this );
-  d->keyLParen = new QPushButton( "(",    this );
-  d->keySemic  = new QPushButton( ";",    this );
-  d->keyRParen = new QPushButton( ")",    this );
-  d->keyAvg    = new QPushButton(         this );
-  d->keyAdd    = new QPushButton( "+",    this );
-  d->keySub    = new QPushButton( "-",    this );
-  d->keyMul    = new QPushButton( "*",    this );
-  d->keyDiv    = new QPushButton( "/",    this );
-  d->keyPi     = new QPushButton(         this );
-  d->keyAns    = new QPushButton( "ans",  this );
-  d->keyX      = new QPushButton( "x",    this );
-  d->keyXEq    = new QPushButton( "x=",   this );
-  d->keyExp    = new QPushButton(         this );
-  d->keyLn     = new QPushButton( "ln",   this );
-  d->keySin    = new QPushButton( "sin",  this );
-  d->keyCos    = new QPushButton( "cos",  this );
-  d->keyTan    = new QPushButton( "tan",  this );
-  d->keyASin   = new QPushButton( "asin", this );
   d->keyACos   = new QPushButton( "acos", this );
+  d->keyAdd    = new QPushButton( "+",    this );
+  d->keyAns    = new QPushButton( "ans",  this );
+  d->keyASin   = new QPushButton( "asin", this );
   d->keyATan   = new QPushButton( "atan", this );
-  d->keyDot    = new QPushButton( Settings::decimalPoint(), this );
+  d->keyAvg    = new QPushButton(         this );
+  d->keyCos    = new QPushButton( "cos",  this );
+  d->keyDiv    = new QPushButton( "/",    this );
+  d->keyDot    = new QPushButton( dot,    this );
+  d->keyEE     = new QPushButton(         this );
+  d->keyExp    = new QPushButton(         this );
+  d->keyFact   = new QPushButton( "!",    this );
+  d->keyLn     = new QPushButton( "ln",   this );
+  d->keyLParen = new QPushButton( "(",    this );
+  d->keyMul    = new QPushButton( "*",    this );
+  d->keyPerc   = new QPushButton( "%",    this );
+  d->keyPi     = new QPushButton(         this );
+  d->keyRaise  = new QPushButton( "^",    this );
+  d->keyRParen = new QPushButton( ")",    this );
+  d->keySemic  = new QPushButton( ";",    this );
+  d->keySin    = new QPushButton( "sin",  this );
+  d->keySqrt   = new QPushButton(         this );
+  d->keySub    = new QPushButton( "-",    this );
+  d->keyTan    = new QPushButton( "tan",  this );
+  d->keyXEq    = new QPushButton( "x=",   this );
+  d->keyX      = new QPushButton( "x",    this );
 
   d->keyAvg->setIcon ( QPixmap( ":/average.png" ) );
   d->keyEE->setIcon  ( QPixmap( ":/ee.png"      ) );
@@ -117,7 +118,7 @@ void KeyPad::createButtons()
 }
 
 
-void KeyPad::polishButtons()
+void Keypad::polishButtons()
 {
   d->key0->ensurePolished();
   d->key1->ensurePolished();
@@ -158,7 +159,7 @@ void KeyPad::polishButtons()
 }
 
 
-void KeyPad::sizeButtons()
+void Keypad::sizeButtons()
 {
   // The same font in all buttons, so just pick one
   QFontMetrics fm = d->key0->fontMetrics();
@@ -253,7 +254,7 @@ void KeyPad::sizeButtons()
 }
 
 
-void KeyPad::dontFocusButtons()
+void Keypad::dontFocusButtons()
 {
   d->key0->setFocusPolicy     ( Qt::NoFocus );
   d->key1->setFocusPolicy     ( Qt::NoFocus );
@@ -294,7 +295,7 @@ void KeyPad::dontFocusButtons()
 }
 
 
-void KeyPad::layoutButtons()
+void Keypad::layoutButtons()
 {
 
   QGridLayout* layout = new QGridLayout( this );
@@ -345,7 +346,7 @@ void KeyPad::layoutButtons()
 }
 
 
-void KeyPad::connectButtons()
+void Keypad::connectButtons()
 {
   connect( d->key0,         SIGNAL(clicked()), SLOT(clicked0())      );
   connect( d->key1,         SIGNAL(clicked()), SLOT(clicked1())      );
@@ -386,9 +387,9 @@ void KeyPad::connectButtons()
 }
 
 
-KeyPad::KeyPad( QWidget* parent ) : QWidget( parent )
+Keypad::Keypad( QWidget* parent ) : QWidget( parent )
 {
-  d = new KeyPadPrivate;
+  d = new KeypadPrivate;
 
   // Setup buttons
   createButtons();
@@ -414,51 +415,51 @@ KeyPad::KeyPad( QWidget* parent ) : QWidget( parent )
 }
 
 
-KeyPad::~KeyPad()
+Keypad::~Keypad()
 {
   delete d;
 }
 
 
-void KeyPad::clicked0()      { emit addText( "0"        ); }
-void KeyPad::clicked1()      { emit addText( "1"        ); }
-void KeyPad::clicked2()      { emit addText( "2"        ); }
-void KeyPad::clicked3()      { emit addText( "3"        ); }
-void KeyPad::clicked4()      { emit addText( "4"        ); }
-void KeyPad::clicked5()      { emit addText( "5"        ); }
-void KeyPad::clicked6()      { emit addText( "6"        ); }
-void KeyPad::clicked7()      { emit addText( "7"        ); }
-void KeyPad::clicked8()      { emit addText( "8"        ); }
-void KeyPad::clicked9()      { emit addText( "9"        ); }
-void KeyPad::clickedSqrt()   { emit addText( "sqrt("    ); }
-void KeyPad::clickedRaise()  { emit addText( "^"        ); }
-void KeyPad::clickedPerc()   { emit addText( "%"        ); }
-void KeyPad::clickedFact()   { emit addText( "!"        ); }
-void KeyPad::clickedEE()     { emit addText( "e"        ); }
-void KeyPad::clickedLParen() { emit addText( "("        ); }
-void KeyPad::clickedSemic()  { emit addText( ";"        ); }
-void KeyPad::clickedRParen() { emit addText( ")"        ); }
-void KeyPad::clickedAvg()    { emit addText( "average(" ); }
-void KeyPad::clickedAdd()    { emit addText( "+"        ); }
-void KeyPad::clickedSub()    { emit addText( "-"        ); }
-void KeyPad::clickedMul()    { emit addText( "*"        ); }
-void KeyPad::clickedDiv()    { emit addText( "/"        ); }
-void KeyPad::clickedPi()     { emit addText( "pi"       ); }
-void KeyPad::clickedAns()    { emit addText( "ans"      ); }
-void KeyPad::clickedX()      { emit addText( "x"        ); }
-void KeyPad::clickedXEq()    { emit addText( "x="       ); }
-void KeyPad::clickedExp()    { emit addText( "exp("     ); }
-void KeyPad::clickedLn()     { emit addText( "ln("      ); }
-void KeyPad::clickedSin()    { emit addText( "sin("     ); }
-void KeyPad::clickedCos()    { emit addText( "cos("     ); }
-void KeyPad::clickedTan()    { emit addText( "tan("     ); }
-void KeyPad::clickedASin()   { emit addText( "asin("    ); }
-void KeyPad::clickedACos()   { emit addText( "acos("    ); }
-void KeyPad::clickedATan()   { emit addText( "atan("    ); }
-void KeyPad::clickedDot()    { emit addText( d->keyDot->text().toLatin1() ); }
+void Keypad::clicked0()      { emit addText( "0"        ); }
+void Keypad::clicked1()      { emit addText( "1"        ); }
+void Keypad::clicked2()      { emit addText( "2"        ); }
+void Keypad::clicked3()      { emit addText( "3"        ); }
+void Keypad::clicked4()      { emit addText( "4"        ); }
+void Keypad::clicked5()      { emit addText( "5"        ); }
+void Keypad::clicked6()      { emit addText( "6"        ); }
+void Keypad::clicked7()      { emit addText( "7"        ); }
+void Keypad::clicked8()      { emit addText( "8"        ); }
+void Keypad::clicked9()      { emit addText( "9"        ); }
+void Keypad::clickedSqrt()   { emit addText( "sqrt("    ); }
+void Keypad::clickedRaise()  { emit addText( "^"        ); }
+void Keypad::clickedPerc()   { emit addText( "%"        ); }
+void Keypad::clickedFact()   { emit addText( "!"        ); }
+void Keypad::clickedEE()     { emit addText( "e"        ); }
+void Keypad::clickedLParen() { emit addText( "("        ); }
+void Keypad::clickedSemic()  { emit addText( ";"        ); }
+void Keypad::clickedRParen() { emit addText( ")"        ); }
+void Keypad::clickedAvg()    { emit addText( "average(" ); }
+void Keypad::clickedAdd()    { emit addText( "+"        ); }
+void Keypad::clickedSub()    { emit addText( "-"        ); }
+void Keypad::clickedMul()    { emit addText( "*"        ); }
+void Keypad::clickedDiv()    { emit addText( "/"        ); }
+void Keypad::clickedPi()     { emit addText( "pi"       ); }
+void Keypad::clickedAns()    { emit addText( "ans"      ); }
+void Keypad::clickedX()      { emit addText( "x"        ); }
+void Keypad::clickedXEq()    { emit addText( "x="       ); }
+void Keypad::clickedExp()    { emit addText( "exp("     ); }
+void Keypad::clickedLn()     { emit addText( "ln("      ); }
+void Keypad::clickedSin()    { emit addText( "sin("     ); }
+void Keypad::clickedCos()    { emit addText( "cos("     ); }
+void Keypad::clickedTan()    { emit addText( "tan("     ); }
+void Keypad::clickedASin()   { emit addText( "asin("    ); }
+void Keypad::clickedACos()   { emit addText( "acos("    ); }
+void Keypad::clickedATan()   { emit addText( "atan("    ); }
+void Keypad::clickedDot()    { emit addText( d->keyDot->text().toLatin1() ); }
 
 
-void KeyPad::settingsChanged()
+void Keypad::settingsChanged()
 {
   d->keyDot->setText( Settings::decimalPoint() );
 }

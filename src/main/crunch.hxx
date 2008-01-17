@@ -46,10 +46,10 @@ class Crunch : public QMainWindow
   public slots:
     void about();
     void aboutQt();
-    void addKeyPadText( const QString & );
+    void addKeypadText( const QString & );
     void applySettings();
     void clearHistory();
-    void clearInput();
+    void clearExpression();
     void configure();
     void copyResult();
     void degree();
@@ -61,7 +61,7 @@ class Crunch : public QMainWindow
     void digits15();
     void digits50();
     void digitsAuto();
-    void focusAndSelectInput();
+    void selectExpression();
     void gotoWebsite();
     void hideAutoCalc();
     void insertFunction();
@@ -71,12 +71,10 @@ class Crunch : public QMainWindow
     void saveSession();
     void setWidgetsLayoutAccordingToLanguageDirection();
     void showAutoCalc( const QString & );
-    void showClearButton( bool );
     void showConstants( bool );
-    void showEvalButton( bool );
     void showFunctions( bool );
     void showHistory( bool );
-    void showKeyPad( bool );
+    void showKeypad( bool );
     void showTip();
     void showVariables( bool );
     void viewBinary();

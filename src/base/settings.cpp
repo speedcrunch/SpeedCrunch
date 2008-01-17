@@ -84,7 +84,7 @@ void Settings::load()
 
   showClearInputButton = settings.value( key + "/Appearance/ShowClearInputButton", true ).toBool();
   showEvaluateButton   = settings.value( key + "/Appearance/ShowEvaluateButton",   true ).toBool();
-  showKeyPad           = settings.value( key + "/Appearance/ShowKeyPad",           true ).toBool();
+  showKeypad           = settings.value( key + "/Appearance/ShowKeypad",           true ).toBool();
 
   showHistory   = settings.value( key + "/Appearance/ShowHistory",   false ).toBool();
   showFunctions = settings.value( key + "/Appearance/ShowFunctions", false ).toBool();
@@ -228,7 +228,7 @@ void Settings::save()
 
   settings.setValue( key + "/Appearance/ShowClearInputButton", showClearInputButton );
   settings.setValue( key + "/Appearance/ShowEvaluateButton",   showEvaluateButton   );
-  settings.setValue( key + "/Appearance/ShowKeyPad",           showKeyPad           );
+  settings.setValue( key + "/Appearance/ShowKeypad",           showKeypad           );
   settings.setValue( key + "/Appearance/ShowHistory",          showHistory          );
   settings.setValue( key + "/Appearance/ShowFunctions",        showFunctions        );
   settings.setValue( key + "/Appearance/ShowVariables",        showVariables        );
@@ -378,7 +378,7 @@ Settings::Settings()
 
   showClearInputButton = true;
   showEvaluateButton   = true;
-  showKeyPad           = true;
+  showKeypad           = true;
   showHistory          = false;
   showFunctions        = false;
   showVariables        = false;

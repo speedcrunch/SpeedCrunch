@@ -75,7 +75,7 @@ class CrunchActions
 {
   public:
     QAction * clearHistory;
-    QAction * clearInput;
+    QAction * clearExpression;
     QAction * configure;
     QAction * degree;
     QAction * deleteAllVariables;
@@ -89,7 +89,7 @@ class CrunchActions
     QAction * editCopy;
     QAction * editCopyResult;
     QAction * editPaste;
-    QAction * focusAndSelectInput;
+    QAction * selectExpression;
     QAction * helpAbout;
     QAction * helpAboutQt;
     QAction * helpGotoWebsite;
@@ -100,12 +100,10 @@ class CrunchActions
     QAction * sessionLoad;
     QAction * sessionQuit;
     QAction * sessionSave;
-    QAction * showClearButton;
     QAction * showConstants;
-    QAction * showEvalButton;
     QAction * showFunctions;
     QAction * showHistory;
-    QAction * showKeyPad;
+    QAction * showKeypad;
     QAction * showVariables;
     QAction * viewBinary;
     QAction * viewEngineering;
@@ -128,14 +126,14 @@ class CrunchPrivate
 
     Editor    * editor;
     Evaluator * eval;
-    KeyPad    * keypad;
+    Keypad    * keypad;
     Result    * result;
 
     bool            autoAns;
     AutoHideLabel * autoCalcLabel;
     TipWidget     * tip;
 
-    QPushButton * clearInputButton;
+    QPushButton * clearExpressionButton;
     QPushButton * evalButton;
 
     QSystemTrayIcon * trayIcon;
@@ -184,10 +182,10 @@ Crunch::Crunch() : QMainWindow()
   d->trayNotify = true;
 
   // Outer widget and layout
-  QWidget *box = new QWidget( this );
+  QWidget * box = new QWidget( this );
   setCentralWidget( box );
 
-  QVBoxLayout *outerBoxLayout = new QVBoxLayout( box );
+  QVBoxLayout * outerBoxLayout = new QVBoxLayout( box );
   outerBoxLayout->setMargin( 5 );
   outerBoxLayout->setSpacing( 0 );
 
@@ -196,17 +194,17 @@ Crunch::Crunch() : QMainWindow()
   outerBoxLayout->addWidget( d->result );
 
   // Layout for editor and evaluation button
-  QHBoxLayout *inputBoxLayout = new QHBoxLayout();
-  inputBoxLayout->setMargin( 5 );
-  inputBoxLayout->setSpacing( 5 );
+  QHBoxLayout * inputBoxLayout = new QHBoxLayout();
+  inputBoxLayout->setMargin( 3 );
+  inputBoxLayout->setSpacing( 3 );
 
-  d->clearInputButton = new QPushButton( box );
-  d->clearInputButton->setMaximumWidth( 25 );
-  d->clearInputButton->setFlat( true );
-  d->clearInputButton->setIcon( QPixmap(":/clearinput.png") );
-  d->clearInputButton->hide();
-  d->clearInputButton->setToolTip( tr("Clear input line") );
-  inputBoxLayout->addWidget( d->clearInputButton );
+  d->clearExpressionButton = new QPushButton( box );
+  d->clearExpressionButton->setMaximumWidth( 25 );
+  d->clearExpressionButton->setFlat( true );
+  d->clearExpressionButton->setIcon( QPixmap(":/clearinput.png") );
+  d->clearExpressionButton->hide();
+  d->clearExpressionButton->setToolTip( tr("Clear input line") );
+  inputBoxLayout->addWidget( d->clearExpressionButton );
 
   d->editor = new Editor( d->eval, box );
   d->editor->setFocus();
@@ -224,9 +222,9 @@ Crunch::Crunch() : QMainWindow()
   Settings::self()->load();
 
   // Keypad
-  QHBoxLayout *keypadLayout = new QHBoxLayout();
+  QHBoxLayout * keypadLayout = new QHBoxLayout();
 
-  d->keypad = new KeyPad( box );
+  d->keypad = new Keypad( box );
   d->keypad->setFocusPolicy( Qt::NoFocus );
   d->keypad->hide();
 
@@ -270,20 +268,20 @@ Crunch::Crunch() : QMainWindow()
   d->tip->hide();
 
   // Connect signals and slots
-  connect( d->clearInputButton, SIGNAL(clicked()),                                        SLOT(clearInput())                          );
-  connect( d->constantsDock,    SIGNAL(constantSelected( const QString& )),               SLOT(constantSelected( const QString & ))   );
-  connect( d->editor,           SIGNAL(autoCalcActivated( const QString& )),              SLOT(showAutoCalc( const QString & ))       );
-  connect( d->editor,           SIGNAL(autoCalcDeactivated()),                            SLOT(hideAutoCalc())                        );
-  connect( d->editor,           SIGNAL(returnPressed()),                                  SLOT(returnPressed())                       );
-  connect( d->editor,           SIGNAL(textChanged()),                                    SLOT(textChanged())                         );
-  connect( d->evalButton,       SIGNAL(clicked()),                                        SLOT(returnPressed())                       );
-  connect( d->functionsDock,    SIGNAL(functionSelected( const QString & )),              SLOT(functionSelected( const QString & ))   );
-  connect( d->historyDock,      SIGNAL(expressionSelected( const QString & )),            SLOT(expressionSelected( const QString & )) );
-  connect( d->keypad,           SIGNAL(addText( const QString & )),                       SLOT(addKeyPadText( const QString & ))      );
-  connect( d->keypad,           SIGNAL(evaluate()),                            d->editor, SLOT(evaluate() )                           );
-  connect( d->result,           SIGNAL(textCopied( const QString & )),         d->editor, SLOT(paste())                               );
-  connect( d->result,           SIGNAL(textCopied( const QString & )),         d->editor, SLOT(setFocus())                            );
-  connect( d->variablesDock,    SIGNAL(variableSelected( const QString& )),               SLOT(variableSelected( const QString & ))   );
+  connect( d->clearExpressionButton, SIGNAL(clicked()),                                        SLOT(clearExpression())                          );
+  connect( d->constantsDock,         SIGNAL(constantSelected( const QString& )),               SLOT(constantSelected( const QString & ))   );
+  connect( d->editor,                SIGNAL(autoCalcActivated( const QString& )),              SLOT(showAutoCalc( const QString & ))       );
+  connect( d->editor,                SIGNAL(autoCalcDeactivated()),                            SLOT(hideAutoCalc())                        );
+  connect( d->editor,                SIGNAL(returnPressed()),                                  SLOT(returnPressed())                       );
+  connect( d->editor,                SIGNAL(textChanged()),                                    SLOT(textChanged())                         );
+  connect( d->evalButton,            SIGNAL(clicked()),                                        SLOT(returnPressed())                       );
+  connect( d->functionsDock,         SIGNAL(functionSelected( const QString & )),              SLOT(functionSelected( const QString & ))   );
+  connect( d->historyDock,           SIGNAL(expressionSelected( const QString & )),            SLOT(expressionSelected( const QString & )) );
+  connect( d->keypad,                SIGNAL(addText( const QString & )),                       SLOT(addKeypadText( const QString & ))      );
+  connect( d->keypad,                SIGNAL(evaluate()),                            d->editor, SLOT(evaluate() )                           );
+  connect( d->result,                SIGNAL(textCopied( const QString & )),         d->editor, SLOT(paste())                               );
+  connect( d->result,                SIGNAL(textCopied( const QString & )),         d->editor, SLOT(setFocus())                            );
+  connect( d->variablesDock,         SIGNAL(variableSelected( const QString& )),               SLOT(variableSelected( const QString & ))   );
 
   // Initialize settings
   d->insertFunctionDlg = new InsertFunctionDlg( this );
@@ -325,7 +323,7 @@ bool Crunch::event( QEvent* e )
   // ensure dock windows keep their state after minimize / screen switch
   Settings * set = Settings::self();
   //if ( set->showConstants ) QTimer::singleShot( 0, d->constantsDock, SLOT(show()) );
-  //if ( set->showFunctions ) QTimer::singleShot( 0, d->functionsDock, SLOT(show()) );
+  if ( set->showFunctions ) QTimer::singleShot( 0, d->functionsDock, SLOT(show()) );
   //if ( set->showHistory   ) QTimer::singleShot( 0, d->historyDock,   SLOT(show()) );
   //if ( set->showVariables ) QTimer::singleShot( 0, d->variablesDock, SLOT(show()) );
 
@@ -357,7 +355,7 @@ void Crunch::aboutQt()
 }
 
 
-void Crunch::addKeyPadText( const QString& text )
+void Crunch::addKeypadText( const QString& text )
 {
   if( text == "<--" ) // Special case: backspace
     d->editor->doBackspace();
@@ -471,27 +469,25 @@ void Crunch::applySettings()
   if ( settings->decimalDigits == 15 ) d->actions->digits15->setChecked( true );
   if ( settings->decimalDigits == 50 ) d->actions->digits50->setChecked( true );
 
-  if ( settings->showClearInputButton )
-    d->clearInputButton->show();
+  if ( settings->showKeypad )
+    d->clearExpressionButton->show();
   else
-    d->clearInputButton->hide();
-  d->actions->showClearButton->setChecked( settings->showClearInputButton );
+    d->clearExpressionButton->hide();
 
-  if ( settings->showEvaluateButton )
+  if ( settings->showKeypad )
     d->evalButton->show();
   else
     d->evalButton->hide();
-  d->actions->showEvalButton->setChecked( settings->showEvaluateButton );
 
-  if ( settings->showKeyPad )
+  if ( settings->showKeypad )
     d->keypad->show();
   else
     d->keypad->hide();
-  d->actions->showKeyPad->setChecked( settings->showKeyPad );
+  d->actions->showKeypad->setChecked( settings->showKeypad );
 
   d->actions->showConstants->setChecked( settings->showConstants );
   d->actions->showFunctions->setChecked( settings->showFunctions );
-  d->actions->showHistory->setChecked( settings->showHistory );
+  d->actions->showHistory->setChecked  ( settings->showHistory   );
   d->actions->showVariables->setChecked( settings->showVariables );
 
   d->constantsDock->setVisible( settings->showConstants );
@@ -543,7 +539,7 @@ void Crunch::clearHistory()
 }
 
 
-void Crunch::clearInput()
+void Crunch::clearExpression()
 {
   d->editor->clear();
   QTimer::singleShot(0, d->editor, SLOT(setFocus()) );
@@ -649,7 +645,7 @@ void Crunch::digitsAuto()
 }
 
 
-void Crunch::focusAndSelectInput()
+void Crunch::selectExpression()
 {
   activateWindow();
   d->editor->selectAll();
@@ -873,15 +869,6 @@ void Crunch::showAutoCalc( const QString & msg )
 }
 
 
-void Crunch::showClearButton( bool b )
-{
-  Settings * set = Settings::self();
-  set->showClearInputButton = b;
-  saveSettings();
-  applySettings();
-}
-
-
 void Crunch::showConstants( bool b )
 {
   Settings * set = Settings::self();
@@ -893,15 +880,6 @@ void Crunch::showConstants( bool b )
   //saveSettings();
   //applySettings();
   //d->constantsDock->raise();
-}
-
-
-void Crunch::showEvalButton( bool b )
-{
-  Settings * set = Settings::self();
-  set->showEvaluateButton = b;
-  saveSettings();
-  applySettings();
 }
 
 
@@ -930,10 +908,10 @@ void Crunch::showHistory( bool b )
 }
 
 
-void Crunch::showKeyPad( bool b )
+void Crunch::showKeypad( bool b )
 {
   Settings * settings = Settings::self();
-  settings->showKeyPad = b;
+  settings->showKeypad = b;
   saveSettings();
   applySettings();
 }
@@ -1318,67 +1296,65 @@ void Crunch::closeEvent( QCloseEvent * e )
 void Crunch::createUI()
 {
   // create all the actions
-  d->actions->sessionLoad         = new QAction( tr("&Load..."),                 this );
-  d->actions->sessionSave         = new QAction( tr("&Save..."),                 this );
-  d->actions->sessionQuit         = new QAction( tr("&Quit"),                    this );
-  d->actions->focusAndSelectInput = new QAction( tr("&Select Expression"),       this );
-  d->actions->editCopy            = new QAction( tr("&Copy"),                    this );
-  d->actions->editPaste           = new QAction( tr("&Paste"),                   this );
-  d->actions->editCopyResult      = new QAction( tr("Copy &Result"),             this );
-  d->actions->insertFunction      = new QAction( tr("Insert &Function..."),      this );
-  d->actions->insertVariable      = new QAction( tr("Insert &Variable..."),      this );
-  d->actions->deleteVariable      = new QAction( tr("D&elete Variable..."),      this );
-  d->actions->deleteAllVariables  = new QAction( tr("Delete All V&ariables"),    this );
-  d->actions->clearInput          = new QAction( tr("Clear E&xpression"),        this );
-  d->actions->clearHistory        = new QAction( tr("Clear &History"),           this );
-  d->actions->viewGeneral         = new QAction( tr("&General"),                 this );
-  d->actions->viewFixed           = new QAction( tr("&Fixed Decimal"),           this );
-  d->actions->viewEngineering     = new QAction( tr("&Engineering"),             this );
-  d->actions->viewScientific      = new QAction( tr("&Scientific"),              this );
-  d->actions->viewHexadec         = new QAction( tr("&Hexadecimal"),             this );
-  d->actions->viewOctal           = new QAction( tr("&Octal"),                   this );
-  d->actions->viewBinary          = new QAction( tr("&Binary"),                  this );
-  d->actions->digitsAuto          = new QAction( tr("&Automatic Precision"),     this );
-  d->actions->digits2             = new QAction( tr("&2 Decimal Digits"),        this );
-  d->actions->digits3             = new QAction( tr("&3 Decimal Digits"),        this );
-  d->actions->digits8             = new QAction( tr("&8 Decimal Digits"),        this );
-  d->actions->digits15            = new QAction( tr("&15 Decimal Digits"),       this );
-  d->actions->digits50            = new QAction( tr("&50 Decimal Digits"),       this );
-  d->actions->radian              = new QAction( tr("&Radian"),                  this );
-  d->actions->degree              = new QAction( tr("&Degree"),                  this );
-  d->actions->showClearButton     = new QAction( tr("&Show Clear Button"),       this );
-  d->actions->showEvalButton      = new QAction( tr("Show &Evaluate Button"),    this );
-  d->actions->showKeyPad          = new QAction( tr("Show &Key Pad"),            this );
-  d->actions->showHistory         = new QAction( tr("Show &History"),            this );
-  d->actions->showFunctions       = new QAction( tr("Show &Functions"),          this );
-  d->actions->showVariables       = new QAction( tr("Show &Variables"),          this );
-  d->actions->showConstants       = new QAction( tr("Show C&onstants"),          this );
-  d->actions->configure           = new QAction( tr("&Configure..."),            this );
-  d->actions->helpTipOfTheDay     = new QAction( tr("&Tip of the Day"),          this );
-  d->actions->helpGotoWebsite     = new QAction( tr("SpeedCrunch &Web Site..."), this );
-  d->actions->helpAbout           = new QAction( tr("&About"),                   this );
-  d->actions->helpAboutQt         = new QAction( tr("About &Qt"),                this );
+  d->actions->sessionLoad        = new QAction( tr("&Load..."),                 this );
+  d->actions->sessionSave        = new QAction( tr("&Save..."),                 this );
+  d->actions->sessionQuit        = new QAction( tr("&Quit"),                    this );
+  d->actions->selectExpression   = new QAction( tr("&Select Expression"),       this );
+  d->actions->editCopy           = new QAction( tr("&Copy"),                    this );
+  d->actions->editPaste          = new QAction( tr("&Paste"),                   this );
+  d->actions->editCopyResult     = new QAction( tr("Copy &Result"),             this );
+  d->actions->insertFunction     = new QAction( tr("Insert &Function..."),      this );
+  d->actions->insertVariable     = new QAction( tr("Insert &Variable..."),      this );
+  d->actions->deleteVariable     = new QAction( tr("D&elete Variable..."),      this );
+  d->actions->deleteAllVariables = new QAction( tr("Delete All V&ariables"),    this );
+  d->actions->clearExpression    = new QAction( tr("Clear E&xpression"),        this );
+  d->actions->clearHistory       = new QAction( tr("Clear &History"),           this );
+  d->actions->viewGeneral        = new QAction( tr("&General"),                 this );
+  d->actions->viewFixed          = new QAction( tr("&Fixed Decimal"),           this );
+  d->actions->viewEngineering    = new QAction( tr("&Engineering"),             this );
+  d->actions->viewScientific     = new QAction( tr("&Scientific"),              this );
+  d->actions->viewHexadec        = new QAction( tr("&Hexadecimal"),             this );
+  d->actions->viewOctal          = new QAction( tr("&Octal"),                   this );
+  d->actions->viewBinary         = new QAction( tr("&Binary"),                  this );
+  d->actions->digitsAuto         = new QAction( tr("&Automatic Precision"),     this );
+  d->actions->digits2            = new QAction( tr("&2 Decimal Digits"),        this );
+  d->actions->digits3            = new QAction( tr("&3 Decimal Digits"),        this );
+  d->actions->digits8            = new QAction( tr("&8 Decimal Digits"),        this );
+  d->actions->digits15           = new QAction( tr("&15 Decimal Digits"),       this );
+  d->actions->digits50           = new QAction( tr("&50 Decimal Digits"),       this );
+  d->actions->radian             = new QAction( tr("&Radian"),                  this );
+  d->actions->degree             = new QAction( tr("&Degree"),                  this );
+  d->actions->showKeypad         = new QAction( tr("Show &Keypad"),               this );
+  d->actions->showHistory        = new QAction( tr("Show &History"),            this );
+  d->actions->showFunctions      = new QAction( tr("Show &Functions"),          this );
+  d->actions->showVariables      = new QAction( tr("Show &Variables"),          this );
+  d->actions->showConstants      = new QAction( tr("Show C&onstants"),          this );
+  d->actions->configure          = new QAction( tr("&Configure..."),            this );
+  d->actions->helpTipOfTheDay    = new QAction( tr("&Tip of the Day"),          this );
+  d->actions->helpGotoWebsite    = new QAction( tr("SpeedCrunch &Web Site..."), this );
+  d->actions->helpAbout          = new QAction( tr("&About"),                   this );
+  d->actions->helpAboutQt        = new QAction( tr("About &Qt"),                this );
 
-  d->actions->sessionLoad->setShortcut        ( Qt::CTRL + Qt::Key_L );
-  d->actions->sessionSave->setShortcut        ( Qt::CTRL + Qt::Key_S );
-  d->actions->sessionQuit->setShortcut        ( Qt::CTRL + Qt::Key_Q );
-  d->actions->editCopy->setShortcut           ( Qt::CTRL + Qt::Key_C );
-  d->actions->editPaste->setShortcut          ( Qt::CTRL + Qt::Key_V );
-  d->actions->editCopyResult->setShortcut     ( Qt::CTRL + Qt::Key_R );
-  d->actions->insertFunction->setShortcut     ( Qt::CTRL + Qt::Key_F );
-  d->actions->insertVariable->setShortcut     ( Qt::CTRL + Qt::Key_I );
-  d->actions->deleteVariable->setShortcut     ( Qt::CTRL + Qt::Key_D );
-  d->actions->clearInput->setShortcut         ( Qt::Key_Escape       );
-  d->actions->clearHistory->setShortcut       ( Qt::CTRL + Qt::Key_Y );
-  d->actions->focusAndSelectInput->setShortcut( Qt::CTRL + Qt::Key_A );
-  d->actions->viewBinary->setShortcut         ( Qt::Key_F5           );
-  d->actions->viewOctal->setShortcut          ( Qt::Key_F6           );
-  d->actions->viewGeneral->setShortcut        ( Qt::Key_F7           );
-  d->actions->viewHexadec->setShortcut        ( Qt::Key_F8           );
-  d->actions->radian->setShortcut             ( Qt::Key_F9           );
-  d->actions->degree->setShortcut             ( Qt::Key_F10          );
-  d->actions->showKeyPad->setShortcut         ( Qt::CTRL + Qt::Key_K );
-  d->actions->helpTipOfTheDay->setShortcut    ( Qt::CTRL + Qt::Key_T );
+  d->actions->sessionLoad->setShortcut     ( Qt::CTRL + Qt::Key_L );
+  d->actions->sessionSave->setShortcut     ( Qt::CTRL + Qt::Key_S );
+  d->actions->sessionQuit->setShortcut     ( Qt::CTRL + Qt::Key_Q );
+  d->actions->editCopy->setShortcut        ( Qt::CTRL + Qt::Key_C );
+  d->actions->editPaste->setShortcut       ( Qt::CTRL + Qt::Key_V );
+  d->actions->editCopyResult->setShortcut  ( Qt::CTRL + Qt::Key_R );
+  d->actions->insertFunction->setShortcut  ( Qt::CTRL + Qt::Key_F );
+  d->actions->insertVariable->setShortcut  ( Qt::CTRL + Qt::Key_I );
+  d->actions->deleteVariable->setShortcut  ( Qt::CTRL + Qt::Key_D );
+  d->actions->clearExpression->setShortcut ( Qt::Key_Escape       );
+  d->actions->clearHistory->setShortcut    ( Qt::CTRL + Qt::Key_Y );
+  d->actions->selectExpression->setShortcut( Qt::CTRL + Qt::Key_A );
+  d->actions->viewBinary->setShortcut      ( Qt::Key_F5           );
+  d->actions->viewOctal->setShortcut       ( Qt::Key_F6           );
+  d->actions->viewGeneral->setShortcut     ( Qt::Key_F7           );
+  d->actions->viewHexadec->setShortcut     ( Qt::Key_F8           );
+  d->actions->radian->setShortcut          ( Qt::Key_F9           );
+  d->actions->degree->setShortcut          ( Qt::Key_F10          );
+  d->actions->showKeypad->setShortcut      ( Qt::CTRL + Qt::Key_K );
+  d->actions->helpTipOfTheDay->setShortcut ( Qt::CTRL + Qt::Key_T );
 
   QActionGroup *formatGroup = new QActionGroup( this );
   formatGroup->addAction( d->actions->viewBinary );
@@ -1410,12 +1386,10 @@ void Crunch::createUI()
   d->actions->digits8->setCheckable( true );
   d->actions->digitsAuto->setCheckable( true );
   d->actions->radian->setCheckable( true );
-  d->actions->showClearButton->setCheckable( true );
   d->actions->showConstants->setCheckable( true );
-  d->actions->showEvalButton->setCheckable ( true );
   d->actions->showFunctions->setCheckable( true );
   d->actions->showHistory->setCheckable( true );
-  d->actions->showKeyPad->setCheckable( true );
+  d->actions->showKeypad->setCheckable( true );
   d->actions->showVariables->setCheckable( true );
   d->actions->viewBinary->setCheckable( true );
   d->actions->viewEngineering->setCheckable( true );
@@ -1426,46 +1400,44 @@ void Crunch::createUI()
   d->actions->viewScientific->setCheckable( true );
 
   // signals and slots
-  connect( d->actions->clearHistory,        SIGNAL(activated()    ), this,           SLOT(clearHistory()         ) );
-  connect( d->actions->clearInput,          SIGNAL(activated()    ), this,           SLOT(clearInput()           ) );
-  connect( d->actions->configure,           SIGNAL(activated()    ), this,           SLOT(configure()            ) );
-  connect( d->actions->degree,              SIGNAL(activated()    ), this,           SLOT(degree()               ) );
-  connect( d->actions->deleteAllVariables,  SIGNAL(activated()    ), this,           SLOT(deleteAllVariables()   ) );
-  connect( d->actions->deleteVariable,      SIGNAL(activated()    ), this,           SLOT(deleteVariable()       ) );
-  connect( d->actions->digits15,            SIGNAL(activated()    ), this,           SLOT(digits15()             ) );
-  connect( d->actions->digits2,             SIGNAL(activated()    ), this,           SLOT(digits2()              ) );
-  connect( d->actions->digits3,             SIGNAL(activated()    ), this,           SLOT(digits3()              ) );
-  connect( d->actions->digits50,            SIGNAL(activated()    ), this,           SLOT(digits50()             ) );
-  connect( d->actions->digits8,             SIGNAL(activated()    ), this,           SLOT(digits8()              ) );
-  connect( d->actions->digitsAuto,          SIGNAL(activated()    ), this,           SLOT(digitsAuto()           ) );
-  connect( d->actions->editCopyResult,      SIGNAL(activated()    ), this,           SLOT(copyResult()           ) );
-  connect( d->actions->editCopy,            SIGNAL(activated()    ), d->editor,      SLOT(copy()                 ) );
-  connect( d->actions->editPaste,           SIGNAL(activated()    ), d->editor,      SLOT(paste()                ) );
-  connect( d->actions->focusAndSelectInput, SIGNAL(activated()    ), this,           SLOT(focusAndSelectInput()  ) );
-  connect( d->actions->helpAboutQt,         SIGNAL(activated()    ), this,           SLOT(aboutQt()              ) );
-  connect( d->actions->helpAbout,           SIGNAL(activated()    ), this,           SLOT(about()                ) );
-  connect( d->actions->helpGotoWebsite,     SIGNAL(activated()    ), this,           SLOT(gotoWebsite()          ) );
-  connect( d->actions->helpTipOfTheDay,     SIGNAL(activated()    ), this,           SLOT(showTip()              ) );
-  connect( d->actions->insertFunction,      SIGNAL(activated()    ), this,           SLOT(insertFunction()       ) );
-  connect( d->actions->insertVariable,      SIGNAL(activated()    ), this,           SLOT(insertVariable()       ) );
-  connect( d->actions->radian,              SIGNAL(activated()    ), this,           SLOT(radian()               ) );
-  connect( d->actions->sessionLoad,         SIGNAL(activated()    ), this,           SLOT(loadSession()          ) );
-  connect( d->actions->sessionQuit,         SIGNAL(activated()    ), this,           SLOT(close()                ) );
-  connect( d->actions->sessionSave,         SIGNAL(activated()    ), this,           SLOT(saveSession()          ) );
-  connect( d->actions->showClearButton,     SIGNAL(toggled( bool )), this,           SLOT(showClearButton( bool )) );
-  connect( d->actions->showConstants,       SIGNAL(toggled( bool )), this,           SLOT(showConstants( bool )  ) );
-  connect( d->actions->showEvalButton,      SIGNAL(toggled( bool )), this,           SLOT(showEvalButton( bool ) ) );
-  connect( d->actions->showFunctions,       SIGNAL(toggled( bool )), this,           SLOT(showFunctions( bool )  ) );
-  connect( d->actions->showHistory,         SIGNAL(toggled( bool )), this,           SLOT(showHistory( bool )    ) );
-  connect( d->actions->showKeyPad,          SIGNAL(toggled( bool )), this,           SLOT(showKeyPad( bool )     ) );
-  connect( d->actions->showVariables,       SIGNAL(toggled( bool )), this,           SLOT(showVariables( bool )  ) );
-  connect( d->actions->viewBinary,          SIGNAL(activated()    ), this,           SLOT(viewBinary()           ) );
-  connect( d->actions->viewEngineering,     SIGNAL(activated()    ), this,           SLOT(viewEngineering()      ) );
-  connect( d->actions->viewFixed,           SIGNAL(activated()    ), this,           SLOT(viewFixed()            ) );
-  connect( d->actions->viewGeneral,         SIGNAL(activated()    ), this,           SLOT(viewGeneral()          ) );
-  connect( d->actions->viewHexadec,         SIGNAL(activated()    ), this,           SLOT(viewHexadec()          ) );
-  connect( d->actions->viewOctal,           SIGNAL(activated()    ), this,           SLOT(viewOctal()            ) );
-  connect( d->actions->viewScientific,      SIGNAL(activated()    ), this,           SLOT(viewScientific()       ) );
+  connect( d->actions->clearHistory,       SIGNAL(activated()),     this,      SLOT(clearHistory())        );
+  connect( d->actions->clearExpression,    SIGNAL(activated()),     this,      SLOT(clearExpression())     );
+  connect( d->actions->configure,          SIGNAL(activated()),     this,      SLOT(configure())           );
+  connect( d->actions->degree,             SIGNAL(activated()),     this,      SLOT(degree())              );
+  connect( d->actions->deleteAllVariables, SIGNAL(activated()),     this,      SLOT(deleteAllVariables())  );
+  connect( d->actions->deleteVariable,     SIGNAL(activated()),     this,      SLOT(deleteVariable())      );
+  connect( d->actions->digits15,           SIGNAL(activated()),     this,      SLOT(digits15())            );
+  connect( d->actions->digits2,            SIGNAL(activated()),     this,      SLOT(digits2())             );
+  connect( d->actions->digits3,            SIGNAL(activated()),     this,      SLOT(digits3())             );
+  connect( d->actions->digits50,           SIGNAL(activated()),     this,      SLOT(digits50())            );
+  connect( d->actions->digits8,            SIGNAL(activated()),     this,      SLOT(digits8())             );
+  connect( d->actions->digitsAuto,         SIGNAL(activated()),     this,      SLOT(digitsAuto())          );
+  connect( d->actions->editCopyResult,     SIGNAL(activated()),     this,      SLOT(copyResult())          );
+  connect( d->actions->editCopy,           SIGNAL(activated()),     d->editor, SLOT(copy())                );
+  connect( d->actions->editPaste,          SIGNAL(activated()),     d->editor, SLOT(paste())               );
+  connect( d->actions->selectExpression,   SIGNAL(activated()),     this,      SLOT(selectExpression())    );
+  connect( d->actions->helpAboutQt,        SIGNAL(activated()),     this,      SLOT(aboutQt())             );
+  connect( d->actions->helpAbout,          SIGNAL(activated()),     this,      SLOT(about())               );
+  connect( d->actions->helpGotoWebsite,    SIGNAL(activated()),     this,      SLOT(gotoWebsite())         );
+  connect( d->actions->helpTipOfTheDay,    SIGNAL(activated()),     this,      SLOT(showTip())             );
+  connect( d->actions->insertFunction,     SIGNAL(activated()),     this,      SLOT(insertFunction())      );
+  connect( d->actions->insertVariable,     SIGNAL(activated()),     this,      SLOT(insertVariable())      );
+  connect( d->actions->radian,             SIGNAL(activated()),     this,      SLOT(radian())              );
+  connect( d->actions->sessionLoad,        SIGNAL(activated()),     this,      SLOT(loadSession())         );
+  connect( d->actions->sessionQuit,        SIGNAL(activated()),     this,      SLOT(close())               );
+  connect( d->actions->sessionSave,        SIGNAL(activated()),     this,      SLOT(saveSession())         );
+  connect( d->actions->showConstants,      SIGNAL(toggled( bool )), this,      SLOT(showConstants( bool )) );
+  connect( d->actions->showFunctions,      SIGNAL(toggled( bool )), this,      SLOT(showFunctions( bool )) );
+  connect( d->actions->showHistory,        SIGNAL(toggled( bool )), this,      SLOT(showHistory( bool ))   );
+  connect( d->actions->showKeypad,         SIGNAL(toggled( bool )), this,      SLOT(showKeypad( bool ))    );
+  connect( d->actions->showVariables,      SIGNAL(toggled( bool )), this,      SLOT(showVariables( bool )) );
+  connect( d->actions->viewBinary,         SIGNAL(activated()),     this,      SLOT(viewBinary())          );
+  connect( d->actions->viewEngineering,    SIGNAL(activated()),     this,      SLOT(viewEngineering())     );
+  connect( d->actions->viewFixed,          SIGNAL(activated()),     this,      SLOT(viewFixed())           );
+  connect( d->actions->viewGeneral,        SIGNAL(activated()),     this,      SLOT(viewGeneral())         );
+  connect( d->actions->viewHexadec,        SIGNAL(activated()),     this,      SLOT(viewHexadec())         );
+  connect( d->actions->viewOctal,          SIGNAL(activated()),     this,      SLOT(viewOctal())           );
+  connect( d->actions->viewScientific,     SIGNAL(activated()),     this,      SLOT(viewScientific())      );
 
   // synchronize dock actions
   connect( d->constantsDock->toggleViewAction(), SIGNAL(toggled( bool )), d->actions->showConstants, SLOT(setChecked( bool )) );
@@ -1486,7 +1458,7 @@ void Crunch::createUI()
   d->editMenu->addAction( d->actions->editCopy );
   d->editMenu->addAction( d->actions->editCopyResult );
   d->editMenu->addAction( d->actions->editPaste );
-  d->editMenu->addAction( d->actions->focusAndSelectInput );
+  d->editMenu->addAction( d->actions->selectExpression );
   d->editMenu->addSeparator();
   d->editMenu->addAction( d->actions->insertFunction );
   d->editMenu->addAction( d->actions->insertVariable );
@@ -1494,7 +1466,7 @@ void Crunch::createUI()
   d->editMenu->addAction( d->actions->deleteVariable );
   d->editMenu->addAction( d->actions->deleteAllVariables );
   d->editMenu->addSeparator();
-  d->editMenu->addAction( d->actions->clearInput );
+  d->editMenu->addAction( d->actions->clearExpression );
   d->editMenu->addAction( d->actions->clearHistory );
 
   d->baseMenu = new QMenu( tr("&Format"), this );
@@ -1522,9 +1494,7 @@ void Crunch::createUI()
 
   d->settingsMenu = new QMenu( tr("Se&ttings"), this );
   menuBar()->addMenu( d->settingsMenu );
-  d->settingsMenu->addAction( d->actions->showClearButton );
-  d->settingsMenu->addAction( d->actions->showEvalButton );
-  d->settingsMenu->addAction( d->actions->showKeyPad );
+  d->settingsMenu->addAction( d->actions->showKeypad );
   d->settingsMenu->addSeparator();
   d->settingsMenu->addAction( d->actions->showHistory );
   d->settingsMenu->addAction( d->actions->showFunctions );
