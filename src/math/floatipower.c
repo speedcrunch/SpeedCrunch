@@ -1,6 +1,6 @@
 /* floatpower.c: power operation, based on floatnum. */
 /*
-    Copyright (C) 2007 Wolf Lammen.
+    Copyright (C) 2007, 2008 Wolf Lammen.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -129,13 +129,9 @@ _raisei(
   negexp = exponent < 0;
   if (negexp)
     exponent = -exponent;
-  if (_raiseposi(x, &expx, exponent, digits)
-      && expx >= EXPMIN && expx <= EXPMAX)
-  {
-    float_setexponent(x, expx);
-    if (negexp)
-      return float_reciprocal(x, digits);
-    return 1;
-  }
-  return 0;
+  if (!_raiseposi(x, &expx, exponent, digits)
+      || expx < EXPMIN || expx > EXPMAX)
+    return 0;
+  float_setexponent(x, expx);
+  return negexp? float_reciprocal(x, digits) : 1;
 }

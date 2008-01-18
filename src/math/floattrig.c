@@ -1,6 +1,6 @@
 /* floattrig.c: trigonometry functions, based on floatnum. */
 /*
-    Copyright (C) 2007 Wolf Lammen.
+    Copyright (C) 2007, 2008 Wolf Lammen.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -399,7 +399,7 @@ _trigreduce(
   if (float_abscmp(x, &cPi) <= 0)
     return 1;
   expx = float_getexponent(x);
-  if (expx > float_getlength(&cPi) - MATHPRECISION)
+  if (expx > float_getlength(&cPi) - digits)
     return 0;
   float_create(&tmp);
   sgn = float_getsign(x);

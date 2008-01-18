@@ -20,13 +20,6 @@
 #include "symboltables/tables.hxx"
 #include "math/hmath.hxx"
 
-// FIXME move the initialization to another object
-
-static HNumber wrapFactorial(const HNumber& x)
-{
-  return HMath::factorial(x);
-}
-
 struct CSyntaxSymbol
 {
   const char* key;
@@ -72,66 +65,6 @@ struct CVFctSymbol
 };
 static const int cnt3 = sizeof(CVFctSymbols)/sizeof(struct CVFctSymbol);
 
-struct CNFct1Symbol
-{
-  const char* key;
-  Nfct1 fct;
-} CNFct1Symbols[] =
-{
-  { " sin", HMath::sin },
-};
-static const int cnt4 = sizeof(CNFct1Symbols)/sizeof(struct CNFct1Symbol);
-
-struct CTagSymbol
-{
-  const char* key;
-  char base;
-  bool cmpl;
-} CTagSymbols[] =
-{
-  { " x", 16, false },
-  { " xs", 16, true },
-  { " d", 10, false },
-  { " o",  8, false },
-  { " os",  8, true },
-  { " b",  2, false },
-  { " bs",  2, true },
-};
-static const int cnt5 = sizeof(CTagSymbols)/sizeof(struct CTagSymbol);
-
-struct CNUnOpSymbol
-{
-  const char* key;
-  Nfct1 fct;
-  char  precedence;
-} CNUnOpSymbols[] =
-{
-  { " -", operator-, 12 },
-  { " !", wrapFactorial, 13 },
-};
-static const int cnt6 = sizeof(CNUnOpSymbols)/sizeof(struct CNUnOpSymbol);
-
-struct CNBinOpSymbol
-{
-  const char* key;
-  Nfct2 fct;
-  char  precedence;
-} CNBinOpSymbols[] =
-{
-  { " add", operator-, 6 },
-};
-static const int cnt7 = sizeof(CNBinOpSymbols)/sizeof(struct CNBinOpSymbol);
-
-struct CConstSymbol
-{
-  const char* key;
-  const Variant value;
-} CConstSymbols[] =
-{
-  { " pi", HMath::pi() },
-};
-static const int cnt8 = sizeof(CConstSymbols)/sizeof(struct CConstSymbol);
-
 Tables* Tables::tables = 0;
 
 Tables& Tables::self()
@@ -156,7 +89,6 @@ Tables::Tables()
 
 void Tables::init()
 {
-  FctList fcts;
   for (int i = -1; ++i < cnt1; )
   {
     struct CSyntaxSymbol* ps = CSyntaxSymbols + i;
@@ -167,46 +99,12 @@ void Tables::init()
     struct CParSymbol* ps = CParSymbols + i;
     builtinTable().addOpenSymbol(ps->key, ps->symtype, ps->closeKey);
   }
-  fcts.clear();
   for (int i = -1; ++i < cnt3; )
   {
     struct CVFctSymbol* ps = CVFctSymbols + i;
     TypeList paramType(ps->paramtypes);
-    fcts.vfct = ps->fct;
-    builtinTable().addFunctionSymbol(ps->key, paramType, fcts,
+    builtinTable().addFunctionSymbol(ps->key, paramType, ps->fct,
                                      ps->mincount, ps->maxcount);
-  }
-  fcts.clear();
-  for (int i = -1; ++i < cnt4; )
-  {
-    struct CNFct1Symbol* ps = CNFct1Symbols + i;
-    TypeList paramType("n");
-    fcts.nfct1 = ps->fct;
-    builtinTable().addFunctionSymbol(ps->key, paramType, fcts, 1, 1);
-  }
-  for (int i = -1; ++i < cnt5; )
-  {
-    struct CTagSymbol* ps = CTagSymbols + i;
-    builtinTable().addTagSymbol(ps->key, ps->base, ps->cmpl);
-  }
-  fcts.clear();
-  for (int i = -1; ++i < cnt6; )
-  {
-    struct CNUnOpSymbol* ps = CNUnOpSymbols + i;
-    fcts.nfct1 = ps->fct;
-    builtinTable().addUnOpSymbol(ps->key, TNumeric, fcts, ps->precedence);
-  }
-  fcts.clear();
-  for (int i = -1; ++i < cnt7; )
-  {
-    struct CNBinOpSymbol* ps = CNBinOpSymbols + i;
-    fcts.nfct2 = ps->fct;
-    builtinTable().addBinOpSymbol(ps->key, TNumeric, TNumeric, fcts, ps->precedence);
-  }
-  for (int i = -1; ++i < cnt8; )
-  {
-    struct CConstSymbol* ps = CConstSymbols + i;
-    builtinTable().addConstSymbol(ps->key, ps->value);
   }
 }
 
@@ -283,33 +181,33 @@ bool Tables::keysContainChar(QChar c)
   return false;
 }
 
-Variant Tables::escape(const ParamList& params)
+XVariant Tables::escape(const ParamList& params)
 {
   Settings::self()->escape = (const QString&)params.at(0);
   return 0;
 }
 
-Variant Tables::define(const ParamList& params)
+XVariant Tables::define(const ParamList& params)
 {
   if (globalTable().contains((const QString&)params.at(1)))
-    return TABLE_KEY_EXISTS;
+    return KeyExists;
   return overload(params);
 }
 
-Variant Tables::overload(const ParamList& params)
+XVariant Tables::overload(const ParamList& params)
 {
   int prec;
   PSymbol symbol = builtinLookup(params.at(0)).pt.value();
   if (!symbol)
-    return TABLE_SYMBOL_NOT_FOUND;
+    return SymbolNotFound;
   QString key = (const QString&)params.at(1);
   bool ok;
   if (symbol->asOp())
   {
     if (params.size() == 3)
     {
-      if (params.isType(2, TInteger))
-        return SYMBOLS_TYPE_MISMATCH;
+      if (params.isType(2, vInteger))
+        return TypeMismatch;
       prec = ((const HNumber&)(params.at(2))).toInt();
     }
     else
@@ -321,30 +219,30 @@ Variant Tables::overload(const ParamList& params)
   else if (symbol->asOpen())
   {
     if (params.size() != 3)
-      return TABLE_MISSING_CLOSE;
-    if (!params.isType(2, TText))
-      return SYMBOLS_TYPE_MISMATCH;
+      return CloseSymbolMissing;
+    if (!params.isType(2, vText))
+      return TypeMismatch;
     ok = globalTable().addOpenSymbol(key, symbol->type(), params.at(2));
   }
   else
   {
     if (params.size() != 2)
-      return SYMBOLS_INVALID_PARAMCOUNT;
+      return InvalidParamCount;
     ok = globalTable().cloneSymbol(key, symbol);
   }
-  return ok? 0 : SYMBOLS_CLONE_ERROR;
+  return ok? Success : SymbolCloneError;
 }
 
-Variant Tables::undefine(const ParamList& params)
+XVariant Tables::undefine(const ParamList& params)
 {
   int firstindex =  -1;
   if (params.size() == 2)
   {
     HNumber p2 = (const HNumber&)params.at(1);
     if (p2.isNan())
-      return FLOAT_NANOPERAND;
+      return NaNOperand;
     if (p2 != 0 && p2 != 1)
-      return FLOAT_OUTOFDOMAIN;
+      return OutOfDomain;
     if (p2 == 1)
       firstindex = globalSymbols;
   }
@@ -352,7 +250,7 @@ Variant Tables::undefine(const ParamList& params)
   SearchResult sr = Tables::self().doLookup(key, true,
                                             firstindex, globalSymbols);
   if (sr.count == 0)
-    return TABLE_SYMBOL_NOT_FOUND;
+    return SymbolNotFound;
   sr.table->removeSymbols(key);
   return 0;
 }
@@ -409,7 +307,7 @@ bool Table::addOpenSymbol(const QString& key, SymType aType, const QString& clos
 }
 
 bool Table::addFunctionSymbol(const QString& key, const TypeList& t,
-               const FctList& f, int minParamCount, int maxParamCount)
+                       Vfct f, int minParamCount, int maxParamCount)
 {
   return addSymbol(key, new FunctionSymbol(this, t, f, minParamCount, maxParamCount));
 }
@@ -419,7 +317,7 @@ bool Table::addTagSymbol(const QString& key, char base, bool complement)
   return addSymbol(key, new TagSymbol(this, base, complement));
 }
 
-bool Table::addUnOpSymbol(const QString key, VariantType t, const FctList& f,
+bool Table::addUnOpSymbol(const QString key, XVariantType t, Vfct f,
                           char precedence)
 {
   TypeList tl;
@@ -427,8 +325,8 @@ bool Table::addUnOpSymbol(const QString key, VariantType t, const FctList& f,
   return addSymbol(key, new OperatorSymbol(this, tl, f, precedence));
 }
 
-bool Table::addBinOpSymbol(const QString key, VariantType t1, VariantType t2,
-                           const FctList& f, char precedence)
+bool Table::addBinOpSymbol(const QString key, XVariantType t1, XVariantType t2,
+                           Vfct f, char precedence)
 {
   TypeList tl;
   tl.append(t1);
@@ -436,7 +334,7 @@ bool Table::addBinOpSymbol(const QString key, VariantType t1, VariantType t2,
   return addSymbol(key, new OperatorSymbol(this, tl, f, precedence));
 }
 
-bool Table::addConstSymbol(const QString key, const Variant& value)
+bool Table::addConstSymbol(const QString key, const XVariant& value)
 {
   return addSymbol(key, new ConstSymbol(this, value));
 }

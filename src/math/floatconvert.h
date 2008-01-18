@@ -1,6 +1,6 @@
 /* floatconvert.h: radix conversion, based on floatnum. */
 /*
-    Copyright (C) 2007 Wolf Lammen.
+    Copyright (C) 2007, 2008 Wolf Lammen.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -53,8 +53,9 @@ void _longint2floatnum(floatnum f, t_longint* longint);
 
 char float_out(p_otokens tokens, floatnum x, int digits, signed char base,
                signed char expbase, char outmode);
-/* returns one of the IO_ERROR... codes */
-int float_in(floatnum x, p_itokens tokens);
+/* returns one of the IO... codes
+   Errors: BadLiteral, set in addition to the returned result */
+Error float_in(floatnum x, p_itokens tokens);
 
 #ifdef __cplusplus
 }

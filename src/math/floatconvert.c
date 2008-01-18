@@ -1,6 +1,6 @@
 /* floatconvert.c: radix conversion, based on floatnum. */
 /*
-    Copyright (C) 2007 Wolf Lammen.
+    Copyright (C) 2007, 2008 Wolf Lammen.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -223,7 +223,7 @@ _setfndesc(
   n->fracpart.getdigit = _getfnfracdigit;
 }
 
-static int
+static Error
 _pack2longint(
   t_longint* l,
   p_ext_seq_desc n)
@@ -239,13 +239,13 @@ _pack2longint(
     --ofs;
   bitofs = (n->seq.digits - ofs) * logbase;
   if (!_longintsetsize(l, bitofs))
-    return IO_BUFFER_OVERFLOW;
+    return IOBufferOverflow;
   for (; bitofs > 0;)
   {
     bitofs -= logbase;
     _orsubstr(l->value, bitofs, n->getdigit(ofs++, &n->seq));
   }
-  return IO_NO_ERROR;
+  return Success;
 }
 
 static char
@@ -295,7 +295,7 @@ _setlongintdesc(
   n->getdigit = _getlongintdigit;
 }
 
-static int
+static Error
 _packdec2int(
   floatnum x,
   p_ext_seq_desc n)
@@ -311,7 +311,7 @@ _packdec2int(
   exp = n->seq.trailing0;
   bufsz = n->seq.digits - ofs - exp;
   if (bufsz > DECPRECISION)
-    return IO_BUFFER_OVERFLOW;
+    return IOBufferOverflow;
   if (bufsz == 0)
     float_setzero(x);
   else
@@ -319,25 +319,25 @@ _packdec2int(
       buf[i] = n->getdigit(ofs++, &n->seq) + '0';
   float_setsignificand(x, NULL, buf, bufsz);
   float_setexponent(x, exp + bufsz - 1);
-  return IO_NO_ERROR;
+  return Success;
 }
 
-static int
+static Error
 _packbin2int(
   floatnum x,
   p_ext_seq_desc n)
 {
   t_longint l;
-  int result;
+  Error result;
 
   float_setnan(x);
-  if ((result = _pack2longint(&l, n)) != IO_NO_ERROR)
+  if ((result = _pack2longint(&l, n)) != Success)
     return result;
   _longint2floatnum(x, &l);
-  return IO_NO_ERROR;
+  return Success;
 }
 
-static int
+static Error
 _pack2int(
   floatnum x,
   p_ext_seq_desc n)
@@ -355,10 +355,10 @@ _pack2int(
   default:
     return _packbin2int(x, n);
   }
-  return IO_NO_ERROR;
+  return Success;
 }
 
-static int
+static Error
 _pack2frac(
   floatnum x,
   p_ext_seq_desc n,
@@ -366,7 +366,7 @@ _pack2frac(
 {
   floatstruct tmp;
   int exp;
-  int result;
+  Error result;
 
   n->seq.digits -= n->seq.trailing0;
   n->seq.trailing0 = 0;
@@ -379,7 +379,7 @@ _pack2frac(
     float_setzero(x);
     break;
   default:
-    if ((result = _pack2int(x, n)) != IO_NO_ERROR)
+    if ((result = _pack2int(x, n)) != Success)
       return result;
     float_create(&tmp);
     float_setinteger(&tmp, n->seq.base);
@@ -389,10 +389,10 @@ _pack2frac(
     float_free(&tmp);
   }
   n->seq.digits += n->seq.trailing0;
-  return IO_NO_ERROR;
+  return Success;
 }
 
-int
+Error
 pack2floatnum(
   floatnum x,
   p_number_desc n)
@@ -401,13 +401,13 @@ pack2floatnum(
   int digits;
   int saveerr;
   int saverange;
-  int result;
+  Error result;
   signed char base;
 
-  if ((result = _pack2int(x, &n->intpart)) != IO_NO_ERROR)
+  if ((result = _pack2int(x, &n->intpart)) != Success)
     return result;
   if (float_isnan(x))
-    return IO_NO_ERROR;
+    return Success;
   saveerr = float_geterror();
   saverange = float_setrange(MAXEXP);
   float_create(&tmp);
@@ -415,9 +415,9 @@ pack2floatnum(
   float_setzero(x);
   digits = DECPRECISION - float_getexponent(&tmp);
   if (digits <= 0
-      || (result = _pack2frac(x, &n->fracpart, digits)) == IO_NO_ERROR)
+      || (result = _pack2frac(x, &n->fracpart, digits)) == Success)
     float_add(x, x, &tmp, DECPRECISION);
-  if (result != IO_NO_ERROR)
+  if (result != Success)
     return result;
   if (!float_getlength(x) == 0) /* no zero, no NaN? */
   {
@@ -441,7 +441,7 @@ pack2floatnum(
   float_setrange(saverange);
   if (!float_isvalidexp(float_getexponent(x)))
     float_setnan(x);
-  return float_isnan(x)? IO_ERROR_EXP_RANGE : IO_NO_ERROR;
+  return float_isnan(x)? IOExpOverflow : Success;
 }
 
 static char
@@ -785,7 +785,7 @@ char float_out(
   }
 }
 
-int
+Error
 float_in(
   floatnum x,
   p_itokens tokens)
@@ -793,11 +793,11 @@ float_in(
   t_number_desc n;
   int result;
 
-  if ((result = str2desc(&n, tokens)) == IO_NO_ERROR)
+  if ((result = str2desc(&n, tokens)) == Success)
     result = pack2floatnum(x, &n);
-  if (result != IO_NO_ERROR)
+  if (result != Success)
   {
-    float_seterror(FLOAT_BADLITERAL);
+    _seterror(x, BadLiteral);
     float_setnan(x);
   }
   return result;

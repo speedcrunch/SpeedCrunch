@@ -33,6 +33,7 @@
 
 #include "math/hmath.hxx"
 #include "base/functions.hxx" // FIXME this should not be necessary
+#include "base/variant.hxx"
 #include <QString>
 #include <QList>
 #include <QLinkedList>
@@ -59,7 +60,7 @@ typedef enum
   decscale = 'E',
 } SymType;
 
-typedef enum
+/*typedef enum
 {
   TEmpty,
   TError,
@@ -90,54 +91,31 @@ class Variant: protected HNumber
     VariantType m_type;
     QString text;
 };
-
-class TypeList: public QList<VariantType>
+*/
+class TypeList: public QList<XVariantType>
 {
   public:
     TypeList(){};
     TypeList(const char* desc);
-    void appendType(VariantType t, int count = 1);
+    void appendType(XVariantType t, int count = 1);
 };
 
 typedef struct
 {
   int index;
-  int error;
+  TError error;
 } TypeCheck;
 
-class ParamList: public QList<Variant>
+class ParamList: public QList<XVariant>
 {
   public:
-    bool allNums() const;
-    bool isType(int index, VariantType) const;
+    bool allReal() const;
+    bool isType(int index, XVariantType) const;
     bool isNum(int index) const;
     TypeCheck match(const TypeList&) const;
 };
 
-typedef HNumber (*Nfct0)();
-typedef HNumber (*Nfct1)(const HNumber& p1);
-typedef HNumber (*Nfct2)(const HNumber& p1, const HNumber& p2);
-typedef HNumber (*Nfct3)(const HNumber& p1, const HNumber& p2,
-                         const HNumber& p3);
-typedef HNumber (*Nfct4)(const HNumber& p1, const HNumber& p2,
-                         const HNumber& p3, const HNumber& p4);
-typedef HNumber (*Nfct) (const HNumberList& param);
-typedef Variant (*Vfct) (const ParamList& params);
-
-class FctList
-{
-  public:
-    Nfct0 nfct0;
-    Nfct1 nfct1;
-    Nfct2 nfct2;
-    Nfct3 nfct3;
-    Nfct4 nfct4;
-    Nfct  nfct;
-    Vfct  vfct;
-    Variant eval(const ParamList& params) const;
-    bool match(const ParamList& params) const;
-    void clear();
-};
+typedef XVariant (*Vfct) (const ParamList& params);
 
 class Symbol;
 class TagSymbol;
@@ -219,15 +197,15 @@ class FunctionSymbol: public Symbol
 {
   public:
     SymType type() const;
-    FunctionSymbol(void* aOwner, const TypeList&, const FctList&,
+    FunctionSymbol(void* aOwner, const TypeList&, Vfct,
                    int minCount = 0, int maxCount = -1);
     bool match(const ParamList& params) const;
-    Variant eval(const ParamList& params) const;
+    XVariant eval(const ParamList& params) const;
     PSymbol clone(void* aOwner) const;
   protected:
     int minParamCount;
     int maxParamCount;
-    FctList fcts;
+    Vfct fct;
     TypeList types;
   private:
     bool checkCount(const ParamList& params) const;
@@ -236,7 +214,7 @@ class FunctionSymbol: public Symbol
 class OperatorSymbol: public FunctionSymbol
 {
   public:
-    OperatorSymbol(void* aOwner, const TypeList&, const FctList&, int prec);
+    OperatorSymbol(void* aOwner, const TypeList&, Vfct, int prec);
     bool isUnary() const;
     SymType type() const;
     int precedence() const { return m_prec; };
@@ -250,18 +228,18 @@ class VarSymbolIntf: public Symbol
 {
   public:
     VarSymbolIntf(void* aOwner): Symbol(aOwner){};
-    virtual const Variant& value() const = 0;
+    virtual const XVariant& value() const = 0;
 };
 
 class ConstSymbol: public VarSymbolIntf
 {
   public:
-    ConstSymbol(void* aOwner, const Variant& val);
+    ConstSymbol(void* aOwner, const XVariant& val);
     SymType type() const;
-    const Variant& value() const { return m_value; };
+    const XVariant& value() const { return m_value; };
     PSymbol clone(void* aOwner) const;
   protected:
-    const Variant& m_value;
+    const XVariant& m_value;
 };
 
 class AnsSymbol: public VarSymbolIntf
@@ -270,10 +248,10 @@ class AnsSymbol: public VarSymbolIntf
     AnsSymbol(void* aOwner);
     SymType type() const;
     PSymbol clone(void* aOwner) const;
-    void setAns(const Variant& val) { ansVar = val; };
-    const Variant& value() const { return ansVar; };
+    void setAns(const XVariant& val) { ansVar = val; };
+    const XVariant& value() const { return ansVar; };
   protected:
-    static Variant ansVar;
+    static XVariant ansVar;
 };
 
 class VarSymbol: public VarSymbolIntf
@@ -283,13 +261,13 @@ class VarSymbol: public VarSymbolIntf
     ~VarSymbol();
     SymType type() const;
     PSymbol clone(void* aOwner) const;
-    const Variant& value() const { return m_var->v; };
-    Variant* leftVal() const { return &m_var->v; };
+    const XVariant& value() const { return m_var->v; };
+    XVariant* leftVal() const { return &m_var->v; };
   private:
     typedef struct
     {
       unsigned refcount;
-      Variant v;
+      XVariant v;
     } VariableData;
     typedef QLinkedList<VariableData>::iterator iterator;
 

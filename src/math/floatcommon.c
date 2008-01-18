@@ -1,6 +1,6 @@
 /* floatcommon.c: convenience functions, based on floatnum. */
 /*
-    Copyright (C) 2007 Wolf Lammen.
+    Copyright (C) 2007, 2008 Wolf Lammen.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -39,23 +39,34 @@
 #define LOGMSB ((301*(sizeof(unsigned)*8-1))/1000)
 
 static char
-_chckparam(
-  floatnum x,
+_chckparam1(
+  cfloatnum x,
   int digits,
   int limit,
   int specialval)
 {
   if (float_isnan(x))
   {
-    float_seterror(FLOAT_NANOPERAND);
+    float_seterror(NaNOperand);
     return 0;
   }
-  if ((digits <= 0 && digits != specialval) || digits > limit)
+  if ((digits <= 0 || digits > limit) && digits != specialval)
   {
-    float_seterror(FLOAT_INVALIDPARAM);
-    float_setnan(x);
+    float_seterror(InvalidPrecision);
     return 0;
   }
+  return 1;
+}
+
+static char
+_chckparam(
+  floatnum x,
+  int digits,
+  int limit,
+  int specialval)
+{
+  if (!_chckparam1(x, digits, limit, specialval))
+    return _setnan(x);
   return 1;
 }
 
@@ -69,7 +80,7 @@ chckmathparam(
 
 int
 logexp(
-  floatnum x)
+  cfloatnum x)
 {
   int expx, result;
 
@@ -96,26 +107,22 @@ float_setasciiz(
 char
 float_divi(
   floatnum quotient,
-  floatnum dividend,
+  cfloatnum dividend,
   int divisor,
   int digits)
 {
   floatstruct tmp;
   int result, expx;
 
-  if (!_chckparam(dividend, digits, maxdigits, INTQUOT))
-    return 0;
+  if (!_chckparam1(dividend, digits, maxdigits, INTQUOT))
+    return _setnan(quotient);
   if (digits != INTQUOT && (divisor == 1 || divisor == -1))
     return float_muli(quotient, dividend, divisor, digits);
   if (divisor == 10 || divisor == -10)
   {
     expx = float_getexponent(dividend)-1;
-    if (expx < EXPMIN)
-    {
-      float_setnan(quotient);
-      float_seterror(FLOAT_UNDERFLOW);
-      return 0;
-    }
+    if (expx < -float_getrange() - 1)
+      return _seterror(quotient, Underflow);
   }
   float_create(&tmp);
   float_setinteger(&tmp, divisor);
@@ -127,15 +134,15 @@ float_divi(
 char
 float_addi(
   floatnum sum,
-  floatnum summand1,
+  cfloatnum summand1,
   int summand2,
   int digits)
 {
   floatstruct tmp;
   int result;
 
-  if (!_chckparam(summand1, digits, maxdigits, EXACT))
-    return 0;
+  if (!_chckparam1(summand1, digits, maxdigits, EXACT))
+    return _setnan(sum);
   if (summand2 == 0)
     return float_copy(sum, summand1, digits);
   float_create(&tmp);
@@ -148,7 +155,7 @@ float_addi(
 char
 float_muli(
   floatnum product,
-  floatnum factor1,
+  cfloatnum factor1,
   int factor2,
   int digits)
 {
@@ -156,27 +163,20 @@ float_muli(
   int result;
   int expx;
 
-  if (!_chckparam(factor1, digits, maxdigits, EXACT))
-    return 0;
+  if (!_chckparam1(factor1, digits, maxdigits, EXACT))
+    return _setnan(product);
   switch(factor2)
   {
   case 0:
-    float_setzero(product);
-    return 1;
+    return _setzero(product);
   case 1:
   case -1:
   case 10:
   case -10:
     expx = float_getexponent(factor1);
-    if (factor2 != 1 && factor2 != -1)
-    {
-      if (++expx > EXPMAX)
-      {
-        float_setnan(product);
-        float_seterror(FLOAT_OVERFLOW);
-        return 0;
-      }
-    }
+    if (factor2 != 1 && factor2 != -1
+        && ++expx > float_getrange())
+      return _seterror(product, Overflow);
     result = float_copy(product, factor1, digits);
     if (factor2 < 0)
       float_neg(product);
@@ -198,7 +198,7 @@ float_muli(
 
 int
 leadingdigits(
-  floatnum x,
+  cfloatnum x,
   int digits)
 {
   int i;
@@ -300,7 +300,7 @@ float_reciprocal(
 
 char
 float_isinteger(
-  floatnum x)
+  cfloatnum x)
 {
   return !float_isnan(x) 
          && float_getlength(x) <= float_getexponent(x) + 1;
@@ -308,7 +308,7 @@ float_isinteger(
 
 int
 float_asinteger(
-  floatnum x)
+  cfloatnum x)
 {
   return leadingdigits(x, float_getexponent(x)+1);
 }

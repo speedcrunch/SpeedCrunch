@@ -1,6 +1,6 @@
 /* floatpower.c: power operation, based on floatnum. */
 /*
-    Copyright (C) 2007 Wolf Lammen.
+    Copyright (C) 2007, 2008 Wolf Lammen.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -38,19 +38,23 @@
 char
 _raise(
   floatnum x,
-  floatnum exponent,
+  cfloatnum exponent,
   int digits)
 {
   int iexp;
   int extra;
 
   extra = float_getexponent(exponent);
+  if (digits + extra > maxdigits)
+    extra = maxdigits - digits;
   if (float_isinteger(exponent))
   {
     iexp = leadingdigits(exponent, float_getexponent(exponent) + 1);
     if (float_iszero(exponent) || iexp !=  0)
       return _raisei(x, iexp, digits+extra);
   }
+  if (digits + extra > MATHPRECISION)
+    extra = MATHPRECISION - digits;
   _ln(x, digits+extra);
   if (!float_mul(x, x, exponent, digits+extra))
     return 0;

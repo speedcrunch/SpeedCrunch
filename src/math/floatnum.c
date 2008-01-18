@@ -37,6 +37,7 @@
 */
 
 #include "floatnum.h"
+#include "main/errors.h"
 #include "floatlong.h"
 #include <stdio.h>
 #include <string.h>
@@ -45,7 +46,7 @@
 
 int maxdigits = MAXDIGITS;
 
-int float_error;
+Error float_error;
 int expmax = EXPMAX;
 int expmin = EXPMIN;
 
@@ -66,7 +67,7 @@ _min(int x, int y)
 /* the return value points to the first character different
    from accept. */
 const char*
-memskip(
+_memskip(
   const char* buf,
   const char* end,
   char accept)
@@ -253,21 +254,24 @@ float_isvalidexp(
   return exp >= expmin && exp <= expmax;
 }
 
-int
+/* clears the error state as well */
+Error
 float_geterror()
 {
-  int tmp;
+  Error tmp;
 
   tmp = float_error;
-  float_error = FLOAT_SUCCESS;
+  float_error = Success;
   return tmp; 
 }
 
+/* the first error blocks all others as it may be the source
+   of a cascade of dependent errors */
 void
 float_seterror(
-  int code)
+  Error code)
 {
-  if (float_error == FLOAT_SUCCESS)
+  if (float_error == Success)
     float_error = code;
 }
 
@@ -297,11 +301,21 @@ float_setnan (
   float_create(f);
 }
 
-static char _seterror(floatnum result, int code)
+char
+_setnan(
+  floatnum result)
 {
   float_setnan(result);
-  float_seterror(code);
   return FALSE;
+}
+
+char
+_seterror(
+  floatnum result,
+  Error code)
+{
+  float_seterror(code);
+  return _setnan(result);
 }
 
 void
@@ -314,6 +328,14 @@ float_setzero (
   f->value[0] ='0';
   f->value[1] = 0;
 #endif
+}
+
+char
+_setzero(
+  floatnum result)
+{
+  float_setzero(result);
+  return TRUE;
 }
 
 char
@@ -350,15 +372,15 @@ float_getdigit(
 /* checks whether f is a NaN and sets the float_error
    variable accordingly. Used in parameter checks when
    float_xxx calls are executed.
-   TRUE is returned if a NaN is encountered. */
-static char
+   FALSE is returned if a NaN is encountered. */
+char
 _checknan(
   cfloatnum f)
 {
   if (!float_isnan(f))
-    return FALSE;
-  float_seterror(FLOAT_NANOPERAND);
-  return TRUE;
+    return TRUE;
+  float_seterror(NaNOperand);
+  return FALSE;
 }
 
 /* checks whether <digits> is positive and
@@ -375,12 +397,12 @@ _checknan(
    on more than MAXDIGITS digits */
 static char
 _checkdigits(
-  int digits, 
+  int digits,
   int specialval)
 {
   if ((digits > 0 && digits <= maxdigits) || digits == specialval)
     return TRUE;
-  float_seterror(FLOAT_INVALIDPARAM);
+  float_seterror(InvalidPrecision);
   return FALSE;
 }
 
@@ -457,7 +479,7 @@ float_setsign(
   floatnum f,
   signed char s)
 {
-  if (s * s == 1)
+  if (s == 1 || s == -1)
   {
     if(!_is_special(f))
       _setsign(f, s);
@@ -471,7 +493,7 @@ float_neg(
   floatnum f)
 {
   float_setsign(f, -float_getsign(f));
-  return !_checknan(f);
+  return _checknan(f);
 }
 
 char
@@ -480,7 +502,7 @@ float_abs(
 {
   if(float_getsign(f) == -1)
     float_neg(f);
-  return !_checknan(f);
+  return _checknan(f);
 }
 
 signed char
@@ -490,7 +512,7 @@ float_cmp(
 {
   signed char sgn1;
 
-  if (_checknan(val1) || _checknan(val2))
+  if (!_checknan(val1) || !_checknan(val2))
     return UNORDERED;
   sgn1 = float_getsign(val1);
   if (float_getsign(val2) != sgn1)
@@ -688,12 +710,12 @@ float_setsignificand(
   last = buf + bufsz; /* points behind the input buffer */
 
   /* skip all leading zeros */
-  b = memskip(buf, last, '0');
+  b = _memskip(buf, last, '0');
 
   /* is the first non-zero character found a dot? */
   if (b == dot)
     /* then skip all zeros following the dot */
-    b = memskip(b+1, last, '0');
+    b = _memskip(b+1, last, '0');
 
   /* the 'leading zeros' */
   zeros = b - buf - (dot == NULL || dot >= b? 0:1);
@@ -910,9 +932,9 @@ _normalize(
     _corr_trailing_zeros(f);
   if (f->significand != NULL && !float_isvalidexp(f->exponent))
   {
-    float_seterror(FLOAT_UNDERFLOW);
+    float_seterror(Underflow);
     if (f->exponent > 0)
-      float_seterror(FLOAT_OVERFLOW);
+      float_seterror(Overflow);
     float_setnan(f);
   }
 #ifdef FLOATDEBUG
@@ -990,7 +1012,7 @@ _scaled_clone(
 char
 float_copy(
   floatnum dest,
-  floatnum source,
+  cfloatnum source,
   int digits)
 {
   int scale, save;
@@ -998,7 +1020,7 @@ float_copy(
   if (digits == EXACT)
     digits = _max(1, float_getlength(source));
   if (!_checkdigits(digits, NOSPECIALVALUE))
-    return _seterror(dest, FLOAT_INVALIDPARAM);
+    return _seterror(dest, InvalidPrecision);
   if (_is_special(source))
   {
     if (dest != source)
@@ -1007,9 +1029,10 @@ float_copy(
   }
   else
   {
+    // invariant: source has to be restored, if it is != dest
     scale = _min(digits - 1, _scaleof(source));
-    save = _limit_scale(source, scale);
-    _corr_trailing_zeros(source);
+    save = _limit_scale((floatnum)source, scale);
+    _corr_trailing_zeros((floatnum)source);
     _scaled_clone(dest, source, EXACT);
     if (dest != source)
       _setscale(source, save);
@@ -1021,7 +1044,7 @@ float_copy(
 static void
 _trunc(
   floatnum dest,
-  floatnum x,
+  cfloatnum x,
   int scale)
 {
   scale -= _bscandigit(x, scale, 0);
@@ -1059,7 +1082,7 @@ _roundup(
 char
 float_round(
   floatnum dest,
-  floatnum src,
+  cfloatnum src,
   int digits,
   roundmode mode)
 {
@@ -1067,10 +1090,12 @@ float_round(
   char digit;
   signed char sign, updown;
 
-  if (mode > TOMINUSINFINITY || !_checkdigits(digits, NOSPECIALVALUE))
-    return _seterror(dest, FLOAT_INVALIDPARAM);
+  if (mode > TOMINUSINFINITY)
+    return _seterror(dest, InvalidParam);
+  if (!_checkdigits(digits, NOSPECIALVALUE))
+    return _setnan(dest);
   if (float_isnan(src))
-    return _seterror(dest, FLOAT_NANOPERAND);
+    return _seterror(dest, NaNOperand);
   updown = 0;
   scale = digits - 1;
   if (float_getlength(src) > digits)
@@ -1110,7 +1135,7 @@ float_round(
   {
   case 1:
     if (!_roundup(dest, src, scale))
-      return _seterror(dest, FLOAT_OVERFLOW);
+      return _seterror(dest, Overflow);
     break;
   case 0:
     float_copy(dest, src, digits);
@@ -1126,7 +1151,7 @@ char
 float_int(
   floatnum f)
 {
-  if (_checknan(f))
+  if (!_checknan(f))
     return FALSE;
   if (f->exponent < 0)
     float_setzero(f);
@@ -1139,7 +1164,7 @@ char
 float_frac(
   floatnum f)
 {
-  if (_checknan(f) || float_iszero(f) || f->exponent < 0)
+  if (!_checknan(f) || float_iszero(f) || f->exponent < 0)
     return !float_isnan(f);
   if (_scaleof(f) <= f->exponent)
     float_setzero(f);
@@ -1191,7 +1216,7 @@ _addsub_normal(
   }
 
   if (digits > maxdigits)
-    return _seterror(dest, FLOAT_INVALIDPARAM);
+    return _seterror(dest, InvalidPrecision);
 
   /* we cannot add the operands directly
      because of possibly different exponents.
@@ -1237,7 +1262,7 @@ _sub_checkborrow(
   int digits)
 {
   /* the operands have opposite signs, the same exponent,
-     and their first digit of the significand differ.
+     but their first digit of the significand differ.
      The operands are ordered by this digit. */
   int result;
   int borrow;
@@ -1281,13 +1306,13 @@ _sub_checkborrow(
          adder is good enough to deal with such a limited
          cancelling effect. We will replace the last (0,9)
          digit pair with a (9,8) pair. This prevents the
-         creation of a borrow, and yet, will deliver the correct
+         creation of a borrow, and yet, will yield the correct
          result */
 
       /* hide all digits until the last found 0 - 9 pair */
       summand2->exponent -= borrow;
       summand1->exponent -= borrow;
-      /* in case of a one_digit significand, there is nothing to hide */
+      /* in case of a one-digit significand, there is nothing to hide */
       if (scale1 > 0)
         _hidefirst(summand1, borrow);
       _hidefirst(summand2, borrow);
@@ -1335,11 +1360,8 @@ _sub_expdiff0(
   {
     /* the complete second operand is cancelled out */
     if (float_getlength(summand1) == eq)
-    {
       /* op1 == -op2 */
-      float_setzero(dest);
-      return TRUE;
-    }
+      return _setzero(dest);
     /* If xxx.. denotes the second operand, the (longer)
        first one is of form xxx..yyy.., since it has
        the same digits in the beginning. During
@@ -1475,11 +1497,8 @@ _addsub_ordered(
   /* operands are ordered by their exponent */
 
   /* handle a bunch of special cases */
-  if (!_checkdigits(digits, EXACT) || _checknan(summand1))
-  {
-    float_setnan(dest);
-    return FALSE;
-  }
+  if (!_checkdigits(digits, EXACT) || !_checknan(summand1))
+     return _setnan(dest);
   if (float_iszero(summand2))
     return float_copy(dest, summand1, digits);
 
@@ -1492,8 +1511,8 @@ _addsub_ordered(
 char
 float_add(
   floatnum dest,
-  floatnum summand1,
-  floatnum summand2,
+  cfloatnum summand1,
+  cfloatnum summand2,
   int digits)
 {
   bc_struct bc1, bc2;
@@ -1501,9 +1520,9 @@ float_add(
   floatnum s1, s2;
 
   /* the adder may occasionally adjust operands to
-     his needs. Thus, we work on temporary structures */
-  s1 = summand1;
-  s2 = summand2;
+     his needs. Hence we work on temporary structures */
+  s1 = dest;
+  s2 = dest;
   if (dest != summand1)
   {
     _copyfn(&tmp1, summand1, &bc1);
@@ -1526,8 +1545,8 @@ float_add(
 char
 float_sub(
   floatnum dest,
-  floatnum minuend,
-  floatnum subtrahend,
+  cfloatnum minuend,
+  cfloatnum subtrahend,
   int scale)
 {
   int result;
@@ -1535,24 +1554,23 @@ float_sub(
   {
     /* changing the sign of one operand would change that of
        the other as well. So this is a special case */
-    if(_checknan(minuend))
+    if(!_checknan(minuend))
       return FALSE;
-    float_setzero(dest);
-    return TRUE;
+    _setzero(dest);
   }
-  /* do not use float_changesign, because it may change float_error */
-  float_setsign(subtrahend, -float_getsign(subtrahend));
+  /* do not use float_neg, because it may change float_error */
+  float_setsign((floatnum)subtrahend, -float_getsign(subtrahend));
   result = float_add(dest, minuend, subtrahend, scale);
   if (dest != subtrahend)
-    float_setsign(subtrahend, -float_getsign(subtrahend));
+    float_setsign((floatnum)subtrahend, -float_getsign(subtrahend));
   return result;
 }
 
 char
 float_mul(
   floatnum dest,
-  floatnum factor1,
-  floatnum factor2,
+  cfloatnum factor1,
+  cfloatnum factor2,
   int digits)
 {
   int result;
@@ -1562,18 +1580,12 @@ float_mul(
 
   /* handle a bunch of special cases */
   if (!_checkdigits(digits, EXACT)
-      || _checknan(factor1)
-      || _checknan(factor2))
-  {
+      || !_checknan(factor1)
+      || !_checknan(factor2))
     /* invalid scale value or NaN operand */
-    float_setnan(dest);
-    return FALSE;
-  }
+    return _setnan(dest);
   if (float_iszero(factor1) || float_iszero(factor2))
-  {
-    float_setzero(dest);
-    return TRUE;
-  }
+    return _setzero(dest);
 
   scale = digits - 1;
   fullscale = _scaleof(factor1) + _scaleof(factor2);
@@ -1581,16 +1593,12 @@ float_mul(
     scale = fullscale;
 
   if (scale >= maxdigits)
-  {
     /* scale too large */
-    float_seterror(FLOAT_INVALIDPARAM);
-    float_setnan(dest);
-    return FALSE;
-  }
+    return _seterror(dest, InvalidPrecision);
 
   /* limit the scale of the operands to sane sizes */
-  savescale1 = _limit_scale(factor1, scale);
-  savescale2 = _limit_scale(factor2, scale);
+  savescale1 = _limit_scale((floatnum)factor1, scale);
+  savescale2 = _limit_scale((floatnum)factor2, scale);
 
   /* multiply */
   dest->exponent = factor1->exponent + factor2->exponent;
@@ -1608,8 +1616,8 @@ float_mul(
 char
 float_div(
   floatnum dest,
-  floatnum dividend,
-  floatnum divisor,
+  cfloatnum dividend,
+  cfloatnum divisor,
   int digits)
 {
   int result;
@@ -1617,24 +1625,14 @@ float_div(
   int exp;
 
   /* handle a bunch of special cases */
-  if (!_checkdigits(digits, INTQUOT) || _checknan(dividend)
-      || _checknan(divisor))
-  {
-    float_setnan(dest);
-    return FALSE;
-  }
+  if (!_checkdigits(digits, INTQUOT) || !_checknan(dividend)
+      || !_checknan(divisor))
+    return _setnan(dest);
   if (float_iszero(divisor))
-  {
-    float_seterror(FLOAT_ZERODIVIDE);
-    float_setnan(dest);
-    return FALSE;
-  }
+    return _seterror(dest, ZeroDivide);
   if (float_iszero(dividend))
-  {
     /* 0/x == 0 */
-    float_setzero(dest);
-    return TRUE;
-  }
+    return _setzero(dest);
 
   exp = dividend->exponent - divisor->exponent;
 
@@ -1642,23 +1640,17 @@ float_div(
   if(digits == INTQUOT)
   {
     if (exp < 0)
-    {
-      float_setzero(dest);
-      return TRUE;
-    }
+      return _setzero(dest);
     digits = exp;
   }
 
   /* scale OK? */
   if(digits > maxdigits)
-  {
-    float_setnan(dest);
-    return FALSE;
-  }
+    return _seterror(dest, InvalidPrecision);
 
   /* limit the scale of the operands to sane sizes */
-  savescale1 = _limit_scale(dividend, digits);
-  savescale2 = _limit_scale(divisor, digits);
+  savescale1 = _limit_scale((floatnum)dividend, digits);
+  savescale2 = _limit_scale((floatnum)divisor, digits);
 
   /* divide */
   result = TRUE;
@@ -1684,29 +1676,29 @@ char
 float_divmod(
   floatnum quotient,
   floatnum remainder,
-  floatnum dividend,
-  floatnum divisor,
+  cfloatnum dividend,
+  cfloatnum divisor,
   int digits)
 {
   int exp, exp1;
 
-  if (!_checkdigits(digits, INTQUOT) || _checknan(dividend)
-      || _checknan(divisor) || quotient == remainder
+  if (!_checkdigits(digits, INTQUOT) || !_checknan(dividend)
+      || !_checknan(divisor) || quotient == remainder
       || float_iszero(divisor) || float_getlength(divisor) > maxdigits)
   {
+    if (quotient == remainder)
+      float_seterror(InvalidParam);
+    if (float_getlength(divisor) > maxdigits)
+      float_seterror(TooExpensive);
     if (float_iszero(divisor))
-      float_seterror(FLOAT_ZERODIVIDE);
-    if (quotient == remainder || float_getlength(divisor) > maxdigits)
-      float_seterror(FLOAT_INVALIDPARAM);
+      float_seterror(ZeroDivide);
     float_setnan(quotient);
-    float_setnan(remainder);
-    return FALSE;
+    return _setnan(remainder);
   }
   if (float_iszero(dividend))
   {
     float_setzero(quotient);
-    float_setzero(remainder);
-    return TRUE;
+    return _setzero(remainder);
   }
   exp1 = dividend->exponent;
   exp = exp1 - divisor->exponent;
@@ -1715,19 +1707,15 @@ float_divmod(
     if (exp < 0)
     {
       if (float_copy(remainder, dividend, EXACT))
-        float_setzero(quotient);
-      else
-        float_setnan(quotient);
-      return float_iszero(quotient);
+        return _setzero(quotient);
+      return _setnan(quotient);
     }
     digits = exp;
   }
   if (digits > maxdigits)
   {
-    float_seterror(FLOAT_INVALIDPARAM);
     float_setnan(quotient);
-    float_setnan(remainder);
-    return FALSE;
+    return _seterror(remainder, TooExpensive);
   }
 
   /* divide */
@@ -1745,34 +1733,23 @@ float_divmod(
   if (bc_is_zero(remainder->significand))
     float_setzero(remainder);
   else if (!_normalize(remainder))
-  {
-    float_setnan(quotient);
-    return FALSE;
-  }
+    return _setnan(quotient);
   if (bc_is_zero(quotient->significand))
     float_setzero(quotient);
   else if (!_normalize(quotient))
-  {
-    float_setnan(remainder);
-    return FALSE;
-  }
+    return _setnan(remainder);
   return TRUE;
 }
 
 char
 float_sqrt(floatnum value, int digits)
 {
-  if (!_checkdigits(digits, NOSPECIALVALUE) || _checknan(value))
-  {
-    float_setnan(value);
-    return FALSE;
-  }
+  if (!_checkdigits(digits, NOSPECIALVALUE) || !_checknan(value))
+    return _setnan(value);
   switch (float_getsign(value))
   {
     case -1:
-      float_seterror(FLOAT_OUTOFDOMAIN);
-      float_setnan(value);
-      return FALSE;
+      return _seterror(value, OutOfDomain);
     case 0:
       return TRUE;
   }

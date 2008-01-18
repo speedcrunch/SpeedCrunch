@@ -275,9 +275,10 @@ floatstruct erfct3;
 void
 floatmath_init()
 {
-  int i;
+  int i, save;
   floatnum_init();
 
+  save = float_setprecision(MAXDIGITS);
   float_create(&c1);
   float_setinteger(&c1, 1);
   float_create(&c2);
@@ -340,6 +341,7 @@ floatmath_init()
   float_create(&erfcalphasqr);
   float_create(&erfct2);
   float_create(&erfct3);
+  float_setprecision(save);
 }
 
 void

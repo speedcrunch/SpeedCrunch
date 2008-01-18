@@ -1,6 +1,6 @@
 /* floatio.h: low level conversion, based on floatnum. */
 /*
-    Copyright (C) 2007 Wolf Lammen.
+    Copyright (C) 2007, 2008 Wolf Lammen.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -29,6 +29,8 @@
 
 *************************************************************************/
 
+#include "main/errors.h"
+
 #ifndef _FLOATIO_H
 # define _FLOATIO_H
 
@@ -56,7 +58,7 @@
 #define IO_FLAG_SHOW_EXPBASE        0x400
 
 #ifdef __cplusplus
-extern "C"{
+    extern "C"{
 #endif
 
 typedef struct{
@@ -152,7 +154,7 @@ typedef t_number_desc* p_number_desc;
 
 void _clearnumber(p_number_desc n);
 
-int str2desc(p_number_desc n, p_itokens tokens);
+Error str2desc(p_number_desc n, p_itokens tokens);
 char desc2str(p_otokens tokens, p_number_desc n, int scale);
 
 /*------------   additional stuff   ------------------*/
@@ -174,7 +176,7 @@ typedef struct{
 typedef t_ioparams* p_ioparams;
 
 const char* basePrefix(char base);
-int parse(p_itokens tokens, const char** buf);
+Error parse(p_itokens tokens, const char** buf);
 int cattokens(char* buf, int bufsz, p_otokens tokens, unsigned flags);
 void float_stdconvert();
 char setioparams(p_ioparams params);

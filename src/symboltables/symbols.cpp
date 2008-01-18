@@ -32,94 +32,95 @@
 #include "symboltables/tables.hxx"
 #include "main/errors.h"
 
-Variant::Variant()
-{
-  m_type = TEmpty;
-}
+// Variant::Variant()
+// {
+//   m_type = TEmpty;
+// }
+// 
+// void Variant::operator=(const HNumber& val)
+// {
+//   HNumber::operator=(val);
+//   text.clear();
+//   if ( HNumber::error() == 0 )
+//     m_type = TNumeric;
+//   else
+//     m_type = TError;
+// }
+// 
+// void Variant::operator=(int error)
+// {
+//   *this = HNumber::nan(error);
+//   if (error == 0)
+//     m_type = TEmpty;
+// }
+// 
+// void Variant::operator=(const QString& str)
+// {
+//   *this = 0;
+//   text = str;
+//   m_type = TText;
+// }
+// 
+// int Variant::matchType(VariantType t) const
+// {
+//   switch (t)
+//   {
+//     case TEmpty: return 0;
+//     case TInteger:
+//       if (type() == TNumeric && isInteger())
+//         return 0; // fall through
+//     case TNumeric:
+//       if (type() == TError || (type() == TNumeric && isNan()))
+//         return FLOAT_NANOPERAND; // fall through
+//     default:
+//       if (type() != t)
+//         return SYMBOLS_TYPE_MISMATCH;
+//   }
+//   return 0;
+// }
+// 
+// bool Variant::isNum() const
+// {
+//   switch (matchType(TNumeric))
+//   {
+//     case 0:
+//     case FLOAT_NANOPERAND: return true;
+//     default: return false;
+//   }
+// }
 
-void Variant::operator=(const HNumber& val)
-{
-  HNumber::operator=(val);
-  text.clear();
-  if ( HNumber::error() == 0 )
-    m_type = TNumeric;
-  else
-    m_type = TError;
-}
-
-void Variant::operator=(int error)
-{
-  *this = HNumber::nan(error);
-  if (error == 0)
-    m_type = TEmpty;
-}
-
-void Variant::operator=(const QString& str)
-{
-  *this = 0;
-  text = str;
-  m_type = TText;
-}
-
-int Variant::matchType(VariantType t) const
-{
-  switch (t)
-  {
-    case TEmpty: return 0;
-    case TInteger:
-      if (type() == TNumeric && isInteger())
-        return 0; // fall through
-    case TNumeric:
-      if (type() == TError || (type() == TNumeric && isNan()))
-        return FLOAT_NANOPERAND; // fall through
-    default:
-      if (type() != t)
-        return SYMBOLS_TYPE_MISMATCH;
-  }
-  return 0;
-}
-
-bool Variant::isNum() const
-{
-  switch (matchType(TNumeric))
-  {
-    case 0:
-    case FLOAT_NANOPERAND: return true;
-    default: return false;
-  }
-}
-
-void TypeList::appendType(VariantType t, int cnt)
+void TypeList::appendType(XVariantType t, int cnt)
 {
   while (--cnt >= 0)
     append(t);
 }
 
-bool ParamList::allNums() const
+bool ParamList::allReal() const
 {
   for (int i = 0; i < size(); ++i)
-    if (!at(i).isNum())
+    if (!at(i).isCompatible(vReal))
       return false;
   return true;
 }
 
-bool ParamList::isType(int index, VariantType t) const
+bool ParamList::isType(int index, XVariantType t) const
 {
-  return index <= size() && at(index).matchType(t) == 0;
+  return index <= size() && at(index).isCompatible(t);
 }
 
 bool ParamList::isNum(int index) const
 {
-  return index <= size() && at(index).isNum();
+  return index <= size() && at(index).isCompatible(vReal);
 }
 
 TypeCheck ParamList::match(const TypeList& types) const
 {
   TypeCheck result;
-  result.error = 0;
+  result.error = Success;
   int limit = qMin(types.size(), size());
-  for (result.index = -1; ++result.index < limit && result.error == 0;)
-    result.error = at(result.index).matchType(types.at(result.index));
+  for (result.index = -1; ++result.index < limit && result.error == Success;)
+    if (!at(result.index).isCompatible(types.at(result.index)))
+      result.error = TypeMismatch;
   return result;
 }
 
@@ -127,81 +128,17 @@ TypeList::TypeList(const char* s)
 {
   for (const char* p = s; *p != 0; ++p)
   {
-    VariantType t;
+    XVariantType t;
     switch(*p)
     {
-      case 't': t = TText; break;
-      case 'e': t = TError; break;
-      case 'i': t = TInteger; break;
-      case 'n': t = TNumeric; break;
-      default : t = TEmpty;
+      case 't': t = vText; break;
+      case 'e': t = vError; break;
+      case 'i': t = vInteger; break;
+      case 'n': t = vReal; break;
+      default : t = vEmpty;
     }
     appendType(t);
   }
-}
-
-bool FctList::match(const ParamList& params) const
-{
-  if (vfct) return true;
-  int sz = params.size();
-  return params.allNums()
-         && (nfct
-             || (nfct0 && sz == 0)
-             || (nfct1 && sz == 1)
-             || (nfct2 && sz == 2)
-             || (nfct3 && sz == 3)
-             || (nfct4 && sz == 4));
-}
-
-void FctList::clear()
-{
-  nfct0 = 0;
-  nfct1 = 0;
-  nfct2 = 0;
-  nfct3 = 0;
-  nfct4 = 0;
-  nfct  = 0;
-  vfct  = 0;
-}
-
-Variant FctList::eval(const ParamList& params) const
-{
-  if (params.allNums())
-    switch (params.size())
-    {
-      case 0:
-        if (nfct0)
-          return nfct0();
-      case 1:
-        if (nfct1)
-          return nfct1((const HNumber&)params.at(0));
-      case 2:
-        if (nfct2)
-          return nfct2((const HNumber&)params.at(0),
-                      (const HNumber&)params.at(1));
-      case 3:
-        if (nfct3)
-          return nfct3((const HNumber&)params.at(0),
-                      (const HNumber&)params.at(1),
-                      (const HNumber&)params.at(2));
-      case 4:
-        if (nfct4)
-          return nfct4((const HNumber&)params.at(0),
-                      (const HNumber&)params.at(1),
-                      (const HNumber&)params.at(2),
-                      (const HNumber&)params.at(3));
-      default:
-        if (nfct)
-        {
-          HNumberList hnumbers;
-          for (int i = 0; i < params.size(); ++i)
-            hnumbers.append((const HNumber*)params.at(i));
-          return nfct(hnumbers);
-        }
-    }
-    if (vfct)
-      return vfct(params);
-    return SYMBOLS_TYPE_MISMATCH;
 }
 
 Symbol::~Symbol()
@@ -332,20 +269,20 @@ PSymbol OpenSymbol::clone(void* aOwner) const
 }
 
 FunctionSymbol::FunctionSymbol(void* aOwner, const TypeList& tlist,
-      const FctList& flist, int minCount, int maxCount)
+      Vfct vfct, int minCount, int maxCount)
   : Symbol(aOwner)
 {
   if (maxCount < 0)
     maxCount = minCount;
   maxParamCount = maxCount;
   minParamCount = minCount;
-  fcts = flist;
+  fct = vfct;
   types = tlist;
 }
 
 PSymbol FunctionSymbol::clone(void* aOwner) const
 {
-  return new FunctionSymbol(aOwner, types, fcts, minParamCount, maxParamCount);
+  return new FunctionSymbol(aOwner, types, fct, minParamCount, maxParamCount);
 }
 
 bool FunctionSymbol::checkCount(const ParamList& params) const
@@ -361,37 +298,36 @@ SymType FunctionSymbol::type() const
 
 bool FunctionSymbol::match(const ParamList& params) const
 {
-  if (!checkCount(params)
-      || !fcts.match(params))
+  if (!checkCount(params))
     return false;
   switch (params.match(types).error)
   {
-    case 0:
-    case FLOAT_NANOPERAND: return true;
+    case Success:
+    case NaNOperand: return true;
     default: return false;
   }
 }
 
-Variant FunctionSymbol::eval(const ParamList& params) const
+XVariant FunctionSymbol::eval(const ParamList& params) const
 {
   if (!checkCount(params))
-    return SYMBOLS_INVALID_PARAMCOUNT;
+    return InvalidParamCount;
   TypeCheck tc = params.match(types);
   if (tc.error != 0)
     return tc.error;
-  return fcts.eval(params);
+  return fct(params);
 }
 
 OperatorSymbol::OperatorSymbol(void* aOwner, const TypeList& tlist,
-                               const FctList& flist, int prec)
-  : FunctionSymbol(aOwner, tlist, flist, tlist.size(), tlist.size()),
+                               Vfct aFct, int prec)
+  : FunctionSymbol(aOwner, tlist, aFct, tlist.size(), tlist.size()),
     m_prec(prec)
 {
 }
 
 PSymbol OperatorSymbol::clone(void* aOwner) const
 {
-  return new OperatorSymbol(aOwner, types, fcts, m_prec);
+  return new OperatorSymbol(aOwner, types, fct, m_prec);
 }
 
 bool OperatorSymbol::isUnary() const
@@ -404,7 +340,7 @@ SymType OperatorSymbol::type() const
   return operatorSym;
 }
 
-ConstSymbol::ConstSymbol(void* aOwner, const Variant& val)
+ConstSymbol::ConstSymbol(void* aOwner, const XVariant& val)
   : VarSymbolIntf(aOwner), m_value(val)
 {
 }
@@ -419,7 +355,7 @@ PSymbol ConstSymbol::clone(void* aOwner) const
   return new ConstSymbol(aOwner, m_value);
 }
 
-Variant AnsSymbol::ansVar;
+XVariant AnsSymbol::ansVar;
 
 AnsSymbol::AnsSymbol(void* aOwner)
   : VarSymbolIntf(aOwner)

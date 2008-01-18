@@ -1,6 +1,6 @@
 /* floaterf.c: normal distribution integrals erf and the like */
 /*
-    Copyright (C) 2007 Wolf Lammen.
+    Copyright (C) 2007, 2008 Wolf Lammen.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -153,19 +153,18 @@ _erfc(
   float_create(&tmp);
   if (_asymptotic_good(x, digits))
   {
-    result = 0;
     if (float_mul(&tmp, x, x, digits + 5)
         && _exp(&tmp, digits + 3)
         && float_mul(&tmp, &tmp, x, digits + 3)
         && float_div(&tmp, &c1DivSqrtPi, &tmp, digits + 3))
     {
-      result = erfcbigx(x, digits);
-      if (!result)
-        float_seterror(FLOAT_UNSTABLE);
+      if (!erfcbigx(x, digits))
+        result = _seterror(x, EvalUnstable);
+      else
+        result = float_mul(x, x, &tmp, digits + 4);
     }
     else
-      float_seterror(FLOAT_UNDERFLOW);
-    result = result && float_mul(x, x, &tmp, digits + 4);
+      result = _seterror(x, Underflow);
   }
   else
   {
@@ -204,7 +203,5 @@ _erfc(
     float_move(x, &t3);
   }
   float_free(&tmp);
-  if (!result)
-    float_setnan(x);
   return result;
 }

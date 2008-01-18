@@ -19,14 +19,14 @@
 // Boston, MA 02110-1301, USA.
 
 
-#include <main/errors.h>
-#include <math/floatcommon.h>
-#include <math/floatconst.h>
-#include <math/floatconvert.h>
-#include <math/floathmath.h>
-#include <math/floatio.h>
-#include <math/floatnum.h>
-#include <math/hmath.hxx>
+#include "main/errors.h"
+#include "math/floatcommon.h"
+#include "math/floatconst.h"
+#include "math/floatconvert.h"
+#include "math/floathmath.h"
+#include "math/floatio.h"
+#include "math/floatnum.h"
+#include "math/hmath.hxx"
 
 #include <ctype.h>
 #include <sstream>
@@ -46,7 +46,7 @@
 
 /*------------------------   Helper routines  -------------------------*/
 
-void static checkfullcancellation( floatnum op1, floatnum op2,
+void static checkfullcancellation( cfloatnum op1, cfloatnum op2,
                                    floatnum r )
 {
   int expr;
@@ -63,7 +63,7 @@ void static checkfullcancellation( floatnum op1, floatnum op2,
   }
 }
 
-static char checkAdd(floatnum dest, floatnum s1, floatnum s2, int digits)
+static char checkAdd(floatnum dest, cfloatnum s1, cfloatnum s2, int digits)
 {
   if (float_add(dest, s1, s2, digits)
       && float_getsign(s1) + float_getsign(s2) == 0)
@@ -71,7 +71,7 @@ static char checkAdd(floatnum dest, floatnum s1, floatnum s2, int digits)
   return float_isnan(dest);
 }
 
-static char checkSub(floatnum dest, floatnum s1, floatnum s2, int digits)
+static char checkSub(floatnum dest, cfloatnum s1, cfloatnum s2, int digits)
 {
   if (float_sub(dest, s1, s2, digits)
       && float_getsign(s1) - float_getsign(s2) == 0)
@@ -104,7 +104,7 @@ checkpoleorzero( floatnum result, floatnum x )
   else if (expr >= -expx)
   {
     float_setnan(result);
-    float_seterror(FLOAT_UNSTABLE);
+    float_seterror(EvalUnstable);
   }
 }
 
@@ -123,12 +123,12 @@ public:
   HNumberPrivate();
   ~HNumberPrivate();
   floatstruct fnum;
-  int error;
+  Error error;
   char format;
 };
 
 HNumberPrivate::HNumberPrivate()
-  : error(0), format(0)
+  : error(Success), format(0)
 {
   h_init();
   float_create(&fnum);
@@ -141,27 +141,25 @@ HNumberPrivate::~HNumberPrivate()
 
 typedef char (*Float1ArgND)(floatnum x);
 typedef char (*Float1Arg)(floatnum x, int digits);
-typedef char (*Float2ArgsND)(floatnum result, floatnum p1, floatnum p2);
-typedef char (*Float2Args)(floatnum result, floatnum p1, floatnum p2, int digits);
+typedef char (*Float2ArgsND)(floatnum result, cfloatnum p1, cfloatnum p2);
+typedef char (*Float2Args)(floatnum result, cfloatnum p1, cfloatnum p2, int digits);
 
-static int checkNaNParam(const HNumberPrivate& v1,
-                         const HNumberPrivate* v2 = 0)
+static Error checkNaNParam(const HNumberPrivate& v1,
+                            const HNumberPrivate* v2 = 0)
 {
   if ( !float_isnan(&v1.fnum) && (!v2 || !float_isnan(&v2->fnum)))
-    return 0;
-  int error = v1.error;
-  if ( error == 0 && v2 )
+    return Success;
+  Error error = v1.error;
+  if ( error == Success && v2 )
     error = v2->error;
-  if ( error == 0 )
-    error = FLOAT_NANOPERAND;
-  return error;
+  return error == 0? NaNOperand : error;
 }
 
 void roundSetError(HNumberPrivate* dest)
 {
   dest->error = float_geterror();
   floatnum dfnum = &dest->fnum;
-  if (dest->error != 0)
+  if (dest->error != Success)
     float_setnan(dfnum);
   if (!float_isnan(dfnum))
     float_round(dfnum, dfnum, HMATH_WORKING_PREC, TONEAREST);
@@ -171,7 +169,7 @@ void call2Args(HNumberPrivate* dest, HNumberPrivate* n1,
                HNumberPrivate* n2, Float2Args func)
 {
   dest->error = checkNaNParam(*n1, n2);
-  if (dest->error == 0)
+  if (dest->error == Success)
   {
     floatnum dfnum = &dest->fnum;
     func(dfnum, &n1->fnum, &n2->fnum, HMATH_EVAL_PREC);
@@ -183,7 +181,7 @@ void call2ArgsND(HNumberPrivate* dest, HNumberPrivate* n1,
                HNumberPrivate* n2, Float2ArgsND func)
 {
   dest->error = checkNaNParam(*n1, n2);
-  if (dest->error == 0)
+  if (dest->error == Success)
   {
     floatnum dfnum = &dest->fnum;
     func(dfnum, &n1->fnum, &n2->fnum);
@@ -194,7 +192,7 @@ void call2ArgsND(HNumberPrivate* dest, HNumberPrivate* n1,
 void call1Arg(HNumberPrivate* dest, HNumberPrivate* n, Float1Arg func)
 {
   dest->error = checkNaNParam(*n);
-  if (dest->error == 0)
+  if (dest->error == Success)
   {
     floatnum dfnum = &dest->fnum;
     float_copy(dfnum, &n->fnum, HMATH_EVAL_PREC);
@@ -206,7 +204,7 @@ void call1Arg(HNumberPrivate* dest, HNumberPrivate* n, Float1Arg func)
 void call1ArgPoleCheck(HNumberPrivate* dest, HNumberPrivate* n, Float1Arg func)
 {
   dest->error = checkNaNParam(*n);
-  if (dest->error == 0)
+  if (dest->error == Success)
   {
     floatnum dfnum = &dest->fnum;
     float_copy(dfnum, &n->fnum, HMATH_EVAL_PREC);
@@ -219,7 +217,7 @@ void call1ArgPoleCheck(HNumberPrivate* dest, HNumberPrivate* n, Float1Arg func)
 void call1ArgND(HNumberPrivate* dest, HNumberPrivate* n, Float1ArgND func)
 {
   dest->error = checkNaNParam(*n);
-  if (dest->error == 0)
+  if (dest->error == Success)
   {
     floatnum dfnum = &dest->fnum;
     float_copy(dfnum, &n->fnum, HMATH_EVAL_PREC);
@@ -228,7 +226,7 @@ void call1ArgND(HNumberPrivate* dest, HNumberPrivate* n, Float1ArgND func)
   }
 }
 
-char modwrap(floatnum result, floatnum p1, floatnum p2, int digits)
+static char modwrap(floatnum result, cfloatnum p1, cfloatnum p2, int digits)
 {
   char ok;
   floatstruct tmp;
@@ -238,7 +236,7 @@ char modwrap(floatnum result, floatnum p1, floatnum p2, int digits)
   return ok;
 }
 
-char idivwrap(floatnum result, floatnum p1, floatnum p2)
+char idivwrap(floatnum result, cfloatnum p1, cfloatnum p2)
 {
   char ok;
   floatstruct tmp;
@@ -274,7 +272,7 @@ HNumber::HNumber( const char* str )
   t_itokens tokens;
 
   d = new HNumberPrivate;
-  if ((d->error = parse(&tokens, &str)) == IO_NO_ERROR && *str == 0)
+  if ((d->error = parse(&tokens, &str)) == Success && *str == 0)
     d->error = float_in(&d->fnum, &tokens);
   float_geterror();
 }
@@ -284,7 +282,7 @@ HNumber::~HNumber()
   delete d;
 }
 
-int HNumber::error() const
+Error HNumber::error() const
 {
   return d->error;
 }
@@ -324,7 +322,7 @@ void HNumber::setFormat(char c) const
    d->format = float_isnan(&d->fnum)?0:c;
 }
 
-HNumber HNumber::nan(int error)
+HNumber HNumber::nan(Error error)
 {
   HNumber result;
   result.d->error = error;
@@ -396,8 +394,6 @@ HNumber HNumber::operator%( const HNumber& num ) const
 {
   HNumber result;
   call2Args(result.d, d, num.d, modwrap);
-  if (result.error() == FLOAT_INVALIDPARAM)
-    result.d->error = HMATH_TOO_EXPENSIVE;
   return result;
 }
 
@@ -405,8 +401,8 @@ HNumber HNumber::idiv( const HNumber& dividend, const HNumber& divisor)
 {
   HNumber result;
   call2ArgsND(result.d, dividend.d, divisor.d, idivwrap);
-  if (result.error() == FLOAT_INVALIDPARAM)
-    result.d->error = HMATH_INTEGER_OVERFLOW;
+  if (result.error() == TooExpensive)
+    result.d->error = Overflow;
   return result;
 }
 
@@ -848,10 +844,10 @@ HNumber HMath::gcd( const HNumber& n1, const HNumber& n2 )
 {
   if( !n1.isInteger() || !n2.isInteger() )
   {
-    int error = checkNaNParam(*n1.d, n2.d);
-    if (error != 0)
+    Error error = checkNaNParam(*n1.d, n2.d);
+    if (error != Success)
       return HNumber::nan(error);
-    return HNumber::nan(HMATH_INTEGER_REQUIRED);
+    return HNumber::nan(TypeMismatch);
   }
 
   HNumber a = abs( n1 );
@@ -992,7 +988,6 @@ HNumber HMath::sin( const HNumber& x )
   return result;
 }
 
-
 HNumber HMath::cos( const HNumber& x )
 {
   HNumber result;
@@ -1114,10 +1109,10 @@ HNumber HMath::nCr( const HNumber& n, const HNumber& r )
 
   if( !n.isInteger() || !r.isInteger() )
   {
-    int error = checkNaNParam(*n.d, r.d);
+    Error error = checkNaNParam(*n.d, r.d);
     if (error != 0)
       return HNumber::nan(error);
-    return HNumber::nan(HMATH_INTEGER_REQUIRED);
+    return HNumber::nan(TypeMismatch);
   }
 
   if (r > 50 && n-r > 50)

@@ -1,6 +1,6 @@
 /* floatio.c: low level conversion, based on floatnum. */
 /*
-    Copyright (C) 2007 Wolf Lammen.
+    Copyright (C) 2007, 2008 Wolf Lammen.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -430,7 +430,7 @@ _cmplseq2str(
 
 /* create a descriptor from a sequence of digits,
    assuming the sequence is an integer */
-static int
+static Error
 str2int(
   p_ext_seq_desc n,
   const char* value,
@@ -440,7 +440,7 @@ str2int(
   char complement;
 
   if (prefix->base == IO_BASE_NAN)
-    return IO_ERROR_NO_BASE;
+    return IONoBase;
   complement = prefix->sign == IO_SIGN_COMPLEMENT;
   if (complement)
   {
@@ -450,7 +450,7 @@ str2int(
   }
   if (value)
     _str2seq(n, value, maxdigits, prefix->base, complement);
-  return IO_NO_ERROR;
+  return Success;
 }
 
 /* if base describes a special value (0 or NaN), the normal
@@ -498,12 +498,12 @@ int2str(
 
 /* do some sanity checks, create descriptors of integer and fraction
    part in tokens, set sign and base */
-static int
+static Error
 str2fixp(
   p_number_desc n,
   p_itokens tokens)
 {
-  int result;
+  Error result;
   int maxdigits;
 
   maxdigits = tokens->maxdigits;
@@ -511,7 +511,7 @@ str2fixp(
   n->prefix.sign = tokens->sign;
   if (tokens->sign == IO_SIGN_COMPLEMENT
       && (!_isempty(tokens->fracpart) || !_isempty(tokens->exp)))
-    return IO_ERROR_SIGN_CONFLICT;
+    return IOSignConflict;
   result = str2int(&n->intpart, tokens->intpart, &n->prefix, maxdigits);
   if (_ispseudobase(n->prefix.base))
     return result;
@@ -521,11 +521,11 @@ str2fixp(
              n->prefix.base, 0);
   if (n->prefix.sign != IO_SIGN_COMPLEMENT
       && n->intpart.seq.digits + n->fracpart.seq.digits == 0)
-    return IO_ERROR_NO_DIGIT;
+    return IONoSignificand;
   if (n->prefix.sign != IO_SIGN_COMPLEMENT
       && _iszero(&n->intpart.seq) && _iszero(&n->fracpart.seq))
     n->prefix.base = IO_BASE_ZERO;
-  return IO_NO_ERROR;
+  return Success;
 }
 
 /* convert integer and fraction part into ASCIIZ sequences */
@@ -544,34 +544,34 @@ fixp2str(
 }
 
 /* create a descriptor from the digit sequence of the exponent */
-static int
+static Error
 _exp2desc(
   p_number_desc n,
   p_itokens tokens)
 {
   t_prefix prefix;
   t_ext_seq_desc digits;
-  int result;
+  Error result;
 
-  result = IO_NO_ERROR;
+  result = Success;
   if (tokens->expsign != IO_SIGN_NONE || tokens->expbase != IO_BASE_NAN
       || !_isempty(tokens->exp))
   {
     prefix.sign = tokens->expsign;
     if (prefix.sign == IO_SIGN_COMPLEMENT)
-      return IO_ERROR_EXP;
+      return IOBadExp;
     if (prefix.sign == IO_SIGN_NONE)
       prefix.sign = IO_SIGN_PLUS;
     prefix.base = tokens->expbase;
     _clearint(&digits);
     result = str2int(&digits, tokens->exp,
                      &prefix, BITS_IN_EXP);
-    if (result == IO_NO_ERROR)
+    if (result == Success)
     {
       n->expbase = prefix.base;
       if (prefix.base != IO_BASE_ZERO
                && !_seq2value(&n->exp, &digits, prefix.sign))
-        result = IO_ERROR_EXP_RANGE;
+        result = IOExpOverflow;
     }
   }
   return result;
@@ -609,18 +609,18 @@ _desc2exp(
 
 /* create a descriptor from the floating point number given in
    tokens */
-int
+Error
 str2desc(
   p_number_desc n,
   p_itokens tokens)
 {
-  int result;
+  Error result;
 
   _clearnumber(n);
   result = str2fixp(n, tokens);
-  if (result == IO_NO_ERROR)
+  if (result == Success)
     result = _exp2desc(n, tokens);
-  if (result != IO_NO_ERROR)
+  if (result != Success)
     n->prefix.base = IO_BASE_NAN;
   return result;
 }
@@ -841,7 +841,7 @@ _parsecmpl(
   return lg > 0;
 }
 
-int
+Error
 parse(
   p_itokens tokens,
   const char** buffer)
@@ -884,7 +884,7 @@ parse(
   if (_parsecmpl(&p, tokens->base))
   {
     if (tokens->sign != IO_SIGN_NONE)
-      return IO_ERROR_SIGN_CONFLICT;
+      return IOSignConflict;
     tokens->sign = IO_SIGN_COMPLEMENT;
   }
   tokens->intpart = _scandigits(&p, base);
@@ -895,7 +895,7 @@ parse(
   }
   if (!tokens->intpart && !tokens->fracpart
       && tokens->sign != IO_SIGN_COMPLEMENT)
-    return IO_ERROR_NO_DIGIT;
+    return IONoSignificand;
   expchar = strchr(expbegin, *p);
   if (!_isempty(expchar))
   {
@@ -905,10 +905,10 @@ parse(
     tokens->expbase = _parsebase(&p, base);
     tokens->exp = _scandigits(&p, tokens->expbase);
     if (!tokens->exp || (*(expend + idx) != ' ' && *(expend + idx) != *p))
-      return IO_ERROR_EXP;
+      return IOBadExp;
   }
   *buffer = p;
-  return IO_NO_ERROR;
+  return Success;
 }
 
 static char

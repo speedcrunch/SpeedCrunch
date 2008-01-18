@@ -1,3 +1,28 @@
+2008-01-17
+made floatnum 'const' aware.
+use of enum Error instead of #define'd error codes
+bug fix in _gamma0_5, when a fall back to the general gamma routine
+     did not handle a negative argument correctly.
+cleaner error reporting, several fixes in this area
+
+all routines in floathmath and floatnum now take const parameters
+(const floatstruct*), when a parameter is invariant in a function call.
+Actually, these parameters are not guaranteed to be constant; they may,
+for efficiency, assume intermediate values throughout an operation. But
+they are always restored on return (note: this 'constness' is *not* safe
+with respect to concurrency!).
+This rework revealed a few minor bugs related to error handling, not visible
+to SpeedCrunch, and one, where SpeedCrunch could freeze (Gamma(x), when x is
+a very large multiple of -0.5). Fixed these.
+All error values now use the enum Error from errors.h
+
+floathmath, floatnum, floatcommon, floatgamma, floatlogic:
+- const awareness
+- bug fix in _gamma0_5
+- error constants from an enum
+floatio
+- error constants from an enum
+
 2008-01-09
 bugfixes in float_frac, float_gamma
 

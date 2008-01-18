@@ -211,10 +211,7 @@ _lngamma(
   char result;
 
   if (float_cmp(x, &c1) == 0 || float_cmp(x, &c2) == 0)
-  {
-    float_setzero(x);
-    return 1;
-  }
+    return _setzero(x);
   float_create(&factor);
   result = _lngamma_prim(x, &factor, &infinity, digits)
            && infinity == 0;
@@ -224,9 +221,9 @@ _lngamma(
     _ln(&factor, digits + 1);
     result = float_sub(x, x, &factor, digits+1);
   }
-  if (infinity != 0)
-    float_seterror(FLOAT_ZERODIVIDE);
   float_free(&factor);
+  if (infinity != 0)
+    return _seterror(x, ZeroDivide);
   if (!result)
     float_setnan(x);
   return result;
@@ -271,15 +268,14 @@ _gamma(
              && infinity == 0
              && _exp(x, digits)
              && float_div(x, x, &tmp, digits + 1);
-    if (infinity != 0)
-      float_seterror(FLOAT_ZERODIVIDE);
     float_free(&tmp);
+    if (infinity != 0)
+      return _seterror(x, ZeroDivide);
     if (!result)
       float_setnan(x);
     return result;
   }
-  else
-    return _gammagtminus20(x, digits);
+  return _gammagtminus20(x, digits);
 }
 
 char
@@ -305,7 +301,7 @@ _gamma0_5(
   int ofs;
 
   if (float_getexponent(x) >= 2)
-    return _gammagtminus20(x, digits);
+    return _gamma(x, digits);
   float_create(&tmp);
   float_sub(&tmp, x, &c1Div2, EXACT);
   ofs = float_asinteger(&tmp);
@@ -341,7 +337,7 @@ _pochhammer_si(
 static char
 _pochhammer_g(
   floatnum x,
-  floatnum n,
+  cfloatnum n,
   int digits)
 {
   /* this generalizes the rising Pochhammer symbol using the
@@ -360,8 +356,8 @@ _pochhammer_g(
            && (inf2 -= inf1) <= 0;
   if (inf2 > 0)
   {
-    float_seterror(FLOAT_ZERODIVIDE);
-    float_setnan(x);
+    float_seterror(ZeroDivide);
+    result = 0;
   }
   if (result)
   {
@@ -370,7 +366,7 @@ _pochhammer_g(
     else
       result = float_div(&factor1, &factor1, &factor2, digits+1);
   }
-  if (result && inf2 == 0)
+  if (result)
     result = float_sub(x, &tmp, x, digits+1)
              && _exp(x, digits)
              && float_mul(x, x, &factor1, digits+1);
@@ -385,37 +381,30 @@ _pochhammer_g(
 static char
 _pochhammer_i(
   floatnum x,
-  floatnum n,
+  cfloatnum n,
   int digits)
 {
   /* do not use the expensive Gamma function when a few
      multiplications do the same */
   /* pre: n is an integer */
   int ni;
-  char result;
+  signed char result;
 
   if (float_iszero(n))
     return float_copy(x, &c1, EXACT);
   if (float_isinteger(x))
   {
     result = -1;
-    float_neg(n);
+    float_neg((floatnum)n);
     if (float_getsign(x) <= 0 && float_cmp(x, n) > 0)
-    {
       /* x and x+n have opposite signs, meaning 0 is
          among the factors */
-      float_setzero(x);
-      result = 1;
-    }
+      result = _setzero(x);
     else if (float_getsign(x) > 0 && float_cmp(x, n) <= 0)
-    {
       /* x and x+n have opposite signs, meaning at one point
       you have to divide by 0 */
-      float_seterror(FLOAT_ZERODIVIDE);
-      float_setnan(x);
-      result = 0;
-    }
-    float_neg(n);
+      result = _seterror(x, ZeroDivide);
+    float_neg((floatnum)n);
     if (result >= 0)
       return result;
   }
@@ -431,7 +420,7 @@ _pochhammer_i(
 char
 _pochhammer(
   floatnum x,
-  floatnum n,
+  cfloatnum n,
   int digits)
 {
   if (float_isinteger(n))

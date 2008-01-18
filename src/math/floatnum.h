@@ -1,6 +1,6 @@
 /* floatnum.h: Arbitrary precision floating point numbers header file. */
 /*
-    Copyright (C) 2007 Wolf Lammen.
+    Copyright (C) 2007, 2008 Wolf Lammen.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -68,10 +68,10 @@ typedef enum {TONEAREST, TOZERO, TOINFINITY, TOPLUSINFINITY, TOMINUSINFINITY} ro
 void floatnum_init();
 
 /* sets the error to `code' unless it is already set */
-void float_seterror(int code);
+void float_seterror(Error code);
 
 /* gets the last error and clears the error afterwards */
-int float_geterror();
+Error float_geterror();
 
 /* returns the current overflow limit. It is the maximum possible
    exponent. The smallest exponent is -`return value' - 1.
@@ -200,7 +200,7 @@ char float_getdigit(cfloatnum f, int ofs);
    The function searches the buffer for the first non-zero digit,
    and starts the encoding from there.
    `f' is set to NaN, if the buffer fails to fulfill the above conditions.
-   If the resulting significand exceeds MAXDIGITS digits, it is truncated.
+   If the resulting significand exceeds <maxdigits> digits, it is truncated.
    The exponent of `f' is set to 0, so the result is always NaN, 0 or a
    number between 1 and 9.99...
    If you want to set both the significand and the exponent of f,
@@ -264,9 +264,9 @@ char float_iszero(cfloatnum f);
    If a copy has to be made, the allocated space is just big enough to hold
    the significand, so no memory is wasted.
    A return value of 0 indicates an error.
-   errors: FLOAT_INVALIDPARAM, if `digits', or the length of the copy,
+   errors: InvalidPrecision,   if `digits', or the length of the copy,
                                exceeds `maxdigits' */
-char float_copy(floatnum dest, floatnum source, int digits);
+char float_copy(floatnum dest, cfloatnum source, int digits);
 
 /* transfers the contents of source to dest. source is assigned NaN
    afterwards.
@@ -281,19 +281,19 @@ void float_move(floatnum dest, floatnum source);
 
 /* changes the value of `f' to -`f'. Has no effect on zero or NaN.
    A return value of 0 indicates an error.
-   errors: FLOAT_NANOPERAND  */
+   errors: NaNOperand  */
 char float_neg(floatnum f);
 
 /* changes the sign of `f', if `f' is negative. Has no effect on a NaN.
    A return value of 0 indicates an error.
-   errors: FLOAT_NANOPERAND */
+   errors: NaNOperand */
 char float_abs(floatnum f);
 
 /* compares two values and returns +1 if val1 > val2, 0 if val1 == val2
    and -1 if val1 ` val2.
    This function is not intended to be used with NaN's. If you
    pass it as an argument, UNORDERED is returned to indicate an error.
-   errors: FLOAT_NANOPERAND */
+   errors: NaNOperand */
 signed char float_cmp(cfloatnum val1, cfloatnum val2);
 
 /* rounds `f' to `digits' digits according to the submitted mode.
@@ -314,23 +314,24 @@ signed char float_cmp(cfloatnum val1, cfloatnum val2);
    mode == TOMINUSINFINITY: always rounds down. So, negative values
                             usually increase in magnitude.
    A return value of 0 indicates an error.
-   errors: FLOAT_NANOPERAND
-           FLOAT_INVALIDPARAM
-           FLOAT_OVERFLOW */
-char float_round(floatnum dest, floatnum src, int digits, roundmode mode);
+   errors: NaNOperand
+           InvalidParam
+           InvalidPrecision
+           Overflow */
+char float_round(floatnum dest, cfloatnum src, int digits, roundmode mode);
 
 /* cuts off the fractional part of `f'. The result is always less
    or equal in magnitude to the passed argument.
    A NaN yields a NaN.
    A return value of 0 indicates an error.
-   errors: FLOAT_NANOPERAND */
+   errors: NaNOperand */
 char float_int(floatnum f);
 
 /* cuts off the integer part of `f'. If the result is not equal to 0,
    it has the same sign as the argument.
    NaN yields NaN.
    A return value of 0 indicates an error.
-   errors: FLOAT_NANOPERAND */
+   errors: NaNOperand */
 char float_frac(floatnum f);
 
 /* adds the values in `summand1' and `summand2' and stores the result in
@@ -342,11 +343,11 @@ char float_frac(floatnum f);
    - the result overflows or underflows;
    - `digits' is invalid, or the resulting digits exceed `maxdigits'.
    A return value of 0 indicates an error.
-   errors: FLOAT_NANOPERAND
-           FLOAT_INVALIDPARAM
-           FLOAT_OVERFLOW
-           FLOAT_UNDERFLOW */
-char float_add(floatnum dest, floatnum summand1, floatnum summand2,
+   errors: NaNOperand
+           InvalidPrecision
+           Overflow
+           Underflow */
+char float_add(floatnum dest, cfloatnum summand1, cfloatnum summand2,
   int digits);
 
 /* subtracts `subtrahend' from `minuend' and stores the result in
@@ -358,11 +359,11 @@ char float_add(floatnum dest, floatnum summand1, floatnum summand2,
    - the result overflows or underflows;
    - `digits' is invalid, or the resulting digits exceed `maxdigits'.
    A return value of 0 indicates an error.
-   errors: FLOAT_NANOPERAND
-           FLOAT_INVALIDPARAM
-           FLOAT_OVERFLOW
-           FLOAT_UNDERFLOW */
-char float_sub(floatnum dest, floatnum minuend, floatnum subtrahend,
+   errors: NaNOperand
+           InvalidPrecision
+           Overflow
+           Underflow */
+char float_sub(floatnum dest, cfloatnum minuend, cfloatnum subtrahend,
   int digits);
 
 /* multiplies both factors and stores the result in `dest'. `dest' may
@@ -374,11 +375,11 @@ char float_sub(floatnum dest, floatnum minuend, floatnum subtrahend,
    - the result overflows or underflows;
    - `digits' is invalid, or the resulting scale exceeds `maxdigits'.
    A return value of 0 indicates an error.
-   errors: FLOAT_NANOPERAND
-           FLOAT_INVALIDPARAM
-           FLOAT_OVERFLOW
-           FLOAT_UNDERFLOW */
-char float_mul(floatnum dest, floatnum factor1, floatnum factor2,
+   errors: NaNOperand
+           InvalidPrecision
+           Overflow
+           Underflow */
+char float_mul(floatnum dest, cfloatnum factor1, cfloatnum factor2,
   int digits);
 
 /* divides `dividend' by `divisor' and stores the result in `dest'. `dest'
@@ -393,12 +394,12 @@ char float_mul(floatnum dest, floatnum factor1, floatnum factor2,
    - the divisor is zero;
    - `digits' is invalid, or the effective scale exceeds `maxdigits'.
    A return value of 0 indicates an error.
-   errors: FLOAT_NANOPERAND
-           FLOAT_INVALIDPARAM
-           FLOAT_OVERFLOW
-           FLOAT_UNDERFLOW
-           FLOAT_ZERODIVIDE */
-char float_div(floatnum dest, floatnum dividend, floatnum divisor,
+   errors: NaNOperand
+           InvalidPrecision
+           Overflow
+           Underflow
+           ZeroDivide */
+char float_div(floatnum dest, cfloatnum dividend, cfloatnum divisor,
   int digits);
 
 /* evaluates the quotient, using `digits' steps of the schoolbook
@@ -415,13 +416,15 @@ char float_div(floatnum dest, floatnum dividend, floatnum divisor,
    this, there are no other restrictions on the passed variables.
    If this function fails, both result variables are set to NaN.
    A return value of 0 indicates an error.
-   errors: FLOAT_NANOPERAND
-           FLOAT_INVALIDPARAM
-           FLOAT_OVERFLOW
-           FLOAT_UNDERFLOW
-           FLOAT_ZERODIVIDE */
-char float_divmod(floatnum quotient, floatnum remainder, floatnum dividend,
-  floatnum divisor, int digits);
+   errors: NaNOperand
+           InvalidParam
+           InvalidPrecision
+           TooExpensive
+           Overflow
+           Underflow
+           ZeroDivide */
+char float_divmod(floatnum quotient, floatnum remainder, cfloatnum dividend,
+  cfloatnum divisor, int digits);
 
 /* computes the sqare root of `value' to `digits' or `digits'+1 digits.
    `digits' == EXACT is not allowed, even if the argument is a square.
@@ -430,10 +433,17 @@ char float_divmod(floatnum quotient, floatnum remainder, floatnum dividend,
    - `digits' exceeds `maxdigits'
    - the operand is negative.
    A return value 0 indicates an error.
-   errors: FLOAT_NANOPERAND
-           FLOAT_INVALIDPARAM
-           FLOAT_OUTOFDOMAIN */
+   errors: NaNOperand
+           InvalidPrecision
+           OutOfDomain */
 char float_sqrt(floatnum value, int digits);
+
+/* a few convenience functions used everywhere */
+
+char _setnan(floatnum result);
+char _seterror(floatnum result, Error code);
+char _checknan(cfloatnum f);
+char _setzero(floatnum x);
 
 #ifdef __cplusplus
 }

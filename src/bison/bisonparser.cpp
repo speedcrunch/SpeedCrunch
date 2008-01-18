@@ -109,13 +109,13 @@ bool SglExprLex::autoFix(const QString& newexpr)
   return true;
 }
 
-Variant SglExprLex::eval()
+XVariant SglExprLex::eval()
 {
   CallBacks cb;
   NumValue pResult;
   int errorpos;
   int errortokenlg;
-  Variant result;
+  XVariant result;
 
   scan();
   cb.str2Val = str2Val;
@@ -129,7 +129,7 @@ Variant SglExprLex::eval()
   if (parseexpr(cb, &pResult, &errorpos, &errortokenlg) == PARSE_OK)
     result = numValue2variant(pResult);
   else 
-    result = SCANNER_SYNTAX_ERROR;
+    result = SyntaxError;
   strlist.clear();
   numlist.clear();
   paramlists.clear();
@@ -144,7 +144,7 @@ bool SglExprLex::run(const QStringList& script)
   while (result && ++i < script.size())
   {
     setExpression(script.at(i));
-    result = eval().type() != TError;
+    result = eval() == Success;
   }
   return result;
 }
@@ -665,7 +665,7 @@ String SglExprLex::allocString(const QString& s)
   return strlist.size() - 1;
 }
 
-VariantIdx SglExprLex::allocNumber(const Variant& n)
+VariantIdx SglExprLex::allocNumber(const XVariant& n)
 {
   numlist.append(n);
   return numlist.size() - 1;
@@ -691,7 +691,7 @@ HNumber SglExprLex::cvtNumber(const DigitSeq& descriptor, String frac)
   return bias - HNumber(str.data());
 }
 
-NumValue SglExprLex::variant2numValue(const Variant& v)
+NumValue SglExprLex::variant2numValue(const XVariant& v)
 {
   NumValue result;
   result.percent = 0;
@@ -699,13 +699,13 @@ NumValue SglExprLex::variant2numValue(const Variant& v)
   return result;
 }
 
-Variant SglExprLex::numValue2variant(NumValue n)
+XVariant SglExprLex::numValue2variant(NumValue n)
 {
-  Variant result;
-  const Variant* v = &numlist.at(n.val);
-  if (n.percent)
+  XVariant result;
+  const XVariant* v = &numlist.at(n.val);
+/*  if (n.percent)
     result = *(const HNumber*)v / HNumber(100);
-  else
+  else*/
     result = *v;
   return result;
 }
@@ -815,7 +815,7 @@ NumValue SglExprLex::str2Val(String s)
 NumValue SglExprLex::mStr2Val(String s)
 {
   NumValue result;
-  Variant v = strlist.at(s);
+  XVariant v = strlist.at(s);
   result.percent = 0;
   result.val = allocNumber(v);
   return result;
@@ -841,11 +841,11 @@ NumValue SglExprLex::convertStr(NumLiteral literal)
 NumValue SglExprLex::mConvertStr(NumLiteral literal)
 {
   NumValue result;
-  HNumber value = cvtNumber(literal.intpart, literal.fracpart);
+/*  HNumber value = cvtNumber(literal.intpart, literal.fracpart);
   if (literal.exp.digits)
     value *= HMath::raise(HNumber(literal.intpart.base), cvtNumber(literal.exp));
   result.val = allocNumber(value);
-  result.percent = false;
+  result.percent = false;*/
   return result;
 }
 

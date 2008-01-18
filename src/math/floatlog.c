@@ -1,6 +1,6 @@
 /* floatlog.c: logarithm and friends, based on floatnum. */
 /*
-    Copyright (C) 2007 Wolf Lammen.
+    Copyright (C) 2007, 2008 Wolf Lammen.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -217,7 +217,7 @@ _lnxplus1lt1(
    require taking square roots several times. A test showed,
    a hundred digits calculation using AGM is 8 times slower than
    the algorithm here. For extreme precision, of course, AGM will be
-   superior. 
+   superior.
    The relative error seems to be less than 7e-101 for 100-digits
    computations */
 void

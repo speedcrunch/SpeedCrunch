@@ -36,21 +36,22 @@
 
 /* a few tests depend on 32 bit integer size, fix this in future!! */
 
-#include <math/floatconfig.h>
-#include <math/floatconst.h>
-#include <math/floatcommon.h>
-#include <math/floatseries.h>
-#include <math/floatlog.h>
-#include <math/floatexp.h>
-#include <math/floattrig.h>
-#include <math/floathmath.h>
-#include <math/floatlong.h>
-#include <math/floatconvert.h>
-#include <math/floatipower.h>
-#include <math/floatpower.h>
-#include <math/floatgamma.h>
-#include <math/floatlogic.h>
-#include <math/floaterf.h>
+#include "main/errors.h"
+#include "math/floatconfig.h"
+#include "math/floatconst.h"
+#include "math/floatcommon.h"
+#include "math/floatseries.h"
+#include "math/floatlog.h"
+#include "math/floatexp.h"
+#include "math/floattrig.h"
+#include "math/floathmath.h"
+#include "math/floatlong.h"
+#include "math/floatconvert.h"
+#include "math/floatipower.h"
+#include "math/floatpower.h"
+#include "math/floatgamma.h"
+#include "math/floatlogic.h"
+#include "math/floaterf.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -425,7 +426,7 @@ static int tc_isnan(void* s, int exp, char result)
   f.significand = s;
   f.exponent = exp;
   return float_isnan(&f) == result && exp == f.exponent
-         && f.significand == s && float_geterror() == FLOAT_SUCCESS;
+         && f.significand == s && float_geterror() == Success;
 }
 
 static int test_isnan()
@@ -457,7 +458,7 @@ static int tc_iszero(void* s, int exp, char result)
   f.significand = s;
   f.exponent = exp;
   return float_iszero(&f) == result && exp == f.exponent
-      && f.significand == s && float_geterror() == FLOAT_SUCCESS;
+      && f.significand == s && float_geterror() == Success;
 }
 
 static int test_iszero()
@@ -489,7 +490,7 @@ static int tc_create(void* s, int exp)
   f.significand = s;
   f.exponent = exp;
   float_create(&f);
-  return istruenan(&f) && float_geterror() == FLOAT_SUCCESS;
+  return istruenan(&f) && float_geterror() == Success;
 }
 
 static int test_create()
@@ -526,7 +527,7 @@ static int tc_setnan(char one, int exp)
   f.exponent = exp;
   float_setnan(&f);
   return istruenan(&f) && refs == _one_->n_refs
-         && float_geterror() == FLOAT_SUCCESS;
+         && float_geterror() == Success;
 }
 
 static int test_setnan()
@@ -562,7 +563,7 @@ static int tc_setzero(char one, int exp)
   f.exponent = exp;
   float_setzero(&f);
   return float_iszero(&f) && refs == _one_->n_refs
-        && float_geterror() == FLOAT_SUCCESS;
+        && float_geterror() == Success;
 }
 
 static int test_setzero()
@@ -610,7 +611,7 @@ static int tc_setsignificand(const char* mant, int mlg,
     else if (result[0] == '0')
       retvalue = float_iszero(&f);
     retvalue = retvalue && refs == _one_->n_refs
-      && dot == d && z == zeros && float_geterror() == FLOAT_SUCCESS;
+      && dot == d && z == zeros && float_geterror() == Success;
   }
   if (retvalue)
   {
@@ -626,7 +627,7 @@ static int tc_setsignificand(const char* mant, int mlg,
           && f.significand->n_len == 1
           && f.significand->n_sign == PLUS
           && mantcmp(f.significand, result);
-    retvalue = retvalue && dot == d && float_geterror() == FLOAT_SUCCESS;
+    retvalue = retvalue && dot == d && float_geterror() == Success;
   }
   if (retvalue && result != NULL && result[0] != '0')
   {
@@ -647,7 +648,7 @@ static int tc_setsignificand(const char* mant, int mlg,
           && mantcmp(f.significand, result)
           && dot == d && z == zeros
           && f.exponent == 0
-          && float_geterror() == FLOAT_SUCCESS;
+          && float_geterror() == Success;
     }
     maxdigits = save;
   }
@@ -766,7 +767,7 @@ static int tc_getsignificand(const char* value, int bufsz, const char* result)
         && buf[lg + 1] == '?'
         && memcmp(buf + 1, result, lg) == 0
         && h == hash(&f)
-        && float_geterror() == FLOAT_SUCCESS;
+        && float_geterror() == Success;
   }
   else
     for (i = sizeof(exp)/sizeof(int); --i >= 0;)
@@ -782,7 +783,7 @@ static int tc_getsignificand(const char* value, int bufsz, const char* result)
           && buf[0] == '?'
           && buf[lg + 1] == '?'
           && memcmp(buf + 1, result, lg) == 0
-          && float_geterror() == FLOAT_SUCCESS;
+          && float_geterror() == Success;
       }
   float_free(&f);
   return retvalue;
@@ -854,7 +855,7 @@ static int tc_setexponent(const char* value, int exp, int range,
   }
   float_free(&f);
   float_setrange(save);
-  return float_geterror() == FLOAT_SUCCESS;
+  return float_geterror() == Success;
 }
 
 static int test_setexponent()
@@ -908,7 +909,7 @@ static int tc_getexponent(const char* value, int exp, int result)
   h = hash(&f);
   float_geterror();
   retvalue = float_getexponent(&f) == result && hash(&f) == h
-             && float_geterror() == FLOAT_SUCCESS;
+             && float_geterror() == Success;
   float_free(&f);
   return retvalue;
 }
@@ -980,7 +981,7 @@ static int tc_setsign(const char* value, int exp)
     if (!istruenan(&f))
       return 0;
   }
-  return float_geterror() == FLOAT_SUCCESS;
+  return float_geterror() == Success;
 }
 
 static int test_setsign()
@@ -1017,7 +1018,7 @@ static int tc_getsign(const char* value, int exp, signed char sign, signed char 
   h = hash(&f);
   float_geterror();
   retvalue = float_getsign(&f) == result && hash(&f) == h
-             && float_geterror() == FLOAT_SUCCESS;
+             && float_geterror() == Success;
   float_free(&f);
   return retvalue;
 }
@@ -1081,7 +1082,7 @@ static int tc_getlength(const char* value, int result)
   }
   float_free(&f);
   float_setrange(save);
-  return float_geterror() == FLOAT_SUCCESS;
+  return float_geterror() == Success;
 }
 
 static int test_getlength()
@@ -1152,7 +1153,7 @@ static int tc_getdigit(const char* value)
     float_setrange(save);
   }
   float_free(&f);
-  return float_geterror() == FLOAT_SUCCESS;
+  return float_geterror() == Success;
 }
 
 static int test_getdigit()
@@ -1226,7 +1227,7 @@ static int tc_getscientific(const char* s, int exp, int sz, const char* result)
     }
   }
   float_free(&f);
-  return float_geterror() == FLOAT_SUCCESS;
+  return float_geterror() == Success;
 }
 
 static int test_getscientific()
@@ -1326,7 +1327,7 @@ static int tc_setscientific(const char* value, const char* result)
   if (sign > 0 || strcmp(buf, result) != 0)
     return 0;
   float_free(&f);
-  return float_geterror() == FLOAT_SUCCESS;
+  return float_geterror() == Success;
 }
 
 static int test_setscientific()
@@ -1436,7 +1437,7 @@ static int tc_setinteger(int value)
   float_getscientific(r, 50, &g);
   float_free(&f);
   float_free(&g);
-  return strcmp(buf, r) == 0 && err == FLOAT_SUCCESS;
+  return strcmp(buf, r) == 0 && err == Success;
 }
 
 static int test_setinteger()
@@ -1494,10 +1495,10 @@ static int test_neg()
   static struct{
     const char* value; signed char result; int error;
   } testcases[] = {
-    {"NaN", 0, FLOAT_NANOPERAND},
-    {"0", 0, FLOAT_SUCCESS},
-    {"1.23", -1, FLOAT_SUCCESS},
-    {"-1.23", 1, FLOAT_SUCCESS},
+    {"NaN", 0, NaNOperand},
+    {"0", 0, Success},
+    {"1.23", -1, Success},
+    {"-1.23", 1, Success},
   };
 
   printf("testing float_changesign\n");
@@ -1540,10 +1541,10 @@ static int test_abs()
   static struct{
     const char* value; int error;
   } testcases[] = {
-    {"NaN", FLOAT_NANOPERAND},
-    {"0", FLOAT_SUCCESS},
-    {"1.23", FLOAT_SUCCESS},
-    {"-1.23", FLOAT_SUCCESS},
+    {"NaN", NaNOperand},
+    {"0", Success},
+    {"1.23", Success},
+    {"-1.23", Success},
   };
 
   printf("testing float_abs\n");
@@ -1567,14 +1568,14 @@ static int tc_cmp(const char* val1, const char* val2, signed char result)
   revres = float_cmp(&v2, &v1);
   if (revres != UNORDERED)
     revres = -revres;
-  else if (float_geterror() != FLOAT_NANOPERAND)
+  else if (float_geterror() != NaNOperand)
     return 0;
   res = float_cmp(&v1, &v2);
-  if (res == UNORDERED && float_geterror() != FLOAT_NANOPERAND)
+  if (res == UNORDERED && float_geterror() != NaNOperand)
     return 0;
   float_free(&v1);
   float_free(&v2);
-  return res == result && revres == result && float_geterror() == FLOAT_SUCCESS;
+  return res == result && revres == result && float_geterror() == Success;
 }
 
 static int test_cmp()
@@ -1672,34 +1673,34 @@ static int test_copy()
   static struct{
     const char* src; int digits; const char* result; int error;
   } testcases[] = {
-    {"NaN", -10, "NaN", FLOAT_INVALIDPARAM},
-    {"NaN", EXACT, "NaN", FLOAT_SUCCESS},
-    {"NaN", 0, "NaN", FLOAT_INVALIDPARAM},
-    {"NaN", 1, "NaN", FLOAT_SUCCESS},
-    {"NaN", 15, "NaN", FLOAT_SUCCESS},
-    {"NaN", 16, "NaN", FLOAT_INVALIDPARAM},
-    {"0", -10, "NaN", FLOAT_INVALIDPARAM},
-    {"0", EXACT, "0", FLOAT_SUCCESS},
-    {"0", 0, "NaN", FLOAT_INVALIDPARAM},
-    {"0", 1, "0", FLOAT_SUCCESS},
-    {"0", 15, "0", FLOAT_SUCCESS},
-    {"0", 16, "NaN", FLOAT_INVALIDPARAM},
-    {"12305", EXACT, "1.2305e4", FLOAT_SUCCESS},
-    {"12305", -1, "NaN", FLOAT_INVALIDPARAM},
-    {"12305", 0, "NaN", FLOAT_INVALIDPARAM},
-    {"12305", 1, "1.e4", FLOAT_SUCCESS},
-    {"12305", 2, "1.2e4", FLOAT_SUCCESS},
-    {"12305", 3, "1.23e4", FLOAT_SUCCESS},
-    {"12305", 4, "1.23e4", FLOAT_SUCCESS},
-    {"12305", 5, "1.2305e4", FLOAT_SUCCESS},
-    {"12305", 6, "1.2305e4", FLOAT_SUCCESS},
-    {"-12305", 5, "-1.2305e4", FLOAT_SUCCESS},
-    {"1.234567890123456789", 0, "NaN", FLOAT_INVALIDPARAM},
-    {"1.234567890123456789", 1, "1.e0", FLOAT_SUCCESS},
-    {"1.234567890123456789", 14, "1.2345678901234e0", FLOAT_SUCCESS},
-    {"1.234567890123456789", 15, "1.23456789012345e0", FLOAT_SUCCESS},
-    {"1.23456789012345006789", 16, "NaN", FLOAT_INVALIDPARAM},
-    {"1.23456789012345006789", EXACT, "NaN", FLOAT_INVALIDPARAM},
+    {"NaN", -10, "NaN", InvalidPrecision},
+    {"NaN", EXACT, "NaN", Success},
+    {"NaN", 0, "NaN", InvalidPrecision},
+    {"NaN", 1, "NaN", Success},
+    {"NaN", 15, "NaN", Success},
+    {"NaN", 16, "NaN", InvalidPrecision},
+    {"0", -10, "NaN", InvalidPrecision},
+    {"0", EXACT, "0", Success},
+    {"0", 0, "NaN", InvalidPrecision},
+    {"0", 1, "0", Success},
+    {"0", 15, "0", Success},
+    {"0", 16, "NaN", InvalidPrecision},
+    {"12305", EXACT, "1.2305e4", Success},
+    {"12305", -1, "NaN", InvalidPrecision},
+    {"12305", 0, "NaN", InvalidPrecision},
+    {"12305", 1, "1.e4", Success},
+    {"12305", 2, "1.2e4", Success},
+    {"12305", 3, "1.23e4", Success},
+    {"12305", 4, "1.23e4", Success},
+    {"12305", 5, "1.2305e4", Success},
+    {"12305", 6, "1.2305e4", Success},
+    {"-12305", 5, "-1.2305e4", Success},
+    {"1.234567890123456789", 0, "NaN", InvalidPrecision},
+    {"1.234567890123456789", 1, "1.e0", Success},
+    {"1.234567890123456789", 14, "1.2345678901234e0", Success},
+    {"1.234567890123456789", 15, "1.23456789012345e0", Success},
+    {"1.23456789012345006789", 16, "NaN", InvalidPrecision},
+    {"1.23456789012345006789", EXACT, "NaN", InvalidPrecision},
   };
 
   printf("testing float_copy\n");
@@ -1732,7 +1733,7 @@ static int tc_move(const char* value)
   retvalue = refs == _one_->n_refs
              && float_isnan(&f)
              && strcmp(buf, value) == 0
-             && code == FLOAT_SUCCESS;
+             && code == Success;
   float_free(&g);
   return retvalue;
 }
@@ -1761,10 +1762,11 @@ static int test_move()
 }
 
 static int tc_round(const char* value, int digits, const char* up,
-                    const char* down, int roundflags, int error)
+                    const char* down, int roundflags, Error error)
 {
   floatstruct f, g;
-  int flag, refs, save, code, cmp, cd;
+  Error code;
+  int flag, refs, save, cmp, cd;
   char buf[50];
   roundmode rm;
   char err;
@@ -1780,7 +1782,7 @@ static int tc_round(const char* value, int digits, const char* up,
   float_geterror();
   err = float_round(&g, &f, digits, 5);
   code = float_geterror();
-  if (err != 0 || code != FLOAT_INVALIDPARAM || !float_isnan(&g)
+  if (err != 0 || code != InvalidParam || !float_isnan(&g)
       || refs != _one_->n_refs)
     return 0;
   for (rm = TONEAREST; rm <= TOMINUSINFINITY; ++rm)
@@ -1795,7 +1797,7 @@ static int tc_round(const char* value, int digits, const char* up,
     err = float_round(&g, &f, digits, rm);
     code = float_geterror();
     float_getscientific(buf, sizeof(buf), &g);
-    cd = FLOAT_SUCCESS;
+    cd = Success;
     if ((flag & roundflags) != 0)
     {
       if (*up == 'N')
@@ -1816,7 +1818,7 @@ static int tc_round(const char* value, int digits, const char* up,
     err = float_round(&f, &f, digits, rm);
     code = float_geterror();
     float_getscientific(buf, sizeof(buf), &f);
-    cd = FLOAT_SUCCESS;
+    cd = Success;
     if ((flag & roundflags) != 0)
     {
       if (*up == 'N')
@@ -1851,63 +1853,63 @@ static int test_round()
   int i;
   static struct{
     const char* value; int digits; const char* up; const char* down;
-    int roundflags; int error;
+    int roundflags; Error error;
   } testcases[] = {
-    {"NaN", -1, "NaN", "NaN", 0, FLOAT_INVALIDPARAM},
-    {"NaN", 0, "NaN", "NaN", 0, FLOAT_INVALIDPARAM},
-    {"NaN", 16, "NaN", "NaN", 0, FLOAT_INVALIDPARAM},
-    {"NaN", 1, "NaN", "NaN", 0, FLOAT_NANOPERAND},
-    {"0", -1, "NaN", "NaN", 0, FLOAT_INVALIDPARAM},
-    {"0", 0, "NaN", "NaN", 0, FLOAT_INVALIDPARAM},
-    {"0", 16, "NaN", "NaN", 0, FLOAT_INVALIDPARAM},
-    {"0", 1, "0", "0", 0, FLOAT_SUCCESS},
-    {"1", -1, "NaN", "NaN", 0, FLOAT_INVALIDPARAM},
-    {"1", 0, "NaN", "NaN", 0, FLOAT_INVALIDPARAM},
-    {"1", 16, "NaN", "NaN", 0, FLOAT_INVALIDPARAM},
-    {"1", 1, "1.e0", "1.e0", 0, FLOAT_SUCCESS},
-    {"1", 2, "1.e0", "1.e0", 0, FLOAT_SUCCESS},
-    {"1", 15, "1.e0", "1.e0", 0, FLOAT_SUCCESS},
-    {"-1", -1, "NaN", "NaN", 0, FLOAT_INVALIDPARAM},
-    {"-1", 0, "NaN", "NaN", 0, FLOAT_INVALIDPARAM},
-    {"-1", 16, "NaN", "NaN", 0, FLOAT_INVALIDPARAM},
-    {"-1", 1, "-1.e0", "-1.e0", 0, FLOAT_SUCCESS},
-    {"-1", 2, "-1.e0", "-1.e0", 0, FLOAT_SUCCESS},
-    {"-1", 15, "-1.e0", "-1.e0", 0, FLOAT_SUCCESS},
-    {"1.903", 1, "2.e0", "1.e0", FN+FI+FU, FLOAT_SUCCESS},
-    {"1.903", 2, "2.e0", "1.9e0", FI+FU, FLOAT_SUCCESS},
-    {"1.903", 3, "1.91e0", "1.9e0", FI+FU, FLOAT_SUCCESS},
-    {"1.903", 4, "1.903e0", "1.903e0", 0, FLOAT_SUCCESS},
-    {"1.903", 5, "1.903e0", "1.903e0", 0, FLOAT_SUCCESS},
-    {"19.03", 1, "2.e1", "1.e1", FN+FI+FU, FLOAT_SUCCESS},
-    {"19.03", 2, "2.e1", "1.9e1", FI+FU, FLOAT_SUCCESS},
-    {"19.03", 3, "1.91e1", "1.9e1", FI+FU, FLOAT_SUCCESS},
-    {"19.03", 4, "1.903e1", "1.903e1", 0, FLOAT_SUCCESS},
-    {"19.03", 5, "1.903e1", "1.903e1", 0, FLOAT_SUCCESS},
-    {"0.1903", 1, "2.e-1", "1.e-1", FN+FI+FU, FLOAT_SUCCESS},
-    {"0.1903", 2, "2.e-1", "1.9e-1", FI+FU, FLOAT_SUCCESS},
-    {"0.1903", 3, "1.91e-1", "1.9e-1", FI+FU, FLOAT_SUCCESS},
-    {"0.1903", 4, "1.903e-1", "1.903e-1", 0, FLOAT_SUCCESS},
-    {"0.1903", 5, "1.903e-1", "1.903e-1", 0, FLOAT_SUCCESS},
-    {"-1.903", 1, "-1.e0", "-2.e0", FZ+FU, FLOAT_SUCCESS},
-    {"-1.903", 2, "-1.9e0", "-2.e0", FN+FZ+FU, FLOAT_SUCCESS},
-    {"-1.903", 3, "-1.9e0", "-1.91e0", FN+FZ+FU, FLOAT_SUCCESS},
-    {"-1.903", 4, "-1.903e0", "-1.903e0", 0, FLOAT_SUCCESS},
-    {"-1.903", 5, "-1.903e0", "-1.903e0", 0, FLOAT_SUCCESS},
-    {"1.29903", 1, "2.e0", "1.e0", FI+FU, FLOAT_SUCCESS},
-    {"1.29903", 2, "1.3e0", "1.2e0", FN+FI+FU, FLOAT_SUCCESS},
-    {"1.29903", 3, "1.3e0", "1.29e0", FN+FI+FU, FLOAT_SUCCESS},
-    {"1.29903", 4, "1.3e0", "1.299e0", FI+FU, FLOAT_SUCCESS},
-    {"1.29903", 5, "1.2991e0", "1.299e0", FI+FU, FLOAT_SUCCESS},
-    {"1.29903", 6, "1.29903e0", "1.29903e0", 0, FLOAT_SUCCESS},
-    {"9.99", 1, "1.e1", "9.e0", FN+FI+FU, FLOAT_SUCCESS},
-    {"9.99", 2, "1.e1", "9.9e0", FN+FI+FU, FLOAT_SUCCESS},
-    {"9.99", 3, "9.99e0", "9.99e0", 0, FLOAT_SUCCESS},
-    {"1.5", 1, "2.e0", "1.e0", FN+FI+FU, FLOAT_SUCCESS},
-    {"2.5", 1, "3.e0", "2.e0", FI+FU, FLOAT_SUCCESS},
-    {"9.99e100", 1, "NaN", "9.e100", FN+FI+FU, FLOAT_OVERFLOW},
-    {"9.99e100", 2, "NaN", "9.9e100", FN+FI+FU, FLOAT_OVERFLOW},
-    {"9.99e100", 3, "9.99e100", "9.99e100", 0, FLOAT_SUCCESS},
-    {"9.995e100", 3, "NaN", "9.99e100", FN+FI+FU, FLOAT_OVERFLOW},
+    {"NaN", -1, "NaN", "NaN", 0, InvalidPrecision},
+    {"NaN", 0, "NaN", "NaN", 0, InvalidPrecision},
+    {"NaN", 16, "NaN", "NaN", 0, InvalidPrecision},
+    {"NaN", 1, "NaN", "NaN", 0, NaNOperand},
+    {"0", -1, "NaN", "NaN", 0, InvalidPrecision},
+    {"0", 0, "NaN", "NaN", 0, InvalidPrecision},
+    {"0", 16, "NaN", "NaN", 0, InvalidPrecision},
+    {"0", 1, "0", "0", 0, Success},
+    {"1", -1, "NaN", "NaN", 0, InvalidPrecision},
+    {"1", 0, "NaN", "NaN", 0, InvalidPrecision},
+    {"1", 16, "NaN", "NaN", 0, InvalidPrecision},
+    {"1", 1, "1.e0", "1.e0", 0, Success},
+    {"1", 2, "1.e0", "1.e0", 0, Success},
+    {"1", 15, "1.e0", "1.e0", 0, Success},
+    {"-1", -1, "NaN", "NaN", 0, InvalidPrecision},
+    {"-1", 0, "NaN", "NaN", 0, InvalidPrecision},
+    {"-1", 16, "NaN", "NaN", 0, InvalidPrecision},
+    {"-1", 1, "-1.e0", "-1.e0", 0, Success},
+    {"-1", 2, "-1.e0", "-1.e0", 0, Success},
+    {"-1", 15, "-1.e0", "-1.e0", 0, Success},
+    {"1.903", 1, "2.e0", "1.e0", FN+FI+FU, Success},
+    {"1.903", 2, "2.e0", "1.9e0", FI+FU, Success},
+    {"1.903", 3, "1.91e0", "1.9e0", FI+FU, Success},
+    {"1.903", 4, "1.903e0", "1.903e0", 0, Success},
+    {"1.903", 5, "1.903e0", "1.903e0", 0, Success},
+    {"19.03", 1, "2.e1", "1.e1", FN+FI+FU, Success},
+    {"19.03", 2, "2.e1", "1.9e1", FI+FU, Success},
+    {"19.03", 3, "1.91e1", "1.9e1", FI+FU, Success},
+    {"19.03", 4, "1.903e1", "1.903e1", 0, Success},
+    {"19.03", 5, "1.903e1", "1.903e1", 0, Success},
+    {"0.1903", 1, "2.e-1", "1.e-1", FN+FI+FU, Success},
+    {"0.1903", 2, "2.e-1", "1.9e-1", FI+FU, Success},
+    {"0.1903", 3, "1.91e-1", "1.9e-1", FI+FU, Success},
+    {"0.1903", 4, "1.903e-1", "1.903e-1", 0, Success},
+    {"0.1903", 5, "1.903e-1", "1.903e-1", 0, Success},
+    {"-1.903", 1, "-1.e0", "-2.e0", FZ+FU, Success},
+    {"-1.903", 2, "-1.9e0", "-2.e0", FN+FZ+FU, Success},
+    {"-1.903", 3, "-1.9e0", "-1.91e0", FN+FZ+FU, Success},
+    {"-1.903", 4, "-1.903e0", "-1.903e0", 0, Success},
+    {"-1.903", 5, "-1.903e0", "-1.903e0", 0, Success},
+    {"1.29903", 1, "2.e0", "1.e0", FI+FU, Success},
+    {"1.29903", 2, "1.3e0", "1.2e0", FN+FI+FU, Success},
+    {"1.29903", 3, "1.3e0", "1.29e0", FN+FI+FU, Success},
+    {"1.29903", 4, "1.3e0", "1.299e0", FI+FU, Success},
+    {"1.29903", 5, "1.2991e0", "1.299e0", FI+FU, Success},
+    {"1.29903", 6, "1.29903e0", "1.29903e0", 0, Success},
+    {"9.99", 1, "1.e1", "9.e0", FN+FI+FU, Success},
+    {"9.99", 2, "1.e1", "9.9e0", FN+FI+FU, Success},
+    {"9.99", 3, "9.99e0", "9.99e0", 0, Success},
+    {"1.5", 1, "2.e0", "1.e0", FN+FI+FU, Success},
+    {"2.5", 1, "3.e0", "2.e0", FI+FU, Success},
+    {"9.99e100", 1, "NaN", "9.e100", FN+FI+FU, Overflow},
+    {"9.99e100", 2, "NaN", "9.9e100", FN+FI+FU, Overflow},
+    {"9.99e100", 3, "9.99e100", "9.99e100", 0, Success},
+    {"9.995e100", 3, "NaN", "9.99e100", FN+FI+FU, Overflow},
   };
   int save;
 

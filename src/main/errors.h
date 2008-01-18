@@ -17,114 +17,118 @@
    Boston, MA 02110-1301, USA.
  */
 
-/*======================   math engine   ==========================*/
-/* FIXME convert this into an enum with continuous values */
+#ifndef _ERRORS_H
+#define _ERRORS_H
 
-#define FLOAT_SUCCESS              0
+#ifdef __cplusplus
+extern "C"{
+#endif
+
+typedef enum
+{
+  Success,
 
 /* a NaN was submitted as a parameter. Only a few functions in
-   the math engine accept such a value. All arithmetic functions
-   fail on such an operand */
-#define FLOAT_NANOPERAND           1
+  the math engine accept such a value. All arithmetic functions
+  fail on such an operand */
+  NaNOperand,
 
 /* This error is returned if a result is mathematically defined, but
-   cannot be computed reliably without extending the working precision
-   considerably and/or requiring considerable computing time */
-#define FLOAT_UNSTABLE             2
+  cannot be computed reliably without extending the working precision
+  considerably and/or requiring considerable computing time */
+  EvalUnstable,
 
 /* the result is in absolute value smaller than the smallest non-zero
-   value the math engine can produce */
-#define FLOAT_UNDERFLOW            3
+  value the math engine can produce */
+  Underflow,
 
 /* the result is in absolute value bigger than the biggest number
-   the math engine can produce */
-#define FLOAT_OVERFLOW             4
+  the math engine can produce */
+  Overflow,
 
 /* operation requests a division by zero, or a function was evaluated
-   at a pole */
-#define FLOAT_ZERODIVIDE           5
+  at a pole */
+  ZeroDivide,
 
 /* One or more parameters to a function lie outside of the function's
-   domain */
-#define FLOAT_OUTOFDOMAIN          6
+  domain */
+  OutOfDomain,
 
-/* This error indicates a failed conversion from an ASCII string */
-#define FLOAT_BADLITERAL           7
+/* a number exceeds the logic number range, so logic operations cannot be
+  applied */
+  OutOfLogicRange,
 
-/* A parameter exceeds the bounds of the engine, or is completely
-   meaningless, like the request to evaluate something to 0 decimal
-   places. This error indicates a bug, because the calling program
-   should never submit such a parameter */
-#define FLOAT_INVALIDPARAM         10
+/* a number or a result exceeds the integer range */
+  OutOfIntegerRange,
 
-/*---------------   low level ASCII conversion errors   ------------------*/
-#define IO_NO_ERROR                0
+/* This error indicates a failed conversion from an ASCII string.
+   Functions setting this error report a more detailed IO... error code,
+   too */
+  BadLiteral,
 
-/* For correct conversion of a digit sequence, the IO routines need information
-   about the radix to use. This error is returned if none was specified.
-   This error indicates a bug, because a calling routine should always
-   supply this information */
-#define IO_ERROR_NO_BASE           20
+/* A request to calculate something to more places than is (currently)
+   acceptable */
+  InvalidPrecision,
 
-/* This error occurs if you request a two's complement conversion, and either
-   additionally specify a sign, or gave a non-zero fraction */
-#define IO_ERROR_SIGN_CONFLICT     21
-
-/* You must specify at least one digit of the significant */
-#define IO_ERROR_NO_DIGIT          22
-
-/* unknown characters in exponent, e.g. a two's complement tag */
-#define IO_ERROR_EXP               23
-
-/* the exponent exceeds the possible range */
-#define IO_ERROR_EXP_RANGE         24
-
-/*---------------  high level ASCII conversion errors   ------------*/
-
-/* internal buffer overflow. This indicates a bug, because the high
-   level conversion routines should set up a proper limit for the
-   low level routines */
-#define IO_BUFFER_OVERFLOW         30
-
-//=============================   hmath   ============================*/
-
-/* returned when an integer result cannot be represented without
-   loss of digits */
-#define HMATH_INTEGER_OVERFLOW     40
-
-/* returned when a non-integer is passed as an integer-only parameter */
-#define HMATH_INTEGER_REQUIRED     41
+/* A parameter violates the limitations of the engine, or is completely
+  meaningless, like the evaluation of a quotient and a remainder in the same variable.
+  This error indicates a bug, because the calling program should never submit
+  such a parameter */
+  InvalidParam,
 
 /* returned when an operation request is mathematically valid, but
-   would require too much time */
-#define HMATH_TOO_EXPENSIVE        42
+  would require too much time */
+  TooExpensive,
 
-//=============================   symbols   ==========================*/
+/* For correct conversion of a digit sequence, the IO routines need information
+  about the radix to use. This error is returned if none was specified.
+  This error indicates a bug, because a calling routine should always
+  supply this information */
+  IONoBase,
+
+/* This error occurs if you request a two's complement conversion, and either
+  additionally specify a sign, or gave a non-zero fraction */
+  IOSignConflict,
+
+/* You must specify at least one digit of the significant */
+  IONoSignificand,
+
+/* unknown characters in exponent, e.g. a two's complement tag */
+  IOBadExp,
+
+/* the exponent exceeds the allowed range */
+  IOExpOverflow,
+
+/* internal buffer overflow in a radix conversion. This indicates a bug
+  because range checking should be done in advance */
+  IOBufferOverflow,
 
 /* a function was called with the wrong count of parameters
-   e.g. sin(12;13) (sin takes only 1 parameter) */
-#define SYMBOLS_INVALID_PARAMCOUNT 60
+  e.g. sin(12;13) (sin takes only 1 parameter) */
+  InvalidParamCount,
 
 /* parameter type mismatch */
-#define SYMBOLS_TYPE_MISMATCH      61
+  TypeMismatch,
 
-/* a symbol could not be cloned, most probably because it
+/* cannot overwrite an existing key in a table */
+  KeyExists,
+
+/* could not retrieve a symbol by the submitted key */
+  SymbolNotFound,
+
+/* no matching close token for an open token */
+  CloseSymbolMissing,
+
+/* unable to clone a symbol, most probably because it
    was of a special type, like a close parenthesis */
-#define SYMBOLS_CLONE_ERROR        62
+  SymbolCloneError,
 
-//=============================   scanner   ==========================*/
+  SyntaxError,
+  NotImplemented,
+} Error;
 
-#define SCANNER_NO_INPUT           80
+#ifdef __cplusplus
+}
+#endif
 
-#define SCANNER_SYNTAX_ERROR       81
-
-//================================   table   ========================*/
-
-/* could not retrieve a symbol from the submitted key */
-#define TABLE_SYMBOL_NOT_FOUND     100
-
-/* cannot overwrite an existing key */
-#define TABLE_KEY_EXISTS    101
-
-/* missed a closing token for an opening token */
-#define TABLE_MISSING_CLOSE        102
+#endif /* _ERRORS_H */

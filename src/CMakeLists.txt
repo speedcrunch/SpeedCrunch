@@ -116,6 +116,7 @@ set(testevaluator_SOURCES
 base/evaluator.cpp
 base/functions.cpp
 base/settings.cpp
+base/variant.cpp
 bison/exprparser.c
 math/floatcommon.c
 math/floatconst.c
@@ -143,6 +144,7 @@ add_test(testevaluator ${EXECUTABLE_OUTPUT_PATH}/testevaluator)
 
 # regression test for floatnum
 set(testfloatnum_SOURCES
+main/errors.h
 math/floatcommon.c
 math/floatconst.c
 math/floatconvert.c

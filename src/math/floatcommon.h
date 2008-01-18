@@ -1,6 +1,6 @@
 /* floatcommon.h: header file for convenience functions, based on floatnum. */
 /*
-    Copyright (C) 2007 Wolf Lammen.
+    Copyright (C) 2007, 2008 Wolf Lammen.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -36,19 +36,19 @@
 extern "C" {
 #endif
 
-/* helper, checks parameters. Sets float_error to FLOAT_NANOPERAND
-   or FLOAT_INVALIDPARAM and sets <x> to NaN, if the parameters do
+/* helper, checks parameters. Sets float_error to NaNOperand
+   or InvalidPrecision and sets <x> to NaN, if the parameters do
    not meet the requirements of routines for higher mathematical
    functions, and returns 0 in this case */
 char chckmathparam(floatnum x, int digits);
 
 /* helper, determines, how many decimal digits the exponent of <x> has.
    If the exponent is 0, -1 is returned */
-int logexp(floatnum x);
+int logexp(cfloatnum x);
 
 /* helper, returns the <digits> first decimal digits and the sign of a
    significand, encoded in an integer. */
-int leadingdigits(floatnum x, int digits);
+int leadingdigits(cfloatnum x, int digits);
 
 /* convenience wrapper for float_setscientific, setting the last
    parameter to NULLTERMINATED */
@@ -56,17 +56,17 @@ void float_setasciiz(floatnum x, const char* asciiz);
 
 /* convenience wrapper for float_add, adds a signed integer to <summand1>
    and places the result in <sum> */
-char float_addi(floatnum sum, floatnum summand1,
+char float_addi(floatnum sum, cfloatnum summand1,
                int summand2, int digits);
 
 /* convenience wrapper for float_mul, multiplies a signed integer with
    <factor1> and places the result in <product> */
-char float_muli(floatnum product, floatnum factor1,
+char float_muli(floatnum product, cfloatnum factor1,
                int factor2, int digits);
 
 /* convenience wrapper for float_div, divides <dividend> by a signed integer
    and places the result in <quotient> */
-char float_divi(floatnum quotient, floatnum dividend,
+char float_divi(floatnum quotient, cfloatnum dividend,
                int divisor, int digits);
 
 /* convenience wrapper for float_cmp: compares the absolute value of
@@ -82,11 +82,11 @@ char float_reciprocal(floatnum x, int digits);
 int float_relcmp(floatnum x, floatnum y, int digits);
 
 /* returns whether x is an integer */
-char float_isinteger(floatnum x);
+char float_isinteger(cfloatnum x);
 
 /* returns the integer part of x as integer. If x exceeds the
    integer range, 0 is returned */
-int float_asinteger(floatnum x);
+int float_asinteger(cfloatnum x);
 
 /* rounds x in TONEAREST mode. If x overflows, the rounding is reverted.
    Does not report errors */

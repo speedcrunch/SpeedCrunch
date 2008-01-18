@@ -243,7 +243,7 @@ public:
    * Returns a NaN (Not a Number) with error set to
    * passed parameter.
    */
-  static HNumber nan(int error = 0);
+  static HNumber nan(Error error = Success);
 
   /*!
    * Returns the number as an int.
@@ -255,7 +255,7 @@ public:
   /*!
    * Returns the error code kept with a NaN
    */
-  int error() const;
+  Error error() const;
 
 private:
   HNumberPrivate* d;

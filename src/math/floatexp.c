@@ -1,6 +1,6 @@
 /* floatexp.c: exponential function and friends, based on floatnum. */
 /*
-    Copyright (C) 2007 Wolf Lammen.
+    Copyright (C) 2007, 2008 Wolf Lammen.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -195,7 +195,7 @@ _exp(
   }
   expx = float_getexponent(x);
   if (expx >= (int)(BITS_IN_EXP >> 1))
-    /* clear overflow or underflow */
+    /* obvious overflow or underflow */
     return 0;
 
   float_create(&exp);
@@ -404,11 +404,11 @@ _power10(
   if (float_isinteger(x))
   {
     exp = float_asinteger(x);
+    if (exp == 0 && !float_iszero(x))
+      return 0;
     float_copy(x, &c1, EXACT);
-    if (float_iszero(x))
-      return 1;
     float_setexponent(x, exp);
-    return exp != 0 && !float_isnan(x);
+    return !float_isnan(x);
   }
   return float_mul(x, x, &cLn10, digits+2) && _exp(x, digits);
 }

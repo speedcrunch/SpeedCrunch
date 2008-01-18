@@ -1,6 +1,6 @@
 /* floatlogic.h: logic functions, based on floatnum. */
 /*
-    Copyright (C) 2007 Wolf Lammen.
+    Copyright (C) 2007, 2008 Wolf Lammen.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -39,8 +39,8 @@
 extern "C" {
 #endif
 
-char _canconvert(floatnum x);
-char _floatnum2logic(t_longint* longint, floatnum x);
+char _canconvert(cfloatnum x);
+char _floatnum2logic(t_longint* longint, cfloatnum x);
 void _logic2floatnum(floatnum f, t_longint* longint);
 void _not(t_longint* longint);
 void _and(t_longint* x1, t_longint* x2);
