@@ -83,6 +83,7 @@ class Settings
     bool         showFunctions;
     bool         showHistory;
     bool         showKeypad;
+    bool         showMenuBar;
     bool         showVariables;
     bool         stayAlwaysOnTop;
     QStringList  variables;

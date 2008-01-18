@@ -116,7 +116,8 @@ class CrunchActions
     QAction * viewScientific;
 
     QShortcut * scrollDown;
-    QShortcut * scrollUp  ;
+    QShortcut * scrollUp;
+    QShortcut * toggleMenuVisibility;
 };
 
 
@@ -474,6 +475,12 @@ void Crunch::applySettings()
   if ( settings->decimalDigits == 50 ) d->actions->digits50->setChecked( true );
 
   showKeypad( settings->showKeypad );
+  menuBar()->setVisible( settings->showMenuBar );
+  if ( ! settings->showMenuBar )
+  {
+    menuBar()->releaseKeyboard();
+    menuBar()->setEnabled( true );
+  }
 
   d->actions->showConstants->setChecked( settings->showConstants );
   d->actions->showFunctions->setChecked( settings->showFunctions );
@@ -853,6 +860,18 @@ void Crunch::scrollUp()
   QScrollBar * sb = d->result->verticalScrollBar();
   int value = sb->value() - 40;
   sb->setValue( value );
+}
+
+
+void Crunch::toggleMenuVisibility()
+{
+  menuBar()->setVisible( ! menuBar()->isVisible() );
+  Settings::self()->showMenuBar = menuBar()->isVisible();
+  if ( ! menuBar()->isVisible() )
+  {
+    menuBar()->releaseKeyboard();
+    menuBar()->setEnabled( true );
+  }
 }
 
 
@@ -1361,8 +1380,9 @@ void Crunch::createUI()
   d->actions->viewHexadec->setShortcut     ( Qt::Key_F8                   );
   d->actions->viewOctal->setShortcut       ( Qt::Key_F6                   );
 
-  d->actions->scrollDown = new QShortcut( Qt::Key_PageDown, this );
-  d->actions->scrollUp   = new QShortcut( Qt::Key_PageUp,   this );
+  d->actions->scrollDown           = new QShortcut( Qt::Key_PageDown,     this );
+  d->actions->scrollUp             = new QShortcut( Qt::Key_PageUp,       this );
+  d->actions->toggleMenuVisibility = new QShortcut( Qt::CTRL + Qt::Key_M, this );
 
   QActionGroup * formatGroup = new QActionGroup( this );
   formatGroup->addAction( d->actions->viewBinary );
@@ -1408,46 +1428,47 @@ void Crunch::createUI()
   d->actions->viewScientific->setCheckable( true );
 
   // signals and slots
-  connect( d->actions->clearHistory,       SIGNAL(activated()),     this,      SLOT(clearHistory())        );
-  connect( d->actions->clearExpression,    SIGNAL(activated()),     this,      SLOT(clearExpression())     );
-  connect( d->actions->configure,          SIGNAL(activated()),     this,      SLOT(configure())           );
-  connect( d->actions->degree,             SIGNAL(activated()),     this,      SLOT(degree())              );
-  connect( d->actions->deleteAllVariables, SIGNAL(activated()),     this,      SLOT(deleteAllVariables())  );
-  connect( d->actions->deleteVariable,     SIGNAL(activated()),     this,      SLOT(deleteVariable())      );
-  connect( d->actions->digits15,           SIGNAL(activated()),     this,      SLOT(digits15())            );
-  connect( d->actions->digits2,            SIGNAL(activated()),     this,      SLOT(digits2())             );
-  connect( d->actions->digits3,            SIGNAL(activated()),     this,      SLOT(digits3())             );
-  connect( d->actions->digits50,           SIGNAL(activated()),     this,      SLOT(digits50())            );
-  connect( d->actions->digits8,            SIGNAL(activated()),     this,      SLOT(digits8())             );
-  connect( d->actions->digitsAuto,         SIGNAL(activated()),     this,      SLOT(digitsAuto())          );
-  connect( d->actions->editCopyResult,     SIGNAL(activated()),     this,      SLOT(copyResult())          );
-  connect( d->actions->editCopy,           SIGNAL(activated()),     d->editor, SLOT(copy())                );
-  connect( d->actions->editPaste,          SIGNAL(activated()),     d->editor, SLOT(paste())               );
-  connect( d->actions->selectExpression,   SIGNAL(activated()),     this,      SLOT(selectExpression())    );
-  connect( d->actions->helpAboutQt,        SIGNAL(activated()),     this,      SLOT(aboutQt())             );
-  connect( d->actions->helpAbout,          SIGNAL(activated()),     this,      SLOT(about())               );
-  connect( d->actions->helpGotoWebsite,    SIGNAL(activated()),     this,      SLOT(gotoWebsite())         );
-  connect( d->actions->helpTipOfTheDay,    SIGNAL(activated()),     this,      SLOT(showTip())             );
-  connect( d->actions->insertFunction,     SIGNAL(activated()),     this,      SLOT(insertFunction())      );
-  connect( d->actions->insertVariable,     SIGNAL(activated()),     this,      SLOT(insertVariable())      );
-  connect( d->actions->radian,             SIGNAL(activated()),     this,      SLOT(radian())              );
-  connect( d->actions->scrollDown,         SIGNAL(activated()),     this,      SLOT(scrollDown())          );
-  connect( d->actions->scrollUp,           SIGNAL(activated()),     this,      SLOT(scrollUp())            );
-  connect( d->actions->sessionLoad,        SIGNAL(activated()),     this,      SLOT(loadSession())         );
-  connect( d->actions->sessionQuit,        SIGNAL(activated()),     this,      SLOT(close())               );
-  connect( d->actions->sessionSave,        SIGNAL(activated()),     this,      SLOT(saveSession())         );
-  connect( d->actions->showConstants,      SIGNAL(toggled( bool )), this,      SLOT(showConstants( bool )) );
-  connect( d->actions->showFunctions,      SIGNAL(toggled( bool )), this,      SLOT(showFunctions( bool )) );
-  connect( d->actions->showHistory,        SIGNAL(toggled( bool )), this,      SLOT(showHistory( bool ))   );
-  connect( d->actions->showKeypad,         SIGNAL(toggled( bool )), this,      SLOT(showKeypad( bool ))    );
-  connect( d->actions->showVariables,      SIGNAL(toggled( bool )), this,      SLOT(showVariables( bool )) );
-  connect( d->actions->viewBinary,         SIGNAL(activated()),     this,      SLOT(viewBinary())          );
-  connect( d->actions->viewEngineering,    SIGNAL(activated()),     this,      SLOT(viewEngineering())     );
-  connect( d->actions->viewFixed,          SIGNAL(activated()),     this,      SLOT(viewFixed())           );
-  connect( d->actions->viewGeneral,        SIGNAL(activated()),     this,      SLOT(viewGeneral())         );
-  connect( d->actions->viewHexadec,        SIGNAL(activated()),     this,      SLOT(viewHexadec())         );
-  connect( d->actions->viewOctal,          SIGNAL(activated()),     this,      SLOT(viewOctal())           );
-  connect( d->actions->viewScientific,     SIGNAL(activated()),     this,      SLOT(viewScientific())      );
+  connect( d->actions->clearHistory,         SIGNAL(activated()),     this,      SLOT(clearHistory())         );
+  connect( d->actions->clearExpression,      SIGNAL(activated()),     this,      SLOT(clearExpression())      );
+  connect( d->actions->configure,            SIGNAL(activated()),     this,      SLOT(configure())            );
+  connect( d->actions->degree,               SIGNAL(activated()),     this,      SLOT(degree())               );
+  connect( d->actions->deleteAllVariables,   SIGNAL(activated()),     this,      SLOT(deleteAllVariables())   );
+  connect( d->actions->deleteVariable,       SIGNAL(activated()),     this,      SLOT(deleteVariable())       );
+  connect( d->actions->digits15,             SIGNAL(activated()),     this,      SLOT(digits15())             );
+  connect( d->actions->digits2,              SIGNAL(activated()),     this,      SLOT(digits2())              );
+  connect( d->actions->digits3,              SIGNAL(activated()),     this,      SLOT(digits3())              );
+  connect( d->actions->digits50,             SIGNAL(activated()),     this,      SLOT(digits50())             );
+  connect( d->actions->digits8,              SIGNAL(activated()),     this,      SLOT(digits8())              );
+  connect( d->actions->digitsAuto,           SIGNAL(activated()),     this,      SLOT(digitsAuto())           );
+  connect( d->actions->editCopyResult,       SIGNAL(activated()),     this,      SLOT(copyResult())           );
+  connect( d->actions->editCopy,             SIGNAL(activated()),     d->editor, SLOT(copy())                 );
+  connect( d->actions->editPaste,            SIGNAL(activated()),     d->editor, SLOT(paste())                );
+  connect( d->actions->selectExpression,     SIGNAL(activated()),     this,      SLOT(selectExpression())     );
+  connect( d->actions->helpAboutQt,          SIGNAL(activated()),     this,      SLOT(aboutQt())              );
+  connect( d->actions->helpAbout,            SIGNAL(activated()),     this,      SLOT(about())                );
+  connect( d->actions->helpGotoWebsite,      SIGNAL(activated()),     this,      SLOT(gotoWebsite())          );
+  connect( d->actions->helpTipOfTheDay,      SIGNAL(activated()),     this,      SLOT(showTip())              );
+  connect( d->actions->insertFunction,       SIGNAL(activated()),     this,      SLOT(insertFunction())       );
+  connect( d->actions->insertVariable,       SIGNAL(activated()),     this,      SLOT(insertVariable())       );
+  connect( d->actions->radian,               SIGNAL(activated()),     this,      SLOT(radian())               );
+  connect( d->actions->scrollDown,           SIGNAL(activated()),     this,      SLOT(scrollDown())           );
+  connect( d->actions->scrollUp,             SIGNAL(activated()),     this,      SLOT(scrollUp())             );
+  connect( d->actions->sessionLoad,          SIGNAL(activated()),     this,      SLOT(loadSession())          );
+  connect( d->actions->sessionQuit,          SIGNAL(activated()),     this,      SLOT(close())                );
+  connect( d->actions->sessionSave,          SIGNAL(activated()),     this,      SLOT(saveSession())          );
+  connect( d->actions->showConstants,        SIGNAL(toggled( bool )), this,      SLOT(showConstants( bool ))  );
+  connect( d->actions->showFunctions,        SIGNAL(toggled( bool )), this,      SLOT(showFunctions( bool ))  );
+  connect( d->actions->showHistory,          SIGNAL(toggled( bool )), this,      SLOT(showHistory( bool ))    );
+  connect( d->actions->showKeypad,           SIGNAL(toggled( bool )), this,      SLOT(showKeypad( bool ))     );
+  connect( d->actions->showVariables,        SIGNAL(toggled( bool )), this,      SLOT(showVariables( bool ))  );
+  connect( d->actions->toggleMenuVisibility, SIGNAL(activated()),     this,      SLOT(toggleMenuVisibility()) );
+  connect( d->actions->viewBinary,           SIGNAL(activated()),     this,      SLOT(viewBinary())           );
+  connect( d->actions->viewEngineering,      SIGNAL(activated()),     this,      SLOT(viewEngineering())      );
+  connect( d->actions->viewFixed,            SIGNAL(activated()),     this,      SLOT(viewFixed())            );
+  connect( d->actions->viewGeneral,          SIGNAL(activated()),     this,      SLOT(viewGeneral())          );
+  connect( d->actions->viewHexadec,          SIGNAL(activated()),     this,      SLOT(viewHexadec())          );
+  connect( d->actions->viewOctal,            SIGNAL(activated()),     this,      SLOT(viewOctal())            );
+  connect( d->actions->viewScientific,       SIGNAL(activated()),     this,      SLOT(viewScientific())       );
 
   // synchronize dock actions
   connect( d->constantsDock->toggleViewAction(), SIGNAL(toggled( bool )), d->actions->showConstants, SLOT(setChecked( bool )) );

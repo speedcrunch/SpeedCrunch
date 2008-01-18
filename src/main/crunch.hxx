@@ -37,8 +37,8 @@ class Crunch : public QMainWindow
 
   public:
     Crunch();
-    bool event( QEvent * );
     ~Crunch();
+    bool event( QEvent * );
 
   signals:
     void adaptToLanguageChange();
@@ -80,6 +80,7 @@ class Crunch : public QMainWindow
     void showVariables( bool );
     void scrollDown();
     void scrollUp();
+    void toggleMenuVisibility();
     void viewBinary();
     void viewEngineering();
     void viewFixed();
