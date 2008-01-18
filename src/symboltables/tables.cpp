@@ -181,20 +181,20 @@ bool Tables::keysContainChar(QChar c)
   return false;
 }
 
-XVariant Tables::escape(const ParamList& params)
+Variant Tables::escape(const ParamList& params)
 {
   Settings::self()->escape = (const QString&)params.at(0);
   return 0;
 }
 
-XVariant Tables::define(const ParamList& params)
+Variant Tables::define(const ParamList& params)
 {
   if (globalTable().contains((const QString&)params.at(1)))
     return KeyExists;
   return overload(params);
 }
 
-XVariant Tables::overload(const ParamList& params)
+Variant Tables::overload(const ParamList& params)
 {
   int prec;
   PSymbol symbol = builtinLookup(params.at(0)).pt.value();
@@ -233,7 +233,7 @@ XVariant Tables::overload(const ParamList& params)
   return ok? Success : SymbolCloneError;
 }
 
-XVariant Tables::undefine(const ParamList& params)
+Variant Tables::undefine(const ParamList& params)
 {
   int firstindex =  -1;
   if (params.size() == 2)
@@ -317,7 +317,7 @@ bool Table::addTagSymbol(const QString& key, char base, bool complement)
   return addSymbol(key, new TagSymbol(this, base, complement));
 }
 
-bool Table::addUnOpSymbol(const QString key, XVariantType t, Vfct f,
+bool Table::addUnOpSymbol(const QString key, VariantType t, Vfct f,
                           char precedence)
 {
   TypeList tl;
@@ -325,7 +325,7 @@ bool Table::addUnOpSymbol(const QString key, XVariantType t, Vfct f,
   return addSymbol(key, new OperatorSymbol(this, tl, f, precedence));
 }
 
-bool Table::addBinOpSymbol(const QString key, XVariantType t1, XVariantType t2,
+bool Table::addBinOpSymbol(const QString key, VariantType t1, VariantType t2,
                            Vfct f, char precedence)
 {
   TypeList tl;
@@ -334,7 +334,7 @@ bool Table::addBinOpSymbol(const QString key, XVariantType t1, XVariantType t2,
   return addSymbol(key, new OperatorSymbol(this, tl, f, precedence));
 }
 
-bool Table::addConstSymbol(const QString key, const XVariant& value)
+bool Table::addConstSymbol(const QString key, const Variant& value)
 {
   return addSymbol(key, new ConstSymbol(this, value));
 }

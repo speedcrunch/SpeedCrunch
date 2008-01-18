@@ -89,7 +89,7 @@
 //   }
 // }
 
-void TypeList::appendType(XVariantType t, int cnt)
+void TypeList::appendType(VariantType t, int cnt)
 {
   while (--cnt >= 0)
     append(t);
@@ -98,19 +98,19 @@ void TypeList::appendType(XVariantType t, int cnt)
 bool ParamList::allReal() const
 {
   for (int i = 0; i < size(); ++i)
-    if (!at(i).isCompatible(vReal))
+    if (!at(i).type() == vReal)
       return false;
   return true;
 }
 
-bool ParamList::isType(int index, XVariantType t) const
+bool ParamList::isType(int index, VariantType t) const
 {
-  return index <= size() && at(index).isCompatible(t);
+  return index <= size() && at(index).type() == t;
 }
 
 bool ParamList::isNum(int index) const
 {
-  return index <= size() && at(index).isCompatible(vReal);
+  return index <= size() && at(index).type() == vReal;
 }
 
 TypeCheck ParamList::match(const TypeList& types) const
@@ -119,7 +119,7 @@ TypeCheck ParamList::match(const TypeList& types) const
   result.error = Success;
   int limit = qMin(types.size(), size());
   for (result.index = -1; ++result.index < limit && result.error == Success;)
-    if (!at(result.index).isCompatible(types.at(result.index)))
+    if (!at(result.index).type() == types.at(result.index))
       result.error = TypeMismatch;
   return result;
 }
@@ -128,7 +128,7 @@ TypeList::TypeList(const char* s)
 {
   for (const char* p = s; *p != 0; ++p)
   {
-    XVariantType t;
+    VariantType t;
     switch(*p)
     {
       case 't': t = vText; break;
@@ -308,7 +308,7 @@ bool FunctionSymbol::match(const ParamList& params) const
   }
 }
 
-XVariant FunctionSymbol::eval(const ParamList& params) const
+Variant FunctionSymbol::eval(const ParamList& params) const
 {
   if (!checkCount(params))
     return InvalidParamCount;
@@ -340,7 +340,7 @@ SymType OperatorSymbol::type() const
   return operatorSym;
 }
 
-ConstSymbol::ConstSymbol(void* aOwner, const XVariant& val)
+ConstSymbol::ConstSymbol(void* aOwner, const Variant& val)
   : VarSymbolIntf(aOwner), m_value(val)
 {
 }
@@ -355,7 +355,7 @@ PSymbol ConstSymbol::clone(void* aOwner) const
   return new ConstSymbol(aOwner, m_value);
 }
 
-XVariant AnsSymbol::ansVar;
+Variant AnsSymbol::ansVar;
 
 AnsSymbol::AnsSymbol(void* aOwner)
   : VarSymbolIntf(aOwner)

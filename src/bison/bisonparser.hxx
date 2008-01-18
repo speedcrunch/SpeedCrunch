@@ -63,7 +63,7 @@ class SglExprLex
         const Symbol* m_symbol;
     };
     bool autoFix(const QString& newexpr);
-    XVariant eval();
+    Variant eval();
     bool run(const QStringList& script);
     const QList<Token>& scan();
     void setExpression(const QString& newexpr);
@@ -98,7 +98,7 @@ class SglExprLex
     QStack<QString> closePar;
     QList<Token> tokens;
     QList<QString>strlist;
-    QList<XVariant>numlist;
+    QList<Variant>numlist;
     QList<ParamList>paramlists;
 
     enum
@@ -145,10 +145,10 @@ class SglExprLex
     void reset();
 
     HNumber cvtNumber(const DigitSeq& descriptor, String frac = -1);
-    VariantIdx allocNumber(const XVariant& n);
+    VariantIdx allocNumber(const Variant& n);
     String allocString(const QString&);
-    NumValue variant2numValue(const XVariant&);
-    XVariant numValue2variant(NumValue);
+    NumValue variant2numValue(const Variant&);
+    Variant numValue2variant(NumValue);
     static int getToken(YYSTYPE* val, int* pos, int* lg);
     int mGetToken(YYSTYPE* val, int* pos, int* lg);
     static Params addParam(Params list, NumValue val);

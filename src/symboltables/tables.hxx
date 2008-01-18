@@ -38,11 +38,11 @@ class Table: private QMap<QString, PSymbol>
     bool addOpenSymbol(const QString& key, SymType aType, const QString& close);
     bool addFunctionSymbol(const QString& key, const TypeList&, Vfct,
                            int minParamCount, int maxParamCount);
-    bool addUnOpSymbol(const QString key, XVariantType t, Vfct,
+    bool addUnOpSymbol(const QString key, VariantType t, Vfct,
                        char precedence);
-    bool addBinOpSymbol(const QString key, XVariantType t1, XVariantType t2,
+    bool addBinOpSymbol(const QString key, VariantType t1, VariantType t2,
                         Vfct f, char precedence);
-    bool addConstSymbol(const QString key, const XVariant& value);
+    bool addConstSymbol(const QString key, const Variant& value);
     VarSymbol* createVarSymbol(const QString key);
     bool addSymbol(const QString& key, PSymbol symbol);
     bool cloneSymbol(const QString& key, PSymbol symbol, bool overload = false);
@@ -69,10 +69,10 @@ class Tables
     static void addCloseSymbol(const QString& key, PSymbol symbol);
     static VarSymbol* createVarSymbol(const QString& key);
     static void removeCloseSymbol(PSymbol symbol);
-    static XVariant escape(const ParamList& params);
-    static XVariant define(const ParamList& params);
-    static XVariant undefine(const ParamList& params);
-    static XVariant overload(const ParamList& params);
+    static Variant escape(const ParamList& params);
+    static Variant define(const ParamList& params);
+    static Variant undefine(const ParamList& params);
+    static Variant overload(const ParamList& params);
     static bool keysContainChar(QChar c);
   private:
 

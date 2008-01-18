@@ -63,7 +63,7 @@ typedef enum
 /*typedef enum
 {
   TEmpty,
-  TError,
+  Error,
   TInteger,
   TNumeric,
   TText,
@@ -92,30 +92,30 @@ class Variant: protected HNumber
     QString text;
 };
 */
-class TypeList: public QList<XVariantType>
+class TypeList: public QList<VariantType>
 {
   public:
     TypeList(){};
     TypeList(const char* desc);
-    void appendType(XVariantType t, int count = 1);
+    void appendType(VariantType t, int count = 1);
 };
 
 typedef struct
 {
   int index;
-  TError error;
+  Error error;
 } TypeCheck;
 
-class ParamList: public QList<XVariant>
+class ParamList: public QList<Variant>
 {
   public:
     bool allReal() const;
-    bool isType(int index, XVariantType) const;
+    bool isType(int index, VariantType) const;
     bool isNum(int index) const;
     TypeCheck match(const TypeList&) const;
 };
 
-typedef XVariant (*Vfct) (const ParamList& params);
+typedef Variant (*Vfct) (const ParamList& params);
 
 class Symbol;
 class TagSymbol;
@@ -200,7 +200,7 @@ class FunctionSymbol: public Symbol
     FunctionSymbol(void* aOwner, const TypeList&, Vfct,
                    int minCount = 0, int maxCount = -1);
     bool match(const ParamList& params) const;
-    XVariant eval(const ParamList& params) const;
+    Variant eval(const ParamList& params) const;
     PSymbol clone(void* aOwner) const;
   protected:
     int minParamCount;
@@ -228,18 +228,18 @@ class VarSymbolIntf: public Symbol
 {
   public:
     VarSymbolIntf(void* aOwner): Symbol(aOwner){};
-    virtual const XVariant& value() const = 0;
+    virtual const Variant& value() const = 0;
 };
 
 class ConstSymbol: public VarSymbolIntf
 {
   public:
-    ConstSymbol(void* aOwner, const XVariant& val);
+    ConstSymbol(void* aOwner, const Variant& val);
     SymType type() const;
-    const XVariant& value() const { return m_value; };
+    const Variant& value() const { return m_value; };
     PSymbol clone(void* aOwner) const;
   protected:
-    const XVariant& m_value;
+    const Variant& m_value;
 };
 
 class AnsSymbol: public VarSymbolIntf
@@ -248,10 +248,10 @@ class AnsSymbol: public VarSymbolIntf
     AnsSymbol(void* aOwner);
     SymType type() const;
     PSymbol clone(void* aOwner) const;
-    void setAns(const XVariant& val) { ansVar = val; };
-    const XVariant& value() const { return ansVar; };
+    void setAns(const Variant& val) { ansVar = val; };
+    const Variant& value() const { return ansVar; };
   protected:
-    static XVariant ansVar;
+    static Variant ansVar;
 };
 
 class VarSymbol: public VarSymbolIntf
@@ -261,13 +261,13 @@ class VarSymbol: public VarSymbolIntf
     ~VarSymbol();
     SymType type() const;
     PSymbol clone(void* aOwner) const;
-    const XVariant& value() const { return m_var->v; };
-    XVariant* leftVal() const { return &m_var->v; };
+    const Variant& value() const { return m_var->v; };
+    Variant* leftVal() const { return &m_var->v; };
   private:
     typedef struct
     {
       unsigned refcount;
-      XVariant v;
+      Variant v;
     } VariableData;
     typedef QLinkedList<VariableData>::iterator iterator;
 

@@ -109,13 +109,13 @@ bool SglExprLex::autoFix(const QString& newexpr)
   return true;
 }
 
-XVariant SglExprLex::eval()
+Variant SglExprLex::eval()
 {
   CallBacks cb;
   NumValue pResult;
   int errorpos;
   int errortokenlg;
-  XVariant result;
+  Variant result;
 
   scan();
   cb.str2Val = str2Val;
@@ -144,7 +144,7 @@ bool SglExprLex::run(const QStringList& script)
   while (result && ++i < script.size())
   {
     setExpression(script.at(i));
-    result = eval() == Success;
+    result = Error(eval()) == Success;
   }
   return result;
 }
@@ -665,7 +665,7 @@ String SglExprLex::allocString(const QString& s)
   return strlist.size() - 1;
 }
 
-VariantIdx SglExprLex::allocNumber(const XVariant& n)
+VariantIdx SglExprLex::allocNumber(const Variant& n)
 {
   numlist.append(n);
   return numlist.size() - 1;
@@ -691,7 +691,7 @@ HNumber SglExprLex::cvtNumber(const DigitSeq& descriptor, String frac)
   return bias - HNumber(str.data());
 }
 
-NumValue SglExprLex::variant2numValue(const XVariant& v)
+NumValue SglExprLex::variant2numValue(const Variant& v)
 {
   NumValue result;
   result.percent = 0;
@@ -699,10 +699,10 @@ NumValue SglExprLex::variant2numValue(const XVariant& v)
   return result;
 }
 
-XVariant SglExprLex::numValue2variant(NumValue n)
+Variant SglExprLex::numValue2variant(NumValue n)
 {
-  XVariant result;
-  const XVariant* v = &numlist.at(n.val);
+  Variant result;
+  const Variant* v = &numlist.at(n.val);
 /*  if (n.percent)
     result = *(const HNumber*)v / HNumber(100);
   else*/
@@ -815,7 +815,7 @@ NumValue SglExprLex::str2Val(String s)
 NumValue SglExprLex::mStr2Val(String s)
 {
   NumValue result;
-  XVariant v = strlist.at(s);
+  Variant v = strlist.at(s);
   result.percent = 0;
   result.val = allocNumber(v);
   return result;
