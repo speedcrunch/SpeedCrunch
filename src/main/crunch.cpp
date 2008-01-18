@@ -142,6 +142,7 @@ class CrunchPrivate
     QPushButton * evalButton;
 
     QSystemTrayIcon * trayIcon;
+    QMenu           * trayIconMenu;
     bool              trayNotify;
 
     QMenu * angleMenu;
@@ -320,7 +321,7 @@ Crunch::Crunch() : QMainWindow()
 }
 
 
-bool Crunch::event( QEvent* e )
+bool Crunch::event( QEvent * e )
 {
   if ( e->type() == QEvent::WindowStateChange )
   {
@@ -352,7 +353,7 @@ Crunch::~Crunch()
 
 void Crunch::about()
 {
-  AboutBox* aboutBox = new AboutBox( this );
+  AboutBox * aboutBox = new AboutBox( this );
   aboutBox->exec();
   delete aboutBox;
 }
@@ -364,28 +365,22 @@ void Crunch::aboutQt()
 }
 
 
-void Crunch::addKeypadText( const QString& text )
+void Crunch::addKeypadText( const QString & text )
 {
-  if( text == "<--" ) // Special case: backspace
-    d->editor->doBackspace();
-  else
-  {
-    bool wasAns = d->editor->toPlainText().startsWith( "ans", Qt::CaseInsensitive );
-    d->editor->insertPlainText( text );
-    if( !wasAns && d->editor->toPlainText().startsWith( "ans", Qt::CaseInsensitive ) )
-      d->editor->setCursorPosition( d->editor->text().length() );
-  }
-
+  bool wasAns = d->editor->toPlainText().startsWith( "ans", Qt::CaseInsensitive );
+  d->editor->insertPlainText( text );
+  if ( ! wasAns && d->editor->toPlainText().startsWith( "ans", Qt::CaseInsensitive ) )
+    d->editor->setCursorPosition( d->editor->text().length() );
   d->editor->setFocus();
 }
 
 
 void Crunch::applySettings()
 {
-  Settings* settings = Settings::self();
+  Settings * settings = Settings::self();
   settings->load();
 
-  if( settings->mainWindowSize != QSize( 0, 0 ) )
+  if ( settings->mainWindowSize != QSize(0, 0) )
     resize( settings->mainWindowSize );
 
   d->editor->setAutoCompleteEnabled( settings->autoComplete );
@@ -498,8 +493,14 @@ void Crunch::applySettings()
       d->trayIcon = new QSystemTrayIcon( this );
       d->trayIcon->setToolTip( tr("SpeedCrunch") );
       d->trayIcon->setIcon( QPixmap( ":/crunch.png" ) );
-      connect( d->trayIcon, SIGNAL( activated(QSystemTrayIcon::ActivationReason) ),
-        SLOT( trayIconActivated() ) );
+
+      d->trayIconMenu = new QMenu( this );
+      d->trayIconMenu->addAction( d->actions->editCopyResult );
+      d->trayIconMenu->addSeparator();
+      d->trayIconMenu->addAction( d->actions->sessionQuit    );
+
+      d->trayIcon->setContextMenu( d->trayIconMenu );
+      connect( d->trayIcon, SIGNAL(activated( QSystemTrayIcon::ActivationReason )), SLOT(trayIconActivated( QSystemTrayIcon::ActivationReason )) );
     }
   }
   else
@@ -510,7 +511,7 @@ void Crunch::applySettings()
   }
 
   // treat stay-always-on-top preference
-  if( settings->stayAlwaysOnTop )
+  if ( settings->stayAlwaysOnTop )
     setWindowFlags( windowFlags() | Qt::WindowStaysOnTopHint );
   else
     setWindowFlags( windowFlags() & (~ Qt::WindowStaysOnTopHint) );
@@ -552,28 +553,11 @@ void Crunch::copyResult()
 {
   QClipboard * cb = QApplication::clipboard();
   HNumber num = d->eval->get( "ans" );
-  char * strToCopy;
-
   Settings * set = Settings::self();
-  switch ( set->format )
-  {
-    case 'h':
-      strToCopy = HMath::formatHexadec( num );
-      break;
-    case 'o':
-      strToCopy = HMath::formatOctal( num );
-      break;
-    case 'b':
-      strToCopy = HMath::formatBinary( num );
-      break;
-    default:
-      strToCopy = HMath::formatFixed( num, set->decimalDigits );
-  }
-
+  char * strToCopy = HMath::format( num, set->format, set->decimalDigits );
   QString final( strToCopy );
   if ( Settings::decimalPoint() == ',' )
     final.replace( '.', ',' );
-
   cb->setText( final, QClipboard::Clipboard );
   free( strToCopy );
 }
@@ -1054,17 +1038,17 @@ void Crunch::constantSelected( const QString & c )
 
   QTimer::singleShot( 0, d->editor, SLOT(setFocus()) );
 
-  if ( !isActiveWindow () )
+  if ( ! isActiveWindow () )
     activateWindow();
 }
 
 
-void Crunch::expressionSelected( const QString& e )
+void Crunch::expressionSelected( const QString & e )
 {
   d->editor->setText( e );
   returnPressed();
 
-  if( !isActiveWindow () )
+  if( ! isActiveWindow () )
     activateWindow();
 }
 
@@ -1217,9 +1201,9 @@ void Crunch::returnPressed()
 
 void Crunch::showTrayMessage()
 {
-  const char * msg = "SpeedCrunch is minimized.\nClick on the icon to reactivate it.";
+  const char * msg = "SpeedCrunch is minimized.\nLeft click on the icon to restore it or right click for options menu.";
   if ( d->trayIcon )
-    d->trayIcon->showMessage( QString(), tr(msg), QSystemTrayIcon::NoIcon, 2000 );
+    d->trayIcon->showMessage( QString(), tr(msg), QSystemTrayIcon::NoIcon, 4000 );
 }
 
 
@@ -1247,36 +1231,43 @@ void Crunch::textChanged()
 }
 
 
-void Crunch::trayIconActivated()
+void Crunch::trayIconActivated( QSystemTrayIcon::ActivationReason r )
 {
-  showNormal();
-  activateWindow();
-  d->editor->setFocus();
-  QTimer::singleShot( 0, d->trayIcon, SLOT(hide()) );
+  if ( r == QSystemTrayIcon::Context )
+  {
+    d->trayIconMenu->show();
+  }
+  else
+  {
+    showNormal();
+    activateWindow();
+    d->editor->setFocus();
+    QTimer::singleShot( 0, d->trayIcon, SLOT(hide()) );
+  }
 
   // work around docks does not reappear (under KDE/Linux)
-#ifdef Q_OS_UNIX
-  if ( d->historyDock->isFloating() )
-  {
-    d->historyDock->hide();
-    QTimer::singleShot( 0, d->historyDock, SLOT(show()) );
-  }
-  if ( d->functionsDock->isFloating() )
-  {
-    d->functionsDock->hide();
-    QTimer::singleShot( 0, d->functionsDock, SLOT(show()) );
-  }
-  if ( d->variablesDock->isFloating() )
-  {
-    d->variablesDock->hide();
-    QTimer::singleShot( 0, d->variablesDock, SLOT(show()) );
-  }
-  if ( d->constantsDock->isFloating() )
-  {
-    d->constantsDock->hide();
-    QTimer::singleShot( 0, d->constantsDock, SLOT(show()) );
-  }
-#endif
+//#ifdef Q_OS_UNIX
+//  if ( d->historyDock->isFloating() )
+//  {
+//    d->historyDock->hide();
+//    QTimer::singleShot( 0, d->historyDock, SLOT(show()) );
+//  }
+//  if ( d->functionsDock->isFloating() )
+//  {
+//    d->functionsDock->hide();
+//    QTimer::singleShot( 0, d->functionsDock, SLOT(show()) );
+//  }
+//  if ( d->variablesDock->isFloating() )
+//  {
+//    d->variablesDock->hide();
+//    QTimer::singleShot( 0, d->variablesDock, SLOT(show()) );
+//  }
+//  if ( d->constantsDock->isFloating() )
+//  {
+//    d->constantsDock->hide();
+//    QTimer::singleShot( 0, d->constantsDock, SLOT(show()) );
+//  }
+//#endif
 }
 
 
@@ -1323,7 +1314,7 @@ void Crunch::createUI()
   d->actions->digits8            = new QAction( tr("&8 Decimal Digits"),        this );
   d->actions->digitsAuto         = new QAction( tr("&Automatic Precision"),     this );
   d->actions->editCopy           = new QAction( tr("&Copy"),                    this );
-  d->actions->editCopyResult     = new QAction( tr("Copy &Result"),             this );
+  d->actions->editCopyResult     = new QAction( tr("Copy Last &Result"),        this );
   d->actions->editPaste          = new QAction( tr("&Paste"),                   this );
   d->actions->helpAbout          = new QAction( tr("&About"),                   this );
   d->actions->helpAboutQt        = new QAction( tr("About &Qt"),                this );
@@ -1370,8 +1361,8 @@ void Crunch::createUI()
   d->actions->viewHexadec->setShortcut     ( Qt::Key_F8                   );
   d->actions->viewOctal->setShortcut       ( Qt::Key_F6                   );
 
-  d->actions->scrollDown = new QShortcut( /*Qt::SHIFT +*/ Qt::Key_PageDown, this );
-  d->actions->scrollUp   = new QShortcut( /*Qt::SHIFT +*/ Qt::Key_PageUp,   this );
+  d->actions->scrollDown = new QShortcut( Qt::Key_PageDown, this );
+  d->actions->scrollUp   = new QShortcut( Qt::Key_PageUp,   this );
 
   QActionGroup * formatGroup = new QActionGroup( this );
   formatGroup->addAction( d->actions->viewBinary );

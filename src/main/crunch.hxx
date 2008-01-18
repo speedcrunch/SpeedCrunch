@@ -25,6 +25,7 @@
 
 #include <QCloseEvent>
 #include <QMainWindow>
+#include <QSystemTrayIcon>
 
 
 class CrunchPrivate;
@@ -98,7 +99,7 @@ class Crunch : public QMainWindow
     void returnPressed();
     void showTrayMessage();
     void textChanged();
-    void trayIconActivated();
+    void trayIconActivated( QSystemTrayIcon::ActivationReason );
     void variableSelected( const QString & );
 
   protected:
