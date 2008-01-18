@@ -45,45 +45,53 @@
 class EditorHighlighter : public QSyntaxHighlighter
 {
   public:
-    EditorHighlighter( Editor* e ): QSyntaxHighlighter( e ), editor( e ) {}
+    EditorHighlighter( Editor * e ): QSyntaxHighlighter( e ), editor( e ) {}
 
-    void highlightBlock( const QString& text )
+    void highlightBlock( const QString & text )
     {
-      if( !editor->isSyntaxHighlightEnabled() )
+      if ( ! editor->isSyntaxHighlightEnabled() )
       {
         setFormat( 0, text.length(), editor->palette().text().color() );
         return;
       }
 
-  //    Tokens tokens = Evaluator::scan( text, Settings::self()->decimalPoint ); //refdp
       Tokens tokens = Evaluator::scan( text );
-      for( int i = 0; i < tokens.count(); i++ )
+      for ( int i = 0; i < tokens.count(); i++ )
       {
-        Token& token = tokens[i];
+        Token & token = tokens[i];
         QString text = token.text().toLower();
-        QColor color = Qt::black;
-        switch( token.type() )
+        QColor color;
+        QStringList fnames;
+
+        switch ( token.type() )
         {
+          case Token::stxOperator:
+          case Token::stxUnknown:
+          case Token::stxOpenPar:
+          case Token::stxClosePar:
+            color = QApplication::palette().windowText().color();
+            break;
+
           case Token::stxNumber:
+          case Token::stxSep:
             color = editor->highlightColor( Editor::Number );
-          break;
+            break;
 
           case Token::stxIdentifier:
+            color = editor->highlightColor( Editor::Variable );
+            fnames = FunctionRepository::self()->functionNames();
+            for ( int i = 0; i < fnames.count(); i++ )
             {
-              color = editor->highlightColor( Editor::Variable );
-              QStringList fnames = FunctionRepository::self()->functionNames();
-              for( int i=0; i<fnames.count(); i++ )
-                if( fnames[i].toLower() == text )
-                  color = editor->highlightColor( Editor::FunctionName );
+              if ( fnames[i].toLower() == text )
+                color = editor->highlightColor( Editor::FunctionName );
             }
             break;
 
-          case Token::stxOperator:
+          default:
             break;
-
-          default: break;
         };
-    	  if( token.pos() >= 0 )
+
+        if ( token.pos() >= 0 )
           setFormat( token.pos(), token.text().length(), color );
       }
     }

@@ -187,7 +187,7 @@ Result::Result( QWidget * parent, const char * name ) : QListWidget( parent )
   d->customErrorColor       = QColor( 255,   0,   0 );
 
   setObjectName( name );
-  setBackgroundRole(QPalette::Base);
+  setBackgroundRole( QPalette::Base );
 
   setSelectionMode( NoSelection );
   setMinimumWidth( 150 );
