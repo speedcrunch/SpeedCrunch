@@ -36,13 +36,13 @@
 #include <QList>
 
 typedef enum
+// the order is important, because it controls the retyping.
+// later types know how to convert from earlier ones
 {
-  vEmpty,
-  vError,
-  vBoolean,
-  vInteger,
-  vReal,
-  vText,
+  vBoolean,  // has to be the first
+  vReal,     // real numbers
+  vEmpty,    // has to be the last but one
+  vError     // sentinel value, has to be the last
 } VariantType;
 
 class Variant;
@@ -50,11 +50,15 @@ class Variant;
 class Data
 {
   public:
+    typedef Data*(*Constructor)();
+    typedef Constructor Constructors[int(vError)];
+    static Constructors constructors;
     // virtual constructor
     static Data* create(VariantType);
     virtual ~Data() { };
-    virtual void release() = 0;
-    virtual Data* clone() const = 0;
+    virtual VariantType type() const { return vEmpty; };
+    virtual void release() { delete this; };
+    virtual Data* clone() = 0;
     virtual operator bool() const { return true; };
     virtual Data* retype(VariantType) const { return 0; };
     virtual Data* retype(Data*) const { return 0; };
@@ -63,20 +67,38 @@ class Data
     virtual Variant operator-() const;
     virtual Variant operator~() const;
     virtual Variant operator!() const;
-    virtual Variant operator+(const Variant other) const;
-    virtual Variant operator-(const Variant other) const;
-    virtual Variant operator*(const Variant other) const;
-    virtual Variant operator/(const Variant other) const;
-    virtual Variant operator%(const Variant other) const;
-    virtual Variant operator&(const Variant other) const;
-    virtual Variant operator|(const Variant other) const;
-    virtual Variant operator^(const Variant other) const;
-    virtual Variant operator==(const Variant other) const;
-    virtual Variant operator!=(const Variant other) const;
-    virtual Variant operator>=(const Variant other) const;
-    virtual Variant operator<=(const Variant other) const;
-    virtual Variant operator>(const Variant other) const;
-    virtual Variant operator<(const Variant other) const;
+    virtual Variant operator+(const Variant& other) const;
+    virtual Variant operator-(const Variant& other) const;
+    virtual Variant operator*(const Variant& other) const;
+    virtual Variant operator/(const Variant& other) const;
+    virtual Variant operator%(const Variant& other) const;
+    virtual Variant operator&(const Variant& other) const;
+    virtual Variant operator|(const Variant& other) const;
+    virtual Variant operator^(const Variant& other) const;
+    virtual Variant operator<<(const Variant& other) const;
+    virtual Variant operator>>(const Variant& other) const;
+    virtual Variant operator==(const Variant& other) const;
+    virtual Variant operator!=(const Variant& other) const;
+    virtual Variant operator>=(const Variant& other) const;
+    virtual Variant operator<=(const Variant& other) const;
+    virtual Variant operator>(const Variant& other) const;
+    virtual Variant operator<(const Variant& other) const;
+    virtual Variant swapadd(const Variant& other) const;
+    virtual Variant swapsub(const Variant& other) const;
+    virtual Variant swapmul(const Variant& other) const;
+    virtual Variant swapdiv(const Variant& other) const;
+    virtual Variant swapmod(const Variant& other) const;
+    virtual Variant swapand(const Variant& other) const;
+    virtual Variant swapor(const Variant& other) const;
+    virtual Variant swapxor(const Variant& other) const;
+    virtual Variant swapshl(const Variant& other) const;
+    virtual Variant swapshr(const Variant& other) const;
+    virtual Variant swapeq(const Variant& other) const;
+    virtual Variant swapne(const Variant& other) const;
+    virtual Variant swapge(const Variant& other) const;
+    virtual Variant swaple(const Variant& other) const;
+    virtual Variant swapgt(const Variant& other) const;
+    virtual Variant swapls(const Variant& other) const;
 };
 
 class VariantBase
@@ -94,12 +116,16 @@ class Variant: public VariantBase
     Variant() {};
     Variant(bool val) { *this = val; };
     Variant(Error error) { *this = error; };
+    Variant(Data* d) { *this = d; };
     Variant(const Variant& other) { *this = other; };
     void operator=(Error error);
     void operator=(bool val);
     void operator=(const Variant& other);
+    void operator=(Data* other);
     operator Error() const;
     operator bool() const;
+    operator const Data*() const;
+    Variant as(VariantType);
     bool retype(VariantType);
     Variant operator+() const;
     Variant operator-() const;
@@ -113,12 +139,12 @@ class Variant: public VariantBase
     Variant operator&(const Variant&) const;
     Variant operator|(const Variant&) const;
     Variant operator^(const Variant&) const;
-    Variant operator==(const Variant other) const;
-    Variant operator!=(const Variant other) const;
-    Variant operator>=(const Variant other) const;
-    Variant operator<=(const Variant other) const;
-    Variant operator>(const Variant other) const;
-    Variant operator<(const Variant other) const;
+    Variant operator==(const Variant& other) const;
+    Variant operator!=(const Variant& other) const;
+    Variant operator>=(const Variant& other) const;
+    Variant operator<=(const Variant& other) const;
+    Variant operator>(const Variant& other) const;
+    Variant operator<(const Variant& other) const;
   protected:
     union
     {
@@ -131,7 +157,8 @@ class Variant: public VariantBase
     void clear();
     bool builtinType() const;
   private:
-    bool setType(VariantType newType, Data* newval);
+    Error checkError(const Variant& other, bool checkBool = true) const;
+    bool setType(Data* newval);
     Data* convert(VariantType newtype);
 };
 

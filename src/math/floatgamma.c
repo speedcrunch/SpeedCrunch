@@ -355,19 +355,12 @@ _pochhammer_g(
            && _lngamma_prim(&tmp, &factor2, &inf2, digits)
            && (inf2 -= inf1) <= 0;
   if (inf2 > 0)
-  {
     float_seterror(ZeroDivide);
-    result = 0;
-  }
-  if (result)
-  {
-    if (inf2 < 0)
-      float_setzero(x);
-    else
-      result = float_div(&factor1, &factor1, &factor2, digits+1);
-  }
+  if (result && inf2 < 0)
+    float_setzero(x);
   if (result && inf2 == 0)
-    result = float_sub(x, &tmp, x, digits+1)
+    result = float_div(&factor1, &factor1, &factor2, digits+1)
+             && float_sub(x, &tmp, x, digits+1)
              && _exp(x, digits)
              && float_mul(x, x, &factor1, digits+1);
   float_free(&tmp);

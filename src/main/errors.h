@@ -28,10 +28,10 @@ typedef enum
 {
   Success,
 
-/* a NaN was submitted as a parameter. Only a few functions in
-  the math engine accept such a value. All arithmetic functions
+/* a NaN or an empty Variant was submitted as a parameter. Only a few
+  functions in the math engine accept such a value. All arithmetic functions
   fail on such an operand */
-  NaNOperand,
+  NoOperand,
 
 /* This error is returned if a result is mathematically defined, but
   cannot be computed reliably without extending the working precision
@@ -124,7 +124,14 @@ typedef enum
   SymbolCloneError,
 
   SyntaxError,
+
+/* used with variants, when an operation is not implemented
+  for a particular data type */
   NotImplemented,
+
+/* this value is used internally to indicate the absence of
+  any error information altogether */
+  NotAnError,
 } Error;
 
 #ifdef __cplusplus

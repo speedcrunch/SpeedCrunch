@@ -46,6 +46,7 @@ math/floatnum.c
 math/floatpower.c
 math/floatseries.c
 math/floattrig.c
+math/numdata.cpp
 math/hmath.cpp
 math/number.c
 
@@ -102,6 +103,7 @@ math/floatnum.h
 math/floatpower.h
 math/floatseries.h
 math/floattrig.h
+math/numdata.hxx
 math/hmath.hxx
 math/number.h
 

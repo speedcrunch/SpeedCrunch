@@ -47,7 +47,7 @@ _chckparam1(
 {
   if (float_isnan(x))
   {
-    float_seterror(NaNOperand);
+    float_seterror(NoOperand);
     return 0;
   }
   if ((digits <= 0 || digits > limit) && digits != specialval)

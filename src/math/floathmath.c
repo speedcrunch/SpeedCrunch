@@ -48,7 +48,7 @@ _cvtlogic(
 {
   if (float_isnan(x))
   {
-    float_seterror(NaNOperand);
+    float_seterror(NoOperand);
     return 0;
   }
   if (_floatnum2logic(lx, x))
@@ -417,7 +417,7 @@ float_raisei(
   if (digits <= 0 || digits > maxdigits)
     return _seterror(power, InvalidPrecision);
   if (float_isnan(base))
-    return _seterror(power, NaNOperand);
+    return _seterror(power, NoOperand);
   if (float_iszero(base))
   {
     if (exponent == 0)
@@ -450,7 +450,7 @@ float_raise(
   signed char sgn;
 
   if (float_isnan(exponent) || float_isnan(base))
-    return _seterror(power, NaNOperand);
+    return _seterror(power, NoOperand);
   if (digits <= 0 || digits > MATHPRECISION)
     return _seterror(power, InvalidPrecision);
   if (float_iszero(base))
@@ -563,7 +563,7 @@ float_pochhammer(
   if (!chckmathparam(x, digits))
     return 0;
   return float_isnan(delta)?
-         _seterror(x, NaNOperand)
+         _seterror(x, NoOperand)
          : _pochhammer(x, delta, digits);
 }
 
@@ -647,7 +647,7 @@ float_shr(
   t_longint lx;
 
   if (float_isnan(shift))
-    return _seterror(dest, NaNOperand);
+    return _seterror(dest, NoOperand);
   if (!float_isinteger(shift))
     return _seterror(dest, OutOfDomain);
   if(!_cvtlogic(&lx, x))

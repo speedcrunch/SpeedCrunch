@@ -30,55 +30,49 @@
 
 #include "base/variant.hxx"
 
-Data* Data::create(VariantType)
+Data::Constructors Data::constructors;
+
+Data* Data::create(VariantType t)
 {
-  return 0;
+  return constructors[t]();
 }
 
-Variant Data::operator+() const { return NotImplemented; }
+Variant Data::operator+() const { return this; }
 Variant Data::operator-() const { return NotImplemented; }
 Variant Data::operator~() const { return NotImplemented; }
 Variant Data::operator!() const { return NotImplemented; }
-Variant Data::operator+(const Variant other) const { return NotImplemented; }
-Variant Data::operator-(const Variant other) const { return NotImplemented; }
-Variant Data::operator*(const Variant other) const { return NotImplemented; }
-Variant Data::operator/(const Variant other) const { return NotImplemented; }
-Variant Data::operator%(const Variant other) const { return NotImplemented; }
-Variant Data::operator&(const Variant other) const { return NotImplemented; }
-Variant Data::operator|(const Variant other) const { return NotImplemented; }
-Variant Data::operator^(const Variant other) const { return NotImplemented; }
-Variant Data::operator==(const Variant other) const { return NotImplemented; }
-Variant Data::operator!=(const Variant other) const { return NotImplemented; }
-Variant Data::operator>=(const Variant other) const { return NotImplemented; }
-Variant Data::operator<=(const Variant other) const { return NotImplemented; }
-Variant Data::operator>(const Variant other) const { return NotImplemented; }
-Variant Data::operator<(const Variant other) const { return NotImplemented; }
-
-void Variant::operator=(VariantType aType)
-{
-  clear();
-  switch (aType)
-  {
-    case vError: error = Success; break;
-    case vBoolean: boolval = false; break;
-    default: val = 0;
-  }
-  m_type = aType;
-}
-
-void Variant::clear()
-{
-  switch (type())
-  {
-    case vBoolean:
-    case vEmpty:
-    case vError: break;
-    default: 
-      val->release();
-      val = 0;
-  }
-  m_type = vEmpty;
-}
+Variant Data::operator+(const Variant& other) const { return NotImplemented; }
+Variant Data::operator-(const Variant& other) const { return NotImplemented; }
+Variant Data::operator*(const Variant& other) const { return NotImplemented; }
+Variant Data::operator/(const Variant& other) const { return NotImplemented; }
+Variant Data::operator%(const Variant& other) const { return NotImplemented; }
+Variant Data::operator&(const Variant& other) const { return NotImplemented; }
+Variant Data::operator|(const Variant& other) const { return NotImplemented; }
+Variant Data::operator^(const Variant& other) const { return NotImplemented; }
+Variant Data::operator<<(const Variant& other) const { return NotImplemented; }
+Variant Data::operator>>(const Variant& other) const { return NotImplemented; }
+Variant Data::operator==(const Variant& other) const { return NotImplemented; }
+Variant Data::operator>(const Variant& other) const { return NotImplemented; }
+Variant Data::operator<(const Variant& other) const { return NotImplemented; }
+Variant Data::operator!=(const Variant& other) const { return !(*this == other); }
+Variant Data::operator>=(const Variant& other) const { return !(*this < other); }
+Variant Data::operator<=(const Variant& other) const { return !(*this > other); }
+Variant Data::swapadd(const Variant& other) const { return *this + other; }
+Variant Data::swapsub(const Variant& other) const { return -(*this - other); }
+Variant Data::swapmul(const Variant& other) const { return *this * other; }
+Variant Data::swapdiv(const Variant& other) const { return NotImplemented; }
+Variant Data::swapmod(const Variant& other) const { return NotImplemented; }
+Variant Data::swapand(const Variant& other) const { return *this & other; }
+Variant Data::swapor(const Variant& other) const { return *this | other; }
+Variant Data::swapxor(const Variant& other) const { return *this ^ other; }
+Variant Data::swapshr(const Variant& other) const { return NotImplemented; }
+Variant Data::swapshl(const Variant& other) const { return NotImplemented; }
+Variant Data::swapeq(const Variant& other) const { return *this == other; }
+Variant Data::swapne(const Variant& other) const { return *this != other; }
+Variant Data::swapge(const Variant& other) const { return *this < other; }
+Variant Data::swaple(const Variant& other) const { return *this > other; }
+Variant Data::swapgt(const Variant& other) const { return *this <= other; }
+Variant Data::swapls(const Variant& other) const { return *this >= other; }
 
 bool Variant::builtinType() const
 {
@@ -89,6 +83,29 @@ bool Variant::builtinType() const
     case vError: return true;
     default: return false;
   }
+}
+
+void Variant::clear()
+{
+  if (!builtinType())
+    val->release();
+  val = 0; // error = Success, boolvar = false
+  m_type = vEmpty;
+}
+
+bool Variant::setType(Data* newval)
+{
+  if (!newval)
+    return false;
+  *this = newval->type();
+  val = newval;
+  return true;
+}
+
+void Variant::operator=(VariantType aType)
+{
+  clear();
+  m_type = aType;
 }
 
 void Variant::operator=(Error code)
@@ -103,16 +120,20 @@ void Variant::operator=(bool val)
   boolval = val;
 }
 
+void Variant::operator=(Data* other)
+{
+  if (!setType(other))
+    clear();
+}
+
 void Variant::operator=(const Variant& other)
 {
-  if (type() != other.type())
-    *this = other.type();
-  switch(type())
+  switch(other.type())
   {
-    case vEmpty: break;
-    case vBoolean: boolval = other.boolval;
-    case vError: error = other.error; break;
-    default: val = other.val->clone(); break;
+    case vEmpty: clear(); break;
+    case vBoolean: *this = other.boolval; break;
+    case vError: *this = other.error; break;
+    default: *this = other.val->clone(); break;
   }
 }
 
@@ -134,13 +155,11 @@ Variant::operator bool() const
   }
 }
 
-bool Variant::setType(VariantType newtype, Data* newval)
+Variant::operator const Data*() const
 {
-  if (!newval)
-    return  false;
-  *this = newtype;
-  val = newval;
-  return true;
+  if (builtinType())
+    return 0;
+  return val;
 }
 
 Data* Variant::convert(VariantType newtype)
@@ -156,34 +175,61 @@ Data* Variant::convert(VariantType newtype)
   return result;
 }
 
+Error Variant::checkError(const Variant& other, bool checkBool) const
+{
+  Error result = NotAnError;
+  if (type() == vError)
+  {
+    result = error;
+    if (result == Success)
+      result = NoOperand;
+  }
+  else if (other.type() == vError)
+  {
+    result = other.error;
+    if (result == Success)
+      result = NoOperand;
+  }
+  else if (type() == vEmpty || other.type() == vEmpty)
+    result = NoOperand;
+  else if (checkBool && type() == vBoolean && other.type() == vBoolean)
+    result = NotImplemented;
+  return result;
+}
+
+Variant Variant::as(VariantType othertype)
+{
+  Variant result;
+  result = *this;
+  result.retype(othertype);
+  return result;
+}
+
 bool Variant::retype(VariantType newtype)
 {
   if (type() == newtype)
     return true;
+  if (newtype > type())
+    switch (newtype)
+    {
+      case vEmpty: clear(); return true;
+      case vError: *this = Success; return true;
+      default: return setType(convert(newtype));
+    }
+  // newtype < type()
   switch (newtype)
   {
-    case vEmpty: clear(); break;
-    case vError: *this = Error(*this); break;
-    case vBoolean: *this = bool(*this); break;
-    default:
-      switch (type())
-      {
-        case vEmpty:
-        case vError: return false;
-        default:
-          if (setType(newtype, val->retype(newtype)))
-            return true; // fall through
-        case vBoolean: return setType(newtype, convert(newtype));
-      }
+    case vError: *this = Error(*this); return true;
+    case vBoolean: *this = bool(*this); return true;
+    default: return setType(val->retype(newtype));
   }
-  return true;
 }
 
 Variant Variant::operator+() const
 {
   switch (type())
   {
-    case vEmpty:
+    case vEmpty: return NoOperand;
     case vError: return *this;
     case vBoolean: return NotImplemented;
     default: return +*val;
@@ -194,7 +240,7 @@ Variant Variant::operator-() const
 {
   switch (type())
   {
-    case vEmpty:
+    case vEmpty: return NoOperand;
     case vError: return *this;
     case vBoolean: return NotImplemented;
     default: return -*val;
@@ -205,7 +251,7 @@ Variant Variant::operator~() const
 {
   switch (type())
   {
-    case vEmpty:
+    case vEmpty: return NoOperand;
     case vError: return *this;
     case vBoolean: return NotImplemented;
     default: return ~*val;
@@ -216,7 +262,7 @@ Variant Variant::operator!() const
 {
   switch (type())
   {
-    case vEmpty:
+    case vEmpty: return NoOperand;
     case vError: return *this;
     case vBoolean: return !boolval;
     default: return !*val;
@@ -225,17 +271,160 @@ Variant Variant::operator!() const
 
 Variant Variant::operator+(const Variant& other) const
 {
-  if (type() == vEmpty || other.type() == vEmpty)
-    return NaNOperand;
-  if (type() == vError)
-    return *this;
-  if (other.type() == vError)
-    return other;
-  switch (type())
+  Error e = checkError(other);
+  if (e != NotAnError)
+    return e;
+  if (type() >= other.type())
+    return *val + other;
+  return other.val->swapadd(*this);
+}
+
+Variant Variant::operator-(const Variant& other) const
+{
+  Error e = checkError(other);
+  if (e != NotAnError)
+    return e;
+  if (type() >= other.type())
+    return *val - other;
+  return other.val->swapsub(*this);
+}
+
+Variant Variant::operator*(const Variant& other) const
+{
+  Error e = checkError(other);
+  if (e != NotAnError)
+    return e;
+  if (type() >= other.type())
+    return *val * other;
+  return other.val->swapmul(*this);
+}
+
+Variant Variant::operator/(const Variant& other) const
+{
+  Error e = checkError(other);
+  if (e != NotAnError)
+    return e;
+  if (type() >= other.type())
+    return *val / other;
+  return other.val->swapdiv(*this);
+}
+
+Variant Variant::operator%(const Variant& other) const
+{
+  Error e = checkError(other);
+  if (e != NotAnError)
+    return e;
+  if (type() >= other.type())
+    return *val % other;
+  return other.val->swapmod(*this);
+}
+
+Variant Variant::operator&(const Variant& other) const
+{
+  Error e = checkError(other, false);
+  if (e != NotAnError)
+    return e;
+  if (type() >= other.type())
   {
-    case vEmpty:
-    case vError: return *this;
-    case vBoolean: return !boolval;
-    default: return !*val;
+    if (type() == vBoolean)
+      return boolval & other.boolval;
+    return *val & other;
   }
+  return other.val->swapand(*this);
+}
+
+Variant Variant::operator|(const Variant& other) const
+{
+  Error e = checkError(other, false);
+  if (e != NotAnError)
+    return e;
+  if (type() >= other.type())
+  {
+    if (type() == vBoolean)
+      return boolval | other.boolval;
+    return *val | other;
+  }
+  return other.val->swapor(*this);
+}
+
+Variant Variant::operator^(const Variant& other) const
+{
+  Error e = checkError(other, false);
+  if (e != NotAnError)
+    return e;
+  if (type() >= other.type())
+  {
+    if (type() == vBoolean)
+      return boolval ^ other.boolval;
+    return *val ^ other;
+  }
+  return other.val->swapxor(*this);
+}
+
+Variant Variant::operator==(const Variant& other) const
+{
+  Error e = checkError(other, false);
+  if (e != NotAnError)
+    return e;
+  if (type() >= other.type())
+  {
+    if (type() == vBoolean)
+      return boolval == other.boolval;
+    return *val == other;
+  }
+  return other.val->swapeq(*this);
+}
+
+Variant Variant::operator!=(const Variant& other) const
+{
+  Error e = checkError(other, false);
+  if (e != NotAnError)
+    return e;
+  if (type() >= other.type())
+  {
+    if (type() == vBoolean)
+      return boolval != other.boolval;
+    return *val != other;
+  }
+  return other.val->swapne(*this);
+}
+
+Variant Variant::operator>=(const Variant& other) const
+{
+  Error e = checkError(other);
+  if (e != NotAnError)
+    return e;
+  if (type() >= other.type())
+    return *val >= other;
+  return other.val->swapge(*this);
+}
+
+Variant Variant::operator<=(const Variant& other) const
+{
+  Error e = checkError(other);
+  if (e != NotAnError)
+    return e;
+  if (type() >= other.type())
+    return *val <= other;
+  return other.val->swaple(*this);
+}
+
+Variant Variant::operator>(const Variant& other) const
+{
+  Error e = checkError(other, true);
+  if (e != NotAnError)
+    return e;
+  if (type() >= other.type())
+    return *val > other;
+  return other.val->swapgt(*this);
+}
+
+Variant Variant::operator<(const Variant& other) const
+{
+  Error e = checkError(other, true);
+  if (e != NotAnError)
+    return e;
+  if (type() >= other.type())
+    return *val < other;
+  return other.val->swapls(*this);
 }

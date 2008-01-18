@@ -379,7 +379,7 @@ _checknan(
 {
   if (!float_isnan(f))
     return TRUE;
-  float_seterror(NaNOperand);
+  float_seterror(NoOperand);
   return FALSE;
 }
 
@@ -1095,7 +1095,7 @@ float_round(
   if (!_checkdigits(digits, NOSPECIALVALUE))
     return _setnan(dest);
   if (float_isnan(src))
-    return _seterror(dest, NaNOperand);
+    return _seterror(dest, NoOperand);
   updown = 0;
   scale = digits - 1;
   if (float_getlength(src) > digits)

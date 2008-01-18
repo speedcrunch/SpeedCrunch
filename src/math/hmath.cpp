@@ -152,7 +152,7 @@ static Error checkNaNParam(const HNumberPrivate& v1,
   Error error = v1.error;
   if ( error == Success && v2 )
     error = v2->error;
-  return error == 0? NaNOperand : error;
+  return error == 0? NoOperand : error;
 }
 
 void roundSetError(HNumberPrivate* dest)
