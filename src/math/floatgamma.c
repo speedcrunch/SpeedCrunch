@@ -366,7 +366,7 @@ _pochhammer_g(
     else
       result = float_div(&factor1, &factor1, &factor2, digits+1);
   }
-  if (result)
+  if (result && inf2 == 0)
     result = float_sub(x, &tmp, x, digits+1)
              && _exp(x, digits)
              && float_mul(x, x, &factor1, digits+1);
