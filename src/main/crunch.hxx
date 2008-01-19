@@ -80,7 +80,7 @@ class Crunch : public QMainWindow
     void showVariables( bool );
     void scrollDown();
     void scrollUp();
-    void toggleMenuVisibility();
+    void showMenuBar();
     void viewBinary();
     void viewEngineering();
     void viewFixed();
