@@ -135,6 +135,7 @@ struct CrunchPrivate
   QMenu * helpMenu;
   QMenu * sessionMenu;
   QMenu * settingsMenu;
+  bool    notifyMenuBarHidden;
 
   Editor *    editor;
   Evaluator * eval;
@@ -184,6 +185,8 @@ Crunch::Crunch() : QMainWindow()
   d->autoAns = false;
   d->trayIcon = 0;
   d->trayNotify = true;
+
+  d->notifyMenuBarHidden = true;
 
   // outer widget and layout
   QWidget * box = new QWidget( this );
@@ -271,7 +274,7 @@ Crunch::Crunch() : QMainWindow()
   d->autoCalcLabel = new AutoHideLabel( this );
   d->autoCalcLabel->hide();
 
-  // for tip of the day
+  // for tip of the day and and menu bar hiding message
   d->tip = new TipWidget( this );
   d->tip->hide();
 
@@ -618,7 +621,7 @@ void Crunch::digits50()
 
 void Crunch::digitsAuto()
 {
-  setDigits(-1);
+  setDigits( -1 );
 }
 
 
@@ -858,6 +861,12 @@ void Crunch::showMenuBar()
 {
   menuBar()->setVisible( ! menuBar()->isVisible() );
   Settings::self()->showMenuBar = menuBar()->isVisible();
+
+  if ( ! menuBar()->isVisible() && d->notifyMenuBarHidden )
+  {
+    showMenuBarTip();
+    d->notifyMenuBarHidden = false;
+  }
 }
 
 
@@ -920,14 +929,27 @@ void Crunch::showKeypad( bool b )
 }
 
 
-void Crunch::showTip()
+void Crunch::showMenuBarTip()
 {
-  QPoint p = mapFromGlobal( d->result->mapToGlobal( QPoint(0, 0) ) ) += QPoint(4,4);
+  QString msg = tr("The menu bar is now hidden. "
+                   "To make it visible again, press Ctrl+M.");
+
+  QPoint p = mapFromGlobal( d->result->mapToGlobal( QPoint(0, 0) ) ) += QPoint(5, 5);
   d->tip->move( p );
+  d->tip->resize( 345, d->tip->sizeHint().height() );
+  d->tip->showText( msg, tr("Warning") );
+}
+
+
+void Crunch::showTipOfTheDay()
+{
+  QPoint p = mapFromGlobal( d->result->mapToGlobal( QPoint(0, 0) ) ) += QPoint(5, 5);
+  d->tip->move( p );
+  d->tip->resize( 345, d->tip->sizeHint().height() );
 
   int tipNo = rand() % 5;
   QString msg;
-  switch( tipNo )
+  switch ( tipNo )
   {
     case 0:
       msg = tr("You can customize the syntax highlight colors. "
@@ -955,7 +977,7 @@ void Crunch::showTip()
       break;
   }
 
-  d->tip->showText( msg );
+  d->tip->showText( msg, tr("Tip of the day") );
 }
 
 
@@ -1437,7 +1459,7 @@ void Crunch::createUI()
   connect( d->actions.helpAboutQt,          SIGNAL(activated()),     this,      SLOT(aboutQt())              );
   connect( d->actions.helpAbout,            SIGNAL(activated()),     this,      SLOT(about())                );
   connect( d->actions.helpGotoWebsite,      SIGNAL(activated()),     this,      SLOT(gotoWebsite())          );
-  connect( d->actions.helpTipOfTheDay,      SIGNAL(activated()),     this,      SLOT(showTip())              );
+  connect( d->actions.helpTipOfTheDay,      SIGNAL(activated()),     this,      SLOT(showTipOfTheDay())      );
   connect( d->actions.insertFunction,       SIGNAL(activated()),     this,      SLOT(insertFunction())       );
   connect( d->actions.insertVariable,       SIGNAL(activated()),     this,      SLOT(insertVariable())       );
   connect( d->actions.radian,               SIGNAL(activated()),     this,      SLOT(radian())               );
