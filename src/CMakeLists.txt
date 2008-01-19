@@ -134,6 +134,7 @@ math/floatnum.c
 math/floatpower.c
 math/floatseries.c
 math/floattrig.c
+math/numdata.cpp
 math/hmath.cpp
 math/number.c
 test/testevaluator.cpp

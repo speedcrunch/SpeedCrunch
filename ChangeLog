@@ -10,7 +10,7 @@ New functions:
   ERF: the normalized error function (related to normal distribution)
   ERFC: the complementary error function
   GAMMA: the extension of the factorials (x-1)!
-  LNGAMMA: ln(abs(Gamma(x)))
+  LNGAMMA: ln(Gamma(x)) for x > 0
 
 Improvements and bug fixes:
   Fixed loss of precision on variable saving
@@ -20,6 +20,7 @@ Improvements and bug fixes:
   Fixed a bug in the math engine (float_frac) that could cause memory corruption
   bugfix in the pochhammer symbol evaluating routine, affecting nPr
     when n and r are negative integers, and n == r-1
+  bugfix: No freeze any more when evaluating (-n+0.5)! for very large integers n
 
 SpeedCrunch 0.9
 ---------------------

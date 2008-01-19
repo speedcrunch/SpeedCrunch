@@ -58,7 +58,7 @@ void static checkfullcancellation( cfloatnum op1, cfloatnum op2,
     /* NaN or zero not involved in computation */
     expr = float_getexponent(r);
     if (float_getexponent(op1) - expr >= HMATH_WORKING_PREC - 1
-        || float_getexponent(op1) - expr >= HMATH_WORKING_PREC - 1)
+        || float_getexponent(op2) - expr >= HMATH_WORKING_PREC - 1)
       float_setzero(r);
   }
 }

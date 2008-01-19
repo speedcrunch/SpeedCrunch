@@ -29,6 +29,7 @@
 *************************************************************************/
 
 #include "base/variant.hxx"
+#include "math/numdata.hxx"
 
 Data::Constructors Data::constructors;
 
@@ -361,6 +362,26 @@ Variant Variant::operator^(const Variant& other) const
   return other.val->swapxor(*this);
 }
 
+Variant Variant::operator>>(const Variant& other) const
+{
+  Error e = checkError(other);
+  if (e != NotAnError)
+    return e;
+  if (type() >= other.type())
+    return *val >> other;
+  return other.val->swapshr(*this);
+}
+
+Variant Variant::operator<<(const Variant& other) const
+{
+  Error e = checkError(other);
+  if (e != NotAnError)
+    return e;
+  if (type() >= other.type())
+    return *val << other;
+  return other.val->swapshl(*this);
+}
+
 Variant Variant::operator==(const Variant& other) const
 {
   Error e = checkError(other, false);
@@ -427,4 +448,91 @@ Variant Variant::operator<(const Variant& other) const
   if (type() >= other.type())
     return *val < other;
   return other.val->swapls(*this);
+}
+
+bool Variant::isZero()
+{
+  switch(type())
+  {
+    case vBoolean:
+    case vError:
+    case vEmpty: return false;
+    default: return val->isZero();
+  }
+}
+
+bool Variant::isNaN()
+{
+  switch(type())
+  {
+    case vBoolean:
+    case vError:
+    case vEmpty: return true;
+    default: return val->isNaN();
+  }
+}
+
+bool Variant::isInteger()
+{
+  switch(type())
+  {
+    case vBoolean:
+    case vError:
+    case vEmpty: return false;
+    default: return val->isInteger();
+  }
+}
+
+int Variant::precision(int newprec)
+{
+  return Floatnum::precision(newprec);
+}
+
+void Variant::operator=(int x)
+{
+  *this = Data::create(vReal);
+  *static_cast<Floatnum*>(val) = x;
+}
+
+void Variant::operator=(const char* s)
+{
+  *this = Data::create(vReal);
+  *static_cast<Floatnum*>(val) = s;
+}
+
+void Variant::operator=(floatnum x)
+{
+  *this = Data::create(vReal);
+  *static_cast<Floatnum*>(val) = x;
+}
+
+void Variant::operator=(const LowLevelIO& io)
+{
+  *this = Data::create(vReal);
+  *static_cast<Floatnum*>(val) = io;
+}
+
+Variant::LowLevelIO Variant::format(Format fmt, int scale,
+                                    char base, char expbase) const
+{
+  switch (type())
+  {
+    case vReal:
+      return static_cast<Real*>(val)->format(fmt, scale, base, expbase);
+    default: ;
+  }
+  LowLevelIO io;
+  io.baseSignificand = -1;
+  io.baseScale = -1;
+  return io;
+}
+
+Variant::operator cfloatnum() const
+{
+  switch (type())
+  {
+    case vReal:
+      return (cfloatnum)static_cast<Real*>(val);
+    default: return Floatnum::NaN();
+  }
 }

@@ -33,6 +33,7 @@
 
 #include "base/variant.hxx"
 #include "floatnum.h"
+#include <QString>
 
 class Floatnum: public Data
 {
@@ -64,23 +65,49 @@ class Floatnum: public Data
     Variant swapmod(const Variant& other) const;
     Variant swapshl(const Variant& other) const;
     Variant swapshr(const Variant& other) const;
+    bool isZero();
+    bool isNaN();
+    bool isInteger();
+    // 0: default, -1: query; returns old value
+    static int precision(int newprec = -1);
+    void operator=(int);
+    void operator=(const char*);
+    // this frees x
+    void operator=(floatnum x);
+    void operator=(const Variant::LowLevelIO&);
+    Variant::LowLevelIO format(Variant::Format, int scale,
+                               char base = 10, char expbase = 10) const;
+    static cfloatnum NaN() { return &NaNval; };
   protected:
     static bool isFloatnumType(VariantType);
-    void operator=(floatnum);
-    void operator=(int);
     Variant boolresult(bool result) const;
     Variant realresult(floatnum result) const;
     static cfloatnum asfloatnum(const Variant&);
     Floatnum* createSameType(floatnum val = 0) const;
+    static int workprec;
+    static int evalprec;
   private:
     typedef char (*Float1ArgND)(floatnum x);
     typedef char (*Float2Args)(floatnum result, cfloatnum p1, cfloatnum p2, int digits);
     typedef char (*Float2ArgsND)(floatnum result, cfloatnum p1, cfloatnum p2);
+
     int refcount;
     floatstruct val;
+    static floatstruct NaNval;
+
     Variant call2Args(Variant x2, Float2Args func, bool swap = false) const;
     Variant call2ArgsND(Variant x2, Float2ArgsND func, bool swap = false) const;
     Variant call1ArgND(Float1ArgND func) const;
+    static void checkfullcancellation(cfloatnum op1, cfloatnum op2, floatnum r);
+    static char checkAdd(floatnum dest, cfloatnum s1, cfloatnum s2, int digits);
+    static char checkSub(floatnum dest, cfloatnum s1, cfloatnum s2, int digits);
+};
+
+class Real: public Floatnum
+{
+  public:
+    VariantType type() { return vReal; };
+    static Data* createReal() { return new Real; };
 };
 
 #endif /* _NUMDATA_H */

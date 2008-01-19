@@ -40,6 +40,8 @@ typedef enum
 // later types know how to convert from earlier ones
 {
   vBoolean,  // has to be the first
+  vText,
+  vInteger,
   vReal,     // real numbers
   vEmpty,    // has to be the last but one
   vError     // sentinel value, has to be the last
@@ -99,6 +101,9 @@ class Data
     virtual Variant swaple(const Variant& other) const;
     virtual Variant swapgt(const Variant& other) const;
     virtual Variant swapls(const Variant& other) const;
+    virtual bool isZero() { return false; };
+    virtual bool isNaN() { return true; };
+    virtual bool isInteger() { return false; };
 };
 
 class VariantBase
@@ -126,6 +131,7 @@ class Variant: public VariantBase
     operator bool() const;
     operator const Data*() const;
     Variant as(VariantType);
+    // in place retyping, result is true on success
     bool retype(VariantType);
     Variant operator+() const;
     Variant operator-() const;
@@ -139,12 +145,21 @@ class Variant: public VariantBase
     Variant operator&(const Variant&) const;
     Variant operator|(const Variant&) const;
     Variant operator^(const Variant&) const;
-    Variant operator==(const Variant& other) const;
-    Variant operator!=(const Variant& other) const;
-    Variant operator>=(const Variant& other) const;
-    Variant operator<=(const Variant& other) const;
-    Variant operator>(const Variant& other) const;
-    Variant operator<(const Variant& other) const;
+    Variant operator<<(const Variant&) const;
+    Variant operator>>(const Variant&) const;
+    Variant operator==(const Variant&) const;
+    Variant operator!=(const Variant&) const;
+    Variant operator>=(const Variant&) const;
+    Variant operator<=(const Variant&) const;
+    Variant operator>(const Variant&) const;
+    Variant operator<(const Variant&) const;
+    void operator+=(const Variant& other) { *this = *this + other; };
+    void operator-=(const Variant& other) { *this = *this - other; };
+    void operator*=(const Variant& other) { *this = *this * other; };
+    void operator/=(const Variant& other) { *this = *this / other; };
+    bool isZero();
+    bool isNaN();
+    bool isInteger();
   protected:
     union
     {
@@ -160,6 +175,46 @@ class Variant: public VariantBase
     Error checkError(const Variant& other, bool checkBool = true) const;
     bool setType(Data* newval);
     Data* convert(VariantType newtype);
+
+  // support of Real
+  public:
+    typedef enum
+    {
+      Plus,
+      Minus,
+      Compl2,
+    } Sign;
+    typedef enum
+    {
+      Scientific,
+      Fixpoint,
+      Engineering,
+      Complement2,
+    } Format;
+    typedef struct
+    {
+      QString intpart;
+      QString fracpart;
+      QString scale;
+      Sign signSignificand;
+      Sign signScale;
+      signed char baseSignificand;
+      signed char baseScale;
+    } LowLevelIO;
+
+    // 0: default, -1: query; returns old value
+    static int precision(int newprec = -1);
+    void operator=(int);
+    void operator=(const char*);
+    // this frees x
+    void operator=(floatnum x);
+    void operator=(const LowLevelIO&);
+    operator cfloatnum() const;
+    Variant(int x) { *this = x; };
+    Variant(const char* s) { *this = s; };
+    Variant(const LowLevelIO& io) { *this = io; };
+    LowLevelIO format(Format, int scale,
+                      char base = 10, char expbase = 10) const;
 };
 
 #endif /* _VARIANT_H */

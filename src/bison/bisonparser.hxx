@@ -144,7 +144,7 @@ class SglExprLex
     void updateState();
     void reset();
 
-    HNumber cvtNumber(const DigitSeq& descriptor, String frac = -1);
+    Variant cvtNumber(const DigitSeq& descriptor, String frac = -1);
     VariantIdx allocNumber(const Variant& n);
     String allocString(const QString&);
     NumValue variant2numValue(const Variant&);

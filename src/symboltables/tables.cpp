@@ -240,7 +240,7 @@ Variant Tables::undefine(const ParamList& params)
   {
     HNumber p2 = (const HNumber&)params.at(1);
     if (p2.isNan())
-      return NaNOperand;
+      return NoOperand;
     if (p2 != 0 && p2 != 1)
       return OutOfDomain;
     if (p2 == 1)

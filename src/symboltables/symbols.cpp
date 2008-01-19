@@ -303,7 +303,7 @@ bool FunctionSymbol::match(const ParamList& params) const
   switch (params.match(types).error)
   {
     case Success:
-    case NaNOperand: return true;
+    case NoOperand: return true;
     default: return false;
   }
 }

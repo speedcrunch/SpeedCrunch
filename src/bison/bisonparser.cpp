@@ -671,24 +671,24 @@ VariantIdx SglExprLex::allocNumber(const Variant& n)
   return numlist.size() - 1;
 }
 
-HNumber SglExprLex::cvtNumber(const DigitSeq& descriptor, String frac)
+Variant SglExprLex::cvtNumber(const DigitSeq& descriptor, String frac)
 {
-  QByteArray str;
-  HNumber bias(0);
-  if (descriptor.digits)
-    str = strlist.at(descriptor.digits).toLatin1();
-  if (descriptor.complement && str[0] - '0' >= descriptor.base >> 1)
-    bias = HMath::raise(HNumber(descriptor.base), str.size());
-  if (descriptor.base != 10)
-    str.prepend(basePrefix(descriptor.base));
+  Variant::LowLevelIO io;
+  if (descriptor.complement && descriptor.sign < 0)
+    return IOSignConflict;
+  io.intpart = strlist.at(descriptor.digits);
   if (frac >= 0)
-  {
-    str.append('.');
-    str.append(strlist.at(frac).toLatin1());
-  }
-  if (descriptor.sign >= 0)
-    return HNumber(str.data()) - bias;
-  return bias - HNumber(str.data());
+    io.fracpart = strlist.at(frac);
+  io.baseSignificand = descriptor.base;
+  io.baseScale = 10;
+  if (descriptor.complement)
+    io.signSignificand = Variant::Complement;
+  else if (descriptor.sign >= 0)
+    io.signSignificand = Variant::Plus;
+  else
+    io.signSignificand = Variant::Minus;
+  io.signScale = Variant::PLus;
+  return io;
 }
 
 NumValue SglExprLex::variant2numValue(const Variant& v)
@@ -703,9 +703,9 @@ Variant SglExprLex::numValue2variant(NumValue n)
 {
   Variant result;
   const Variant* v = &numlist.at(n.val);
-/*  if (n.percent)
-    result = *(const HNumber*)v / HNumber(100);
-  else*/
+  if (n.percent)
+    result = *v / Variant(100);
+  else
     result = *v;
   return result;
 }
@@ -841,11 +841,41 @@ NumValue SglExprLex::convertStr(NumLiteral literal)
 NumValue SglExprLex::mConvertStr(NumLiteral literal)
 {
   NumValue result;
-/*  HNumber value = cvtNumber(literal.intpart, literal.fracpart);
-  if (literal.exp.digits)
-    value *= HMath::raise(HNumber(literal.intpart.base), cvtNumber(literal.exp));
-  result.val = allocNumber(value);
-  result.percent = false;*/
+  Variant v;
+  Variant::LowLevelIO io;
+  if ((literal.intpart.complement && literal.intpart.sign < 0)
+       || (literal.exp.complement && literal.exp.sign < 0))
+    v = IOSignConflict;
+  else
+  {
+    if (literal.intpart.digits >= 0)
+      io.intpart = strlist.at(literal.intpart.digits);
+    if (literal.frac >= 0)
+      io.fracpart = strlist.at(frac);
+    io.baseSignificand = literal.intpart.base;
+    if (literal.intpart.complement)
+      io.signSignificand = Variant::Complement;
+    else if (literal.intpart.sign >= 0)
+      io.signSignificand = Variant::Plus;
+    else
+      io.signSignificand = Variant::Minus;
+    io.baseScale = 10;
+    io.signScale = Variant::PLus;
+    if (literal.exp.digits >= 0)
+    {
+      io.baseScale = literal.exp.base;
+      io.scale = strlist.at(literal.exp.digits);
+      if (literal.exp.complement)
+        io.signScale = Variant::Complement;
+      else if (literal.exp.sign >= 0)
+        io.signScale = Variant::Plus;
+      else
+        io.signScale = Variant::Minus;
+    }
+    v = io;
+  }
+  result.percent = false;
+  result.val = allocNumber(v);
   return result;
 }
 

@@ -1,6 +1,7 @@
 /* HMath: C++ high precision math routines
    Copyright (C) 2004 Ariya Hidayat <ariya.hidayat@gmail.com>
                  2007 Helder Correia <helder.pereira.correia@gmail.com>
+                 2008 Wolf Lammen
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
