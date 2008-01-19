@@ -1360,7 +1360,7 @@ void Crunch::createUI()
   d->actions.showFunctions      = new QAction( tr("Show &Functions"),          this );
   d->actions.showHistory        = new QAction( tr("Show &History"),            this );
   d->actions.showKeypad         = new QAction( tr("Show &Keypad"),             this );
-  d->actions.showMenuBar        = new QAction( tr("Show &Menu Bar"),           this );
+  d->actions.showMenuBar        = new QAction( tr("Hide &Menu Bar"),           this );
   d->actions.showVariables      = new QAction( tr("Show &Variables"),          this );
   d->actions.viewBinary         = new QAction( tr("&Binary"),                  this );
   d->actions.viewEngineering    = new QAction( tr("&Engineering"),             this );
@@ -1429,7 +1429,6 @@ void Crunch::createUI()
   d->actions.showFunctions->setCheckable( true );
   d->actions.showHistory->setCheckable( true );
   d->actions.showKeypad->setCheckable( true );
-  d->actions.showMenuBar->setCheckable( true );
   d->actions.showVariables->setCheckable( true );
   d->actions.viewBinary->setCheckable( true );
   d->actions.viewEngineering->setCheckable( true );
@@ -1472,7 +1471,7 @@ void Crunch::createUI()
   connect( d->actions.showFunctions,        SIGNAL(toggled( bool )), this,      SLOT(showFunctions( bool ))  );
   connect( d->actions.showHistory,          SIGNAL(toggled( bool )), this,      SLOT(showHistory( bool ))    );
   connect( d->actions.showKeypad,           SIGNAL(toggled( bool )), this,      SLOT(showKeypad( bool ))     );
-  connect( d->actions.showMenuBar,          SIGNAL(toggled( bool )), this,      SLOT(showMenuBar())          );
+  connect( d->actions.showMenuBar,          SIGNAL(activated()),     this,      SLOT(showMenuBar())          );
   connect( d->actions.showVariables,        SIGNAL(toggled( bool )), this,      SLOT(showVariables( bool ))  );
   connect( d->actions.viewBinary,           SIGNAL(activated()),     this,      SLOT(viewBinary())           );
   connect( d->actions.viewEngineering,      SIGNAL(activated()),     this,      SLOT(viewEngineering())      );
@@ -1538,12 +1537,12 @@ void Crunch::createUI()
   d->settingsMenu = new QMenu( tr("Se&ttings"), this );
   menuBar()->addMenu( d->settingsMenu );
   d->settingsMenu->addAction( d->actions.showKeypad );
-  d->settingsMenu->addAction( d->actions.showMenuBar );
-  d->settingsMenu->addSeparator();
   d->settingsMenu->addAction( d->actions.showHistory );
   d->settingsMenu->addAction( d->actions.showFunctions );
   d->settingsMenu->addAction( d->actions.showVariables );
   d->settingsMenu->addAction( d->actions.showConstants );
+  d->settingsMenu->addSeparator();
+  d->settingsMenu->addAction( d->actions.showMenuBar );
   d->settingsMenu->addSeparator();
   d->settingsMenu->addAction( d->actions.configure );
 

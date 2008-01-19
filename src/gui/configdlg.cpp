@@ -44,13 +44,11 @@
 #include <qwwcolorbutton.h>
 
 
-class ConfigDlgPrivate
+struct ConfigDlgPrivate
 {
-public:
   QTabWidget* centerWidget;
 
   QCheckBox* saveSessionCheck;
-  QCheckBox* saveVariablesCheck;
   QCheckBox* autoCompleteCheck;
   QCheckBox* autoCalcCheck;
   QCheckBox* minimizeToTrayCheck;
@@ -88,12 +86,12 @@ public:
   QWidget* hilitePg;
 };
 
+
 void ConfigDlgPrivate::loadSettings()
 {
   Settings* settings = Settings::self();
 
   saveSessionCheck->setChecked( settings->saveSession );
-  saveVariablesCheck->setChecked( settings->saveVariables );
   autoCompleteCheck->setChecked( settings->autoComplete );
   autoCalcCheck->setChecked( settings->autoCalc );
   minimizeToTrayCheck->setChecked( settings->minimizeToTray );
@@ -129,7 +127,6 @@ void ConfigDlgPrivate::saveSettings()
 {
   Settings* settings = Settings::self();
   settings->saveSession = saveSessionCheck->isChecked();
-  settings->saveVariables = saveVariablesCheck->isChecked();
   settings->autoComplete = autoCompleteCheck->isChecked();
   settings->autoCalc = autoCalcCheck->isChecked();
   settings->minimizeToTray = minimizeToTrayCheck->isChecked();
@@ -153,12 +150,11 @@ QWidget* ConfigDlgPrivate::generalPage()
 {
   QWidget *page = new QWidget( centerWidget );
 
-  saveSessionCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Restore last &session on start-up"), page );
-  saveVariablesCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Restore last session &variables on start-up"), page );
-  autoCompleteCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Automatic &completion"), page );
-  autoCalcCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Automatically calculate as you &type"), page );
-  minimizeToTrayCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Minimi&ze to system tray"), page );
-  stayAlwaysOnTopCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Stay always-on-&top"), page );
+  autoCalcCheck        = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Automatically calculate as you &type"), page );
+  autoCompleteCheck    = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Automatic &completion"),                page );
+  minimizeToTrayCheck  = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Minimi&ze to system tray"),             page );
+  saveSessionCheck     = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Restore last &session on start-up"),    page );
+  stayAlwaysOnTopCheck = new QCheckBox( qApp->translate("ConfigDlgPrivate", "Stay always-on-&top"),                  page );
 
   QWidget* box = new QWidget( page );
   QVBoxLayout* boxLayout = new QVBoxLayout;
@@ -195,7 +191,6 @@ QWidget* ConfigDlgPrivate::generalPage()
   QVBoxLayout *layout = new QVBoxLayout;
 
   layout->addWidget( saveSessionCheck );
-  layout->addWidget( saveVariablesCheck );
   layout->addWidget( autoCompleteCheck );
   layout->addWidget( autoCalcCheck );
   layout->addWidget( minimizeToTrayCheck );
@@ -347,8 +342,7 @@ QWidget* ConfigDlgPrivate::hilitePage()
   colorLayout->addWidget( variableColorButton, 2, 1 );
   colorLayout->addWidget( label4, 3, 0 );
   colorLayout->addWidget( matchParColorButton, 3, 1 );
-  colorLayout->addItem( new QSpacerItem( 20, 0, QSizePolicy::MinimumExpanding,
-    QSizePolicy::Minimum ), 0, 2 );
+  colorLayout->addItem( new QSpacerItem( 20, 0, QSizePolicy::MinimumExpanding, QSizePolicy::Minimum ), 0, 2 );
 
   layout->addWidget( enableHiliteCheck );
   layout->addWidget( colorGroup );
@@ -357,8 +351,7 @@ QWidget* ConfigDlgPrivate::hilitePage()
   return page;
 }
 
-ConfigDlg::ConfigDlg( QWidget* parent ):
-QDialog( parent )
+ConfigDlg::ConfigDlg( QWidget * parent ) : QDialog( parent )
 {
   d = new ConfigDlgPrivate;
   setWindowTitle( tr("Configure SpeedCrunch" ) );
