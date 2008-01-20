@@ -1,7 +1,7 @@
 /* This file is part of the SpeedCrunch project
    Copyright (C) 2004-2006 Ariya Hidayat <ariya@kde.org>
-                 2005-2006 Johan Thelin <e8johan@gmail.com>
-                 2007 Helder Correia <helder.pereira.correia@gmail.com>
+   Copyright (C) 2005-2006 Johan Thelin <e8johan@gmail.com>
+   Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -55,13 +55,9 @@ MarqueeText::MarqueeText( QWidget * parent, const char * name ):
   setFrameStyle( Panel | Sunken );
   setLineWidth( 1 );
 
-  setMinimumSize( 400, 275 );
-
   QTimer * scrollTimer = new QTimer( this );
   connect( scrollTimer, SIGNAL(timeout()), this, SLOT(scroll()) );
   scrollTimer->start( d->scrollTick );
-
-  setBackgroundRole( QPalette::Base );
 }
 
 MarqueeText::~MarqueeText()
@@ -87,7 +83,8 @@ void MarqueeText::setText( const QString & text )
 void MarqueeText::paintEvent( QPaintEvent * e )
 {
   QPainter painter( this );
-  painter.fillRect( this->rect(), painter.background().color() );
+  //painter.fillRect( this->rect(), painter.background().color() );
+  painter.fillRect( this->rect(), Qt::black );
   painter.end();
 
   QFrame::paintEvent( e );
@@ -157,25 +154,23 @@ void MarqueeText::layout()
   }
 
   // recreate off-screen buffer
-
   QPixmap * oldbuf = d->buffer;
   d->buffer = 0;
   delete oldbuf;
 
-  QBrush bgbrush( palette().base() );
   d->buffer = new QPixmap( QSize( int(lineWidth + 5), int(2 * hh + 50) ) );
-  d->buffer->fill( bgbrush.color() );
+  d->buffer->fill( Qt::black );
 
   // paint the lines
-
   QPainter painter( d->buffer );
+  painter.setPen( Qt::white );
   double ypos = 0;
   for ( int k = 0; k < layouts.count(); k++ )
   {
     QTextLayout * textLayout = layouts[k];
     if ( ! textLayout )
-			continue;
-    for( int i = 0; i < textLayout->lineCount(); ++i )
+      continue;
+    for ( int i = 0; i < textLayout->lineCount(); ++i )
     {
       QTextLine line = textLayout->lineAt( i );
       QPointF pos = QPointF( (d->sideMargin / 2), ypos );
@@ -187,13 +182,12 @@ void MarqueeText::layout()
   }
 }
 
-AboutBox::AboutBox( QWidget * parent ):
-  QDialog( parent )
+AboutBox::AboutBox( QWidget * parent ) : QDialog( parent )
 {
   setObjectName( "AboutBox" );
   setWindowTitle( tr("About SpeedCrunch") );
 
-  QString website = tr( "http://www.speedcrunch.org");
+  QString website = "http://www.speedcrunch.org";
 
   QLabel * infoLabel = new QLabel( this );
   QString info = "<b>";
@@ -208,7 +202,7 @@ AboutBox::AboutBox( QWidget * parent ):
   iconLabel->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
 
   MarqueeText * marqueeText = new MarqueeText( this );
-  QString msg = "<center>";
+  QString msg = "<br><br><br><br><br><center>";
   msg += "<p><b><i>";
   msg += tr( "SpeedCrunch version %1").arg( MAKE_STRING(SPEEDCRUNCH_VERSION) );
   msg += "</i></b><br></p>";
@@ -221,10 +215,12 @@ AboutBox::AboutBox( QWidget * parent ):
                                                          "Helder Correia<br>"
                                                          "Johan Thelin<br>"
                                                          "Wolf Lammen" );
+
   msg += QString( mainFmt ).arg( tr("Special thanks to") ).arg( "Marco Wegner<br>"
                                                                 "Michael Pyne<br>"
                                                                 "Jonathan Avraham<br>"
                                                                 "Witold Wysota<br>" );
+
   msg += QString( mainFmt ).arg( tr("Artworks") ).arg( "Kuswanto (Zeus)<br>"
                                                        "Helder Correia<br>"
                                                        "Oxygen Project" );
@@ -331,7 +327,6 @@ AboutBox::AboutBox( QWidget * parent ):
   buttonLayout->addWidget( okButton );
 
   setWindowTitle( tr("About SpeedCrunch") );
-  resize( QSize( 512, 384 ) );
-  setMinimumSize( 512, 384 );
-  setMaximumSize( 512, 384 );
+  setMinimumSize( 350, 400 );
+  setMaximumSize( 350, 400 );
 }

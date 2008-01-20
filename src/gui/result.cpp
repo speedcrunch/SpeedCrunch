@@ -305,7 +305,7 @@ void Result::setCustomAppearance( bool custom )
     bgcolor = customBackgroundColor1();
 
   QPalette pal = palette();
-  pal.setColor( QPalette::Background, bgcolor);
+  pal.setColor( QPalette::Background, bgcolor );
   setPalette( pal );
 
   triggerUpdate();
