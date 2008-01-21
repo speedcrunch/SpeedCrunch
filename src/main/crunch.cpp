@@ -233,18 +233,17 @@ Crunch::Crunch() : QMainWindow()
   Settings::self()->load();
 
   // Keypad
-  //QHBoxLayout * keypadLayout = new QHBoxLayout();
+  QHBoxLayout * keypadLayout = new QHBoxLayout();
 
   d->keypad = new Keypad( box );
   d->keypad->setFocusPolicy( Qt::NoFocus );
   d->keypad->hide();
 
-  //keypadLayout->addStretch();
-  //keypadLayout->addWidget( d->keypad );
-  //keypadLayout->addStretch();
+  keypadLayout->addStretch();
+  keypadLayout->addWidget( d->keypad );
+  keypadLayout->addStretch();
 
-  //outerBoxLayout->addLayout( keypadLayout );
-  outerBoxLayout->addWidget( d->keypad );
+  outerBoxLayout->addLayout( keypadLayout );
 
   // Docks
   d->historyDock = new HistoryDock( this );
