@@ -190,18 +190,21 @@ Crunch::Crunch() : QMainWindow()
 
   // outer widget and layout
   QWidget * box = new QWidget( this );
+  //box->setStyleSheet( "background: #202020" );
   setCentralWidget( box );
 
   QVBoxLayout * outerBoxLayout = new QVBoxLayout( box );
-  outerBoxLayout->setMargin( 5 );
+  outerBoxLayout->setMargin( 0 );
   outerBoxLayout->setSpacing( 0 );
 
   // Result list
   d->result = new Result( box );
+  //d->result->setStyleSheet( "background: black" );
   outerBoxLayout->addWidget( d->result );
 
   // Layout for editor and evaluation button
-  QHBoxLayout * inputBoxLayout = new QHBoxLayout();
+  QWidget * inputBoxLayoutWidget = new QWidget;
+  QHBoxLayout * inputBoxLayout = new QHBoxLayout( inputBoxLayoutWidget );
   inputBoxLayout->setMargin( 3 );
   inputBoxLayout->setSpacing( 3 );
 
@@ -215,19 +218,23 @@ Crunch::Crunch() : QMainWindow()
   inputBoxLayout->addWidget( d->clearExpressionButton );
 
   d->editor = new Editor( d->eval, box );
+  //d->editor->setStyleSheet( "font: bold 11px" );
   d->editor->setFocus();
   inputBoxLayout->addWidget( d->editor );
 
   d->evalButton = new QPushButton( box );
   d->evalButton->hide();
-  d->evalButton->setMinimumWidth( 75 );
+  d->evalButton->setMinimumWidth( 60 );
   d->evalButton->setMaximumHeight( d->editor->height() );
-  d->evalButton->setIcon( QPixmap( ":/calculate.png" ) );
+  d->evalButton->setText( "=" );
   d->evalButton->setToolTip( tr("Evaluate") );
   d->evalButton->setFocusPolicy( Qt::NoFocus );
+  //d->evalButton->setStyleSheet( "QPushButton {font: bold; color: white; border-style: outset; border-color: #101010; border-radius: 10px; border-width: 2px }" );
+  d->evalButton->setStyleSheet( "QPushButton { font: bold; border-style: outset; border-color: beige; border-radius: 10px; border-width: 3px }" );
   inputBoxLayout->addWidget( d->evalButton );
 
-  outerBoxLayout->addLayout( inputBoxLayout );
+  //outerBoxLayout->addLayout( inputBoxLayout );
+  outerBoxLayout->addWidget( inputBoxLayoutWidget );
 
   // we need settings to be loaded before keypad and constants dock
   Settings::self()->load();
@@ -238,6 +245,8 @@ Crunch::Crunch() : QMainWindow()
   d->keypad = new Keypad( box );
   d->keypad->setFocusPolicy( Qt::NoFocus );
   d->keypad->hide();
+  //d->keypad->setStyleSheet( "QPushButton { font: bold; color: white; border-style: outset; border-color: #101010; border-radius: 10px; border-width: 2px }" );
+  d->keypad->setStyleSheet( "QPushButton { font: bold; border-style: outset; border-color: beige; border-radius: 10px; border-width: 3px }" );
 
   keypadLayout->addStretch();
   keypadLayout->addWidget( d->keypad );
@@ -843,6 +852,7 @@ void Crunch::setWidgetsLayoutAccordingToLanguageDirection()
 
 void Crunch::scrollDown()
 {
+  qDebug( "SDJFJSDJFSDJFJ") ;
   QScrollBar * sb = d->result->verticalScrollBar();
   int value = sb->value() + 40;
   sb->setValue( value );
@@ -851,6 +861,7 @@ void Crunch::scrollDown()
 
 void Crunch::scrollUp()
 {
+  qDebug( "SDJFJSDJFSDJFJ") ;
   QScrollBar * sb = d->result->verticalScrollBar();
   int value = sb->value() - 40;
   sb->setValue( value );
@@ -867,6 +878,8 @@ void Crunch::showMenuBar()
     showMenuBarTip();
     d->notifyMenuBarHidden = false;
   }
+
+  d->result->scrollEnd();
 }
 
 

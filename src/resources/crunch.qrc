@@ -1,12 +1,6 @@
 <!DOCTYPE RCC><RCC version="1.0">
     <qresource>
-        <file>average.png</file>
-        <file>calculate.png</file>
         <file>clearinput.png</file>
         <file>crunch.png</file>
-        <file>ee.png</file>
-        <file>exp.png</file>
-        <file>pi.png</file>
-        <file>sqrt.png</file>
     </qresource>
 </RCC>

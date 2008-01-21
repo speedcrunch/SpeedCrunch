@@ -45,7 +45,7 @@ class KeypadPrivate
     QPushButton * keyAns;
     QPushButton * keyASin;
     QPushButton * keyATan;
-    QPushButton * keyAvg;
+    QPushButton * keyCbrt;
     QPushButton * keyCos;
     QPushButton * keyDiv;
     QPushButton * keyDot;
@@ -88,6 +88,7 @@ Keypad::Keypad( QWidget * parent ) : QWidget( parent )
   d->keyAns->setToolTip ( tr("The last result")       );
   d->keyASin->setToolTip( tr("Inverse sine")          );
   d->keyATan->setToolTip( tr("Inverse tangent")       );
+  d->keyCbrt->setToolTip( tr("Cube root")             );
   d->keyCos->setToolTip ( tr("Cosine")                );
   d->keyEE->setToolTip  ( tr("Scientific E notation") );
   d->keyExp->setToolTip ( tr("Exponential")           );
@@ -132,7 +133,7 @@ void Keypad::clickedAdd()    { emit addText( "+"        ); }
 void Keypad::clickedAns()    { emit addText( "ans"      ); }
 void Keypad::clickedASin()   { emit addText( "asin("    ); }
 void Keypad::clickedATan()   { emit addText( "atan("    ); }
-void Keypad::clickedAvg()    { emit addText( "average(" ); }
+void Keypad::clickedAvg()    { emit addText( "cbrt("    ); }
 void Keypad::clickedCos()    { emit addText( "cos("     ); }
 void Keypad::clickedDiv()    { emit addText( "/"        ); }
 void Keypad::clickedDot()    { emit addText( d->keyDot->text().toLatin1() ); }
@@ -178,7 +179,7 @@ void Keypad::connectButtons()
   connect( d->keyLParen,    SIGNAL(clicked()), SLOT(clickedLParen()) );
   connect( d->keySemic,     SIGNAL(clicked()), SLOT(clickedSemic())  );
   connect( d->keyRParen,    SIGNAL(clicked()), SLOT(clickedRParen()) );
-  connect( d->keyAvg,       SIGNAL(clicked()), SLOT(clickedAvg())    );
+  connect( d->keyCbrt,      SIGNAL(clicked()), SLOT(clickedAvg())    );
   connect( d->keyAdd,       SIGNAL(clicked()), SLOT(clickedAdd())    );
   connect( d->keySub,       SIGNAL(clicked()), SLOT(clickedSub())    );
   connect( d->keyMul,       SIGNAL(clicked()), SLOT(clickedMul())    );
@@ -217,33 +218,27 @@ void Keypad::createButtons()
   d->keyAns    = new QPushButton( "ans",  this );
   d->keyASin   = new QPushButton( "asin", this );
   d->keyATan   = new QPushButton( "atan", this );
-  d->keyAvg    = new QPushButton(         this );
   d->keyCos    = new QPushButton( "cos",  this );
   d->keyDiv    = new QPushButton( "/",    this );
   d->keyDot    = new QPushButton( dot,    this );
-  d->keyEE     = new QPushButton(         this );
-  d->keyExp    = new QPushButton(         this );
+  d->keyEE     = new QPushButton( "EE",   this );
+  d->keyExp    = new QPushButton( "exp",  this );
   d->keyFact   = new QPushButton( "!",    this );
   d->keyLn     = new QPushButton( "ln",   this );
   d->keyLParen = new QPushButton( "(",    this );
   d->keyMul    = new QPushButton( "*",    this );
   d->keyPerc   = new QPushButton( "%",    this );
-  d->keyPi     = new QPushButton(         this );
   d->keyRaise  = new QPushButton( "^",    this );
   d->keyRParen = new QPushButton( ")",    this );
   d->keySemic  = new QPushButton( ";",    this );
   d->keySin    = new QPushButton( "sin",  this );
-  d->keySqrt   = new QPushButton(         this );
   d->keySub    = new QPushButton( "-",    this );
   d->keyTan    = new QPushButton( "tan",  this );
   d->keyXEq    = new QPushButton( "x=",   this );
   d->keyX      = new QPushButton( "x",    this );
-
-  d->keyAvg->setIcon ( QPixmap( ":/average.png" ) );
-  d->keyEE->setIcon  ( QPixmap( ":/ee.png"      ) );
-  d->keyExp->setIcon ( QPixmap( ":/exp.png"     ) );
-  d->keyPi->setIcon  ( QPixmap( ":/pi.png"      ) );
-  d->keySqrt->setIcon( QPixmap( ":/sqrt.png"    ) );
+  d->keyCbrt   = new QPushButton( QString::fromUtf8("∛"), this );
+  d->keyPi     = new QPushButton( QString::fromUtf8("π"), this );
+  d->keySqrt   = new QPushButton( QString::fromUtf8("√"), this );
 }
 
 
@@ -264,7 +259,7 @@ void Keypad::deactivateButtonFocus()
   d->keyAns->setFocusPolicy   ( Qt::NoFocus );
   d->keyASin->setFocusPolicy  ( Qt::NoFocus );
   d->keyATan->setFocusPolicy  ( Qt::NoFocus );
-  d->keyAvg->setFocusPolicy   ( Qt::NoFocus );
+  d->keyCbrt->setFocusPolicy  ( Qt::NoFocus );
   d->keyCos->setFocusPolicy   ( Qt::NoFocus );
   d->keyDiv->setFocusPolicy   ( Qt::NoFocus );
   d->keyDot->setFocusPolicy   ( Qt::NoFocus );
@@ -290,52 +285,46 @@ void Keypad::deactivateButtonFocus()
 
 void Keypad::layoutButtons()
 {
-
   QGridLayout * layout = new QGridLayout( this );
   layout->setMargin( 3 );
   layout->setSpacing( 3 );
 
-  //   7    8    9     /   sqrt    ^     pi   exp   ln
-  //   4    5    6     *     (     )    ans   sin  asin
-  //   1    2    3     -     ;    avg    x    cos  acos
-  //   0    .    E     +     %     !     x=   tan  atan
-
-  layout->addWidget( d->key7,         0, 0 );
-  layout->addWidget( d->key4,         1, 0 );
-  layout->addWidget( d->key1,         2, 0 );
   layout->addWidget( d->key0,         3, 0 );
-  layout->addWidget( d->key8,         0, 1 );
-  layout->addWidget( d->key5,         1, 1 );
+  layout->addWidget( d->key1,         2, 0 );
   layout->addWidget( d->key2,         2, 1 );
-  layout->addWidget( d->keyDot,       3, 1 );
-  layout->addWidget( d->key9,         0, 2 );
-  layout->addWidget( d->key6,         1, 2 );
   layout->addWidget( d->key3,         2, 2 );
-  layout->addWidget( d->keyEE,        3, 2 );
-  layout->addWidget( d->keyDiv,       0, 3 );
-  layout->addWidget( d->keyMul,       1, 3 );
-  layout->addWidget( d->keySub,       2, 3 );
+  layout->addWidget( d->key4,         1, 0 );
+  layout->addWidget( d->key5,         1, 1 );
+  layout->addWidget( d->key6,         1, 2 );
+  layout->addWidget( d->key7,         0, 0 );
+  layout->addWidget( d->key8,         0, 1 );
+  layout->addWidget( d->key9,         0, 2 );
+  layout->addWidget( d->keyACos,      2, 8 );
   layout->addWidget( d->keyAdd,       3, 3 );
-  layout->addWidget( d->keySqrt,      0, 4 );
-  layout->addWidget( d->keyLParen,    1, 4 );
-  layout->addWidget( d->keySemic,     2, 4 );
-  layout->addWidget( d->keyPerc,      3, 4 );
-  layout->addWidget( d->keyRaise,     0, 5 );
-  layout->addWidget( d->keyRParen,    1, 5 );
-  layout->addWidget( d->keyAvg,       2, 5 );
-  layout->addWidget( d->keyFact,      3, 5 );
-  layout->addWidget( d->keyPi,        0, 6 );
   layout->addWidget( d->keyAns,       1, 6 );
+  layout->addWidget( d->keyASin,      1, 8 );
+  layout->addWidget( d->keyATan,      3, 8 );
+  layout->addWidget( d->keyCbrt,      0, 5 );
+  layout->addWidget( d->keyCos,       2, 7 );
+  layout->addWidget( d->keyDiv,       0, 3 );
+  layout->addWidget( d->keyDot,       3, 1 );
+  layout->addWidget( d->keyEE,        3, 2 );
+  layout->addWidget( d->keyExp,       0, 7 );
+  layout->addWidget( d->keyFact,      3, 5 );
+  layout->addWidget( d->keyLn,        0, 8 );
+  layout->addWidget( d->keyLParen,    1, 4 );
+  layout->addWidget( d->keyMul,       1, 3 );
+  layout->addWidget( d->keyPerc,      3, 4 );
+  layout->addWidget( d->keyPi,        0, 6 );
+  layout->addWidget( d->keyRaise,     2, 4 );
+  layout->addWidget( d->keyRParen,    1, 5 );
+  layout->addWidget( d->keySemic,     2, 5 );
+  layout->addWidget( d->keySin,       1, 7 );
+  layout->addWidget( d->keySqrt,      0, 4 );
+  layout->addWidget( d->keySub,       2, 3 );
+  layout->addWidget( d->keyTan,       3, 7 );
   layout->addWidget( d->keyX,         2, 6 );
   layout->addWidget( d->keyXEq,       3, 6 );
-  layout->addWidget( d->keyExp,       0, 7 );
-  layout->addWidget( d->keySin,       1, 7 );
-  layout->addWidget( d->keyCos,       2, 7 );
-  layout->addWidget( d->keyTan,       3, 7 );
-  layout->addWidget( d->keyLn,        0, 8 );
-  layout->addWidget( d->keyASin,      1, 8 );
-  layout->addWidget( d->keyACos,      2, 8 );
-  layout->addWidget( d->keyATan,      3, 8 );
 }
 
 
@@ -356,7 +345,7 @@ void Keypad::polishButtons()
   d->keyAns->ensurePolished();
   d->keyASin->ensurePolished();
   d->keyATan->ensurePolished();
-  d->keyAvg->ensurePolished();
+  d->keyCbrt->ensurePolished();
   d->keyCos->ensurePolished();
   d->keyDiv->ensurePolished();
   d->keyDot->ensurePolished();
@@ -404,7 +393,7 @@ void Keypad::sizeButtons()
   if( fm.width( d->keyAns->text()    ) > maxWidth ) maxWidth = fm.width( d->keyAns->text()    );
   if( fm.width( d->keyASin->text()   ) > maxWidth ) maxWidth = fm.width( d->keyASin->text()   );
   if( fm.width( d->keyATan->text()   ) > maxWidth ) maxWidth = fm.width( d->keyATan->text()   );
-  if( fm.width( d->keyAvg->text()    ) > maxWidth ) maxWidth = fm.width( d->keyAvg->text()    );
+  if( fm.width( d->keyCbrt->text()   ) > maxWidth ) maxWidth = fm.width( d->keyCbrt->text()   );
   if( fm.width( d->keyCos->text()    ) > maxWidth ) maxWidth = fm.width( d->keyCos->text()    );
   if( fm.width( d->keyDiv->text()    ) > maxWidth ) maxWidth = fm.width( d->keyDiv->text()    );
   if( fm.width( d->keyDot->text()    ) > maxWidth ) maxWidth = fm.width( d->keyDot->text()    );
@@ -449,7 +438,7 @@ void Keypad::sizeButtons()
   d->keyAns->setMaximumSize   ( d->key0->maximumSize() ); d->keyAns->setMinimumSize   ( d->key0->maximumSize() );
   d->keyASin->setMaximumSize  ( d->key0->maximumSize() ); d->keyASin->setMinimumSize  ( d->key0->maximumSize() );
   d->keyATan->setMaximumSize  ( d->key0->maximumSize() ); d->keyATan->setMinimumSize  ( d->key0->maximumSize() );
-  d->keyAvg->setMaximumSize   ( d->key0->maximumSize() ); d->keyAvg->setMinimumSize   ( d->key0->maximumSize() );
+  d->keyCbrt->setMaximumSize  ( d->key0->maximumSize() ); d->keyCbrt->setMinimumSize  ( d->key0->maximumSize() );
   d->keyCos->setMaximumSize   ( d->key0->maximumSize() ); d->keyCos->setMinimumSize   ( d->key0->maximumSize() );
   d->keyDiv->setMaximumSize   ( d->key0->maximumSize() ); d->keyDiv->setMinimumSize   ( d->key0->maximumSize() );
   d->keyDot->setMaximumSize   ( d->key0->maximumSize() ); d->keyDot->setMinimumSize   ( d->key0->maximumSize() );
