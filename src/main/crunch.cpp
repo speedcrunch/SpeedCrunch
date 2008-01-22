@@ -204,7 +204,7 @@ Crunch::Crunch() : QMainWindow()
   editorLayout->setMargin( 5 );
   d->editor = new Editor( d->eval, box );
   d->editor->setFocus();
-  //d->editor->setStyleSheet( "font: bold 11px" );
+  d->editor->setStyleSheet( "QTextEdit { font: bold 14px }" );
   editorLayout->addWidget( d->editor );
   boxLayout->addLayout( editorLayout );
 
@@ -216,9 +216,13 @@ Crunch::Crunch() : QMainWindow()
   d->keypad = new Keypad( box );
   d->keypad->setFocusPolicy( Qt::NoFocus );
   d->keypad->hide();
-  //d->keypad->setStyleSheet( "QPushButton { font: bold; color: white; border-style: outset; border-color: #101010; border-radius: 10px; border-width: 2px }" );
+  //d->keypad->setStyleSheet( "background-color: black" );
+  d->keypad->setStyleSheet( "QPushButton { background: black; font: bold 12px;"
+                            "color: white; border-style: solid;"
+                            "border-color: #202020; border-radius: 10px;"
+                            "border-width: 2px }" );
   //d->keypad->setStyleSheet( "QPushButton { font: bold; border-style: outset; border-radius: 10px; border-width: 3px }" );
-  d->keypad->setStyleSheet( "QPushButton { font: bold; border-radius: 10px; border-width: 3px }" );
+  //d->keypad->setStyleSheet( "QPushButton { font: bold; border-radius: 10px; border-width: 3px }" );
   keypadLayout->addStretch();
   keypadLayout->addWidget( d->keypad );
   keypadLayout->addStretch();
@@ -418,7 +422,6 @@ void Crunch::applySettings()
   {
     d->result->setFont( settings->customFont );
     d->editor->setFont( settings->customFont );
-    //d->editor->adjustSize(); // causes issue #110
     d->editor->setFixedHeight( d->editor->sizeHint().height() );
   }
   else
@@ -434,20 +437,20 @@ void Crunch::applySettings()
                                        settings->customBackgroundColor2 );
   d->result->setCustomErrorColor( settings->customErrorColor );
 
-  if ( settings->format == 'g' ) d->actions.viewGeneral->setChecked( true );
-  if ( settings->format == 'f' ) d->actions.viewFixed->setChecked( true );
+  if ( settings->format == 'g' ) d->actions.viewGeneral->setChecked    ( true );
+  if ( settings->format == 'f' ) d->actions.viewFixed->setChecked      ( true );
   if ( settings->format == 'n' ) d->actions.viewEngineering->setChecked( true );
-  if ( settings->format == 'e' ) d->actions.viewScientific->setChecked( true );
-  if ( settings->format == 'h' ) d->actions.viewHexadec->setChecked( true );
-  if ( settings->format == 'o' ) d->actions.viewOctal->setChecked( true );
-  if ( settings->format == 'b' ) d->actions.viewBinary->setChecked( true );
+  if ( settings->format == 'e' ) d->actions.viewScientific->setChecked ( true );
+  if ( settings->format == 'h' ) d->actions.viewHexadec->setChecked    ( true );
+  if ( settings->format == 'o' ) d->actions.viewOctal->setChecked      ( true );
+  if ( settings->format == 'b' ) d->actions.viewBinary->setChecked     ( true );
 
   if ( settings->decimalDigits <   0 ) d->actions.digitsAuto->setChecked( true );
-  if ( settings->decimalDigits ==  2 ) d->actions.digits2->setChecked( true );
-  if ( settings->decimalDigits ==  3 ) d->actions.digits3->setChecked( true );
-  if ( settings->decimalDigits ==  8 ) d->actions.digits8->setChecked( true );
-  if ( settings->decimalDigits == 15 ) d->actions.digits15->setChecked( true );
-  if ( settings->decimalDigits == 50 ) d->actions.digits50->setChecked( true );
+  if ( settings->decimalDigits ==  2 ) d->actions.digits2->setChecked   ( true );
+  if ( settings->decimalDigits ==  3 ) d->actions.digits3->setChecked   ( true );
+  if ( settings->decimalDigits ==  8 ) d->actions.digits8->setChecked   ( true );
+  if ( settings->decimalDigits == 15 ) d->actions.digits15->setChecked  ( true );
+  if ( settings->decimalDigits == 50 ) d->actions.digits50->setChecked  ( true );
 
   showKeypad( settings->showKeypad );
   menuBar()->setVisible( settings->showMenuBar );
@@ -1051,7 +1054,7 @@ void Crunch::expressionSelected( const QString & e )
   d->editor->setText( e );
   returnPressed();
 
-  if( ! isActiveWindow () )
+  if ( ! isActiveWindow () )
     activateWindow();
 }
 

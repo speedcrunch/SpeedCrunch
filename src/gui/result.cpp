@@ -197,9 +197,14 @@ Result::Result( QWidget * parent, const char * name ) : QListWidget( parent )
   setFocusPolicy( Qt::NoFocus );
 
   setHorizontalScrollMode( QAbstractItemView::ScrollPerPixel );
-  setVerticalScrollMode(   QAbstractItemView::ScrollPerPixel );
+  setVerticalScrollMode  ( QAbstractItemView::ScrollPerPixel );
 
   setResizeMode( QListView::Adjust );
+
+  // ensure scrollbars background get system background color
+  QString colorName = QApplication::palette().background().color().name();
+  verticalScrollBar()->setStyleSheet  ( QString("QVerticalScrollBar   { background: %1; }").arg( colorName ) );
+  horizontalScrollBar()->setStyleSheet( QString("QHorizontalScrollBar { background: %1; }").arg( colorName ) );
 }
 
 

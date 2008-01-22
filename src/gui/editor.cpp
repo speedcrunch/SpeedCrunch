@@ -892,7 +892,8 @@ bool EditorCompletion::eventFilter( QObject * obj, QEvent * ev )
     if ( ev->type() == QEvent::KeyPress )
     {
       QKeyEvent *ke = (QKeyEvent*)ev;
-      if ( ke->key() == Qt::Key_Enter || ke->key() == Qt::Key_Return || ke->key() == Qt::Key_Tab )
+      if (    ke->key() == Qt::Key_Enter || ke->key() == Qt::Key_Return
+           || ke->key() == Qt::Key_Tab )
       {
         doneCompletion();
         return true;

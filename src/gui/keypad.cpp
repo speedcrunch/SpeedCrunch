@@ -69,7 +69,6 @@ struct Keypad::Private
     void createButtons();
     void disableButtonFocus();
     void layoutButtons();
-    void polishButtons();
     void setButtonTooltips();
     void setUpButtonPressedSignal();
     void sizeButtons();
@@ -85,7 +84,6 @@ Keypad::Keypad( QWidget * parent )
 {
   d->p = this;
   d->createButtons();
-  d->polishButtons();
   d->sizeButtons();
   d->layoutButtons();
   d->setButtonTooltips();
@@ -275,46 +273,6 @@ void Keypad::Private::layoutButtons()
 }
 
 
-void Keypad::Private::polishButtons()
-{
-  key0->ensurePolished();
-  key1->ensurePolished();
-  key2->ensurePolished();
-  key3->ensurePolished();
-  key4->ensurePolished();
-  key5->ensurePolished();
-  key6->ensurePolished();
-  key7->ensurePolished();
-  key8->ensurePolished();
-  key9->ensurePolished();
-  keyAcos->ensurePolished();
-  keyAdd->ensurePolished();
-  keyAns->ensurePolished();
-  keyAsin->ensurePolished();
-  keyAtan->ensurePolished();
-  keyC->ensurePolished();
-  keyCos->ensurePolished();
-  keyDiv->ensurePolished();
-  keyDot->ensurePolished();
-  keyEE->ensurePolished();
-  keyExp->ensurePolished();
-  keyFact->ensurePolished();
-  keyLn->ensurePolished();
-  keyLPar->ensurePolished();
-  keyMul->ensurePolished();
-  keyPerc->ensurePolished();
-  keyPi->ensurePolished();
-  keyRaise->ensurePolished();
-  keyRPar->ensurePolished();
-  keySin->ensurePolished();
-  keySqrt->ensurePolished();
-  keySub->ensurePolished();
-  keyTan->ensurePolished();
-  keyX->ensurePolished();
-  keyXEq->ensurePolished();
-}
-
-
 void Keypad::Private::setButtonTooltips()
 {
   keyAcos->setToolTip( tr("Inverse cosine")      );
@@ -411,6 +369,7 @@ void Keypad::Private::sizeButtons()
   keyDiv->setMaximumSize   ( size ); keyDiv->setMinimumSize   ( size );
   keyDot->setMaximumSize   ( size ); keyDot->setMinimumSize   ( size );
   keyEE->setMaximumSize    ( size ); keyEE->setMinimumSize    ( size );
+  keyEq->setMaximumSize    ( size ); keyEq->setMinimumSize    ( size );
   keyExp->setMaximumSize   ( size ); keyExp->setMinimumSize   ( size );
   keyFact->setMaximumSize  ( size ); keyFact->setMinimumSize  ( size );
   keyLn->setMaximumSize    ( size ); keyLn->setMinimumSize    ( size );
