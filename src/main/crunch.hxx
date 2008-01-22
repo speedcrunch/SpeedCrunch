@@ -23,12 +23,16 @@
 #define CRUNCH_HXX
 
 
+#include <gui/keypad.hxx>
+
 #include <QCloseEvent>
 #include <QMainWindow>
 #include <QSystemTrayIcon>
 
 
 class CrunchPrivate;
+
+class Keypad;
 
 
 class Crunch : public QMainWindow
@@ -95,6 +99,7 @@ class Crunch : public QMainWindow
     void constantSelected( const QString & );
     void expressionSelected( const QString & );
     void functionSelected( const QString & );
+    void keypadButtonPressed( Keypad::Button );
     void minimizeToTray();
     void restoreDocks();
     void restoreLastSession();

@@ -123,7 +123,7 @@ struct CrunchPrivate
 {
   Qt::WindowFlags flags;
 
-  Actions   actions;
+  Actions actions;
 
   QActionGroup * angleGroup;
   QActionGroup * digitsGroup;
@@ -145,9 +145,6 @@ struct CrunchPrivate
   bool            autoAns;
   AutoHideLabel * autoCalcLabel;
   TipWidget     * tip;
-
-  QPushButton * clearExpressionButton;
-  QPushButton * evalButton;
 
   QSystemTrayIcon * trayIcon;
   QMenu           * trayIconMenu;
@@ -197,61 +194,34 @@ Crunch::Crunch() : QMainWindow()
   outerBoxLayout->setMargin( 0 );
   outerBoxLayout->setSpacing( 0 );
 
-  // Result list
+  // display
   d->result = new Result( box );
   //d->result->setStyleSheet( "background: black" );
   outerBoxLayout->addWidget( d->result );
 
-  // Layout for editor and evaluation button
-  QWidget * inputBoxLayoutWidget = new QWidget;
-  QHBoxLayout * inputBoxLayout = new QHBoxLayout( inputBoxLayoutWidget );
-  inputBoxLayout->setMargin( 3 );
-  inputBoxLayout->setSpacing( 3 );
-
-  d->clearExpressionButton = new QPushButton( box );
-  d->clearExpressionButton->hide();
-  d->clearExpressionButton->setMaximumWidth( 25 );
-  d->clearExpressionButton->setFlat( true );
-  d->clearExpressionButton->setIcon( QPixmap(":/clearinput.png") );
-  d->clearExpressionButton->setToolTip( tr("Clear input line") );
-  d->clearExpressionButton->setFocusPolicy( Qt::NoFocus );
-  inputBoxLayout->addWidget( d->clearExpressionButton );
-
+  // editor
+  QHBoxLayout * editorLayout = new QHBoxLayout( box );
+  editorLayout->setMargin( 5 );
   d->editor = new Editor( d->eval, box );
-  //d->editor->setStyleSheet( "font: bold 11px" );
   d->editor->setFocus();
-  inputBoxLayout->addWidget( d->editor );
-
-  d->evalButton = new QPushButton( box );
-  d->evalButton->hide();
-  d->evalButton->setMinimumWidth( 60 );
-  d->evalButton->setMaximumHeight( d->editor->height() );
-  d->evalButton->setText( "=" );
-  d->evalButton->setToolTip( tr("Evaluate") );
-  d->evalButton->setFocusPolicy( Qt::NoFocus );
-  //d->evalButton->setStyleSheet( "QPushButton {font: bold; color: white; border-style: outset; border-color: #101010; border-radius: 10px; border-width: 2px }" );
-  d->evalButton->setStyleSheet( "QPushButton { font: bold; border-style: outset; border-color: beige; border-radius: 10px; border-width: 3px }" );
-  inputBoxLayout->addWidget( d->evalButton );
-
-  //outerBoxLayout->addLayout( inputBoxLayout );
-  outerBoxLayout->addWidget( inputBoxLayoutWidget );
+  //d->editor->setStyleSheet( "font: bold 11px" );
+  editorLayout->addWidget( d->editor );
+  outerBoxLayout->addLayout( editorLayout );
 
   // we need settings to be loaded before keypad and constants dock
   Settings::self()->load();
 
-  // Keypad
+  // keypad
   QHBoxLayout * keypadLayout = new QHBoxLayout();
-
   d->keypad = new Keypad( box );
   d->keypad->setFocusPolicy( Qt::NoFocus );
   d->keypad->hide();
   //d->keypad->setStyleSheet( "QPushButton { font: bold; color: white; border-style: outset; border-color: #101010; border-radius: 10px; border-width: 2px }" );
-  d->keypad->setStyleSheet( "QPushButton { font: bold; border-style: outset; border-color: beige; border-radius: 10px; border-width: 3px }" );
-
+  //d->keypad->setStyleSheet( "QPushButton { font: bold; border-style: outset; border-radius: 10px; border-width: 3px }" );
+  d->keypad->setStyleSheet( "QPushButton { font: bold; border-radius: 10px; border-width: 3px }" );
   keypadLayout->addStretch();
   keypadLayout->addWidget( d->keypad );
   keypadLayout->addStretch();
-
   outerBoxLayout->addLayout( keypadLayout );
 
   // Docks
@@ -283,22 +253,19 @@ Crunch::Crunch() : QMainWindow()
   d->autoCalcLabel = new AutoHideLabel( this );
   d->autoCalcLabel->hide();
 
-  // for tip of the day and and menu bar hiding message
+  // for tip of the day and menu bar hiding message
   d->tip = new TipWidget( this );
   d->tip->hide();
 
   // Connect signals and slots
-  connect( d->clearExpressionButton, SIGNAL(clicked()),                                        SLOT(clearExpression())                          );
   connect( d->constantsDock,         SIGNAL(constantSelected( const QString& )),               SLOT(constantSelected( const QString & ))   );
   connect( d->editor,                SIGNAL(autoCalcActivated( const QString& )),              SLOT(showAutoCalc( const QString & ))       );
   connect( d->editor,                SIGNAL(autoCalcDeactivated()),                            SLOT(hideAutoCalc())                        );
   connect( d->editor,                SIGNAL(returnPressed()),                                  SLOT(returnPressed())                       );
   connect( d->editor,                SIGNAL(textChanged()),                                    SLOT(textChanged())                         );
-  connect( d->evalButton,            SIGNAL(clicked()),                                        SLOT(returnPressed())                       );
   connect( d->functionsDock,         SIGNAL(functionSelected( const QString & )),              SLOT(functionSelected( const QString & ))   );
   connect( d->historyDock,           SIGNAL(expressionSelected( const QString & )),            SLOT(expressionSelected( const QString & )) );
-  connect( d->keypad,                SIGNAL(addText( const QString & )),                       SLOT(addKeypadText( const QString & ))      );
-  connect( d->keypad,                SIGNAL(evaluate()),                            d->editor, SLOT(evaluate() )                           );
+  connect( d->keypad,                SIGNAL(buttonPressed( Keypad::Button )),                  SLOT(keypadButtonPressed( Keypad::Button )) );
   connect( d->result,                SIGNAL(textCopied( const QString & )),         d->editor, SLOT(paste())                               );
   connect( d->result,                SIGNAL(textCopied( const QString & )),         d->editor, SLOT(setFocus())                            );
   connect( d->variablesDock,         SIGNAL(variableSelected( const QString& )),               SLOT(variableSelected( const QString & ))   );
@@ -852,7 +819,6 @@ void Crunch::setWidgetsLayoutAccordingToLanguageDirection()
 
 void Crunch::scrollDown()
 {
-  qDebug( "SDJFJSDJFSDJFJ") ;
   QScrollBar * sb = d->result->verticalScrollBar();
   int value = sb->value() + 40;
   sb->setValue( value );
@@ -861,7 +827,6 @@ void Crunch::scrollDown()
 
 void Crunch::scrollUp()
 {
-  qDebug( "SDJFJSDJFSDJFJ") ;
   QScrollBar * sb = d->result->verticalScrollBar();
   int value = sb->value() - 40;
   sb->setValue( value );
@@ -935,8 +900,6 @@ void Crunch::showKeypad( bool b )
   Settings * settings = Settings::self();
   settings->showKeypad = b;
   d->keypad->setVisible( b );
-  d->clearExpressionButton->setVisible( b );
-  d->evalButton->setVisible( b );
   d->actions.showKeypad->setChecked( b );
   d->result->scrollEnd();
 }
@@ -1103,8 +1066,55 @@ void Crunch::functionSelected( const QString & e )
 
   QTimer::singleShot( 0, d->editor, SLOT(setFocus()) );
 
-  if( !isActiveWindow () )
+  if ( ! isActiveWindow () )
     activateWindow();
+}
+
+
+void Crunch::keypadButtonPressed( Keypad::Button b )
+{
+  switch ( b )
+  {
+    case Keypad::Key0:         d->editor->insert( "0" );      break;
+    case Keypad::Key1:         d->editor->insert( "1" );      break;
+    case Keypad::Key2:         d->editor->insert( "2" );      break;
+    case Keypad::Key3:         d->editor->insert( "3" );      break;
+    case Keypad::Key4:         d->editor->insert( "4" );      break;
+    case Keypad::Key5:         d->editor->insert( "5" );      break;
+    case Keypad::Key6:         d->editor->insert( "6" );      break;
+    case Keypad::Key7:         d->editor->insert( "7" );      break;
+    case Keypad::Key8:         d->editor->insert( "8" );      break;
+    case Keypad::Key9:         d->editor->insert( "9" );      break;
+    case Keypad::KeyPlus:      d->editor->insert( "+" );      break;
+    case Keypad::KeyMinus:     d->editor->insert( "-" );      break;
+    case Keypad::KeyTimes:     d->editor->insert( "*" );      break;
+    case Keypad::KeyDivide:    d->editor->insert( "/" );      break;
+    case Keypad::KeyEE:        d->editor->insert( "e" );      break;
+    case Keypad::KeyLeftPar:   d->editor->insert( "(" );      break;
+    case Keypad::KeyRightPar:  d->editor->insert( ")" );      break;
+    case Keypad::KeyRaise:     d->editor->insert( "^" );      break;
+    case Keypad::KeyPercent:   d->editor->insert( "%" );      break;
+    case Keypad::KeyFactorial: d->editor->insert( "!" );      break;
+    case Keypad::KeyX:         d->editor->insert( "x" );      break;
+    case Keypad::KeyXEquals:   d->editor->insert( "x=" );     break;
+    case Keypad::KeyPi:        d->editor->insert( "pi" );     break;
+    case Keypad::KeyAns:       d->editor->insert( "ans" );    break;
+    case Keypad::KeyLn:        d->editor->insert( "ln(" );    break;
+    case Keypad::KeyExp:       d->editor->insert( "exp(" );   break;
+    case Keypad::KeySin:       d->editor->insert( "sin(" );   break;
+    case Keypad::KeyCos:       d->editor->insert( "cos(" );   break;
+    case Keypad::KeyTan:       d->editor->insert( "tan(" );   break;
+    case Keypad::KeyAcos:      d->editor->insert( "acos(" );  break;
+    case Keypad::KeyAtan:      d->editor->insert( "atan(" );  break;
+    case Keypad::KeyAsin:      d->editor->insert( "asin(" );  break;
+    case Keypad::KeySqrt:      d->editor->insert( "sqrt(" );  break;
+    case Keypad::KeyEquals:    d->editor->evaluate();         break;
+    case Keypad::KeyClear:     clearExpression();             break;
+    case Keypad::KeyDot:       d->editor->insert( Settings::decimalPoint() ); break;
+    default:;
+  }
+
+  QTimer::singleShot( 0, d->editor, SLOT(setFocus()) );
 }
 
 
@@ -1568,6 +1578,8 @@ void Crunch::createUI()
   d->helpMenu->addAction( d->actions.helpAboutQt );
 
   this->addActions( menuBar()->actions() );
+  this->addAction( d->actions.scrollDown );
+  this->addAction( d->actions.scrollUp );
 
   setWindowIcon( QPixmap( ":/crunch.png" ) );
 }

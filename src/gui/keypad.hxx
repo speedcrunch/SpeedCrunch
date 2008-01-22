@@ -25,71 +25,66 @@
 #include <QWidget>
 
 
-class KeypadPrivate;
-
-
 class Keypad : public QWidget
 {
   Q_OBJECT
 
   public:
+    enum Button { Key0, Key1, Key2, Key3, Key4, Key5, Key6, Key7, Key8, Key9,
+                  KeyEquals, KeyPlus, KeyMinus, KeyTimes, KeyDivide, KeyDot,
+                  KeyClear, KeyEE, KeyLeftPar, KeyRightPar,
+                  KeyRaise, KeySqrt, KeyPercent, KeyFactorial,
+                  KeyPi, KeyAns, KeyX, KeyXEquals, KeyExp, KeyLn,
+                  KeySin, KeyAsin, KeyCos, KeyAcos, KeyTan, KeyAtan };
+
     explicit Keypad( QWidget * parent );
     ~Keypad();
 
   signals:
-    void addText( const QString & );
-    void evaluate();
-
-  public slots:
-    void settingsChanged();
+    void buttonPressed( Keypad::Button );
 
   protected slots:
-    void clicked0();
-    void clicked1();
-    void clicked2();
-    void clicked3();
-    void clicked4();
-    void clicked5();
-    void clicked6();
-    void clicked7();
-    void clicked8();
-    void clicked9();
-    void clickedACos();
-    void clickedAdd();
-    void clickedAns();
-    void clickedASin();
-    void clickedATan();
-    void clickedAvg();
-    void clickedCos();
-    void clickedDiv();
-    void clickedDot();
-    void clickedEE();
-    void clickedExp();
-    void clickedFact();
-    void clickedLn();
-    void clickedLParen();
-    void clickedMul();
-    void clickedPerc();
-    void clickedPi();
-    void clickedRaise();
-    void clickedRParen();
-    void clickedSemic();
-    void clickedSin();
-    void clickedSqrt();
-    void clickedSub();
-    void clickedTan();
-    void clickedX();
-    void clickedXEq();
+    void key0Pressed();
+    void key1Pressed();
+    void key2Pressed();
+    void key3Pressed();
+    void key4Pressed();
+    void key5Pressed();
+    void key6Pressed();
+    void key7Pressed();
+    void key8Pressed();
+    void key9Pressed();
+    void keyAcosPressed();
+    void keyAddPressed();
+    void keyAnsPressed();
+    void keyAsinPressed();
+    void keyAtanPressed();
+    void keyCPressed();
+    void keyCosPressed();
+    void keyDivPressed();
+    void keyDotPressed();
+    void keyEEPressed();
+    void keyEqPressed();
+    void keyExpPressed();
+    void keyFactPressed();
+    void keyLnPressed();
+    void keyLParPressed();
+    void keyMulPressed();
+    void keyPercPressed();
+    void keyPiPressed();
+    void keyRaisePressed();
+    void keyRParPressed();
+    void keySinPressed();
+    void keySqrtPressed();
+    void keySubPressed();
+    void keyTanPressed();
+    void keyXPressed();
+    void keyXEqPressed();
+    void settingsChanged();
 
   private:
-    void connectButtons();
-    void createButtons();
-    void deactivateButtonFocus();
-    void layoutButtons();
-    void polishButtons();
-    void sizeButtons();
-
-    KeypadPrivate * d;
+    struct Private;
+    Keypad::Private * const d;
     Keypad( const Keypad & );
     Keypad & operator=( const Keypad & );
 };

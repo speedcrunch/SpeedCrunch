@@ -27,9 +27,8 @@
 #include <QStyle>
 
 
-class KeypadPrivate
+struct Keypad::Private
 {
-  public:
     QPushButton * key0;
     QPushButton * key1;
     QPushButton * key2;
@@ -40,65 +39,58 @@ class KeypadPrivate
     QPushButton * key7;
     QPushButton * key8;
     QPushButton * key9;
-    QPushButton * keyACos;
+    QPushButton * keyAcos;
     QPushButton * keyAdd;
     QPushButton * keyAns;
-    QPushButton * keyASin;
-    QPushButton * keyATan;
-    QPushButton * keyCbrt;
+    QPushButton * keyAsin;
+    QPushButton * keyAtan;
+    QPushButton * keyC;
     QPushButton * keyCos;
     QPushButton * keyDiv;
     QPushButton * keyDot;
     QPushButton * keyEE;
+    QPushButton * keyEq;
     QPushButton * keyExp;
     QPushButton * keyFact;
     QPushButton * keyLn;
-    QPushButton * keyLParen;
+    QPushButton * keyLPar;
     QPushButton * keyMul;
     QPushButton * keyPerc;
     QPushButton * keyPi;
     QPushButton * keyRaise;
-    QPushButton * keyRParen;
-    QPushButton * keySemic;
+    QPushButton * keyRPar;
     QPushButton * keySin;
     QPushButton * keySqrt;
     QPushButton * keySub;
     QPushButton * keyTan;
     QPushButton * keyX;
     QPushButton * keyXEq;
+
+    void createButtons();
+    void disableButtonFocus();
+    void layoutButtons();
+    void polishButtons();
+    void setButtonTooltips();
+    void setUpButtonPressedSignal();
+    void sizeButtons();
+
+    Keypad * p;
 };
 
 
 // public
 
-Keypad::Keypad( QWidget * parent ) : QWidget( parent )
+Keypad::Keypad( QWidget * parent )
+  : QWidget( parent ), d( new Keypad::Private )
 {
-  d = new KeypadPrivate;
-
-  // Setup buttons
-  createButtons();
-  polishButtons();
-  sizeButtons();
-  deactivateButtonFocus();
-  layoutButtons();
-  connectButtons();
-
-  // Add tool tips
-  d->keyACos->setToolTip( tr("Inverse cosine")        );
-  d->keyAns->setToolTip ( tr("The last result")       );
-  d->keyASin->setToolTip( tr("Inverse sine")          );
-  d->keyATan->setToolTip( tr("Inverse tangent")       );
-  d->keyCbrt->setToolTip( tr("Cube root")             );
-  d->keyCos->setToolTip ( tr("Cosine")                );
-  d->keyEE->setToolTip  ( tr("Scientific E notation") );
-  d->keyExp->setToolTip ( tr("Exponential")           );
-  d->keyLn->setToolTip  ( tr("Natural logarithm")     );
-  d->keyPi->setToolTip  ( tr("The number Pi")         );
-  d->keySin->setToolTip ( tr("Sine")                  );
-  d->keySqrt->setToolTip( tr("Square root")           );
-  d->keyTan->setToolTip ( tr("Tangent")               );
-  d->keyXEq->setToolTip ( tr("Assign variable x")     );
-  d->keyX->setToolTip   ( tr("The variable x")        );
+  d->p = this;
+  d->createButtons();
+  d->polishButtons();
+  d->sizeButtons();
+  d->layoutButtons();
+  d->setButtonTooltips();
+  d->setUpButtonPressedSignal();
+  d->disableButtonFocus();
 }
 
 
@@ -108,7 +100,45 @@ Keypad::~Keypad()
 }
 
 
-// public slots
+// protected slots
+
+void Keypad::key0Pressed()     { emit buttonPressed( Keypad::Key0         ); };
+void Keypad::key1Pressed()     { emit buttonPressed( Keypad::Key1         ); };
+void Keypad::key2Pressed()     { emit buttonPressed( Keypad::Key2         ); };
+void Keypad::key3Pressed()     { emit buttonPressed( Keypad::Key3         ); };
+void Keypad::key4Pressed()     { emit buttonPressed( Keypad::Key4         ); };
+void Keypad::key5Pressed()     { emit buttonPressed( Keypad::Key5         ); };
+void Keypad::key6Pressed()     { emit buttonPressed( Keypad::Key6         ); };
+void Keypad::key7Pressed()     { emit buttonPressed( Keypad::Key7         ); };
+void Keypad::key8Pressed()     { emit buttonPressed( Keypad::Key8         ); };
+void Keypad::key9Pressed()     { emit buttonPressed( Keypad::Key9         ); };
+void Keypad::keyAcosPressed()  { emit buttonPressed( Keypad::KeyAcos      ); };
+void Keypad::keyAddPressed()   { emit buttonPressed( Keypad::KeyPlus      ); };
+void Keypad::keyAnsPressed()   { emit buttonPressed( Keypad::KeyAns       ); };
+void Keypad::keyAsinPressed()  { emit buttonPressed( Keypad::KeyAsin      ); };
+void Keypad::keyAtanPressed()  { emit buttonPressed( Keypad::KeyAtan      ); };
+void Keypad::keyCosPressed()   { emit buttonPressed( Keypad::KeyCos       ); };
+void Keypad::keyCPressed()     { emit buttonPressed( Keypad::KeyClear     ); };
+void Keypad::keyDivPressed()   { emit buttonPressed( Keypad::KeyDivide    ); };
+void Keypad::keyDotPressed()   { emit buttonPressed( Keypad::KeyDot       ); };
+void Keypad::keyEEPressed()    { emit buttonPressed( Keypad::KeyEE        ); };
+void Keypad::keyEqPressed()    { emit buttonPressed( Keypad::KeyEquals    ); };
+void Keypad::keyExpPressed()   { emit buttonPressed( Keypad::KeyExp       ); };
+void Keypad::keyFactPressed()  { emit buttonPressed( Keypad::KeyFactorial ); };
+void Keypad::keyLnPressed()    { emit buttonPressed( Keypad::KeyLn        ); };
+void Keypad::keyLParPressed()  { emit buttonPressed( Keypad::KeyLeftPar   ); };
+void Keypad::keyMulPressed()   { emit buttonPressed( Keypad::KeyTimes     ); };
+void Keypad::keyPercPressed()  { emit buttonPressed( Keypad::KeyPercent   ); };
+void Keypad::keyPiPressed()    { emit buttonPressed( Keypad::KeyPi        ); };
+void Keypad::keyRaisePressed() { emit buttonPressed( Keypad::KeyRaise     ); };
+void Keypad::keyRParPressed()  { emit buttonPressed( Keypad::KeyRightPar  ); };
+void Keypad::keySinPressed()   { emit buttonPressed( Keypad::KeySin       ); };
+void Keypad::keySqrtPressed()  { emit buttonPressed( Keypad::KeySqrt      ); };
+void Keypad::keySubPressed()   { emit buttonPressed( Keypad::KeyMinus     ); };
+void Keypad::keyTanPressed()   { emit buttonPressed( Keypad::KeyTan       ); };
+void Keypad::keyXPressed()     { emit buttonPressed( Keypad::KeyX         ); };
+void Keypad::keyXEqPressed()   { emit buttonPressed( Keypad::KeyXEquals   ); };
+
 
 void Keypad::settingsChanged()
 {
@@ -116,347 +146,284 @@ void Keypad::settingsChanged()
 }
 
 
-// protected slots
-
-void Keypad::clicked0()      { emit addText( "0"        ); }
-void Keypad::clicked1()      { emit addText( "1"        ); }
-void Keypad::clicked2()      { emit addText( "2"        ); }
-void Keypad::clicked3()      { emit addText( "3"        ); }
-void Keypad::clicked4()      { emit addText( "4"        ); }
-void Keypad::clicked5()      { emit addText( "5"        ); }
-void Keypad::clicked6()      { emit addText( "6"        ); }
-void Keypad::clicked7()      { emit addText( "7"        ); }
-void Keypad::clicked8()      { emit addText( "8"        ); }
-void Keypad::clicked9()      { emit addText( "9"        ); }
-void Keypad::clickedACos()   { emit addText( "acos("    ); }
-void Keypad::clickedAdd()    { emit addText( "+"        ); }
-void Keypad::clickedAns()    { emit addText( "ans"      ); }
-void Keypad::clickedASin()   { emit addText( "asin("    ); }
-void Keypad::clickedATan()   { emit addText( "atan("    ); }
-void Keypad::clickedAvg()    { emit addText( "cbrt("    ); }
-void Keypad::clickedCos()    { emit addText( "cos("     ); }
-void Keypad::clickedDiv()    { emit addText( "/"        ); }
-void Keypad::clickedDot()    { emit addText( d->keyDot->text().toLatin1() ); }
-void Keypad::clickedEE()     { emit addText( "e"        ); }
-void Keypad::clickedExp()    { emit addText( "exp("     ); }
-void Keypad::clickedFact()   { emit addText( "!"        ); }
-void Keypad::clickedLn()     { emit addText( "ln("      ); }
-void Keypad::clickedLParen() { emit addText( "("        ); }
-void Keypad::clickedMul()    { emit addText( "*"        ); }
-void Keypad::clickedPerc()   { emit addText( "%"        ); }
-void Keypad::clickedPi()     { emit addText( "pi"       ); }
-void Keypad::clickedRaise()  { emit addText( "^"        ); }
-void Keypad::clickedRParen() { emit addText( ")"        ); }
-void Keypad::clickedSemic()  { emit addText( ";"        ); }
-void Keypad::clickedSin()    { emit addText( "sin("     ); }
-void Keypad::clickedSqrt()   { emit addText( "sqrt("    ); }
-void Keypad::clickedSub()    { emit addText( "-"        ); }
-void Keypad::clickedTan()    { emit addText( "tan("     ); }
-void Keypad::clickedX()      { emit addText( "x"        ); }
-void Keypad::clickedXEq()    { emit addText( "x="       ); }
-
-
 // private
 
-void Keypad::connectButtons()
+void Keypad::Private::createButtons()
 {
-  connect( d->key0,         SIGNAL(clicked()), SLOT(clicked0())      );
-  connect( d->key1,         SIGNAL(clicked()), SLOT(clicked1())      );
-  connect( d->key2,         SIGNAL(clicked()), SLOT(clicked2())      );
-  connect( d->key3,         SIGNAL(clicked()), SLOT(clicked3())      );
-  connect( d->key4,         SIGNAL(clicked()), SLOT(clicked4())      );
-  connect( d->key5,         SIGNAL(clicked()), SLOT(clicked5())      );
-  connect( d->key6,         SIGNAL(clicked()), SLOT(clicked6())      );
-  connect( d->key7,         SIGNAL(clicked()), SLOT(clicked7())      );
-  connect( d->key8,         SIGNAL(clicked()), SLOT(clicked8())      );
-  connect( d->key9,         SIGNAL(clicked()), SLOT(clicked9())      );
-  connect( d->keyDot,       SIGNAL(clicked()), SLOT(clickedDot())    );
-  connect( d->keySqrt,      SIGNAL(clicked()), SLOT(clickedSqrt())   );
-  connect( d->keyRaise,     SIGNAL(clicked()), SLOT(clickedRaise())  );
-  connect( d->keyPerc,      SIGNAL(clicked()), SLOT(clickedPerc())   );
-  connect( d->keyFact,      SIGNAL(clicked()), SLOT(clickedFact())   );
-  connect( d->keyEE,        SIGNAL(clicked()), SLOT(clickedEE())     );
-  connect( d->keyLParen,    SIGNAL(clicked()), SLOT(clickedLParen()) );
-  connect( d->keySemic,     SIGNAL(clicked()), SLOT(clickedSemic())  );
-  connect( d->keyRParen,    SIGNAL(clicked()), SLOT(clickedRParen()) );
-  connect( d->keyCbrt,      SIGNAL(clicked()), SLOT(clickedAvg())    );
-  connect( d->keyAdd,       SIGNAL(clicked()), SLOT(clickedAdd())    );
-  connect( d->keySub,       SIGNAL(clicked()), SLOT(clickedSub())    );
-  connect( d->keyMul,       SIGNAL(clicked()), SLOT(clickedMul())    );
-  connect( d->keyDiv,       SIGNAL(clicked()), SLOT(clickedDiv())    );
-  connect( d->keyPi,        SIGNAL(clicked()), SLOT(clickedPi())     );
-  connect( d->keyAns,       SIGNAL(clicked()), SLOT(clickedAns())    );
-  connect( d->keyX,         SIGNAL(clicked()), SLOT(clickedX())      );
-  connect( d->keyXEq,       SIGNAL(clicked()), SLOT(clickedXEq())    );
-  connect( d->keyExp,       SIGNAL(clicked()), SLOT(clickedExp())    );
-  connect( d->keyLn,        SIGNAL(clicked()), SLOT(clickedLn())     );
-  connect( d->keySin,       SIGNAL(clicked()), SLOT(clickedSin())    );
-  connect( d->keyCos,       SIGNAL(clicked()), SLOT(clickedCos())    );
-  connect( d->keyTan,       SIGNAL(clicked()), SLOT(clickedTan())    );
-  connect( d->keyASin,      SIGNAL(clicked()), SLOT(clickedASin())   );
-  connect( d->keyACos,      SIGNAL(clicked()), SLOT(clickedACos())   );
-  connect( d->keyATan,      SIGNAL(clicked()), SLOT(clickedATan())   );
+  key0      = new QPushButton( "0",    p );
+  key1      = new QPushButton( "1",    p );
+  key2      = new QPushButton( "2",    p );
+  key3      = new QPushButton( "3",    p );
+  key4      = new QPushButton( "4",    p );
+  key5      = new QPushButton( "5",    p );
+  key6      = new QPushButton( "6",    p );
+  key7      = new QPushButton( "7",    p );
+  key8      = new QPushButton( "8",    p );
+  key9      = new QPushButton( "9",    p );
+  keyAcos   = new QPushButton( "acos", p );
+  keyAdd    = new QPushButton( "+",    p );
+  keyAns    = new QPushButton( "ans",  p );
+  keyAsin   = new QPushButton( "asin", p );
+  keyAtan   = new QPushButton( "atan", p );
+  keyC      = new QPushButton( "C",    p );
+  keyCos    = new QPushButton( "cos",  p );
+  keyDiv    = new QPushButton( "/",    p );
+  keyEE     = new QPushButton( "E",    p );
+  keyEq     = new QPushButton( "=",    p );
+  keyExp    = new QPushButton( "exp",  p );
+  keyFact   = new QPushButton( "!",    p );
+  keyLn     = new QPushButton( "ln",   p );
+  keyLPar   = new QPushButton( "(",    p );
+  keyMul    = new QPushButton( "*",    p );
+  keyPerc   = new QPushButton( "%",    p );
+  keyRaise  = new QPushButton( "^",    p );
+  keyRPar   = new QPushButton( ")",    p );
+  keySin    = new QPushButton( "sin",  p );
+  keySub    = new QPushButton( "-",    p );
+  keyTan    = new QPushButton( "tan",  p );
+  keyXEq    = new QPushButton( "x=",   p );
+  keyX      = new QPushButton( "x",    p );
+  keyDot    = new QPushButton( Settings::decimalPoint(), p );
+  keyPi     = new QPushButton( QString::fromUtf8("π"),   p );
+  keySqrt   = new QPushButton( QString::fromUtf8("√"),   p );
 }
 
 
-void Keypad::createButtons()
+void Keypad::Private::disableButtonFocus()
 {
-  QChar dot = Settings::decimalPoint();
-
-  d->key0      = new QPushButton( "0",    this );
-  d->key1      = new QPushButton( "1",    this );
-  d->key2      = new QPushButton( "2",    this );
-  d->key3      = new QPushButton( "3",    this );
-  d->key4      = new QPushButton( "4",    this );
-  d->key5      = new QPushButton( "5",    this );
-  d->key6      = new QPushButton( "6",    this );
-  d->key7      = new QPushButton( "7",    this );
-  d->key8      = new QPushButton( "8",    this );
-  d->key9      = new QPushButton( "9",    this );
-  d->keyACos   = new QPushButton( "acos", this );
-  d->keyAdd    = new QPushButton( "+",    this );
-  d->keyAns    = new QPushButton( "ans",  this );
-  d->keyASin   = new QPushButton( "asin", this );
-  d->keyATan   = new QPushButton( "atan", this );
-  d->keyCos    = new QPushButton( "cos",  this );
-  d->keyDiv    = new QPushButton( "/",    this );
-  d->keyDot    = new QPushButton( dot,    this );
-  d->keyEE     = new QPushButton( "EE",   this );
-  d->keyExp    = new QPushButton( "exp",  this );
-  d->keyFact   = new QPushButton( "!",    this );
-  d->keyLn     = new QPushButton( "ln",   this );
-  d->keyLParen = new QPushButton( "(",    this );
-  d->keyMul    = new QPushButton( "*",    this );
-  d->keyPerc   = new QPushButton( "%",    this );
-  d->keyRaise  = new QPushButton( "^",    this );
-  d->keyRParen = new QPushButton( ")",    this );
-  d->keySemic  = new QPushButton( ";",    this );
-  d->keySin    = new QPushButton( "sin",  this );
-  d->keySub    = new QPushButton( "-",    this );
-  d->keyTan    = new QPushButton( "tan",  this );
-  d->keyXEq    = new QPushButton( "x=",   this );
-  d->keyX      = new QPushButton( "x",    this );
-  d->keyCbrt   = new QPushButton( QString::fromUtf8("∛"), this );
-  d->keyPi     = new QPushButton( QString::fromUtf8("π"), this );
-  d->keySqrt   = new QPushButton( QString::fromUtf8("√"), this );
+  key0->setFocusPolicy    ( Qt::NoFocus );
+  key1->setFocusPolicy    ( Qt::NoFocus );
+  key2->setFocusPolicy    ( Qt::NoFocus );
+  key3->setFocusPolicy    ( Qt::NoFocus );
+  key4->setFocusPolicy    ( Qt::NoFocus );
+  key5->setFocusPolicy    ( Qt::NoFocus );
+  key6->setFocusPolicy    ( Qt::NoFocus );
+  key7->setFocusPolicy    ( Qt::NoFocus );
+  key8->setFocusPolicy    ( Qt::NoFocus );
+  key9->setFocusPolicy    ( Qt::NoFocus );
+  keyAcos->setFocusPolicy ( Qt::NoFocus );
+  keyAdd->setFocusPolicy  ( Qt::NoFocus );
+  keyAns->setFocusPolicy  ( Qt::NoFocus );
+  keyAsin->setFocusPolicy ( Qt::NoFocus );
+  keyAtan->setFocusPolicy ( Qt::NoFocus );
+  keyCos->setFocusPolicy  ( Qt::NoFocus );
+  keyC->setFocusPolicy    ( Qt::NoFocus );
+  keyDiv->setFocusPolicy  ( Qt::NoFocus );
+  keyDot->setFocusPolicy  ( Qt::NoFocus );
+  keyEE->setFocusPolicy   ( Qt::NoFocus );
+  keyEq->setFocusPolicy   ( Qt::NoFocus );
+  keyExp->setFocusPolicy  ( Qt::NoFocus );
+  keyFact->setFocusPolicy ( Qt::NoFocus );
+  keyLn->setFocusPolicy   ( Qt::NoFocus );
+  keyLPar->setFocusPolicy ( Qt::NoFocus );
+  keyMul->setFocusPolicy  ( Qt::NoFocus );
+  keyPerc->setFocusPolicy ( Qt::NoFocus );
+  keyPi->setFocusPolicy   ( Qt::NoFocus );
+  keyRaise->setFocusPolicy( Qt::NoFocus );
+  keyRPar->setFocusPolicy ( Qt::NoFocus );
+  keySin->setFocusPolicy  ( Qt::NoFocus );
+  keySqrt->setFocusPolicy ( Qt::NoFocus );
+  keySub->setFocusPolicy  ( Qt::NoFocus );
+  keyTan->setFocusPolicy  ( Qt::NoFocus );
+  keyXEq->setFocusPolicy  ( Qt::NoFocus );
+  keyX->setFocusPolicy    ( Qt::NoFocus );
 }
 
 
-void Keypad::deactivateButtonFocus()
+void Keypad::Private::layoutButtons()
 {
-  d->key0->setFocusPolicy     ( Qt::NoFocus );
-  d->key1->setFocusPolicy     ( Qt::NoFocus );
-  d->key2->setFocusPolicy     ( Qt::NoFocus );
-  d->key3->setFocusPolicy     ( Qt::NoFocus );
-  d->key4->setFocusPolicy     ( Qt::NoFocus );
-  d->key5->setFocusPolicy     ( Qt::NoFocus );
-  d->key6->setFocusPolicy     ( Qt::NoFocus );
-  d->key7->setFocusPolicy     ( Qt::NoFocus );
-  d->key8->setFocusPolicy     ( Qt::NoFocus );
-  d->key9->setFocusPolicy     ( Qt::NoFocus );
-  d->keyACos->setFocusPolicy  ( Qt::NoFocus );
-  d->keyAdd->setFocusPolicy   ( Qt::NoFocus );
-  d->keyAns->setFocusPolicy   ( Qt::NoFocus );
-  d->keyASin->setFocusPolicy  ( Qt::NoFocus );
-  d->keyATan->setFocusPolicy  ( Qt::NoFocus );
-  d->keyCbrt->setFocusPolicy  ( Qt::NoFocus );
-  d->keyCos->setFocusPolicy   ( Qt::NoFocus );
-  d->keyDiv->setFocusPolicy   ( Qt::NoFocus );
-  d->keyDot->setFocusPolicy   ( Qt::NoFocus );
-  d->keyEE->setFocusPolicy    ( Qt::NoFocus );
-  d->keyExp->setFocusPolicy   ( Qt::NoFocus );
-  d->keyFact->setFocusPolicy  ( Qt::NoFocus );
-  d->keyLn->setFocusPolicy    ( Qt::NoFocus );
-  d->keyLParen->setFocusPolicy( Qt::NoFocus );
-  d->keyMul->setFocusPolicy   ( Qt::NoFocus );
-  d->keyPerc->setFocusPolicy  ( Qt::NoFocus );
-  d->keyPi->setFocusPolicy    ( Qt::NoFocus );
-  d->keyRaise->setFocusPolicy ( Qt::NoFocus );
-  d->keyRParen->setFocusPolicy( Qt::NoFocus );
-  d->keySemic->setFocusPolicy ( Qt::NoFocus );
-  d->keySin->setFocusPolicy   ( Qt::NoFocus );
-  d->keySqrt->setFocusPolicy  ( Qt::NoFocus );
-  d->keySub->setFocusPolicy   ( Qt::NoFocus );
-  d->keyTan->setFocusPolicy   ( Qt::NoFocus );
-  d->keyXEq->setFocusPolicy   ( Qt::NoFocus );
-  d->keyX->setFocusPolicy     ( Qt::NoFocus );
-}
-
-
-void Keypad::layoutButtons()
-{
-  QGridLayout * layout = new QGridLayout( this );
+  QGridLayout * layout = new QGridLayout( p );
   layout->setMargin( 3 );
   layout->setSpacing( 3 );
 
-  layout->addWidget( d->key0,         3, 0 );
-  layout->addWidget( d->key1,         2, 0 );
-  layout->addWidget( d->key2,         2, 1 );
-  layout->addWidget( d->key3,         2, 2 );
-  layout->addWidget( d->key4,         1, 0 );
-  layout->addWidget( d->key5,         1, 1 );
-  layout->addWidget( d->key6,         1, 2 );
-  layout->addWidget( d->key7,         0, 0 );
-  layout->addWidget( d->key8,         0, 1 );
-  layout->addWidget( d->key9,         0, 2 );
-  layout->addWidget( d->keyACos,      2, 8 );
-  layout->addWidget( d->keyAdd,       3, 3 );
-  layout->addWidget( d->keyAns,       1, 6 );
-  layout->addWidget( d->keyASin,      1, 8 );
-  layout->addWidget( d->keyATan,      3, 8 );
-  layout->addWidget( d->keyCbrt,      0, 5 );
-  layout->addWidget( d->keyCos,       2, 7 );
-  layout->addWidget( d->keyDiv,       0, 3 );
-  layout->addWidget( d->keyDot,       3, 1 );
-  layout->addWidget( d->keyEE,        3, 2 );
-  layout->addWidget( d->keyExp,       0, 7 );
-  layout->addWidget( d->keyFact,      3, 5 );
-  layout->addWidget( d->keyLn,        0, 8 );
-  layout->addWidget( d->keyLParen,    1, 4 );
-  layout->addWidget( d->keyMul,       1, 3 );
-  layout->addWidget( d->keyPerc,      3, 4 );
-  layout->addWidget( d->keyPi,        0, 6 );
-  layout->addWidget( d->keyRaise,     2, 4 );
-  layout->addWidget( d->keyRParen,    1, 5 );
-  layout->addWidget( d->keySemic,     2, 5 );
-  layout->addWidget( d->keySin,       1, 7 );
-  layout->addWidget( d->keySqrt,      0, 4 );
-  layout->addWidget( d->keySub,       2, 3 );
-  layout->addWidget( d->keyTan,       3, 7 );
-  layout->addWidget( d->keyX,         2, 6 );
-  layout->addWidget( d->keyXEq,       3, 6 );
+  layout->addWidget( key0,      3, 0 );
+  layout->addWidget( key1,      2, 0 );
+  layout->addWidget( key2,      2, 1 );
+  layout->addWidget( key3,      2, 2 );
+  layout->addWidget( key4,      1, 0 );
+  layout->addWidget( key5,      1, 1 );
+  layout->addWidget( key6,      1, 2 );
+  layout->addWidget( key7,      0, 0 );
+  layout->addWidget( key8,      0, 1 );
+  layout->addWidget( key9,      0, 2 );
+  layout->addWidget( keyAcos,   2, 8 );
+  layout->addWidget( keyAdd,    3, 3 );
+  layout->addWidget( keyAns,    1, 6 );
+  layout->addWidget( keyAsin,   1, 8 );
+  layout->addWidget( keyAtan,   3, 8 );
+  layout->addWidget( keyC,      0, 4 );
+  layout->addWidget( keyCos,    2, 7 );
+  layout->addWidget( keyDiv,    0, 3 );
+  layout->addWidget( keyDot,    3, 1 );
+  layout->addWidget( keyEE,     1, 4 );
+  layout->addWidget( keyEq,     3, 2 );
+  layout->addWidget( keyExp,    0, 7 );
+  layout->addWidget( keyFact,   3, 5 );
+  layout->addWidget( keyLn,     0, 8 );
+  layout->addWidget( keyLPar,   2, 4 );
+  layout->addWidget( keyMul,    1, 3 );
+  layout->addWidget( keyPerc,   3, 4 );
+  layout->addWidget( keyPi,     0, 6 );
+  layout->addWidget( keyRaise,  1, 5 );
+  layout->addWidget( keyRPar,   2, 5 );
+  layout->addWidget( keySin,    1, 7 );
+  layout->addWidget( keySqrt,   0, 5 );
+  layout->addWidget( keySub,    2, 3 );
+  layout->addWidget( keyTan,    3, 7 );
+  layout->addWidget( keyX,      2, 6 );
+  layout->addWidget( keyXEq,    3, 6 );
 }
 
 
-void Keypad::polishButtons()
+void Keypad::Private::polishButtons()
 {
-  d->key0->ensurePolished();
-  d->key1->ensurePolished();
-  d->key2->ensurePolished();
-  d->key3->ensurePolished();
-  d->key4->ensurePolished();
-  d->key5->ensurePolished();
-  d->key6->ensurePolished();
-  d->key7->ensurePolished();
-  d->key8->ensurePolished();
-  d->key9->ensurePolished();
-  d->keyACos->ensurePolished();
-  d->keyAdd->ensurePolished();
-  d->keyAns->ensurePolished();
-  d->keyASin->ensurePolished();
-  d->keyATan->ensurePolished();
-  d->keyCbrt->ensurePolished();
-  d->keyCos->ensurePolished();
-  d->keyDiv->ensurePolished();
-  d->keyDot->ensurePolished();
-  d->keyEE->ensurePolished();
-  d->keyExp->ensurePolished();
-  d->keyFact->ensurePolished();
-  d->keyLn->ensurePolished();
-  d->keyLParen->ensurePolished();
-  d->keyMul->ensurePolished();
-  d->keyPerc->ensurePolished();
-  d->keyPi->ensurePolished();
-  d->keyRaise->ensurePolished();
-  d->keyRParen->ensurePolished();
-  d->keySemic->ensurePolished();
-  d->keySin->ensurePolished();
-  d->keySqrt->ensurePolished();
-  d->keySub->ensurePolished();
-  d->keyTan->ensurePolished();
-  d->keyX->ensurePolished();
-  d->keyXEq->ensurePolished();
+  key0->ensurePolished();
+  key1->ensurePolished();
+  key2->ensurePolished();
+  key3->ensurePolished();
+  key4->ensurePolished();
+  key5->ensurePolished();
+  key6->ensurePolished();
+  key7->ensurePolished();
+  key8->ensurePolished();
+  key9->ensurePolished();
+  keyAcos->ensurePolished();
+  keyAdd->ensurePolished();
+  keyAns->ensurePolished();
+  keyAsin->ensurePolished();
+  keyAtan->ensurePolished();
+  keyC->ensurePolished();
+  keyCos->ensurePolished();
+  keyDiv->ensurePolished();
+  keyDot->ensurePolished();
+  keyEE->ensurePolished();
+  keyExp->ensurePolished();
+  keyFact->ensurePolished();
+  keyLn->ensurePolished();
+  keyLPar->ensurePolished();
+  keyMul->ensurePolished();
+  keyPerc->ensurePolished();
+  keyPi->ensurePolished();
+  keyRaise->ensurePolished();
+  keyRPar->ensurePolished();
+  keySin->ensurePolished();
+  keySqrt->ensurePolished();
+  keySub->ensurePolished();
+  keyTan->ensurePolished();
+  keyX->ensurePolished();
+  keyXEq->ensurePolished();
 }
 
 
-void Keypad::sizeButtons()
+void Keypad::Private::setButtonTooltips()
+{
+  keyAcos->setToolTip( tr("Inverse cosine")      );
+  keyAns->setToolTip ( tr("The last result")     );
+  keyAsin->setToolTip( tr("Inverse sine")        );
+  keyAtan->setToolTip( tr("Inverse tangent")     );
+  keyC->setToolTip   ( tr("Clear expression")    );
+  keyCos->setToolTip ( tr("Cosine")              );
+  keyEE->setToolTip  ( tr("Scientific notation") );
+  keyExp->setToolTip ( tr("Exponential")         );
+  keyLn->setToolTip  ( tr("Natural logarithm")   );
+  keySin->setToolTip ( tr("Sine")                );
+  keySqrt->setToolTip( tr("Square root")         );
+  keyTan->setToolTip ( tr("Tangent")             );
+  keyXEq->setToolTip ( tr("Assign variable x")   );
+  keyX->setToolTip   ( tr("The variable x")      );
+}
+
+
+void Keypad::Private::setUpButtonPressedSignal()
+{
+  connect( key0,     SIGNAL(clicked()), p, SLOT(key0Pressed())     );
+  connect( key1,     SIGNAL(clicked()), p, SLOT(key1Pressed())     );
+  connect( key2,     SIGNAL(clicked()), p, SLOT(key2Pressed())     );
+  connect( key3,     SIGNAL(clicked()), p, SLOT(key3Pressed())     );
+  connect( key4,     SIGNAL(clicked()), p, SLOT(key4Pressed())     );
+  connect( key5,     SIGNAL(clicked()), p, SLOT(key5Pressed())     );
+  connect( key6,     SIGNAL(clicked()), p, SLOT(key6Pressed())     );
+  connect( key7,     SIGNAL(clicked()), p, SLOT(key7Pressed())     );
+  connect( key8,     SIGNAL(clicked()), p, SLOT(key8Pressed())     );
+  connect( key9,     SIGNAL(clicked()), p, SLOT(key9Pressed())     );
+  connect( keyAcos,  SIGNAL(clicked()), p, SLOT(keyAcosPressed())  );
+  connect( keyAdd,   SIGNAL(clicked()), p, SLOT(keyAddPressed())   );
+  connect( keyAns,   SIGNAL(clicked()), p, SLOT(keyAnsPressed())   );
+  connect( keyAsin,  SIGNAL(clicked()), p, SLOT(keyAsinPressed())  );
+  connect( keyAtan,  SIGNAL(clicked()), p, SLOT(keyAtanPressed())  );
+  connect( keyC,     SIGNAL(clicked()), p, SLOT(keyCPressed())     );
+  connect( keyCos,   SIGNAL(clicked()), p, SLOT(keyCosPressed())   );
+  connect( keyDiv,   SIGNAL(clicked()), p, SLOT(keyDivPressed())   );
+  connect( keyEE,    SIGNAL(clicked()), p, SLOT(keyEEPressed())    );
+  connect( keyEq,    SIGNAL(clicked()), p, SLOT(keyEqPressed())    );
+  connect( keyExp,   SIGNAL(clicked()), p, SLOT(keyExpPressed())   );
+  connect( keyFact,  SIGNAL(clicked()), p, SLOT(keyFactPressed())  );
+  connect( keyLn,    SIGNAL(clicked()), p, SLOT(keyLnPressed())    );
+  connect( keyLPar,  SIGNAL(clicked()), p, SLOT(keyLParPressed())  );
+  connect( keyMul,   SIGNAL(clicked()), p, SLOT(keyMulPressed())   );
+  connect( keyPerc,  SIGNAL(clicked()), p, SLOT(keyPercPressed())  );
+  connect( keyRaise, SIGNAL(clicked()), p, SLOT(keyRaisePressed()) );
+  connect( keyRPar,  SIGNAL(clicked()), p, SLOT(keyRParPressed())  );
+  connect( keySin,   SIGNAL(clicked()), p, SLOT(keySinPressed())   );
+  connect( keySub,   SIGNAL(clicked()), p, SLOT(keySubPressed())   );
+  connect( keyTan,   SIGNAL(clicked()), p, SLOT(keyTanPressed())   );
+  connect( keyXEq,   SIGNAL(clicked()), p, SLOT(keyXEqPressed())   );
+  connect( keyX,     SIGNAL(clicked()), p, SLOT(keyXPressed())     );
+  connect( keyDot,   SIGNAL(clicked()), p, SLOT(keyDotPressed())   );
+  connect( keyPi,    SIGNAL(clicked()), p, SLOT(keyPiPressed())    );
+  connect( keySqrt,  SIGNAL(clicked()), p, SLOT(keySqrtPressed())  );
+}
+
+
+void Keypad::Private::sizeButtons()
 {
   // The same font in all buttons, so just pick one
-  QFontMetrics fm = d->key0->fontMetrics();
+  QFontMetrics fm = key0->fontMetrics();
 
-  int maxWidth = 0;
-  int textHeight = qMax(fm.lineSpacing(), 14);
-
-  // Find the widest text
-  if( fm.width( d->key0->text()      ) > maxWidth ) maxWidth = fm.width( d->key0->text()      );
-  if( fm.width( d->key1->text()      ) > maxWidth ) maxWidth = fm.width( d->key1->text()      );
-  if( fm.width( d->key2->text()      ) > maxWidth ) maxWidth = fm.width( d->key2->text()      );
-  if( fm.width( d->key3->text()      ) > maxWidth ) maxWidth = fm.width( d->key3->text()      );
-  if( fm.width( d->key4->text()      ) > maxWidth ) maxWidth = fm.width( d->key4->text()      );
-  if( fm.width( d->key5->text()      ) > maxWidth ) maxWidth = fm.width( d->key5->text()      );
-  if( fm.width( d->key6->text()      ) > maxWidth ) maxWidth = fm.width( d->key6->text()      );
-  if( fm.width( d->key7->text()      ) > maxWidth ) maxWidth = fm.width( d->key7->text()      );
-  if( fm.width( d->key8->text()      ) > maxWidth ) maxWidth = fm.width( d->key8->text()      );
-  if( fm.width( d->key9->text()      ) > maxWidth ) maxWidth = fm.width( d->key9->text()      );
-  if( fm.width( d->keyACos->text()   ) > maxWidth ) maxWidth = fm.width( d->keyACos->text()   );
-  if( fm.width( d->keyAdd->text()    ) > maxWidth ) maxWidth = fm.width( d->keyAdd->text()    );
-  if( fm.width( d->keyAns->text()    ) > maxWidth ) maxWidth = fm.width( d->keyAns->text()    );
-  if( fm.width( d->keyASin->text()   ) > maxWidth ) maxWidth = fm.width( d->keyASin->text()   );
-  if( fm.width( d->keyATan->text()   ) > maxWidth ) maxWidth = fm.width( d->keyATan->text()   );
-  if( fm.width( d->keyCbrt->text()   ) > maxWidth ) maxWidth = fm.width( d->keyCbrt->text()   );
-  if( fm.width( d->keyCos->text()    ) > maxWidth ) maxWidth = fm.width( d->keyCos->text()    );
-  if( fm.width( d->keyDiv->text()    ) > maxWidth ) maxWidth = fm.width( d->keyDiv->text()    );
-  if( fm.width( d->keyDot->text()    ) > maxWidth ) maxWidth = fm.width( d->keyDot->text()    );
-  if( fm.width( d->keyEE->text()     ) > maxWidth ) maxWidth = fm.width( d->keyEE->text()     );
-  if( fm.width( d->keyExp->text()    ) > maxWidth ) maxWidth = fm.width( d->keyExp->text()    );
-  if( fm.width( d->keyFact->text()   ) > maxWidth ) maxWidth = fm.width( d->keyFact->text()   );
-  if( fm.width( d->keyLn->text()     ) > maxWidth ) maxWidth = fm.width( d->keyLn->text()     );
-  if( fm.width( d->keyLParen->text() ) > maxWidth ) maxWidth = fm.width( d->keyLParen->text() );
-  if( fm.width( d->keyMul->text()    ) > maxWidth ) maxWidth = fm.width( d->keyMul->text()    );
-  if( fm.width( d->keyPerc->text()   ) > maxWidth ) maxWidth = fm.width( d->keyPerc->text()   );
-  if( fm.width( d->keyPi->text()     ) > maxWidth ) maxWidth = fm.width( d->keyPi->text()     );
-  if( fm.width( d->keyRaise->text()  ) > maxWidth ) maxWidth = fm.width( d->keyRaise->text()  );
-  if( fm.width( d->keyRParen->text() ) > maxWidth ) maxWidth = fm.width( d->keyRParen->text() );
-  if( fm.width( d->keySemic->text()  ) > maxWidth ) maxWidth = fm.width( d->keySemic->text()  );
-  if( fm.width( d->keySin->text()    ) > maxWidth ) maxWidth = fm.width( d->keySin->text()    );
-  if( fm.width( d->keySqrt->text()   ) > maxWidth ) maxWidth = fm.width( d->keySqrt->text()   );
-  if( fm.width( d->keySub->text()    ) > maxWidth ) maxWidth = fm.width( d->keySub->text()    );
-  if( fm.width( d->keyTan->text()    ) > maxWidth ) maxWidth = fm.width( d->keyTan->text()    );
-  if( fm.width( d->keyXEq->text()    ) > maxWidth ) maxWidth = fm.width( d->keyXEq->text()    );
-  if( fm.width( d->keyX->text()      ) > maxWidth ) maxWidth = fm.width( d->keyX->text()      );
-
-  // Limit the size of the buttons
-  d->key0->setMaximumSize(
+  int maxWidth = fm.width( keyAcos->text() );
+  int textHeight = qMax( fm.lineSpacing(), 14 );
+  QSize size =
 #ifdef Q_WS_MAC
-      d->key0->style()->sizeFromContents( QStyle::CT_PushButton,
+               key0->style()->sizeFromContents( QStyle::CT_PushButton,
 #else
-      d->key0->style()->sizeFromContents( QStyle::CT_ToolButton,
+               key0->style()->sizeFromContents( QStyle::CT_ToolButton,
 #endif
-                                          0, QSize( int(maxWidth), int(textHeight) ).expandedTo( QApplication::globalStrut() ), d->key0 ) );
+                 0, QSize( int(maxWidth), int(textHeight) ).expandedTo( QApplication::globalStrut() ), keyAcos );
 
-  d->key1->setMaximumSize     ( d->key0->maximumSize() ); d->key1->setMinimumSize     ( d->key0->maximumSize() );
-  d->key2->setMaximumSize     ( d->key0->maximumSize() ); d->key2->setMinimumSize     ( d->key0->maximumSize() );
-  d->key3->setMaximumSize     ( d->key0->maximumSize() ); d->key3->setMinimumSize     ( d->key0->maximumSize() );
-  d->key4->setMaximumSize     ( d->key0->maximumSize() ); d->key4->setMinimumSize     ( d->key0->maximumSize() );
-  d->key5->setMaximumSize     ( d->key0->maximumSize() ); d->key5->setMinimumSize     ( d->key0->maximumSize() );
-  d->key6->setMaximumSize     ( d->key0->maximumSize() ); d->key6->setMinimumSize     ( d->key0->maximumSize() );
-  d->key7->setMaximumSize     ( d->key0->maximumSize() ); d->key7->setMinimumSize     ( d->key0->maximumSize() );
-  d->key8->setMaximumSize     ( d->key0->maximumSize() ); d->key8->setMinimumSize     ( d->key0->maximumSize() );
-  d->key9->setMaximumSize     ( d->key0->maximumSize() ); d->key9->setMinimumSize     ( d->key0->maximumSize() );
-  d->keyACos->setMaximumSize  ( d->key0->maximumSize() ); d->keyACos->setMinimumSize  ( d->key0->maximumSize() );
-  d->keyAdd->setMaximumSize   ( d->key0->maximumSize() ); d->keyAdd->setMinimumSize   ( d->key0->maximumSize() );
-  d->keyAns->setMaximumSize   ( d->key0->maximumSize() ); d->keyAns->setMinimumSize   ( d->key0->maximumSize() );
-  d->keyASin->setMaximumSize  ( d->key0->maximumSize() ); d->keyASin->setMinimumSize  ( d->key0->maximumSize() );
-  d->keyATan->setMaximumSize  ( d->key0->maximumSize() ); d->keyATan->setMinimumSize  ( d->key0->maximumSize() );
-  d->keyCbrt->setMaximumSize  ( d->key0->maximumSize() ); d->keyCbrt->setMinimumSize  ( d->key0->maximumSize() );
-  d->keyCos->setMaximumSize   ( d->key0->maximumSize() ); d->keyCos->setMinimumSize   ( d->key0->maximumSize() );
-  d->keyDiv->setMaximumSize   ( d->key0->maximumSize() ); d->keyDiv->setMinimumSize   ( d->key0->maximumSize() );
-  d->keyDot->setMaximumSize   ( d->key0->maximumSize() ); d->keyDot->setMinimumSize   ( d->key0->maximumSize() );
-  d->keyEE->setMaximumSize    ( d->key0->maximumSize() ); d->keyEE->setMinimumSize    ( d->key0->maximumSize() );
-  d->keyExp->setMaximumSize   ( d->key0->maximumSize() ); d->keyExp->setMinimumSize   ( d->key0->maximumSize() );
-  d->keyFact->setMaximumSize  ( d->key0->maximumSize() ); d->keyFact->setMinimumSize  ( d->key0->maximumSize() );
-  d->keyLn->setMaximumSize    ( d->key0->maximumSize() ); d->keyLn->setMinimumSize    ( d->key0->maximumSize() );
-  d->keyLParen->setMaximumSize( d->key0->maximumSize() ); d->keyLParen->setMinimumSize( d->key0->maximumSize() );
-  d->keyMul->setMaximumSize   ( d->key0->maximumSize() ); d->keyMul->setMinimumSize   ( d->key0->maximumSize() );
-  d->keyPerc->setMaximumSize  ( d->key0->maximumSize() ); d->keyPerc->setMinimumSize  ( d->key0->maximumSize() );
-  d->keyPi->setMaximumSize    ( d->key0->maximumSize() ); d->keyPi->setMinimumSize    ( d->key0->maximumSize() );
-  d->keyRaise->setMaximumSize ( d->key0->maximumSize() ); d->keyRaise->setMinimumSize ( d->key0->maximumSize() );
-  d->keyRParen->setMaximumSize( d->key0->maximumSize() ); d->keyRParen->setMinimumSize( d->key0->maximumSize() );
-  d->keySemic->setMaximumSize ( d->key0->maximumSize() ); d->keySemic->setMinimumSize ( d->key0->maximumSize() );
-  d->keySin->setMaximumSize   ( d->key0->maximumSize() ); d->keySin->setMinimumSize   ( d->key0->maximumSize() );
-  d->keySqrt->setMaximumSize  ( d->key0->maximumSize() ); d->keySqrt->setMinimumSize  ( d->key0->maximumSize() );
-  d->keySub->setMaximumSize   ( d->key0->maximumSize() ); d->keySub->setMinimumSize   ( d->key0->maximumSize() );
-  d->keyTan->setMaximumSize   ( d->key0->maximumSize() ); d->keyTan->setMinimumSize   ( d->key0->maximumSize() );
-  d->keyXEq->setMaximumSize   ( d->key0->maximumSize() ); d->keyXEq->setMinimumSize   ( d->key0->maximumSize() );
-  d->keyX->setMaximumSize     ( d->key0->maximumSize() ); d->keyX->setMinimumSize     ( d->key0->maximumSize() );
+  // limit the size of the buttons
+  key0->setMaximumSize     ( size ); key0->setMinimumSize     ( size );
+  key1->setMaximumSize     ( size ); key1->setMinimumSize     ( size );
+  key2->setMaximumSize     ( size ); key2->setMinimumSize     ( size );
+  key3->setMaximumSize     ( size ); key3->setMinimumSize     ( size );
+  key4->setMaximumSize     ( size ); key4->setMinimumSize     ( size );
+  key5->setMaximumSize     ( size ); key5->setMinimumSize     ( size );
+  key6->setMaximumSize     ( size ); key6->setMinimumSize     ( size );
+  key7->setMaximumSize     ( size ); key7->setMinimumSize     ( size );
+  key8->setMaximumSize     ( size ); key8->setMinimumSize     ( size );
+  key9->setMaximumSize     ( size ); key9->setMinimumSize     ( size );
+  keyAcos->setMaximumSize  ( size ); keyAcos->setMinimumSize  ( size );
+  keyAdd->setMaximumSize   ( size ); keyAdd->setMinimumSize   ( size );
+  keyAns->setMaximumSize   ( size ); keyAns->setMinimumSize   ( size );
+  keyAsin->setMaximumSize  ( size ); keyAsin->setMinimumSize  ( size );
+  keyAtan->setMaximumSize  ( size ); keyAtan->setMinimumSize  ( size );
+  keyC->setMaximumSize     ( size ); keyC->setMinimumSize     ( size );
+  keyCos->setMaximumSize   ( size ); keyCos->setMinimumSize   ( size );
+  keyDiv->setMaximumSize   ( size ); keyDiv->setMinimumSize   ( size );
+  keyDot->setMaximumSize   ( size ); keyDot->setMinimumSize   ( size );
+  keyEE->setMaximumSize    ( size ); keyEE->setMinimumSize    ( size );
+  keyExp->setMaximumSize   ( size ); keyExp->setMinimumSize   ( size );
+  keyFact->setMaximumSize  ( size ); keyFact->setMinimumSize  ( size );
+  keyLn->setMaximumSize    ( size ); keyLn->setMinimumSize    ( size );
+  keyLPar->setMaximumSize  ( size ); keyLPar->setMinimumSize  ( size );
+  keyMul->setMaximumSize   ( size ); keyMul->setMinimumSize   ( size );
+  keyPerc->setMaximumSize  ( size ); keyPerc->setMinimumSize  ( size );
+  keyPi->setMaximumSize    ( size ); keyPi->setMinimumSize    ( size );
+  keyRaise->setMaximumSize ( size ); keyRaise->setMinimumSize ( size );
+  keyRPar->setMaximumSize  ( size ); keyRPar->setMinimumSize  ( size );
+  keySin->setMaximumSize   ( size ); keySin->setMinimumSize   ( size );
+  keySqrt->setMaximumSize  ( size ); keySqrt->setMinimumSize  ( size );
+  keySub->setMaximumSize   ( size ); keySub->setMinimumSize   ( size );
+  keyTan->setMaximumSize   ( size ); keyTan->setMinimumSize   ( size );
+  keyXEq->setMaximumSize   ( size ); keyXEq->setMinimumSize   ( size );
+  keyX->setMaximumSize     ( size ); keyX->setMinimumSize     ( size );
 }
