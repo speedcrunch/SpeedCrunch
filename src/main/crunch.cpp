@@ -190,23 +190,23 @@ Crunch::Crunch() : QMainWindow()
   //box->setStyleSheet( "background: #202020" );
   setCentralWidget( box );
 
-  QVBoxLayout * outerBoxLayout = new QVBoxLayout( box );
-  outerBoxLayout->setMargin( 0 );
-  outerBoxLayout->setSpacing( 0 );
+  QVBoxLayout * boxLayout = new QVBoxLayout( box );
+  boxLayout->setMargin( 0 );
+  boxLayout->setSpacing( 0 );
 
   // display
   d->result = new Result( box );
   //d->result->setStyleSheet( "background: black" );
-  outerBoxLayout->addWidget( d->result );
+  boxLayout->addWidget( d->result );
 
   // editor
-  QHBoxLayout * editorLayout = new QHBoxLayout( box );
+  QHBoxLayout * editorLayout = new QHBoxLayout();
   editorLayout->setMargin( 5 );
   d->editor = new Editor( d->eval, box );
   d->editor->setFocus();
   //d->editor->setStyleSheet( "font: bold 11px" );
   editorLayout->addWidget( d->editor );
-  outerBoxLayout->addLayout( editorLayout );
+  boxLayout->addLayout( editorLayout );
 
   // we need settings to be loaded before keypad and constants dock
   Settings::self()->load();
@@ -222,7 +222,7 @@ Crunch::Crunch() : QMainWindow()
   keypadLayout->addStretch();
   keypadLayout->addWidget( d->keypad );
   keypadLayout->addStretch();
-  outerBoxLayout->addLayout( keypadLayout );
+  boxLayout->addLayout( keypadLayout );
 
   // Docks
   d->historyDock = new HistoryDock( this );
