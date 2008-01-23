@@ -1,32 +1,32 @@
-/* This file is part of the SpeedCrunch project
-   Copyright (C) 2004-2006 Ariya Hidayat <ariya@kde.org>
-                 2007 Helder Correia <helder.pereira.correia@gmail.com>
+// This file is part of the SpeedCrunch project
+// Copyright (C) 2004-2006 Ariya Hidayat <ariya@kde.org>
+// Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; see the file COPYING.  If not, write to
+// the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+// Boston, MA 02110-1301, USA.
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public License
-   as published by the Free Software Foundation; either version 2
-   of the License, or (at your option) any later version.
 
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
- */
-
-#include <iostream>
-#include <string.h>
+#include <base/evaluator.hxx>
+#include <base/functions.hxx>
+#include <base/settings.hxx>
+#include <math/hmath.hxx>
 
 #include <QtCore>
 
-#include <base/settings.hxx> //refdp
-#include <base/evaluator.hxx>
-#include <base/functions.hxx>
-#include <math/hmath.hxx>
+#include <iostream>
+#include <string.h>
 
 
 using namespace std;
@@ -71,8 +71,6 @@ static void checkDivisionByZero( const char    * file,
   eval_total_tests++;
 
   Evaluator e;
-//  e.setDecimalPoint( "." ); //refdp
-//  e.setAngleMode( Evaluator::Radian ); //refan
   e.setExpression( expr );
   HNumber rn = e.evalUpdateAns();
 
@@ -95,7 +93,6 @@ static void checkEval( const char    * file,
   eval_total_tests++;
 
   Evaluator e;
-//  e.setAngleMode( Evaluator::Radian ); //refan
   Settings::self()->angleMode = Settings::Radian; //refan
   e.setExpression( expr );
   HNumber rn = e.evalUpdateAns();
@@ -457,8 +454,8 @@ void test_auto_fix_untouch()
 
 int main( int argc, char * * argv)
 {
-  Settings::self()->setDecimalPoint("."); //refdp
-  Settings::self()->angleMode = Settings::Radian; //refan
+  Settings::self()->setDot( "." );
+  Settings::self()->angleMode = Settings::Radian;
   test_constants();
   test_unary();
   test_binary();

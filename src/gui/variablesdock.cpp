@@ -46,7 +46,7 @@ static QString formatValue( const HNumber & value )
 {
   char * str = HMath::format( value, 'g' );
   QString s;
-  if ( Settings::decimalPoint() == '.' )
+  if ( Settings::self()->dot() == '.' )
     s = QString::fromLatin1( str );
   else
     s = QString::fromLatin1( str ).replace( '.', ',' );

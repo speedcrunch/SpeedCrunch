@@ -148,6 +148,7 @@ void ConstantsDock::filter()
 
   QString chosenCategory = d->category->currentText();
 
+  QChar dot = Settings::self()->dot();
   d->list->clear();
   for ( int k = 0; k < c->constantList.count(); k++ )
   {
@@ -156,15 +157,15 @@ void ConstantsDock::filter()
       if ( QLocale().language() == QLocale::Hebrew )
       {
 	str << c->constantList[k].unit;
-	str << (Settings::decimalPoint() == '.' ?
+	str << (dot == '.' ?
                   c->constantList[k].value.replace( ',', '.' )
-                : c->constantList[k].value.replace( '.', ',' ) );
+                    : c->constantList[k].value.replace( '.', ',' ) );
       }
       else
       {
-	str << (Settings::decimalPoint() == '.' ?
+	str << (dot == '.' ?
                   c->constantList[k].value.replace( ',', '.' )
-                : c->constantList[k].value.replace( '.', ',' ) );
+                    : c->constantList[k].value.replace( '.', ',' ));
 	str << c->constantList[k].unit;
       }
       str << c->constantList[k].name.toUpper();

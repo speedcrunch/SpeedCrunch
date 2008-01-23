@@ -416,28 +416,13 @@ void Crunch::applySettings()
   }
 
   d->result->setFormat( settings->format );
-  d->result->setDecimalDigits( settings->decimalDigits );
+  d->result->setDecimalDigits( settings->precision );
   d->editor->setFormat( settings->format );
-  d->editor->setDecimalDigits( settings->decimalDigits );
+  d->editor->setDecimalDigits( settings->precision );
 
-  if ( settings->customAppearance )
-  {
-    d->result->setFont( settings->customFont );
-    d->editor->setFont( settings->customFont );
-    d->editor->setFixedHeight( d->editor->sizeHint().height() );
-  }
-  else
-  {
-    d->result->setFont( QApplication::font( d->result ) );
-    d->editor->setFont( QApplication::font( d->editor ) );
-    d->editor->setFixedHeight( d->editor->sizeHint().height() );
-  }
-
-  d->result->setCustomAppearance( settings->customAppearance );
-  d->result->setCustomTextColor( settings->customTextColor );
-  d->result->setCustomBackgroundColor( settings->customBackgroundColor1,
-                                       settings->customBackgroundColor2 );
-  d->result->setCustomErrorColor( settings->customErrorColor );
+  d->result->setFont( QApplication::font( d->result ) );
+  d->editor->setFont( QApplication::font( d->editor ) );
+  d->editor->setFixedHeight( d->editor->sizeHint().height() );
 
   if ( settings->format == 'g' ) d->actions.viewGeneral->setChecked    ( true );
   if ( settings->format == 'f' ) d->actions.viewFixed->setChecked      ( true );
@@ -447,12 +432,12 @@ void Crunch::applySettings()
   if ( settings->format == 'o' ) d->actions.viewOctal->setChecked      ( true );
   if ( settings->format == 'b' ) d->actions.viewBinary->setChecked     ( true );
 
-  if ( settings->decimalDigits <   0 ) d->actions.digitsAuto->setChecked( true );
-  if ( settings->decimalDigits ==  2 ) d->actions.digits2->setChecked   ( true );
-  if ( settings->decimalDigits ==  3 ) d->actions.digits3->setChecked   ( true );
-  if ( settings->decimalDigits ==  8 ) d->actions.digits8->setChecked   ( true );
-  if ( settings->decimalDigits == 15 ) d->actions.digits15->setChecked  ( true );
-  if ( settings->decimalDigits == 50 ) d->actions.digits50->setChecked  ( true );
+  if ( settings->precision <   0 ) d->actions.digitsAuto->setChecked( true );
+  if ( settings->precision ==  2 ) d->actions.digits2->setChecked   ( true );
+  if ( settings->precision ==  3 ) d->actions.digits3->setChecked   ( true );
+  if ( settings->precision ==  8 ) d->actions.digits8->setChecked   ( true );
+  if ( settings->precision == 15 ) d->actions.digits15->setChecked  ( true );
+  if ( settings->precision == 50 ) d->actions.digits50->setChecked  ( true );
 
   showKeypad( settings->showKeypad );
   menuBar()->setVisible( settings->showMenuBar );
@@ -537,9 +522,9 @@ void Crunch::copyResult()
   QClipboard * cb = QApplication::clipboard();
   HNumber num = d->eval->get( "ans" );
   Settings * set = Settings::self();
-  char * strToCopy = HMath::format( num, set->format, set->decimalDigits );
+  char * strToCopy = HMath::format( num, set->format, set->precision );
   QString final( strToCopy );
-  if ( Settings::decimalPoint() == ',' )
+  if ( Settings::self()->dot() == ',' )
     final.replace( '.', ',' );
   cb->setText( final, QClipboard::Clipboard );
   free( strToCopy );
@@ -1049,7 +1034,7 @@ void Crunch::constantSelected( const QString & c )
     return;
 
   QString str( c );
-  str.replace( '.', Settings::decimalPoint() );
+  str.replace( '.', Settings::self()->dot() );
   d->editor->insert( str );
 
   QTimer::singleShot( 0, d->editor, SLOT(setFocus()) );
@@ -1123,7 +1108,7 @@ void Crunch::keypadButtonPressed( Keypad::Button b )
     case Keypad::KeySqrt:      d->editor->insert( "sqrt(" );  break;
     case Keypad::KeyEquals:    d->editor->evaluate();         break;
     case Keypad::KeyClear:     clearExpression();             break;
-    case Keypad::KeyDot:       d->editor->insert( Settings::decimalPoint() ); break;
+    case Keypad::KeyDot:       d->editor->insert( Settings::self()->dot() ); break;
     default:;
   }
 
@@ -1661,8 +1646,7 @@ void Crunch::saveSettings()
 
 void Crunch::setDigits( int i )
 {
-  Settings * settings = Settings::self();
-  settings->decimalDigits = i;
+  Settings::self()->precision = i;
   saveSettings();
   applySettings();
 }
@@ -1670,8 +1654,7 @@ void Crunch::setDigits( int i )
 
 void Crunch::setView( char c )
 {
-  Settings * settings = Settings::self();
-  settings->format = c;
+  Settings::self()->format = c;
   saveSettings();
   applySettings();
 }

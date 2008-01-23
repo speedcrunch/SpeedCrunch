@@ -663,7 +663,7 @@ void Editor::insertConstant( const QString & c )
 {
   // replace constant dot separator
   QString str( c );
-  str.replace( QChar( '.' ), Settings::decimalPoint() );
+  str.replace( QChar( '.' ), Settings::self()->dot() );
   insert( str );
 }
 

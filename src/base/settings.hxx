@@ -23,85 +23,72 @@
 #define SETTINGS_HXX
 
 
-#include <qcolor.h>
-#include <qfont.h>
-#include <qrect.h>
+#include <QColor>
+#include <QFont>
+#include <QRect>
 #include <QSize>
-#include <qstring.h>
-#include <qstringlist.h>
+#include <QString>
+#include <QStringList>
 
 
 class Settings
 {
   public:
-    typedef enum { Degree, Radian } AngleMode; //refan
+    enum AngleMode { Degree, Radian };
 
-    AngleMode    angleMode;
-    bool         autoCalc;
-    bool         autoComplete;
-    static bool  autoDetectDot;
-    bool         constantsDockFloating;
-    int          constantsDockTop;
-    int          constantsDockLeft;
-    int          constantsDockWidth;
-    int          constantsDockHeight;
-    bool         customAppearance;
-    QColor       customBackgroundColor1;
-    QColor       customBackgroundColor2;
-    QColor       customErrorColor;
-    QFont        customFont;
-    QColor       customTextColor;
-    int          decimalDigits;
-    bool         enableSyntaxHighlight;
-    QString      escape; //reftbl
-    char         format;
-    bool         functionsDockFloating;
-    int          functionsDockHeight;
-    int          functionsDockLeft;
-    int          functionsDockTop;
-    int          functionsDockWidth;
-    QColor       highlightFunctionColor;
-    QColor       highlightNumberColor;
-    QColor       highlightVariableColor;
-    QStringList  history;
-    bool         historyDockFloating;
-    int          historyDockHeight;
-    int          historyDockLeft;
-    int          historyDockTop;
-    int          historyDockWidth;
-    QStringList  historyResults;
+    AngleMode   angleMode;
+    bool        autoCalc;
+    bool        autoComplete;
+    bool        autoDetectDot;
+    bool        constantsDockFloating;
+    int         constantsDockTop;
+    int         constantsDockLeft;
+    int         constantsDockWidth;
+    int         constantsDockHeight;
+    int         precision;
+    QString     escape; //reftbl
+    char        format;
+    bool        functionsDockFloating;
+    int         functionsDockHeight;
+    int         functionsDockLeft;
+    int         functionsDockTop;
+    int         functionsDockWidth;
+    QStringList history;
+    bool        historyDockFloating;
+    int         historyDockHeight;
+    int         historyDockLeft;
+    int         historyDockTop;
+    int         historyDockWidth;
+    QStringList historyResults;
     //QString     language;
-    QSize        mainWindowSize;
-    QByteArray   mainWindowState;
-    QColor       matchedParenthesisColor;
-    bool         minimizeToTray;
-    bool         saveSession;
-    bool         saveVariables;
-    bool         showClearInputButton;
-    bool         showConstants;
-    bool         showEvaluateButton;
-    bool         showFullScreen;
-    bool         showFunctions;
-    bool         showHistory;
-    bool         showKeypad;
-    bool         showMenuBar;
-    bool         showVariables;
-    bool         stayAlwaysOnTop;
-    QStringList  variables;
-    bool         variablesDockFloating;
-    int          variablesDockTop;
-    int          variablesDockHeight;
-    int          variablesDockLeft;
-    int          variablesDockWidth;
+    QSize       mainWindowSize;
+    QByteArray  mainWindowState;
+    bool        minimizeToTray;
+    bool        saveSession;
+    bool        saveVariables;
+    bool        showConstants;
+    bool        showFullScreen;
+    bool        showFunctions;
+    bool        showHistory;
+    bool        showKeypad;
+    bool        showMenuBar;
+    bool        showVariables;
+    bool        stayAlwaysOnTop;
+    QStringList variables;
+    bool        variablesDockFloating;
+    int         variablesDockTop;
+    int         variablesDockHeight;
+    int         variablesDockLeft;
+    int         variablesDockWidth;
 
-    static QChar      decimalPoint();
-    void              load();
-    void              save();
     static Settings * self();
-    void              setDecimalPoint( const QString & val);
+    QChar dot();
+    void load();
+    void save();
+    void setDot( const QString & );
 
   private:
-    static QChar dot; //refdp
+    QChar decimalPoint;
 
     Settings();
     Settings( const Settings & );

@@ -408,7 +408,7 @@ Tokens Evaluator::scan( const QString& expr )
   // auto-detect, always dot, or always comma
   QChar decimalPoint;
   QChar wrongDecimalPoint;
-  decimalPoint = Settings::decimalPoint();
+  decimalPoint = Settings::self()->dot();
   // sanity check for wrong decimal separator usage
   if ( decimalPoint == ',' )
     wrongDecimalPoint = '.';

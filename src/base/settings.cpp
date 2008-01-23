@@ -30,12 +30,10 @@
 #include <stdlib.h>
 
 
-#define SETTINGSKEY "SpeedCrunch"
+#define KEY (QString("SpeedCrunch"))
 
 
 Settings * s_global_settings = 0;
-QChar      Settings::dot;
-bool       Settings::autoDetectDot;
 
 
 static void deleteGlobalSettings()
@@ -47,30 +45,32 @@ static void deleteGlobalSettings()
 
 // public
 
-QChar Settings::decimalPoint()
+QChar Settings::dot()
 {
-  return self()->dot;
+  return decimalPoint;
 }
 
 
 void Settings::load()
 {
-  QSettings settings( /*QSettings::IniFormat,*/ QSettings::UserScope, SETTINGSKEY, SETTINGSKEY );
+  QSettings settings( /*QSettings::IniFormat,*/ QSettings::UserScope, KEY, KEY );
 
-  QString key = SETTINGSKEY;
+  QString key;
 
+  key = KEY + "/General";
   angleMode = Radian;
-  if ( settings.value( key + "/General/AngleMode", "Radian" ).toString() == "Degree")
+  if ( settings.value( key + "/AngleMode", "Radian" ).toString() == "Degree")
     angleMode = Degree;
-  saveSession    = settings.value( key + "/General/RestoreLastSession", true      ).toBool();
-  saveVariables  = settings.value( key + "/General/SaveVariables",      true      ).toBool();
-  autoComplete   = settings.value( key + "/General/AutoComplete",       true      ).toBool();
-  autoCalc       = settings.value( key + "/General/AutoCalc",           true      ).toBool();
-  setDecimalPoint( settings.value( key + "/General/DecimalPoint",       QString() ).toString());
-  //language       = settings.value( key + "/General/Language",           QString() ).toString();
-  minimizeToTray = settings.value( key + "/General/MinimizeToTray",     false     ).toBool();
+  saveSession    = settings.value( key + "/RestoreLastSession", true      ).toBool();
+  saveVariables  = settings.value( key + "/SaveVariables",      true      ).toBool();
+  autoComplete   = settings.value( key + "/AutoComplete",       true      ).toBool();
+  autoCalc       = settings.value( key + "/AutoCalc",           true      ).toBool();
+  //language       = settings.value( key + "/Language",           QString() ).toString();
+  minimizeToTray = settings.value( key + "/MinimizeToTray",     false     ).toBool();
+  setDot( settings.value( key + "/DecimalPoint", QString() ).toString());
 
-  QString formatStr = settings.value( key + "/View/Format" ).toString();
+  key = KEY + "/Format";
+  QString formatStr = settings.value( key + "/Code" ).toString();
   if ( formatStr == "Fixed" )       format = 'f';
   if ( formatStr == "Engineering" ) format = 'n';
   if ( formatStr == "Scientific" )  format = 'e';
@@ -78,30 +78,18 @@ void Settings::load()
   if ( formatStr == "Hexadecimal" ) format = 'h';
   if ( formatStr == "Octal" )       format = 'o';
   if ( formatStr == "Binary" )      format = 'b';
-  decimalDigits = settings.value( key + "/View/DecimalDigits", -1 ).toInt();
-  if ( decimalDigits > DECPRECISION )
-    decimalDigits = DECPRECISION;
+  precision = settings.value( key + "/Precision", -1 ).toInt();
+  if ( precision > DECPRECISION )
+    precision = DECPRECISION;
 
-  showFullScreen       = settings.value( key + "/Appearance/ShowFullScreen", false ).toBool();
-  showKeypad           = settings.value( key + "/Appearance/ShowKeypad",     true  ).toBool();
-  showMenuBar          = settings.value( key + "/Appearance/ShowMenuBar",    true  ).toBool();
-
-  showHistory   = settings.value( key + "/Appearance/ShowHistory",   false ).toBool();
-  showFunctions = settings.value( key + "/Appearance/ShowFunctions", false ).toBool();
-  showVariables = settings.value( key + "/Appearance/ShowVariables", false ).toBool();
-  showConstants = settings.value( key + "/Appearance/ShowConstants", false ).toBool();
-
-  customAppearance = settings.value                   ( key + "/Appearance/CustomAppearance",       true               ).toBool();
-  customFont.fromString( settings.value               ( key + "/Appearance/CustomFont",             QFont().toString() ).toString() );
-  customTextColor.setNamedColor( settings.value       ( key + "/Appearance/CustomTextColor",        "#9acd32"          ).toString() );
-  customBackgroundColor1.setNamedColor( settings.value( key + "/Appearance/CustomBackgroundColor1", "#000000"          ).toString() );
-  customBackgroundColor2.setNamedColor( settings.value( key + "/Appearance/CustomBackgroundColor2", "#111417"          ).toString() );
-  customErrorColor.setNamedColor( settings.value      ( key + "/Appearance/CustomErrorColor",       "#ff8c00"          ).toString() );
-  mainWindowSize = QSize( settings.value              ( key + "/Appearance/WindowWidth",            350                ).toInt(),
-                          settings.value              ( key + "/Appearance/WindowHeight",           400                ).toInt() );
-
-  key = SETTINGSKEY;
-  key += "/MainWindow/";
+  key = KEY + "/Layout";
+  showFullScreen        = settings.value( key + "/ShowFullScreen",       false ).toBool();
+  showKeypad            = settings.value( key + "/ShowKeypad",           true  ).toBool();
+  showMenuBar           = settings.value( key + "/ShowMenuBar",          true  ).toBool();
+  showHistory           = settings.value( key + "/ShowHistory",          false ).toBool();
+  showFunctions         = settings.value( key + "/ShowFunctions",        false ).toBool();
+  showVariables         = settings.value( key + "/ShowVariables",        false ).toBool();
+  showConstants         = settings.value( key + "/ShowConstants",        false ).toBool();
   mainWindowState       = settings.value( key + "State"                        ).toByteArray();
   stayAlwaysOnTop       = settings.value( key + "StayAlwaysOnTop",       false ).toBool();
   historyDockFloating   = settings.value( key + "HistoryDockFloating",   false ).toBool();
@@ -124,24 +112,16 @@ void Settings::load()
   constantsDockLeft     = settings.value( key + "ConstantsDockLeft",     0     ).toInt();
   constantsDockWidth    = settings.value( key + "ConstantsDockWidth",    150   ).toInt();
   constantsDockHeight   = settings.value( key + "ConstantsDockHeight",   350   ).toInt();
-
-  key = SETTINGSKEY;
-  key += "/SyntaxHighlight/";
-  enableSyntaxHighlight = settings.value( key + "EnableSyntaxHighlight", true ).toBool();
-
-  highlightNumberColor.setNamedColor   ( settings.value( key + "NumberColor",             "#00007f" ).toString() );
-  highlightFunctionColor.setNamedColor ( settings.value( key + "FunctionColor",           "#550000" ).toString() );
-  highlightVariableColor.setNamedColor ( settings.value( key + "VariableColor",           "#005500" ).toString() );
-  matchedParenthesisColor.setNamedColor( settings.value( key + "MatchedParenthesisColor", "#ffffb7" ).toString() );
-
-  key = SETTINGSKEY;
+  mainWindowSize        = QSize( settings.value ( key + "/WindowWidth",  350   ).toInt(),
+                                 settings.value ( key + "/WindowHeight", 400   ).toInt() );
 
   // load history
+  key = KEY + "/History";
   history.clear();
-  int count = settings.value( key + "/History/Count", 0 ).toInt();
+  int count = settings.value( key + "/Count", 0 ).toInt();
   for ( int i = 0; i < count; i++ )
   {
-    QString keyname = QString( key + "/History/Expression%1" ).arg( i );
+    QString keyname = QString( key + "/Expression%1" ).arg( i );
     QString str = settings.value( keyname ).toString();
     if ( ! str.isEmpty() )
     {
@@ -156,7 +136,7 @@ void Settings::load()
   historyResults.clear();
   for ( int i = 0; i < count; i++ )
   {
-    QString keyname = QString( key + "/History/Expression%1Result" ).arg( i );
+    QString keyname = QString( key + "/Expression%1Result" ).arg( i );
     QString str = settings.value( keyname ).toString();
     if ( ! str.isEmpty() )
       historyResults.append( str );
@@ -169,14 +149,15 @@ void Settings::load()
   }
 
   // load variables
+  key = KEY + "/Variables";
   variables.clear();
-  settings.beginGroup( key + "/Variables" );
+  settings.beginGroup( key );
   QStringList names = settings.childKeys();
   settings.endGroup();
   for ( int k = 0; k < names.count(); k++ )
   {
     QString name = names[k];
-    QString keyname = QString( key + "/Variables/%1" ).arg( name );
+    QString keyname = QString( key + "/%1" ).arg( name );
     QString value = settings.value( keyname ).toString();
     // treat upper case escape code
     int length = name.length();
@@ -198,23 +179,25 @@ void Settings::load()
 
 void Settings::save()
 {
-  QSettings settings( /*QSettings::IniFormat,*/ QSettings::UserScope, SETTINGSKEY, SETTINGSKEY );
+  QSettings settings( /*QSettings::IniFormat,*/ QSettings::UserScope, KEY, KEY );
   int k, i;
 
-  QString key = SETTINGSKEY;
+  QString key;
 
+  key = KEY + "/General";
   QString angleStr;
   if      ( angleMode == Settings::Radian ) angleStr = "Radian";
   else if ( angleMode == Settings::Degree ) angleStr = "Degree";
-  settings.setValue( key + "/General/AngleMode",          angleStr      );
-  settings.setValue( key + "/General/RestoreLastSession", saveSession   );
-  settings.setValue( key + "/General/SaveVariables",      saveVariables );
-  settings.setValue( key + "/General/AutoComplete",       autoComplete  );
-  settings.setValue( key + "/General/AutoCalc",           autoCalc      );
-  settings.setValue( key + "/General/DecimalPoint",       autoDetectDot? QString(): decimalPoint() );
-  //settings.setValue( key + "/General/Language",           language      );
-  settings.setValue( key + "/General/MinimizeToTray",     minimizeToTray );
+  settings.setValue( key + "/AngleMode",          angleStr      );
+  settings.setValue( key + "/RestoreLastSession", saveSession   );
+  settings.setValue( key + "/SaveVariables",      saveVariables );
+  settings.setValue( key + "/AutoComplete",       autoComplete  );
+  settings.setValue( key + "/AutoCalc",           autoCalc      );
+  //settings.setValue( key + "/Language",           language      );
+  settings.setValue( key + "/MinimizeToTray",     minimizeToTray );
+  settings.setValue( key + "/DecimalPoint", autoDetectDot ? QString() : decimalPoint );
 
+  key = KEY + "/Format";
   QString formatStr;
   if      ( format == 'f' ) formatStr = "Fixed";
   else if ( format == 'n' ) formatStr = "Engineering";
@@ -223,59 +206,44 @@ void Settings::save()
   else if ( format == 'h' ) formatStr = "Hexadecimal";
   else if ( format == 'o' ) formatStr = "Octal";
   else if ( format == 'b' ) formatStr = "Binary";
-  settings.setValue( key + "/View/Format",        formatStr     );
-  settings.setValue( key + "/View/DecimalDigits", decimalDigits );
+  settings.setValue( key + "/Code",      formatStr );
+  settings.setValue( key + "/Precision", precision );
 
-  settings.setValue( key + "/Appearance/ShowConstants",        showConstants        );
-  settings.setValue( key + "/Appearance/ShowFunctions",        showFunctions        );
-  settings.setValue( key + "/Appearance/ShowHistory",          showHistory          );
-  settings.setValue( key + "/Appearance/ShowFullScreen",       showFullScreen       );
-  settings.setValue( key + "/Appearance/ShowKeypad",           showKeypad           );
-  settings.setValue( key + "/Appearance/ShowMenuBar",          showMenuBar          );
-  settings.setValue( key + "/Appearance/ShowVariables",        showVariables        );
-
-  settings.setValue( key + "/Appearance/CustomAppearance",       customAppearance              );
-  settings.setValue( key + "/Appearance/CustomBackgroundColor1", customBackgroundColor1.name() );
-  settings.setValue( key + "/Appearance/CustomBackgroundColor2", customBackgroundColor2.name() );
-  settings.setValue( key + "/Appearance/CustomErrorColor",       customErrorColor.name()       );
-  settings.setValue( key + "/Appearance/CustomFont",             customFont.toString()         );
-  settings.setValue( key + "/Appearance/CustomTextColor",        customTextColor.name()        );
-  settings.setValue( key + "/Appearance/WindowHeight",           mainWindowSize.height()       );
-  settings.setValue( key + "/Appearance/WindowWidth",            mainWindowSize.width()        ),
-
-  settings.setValue( key + "/MainWindow/ConstantsDockFloating", constantsDockFloating );
-  settings.setValue( key + "/MainWindow/ConstantsDockHeight",   constantsDockHeight   );
-  settings.setValue( key + "/MainWindow/ConstantsDockLeft",     constantsDockLeft     );
-  settings.setValue( key + "/MainWindow/ConstantsDockTop",      constantsDockTop      );
-  settings.setValue( key + "/MainWindow/ConstantsDockWidth",    constantsDockWidth    );
-  settings.setValue( key + "/MainWindow/FunctionsDockFloating", functionsDockFloating );
-  settings.setValue( key + "/MainWindow/FunctionsDockHeight",   functionsDockHeight   );
-  settings.setValue( key + "/MainWindow/FunctionsDockLeft",     functionsDockLeft     );
-  settings.setValue( key + "/MainWindow/FunctionsDockTop",      functionsDockTop      );
-  settings.setValue( key + "/MainWindow/FunctionsDockWidth",    functionsDockWidth    );
-  settings.setValue( key + "/MainWindow/HistoryDockFloating",   historyDockFloating   );
-  settings.setValue( key + "/MainWindow/HistoryDockHeight",     historyDockHeight     );
-  settings.setValue( key + "/MainWindow/HistoryDockLeft",       historyDockLeft       );
-  settings.setValue( key + "/MainWindow/HistoryDockTop",        historyDockTop        );
-  settings.setValue( key + "/MainWindow/HistoryDockWidth",      historyDockWidth      );
-  settings.setValue( key + "/MainWindow/State",                 mainWindowState       );
-  settings.setValue( key + "/MainWindow/StayAlwaysOnTop",       stayAlwaysOnTop       );
-  settings.setValue( key + "/MainWindow/VariablesDockFloating", variablesDockFloating );
-  settings.setValue( key + "/MainWindow/VariablesDockHeight",   variablesDockHeight   );
-  settings.setValue( key + "/MainWindow/VariablesDockLeft",     variablesDockLeft     );
-  settings.setValue( key + "/MainWindow/VariablesDockTop",      variablesDockTop      );
-  settings.setValue( key + "/MainWindow/VariablesDockWidth",    variablesDockWidth    );
-
-  key = SETTINGSKEY;
-  key += "/SyntaxHighlight/";
-  settings.setValue( key + "/EnableSyntaxHighlight",   enableSyntaxHighlight          );
-  settings.setValue( key + "/FunctionColor",           highlightFunctionColor.name()  );
-  settings.setValue( key + "/MatchedParenthesisColor", matchedParenthesisColor.name() );
-  settings.setValue( key + "/NumberColor",             highlightNumberColor.name()    );
-  settings.setValue( key + "/VariableColor",           highlightVariableColor.name()  );
-  key = SETTINGSKEY;
+  key = KEY + "/Layout/";
+  settings.setValue( key + "ShowConstants",         showConstants           );
+  settings.setValue( key + "ShowFunctions",         showFunctions           );
+  settings.setValue( key + "ShowHistory",           showHistory             );
+  settings.setValue( key + "ShowFullScreen",        showFullScreen          );
+  settings.setValue( key + "ShowKeypad",            showKeypad              );
+  settings.setValue( key + "ShowMenuBar",           showMenuBar             );
+  settings.setValue( key + "ShowVariables",         showVariables           );
+  settings.setValue( key + "WindowHeight",          mainWindowSize.height() );
+  settings.setValue( key + "WindowWidth",           mainWindowSize.width()  ),
+  settings.setValue( key + "ConstantsDockFloating", constantsDockFloating   );
+  settings.setValue( key + "ConstantsDockHeight",   constantsDockHeight     );
+  settings.setValue( key + "ConstantsDockLeft",     constantsDockLeft       );
+  settings.setValue( key + "ConstantsDockTop",      constantsDockTop        );
+  settings.setValue( key + "ConstantsDockWidth",    constantsDockWidth      );
+  settings.setValue( key + "FunctionsDockFloating", functionsDockFloating   );
+  settings.setValue( key + "FunctionsDockHeight",   functionsDockHeight     );
+  settings.setValue( key + "FunctionsDockLeft",     functionsDockLeft       );
+  settings.setValue( key + "FunctionsDockTop",      functionsDockTop        );
+  settings.setValue( key + "FunctionsDockWidth",    functionsDockWidth      );
+  settings.setValue( key + "HistoryDockFloating",   historyDockFloating     );
+  settings.setValue( key + "HistoryDockHeight",     historyDockHeight       );
+  settings.setValue( key + "HistoryDockLeft",       historyDockLeft         );
+  settings.setValue( key + "HistoryDockTop",        historyDockTop          );
+  settings.setValue( key + "HistoryDockWidth",      historyDockWidth        );
+  settings.setValue( key + "State",                 mainWindowState         );
+  settings.setValue( key + "StayAlwaysOnTop",       stayAlwaysOnTop         );
+  settings.setValue( key + "VariablesDockFloating", variablesDockFloating   );
+  settings.setValue( key + "VariablesDockHeight",   variablesDockHeight     );
+  settings.setValue( key + "VariablesDockLeft",     variablesDockLeft       );
+  settings.setValue( key + "VariablesDockTop",      variablesDockTop        );
+  settings.setValue( key + "VariablesDockWidth",    variablesDockWidth      );
 
   // save history
+  key = KEY + "/History";
   QStringList realHistory = history;
   QStringList realHistoryResults = historyResults;
   if ( history.count() > 100 )
@@ -290,30 +258,31 @@ void Settings::save()
     }
   }
 
-  settings.beginGroup( key + "/History" );
+  settings.beginGroup( key );
   QStringList hkeys = settings.childKeys();
   settings.endGroup();
 
   for ( k = 0; k < hkeys.count(); k++ )
   {
-    settings.remove( QString( key + "/History/Expression%1" ).arg( k ) );
-    settings.remove( QString( key + "/History/Expression%1Result" ).arg( k ) );
+    settings.remove( QString( key + "/Expression%1" ).arg( k ) );
+    settings.remove( QString( key + "/Expression%1Result" ).arg( k ) );
   }
 
-  settings.setValue( key + "/History/Count", (int) history.count() );
+  settings.setValue( key + "/Count", (int) history.count() );
   for ( i = 0; i < realHistory.count(); i++ )
   {
-    settings.setValue( QString( key + "/History/Expression%1" ).arg( i ), realHistory[i] );
-    settings.setValue( QString( key + "/History/Expression%1Result" ).arg( i ), realHistoryResults[i] );
+    settings.setValue( QString( key + "/Expression%1" ).arg( i ), realHistory[i] );
+    settings.setValue( QString( key + "/Expression%1Result" ).arg( i ), realHistoryResults[i] );
   }
 
   // save variables
-  settings.beginGroup( key + "/Variables" );
+  key = KEY + "/Variables";
+  settings.beginGroup( key );
   QStringList vkeys = settings.childKeys();
   settings.endGroup();
 
   for ( k = 0; k < vkeys.count(); k++ )
-    settings.remove( QString( key + "/Variables/%1" ).arg( vkeys[k] ) );
+    settings.remove( QString( key + "/%1" ).arg( vkeys[k] ) );
 
   for ( i = 0; i < variables.count(); i++ )
   {
@@ -338,13 +307,13 @@ void Settings::save()
           name += s[0][c];
         }
       }
-      settings.setValue( QString( key + "/Variables/%1").arg( name ), value );
+      settings.setValue( QString( key + "/%1").arg( name ), value );
     }
   }
 }
 
 
-Settings* Settings::self()
+Settings * Settings::self()
 {
   if ( ! s_global_settings )
   {
@@ -355,10 +324,10 @@ Settings* Settings::self()
 }
 
 
-void Settings::setDecimalPoint( const QString & val )
+void Settings::setDot( const QString & s )
 {
-  autoDetectDot = (val.length() != 1);
-  dot = autoDetectDot? QLocale().decimalPoint() : val[0];
+  autoDetectDot = (s.length() != 1);
+  decimalPoint = autoDetectDot ? QLocale().decimalPoint() : s[0];
 }
 
 
@@ -366,57 +335,5 @@ void Settings::setDecimalPoint( const QString & val )
 
 Settings::Settings()
 {
-  angleMode       = Radian;
-  autoCalc        = true;
-  autoComplete    = true;
-  minimizeToTray  = false;
-  saveSession     = true;
-  saveVariables   = true;
-  setDecimalPoint( QString() );
-  stayAlwaysOnTop = false;
-
-  format        = 'g';
-  decimalDigits = -1;
-
-  customAppearance = true;
-  showConstants    = false;
-  showFunctions    = false;
-  showHistory      = false;
-  showFullScreen   = false;
-  showKeypad       = true;
-  showMenuBar      = true;
-  showVariables    = false;
-
-  customBackgroundColor1  = QColor(   0,   0,   0 );
-  customBackgroundColor2  = QColor(  17,  20,  23 );
-  customErrorColor        = QColor( 255, 140,   0 );
-  customTextColor         = QColor( 154, 205,  50 );
-  highlightFunctionColor  = QColor(  85,   0,   0 );
-  highlightNumberColor    = QColor(   0,   0, 127 );
-  highlightVariableColor  = QColor(   0,  85,   0 );
-  matchedParenthesisColor = QColor( 255, 255, 183 );
-
-  constantsDockFloating = false;
-  constantsDockHeight   = 350;
-  constantsDockLeft     = 0;
-  constantsDockTop      = 0;
-  constantsDockWidth    = 200;
-  functionsDockFloating = false;
-  functionsDockHeight   = 350;
-  functionsDockLeft     = 0;
-  functionsDockTop      = 0;
-  functionsDockWidth    = 200;
-  historyDockFloating   = false;
-  historyDockHeight     = 350;
-  historyDockLeft       = 0;
-  historyDockTop        = 0;
-  historyDockWidth      = 200;
-  mainWindowSize        = QSize( 0, 0 );
-  variablesDockFloating = false;
-  variablesDockHeight   = 350;
-  variablesDockLeft     = 0;
-  variablesDockTop      = 0;
-  variablesDockWidth    = 200;
-
   escape = "\\"; //reftbl
 }

@@ -75,9 +75,9 @@ void ConfigDlgPrivate::loadSettings()
   stayAlwaysOnTopCheck->setChecked( settings->stayAlwaysOnTop );
 
   decimalList->setCurrentIndex( 0 );
-  if      ( settings->autoDetectDot         ) decimalList->setCurrentIndex(0);
-  else if ( settings->decimalPoint() == '.' ) decimalList->setCurrentIndex(1);
-  else if ( settings->decimalPoint() == ',' ) decimalList->setCurrentIndex(2);
+  if      ( settings->autoDetectDot ) decimalList->setCurrentIndex(0);
+  else if ( settings->dot() == '.'  ) decimalList->setCurrentIndex(1);
+  else if ( settings->dot() == ','  ) decimalList->setCurrentIndex(2);
 }
 
 void ConfigDlgPrivate::saveSettings()
@@ -89,9 +89,9 @@ void ConfigDlgPrivate::saveSettings()
   s->minimizeToTray  = minimizeToTrayCheck->isChecked();
   s->stayAlwaysOnTop = stayAlwaysOnTopCheck->isChecked();
 
-  s->setDecimalPoint( decimalList->currentIndex() == 1 ?
-                        "." : decimalList->currentIndex() == 2 ?
-                                "," : QString());
+  s->setDot( decimalList->currentIndex() == 1 ?
+               "." : decimalList->currentIndex() == 2 ?
+                       "," : QString());
   s->save();
 }
 

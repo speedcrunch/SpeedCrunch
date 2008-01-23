@@ -140,7 +140,7 @@ void Keypad::keyXEqPressed()   { emit buttonPressed( Keypad::KeyXEquals   ); };
 
 void Keypad::settingsChanged()
 {
-  d->keyDot->setText( Settings::decimalPoint() );
+  d->keyDot->setText( Settings::self()->dot() );
 }
 
 
@@ -181,7 +181,7 @@ void Keypad::Private::createButtons()
   keyTan    = new QPushButton( "tan",  p );
   keyXEq    = new QPushButton( "x=",   p );
   keyX      = new QPushButton( "x",    p );
-  keyDot    = new QPushButton( Settings::decimalPoint(), p );
+  keyDot    = new QPushButton( Settings::self()->dot(),  p );
   keyPi     = new QPushButton( QString::fromUtf8("π"),   p );
   keySqrt   = new QPushButton( QString::fromUtf8("√"),   p );
 }
