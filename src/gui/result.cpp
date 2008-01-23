@@ -20,9 +20,10 @@
 // Boston, MA 02110-1301, USA.
 
 
+#include "result.hxx"
+
 #include <base/functions.hxx>
 #include <base/settings.hxx> //refdp
-#include <gui/result.hxx>
 #include <math/hmath.hxx>
 
 #include <QApplication>
@@ -42,7 +43,7 @@ class ResultPrivate
     QColor      customBackgroundColor2;
     QColor      customErrorColor;
     QColor      customTextColor;
-    int         decimalDigits;
+    int         precision;
     char        format;
 };
 
@@ -173,11 +174,11 @@ class ErrorItem: public BaseItem
 
 // public
 
-Result::Result( QWidget * parent, const char * name ) : QListWidget( parent )
+Result::Result( QWidget * parent, const char * name ) : QListWidget( parent ),
+    d( new ResultPrivate )
 {
-  d = new ResultPrivate;
   d->format = 'g';
-  d->decimalDigits = -1;
+  d->precision = -1;
   d->customAppearance = false;
   d->count = 0;
 
@@ -278,9 +279,9 @@ QColor Result::customTextColor() const
 }
 
 
-int Result::decimalDigits() const
+int Result::precision() const
 {
-  return d->decimalDigits;
+  return d->precision;
 }
 
 
@@ -292,7 +293,8 @@ char Result::format() const
 
 QString Result::formatNumber( const HNumber & value ) const
 {
-  char * str = HMath::format( value, value.format() ? value.format() : d->format, d->decimalDigits );
+  char * str = HMath::format( value, value.format() ?
+                                       value.format() : d->format, d->precision );
   QString s = QString::fromLatin1( str );
   free( str );
   QChar dot = Settings::self()->dot();
@@ -345,9 +347,9 @@ void Result::setCustomTextColor( const QColor & c )
 }
 
 
-void Result::setDecimalDigits( int digits )
+void Result::setPrecision( int digits )
 {
-  d->decimalDigits = digits;
+  d->precision = digits;
   triggerUpdate();
 }
 

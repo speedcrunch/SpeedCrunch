@@ -42,7 +42,7 @@ class Editor : public QTextEdit
   Q_OBJECT
 
   public:
-    typedef enum { Number, FunctionName, Variable, MatchedPar } ColorType;
+    enum ColorType { Number, FunctionName, Variable, MatchedPar };
 
     explicit Editor( Evaluator * eval, QWidget * parent = 0 );
     ~Editor();
@@ -59,7 +59,7 @@ class Editor : public QTextEdit
     void        setAutoCalcEnabled( bool enable );
     void        setAutoCompleteEnabled( bool enable );
     void        setCursorPosition( int pos );
-    void        setDecimalDigits( int digits );
+    void        setPrecision( int digits );
     void        setFormat( char format );
     void        setHighlightColor( ColorType type, QColor color );
     void        setSyntaxHighlight( bool enable );
@@ -146,9 +146,9 @@ class ConstantCompletion : public QObject
   Q_OBJECT
 
   public:
-    ConstantCompletion( Editor * editor );
+    ConstantCompletion( Editor * );
     ~ConstantCompletion();
-    bool eventFilter( QObject * o, QEvent * e );
+    bool eventFilter( QObject *, QEvent * );
     void showCompletion();
 
   signals:
@@ -163,7 +163,7 @@ class ConstantCompletion : public QObject
     void slide( int );
 
   private:
-    ConstantCompletionPrivate * d;
+    ConstantCompletionPrivate * const d;
     ConstantCompletion( const ConstantCompletion & );
     ConstantCompletion & operator=( const ConstantCompletion & );
 };

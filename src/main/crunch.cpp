@@ -416,9 +416,9 @@ void Crunch::applySettings()
   }
 
   d->result->setFormat( settings->format );
-  d->result->setDecimalDigits( settings->precision );
+  d->result->setPrecision( settings->precision );
   d->editor->setFormat( settings->format );
-  d->editor->setDecimalDigits( settings->precision );
+  d->editor->setPrecision( settings->precision );
 
   d->result->setFont( QApplication::font( d->result ) );
   d->editor->setFont( QApplication::font( d->editor ) );
@@ -1593,54 +1593,56 @@ void Crunch::createUI()
 
 void Crunch::saveSettings()
 {
-  Settings * settings = Settings::self();
+  Settings * s = Settings::self();
 
-  settings->mainWindowSize = size();
+  // main window
+  s->mainWindowState = saveState();
+  s->mainWindowSize  = size();
 
-  settings->history = d->editor->history();
-  settings->historyResults = d->editor->historyResults();
+  // history
+  s->history        = d->editor->history();
+  s->historyResults = d->editor->historyResults();
 
-  if( settings->saveVariables )
+  // variables
+  if ( s->saveVariables )
   {
-    settings->variables.clear();
+    s->variables.clear();
     QVector<Variable> vars = d->eval->variables();
     for ( int i = 0; i < vars.count(); i++ )
     {
       QString name = vars[i].name;
       char * value = HMath::formatScientific( vars[i].value, DECPRECISION );
-      settings->variables.append( QString("%1=%2").arg( name ).arg( QString( value ) ) );
+      s->variables.append( QString("%1=%2").arg( name ).arg( QString( value ) ) );
       free( value );
     }
   }
 
-  // docks
-  settings->mainWindowState = saveState();
+  // history dock
+  s->historyDockFloating   = d->historyDock->isFloating();
+  s->historyDockLeft       = d->historyDock->x();
+  s->historyDockTop        = d->historyDock->y();
+  s->historyDockWidth      = d->historyDock->width();
+  s->historyDockHeight     = d->historyDock->height();
+  // functions dock
+  s->functionsDockFloating = d->functionsDock->isFloating();
+  s->functionsDockLeft     = d->functionsDock->x();
+  s->functionsDockTop      = d->functionsDock->y();
+  s->functionsDockWidth    = d->functionsDock->width();
+  s->functionsDockHeight   = d->functionsDock->height();
+  // variables dock
+  s->variablesDockFloating = d->variablesDock->isFloating();
+  s->variablesDockLeft     = d->variablesDock->x();
+  s->variablesDockTop      = d->variablesDock->y();
+  s->variablesDockWidth    = d->variablesDock->width();
+  s->variablesDockHeight   = d->variablesDock->height();
+  // constants dock
+  s->constantsDockFloating = d->constantsDock->isFloating();
+  s->constantsDockLeft     = d->constantsDock->x();
+  s->constantsDockTop      = d->constantsDock->y();
+  s->constantsDockWidth    = d->constantsDock->width();
+  s->constantsDockHeight   = d->constantsDock->height();
 
-  settings->historyDockFloating = d->historyDock->isFloating();
-  settings->historyDockLeft = d->historyDock->x();
-  settings->historyDockTop = d->historyDock->y();
-  settings->historyDockWidth = d->historyDock->width();
-  settings->historyDockHeight = d->historyDock->height();
-
-  settings->functionsDockFloating = d->functionsDock->isFloating();
-  settings->functionsDockLeft = d->functionsDock->x();
-  settings->functionsDockTop = d->functionsDock->y();
-  settings->functionsDockWidth = d->functionsDock->width();
-  settings->functionsDockHeight = d->functionsDock->height();
-
-  settings->variablesDockFloating = d->variablesDock->isFloating();
-  settings->variablesDockLeft = d->variablesDock->x();
-  settings->variablesDockTop = d->variablesDock->y();
-  settings->variablesDockWidth = d->variablesDock->width();
-  settings->variablesDockHeight = d->variablesDock->height();
-
-  settings->constantsDockFloating = d->constantsDock->isFloating();
-  settings->constantsDockLeft = d->constantsDock->x();
-  settings->constantsDockTop = d->constantsDock->y();
-  settings->constantsDockWidth = d->constantsDock->width();
-  settings->constantsDockHeight = d->constantsDock->height();
-
-  settings->save();
+  s->save();
 }
 
 

@@ -49,14 +49,14 @@ class Result : public QListWidget
     QColor  customBackgroundColor2() const;
     QColor  customErrorColor() const;
     QColor  customTextColor() const;
-    int     decimalDigits() const;
+    int     precision() const;
     char    format() const;
     QString formatNumber( const HNumber & value ) const;
     void    setCustomAppearance( bool custom );
     void    setCustomBackgroundColor( const QColor & bg1, const QColor & bg2 );
     void    setCustomErrorColor( const QColor & e );
     void    setCustomTextColor( const QColor & textColor );
-    void    setDecimalDigits( int digits );
+    void    setPrecision( int digits );
     void    setFormat( char format );
 
   signals:
@@ -71,7 +71,7 @@ class Result : public QListWidget
     void triggerUpdate();
 
   private:
-    ResultPrivate * d;
+    ResultPrivate * const d;
     Result( const Result & );
     Result & operator=( const Result & );
 };

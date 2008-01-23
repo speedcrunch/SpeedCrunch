@@ -111,7 +111,7 @@ class EditorPrivate
     EditorCompletion *              completion;
     QTimer *                        completionTimer;
     ConstantCompletion *            constantCompletion;
-    int                             decimalDigits;
+    int                             precision;
     Evaluator *                     eval;
     char                            format;
     QStringList                     history;
@@ -288,9 +288,9 @@ void Editor::setFormat( char format )
 }
 
 
-void Editor::setDecimalDigits( int digits )
+void Editor::setPrecision( int digits )
 {
-  d->decimalDigits = digits;
+  d->precision = digits;
 }
 
 
@@ -676,7 +676,7 @@ void Editor::evaluate()
 
 QString Editor::formatNumber( const HNumber & value ) const
 {
-  char * str = HMath::format( value, d->format, d->decimalDigits );
+  char * str = HMath::format( value, d->format, d->precision );
   QString s = QString::fromLatin1( str );
   free( str );
   return s;
@@ -1008,9 +1008,9 @@ class ConstantCompletionPrivate
 };
 
 
-ConstantCompletion::ConstantCompletion( Editor * editor ) : QObject( editor )
+ConstantCompletion::ConstantCompletion( Editor * editor ) : QObject( editor ),
+    d( new ConstantCompletionPrivate )
 {
-  d = new ConstantCompletionPrivate;
   d->editor = editor;
 
   d->popup = new QFrame( 0 );

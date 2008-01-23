@@ -19,7 +19,8 @@
 // Boston, MA 02110-1301, USA.
 
 
-#include <base/settings.hxx>
+#include "settings.hxx"
+
 #include <math/floatconfig.h>
 
 #include <QApplication>
@@ -70,7 +71,7 @@ void Settings::load()
   setDot( settings.value( key + "/DecimalPoint", QString() ).toString());
 
   key = KEY + "/Format";
-  QString formatStr = settings.value( key + "/Code" ).toString();
+  QString formatStr = settings.value( key + "/Type" ).toString();
   if ( formatStr == "Fixed" )       format = 'f';
   if ( formatStr == "Engineering" ) format = 'n';
   if ( formatStr == "Scientific" )  format = 'e';
@@ -206,7 +207,7 @@ void Settings::save()
   else if ( format == 'h' ) formatStr = "Hexadecimal";
   else if ( format == 'o' ) formatStr = "Octal";
   else if ( format == 'b' ) formatStr = "Binary";
-  settings.setValue( key + "/Code",      formatStr );
+  settings.setValue( key + "/Type",      formatStr );
   settings.setValue( key + "/Precision", precision );
 
   key = KEY + "/Layout/";
