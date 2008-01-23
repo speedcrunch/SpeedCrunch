@@ -77,6 +77,7 @@ class Crunch : public QMainWindow
     void setWidgetsLayoutAccordingToLanguageDirection();
     void showAutoCalc( const QString & );
     void showConstants( bool );
+    void showInFullScreen( bool );
     void showFunctions( bool );
     void showHistory( bool );
     void showKeypad( bool );

@@ -105,6 +105,7 @@ struct Actions
   QAction * sessionSave;
   QAction * showConstants;
   QAction * showFunctions;
+  QAction * showFullScreen;
   QAction * showHistory;
   QAction * showKeypad;
   QAction * showVariables;
@@ -119,23 +120,31 @@ struct Actions
 };
 
 
+struct Menus
+{
+  QMenu * angle;
+  QMenu * decimal;
+  QMenu * edit;
+  QMenu * format;
+  QMenu * help;
+  QMenu * layout;
+  QMenu * session;
+  QMenu * settings;
+};
+
+
 struct CrunchPrivate
 {
   Qt::WindowFlags flags;
 
   Actions actions;
+  Menus   menus;
 
   QActionGroup * angleGroup;
   QActionGroup * digitsGroup;
 
-  QMenu * angleMenu;
-  QMenu * baseMenu;
-  QMenu * decimalBaseSubmenu;
-  QMenu * editMenu;
-  QMenu * helpMenu;
-  QMenu * sessionMenu;
-  QMenu * settingsMenu;
-  bool    notifyMenuBarHidden;
+  bool notifyMenuBarHidden;
+  bool trayNotify;
 
   Editor *    editor;
   Evaluator * eval;
@@ -148,7 +157,6 @@ struct CrunchPrivate
 
   QSystemTrayIcon * trayIcon;
   QMenu           * trayIconMenu;
-  bool              trayNotify;
 
   ConstantsDock * constantsDock;
   FunctionsDock * functionsDock;
@@ -184,7 +192,6 @@ Crunch::Crunch() : QMainWindow()
   d->trayNotify = true;
 
   d->notifyMenuBarHidden = true;
-
   // outer widget and layout
   QWidget * box = new QWidget( this );
   //box->setStyleSheet( "background: #202020" );
@@ -216,13 +223,11 @@ Crunch::Crunch() : QMainWindow()
   d->keypad = new Keypad( box );
   d->keypad->setFocusPolicy( Qt::NoFocus );
   d->keypad->hide();
-  //d->keypad->setStyleSheet( "background-color: black" );
-  d->keypad->setStyleSheet( "QPushButton { background: black; font: bold 12px;"
+  //d->keypad->setStyleSheet( "QPushButton { font: bold }" );
+  d->keypad->setStyleSheet( "QPushButton { background: black; font: bold;"
                             "color: white; border-style: solid;"
                             "border-color: #202020; border-radius: 10px;"
                             "border-width: 2px }" );
-  //d->keypad->setStyleSheet( "QPushButton { font: bold; border-style: outset; border-radius: 10px; border-width: 3px }" );
-  //d->keypad->setStyleSheet( "QPushButton { font: bold; border-radius: 10px; border-width: 3px }" );
   keypadLayout->addStretch();
   keypadLayout->addWidget( d->keypad );
   keypadLayout->addStretch();
@@ -363,13 +368,10 @@ void Crunch::applySettings()
   if ( settings->mainWindowSize != QSize(0, 0) )
     resize( settings->mainWindowSize );
 
+  showInFullScreen( settings->showFullScreen );
+
   d->editor->setAutoCompleteEnabled( settings->autoComplete );
   d->editor->setAutoCalcEnabled( settings->autoCalc );
-  d->editor->setSyntaxHighlight( settings->enableSyntaxHighlight );
-  d->editor->setHighlightColor( Editor::Number, settings->highlightNumberColor );
-  d->editor->setHighlightColor( Editor::FunctionName, settings->highlightFunctionColor );
-  d->editor->setHighlightColor( Editor::Variable, settings->highlightVariableColor );
-  d->editor->setHighlightColor( Editor::MatchedPar, settings->matchedParenthesisColor );
 
   if( Settings::self()->angleMode == Settings::Radian )
   {
@@ -455,10 +457,11 @@ void Crunch::applySettings()
   showKeypad( settings->showKeypad );
   menuBar()->setVisible( settings->showMenuBar );
 
-  d->actions.showConstants->setChecked( settings->showConstants );
-  d->actions.showFunctions->setChecked( settings->showFunctions );
-  d->actions.showHistory->setChecked  ( settings->showHistory   );
-  d->actions.showVariables->setChecked( settings->showVariables );
+  d->actions.showConstants->setChecked ( settings->showConstants  );
+  d->actions.showFullScreen->setChecked( settings->showFullScreen );
+  d->actions.showFunctions->setChecked ( settings->showFunctions  );
+  d->actions.showHistory->setChecked   ( settings->showHistory    );
+  d->actions.showVariables->setChecked ( settings->showVariables  );
 
   d->constantsDock->setVisible( settings->showConstants );
   d->functionsDock->setVisible( settings->showFunctions );
@@ -800,11 +803,11 @@ void Crunch::setWidgetsLayoutAccordingToLanguageDirection()
 {
   // menu bar and menus
   setWidgetLayoutAccordingToLanguageDirection( menuBar()        );
-  setWidgetLayoutAccordingToLanguageDirection( d->sessionMenu   );
-  setWidgetLayoutAccordingToLanguageDirection( d->editMenu      );
-  setWidgetLayoutAccordingToLanguageDirection( d->baseMenu      );
-  setWidgetLayoutAccordingToLanguageDirection( d->settingsMenu  );
-  setWidgetLayoutAccordingToLanguageDirection( d->helpMenu      );
+  setWidgetLayoutAccordingToLanguageDirection( d->menus.session   );
+  setWidgetLayoutAccordingToLanguageDirection( d->menus.edit      );
+  setWidgetLayoutAccordingToLanguageDirection( d->menus.format      );
+  setWidgetLayoutAccordingToLanguageDirection( d->menus.settings  );
+  setWidgetLayoutAccordingToLanguageDirection( d->menus.help      );
   // tip of the day
   setWidgetLayoutAccordingToLanguageDirection( d->tip           );
   // docks
@@ -870,6 +873,13 @@ void Crunch::showConstants( bool b )
   //saveSettings();
   //applySettings();
   //d->constantsDock->raise();
+}
+
+
+void Crunch::showInFullScreen( bool b )
+{
+  b ? showFullScreen() : showNormal();
+  Settings::self()->showFullScreen = b;
 }
 
 
@@ -1383,6 +1393,7 @@ void Crunch::createUI()
   d->actions.sessionQuit        = new QAction( tr("&Quit"),                    this );
   d->actions.sessionSave        = new QAction( tr("&Save..."),                 this );
   d->actions.showConstants      = new QAction( tr("Show &Constants"),          this );
+  d->actions.showFullScreen     = new QAction( tr("Full &Screen Mode"),        this );
   d->actions.showFunctions      = new QAction( tr("Show &Functions"),          this );
   d->actions.showHistory        = new QAction( tr("Show &History"),            this );
   d->actions.showKeypad         = new QAction( tr("Show &Keypad"),             this );
@@ -1414,12 +1425,110 @@ void Crunch::createUI()
   d->actions.sessionLoad->setShortcut     ( Qt::CTRL + Qt::Key_L        );
   d->actions.sessionQuit->setShortcut     ( Qt::CTRL + Qt::Key_Q        );
   d->actions.sessionSave->setShortcut     ( Qt::CTRL + Qt::Key_S        );
+  d->actions.showFullScreen->setShortcut  (            Qt::Key_F11      );
   d->actions.showKeypad->setShortcut      ( Qt::CTRL + Qt::Key_K        );
   d->actions.showMenuBar->setShortcut     ( Qt::CTRL + Qt::Key_M        );
   d->actions.viewBinary->setShortcut      (            Qt::Key_F5       );
   d->actions.viewGeneral->setShortcut     (            Qt::Key_F7       );
   d->actions.viewHexadec->setShortcut     (            Qt::Key_F8       );
   d->actions.viewOctal->setShortcut       (            Qt::Key_F6       );
+
+  // define checkable
+  d->actions.degree->setCheckable         ( true );
+  d->actions.digits15->setCheckable       ( true );
+  d->actions.digits2->setCheckable        ( true );
+  d->actions.digits3->setCheckable        ( true );
+  d->actions.digits50->setCheckable       ( true );
+  d->actions.digits8->setCheckable        ( true );
+  d->actions.digitsAuto->setCheckable     ( true );
+  d->actions.radian->setCheckable         ( true );
+  d->actions.showConstants->setCheckable  ( true );
+  d->actions.showFullScreen->setCheckable ( true );
+  d->actions.showFunctions->setCheckable  ( true );
+  d->actions.showHistory->setCheckable    ( true );
+  d->actions.showKeypad->setCheckable     ( true );
+  d->actions.showVariables->setCheckable  ( true );
+  d->actions.viewBinary->setCheckable     ( true );
+  d->actions.viewEngineering->setCheckable( true );
+  d->actions.viewFixed->setCheckable      ( true );
+  d->actions.viewGeneral->setCheckable    ( true );
+  d->actions.viewHexadec->setCheckable    ( true );
+  d->actions.viewOctal->setCheckable      ( true );
+  d->actions.viewScientific->setCheckable ( true );
+
+  // signals and slots
+  connect( d->actions.clearHistory,         SIGNAL(activated()),     this,      SLOT(clearHistory())           );
+  connect( d->actions.clearExpression,      SIGNAL(activated()),     this,      SLOT(clearExpression())        );
+  connect( d->actions.configure,            SIGNAL(activated()),     this,      SLOT(configure())              );
+  connect( d->actions.degree,               SIGNAL(activated()),     this,      SLOT(degree())                 );
+  connect( d->actions.deleteAllVariables,   SIGNAL(activated()),     this,      SLOT(deleteAllVariables())     );
+  connect( d->actions.deleteVariable,       SIGNAL(activated()),     this,      SLOT(deleteVariable())         );
+  connect( d->actions.digits15,             SIGNAL(activated()),     this,      SLOT(digits15())               );
+  connect( d->actions.digits2,              SIGNAL(activated()),     this,      SLOT(digits2())                );
+  connect( d->actions.digits3,              SIGNAL(activated()),     this,      SLOT(digits3())                );
+  connect( d->actions.digits50,             SIGNAL(activated()),     this,      SLOT(digits50())               );
+  connect( d->actions.digits8,              SIGNAL(activated()),     this,      SLOT(digits8())                );
+  connect( d->actions.digitsAuto,           SIGNAL(activated()),     this,      SLOT(digitsAuto())             );
+  connect( d->actions.editCopyResult,       SIGNAL(activated()),     this,      SLOT(copyResult())             );
+  connect( d->actions.editCopy,             SIGNAL(activated()),     d->editor, SLOT(copy())                   );
+  connect( d->actions.editPaste,            SIGNAL(activated()),     d->editor, SLOT(paste())                  );
+  connect( d->actions.selectExpression,     SIGNAL(activated()),     this,      SLOT(selectExpression())       );
+  connect( d->actions.helpAboutQt,          SIGNAL(activated()),     this,      SLOT(aboutQt())                );
+  connect( d->actions.helpAbout,            SIGNAL(activated()),     this,      SLOT(about())                  );
+  connect( d->actions.helpGotoWebsite,      SIGNAL(activated()),     this,      SLOT(gotoWebsite())            );
+  connect( d->actions.helpTipOfTheDay,      SIGNAL(activated()),     this,      SLOT(showTipOfTheDay())        );
+  connect( d->actions.insertFunction,       SIGNAL(activated()),     this,      SLOT(insertFunction())         );
+  connect( d->actions.insertVariable,       SIGNAL(activated()),     this,      SLOT(insertVariable())         );
+  connect( d->actions.radian,               SIGNAL(activated()),     this,      SLOT(radian())                 );
+  connect( d->actions.scrollDown,           SIGNAL(activated()),     this,      SLOT(scrollDown())             );
+  connect( d->actions.scrollUp,             SIGNAL(activated()),     this,      SLOT(scrollUp())               );
+  connect( d->actions.sessionLoad,          SIGNAL(activated()),     this,      SLOT(loadSession())            );
+  connect( d->actions.sessionQuit,          SIGNAL(activated()),     this,      SLOT(close())                  );
+  connect( d->actions.sessionSave,          SIGNAL(activated()),     this,      SLOT(saveSession())            );
+  connect( d->actions.showConstants,        SIGNAL(toggled( bool )), this,      SLOT(showConstants( bool ))    );
+  connect( d->actions.showFullScreen,       SIGNAL(toggled( bool )), this,      SLOT(showInFullScreen( bool )) );
+  connect( d->actions.showFunctions,        SIGNAL(toggled( bool )), this,      SLOT(showFunctions( bool ))    );
+  connect( d->actions.showHistory,          SIGNAL(toggled( bool )), this,      SLOT(showHistory( bool ))      );
+  connect( d->actions.showKeypad,           SIGNAL(toggled( bool )), this,      SLOT(showKeypad( bool ))       );
+  connect( d->actions.showMenuBar,          SIGNAL(activated()),     this,      SLOT(showMenuBar())            );
+  connect( d->actions.showVariables,        SIGNAL(toggled( bool )), this,      SLOT(showVariables( bool ))    );
+  connect( d->actions.viewBinary,           SIGNAL(activated()),     this,      SLOT(viewBinary())             );
+  connect( d->actions.viewEngineering,      SIGNAL(activated()),     this,      SLOT(viewEngineering())        );
+  connect( d->actions.viewFixed,            SIGNAL(activated()),     this,      SLOT(viewFixed())              );
+  connect( d->actions.viewGeneral,          SIGNAL(activated()),     this,      SLOT(viewGeneral())            );
+  connect( d->actions.viewHexadec,          SIGNAL(activated()),     this,      SLOT(viewHexadec())            );
+  connect( d->actions.viewOctal,            SIGNAL(activated()),     this,      SLOT(viewOctal())              );
+  connect( d->actions.viewScientific,       SIGNAL(activated()),     this,      SLOT(viewScientific())         );
+
+  // synchronize dock actions
+  connect( d->constantsDock->toggleViewAction(), SIGNAL(toggled( bool )), d->actions.showConstants, SLOT(setChecked( bool )) );
+  connect( d->functionsDock->toggleViewAction(), SIGNAL(toggled( bool )), d->actions.showFunctions, SLOT(setChecked( bool )) );
+  connect( d->historyDock->toggleViewAction(),   SIGNAL(toggled( bool )), d->actions.showHistory,   SLOT(setChecked( bool )) );
+  connect( d->variablesDock->toggleViewAction(), SIGNAL(toggled( bool )), d->actions.showVariables, SLOT(setChecked( bool )) );
+
+  // construct the menu
+  d->menus.session = new QMenu( tr("&Session"), this );
+  menuBar()->addMenu( d->menus.session );
+  d->menus.session->addAction( d->actions.sessionLoad );
+  d->menus.session->addAction( d->actions.sessionSave );
+  d->menus.session->addSeparator();
+  d->menus.session->addAction( d->actions.sessionQuit );
+
+  d->menus.edit = new QMenu( tr("&Edit"), this );
+  menuBar()->addMenu( d->menus.edit );
+  d->menus.edit->addAction( d->actions.editCopy           );
+  d->menus.edit->addAction( d->actions.editCopyResult     );
+  d->menus.edit->addAction( d->actions.editPaste          );
+  d->menus.edit->addAction( d->actions.selectExpression   );
+  d->menus.edit->addSeparator();
+  d->menus.edit->addAction( d->actions.insertFunction     );
+  d->menus.edit->addAction( d->actions.insertVariable     );
+  d->menus.edit->addSeparator();
+  d->menus.edit->addAction( d->actions.deleteVariable     );
+  d->menus.edit->addAction( d->actions.deleteAllVariables );
+  d->menus.edit->addSeparator();
+  d->menus.edit->addAction( d->actions.clearExpression    );
+  d->menus.edit->addAction( d->actions.clearHistory       );
 
   QActionGroup * formatGroup = new QActionGroup( this );
   formatGroup->addAction( d->actions.viewBinary );
@@ -1443,142 +1552,51 @@ void Crunch::createUI()
   d->angleGroup->addAction( d->actions.radian );
   d->angleGroup->addAction( d->actions.degree );
 
-  d->actions.degree->setCheckable( true );
-  d->actions.digits15->setCheckable( true );
-  d->actions.digits2->setCheckable( true );
-  d->actions.digits3->setCheckable( true );
-  d->actions.digits50->setCheckable( true );
-  d->actions.digits8->setCheckable( true );
-  d->actions.digitsAuto->setCheckable( true );
-  d->actions.radian->setCheckable( true );
-  d->actions.showConstants->setCheckable( true );
-  d->actions.showFunctions->setCheckable( true );
-  d->actions.showHistory->setCheckable( true );
-  d->actions.showKeypad->setCheckable( true );
-  d->actions.showVariables->setCheckable( true );
-  d->actions.viewBinary->setCheckable( true );
-  d->actions.viewEngineering->setCheckable( true );
-  d->actions.viewFixed->setCheckable( true );
-  d->actions.viewGeneral->setCheckable( true );
-  d->actions.viewHexadec->setCheckable( true );
-  d->actions.viewOctal->setCheckable( true );
-  d->actions.viewScientific->setCheckable( true );
+  d->menus.format = new QMenu( tr("&Format"), this );
+  menuBar()->addMenu( d->menus.format );
+  d->menus.format->addAction( d->actions.viewBinary );
+  d->menus.format->addAction( d->actions.viewOctal );
+  d->menus.decimal = d->menus.format->addMenu( tr("Decimal") );
+    d->menus.decimal->addAction( d->actions.viewGeneral );
+    d->menus.decimal->addAction( d->actions.viewFixed );
+    d->menus.decimal->addAction( d->actions.viewEngineering );
+    d->menus.decimal->addAction( d->actions.viewScientific );
+    d->menus.decimal->addSeparator();
+    d->menus.decimal->addAction( d->actions.digitsAuto );
+    d->menus.decimal->addAction( d->actions.digits2 );
+    d->menus.decimal->addAction( d->actions.digits3 );
+    d->menus.decimal->addAction( d->actions.digits8 );
+    d->menus.decimal->addAction( d->actions.digits15 );
+    d->menus.decimal->addAction( d->actions.digits50 );
+  d->menus.format->addAction( d->actions.viewHexadec );
 
-  // signals and slots
-  connect( d->actions.clearHistory,         SIGNAL(activated()),     this,      SLOT(clearHistory())         );
-  connect( d->actions.clearExpression,      SIGNAL(activated()),     this,      SLOT(clearExpression())      );
-  connect( d->actions.configure,            SIGNAL(activated()),     this,      SLOT(configure())            );
-  connect( d->actions.degree,               SIGNAL(activated()),     this,      SLOT(degree())               );
-  connect( d->actions.deleteAllVariables,   SIGNAL(activated()),     this,      SLOT(deleteAllVariables())   );
-  connect( d->actions.deleteVariable,       SIGNAL(activated()),     this,      SLOT(deleteVariable())       );
-  connect( d->actions.digits15,             SIGNAL(activated()),     this,      SLOT(digits15())             );
-  connect( d->actions.digits2,              SIGNAL(activated()),     this,      SLOT(digits2())              );
-  connect( d->actions.digits3,              SIGNAL(activated()),     this,      SLOT(digits3())              );
-  connect( d->actions.digits50,             SIGNAL(activated()),     this,      SLOT(digits50())             );
-  connect( d->actions.digits8,              SIGNAL(activated()),     this,      SLOT(digits8())              );
-  connect( d->actions.digitsAuto,           SIGNAL(activated()),     this,      SLOT(digitsAuto())           );
-  connect( d->actions.editCopyResult,       SIGNAL(activated()),     this,      SLOT(copyResult())           );
-  connect( d->actions.editCopy,             SIGNAL(activated()),     d->editor, SLOT(copy())                 );
-  connect( d->actions.editPaste,            SIGNAL(activated()),     d->editor, SLOT(paste())                );
-  connect( d->actions.selectExpression,     SIGNAL(activated()),     this,      SLOT(selectExpression())     );
-  connect( d->actions.helpAboutQt,          SIGNAL(activated()),     this,      SLOT(aboutQt())              );
-  connect( d->actions.helpAbout,            SIGNAL(activated()),     this,      SLOT(about())                );
-  connect( d->actions.helpGotoWebsite,      SIGNAL(activated()),     this,      SLOT(gotoWebsite())          );
-  connect( d->actions.helpTipOfTheDay,      SIGNAL(activated()),     this,      SLOT(showTipOfTheDay())      );
-  connect( d->actions.insertFunction,       SIGNAL(activated()),     this,      SLOT(insertFunction())       );
-  connect( d->actions.insertVariable,       SIGNAL(activated()),     this,      SLOT(insertVariable())       );
-  connect( d->actions.radian,               SIGNAL(activated()),     this,      SLOT(radian())               );
-  connect( d->actions.scrollDown,           SIGNAL(activated()),     this,      SLOT(scrollDown())           );
-  connect( d->actions.scrollUp,             SIGNAL(activated()),     this,      SLOT(scrollUp())             );
-  connect( d->actions.sessionLoad,          SIGNAL(activated()),     this,      SLOT(loadSession())          );
-  connect( d->actions.sessionQuit,          SIGNAL(activated()),     this,      SLOT(close())                );
-  connect( d->actions.sessionSave,          SIGNAL(activated()),     this,      SLOT(saveSession())          );
-  connect( d->actions.showConstants,        SIGNAL(toggled( bool )), this,      SLOT(showConstants( bool ))  );
-  connect( d->actions.showFunctions,        SIGNAL(toggled( bool )), this,      SLOT(showFunctions( bool ))  );
-  connect( d->actions.showHistory,          SIGNAL(toggled( bool )), this,      SLOT(showHistory( bool ))    );
-  connect( d->actions.showKeypad,           SIGNAL(toggled( bool )), this,      SLOT(showKeypad( bool ))     );
-  connect( d->actions.showMenuBar,          SIGNAL(activated()),     this,      SLOT(showMenuBar())          );
-  connect( d->actions.showVariables,        SIGNAL(toggled( bool )), this,      SLOT(showVariables( bool ))  );
-  connect( d->actions.viewBinary,           SIGNAL(activated()),     this,      SLOT(viewBinary())           );
-  connect( d->actions.viewEngineering,      SIGNAL(activated()),     this,      SLOT(viewEngineering())      );
-  connect( d->actions.viewFixed,            SIGNAL(activated()),     this,      SLOT(viewFixed())            );
-  connect( d->actions.viewGeneral,          SIGNAL(activated()),     this,      SLOT(viewGeneral())          );
-  connect( d->actions.viewHexadec,          SIGNAL(activated()),     this,      SLOT(viewHexadec())          );
-  connect( d->actions.viewOctal,            SIGNAL(activated()),     this,      SLOT(viewOctal())            );
-  connect( d->actions.viewScientific,       SIGNAL(activated()),     this,      SLOT(viewScientific())       );
+  d->menus.angle = new QMenu( tr("&Angle"), this );
+  menuBar()->addMenu( d->menus.angle );
+  d->menus.angle->addAction( d->actions.radian );
+  d->menus.angle->addAction( d->actions.degree );
 
-  // synchronize dock actions
-  connect( d->constantsDock->toggleViewAction(), SIGNAL(toggled( bool )), d->actions.showConstants, SLOT(setChecked( bool )) );
-  connect( d->functionsDock->toggleViewAction(), SIGNAL(toggled( bool )), d->actions.showFunctions, SLOT(setChecked( bool )) );
-  connect( d->historyDock->toggleViewAction(),   SIGNAL(toggled( bool )), d->actions.showHistory,   SLOT(setChecked( bool )) );
-  connect( d->variablesDock->toggleViewAction(), SIGNAL(toggled( bool )), d->actions.showVariables, SLOT(setChecked( bool )) );
+  d->menus.settings = new QMenu( tr("Se&ttings"), this );
+  menuBar()->addMenu( d->menus.settings );
+  d->menus.layout = d->menus.settings->addMenu( tr("Layout") );
+    d->menus.layout->addAction( d->actions.showKeypad     );
+    d->menus.layout->addSeparator();
+    d->menus.layout->addAction( d->actions.showHistory    );
+    d->menus.layout->addAction( d->actions.showFunctions  );
+    d->menus.layout->addAction( d->actions.showVariables  );
+    d->menus.layout->addAction( d->actions.showConstants  );
+    d->menus.layout->addSeparator();
+    d->menus.layout->addAction( d->actions.showMenuBar    );
+    d->menus.layout->addSeparator();
+    d->menus.layout->addAction( d->actions.showFullScreen );
+  d->menus.settings->addAction( d->actions.configure      );
 
-  // construct the menu
-  d->sessionMenu = new QMenu( tr("&Session"), this );
-  menuBar()->addMenu( d->sessionMenu );
-  d->sessionMenu->addAction( d->actions.sessionLoad );
-  d->sessionMenu->addAction( d->actions.sessionSave );
-  d->sessionMenu->addSeparator();
-  d->sessionMenu->addAction( d->actions.sessionQuit );
-
-  d->editMenu = new QMenu( tr("&Edit"), this );
-  menuBar()->addMenu( d->editMenu );
-  d->editMenu->addAction( d->actions.editCopy );
-  d->editMenu->addAction( d->actions.editCopyResult );
-  d->editMenu->addAction( d->actions.editPaste );
-  d->editMenu->addAction( d->actions.selectExpression );
-  d->editMenu->addSeparator();
-  d->editMenu->addAction( d->actions.insertFunction );
-  d->editMenu->addAction( d->actions.insertVariable );
-  d->editMenu->addSeparator();
-  d->editMenu->addAction( d->actions.deleteVariable );
-  d->editMenu->addAction( d->actions.deleteAllVariables );
-  d->editMenu->addSeparator();
-  d->editMenu->addAction( d->actions.clearExpression );
-  d->editMenu->addAction( d->actions.clearHistory );
-
-  d->baseMenu = new QMenu( tr("&Format"), this );
-  menuBar()->addMenu( d->baseMenu );
-  d->baseMenu->addAction( d->actions.viewBinary );
-  d->baseMenu->addAction( d->actions.viewOctal );
-  d->decimalBaseSubmenu = d->baseMenu->addMenu( tr("Decimal") );
-    d->decimalBaseSubmenu->addAction( d->actions.viewGeneral );
-    d->decimalBaseSubmenu->addAction( d->actions.viewFixed );
-    d->decimalBaseSubmenu->addAction( d->actions.viewEngineering );
-    d->decimalBaseSubmenu->addAction( d->actions.viewScientific );
-    d->decimalBaseSubmenu->addSeparator();
-    d->decimalBaseSubmenu->addAction( d->actions.digitsAuto );
-    d->decimalBaseSubmenu->addAction( d->actions.digits2 );
-    d->decimalBaseSubmenu->addAction( d->actions.digits3 );
-    d->decimalBaseSubmenu->addAction( d->actions.digits8 );
-    d->decimalBaseSubmenu->addAction( d->actions.digits15 );
-    d->decimalBaseSubmenu->addAction( d->actions.digits50 );
-  d->baseMenu->addAction( d->actions.viewHexadec );
-
-  d->angleMenu = new QMenu( tr("&Angle"), this );
-  menuBar()->addMenu( d->angleMenu );
-  d->angleMenu->addAction( d->actions.radian );
-  d->angleMenu->addAction( d->actions.degree );
-
-  d->settingsMenu = new QMenu( tr("Se&ttings"), this );
-  menuBar()->addMenu( d->settingsMenu );
-  d->settingsMenu->addAction( d->actions.showKeypad );
-  d->settingsMenu->addAction( d->actions.showHistory );
-  d->settingsMenu->addAction( d->actions.showFunctions );
-  d->settingsMenu->addAction( d->actions.showVariables );
-  d->settingsMenu->addAction( d->actions.showConstants );
-  d->settingsMenu->addSeparator();
-  d->settingsMenu->addAction( d->actions.showMenuBar );
-  d->settingsMenu->addSeparator();
-  d->settingsMenu->addAction( d->actions.configure );
-
-  d->helpMenu = new QMenu( tr("&Help"), this );
-  menuBar()->addMenu( d->helpMenu );
-  d->helpMenu->addAction( d->actions.helpTipOfTheDay );
-  d->helpMenu->addAction( d->actions.helpGotoWebsite );
-  d->helpMenu->addSeparator();
-  d->helpMenu->addAction( d->actions.helpAbout );
-  d->helpMenu->addAction( d->actions.helpAboutQt );
+  d->menus.help = new QMenu( tr("&Help"), this );
+  menuBar()->addMenu( d->menus.help );
+  d->menus.help->addAction( d->actions.helpTipOfTheDay );
+  d->menus.help->addAction( d->actions.helpGotoWebsite );
+  d->menus.help->addSeparator();
+  d->menus.help->addAction( d->actions.helpAbout );
+  d->menus.help->addAction( d->actions.helpAboutQt );
 
   this->addActions( menuBar()->actions() );
   this->addAction( d->actions.scrollDown );

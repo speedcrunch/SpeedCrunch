@@ -48,8 +48,6 @@ class ConfigDlg : public QDialog
     void adaptToLanguageChange();
 
   protected slots:
-    void chooseFont();
-    void customAppearance();
     void initUI();
     virtual void accept();
     virtual void showEvent( QShowEvent * );

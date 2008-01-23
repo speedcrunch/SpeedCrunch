@@ -80,6 +80,7 @@ class Settings
     bool         showClearInputButton;
     bool         showConstants;
     bool         showEvaluateButton;
+    bool         showFullScreen;
     bool         showFunctions;
     bool         showHistory;
     bool         showKeypad;

@@ -82,10 +82,9 @@ void Settings::load()
   if ( decimalDigits > DECPRECISION )
     decimalDigits = DECPRECISION;
 
-  showClearInputButton = settings.value( key + "/Appearance/ShowClearInputButton", true ).toBool();
-  showEvaluateButton   = settings.value( key + "/Appearance/ShowEvaluateButton",   true ).toBool();
-  showKeypad           = settings.value( key + "/Appearance/ShowKeypad",           true ).toBool();
-  showMenuBar          = settings.value( key + "/Appearance/ShowMenuBar",          true ).toBool();
+  showFullScreen       = settings.value( key + "/Appearance/ShowFullScreen", false ).toBool();
+  showKeypad           = settings.value( key + "/Appearance/ShowKeypad",     true  ).toBool();
+  showMenuBar          = settings.value( key + "/Appearance/ShowMenuBar",    true  ).toBool();
 
   showHistory   = settings.value( key + "/Appearance/ShowHistory",   false ).toBool();
   showFunctions = settings.value( key + "/Appearance/ShowFunctions", false ).toBool();
@@ -227,11 +226,10 @@ void Settings::save()
   settings.setValue( key + "/View/Format",        formatStr     );
   settings.setValue( key + "/View/DecimalDigits", decimalDigits );
 
-  settings.setValue( key + "/Appearance/ShowClearInputButton", showClearInputButton );
   settings.setValue( key + "/Appearance/ShowConstants",        showConstants        );
-  settings.setValue( key + "/Appearance/ShowEvaluateButton",   showEvaluateButton   );
   settings.setValue( key + "/Appearance/ShowFunctions",        showFunctions        );
   settings.setValue( key + "/Appearance/ShowHistory",          showHistory          );
+  settings.setValue( key + "/Appearance/ShowFullScreen",       showFullScreen       );
   settings.setValue( key + "/Appearance/ShowKeypad",           showKeypad           );
   settings.setValue( key + "/Appearance/ShowMenuBar",          showMenuBar          );
   settings.setValue( key + "/Appearance/ShowVariables",        showVariables        );
@@ -380,15 +378,14 @@ Settings::Settings()
   format        = 'g';
   decimalDigits = -1;
 
-  customAppearance     = true;
-  showClearInputButton = true;
-  showConstants        = false;
-  showEvaluateButton   = true;
-  showFunctions        = false;
-  showHistory          = false;
-  showKeypad           = true;
-  showMenuBar          = true;
-  showVariables        = false;
+  customAppearance = true;
+  showConstants    = false;
+  showFunctions    = false;
+  showHistory      = false;
+  showFullScreen   = false;
+  showKeypad       = true;
+  showMenuBar      = true;
+  showVariables    = false;
 
   customBackgroundColor1  = QColor(   0,   0,   0 );
   customBackgroundColor2  = QColor(  17,  20,  23 );
