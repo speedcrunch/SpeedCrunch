@@ -55,7 +55,6 @@ class Crunch : public QMainWindow
     void applySettings();
     void clearHistory();
     void clearExpression();
-    void configure();
     void copyResult();
     void degree();
     void deleteAllVariables();

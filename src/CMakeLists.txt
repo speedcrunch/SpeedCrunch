@@ -168,4 +168,4 @@ test/testfloatnum.c
 add_executable(testfloatnum ${testfloatnum_SOURCES})
 add_test(testfloatnum ${EXECUTABLE_OUTPUT_PATH}/testfloatnum)
 
-INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR} 3rdparty/gui/wwwidgets 3rdparty/util base gui main math)
+INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR} 3rdparty/util base gui main math)

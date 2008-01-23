@@ -20,7 +20,7 @@
 // Boston, MA 02110-1301, USA.
 
 
-#include <main/crunch.hxx>
+#include "crunch.hxx"
 
 #include <base/constants.hxx>
 #include <base/evaluator.hxx>
@@ -28,7 +28,6 @@
 #include <base/settings.hxx>
 #include <gui/aboutbox.hxx>
 #include <gui/autohidelabel.hxx>
-#include <gui/configdlg.hxx>
 #include <gui/constantsdock.hxx>
 #include <gui/deletevardlg.hxx>
 #include <gui/editor.hxx>
@@ -77,7 +76,6 @@ struct Actions
 {
   QAction * clearExpression;
   QAction * clearHistory;
-  QAction * configure;
   QAction * degree;
   QAction * deleteAllVariables;
   QAction * deleteVariable;
@@ -96,6 +94,13 @@ struct Actions
   QAction * helpTipOfTheDay;
   QAction * insertFunction;
   QAction * insertVariable;
+  QAction * optionAlwaysOnTop;
+  QAction * optionAutoCalc;
+  QAction * optionAutoCompletion;
+  QAction * optionDotAuto;
+  QAction * optionDotComma;
+  QAction * optionDotPoint;
+  QAction * optionMinimizeSystray;
   QAction * radian;
   QAction * scrollDown;
   QAction * scrollUp;
@@ -123,6 +128,7 @@ struct Actions
 struct Menus
 {
   QMenu * angle;
+  QMenu * behavior;
   QMenu * decimal;
   QMenu * edit;
   QMenu * format;
@@ -149,7 +155,7 @@ struct CrunchPrivate
   Editor *    editor;
   Evaluator * eval;
   Keypad *    keypad;
-  Result *    result;
+  Result *    display;
 
   bool            autoAns;
   AutoHideLabel * autoCalcLabel;
@@ -163,7 +169,6 @@ struct CrunchPrivate
   HistoryDock   * historyDock;
   VariablesDock * variablesDock;
 
-  ConfigDlg         * configDlg;
   DeleteVariableDlg * deleteVariableDlg;
   InsertFunctionDlg * insertFunctionDlg;
   InsertVariableDlg * insertVariableDlg;
@@ -202,9 +207,9 @@ Crunch::Crunch() : QMainWindow()
   boxLayout->setSpacing( 0 );
 
   // display
-  d->result = new Result( box );
-  //d->result->setStyleSheet( "background: black" );
-  boxLayout->addWidget( d->result );
+  d->display = new Result( box );
+  //d->display->setStyleSheet( "background: black" );
+  boxLayout->addWidget( d->display );
 
   // editor
   QHBoxLayout * editorLayout = new QHBoxLayout();
@@ -275,8 +280,8 @@ Crunch::Crunch() : QMainWindow()
   connect( d->functionsDock,         SIGNAL(functionSelected( const QString & )),              SLOT(functionSelected( const QString & ))   );
   connect( d->historyDock,           SIGNAL(expressionSelected( const QString & )),            SLOT(expressionSelected( const QString & )) );
   connect( d->keypad,                SIGNAL(buttonPressed( Keypad::Button )),                  SLOT(keypadButtonPressed( Keypad::Button )) );
-  connect( d->result,                SIGNAL(textCopied( const QString & )),         d->editor, SLOT(paste())                               );
-  connect( d->result,                SIGNAL(textCopied( const QString & )),         d->editor, SLOT(setFocus())                            );
+  connect( d->display,               SIGNAL(textCopied( const QString & )),         d->editor, SLOT(paste())                               );
+  connect( d->display,               SIGNAL(textCopied( const QString & )),         d->editor, SLOT(setFocus())                            );
   connect( d->variablesDock,         SIGNAL(variableSelected( const QString& )),               SLOT(variableSelected( const QString & ))   );
 
   // Initialize settings
@@ -293,13 +298,6 @@ Crunch::Crunch() : QMainWindow()
 
   applySettings();
   restoreDocks();
-
-  d->configDlg = new ConfigDlg( this );
-  connect( d->configDlg, SIGNAL(settingsChanged()),                         SLOT(applySettings())         );
-  connect( d->configDlg, SIGNAL(settingsChanged()),       d->constantsDock, SLOT(settingsChanged())       );
-  connect( d->configDlg, SIGNAL(settingsChanged()),       d->keypad,        SLOT(settingsChanged())       );
-  connect( d->configDlg, SIGNAL(settingsChanged()),       d->variablesDock, SLOT(settingsChanged())       );
-  connect( this,         SIGNAL(adaptToLanguageChange()), d->configDlg,     SLOT(adaptToLanguageChange()) );
 
   setWidgetsLayoutAccordingToLanguageDirection();
 
@@ -415,12 +413,12 @@ void Crunch::applySettings()
     d->variablesDock->updateList( d->eval );
   }
 
-  d->result->setFormat( settings->format );
-  d->result->setPrecision( settings->precision );
+  d->display->setFormat( settings->format );
+  d->display->setPrecision( settings->precision );
   d->editor->setFormat( settings->format );
   d->editor->setPrecision( settings->precision );
 
-  d->result->setFont( QApplication::font( d->result ) );
+  d->display->setFont( QApplication::font( d->display ) );
   d->editor->setFont( QApplication::font( d->editor ) );
   d->editor->setFixedHeight( d->editor->sizeHint().height() );
 
@@ -452,6 +450,11 @@ void Crunch::applySettings()
   d->functionsDock->setVisible( settings->showFunctions );
   d->historyDock->setVisible( settings->showHistory );
   d->variablesDock->setVisible( settings->showVariables );
+
+  d->actions.optionAlwaysOnTop->setChecked    ( settings->stayAlwaysOnTop    );
+  d->actions.optionAutoCalc->setChecked       ( settings->autoCalc           );
+  d->actions.optionAutoCompletion->setChecked ( settings->autoComplete       );
+  d->actions.optionMinimizeSystray->setChecked( settings->minimizeToTray     );
 
   if ( settings->minimizeToTray )
   {
@@ -493,7 +496,7 @@ void Crunch::applySettings()
 
 void Crunch::clearHistory()
 {
-  d->result->clear();
+  d->display->clear();
   d->editor->clearHistory();
   d->historyDock->clear();
   Settings * set = Settings::self();
@@ -506,14 +509,7 @@ void Crunch::clearHistory()
 void Crunch::clearExpression()
 {
   d->editor->clear();
-  QTimer::singleShot(0, d->editor, SLOT(setFocus()) );
-}
-
-
-void Crunch::configure()
-{
-  saveSettings();
-  d->configDlg->exec();
+  QTimer::singleShot( 0, d->editor, SLOT(setFocus()) );
 }
 
 
@@ -685,7 +681,7 @@ void Crunch::loadSession()
   }
   else if ( but == QMessageBox::No )
   {
-    d->result->clear();
+    d->display->clear();
     deleteAllVariables();
     clearHistory();
     saveSettings();
@@ -704,9 +700,9 @@ void Crunch::loadSession()
     }
     HNumber num( res.toAscii().data() );
     if ( ! num.isNan() )
-      d->result->append( exp, num );
+      d->display->append( exp, num );
     else
-      d->result->appendError( exp, res );
+      d->display->appendError( exp, res );
   }
 
   // variables
@@ -763,10 +759,10 @@ void Crunch::saveSession()
   stream << "0.10" << "\n";
 
   // number of calculations
-  stream << d->result->count() << "\n";
+  stream << d->display->count() << "\n";
 
   // expressions and results
-  stream << d->result->asText() << "\n";
+  stream << d->display->asText() << "\n";
 
   // number of variables
   int noVars = d->eval->variables().count();
@@ -810,7 +806,7 @@ void Crunch::setWidgetsLayoutAccordingToLanguageDirection()
 
 void Crunch::scrollDown()
 {
-  QScrollBar * sb = d->result->verticalScrollBar();
+  QScrollBar * sb = d->display->verticalScrollBar();
   int value = sb->value() + 40;
   sb->setValue( value );
 }
@@ -818,7 +814,7 @@ void Crunch::scrollDown()
 
 void Crunch::scrollUp()
 {
-  QScrollBar * sb = d->result->verticalScrollBar();
+  QScrollBar * sb = d->display->verticalScrollBar();
   int value = sb->value() - 40;
   sb->setValue( value );
 }
@@ -835,7 +831,7 @@ void Crunch::showMenuBar()
     d->notifyMenuBarHidden = false;
   }
 
-  d->result->scrollEnd();
+  d->display->scrollEnd();
 }
 
 
@@ -899,7 +895,7 @@ void Crunch::showKeypad( bool b )
   settings->showKeypad = b;
   d->keypad->setVisible( b );
   d->actions.showKeypad->setChecked( b );
-  d->result->scrollEnd();
+  d->display->scrollEnd();
 }
 
 
@@ -908,7 +904,7 @@ void Crunch::showMenuBarTip()
   QString msg = tr("The menu bar is now hidden. "
                    "To make it visible again, press Ctrl+M.");
 
-  QPoint p = mapFromGlobal( d->result->mapToGlobal( QPoint(0, 0) ) ) += QPoint(5, 5);
+  QPoint p = mapFromGlobal( d->display->mapToGlobal( QPoint(0, 0) ) ) += QPoint(5, 5);
   d->tip->move( p );
   d->tip->resize( 345, d->tip->sizeHint().height() );
   d->tip->showText( msg, tr("Warning") );
@@ -917,7 +913,7 @@ void Crunch::showMenuBarTip()
 
 void Crunch::showTipOfTheDay()
 {
-  QPoint p = mapFromGlobal( d->result->mapToGlobal( QPoint(0, 0) ) ) += QPoint(5, 5);
+  QPoint p = mapFromGlobal( d->display->mapToGlobal( QPoint(0, 0) ) ) += QPoint(5, 5);
   d->tip->move( p );
   d->tip->resize( 345, d->tip->sizeHint().height() );
 
@@ -926,24 +922,19 @@ void Crunch::showTipOfTheDay()
   switch ( tipNo )
   {
     case 0:
-      msg = tr("You can customize the syntax highlight colors. "
-               "Use menu <i>Settings, Configure</i>, and then from the "
-               "configuration dialog, choose tab <i>Syntax Highlight</i>." );
-      break;
-    case 1:
       msg = tr("To insert a function using keyboard, use Ctrl+F shorcut. "
                "From the dialog, you can choose the function you want to "
                "insert." );
       break;
-    case 2:
+    case 1:
       msg = tr("To insert a variable using keyboard, use Ctrl+I shorcut. "
                "From the dialog, you can choose the variable you want to "
                "insert." );
       break;
-    case 3:
+    case 2:
       msg = tr("Use variable <i>pi</i> to use pi constant." );
       break;
-    case 4:
+    case 3:
       msg = tr("Use <i>;</i> (semicolon) to separate the parameters in "
                "functions." );
       break;
@@ -1204,9 +1195,9 @@ void Crunch::restoreLastSession()
     const char * resultStr = set->historyResults[i].toAscii().data();
     HNumber result( resultStr );
     if ( ! result.isNan() )
-      d->result->append( set->history[i], result );
+      d->display->append( set->history[i], result );
     else
-      d->result->appendError( set->history[i], resultStr );
+      d->display->appendError( set->history[i], resultStr );
   }
 }
 
@@ -1223,12 +1214,12 @@ void Crunch::returnPressed()
   HNumber result = d->eval->evalUpdateAns();
   if ( ! d->eval->error().isEmpty() )
   {
-    d->result->appendError( str, d->eval->error() );
+    d->display->appendError( str, d->eval->error() );
     d->editor->appendHistory( str, d->eval->error() );
   }
   else
   {
-    d->result->append( str, result );
+    d->display->append( str, result );
     d->editor->appendHistory( str, HMath::format( result ) );
     d->editor->setAnsAvailable( true );
     d->variablesDock->updateList( d->eval );
@@ -1349,48 +1340,51 @@ void Crunch::closeEvent( QCloseEvent * e )
 void Crunch::createUI()
 {
   // createActions
-  d->actions.clearExpression    = new QAction( tr("Clear E&xpression"),        this );
-  d->actions.clearHistory       = new QAction( tr("Clear &History"),           this );
-  d->actions.configure          = new QAction( tr("Confi&gure..."),            this );
-  d->actions.degree             = new QAction( tr("&Degree"),                  this );
-  d->actions.deleteAllVariables = new QAction( tr("Delete All V&ariables"),    this );
-  d->actions.deleteVariable     = new QAction( tr("D&elete Variable..."),      this );
-  d->actions.digits15           = new QAction( tr("&15 Decimal Digits"),       this );
-  d->actions.digits2            = new QAction( tr("&2 Decimal Digits"),        this );
-  d->actions.digits3            = new QAction( tr("&3 Decimal Digits"),        this );
-  d->actions.digits50           = new QAction( tr("&50 Decimal Digits"),       this );
-  d->actions.digits8            = new QAction( tr("&8 Decimal Digits"),        this );
-  d->actions.digitsAuto         = new QAction( tr("&Automatic Precision"),     this );
-  d->actions.editCopy           = new QAction( tr("&Copy"),                    this );
-  d->actions.editCopyResult     = new QAction( tr("Copy Last &Result"),        this );
-  d->actions.editPaste          = new QAction( tr("&Paste"),                   this );
-  d->actions.helpAbout          = new QAction( tr("&About"),                   this );
-  d->actions.helpAboutQt        = new QAction( tr("About &Qt"),                this );
-  d->actions.helpGotoWebsite    = new QAction( tr("SpeedCrunch &Web Site..."), this );
-  d->actions.helpTipOfTheDay    = new QAction( tr("&Tip of the Day"),          this );
-  d->actions.insertFunction     = new QAction( tr("Insert &Function..."),      this );
-  d->actions.insertVariable     = new QAction( tr("Insert &Variable..."),      this );
-  d->actions.radian             = new QAction( tr("&Radian"),                  this );
-  d->actions.scrollDown         = new QAction( tr("Scroll Display Down"),      this );
-  d->actions.scrollUp           = new QAction( tr("Scroll Display Up"),        this );
-  d->actions.selectExpression   = new QAction( tr("&Select Expression"),       this );
-  d->actions.sessionLoad        = new QAction( tr("&Load..."),                 this );
-  d->actions.sessionQuit        = new QAction( tr("&Quit"),                    this );
-  d->actions.sessionSave        = new QAction( tr("&Save..."),                 this );
-  d->actions.showConstants      = new QAction( tr("Show &Constants"),          this );
-  d->actions.showFullScreen     = new QAction( tr("Full &Screen Mode"),        this );
-  d->actions.showFunctions      = new QAction( tr("Show &Functions"),          this );
-  d->actions.showHistory        = new QAction( tr("Show &History"),            this );
-  d->actions.showKeypad         = new QAction( tr("Show &Keypad"),             this );
-  d->actions.showMenuBar        = new QAction( tr("Hide &Menu Bar"),           this );
-  d->actions.showVariables      = new QAction( tr("Show &Variables"),          this );
-  d->actions.viewBinary         = new QAction( tr("&Binary"),                  this );
-  d->actions.viewEngineering    = new QAction( tr("&Engineering"),             this );
-  d->actions.viewFixed          = new QAction( tr("&Fixed Decimal"),           this );
-  d->actions.viewGeneral        = new QAction( tr("&General"),                 this );
-  d->actions.viewHexadec        = new QAction( tr("&Hexadecimal"),             this );
-  d->actions.viewOctal          = new QAction( tr("&Octal"),                   this );
-  d->actions.viewScientific     = new QAction( tr("&Scientific"),              this );
+  d->actions.clearExpression       = new QAction( tr("Clear E&xpression"),        this );
+  d->actions.clearHistory          = new QAction( tr("Clear &History"),           this );
+  d->actions.degree                = new QAction( tr("&Degree"),                  this );
+  d->actions.deleteAllVariables    = new QAction( tr("Delete All V&ariables"),    this );
+  d->actions.deleteVariable        = new QAction( tr("D&elete Variable..."),      this );
+  d->actions.digits15              = new QAction( tr("&15 Decimal Digits"),       this );
+  d->actions.digits2               = new QAction( tr("&2 Decimal Digits"),        this );
+  d->actions.digits3               = new QAction( tr("&3 Decimal Digits"),        this );
+  d->actions.digits50              = new QAction( tr("&50 Decimal Digits"),       this );
+  d->actions.digits8               = new QAction( tr("&8 Decimal Digits"),        this );
+  d->actions.digitsAuto            = new QAction( tr("&Automatic Precision"),     this );
+  d->actions.editCopy              = new QAction( tr("&Copy"),                    this );
+  d->actions.editCopyResult        = new QAction( tr("Copy Last &Result"),        this );
+  d->actions.editPaste             = new QAction( tr("&Paste"),                   this );
+  d->actions.helpAbout             = new QAction( tr("&About"),                   this );
+  d->actions.helpAboutQt           = new QAction( tr("About &Qt"),                this );
+  d->actions.helpGotoWebsite       = new QAction( tr("SpeedCrunch &Web Site..."), this );
+  d->actions.helpTipOfTheDay       = new QAction( tr("&Tip of the Day"),          this );
+  d->actions.insertFunction        = new QAction( tr("Insert &Function..."),      this );
+  d->actions.insertVariable        = new QAction( tr("Insert &Variable..."),      this );
+  d->actions.optionAutoCalc        = new QAction( tr("&Partial Results"),         this );
+  d->actions.optionAutoCompletion  = new QAction( tr("Automatic &Completion"),    this );
+  d->actions.optionAlwaysOnTop     = new QAction( tr("Stay Always On &Top"),      this );
+  d->actions.optionMinimizeSystray = new QAction( tr("&Minimize To System Tray"), this );
+  d->actions.radian                = new QAction( tr("&Radian"),                  this );
+  d->actions.scrollDown            = new QAction( tr("Scroll Display Down"),      this );
+  d->actions.scrollUp              = new QAction( tr("Scroll Display Up"),        this );
+  d->actions.selectExpression      = new QAction( tr("&Select Expression"),       this );
+  d->actions.sessionLoad           = new QAction( tr("&Load..."),                 this );
+  d->actions.sessionQuit           = new QAction( tr("&Quit"),                    this );
+  d->actions.sessionSave           = new QAction( tr("&Save..."),                 this );
+  d->actions.showConstants         = new QAction( tr("Show &Constants"),          this );
+  d->actions.showFullScreen        = new QAction( tr("Full &Screen Mode"),        this );
+  d->actions.showFunctions         = new QAction( tr("Show &Functions"),          this );
+  d->actions.showHistory           = new QAction( tr("Show &History"),            this );
+  d->actions.showKeypad            = new QAction( tr("Show &Keypad"),             this );
+  d->actions.showMenuBar           = new QAction( tr("Hide &Menu Bar"),           this );
+  d->actions.showVariables         = new QAction( tr("Show &Variables"),          this );
+  d->actions.viewBinary            = new QAction( tr("&Binary"),                  this );
+  d->actions.viewEngineering       = new QAction( tr("&Engineering"),             this );
+  d->actions.viewFixed             = new QAction( tr("&Fixed Decimal"),           this );
+  d->actions.viewGeneral           = new QAction( tr("&General"),                 this );
+  d->actions.viewHexadec           = new QAction( tr("&Hexadecimal"),             this );
+  d->actions.viewOctal             = new QAction( tr("&Octal"),                   this );
+  d->actions.viewScientific        = new QAction( tr("&Scientific"),              this );
 
   // define shortcuts
   d->actions.clearExpression->setShortcut (            Qt::Key_Escape   );
@@ -1419,32 +1413,35 @@ void Crunch::createUI()
   d->actions.viewOctal->setShortcut       (            Qt::Key_F6       );
 
   // define checkable
-  d->actions.degree->setCheckable         ( true );
-  d->actions.digits15->setCheckable       ( true );
-  d->actions.digits2->setCheckable        ( true );
-  d->actions.digits3->setCheckable        ( true );
-  d->actions.digits50->setCheckable       ( true );
-  d->actions.digits8->setCheckable        ( true );
-  d->actions.digitsAuto->setCheckable     ( true );
-  d->actions.radian->setCheckable         ( true );
-  d->actions.showConstants->setCheckable  ( true );
-  d->actions.showFullScreen->setCheckable ( true );
-  d->actions.showFunctions->setCheckable  ( true );
-  d->actions.showHistory->setCheckable    ( true );
-  d->actions.showKeypad->setCheckable     ( true );
-  d->actions.showVariables->setCheckable  ( true );
-  d->actions.viewBinary->setCheckable     ( true );
-  d->actions.viewEngineering->setCheckable( true );
-  d->actions.viewFixed->setCheckable      ( true );
-  d->actions.viewGeneral->setCheckable    ( true );
-  d->actions.viewHexadec->setCheckable    ( true );
-  d->actions.viewOctal->setCheckable      ( true );
-  d->actions.viewScientific->setCheckable ( true );
+  d->actions.degree->setCheckable               ( true );
+  d->actions.digits15->setCheckable             ( true );
+  d->actions.digits2->setCheckable              ( true );
+  d->actions.digits3->setCheckable              ( true );
+  d->actions.digits50->setCheckable             ( true );
+  d->actions.digits8->setCheckable              ( true );
+  d->actions.digitsAuto->setCheckable           ( true );
+  d->actions.optionAutoCalc->setCheckable       ( true );
+  d->actions.optionAutoCompletion->setCheckable ( true );
+  d->actions.optionAlwaysOnTop->setCheckable    ( true );
+  d->actions.optionMinimizeSystray->setCheckable( true );
+  d->actions.radian->setCheckable               ( true );
+  d->actions.showConstants->setCheckable        ( true );
+  d->actions.showFullScreen->setCheckable       ( true );
+  d->actions.showFunctions->setCheckable        ( true );
+  d->actions.showHistory->setCheckable          ( true );
+  d->actions.showKeypad->setCheckable           ( true );
+  d->actions.showVariables->setCheckable        ( true );
+  d->actions.viewBinary->setCheckable           ( true );
+  d->actions.viewEngineering->setCheckable      ( true );
+  d->actions.viewFixed->setCheckable            ( true );
+  d->actions.viewGeneral->setCheckable          ( true );
+  d->actions.viewHexadec->setCheckable          ( true );
+  d->actions.viewOctal->setCheckable            ( true );
+  d->actions.viewScientific->setCheckable       ( true );
 
   // signals and slots
   connect( d->actions.clearHistory,         SIGNAL(activated()),     this,      SLOT(clearHistory())           );
   connect( d->actions.clearExpression,      SIGNAL(activated()),     this,      SLOT(clearExpression())        );
-  connect( d->actions.configure,            SIGNAL(activated()),     this,      SLOT(configure())              );
   connect( d->actions.degree,               SIGNAL(activated()),     this,      SLOT(degree())                 );
   connect( d->actions.deleteAllVariables,   SIGNAL(activated()),     this,      SLOT(deleteAllVariables())     );
   connect( d->actions.deleteVariable,       SIGNAL(activated()),     this,      SLOT(deleteVariable())         );
@@ -1562,7 +1559,7 @@ void Crunch::createUI()
 
   d->menus.settings = new QMenu( tr("Se&ttings"), this );
   menuBar()->addMenu( d->menus.settings );
-  d->menus.layout = d->menus.settings->addMenu( tr("Layout") );
+  d->menus.layout = d->menus.settings->addMenu( tr("&Layout") );
     d->menus.layout->addAction( d->actions.showKeypad     );
     d->menus.layout->addSeparator();
     d->menus.layout->addAction( d->actions.showHistory    );
@@ -1573,7 +1570,14 @@ void Crunch::createUI()
     d->menus.layout->addAction( d->actions.showMenuBar    );
     d->menus.layout->addSeparator();
     d->menus.layout->addAction( d->actions.showFullScreen );
-  d->menus.settings->addAction( d->actions.configure      );
+  d->menus.behavior = d->menus.settings->addMenu( tr("&Behavior")  );
+    d->menus.behavior->addAction( d->actions.optionAutoCalc        );
+    d->menus.behavior->addAction( d->actions.optionAutoCompletion  );
+    d->menus.behavior->addAction( d->actions.optionAlwaysOnTop     );
+    d->menus.behavior->addAction( d->actions.optionMinimizeSystray );
+  //QAction * optionDotAuto;
+  //QAction * optionDotComma;
+  //QAction * optionDotPoint;
 
   d->menus.help = new QMenu( tr("&Help"), this );
   menuBar()->addMenu( d->menus.help );

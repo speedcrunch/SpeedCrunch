@@ -1,21 +1,30 @@
-TEMPLATE = app
-TARGET = speedcrunch
+CONFIG += qt
+CONFIG += thread
+CONFIG += warn_on
+CONFIG += release
+
+TEMPLATE  = app
+TARGET    = speedcrunch
+RC_FILE   = resources/crunchico.rc
+RESOURCES = resources/crunch.qrc
 
 # note: change this BEFORE making a release !
-DEFINES += SPEEDCRUNCH_VERSION="trunk"
+DEFINES      += SPEEDCRUNCH_VERSION="trunk"
+unix:DEFINES += ENABLE_BINRELOC
 
-HEADERS += 3rdparty/gui/wwwidgets/wwglobal.h
-HEADERS += 3rdparty/gui/wwwidgets/wwglobal_p.h
-HEADERS += 3rdparty/gui/wwwidgets/colormodel.h
-HEADERS += 3rdparty/gui/wwwidgets/qwwcolorbutton.h
+binaries.path  =  $${BINDIR}
+binaries.files += speedcrunch
+INSTALLS       += binaries
+
+
 HEADERS += 3rdparty/util/binreloc.h
 HEADERS += base/constants.hxx
 HEADERS += base/evaluator.hxx
 HEADERS += base/functions.hxx
 HEADERS += base/settings.hxx
+HEADERS += bison/exprparser.h
 HEADERS += gui/aboutbox.hxx
 HEADERS += gui/autohidelabel.hxx
-HEADERS += gui/configdlg.hxx
 HEADERS += gui/constantsdock.hxx
 HEADERS += gui/deletevardlg.hxx
 HEADERS += gui/editor.hxx
@@ -32,6 +41,7 @@ HEADERS += math/floatcommon.h
 HEADERS += math/floatconfig.h
 HEADERS += math/floatconst.h
 HEADERS += math/floatconvert.h
+HEADERS += math/floaterf.h
 HEADERS += math/floatexp.h
 HEADERS += math/floatgamma.h
 HEADERS += math/floathmath.h
@@ -46,18 +56,16 @@ HEADERS += math/floatseries.h
 HEADERS += math/floattrig.h
 HEADERS += math/hmath.hxx
 HEADERS += math/number.h
+HEADERS += math/numdata.hxx
 
-SOURCES += 3rdparty/gui/wwwidgets/wwglobal_p.cpp
-SOURCES += 3rdparty/gui/wwwidgets/colormodel.cpp
-SOURCES += 3rdparty/gui/wwwidgets/qwwcolorbutton.cpp
 SOURCES += 3rdparty/util/binreloc.c
 SOURCES += base/constants.cpp
 SOURCES += base/evaluator.cpp
 SOURCES += base/functions.cpp
 SOURCES += base/settings.cpp
+SOURCES += bison/exprparser.c
 SOURCES += gui/aboutbox.cpp
 SOURCES += gui/autohidelabel.cpp
-SOURCES += gui/configdlg.cpp
 SOURCES += gui/constantsdock.cpp
 SOURCES += gui/deletevardlg.cpp
 SOURCES += gui/editor.cpp
@@ -74,6 +82,7 @@ SOURCES += main/main.cpp
 SOURCES += math/floatcommon.c
 SOURCES += math/floatconst.c
 SOURCES += math/floatconvert.c
+SOURCES += math/floaterf.c
 SOURCES += math/floatexp.c
 SOURCES += math/floatgamma.c
 SOURCES += math/floathmath.c
@@ -88,15 +97,7 @@ SOURCES += math/floatseries.c
 SOURCES += math/floattrig.c
 SOURCES += math/hmath.cpp
 SOURCES += math/number.c
-
-CONFIG += qt
-CONFIG += thread
-CONFIG += warn_on
-CONFIG += release
-
-unix:DEFINES += ENABLE_BINRELOC
-
-RC_FILE = resources/crunchico.rc
+SOURCES += math/numdata.cpp
 
 TRANSLATIONS += ../i18n/crunch_cs.ts
 TRANSLATIONS += ../i18n/crunch_de.ts
@@ -117,12 +118,6 @@ TRANSLATIONS += ../i18n/crunch_ru.ts
 TRANSLATIONS += ../i18n/crunch_sv.ts
 TRANSLATIONS += ../i18n/crunch_sl.ts
 TRANSLATIONS += ../i18n/crunch_tr.ts
-
-RESOURCES = resources/crunch.qrc
-
-binaries.path = $${BINDIR}
-binaries.files += speedcrunch
-INSTALLS += binaries
 
 translations.path = $${DATADIR}/crunch
 translations.files += ../i18n/crunch_cs.qm
