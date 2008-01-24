@@ -46,7 +46,10 @@ class Crunch : public QMainWindow
 
   signals:
     void adaptToLanguageChange();
+    void formatChanged( char );
+    void precisionChanged( int );
     void quitApplication();
+    void radixCharChanged( QChar );
 
   public slots:
     void about();
@@ -71,6 +74,10 @@ class Crunch : public QMainWindow
     void insertFunction();
     void insertVariable();
     void loadSession();
+    void onAlwaysOnTop( bool );
+    void onAutoCalc( bool );
+    void onAutoCompletion( bool );
+    void onMinimizeToTray( bool );
     void radian();
     void saveSession();
     void setWidgetsLayoutAccordingToLanguageDirection();
@@ -115,8 +122,9 @@ class Crunch : public QMainWindow
   private:
     void createUI();
     void saveSettings();
-    void setDigits( int i = -1 );
-    void setView( char c = 'g' );
+    void setPrecision( int i /*= -1*/ );
+    void setFormat( char c /*= 'g'*/ );
+    void setRadixChar( QChar c /*= '.'*/ );
 
     CrunchPrivate * d;
     Crunch( const Crunch & );

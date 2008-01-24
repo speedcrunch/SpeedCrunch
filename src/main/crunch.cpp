@@ -100,8 +100,11 @@ struct Actions
   QAction * optionDotAuto;
   QAction * optionDotComma;
   QAction * optionDotPoint;
-  QAction * optionMinimizeSystray;
+  QAction * optionMinimizeToTray;
   QAction * radian;
+  QAction * radixCharAuto;
+  QAction * radixCharComma;
+  QAction * radixCharDot;
   QAction * scrollDown;
   QAction * scrollUp;
   QAction * selectExpression;
@@ -109,12 +112,12 @@ struct Actions
   QAction * sessionQuit;
   QAction * sessionSave;
   QAction * showConstants;
-  QAction * showFunctions;
   QAction * showFullScreen;
+  QAction * showFunctions;
   QAction * showHistory;
   QAction * showKeypad;
-  QAction * showVariables;
   QAction * showMenuBar;
+  QAction * showVariables;
   QAction * viewBinary;
   QAction * viewEngineering;
   QAction * viewFixed;
@@ -134,6 +137,7 @@ struct Menus
   QMenu * format;
   QMenu * help;
   QMenu * layout;
+  QMenu * radixChar;
   QMenu * session;
   QMenu * settings;
 };
@@ -141,38 +145,48 @@ struct Menus
 
 struct CrunchPrivate
 {
-  Qt::WindowFlags flags;
-
-  Actions actions;
-  Menus   menus;
-
-  QActionGroup * angleGroup;
-  QActionGroup * digitsGroup;
-
-  bool notifyMenuBarHidden;
-  bool trayNotify;
-
-  Editor *    editor;
-  Evaluator * eval;
-  Keypad *    keypad;
-  Result *    display;
-
-  bool            autoAns;
-  AutoHideLabel * autoCalcLabel;
-  TipWidget     * tip;
-
-  QSystemTrayIcon * trayIcon;
-  QMenu           * trayIconMenu;
-
-  ConstantsDock * constantsDock;
-  FunctionsDock * functionsDock;
-  HistoryDock   * historyDock;
-  VariablesDock * variablesDock;
-
+  Settings *          s;
+  //
+  Qt::WindowFlags     flags;
+  //
+  Actions             actions;
+  Menus               menus;
+  //
+  QActionGroup *      angleGroup;
+  QActionGroup *      digitsGroup;
+  //
+  bool                notifyMenuBarHidden;
+  bool                trayNotify;
+  //
+  Editor *            editor;
+  Evaluator *         eval;
+  Keypad *            keypad;
+  Result *            display;
+  //
+  bool                autoAns;
+  AutoHideLabel *     autoCalcLabel;
+  TipWidget *         tip;
+  //
+  QSystemTrayIcon *   trayIcon;
+  QMenu *             trayIconMenu;
+  //
+  ConstantsDock *     constantsDock;
+  FunctionsDock *     functionsDock;
+  HistoryDock *       historyDock;
+  VariablesDock *     variablesDock;
+  //
   DeleteVariableDlg * deleteVariableDlg;
   InsertFunctionDlg * insertFunctionDlg;
   InsertVariableDlg * insertVariableDlg;
+
+  CrunchPrivate();
 };
+
+
+CrunchPrivate::CrunchPrivate() : s( Settings::self() )
+{
+  s->load();
+}
 
 
 static void setWidgetLayoutAccordingToLanguageDirection( QWidget * widget )
@@ -199,7 +213,6 @@ Crunch::Crunch() : QMainWindow()
   d->notifyMenuBarHidden = true;
   // outer widget and layout
   QWidget * box = new QWidget( this );
-  //box->setStyleSheet( "background: #202020" );
   setCentralWidget( box );
 
   QVBoxLayout * boxLayout = new QVBoxLayout( box );
@@ -208,7 +221,6 @@ Crunch::Crunch() : QMainWindow()
 
   // display
   d->display = new Result( box );
-  //d->display->setStyleSheet( "background: black" );
   boxLayout->addWidget( d->display );
 
   // editor
@@ -216,19 +228,18 @@ Crunch::Crunch() : QMainWindow()
   editorLayout->setMargin( 5 );
   d->editor = new Editor( d->eval, box );
   d->editor->setFocus();
-  d->editor->setStyleSheet( "QTextEdit { font: bold 14px }" );
+  d->editor->setStyleSheet( "QTextEdit { font: bold 16px }" );
   editorLayout->addWidget( d->editor );
   boxLayout->addLayout( editorLayout );
 
   // we need settings to be loaded before keypad and constants dock
-  Settings::self()->load();
+  //d->s->load();
 
   // keypad
   QHBoxLayout * keypadLayout = new QHBoxLayout();
   d->keypad = new Keypad( box );
   d->keypad->setFocusPolicy( Qt::NoFocus );
   d->keypad->hide();
-  //d->keypad->setStyleSheet( "QPushButton { font: bold }" );
   d->keypad->setStyleSheet( "QPushButton { background: black; font: bold;"
                             "color: white; border-style: solid;"
                             "border-color: #202020; border-radius: 10px;"
@@ -272,17 +283,20 @@ Crunch::Crunch() : QMainWindow()
   d->tip->hide();
 
   // Connect signals and slots
-  connect( d->constantsDock,         SIGNAL(constantSelected( const QString& )),               SLOT(constantSelected( const QString & ))   );
-  connect( d->editor,                SIGNAL(autoCalcActivated( const QString& )),              SLOT(showAutoCalc( const QString & ))       );
-  connect( d->editor,                SIGNAL(autoCalcDeactivated()),                            SLOT(hideAutoCalc())                        );
-  connect( d->editor,                SIGNAL(returnPressed()),                                  SLOT(returnPressed())                       );
-  connect( d->editor,                SIGNAL(textChanged()),                                    SLOT(textChanged())                         );
-  connect( d->functionsDock,         SIGNAL(functionSelected( const QString & )),              SLOT(functionSelected( const QString & ))   );
-  connect( d->historyDock,           SIGNAL(expressionSelected( const QString & )),            SLOT(expressionSelected( const QString & )) );
-  connect( d->keypad,                SIGNAL(buttonPressed( Keypad::Button )),                  SLOT(keypadButtonPressed( Keypad::Button )) );
-  connect( d->display,               SIGNAL(textCopied( const QString & )),         d->editor, SLOT(paste())                               );
-  connect( d->display,               SIGNAL(textCopied( const QString & )),         d->editor, SLOT(setFocus())                            );
-  connect( d->variablesDock,         SIGNAL(variableSelected( const QString& )),               SLOT(variableSelected( const QString & ))   );
+  connect( d->constantsDock, SIGNAL(constantSelected( const QString& )),               SLOT(constantSelected( const QString & ))   );
+  connect( d->editor,        SIGNAL(autoCalcActivated( const QString& )),              SLOT(showAutoCalc( const QString & ))       );
+  connect( d->editor,        SIGNAL(autoCalcDeactivated()),                            SLOT(hideAutoCalc())                        );
+  connect( d->editor,        SIGNAL(returnPressed()),                                  SLOT(returnPressed())                       );
+  connect( d->editor,        SIGNAL(textChanged()),                                    SLOT(textChanged())                         );
+  connect( d->functionsDock, SIGNAL(functionSelected( const QString & )),              SLOT(functionSelected( const QString & ))   );
+  connect( d->historyDock,   SIGNAL(expressionSelected( const QString & )),            SLOT(expressionSelected( const QString & )) );
+  connect( d->keypad,        SIGNAL(buttonPressed( Keypad::Button )),                  SLOT(keypadButtonPressed( Keypad::Button )) );
+  connect( d->display,       SIGNAL(textCopied( const QString & )),         d->editor, SLOT(paste())                               );
+  connect( d->display,       SIGNAL(textCopied( const QString & )),         d->editor, SLOT(setFocus())                            );
+  connect( d->variablesDock, SIGNAL(variableSelected( const QString& )),               SLOT(variableSelected( const QString & ))   );
+
+  connect( this, SIGNAL(formatChanged( char )),   d->display, SLOT(setFormat( char )) );
+  connect( this, SIGNAL(precisionChanged( int )), d->display, SLOT(setPrecision( int )) );
 
   // Initialize settings
   d->insertFunctionDlg = new InsertFunctionDlg( this );
@@ -291,9 +305,9 @@ Crunch::Crunch() : QMainWindow()
 
   setWindowTitle( "SpeedCrunch" );
   createUI();
-  Settings::self()->load();
+  //d->s->load();
 
-  if ( Settings::self()->saveSession )
+  if ( d->s->saveSession )
     restoreLastSession();
 
   applySettings();
@@ -310,12 +324,12 @@ bool Crunch::event( QEvent * e )
   if ( e->type() == QEvent::WindowStateChange )
   {
     if ( windowState() & Qt::WindowMinimized )
-    if ( Settings::self()->minimizeToTray )
+    if ( d->s->minimizeToTray )
       QTimer::singleShot( 100, this, SLOT(minimizeToTray()) );
   }
 
   // ensure dock windows keep their state after minimize / screen switch
-  Settings * set = Settings::self();
+  Settings * set = d->s;
   //if ( set->showConstants ) QTimer::singleShot( 0, d->constantsDock, SLOT(show()) );
   if ( set->showFunctions ) QTimer::singleShot( 0, d->functionsDock, SLOT(show()) );
   //if ( set->showHistory   ) QTimer::singleShot( 0, d->historyDock,   SLOT(show()) );
@@ -360,29 +374,29 @@ void Crunch::addKeypadText( const QString & text )
 
 void Crunch::applySettings()
 {
-  Settings * settings = Settings::self();
-  settings->load();
+  Settings * s = d->s;
+  //s->load();
 
-  if ( settings->mainWindowSize != QSize(0, 0) )
-    resize( settings->mainWindowSize );
+  if ( s->mainWindowSize != QSize(0, 0) )
+    resize( s->mainWindowSize );
 
-  showInFullScreen( settings->showFullScreen );
+  showInFullScreen( s->showFullScreen );
 
-  d->editor->setAutoCompleteEnabled( settings->autoComplete );
-  d->editor->setAutoCalcEnabled( settings->autoCalc );
+  d->editor->setAutoCompleteEnabled( s->autoComplete );
+  d->editor->setAutoCalcEnabled( s->autoCalc );
 
-  if( Settings::self()->angleMode == Settings::Radian )
+  if( d->s->angleMode == Settings::Radian )
   {
     d->actions.radian->setChecked( true );
     d->actions.degree->setChecked( false );
   }
-  else if( Settings::self()->angleMode == Settings::Degree )
+  else if( d->s->angleMode == Settings::Degree )
   {
     d->actions.radian->setChecked( false );
     d->actions.degree->setChecked( true );
   }
 
-  //QString l = settings->language;
+  //QString l = s->language;
   //if ( l == "" )
   //{
   //  // autodetect
@@ -393,70 +407,77 @@ void Crunch::applySettings()
   //}
 
   d->historyDock->clear();
-  if ( settings->saveSession && settings->history.count() > 0 )
+  if ( s->saveSession && s->history.count() > 0 )
   {
-    d->editor->setHistory( settings->history );
-    d->editor->setHistoryResults( settings->historyResults );
+    d->editor->setHistory( s->history );
+    d->editor->setHistoryResults( s->historyResults );
   }
-  if ( settings->history.count() > 0 )
-    d->historyDock->setHistory( settings->history );
+  if ( s->history.count() > 0 )
+    d->historyDock->setHistory( s->history );
 
-  if ( settings->saveVariables )
+  if ( s->saveVariables )
   {
-    for ( int k = 0; k < settings->variables.count(); k++ )
+    for ( int k = 0; k < s->variables.count(); k++ )
     {
-      d->eval->setExpression( settings->variables[k] );
+      d->eval->setExpression( s->variables[k] );
       d->eval->eval();
-      QStringList s = settings->variables[k].split( "=" );
-      d->eval->set( s[0], HNumber( s[1].toAscii().data() ) );
+      QStringList list = s->variables[k].split( "=" );
+      d->eval->set( list[0], HNumber( list[1].toAscii().data() ) );
     }
     d->variablesDock->updateList( d->eval );
   }
 
-  d->display->setFormat( settings->format );
-  d->display->setPrecision( settings->precision );
-  d->editor->setFormat( settings->format );
-  d->editor->setPrecision( settings->precision );
+  //d->display->setFormat( s->format );
+  //d->display->setPrecision( s->precision );
+  d->editor->setFormat( s->format );
+  d->editor->setPrecision( s->precision );
 
-  d->display->setFont( QApplication::font( d->display ) );
-  d->editor->setFont( QApplication::font( d->editor ) );
+  //d->display->setFont( QApplication::font( d->display ) );
+  //d->editor->setFont( QApplication::font( d->editor ) );
   d->editor->setFixedHeight( d->editor->sizeHint().height() );
 
-  if ( settings->format == 'g' ) d->actions.viewGeneral->setChecked    ( true );
-  if ( settings->format == 'f' ) d->actions.viewFixed->setChecked      ( true );
-  if ( settings->format == 'n' ) d->actions.viewEngineering->setChecked( true );
-  if ( settings->format == 'e' ) d->actions.viewScientific->setChecked ( true );
-  if ( settings->format == 'h' ) d->actions.viewHexadec->setChecked    ( true );
-  if ( settings->format == 'o' ) d->actions.viewOctal->setChecked      ( true );
-  if ( settings->format == 'b' ) d->actions.viewBinary->setChecked     ( true );
+  // format
+  if      ( s->format == 'g' ) d->actions.viewGeneral->setChecked    ( true );
+  else if ( s->format == 'f' ) d->actions.viewFixed->setChecked      ( true );
+  else if ( s->format == 'n' ) d->actions.viewEngineering->setChecked( true );
+  else if ( s->format == 'e' ) d->actions.viewScientific->setChecked ( true );
+  else if ( s->format == 'h' ) d->actions.viewHexadec->setChecked    ( true );
+  else if ( s->format == 'o' ) d->actions.viewOctal->setChecked      ( true );
+  else if ( s->format == 'b' ) d->actions.viewBinary->setChecked     ( true );
 
-  if ( settings->precision <   0 ) d->actions.digitsAuto->setChecked( true );
-  if ( settings->precision ==  2 ) d->actions.digits2->setChecked   ( true );
-  if ( settings->precision ==  3 ) d->actions.digits3->setChecked   ( true );
-  if ( settings->precision ==  8 ) d->actions.digits8->setChecked   ( true );
-  if ( settings->precision == 15 ) d->actions.digits15->setChecked  ( true );
-  if ( settings->precision == 50 ) d->actions.digits50->setChecked  ( true );
+  // precision
+  if      ( s->precision <   0 ) d->actions.digitsAuto->setChecked( true );
+  else if ( s->precision ==  2 ) d->actions.digits2->setChecked   ( true );
+  else if ( s->precision ==  3 ) d->actions.digits3->setChecked   ( true );
+  else if ( s->precision ==  8 ) d->actions.digits8->setChecked   ( true );
+  else if ( s->precision == 15 ) d->actions.digits15->setChecked  ( true );
+  else if ( s->precision == 50 ) d->actions.digits50->setChecked  ( true );
 
-  showKeypad( settings->showKeypad );
-  menuBar()->setVisible( settings->showMenuBar );
+  // radix character
+  if      ( s->autoDetectDot ) d->actions.radixCharAuto->setChecked ( true );
+  else if ( s->dot() == '.'  ) d->actions.radixCharDot->setChecked  ( true );
+  else if ( s->dot() == ','  ) d->actions.radixCharComma->setChecked( true );
 
-  d->actions.showConstants->setChecked ( settings->showConstants  );
-  d->actions.showFullScreen->setChecked( settings->showFullScreen );
-  d->actions.showFunctions->setChecked ( settings->showFunctions  );
-  d->actions.showHistory->setChecked   ( settings->showHistory    );
-  d->actions.showVariables->setChecked ( settings->showVariables  );
+  showKeypad( s->showKeypad );
+  menuBar()->setVisible( s->showMenuBar );
 
-  d->constantsDock->setVisible( settings->showConstants );
-  d->functionsDock->setVisible( settings->showFunctions );
-  d->historyDock->setVisible( settings->showHistory );
-  d->variablesDock->setVisible( settings->showVariables );
+  d->actions.showConstants->setChecked ( s->showConstants  );
+  d->actions.showFullScreen->setChecked( s->showFullScreen );
+  d->actions.showFunctions->setChecked ( s->showFunctions  );
+  d->actions.showHistory->setChecked   ( s->showHistory    );
+  d->actions.showVariables->setChecked ( s->showVariables  );
 
-  d->actions.optionAlwaysOnTop->setChecked    ( settings->stayAlwaysOnTop    );
-  d->actions.optionAutoCalc->setChecked       ( settings->autoCalc           );
-  d->actions.optionAutoCompletion->setChecked ( settings->autoComplete       );
-  d->actions.optionMinimizeSystray->setChecked( settings->minimizeToTray     );
+  d->constantsDock->setVisible( s->showConstants );
+  d->functionsDock->setVisible( s->showFunctions );
+  d->historyDock->setVisible  ( s->showHistory   );
+  d->variablesDock->setVisible( s->showVariables );
 
-  if ( settings->minimizeToTray )
+  d->actions.optionAlwaysOnTop->setChecked   ( s->stayAlwaysOnTop );
+  d->actions.optionAutoCalc->setChecked      ( s->autoCalc        );
+  d->actions.optionAutoCompletion->setChecked( s->autoComplete    );
+  d->actions.optionMinimizeToTray->setChecked( s->minimizeToTray  );
+
+  if ( s->minimizeToTray )
   {
     if ( ! d->trayIcon && QSystemTrayIcon::isSystemTrayAvailable() )
     {
@@ -482,7 +503,7 @@ void Crunch::applySettings()
   }
 
   // treat stay-always-on-top preference
-  if ( settings->stayAlwaysOnTop )
+  if ( s->stayAlwaysOnTop )
     setWindowFlags( windowFlags() | Qt::WindowStaysOnTopHint );
   else
     setWindowFlags( windowFlags() & (~ Qt::WindowStaysOnTopHint) );
@@ -499,7 +520,7 @@ void Crunch::clearHistory()
   d->display->clear();
   d->editor->clearHistory();
   d->historyDock->clear();
-  Settings * set = Settings::self();
+  Settings * set = d->s;
   set->history.clear();
   set->historyResults.clear();
   QTimer::singleShot( 0, d->editor, SLOT(setFocus()) );
@@ -517,10 +538,10 @@ void Crunch::copyResult()
 {
   QClipboard * cb = QApplication::clipboard();
   HNumber num = d->eval->get( "ans" );
-  Settings * set = Settings::self();
+  Settings * set = d->s;
   char * strToCopy = HMath::format( num, set->format, set->precision );
   QString final( strToCopy );
-  if ( Settings::self()->dot() == ',' )
+  if ( d->s->dot() == ',' )
     final.replace( '.', ',' );
   cb->setText( final, QClipboard::Clipboard );
   free( strToCopy );
@@ -529,7 +550,7 @@ void Crunch::copyResult()
 
 void Crunch::degree()
 {
-  Settings::self()->angleMode = Settings::Degree;
+  d->s->angleMode = Settings::Degree;
 }
 
 
@@ -554,37 +575,37 @@ void Crunch::deleteVariable()
 
 void Crunch::digits2()
 {
-  setDigits( 2 );
+  setPrecision( 2 );
 }
 
 
 void Crunch::digits3()
 {
-  setDigits( 3 );
+  setPrecision( 3 );
 }
 
 
 void Crunch::digits8()
 {
-  setDigits( 8 );
+  setPrecision( 8 );
 }
 
 
 void Crunch::digits15()
 {
-  setDigits(15);
+  setPrecision(15);
 }
 
 
 void Crunch::digits50()
 {
-  setDigits( 50 );
+  setPrecision( 50 );
 }
 
 
 void Crunch::digitsAuto()
 {
-  setDigits( -1 );
+  setPrecision( -1 );
 }
 
 
@@ -684,8 +705,8 @@ void Crunch::loadSession()
     d->display->clear();
     deleteAllVariables();
     clearHistory();
-    saveSettings();
-    applySettings();
+    //saveSettings();
+    //applySettings();
   }
 
   // expressions and results
@@ -728,14 +749,46 @@ void Crunch::loadSession()
 
   file.close();
 
-  saveSettings();
+  //saveSettings();
+  //applySettings();
+}
+
+
+void Crunch::onAlwaysOnTop( bool b )
+{
+  d->s->stayAlwaysOnTop = b;
+  d->actions.optionAlwaysOnTop->setChecked( b );
+  applySettings();
+}
+
+
+void Crunch::onAutoCalc( bool b )
+{
+  d->s->autoCalc = b;
+  d->actions.optionAutoCalc->setChecked( b );
+  applySettings();
+}
+
+
+void Crunch::onAutoCompletion( bool b )
+{
+  d->s->autoComplete = b;
+  d->actions.optionAutoCompletion->setChecked( b );
+  applySettings();
+}
+
+
+void Crunch::onMinimizeToTray( bool b )
+{
+  d->s->minimizeToTray = b;
+  d->actions.optionMinimizeToTray->setChecked( b );
   applySettings();
 }
 
 
 void Crunch::radian()
 {
-  Settings::self()->angleMode = Settings::Radian;
+  d->s->angleMode = Settings::Radian;
 }
 
 
@@ -783,14 +836,20 @@ void Crunch::saveSession()
 void Crunch::setWidgetsLayoutAccordingToLanguageDirection()
 {
   // menu bar and menus
-  setWidgetLayoutAccordingToLanguageDirection( menuBar()        );
+  setWidgetLayoutAccordingToLanguageDirection( menuBar()          );
   setWidgetLayoutAccordingToLanguageDirection( d->menus.session   );
   setWidgetLayoutAccordingToLanguageDirection( d->menus.edit      );
-  setWidgetLayoutAccordingToLanguageDirection( d->menus.format      );
+  setWidgetLayoutAccordingToLanguageDirection( d->menus.format    );
+  setWidgetLayoutAccordingToLanguageDirection( d->menus.decimal   );
   setWidgetLayoutAccordingToLanguageDirection( d->menus.settings  );
+  setWidgetLayoutAccordingToLanguageDirection( d->menus.layout    );
+  setWidgetLayoutAccordingToLanguageDirection( d->menus.behavior  );
+  setWidgetLayoutAccordingToLanguageDirection( d->menus.radixChar );
+  //setWidgetLayoutAccordingToLanguageDirection( d->menus.theme     );
+  //setWidgetLayoutAccordingToLanguageDirection( d->menus.language  );
   setWidgetLayoutAccordingToLanguageDirection( d->menus.help      );
   // tip of the day
-  setWidgetLayoutAccordingToLanguageDirection( d->tip           );
+  setWidgetLayoutAccordingToLanguageDirection( d->tip );
   // docks
   setWidgetLayoutAccordingToLanguageDirection( d->constantsDock );
   setWidgetLayoutAccordingToLanguageDirection( d->functionsDock );
@@ -823,7 +882,7 @@ void Crunch::scrollUp()
 void Crunch::showMenuBar()
 {
   menuBar()->setVisible( ! menuBar()->isVisible() );
-  Settings::self()->showMenuBar = menuBar()->isVisible();
+  d->s->showMenuBar = menuBar()->isVisible();
 
   if ( ! menuBar()->isVisible() && d->notifyMenuBarHidden )
   {
@@ -845,7 +904,7 @@ void Crunch::showAutoCalc( const QString & msg )
 
 void Crunch::showConstants( bool b )
 {
-  Settings * set = Settings::self();
+  Settings * set = d->s;
   set->showConstants = b;
   if ( b )
     d->constantsDock->show();
@@ -860,16 +919,16 @@ void Crunch::showConstants( bool b )
 void Crunch::showInFullScreen( bool b )
 {
   b ? showFullScreen() : showNormal();
-  Settings::self()->showFullScreen = b;
+  d->s->showFullScreen = b;
 }
 
 
 void Crunch::showFunctions( bool b )
 {
-  Settings * set = Settings::self();
-  if ( set->showFunctions == b )
+  Settings * s = d->s;
+  if ( s->showFunctions == b )
     return;
-  set->showFunctions = b;
+  s->showFunctions = b;
   d->actions.showFunctions->setChecked( b );
   d->functionsDock->setVisible( b );
 }
@@ -877,12 +936,8 @@ void Crunch::showFunctions( bool b )
 
 void Crunch::showHistory( bool b )
 {
-  Settings* set = Settings::self();
-  set->showHistory = b;
-  if ( b )
-    d->historyDock->show();
-  else
-    d->historyDock->hide();
+  d->s->showHistory = b;
+  d->historyDock->setVisible( b );
   //saveSettings();
   //applySettings();
   //d->historyDock->raise();
@@ -891,8 +946,7 @@ void Crunch::showHistory( bool b )
 
 void Crunch::showKeypad( bool b )
 {
-  Settings * settings = Settings::self();
-  settings->showKeypad = b;
+  d->s->showKeypad = b;
   d->keypad->setVisible( b );
   d->actions.showKeypad->setChecked( b );
   d->display->scrollEnd();
@@ -948,8 +1002,8 @@ void Crunch::showTipOfTheDay()
 
 void Crunch::showVariables( bool b)
 {
-  Settings * settings = Settings::self();
-  settings->showVariables = b;
+  Settings * s = d->s;
+  s->showVariables = b;
   if ( b )
     d->variablesDock->show();
   else
@@ -963,49 +1017,49 @@ void Crunch::showVariables( bool b)
 void Crunch::viewBinary()
 {
   d->digitsGroup->setDisabled( true );
-  setView( 'b' );
+  setFormat( 'b' );
 }
 
 
 void Crunch::viewEngineering()
 {
   d->digitsGroup->setEnabled( true );
-  setView( 'n' );
+  setFormat( 'n' );
 }
 
 
 void Crunch::viewFixed()
 {
   d->digitsGroup->setEnabled( true );
-  setView( 'f' );
+  setFormat( 'f' );
 }
 
 
 void Crunch::viewGeneral()
 {
   d->digitsGroup->setEnabled( true );
-  setView( 'g' );
+  setFormat( 'g' );
 }
 
 
 void Crunch::viewHexadec()
 {
   d->digitsGroup->setDisabled( true );
-  setView( 'h' );
+  setFormat( 'h' );
 }
 
 
 void Crunch::viewOctal()
 {
   d->digitsGroup->setDisabled( true );
-  setView( 'o' );
+  setFormat( 'o' );
 }
 
 
 void Crunch::viewScientific()
 {
   d->digitsGroup->setEnabled( true );
-  setView( 'e' );
+  setFormat( 'e' );
 }
 
 
@@ -1025,7 +1079,7 @@ void Crunch::constantSelected( const QString & c )
     return;
 
   QString str( c );
-  str.replace( '.', Settings::self()->dot() );
+  str.replace( '.', d->s->dot() );
   d->editor->insert( str );
 
   QTimer::singleShot( 0, d->editor, SLOT(setFocus()) );
@@ -1099,7 +1153,7 @@ void Crunch::keypadButtonPressed( Keypad::Button b )
     case Keypad::KeySqrt:      d->editor->insert( "sqrt(" );  break;
     case Keypad::KeyEquals:    d->editor->evaluate();         break;
     case Keypad::KeyClear:     clearExpression();             break;
-    case Keypad::KeyDot:       d->editor->insert( Settings::self()->dot() ); break;
+    case Keypad::KeyDot:       d->editor->insert( d->s->dot() ); break;
     default:;
   }
 
@@ -1122,60 +1176,60 @@ void Crunch::minimizeToTray()
 
 void Crunch::restoreDocks()
 {
-  Settings* settings = Settings::self();
+  Settings * s = d->s;
 
-  restoreState( settings->mainWindowState );
+  restoreState( s->mainWindowState );
 
-  if ( settings->showHistory )
-  if ( settings->historyDockFloating )
+  if ( s->showHistory )
+  if ( s->historyDockFloating )
   if ( ! d->historyDock->isFloating() )
   {
     d->historyDock->hide();
     d->historyDock->setFloating( true );
-    d->historyDock->move( settings->historyDockLeft, settings->historyDockTop );
-    d->historyDock->resize( settings->historyDockWidth, settings->historyDockHeight );
+    d->historyDock->move( s->historyDockLeft, s->historyDockTop );
+    d->historyDock->resize( s->historyDockWidth, s->historyDockHeight );
     QTimer::singleShot(0, d->historyDock, SLOT(show()));
   }
 
-  //if ( settings->showFunctions )
-  //if ( settings->functionsDockFloating )
+  //if ( s->showFunctions )
+  //if ( s->functionsDockFloating )
   //if ( ! d->functionsDock->isFloating() )
   //{
   //  d->functionsDock->hide();
   //  d->functionsDock->setFloating( true );
-  //  d->functionsDock->move( settings->functionsDockLeft, settings->functionsDockTop );
-  //  d->functionsDock->resize( settings->functionsDockWidth, settings->functionsDockHeight );
+  //  d->functionsDock->move( s->functionsDockLeft, s->functionsDockTop );
+  //  d->functionsDock->resize( s->functionsDockWidth, s->functionsDockHeight );
   //  QTimer::singleShot( 0, d->functionsDock, SLOT(show()) );
   //}
-  if ( settings->showFunctions && settings->functionsDockFloating && ! d->functionsDock->isFloating() )
+  if ( s->showFunctions && s->functionsDockFloating && ! d->functionsDock->isFloating() )
   {
     d->functionsDock->hide();
     d->functionsDock->setFloating( true );
-    d->functionsDock->move( settings->functionsDockLeft, settings->functionsDockTop );
-    d->functionsDock->resize( settings->functionsDockWidth, settings->functionsDockHeight );
+    d->functionsDock->move( s->functionsDockLeft, s->functionsDockTop );
+    d->functionsDock->resize( s->functionsDockWidth, s->functionsDockHeight );
     d->functionsDock->setFloating( false );
     QTimer::singleShot( 0, d->functionsDock, SLOT(show()) );
   }
 
-  if ( settings->showVariables )
-  if ( settings->variablesDockFloating )
+  if ( s->showVariables )
+  if ( s->variablesDockFloating )
   if ( ! d->variablesDock->isFloating() )
   {
     d->variablesDock->hide();
     d->variablesDock->setFloating( true );
-    d->variablesDock->move( settings->variablesDockLeft, settings->variablesDockTop );
-    d->variablesDock->resize( settings->variablesDockWidth, settings->variablesDockHeight );
+    d->variablesDock->move( s->variablesDockLeft, s->variablesDockTop );
+    d->variablesDock->resize( s->variablesDockWidth, s->variablesDockHeight );
     QTimer::singleShot( 0, d->variablesDock, SLOT(show()) );
   }
 
-  if ( settings->showConstants )
-  if ( settings->constantsDockFloating )
+  if ( s->showConstants )
+  if ( s->constantsDockFloating )
   if ( !d->constantsDock->isFloating() )
   {
     d->constantsDock->hide();
     d->constantsDock->setFloating( true );
-    d->constantsDock->move( settings->constantsDockLeft, settings->constantsDockTop );
-    d->constantsDock->resize( settings->constantsDockWidth, settings->constantsDockHeight );
+    d->constantsDock->move( s->constantsDockLeft, s->constantsDockTop );
+    d->constantsDock->resize( s->constantsDockWidth, s->constantsDockHeight );
     QTimer::singleShot( 0, d->constantsDock, SLOT(show()) );
   }
 }
@@ -1183,7 +1237,7 @@ void Crunch::restoreDocks()
 
 void Crunch::restoreLastSession()
 {
-  Settings * set = Settings::self();
+  Settings * set = d->s;
   if ( set->historyResults.count() != set->history.count() )
   {
     clearHistory();
@@ -1363,7 +1417,10 @@ void Crunch::createUI()
   d->actions.optionAutoCalc        = new QAction( tr("&Partial Results"),         this );
   d->actions.optionAutoCompletion  = new QAction( tr("Automatic &Completion"),    this );
   d->actions.optionAlwaysOnTop     = new QAction( tr("Stay Always On &Top"),      this );
-  d->actions.optionMinimizeSystray = new QAction( tr("&Minimize To System Tray"), this );
+  d->actions.optionMinimizeToTray  = new QAction( tr("&Minimize To System Tray"), this );
+  d->actions.radixCharAuto         = new QAction( tr("&Automatic"),               this );
+  d->actions.radixCharDot          = new QAction( tr("&Dot"),                     this );
+  d->actions.radixCharComma        = new QAction( tr("&Comma"),                   this );
   d->actions.radian                = new QAction( tr("&Radian"),                  this );
   d->actions.scrollDown            = new QAction( tr("Scroll Display Down"),      this );
   d->actions.scrollUp              = new QAction( tr("Scroll Display Up"),        this );
@@ -1413,31 +1470,34 @@ void Crunch::createUI()
   d->actions.viewOctal->setShortcut       (            Qt::Key_F6       );
 
   // define checkable
-  d->actions.degree->setCheckable               ( true );
-  d->actions.digits15->setCheckable             ( true );
-  d->actions.digits2->setCheckable              ( true );
-  d->actions.digits3->setCheckable              ( true );
-  d->actions.digits50->setCheckable             ( true );
-  d->actions.digits8->setCheckable              ( true );
-  d->actions.digitsAuto->setCheckable           ( true );
-  d->actions.optionAutoCalc->setCheckable       ( true );
-  d->actions.optionAutoCompletion->setCheckable ( true );
-  d->actions.optionAlwaysOnTop->setCheckable    ( true );
-  d->actions.optionMinimizeSystray->setCheckable( true );
-  d->actions.radian->setCheckable               ( true );
-  d->actions.showConstants->setCheckable        ( true );
-  d->actions.showFullScreen->setCheckable       ( true );
-  d->actions.showFunctions->setCheckable        ( true );
-  d->actions.showHistory->setCheckable          ( true );
-  d->actions.showKeypad->setCheckable           ( true );
-  d->actions.showVariables->setCheckable        ( true );
-  d->actions.viewBinary->setCheckable           ( true );
-  d->actions.viewEngineering->setCheckable      ( true );
-  d->actions.viewFixed->setCheckable            ( true );
-  d->actions.viewGeneral->setCheckable          ( true );
-  d->actions.viewHexadec->setCheckable          ( true );
-  d->actions.viewOctal->setCheckable            ( true );
-  d->actions.viewScientific->setCheckable       ( true );
+  d->actions.degree->setCheckable              ( true );
+  d->actions.digits15->setCheckable            ( true );
+  d->actions.digits2->setCheckable             ( true );
+  d->actions.digits3->setCheckable             ( true );
+  d->actions.digits50->setCheckable            ( true );
+  d->actions.digits8->setCheckable             ( true );
+  d->actions.digitsAuto->setCheckable          ( true );
+  d->actions.optionAlwaysOnTop->setCheckable   ( true );
+  d->actions.optionAutoCalc->setCheckable      ( true );
+  d->actions.optionAutoCompletion->setCheckable( true );
+  d->actions.optionMinimizeToTray->setCheckable( true );
+  d->actions.radian->setCheckable              ( true );
+  d->actions.radixCharAuto->setCheckable       ( true );
+  d->actions.radixCharComma->setCheckable      ( true );
+  d->actions.radixCharDot->setCheckable        ( true );
+  d->actions.showConstants->setCheckable       ( true );
+  d->actions.showFullScreen->setCheckable      ( true );
+  d->actions.showFunctions->setCheckable       ( true );
+  d->actions.showHistory->setCheckable         ( true );
+  d->actions.showKeypad->setCheckable          ( true );
+  d->actions.showVariables->setCheckable       ( true );
+  d->actions.viewBinary->setCheckable          ( true );
+  d->actions.viewEngineering->setCheckable     ( true );
+  d->actions.viewFixed->setCheckable           ( true );
+  d->actions.viewGeneral->setCheckable         ( true );
+  d->actions.viewHexadec->setCheckable         ( true );
+  d->actions.viewOctal->setCheckable           ( true );
+  d->actions.viewScientific->setCheckable      ( true );
 
   // signals and slots
   connect( d->actions.clearHistory,         SIGNAL(activated()),     this,      SLOT(clearHistory())           );
@@ -1481,6 +1541,10 @@ void Crunch::createUI()
   connect( d->actions.viewHexadec,          SIGNAL(activated()),     this,      SLOT(viewHexadec())            );
   connect( d->actions.viewOctal,            SIGNAL(activated()),     this,      SLOT(viewOctal())              );
   connect( d->actions.viewScientific,       SIGNAL(activated()),     this,      SLOT(viewScientific())         );
+  connect( d->actions.optionAutoCalc,       SIGNAL(toggled( bool )), this,      SLOT(onAutoCalc( bool ))       );
+  connect( d->actions.optionAutoCompletion, SIGNAL(toggled( bool )), this,      SLOT(onAutoCompletion( bool )) );
+  connect( d->actions.optionAlwaysOnTop,    SIGNAL(toggled( bool )), this,      SLOT(onAlwaysOnTop( bool ))    );
+  connect( d->actions.optionMinimizeToTray, SIGNAL(toggled( bool )), this,      SLOT(onAlwaysOnTop( bool ))    );
 
   // synchronize dock actions
   connect( d->constantsDock->toggleViewAction(), SIGNAL(toggled( bool )), d->actions.showConstants, SLOT(setChecked( bool )) );
@@ -1512,13 +1576,13 @@ void Crunch::createUI()
   d->menus.edit->addAction( d->actions.clearExpression    );
   d->menus.edit->addAction( d->actions.clearHistory       );
 
+  // format menu
   QActionGroup * formatGroup = new QActionGroup( this );
   formatGroup->addAction( d->actions.viewBinary );
-  // decimal submenu
-    formatGroup->addAction( d->actions.viewGeneral );
-    formatGroup->addAction( d->actions.viewFixed );
-    formatGroup->addAction( d->actions.viewEngineering );
-    formatGroup->addAction( d->actions.viewScientific );
+  formatGroup->addAction( d->actions.viewGeneral );
+  formatGroup->addAction( d->actions.viewFixed );
+  formatGroup->addAction( d->actions.viewEngineering );
+  formatGroup->addAction( d->actions.viewScientific );
   formatGroup->addAction( d->actions.viewOctal );
   formatGroup->addAction( d->actions.viewHexadec );
 
@@ -1530,15 +1594,13 @@ void Crunch::createUI()
   d->digitsGroup->addAction( d->actions.digits15 );
   d->digitsGroup->addAction( d->actions.digits50 );
 
-  d->angleGroup = new QActionGroup( this );
-  d->angleGroup->addAction( d->actions.radian );
-  d->angleGroup->addAction( d->actions.degree );
-
   d->menus.format = new QMenu( tr("&Format"), this );
   menuBar()->addMenu( d->menus.format );
   d->menus.format->addAction( d->actions.viewBinary );
   d->menus.format->addAction( d->actions.viewOctal );
-  d->menus.decimal = d->menus.format->addMenu( tr("Decimal") );
+
+    // decimal submenu
+    d->menus.decimal = d->menus.format->addMenu( tr("Decimal") );
     d->menus.decimal->addAction( d->actions.viewGeneral );
     d->menus.decimal->addAction( d->actions.viewFixed );
     d->menus.decimal->addAction( d->actions.viewEngineering );
@@ -1550,31 +1612,54 @@ void Crunch::createUI()
     d->menus.decimal->addAction( d->actions.digits8 );
     d->menus.decimal->addAction( d->actions.digits15 );
     d->menus.decimal->addAction( d->actions.digits50 );
+
   d->menus.format->addAction( d->actions.viewHexadec );
+
+  // angel menu
+  d->angleGroup = new QActionGroup( this );
+  d->angleGroup->addAction( d->actions.radian );
+  d->angleGroup->addAction( d->actions.degree );
 
   d->menus.angle = new QMenu( tr("&Angle"), this );
   menuBar()->addMenu( d->menus.angle );
   d->menus.angle->addAction( d->actions.radian );
   d->menus.angle->addAction( d->actions.degree );
 
+  // settings menu
   d->menus.settings = new QMenu( tr("Se&ttings"), this );
   menuBar()->addMenu( d->menus.settings );
-  d->menus.layout = d->menus.settings->addMenu( tr("&Layout") );
-    d->menus.layout->addAction( d->actions.showKeypad     );
+
+    // layout submenu
+    d->menus.layout = d->menus.settings->addMenu( tr("&Layout") );
+    d->menus.layout->addAction( d->actions.showKeypad );
     d->menus.layout->addSeparator();
-    d->menus.layout->addAction( d->actions.showHistory    );
-    d->menus.layout->addAction( d->actions.showFunctions  );
-    d->menus.layout->addAction( d->actions.showVariables  );
-    d->menus.layout->addAction( d->actions.showConstants  );
+    d->menus.layout->addAction( d->actions.showHistory   );
+    d->menus.layout->addAction( d->actions.showFunctions );
+    d->menus.layout->addAction( d->actions.showVariables );
+    d->menus.layout->addAction( d->actions.showConstants );
     d->menus.layout->addSeparator();
-    d->menus.layout->addAction( d->actions.showMenuBar    );
+    d->menus.layout->addAction( d->actions.showMenuBar );
     d->menus.layout->addSeparator();
     d->menus.layout->addAction( d->actions.showFullScreen );
-  d->menus.behavior = d->menus.settings->addMenu( tr("&Behavior")  );
-    d->menus.behavior->addAction( d->actions.optionAutoCalc        );
-    d->menus.behavior->addAction( d->actions.optionAutoCompletion  );
-    d->menus.behavior->addAction( d->actions.optionAlwaysOnTop     );
-    d->menus.behavior->addAction( d->actions.optionMinimizeSystray );
+
+    // behavior submenu
+    d->menus.behavior = d->menus.settings->addMenu( tr("&Behavior") );
+    d->menus.behavior->addAction( d->actions.optionAutoCalc       );
+    d->menus.behavior->addAction( d->actions.optionAutoCompletion );
+    d->menus.behavior->addAction( d->actions.optionAlwaysOnTop    );
+    d->menus.behavior->addAction( d->actions.optionMinimizeToTray );
+
+    // radix character submenu
+    QActionGroup * radixCharGroup = new QActionGroup( this );
+    radixCharGroup->addAction( d->actions.radixCharAuto  );
+    radixCharGroup->addAction( d->actions.radixCharDot   );
+    radixCharGroup->addAction( d->actions.radixCharComma );
+
+    d->menus.radixChar = d->menus.settings->addMenu( tr("&Radix Character") );
+    d->menus.radixChar->addAction( d->actions.radixCharAuto  );
+    d->menus.radixChar->addAction( d->actions.radixCharDot   );
+    d->menus.radixChar->addAction( d->actions.radixCharComma );
+
   //QAction * optionDotAuto;
   //QAction * optionDotComma;
   //QAction * optionDotPoint;
@@ -1597,7 +1682,7 @@ void Crunch::createUI()
 
 void Crunch::saveSettings()
 {
-  Settings * s = Settings::self();
+  Settings * s = d->s;
 
   // main window
   s->mainWindowState = saveState();
@@ -1650,17 +1735,28 @@ void Crunch::saveSettings()
 }
 
 
-void Crunch::setDigits( int i )
+void Crunch::setPrecision( int p )
 {
-  Settings::self()->precision = i;
-  saveSettings();
-  applySettings();
+  d->s->precision = p;
+  emit precisionChanged( p );
+  //saveSettings();
+  //applySettings();
 }
 
 
-void Crunch::setView( char c )
+void Crunch::setFormat( char c )
 {
-  Settings::self()->format = c;
-  saveSettings();
-  applySettings();
+  d->s->format = c;
+  emit formatChanged( c );
+  //saveSettings();
+  //applySettings();
+}
+
+
+void Crunch::setRadixChar( QChar c )
+{
+  d->s->setDot( c );
+  emit radixCharChanged( c );
+  //saveSettings();
+  //applySettings();
 }

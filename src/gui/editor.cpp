@@ -833,7 +833,7 @@ void Editor::stopAutoComplete()
 
 
 // uncomment to activate fade-away effect when the completion pop-up disappears
-#define COMPLETION_FADE_EFFECT
+//#define COMPLETION_FADE_EFFECT
 
 class EditorCompletionPrivate
 {

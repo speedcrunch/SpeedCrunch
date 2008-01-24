@@ -22,13 +22,13 @@
 #define RESULT_HXX
 
 
-#include <math/hmath.hxx>
-
 #include <QListWidget>
 #include <QResizeEvent>
 
 
-class ResultPrivate;
+struct ResultPrivate;
+
+class HNumber;
 
 class QListWidgetItem;
 
@@ -49,26 +49,25 @@ class Result : public QListWidget
     QColor  customBackgroundColor2() const;
     QColor  customErrorColor() const;
     QColor  customTextColor() const;
-    int     precision() const;
-    char    format() const;
-    QString formatNumber( const HNumber & value ) const;
-    void    setCustomAppearance( bool custom );
+    QString formatNumber( const HNumber & ) const;
+    void    setCustomAppearance( bool );
     void    setCustomBackgroundColor( const QColor & bg1, const QColor & bg2 );
-    void    setCustomErrorColor( const QColor & e );
-    void    setCustomTextColor( const QColor & textColor );
-    void    setPrecision( int digits );
-    void    setFormat( char format );
+    void    setCustomErrorColor( const QColor & );
+    void    setCustomTextColor( const QColor & );
 
   signals:
-    void textCopied( const QString & text );
+    void textCopied( const QString & );
 
   public slots:
     void clear();
     void scrollEnd();
+    void setFormat( char );
+    void setPrecision( int );
+    void setRadixChar( QChar );
 
   private slots:
     void copyToClipboard( QListWidgetItem * );
-    void triggerUpdate();
+    void refresh();
 
   private:
     ResultPrivate * const d;

@@ -23,7 +23,6 @@
 #include "result.hxx"
 
 #include <base/functions.hxx>
-#include <base/settings.hxx> //refdp
 #include <math/hmath.hxx>
 
 #include <QApplication>
@@ -33,18 +32,18 @@
 #include <QTimer>
 
 
-class ResultPrivate
+struct ResultPrivate
 {
-  public:
-    QStringList contents;
-    int         count;
-    bool        customAppearance;
-    QColor      customBackgroundColor1;
-    QColor      customBackgroundColor2;
-    QColor      customErrorColor;
-    QColor      customTextColor;
-    int         precision;
-    char        format;
+  QStringList contents;
+  int         count;
+  bool        customAppearance;
+  QColor      customBackgroundColor1;
+  QColor      customBackgroundColor2;
+  QColor      customErrorColor;
+  QColor      customTextColor;
+  char        format;
+  int         precision;
+  QChar       radixChar;
 };
 
 
@@ -177,8 +176,10 @@ class ErrorItem: public BaseItem
 Result::Result( QWidget * parent, const char * name ) : QListWidget( parent ),
     d( new ResultPrivate )
 {
-  d->format = 'g';
+  d->format    = 'g';
   d->precision = -1;
+  d->radixChar = '.';
+
   d->customAppearance = false;
   d->count = 0;
 
@@ -217,7 +218,7 @@ QString Result::asText() const
 
 void Result::append( const QString & expr, const HNumber & value )
 {
-  d->count++;
+  ++d->count;
 
   new ExprItem(   this, d->count, expr );
   new ResultItem( this, d->count, value );
@@ -231,7 +232,7 @@ void Result::append( const QString & expr, const HNumber & value )
 
 void Result::appendError( const QString & expr, const QString & msg )
 {
-  d->count++;
+  ++d->count;
 
   new ExprItem(  this, d->count, expr );
   new ErrorItem( this, d->count, msg );
@@ -279,27 +280,14 @@ QColor Result::customTextColor() const
 }
 
 
-int Result::precision() const
-{
-  return d->precision;
-}
-
-
-char Result::format() const
-{
-  return d->format;
-}
-
-
 QString Result::formatNumber( const HNumber & value ) const
 {
   char * str = HMath::format( value, value.format() ?
                                        value.format() : d->format, d->precision );
   QString s = QString::fromLatin1( str );
   free( str );
-  QChar dot = Settings::self()->dot();
-  if ( dot != '.' )
-    s.replace( '.', dot);
+  if ( d->radixChar != '.' )
+    s.replace( '.', d->radixChar );
   return s;
 }
 
@@ -315,7 +303,7 @@ void Result::setCustomAppearance( bool custom )
   pal.setColor( QPalette::Background, bgcolor );
   setPalette( pal );
 
-  triggerUpdate();
+  refresh();
 }
 
 
@@ -329,35 +317,21 @@ void Result::setCustomBackgroundColor( const QColor & bg1, const QColor & bg2 )
     pal.setColor( QPalette::Base, bg1 );
     setPalette( pal );
   }
-  triggerUpdate();
+  refresh();
 }
 
 
 void Result::setCustomErrorColor( const QColor & e )
 {
   d->customErrorColor = e;
-  triggerUpdate();
+  refresh();
 };
 
 
 void Result::setCustomTextColor( const QColor & c )
 {
   d->customTextColor = c;
-  triggerUpdate();
-}
-
-
-void Result::setPrecision( int digits )
-{
-  d->precision = digits;
-  triggerUpdate();
-}
-
-
-void Result::setFormat( char format )
-{
-  d->format = format;
-  triggerUpdate();
+  refresh();
 }
 
 
@@ -385,6 +359,36 @@ void Result::scrollEnd()
 }
 
 
+void Result::setFormat( char c )
+{
+  if ( d->format != c )
+  {
+    d->format = c;
+    refresh();
+  }
+}
+
+
+void Result::setPrecision( int p )
+{
+  if ( d->precision != p )
+  {
+    d->precision = p;
+    refresh();
+  }
+}
+
+
+void Result::setRadixChar( QChar c )
+{
+  if ( d->radixChar != c )
+  {
+    d->radixChar = c;
+    refresh();
+  }
+}
+
+
 // private slots
 
 void Result::copyToClipboard( QListWidgetItem * item )
@@ -398,8 +402,8 @@ void Result::copyToClipboard( QListWidgetItem * item )
 }
 
 
-void Result::triggerUpdate()
+void Result::refresh()
 {
-  for ( int c = 0; c < count(); c++ )
+  for ( int c = 0; c < d->count * 2; c++ )
     dynamic_cast<BaseItem *>( item(c) )->updateItem();
 }
