@@ -27,6 +27,7 @@
 
 #include <QApplication>
 #include <QClipboard>
+#include <QLocale>
 #include <QResizeEvent>
 #include <QScrollBar>
 #include <QTimer>
@@ -43,7 +44,7 @@ struct ResultPrivate
   QColor      customTextColor;
   char        format;
   int         precision;
-  QChar       radixChar;
+  char        radixChar;
 };
 
 
@@ -173,12 +174,17 @@ class ErrorItem: public BaseItem
 
 // public
 
-Result::Result( QWidget * parent, const char * name ) : QListWidget( parent ),
-    d( new ResultPrivate )
+Result::Result( char radixChar, char format, int precision, QWidget * parent,
+                const char * name )
+  : QListWidget( parent ), d( new ResultPrivate )
 {
-  d->format    = 'g';
-  d->precision = -1;
-  d->radixChar = '.';
+  if ( radixChar == 'C' )
+    d->radixChar = QLocale().decimalPoint().toAscii();
+  else
+    d->radixChar = radixChar;
+
+  d->format    = format;
+  d->precision = precision;
 
   d->customAppearance = false;
   d->count = 0;
@@ -256,6 +262,24 @@ bool Result::customAppearance() const
 }
 
 
+char Result::format() const
+{
+  return d->format;
+}
+
+
+char Result::radixChar() const
+{
+  return d->radixChar;
+}
+
+
+int Result::precision() const
+{
+  return d->precision;
+}
+
+
 QColor Result::customBackgroundColor1() const
 {
   return d->customBackgroundColor1;
@@ -286,8 +310,8 @@ QString Result::formatNumber( const HNumber & value ) const
                                        value.format() : d->format, d->precision );
   QString s = QString::fromLatin1( str );
   free( str );
-  if ( d->radixChar != '.' )
-    s.replace( '.', d->radixChar );
+  if ( d->radixChar == ',' )
+    s.replace( '.', ',' );
   return s;
 }
 
@@ -379,12 +403,13 @@ void Result::setPrecision( int p )
 }
 
 
-void Result::setRadixChar( QChar c )
+void Result::setRadixChar( char c )
 {
+  if ( c == 'C' )
+    c = QLocale().decimalPoint().toAscii();
   if ( d->radixChar != c )
   {
     d->radixChar = c;
-    refresh();
   }
 }
 

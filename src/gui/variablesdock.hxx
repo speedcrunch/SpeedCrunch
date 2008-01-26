@@ -37,14 +37,15 @@ class VariablesDock : public QDockWidget
 
   public:
     explicit VariablesDock( QWidget * parent );
-    void updateList( const Evaluator * eval );
     ~VariablesDock();
+    QChar radixChar() const;
+    void  updateList( const Evaluator * );
 
   signals:
-    void variableSelected( const QString & v );
+    void variableSelected( const QString & );
 
   public slots:
-    void settingsChanged();
+    void setRadixChar( QChar );
 
   protected slots:
     void filter();

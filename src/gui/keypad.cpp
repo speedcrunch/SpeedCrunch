@@ -18,17 +18,24 @@
 // Boston, MA 02110-1301, USA.
 
 
-#include <base/settings.hxx>
-#include <gui/keypad.hxx>
+#include "keypad.hxx"
 
 #include <QApplication>
 #include <QGridLayout>
+#include <QLocale>
 #include <QPushButton>
 #include <QStyle>
 
 
 struct Keypad::Private
 {
+    // parent
+    Keypad * p;
+
+    // attributes
+    char radixChar;
+
+    // widgets
     QPushButton * key0;
     QPushButton * key1;
     QPushButton * key2;
@@ -66,23 +73,28 @@ struct Keypad::Private
     QPushButton * keyX;
     QPushButton * keyXEq;
 
+    // methods
     void createButtons();
     void disableButtonFocus();
     void layoutButtons();
     void setButtonTooltips();
     void setUpButtonPressedSignal();
     void sizeButtons();
-
-    Keypad * p;
 };
 
 
 // public
 
-Keypad::Keypad( QWidget * parent )
+Keypad::Keypad( char radixChar, QWidget * parent )
   : QWidget( parent ), d( new Keypad::Private )
 {
   d->p = this;
+
+  if ( radixChar == 'C' )
+    d->radixChar = QLocale().decimalPoint().toAscii();
+  else
+    d->radixChar = radixChar;
+
   d->createButtons();
   d->sizeButtons();
   d->layoutButtons();
@@ -95,6 +107,26 @@ Keypad::Keypad( QWidget * parent )
 Keypad::~Keypad()
 {
   delete d;
+}
+
+
+QChar Keypad::radixChar() const
+{
+  return d->radixChar;
+}
+
+
+// public slots
+
+void Keypad::setRadixChar( char c )
+{
+  if ( c == 'C' )
+    c = QLocale().decimalPoint().toAscii();
+  if ( d->radixChar != c )
+  {
+    d->radixChar = c;
+    d->keyDot->setText( QString(c) );
+  }
 }
 
 
@@ -118,7 +150,7 @@ void Keypad::keyAtanPressed()  { emit buttonPressed( Keypad::KeyAtan      ); };
 void Keypad::keyCosPressed()   { emit buttonPressed( Keypad::KeyCos       ); };
 void Keypad::keyCPressed()     { emit buttonPressed( Keypad::KeyClear     ); };
 void Keypad::keyDivPressed()   { emit buttonPressed( Keypad::KeyDivide    ); };
-void Keypad::keyDotPressed()   { emit buttonPressed( Keypad::KeyDot       ); };
+void Keypad::keyDotPressed()   { emit buttonPressed( Keypad::KeyRadixChar ); };
 void Keypad::keyEEPressed()    { emit buttonPressed( Keypad::KeyEE        ); };
 void Keypad::keyEqPressed()    { emit buttonPressed( Keypad::KeyEquals    ); };
 void Keypad::keyExpPressed()   { emit buttonPressed( Keypad::KeyExp       ); };
@@ -136,12 +168,6 @@ void Keypad::keySubPressed()   { emit buttonPressed( Keypad::KeyMinus     ); };
 void Keypad::keyTanPressed()   { emit buttonPressed( Keypad::KeyTan       ); };
 void Keypad::keyXPressed()     { emit buttonPressed( Keypad::KeyX         ); };
 void Keypad::keyXEqPressed()   { emit buttonPressed( Keypad::KeyXEquals   ); };
-
-
-void Keypad::settingsChanged()
-{
-  d->keyDot->setText( Settings::self()->dot() );
-}
 
 
 // private
@@ -181,9 +207,10 @@ void Keypad::Private::createButtons()
   keyTan    = new QPushButton( "tan",  p );
   keyXEq    = new QPushButton( "x=",   p );
   keyX      = new QPushButton( "x",    p );
-  keyDot    = new QPushButton( Settings::self()->dot(),  p );
-  keyPi     = new QPushButton( QString::fromUtf8("π"),   p );
-  keySqrt   = new QPushButton( QString::fromUtf8("√"),   p );
+
+  keyDot    = new QPushButton( QString( radixChar ),     p );
+  keyPi     = new QPushButton( QString::fromUtf8( "π" ), p );
+  keySqrt   = new QPushButton( QString::fromUtf8( "√" ), p );
 }
 
 

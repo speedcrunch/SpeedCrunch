@@ -25,61 +25,58 @@
 
 #include <QApplication>
 #include <QDir>
-#include <QLocale>
 #include <QSettings>
 
 #include <stdlib.h>
 
 
-#define KEY (QString("SpeedCrunch"))
-
-
-Settings * s_global_settings = 0;
-
-
-static void deleteGlobalSettings()
-{
-    delete s_global_settings;
-    s_global_settings = 0;
-}
-
-
 // public
-
-QChar Settings::dot()
-{
-  return decimalPoint;
-}
-
 
 void Settings::load()
 {
+  const QString KEY = "SpeedCrunch";
   QSettings settings( /*QSettings::IniFormat,*/ QSettings::UserScope, KEY, KEY );
-
   QString key;
 
   key = KEY + "/General";
-  angleMode = Radian;
-  if ( settings.value( key + "/AngleMode", "Radian" ).toString() == "Degree")
-    angleMode = Degree;
-  saveSession    = settings.value( key + "/RestoreLastSession", true      ).toBool();
-  saveVariables  = settings.value( key + "/SaveVariables",      true      ).toBool();
-  autoComplete   = settings.value( key + "/AutoComplete",       true      ).toBool();
-  autoCalc       = settings.value( key + "/AutoCalc",           true      ).toBool();
+
+  // angle mode special case
+  QString angleModeStr;
+  angleModeStr   = settings.value( key + "/AngleMode", "r" ).toString();
+  if ( angleModeStr != "r" && angleModeStr != "d" )
+    angleMode = 'r';
+  else
+    angleMode = angleModeStr[0].toAscii();
+
+  // radix character special case
+  QString radixCharStr;
+  radixCharStr = settings.value( key + "/RadixChar", 'C' ).toString();
+  if ( radixCharStr != "C" && radixCharStr != "," && radixCharStr != "." )
+    radixChar = 'C';
+  else
+    radixChar = radixCharStr[0].toAscii();
+
+  saveSession    = settings.value( key + "/RestoreLastSession", true  ).toBool();
+  saveVariables  = settings.value( key + "/SaveVariables",      true  ).toBool();
+  autoComplete   = settings.value( key + "/AutoComplete",       true  ).toBool();
+  autoCalc       = settings.value( key + "/AutoCalc",           true  ).toBool();
+  minimizeToTray = settings.value( key + "/MinimizeToTray",     false ).toBool();
   //language       = settings.value( key + "/Language",           QString() ).toString();
-  minimizeToTray = settings.value( key + "/MinimizeToTray",     false     ).toBool();
-  setDot( settings.value( key + "/DecimalPoint", QString() ).toString());
 
   key = KEY + "/Format";
-  QString formatStr = settings.value( key + "/Type" ).toString();
-  if ( formatStr == "Fixed" )       format = 'f';
-  if ( formatStr == "Engineering" ) format = 'n';
-  if ( formatStr == "Scientific" )  format = 'e';
-  if ( formatStr == "General" )     format = 'g';
-  if ( formatStr == "Hexadecimal" ) format = 'h';
-  if ( formatStr == "Octal" )       format = 'o';
-  if ( formatStr == "Binary" )      format = 'b';
-  precision = settings.value( key + "/Precision", -1 ).toInt();
+
+  // format special case
+  QString formatStr;
+  formatStr = settings.value( key + "/Type", 'g' ).toString();
+  if (    formatStr != "g" && formatStr != "f" && formatStr != "e"
+       && formatStr != "n" && formatStr != "h" && formatStr != "o"
+       && formatStr != "b" )
+    format = 'g';
+  else
+    format = formatStr[0].toAscii();
+
+  precision = settings.value( key + "/Precision", -1  ).toInt();
+
   if ( precision > DECPRECISION )
     precision = DECPRECISION;
 
@@ -180,37 +177,29 @@ void Settings::load()
 
 void Settings::save()
 {
+  const QString KEY = "SpeedCrunch";
   QSettings settings( /*QSettings::IniFormat,*/ QSettings::UserScope, KEY, KEY );
+  QString key;
   int k, i;
 
-  QString key;
-
   key = KEY + "/General";
-  QString angleStr;
-  if      ( angleMode == Settings::Radian ) angleStr = "Radian";
-  else if ( angleMode == Settings::Degree ) angleStr = "Degree";
-  settings.setValue( key + "/AngleMode",          angleStr      );
-  settings.setValue( key + "/RestoreLastSession", saveSession   );
-  settings.setValue( key + "/SaveVariables",      saveVariables );
-  settings.setValue( key + "/AutoComplete",       autoComplete  );
-  settings.setValue( key + "/AutoCalc",           autoCalc      );
-  //settings.setValue( key + "/Language",           language      );
+
+  settings.setValue( key + "/AngleMode",          QString(QChar(angleMode)) );
+  settings.setValue( key + "/RadixChar",          QString(QChar(radixChar)) );
+  settings.setValue( key + "/RestoreLastSession", saveSession    );
+  settings.setValue( key + "/SaveVariables",      saveVariables  );
+  settings.setValue( key + "/AutoComplete",       autoComplete   );
+  settings.setValue( key + "/AutoCalc",           autoCalc       );
   settings.setValue( key + "/MinimizeToTray",     minimizeToTray );
-  settings.setValue( key + "/DecimalPoint", autoDetectDot ? QString() : decimalPoint );
+  //settings.setValue( key + "/Language",           language       );
 
   key = KEY + "/Format";
-  QString formatStr;
-  if      ( format == 'f' ) formatStr = "Fixed";
-  else if ( format == 'n' ) formatStr = "Engineering";
-  else if ( format == 'e' ) formatStr = "Scientific";
-  else if ( format == 'g' ) formatStr = "General";
-  else if ( format == 'h' ) formatStr = "Hexadecimal";
-  else if ( format == 'o' ) formatStr = "Octal";
-  else if ( format == 'b' ) formatStr = "Binary";
-  settings.setValue( key + "/Type",      formatStr );
+
+  settings.setValue( key + "/Type",      QString(QChar(format)) );
   settings.setValue( key + "/Precision", precision );
 
   key = KEY + "/Layout/";
+
   settings.setValue( key + "ShowConstants",         showConstants           );
   settings.setValue( key + "ShowFunctions",         showFunctions           );
   settings.setValue( key + "ShowHistory",           showHistory             );
@@ -265,14 +254,14 @@ void Settings::save()
 
   for ( k = 0; k < hkeys.count(); k++ )
   {
-    settings.remove( QString( key + "/Expression%1" ).arg( k ) );
+    settings.remove( QString( key + "/Expression%1" ).arg( k )       );
     settings.remove( QString( key + "/Expression%1Result" ).arg( k ) );
   }
 
   settings.setValue( key + "/Count", (int) history.count() );
   for ( i = 0; i < realHistory.count(); i++ )
   {
-    settings.setValue( QString( key + "/Expression%1" ).arg( i ), realHistory[i] );
+    settings.setValue( QString( key + "/Expression%1" ).arg( i ),       realHistory[i]        );
     settings.setValue( QString( key + "/Expression%1Result" ).arg( i ), realHistoryResults[i] );
   }
 
@@ -314,27 +303,9 @@ void Settings::save()
 }
 
 
-Settings * Settings::self()
-{
-  if ( ! s_global_settings )
-  {
-    s_global_settings = new Settings();
-    qAddPostRoutine( deleteGlobalSettings );
-  }
-  return s_global_settings;
-}
-
-
-void Settings::setDot( const QString & s )
-{
-  autoDetectDot = (s.length() != 1);
-  decimalPoint = autoDetectDot ? QLocale().decimalPoint() : s[0];
-}
-
-
 // private
 
 Settings::Settings()
 {
-  escape = "\\"; //reftbl
+  //escape = "\\"; //reftbl
 }

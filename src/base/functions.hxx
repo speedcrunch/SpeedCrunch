@@ -1,5 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
+// Copyright (C) 2008 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -31,11 +32,10 @@ class Evaluator;
 class Function;
 
 class FunctionPrivate;
-class FunctionRepositoryPrivate;
+class FunctionsPrivate;
 
 
-typedef QVector<HNumber> FunctionArguments;
-typedef HNumber (*FunctionPtr)( const Evaluator *, Function *, const FunctionArguments & );
+typedef HNumber (*FunctionPtr)( const Evaluator *, Function *, const QVector<HNumber> & );
 
 
 class Function
@@ -43,35 +43,40 @@ class Function
   public:
     Function( const QString & name, int argc, FunctionPtr ptr, const QString & desc );
     Function( const QString & name, FunctionPtr ptr, const QString & desc );
+    ~Function();
     QString description() const;
     QString error() const;
-    HNumber exec( const Evaluator *, const FunctionArguments & args );
+    HNumber exec( const Evaluator *, const QVector<HNumber> & args );
     QString name() const;
     void    setError( const QString & context, const QString & error );
-    ~Function();
 
   private:
     FunctionPrivate * d;
     Function( const Function & );
-    Function& operator=( const Function & );
+    Function & operator=( const Function & );
 };
 
 
-class FunctionRepository
+class Functions
 {
   public:
-    FunctionRepository();
-    static FunctionRepository * self();
-    void        add( Function * function );
-    Function *  function( const QString & name );
+    Functions();
+    ~Functions();
+
+    void        add( Function * );
+    Function *  function( const QString & );
     QStringList functionNames() const;
-    ~FunctionRepository();
+
+    static Functions * self();
+
+  //public slots:
+  //  setAngleMode
 
   private:
-    FunctionRepositoryPrivate * d;
-    static FunctionRepository * s_self;
-    FunctionRepository( const FunctionRepository & );
-    FunctionRepository & operator=( const FunctionRepository & );
+    FunctionsPrivate * d;
+    static Functions * s_self;
+    Functions( const Functions & );
+    Functions & operator=( const Functions & );
 };
 
 

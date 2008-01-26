@@ -34,23 +34,23 @@
 #include <QVBoxLayout>
 
 
-class ConstantsDockPrivate
+struct ConstantsDockPrivate
 {
-  public:
-    QComboBox   * category;
-    QLineEdit   * filter;
-    QTimer      * filterTimer;
-    QTreeWidget * list;
-    QLabel      * noMatchLabel;
+  QChar radixChar;
+
+  QComboBox   * category;
+  QLineEdit   * filter;
+  QTimer      * filterTimer;
+  QTreeWidget * list;
+  QLabel      * noMatchLabel;
 };
 
 
 // public
 
-ConstantsDock::ConstantsDock( QWidget * parent ): QDockWidget( tr("Constants"), parent )
+ConstantsDock::ConstantsDock( QWidget * parent )
+  : QDockWidget( tr("Constants"), parent ), d( new ConstantsDockPrivate )
 {
-  d = new ConstantsDockPrivate;
-
   QLabel * categorylabel = new QLabel( this );
   categorylabel->setText( tr("Category") );
 
@@ -128,11 +128,21 @@ ConstantsDock::~ConstantsDock()
 }
 
 
+QChar ConstantsDock::radixChar() const
+{
+  return d->radixChar;
+}
+
+
 // public slots
 
-void ConstantsDock::settingsChanged()
+void ConstantsDock::setRadixChar( QChar c )
 {
-  updateList();
+  if ( d->radixChar != c )
+  {
+    d->radixChar = c;
+    updateList();
+  }
 }
 
 
@@ -148,7 +158,6 @@ void ConstantsDock::filter()
 
   QString chosenCategory = d->category->currentText();
 
-  QChar dot = Settings::self()->dot();
   d->list->clear();
   for ( int k = 0; k < c->constantList.count(); k++ )
   {
@@ -157,13 +166,13 @@ void ConstantsDock::filter()
       if ( QLocale().language() == QLocale::Hebrew )
       {
 	str << c->constantList[k].unit;
-	str << (dot == '.' ?
+	str << (d->radixChar == '.' ?
                   c->constantList[k].value.replace( ',', '.' )
                     : c->constantList[k].value.replace( '.', ',' ) );
       }
       else
       {
-	str << (dot == '.' ?
+	str << (d->radixChar == '.' ?
                   c->constantList[k].value.replace( ',', '.' )
                     : c->constantList[k].value.replace( '.', ',' ));
 	str << c->constantList[k].unit;

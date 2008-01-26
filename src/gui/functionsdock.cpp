@@ -18,9 +18,10 @@
 // Boston, MA 02110-1301, USA.
 
 
+#include "functionsdock.hxx"
+
 #include <base/functions.hxx>
 #include <base/settings.hxx>
-#include <gui/functionsdock.hxx>
 
 #include <QHBoxLayout>
 #include <QHeaderView>
@@ -97,10 +98,12 @@ FunctionsDock::FunctionsDock( QWidget * parent )
   setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
   setWindowIcon( QIcon() ); // no icon
 
-  QStringList functionNames = FunctionRepository::self()->functionNames();
+  //QStringList functionNames = Functions::self()->functionNames();
+  QStringList functionNames = Functions::self()->functionNames();
   for ( int i = 0; i < functionNames.count(); i++ )
   {
-    Function * f = FunctionRepository::self()->function( functionNames[i] );
+    //Function * f = Functions::self()->function( functionNames[i] );
+    Function * f = Functions::self()->function( functionNames[i] );
     if ( f )
     {
       d->functionNames << f->name();

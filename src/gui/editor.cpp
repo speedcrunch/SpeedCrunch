@@ -20,11 +20,11 @@
 // Boston, MA 02110-1301, USA.
 
 
+#include "editor.hxx"
+
 #include <base/constants.hxx>
 #include <base/evaluator.hxx>
 #include <base/functions.hxx>
-#include <base/settings.hxx>
-#include <gui/editor.hxx>
 
 #include <QApplication>
 #include <QDesktopWidget>
@@ -49,13 +49,13 @@ class EditorHighlighter : public QSyntaxHighlighter
 
     void highlightBlock( const QString & text )
     {
-      if ( ! editor->isSyntaxHighlightEnabled() )
+      if ( ! editor->syntaxHighlight() )
       {
         setFormat( 0, text.length(), editor->palette().text().color() );
         return;
       }
 
-      Tokens tokens = Evaluator::scan( text );
+      Tokens tokens = editor->evaluator()->scan( text );
       for ( int i = 0; i < tokens.count(); i++ )
       {
         Token & token = tokens[i];
@@ -79,7 +79,7 @@ class EditorHighlighter : public QSyntaxHighlighter
 
           case Token::stxIdentifier:
             color = editor->highlightColor( Editor::Variable );
-            fnames = FunctionRepository::self()->functionNames();
+            fnames = Functions::self()->functionNames();
             for ( int i = 0; i < fnames.count(); i++ )
             {
               if ( fnames[i].toLower() == text )
@@ -101,7 +101,7 @@ class EditorHighlighter : public QSyntaxHighlighter
 };
 
 
-class EditorPrivate
+class Editor::Private
 {
   public:
     bool                            ansAvailable;
@@ -120,13 +120,19 @@ class EditorPrivate
     QMap<Editor::ColorType, QColor> highlightColors;
     int                             index;
     QTimer *                        matchingTimer;
+    char                            radixChar;
     bool                            syntaxHighlightEnabled;
 };
 
 
-Editor::Editor( Evaluator * e, QWidget * parent ) : QTextEdit( parent )
+Editor::Editor( Evaluator * e, char radixChar, QWidget * parent )
+  : QTextEdit( parent ), d( new Editor::Private )
 {
-  d = new EditorPrivate;
+  if ( radixChar == 'C' )
+    d->radixChar = QLocale().decimalPoint().toAscii();
+  else
+    d->radixChar = radixChar;
+
   d->eval = e;
   d->index = 0;
   d->autoCompleteEnabled = true;
@@ -191,11 +197,30 @@ void Editor::insert( const QString & str )
 }
 
 
+void Editor::setRadixChar( char c )
+{
+  if ( c == 'C' )
+    c = QLocale().decimalPoint().toAscii();
+  if ( d->radixChar != c )
+  {
+    d->radixChar = c;
+    if ( syntaxHighlight() )
+      d->highlighter->rehighlight();
+  }
+}
+
+
 void Editor::doBackspace()
 {
   QTextCursor cursor = textCursor();
   cursor.deletePreviousChar();
   setTextCursor( cursor );
+}
+
+
+Evaluator * Editor::evaluator() const
+{
+  return d->eval;
 }
 
 
@@ -361,7 +386,7 @@ void Editor::doMatchingLeft()
 
   // check for right par
   QString subtext = text().left( curPos );
-  Tokens tokens = Evaluator::scan( subtext );
+  Tokens tokens = d->eval->scan( subtext );
   if ( ! tokens.valid()   ) return;
   if ( tokens.count() < 1 ) return;
   Token lastToken = tokens[tokens.count()-1];
@@ -435,7 +460,7 @@ void Editor::doMatchingRight()
 
   // check for left par
   QString subtext = text().right( text().length() - curPos );
-  Tokens tokens = Evaluator::scan( subtext );
+  Tokens tokens = d->eval->scan( subtext );
   if ( ! tokens.valid()   ) return;
   if ( tokens.count() < 1 ) return;
   Token firstToken = tokens[0];
@@ -510,7 +535,7 @@ void Editor::triggerAutoComplete()
   // tokenize the expression (don't worry, this is very fast)
   int curPos = textCursor().position();
   QString subtext = text().left( curPos );
-  Tokens tokens = Evaluator::scan( subtext );
+  Tokens tokens = d->eval->scan( subtext );
   if ( ! tokens.valid()   ) return;
   if ( tokens.count() < 1 ) return;
 
@@ -528,14 +553,16 @@ void Editor::triggerAutoComplete()
     return;
 
   // find matches in function names
-  QStringList fnames = FunctionRepository::self()->functionNames();
+  //QStringList fnames = Functions::self()->functionNames();
+  QStringList fnames = Functions::self()->functionNames();
   QStringList choices;
   for ( int i = 0; i < fnames.count(); i++ )
   {
     if ( fnames[i].startsWith( id, Qt::CaseInsensitive ) )
     {
       QString str = fnames[i];
-      ::Function * f = FunctionRepository::self()->function( str );
+      //::Function * f = Functions::self()->function( str );
+      ::Function * f = Functions::self()->function( str );
       if ( f )
         str.append( ':' ).append( f->description() );
       choices.append( str );
@@ -592,7 +619,7 @@ void Editor::autoComplete( const QString & item )
 
   int curPos = textCursor().position();
   QString subtext = text().left( curPos );
-  Tokens tokens = Evaluator::scan( subtext );
+  Tokens tokens = d->eval->scan( subtext );
   if ( ! tokens.valid() || tokens.count() < 1 )
     return;
 
@@ -617,20 +644,20 @@ void Editor::autoCalc()
   if ( ! d->autoCalcEnabled )
     return;
 
-  QString str = Evaluator::autoFix( text() );
+  QString str = d->eval->autoFix( text() );
   if ( str.isEmpty() )
     return;
 
   // very short (just one token) and still no calculation, then skip
   if ( ! d->ansAvailable )
   {
-    Tokens tokens = Evaluator::scan( text() );
+    Tokens tokens = d->eval->scan( text() );
     if ( tokens.count() < 2 )
       return;
   }
 
   // too short even after autofix ? do not bother either...
-  Tokens tokens = Evaluator::scan( str );
+  Tokens tokens = d->eval->scan( str );
   if ( tokens.count() < 2 )
     return;
 
@@ -661,10 +688,10 @@ void Editor::autoCalc()
 
 void Editor::insertConstant( const QString & c )
 {
-  // replace constant dot separator
-  QString str( c );
-  str.replace( QChar( '.' ), Settings::self()->dot() );
-  insert( str );
+  QString s( c );
+  if ( d->radixChar == ',' )
+    s.replace( '.', ',' );
+  insert( s );
 }
 
 
@@ -788,7 +815,7 @@ void Editor::setSyntaxHighlight( bool enable )
 }
 
 
-bool Editor::isSyntaxHighlightEnabled() const
+bool Editor::syntaxHighlight() const
 {
   return d->syntaxHighlightEnabled;
 }

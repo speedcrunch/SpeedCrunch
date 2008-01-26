@@ -20,9 +20,9 @@
 // Boston, MA 02110-1301, USA.
 
 
+#include "insertvardlg.hxx"
+
 #include <base/evaluator.hxx>
-#include <base/settings.hxx>
-#include <gui/insertvardlg.hxx>
 
 #include <QDialog>
 #include <QHBoxLayout>
@@ -37,18 +37,22 @@
 class InsertVariableDlgPrivate
 {
   public:
+    QChar radixChar;
+
     QPushButton * cancelButton;
     Evaluator   * eval;
     QPushButton * insertButton;
     QTreeWidget * list;
+
+    QString formatValue( const HNumber & value );
 };
 
 
-static QString formatValue( const HNumber & value )
+QString InsertVariableDlgPrivate::formatValue( const HNumber & value )
 {
   char * str = HMath::format( value, 'g' );
   QString s;
-  if ( Settings::self()->dot() == '.' )
+  if ( radixChar == '.' )
     s = QString::fromLatin1( str );
   else
     s = QString::fromLatin1( str ).replace( '.', ',' );
@@ -102,10 +106,10 @@ InsertVariableDlg::InsertVariableDlg( Evaluator * eval, QWidget * parent )
   layout->addWidget( d->list );
   layout->addWidget( box );
 
-  connect( d->insertButton, SIGNAL( clicked() ), this, SLOT( accept() ) );
-  connect( d->cancelButton, SIGNAL( clicked() ), this, SLOT( reject() ) );
-  connect( d->list, SIGNAL( itemActivated( QTreeWidgetItem*, int ) ), this, SLOT( accept() ) );
-  connect( d->list, SIGNAL( itemDoubleClicked( QTreeWidgetItem*, int ) ), this, SLOT( accept() ) );
+  connect( d->insertButton, SIGNAL(clicked()), this, SLOT(accept()) );
+  connect( d->cancelButton, SIGNAL(clicked()), this, SLOT(reject()) );
+  connect( d->list, SIGNAL(itemActivated( QTreeWidgetItem *, int )),     this, SLOT(accept()) );
+  connect( d->list, SIGNAL(itemDoubleClicked( QTreeWidgetItem *, int )), this, SLOT(accept()) );
 
   updateList();
   adjustSize();
@@ -122,7 +126,7 @@ void InsertVariableDlg::updateList()
   {
       QStringList str;
       str << variables[k].name;
-      str << formatValue( variables[k].value );
+      str << d->formatValue( variables[k].value );
 
       QTreeWidgetItem* item = 0;
       item = new QTreeWidgetItem( d->list, str );
@@ -150,7 +154,11 @@ InsertVariableDlg::~InsertVariableDlg()
 
 // public slots
 
-void InsertVariableDlg::settingsChanged()
+void InsertVariableDlg::setRadixChar( QChar c )
 {
-  updateList();
+  if ( d->radixChar != c )
+  {
+    d->radixChar = c;
+    updateList();
+  }
 }

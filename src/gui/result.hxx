@@ -38,22 +38,28 @@ class Result : public QListWidget
   Q_OBJECT
 
   public:
-    Result( QWidget * parent = 0, const char * name = 0 );
+    Result( char radixChar = 'C', char format = 'g', int precision = -1,
+            QWidget * parent = 0, const char * name = 0 );
     ~Result();
-    QString asText() const;
+
     void    append( const QString & expr, const HNumber & value );
     void    appendError( const QString & expr, const QString & msg );
-    int     count() const;
-    bool    customAppearance() const;
-    QColor  customBackgroundColor1() const;
-    QColor  customBackgroundColor2() const;
-    QColor  customErrorColor() const;
-    QColor  customTextColor() const;
-    QString formatNumber( const HNumber & ) const;
     void    setCustomAppearance( bool );
     void    setCustomBackgroundColor( const QColor & bg1, const QColor & bg2 );
     void    setCustomErrorColor( const QColor & );
     void    setCustomTextColor( const QColor & );
+
+    bool    customAppearance() const;
+    char    format() const;
+    char    radixChar() const;
+    int     count() const;
+    int     precision() const;
+    QColor  customBackgroundColor1() const;
+    QColor  customBackgroundColor2() const;
+    QColor  customErrorColor() const;
+    QColor  customTextColor() const;
+    QString asText() const;
+    QString formatNumber( const HNumber & ) const;
 
   signals:
     void textCopied( const QString & );
@@ -63,7 +69,7 @@ class Result : public QListWidget
     void scrollEnd();
     void setFormat( char );
     void setPrecision( int );
-    void setRadixChar( QChar );
+    void setRadixChar( char );
 
   private slots:
     void copyToClipboard( QListWidgetItem * );

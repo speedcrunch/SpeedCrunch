@@ -1,38 +1,38 @@
-/* This file is part of the SpeedCrunch project
-   Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
-                 2005-2006 Johan Thelin <e8johan@gmail.com>
-                 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
+// This file is part of the SpeedCrunch project
+// Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
+// Copyright (C) 2005-2006 Johan Thelin <e8johan@gmail.com>
+// Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; see the file COPYING.  If not, write to
+// the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+// Boston, MA 02110-1301, USA.
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public License
-   as published by the Free Software Foundation; either version 2
-   of the License, or (at your option) any later version.
 
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
- */
-
-#include <base/evaluator.hxx>
-#include <base/functions.hxx>
-#include <base/settings.hxx>
+#include "evaluator.hxx"
+#include "functions.hxx"
+#ifdef _BISON
+# include "bison/bisonparser.cpp"
+#endif
 
 #include <QApplication>
+#include <QLocale>
 #include <QMap>
 #include <QString>
 #include <QStringList>
 #include <QVector>
 #include <QStack>
 
-#ifdef _BISON
-# include "bison/bisonparser.cpp"
-#endif
 
 // #define EVALUATOR_DEBUG
 
@@ -64,22 +64,24 @@ public:
   Opcode( unsigned t, unsigned i ): type(t), index(i) {};
 };
 
-class EvaluatorPrivate
-{
-public:
-  Evaluator *evaluator;
-  bool dirty;
-  bool valid;
-  QString expression;
 
+struct Evaluator::Private
+{
+  Evaluator * p;
+
+  char    radixChar;
+  bool    dirty;
+  bool    valid;
+  QString expression;
   QString error;
-  QMap<QString,Variable> variables;
 
   QString assignId;
   QVector<Opcode> codes;
   QStringList identifiers;
   QVector<HNumber> constants;
+  QMap<QString,Variable> variables;
 };
+
 
 class TokenStack : public QVector<Token>
 {
@@ -200,9 +202,9 @@ HNumber Token::asNumber() const
 Token::Op Token::asOperator() const
 {
   if( isOperator() )
-		return matchOperator( m_text );
+    return matchOperator( m_text );
   else
-		return InvalidOp;
+    return InvalidOp;
 }
 
 QString Token::description() const
@@ -285,10 +287,18 @@ static bool isIdentifier( QChar ch )
 
 // Constructor
 
-Evaluator::Evaluator()
+Evaluator::Evaluator( char radixChar, QObject * parent ) : QObject( parent ),
+  d( new Evaluator::Private )
 {
-  d = new EvaluatorPrivate;
+  d->p = this;
+
+  if ( radixChar == 'C' )
+    d->radixChar = QLocale().decimalPoint().toAscii();
+  else
+    d->radixChar = radixChar;
+
   clear();
+
 #ifdef _BISON
   QStringList script;
   script << "\\escape \\(\\\"@\\\"\\)"
@@ -400,17 +410,16 @@ Tokens Evaluator::tokens() const
   return scan( d->expression );
 }
 
-Tokens Evaluator::scan( const QString& expr )
+Tokens Evaluator::scan( const QString& expr ) const
 {
   // to hold the result
   Tokens tokens;
 
   // auto-detect, always dot, or always comma
-  QChar decimalPoint;
   QChar wrongDecimalPoint;
-  decimalPoint = Settings::self()->dot();
+  //decimalPoint = Settings::self()->dot();
   // sanity check for wrong decimal separator usage
-  if ( decimalPoint == ',' )
+  if ( d->radixChar == ',' )
     wrongDecimalPoint = '.';
   else
     wrongDecimalPoint = ',';
@@ -463,7 +472,7 @@ Tokens Evaluator::scan( const QString& expr )
        }
 
        // decimal dot ?
-       else if ( ch == decimalPoint )
+       else if ( ch == d->radixChar )
        {
          tokenText.append( ex.at(i++) );
          state = InDecimal;
@@ -548,7 +557,7 @@ Tokens Evaluator::scan( const QString& expr )
        if( ch.isDigit() ) tokenText.append( ex.at(i++) );
 
        // convert decimal separator to '.'
-       else if( ch == decimalPoint )
+       else if( ch == d->radixChar )
        {
          tokenText.append( '.' );
          i++;
@@ -831,7 +840,7 @@ void Evaluator::compile( const Tokens& tokens ) const
           Token id = syntaxStack.top( 1 );
           if( !arg.isOperator() )
           if( id.isIdentifier() )
-          if( FunctionRepository::self()->function( id.text() ) )
+          if( Functions::self()->function( id.text() ) )
           {
             ruleFound = true;
             d->codes.append( Opcode( Opcode::Function, 1 ) );
@@ -855,7 +864,7 @@ void Evaluator::compile( const Tokens& tokens ) const
             if( !x.isOperator() )
             if( op.isOperator() )
             if( id.isIdentifier() )
-            if( FunctionRepository::self()->function( id.text() ) )
+            if( Functions::self()->function( id.text() ) )
             if( ( op.asOperator() == Token::Plus ) ||
                ( op.asOperator() == Token::Minus ) )
             {
@@ -879,7 +888,7 @@ void Evaluator::compile( const Tokens& tokens ) const
             Token op = syntaxStack.top();
             Token x = syntaxStack.top( 1 );
             Token id = syntaxStack.top( 2 );
-            if( id.isIdentifier() && FunctionRepository::self()->function( id.text() ) )
+            if( id.isIdentifier() && Functions::self()->function( id.text() ) )
             {
                if( !x.isOperator() && op.isOperator() &&
                   op.asOperator() == Token::Exclamation )
@@ -1312,7 +1321,7 @@ HNumber Evaluator::evalNoAssign()
         else
         {
           // function
-          function = FunctionRepository::self()->function( fname );
+          function = Functions::self()->function( fname );
           if( function )
             refs.push( fname );
           else
@@ -1331,7 +1340,7 @@ HNumber Evaluator::evalNoAssign()
           break;
 
         fname = refs.pop();
-        function = FunctionRepository::self()->function( fname );
+        function = Functions::self()->function( fname );
         if( !function )
         {
           d->error = fname + ": " + qApp->translate( "evaluator",
@@ -1389,7 +1398,7 @@ HNumber Evaluator::eval()
   }
 
   // variable can't have the same name as function
-  if ( FunctionRepository::self()->function( d->assignId ) )
+  if ( Functions::self()->function( d->assignId ) )
   {
     d->error = d->assignId + ": " + qApp->translate( "evaluator", "identifier matches an existing function name" );
     return HNumber::nan();
@@ -1518,7 +1527,7 @@ QString Evaluator::autoFix( const QString& expr )
     {
       if( tokens[0].isIdentifier() )
       {
-        Function* f = FunctionRepository::self()->function( tokens[0].text() );
+        Function* f = Functions::self()->function( tokens[0].text() );
         if( f ) result.append( "(ans)" );
       }
     }
@@ -1526,6 +1535,24 @@ QString Evaluator::autoFix( const QString& expr )
 
   return result;
 }
+
+
+QChar Evaluator::radixChar() const
+{
+  return d->radixChar;
+}
+
+
+void Evaluator::setRadixChar( char c )
+{
+  if ( c == 'C' )
+    c = QLocale().decimalPoint().toAscii();
+  if ( d->radixChar != c )
+  {
+    d->radixChar = c;
+  }
+}
+
 
 // Debugging aid
 QString Evaluator::dump() const

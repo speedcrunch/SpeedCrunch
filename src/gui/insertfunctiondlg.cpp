@@ -2,6 +2,7 @@
 // Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
 // Copyright (C) 2006 Johan Thelin <e8johan@gmail.com>
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
+// Copyright (C) 2008 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -19,9 +20,10 @@
 // Boston, MA 02110-1301, USA.
 
 
+#include "insertfunctiondlg.hxx"
+
 #include <base/functions.hxx>
 #include <base/settings.hxx>
-#include <gui/insertfunctiondlg.hxx>
 
 #include <QDialog>
 #include <QHBoxLayout>
@@ -112,11 +114,13 @@ InsertFunctionDlg::~InsertFunctionDlg()
 
 void InsertFunctionDlg::initUI()
 {
-  QStringList functionNames = FunctionRepository::self()->functionNames();
+  //QStringList functionNames = Functions::self()->functionNames();
+  QStringList functionNames = Functions::self()->functionNames();
   int k = 0;
   for ( int i = 0; i < functionNames.count(); i++ )
   {
-    Function * f = FunctionRepository::self()->function( functionNames[i] );
+    //Function * f = Functions::self()->function( functionNames[i] );
+    Function * f = Functions::self()->function( functionNames[i] );
     if ( f )
     {
       QStringList str;

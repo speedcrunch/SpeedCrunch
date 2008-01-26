@@ -1,29 +1,28 @@
-/* This file is part of the SpeedCrunch project
-   Copyright (C) 2004-2006 Ariya Hidayat <ariya@kde.org>
-                 2007 Helder Correia <helder.pereira.correia@gmail.com>
+// This file is part of the SpeedCrunch project
+// Copyright (C) 2004-2006 Ariya Hidayat <ariya@kde.org>
+// Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; see the file COPYING.  If not, write to
+// the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+// Boston, MA 02110-1301, USA.
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public License
-   as published by the Free Software Foundation; either version 2
-   of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
- */
-
-
-#include <iostream>
-#include <string.h>
-#include <cstdlib>
 
 #include <math/hmath.hxx>
+
+#include <cstdlib>
+#include <iostream>
+#include <string.h>
 
 
 using namespace std;
@@ -41,11 +40,8 @@ static const HNumber PI  = HMath::pi();
 static const HNumber PHI = HMath::phi();
 
 
-static void check_value( const char    * file,
-                               int       line,
-                         const char    * msg,
-                         const HNumber & n,
-                         const char    * expected )
+static void check_value( const char * file, int line, const char * msg,
+                         const HNumber & n, const char * expected )
 {
   hmath_total_tests++;
   char * result = HMath::formatFixed( n );
@@ -61,13 +57,9 @@ static void check_value( const char    * file,
 }
 
 
-static void check_format( const char    * file,
-                                int       line,
-                          const char    * msg,
-                          const HNumber & n,
-                                char      format,
-                                int       prec,
-                          const char    * expected )
+static void check_format( const char * file, int line, const char * msg,
+                          const HNumber & n, char format, int prec,
+                          const char * expected )
 {
   hmath_total_tests++;
 
@@ -85,11 +77,8 @@ static void check_format( const char    * file,
 }
 
 
-static void check_precise( const char    * file,
-                                 int       line,
-                           const char    * msg,
-                           const HNumber & n,
-                           const char    * expected )
+static void check_precise( const char * file, int line, const char * msg,
+                           const HNumber & n, const char * expected )
 {
   hmath_total_tests++;
 
@@ -1178,6 +1167,8 @@ void test_functions()
 
 int main( int argc, char * * argv )
 {
+  HMath::setAngleMode( 'r' );
+
   hmath_total_tests  = 0;
   hmath_failed_tests = 0;
 
@@ -1190,6 +1181,5 @@ int main( int argc, char * * argv )
             << hmath_failed_tests << " failed"
             << endl;
 
-  HMath::finalize();
   return hmath_failed_tests;
 }

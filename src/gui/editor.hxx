@@ -29,7 +29,6 @@
 
 
 class Evaluator;
-class EditorPrivate;
 
 class QEvent;
 class QKeyEvent;
@@ -44,17 +43,20 @@ class Editor : public QTextEdit
   public:
     enum ColorType { Number, FunctionName, Variable, MatchedPar };
 
-    explicit Editor( Evaluator * eval, QWidget * parent = 0 );
+    explicit Editor( Evaluator * eval, char radixChar = 'C',
+                     QWidget * parent = 0 );
     ~Editor();
     bool        autoCalcEnabled() const;
     bool        autoCompleteEnabled() const;
     void        clearHistory();
     int         cursorPosition() const;
     void        doBackspace();
+    Evaluator * evaluator() const;
     QStringList history() const;
     QStringList historyResults() const;
     QColor      highlightColor( ColorType type );
-    bool        isSyntaxHighlightEnabled() const;
+    bool        syntaxHighlight() const;
+    QChar       radixChar() const;
     void        setAnsAvailable( bool avail );
     void        setAutoCalcEnabled( bool enable );
     void        setAutoCompleteEnabled( bool enable );
@@ -76,6 +78,7 @@ class Editor : public QTextEdit
     void evaluate();
     void insertConstant( const QString & );
     void insert( const QString & );
+    void setRadixChar( char );
 
   protected slots:
     void autoCalc();
@@ -102,7 +105,8 @@ class Editor : public QTextEdit
     void    wheelEvent( QWheelEvent * );
 
   private:
-    EditorPrivate * d;
+    struct Private;
+    Private * const d;
     Editor( const Editor & );
     Editor & operator=( const Editor & );
 };

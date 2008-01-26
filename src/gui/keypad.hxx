@@ -31,17 +31,21 @@ class Keypad : public QWidget
 
   public:
     enum Button { Key0, Key1, Key2, Key3, Key4, Key5, Key6, Key7, Key8, Key9,
-                  KeyEquals, KeyPlus, KeyMinus, KeyTimes, KeyDivide, KeyDot,
-                  KeyClear, KeyEE, KeyLeftPar, KeyRightPar,
-                  KeyRaise, KeySqrt, KeyPercent, KeyFactorial,
-                  KeyPi, KeyAns, KeyX, KeyXEquals, KeyExp, KeyLn,
-                  KeySin, KeyAsin, KeyCos, KeyAcos, KeyTan, KeyAtan };
+                  KeyEquals, KeyPlus, KeyMinus, KeyTimes, KeyDivide,
+                  KeyRadixChar, KeyClear, KeyEE, KeyLeftPar, KeyRightPar,
+                  KeyRaise, KeySqrt, KeyPercent, KeyFactorial, KeyPi, KeyAns,
+                  KeyX, KeyXEquals, KeyExp, KeyLn, KeySin, KeyAsin, KeyCos,
+                  KeyAcos, KeyTan, KeyAtan };
 
-    explicit Keypad( QWidget * parent );
+    explicit Keypad( char radixChar = '.', QWidget * parent  = 0 );
     ~Keypad();
+    QChar radixChar() const;
 
   signals:
     void buttonPressed( Keypad::Button );
+
+  public slots:
+    void setRadixChar( char );
 
   protected slots:
     void key0Pressed();
@@ -80,7 +84,6 @@ class Keypad : public QWidget
     void keyTanPressed();
     void keyXPressed();
     void keyXEqPressed();
-    void settingsChanged();
 
   private:
     struct Private;

@@ -34,35 +34,13 @@
 class Settings
 {
   public:
-    enum AngleMode { Degree, Radian };
+    char        radixChar; // 'C': locale (default);
+    char        angleMode; // see HMath documentation
+    char        format;    // see HMath documentation
+    int         precision; // see HMath documentation
 
-    AngleMode   angleMode;
     bool        autoCalc;
     bool        autoComplete;
-    bool        autoDetectDot;
-    bool        constantsDockFloating;
-    int         constantsDockTop;
-    int         constantsDockLeft;
-    int         constantsDockWidth;
-    int         constantsDockHeight;
-    int         precision;
-    QString     escape; //reftbl
-    char        format;
-    bool        functionsDockFloating;
-    int         functionsDockHeight;
-    int         functionsDockLeft;
-    int         functionsDockTop;
-    int         functionsDockWidth;
-    QStringList history;
-    bool        historyDockFloating;
-    int         historyDockHeight;
-    int         historyDockLeft;
-    int         historyDockTop;
-    int         historyDockWidth;
-    QStringList historyResults;
-    //QString     language;
-    QSize       mainWindowSize;
-    QByteArray  mainWindowState;
     bool        minimizeToTray;
     bool        saveSession;
     bool        saveVariables;
@@ -74,23 +52,44 @@ class Settings
     bool        showMenuBar;
     bool        showVariables;
     bool        stayAlwaysOnTop;
-    QStringList variables;
+
+    bool        constantsDockFloating;
+    int         constantsDockTop;
+    int         constantsDockLeft;
+    int         constantsDockWidth;
+    int         constantsDockHeight;
+    bool        functionsDockFloating;
+    int         functionsDockHeight;
+    int         functionsDockLeft;
+    int         functionsDockTop;
+    int         functionsDockWidth;
+    bool        historyDockFloating;
+    int         historyDockHeight;
+    int         historyDockLeft;
+    int         historyDockTop;
+    int         historyDockWidth;
     bool        variablesDockFloating;
     int         variablesDockTop;
     int         variablesDockHeight;
     int         variablesDockLeft;
     int         variablesDockWidth;
 
-    static Settings * self();
-    QChar dot();
-    void load();
-    void save();
-    void setDot( const QString & );
+    QStringList history;
+    QStringList historyResults;
 
-  private:
-    QChar decimalPoint;
+    //QString     language;
+    //
+    QSize       mainWindowSize;
+    QByteArray  mainWindowState;
+    QStringList variables;
+
+    //static QString escape; //reftbl
 
     Settings();
+    void load();
+    void save();
+
+  private:
     Settings( const Settings & );
     Settings & operator=( const Settings & );
 };

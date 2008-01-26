@@ -19,10 +19,9 @@
 
 
 #include <base/evaluator.hxx>
-#include <base/functions.hxx>
-#include <base/settings.hxx>
 #include <math/hmath.hxx>
 
+#include <QApplication>
 #include <QtCore>
 
 #include <iostream>
@@ -32,6 +31,7 @@
 using namespace std;
 
 
+static Evaluator * eval = 0;
 static int eval_total_tests  = 0;
 static int eval_failed_tests = 0;
 
@@ -42,16 +42,12 @@ static int eval_failed_tests = 0;
 #define CHECK_EVAL_PRECISE(x,y) checkEvalPrecise(__FILE__,__LINE__,#x,x,y)
 
 
-static void checkAutoFix( const char    * file,
-                                int       line,
-                          const char    * msg,
-                          const QString & expr,
-                          const QString & fixed )
+static void checkAutoFix( const char * file, int line, const char * msg,
+                          const QString & expr, const QString & fixed )
 {
   eval_total_tests++;
 
-//  QString r = Evaluator::autoFix( expr, "." ); //refdp
-  QString r = Evaluator::autoFix( expr );
+  QString r = eval->autoFix( expr );
   if ( r != fixed )
   {
     eval_failed_tests++;
@@ -63,18 +59,15 @@ static void checkAutoFix( const char    * file,
 }
 
 
-static void checkDivisionByZero( const char    * file,
-                                       int       line,
-                                 const char    * msg,
-                                 const QString & expr )
+static void checkDivisionByZero( const char * file, int line,
+                                 const char * msg, const QString & expr )
 {
   eval_total_tests++;
 
-  Evaluator e;
-  e.setExpression( expr );
-  HNumber rn = e.evalUpdateAns();
+  eval->setExpression( expr );
+  HNumber rn = eval->evalUpdateAns();
 
-  if ( e.error().isEmpty() )
+  if ( eval->error().isEmpty() )
   {
     eval_failed_tests++;
     cerr << file << "[" << line << "]: " << msg
@@ -84,24 +77,20 @@ static void checkDivisionByZero( const char    * file,
 }
 
 
-static void checkEval( const char    * file,
-                             int       line,
-                       const char    * msg,
-                       const QString & expr,
-                       const char    * expected )
+static void checkEval( const char * file, int line, const char * msg,
+                       const QString & expr, const char * expected )
 {
   eval_total_tests++;
 
-  Evaluator e;
-  Settings::self()->angleMode = Settings::Radian; //refan
-  e.setExpression( expr );
-  HNumber rn = e.evalUpdateAns();
+  //Settings::self()->angleMode = Settings::Radian; //refan
+  eval->setExpression( expr );
+  HNumber rn = eval->evalUpdateAns();
 
-  if ( ! e.error().isEmpty() )
+  if ( ! eval->error().isEmpty() )
   {
     eval_failed_tests++;
     cerr << file << "[" << line << "]: " << msg
-         << "  Error: " << qPrintable( e.error() )
+         << "  Error: " << qPrintable( eval->error() )
          << endl;
   }
   else
@@ -121,17 +110,13 @@ static void checkEval( const char    * file,
 }
 
 
-static void checkEvalPrecise( const char    * file,
-                                    int       line,
-                              const char    * msg,
-                              const QString & expr,
-                              const char    * expected )
+static void checkEvalPrecise( const char * file, int line, const char * msg,
+                              const QString & expr, const char * expected )
 {
   eval_total_tests++;
 
-  Evaluator e;
-  e.setExpression( expr );
-  HNumber rn = e.evalUpdateAns();
+  eval->setExpression( expr );
+  HNumber rn = eval->evalUpdateAns();
 
   // we compare up to 50 decimals, not exact number because it's often difficult
   // to represent the result as an irrational number, e.g. PI
@@ -452,10 +437,12 @@ void test_auto_fix_untouch()
 }
 
 
-int main( int argc, char * * argv)
+int main( int argc, char * * argv )
 {
-  Settings::self()->setDot( "." );
-  Settings::self()->angleMode = Settings::Radian;
+  QApplication app( argc, argv );
+
+  HMath::setAngleMode( HMath::Radian );
+  eval = new Evaluator( '.' );
   test_constants();
   test_unary();
   test_binary();
@@ -475,5 +462,7 @@ int main( int argc, char * * argv)
        << eval_failed_tests << " failed"
        << endl;
 
-  return eval_failed_tests;
+  delete eval;
+
+  return app.exec();
 }

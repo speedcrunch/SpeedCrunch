@@ -18,10 +18,11 @@
 // Boston, MA 02110-1301, USA.
 
 
+#include "variablesdock.hxx"
+
 #include <base/evaluator.hxx>
 #include <base/functions.hxx>
 #include <base/settings.hxx>
-#include <gui/variablesdock.hxx>
 
 #include <QHeaderView>
 #include <QLabel>
@@ -34,19 +35,23 @@
 class VariablesDockPrivate
 {
   public:
+    QChar radixChar;
+
     QLineEdit         * filter;
     QTimer            * filterTimer;
     QTreeWidget       * list;
     QLabel            * noMatchLabel;
     QVector<Variable>   variables;
+
+    QString formatValue( const HNumber & value );
 };
 
 
-static QString formatValue( const HNumber & value )
+QString VariablesDockPrivate::formatValue( const HNumber & value )
 {
   char * str = HMath::format( value, 'g' );
   QString s;
-  if ( Settings::self()->dot() == '.' )
+  if ( radixChar == '.' )
     s = QString::fromLatin1( str );
   else
     s = QString::fromLatin1( str ).replace( '.', ',' );
@@ -110,6 +115,12 @@ VariablesDock::VariablesDock( QWidget * parent ): QDockWidget( tr("Variables"), 
 }
 
 
+QChar VariablesDock::radixChar() const
+{
+  return d->radixChar;
+}
+
+
 void VariablesDock::updateList( const Evaluator * eval )
 {
   d->variables = eval->variables();
@@ -126,9 +137,13 @@ VariablesDock::~VariablesDock()
 
 // public slots
 
-void VariablesDock::settingsChanged()
+void VariablesDock::setRadixChar( QChar c )
 {
-  filter();
+  if ( d->radixChar != c )
+  {
+    d->radixChar = c;
+    filter();
+  }
 }
 
 
@@ -146,7 +161,7 @@ void VariablesDock::filter()
   {
       QStringList str;
       str << d->variables[k].name;
-      str << formatValue( d->variables[k].value );
+      str << d->formatValue( d->variables[k].value );
       str << QString( "" );
 
       if ( str[0] == "PI" || str[0] == "PHI" )

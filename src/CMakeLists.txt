@@ -70,8 +70,7 @@ ELSE( APPLE )
   ADD_EXECUTABLE( ${PROGNAME} ${speedcrunch_SOURCES} ${speedcrunch_HEADERS_MOC} ${speedcrunch_RESOURCES_SOURCES} ${speedcrunch_FORMS_HEADERS} )
 ENDIF( APPLE )
 
-add_custom_target( confclean
-  COMMAND rm -rf CMakeFiles/ CMakeCache.txt cmake_install.cmake )
+add_custom_target( confclean COMMAND rm -rf CMakeFiles/ CMakeCache.txt cmake_install.cmake DartTestfile.txt install_manifest.txt )
 
 target_link_libraries(${PROGNAME} ${QT_LIBRARIES} ${LINK_FLAGS})
 
@@ -86,85 +85,13 @@ install(FILES ${speedcrunch_TRANSLATIONS} DESTINATION share/crunch)
 # required for regression tests
 enable_testing()
 
-# regression test for HMath
-set(testhmath_SOURCES
-math/floatcommon.c
-math/floatconst.c
-math/floatconvert.c
-math/floaterf.c
-math/floatexp.c
-math/floathmath.c
-math/floatgamma.c
-math/floatio.c
-math/floatipower.c
-math/floatlog.c
-math/floatlogic.c
-math/floatlong.c
-math/floatnum.c
-math/floatpower.c
-math/floatseries.c
-math/floattrig.c
-math/hmath.cpp
-math/number.c
-test/testhmath.cpp
-)
 add_executable(testhmath ${testhmath_SOURCES})
 add_test(testhmath ${EXECUTABLE_OUTPUT_PATH}/testhmath)
 
-# regression test for Evaluator class
-set(testevaluator_SOURCES
-base/evaluator.cpp
-base/functions.cpp
-base/settings.cpp
-base/variant.cpp
-bison/exprparser.c
-math/floatcommon.c
-math/floatconst.c
-math/floatconvert.c
-math/floaterf.c
-math/floatexp.c
-math/floathmath.c
-math/floatgamma.c
-math/floatio.c
-math/floatipower.c
-math/floatlog.c
-math/floatlogic.c
-math/floatlong.c
-math/floatnum.c
-math/floatpower.c
-math/floatseries.c
-math/floattrig.c
-math/numdata.cpp
-math/hmath.cpp
-math/number.c
-test/testevaluator.cpp
-)
-add_executable(testevaluator ${testevaluator_SOURCES})
-target_link_libraries(testevaluator ${QT_LIBRARIES})
-add_test(testevaluator ${EXECUTABLE_OUTPUT_PATH}/testevaluator)
+#add_executable(testevaluator ${testevaluator_SOURCES})
+#target_link_libraries(testevaluator ${QT_LIBRARIES})
+#add_test(testevaluator ${EXECUTABLE_OUTPUT_PATH}/testevaluator)
 
-# regression test for floatnum
-set(testfloatnum_SOURCES
-main/errors.h
-math/floatcommon.c
-math/floatconst.c
-math/floatconvert.c
-math/floaterf.c
-math/floatexp.c
-math/floathmath.c
-math/floatgamma.c
-math/floatio.c
-math/floatipower.c
-math/floatlog.c
-math/floatlogic.c
-math/floatlong.c
-math/floatnum.c
-math/floatpower.c
-math/floatseries.c
-math/floattrig.c
-math/number.c
-test/testfloatnum.c
-)
 add_executable(testfloatnum ${testfloatnum_SOURCES})
 add_test(testfloatnum ${EXECUTABLE_OUTPUT_PATH}/testfloatnum)
 

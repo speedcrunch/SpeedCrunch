@@ -30,8 +30,6 @@
 #include <QSystemTrayIcon>
 
 
-class CrunchPrivate;
-
 class Keypad;
 
 
@@ -49,7 +47,7 @@ class Crunch : public QMainWindow
     void formatChanged( char );
     void precisionChanged( int );
     void quitApplication();
-    void radixCharChanged( QChar );
+    void radixCharChanged( char );
 
   public slots:
     void about();
@@ -74,10 +72,10 @@ class Crunch : public QMainWindow
     void insertFunction();
     void insertVariable();
     void loadSession();
-    void onAlwaysOnTop( bool );
-    void onAutoCalc( bool );
-    void onAutoCompletion( bool );
-    void onMinimizeToTray( bool );
+    void alwaysOnTopToggled( bool );
+    void autoCalcToggled( bool );
+    void autoCompletionToggled( bool );
+    void minimizeToTrayToggled( bool );
     void radian();
     void saveSession();
     void setWidgetsLayoutAccordingToLanguageDirection();
@@ -100,6 +98,9 @@ class Crunch : public QMainWindow
     void viewHexadec();
     void viewOctal();
     void viewScientific();
+    void radixCharAutoActivated();
+    void radixCharDotActivated();
+    void radixCharCommaActivated();
 
   protected slots:
     void activate();
@@ -122,11 +123,12 @@ class Crunch : public QMainWindow
   private:
     void createUI();
     void saveSettings();
-    void setPrecision( int i /*= -1*/ );
-    void setFormat( char c /*= 'g'*/ );
-    void setRadixChar( QChar c /*= '.'*/ );
+    void setPrecision( int );
+    void setFormat( char );
+    void setRadixChar( char );
 
-    CrunchPrivate * d;
+    struct Private;
+    Private * const d;
     Crunch( const Crunch & );
     Crunch & operator=( const Crunch & );
 };

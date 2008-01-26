@@ -27,13 +27,14 @@
               Germany
 
 *************************************************************************/
-#ifndef _VARIANT_H
-#define _VARIANT_H
+#ifndef VARIANT_HXX
+#define VARIANT_HXX
 
-#include "math/floatnum.h"
-#include "main/errors.h"
-#include <QString>
+#include <main/errors.h>
+#include <math/floatnum.h>
+
 #include <QList>
+#include <QString>
 
 typedef enum
 // the order is important, because it controls the retyping.
@@ -217,4 +218,4 @@ class Variant: public VariantBase
                       char base = 10, char expbase = 10) const;
 };
 
-#endif /* _VARIANT_H */
+#endif /* _VARIANT_HXX */
