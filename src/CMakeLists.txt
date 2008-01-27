@@ -1,8 +1,8 @@
 project(speedcrunch)
 
 IF( APPLE )
-  set( PROGNAME Speedcrunch )
-  set( MACOSX_BUNDLE_ICON_FILE Speedcrunch.icns )
+  set( PROGNAME SpeedCrunch )
+  set( MACOSX_BUNDLE_ICON_FILE SpeedCrunch.icns )
   set( MACOSX_BUNDLE_SHORT_VERSION_STRING trunk )
   set( MACOSX_BUNDLE_VERSION trunk )
   set( MACOSX_BUNDLE_LONG_VERSION_STRING Version trunk )
@@ -30,19 +30,19 @@ ENDIF( NOT WIN32 )
 INCLUDE(SourceFiles.cmake)
 
 # resources
-set(speedcrunch_RESOURCES resources/crunch.qrc)
+set(speedcrunch_RESOURCES resources/speedcrunch.qrc)
 
 # translations
 INCLUDE(Translations.cmake)
 
 if( MINGW )
   # resource compilation for mingw
-  ADD_CUSTOM_COMMAND( OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/crunchico.o
-                      COMMAND windres.exe -I${CMAKE_CURRENT_SOURCE_DIR} -i${CMAKE_CURRENT_SOURCE_DIR}/resources/crunchico.rc -o ${CMAKE_CURRENT_BINARY_DIR}/crunchico.o )
-  SET(speedcrunch_SOURCES ${speedcrunch_SOURCES} ${CMAKE_CURRENT_BINARY_DIR}/crunchico.o)
+  ADD_CUSTOM_COMMAND( OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/speedcrunchico.o
+                      COMMAND windres.exe -I${CMAKE_CURRENT_SOURCE_DIR} -i${CMAKE_CURRENT_SOURCE_DIR}/resources/speedcrunchico.rc -o ${CMAKE_CURRENT_BINARY_DIR}/speedcrunchico.o )
+  SET(speedcrunch_SOURCES ${speedcrunch_SOURCES} ${CMAKE_CURRENT_BINARY_DIR}/speedcrunchico.o)
   SET(LINK_FLAGS -Wl,-subsystem,windows)
 else(MINGW)
-  SET(speedcrunch_SOURCES ${speedcrunch_SOURCES} resources/crunchico.rc)
+  SET(speedcrunch_SOURCES ${speedcrunch_SOURCES} resources/speedcrunchico.rc)
 endif(MINGW)
 
 # enable warnings
@@ -65,7 +65,7 @@ IF( APPLE )
     COMMAND cp ARGS ${MACOSX_BUNDLE_ICON_FILE} ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources
     COMMAND cp ARGS *.qm ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources
     COMMENT Setting up translations & resources )
-  #ADD_DEPENDENCIES( ${PROGNAME} Speedcrunch_RESOURCE_DIR )
+  #ADD_DEPENDENCIES( ${PROGNAME} SpeedCrunch_RESOURCE_DIR )
 ELSE( APPLE )
   ADD_EXECUTABLE( ${PROGNAME} ${speedcrunch_SOURCES} ${speedcrunch_HEADERS_MOC} ${speedcrunch_RESOURCES_SOURCES} ${speedcrunch_FORMS_HEADERS} )
 ENDIF( APPLE )
@@ -80,7 +80,7 @@ target_link_libraries(${PROGNAME} ${QT_LIBRARIES} ${LINK_FLAGS})
 # note: it will install to CMAKE_INSTALL_PREFIX, which can be set e.g
 #  cmake ../trunk  -DCMAKE_INSTALL_PREFIX=/usr
 install(TARGETS ${PROGNAME} DESTINATION bin)
-install(FILES ${speedcrunch_TRANSLATIONS} DESTINATION share/crunch)
+install(FILES ${speedcrunch_TRANSLATIONS} DESTINATION share/speedcrunch)
 
 # required for regression tests
 enable_testing()

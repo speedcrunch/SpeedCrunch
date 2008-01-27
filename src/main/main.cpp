@@ -31,19 +31,17 @@
 
 QTranslator * createTranslator()
 {
-  QString locale = QLocale().name();
-  QString localeShort = locale.left( 2 ).toLower();
-
-  bool foundTranslator = false;
-
-  QString qmFile;
-  QFileInfo fi;
-  QTranslator* translator = 0;
+  QString       qmFile;
+  QFileInfo     fi;
+  QTranslator * translator = 0;
+  bool          foundTranslator = false;
+  QString       locale = QLocale().name();
+  QString       localeShort = locale.left( 2 ).toLower();
 
 #ifdef Q_OS_WIN32
   if ( ! foundTranslator )
   {
-    qmFile = QString("crunch_") + locale + ".qm";
+    qmFile = locale + ".qm";
     fi = QFileInfo( qmFile );
     if( fi.exists() )
     {
@@ -56,7 +54,7 @@ QTranslator * createTranslator()
 
   if ( ! foundTranslator )
   {
-    qmFile = QString("crunch_") + localeShort + ".qm";
+    qmFile = localeShort + ".qm";
     fi = QFileInfo( qmFile );
     if ( fi.exists() )
     {
@@ -70,25 +68,25 @@ QTranslator * createTranslator()
 
     BrInitError error;
 
-    if ( br_init( &error ) == 0 && error != BR_INIT_ERROR_DISABLED)
+    if ( br_init( &error ) == 0 && error != BR_INIT_ERROR_DISABLED )
     {
         printf( "Warning: BinReloc failed to initialize (error code %d)\n", error );
         printf( "Will fallback to hardcoded default path.\n" );
     }
 
     // Search with the following order:
-    // (1) install prefix + share/crunch, e.g. "/usr/local/share/crunch"
+    // (1) install prefix + share/speedcrunch, e.g. "/usr/local/share/speedcrunch"
     // (2) install prefix + share, e.g. "/usr/local/share"
     // (3) current directory
 
     // item (1)
-    QString shareDir = QString(br_find_data_dir(0)).append("/crunch");
+    QString shareDir = QString( br_find_data_dir( 0 ) ).append( "/speedcrunch/locale" );
     QDir qmPath( shareDir );
-    qmPath.cd( "crunch" );
+    qmPath.cd( "speedcrunch" );
 
     if ( ! foundTranslator )
     {
-      qmFile = qmPath.absolutePath() + "/crunch_" + locale + ".qm";
+      qmFile = qmPath.absolutePath() + "/" + locale + ".qm";
       fi = QFileInfo( qmFile );
       if ( fi.exists() )
       {
@@ -100,9 +98,9 @@ QTranslator * createTranslator()
 
     if ( ! foundTranslator )
     {
-      qmFile = qmPath.absolutePath() + "/crunch_" + localeShort + ".qm";
+      qmFile = qmPath.absolutePath() + "/" + localeShort + ".qm";
       fi = QFileInfo( qmFile );
-      if( fi.exists() )
+      if ( fi.exists() )
       {
         translator = new QTranslator( 0 );
         translator->load( qmFile );
@@ -111,11 +109,11 @@ QTranslator * createTranslator()
     }
 
     // item (2), fallback is item (3)
-    qmPath = QDir( br_find_data_dir(".") );
+    qmPath = QDir( br_find_data_dir( "." ) );
 
     if ( ! foundTranslator )
     {
-      qmFile = qmPath.absolutePath() + "/crunch_" + locale + ".qm";
+      qmFile = qmPath.absolutePath() + "/" + locale + ".qm";
       fi = QFileInfo( qmFile );
       if ( fi.exists() )
       {
@@ -127,7 +125,7 @@ QTranslator * createTranslator()
 
     if ( ! foundTranslator )
     {
-      qmFile = qmPath.absolutePath() + "/crunch_" + localeShort + ".qm";
+      qmFile = qmPath.absolutePath() + "/" + localeShort + ".qm";
       fi = QFileInfo( qmFile );
       if ( fi.exists() )
       {
@@ -148,11 +146,9 @@ int main( int argc, char * * argv )
 {
   QApplication app( argc, argv );
   app.installTranslator( createTranslator() );
-
-  MainWindow * v = new MainWindow();
-  v->show();
-
-  //a.connect( &a, SIGNAL(lastWindowClosed()), &a, SLOT(quit()) );
-  app.connect( v, SIGNAL( quitApplication() ), &app, SLOT( quit() ) );
+  MainWindow mw;
+  mw.show();
+  //a.connect( & a, SIGNAL(lastWindowClosed()), & a, SLOT(quit()) );
+  app.connect( & mw, SIGNAL( quitApplication() ), & app, SLOT( quit() ) );
   return app.exec();
 }

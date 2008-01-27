@@ -205,7 +205,7 @@ struct MainWindow::Private
 
   Private();
   void loadSettings();
-  void createUI();
+  void createUi();
   void createActions();
   void createActionGroups();
   void createActionShortcuts();
@@ -238,7 +238,7 @@ void MainWindow::Private::loadSettings()
 };
 
 
-void MainWindow::Private::createUI()
+void MainWindow::Private::createUi()
 {
   createActions();
   createActionGroups();
@@ -502,8 +502,13 @@ void MainWindow::Private::createWidgets()
   boxLayout->setSpacing( 0 );
 
   // display
-  widgets.display = new Result( settings.radixChar, settings.format, settings.precision, box );
-  boxLayout->addWidget( widgets.display );
+  QHBoxLayout * displayLayout = new QHBoxLayout();
+  displayLayout->setMargin( 5 );
+  widgets.display = new Result( settings.radixChar, settings.format,
+                                settings.precision, box );
+  //boxLayout->addWidget( widgets.display );
+  displayLayout->addWidget( widgets.display );
+  boxLayout->addLayout( displayLayout );
 
   // editor
   QHBoxLayout * editorLayout = new QHBoxLayout();
@@ -546,20 +551,22 @@ void MainWindow::Private::createDocks()
   p->addDockWidget( Qt::RightDockWidgetArea, docks.history );
 
   docks.functions = new FunctionsDock( p );
-  docks.functions->setObjectName( "FunctionsList" );
+  docks.functions->setObjectName( "FunctionsDock" );
   p->addDockWidget( Qt::RightDockWidgetArea, docks.functions );
 
   docks.variables = new VariablesDock( p );
-  docks.variables->setObjectName( "VariablesList" );
+  docks.variables->setObjectName( "VariablesDock" );
   p->addDockWidget( Qt::RightDockWidgetArea, docks.variables );
 
   docks.constants = new ConstantsDock( p );
-  docks.constants->setObjectName( "ConstantsList" );
+  docks.constants->setObjectName( "ConstantsDock" );
   p->addDockWidget( Qt::RightDockWidgetArea, docks.constants );
 
   p->tabifyDockWidget( docks.functions, docks.history );
+  p->tabifyDockWidget( docks.functions, docks.functions );
   p->tabifyDockWidget( docks.functions, docks.variables );
   p->tabifyDockWidget( docks.functions, docks.constants );
+
   docks.history->hide();
   docks.functions->hide();
   docks.variables->hide();
@@ -841,7 +848,7 @@ MainWindow::MainWindow() : QMainWindow(), d( new MainWindow::Private )
   d->p = this;
 
   d->loadSettings();
-  d->createUI();
+  d->createUi();
   d->applySettings();
   restoreDocks();
 
@@ -1368,8 +1375,6 @@ void MainWindow::showVariables( bool b )
 {
   d->settings.showVariables = b;
   d->docks.variables->setVisible( b );
-  //saveSettings();
-  //applySettings();
   //docks.variables->raise();
 }
 
@@ -1790,8 +1795,6 @@ void MainWindow::setPrecision( int p )
 {
   d->settings.precision = p;
   emit precisionChanged( p );
-  //saveSettings();
-  //applySettings();
 }
 
 
@@ -1799,8 +1802,6 @@ void MainWindow::setFormat( char c )
 {
   d->settings.format = c;
   emit formatChanged( c );
-  //saveSettings();
-  //applySettings();
 }
 
 

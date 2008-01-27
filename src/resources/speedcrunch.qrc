@@ -1,6 +1,5 @@
 <!DOCTYPE RCC><RCC version="1.0">
     <qresource>
-        <file>clearinput.png</file>
-        <file>crunch.png</file>
+        <file>speedcrunch.png</file>
     </qresource>
 </RCC>
