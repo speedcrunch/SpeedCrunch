@@ -108,7 +108,6 @@ class MainWindow : public QMainWindow
     void keypadButtonPressed( Keypad::Button );
     void minimizeToTray();
     void restoreDocks();
-    void restoreLastSession();
     void returnPressed();
     void showTrayMessage();
     void textChanged();

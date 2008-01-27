@@ -133,6 +133,8 @@ struct ActionGroups
 {
   QActionGroup * angle;
   QActionGroup * digits;
+  QActionGroup * format;
+  QActionGroup * radixChar;
 };
 
 
@@ -190,7 +192,7 @@ struct Conditions
 
 struct MainWindow::Private
 {
-  MainWindow *        p;
+  MainWindow *    p;
   Evaluator *     evaluator;
   Settings        settings;
   Actions         actions;
@@ -204,7 +206,16 @@ struct MainWindow::Private
   Private();
   void loadSettings();
   void createUI();
+  void createActions();
+  void createActionGroups();
+  void createActionShortcuts();
+  void createMenus();
+  void createWidgets();
+  void createDocks();
+  void createConnections();
   void applySettings();
+  void restoreHistory();
+  void restoreVariables();
   void saveSettings();
 };
 
@@ -224,88 +235,414 @@ void MainWindow::Private::loadSettings()
 };
 
 
-static void setWidgetLayoutAccordingToLanguageDirection( QWidget * widget )
+void MainWindow::Private::createUI()
 {
-  if ( QLocale().language() == QLocale::Hebrew )
-    widget->setLayoutDirection( Qt::RightToLeft );
-  else
-    widget->setLayoutDirection( Qt::LeftToRight );
+  createActions();
+  createActionGroups();
+  createActionShortcuts();
+  createMenus();
+  createWidgets();
+  createDocks();
+  createConnections();
+
+  p->setWindowTitle( "SpeedCrunch" );
+  p->setWindowIcon( QPixmap( ":/crunch.png" ) );
+  // Initialize settings
+  dialogs.insertVariable = 0;
+  dialogs.deleteVariable = 0;
 }
 
 
-// public
-
-MainWindow::MainWindow() : QMainWindow(), d( new MainWindow::Private )
+void MainWindow::Private::createActions()
 {
-  d->p = this;
+  actions.clearExpression       = new QAction( tr("Clear E&xpression"),        p );
+  actions.clearHistory          = new QAction( tr("Clear &History"),           p );
+  actions.degree                = new QAction( tr("&Degree"),                  p );
+  actions.deleteAllVariables    = new QAction( tr("Delete All V&ariables"),    p );
+  actions.deleteVariable        = new QAction( tr("D&elete Variable..."),      p );
+  actions.digits15              = new QAction( tr("&15 Decimal Digits"),       p );
+  actions.digits2               = new QAction( tr("&2 Decimal Digits"),        p );
+  actions.digits3               = new QAction( tr("&3 Decimal Digits"),        p );
+  actions.digits50              = new QAction( tr("&50 Decimal Digits"),       p );
+  actions.digits8               = new QAction( tr("&8 Decimal Digits"),        p );
+  actions.digitsAuto            = new QAction( tr("&Automatic Precision"),     p );
+  actions.editCopy              = new QAction( tr("&Copy"),                    p );
+  actions.editCopyResult        = new QAction( tr("Copy Last &Result"),        p );
+  actions.editPaste             = new QAction( tr("&Paste"),                   p );
+  actions.helpAbout             = new QAction( tr("&About"),                   p );
+  actions.helpAboutQt           = new QAction( tr("About &Qt"),                p );
+  actions.helpGotoWebsite       = new QAction( tr("SpeedCrunch &Web Site..."), p );
+  actions.helpTipOfTheDay       = new QAction( tr("&Tip of the Day"),          p );
+  actions.insertFunction        = new QAction( tr("Insert &Function..."),      p );
+  actions.insertVariable        = new QAction( tr("Insert &Variable..."),      p );
+  actions.optionAutoCalc        = new QAction( tr("&Partial Results"),         p );
+  actions.optionAutoCompletion  = new QAction( tr("Automatic &Completion"),    p );
+  actions.optionAlwaysOnTop     = new QAction( tr("Stay Always On &Top"),      p );
+  actions.optionMinimizeToTray  = new QAction( tr("&Minimize To System Tray"), p );
+  actions.radixCharAuto         = new QAction( tr("&Automatic"),               p );
+  actions.radixCharDot          = new QAction( tr("&Dot"),                     p );
+  actions.radixCharComma        = new QAction( tr("&Comma"),                   p );
+  actions.radian                = new QAction( tr("&Radian"),                  p );
+  actions.scrollDown            = new QAction( tr("Scroll Display Down"),      p );
+  actions.scrollUp              = new QAction( tr("Scroll Display Up"),        p );
+  actions.selectExpression      = new QAction( tr("&Select Expression"),       p );
+  actions.sessionLoad           = new QAction( tr("&Load..."),                 p );
+  actions.sessionQuit           = new QAction( tr("&Quit"),                    p );
+  actions.sessionSave           = new QAction( tr("&Save..."),                 p );
+  actions.showConstants         = new QAction( tr("Show &Constants"),          p );
+  actions.showFullScreen        = new QAction( tr("Full &Screen Mode"),        p );
+  actions.showFunctions         = new QAction( tr("Show &Functions"),          p );
+  actions.showHistory           = new QAction( tr("Show &History"),            p );
+  actions.showKeypad            = new QAction( tr("Show &Keypad"),             p );
+  actions.showMenuBar           = new QAction( tr("Hide &Menu Bar"),           p );
+  actions.showVariables         = new QAction( tr("Show &Variables"),          p );
+  actions.viewBinary            = new QAction( tr("&Binary"),                  p );
+  actions.viewEngineering       = new QAction( tr("&Engineering"),             p );
+  actions.viewFixed             = new QAction( tr("&Fixed Decimal"),           p );
+  actions.viewGeneral           = new QAction( tr("&General"),                 p );
+  actions.viewHexadec           = new QAction( tr("&Hexadecimal"),             p );
+  actions.viewOctal             = new QAction( tr("&Octal"),                   p );
+  actions.viewScientific        = new QAction( tr("&Scientific"),              p );
 
-  d->loadSettings();
-  d->createUI();
+  // necessary after hiding the menu bar
+  p->addActions( p->menuBar()->actions() );
+  p->addAction( actions.scrollDown );
+  p->addAction( actions.scrollUp );
 
-  //d->createUI();
-////////////////////////
-
-//////////////////////
-  //d->settings.load();
-
-  if ( d->settings.saveSession )
-    restoreLastSession();
-
-  d->applySettings();
-  restoreDocks();
-
-  setWidgetsLayoutAccordingToLanguageDirection();
-
-  QTimer::singleShot( 0, this, SLOT(activate()) );
+  actions.degree->setCheckable              ( true );
+  actions.digits15->setCheckable            ( true );
+  actions.digits2->setCheckable             ( true );
+  actions.digits3->setCheckable             ( true );
+  actions.digits50->setCheckable            ( true );
+  actions.digits8->setCheckable             ( true );
+  actions.digitsAuto->setCheckable          ( true );
+  actions.optionAlwaysOnTop->setCheckable   ( true );
+  actions.optionAutoCalc->setCheckable      ( true );
+  actions.optionAutoCompletion->setCheckable( true );
+  actions.optionMinimizeToTray->setCheckable( true );
+  actions.radian->setCheckable              ( true );
+  actions.radixCharAuto->setCheckable       ( true );
+  actions.radixCharComma->setCheckable      ( true );
+  actions.radixCharDot->setCheckable        ( true );
+  actions.showConstants->setCheckable       ( true );
+  actions.showFullScreen->setCheckable      ( true );
+  actions.showFunctions->setCheckable       ( true );
+  actions.showHistory->setCheckable         ( true );
+  actions.showKeypad->setCheckable          ( true );
+  actions.showVariables->setCheckable       ( true );
+  actions.viewBinary->setCheckable          ( true );
+  actions.viewEngineering->setCheckable     ( true );
+  actions.viewFixed->setCheckable           ( true );
+  actions.viewGeneral->setCheckable         ( true );
+  actions.viewHexadec->setCheckable         ( true );
+  actions.viewOctal->setCheckable           ( true );
+  actions.viewScientific->setCheckable      ( true );
 }
 
 
-bool MainWindow::event( QEvent * e )
+void MainWindow::Private::createActionGroups()
 {
-  if ( e->type() == QEvent::WindowStateChange )
-  {
-    if ( windowState() & Qt::WindowMinimized )
-    if ( d->settings.minimizeToTray )
-      QTimer::singleShot( 100, this, SLOT(minimizeToTray()) );
-  }
+  actionGroups.format = new QActionGroup( p );
+  actionGroups.format->addAction( actions.viewBinary );
+  actionGroups.format->addAction( actions.viewGeneral );
+  actionGroups.format->addAction( actions.viewFixed );
+  actionGroups.format->addAction( actions.viewEngineering );
+  actionGroups.format->addAction( actions.viewScientific );
+  actionGroups.format->addAction( actions.viewOctal );
+  actionGroups.format->addAction( actions.viewHexadec );
 
-  // ensure dock windows keep their state after minimize / screen switch
-  //if ( d->settings.showConstants ) QTimer::singleShot( 0, d->docks.constants, SLOT( show() ) );
-  if ( d->settings.showFunctions ) QTimer::singleShot( 0, d->docks.functions, SLOT( show() ) );
-  //if ( d->settings.showHistory   ) QTimer::singleShot( 0, d->docks.history,   SLOT( show() ) );
-  //if ( d->settings.showVariables ) QTimer::singleShot( 0, d->docks.variables, SLOT( show() ) );
+  actionGroups.digits = new QActionGroup( p );
+  actionGroups.digits->addAction( actions.digitsAuto );
+  actionGroups.digits->addAction( actions.digits2 );
+  actionGroups.digits->addAction( actions.digits3 );
+  actionGroups.digits->addAction( actions.digits8 );
+  actionGroups.digits->addAction( actions.digits15 );
+  actionGroups.digits->addAction( actions.digits50 );
 
-  return QMainWindow::event( e );
+  actionGroups.angle = new QActionGroup( p );
+  actionGroups.angle->addAction( actions.radian );
+  actionGroups.angle->addAction( actions.degree );
+
+  actionGroups.radixChar = new QActionGroup( p );
+  actionGroups.radixChar->addAction( actions.radixCharAuto  );
+  actionGroups.radixChar->addAction( actions.radixCharDot   );
+  actionGroups.radixChar->addAction( actions.radixCharComma );
 }
 
 
-MainWindow::~MainWindow()
+void MainWindow::Private::createActionShortcuts()
 {
-  //delete d->evaluator; // not needed to delele anymore, QObject child of main window
-  delete d;
+  actions.clearExpression->setShortcut (            Qt::Key_Escape   );
+  actions.clearHistory->setShortcut    ( Qt::CTRL + Qt::Key_Y        );
+  actions.degree->setShortcut          (            Qt::Key_F10      );
+  actions.deleteVariable->setShortcut  ( Qt::CTRL + Qt::Key_D        );
+  actions.editCopyResult->setShortcut  ( Qt::CTRL + Qt::Key_R        );
+  actions.editCopy->setShortcut        ( Qt::CTRL + Qt::Key_C        );
+  actions.editPaste->setShortcut       ( Qt::CTRL + Qt::Key_V        );
+  actions.helpTipOfTheDay->setShortcut ( Qt::CTRL + Qt::Key_T        );
+  actions.insertFunction->setShortcut  ( Qt::CTRL + Qt::Key_F        );
+  actions.insertVariable->setShortcut  ( Qt::CTRL + Qt::Key_I        );
+  actions.radian->setShortcut          (            Qt::Key_F9       );
+  actions.scrollDown->setShortcut      (            Qt::Key_PageDown );
+  actions.scrollUp->setShortcut        (            Qt::Key_PageUp   );
+  actions.selectExpression->setShortcut( Qt::CTRL + Qt::Key_A        );
+  actions.sessionLoad->setShortcut     ( Qt::CTRL + Qt::Key_L        );
+  actions.sessionQuit->setShortcut     ( Qt::CTRL + Qt::Key_Q        );
+  actions.sessionSave->setShortcut     ( Qt::CTRL + Qt::Key_S        );
+  actions.showFullScreen->setShortcut  (            Qt::Key_F11      );
+  actions.showKeypad->setShortcut      ( Qt::CTRL + Qt::Key_K        );
+  actions.showMenuBar->setShortcut     ( Qt::CTRL + Qt::Key_M        );
+  actions.viewBinary->setShortcut      (            Qt::Key_F5       );
+  actions.viewGeneral->setShortcut     (            Qt::Key_F7       );
+  actions.viewHexadec->setShortcut     (            Qt::Key_F8       );
+  actions.viewOctal->setShortcut       (            Qt::Key_F6       );
 }
 
 
-// public slots
-
-void MainWindow::about()
+void MainWindow::Private::createMenus()
 {
-  AboutBox * aboutBox = new AboutBox( this );
-  aboutBox->exec();
-  delete aboutBox;
+  // session
+  menus.session = new QMenu( tr("&Session"), p );
+  p->menuBar()->addMenu( menus.session );
+  menus.session->addAction( actions.sessionLoad );
+  menus.session->addAction( actions.sessionSave );
+  menus.session->addSeparator();
+  menus.session->addAction( actions.sessionQuit );
+
+  // edit
+  menus.edit = new QMenu( tr("&Edit"), p );
+  p->menuBar()->addMenu( menus.edit );
+  menus.edit->addAction( actions.editCopy         );
+  menus.edit->addAction( actions.editCopyResult   );
+  menus.edit->addAction( actions.editPaste        );
+  menus.edit->addAction( actions.selectExpression );
+  menus.edit->addSeparator();
+  menus.edit->addAction( actions.insertFunction );
+  menus.edit->addAction( actions.insertVariable );
+  menus.edit->addSeparator();
+  menus.edit->addAction( actions.deleteVariable     );
+  menus.edit->addAction( actions.deleteAllVariables );
+  menus.edit->addSeparator();
+  menus.edit->addAction( actions.clearExpression );
+  menus.edit->addAction( actions.clearHistory    );
+
+  // format
+  menus.format = new QMenu( tr("&Format"), p );
+  p->menuBar()->addMenu( menus.format );
+  menus.format->addAction( actions.viewBinary );
+  menus.format->addAction( actions.viewOctal );
+  // settings / decimal
+  menus.decimal = menus.format->addMenu( tr("Decimal") );
+  menus.decimal->addAction( actions.viewGeneral );
+  menus.decimal->addAction( actions.viewFixed );
+  menus.decimal->addAction( actions.viewEngineering );
+  menus.decimal->addAction( actions.viewScientific );
+  menus.decimal->addSeparator();
+  menus.decimal->addAction( actions.digitsAuto );
+  menus.decimal->addAction( actions.digits2 );
+  menus.decimal->addAction( actions.digits3 );
+  menus.decimal->addAction( actions.digits8 );
+  menus.decimal->addAction( actions.digits15 );
+  menus.decimal->addAction( actions.digits50 );
+  // format (continued)
+  menus.format->addAction( actions.viewHexadec );
+
+  // angle
+  menus.angle = new QMenu( tr("&Angle"), p );
+  p->menuBar()->addMenu( menus.angle );
+  menus.angle->addAction( actions.radian );
+  menus.angle->addAction( actions.degree );
+
+  // settings
+  menus.settings = new QMenu( tr("Se&ttings"), p );
+  p->menuBar()->addMenu( menus.settings );
+  // settings / layout
+  menus.layout = menus.settings->addMenu( tr("&Layout") );
+  menus.layout->addAction( actions.showKeypad );
+  menus.layout->addSeparator();
+  menus.layout->addAction( actions.showHistory   );
+  menus.layout->addAction( actions.showFunctions );
+  menus.layout->addAction( actions.showVariables );
+  menus.layout->addAction( actions.showConstants );
+  menus.layout->addSeparator();
+  menus.layout->addAction( actions.showMenuBar );
+  menus.layout->addSeparator();
+  menus.layout->addAction( actions.showFullScreen );
+  // settings / behavior
+  menus.behavior = menus.settings->addMenu( tr("&Behavior") );
+  menus.behavior->addAction( actions.optionAutoCalc       );
+  menus.behavior->addAction( actions.optionAutoCompletion );
+  menus.behavior->addAction( actions.optionAlwaysOnTop    );
+  menus.behavior->addAction( actions.optionMinimizeToTray );
+  // settings / radix character
+  menus.radixChar = menus.settings->addMenu( tr("Radix &Character") );
+  menus.radixChar->addAction( actions.radixCharAuto  );
+  menus.radixChar->addAction( actions.radixCharDot   );
+  menus.radixChar->addAction( actions.radixCharComma );
+
+  // help
+  menus.help = new QMenu( tr("&Help"), p );
+  p->menuBar()->addMenu( menus.help );
+  menus.help->addAction( actions.helpTipOfTheDay );
+  menus.help->addAction( actions.helpGotoWebsite );
+  menus.help->addSeparator();
+  menus.help->addAction( actions.helpAbout );
+  menus.help->addAction( actions.helpAboutQt );
 }
 
 
-void MainWindow::aboutQt()
+void MainWindow::Private::createWidgets()
 {
-  QMessageBox::aboutQt( this, tr("About Qt") );
+  // outer widget and layout
+  QWidget * box = new QWidget( p );
+  p->setCentralWidget( box );
+
+  QVBoxLayout * boxLayout = new QVBoxLayout( box );
+  boxLayout->setMargin( 0 );
+  boxLayout->setSpacing( 0 );
+
+  // display
+  widgets.display = new Result( settings.radixChar, settings.format, settings.precision, box );
+  boxLayout->addWidget( widgets.display );
+
+  // editor
+  QHBoxLayout * editorLayout = new QHBoxLayout();
+  editorLayout->setMargin( 5 );
+  evaluator = new Evaluator( settings.radixChar, p );
+  widgets.editor = new Editor( evaluator, settings.radixChar, box );
+  widgets.editor->setFocus();
+  widgets.editor->setStyleSheet( "QTextEdit { font: bold 16px }" );
+  editorLayout->addWidget( widgets.editor );
+  boxLayout->addLayout( editorLayout );
+
+  // keypad
+  QHBoxLayout * keypadLayout = new QHBoxLayout();
+  widgets.keypad = new Keypad( settings.radixChar, box );
+  widgets.keypad->setFocusPolicy( Qt::NoFocus );
+  widgets.keypad->hide();
+  widgets.keypad->setStyleSheet( "QPushButton { background: black; font: bold;"
+                                 "color: white; border-style: solid;"
+                                 "border-color: #202020; border-radius: 10px;"
+                                 "border-width: 2px }" );
+  keypadLayout->addStretch();
+  keypadLayout->addWidget( widgets.keypad );
+  keypadLayout->addStretch();
+  boxLayout->addLayout( keypadLayout );
+
+  // for autocalc
+  widgets.autoCalcLabel = new AutoHideLabel( p );
+  widgets.autoCalcLabel->hide();
+
+  // for tip of the day and menu bar hiding message
+  widgets.tip = new TipWidget( p );
+  widgets.tip->hide();
+}
+
+
+void MainWindow::Private::createDocks()
+{
+  docks.history = new HistoryDock( p );
+  docks.history->setObjectName( "HistoryDock" );
+  p->addDockWidget( Qt::RightDockWidgetArea, docks.history );
+
+  docks.functions = new FunctionsDock( p );
+  docks.functions->setObjectName( "FunctionsList" );
+  p->addDockWidget( Qt::RightDockWidgetArea, docks.functions );
+
+  docks.variables = new VariablesDock( p );
+  docks.variables->setObjectName( "VariablesList" );
+  p->addDockWidget( Qt::RightDockWidgetArea, docks.variables );
+
+  docks.constants = new ConstantsDock( p );
+  docks.constants->setObjectName( "ConstantsList" );
+  p->addDockWidget( Qt::RightDockWidgetArea, docks.constants );
+
+  p->tabifyDockWidget( docks.functions, docks.history );
+  p->tabifyDockWidget( docks.functions, docks.variables );
+  p->tabifyDockWidget( docks.functions, docks.constants );
+  docks.history->hide();
+  docks.functions->hide();
+  docks.variables->hide();
+  docks.constants->hide();
+}
+
+
+void MainWindow::Private::createConnections()
+{
+  QObject::connect( actions.clearHistory,                SIGNAL( activated()                           ), p,                     SLOT( clearHistory()                        ) );
+  QObject::connect( actions.clearExpression,             SIGNAL( activated()                           ), p,                     SLOT( clearExpression()                     ) );
+  QObject::connect( actions.degree,                      SIGNAL( activated()                           ), p,                     SLOT( degree()                              ) );
+  QObject::connect( actions.deleteAllVariables,          SIGNAL( activated()                           ), p,                     SLOT( deleteAllVariables()                  ) );
+  QObject::connect( actions.deleteVariable,              SIGNAL( activated()                           ), p,                     SLOT( deleteVariable()                      ) );
+  QObject::connect( actions.digits15,                    SIGNAL( activated()                           ), p,                     SLOT( digits15()                            ) );
+  QObject::connect( actions.digits2,                     SIGNAL( activated()                           ), p,                     SLOT( digits2()                             ) );
+  QObject::connect( actions.digits3,                     SIGNAL( activated()                           ), p,                     SLOT( digits3()                             ) );
+  QObject::connect( actions.digits50,                    SIGNAL( activated()                           ), p,                     SLOT( digits50()                            ) );
+  QObject::connect( actions.digits8,                     SIGNAL( activated()                           ), p,                     SLOT( digits8()                             ) );
+  QObject::connect( actions.digitsAuto,                  SIGNAL( activated()                           ), p,                     SLOT( digitsAuto()                          ) );
+  QObject::connect( actions.editCopyResult,              SIGNAL( activated()                           ), p,                     SLOT( copyResult()                          ) );
+  QObject::connect( actions.editCopy,                    SIGNAL( activated()                           ), widgets.editor,        SLOT( copy()                                ) );
+  QObject::connect( actions.editPaste,                   SIGNAL( activated()                           ), widgets.editor,        SLOT( paste()                               ) );
+  QObject::connect( actions.selectExpression,            SIGNAL( activated()                           ), p,                     SLOT( selectExpression()                    ) );
+  QObject::connect( actions.helpAboutQt,                 SIGNAL( activated()                           ), p,                     SLOT( aboutQt()                             ) );
+  QObject::connect( actions.helpAbout,                   SIGNAL( activated()                           ), p,                     SLOT( about()                               ) );
+  QObject::connect( actions.helpGotoWebsite,             SIGNAL( activated()                           ), p,                     SLOT( gotoWebsite()                         ) );
+  QObject::connect( actions.helpTipOfTheDay,             SIGNAL( activated()                           ), p,                     SLOT( showTipOfTheDay()                     ) );
+  QObject::connect( actions.insertFunction,              SIGNAL( activated()                           ), p,                     SLOT( insertFunction()                      ) );
+  QObject::connect( actions.insertVariable,              SIGNAL( activated()                           ), p,                     SLOT( insertVariable()                      ) );
+  QObject::connect( actions.radian,                      SIGNAL( activated()                           ), p,                     SLOT( radian()                              ) );
+  QObject::connect( actions.scrollDown,                  SIGNAL( activated()                           ), p,                     SLOT( scrollDown()                          ) );
+  QObject::connect( actions.scrollUp,                    SIGNAL( activated()                           ), p,                     SLOT( scrollUp()                            ) );
+  QObject::connect( actions.sessionLoad,                 SIGNAL( activated()                           ), p,                     SLOT( loadSession()                         ) );
+  QObject::connect( actions.sessionQuit,                 SIGNAL( activated()                           ), p,                     SLOT( close()                               ) );
+  QObject::connect( actions.sessionSave,                 SIGNAL( activated()                           ), p,                     SLOT( saveSession()                         ) );
+  QObject::connect( actions.showConstants,               SIGNAL( toggled( bool )                       ), p,                     SLOT( showConstants( bool )                 ) );
+  QObject::connect( actions.showFullScreen,              SIGNAL( toggled( bool )                       ), p,                     SLOT( showInFullScreen( bool )              ) );
+  QObject::connect( actions.showFunctions,               SIGNAL( toggled( bool )                       ), p,                     SLOT( showFunctions( bool )                 ) );
+  QObject::connect( actions.showHistory,                 SIGNAL( toggled( bool )                       ), p,                     SLOT( showHistory( bool )                   ) );
+  QObject::connect( actions.showKeypad,                  SIGNAL( toggled( bool )                       ), p,                     SLOT( showKeypad( bool )                    ) );
+  QObject::connect( actions.showMenuBar,                 SIGNAL( activated()                           ), p,                     SLOT( showMenuBar()                         ) );
+  QObject::connect( actions.showVariables,               SIGNAL( toggled( bool )                       ), p,                     SLOT( showVariables( bool )                 ) );
+  QObject::connect( actions.viewBinary,                  SIGNAL( activated()                           ), p,                     SLOT( viewBinary()                          ) );
+  QObject::connect( actions.viewEngineering,             SIGNAL( activated()                           ), p,                     SLOT( viewEngineering()                     ) );
+  QObject::connect( actions.viewFixed,                   SIGNAL( activated()                           ), p,                     SLOT( viewFixed()                           ) );
+  QObject::connect( actions.viewGeneral,                 SIGNAL( activated()                           ), p,                     SLOT( viewGeneral()                         ) );
+  QObject::connect( actions.viewHexadec,                 SIGNAL( activated()                           ), p,                     SLOT( viewHexadec()                         ) );
+  QObject::connect( actions.viewOctal,                   SIGNAL( activated()                           ), p,                     SLOT( viewOctal()                           ) );
+  QObject::connect( actions.viewScientific,              SIGNAL( activated()                           ), p,                     SLOT( viewScientific()                      ) );
+  QObject::connect( actions.optionAutoCalc,              SIGNAL( toggled( bool )                       ), p,                     SLOT( autoCalcToggled( bool )               ) );
+  QObject::connect( actions.optionAutoCompletion,        SIGNAL( toggled( bool )                       ), p,                     SLOT( autoCompletionToggled( bool )         ) );
+  QObject::connect( actions.optionAlwaysOnTop,           SIGNAL( toggled( bool )                       ), p,                     SLOT( alwaysOnTopToggled( bool )            ) );
+  QObject::connect( actions.optionMinimizeToTray,        SIGNAL( toggled( bool )                       ), p,                     SLOT( minimizeToTrayToggled( bool )         ) );
+  QObject::connect( actions.radixCharAuto,               SIGNAL( activated()                           ), p,                     SLOT( radixCharAutoActivated()              ) );
+  QObject::connect( actions.radixCharDot,                SIGNAL( activated()                           ), p,                     SLOT( radixCharDotActivated()               ) );
+  QObject::connect( actions.radixCharComma,              SIGNAL( activated()                           ), p,                     SLOT( radixCharCommaActivated()             ) );
+  QObject::connect( widgets.keypad,                      SIGNAL( buttonPressed( Keypad::Button )       ), p,                     SLOT( keypadButtonPressed( Keypad::Button ) ) );
+  QObject::connect( widgets.editor,                      SIGNAL( autoCalcActivated( const QString & )  ), p,                     SLOT( showAutoCalc( const QString & )       ) );
+  QObject::connect( widgets.editor,                      SIGNAL( autoCalcDeactivated()                 ), p,                     SLOT( hideAutoCalc()                        ) );
+  QObject::connect( widgets.editor,                      SIGNAL( returnPressed()                       ), p,                     SLOT( returnPressed()                       ) );
+  QObject::connect( widgets.editor,                      SIGNAL( textChanged()                         ), p,                     SLOT( textChanged()                         ) );
+  QObject::connect( docks.constants,                     SIGNAL( constantSelected( const QString & )   ), p,                     SLOT( constantSelected( const QString & )   ) );
+  QObject::connect( docks.functions,                     SIGNAL( functionSelected( const QString & )   ), p,                     SLOT( functionSelected( const QString & )   ) );
+  QObject::connect( docks.history,                       SIGNAL( expressionSelected( const QString & ) ), p,                     SLOT( expressionSelected( const QString & ) ) );
+  QObject::connect( docks.variables,                     SIGNAL( variableSelected( const QString & )   ), p,                     SLOT( variableSelected( const QString & )   ) );
+  QObject::connect( widgets.display,                     SIGNAL( textCopied( const QString & )         ), widgets.editor,        SLOT( paste()                               ) );
+  QObject::connect( widgets.display,                     SIGNAL( textCopied( const QString & )         ), widgets.editor,        SLOT( setFocus()                            ) );
+  QObject::connect( docks.constants->toggleViewAction(), SIGNAL( toggled( bool )                       ), actions.showConstants, SLOT( setChecked( bool )                    ) );
+  QObject::connect( docks.functions->toggleViewAction(), SIGNAL( toggled( bool )                       ), actions.showFunctions, SLOT( setChecked( bool )                    ) );
+  QObject::connect( docks.history->toggleViewAction(),   SIGNAL( toggled( bool )                       ), actions.showHistory,   SLOT( setChecked( bool )                    ) );
+  QObject::connect( docks.variables->toggleViewAction(), SIGNAL( toggled( bool )                       ), actions.showVariables, SLOT( setChecked( bool )                    ) );
+  QObject::connect( p,                                   SIGNAL( radixCharChanged( char )              ), widgets.editor,        SLOT( setRadixChar( char )                  ) );
+  QObject::connect( p,                                   SIGNAL( radixCharChanged( char )              ), widgets.display,       SLOT( setRadixChar( char )                  ) );
+  QObject::connect( p,                                   SIGNAL( formatChanged( char )                 ), widgets.display,       SLOT( setFormat( char )                     ) );
+  QObject::connect( p,                                   SIGNAL( precisionChanged( int )               ), widgets.display,       SLOT( setPrecision( int )                   ) );
+  QObject::connect( p,                                   SIGNAL( radixCharChanged( char )              ), widgets.keypad,        SLOT( setRadixChar( char )                  ) );
+  QObject::connect( p,                                   SIGNAL( radixCharChanged( char )              ), evaluator,             SLOT( setRadixChar( char )                  ) );
 }
 
 
 void MainWindow::Private::applySettings()
 {
-  //d->settings.load();
-
   if ( settings.mainWindowSize != QSize(0, 0) )
     p->resize( settings.mainWindowSize );
 
@@ -329,26 +666,22 @@ void MainWindow::Private::applySettings()
   //  // load specified language
   //}
 
-  docks.history->clear();
-  if ( settings.saveSession && settings.history.count() > 0 )
-  {
-    widgets.editor->setHistory( settings.history );
-    widgets.editor->setHistoryResults( settings.historyResults );
-  }
-  if ( settings.history.count() > 0 )
-    docks.history->setHistory( settings.history );
+  //docks.history->clear();
+  //if ( settings.saveSession && settings.history.count() > 0 )
+  //{
+  //  widgets.editor->setHistory( settings.history );
+  //  widgets.editor->setHistoryResults( settings.historyResults );
+  //}
+  //if ( settings.history.count() > 0 )
+  //  docks.history->setHistory( settings.history );
+
+  if ( settings.saveSession )
+    restoreHistory();
+  else
+    p->clearHistory();
 
   if ( settings.saveVariables )
-  {
-    for ( int k = 0; k < settings.variables.count(); k++ )
-    {
-      evaluator->setExpression( settings.variables[k] );
-      evaluator->eval();
-      QStringList list = settings.variables[k].split( "=" );
-      evaluator->set( list[0], HNumber( list[1].toAscii().data() ) );
-    }
-    docks.variables->updateList( evaluator );
-  }
+    restoreVariables();
 
   //display->setFormat( settings.format );
   //display->setPrecision( settings.precision );
@@ -436,6 +769,126 @@ void MainWindow::Private::applySettings()
   // changed settings should trigger auto calc nor auto complete
   widgets.editor->stopAutoCalc();
   widgets.editor->stopAutoComplete();
+}
+
+
+void MainWindow::Private::saveSettings()
+{
+  // main window
+  settings.mainWindowState = p->saveState();
+  settings.mainWindowSize  = p->size();
+
+  // history
+  settings.history        = widgets.editor->history();
+  settings.historyResults = widgets.editor->historyResults();
+
+  // variables
+  if ( settings.saveVariables )
+  {
+    settings.variables.clear();
+    QVector<Variable> vars = evaluator->variables();
+    for ( int i = 0; i < vars.count(); i++ )
+    {
+      QString name = vars[i].name;
+      char * value = HMath::formatScientific( vars[i].value, DECPRECISION );
+      settings.variables.append( QString( "%1=%2" ).arg( name ).arg( QString( value ) ) );
+      free( value );
+    }
+  }
+
+  // history dock
+  settings.historyDockFloating   = docks.history->isFloating();
+  settings.historyDockLeft       = docks.history->x();
+  settings.historyDockTop        = docks.history->y();
+  settings.historyDockWidth      = docks.history->width();
+  settings.historyDockHeight     = docks.history->height();
+  // functions dock
+  settings.functionsDockFloating = docks.functions->isFloating();
+  settings.functionsDockLeft     = docks.functions->x();
+  settings.functionsDockTop      = docks.functions->y();
+  settings.functionsDockWidth    = docks.functions->width();
+  settings.functionsDockHeight   = docks.functions->height();
+  // variables dock
+  settings.variablesDockFloating = docks.variables->isFloating();
+  settings.variablesDockLeft     = docks.variables->x();
+  settings.variablesDockTop      = docks.variables->y();
+  settings.variablesDockWidth    = docks.variables->width();
+  settings.variablesDockHeight   = docks.variables->height();
+  // constants dock
+  settings.constantsDockFloating = docks.constants->isFloating();
+  settings.constantsDockLeft     = docks.constants->x();
+  settings.constantsDockTop      = docks.constants->y();
+  settings.constantsDockWidth    = docks.constants->width();
+  settings.constantsDockHeight   = docks.constants->height();
+
+  settings.save();
+}
+
+
+void setWidgetLayoutAccordingToLanguageDirection( QWidget * widget )
+{
+  if ( QLocale().language() == QLocale::Hebrew )
+    widget->setLayoutDirection( Qt::RightToLeft );
+  else
+    widget->setLayoutDirection( Qt::LeftToRight );
+}
+
+
+// public
+
+MainWindow::MainWindow() : QMainWindow(), d( new MainWindow::Private )
+{
+  d->p = this;
+
+  d->loadSettings();
+  d->createUI();
+  d->applySettings();
+  restoreDocks();
+
+  setWidgetsLayoutAccordingToLanguageDirection();
+
+  QTimer::singleShot( 0, this, SLOT( activate() ) );
+}
+
+
+bool MainWindow::event( QEvent * e )
+{
+  if ( e->type() == QEvent::WindowStateChange )
+  {
+    if ( windowState() & Qt::WindowMinimized )
+    if ( d->settings.minimizeToTray )
+      QTimer::singleShot( 100, this, SLOT( minimizeToTray() ) );
+  }
+
+  // ensure dock windows keep their state after minimize / screen switch
+  //if ( d->settings.showConstants ) QTimer::singleShot( 0, d->docks.constants, SLOT( show() ) );
+  if ( d->settings.showFunctions ) QTimer::singleShot( 0, d->docks.functions, SLOT( show() ) );
+  //if ( d->settings.showHistory   ) QTimer::singleShot( 0, d->docks.history,   SLOT( show() ) );
+  //if ( d->settings.showVariables ) QTimer::singleShot( 0, d->docks.variables, SLOT( show() ) );
+
+  return QMainWindow::event( e );
+}
+
+
+MainWindow::~MainWindow()
+{
+  delete d;
+}
+
+
+// public slots
+
+void MainWindow::about()
+{
+  AboutBox * aboutBox = new AboutBox( this );
+  aboutBox->exec();
+  delete aboutBox;
+}
+
+
+void MainWindow::aboutQt()
+{
+  QMessageBox::aboutQt( this, tr("About Qt") );
 }
 
 
@@ -553,6 +1006,9 @@ void MainWindow::hideAutoCalc()
 
 void MainWindow::insertFunction()
 {
+  if ( ! d->dialogs.insertFunction )
+    d->dialogs.insertFunction = new InsertFunctionDlg( this );
+
   if ( d->dialogs.insertFunction->exec() == InsertFunctionDlg::Accepted )
   {
     QString funcName = d->dialogs.insertFunction->functionName();
@@ -627,8 +1083,6 @@ void MainWindow::loadSession()
     d->widgets.display->clear();
     deleteAllVariables();
     clearHistory();
-    //saveSettings();
-    //applySettings();
   }
 
   // expressions and results
@@ -670,9 +1124,6 @@ void MainWindow::loadSession()
   }
 
   file.close();
-
-  //saveSettings();
-  //applySettings();
 }
 
 
@@ -680,28 +1131,24 @@ void MainWindow::alwaysOnTopToggled( bool b )
 {
   d->settings.stayAlwaysOnTop = b;
   d->actions.optionAlwaysOnTop->setChecked( b );
-  //applySettings();
 }
 
 
 void MainWindow::autoCalcToggled( bool b )
 {
   d->settings.autoCalc = b;
-  //applySettings();
 }
 
 
 void MainWindow::autoCompletionToggled( bool b )
 {
   d->settings.autoComplete = b;
-  //applySettings();
 }
 
 
 void MainWindow::minimizeToTrayToggled( bool b )
 {
   d->settings.minimizeToTray = b;
-  //applySettings();
 }
 
 
@@ -773,7 +1220,8 @@ void MainWindow::setWidgetsLayoutAccordingToLanguageDirection()
   setWidgetLayoutAccordingToLanguageDirection( d->docks.constants );
   setWidgetLayoutAccordingToLanguageDirection( d->docks.functions );
   // insert function dialog
-  setWidgetLayoutAccordingToLanguageDirection( d->dialogs.insertFunction );
+  if ( d->dialogs.insertFunction )
+    setWidgetLayoutAccordingToLanguageDirection( d->dialogs.insertFunction );
   // tip of the day
   setWidgetLayoutAccordingToLanguageDirection( d->widgets.tip );
 
@@ -825,8 +1273,6 @@ void MainWindow::showConstants( bool b )
 {
   d->settings.showConstants = b;
   d->docks.constants->setVisible( b );
-  //saveSettings();
-  //applySettings();
   //docks.constants->raise();
 }
 
@@ -840,11 +1286,11 @@ void MainWindow::showInFullScreen( bool b )
 
 void MainWindow::showFunctions( bool b )
 {
-  if ( d->settings.showFunctions == b )
-    return;
-  d->settings.showFunctions = b;
-  //d->actions.showFunctions->setChecked( b );
-  d->docks.functions->setVisible( b );
+  if ( d->settings.showFunctions != b )
+  {
+    d->settings.showFunctions = b;
+    d->docks.functions->setVisible( b );
+  }
 }
 
 
@@ -852,8 +1298,6 @@ void MainWindow::showHistory( bool b )
 {
   d->settings.showHistory = b;
   d->docks.history->setVisible( b );
-  //saveSettings();
-  //applySettings();
   //docks.history->raise();
 }
 
@@ -862,7 +1306,6 @@ void MainWindow::showKeypad( bool b )
 {
   d->settings.showKeypad = b;
   d->widgets.keypad->setVisible( b );
-  //d->actions.showKeypad->setChecked( b );
   d->widgets.display->scrollEnd();
 }
 
@@ -1086,6 +1529,19 @@ void MainWindow::minimizeToTray()
 }
 
 
+void MainWindow::Private::restoreVariables()
+{
+  for ( int k = 0; k < settings.variables.count(); k++ )
+  {
+    evaluator->setExpression( settings.variables[k] );
+    evaluator->eval();
+    QStringList list = settings.variables[k].split( "=" );
+    evaluator->set( list[0], HNumber( list[1].toAscii().data() ) );
+  }
+  docks.variables->updateList( evaluator );
+}
+
+
 void MainWindow::restoreDocks()
 {
   restoreState( d->settings.mainWindowState );
@@ -1145,22 +1601,22 @@ void MainWindow::restoreDocks()
 }
 
 
-void MainWindow::restoreLastSession()
+void MainWindow::Private::restoreHistory()
 {
-  if ( d->settings.historyResults.count() != d->settings.history.count() )
+  if ( settings.historyResults.count() != settings.history.count() )
   {
-    clearHistory();
+    p->clearHistory();
     return;
   }
 
-  for ( int i = 0 ; i < d->settings.history.count(); i++ )
+  for ( int i = 0 ; i < settings.history.count(); i++ )
   {
-    const char * resultStr = d->settings.historyResults[i].toAscii().data();
+    const char * resultStr = settings.historyResults[i].toAscii().data();
     HNumber result( resultStr );
     if ( ! result.isNan() )
-      d->widgets.display->append( d->settings.history[i], result );
+      widgets.display->append( settings.history[i], result );
     else
-      d->widgets.display->appendError( d->settings.history[i], resultStr );
+      widgets.display->appendError( settings.history[i], resultStr );
   }
 }
 
@@ -1320,445 +1776,6 @@ void MainWindow::closeEvent( QCloseEvent * e )
   d->saveSettings();
   emit quitApplication();
   QMainWindow::closeEvent( e );
-}
-
-
-// private
-
-void MainWindow::Private::createUI()
-{
-  // createActions
-  actions.clearExpression       = new QAction( tr("Clear E&xpression"),        p );
-  actions.clearHistory          = new QAction( tr("Clear &History"),           p );
-  actions.degree                = new QAction( tr("&Degree"),                  p );
-  actions.deleteAllVariables    = new QAction( tr("Delete All V&ariables"),    p );
-  actions.deleteVariable        = new QAction( tr("D&elete Variable..."),      p );
-  actions.digits15              = new QAction( tr("&15 Decimal Digits"),       p );
-  actions.digits2               = new QAction( tr("&2 Decimal Digits"),        p );
-  actions.digits3               = new QAction( tr("&3 Decimal Digits"),        p );
-  actions.digits50              = new QAction( tr("&50 Decimal Digits"),       p );
-  actions.digits8               = new QAction( tr("&8 Decimal Digits"),        p );
-  actions.digitsAuto            = new QAction( tr("&Automatic Precision"),     p );
-  actions.editCopy              = new QAction( tr("&Copy"),                    p );
-  actions.editCopyResult        = new QAction( tr("Copy Last &Result"),        p );
-  actions.editPaste             = new QAction( tr("&Paste"),                   p );
-  actions.helpAbout             = new QAction( tr("&About"),                   p );
-  actions.helpAboutQt           = new QAction( tr("About &Qt"),                p );
-  actions.helpGotoWebsite       = new QAction( tr("SpeedCrunch &Web Site..."), p );
-  actions.helpTipOfTheDay       = new QAction( tr("&Tip of the Day"),          p );
-  actions.insertFunction        = new QAction( tr("Insert &Function..."),      p );
-  actions.insertVariable        = new QAction( tr("Insert &Variable..."),      p );
-  actions.optionAutoCalc        = new QAction( tr("&Partial Results"),         p );
-  actions.optionAutoCompletion  = new QAction( tr("Automatic &Completion"),    p );
-  actions.optionAlwaysOnTop     = new QAction( tr("Stay Always On &Top"),      p );
-  actions.optionMinimizeToTray  = new QAction( tr("&Minimize To System Tray"), p );
-  actions.radixCharAuto         = new QAction( tr("&Automatic"),               p );
-  actions.radixCharDot          = new QAction( tr("&Dot"),                     p );
-  actions.radixCharComma        = new QAction( tr("&Comma"),                   p );
-  actions.radian                = new QAction( tr("&Radian"),                  p );
-  actions.scrollDown            = new QAction( tr("Scroll Display Down"),      p );
-  actions.scrollUp              = new QAction( tr("Scroll Display Up"),        p );
-  actions.selectExpression      = new QAction( tr("&Select Expression"),       p );
-  actions.sessionLoad           = new QAction( tr("&Load..."),                 p );
-  actions.sessionQuit           = new QAction( tr("&Quit"),                    p );
-  actions.sessionSave           = new QAction( tr("&Save..."),                 p );
-  actions.showConstants         = new QAction( tr("Show &Constants"),          p );
-  actions.showFullScreen        = new QAction( tr("Full &Screen Mode"),        p );
-  actions.showFunctions         = new QAction( tr("Show &Functions"),          p );
-  actions.showHistory           = new QAction( tr("Show &History"),            p );
-  actions.showKeypad            = new QAction( tr("Show &Keypad"),             p );
-  actions.showMenuBar           = new QAction( tr("Hide &Menu Bar"),           p );
-  actions.showVariables         = new QAction( tr("Show &Variables"),          p );
-  actions.viewBinary            = new QAction( tr("&Binary"),                  p );
-  actions.viewEngineering       = new QAction( tr("&Engineering"),             p );
-  actions.viewFixed             = new QAction( tr("&Fixed Decimal"),           p );
-  actions.viewGeneral           = new QAction( tr("&General"),                 p );
-  actions.viewHexadec           = new QAction( tr("&Hexadecimal"),             p );
-  actions.viewOctal             = new QAction( tr("&Octal"),                   p );
-  actions.viewScientific        = new QAction( tr("&Scientific"),              p );
-
-  // define shortcuts
-  actions.clearExpression->setShortcut (            Qt::Key_Escape   );
-  actions.clearHistory->setShortcut    ( Qt::CTRL + Qt::Key_Y        );
-  actions.degree->setShortcut          (            Qt::Key_F10      );
-  actions.deleteVariable->setShortcut  ( Qt::CTRL + Qt::Key_D        );
-  actions.editCopyResult->setShortcut  ( Qt::CTRL + Qt::Key_R        );
-  actions.editCopy->setShortcut        ( Qt::CTRL + Qt::Key_C        );
-  actions.editPaste->setShortcut       ( Qt::CTRL + Qt::Key_V        );
-  actions.helpTipOfTheDay->setShortcut ( Qt::CTRL + Qt::Key_T        );
-  actions.insertFunction->setShortcut  ( Qt::CTRL + Qt::Key_F        );
-  actions.insertVariable->setShortcut  ( Qt::CTRL + Qt::Key_I        );
-  actions.radian->setShortcut          (            Qt::Key_F9       );
-  actions.scrollDown->setShortcut      (            Qt::Key_PageDown );
-  actions.scrollUp->setShortcut        (            Qt::Key_PageUp   );
-  actions.selectExpression->setShortcut( Qt::CTRL + Qt::Key_A        );
-  actions.sessionLoad->setShortcut     ( Qt::CTRL + Qt::Key_L        );
-  actions.sessionQuit->setShortcut     ( Qt::CTRL + Qt::Key_Q        );
-  actions.sessionSave->setShortcut     ( Qt::CTRL + Qt::Key_S        );
-  actions.showFullScreen->setShortcut  (            Qt::Key_F11      );
-  actions.showKeypad->setShortcut      ( Qt::CTRL + Qt::Key_K        );
-  actions.showMenuBar->setShortcut     ( Qt::CTRL + Qt::Key_M        );
-  actions.viewBinary->setShortcut      (            Qt::Key_F5       );
-  actions.viewGeneral->setShortcut     (            Qt::Key_F7       );
-  actions.viewHexadec->setShortcut     (            Qt::Key_F8       );
-  actions.viewOctal->setShortcut       (            Qt::Key_F6       );
-
-  // define checkable
-  actions.degree->setCheckable              ( true );
-  actions.digits15->setCheckable            ( true );
-  actions.digits2->setCheckable             ( true );
-  actions.digits3->setCheckable             ( true );
-  actions.digits50->setCheckable            ( true );
-  actions.digits8->setCheckable             ( true );
-  actions.digitsAuto->setCheckable          ( true );
-  actions.optionAlwaysOnTop->setCheckable   ( true );
-  actions.optionAutoCalc->setCheckable      ( true );
-  actions.optionAutoCompletion->setCheckable( true );
-  actions.optionMinimizeToTray->setCheckable( true );
-  actions.radian->setCheckable              ( true );
-  actions.radixCharAuto->setCheckable       ( true );
-  actions.radixCharComma->setCheckable      ( true );
-  actions.radixCharDot->setCheckable        ( true );
-  actions.showConstants->setCheckable       ( true );
-  actions.showFullScreen->setCheckable      ( true );
-  actions.showFunctions->setCheckable       ( true );
-  actions.showHistory->setCheckable         ( true );
-  actions.showKeypad->setCheckable          ( true );
-  actions.showVariables->setCheckable       ( true );
-  actions.viewBinary->setCheckable          ( true );
-  actions.viewEngineering->setCheckable     ( true );
-  actions.viewFixed->setCheckable           ( true );
-  actions.viewGeneral->setCheckable         ( true );
-  actions.viewHexadec->setCheckable         ( true );
-  actions.viewOctal->setCheckable           ( true );
-  actions.viewScientific->setCheckable      ( true );
-
-  // construct the menu
-  menus.session = new QMenu( tr("&Session"), p );
-  p->menuBar()->addMenu( menus.session );
-  menus.session->addAction( actions.sessionLoad );
-  menus.session->addAction( actions.sessionSave );
-  menus.session->addSeparator();
-  menus.session->addAction( actions.sessionQuit );
-
-  menus.edit = new QMenu( tr("&Edit"), p );
-  p->menuBar()->addMenu( menus.edit );
-  menus.edit->addAction( actions.editCopy         );
-  menus.edit->addAction( actions.editCopyResult   );
-  menus.edit->addAction( actions.editPaste        );
-  menus.edit->addAction( actions.selectExpression );
-  menus.edit->addSeparator();
-  menus.edit->addAction( actions.insertFunction );
-  menus.edit->addAction( actions.insertVariable );
-  menus.edit->addSeparator();
-  menus.edit->addAction( actions.deleteVariable     );
-  menus.edit->addAction( actions.deleteAllVariables );
-  menus.edit->addSeparator();
-  menus.edit->addAction( actions.clearExpression );
-  menus.edit->addAction( actions.clearHistory    );
-
-  // format menu
-  QActionGroup * formatGroup = new QActionGroup( p );
-  formatGroup->addAction( actions.viewBinary );
-  formatGroup->addAction( actions.viewGeneral );
-  formatGroup->addAction( actions.viewFixed );
-  formatGroup->addAction( actions.viewEngineering );
-  formatGroup->addAction( actions.viewScientific );
-  formatGroup->addAction( actions.viewOctal );
-  formatGroup->addAction( actions.viewHexadec );
-
-  actionGroups.digits = new QActionGroup( p );
-  actionGroups.digits->addAction( actions.digitsAuto );
-  actionGroups.digits->addAction( actions.digits2 );
-  actionGroups.digits->addAction( actions.digits3 );
-  actionGroups.digits->addAction( actions.digits8 );
-  actionGroups.digits->addAction( actions.digits15 );
-  actionGroups.digits->addAction( actions.digits50 );
-
-  menus.format = new QMenu( tr("&Format"), p );
-  p->menuBar()->addMenu( menus.format );
-  menus.format->addAction( actions.viewBinary );
-  menus.format->addAction( actions.viewOctal );
-
-  // decimal submenu
-  menus.decimal = menus.format->addMenu( tr("Decimal") );
-  menus.decimal->addAction( actions.viewGeneral );
-  menus.decimal->addAction( actions.viewFixed );
-  menus.decimal->addAction( actions.viewEngineering );
-  menus.decimal->addAction( actions.viewScientific );
-  menus.decimal->addSeparator();
-  menus.decimal->addAction( actions.digitsAuto );
-  menus.decimal->addAction( actions.digits2 );
-  menus.decimal->addAction( actions.digits3 );
-  menus.decimal->addAction( actions.digits8 );
-  menus.decimal->addAction( actions.digits15 );
-  menus.decimal->addAction( actions.digits50 );
-
-  menus.format->addAction( actions.viewHexadec );
-
-  // angle menu
-  actionGroups.angle = new QActionGroup( p );
-  actionGroups.angle->addAction( actions.radian );
-  actionGroups.angle->addAction( actions.degree );
-
-  menus.angle = new QMenu( tr("&Angle"), p );
-  p->menuBar()->addMenu( menus.angle );
-  menus.angle->addAction( actions.radian );
-  menus.angle->addAction( actions.degree );
-
-  // settings menu
-  menus.settings = new QMenu( tr("Se&ttings"), p );
-  p->menuBar()->addMenu( menus.settings );
-
-  // layout submenu
-  menus.layout = menus.settings->addMenu( tr("&Layout") );
-  menus.layout->addAction( actions.showKeypad );
-  menus.layout->addSeparator();
-  menus.layout->addAction( actions.showHistory   );
-  menus.layout->addAction( actions.showFunctions );
-  menus.layout->addAction( actions.showVariables );
-  menus.layout->addAction( actions.showConstants );
-  menus.layout->addSeparator();
-  menus.layout->addAction( actions.showMenuBar );
-  menus.layout->addSeparator();
-  menus.layout->addAction( actions.showFullScreen );
-
-  // behavior submenu
-  menus.behavior = menus.settings->addMenu( tr("&Behavior") );
-  menus.behavior->addAction( actions.optionAutoCalc       );
-  menus.behavior->addAction( actions.optionAutoCompletion );
-  menus.behavior->addAction( actions.optionAlwaysOnTop    );
-  menus.behavior->addAction( actions.optionMinimizeToTray );
-
-  // radix character submenu
-  QActionGroup * radixCharGroup = new QActionGroup( p );
-  radixCharGroup->addAction( actions.radixCharAuto  );
-  radixCharGroup->addAction( actions.radixCharDot   );
-  radixCharGroup->addAction( actions.radixCharComma );
-
-  menus.radixChar = menus.settings->addMenu( tr("Radix &Character") );
-  menus.radixChar->addAction( actions.radixCharAuto  );
-  menus.radixChar->addAction( actions.radixCharDot   );
-  menus.radixChar->addAction( actions.radixCharComma );
-
-  menus.help = new QMenu( tr("&Help"), p );
-  p->menuBar()->addMenu( menus.help );
-  menus.help->addAction( actions.helpTipOfTheDay );
-  menus.help->addAction( actions.helpGotoWebsite );
-  menus.help->addSeparator();
-  menus.help->addAction( actions.helpAbout );
-  menus.help->addAction( actions.helpAboutQt );
-
-  p->addActions( p->menuBar()->actions() );
-  p->addAction( actions.scrollDown );
-  p->addAction( actions.scrollUp );
-
-  p->setWindowIcon( QPixmap( ":/crunch.png" ) );
-
-  // outer widget and layout
-  QWidget * box = new QWidget( p );
-  p->setCentralWidget( box );
-
-  QVBoxLayout * boxLayout = new QVBoxLayout( box );
-  boxLayout->setMargin( 0 );
-  boxLayout->setSpacing( 0 );
-
-  // display
-  widgets.display = new Result( settings.radixChar, settings.format, settings.precision, box );
-  boxLayout->addWidget( widgets.display );
-
-  // editor
-  QHBoxLayout * editorLayout = new QHBoxLayout();
-  editorLayout->setMargin( 5 );
-  evaluator = new Evaluator( settings.radixChar, p );
-  widgets.editor = new Editor( evaluator, settings.radixChar, box );
-  widgets.editor->setFocus();
-  widgets.editor->setStyleSheet( "QTextEdit { font: bold 16px }" );
-  editorLayout->addWidget( widgets.editor );
-  boxLayout->addLayout( editorLayout );
-
-  // we need settings to be loaded before keypad and constants dock
-  //d->settings.load(); // load happens only once now, very first action
-
-  // keypad
-  QHBoxLayout * keypadLayout = new QHBoxLayout();
-  widgets.keypad = new Keypad( settings.radixChar, box );
-  widgets.keypad->setFocusPolicy( Qt::NoFocus );
-  widgets.keypad->hide();
-  widgets.keypad->setStyleSheet( "QPushButton { background: black; font: bold;"
-                                 "color: white; border-style: solid;"
-                                 "border-color: #202020; border-radius: 10px;"
-                                 "border-width: 2px }" );
-  keypadLayout->addStretch();
-  keypadLayout->addWidget( widgets.keypad );
-  keypadLayout->addStretch();
-  boxLayout->addLayout( keypadLayout );
-
-  // Docks
-  docks.history = new HistoryDock( p );
-  docks.history->setObjectName( "HistoryDock" );
-  p->addDockWidget( Qt::RightDockWidgetArea, docks.history );
-
-  docks.functions = new FunctionsDock( p );
-  docks.functions->setObjectName( "FunctionsList" );
-  p->addDockWidget( Qt::RightDockWidgetArea, docks.functions );
-
-  docks.variables = new VariablesDock( p );
-  docks.variables->setObjectName( "VariablesList" );
-  p->addDockWidget( Qt::RightDockWidgetArea, docks.variables );
-
-  docks.constants = new ConstantsDock( p );
-  docks.constants->setObjectName( "ConstantsList" );
-  p->addDockWidget( Qt::RightDockWidgetArea, docks.constants );
-
-  p->tabifyDockWidget( docks.functions, docks.history );
-  p->tabifyDockWidget( docks.functions, docks.variables );
-  p->tabifyDockWidget( docks.functions, docks.constants );
-  docks.history->hide();
-  docks.functions->hide();
-  docks.variables->hide();
-  docks.constants->hide();
-
-  // for autocalc
-  widgets.autoCalcLabel = new AutoHideLabel( p );
-  widgets.autoCalcLabel->hide();
-
-  // for tip of the day and menu bar hiding message
-  widgets.tip = new TipWidget( p );
-  widgets.tip->hide();
-
-  // Connect signals and slots
-
-  // Initialize settings
-  dialogs.insertFunction = new InsertFunctionDlg( p );
-  dialogs.insertVariable = 0;
-  dialogs.deleteVariable = 0;
-
-  p->setWindowTitle( "SpeedCrunch" );
-
-  // signals and slots
-  QObject::connect( actions.clearHistory,                SIGNAL( activated()                           ), p,                     SLOT( clearHistory()                        ) );
-  QObject::connect( actions.clearExpression,             SIGNAL( activated()                           ), p,                     SLOT( clearExpression()                     ) );
-  QObject::connect( actions.degree,                      SIGNAL( activated()                           ), p,                     SLOT( degree()                              ) );
-  QObject::connect( actions.deleteAllVariables,          SIGNAL( activated()                           ), p,                     SLOT( deleteAllVariables()                  ) );
-  QObject::connect( actions.deleteVariable,              SIGNAL( activated()                           ), p,                     SLOT( deleteVariable()                      ) );
-  QObject::connect( actions.digits15,                    SIGNAL( activated()                           ), p,                     SLOT( digits15()                            ) );
-  QObject::connect( actions.digits2,                     SIGNAL( activated()                           ), p,                     SLOT( digits2()                             ) );
-  QObject::connect( actions.digits3,                     SIGNAL( activated()                           ), p,                     SLOT( digits3()                             ) );
-  QObject::connect( actions.digits50,                    SIGNAL( activated()                           ), p,                     SLOT( digits50()                            ) );
-  QObject::connect( actions.digits8,                     SIGNAL( activated()                           ), p,                     SLOT( digits8()                             ) );
-  QObject::connect( actions.digitsAuto,                  SIGNAL( activated()                           ), p,                     SLOT( digitsAuto()                          ) );
-  QObject::connect( actions.editCopyResult,              SIGNAL( activated()                           ), p,                     SLOT( copyResult()                          ) );
-  QObject::connect( actions.editCopy,                    SIGNAL( activated()                           ), widgets.editor,        SLOT( copy()                                ) );
-  QObject::connect( actions.editPaste,                   SIGNAL( activated()                           ), widgets.editor,        SLOT( paste()                               ) );
-  QObject::connect( actions.selectExpression,            SIGNAL( activated()                           ), p,                     SLOT( selectExpression()                    ) );
-  QObject::connect( actions.helpAboutQt,                 SIGNAL( activated()                           ), p,                     SLOT( aboutQt()                             ) );
-  QObject::connect( actions.helpAbout,                   SIGNAL( activated()                           ), p,                     SLOT( about()                               ) );
-  QObject::connect( actions.helpGotoWebsite,             SIGNAL( activated()                           ), p,                     SLOT( gotoWebsite()                         ) );
-  QObject::connect( actions.helpTipOfTheDay,             SIGNAL( activated()                           ), p,                     SLOT( showTipOfTheDay()                     ) );
-  QObject::connect( actions.insertFunction,              SIGNAL( activated()                           ), p,                     SLOT( insertFunction()                      ) );
-  QObject::connect( actions.insertVariable,              SIGNAL( activated()                           ), p,                     SLOT( insertVariable()                      ) );
-  QObject::connect( actions.radian,                      SIGNAL( activated()                           ), p,                     SLOT( radian()                              ) );
-  QObject::connect( actions.scrollDown,                  SIGNAL( activated()                           ), p,                     SLOT( scrollDown()                          ) );
-  QObject::connect( actions.scrollUp,                    SIGNAL( activated()                           ), p,                     SLOT( scrollUp()                            ) );
-  QObject::connect( actions.sessionLoad,                 SIGNAL( activated()                           ), p,                     SLOT( loadSession()                         ) );
-  QObject::connect( actions.sessionQuit,                 SIGNAL( activated()                           ), p,                     SLOT( close()                               ) );
-  QObject::connect( actions.sessionSave,                 SIGNAL( activated()                           ), p,                     SLOT( saveSession()                         ) );
-  QObject::connect( actions.showConstants,               SIGNAL( toggled( bool )                       ), p,                     SLOT( showConstants( bool )                 ) );
-  QObject::connect( actions.showFullScreen,              SIGNAL( toggled( bool )                       ), p,                     SLOT( showInFullScreen( bool )              ) );
-  QObject::connect( actions.showFunctions,               SIGNAL( toggled( bool )                       ), p,                     SLOT( showFunctions( bool )                 ) );
-  QObject::connect( actions.showHistory,                 SIGNAL( toggled( bool )                       ), p,                     SLOT( showHistory( bool )                   ) );
-  QObject::connect( actions.showKeypad,                  SIGNAL( toggled( bool )                       ), p,                     SLOT( showKeypad( bool )                    ) );
-  QObject::connect( actions.showMenuBar,                 SIGNAL( activated()                           ), p,                     SLOT( showMenuBar()                         ) );
-  QObject::connect( actions.showVariables,               SIGNAL( toggled( bool )                       ), p,                     SLOT( showVariables( bool )                 ) );
-  QObject::connect( actions.viewBinary,                  SIGNAL( activated()                           ), p,                     SLOT( viewBinary()                          ) );
-  QObject::connect( actions.viewEngineering,             SIGNAL( activated()                           ), p,                     SLOT( viewEngineering()                     ) );
-  QObject::connect( actions.viewFixed,                   SIGNAL( activated()                           ), p,                     SLOT( viewFixed()                           ) );
-  QObject::connect( actions.viewGeneral,                 SIGNAL( activated()                           ), p,                     SLOT( viewGeneral()                         ) );
-  QObject::connect( actions.viewHexadec,                 SIGNAL( activated()                           ), p,                     SLOT( viewHexadec()                         ) );
-  QObject::connect( actions.viewOctal,                   SIGNAL( activated()                           ), p,                     SLOT( viewOctal()                           ) );
-  QObject::connect( actions.viewScientific,              SIGNAL( activated()                           ), p,                     SLOT( viewScientific()                      ) );
-  QObject::connect( actions.optionAutoCalc,              SIGNAL( toggled( bool )                       ), p,                     SLOT( autoCalcToggled( bool )               ) );
-  QObject::connect( actions.optionAutoCompletion,        SIGNAL( toggled( bool )                       ), p,                     SLOT( autoCompletionToggled( bool )         ) );
-  QObject::connect( actions.optionAlwaysOnTop,           SIGNAL( toggled( bool )                       ), p,                     SLOT( alwaysOnTopToggled( bool )            ) );
-  QObject::connect( actions.optionMinimizeToTray,        SIGNAL( toggled( bool )                       ), p,                     SLOT( minimizeToTrayToggled( bool )         ) );
-  QObject::connect( actions.radixCharAuto,               SIGNAL( activated()                           ), p,                     SLOT( radixCharAutoActivated()              ) );
-  QObject::connect( actions.radixCharDot,                SIGNAL( activated()                           ), p,                     SLOT( radixCharDotActivated()               ) );
-  QObject::connect( actions.radixCharComma,              SIGNAL( activated()                           ), p,                     SLOT( radixCharCommaActivated()             ) );
-  QObject::connect( widgets.keypad,                      SIGNAL( buttonPressed( Keypad::Button )       ), p,                     SLOT( keypadButtonPressed( Keypad::Button ) ) );
-  QObject::connect( widgets.editor,                      SIGNAL( autoCalcActivated( const QString & )  ), p,                     SLOT( showAutoCalc( const QString & )       ) );
-  QObject::connect( widgets.editor,                      SIGNAL( autoCalcDeactivated()                 ), p,                     SLOT( hideAutoCalc()                        ) );
-  QObject::connect( widgets.editor,                      SIGNAL( returnPressed()                       ), p,                     SLOT( returnPressed()                       ) );
-  QObject::connect( widgets.editor,                      SIGNAL( textChanged()                         ), p,                     SLOT( textChanged()                         ) );
-  QObject::connect( docks.constants,                     SIGNAL( constantSelected( const QString & )   ), p,                     SLOT( constantSelected( const QString & )   ) );
-  QObject::connect( docks.functions,                     SIGNAL( functionSelected( const QString & )   ), p,                     SLOT( functionSelected( const QString & )   ) );
-  QObject::connect( docks.history,                       SIGNAL( expressionSelected( const QString & ) ), p,                     SLOT( expressionSelected( const QString & ) ) );
-  QObject::connect( docks.variables,                     SIGNAL( variableSelected( const QString & )   ), p,                     SLOT( variableSelected( const QString & )   ) );
-  QObject::connect( widgets.display,                     SIGNAL( textCopied( const QString & )         ), widgets.editor,        SLOT( paste()                               ) );
-  QObject::connect( widgets.display,                     SIGNAL( textCopied( const QString & )         ), widgets.editor,        SLOT( setFocus()                            ) );
-  QObject::connect( docks.constants->toggleViewAction(), SIGNAL( toggled( bool )                       ), actions.showConstants, SLOT( setChecked( bool )                    ) );
-  QObject::connect( docks.functions->toggleViewAction(), SIGNAL( toggled( bool )                       ), actions.showFunctions, SLOT( setChecked( bool )                    ) );
-  QObject::connect( docks.history->toggleViewAction(),   SIGNAL( toggled( bool )                       ), actions.showHistory,   SLOT( setChecked( bool )                    ) );
-  QObject::connect( docks.variables->toggleViewAction(), SIGNAL( toggled( bool )                       ), actions.showVariables, SLOT( setChecked( bool )                    ) );
-  QObject::connect( p,                                   SIGNAL( radixCharChanged( char )              ), widgets.editor,        SLOT( setRadixChar( char )                  ) );
-  QObject::connect( p,                                   SIGNAL( radixCharChanged( char )              ), widgets.display,       SLOT( setRadixChar( char )                  ) );
-  QObject::connect( p,                                   SIGNAL( formatChanged( char )                 ), widgets.display,       SLOT( setFormat( char )                     ) );
-  QObject::connect( p,                                   SIGNAL( precisionChanged( int )               ), widgets.display,       SLOT( setPrecision( int )                   ) );
-  QObject::connect( p,                                   SIGNAL( radixCharChanged( char )              ), widgets.keypad,        SLOT( setRadixChar( char )                  ) );
-  QObject::connect( p,                                   SIGNAL( radixCharChanged( char )              ), evaluator,             SLOT( setRadixChar( char )                  ) );
-}
-
-
-void MainWindow::Private::saveSettings()
-{
-  // main window
-  settings.mainWindowState = p->saveState();
-  settings.mainWindowSize  = p->size();
-
-  // history
-  settings.history        = widgets.editor->history();
-  settings.historyResults = widgets.editor->historyResults();
-
-  // variables
-  if ( settings.saveVariables )
-  {
-    settings.variables.clear();
-    QVector<Variable> vars = evaluator->variables();
-    for ( int i = 0; i < vars.count(); i++ )
-    {
-      QString name = vars[i].name;
-      char * value = HMath::formatScientific( vars[i].value, DECPRECISION );
-      settings.variables.append( QString( "%1=%2" ).arg( name ).arg( QString( value ) ) );
-      free( value );
-    }
-  }
-
-  // history dock
-  settings.historyDockFloating   = docks.history->isFloating();
-  settings.historyDockLeft       = docks.history->x();
-  settings.historyDockTop        = docks.history->y();
-  settings.historyDockWidth      = docks.history->width();
-  settings.historyDockHeight     = docks.history->height();
-  // functions dock
-  settings.functionsDockFloating = docks.functions->isFloating();
-  settings.functionsDockLeft     = docks.functions->x();
-  settings.functionsDockTop      = docks.functions->y();
-  settings.functionsDockWidth    = docks.functions->width();
-  settings.functionsDockHeight   = docks.functions->height();
-  // variables dock
-  settings.variablesDockFloating = docks.variables->isFloating();
-  settings.variablesDockLeft     = docks.variables->x();
-  settings.variablesDockTop      = docks.variables->y();
-  settings.variablesDockWidth    = docks.variables->width();
-  settings.variablesDockHeight   = docks.variables->height();
-  // constants dock
-  settings.constantsDockFloating = docks.constants->isFloating();
-  settings.constantsDockLeft     = docks.constants->x();
-  settings.constantsDockTop      = docks.constants->y();
-  settings.constantsDockWidth    = docks.constants->width();
-  settings.constantsDockHeight   = docks.constants->height();
-
-  settings.save();
 }
 
 
