@@ -149,7 +149,7 @@ int main( int argc, char * * argv )
   QApplication app( argc, argv );
   app.installTranslator( createTranslator() );
 
-  Crunch * v = new Crunch();
+  MainWindow * v = new MainWindow();
   v->show();
 
   //a.connect( &a, SIGNAL(lastWindowClosed()), &a, SLOT(quit()) );

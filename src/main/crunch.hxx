@@ -33,13 +33,13 @@
 class Keypad;
 
 
-class Crunch : public QMainWindow
+class MainWindow : public QMainWindow
 {
   Q_OBJECT
 
   public:
-    Crunch();
-    ~Crunch();
+    MainWindow();
+    ~MainWindow();
     bool event( QEvent * );
 
   signals:
@@ -52,7 +52,6 @@ class Crunch : public QMainWindow
   public slots:
     void about();
     void aboutQt();
-    void addKeypadText( const QString & );
     void clearHistory();
     void clearExpression();
     void copyResult();
@@ -125,8 +124,8 @@ class Crunch : public QMainWindow
   private:
     struct Private;
     Private * const d;
-    Crunch( const Crunch & );
-    Crunch & operator=( const Crunch & );
+    MainWindow( const MainWindow & );
+    MainWindow & operator=( const MainWindow & );
 };
 
 

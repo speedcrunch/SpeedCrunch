@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
+// Copyright (C) 2004-2005 Ariya Hidayat <ariya@kde.org>
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2004,2005 Ariya Hidayat <ariya@kde.org>
 // Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
