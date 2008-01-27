@@ -1183,6 +1183,7 @@ void MainWindow::returnPressed()
   else
   {
     d->widgets.display->append( str, result );
+    // FIXME format is inappropriate, because it saves values to 20 digits only.
     d->widgets.editor->appendHistory( str, HMath::format( result ) );
     d->widgets.editor->setAnsAvailable( true );
     d->docks.variables->updateList( d->evaluator );
