@@ -53,7 +53,6 @@ class Crunch : public QMainWindow
     void about();
     void aboutQt();
     void addKeypadText( const QString & );
-    void applySettings();
     void clearHistory();
     void clearExpression();
     void copyResult();
@@ -116,17 +115,14 @@ class Crunch : public QMainWindow
     void textChanged();
     void trayIconActivated( QSystemTrayIcon::ActivationReason );
     void variableSelected( const QString & );
+    void setPrecision( int );
+    void setFormat( char );
+    void setRadixChar( char );
 
   protected:
     virtual void closeEvent( QCloseEvent * );
 
   private:
-    void createUI();
-    void saveSettings();
-    void setPrecision( int );
-    void setFormat( char );
-    void setRadixChar( char );
-
     struct Private;
     Private * const d;
     Crunch( const Crunch & );
