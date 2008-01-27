@@ -1,6 +1,6 @@
 // HMath: C++ high precision math routines
 // Copyright (C) 2004 Ariya Hidayat <ariya.hidayat@gmail.com>
-// Copyright (C) 2007 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
 // Copyright (C) 2008 Wolf Lammen
 //
 // This program is free software; you can redistribute it and/or
@@ -19,14 +19,16 @@
 // Boston, MA 02110-1301, USA.
 
 
-#include "main/errors.h"
-#include "math/floatcommon.h"
-#include "math/floatconst.h"
-#include "math/floatconvert.h"
-#include "math/floathmath.h"
-#include "math/floatio.h"
-#include "math/floatnum.h"
-#include "math/hmath.hxx"
+#include "hmath.hxx"
+
+#include "floatcommon.h"
+#include "floatconst.h"
+#include "floatconvert.h"
+#include "floathmath.h"
+#include "floatio.h"
+#include "floatnum.h"
+
+#include "base/errors.h"
 
 #include <ctype.h>
 #include <sstream>

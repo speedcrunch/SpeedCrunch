@@ -34,7 +34,7 @@
 #include "number.h"
 #include "floatconfig.h"
 #include "floatio.h"
-#include "main/errors.h"
+#include <base/errors.h>
 
 #define NULLTERMINATED (-20)
 #define UNORDERED (-2)
@@ -46,7 +46,7 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif 
+#endif
 
 extern int maxdigits;
 
@@ -447,6 +447,6 @@ char _setzero(floatnum x);
 
 #ifdef __cplusplus
 }
-#endif 
+#endif
 
 #endif /* _FLOATNUM_H_ */

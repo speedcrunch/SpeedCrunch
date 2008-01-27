@@ -26,8 +26,6 @@
 #include "floatconfig.h"
 #include "floatio.h"
 
-#include <QList>
-
 #include <iostream>
 
 

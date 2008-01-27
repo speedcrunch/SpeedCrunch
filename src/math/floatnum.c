@@ -37,8 +37,8 @@
 */
 
 #include "floatnum.h"
-#include "main/errors.h"
 #include "floatlong.h"
+#include <base/errors.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -52,13 +52,13 @@ int expmin = EXPMIN;
 
 /*  general helper routines  */
 
-static int 
+static int
 _max(int x, int y)
 {
   return x > y? x : y;
 }
 
-static int 
+static int
 _min(int x, int y)
 {
   return x < y? x : y;
@@ -262,7 +262,7 @@ float_geterror()
 
   tmp = float_error;
   float_error = Success;
-  return tmp; 
+  return tmp;
 }
 
 /* the first error blocks all others as it may be the source
@@ -275,7 +275,7 @@ float_seterror(
     float_error = code;
 }
 
-void 
+void
 floatnum_init()
 {
   bc_init_numbers();
@@ -426,7 +426,7 @@ _bscandigit(
 /* scans two significands for the first occurence
    of a pair of differnt digits. Returns the number
    of equal digits at the beginning */
-static int 
+static int
 _scan_equal(
   floatnum v1,
   floatnum v2)
@@ -448,7 +448,7 @@ _scan_equal(
    9 in the second operand. The scan is limited by <count>
    compares and starts with the *second* digit in the
    significands. Returns the number of found (0,9) pairs. */
-static int 
+static int
 _scan_09pairs(
   floatnum f1,
   floatnum f2,
@@ -842,7 +842,7 @@ float_setscientific(
     /* get the exponent sign */
     switch(*expptr)
     {
-    case '-': 
+    case '-':
       expsign = -1; /* and fall through */
     case '+':
       ++expptr;
@@ -1466,7 +1466,7 @@ _sub_ordered(
      if the operands are known to be exact.
      Cancellation occurs only, if the difference between the
      exponents is 1 at most. We prepare the critical cases in
-     specialized routines, and let the standard routine do the 
+     specialized routines, and let the standard routine do the
      rest. */
 
   /* the operands are ordered by their exponent */

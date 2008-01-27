@@ -28,15 +28,16 @@
 
 *************************************************************************/
 
-#include "symboltables/symbols.hxx"
-#include "symboltables/tables.hxx"
-#include "main/errors.h"
+#include "symbols.hxx"
+#include "tables.hxx"
+
+#include <base/errors.h>
 
 // Variant::Variant()
 // {
 //   m_type = TEmpty;
 // }
-// 
+//
 // void Variant::operator=(const HNumber& val)
 // {
 //   HNumber::operator=(val);
@@ -46,21 +47,21 @@
 //   else
 //     m_type = TError;
 // }
-// 
+//
 // void Variant::operator=(int error)
 // {
 //   *this = HNumber::nan(error);
 //   if (error == 0)
 //     m_type = TEmpty;
 // }
-// 
+//
 // void Variant::operator=(const QString& str)
 // {
 //   *this = 0;
 //   text = str;
 //   m_type = TText;
 // }
-// 
+//
 // int Variant::matchType(VariantType t) const
 // {
 //   switch (t)
@@ -78,7 +79,7 @@
 //   }
 //   return 0;
 // }
-// 
+//
 // bool Variant::isNum() const
 // {
 //   switch (matchType(TNumeric))

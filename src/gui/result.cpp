@@ -22,8 +22,8 @@
 
 #include "result.hxx"
 
-#include <base/functions.hxx>
-#include <math/hmath.hxx>
+#include "base/functions.hxx"
+#include "math/hmath.hxx"
 
 #include <QApplication>
 #include <QClipboard>

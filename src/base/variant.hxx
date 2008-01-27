@@ -30,8 +30,8 @@
 #ifndef VARIANT_HXX
 #define VARIANT_HXX
 
-#include <main/errors.h>
-#include <math/floatnum.h>
+#include "errors.h"
+#include "math/floatnum.h"
 
 #include <QList>
 #include <QString>

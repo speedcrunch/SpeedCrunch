@@ -22,7 +22,7 @@
 #define FUNCTIONS_HXX
 
 
-#include <math/hmath.hxx>
+#include "math/hmath.hxx"
 
 #include <QStringList>
 #include <QVector>

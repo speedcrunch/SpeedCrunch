@@ -28,7 +28,7 @@
 
 *************************************************************************/
 
-#include "base/variant.hxx"
+#include "variant.hxx"
 #include "math/numdata.hxx"
 
 Data::Constructors Data::constructors;

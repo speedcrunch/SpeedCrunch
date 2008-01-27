@@ -18,8 +18,8 @@
 // Boston, MA 02110-1301, USA.
 
 
-#include <3rdparty/util/binreloc.h>
-#include <main/crunch.hxx>
+#include "3rdparty/util/binreloc.h"
+#include "gui/mainwindow.hxx"
 
 #include <QApplication>
 #include <QDir>

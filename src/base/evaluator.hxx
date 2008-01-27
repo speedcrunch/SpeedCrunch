@@ -24,7 +24,7 @@
 
 // #define _BISON
 
-#include <math/hmath.hxx>
+#include "math/hmath.hxx"
 
 #include <QObject>
 #include <QString>

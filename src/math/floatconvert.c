@@ -34,7 +34,7 @@
 #include "floatconfig.h"
 #include "floatconst.h"
 #include "floatipower.h"
-#include "main/errors.h"
+#include <base/errors.h>
 #include <stdlib.h>
 
 typedef struct{
@@ -79,7 +79,7 @@ _floatnum2longint(
   factor = 1000000000;
   while (i < digits)
   {
-    if (_longintmul(longint, factor) 
+    if (_longintmul(longint, factor)
         || _longintadd(longint, _digitblock(f, i, 9)))
       return 0;
     i += 9;
@@ -217,7 +217,7 @@ _setfndesc(
   n->intpart.getdigit = _getfnintdigit;
   n->fracpart.seq.base = 10;
   n->fracpart.seq.leadingSignDigits = _max(-float_getexponent(x) - 1, 0);
-  n->fracpart.seq.digits = float_getlength(x) - digits 
+  n->fracpart.seq.digits = float_getlength(x) - digits
                            + n->fracpart.seq.leadingSignDigits;
   n->fracpart.seq.param = x;
   n->fracpart.getdigit = _getfnfracdigit;

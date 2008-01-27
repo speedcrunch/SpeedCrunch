@@ -21,7 +21,7 @@ gui/keypad.hxx
 gui/result.hxx
 gui/tipwidget.hxx
 gui/variablesdock.hxx
-main/crunch.hxx
+gui/mainwindow.hxx
 math/floatcommon.h
 math/floatconfig.h
 math/floatconst.h
@@ -65,7 +65,7 @@ gui/keypad.cpp
 gui/result.cpp
 gui/tipwidget.cpp
 gui/variablesdock.cpp
-main/crunch.cpp
+gui/mainwindow.cpp
 main/main.cpp
 math/floatcommon.c
 math/floatconst.c
@@ -115,6 +115,9 @@ test/testhmath.cpp
 
 # regression test for Evaluator
 #set(testevaluator_SOURCES
+#base/evaluator.hxx
+#)
+#set(testevaluator_SOURCES
 #base/evaluator.cpp
 #base/functions.cpp
 #base/variant.cpp
@@ -144,7 +147,6 @@ test/testhmath.cpp
 
 # regression test for floatnum
 set(testfloatnum_SOURCES
-main/errors.h
 math/floatcommon.c
 math/floatconst.c
 math/floatconvert.c

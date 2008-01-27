@@ -18,7 +18,7 @@
 // Boston, MA 02110-1301, USA.
 
 
-#include <math/hmath.hxx>
+#include "math/hmath.hxx"
 
 #include <cstdlib>
 #include <iostream>

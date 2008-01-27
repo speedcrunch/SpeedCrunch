@@ -21,7 +21,7 @@
 
 #include "settings.hxx"
 
-#include <math/floatconfig.h>
+#include "math/floatconfig.h"
 
 #include <QApplication>
 #include <QDir>

@@ -21,7 +21,7 @@
 
 #include "functions.hxx"
 
-#include <math/hmath.hxx>
+#include "math/hmath.hxx"
 
 #include <QApplication>
 #include <QHash>

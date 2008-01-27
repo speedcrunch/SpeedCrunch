@@ -20,9 +20,9 @@
 
 #include "variablesdock.hxx"
 
-#include <base/evaluator.hxx>
-#include <base/functions.hxx>
-#include <base/settings.hxx>
+#include "base/evaluator.hxx"
+#include "base/functions.hxx"
+#include "base/settings.hxx"
 
 #include <QHeaderView>
 #include <QLabel>

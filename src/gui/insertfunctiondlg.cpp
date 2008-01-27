@@ -22,8 +22,8 @@
 
 #include "insertfunctiondlg.hxx"
 
-#include <base/functions.hxx>
-#include <base/settings.hxx>
+#include "base/functions.hxx"
+#include "base/settings.hxx"
 
 #include <QDialog>
 #include <QHBoxLayout>

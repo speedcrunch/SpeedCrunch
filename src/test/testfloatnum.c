@@ -36,7 +36,7 @@
 
 /* a few tests depend on 32 bit integer size, fix this in future!! */
 
-#include "main/errors.h"
+#include "base/errors.h"
 #include "math/floatconfig.h"
 #include "math/floatconst.h"
 #include "math/floatcommon.h"
@@ -1649,7 +1649,7 @@ static int tc_copy(const char* source, int digits,
   err = float_copy(d, s, digits);
   code = float_geterror();
   float_getscientific(buf, sizeof(buf), d);
-  retvalue = refs == _one_->n_refs 
+  retvalue = refs == _one_->n_refs
              && code == error
              && logequiv(code, !err)
              && strcmp(result, buf) == 0;
@@ -1952,7 +1952,7 @@ static int tc_add(char* msg, char* val1, char* val2, int digits, char* result)
   lg = strlen(result);
   ok = _cmp(&v1, &b1) == 0
        && _cmp(&v2, &b2) == 0
-       && lg == strlen(buf) 
+       && lg == strlen(buf)
        && memcmp(buf, result, lg) == 0? TRUE : FALSE;
 
   float_free(&v1);
@@ -2078,7 +2078,7 @@ static int tc_sub(char* msg, char* val1, char* val2, int digits, char* result)
   lg = strlen(result);
   ok = _cmp(&v1, &b1) == 0
        && _cmp(&v2, &b2) == 0
-       && lg == strlen(buf) 
+       && lg == strlen(buf)
        && memcmp(buf, result, lg) == 0? TRUE : FALSE;
 
   float_free(&v1);
@@ -2160,7 +2160,7 @@ static int tc_mul(char* msg, char* val1, char* val2, int digits, char* result)
   lg = strlen(result);
   ok = _cmp(&v1, &b1) == 0
        && _cmp(&v2, &b2) == 0
-       && lg == strlen(buf) 
+       && lg == strlen(buf)
        && memcmp(buf, result, lg) == 0? TRUE : FALSE;
 
   float_free(&v1);
@@ -2259,7 +2259,7 @@ static int tc_div(char* msg, char* val1, char* val2, int digits, char* result)
   lg = strlen(result);
   ok = _cmp(&v1, &b1) == 0
        && _cmp(&v2, &b2) == 0
-       && lg == strlen(buf) 
+       && lg == strlen(buf)
        && memcmp(buf, result, lg) == 0? TRUE : FALSE;
 
   float_free(&v1);

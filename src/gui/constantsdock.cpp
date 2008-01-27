@@ -18,9 +18,9 @@
 // Boston, MA 02110-1301, USA.
 
 
-#include <base/constants.hxx>
-#include <base/settings.hxx>
-#include <gui/constantsdock.hxx>
+#include "constantsdock.hxx"
+
+#include "base/constants.hxx"
 
 #include <QComboBox>
 #include <QHBoxLayout>

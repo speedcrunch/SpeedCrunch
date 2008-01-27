@@ -20,26 +20,27 @@
 // Boston, MA 02110-1301, USA.
 
 
-#include "crunch.hxx"
+#include "mainwindow.hxx"
 
-#include <base/constants.hxx>
-#include <base/evaluator.hxx>
-#include <base/functions.hxx>
-#include <base/settings.hxx>
-#include <gui/aboutbox.hxx>
-#include <gui/autohidelabel.hxx>
-#include <gui/constantsdock.hxx>
-#include <gui/deletevardlg.hxx>
-#include <gui/editor.hxx>
-#include <gui/functionsdock.hxx>
-#include <gui/historydock.hxx>
-#include <gui/insertfunctiondlg.hxx>
-#include <gui/insertvardlg.hxx>
-#include <gui/keypad.hxx>
-#include <gui/result.hxx>
-#include <gui/tipwidget.hxx>
-#include <gui/variablesdock.hxx>
-#include <math/hmath.hxx>
+#include "autohidelabel.hxx"
+#include "constantsdock.hxx"
+#include "deletevardlg.hxx"
+#include "editor.hxx"
+#include "functionsdock.hxx"
+#include "historydock.hxx"
+#include "insertfunctiondlg.hxx"
+#include "insertvardlg.hxx"
+#include "keypad.hxx"
+#include "result.hxx"
+#include "tipwidget.hxx"
+#include "variablesdock.hxx"
+
+#include "base/constants.hxx"
+#include "base/evaluator.hxx"
+#include "base/functions.hxx"
+#include "base/settings.hxx"
+#include "gui/aboutbox.hxx"
+#include "math/hmath.hxx"
 
 #include <QAction>
 #include <QActionGroup>

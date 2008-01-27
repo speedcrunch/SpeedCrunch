@@ -23,7 +23,7 @@
 #define EDITOR_HXX
 
 
-#include <math/hmath.hxx>
+#include "math/hmath.hxx"
 
 #include <QTextEdit>
 

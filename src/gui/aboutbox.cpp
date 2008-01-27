@@ -1,30 +1,32 @@
-/* This file is part of the SpeedCrunch project
-   Copyright (C) 2004-2006 Ariya Hidayat <ariya@kde.org>
-   Copyright (C) 2005-2006 Johan Thelin <e8johan@gmail.com>
-   Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
+// This file is part of the SpeedCrunch project
+// Copyright (C) 2004-2006 Ariya Hidayat <ariya@kde.org>
+// Copyright (C) 2005-2006 Johan Thelin <e8johan@gmail.com>
+// Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; see the file COPYING.  If not, write to
+// the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+// Boston, MA 02110-1301, USA.
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public License
-   as published by the Free Software Foundation; either version 2
-   of the License, or (at your option) any later version.
 
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
- */
-
-#include <gui/aboutbox.hxx>
+#include "aboutbox.hxx"
 
 #include <QtGui>
 
+
 #define MAKE_STRING(a) DO_MAKE_STRING(a)
 #define DO_MAKE_STRING(a) # a
+
 
 class MarqueeTextPrivate
 {
@@ -37,6 +39,7 @@ class MarqueeTextPrivate
     unsigned        scrollTick;
     unsigned        sideMargin;
 };
+
 
 MarqueeText::MarqueeText( QWidget * parent, const char * name ):
   QFrame( parent )
@@ -60,16 +63,19 @@ MarqueeText::MarqueeText( QWidget * parent, const char * name ):
   scrollTimer->start( d->scrollTick );
 }
 
+
 MarqueeText::~MarqueeText()
 {
   delete d->buffer;
   delete d;
 }
 
+
 QSizePolicy MarqueeText::sizePolicy() const
 {
   return QSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
 }
+
 
 void MarqueeText::setText( const QString & text )
 {
@@ -79,6 +85,7 @@ void MarqueeText::setText( const QString & text )
   d->pos = height();
   update();
 }
+
 
 void MarqueeText::paintEvent( QPaintEvent * e )
 {
@@ -99,12 +106,14 @@ void MarqueeText::paintEvent( QPaintEvent * e )
   }
 }
 
+
 void MarqueeText::resizeEvent( QResizeEvent * e )
 {
   layout();
   e->accept();
   update();
 }
+
 
 void MarqueeText::scroll()
 {
@@ -116,6 +125,7 @@ void MarqueeText::scroll()
 
   update();
 }
+
 
 void MarqueeText::layout()
 {
@@ -181,6 +191,7 @@ void MarqueeText::layout()
     ypos += 10; // paragraph-spacing
   }
 }
+
 
 AboutBox::AboutBox( QWidget * parent ) : QDialog( parent )
 {

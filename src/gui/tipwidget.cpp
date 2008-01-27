@@ -18,7 +18,7 @@
 // Boston, MA 02110-1301, USA.
 
 
-#include <gui/tipwidget.hxx>
+#include "tipwidget.hxx"
 
 #include <QLabel>
 #include <QPushButton>

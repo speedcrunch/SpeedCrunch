@@ -22,9 +22,9 @@
 
 #include "editor.hxx"
 
-#include <base/constants.hxx>
-#include <base/evaluator.hxx>
-#include <base/functions.hxx>
+#include "base/constants.hxx"
+#include "base/evaluator.hxx"
+#include "base/functions.hxx"
 
 #include <QApplication>
 #include <QDesktopWidget>

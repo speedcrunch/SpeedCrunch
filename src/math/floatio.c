@@ -31,7 +31,7 @@
 
 #include "floatio.h"
 #include "floatlong.h"
-#include "main/errors.h"
+#include <base/errors.h>
 #include <string.h>
 
 #define NORMALBASE (-1)
@@ -1031,7 +1031,7 @@ cattokens(
                      || (flags & IO_FLAG_SUPPRESS_EXPPLUS) == 0);
   printexpbase = expbasetag != NULL
                  && (flags & IO_FLAG_SUPPRESS_EXPBASE) == 0
-                 && (_isempty(basetag) 
+                 && (_isempty(basetag)
                      || strcmp(basetag, expbasetag) != 0);
   if ((flags & IO_FLAG_SHOW_EXPBASE) != 0)
     printexpbase = 1;

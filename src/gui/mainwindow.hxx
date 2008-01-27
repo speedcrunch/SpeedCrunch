@@ -23,7 +23,7 @@
 #define CRUNCH_HXX
 
 
-#include <gui/keypad.hxx>
+#include "keypad.hxx"
 
 #include <QCloseEvent>
 #include <QMainWindow>

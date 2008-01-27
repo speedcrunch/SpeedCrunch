@@ -18,8 +18,8 @@
 // Boston, MA 02110-1301, USA.
 
 
-#include <base/evaluator.hxx>
-#include <math/hmath.hxx>
+#include "base/evaluator.hxx"
+#include "math/hmath.hxx"
 
 #include <QApplication>
 #include <QtCore>
@@ -441,7 +441,7 @@ int main( int argc, char * * argv )
 {
   QApplication app( argc, argv );
 
-  HMath::setAngleMode( HMath::Radian );
+  HMath::setAngleMode( 'r' );
   eval = new Evaluator( '.' );
   test_constants();
   test_unary();
