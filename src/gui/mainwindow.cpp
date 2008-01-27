@@ -226,6 +226,9 @@ MainWindow::Private::Private()
   conditions.autoAns             = false;
   conditions.trayNotify          = true;
   conditions.notifyMenuBarHidden = true;
+  dialogs.deleteVariable         = 0;
+  dialogs.insertFunction         = 0;
+  dialogs.insertVariable         = 0;
 };
 
 
@@ -247,9 +250,6 @@ void MainWindow::Private::createUI()
 
   p->setWindowTitle( "SpeedCrunch" );
   p->setWindowIcon( QPixmap( ":/crunch.png" ) );
-  // Initialize settings
-  dialogs.insertVariable = 0;
-  dialogs.deleteVariable = 0;
 }
 
 
@@ -944,6 +944,9 @@ void MainWindow::deleteVariable()
     d->dialogs.deleteVariable->updateList();
 
   d->dialogs.deleteVariable->exec();
+  delete d->dialogs.deleteVariable;
+  d->dialogs.deleteVariable = 0;
+
   d->docks.variables->updateList( d->evaluator );
 }
 
@@ -1015,6 +1018,8 @@ void MainWindow::insertFunction()
     if ( ! funcName.isEmpty() )
       d->widgets.editor->insert( funcName );
   }
+  delete d->dialogs.insertFunction;
+  d->dialogs.insertFunction = 0;
 }
 
 
@@ -1031,6 +1036,8 @@ void MainWindow::insertVariable()
     if ( ! varName.isEmpty() )
       d->widgets.editor->insert( varName );
   }
+  delete d->dialogs.insertVariable;
+  d->dialogs.insertVariable = 0;
 }
 
 
