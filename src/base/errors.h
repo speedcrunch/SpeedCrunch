@@ -123,7 +123,8 @@ typedef enum
    was of a special type, like a close parenthesis */
   SymbolCloneError,
 
-  SyntaxError,
+/* unable to perform a requested type cast */
+  BadCast,
 
 /* used with variants, when an operation is not implemented
   for a particular data type */

@@ -1,13 +1,14 @@
 # speedcrunch
 
 set(speedcrunch_HEADERS
+variant/variantdata.hxx
+variant/variant.hxx
+variant/real.hxx
 3rdparty/util/binreloc.h
 base/constants.hxx
 base/evaluator.hxx
 base/functions.hxx
 base/settings.hxx
-base/variant.hxx
-bison/exprparser.h
 gui/aboutbox.hxx
 gui/autohidelabel.hxx
 gui/constantsdock.hxx
@@ -41,17 +42,18 @@ math/floatseries.h
 math/floattrig.h
 math/hmath.hxx
 math/number.h
-math/numdata.hxx
 )
 
 set(speedcrunch_SOURCES
+variant/variantdata.cpp
+variant/variant.cpp
+variant/real.cpp
+variant/initvariant.cpp
 3rdparty/util/binreloc.c
 base/constants.cpp
 base/evaluator.cpp
 base/functions.cpp
 base/settings.cpp
-base/variant.cpp
-bison/exprparser.c
 gui/aboutbox.cpp
 gui/autohidelabel.cpp
 gui/constantsdock.cpp
@@ -83,7 +85,6 @@ math/floatnum.c
 math/floatpower.c
 math/floatseries.c
 math/floattrig.c
-math/numdata.cpp
 math/hmath.cpp
 math/number.c
 )
