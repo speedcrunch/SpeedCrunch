@@ -80,7 +80,7 @@ target_link_libraries(${PROGNAME} ${QT_LIBRARIES} ${LINK_FLAGS})
 # note: it will install to CMAKE_INSTALL_PREFIX, which can be set e.g
 #  cmake ../trunk  -DCMAKE_INSTALL_PREFIX=/usr
 install(TARGETS ${PROGNAME} DESTINATION bin)
-install(FILES ${speedcrunch_TRANSLATIONS} DESTINATION share/speedcrunch)
+install(FILES ${speedcrunch_TRANSLATIONS} DESTINATION share/speedcrunch/locale)
 
 # required for regression tests
 enable_testing()

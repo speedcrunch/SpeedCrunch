@@ -31,124 +31,52 @@
 
 QTranslator * createTranslator()
 {
-  QString       qmFile;
-  QFileInfo     fi;
-  QTranslator * translator = 0;
+  QTranslator * translator = new QTranslator();
   bool          foundTranslator = false;
-  QString       locale = QLocale().name();
-  QString       localeShort = locale.left( 2 ).toLower();
+  QString       localeFile = QString( "speedcrunch_" ) + QLocale().name() + ".qm";
+  QString       localeDir;
 
 #ifdef Q_OS_WIN32
   if ( ! foundTranslator )
-  {
-    qmFile = locale + ".qm";
-    fi = QFileInfo( qmFile );
-    if( fi.exists() )
-    {
-      translator = new QTranslator( 0 );
-      translator->load( qmFile );
-
+    if ( translator->load( localeFile ) )
       foundTranslator = true;
-    }
-  }
-
-  if ( ! foundTranslator )
-  {
-    qmFile = localeShort + ".qm";
-    fi = QFileInfo( qmFile );
-    if ( fi.exists() )
-    {
-      translator = new QTranslator( 0 );
-      translator->load( qmFile );
-
-      foundTranslator = true;
-    }
-  }
 #endif // Q_OS_WIN32
 
-    BrInitError error;
+  BrInitError error;
 
-    if ( br_init( &error ) == 0 && error != BR_INIT_ERROR_DISABLED )
-    {
-        printf( "Warning: BinReloc failed to initialize (error code %d)\n", error );
-        printf( "Will fallback to hardcoded default path.\n" );
-    }
+  if ( br_init( &error ) == 0 && error != BR_INIT_ERROR_DISABLED )
+  {
+      printf( "Warning: BinReloc failed to initialize (error code %d)\n", error );
+      printf( "Will fallback to hardcoded default path.\n" );
+  }
 
-    // Search with the following order:
-    // (1) install prefix + share/speedcrunch, e.g. "/usr/local/share/speedcrunch"
-    // (2) install prefix + share, e.g. "/usr/local/share"
-    // (3) current directory
+  localeDir = QString( br_find_data_dir( 0 ) ) + "/speedcrunch/locale";
+  if ( ! foundTranslator )
+  {
+    if ( translator->load( localeFile, localeDir ) )
+      foundTranslator = true;
+  }
 
-    // item (1)
-    QString shareDir = QString( br_find_data_dir( 0 ) ).append( "/speedcrunch/locale" );
-    QDir qmPath( shareDir );
-    qmPath.cd( "speedcrunch" );
-
-    if ( ! foundTranslator )
-    {
-      qmFile = qmPath.absolutePath() + "/" + locale + ".qm";
-      fi = QFileInfo( qmFile );
-      if ( fi.exists() )
-      {
-        translator = new QTranslator( 0 );
-        translator->load( qmFile );
-        foundTranslator = true;
-      }
-    }
-
-    if ( ! foundTranslator )
-    {
-      qmFile = qmPath.absolutePath() + "/" + localeShort + ".qm";
-      fi = QFileInfo( qmFile );
-      if ( fi.exists() )
-      {
-        translator = new QTranslator( 0 );
-        translator->load( qmFile );
-        foundTranslator = true;
-       }
-    }
-
-    // item (2), fallback is item (3)
-    qmPath = QDir( br_find_data_dir( "." ) );
-
-    if ( ! foundTranslator )
-    {
-      qmFile = qmPath.absolutePath() + "/" + locale + ".qm";
-      fi = QFileInfo( qmFile );
-      if ( fi.exists() )
-      {
-        translator = new QTranslator( 0 );
-        translator->load( qmFile );
-        foundTranslator = true;
-      }
-    }
-
-    if ( ! foundTranslator )
-    {
-      qmFile = qmPath.absolutePath() + "/" + localeShort + ".qm";
-      fi = QFileInfo( qmFile );
-      if ( fi.exists() )
-      {
-        translator = new QTranslator( 0 );
-        translator->load( qmFile );
-        foundTranslator = true;
-      }
-    }
-
-    if ( foundTranslator )
-      return translator;
-    else
-      return new QTranslator( 0 );
+  if ( foundTranslator )
+    return translator;
+  else
+    return 0;
 }
 
 
 int main( int argc, char * * argv )
 {
   QApplication app( argc, argv );
-  app.installTranslator( createTranslator() );
+
+  QTranslator * tr = createTranslator();
+  if ( tr )
+    app.installTranslator( tr );
+
   MainWindow mw;
   mw.show();
+
   //a.connect( & a, SIGNAL(lastWindowClosed()), & a, SLOT(quit()) );
   app.connect( & mw, SIGNAL( quitApplication() ), & app, SLOT( quit() ) );
+
   return app.exec();
 }
