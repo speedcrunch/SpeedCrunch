@@ -33,7 +33,7 @@ QTranslator * createTranslator()
 {
   QTranslator * translator = new QTranslator();
   bool          foundTranslator = false;
-  QString       localeFile = QString( "speedcrunch_" ) + QLocale().name() + ".qm";
+  QString       localeFile = QLocale().name();
   QString       localeDir;
 
 #ifdef Q_OS_WIN32
