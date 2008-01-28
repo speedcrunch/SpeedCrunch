@@ -304,11 +304,6 @@ void MainWindow::Private::createActions()
   actions.viewOctal             = new QAction( tr("&Octal"),                   p );
   actions.viewScientific        = new QAction( tr("&Scientific"),              p );
 
-  // necessary after hiding the menu bar
-  p->addActions( p->menuBar()->actions() );
-  p->addAction( actions.scrollDown );
-  p->addAction( actions.scrollUp );
-
   actions.degree->setCheckable              ( true );
   actions.digits15->setCheckable            ( true );
   actions.digits2->setCheckable             ( true );
@@ -488,6 +483,11 @@ void MainWindow::Private::createMenus()
   menus.help->addSeparator();
   menus.help->addAction( actions.helpAbout );
   menus.help->addAction( actions.helpAboutQt );
+
+  // necessary after hiding the menu bar, so shortcuts still recognized by main window
+  p->addActions( p->menuBar()->actions() );
+  p->addAction( actions.scrollDown );
+  p->addAction( actions.scrollUp );
 }
 
 
