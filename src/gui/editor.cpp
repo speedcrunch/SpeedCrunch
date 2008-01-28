@@ -705,6 +705,8 @@ QString Editor::formatNumber( const HNumber & value ) const
 {
   char * str = HMath::format( value, d->format, d->precision );
   QString s = QString::fromLatin1( str );
+  if ( d->radixChar == ',' )
+    s.replace( '.', ',' );
   free( str );
   return s;
 }

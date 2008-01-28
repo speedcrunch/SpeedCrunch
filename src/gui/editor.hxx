@@ -61,8 +61,6 @@ class Editor : public QTextEdit
     void        setAutoCalcEnabled( bool enable );
     void        setAutoCompleteEnabled( bool enable );
     void        setCursorPosition( int pos );
-    void        setPrecision( int digits );
-    void        setFormat( char format );
     void        setHighlightColor( ColorType type, QColor color );
     void        setSyntaxHighlight( bool enable );
     void        setText( const QString & );
@@ -78,6 +76,8 @@ class Editor : public QTextEdit
     void evaluate();
     void insertConstant( const QString & );
     void insert( const QString & );
+    void setPrecision( int );
+    void setFormat( char );
     void setRadixChar( char );
 
   protected slots:

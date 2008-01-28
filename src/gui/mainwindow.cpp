@@ -119,13 +119,13 @@ struct Actions
   QAction * showKeypad;
   QAction * showMenuBar;
   QAction * showVariables;
-  QAction * viewBinary;
-  QAction * viewEngineering;
-  QAction * viewFixed;
-  QAction * viewGeneral;
-  QAction * viewHexadec;
-  QAction * viewOctal;
-  QAction * viewScientific;
+  QAction * formatBinary;
+  QAction * formatEngineering;
+  QAction * formatFixed;
+  QAction * formatGeneral;
+  QAction * formatHexadec;
+  QAction * formatOctal;
+  QAction * formatScientific;
 };
 
 
@@ -296,13 +296,13 @@ void MainWindow::Private::createActions()
   actions.showKeypad            = new QAction( tr("Show &Keypad"),             p );
   actions.showMenuBar           = new QAction( tr("Hide &Menu Bar"),           p );
   actions.showVariables         = new QAction( tr("Show &Variables"),          p );
-  actions.viewBinary            = new QAction( tr("&Binary"),                  p );
-  actions.viewEngineering       = new QAction( tr("&Engineering"),             p );
-  actions.viewFixed             = new QAction( tr("&Fixed Decimal"),           p );
-  actions.viewGeneral           = new QAction( tr("&General"),                 p );
-  actions.viewHexadec           = new QAction( tr("&Hexadecimal"),             p );
-  actions.viewOctal             = new QAction( tr("&Octal"),                   p );
-  actions.viewScientific        = new QAction( tr("&Scientific"),              p );
+  actions.formatBinary          = new QAction( tr("&Binary"),                  p );
+  actions.formatEngineering     = new QAction( tr("&Engineering"),             p );
+  actions.formatFixed           = new QAction( tr("&Fixed Decimal"),           p );
+  actions.formatGeneral         = new QAction( tr("&General"),                 p );
+  actions.formatHexadec         = new QAction( tr("&Hexadecimal"),             p );
+  actions.formatOctal           = new QAction( tr("&Octal"),                   p );
+  actions.formatScientific      = new QAction( tr("&Scientific"),              p );
 
   actions.degree->setCheckable              ( true );
   actions.digits15->setCheckable            ( true );
@@ -325,26 +325,26 @@ void MainWindow::Private::createActions()
   actions.showHistory->setCheckable         ( true );
   actions.showKeypad->setCheckable          ( true );
   actions.showVariables->setCheckable       ( true );
-  actions.viewBinary->setCheckable          ( true );
-  actions.viewEngineering->setCheckable     ( true );
-  actions.viewFixed->setCheckable           ( true );
-  actions.viewGeneral->setCheckable         ( true );
-  actions.viewHexadec->setCheckable         ( true );
-  actions.viewOctal->setCheckable           ( true );
-  actions.viewScientific->setCheckable      ( true );
+  actions.formatBinary->setCheckable        ( true );
+  actions.formatEngineering->setCheckable   ( true );
+  actions.formatFixed->setCheckable         ( true );
+  actions.formatGeneral->setCheckable       ( true );
+  actions.formatHexadec->setCheckable       ( true );
+  actions.formatOctal->setCheckable         ( true );
+  actions.formatScientific->setCheckable    ( true );
 }
 
 
 void MainWindow::Private::createActionGroups()
 {
   actionGroups.format = new QActionGroup( p );
-  actionGroups.format->addAction( actions.viewBinary );
-  actionGroups.format->addAction( actions.viewGeneral );
-  actionGroups.format->addAction( actions.viewFixed );
-  actionGroups.format->addAction( actions.viewEngineering );
-  actionGroups.format->addAction( actions.viewScientific );
-  actionGroups.format->addAction( actions.viewOctal );
-  actionGroups.format->addAction( actions.viewHexadec );
+  actionGroups.format->addAction( actions.formatBinary );
+  actionGroups.format->addAction( actions.formatGeneral );
+  actionGroups.format->addAction( actions.formatFixed );
+  actionGroups.format->addAction( actions.formatEngineering );
+  actionGroups.format->addAction( actions.formatScientific );
+  actionGroups.format->addAction( actions.formatOctal );
+  actionGroups.format->addAction( actions.formatHexadec );
 
   actionGroups.digits = new QActionGroup( p );
   actionGroups.digits->addAction( actions.digitsAuto );
@@ -387,10 +387,10 @@ void MainWindow::Private::createActionShortcuts()
   actions.showFullScreen->setShortcut  (            Qt::Key_F11      );
   actions.showKeypad->setShortcut      ( Qt::CTRL + Qt::Key_K        );
   actions.showMenuBar->setShortcut     ( Qt::CTRL + Qt::Key_M        );
-  actions.viewBinary->setShortcut      (            Qt::Key_F5       );
-  actions.viewGeneral->setShortcut     (            Qt::Key_F7       );
-  actions.viewHexadec->setShortcut     (            Qt::Key_F8       );
-  actions.viewOctal->setShortcut       (            Qt::Key_F6       );
+  actions.formatBinary->setShortcut    (            Qt::Key_F5       );
+  actions.formatGeneral->setShortcut   (            Qt::Key_F7       );
+  actions.formatHexadec->setShortcut   (            Qt::Key_F8       );
+  actions.formatOctal->setShortcut     (            Qt::Key_F6       );
 }
 
 
@@ -424,14 +424,14 @@ void MainWindow::Private::createMenus()
   // format
   menus.format = new QMenu( tr("&Format"), p );
   p->menuBar()->addMenu( menus.format );
-  menus.format->addAction( actions.viewBinary );
-  menus.format->addAction( actions.viewOctal );
+  menus.format->addAction( actions.formatBinary );
+  menus.format->addAction( actions.formatOctal );
   // settings / decimal
   menus.decimal = menus.format->addMenu( tr("Decimal") );
-  menus.decimal->addAction( actions.viewGeneral );
-  menus.decimal->addAction( actions.viewFixed );
-  menus.decimal->addAction( actions.viewEngineering );
-  menus.decimal->addAction( actions.viewScientific );
+  menus.decimal->addAction( actions.formatGeneral );
+  menus.decimal->addAction( actions.formatFixed );
+  menus.decimal->addAction( actions.formatEngineering );
+  menus.decimal->addAction( actions.formatScientific );
   menus.decimal->addSeparator();
   menus.decimal->addAction( actions.digitsAuto );
   menus.decimal->addAction( actions.digits2 );
@@ -440,7 +440,7 @@ void MainWindow::Private::createMenus()
   menus.decimal->addAction( actions.digits15 );
   menus.decimal->addAction( actions.digits50 );
   // format (continued)
-  menus.format->addAction( actions.viewHexadec );
+  menus.format->addAction( actions.formatHexadec );
 
   // angle
   menus.angle = new QMenu( tr("&Angle"), p );
@@ -506,7 +506,6 @@ void MainWindow::Private::createWidgets()
   displayLayout->setMargin( 5 );
   widgets.display = new Result( settings.radixChar, settings.format,
                                 settings.precision, box );
-  //boxLayout->addWidget( widgets.display );
   displayLayout->addWidget( widgets.display );
   boxLayout->addLayout( displayLayout );
 
@@ -517,6 +516,7 @@ void MainWindow::Private::createWidgets()
   widgets.editor = new Editor( evaluator, settings.radixChar, box );
   widgets.editor->setFocus();
   widgets.editor->setStyleSheet( "QTextEdit { font: bold 16px }" );
+  widgets.editor->setFixedHeight( widgets.editor->sizeHint().height() );
   editorLayout->addWidget( widgets.editor );
   boxLayout->addLayout( editorLayout );
 
@@ -610,13 +610,13 @@ void MainWindow::Private::createConnections()
   QObject::connect( actions.showKeypad,                  SIGNAL( toggled( bool )                       ), p,                     SLOT( showKeypad( bool )                    ) );
   QObject::connect( actions.showMenuBar,                 SIGNAL( activated()                           ), p,                     SLOT( showMenuBar()                         ) );
   QObject::connect( actions.showVariables,               SIGNAL( toggled( bool )                       ), p,                     SLOT( showVariables( bool )                 ) );
-  QObject::connect( actions.viewBinary,                  SIGNAL( activated()                           ), p,                     SLOT( viewBinary()                          ) );
-  QObject::connect( actions.viewEngineering,             SIGNAL( activated()                           ), p,                     SLOT( viewEngineering()                     ) );
-  QObject::connect( actions.viewFixed,                   SIGNAL( activated()                           ), p,                     SLOT( viewFixed()                           ) );
-  QObject::connect( actions.viewGeneral,                 SIGNAL( activated()                           ), p,                     SLOT( viewGeneral()                         ) );
-  QObject::connect( actions.viewHexadec,                 SIGNAL( activated()                           ), p,                     SLOT( viewHexadec()                         ) );
-  QObject::connect( actions.viewOctal,                   SIGNAL( activated()                           ), p,                     SLOT( viewOctal()                           ) );
-  QObject::connect( actions.viewScientific,              SIGNAL( activated()                           ), p,                     SLOT( viewScientific()                      ) );
+  QObject::connect( actions.formatBinary,                SIGNAL( activated()                           ), p,                     SLOT( formatBinary()                        ) );
+  QObject::connect( actions.formatEngineering,           SIGNAL( activated()                           ), p,                     SLOT( formatEngineering()                   ) );
+  QObject::connect( actions.formatFixed,                 SIGNAL( activated()                           ), p,                     SLOT( formatFixed()                         ) );
+  QObject::connect( actions.formatGeneral,               SIGNAL( activated()                           ), p,                     SLOT( formatGeneral()                       ) );
+  QObject::connect( actions.formatHexadec,               SIGNAL( activated()                           ), p,                     SLOT( formatHexadec()                       ) );
+  QObject::connect( actions.formatOctal,                 SIGNAL( activated()                           ), p,                     SLOT( formatOctal()                         ) );
+  QObject::connect( actions.formatScientific,            SIGNAL( activated()                           ), p,                     SLOT( formatScientific()                    ) );
   QObject::connect( actions.optionAutoCalc,              SIGNAL( toggled( bool )                       ), p,                     SLOT( autoCalcToggled( bool )               ) );
   QObject::connect( actions.optionAutoCompletion,        SIGNAL( toggled( bool )                       ), p,                     SLOT( autoCompletionToggled( bool )         ) );
   QObject::connect( actions.optionAlwaysOnTop,           SIGNAL( toggled( bool )                       ), p,                     SLOT( alwaysOnTopToggled( bool )            ) );
@@ -633,16 +633,18 @@ void MainWindow::Private::createConnections()
   QObject::connect( docks.functions,                     SIGNAL( functionSelected( const QString & )   ), p,                     SLOT( functionSelected( const QString & )   ) );
   QObject::connect( docks.history,                       SIGNAL( expressionSelected( const QString & ) ), p,                     SLOT( expressionSelected( const QString & ) ) );
   QObject::connect( docks.variables,                     SIGNAL( variableSelected( const QString & )   ), p,                     SLOT( variableSelected( const QString & )   ) );
-  QObject::connect( widgets.display,                     SIGNAL( textCopied( const QString & )         ), widgets.editor,        SLOT( paste()                               ) );
-  QObject::connect( widgets.display,                     SIGNAL( textCopied( const QString & )         ), widgets.editor,        SLOT( setFocus()                            ) );
   QObject::connect( docks.constants->toggleViewAction(), SIGNAL( toggled( bool )                       ), actions.showConstants, SLOT( setChecked( bool )                    ) );
   QObject::connect( docks.functions->toggleViewAction(), SIGNAL( toggled( bool )                       ), actions.showFunctions, SLOT( setChecked( bool )                    ) );
   QObject::connect( docks.history->toggleViewAction(),   SIGNAL( toggled( bool )                       ), actions.showHistory,   SLOT( setChecked( bool )                    ) );
   QObject::connect( docks.variables->toggleViewAction(), SIGNAL( toggled( bool )                       ), actions.showVariables, SLOT( setChecked( bool )                    ) );
+  QObject::connect( widgets.display,                     SIGNAL( textCopied( const QString & )         ), widgets.editor,        SLOT( paste()                               ) );
+  QObject::connect( widgets.display,                     SIGNAL( textCopied( const QString & )         ), widgets.editor,        SLOT( setFocus()                            ) );
+  QObject::connect( p,                                   SIGNAL( formatChanged( char )                 ), widgets.editor,        SLOT( setFormat( char )                     ) );
+  QObject::connect( p,                                   SIGNAL( precisionChanged( int )               ), widgets.editor,        SLOT( setPrecision( int )                   ) );
   QObject::connect( p,                                   SIGNAL( radixCharChanged( char )              ), widgets.editor,        SLOT( setRadixChar( char )                  ) );
-  QObject::connect( p,                                   SIGNAL( radixCharChanged( char )              ), widgets.display,       SLOT( setRadixChar( char )                  ) );
   QObject::connect( p,                                   SIGNAL( formatChanged( char )                 ), widgets.display,       SLOT( setFormat( char )                     ) );
   QObject::connect( p,                                   SIGNAL( precisionChanged( int )               ), widgets.display,       SLOT( setPrecision( int )                   ) );
+  QObject::connect( p,                                   SIGNAL( radixCharChanged( char )              ), widgets.display,       SLOT( setRadixChar( char )                  ) );
   QObject::connect( p,                                   SIGNAL( radixCharChanged( char )              ), widgets.keypad,        SLOT( setRadixChar( char )                  ) );
   QObject::connect( p,                                   SIGNAL( radixCharChanged( char )              ), evaluator,             SLOT( setRadixChar( char )                  ) );
 }
@@ -658,29 +660,8 @@ void MainWindow::Private::applySettings()
   widgets.editor->setAutoCompleteEnabled( settings.autoComplete );
   widgets.editor->setAutoCalcEnabled( settings.autoCalc );
 
-  if ( settings.angleMode == 'r' )
-    actions.radian->setChecked( true );
-  else if ( settings.angleMode == 'd' )
-    actions.degree->setChecked( true );
-
-  //QString l = settings.language;
-  //if ( l == "" )
-  //{
-  //  // autodetect
-  //}
-  //else
-  //{
-  //  // load specified language
-  //}
-
-  //docks.history->clear();
-  //if ( settings.saveSession && settings.history.count() > 0 )
-  //{
-  //  widgets.editor->setHistory( settings.history );
-  //  widgets.editor->setHistoryResults( settings.historyResults );
-  //}
-  //if ( settings.history.count() > 0 )
-  //  docks.history->setHistory( settings.history );
+  if      ( settings.angleMode == 'r' ) actions.radian->setChecked( true );
+  else if ( settings.angleMode == 'd' ) actions.degree->setChecked( true );
 
   if ( settings.saveSession )
     restoreHistory();
@@ -690,23 +671,14 @@ void MainWindow::Private::applySettings()
   if ( settings.saveVariables )
     restoreVariables();
 
-  //display->setFormat( settings.format );
-  //display->setPrecision( settings.precision );
-  widgets.editor->setFormat( settings.format );
-  widgets.editor->setPrecision( settings.precision );
-
-  //display->setFont( QApplication::font( display ) );
-  //editor->setFont( QApplication::font( editor ) );
-  widgets.editor->setFixedHeight( widgets.editor->sizeHint().height() );
-
   // format
-  if      ( settings.format == 'g' ) actions.viewGeneral->setChecked    ( true );
-  else if ( settings.format == 'f' ) actions.viewFixed->setChecked      ( true );
-  else if ( settings.format == 'n' ) actions.viewEngineering->setChecked( true );
-  else if ( settings.format == 'e' ) actions.viewScientific->setChecked ( true );
-  else if ( settings.format == 'h' ) actions.viewHexadec->setChecked    ( true );
-  else if ( settings.format == 'o' ) actions.viewOctal->setChecked      ( true );
-  else if ( settings.format == 'b' ) actions.viewBinary->setChecked     ( true );
+  if      ( settings.format == 'g' ) actions.formatGeneral->setChecked    ( true );
+  else if ( settings.format == 'f' ) actions.formatFixed->setChecked      ( true );
+  else if ( settings.format == 'n' ) actions.formatEngineering->setChecked( true );
+  else if ( settings.format == 'e' ) actions.formatScientific->setChecked ( true );
+  else if ( settings.format == 'h' ) actions.formatHexadec->setChecked    ( true );
+  else if ( settings.format == 'o' ) actions.formatOctal->setChecked      ( true );
+  else if ( settings.format == 'b' ) actions.formatBinary->setChecked     ( true );
 
   // precision
   if      ( settings.precision <   0 ) actions.digitsAuto->setChecked( true );
@@ -868,10 +840,10 @@ bool MainWindow::event( QEvent * e )
   }
 
   // ensure dock windows keep their state after minimize / screen switch
-  //if ( d->settings.showConstants ) QTimer::singleShot( 0, d->docks.constants, SLOT( show() ) );
+  if ( d->settings.showConstants ) QTimer::singleShot( 0, d->docks.constants, SLOT( show() ) );
   if ( d->settings.showFunctions ) QTimer::singleShot( 0, d->docks.functions, SLOT( show() ) );
-  //if ( d->settings.showHistory   ) QTimer::singleShot( 0, d->docks.history,   SLOT( show() ) );
-  //if ( d->settings.showVariables ) QTimer::singleShot( 0, d->docks.variables, SLOT( show() ) );
+  if ( d->settings.showHistory   ) QTimer::singleShot( 0, d->docks.history,   SLOT( show() ) );
+  if ( d->settings.showVariables ) QTimer::singleShot( 0, d->docks.variables, SLOT( show() ) );
 
   return QMainWindow::event( e );
 }
@@ -1379,49 +1351,49 @@ void MainWindow::showVariables( bool b )
 }
 
 
-void MainWindow::viewBinary()
+void MainWindow::formatBinary()
 {
   d->actionGroups.digits->setDisabled( true );
   setFormat( 'b' );
 }
 
 
-void MainWindow::viewEngineering()
+void MainWindow::formatEngineering()
 {
   d->actionGroups.digits->setEnabled( true );
   setFormat( 'n' );
 }
 
 
-void MainWindow::viewFixed()
+void MainWindow::formatFixed()
 {
   d->actionGroups.digits->setEnabled( true );
   setFormat( 'f' );
 }
 
 
-void MainWindow::viewGeneral()
+void MainWindow::formatGeneral()
 {
   d->actionGroups.digits->setEnabled( true );
   setFormat( 'g' );
 }
 
 
-void MainWindow::viewHexadec()
+void MainWindow::formatHexadec()
 {
   d->actionGroups.digits->setDisabled( true );
   setFormat( 'h' );
 }
 
 
-void MainWindow::viewOctal()
+void MainWindow::formatOctal()
 {
   d->actionGroups.digits->setDisabled( true );
   setFormat( 'o' );
 }
 
 
-void MainWindow::viewScientific()
+void MainWindow::formatScientific()
 {
   d->actionGroups.digits->setEnabled( true );
   setFormat( 'e' );
