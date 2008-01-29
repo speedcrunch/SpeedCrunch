@@ -37,11 +37,11 @@ class InsertVariableDlg : public QDialog
     InsertVariableDlg( Evaluator * eval, QWidget * parent );
     ~InsertVariableDlg();
     void    updateList();
-    QChar   radixChar() const;
+    char    radixChar() const;
     QString variableName() const;
 
   public slots:
-    void setRadixChar( QChar );
+    void setRadixChar( char );
 
   private:
     struct Private;

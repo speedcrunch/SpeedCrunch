@@ -27,6 +27,7 @@
 #include <QDialog>
 #include <QHBoxLayout>
 #include <QHeaderView>
+#include <QLocale>
 #include <QPushButton>
 #include <QStringList>
 #include <QTimer>
@@ -36,10 +37,9 @@
 
 struct InsertVariableDlg::Private
 {
-  QChar radixChar;
-
+  char          radixChar;
   QPushButton * cancelButton;
-  Evaluator   * eval;
+  Evaluator *   eval;
   QPushButton * insertButton;
   QTreeWidget * list;
 
@@ -153,8 +153,10 @@ InsertVariableDlg::~InsertVariableDlg()
 
 // public slots
 
-void InsertVariableDlg::setRadixChar( QChar c )
+void InsertVariableDlg::setRadixChar( char c )
 {
+  if ( c == 'C' )
+    c = QLocale().decimalPoint().toAscii();
   if ( d->radixChar != c )
   {
     d->radixChar = c;

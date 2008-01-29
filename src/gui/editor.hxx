@@ -60,7 +60,7 @@ class Editor : public QTextEdit
     QStringList historyResults() const;
     QColor      highlightColor( ColorType type );
     bool        syntaxHighlight() const;
-    QChar       radixChar() const;
+    char        radixChar() const;
     void        setAnsAvailable( bool avail );
     void        setAutoCalcEnabled( bool enable );
     void        setAutoCompleteEnabled( bool enable );
