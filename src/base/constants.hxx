@@ -36,14 +36,19 @@ class Constant
     QString unit;
     QStringList categories;
 
-    Constant( const QString & n, const QString & v, const QString & u, const QStringList & cat )
+    Constant( const QString & n, const QString & v, const QString & u,
+              const QStringList & cat )
       : name( n ), value( v ), unit( u ), categories( cat ) {}
 
-    Constant( const QString & n, const QString & v, const QString & u, const QString & cat )
-      : name( n ), value( v ), unit( u ) { categories << cat; }
+    Constant( const QString & n, const QString & v, const QString & u,
+              const QString & cat )
+      : name( n ), value( v ), unit( u )
+    { categories << cat; }
 
-    Constant( const QString & n, const QString & v, const QString & u, const QString & cat1, const QString & cat2 )
-      : name( n ), value( v ), unit( u ) {  categories << cat1; categories << cat2; }
+    Constant( const QString & n, const QString & v, const QString & u,
+              const QString & cat1, const QString & cat2 )
+      : name( n ), value( v ), unit( u )
+    {  categories << cat1; categories << cat2; }
 };
 
 
@@ -52,13 +57,14 @@ class Constants : public QObject
   Q_OBJECT
 
   public:
-    static Constants * self();
-
-    QList<Constant> constantList;
-    QStringList     categoryList;
+    Constants( QObject * parent );
+    ~Constants();
+    QList<Constant> constantList() const;
+    QStringList     categoryList() const;
 
   private:
-    explicit Constants();
+    struct Private;
+    Private * const d;
     Constants( const Constants & );
     Constants & operator=( const Constants & );
 };

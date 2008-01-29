@@ -102,7 +102,7 @@ class Evaluator : public QObject
     HNumber evalNoAssign();
     HNumber evalUpdateAns();
     HNumber get( const QString & id );
-    QChar   radixChar() const;
+    char    radixChar() const;
     QString autoFix( const QString & );
     QString dump() const;
     QString error() const;

@@ -28,6 +28,7 @@
 #include <QTextEdit>
 
 
+class Constants;
 class Evaluator;
 class Functions;
 
@@ -44,8 +45,8 @@ class Editor : public QTextEdit
   public:
     enum ColorType { Number, FunctionName, Variable, MatchedPar };
 
-    explicit Editor( Evaluator *, Functions *, char radixChar = 'C',
-                     QWidget * parent = 0 );
+    explicit Editor( Evaluator *, Functions *, Constants *,
+                     char radixChar = 'C', QWidget * parent = 0 );
     ~Editor();
     bool        autoCalcEnabled() const;
     bool        autoCompleteEnabled() const;
@@ -54,6 +55,7 @@ class Editor : public QTextEdit
     void        doBackspace();
     Evaluator * evaluator() const;
     Functions * functions() const;
+    Constants * constants() const;
     QStringList history() const;
     QStringList historyResults() const;
     QColor      highlightColor( ColorType type );
@@ -72,6 +74,11 @@ class Editor : public QTextEdit
     void        stopAutoCalc();
     void        stopAutoComplete();
     QString     text() const;
+
+  signals:
+    void autoCalcActivated( const QString & );
+    void autoCalcDeactivated();
+    void returnPressed();
 
   public slots:
     void appendHistory( const QString & result, const QString & expression );
@@ -96,11 +103,6 @@ class Editor : public QTextEdit
     void triggerAutoComplete();
     void triggerEnter();
 
-  signals:
-    void autoCalcActivated( const QString & );
-    void autoCalcDeactivated();
-    void returnPressed();
-
   protected:
     QString formatNumber( const HNumber & value ) const;
     void    keyPressEvent( QKeyEvent * );
@@ -115,17 +117,14 @@ class Editor : public QTextEdit
 };
 
 
-class EditorCompletionPrivate;
-
-
 class EditorCompletion : public QObject
 {
   Q_OBJECT
 
   public:
-    EditorCompletion( Editor * editor );
+    EditorCompletion( Editor * );
     ~EditorCompletion();
-    bool eventFilter( QObject * o, QEvent * e );
+    bool eventFilter( QObject *, QEvent * );
     void showCompletion( const QStringList & choices );
 
   signals:
@@ -139,13 +138,11 @@ class EditorCompletion : public QObject
     void fade( int );
 
   private:
-    EditorCompletionPrivate * d;
+    struct Private;
+    Private * d;
     EditorCompletion( const EditorCompletion & );
     EditorCompletion & operator=( const EditorCompletion & );
 };
-
-
-class ConstantCompletionPrivate;
 
 
 class ConstantCompletion : public QObject
@@ -170,7 +167,8 @@ class ConstantCompletion : public QObject
     void slide( int );
 
   private:
-    ConstantCompletionPrivate * const d;
+    struct Private;
+    Private * const d;
     ConstantCompletion( const ConstantCompletion & );
     ConstantCompletion & operator=( const ConstantCompletion & );
 };

@@ -23,20 +23,17 @@
 #include <QApplication>
 
 
-Constants * s_global_constants = 0;
-
-
-static void deleteGlobalConstants()
+struct Constants::Private
 {
-  delete s_global_constants;
-  s_global_constants = 0;
-}
+  QList<Constant> constantList;
+  QStringList     categoryList;
+
+  void createConstants();
+};
 
 
-Constants::Constants() : QObject( 0 )
+void Constants::Private::createConstants()
 {
-  setObjectName( "Constants" );
-
   // http://en.wikipedia.org/wiki/Physical_constant#Table_of_universal_constants
   constantList += Constant( tr("Characteristic Impedance of Vacuum"), "376.730313461",   "ohm",          tr("General Physics") );
   constantList += Constant( tr("Electric Constant"                 ), "8.854187817e-12", "F/m",          tr("General Physics") );
@@ -96,18 +93,34 @@ Constants::Constants() : QObject( 0 )
   {
     QStringList cats = constantList[k].categories;
     for ( int i = 0; i < cats.count(); i++ )
-      if ( !categoryList.contains( cats[i] ) )
+      if ( ! categoryList.contains( cats[i] ) )
         categoryList += cats[i];
   }
   categoryList.sort();
 }
 
-Constants * Constants::self()
+
+Constants::Constants( QObject * parent )
+  : QObject( parent ), d( new Constants::Private )
 {
-  if ( ! s_global_constants )
-  {
-    s_global_constants = new Constants();
-    qAddPostRoutine(deleteGlobalConstants);
-  }
-  return s_global_constants;
+  setObjectName( "Constants" );
+  d->createConstants();
+}
+
+
+Constants::~Constants()
+{
+  delete d;
+}
+
+
+QList<Constant> Constants::constantList() const
+{
+  return d->constantList;
+}
+
+
+QStringList Constants::categoryList() const
+{
+  return d->categoryList;
 }

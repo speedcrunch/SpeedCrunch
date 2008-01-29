@@ -193,6 +193,7 @@ struct Conditions
 struct MainWindow::Private
 {
   MainWindow *    p;
+  Constants *     constants;
   Evaluator *     evaluator;
   Functions *     functions;
   Settings        settings;
@@ -495,6 +496,7 @@ void MainWindow::Private::createMenus()
 void MainWindow::Private::createWidgets()
 {
   // necessary objects
+  constants = new Constants( p );
   functions = new Functions( settings.angleMode, p );
   evaluator = new Evaluator( functions, settings.radixChar, p );
 
@@ -517,7 +519,8 @@ void MainWindow::Private::createWidgets()
   // editor
   QHBoxLayout * editorLayout = new QHBoxLayout();
   editorLayout->setMargin( 5 );
-  widgets.editor = new Editor( evaluator, functions, settings.radixChar, box );
+  widgets.editor = new Editor( evaluator, functions, constants,
+                               settings.radixChar, box );
   widgets.editor->setFocus();
   widgets.editor->setStyleSheet( "QTextEdit { font: bold 16px }" );
   widgets.editor->setFixedHeight( widgets.editor->sizeHint().height() );
@@ -558,11 +561,11 @@ void MainWindow::Private::createDocks()
   docks.functions->setObjectName( "FunctionsDock" );
   p->addDockWidget( Qt::RightDockWidgetArea, docks.functions );
 
-  docks.variables = new VariablesDock( p );
+  docks.variables = new VariablesDock( settings.radixChar, p );
   docks.variables->setObjectName( "VariablesDock" );
   p->addDockWidget( Qt::RightDockWidgetArea, docks.variables );
 
-  docks.constants = new ConstantsDock( p );
+  docks.constants = new ConstantsDock( constants, settings.radixChar, p );
   docks.constants->setObjectName( "ConstantsDock" );
   p->addDockWidget( Qt::RightDockWidgetArea, docks.constants );
 
@@ -650,6 +653,8 @@ void MainWindow::Private::createConnections()
   QObject::connect( p,                                   SIGNAL( precisionChanged( int )               ), widgets.display,       SLOT( setPrecision( int )                   ) );
   QObject::connect( p,                                   SIGNAL( radixCharChanged( char )              ), widgets.display,       SLOT( setRadixChar( char )                  ) );
   QObject::connect( p,                                   SIGNAL( radixCharChanged( char )              ), widgets.keypad,        SLOT( setRadixChar( char )                  ) );
+  QObject::connect( p,                                   SIGNAL( radixCharChanged( char )              ), docks.constants,       SLOT( setRadixChar( char )                  ) );
+  QObject::connect( p,                                   SIGNAL( radixCharChanged( char )              ), docks.variables,       SLOT( setRadixChar( char )                  ) );
   QObject::connect( p,                                   SIGNAL( radixCharChanged( char )              ), evaluator,             SLOT( setRadixChar( char )                  ) );
   QObject::connect( p,                                   SIGNAL( angleModeChanged( char )              ), functions,             SLOT( setAngleMode( char )                  ) );
 }
@@ -1507,9 +1512,15 @@ void MainWindow::keypadButtonPressed( Keypad::Button b )
     case Keypad::KeyAsin:      d->widgets.editor->insert( "asin(" ); break;
     case Keypad::KeySqrt:      d->widgets.editor->insert( "sqrt(" ); break;
 
-    case Keypad::KeyRadixChar: d->widgets.editor->insert( d->widgets.keypad->radixChar() ); break;
-    case Keypad::KeyEquals:    d->widgets.editor->evaluate(); break;
-    case Keypad::KeyClear:     clearExpression(); break;
+    case Keypad::KeyRadixChar:
+      d->widgets.editor->insert( QString( d->widgets.keypad->radixChar() ) );
+      break;
+    case Keypad::KeyEquals:
+      d->widgets.editor->evaluate();
+      break;
+    case Keypad::KeyClear:
+      clearExpression();
+      break;
 
     default: break;
   }

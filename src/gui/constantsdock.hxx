@@ -26,7 +26,6 @@
 
 
 class Constants;
-struct ConstantsDockPrivate;
 
 class QTreeWidgetItem;
 
@@ -36,15 +35,15 @@ class ConstantsDock : public QDockWidget
   Q_OBJECT
 
   public:
-    explicit ConstantsDock( QWidget * parent );
+    ConstantsDock( Constants *, char radixChar = 'C', QWidget * parent = 0 );
     ~ConstantsDock();
-    QChar radixChar() const;
+    char radixChar() const;
 
   signals:
     void constantSelected( const QString & c );
 
   public slots:
-    void setRadixChar( QChar );
+    void setRadixChar( char );
 
   protected slots:
     void filter();
@@ -53,7 +52,11 @@ class ConstantsDock : public QDockWidget
     void updateList();
 
   private:
-    ConstantsDockPrivate * const d;
+    struct Private;
+    Private * const d;
+    ConstantsDock();
+    ConstantsDock( const ConstantsDock & );
+    ConstantsDock & operator=( const ConstantsDock & );
 };
 
 

@@ -26,7 +26,6 @@
 
 
 class Evaluator;
-class VariablesDockPrivate;
 
 class QTreeWidgetItem;
 
@@ -36,24 +35,27 @@ class VariablesDock : public QDockWidget
   Q_OBJECT
 
   public:
-    explicit VariablesDock( QWidget * parent );
+    VariablesDock( char radixChar = 'C', QWidget * parent = 0 );
     ~VariablesDock();
-    QChar radixChar() const;
-    void  updateList( const Evaluator * );
+    char radixChar() const;
+    void updateList( const Evaluator * );
 
   signals:
     void variableSelected( const QString & );
 
   public slots:
-    void setRadixChar( QChar );
+    void setRadixChar( char );
 
   protected slots:
     void filter();
-    void handleItem( QTreeWidgetItem * item );
+    void handleItem( QTreeWidgetItem * );
     void triggerFilter();
 
   private:
-    VariablesDockPrivate * d;
+    struct Private;
+    Private * const d;
+    VariablesDock( const VariablesDock & );
+    VariablesDock & operator=( const VariablesDock & );
 };
 
 

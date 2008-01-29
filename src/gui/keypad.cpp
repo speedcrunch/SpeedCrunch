@@ -110,7 +110,7 @@ Keypad::~Keypad()
 }
 
 
-QChar Keypad::radixChar() const
+char Keypad::radixChar() const
 {
   return d->radixChar;
 }
@@ -125,7 +125,7 @@ void Keypad::setRadixChar( char c )
   if ( d->radixChar != c )
   {
     d->radixChar = c;
-    d->keyDot->setText( QString(c) );
+    d->keyDot->setText( QString( c ) );
   }
 }
 

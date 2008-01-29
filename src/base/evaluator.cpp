@@ -1542,7 +1542,7 @@ QString Evaluator::autoFix( const QString& expr )
 }
 
 
-QChar Evaluator::radixChar() const
+char Evaluator::radixChar() const
 {
   return d->radixChar;
 }

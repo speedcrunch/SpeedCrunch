@@ -37,9 +37,9 @@ class Keypad : public QWidget
                   KeyX, KeyXEquals, KeyExp, KeyLn, KeySin, KeyAsin, KeyCos,
                   KeyAcos, KeyTan, KeyAtan };
 
-    explicit Keypad( char radixChar = '.', QWidget * parent  = 0 );
+    explicit Keypad( char radixChar = 'C', QWidget * parent  = 0 );
     ~Keypad();
-    QChar radixChar() const;
+    char radixChar() const;
 
   signals:
     void buttonPressed( Keypad::Button );

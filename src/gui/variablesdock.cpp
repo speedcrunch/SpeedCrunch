@@ -32,22 +32,21 @@
 #include <QVBoxLayout>
 
 
-class VariablesDockPrivate
+class VariablesDock::Private
 {
   public:
-    QChar radixChar;
-
-    QLineEdit         * filter;
-    QTimer            * filterTimer;
-    QTreeWidget       * list;
-    QLabel            * noMatchLabel;
-    QVector<Variable>   variables;
+    char          radixChar;
+    QLineEdit *   filter;
+    QTimer *      filterTimer;
+    QTreeWidget * list;
+    QLabel *      noMatchLabel;
+    QVector<Variable> variables;
 
     QString formatValue( const HNumber & value );
 };
 
 
-QString VariablesDockPrivate::formatValue( const HNumber & value )
+QString VariablesDock::Private::formatValue( const HNumber & value )
 {
   char * str = HMath::format( value, 'g' );
   QString s;
@@ -62,15 +61,20 @@ QString VariablesDockPrivate::formatValue( const HNumber & value )
 
 // public
 
-VariablesDock::VariablesDock( QWidget * parent ): QDockWidget( tr("Variables"), parent )
+VariablesDock::VariablesDock( char radixChar, QWidget * parent )
+  : QDockWidget( tr("Variables"), parent ), d( new VariablesDock::Private )
 {
-  d = new VariablesDockPrivate;
+  if ( radixChar == 'C' )
+    d->radixChar = QLocale().decimalPoint().toAscii();
+  else
+    d->radixChar = radixChar;
 
   QLabel * label = new QLabel( this );
   label->setText( tr("Search") );
 
   d->filter = new QLineEdit( this );
-  connect( d->filter, SIGNAL(textChanged( const QString& )), SLOT(triggerFilter()) );
+  connect( d->filter, SIGNAL( textChanged( const QString& ) ),
+           SLOT( triggerFilter() ) );
 
   QWidget     * searchBox    = new QWidget( this );
   QHBoxLayout * searchLayout = new QHBoxLayout;
@@ -88,7 +92,8 @@ VariablesDock::VariablesDock( QWidget * parent ): QDockWidget( tr("Variables"), 
   d->list->header()->hide();
   d->list->setEditTriggers( QTreeWidget::NoEditTriggers );
   d->list->setSelectionBehavior( QTreeWidget::SelectRows );
-  connect( d->list, SIGNAL(itemDoubleClicked( QTreeWidgetItem*, int )), SLOT(handleItem( QTreeWidgetItem* )) );
+  connect( d->list, SIGNAL( itemDoubleClicked( QTreeWidgetItem *, int ) ),
+           SLOT(handleItem( QTreeWidgetItem* )) );
 
   QWidget     * widget = new QWidget( this );
   QVBoxLayout * layout = new QVBoxLayout;
@@ -101,7 +106,7 @@ VariablesDock::VariablesDock( QWidget * parent ): QDockWidget( tr("Variables"), 
   d->filterTimer = new QTimer( this );
   d->filterTimer->setInterval( 500 );
   d->filterTimer->setSingleShot( true );
-  connect( d->filterTimer, SIGNAL(timeout()), SLOT(filter()) );
+  connect( d->filterTimer, SIGNAL( timeout() ), SLOT( filter() ) );
 
   d->noMatchLabel = new QLabel( this );
   d->noMatchLabel->setText( tr("No match found") );
@@ -111,11 +116,11 @@ VariablesDock::VariablesDock( QWidget * parent ): QDockWidget( tr("Variables"), 
 
   setMinimumWidth( 200 );
   setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
-  setWindowIcon( QIcon() ); // no icon
+  setWindowIcon( QIcon() );
 }
 
 
-QChar VariablesDock::radixChar() const
+char VariablesDock::radixChar() const
 {
   return d->radixChar;
 }
@@ -137,8 +142,10 @@ VariablesDock::~VariablesDock()
 
 // public slots
 
-void VariablesDock::setRadixChar( QChar c )
+void VariablesDock::setRadixChar( char c )
 {
+  if ( c == 'C' )
+    c = QLocale().decimalPoint().toAscii();
   if ( d->radixChar != c )
   {
     d->radixChar = c;
@@ -172,7 +179,8 @@ void VariablesDock::filter()
         item = new QTreeWidgetItem( d->list, str );
       else
       {
-        if ( str[0].contains(term, Qt::CaseInsensitive) || str[1].contains(term, Qt::CaseInsensitive) )
+        if (    str[0].contains( term, Qt::CaseInsensitive )
+             || str[1].contains( term, Qt::CaseInsensitive ) )
           item = new QTreeWidgetItem( d->list, str );
       }
 
@@ -197,7 +205,8 @@ void VariablesDock::filter()
       for ( int i = 0; i < d->list->topLevelItemCount(); i++ )
       {
         QTreeWidgetItem * item = d->list->topLevelItem(i);
-        QBrush c = ((int)(i / group)) & 1 ? palette().base() : palette().alternateBase();
+        QBrush c = (((int)(i / group)) & 1) ? palette().base()
+                                            : palette().alternateBase();
         item->setBackground( 0, c );
         item->setBackground( 1, c );
         item->setBackground( 2, c );

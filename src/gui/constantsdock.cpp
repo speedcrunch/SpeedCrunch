@@ -34,30 +34,37 @@
 #include <QVBoxLayout>
 
 
-struct ConstantsDockPrivate
+struct ConstantsDock::Private
 {
-  QChar radixChar;
-
-  QComboBox   * category;
-  QLineEdit   * filter;
-  QTimer      * filterTimer;
+  Constants *   constants;
+  char          radixChar;
+  QComboBox *   category;
+  QLineEdit *   filter;
+  QTimer *      filterTimer;
   QTreeWidget * list;
-  QLabel      * noMatchLabel;
+  QLabel *      noMatchLabel;
 };
 
 
 // public
 
-ConstantsDock::ConstantsDock( QWidget * parent )
-  : QDockWidget( tr("Constants"), parent ), d( new ConstantsDockPrivate )
+ConstantsDock::ConstantsDock( Constants * c, char radixChar, QWidget * parent )
+  : QDockWidget( tr("Constants"), parent ), d( new ConstantsDock::Private )
 {
+  if ( radixChar == 'C' )
+    d->radixChar = QLocale().decimalPoint().toAscii();
+  else
+    d->radixChar = radixChar;
+
+  d->constants = c;
+
   QLabel * categorylabel = new QLabel( this );
   categorylabel->setText( tr("Category") );
 
   d->category = new QComboBox( this );
   d->category->setEditable( false );
   d->category->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
-  connect( d->category, SIGNAL(activated( int )), SLOT(filter()) );
+  connect( d->category, SIGNAL( activated( int ) ), SLOT( filter() ) );
 
   QWidget     * categoryBox    = new QWidget( this );
   QHBoxLayout * categoryLayout = new QHBoxLayout;
@@ -91,7 +98,8 @@ ConstantsDock::ConstantsDock( QWidget * parent )
   d->list->setMouseTracking( true );
   d->list->setEditTriggers( QTreeWidget::NoEditTriggers );
   d->list->setSelectionBehavior( QTreeWidget::SelectRows );
-  connect( d->list, SIGNAL(itemDoubleClicked( QTreeWidgetItem*, int )), SLOT(handleItem( QTreeWidgetItem* )) );
+  connect( d->list, SIGNAL( itemDoubleClicked( QTreeWidgetItem *, int ) ),
+           SLOT(handleItem( QTreeWidgetItem* )) );
 
   QWidget     * widget = new QWidget( this );
   QVBoxLayout * layout = new QVBoxLayout;
@@ -105,7 +113,7 @@ ConstantsDock::ConstantsDock( QWidget * parent )
   d->filterTimer = new QTimer( this );
   d->filterTimer->setInterval( 500 );
   d->filterTimer->setSingleShot( true );
-  connect( d->filterTimer, SIGNAL(timeout()), SLOT(filter()) );
+  connect( d->filterTimer, SIGNAL( timeout() ), SLOT( filter() ) );
 
   d->noMatchLabel = new QLabel( this );
   d->noMatchLabel->setText( tr("No match found") );
@@ -128,7 +136,7 @@ ConstantsDock::~ConstantsDock()
 }
 
 
-QChar ConstantsDock::radixChar() const
+char ConstantsDock::radixChar() const
 {
   return d->radixChar;
 }
@@ -136,8 +144,10 @@ QChar ConstantsDock::radixChar() const
 
 // public slots
 
-void ConstantsDock::setRadixChar( QChar c )
+void ConstantsDock::setRadixChar( char c )
 {
+  if ( c == 'C' )
+    c = QLocale().decimalPoint().toAscii();
   if ( d->radixChar != c )
   {
     d->radixChar = c;
@@ -150,7 +160,7 @@ void ConstantsDock::setRadixChar( QChar c )
 
 void ConstantsDock::filter()
 {
-  Constants * c    = Constants::self();
+  Constants * c    = d->constants;
   QString     term = d->filter->text();
 
   d->filterTimer->stop();
@@ -159,53 +169,54 @@ void ConstantsDock::filter()
   QString chosenCategory = d->category->currentText();
 
   d->list->clear();
-  for ( int k = 0; k < c->constantList.count(); k++ )
+  for ( int k = 0; k < c->constantList().count(); k++ )
   {
-      QStringList str;
-      str << c->constantList[k].name;
-      if ( QLocale().language() == QLocale::Hebrew )
-      {
-	str << c->constantList[k].unit;
-	str << (d->radixChar == '.' ?
-                  c->constantList[k].value.replace( ',', '.' )
-                    : c->constantList[k].value.replace( '.', ',' ) );
-      }
-      else
-      {
-	str << (d->radixChar == '.' ?
-                  c->constantList[k].value.replace( ',', '.' )
-                    : c->constantList[k].value.replace( '.', ',' ));
-	str << c->constantList[k].unit;
-      }
-      str << c->constantList[k].name.toUpper();
-      str << QString( "" );
+    QStringList str;
+    str << c->constantList().at(k).name;
+    if ( QLocale().language() == QLocale::Hebrew )
+    {
+      str << c->constantList().at(k).unit;
+      str << (d->radixChar == ',' ?
+                QString(c->constantList().at(k).value).replace( '.', ',' )
+              : c->constantList().at(k).value);
+    }
+    else
+    {
+      str << (d->radixChar == ',' ?
+                QString(c->constantList().at(k).value).replace( '.', ',' )
+              : c->constantList().at(k).value);
+      str << c->constantList().at(k).unit;
+    }
+    str << c->constantList().at(k).name.toUpper();
+    str << QString( "" );
 
-      bool include = (chosenCategory == tr("All")) ? true:
-        c->constantList[k].categories.contains( chosenCategory );
+    bool include = (chosenCategory == tr("All")) ? true:
+      c->constantList().at(k).categories.contains( chosenCategory );
 
-      if ( ! include )
-        continue;
+    if ( ! include )
+      continue;
 
-      QTreeWidgetItem * item = 0;
-      if ( term.isEmpty() )
+    QTreeWidgetItem * item = 0;
+    if ( term.isEmpty() )
+      item = new QTreeWidgetItem( d->list, str );
+    else
+    {
+      if ( str[0].contains( term, Qt::CaseInsensitive ) )
         item = new QTreeWidgetItem( d->list, str );
-      else
-      {
-        if ( str[0].contains( term, Qt::CaseInsensitive ) )
-          item = new QTreeWidgetItem( d->list, str );
-      }
-      if ( item )
-      {
-        QString tip = QString("<b>%1</b><br>%2").arg( c->constantList[k].name, c->constantList[k].value );
-        if ( !c->constantList[k].unit.isEmpty() )
-          tip.append( " " ).append( c->constantList[k].unit );
-        item->setToolTip( 0, tip );
-        item->setToolTip( 1, tip );
-        item->setToolTip( 2, tip );
+    }
+    if ( item )
+    {
+      QString tip = QString("<b>%1</b><br>%2").arg( c->constantList().at(k).name,
+                                                    c->constantList().at(k).value);
+      if ( ! c->constantList().at(k).unit.isEmpty() )
+        tip.append( " " ).append( c->constantList().at(k).unit );
+      item->setToolTip( 0, tip );
+      item->setToolTip( 1, tip );
+      item->setToolTip( 2, tip );
 
-	item->setTextAlignment( 1, Qt::AlignRight );
-	item->setTextAlignment( 2, Qt::AlignLeft  );
-      }
+      item->setTextAlignment( 1, Qt::AlignRight );
+      item->setTextAlignment( 2, Qt::AlignLeft  );
+    }
   }
 
   d->list->resizeColumnToContents( 0 );
@@ -242,10 +253,10 @@ void ConstantsDock::filter()
 
 void ConstantsDock::handleItem( QTreeWidgetItem * item )
 {
-  Constants * c = Constants::self();
-  for ( int k = 0; k < c->constantList.count(); k++ )
-    if ( c->constantList[k].name == item->text( 0 ) )
-      emit constantSelected( c->constantList[k].value );
+  Constants * c = d->constants;
+  for ( int k = 0; k < c->constantList().count(); k++ )
+    if ( c->constantList().at(k).name == item->text( 0 ) )
+      emit constantSelected( c->constantList().at(k).value );
 }
 
 
@@ -258,12 +269,10 @@ void ConstantsDock::triggerFilter()
 
 void ConstantsDock::updateList()
 {
-  Constants * c = Constants::self();
-
+  Constants * c = d->constants;
   d->category->clear();
-  d->category->addItems( c->categoryList );
+  d->category->addItems( c->categoryList() );
   d->category->insertItem( 0, tr("All") );
   d->category->setCurrentIndex( 0 );
-
   filter();
 }
