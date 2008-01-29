@@ -104,11 +104,7 @@ HNumber operator-( const HNumber &, const HNumber & );
 class HMath
 {
   public:
-    // 'r': radian (default)
-    // 'd': degree
-    static char angleMode();
-    static void setAngleMode( char );
-
+    // FORMAT
     static char * format( const HNumber & n, char format = 'g', int prec = -1 );
     static char * formatFixed( const HNumber & n, int prec = -1 );
     static char * formatScientific( const HNumber & n, int prec = -1 );
@@ -117,11 +113,9 @@ class HMath
     static char * formatHexadec( const HNumber & n );
     static char * formatOctal( const HNumber & n );
     static char * formatBinary( const HNumber & n );
-
     // CONSTANTS
     static HNumber phi();
     static HNumber pi();
-
     // GENERAL MATH
     static HNumber rad2deg( const HNumber & angle );
     static HNumber deg2rad( const HNumber & angle );
@@ -145,7 +139,6 @@ class HMath
     static HNumber log( const HNumber & x );
     static HNumber lg( const HNumber & x );
     static HNumber sign( const HNumber & x );
-
     // TRIGONOMETRY
     static HNumber sin( const HNumber & x );
     static HNumber cos( const HNumber & x );
@@ -162,7 +155,6 @@ class HMath
     static HNumber arsinh( const HNumber & x );
     static HNumber arcosh( const HNumber & x );
     static HNumber artanh( const HNumber & x );
-
     // PROBABILITY
     static HNumber nCr( const HNumber & n, const HNumber & k );
     static HNumber nPr( const HNumber & n, const HNumber & r );
@@ -191,7 +183,6 @@ class HMath
     static HNumber poissonVariance( const HNumber & l );
     static HNumber erf( const HNumber & x );
     static HNumber erfc( const HNumber & x );
-
     // LOGIC
     static HNumber mask ( const HNumber & val, const HNumber & bits);
     static HNumber sgnext ( const HNumber & val, const HNumber & bits);

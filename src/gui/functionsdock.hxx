@@ -25,7 +25,7 @@
 #include <QDockWidget>
 
 
-class FunctionsDockPrivate;
+class Functions;
 
 class QTreeWidgetItem;
 
@@ -35,8 +35,9 @@ class FunctionsDock : public QDockWidget
   Q_OBJECT
 
   public:
-    explicit FunctionsDock( QWidget * parent );
+    explicit FunctionsDock( Functions *, QWidget * parent );
     ~FunctionsDock();
+    Functions * functions() const;
 
   signals:
     void functionSelected( const QString & );
@@ -47,7 +48,8 @@ class FunctionsDock : public QDockWidget
     void triggerFilter();
 
   private:
-    FunctionsDockPrivate * d;
+    struct Private;
+    Private * const d;
 };
 
 

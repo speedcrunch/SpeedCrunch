@@ -34,21 +34,20 @@
 #include <QVBoxLayout>
 
 
-class InsertVariableDlgPrivate
+struct InsertVariableDlg::Private
 {
-  public:
-    QChar radixChar;
+  QChar radixChar;
 
-    QPushButton * cancelButton;
-    Evaluator   * eval;
-    QPushButton * insertButton;
-    QTreeWidget * list;
+  QPushButton * cancelButton;
+  Evaluator   * eval;
+  QPushButton * insertButton;
+  QTreeWidget * list;
 
-    QString formatValue( const HNumber & value );
+  QString formatValue( const HNumber & value );
 };
 
 
-QString InsertVariableDlgPrivate::formatValue( const HNumber & value )
+QString InsertVariableDlg::Private::formatValue( const HNumber & value )
 {
   char * str = HMath::format( value, 'g' );
   QString s;
@@ -65,7 +64,7 @@ QString InsertVariableDlgPrivate::formatValue( const HNumber & value )
 
 InsertVariableDlg::InsertVariableDlg( Evaluator * eval, QWidget * parent )
   : QDialog( parent ),
-    d( new InsertVariableDlgPrivate )
+    d( new InsertVariableDlg::Private )
 {
   setWindowTitle( tr("Insert Variable") );
   setModal( true );

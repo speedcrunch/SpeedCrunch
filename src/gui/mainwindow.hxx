@@ -44,10 +44,11 @@ class MainWindow : public QMainWindow
 
   signals:
     void adaptToLanguageChange();
+    void angleModeChanged( char );
     void formatChanged( char );
+    void radixCharChanged( char );
     void precisionChanged( int );
     void quitApplication();
-    void radixCharChanged( char );
 
   public slots:
     void about();

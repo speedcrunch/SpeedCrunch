@@ -25,9 +25,6 @@
 #include <QFrame>
 
 
-class TipWidgetPrivate;
-
-
 class TipWidget : public QFrame
 {
   Q_OBJECT
@@ -47,7 +44,8 @@ class TipWidget : public QFrame
     void disappear();
 
   private:
-    TipWidgetPrivate * d;
+    struct Private;
+    Private * const d;
     TipWidget( const TipWidget & );
     TipWidget & operator=( const TipWidget & );
 };

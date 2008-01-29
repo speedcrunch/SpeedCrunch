@@ -54,7 +54,8 @@ class Opcode
 {
 public:
 
-  enum { Nop = 0, Load, Ref, Function, Add, Sub, Neg, Mul, Div, Pow, Fact, Modulo, IntDiv };
+  enum { Nop = 0, Load, Ref, Function, Add, Sub, Neg, Mul, Div, Pow, Fact,
+         Modulo, IntDiv };
 
   unsigned type;
   unsigned index;
@@ -68,6 +69,7 @@ public:
 struct Evaluator::Private
 {
   Evaluator * p;
+  Functions * functions;
 
   char    radixChar;
   bool    dirty;
@@ -287,10 +289,11 @@ static bool isIdentifier( QChar ch )
 
 // Constructor
 
-Evaluator::Evaluator( char radixChar, QObject * parent ) : QObject( parent ),
-  d( new Evaluator::Private )
+Evaluator::Evaluator( Functions * f, char radixChar, QObject * parent )
+  : QObject( parent ), d( new Evaluator::Private )
 {
   d->p = this;
+  d->functions = f;
 
   if ( radixChar == 'C' )
     d->radixChar = QLocale().decimalPoint().toAscii();
@@ -840,7 +843,7 @@ void Evaluator::compile( const Tokens& tokens ) const
           Token id = syntaxStack.top( 1 );
           if( !arg.isOperator() )
           if( id.isIdentifier() )
-          if( Functions::self()->function( id.text() ) )
+          if( d->functions->function( id.text() ) )
           {
             ruleFound = true;
             d->codes.append( Opcode( Opcode::Function, 1 ) );
@@ -864,7 +867,7 @@ void Evaluator::compile( const Tokens& tokens ) const
             if( !x.isOperator() )
             if( op.isOperator() )
             if( id.isIdentifier() )
-            if( Functions::self()->function( id.text() ) )
+            if( d->functions->function( id.text() ) )
             if( ( op.asOperator() == Token::Plus ) ||
                ( op.asOperator() == Token::Minus ) )
             {
@@ -888,7 +891,7 @@ void Evaluator::compile( const Tokens& tokens ) const
             Token op = syntaxStack.top();
             Token x = syntaxStack.top( 1 );
             Token id = syntaxStack.top( 2 );
-            if( id.isIdentifier() && Functions::self()->function( id.text() ) )
+            if( id.isIdentifier() && d->functions->function( id.text() ) )
             {
                if( !x.isOperator() && op.isOperator() &&
                   op.asOperator() == Token::Exclamation )
@@ -1321,7 +1324,7 @@ HNumber Evaluator::evalNoAssign()
         else
         {
           // function
-          function = Functions::self()->function( fname );
+          function = d->functions->function( fname );
           if( function )
             refs.push( fname );
           else
@@ -1340,7 +1343,7 @@ HNumber Evaluator::evalNoAssign()
           break;
 
         fname = refs.pop();
-        function = Functions::self()->function( fname );
+        function = d->functions->function( fname );
         if( !function )
         {
           d->error = fname + ": " + qApp->translate( "evaluator",
@@ -1358,7 +1361,7 @@ HNumber Evaluator::evalNoAssign()
         for( ; index; index-- )
           args.insert( args.begin(), stack.pop() );
 
-        stack.push( function->exec( this, args ) );
+        stack.push( function->exec( args ) );
         if( !function->error().isEmpty() )
         {
           d->error = function->error();
@@ -1389,23 +1392,25 @@ HNumber Evaluator::eval()
   HNumber result = evalNoAssign(); // this sets d->assignId
 
   // can not overwrite built-in variables
-  if (   d->assignId == QString("pi")
-      || d->assignId == QString("phi")
-      || d->assignId == QString("ans") )
+  if (    d->assignId == QString("pi")
+       || d->assignId == QString("phi")
+       || d->assignId == QString("ans") )
   {
-    d->error = d->assignId + ": " + qApp->translate( "evaluator", "variable cannot be overwritten" );
+    d->error = d->assignId + ": " + qApp->translate( "evaluator",
+        "variable cannot be overwritten" );
     return HNumber::nan();
   }
 
   // variable can't have the same name as function
-  if ( Functions::self()->function( d->assignId ) )
+  if ( d->functions->function( d->assignId ) )
   {
-    d->error = d->assignId + ": " + qApp->translate( "evaluator", "identifier matches an existing function name" );
+    d->error = d->assignId + ": " + qApp->translate( "evaluator",
+        "identifier matches an existing function name" );
     return HNumber::nan();
   }
 
   // handle variable assignment, e.g. "x=2*4"
-  if( !d->assignId.isEmpty() )
+  if ( ! d->assignId.isEmpty() )
     set( d->assignId, result );
 
   return result;
@@ -1527,7 +1532,7 @@ QString Evaluator::autoFix( const QString& expr )
     {
       if( tokens[0].isIdentifier() )
       {
-        Function* f = Functions::self()->function( tokens[0].text() );
+        Function* f = d->functions->function( tokens[0].text() );
         if( f ) result.append( "(ans)" );
       }
     }

@@ -7,7 +7,7 @@ set(speedcrunch_HEADERS
 #3rdparty/util/binreloc.h
 base/constants.hxx
 base/evaluator.hxx
-#base/functions.hxx
+base/functions.hxx
 #base/settings.hxx
 gui/aboutbox.hxx
 gui/autohidelabel.hxx

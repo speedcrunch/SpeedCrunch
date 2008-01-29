@@ -1,6 +1,7 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
 // Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
+// Copyright (C) 2008 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -25,7 +26,7 @@
 #include <QDialog>
 
 
-class InsertFunctionDlgPrivate;
+class Functions;
 
 
 class InsertFunctionDlg : public QDialog
@@ -33,7 +34,7 @@ class InsertFunctionDlg : public QDialog
   Q_OBJECT
 
   public:
-    InsertFunctionDlg( QWidget * parent = 0 );
+    InsertFunctionDlg( Functions *, QWidget * parent = 0 );
     QString functionName() const;
     ~InsertFunctionDlg();
 
@@ -41,7 +42,9 @@ class InsertFunctionDlg : public QDialog
     void initUI();
 
   private:
-    InsertFunctionDlgPrivate * d;
+    struct Private;
+    Private * const d;
+    InsertFunctionDlg();
     InsertFunctionDlg( const InsertFunctionDlg & );
     InsertFunctionDlg & operator=( const InsertFunctionDlg & );
 };

@@ -27,7 +27,6 @@
 
 
 class Evaluator;
-class InsertVariableDlgPrivate;
 
 
 class InsertVariableDlg : public QDialog
@@ -45,7 +44,9 @@ class InsertVariableDlg : public QDialog
     void setRadixChar( QChar );
 
   private:
-    InsertVariableDlgPrivate * d;
+    struct Private;
+    Private * const d;
+    InsertVariableDlg();
     InsertVariableDlg( const InsertVariableDlg & );
     InsertVariableDlg & operator=( const InsertVariableDlg & );
 };

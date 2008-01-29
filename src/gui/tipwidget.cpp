@@ -28,7 +28,7 @@
 #include <QToolTip>
 
 
-struct TipWidgetPrivate
+struct TipWidget::Private
 {
   QTimeLine *   fadeTimeLine;
   QTimer *      hideTimer;
@@ -38,7 +38,7 @@ struct TipWidgetPrivate
 
 
 TipWidget::TipWidget( QWidget * parent ) : QFrame( parent ),
-  d( new TipWidgetPrivate )
+  d( new TipWidget::Private )
 {
   setObjectName( "TipWidget" );
 
@@ -59,7 +59,8 @@ TipWidget::TipWidget( QWidget * parent ) : QFrame( parent ),
   d->fadeTimeLine->setFrameRange( 0, 100 );
   //d->fadeTimeLine->setUpdateInterval( 25 );
   d->fadeTimeLine->setCurveShape( QTimeLine::EaseInCurve );
-  connect( d->fadeTimeLine, SIGNAL( frameChanged(int) ), SLOT( animateFade(int) ) );
+  connect( d->fadeTimeLine, SIGNAL( frameChanged( int ) ),
+           SLOT( animateFade(int) ) );
 
 //  QPalette normal = palette();
   setPalette( QToolTip::palette() );
@@ -92,7 +93,7 @@ void TipWidget::hideText()
   if ( d->fadeTimeLine->state() == QTimeLine::NotRunning )
   {
     d->hideTimer->stop();
-    QTimer::singleShot( 0, this, SLOT(disappear()) );
+    QTimer::singleShot( 0, this, SLOT( disappear() ) );
   }
 }
 
@@ -106,7 +107,7 @@ void TipWidget::showText( const QString & msg, const QString & title )
   d->tipLabel->adjustSize();
   d->tipLabel->resize( width(), d->tipLabel->sizeHint().height() );
 
-  QTimer::singleShot(0, this, SLOT(appear()) );
+  QTimer::singleShot( 0, this, SLOT( appear() ) );
 }
 
 
@@ -115,7 +116,7 @@ void TipWidget::animateFade( int v )
   resize( width(), d->fadeTimeLine->endFrame() - v );
   d->tipLabel->move( 10, -v );
 
-  int a = qMax( 0, 240-v*4 );
+  int a = qMax( 0, 240 - v * 4 );
 
   QPalette pal = QToolTip::palette();
   QColor c1 = pal.window().color();

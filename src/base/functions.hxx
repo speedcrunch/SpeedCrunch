@@ -24,57 +24,61 @@
 
 #include "math/hmath.hxx"
 
+#include <QObject>
 #include <QStringList>
 #include <QVector>
 
 
-class Evaluator;
 class Function;
-
-class FunctionPrivate;
-class FunctionsPrivate;
+class Functions;
 
 
-typedef HNumber (*FunctionPtr)( const Evaluator *, Function *, const QVector<HNumber> & );
+typedef HNumber (*FunctionPtr)( Function *, const QVector<HNumber> & );
 
 
 class Function
 {
   public:
-    Function( const QString & name, int argc, FunctionPtr ptr, const QString & desc );
-    Function( const QString & name, FunctionPtr ptr, const QString & desc );
+    Function( const QString & name, int argc, FunctionPtr ptr, const QString & desc,
+              Functions * parent );
+    Function( const QString & name, FunctionPtr ptr, const QString & desc,
+              Functions * parent );
     ~Function();
-    QString description() const;
-    QString error() const;
-    HNumber exec( const Evaluator *, const QVector<HNumber> & args );
-    QString name() const;
-    void    setError( const QString & context, const QString & error );
+
+    QString     description() const;
+    QString     error() const;
+    HNumber     exec( const QVector<HNumber> & args );
+    QString     name() const;
+    Functions * functions() const;
+    void        setError( const QString & context, const QString & error );
 
   private:
-    FunctionPrivate * d;
+    struct Private;
+    Private * const d;
     Function( const Function & );
     Function & operator=( const Function & );
 };
 
 
-class Functions
+class Functions : public QObject
 {
+  Q_OBJECT
+
   public:
-    Functions();
+    Functions( char angleMode = 'r', QObject * parent = 0 );
     ~Functions();
 
     void        add( Function * );
-    Function *  function( const QString & );
+    Function *  function( const QString & ) const;
     QStringList functionNames() const;
 
-    static Functions * self();
-
-  //public slots:
-  //  setAngleMode
+  public slots:
+    char angleMode();          // 'r': radian (default)
+    void setAngleMode( char ); // 'd': degree
 
   private:
-    FunctionsPrivate * d;
-    static Functions * s_self;
+    struct Private;
+    Private * const d;
     Functions( const Functions & );
     Functions & operator=( const Functions & );
 };

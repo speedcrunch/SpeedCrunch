@@ -23,7 +23,6 @@
 #include "insertfunctiondlg.hxx"
 
 #include "base/functions.hxx"
-#include "base/settings.hxx"
 
 #include <QDialog>
 #include <QHBoxLayout>
@@ -35,26 +34,26 @@
 #include <QVBoxLayout>
 
 
-class InsertFunctionDlgPrivate
+struct InsertFunctionDlg::Private
 {
-  public:
-    QPushButton * cancelButton;
-    QPushButton * insertButton;
-    QTreeWidget * list;
+  Functions *   functions;
+  QPushButton * cancelButton;
+  QPushButton * insertButton;
+  QTreeWidget * list;
 };
 
 
 // public
 
-InsertFunctionDlg::InsertFunctionDlg( QWidget * parent )
-  : QDialog( parent )
+InsertFunctionDlg::InsertFunctionDlg( Functions * f, QWidget * parent )
+  : QDialog( parent ), d( new InsertFunctionDlg::Private )
 {
-  d = new InsertFunctionDlgPrivate;
+  d->functions = f;
 
   setWindowTitle( tr("Insert Function") );
   setModal( true );
 
-  QVBoxLayout* layout = new QVBoxLayout;
+  QVBoxLayout * layout = new QVBoxLayout;
   setLayout( layout );
 
   d->list = new QTreeWidget( this );
@@ -114,20 +113,17 @@ InsertFunctionDlg::~InsertFunctionDlg()
 
 void InsertFunctionDlg::initUI()
 {
-  //QStringList functionNames = Functions::self()->functionNames();
-  QStringList functionNames = Functions::self()->functionNames();
-  int k = 0;
+  QStringList functionNames = d->functions->functionNames();
+
   for ( int i = 0; i < functionNames.count(); i++ )
   {
-    //Function * f = Functions::self()->function( functionNames[i] );
-    Function * f = Functions::self()->function( functionNames[i] );
+    Function * f = d->functions->function( functionNames[i] );
     if ( f )
     {
       QStringList str;
       str << f->name();
       str << f->description();
       new QTreeWidgetItem( d->list, str );
-      k++;
     }
   }
 

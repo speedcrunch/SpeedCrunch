@@ -79,7 +79,7 @@ class EditorHighlighter : public QSyntaxHighlighter
 
           case Token::stxIdentifier:
             color = editor->highlightColor( Editor::Variable );
-            fnames = Functions::self()->functionNames();
+            fnames = editor->functions()->functionNames();
             for ( int i = 0; i < fnames.count(); i++ )
             {
               if ( fnames[i].toLower() == text )
@@ -113,6 +113,7 @@ class Editor::Private
     ConstantCompletion *            constantCompletion;
     int                             precision;
     Evaluator *                     eval;
+    Functions *                     functions;
     char                            format;
     QStringList                     history;
     QStringList                     historyResults;
@@ -125,7 +126,7 @@ class Editor::Private
 };
 
 
-Editor::Editor( Evaluator * e, char radixChar, QWidget * parent )
+Editor::Editor( Evaluator * e, Functions * f, char radixChar, QWidget * parent )
   : QTextEdit( parent ), d( new Editor::Private )
 {
   if ( radixChar == 'C' )
@@ -134,6 +135,7 @@ Editor::Editor( Evaluator * e, char radixChar, QWidget * parent )
     d->radixChar = radixChar;
 
   d->eval = e;
+  d->functions = f;
   d->index = 0;
   d->autoCompleteEnabled = true;
   d->completion = new EditorCompletion( this );
@@ -221,6 +223,12 @@ void Editor::doBackspace()
 Evaluator * Editor::evaluator() const
 {
   return d->eval;
+}
+
+
+Functions * Editor::functions() const
+{
+  return d->functions;
 }
 
 
@@ -553,8 +561,7 @@ void Editor::triggerAutoComplete()
     return;
 
   // find matches in function names
-  //QStringList fnames = Functions::self()->functionNames();
-  QStringList fnames = Functions::self()->functionNames();
+  QStringList fnames = d->functions->functionNames();
   QStringList choices;
   for ( int i = 0; i < fnames.count(); i++ )
   {
@@ -562,7 +569,7 @@ void Editor::triggerAutoComplete()
     {
       QString str = fnames[i];
       //::Function * f = Functions::self()->function( str );
-      ::Function * f = Functions::self()->function( str );
+      ::Function * f = d->functions->function( str );
       if ( f )
         str.append( ':' ).append( f->description() );
       choices.append( str );
@@ -675,7 +682,7 @@ void Editor::autoCalc()
 
   if ( d->eval->error().isEmpty() )
   {
-    QString ss = QString("%1&nbsp;<b>%2</b>").arg( tr("Result:") ).arg( formatNumber( num ) );
+    QString ss = QString("<b>%1</b>").arg( formatNumber( num ) );
     emit autoCalcActivated( ss );
   }
   else
@@ -719,7 +726,7 @@ void Editor::historyBack()
     d->index--;
     if ( d->index < 0 )
       d->index = 0;
-    setText( d->history[ d->index ] );
+    setText( d->history[d->index] );
     QTextCursor cursor = textCursor();
     cursor.movePosition( QTextCursor::EndOfBlock );
     setTextCursor( cursor );

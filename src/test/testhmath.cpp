@@ -1167,8 +1167,6 @@ void test_functions()
 
 int main( int argc, char * * argv )
 {
-  HMath::setAngleMode( 'r' );
-
   hmath_total_tests  = 0;
   hmath_failed_tests = 0;
 

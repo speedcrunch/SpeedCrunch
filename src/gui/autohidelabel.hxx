@@ -1,5 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
+// Copyright (C) 2008 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -24,27 +25,26 @@
 #include <QLabel>
 
 
-class AutoHideLabelPrivate;
-
 class AutoHideLabel: public QLabel
 {
   Q_OBJECT
 
   public:
-    explicit AutoHideLabel( QWidget* parent );
+    explicit AutoHideLabel( QWidget * parent );
     ~AutoHideLabel();
 
   public slots:
-    void showText( const QString& msg );
+    void showText( const QString & );
     void hideText();
 
   private slots:
     void fade();
 
   private:
-    AutoHideLabelPrivate* d;
-    AutoHideLabel( const AutoHideLabel& );
-    AutoHideLabel& operator=( const AutoHideLabel& );
+    struct Private;
+    Private * const d;
+    AutoHideLabel( const AutoHideLabel & );
+    AutoHideLabel& operator=( const AutoHideLabel & );
 };
 
 

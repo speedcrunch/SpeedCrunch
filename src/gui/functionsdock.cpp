@@ -31,9 +31,10 @@
 #include <QVBoxLayout>
 
 
-class FunctionsDockPrivate
+class FunctionsDock::Private
 {
   public:
+    Functions *   functions;
     QLineEdit *   filter;
     QTimer *      filterTimer;
     QStringList   functionDesc;
@@ -45,16 +46,17 @@ class FunctionsDockPrivate
 
 // public
 
-FunctionsDock::FunctionsDock( QWidget * parent )
-  : QDockWidget( tr("Functions"), parent )
+FunctionsDock::FunctionsDock( Functions * f, QWidget * parent )
+  : QDockWidget( tr("Functions"), parent ), d( new FunctionsDock::Private )
 {
-  d = new FunctionsDockPrivate;
+  d->functions = f;
 
   QLabel * label = new QLabel( this );
   label->setText( tr("Search") );
 
   d->filter = new QLineEdit( this );
-  connect( d->filter, SIGNAL(textChanged( const QString & )), SLOT(triggerFilter()) );
+  connect( d->filter, SIGNAL( textChanged( const QString & ) ),
+           SLOT( triggerFilter()) );
 
   QWidget * searchBox = new QWidget( this );
   QHBoxLayout * searchLayout = new QHBoxLayout;
@@ -98,11 +100,11 @@ FunctionsDock::FunctionsDock( QWidget * parent )
   setWindowIcon( QIcon() ); // no icon
 
   //QStringList functionNames = Functions::self()->functionNames();
-  QStringList functionNames = Functions::self()->functionNames();
+  QStringList functionNames = d->functions->functionNames();
   for ( int i = 0; i < functionNames.count(); i++ )
   {
     //Function * f = Functions::self()->function( functionNames[i] );
-    Function * f = Functions::self()->function( functionNames[i] );
+    Function * f = d->functions->function( functionNames[i] );
     if ( f )
     {
       d->functionNames << f->name();
@@ -118,6 +120,12 @@ FunctionsDock::~FunctionsDock()
 {
   d->filterTimer->stop();
   delete d;
+}
+
+
+Functions * FunctionsDock::functions() const
+{
+  return d->functions;
 }
 
 

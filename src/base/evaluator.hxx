@@ -86,12 +86,15 @@ class Variable
 };
 
 
+class Functions;
+
+
 class Evaluator : public QObject
 {
   Q_OBJECT
 
   public:
-    Evaluator( char radixChar = 'C', QObject * parent = 0 );
+    Evaluator( Functions *, char radixChar = 'C', QObject * parent = 0 );
     ~Evaluator();
     bool    has( const QString & id );
     bool    isValid() const;
@@ -123,6 +126,7 @@ class Evaluator : public QObject
   private:
     struct Private;
     Private * const d;
+    Evaluator();
     Evaluator( const Evaluator & );
     Evaluator & operator=( const Evaluator & );
 };

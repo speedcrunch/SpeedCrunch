@@ -1,5 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
+// Copyright (C) 2008 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -25,18 +26,18 @@
 
 
 #define TIMER_INTERVAL 25
-#define FADE_STEP 16
+#define FADE_STEP      16
 
 
-class AutoHideLabelPrivate
+struct AutoHideLabel::Private
 {
-public:
-  QTimer* fadeTimer;
-  int alpha;
+  QTimer * fadeTimer;
+  int      alpha;
 };
 
 
-AutoHideLabel::AutoHideLabel( QWidget* parent ): QLabel( parent ), d( new AutoHideLabelPrivate )
+AutoHideLabel::AutoHideLabel( QWidget * parent ): QLabel( parent ),
+  d( new AutoHideLabel::Private )
 {
   d->fadeTimer = new QTimer( this );
   d->fadeTimer->setInterval( TIMER_INTERVAL );
@@ -56,7 +57,7 @@ AutoHideLabel::~AutoHideLabel()
 }
 
 
-void AutoHideLabel::showText( const QString& msg )
+void AutoHideLabel::showText( const QString & msg )
 {
   setText( msg );
   adjustSize();

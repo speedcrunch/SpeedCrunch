@@ -194,6 +194,7 @@ struct MainWindow::Private
 {
   MainWindow *    p;
   Evaluator *     evaluator;
+  Functions *     functions;
   Settings        settings;
   Actions         actions;
   ActionGroups    actionGroups;
@@ -279,7 +280,7 @@ void MainWindow::Private::createActions()
   actions.optionAutoCompletion  = new QAction( tr("Automatic &Completion"),    p );
   actions.optionAlwaysOnTop     = new QAction( tr("Stay Always On &Top"),      p );
   actions.optionMinimizeToTray  = new QAction( tr("&Minimize To System Tray"), p );
-  actions.radixCharAuto         = new QAction( tr("&Automatic"),               p );
+  actions.radixCharAuto         = new QAction( tr("&Locale Default"),          p );
   actions.radixCharDot          = new QAction( tr("&Dot"),                     p );
   actions.radixCharComma        = new QAction( tr("&Comma"),                   p );
   actions.radian                = new QAction( tr("&Radian"),                  p );
@@ -493,6 +494,10 @@ void MainWindow::Private::createMenus()
 
 void MainWindow::Private::createWidgets()
 {
+  // necessary objects
+  functions = new Functions( settings.angleMode, p );
+  evaluator = new Evaluator( functions, settings.radixChar, p );
+
   // outer widget and layout
   QWidget * box = new QWidget( p );
   p->setCentralWidget( box );
@@ -512,8 +517,7 @@ void MainWindow::Private::createWidgets()
   // editor
   QHBoxLayout * editorLayout = new QHBoxLayout();
   editorLayout->setMargin( 5 );
-  evaluator = new Evaluator( settings.radixChar, p );
-  widgets.editor = new Editor( evaluator, settings.radixChar, box );
+  widgets.editor = new Editor( evaluator, functions, settings.radixChar, box );
   widgets.editor->setFocus();
   widgets.editor->setStyleSheet( "QTextEdit { font: bold 16px }" );
   widgets.editor->setFixedHeight( widgets.editor->sizeHint().height() );
@@ -550,7 +554,7 @@ void MainWindow::Private::createDocks()
   docks.history->setObjectName( "HistoryDock" );
   p->addDockWidget( Qt::RightDockWidgetArea, docks.history );
 
-  docks.functions = new FunctionsDock( p );
+  docks.functions = new FunctionsDock( functions, p );
   docks.functions->setObjectName( "FunctionsDock" );
   p->addDockWidget( Qt::RightDockWidgetArea, docks.functions );
 
@@ -647,29 +651,38 @@ void MainWindow::Private::createConnections()
   QObject::connect( p,                                   SIGNAL( radixCharChanged( char )              ), widgets.display,       SLOT( setRadixChar( char )                  ) );
   QObject::connect( p,                                   SIGNAL( radixCharChanged( char )              ), widgets.keypad,        SLOT( setRadixChar( char )                  ) );
   QObject::connect( p,                                   SIGNAL( radixCharChanged( char )              ), evaluator,             SLOT( setRadixChar( char )                  ) );
+  QObject::connect( p,                                   SIGNAL( angleModeChanged( char )              ), functions,             SLOT( setAngleMode( char )                  ) );
 }
 
 
 void MainWindow::Private::applySettings()
 {
+  // window size
   if ( settings.mainWindowSize != QSize(0, 0) )
     p->resize( settings.mainWindowSize );
 
-  p->showInFullScreen( settings.showFullScreen );
+  // always-on-top
+  actions.optionAlwaysOnTop->setChecked( settings.stayAlwaysOnTop );
 
-  widgets.editor->setAutoCompleteEnabled( settings.autoComplete );
-  widgets.editor->setAutoCalcEnabled( settings.autoCalc );
+  // full screen
+  actions.showFullScreen->setChecked( settings.showFullScreen );
 
+  // angle mode
   if      ( settings.angleMode == 'r' ) actions.radian->setChecked( true );
   else if ( settings.angleMode == 'd' ) actions.degree->setChecked( true );
 
-  if ( settings.saveSession )
-    restoreHistory();
-  else
-    p->clearHistory();
+  // history
+  if ( settings.saveSession ) restoreHistory();
+  else                        p->clearHistory();
 
-  if ( settings.saveVariables )
-    restoreVariables();
+  // variables
+  if ( settings.saveVariables ) restoreVariables();
+
+  // various toggable option
+  actions.optionAlwaysOnTop->setChecked   ( settings.stayAlwaysOnTop );
+  actions.optionAutoCalc->setChecked      ( settings.autoCalc        );
+  actions.optionAutoCompletion->setChecked( settings.autoComplete    );
+  actions.optionMinimizeToTray->setChecked( settings.minimizeToTray  );
 
   // format
   if      ( settings.format == 'g' ) actions.formatGeneral->setChecked    ( true );
@@ -693,25 +706,19 @@ void MainWindow::Private::applySettings()
   else if ( settings.radixChar == '.' ) actions.radixCharDot->setChecked  ( true );
   else if ( settings.radixChar == ',' ) actions.radixCharComma->setChecked( true );
 
-  p->showKeypad( settings.showKeypad );
+  // keypad
+  actions.showKeypad->setChecked( settings.showKeypad );
+
+  // menu bar
   p->menuBar()->setVisible( settings.showMenuBar );
 
-  actions.showConstants->setChecked ( settings.showConstants  );
-  actions.showFullScreen->setChecked( settings.showFullScreen );
-  actions.showFunctions->setChecked ( settings.showFunctions  );
-  actions.showHistory->setChecked   ( settings.showHistory    );
-  actions.showVariables->setChecked ( settings.showVariables  );
+  // docks
+  actions.showConstants->setChecked ( settings.showConstants );
+  actions.showFunctions->setChecked ( settings.showFunctions );
+  actions.showHistory->setChecked   ( settings.showHistory   );
+  actions.showVariables->setChecked ( settings.showVariables );
 
-  docks.constants->setVisible( settings.showConstants );
-  docks.functions->setVisible( settings.showFunctions );
-  docks.history->setVisible  ( settings.showHistory   );
-  docks.variables->setVisible( settings.showVariables );
-
-  actions.optionAlwaysOnTop->setChecked   ( settings.stayAlwaysOnTop );
-  actions.optionAutoCalc->setChecked      ( settings.autoCalc        );
-  actions.optionAutoCompletion->setChecked( settings.autoComplete    );
-  actions.optionMinimizeToTray->setChecked( settings.minimizeToTray  );
-
+  // system tray
   if ( settings.minimizeToTray )
   {
     if ( ! widgets.trayIcon && QSystemTrayIcon::isSystemTrayAvailable() )
@@ -727,8 +734,9 @@ void MainWindow::Private::applySettings()
       menus.trayIcon->addAction( actions.sessionQuit    );
 
       widgets.trayIcon->setContextMenu( menus.trayIcon );
-      QObject::connect( widgets.trayIcon, SIGNAL( activated( QSystemTrayIcon::ActivationReason ) ),
-                        p,                SLOT  ( trayIconActivated( QSystemTrayIcon::ActivationReason ) ) );
+      QObject::connect( widgets.trayIcon,
+        SIGNAL( activated( QSystemTrayIcon::ActivationReason ) ),
+        p, SLOT  ( trayIconActivated( QSystemTrayIcon::ActivationReason ) ) );
     }
   }
   else
@@ -737,13 +745,6 @@ void MainWindow::Private::applySettings()
       delete widgets.trayIcon;
     widgets.trayIcon = 0;
   }
-
-  // treat stay-always-on-top preference
-  if ( settings.stayAlwaysOnTop )
-    p->setWindowFlags( p->windowFlags() | Qt::WindowStaysOnTopHint );
-  else
-    p->setWindowFlags( p->windowFlags() & (~ Qt::WindowStaysOnTopHint) );
-  p->show();
 
   // changed settings should trigger auto calc nor auto complete
   widgets.editor->stopAutoCalc();
@@ -840,10 +841,14 @@ bool MainWindow::event( QEvent * e )
   }
 
   // ensure dock windows keep their state after minimize / screen switch
-  if ( d->settings.showConstants ) QTimer::singleShot( 0, d->docks.constants, SLOT( show() ) );
-  if ( d->settings.showFunctions ) QTimer::singleShot( 0, d->docks.functions, SLOT( show() ) );
-  if ( d->settings.showHistory   ) QTimer::singleShot( 0, d->docks.history,   SLOT( show() ) );
-  if ( d->settings.showVariables ) QTimer::singleShot( 0, d->docks.variables, SLOT( show() ) );
+  //if ( d->settings.showConstants ) QTimer::singleShot( 0, d->docks.constants,
+  //                                                     SLOT( show() ) );
+  //if ( d->settings.showFunctions ) QTimer::singleShot( 0, d->docks.functions,
+  //                                                     SLOT( show() ) );
+  //if ( d->settings.showHistory   ) QTimer::singleShot( 0, d->docks.history,
+  //                                                     SLOT( show() ) );
+  //if ( d->settings.showVariables ) QTimer::singleShot( 0, d->docks.variables,
+  //                                                     SLOT( show() ) );
 
   return QMainWindow::event( e );
 }
@@ -905,6 +910,7 @@ void MainWindow::copyResult()
 void MainWindow::degree()
 {
   d->settings.angleMode = 'd';
+  emit angleModeChanged( 'd' );
 }
 
 
@@ -989,7 +995,7 @@ void MainWindow::hideAutoCalc()
 void MainWindow::insertFunction()
 {
   if ( ! d->dialogs.insertFunction )
-    d->dialogs.insertFunction = new InsertFunctionDlg( this );
+    d->dialogs.insertFunction = new InsertFunctionDlg( d->functions, this );
 
   if ( d->dialogs.insertFunction->exec() == InsertFunctionDlg::Accepted )
   {
@@ -1116,19 +1122,26 @@ void MainWindow::loadSession()
 void MainWindow::alwaysOnTopToggled( bool b )
 {
   d->settings.stayAlwaysOnTop = b;
-  d->actions.optionAlwaysOnTop->setChecked( b );
+
+  if ( d->settings.stayAlwaysOnTop )
+    setWindowFlags( windowFlags() | Qt::WindowStaysOnTopHint );
+  else
+    setWindowFlags( windowFlags() & (~ Qt::WindowStaysOnTopHint) );
+  show();
 }
 
 
 void MainWindow::autoCalcToggled( bool b )
 {
   d->settings.autoCalc = b;
+  d->widgets.editor->setAutoCalcEnabled( b );
 }
 
 
 void MainWindow::autoCompletionToggled( bool b )
 {
   d->settings.autoComplete = b;
+  d->widgets.editor->setAutoCompleteEnabled( b );
 }
 
 
@@ -1141,13 +1154,15 @@ void MainWindow::minimizeToTrayToggled( bool b )
 void MainWindow::radian()
 {
   d->settings.angleMode = 'r';
+  emit angleModeChanged( 'r' );
 }
 
 
 void MainWindow::saveSession()
 {
   QString filters = tr( "SpeedCrunch Sessions (*.sch);;All Files (*)" );
-  QString fname = QFileDialog::getSaveFileName( this, tr("Save Session"), QString::null, filters );
+  QString fname = QFileDialog::getSaveFileName( this, tr("Save Session"),
+                                                QString::null, filters );
   if ( fname.isEmpty() )
     return;
 
@@ -1301,8 +1316,9 @@ void MainWindow::showMenuBarTip()
   QString msg = tr("The menu bar is now hidden. "
                    "To make it visible again, press Ctrl+M.");
 
-  QPoint p = mapFromGlobal( d->widgets.display->mapToGlobal( QPoint(0, 0) ) ) += QPoint(5, 5);
-  d->widgets.tip->move( p );
+  //QPoint p = mapFromGlobal( d->widgets.display->mapToGlobal( QPoint(0, 0) ) )
+  //                          += QPoint(5, 5);
+  d->widgets.tip->move( 5, 10 );
   d->widgets.tip->resize( 345, d->widgets.tip->sizeHint().height() );
   d->widgets.tip->showText( msg, tr("Warning") );
 }
@@ -1310,11 +1326,12 @@ void MainWindow::showMenuBarTip()
 
 void MainWindow::showTipOfTheDay()
 {
-  QPoint p = mapFromGlobal( d->widgets.display->mapToGlobal( QPoint(0, 0) ) ) += QPoint(5, 5);
-  d->widgets.tip->move( p );
+  //QPoint p = mapFromGlobal( d->widgets.display->mapToGlobal( QPoint(0, 0) ) )
+  //                          += QPoint(5, 5);
+  d->widgets.tip->move( 5, 10 );
   d->widgets.tip->resize( 345, d->widgets.tip->sizeHint().height() );
 
-  int tipNo = rand() % 5;
+  int tipNo = rand() % 4;
   QString msg;
   switch ( tipNo )
   {
@@ -1331,6 +1348,7 @@ void MainWindow::showTipOfTheDay()
     case 2:
       msg = tr("Use variable <i>pi</i> to use pi constant." );
       break;
+
     case 3:
       msg = tr("Use <i>;</i> (semicolon) to separate the parameters in "
                "functions." );
@@ -1541,25 +1559,25 @@ void MainWindow::restoreDocks()
     QTimer::singleShot(0, d->docks.history, SLOT( show() ));
   }
 
-  //if ( d->settings.showFunctions )
-  //if ( d->settings.functionsDockFloating )
-  //if ( ! d->docks.functions->isFloating() )
-  //{
-  //  d->docks.functions->hide();
-  //  d->docks.functions->setFloating( true );
-  //  d->docks.functions->move( d->settings.functionsDockLeft, d->settings.functionsDockTop );
-  //  d->docks.functions->resize( d->settings.functionsDockWidth, d->settings.functionsDockHeight );
-  //  QTimer::singleShot( 0, d->docks.functions, SLOT( show() ) );
-  //}
-  if ( d->settings.showFunctions && d->settings.functionsDockFloating && ! d->docks.functions->isFloating() )
+  if ( d->settings.showFunctions )
+  if ( d->settings.functionsDockFloating )
+  if ( ! d->docks.functions->isFloating() )
   {
     d->docks.functions->hide();
     d->docks.functions->setFloating( true );
     d->docks.functions->move( d->settings.functionsDockLeft, d->settings.functionsDockTop );
     d->docks.functions->resize( d->settings.functionsDockWidth, d->settings.functionsDockHeight );
-    d->docks.functions->setFloating( false );
     QTimer::singleShot( 0, d->docks.functions, SLOT( show() ) );
   }
+  //if ( d->settings.showFunctions && d->settings.functionsDockFloating && ! d->docks.functions->isFloating() )
+  //{
+  //  d->docks.functions->hide();
+  //  d->docks.functions->setFloating( true );
+  //  d->docks.functions->move( d->settings.functionsDockLeft, d->settings.functionsDockTop );
+  //  d->docks.functions->resize( d->settings.functionsDockWidth, d->settings.functionsDockHeight );
+  //  d->docks.functions->setFloating( false );
+  //  QTimer::singleShot( 0, d->docks.functions, SLOT( show() ) );
+  //}
 
   if ( d->settings.showVariables )
   if ( d->settings.variablesDockFloating )
@@ -1758,6 +1776,16 @@ void MainWindow::closeEvent( QCloseEvent * e )
   if ( d->widgets.trayIcon )
     d->widgets.trayIcon->hide();
   d->saveSettings();
+
+  d->docks.constants->hide();
+  d->docks.variables->hide();
+  d->docks.functions->hide();
+  d->docks.history->hide();
+  delete d->docks.constants;
+  delete d->docks.variables;
+  delete d->docks.functions;
+  delete d->docks.history;
+
   emit quitApplication();
   QMainWindow::closeEvent( e );
 }

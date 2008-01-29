@@ -47,9 +47,6 @@
 #define HMATH_HEX_MAX_SHOWN ((8305*HMATH_MAX_SHOWN)/10000 + 1)
 
 
-static char s_angleMode = 'r';
-
-
 /*------------------------   Helper routines  -------------------------*/
 
 void static checkfullcancellation( cfloatnum op1, cfloatnum op2,
@@ -703,17 +700,6 @@ _doFormat(
   return str;
 }
 
-
-char HMath::angleMode()
-{
-  return s_angleMode;
-}
-
-
-void HMath::setAngleMode( char am )
-{
-  s_angleMode = am;
-}
 
 /**
  * Formats the given number as string, using specified decimal digits.
