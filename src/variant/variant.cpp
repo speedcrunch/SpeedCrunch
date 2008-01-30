@@ -30,16 +30,15 @@
 *************************************************************************/
 
 #include "variant/variant.hxx"
+#include <QByteArray>
+
+const char cFalse[] = "false";
+const char cTrue[] = "true";
 
 void Variant::initClass()
 {
-  registerConstructor(create, vError);
-  registerConstructor(create, vBoolean);
-}
-
-VariantData* Variant::create()
-{
-  return new Variant;
+  VariantData::registerConstructor(0, vError);
+  VariantData::registerConstructor(0, vBoolean);
 }
 
 bool Variant::isBuiltinType(VariantType t)
@@ -52,47 +51,107 @@ bool Variant::isBuiltinType(VariantType t)
   }
 }
 
-void Variant::clear()
+void Variant::retype(VariantType t)
 {
   if (!isBuiltinType(type()))
     val->release();
-  m_type = vError;
+  m_type = t;
+  val = 0;
+}
+
+void Variant::clear()
+{
+  retype(vError);
   error = NoOperand;
 }
 
-void Variant::operator=(VariantType t)
+void Variant::defaultType(VariantType t)
 {
-  clear();
-  m_type = t;
+  retype(t);
   switch (t)
   {
     case vBoolean: boolval = false; break;
-    case vError: break;
+    case vError: error = NoOperand; break;
     default: val = VariantData::create(t); break;
   }
 }
 
 void Variant::operator=(Error e)
 {
-  *this = vError;
+  retype(vError);
   error = e;
 }
 
 void Variant::operator=(bool b)
 {
-  *this = vBoolean;
+  retype(vBoolean);
   boolval = b;
+}
+
+void Variant::operator=(VariantData* newval)
+{
+  if (newval == 0)
+    clear();
+  else
+  {
+    retype(newval->type());
+    val = newval;
+  }
 }
 
 void Variant::operator=(const Variant& other)
 {
-  *this = other.type();
+  switch (other.type())
+  {
+    case vBoolean: *this = other.boolval; break;
+    case vError: *this = other.error; break;
+    default: *this = other.val->clone();
+  }
+}
+
+bool Variant::assign(VariantType t, const char* s)
+{
+  defaultType(t);
+  bool ok = true;
+  switch (t)
+  {
+    case vBoolean:
+      if (qstrcmp(s, cTrue) == 0)
+        boolval = true;
+      else if (qstrcmp(s, cFalse) == 0)
+        boolval = false;
+      else ok = false;
+      break;
+    case vError:
+      error = Error(QByteArray(s).toInt(&ok));
+      break;
+    default:
+      ok = val->assign(s);
+  }
+  if (!ok)
+    *this = BadLiteral;
+  return ok;
+}
+
+Variant::operator QByteArray() const
+{
+  QByteArray result;
   switch (type())
   {
-    case vBoolean: boolval = other.boolval; break;
-    case vError: error = other.error; break;
-    default: val = other.val->clone();
+    case vBoolean:
+      if (boolval)
+        result = cTrue;
+      else
+        result = cFalse;
+      break;
+    case vError:
+      result.setNum(int(error));
+      break;
+    default:
+      result = *val;
+      break;
   }
+  return VariantTypeName(type()) + ':' + result;
 }
 
 Variant::operator bool() const
@@ -101,7 +160,7 @@ Variant::operator bool() const
   {
     case vBoolean: return boolval;
     case vError: return error == Success;
-    default: return val != 0;
+    default: return Error(*val) == Success;
   }
 }
 
@@ -111,18 +170,7 @@ Variant::operator Error() const
   {
     case vBoolean: return Success;
     case vError: return error;
-    default: return val == 0? NoOperand: Success;
-  }
-}
-
-void Variant::operator=(VariantData* newval)
-{
-  if (newval == 0)
-    *this = NoOperand;
-  else
-  {
-    *this = newval->type();
-    val = newval;
+    default: return val == 0? NoOperand: Error(*val);
   }
 }
 
@@ -203,18 +251,102 @@ Variant Variant::operator!() const
   return overloadfct(&VariantData::operator!);
 }
 
-Variant Variant::operator-(const Variant& other) const
+Variant Variant::call2(Method2 normal, Method2 swapped,
+                       const Variant& other) const
 {
   if (cmpType(other.type()) >= 0)
-    return overloadfct(&VariantData::operator-, other);
-  return overloadfct(&VariantData::swapSub, other);
+    return overloadfct(normal, other);
+  return other.overloadfct(swapped, *this);
 }
 
 Variant Variant::operator+(const Variant& other) const
 {
-  if (cmpType(other.type()) >= 0)
-    return overloadfct(&VariantData::operator+, other);
-  return overloadfct(&VariantData::swapAdd, other);
+  return call2(&VariantData::operator+, &VariantData::swapAdd, other);
+}
+
+Variant Variant::operator-(const Variant& other) const
+{
+  return call2(&VariantData::operator-, &VariantData::swapSub, other);
+}
+
+Variant Variant::operator*(const Variant& other) const
+{
+  return call2(&VariantData::operator*, &VariantData::swapMul, other);
+}
+
+Variant Variant::operator/(const Variant& other) const
+{
+  return call2(&VariantData::operator/, &VariantData::swapDiv, other);
+}
+
+Variant Variant::operator%(const Variant& other) const
+{
+  return call2(&VariantData::operator%, &VariantData::swapMod, other);
+}
+
+Variant Variant::idiv(const Variant& other) const
+{
+  return call2(&VariantData::idiv, &VariantData::swapIdiv, other);
+}
+
+Variant Variant::operator&(const Variant& other) const
+{
+  if (type() == vBoolean && other.type() == vBoolean)
+    return bool(*this) && bool(other);
+  return call2(&VariantData::operator&, &VariantData::swapAnd, other);
+}
+
+Variant Variant::operator|(const Variant& other) const
+{
+  if (type() == vBoolean && other.type() == vBoolean)
+    return bool(*this) || bool(other);
+  return call2(&VariantData::operator|, &VariantData::swapOr, other);
+}
+
+Variant Variant::operator^(const Variant& other) const
+{
+  if (type() == vBoolean && other.type() == vBoolean)
+    return bool(*this) ^ bool(other);
+  return call2(&VariantData::operator^, &VariantData::swapXor, other);
+}
+
+Variant Variant::operator==(const Variant& other) const
+{
+  if (type() == vBoolean && other.type() == vBoolean)
+    return bool(*this) == bool(other);
+  return call2(&VariantData::operator==, &VariantData::swapEq, other);
+}
+
+Variant Variant::operator!=(const Variant& other) const
+{
+  if (type() == vBoolean && other.type() == vBoolean)
+    return bool(*this) != bool(other);
+  return call2(&VariantData::operator!=, &VariantData::swapNe, other);
+}
+
+Variant Variant::operator>(const Variant& other) const
+{
+  return call2(&VariantData::operator>, &VariantData::swapGt, other);
+}
+
+Variant Variant::operator>=(const Variant& other) const
+{
+  return call2(&VariantData::operator>=, &VariantData::swapGe, other);
+}
+
+Variant Variant::operator<(const Variant& other) const
+{
+  return call2(&VariantData::operator<, &VariantData::swapLs, other);
+}
+
+Variant Variant::operator<=(const Variant& other) const
+{
+  return call2(&VariantData::operator<=, &VariantData::swapLe, other);
+}
+
+Variant Variant::raise(const Variant& other) const
+{
+  return call2(&VariantData::raise, &VariantData::swapRaise, other);
 }
 
 Variant::operator cfloatnum() const
@@ -230,7 +362,7 @@ void Variant::move(floatnum x, Error e)
     *this = e;
   else
   {
-    *this = vLongReal;
+    defaultType(vLongReal);
     static_cast<LongReal*>(val)->move(x);
   }
 }

@@ -94,7 +94,7 @@ int float_setrange(int maxexp);
    after this number of decimal digits */
 int float_getprecision();
 
-/* sets the current precision (in decimal digits) that is used by basic
+/* sets the current maximum precision (in decimal digits) that is used by basic
    arithmetic operations. The precision is at least 1 and at most MAXDIGITS.
    An exceeding argument is replaced by the respective limit.
    Setting a new precision affects future operations only; currently set

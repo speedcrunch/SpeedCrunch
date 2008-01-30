@@ -33,6 +33,7 @@
 #define _VARIANTBASE_H
 
 #include "base/errors.h"
+#include <QByteArray>
 
 class Variant;
 
@@ -45,7 +46,8 @@ class VariantIntf
       vLongReal,
       vError // has to be the last entry
     } VariantType;
-
+    static const char* VariantTypeName(VariantType);
+    static VariantType Name2VariantType(const QByteArray&);
   public:
     virtual ~VariantIntf() {};
   public: // type & casting
@@ -60,7 +62,20 @@ class VariantIntf
     virtual Variant operator!() const;
     virtual Variant operator+(const Variant& other) const;
     virtual Variant operator-(const Variant& other) const;
+    virtual Variant operator*(const Variant& other) const;
+    virtual Variant operator/(const Variant& other) const;
+    virtual Variant operator%(const Variant& other) const;
+    virtual Variant idiv(const Variant& other) const;
+    virtual Variant operator&(const Variant& other) const;
+    virtual Variant operator|(const Variant& other) const;
+    virtual Variant operator^(const Variant& other) const;
     virtual Variant operator==(const Variant& other) const;
+    virtual Variant operator!=(const Variant& other) const;
+    virtual Variant operator>(const Variant& other) const;
+    virtual Variant operator>=(const Variant& other) const;
+    virtual Variant operator<(const Variant& other) const;
+    virtual Variant operator<=(const Variant& other) const;
+    virtual Variant raise(const Variant& exp) const;
 };
 
 class VariantData: public VariantIntf
@@ -70,12 +85,27 @@ class VariantData: public VariantIntf
     static void registerConstructor(Constructor, VariantType);
     static VariantData* create(VariantType);
     virtual void release() { delete this; };
-  public: // copying
+    virtual VariantData* writePtr() { return this; };
     virtual VariantData* clone() const { return 0; };
+    virtual bool assign(const char*) { return false; };
+    virtual operator QByteArray() const = 0;
   public: // swapped parameter operations
     virtual Variant swapAdd(const Variant& other) const;
     virtual Variant swapSub(const Variant& other) const;
+    virtual Variant swapMul(const Variant& other) const;
+    virtual Variant swapDiv(const Variant& other) const;
+    virtual Variant swapMod(const Variant& other) const;
+    virtual Variant swapIdiv(const Variant& other) const;
+    virtual Variant swapAnd(const Variant& other) const;
+    virtual Variant swapOr(const Variant& other) const;
+    virtual Variant swapXor(const Variant& other) const;
     virtual Variant swapEq(const Variant& other) const;
+    virtual Variant swapNe(const Variant& other) const;
+    virtual Variant swapGe(const Variant& other) const;
+    virtual Variant swapGt(const Variant& other) const;
+    virtual Variant swapLe(const Variant& other) const;
+    virtual Variant swapLs(const Variant& other) const;
+    virtual Variant swapRaise(const Variant& base) const;
 };
 
 #endif /*_VARIANTBASE_H*/

@@ -36,26 +36,89 @@
 
 #include "variant/variantdata.hxx"
 #include "variant/variant.hxx"
+#include <QString>
 
 class LongReal: public VariantData
 {
   friend class InitVariant;
-  public:
+  public: // creating & destructing
     LongReal();
     ~LongReal();
-    VariantType type() const { return vLongReal; };
     void release();
-    operator cfloatnum() const { return &val; };
-    static cfloatnum NaN();
     VariantData* clone() const;
+  public: // type, casting, assignment
+    VariantType type() const { return vLongReal; };
+    operator cfloatnum() const { return &val; };
     bool move(floatnum x);
+    static cfloatnum NaN();
+    public: // operators
     Variant operator+() const;
     Variant operator-() const;
+    Variant operator+(const Variant& other) const;
+    Variant operator-(const Variant& other) const;
+    Variant operator*(const Variant& other) const;
+    Variant operator/(const Variant& other) const;
+    Variant operator%(const Variant& other) const;
+    Variant idiv(const Variant& other) const;
+    Variant operator==(const Variant& other) const;
+    Variant operator!=(const Variant& other) const;
+    Variant operator>(const Variant& other) const;
+    Variant operator>=(const Variant& other) const;
+    Variant operator<(const Variant& other) const;
+    Variant operator<=(const Variant& other) const;
+    Variant swapSub(const Variant& other) const;
+    Variant swapDiv(const Variant& other) const;
+    Variant swapIdiv(const Variant& other) const;
+    Variant swapMod(const Variant& other) const;
+  public: // precision handling
+    enum { precQuery = -1, precDefault = 0 };
+    static int evalPrec();
+    static int workPrec();
+    static int precision(int newprec = precQuery);
+  public: // conversion, IO
+    typedef enum
+    {
+      FixPoint,
+      Scientific,
+      Engineering,
+      Complement2,
+    } fmtMode;
+    typedef enum
+    {
+      Plus,
+      Minus,
+      Compl2,
+    } Sign;
+    typedef struct
+    {
+      QString intpart;
+      QString fracpart;
+      QString scale;
+      Sign signSignificand;
+      Sign signScale;
+      signed char baseSignificand;
+      signed char baseScale;
+      Error error;
+    } RawIO;
+    bool assign(const char*);
+    operator QByteArray() const;
+    RawIO convert(int digits = -1, fmtMode mode = Scientific,
+                  char base = 10, char scalebase = 10);
+    static LongReal* convert(const RawIO&);
   private:
     static void initClass();
     static VariantData* create();
     mutable unsigned refcount;
     floatstruct val;
+
+  private: // generic function calls, helpers
+    typedef char (*Fct2)(floatnum result, cfloatnum op1,
+                         cfloatnum op2, int digits);
+    typedef char (*Fct2ND)(floatnum result, cfloatnum op1,
+                           cfloatnum op2);
+    Variant call2(const Variant& other, Fct2, bool swap = false) const;
+    Variant call2ND(const Variant& other, Fct2ND, bool swap = false) const;
+    Variant callCmp(const Variant& other, char mask) const;
 };
 
 #endif /*_REAL_H*/

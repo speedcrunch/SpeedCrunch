@@ -32,6 +32,27 @@
 #include "variant/variantdata.hxx"
 #include "variant/variant.hxx"
 
+static const char* names[] =
+{
+  "BOOL",
+  "LONGREAL"
+  "ERROR",
+};
+
+const char* VariantIntf::VariantTypeName(VariantType t)
+{
+  // FIXME bound check
+  return names[int(t)];
+}
+
+VariantIntf::VariantType VariantIntf::Name2VariantType(const QByteArray& b)
+{
+  int i = -1;
+  // FIXME bound check
+  for (; b != names[i]; );
+  return VariantType(i);
+}
+
 signed char VariantIntf::cmpType(VariantType other) const
 {
   if (type() == other)
@@ -51,7 +72,38 @@ Variant VariantIntf::operator+(const Variant& other) const
 { return NotImplemented; }
 Variant VariantIntf::operator-(const Variant& other) const
 { return NotImplemented; }
+Variant VariantIntf::operator*(const Variant& other) const
+{ return NotImplemented; }
+Variant VariantIntf::operator/(const Variant& other) const
+{ return NotImplemented; }
+Variant VariantIntf::operator%(const Variant& other) const
+{ return NotImplemented; }
+Variant VariantIntf::idiv(const Variant& other) const
+{ return NotImplemented; }
+Variant VariantIntf::operator&(const Variant& other) const
+{ return NotImplemented; }
+Variant VariantIntf::operator|(const Variant& other) const
+{ return NotImplemented; }
+Variant VariantIntf::operator^(const Variant& other) const
+{ return NotImplemented; }
 Variant VariantIntf::operator==(const Variant& other) const
+{ return NotImplemented; }
+Variant VariantIntf::operator!=(const Variant& other) const
+{ return !(*this == other); }
+Variant VariantIntf::operator>(const Variant& other) const
+{ return NotImplemented; }
+Variant VariantIntf::operator>=(const Variant& other) const
+{
+  Variant result = *this > other;
+  if (result.type() == vBoolean && !result)
+    result = *this == other;
+  return result;
+}
+Variant VariantIntf::operator<(const Variant& other) const
+{ return !(*this >= other); }
+Variant VariantIntf::operator<=(const Variant& other) const
+{ return !(*this > other); }
+Variant VariantIntf::raise(const Variant& other) const
 { return NotImplemented; }
 
 Variant VariantIntf::embed() const
@@ -73,8 +125,34 @@ VariantData* VariantData::create(VariantType t)
 }
 
 Variant VariantData::swapAdd(const Variant& other) const
-{ return NotImplemented; }
+{ return *this + other; }
 Variant VariantData::swapSub(const Variant& other) const
 { return NotImplemented; }
+Variant VariantData::swapMul(const Variant& other) const
+{ return *this * other; }
+Variant VariantData::swapDiv(const Variant& other) const
+{ return NotImplemented; }
+Variant VariantData::swapMod(const Variant& other) const
+{ return NotImplemented; }
+Variant VariantData::swapIdiv(const Variant& other) const
+{ return NotImplemented; }
+Variant VariantData::swapAnd(const Variant& other) const
+{ return *this & other; }
+Variant VariantData::swapOr(const Variant& other) const
+{ return *this | other; }
+Variant VariantData::swapXor(const Variant& other) const
+{ return *this ^ other; }
 Variant VariantData::swapEq(const Variant& other) const
+{ return *this == other; }
+Variant VariantData::swapNe(const Variant& other) const
+{ return *this != other; }
+Variant VariantData::swapGe(const Variant& other) const
+{ return *this < other; }
+Variant VariantData::swapGt(const Variant& other) const
+{ return *this <= other; }
+Variant VariantData::swapLe(const Variant& other) const
+{ return *this > other; }
+Variant VariantData::swapLs(const Variant& other) const
+{ return *this >= other; }
+Variant VariantData::swapRaise(const Variant& base) const
 { return NotImplemented; }

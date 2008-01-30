@@ -39,11 +39,11 @@ typedef enum
   EvalUnstable,
 
 /* the result is in absolute value smaller than the smallest non-zero
-  value the math engine can produce */
+  value the math engine can handle */
   Underflow,
 
 /* the result is in absolute value bigger than the biggest number
-  the math engine can produce */
+  the math engine can handle */
   Overflow,
 
 /* operation requests a division by zero, or a function was evaluated
@@ -62,7 +62,7 @@ typedef enum
   OutOfIntegerRange,
 
 /* This error indicates a failed conversion from an ASCII string.
-   Functions setting this error report a more detailed IO... error code,
+   Functions setting this error may report a more detailed IO... error code,
    too */
   BadLiteral,
 
@@ -71,9 +71,9 @@ typedef enum
   InvalidPrecision,
 
 /* A parameter violates the limitations of the engine, or is completely
-  meaningless, like the evaluation of a quotient and a remainder in the same variable.
+  meaningless, e.g. the evaluation of a quotient and a remainder in the same variable.
   This error indicates a bug, because the calling program should never submit
-  such a parameter */
+  such a parameter (combinations) */
   InvalidParam,
 
 /* returned when an operation request is mathematically valid, but
@@ -93,7 +93,7 @@ typedef enum
 /* You must specify at least one digit of the significant */
   IONoSignificand,
 
-/* unknown characters in exponent, e.g. a two's complement tag */
+/* invalid characters in exponent, e.g. a decimal dot */
   IOBadExp,
 
 /* the exponent exceeds the allowed range */

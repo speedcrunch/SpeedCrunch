@@ -37,42 +37,69 @@
 #include "variant/real.hxx"
 #include "variant/variant.hxx"
 
-class VariantBase: public VariantData
+class VariantBase: public VariantIntf
 {
   protected:
     VariantBase(): m_type(vError) {};
     VariantType m_type;
+  private:
 };
 
 class Variant: public VariantBase
 {
   friend class InitVariant;
-  public:
+  public: // constructors
     Variant(Error e){ *this = e; };
     Variant(bool b) { *this = b; };
     Variant() { *this = NoOperand; };
-    Variant(VariantData* p) { *this = p; };
+    Variant(VariantData* d) { *this = d; };
+    Variant(const Variant& other) { *this = other; };
+    // this frees x
+    Variant(floatnum x, Error e = Success) { move(x, e); };
+    Variant(VariantType t, const char* value) { assign(t, value); };
+    ~Variant() { *this = Success; };
+  public: // assignment
     void operator=(Error);
     void operator=(bool);
-    void operator=(const Variant&);
     void operator=(VariantData*);
+    void operator=(const Variant&);
+    bool assign(VariantType, const char*);
+  public: // types & conversion
     operator bool() const;
     operator Error() const;
+    operator QByteArray() const;
     VariantType type() const { return m_type; };
     static bool isBuiltinType(VariantType);
     Variant embed() const;
+    void clear();
+  public: // operators & functions
     Variant operator+() const;
     Variant operator-() const;
     Variant operator~() const;
     Variant operator!() const;
     Variant operator+(const Variant&) const;
     Variant operator-(const Variant&) const;
+    Variant operator*(const Variant& other) const;
+    Variant operator/(const Variant& other) const;
+    Variant operator%(const Variant& other) const;
+    Variant idiv(const Variant& other) const;
+    Variant raise(const Variant& exp) const;
+    Variant operator&(const Variant& other) const;
+    Variant operator|(const Variant& other) const;
+    Variant operator^(const Variant& other) const;
+    Variant operator==(const Variant& other) const;
+    Variant operator!=(const Variant& other) const;
+    Variant operator>(const Variant& other) const;
+    Variant operator>=(const Variant& other) const;
+    Variant operator<(const Variant& other) const;
+    Variant operator<=(const Variant& other) const;
   protected:
     typedef Variant (VariantData::*Method1)() const;
     typedef Variant (VariantData::*Method2)(const Variant& other) const;
 
-    void operator=(VariantType);
-    void clear();
+    // retype sets val to 0, defaultType creates a default value
+    void defaultType(VariantType);
+    void retype(VariantType);
     Variant overloadfct(Method1) const;
     Variant overloadfct(Method2, const Variant& other) const;
   private:
@@ -83,9 +110,12 @@ class Variant: public VariantBase
     };
     static void initClass();
     static VariantData* create();
+
+    Variant call2(Method2, Method2, const Variant& other) const;
   // support of LongReal
   public:
     operator cfloatnum() const;
+    // this frees x
     void move(floatnum x, Error e = Success);
 };
 
