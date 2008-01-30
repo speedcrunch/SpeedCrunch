@@ -690,7 +690,7 @@ _doFormat(
   tokens.exp.sz = sizeof(expbuf);
   tokens.exp.buf = expbuf;
   float_copy(&tmp, x, DECPRECISION + 2);
-  if (float_out(&tokens, &tmp, prec, base, expbase, outmode))
+  if (float_out(&tokens, &tmp, prec, base, expbase, outmode) == Success)
   {
     sz = cattokens(NULL, -1, &tokens, flags);
     str = (char*)malloc( sz );
@@ -1232,7 +1232,7 @@ HNumber HMath::exp( const HNumber & x )
 HNumber HMath::ln( const HNumber & x )
 {
   HNumber result;
-  call1Arg(result.d, x.d, float_ln);
+  call1ArgPoleCheck(result.d, x.d, float_ln);
   return result;
 
 }

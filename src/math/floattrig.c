@@ -392,7 +392,7 @@ _trigreduce(
   int digits)
 {
   floatstruct tmp;
-  int expx;
+  int expx, save;
   signed char sgn;
   char odd;
 
@@ -401,24 +401,13 @@ _trigreduce(
   expx = float_getexponent(x);
   if (expx > float_getlength(&cPi) - digits)
     return 0;
+  save = float_setprecision(MAXDIGITS);
   float_create(&tmp);
   sgn = float_getsign(x);
   float_abs(x);
-  float_div(&tmp, x, &cPi, expx + 1);
-  float_int(&tmp);
+  float_divmod(&tmp, x, x, &cPi, INTQUOT);
+  float_setprecision(save);
   odd = float_isodd(&tmp);
-  float_mul(&tmp, &tmp, &cPi, digits + float_getexponent(&tmp) + 1);
-  float_sub(x, x, &tmp, digits+1);
-  if (float_cmp(x, &cPi) > 0)
-  {
-    float_sub(x, x, &cPi, digits+1);
-    odd = !odd;
-  }
-  if (float_getsign(x) < 0)
-  {
-    float_add(x, x, &cPi, digits+1);
-    odd = !odd;
-  }
   if (odd)
     float_sub(x, x, &cPi, digits+1);
   if (sgn < 0)

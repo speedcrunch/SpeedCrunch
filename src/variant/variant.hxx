@@ -54,8 +54,6 @@ class Variant: public VariantBase
     Variant() { *this = NoOperand; };
     Variant(VariantData* d) { *this = d; };
     Variant(const Variant& other) { *this = other; };
-    // this frees x
-    Variant(floatnum x, Error e = Success) { move(x, e); };
     Variant(VariantType t, const char* value) { assign(t, value); };
     ~Variant() { *this = Success; };
   public: // assignment
@@ -64,7 +62,8 @@ class Variant: public VariantBase
     void operator=(VariantData*);
     void operator=(const Variant&);
     bool assign(VariantType, const char*);
-  public: // types & conversion
+    bool assign(const QByteArray&);
+    public: // types & conversion
     operator bool() const;
     operator Error() const;
     operator QByteArray() const;
@@ -116,6 +115,7 @@ class Variant: public VariantBase
   public:
     operator cfloatnum() const;
     // this frees x
+    Variant(floatnum x, Error e = Success) { move(x, e); };
     void move(floatnum x, Error e = Success);
 };
 

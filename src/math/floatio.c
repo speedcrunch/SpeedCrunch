@@ -34,7 +34,7 @@
 #include <base/errors.h>
 #include <string.h>
 
-#define NORMALBASE (-1)
+typedef enum { NmbNormal, NmbSpecial, NmbBufferOverflow } NmbType;
 
 /* Besides the regular bases 2, 8, 10 and 16, there are
    three others (IO_BASE_DEFAULT, IO_BASE_NAN and IO_BASE_ZERO)
@@ -42,7 +42,7 @@
    pseudo-bases, because you cannot use them as parameter to
    floatnum functions */
 static char
-_ispseudobase(
+_isspecial(
   signed char base)
 {
   switch (base)
@@ -74,7 +74,7 @@ _isempty(
 static char
 _setstr(
   p_buffer dest,
-  char*src)
+  const char* src)
 {
   if (dest->sz > 0)
   {
@@ -371,7 +371,7 @@ _str2seq(
 
 /* copy count digits (leading zeros included) from the
    digit sequence described by n to an ASCII buffer */
-static char
+static Error
 _seq2str(
   p_buffer dest,
   int count,
@@ -382,18 +382,18 @@ _seq2str(
 
   ofs = 0;
   if (count >= dest->sz)
-    return 0;
+    return IOBufferOverflow;
   buf = dest->buf;
   for (; ofs < count; ++ofs)
     *(buf++) = _digit2ascii(n->getdigit(ofs, &n->seq));
   *(buf) = '\0';
-  return 1;
+  return Success;
 }
 
 /* copy all digits (leading zeros included) from the
    digit sequence described by n to an ASCII buffer, but
    complement the sequence before writing to the buffer */
-static char
+static Error
 _cmplseq2str(
   p_buffer dest,
   p_ext_seq_desc n)
@@ -407,7 +407,7 @@ _cmplseq2str(
   buf = dest->buf;
   bound = _intdigits(&n->seq);
   if (bound + 1 > dest->sz)
-    return 0;
+    return IOBufferOverflow;
   lastnz = _ofslastnz(&n->seq);
   for (ofs = -1; ++ofs < lastnz;)
   {
@@ -425,7 +425,7 @@ _cmplseq2str(
   for (; ++ofs < bound;)
     *(buf++) = _digit2ascii(0);
   *(buf) = '\0';
-  return 1;
+  return Success;
 }
 
 /* create a descriptor from a sequence of digits,
@@ -456,40 +456,47 @@ str2int(
 /* if base describes a special value (0 or NaN), the normal
    conversion routines fail. This routine creates special output
    values for these bases, and return
-   0: if the buffer is too small
-   1: if it created output
-   NORMALBASE: if base stands for a usual number that the
+   nmbBufferOverflow: if the buffer is too small
+   nmbSpecial: if it created output
+   nmbNormal: if base stands for a usual number that the
                normal routines should deal with */
-static signed char
-_pseudo2str(
+static NmbType
+_special2str(
   p_otokens tokens,
   signed char base)
 {
+  const char* p;
   switch (base)
   {
   case IO_BASE_ZERO:
-    return _setstr(&tokens->intpart, "0");
+    p = "0";
+    break;
   case IO_BASE_NAN:
-    return _setstr(&tokens->intpart, "NaN");
+    p = "NaN";
+    break;
+  default:
+    return NmbNormal;
   }
-  return NORMALBASE;
+  return _setstr(&tokens->intpart, p)? NmbSpecial : NmbBufferOverflow;
 }
 
 /* create an ASCIIZ sequence of the integer part,
    set sign and base. */
-static char
+static Error
 int2str(
   p_otokens tokens,
   p_number_desc n,
   char complement)
 {
-  signed char result;
-
   tokens->sign = n->prefix.sign;
   tokens->base = n->prefix.base;
-  result = _pseudo2str(tokens, n->prefix.base);
-  if (result != NORMALBASE)
-    return result;
+  switch (_special2str(tokens, n->prefix.base))
+  {
+    case NmbSpecial: return Success;
+    case NmbBufferOverflow: return IOBufferOverflow;
+    default: break; /* NmbNormal */
+  }
+  /* no special encodings */
   if (complement)
     return _cmplseq2str(&tokens->intpart, &n->intpart);
   return _seq2str(&tokens->intpart, _intdigits(&n->intpart.seq),
@@ -511,9 +518,9 @@ str2fixp(
   n->prefix.sign = tokens->sign;
   if (tokens->sign == IO_SIGN_COMPLEMENT
       && (!_isempty(tokens->fracpart) || !_isempty(tokens->exp)))
-    return IOSignConflict;
+    return IOInvalidComplement;
   result = str2int(&n->intpart, tokens->intpart, &n->prefix, maxdigits);
-  if (_ispseudobase(n->prefix.base))
+  if (_isspecial(n->prefix.base))
     return result;
   if (!_isempty(tokens->fracpart))
     _str2seq(&n->fracpart, tokens->fracpart,
@@ -529,18 +536,18 @@ str2fixp(
 }
 
 /* convert integer and fraction part into ASCIIZ sequences */
-static char
+static Error
 fixp2str(
   p_otokens tokens,
   p_number_desc n,
   int scale)
 {
-  char result;
+  Error result;
 
   result = int2str(tokens, n, n->prefix.sign == IO_SIGN_COMPLEMENT);
-  if (result && !_ispseudobase(n->prefix.base))
-    result = _seq2str(&tokens->fracpart, scale, &n->fracpart);
-  return result;
+  if (result != Success || _isspecial(n->prefix.base))
+    return result;
+  return _seq2str(&tokens->fracpart, scale, &n->fracpart);
 }
 
 /* create a descriptor from the digit sequence of the exponent */
@@ -578,14 +585,14 @@ _exp2desc(
 }
 
 /* create an ASCIIZ sequence from the exponent value */
-static char
+static Error
 _desc2exp(
   p_otokens tokens,
   p_number_desc n)
 {
   t_otokens tmptokens;
   t_number_desc tmpn;
-  char result;
+  Error result;
 
   _cleartokens(&tmptokens);
   tmptokens.intpart = tokens->exp;
@@ -625,19 +632,19 @@ str2desc(
   return result;
 }
 
-char
+Error
 desc2str(
   p_otokens tokens,
   p_number_desc n,
   int scale)
 {
-  char result;
+  Error result;
 
   result = fixp2str(tokens, n, scale);
-  if (result && !_ispseudobase(n->prefix.base)
-      && n->expbase != IO_BASE_NAN)
-    return _desc2exp(tokens, n);
-  return result;
+  if (result != Success || _isspecial(n->prefix.base)
+      || n->expbase == IO_BASE_NAN)
+    return result;
+  return _desc2exp(tokens, n);
 }
 
 
@@ -884,7 +891,7 @@ parse(
   if (_parsecmpl(&p, tokens->base))
   {
     if (tokens->sign != IO_SIGN_NONE)
-      return IOSignConflict;
+      return IOInvalidComplement;
     tokens->sign = IO_SIGN_COMPLEMENT;
   }
   tokens->intpart = _scandigits(&p, base);
@@ -1005,7 +1012,7 @@ cattokens(
   basetag = _decodebase(base);
   cmpltag = _decodecomplement(tokens->sign, base);
   expbasetag = _decodebase(tokens->expbase);
-  printbasetag = !_ispseudobase(base)
+  printbasetag = !_isspecial(base)
                   && (flags & IO_FLAG_SUPPRESS_BASETAG) == 0
                   && (ioparams == NULL
                       || ioparams->base != base);

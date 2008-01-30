@@ -1495,7 +1495,7 @@ static int test_neg()
   static struct{
     const char* value; signed char result; int error;
   } testcases[] = {
-    {"NaN", 0, NaNOperand},
+    {"NaN", 0, NoOperand},
     {"0", 0, Success},
     {"1.23", -1, Success},
     {"-1.23", 1, Success},
@@ -1541,7 +1541,7 @@ static int test_abs()
   static struct{
     const char* value; int error;
   } testcases[] = {
-    {"NaN", NaNOperand},
+    {"NaN", NoOperand},
     {"0", Success},
     {"1.23", Success},
     {"-1.23", Success},
@@ -1568,10 +1568,10 @@ static int tc_cmp(const char* val1, const char* val2, signed char result)
   revres = float_cmp(&v2, &v1);
   if (revres != UNORDERED)
     revres = -revres;
-  else if (float_geterror() != NaNOperand)
+  else if (float_geterror() != NoOperand)
     return 0;
   res = float_cmp(&v1, &v2);
-  if (res == UNORDERED && float_geterror() != NaNOperand)
+  if (res == UNORDERED && float_geterror() != NoOperand)
     return 0;
   float_free(&v1);
   float_free(&v2);
@@ -1858,7 +1858,7 @@ static int test_round()
     {"NaN", -1, "NaN", "NaN", 0, InvalidPrecision},
     {"NaN", 0, "NaN", "NaN", 0, InvalidPrecision},
     {"NaN", 16, "NaN", "NaN", 0, InvalidPrecision},
-    {"NaN", 1, "NaN", "NaN", 0, NaNOperand},
+    {"NaN", 1, "NaN", "NaN", 0, NoOperand},
     {"0", -1, "NaN", "NaN", 0, InvalidPrecision},
     {"0", 0, "NaN", "NaN", 0, InvalidPrecision},
     {"0", 16, "NaN", "NaN", 0, InvalidPrecision},
@@ -5962,7 +5962,7 @@ static int tc_out(char* value, int digits, char base, char mode, char* result)
   tokens.fracpart.buf = fracbuf;
   tokens.exp.buf = exp;
   tokens.exp.sz = 33;
-  if (!float_out(&tokens, &x, digits, base, base != 2? base : 16, mode))
+  if (float_out(&tokens, &x, digits, base, base != 2? base : 16, mode) != Success)
     return result == NULL || *result == '\0';
   cattokens(buffer, 350, &tokens,
     IO_FLAG_SHOW_BASE + IO_FLAG_SHOW_EXPBASE + IO_FLAG_SUPPRESS_DOT

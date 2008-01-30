@@ -88,7 +88,7 @@ typedef enum
 
 /* This error occurs if you request a two's complement conversion, and either
   additionally specify a sign, or gave a non-zero fraction */
-  IOSignConflict,
+  IOInvalidComplement,
 
 /* You must specify at least one digit of the significant */
   IONoSignificand,
@@ -99,9 +99,18 @@ typedef enum
 /* the exponent exceeds the allowed range */
   IOExpOverflow,
 
-/* internal buffer overflow in a radix conversion. This indicates a bug
+/* internal (string) buffer overflow in a conversion. This indicates a bug
   because range checking should be done in advance */
   IOBufferOverflow,
+
+/* request to convert more digits to another base than internal buffers
+  can hold. This occurs when you try to convert huge values in fixpoint
+  format */
+  IOConversionOverflow,
+
+/* request to convert a tiny number in fixpoint format, so that only
+  leading zeros are displayed. */
+  IOConversionUnderflow,
 
 /* a function was called with the wrong count of parameters
   e.g. sin(12;13) (sin takes only 1 parameter) */

@@ -82,7 +82,7 @@ class LongReal: public VariantData
       Scientific,
       Engineering,
       Complement2,
-    } fmtMode;
+    } FmtMode;
     typedef enum
     {
       Plus,
@@ -102,7 +102,7 @@ class LongReal: public VariantData
     } RawIO;
     bool assign(const char*);
     operator QByteArray() const;
-    RawIO convert(int digits = -1, fmtMode mode = Scientific,
+    RawIO convert(int prec = -1, FmtMode mode = Scientific,
                   char base = 10, char scalebase = 10);
     static LongReal* convert(const RawIO&);
   private:

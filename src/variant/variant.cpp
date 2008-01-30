@@ -30,7 +30,6 @@
 *************************************************************************/
 
 #include "variant/variant.hxx"
-#include <QByteArray>
 
 const char cFalse[] = "false";
 const char cTrue[] = "true";
@@ -127,10 +126,19 @@ bool Variant::assign(VariantType t, const char* s)
       break;
     default:
       ok = val->assign(s);
+      break;
   }
   if (!ok)
     *this = BadLiteral;
   return ok;
+}
+
+bool Variant::assign(const QByteArray& typeValue)
+{
+  VariantType t = name2VariantType(typeValue);
+  if (t > vError)
+    return false;
+  return assign(t, typeValue.data() + qstrlen(variantTypeName(t)));
 }
 
 Variant::operator QByteArray() const
@@ -151,7 +159,7 @@ Variant::operator QByteArray() const
       result = *val;
       break;
   }
-  return VariantTypeName(type()) + ':' + result;
+  return variantTypeName(type()) + result;
 }
 
 Variant::operator bool() const

@@ -46,8 +46,8 @@ class VariantIntf
       vLongReal,
       vError // has to be the last entry
     } VariantType;
-    static const char* VariantTypeName(VariantType);
-    static VariantType Name2VariantType(const QByteArray&);
+    static const char* variantTypeName(VariantType);
+    static VariantType name2VariantType(const QByteArray&);
   public:
     virtual ~VariantIntf() {};
   public: // type & casting

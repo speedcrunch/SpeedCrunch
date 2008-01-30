@@ -63,7 +63,7 @@ _digitblock(
   return result;
 }
 
-char
+Error
 _floatnum2longint(
   t_longint* longint,
   floatnum f)
@@ -81,12 +81,12 @@ _floatnum2longint(
   {
     if (_longintmul(longint, factor)
         || _longintadd(longint, _digitblock(f, i, 9)))
-      return 0;
+      return IOConversionOverflow;
     i += 9;
   }
   /* extra element for floatlong operations */
   *(longint->value+longint->length) = 0;
-  return 1;
+  return Success;
 }
 
 static void
@@ -444,7 +444,7 @@ pack2floatnum(
   return float_isnan(x)? IOExpOverflow : Success;
 }
 
-static char
+static Error
 _outscidec(
   p_otokens tokens,
   floatnum x,
@@ -498,7 +498,7 @@ _scale2int(
   float_roundtoint(x, TONEAREST);
 }
 
-static char
+static Error
 _fixp2longint(
   p_number_desc n,
   t_longint* l,
@@ -506,10 +506,11 @@ _fixp2longint(
   int scale)
 {
   _scale2int(x, scale, n->prefix.base);
-  if (!_floatnum2longint(l, x))
-    return 0;
+  Error result = _floatnum2longint(l, x);
+  if (result != Success)
+    return result;
   _setlongintdesc(&n->fracpart, l, n->prefix.base);
-  return 1;
+  return Success;
 }
 
 static int
@@ -579,7 +580,7 @@ _setscale(
   }
 }
 
-static char
+static Error
 _outscihex(
   p_otokens tokens,
   floatnum x,
@@ -589,8 +590,9 @@ _outscihex(
   t_longint l;
 
   n->exp = _extractexp(x, scale, n->prefix.base);
-  if (!_fixp2longint(n, &l, x, scale))
-    return 0;
+  Error result = _fixp2longint(n, &l, x, scale);
+  if (result != Success)
+    return result;
   /* rounding in _fixp2longint may have increased the exponent */
   n->exp += n->fracpart.seq.digits - 1 - scale;
   _setscale(n, &l, n->fracpart.seq.digits - 1);
@@ -604,7 +606,7 @@ _isvalidbase(
   return base == 10 || lgbase(base) != 0;
 }
 
-static char
+static Error
 _outsci(
   p_otokens tokens,
   floatnum x,
@@ -616,7 +618,7 @@ _outsci(
   return _outscihex(tokens, x, n, scale);
 }
 
-static char
+static Error
 _outfixpdec(
   p_otokens tokens,
   floatnum x,
@@ -628,40 +630,35 @@ _outfixpdec(
   digits = float_getexponent(x) + scale + 1;
   if (digits <= 0)
     /* underflow */
-    return 0;
+    return IOConversionUnderflow;
   float_round(x, x, digits, TONEAREST);
   _setfndesc(n, x);
   n->expbase = IO_BASE_NAN;
   return desc2str(tokens, n, scale);
 }
 
-static char
+static Error
 _outfixphex(
   p_otokens tokens,
   floatnum x,
   p_number_desc n,
   int scale)
 {
-  floatstruct tmp;
   t_longint l;
-  char result;
+  Error result;
 
-  float_create(&tmp);
-  float_copy(&tmp, x, DECPRECISION+1);
-  if (!_fixp2longint(n, &l, x, scale) || l.length == 0)
-    /* overflow or underflow */
-    result = 0;
-  else
-  {
-    _setscale(n, &l, scale);
-    n->expbase = IO_BASE_NAN;
-    result = desc2str(tokens, n, scale);
-  }
-  float_free(&tmp);
-  return result;
+  float_copy(x, x, DECPRECISION+1);
+  result = _fixp2longint(n, &l, x, scale);
+  if (result != Success)
+    return result;
+  if (l.length == 0)
+    return IOConversionUnderflow;
+  _setscale(n, &l, scale);
+  n->expbase = IO_BASE_NAN;
+  return desc2str(tokens, n, scale);
 }
 
-static char
+static Error
 _outfixp(
   p_otokens tokens,
   floatnum x,
@@ -673,7 +670,7 @@ _outfixp(
   return _outfixphex(tokens, x, n, scale);
 }
 
-static char
+static Error
 _outengdec(
   p_otokens tokens,
   floatnum x,
@@ -694,26 +691,27 @@ _outengdec(
   return desc2str(tokens, n, scale - shift);
 }
 
-static char
+static Error
 _outeng(
   p_otokens tokens,
   floatnum x,
   p_number_desc n,
   int scale)
 {
-  return n->prefix.base == 10  && scale >= 2
-         && _outengdec(tokens, x, n, scale);
+  if (n->prefix.base != 10 || scale < 2)
+    return InvalidParam;
+  return _outengdec(tokens, x, n, scale);
 }
 
-static char
+static Error
 _outcompl(
   p_otokens tokens,
   floatnum x,
   p_number_desc n,
   int scale)
 {
-  if (!float_isinteger(x) || lgbase(n->prefix.base) == 0)
-    return 0;
+  if (!float_isinteger(x))
+    return IOInvalidComplement;
   if (n->prefix.sign == IO_SIGN_MINUS)
     n->prefix.sign = IO_SIGN_COMPLEMENT;
   else
@@ -744,7 +742,7 @@ _emptytokens(
   tokens->expbase = IO_BASE_NAN;
 }
 
-char float_out(
+Error float_out(
   p_otokens tokens,
   floatnum x,
   int scale,
@@ -758,7 +756,7 @@ char float_out(
   /* do some sanity checks first */
   if (!_validmode(outmode) || scale < 0 || !_isvalidbase(base)
        || !_isvalidbase(expbase))
-    return 0;
+    return InvalidParam;
   _clearnumber(&n);
   if (float_iszero(x))
     n.prefix.base = IO_BASE_ZERO;

@@ -58,7 +58,7 @@
 #define IO_FLAG_SHOW_EXPBASE        0x400
 
 #ifdef __cplusplus
-    extern "C"{
+extern "C"{
 #endif
 
 typedef struct{
@@ -155,7 +155,7 @@ typedef t_number_desc* p_number_desc;
 void _clearnumber(p_number_desc n);
 
 Error str2desc(p_number_desc n, p_itokens tokens);
-char desc2str(p_otokens tokens, p_number_desc n, int scale);
+Error desc2str(p_otokens tokens, p_number_desc n, int scale);
 
 /*------------   additional stuff   ------------------*/
 

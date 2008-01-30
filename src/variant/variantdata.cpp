@@ -34,22 +34,22 @@
 
 static const char* names[] =
 {
-  "BOOL",
-  "LONGREAL"
-  "ERROR",
+  "BOOL:",
+  "LONGREAL:"
+  "ERROR:",
 };
 
-const char* VariantIntf::VariantTypeName(VariantType t)
+const char* VariantIntf::variantTypeName(VariantType t)
 {
-  // FIXME bound check
-  return names[int(t)];
+  if (t <= vError)
+    return names[int(t)];
+  return 0;
 }
 
-VariantIntf::VariantType VariantIntf::Name2VariantType(const QByteArray& b)
+VariantIntf::VariantType VariantIntf::name2VariantType(const QByteArray& b)
 {
   int i = -1;
-  // FIXME bound check
-  for (; b != names[i]; );
+  for (; ++i <= int(vError) && !b.startsWith(names[i]); );
   return VariantType(i);
 }
 

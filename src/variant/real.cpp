@@ -31,11 +31,23 @@
 
 #include "variant/real.hxx"
 #include "math/floatconfig.h"
+#include "math/floatconvert.h"
 
 enum { less = 1, equal = 2, greater = 4 };
 
 static floatstruct NaNVal;
 static int longrealPrec;
+
+static int _cvtMode(LongReal::FmtMode mode)
+{
+  switch (mode)
+  {
+    case LongReal::FixPoint: return IO_MODE_FIXPOINT;
+    case LongReal::Engineering: return IO_MODE_ENG;
+    case LongReal::Complement2: return IO_MODE_COMPLEMENT;
+    default: return IO_MODE_SCIENTIFIC;
+  }
+}
 
 static char _mod(floatnum dest, cfloatnum dividend, cfloatnum modulo)
 {
@@ -279,3 +291,14 @@ LongReal::operator QByteArray() const
   float_getscientific(buffer, sizeof(buffer), &val);
   return buffer;
 }
+
+// LongReal::RawIO LongReal::convert(int prec, FmtMode mode,
+//                                   char base, char scalebase)
+// {
+//   t_otokens tokens;
+//   float_out(&tokens, &val, prec, base, scalebase, _cvtMode(mode));
+// }
+// 
+// LongReal* LongReal::convert(const RawIO&)
+// {
+// }

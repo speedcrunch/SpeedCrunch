@@ -637,11 +637,12 @@ float_xor(
   return 1;
 }
 
-char
-float_shr(
+char 
+_doshift(
   floatnum dest,
   cfloatnum x,
-  cfloatnum shift)
+  cfloatnum shift,
+  char right)
 {
   int ishift;
   t_longint lx;
@@ -660,12 +661,23 @@ float_shr(
   ishift = float_asinteger(shift);
   if (ishift == 0)
     ishift = (3*LOGICRANGE) * float_getsign(shift);
+  if (!right)
+    ishift = -ishift;
   if (ishift > 0)
     _shr(&lx, ishift);
   else
-    _shl(&lx, ishift);
+    _shl(&lx, -ishift);
   _logic2floatnum(dest, &lx);
   return 1;
+}
+
+char
+float_shr(
+  floatnum dest,
+  cfloatnum x,
+  cfloatnum shift)
+{
+  return _doshift(dest, x, shift, 1);
 }
 
 char
@@ -674,9 +686,5 @@ float_shl(
   cfloatnum x,
   cfloatnum shift)
 {
-  char result;
-  float_neg((floatnum)shift);
-  result = float_shr(dest, x, shift);
-  float_neg((floatnum)shift);
-  return result;
+  return _doshift(dest, x, shift, 0);
 }

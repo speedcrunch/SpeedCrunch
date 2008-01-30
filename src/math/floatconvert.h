@@ -46,12 +46,22 @@ extern "C" {
 #define IO_MODE_COMPLEMENT 3
 
 /* converts the integer part of f to a binary coded bigint. Returns
-   0, if the bigint overflows */
-char _floatnum2longint(t_longint* longint, floatnum f);
+   IOConversionOverflow, if the bigint overflows */
+Error _floatnum2longint(t_longint* longint, floatnum f);
 /* converts a binary coded bigint into a floatnum */
 void _longint2floatnum(floatnum f, t_longint* longint);
 
-char float_out(p_otokens tokens, floatnum x, int digits, signed char base,
+/* the output process destroys x
+   Errors: InvalidParam (if any of the parameters makes no sense
+                         like digits <= 0, or a not supported base)
+           IOBufferOverflow (if the caller does not provide enough
+                             buffer in tokens )
+           IOConversionOverflow (request requires too much buffer
+                                 space for radix conversion )
+           IOConversionUnderflow (request would produce leading
+                                  zeros only)
+           IOInvalidComplement (two's complement cannot be generated) */
+Error float_out(p_otokens tokens, floatnum x, int digits, signed char base,
                signed char expbase, char outmode);
 /* returns one of the IO... codes
    Errors: BadLiteral, set in addition to the returned result */
