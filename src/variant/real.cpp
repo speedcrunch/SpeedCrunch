@@ -49,6 +49,26 @@ static int _cvtMode(LongReal::FmtMode mode)
   }
 }
 
+static LongReal::Sign _cvtSign(signed char sign)
+{
+  switch (sign)
+  {
+    case IO_SIGN_COMPLEMENT: return LongReal::Compl2;
+    case IO_SIGN_MINUS     : return LongReal::Minus;
+    default                : return LongReal::Plus;
+  }
+}
+
+static signed char _cvtSign(LongReal::Sign sign)
+{
+  switch (sign)
+  {
+    case LongReal::Compl2: return IO_SIGN_COMPLEMENT;
+    case LongReal::Minus:  return IO_SIGN_MINUS;
+    default              : return IO_SIGN_PLUS;
+  }
+}
+
 static char _mod(floatnum dest, cfloatnum dividend, cfloatnum modulo)
 {
   enum { maxdivloops = 250 };
@@ -292,13 +312,61 @@ LongReal::operator QByteArray() const
   return buffer;
 }
 
-// LongReal::RawIO LongReal::convert(int prec, FmtMode mode,
-//                                   char base, char scalebase)
-// {
-//   t_otokens tokens;
-//   float_out(&tokens, &val, prec, base, scalebase, _cvtMode(mode));
-// }
-// 
-// LongReal* LongReal::convert(const RawIO&)
-// {
-// }
+LongReal::BasicIO LongReal::convert(int prec, FmtMode mode,
+                                  char base, char scalebase)
+{
+  t_otokens tokens;
+  floatstruct workcopy;
+  BasicIO result;
+  char intpart[BINPRECISION+10];
+  char fracpart[BINPRECISION+10];
+  char scalepart[BITS_IN_EXP+10];
+
+  tokens.intpart.buf = intpart;
+  tokens.intpart.sz = sizeof(intpart);
+  tokens.fracpart.buf = fracpart;
+  tokens.fracpart.sz = sizeof(fracpart);
+  tokens.exp.buf = scalepart;
+  tokens.exp.sz = sizeof(scalepart);
+  float_create(&workcopy);
+  float_copy(&workcopy, &val, evalPrec());
+  result.error = float_out(&tokens, &workcopy, prec,
+                           base, scalebase, _cvtMode(mode));
+  if (result.error == Success)
+  {
+    result.baseSignificand = base;
+    result.baseScale = scalebase;
+    result.signSignificand = _cvtSign(tokens.sign);
+    result.signScale = _cvtSign(tokens.expsign);
+    result.intpart = QString::fromAscii(tokens.intpart.buf);
+    result.fracpart = QString::fromAscii(tokens.fracpart.buf);
+    result.scale = QString::fromAscii(tokens.exp.buf);
+  }
+  return result;
+}
+
+Variant LongReal::convert(const BasicIO& io)
+{
+  t_itokens tokens;
+  QByteArray intpart = io.intpart.toUtf8();
+  QByteArray fracpart = io.fracpart.toUtf8();
+  tokens.intpart = intpart.data();
+  tokens.fracpart = intpart.data();
+  tokens.exp = 0;
+  tokens.expbase = IO_BASE_NAN;
+  tokens.expsign = IO_SIGN_NONE;
+  tokens.sign = _cvtSign(io.signSignificand);
+  tokens.base = io.baseSignificand;
+  tokens.maxdigits = evalPrec();
+  if (!io.scale.isEmpty())
+  {
+    QByteArray scale = io.scale.toUtf8();
+    tokens.exp = scale.data();
+    tokens.expbase = io.baseScale;
+    tokens.expsign = io.signScale;
+  }
+  floatstruct val;
+  float_create(&val);
+  Error e = float_in(&val, &tokens);
+  return Variant(&val, e);
+}

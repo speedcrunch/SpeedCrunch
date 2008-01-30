@@ -96,15 +96,15 @@ class LongReal: public VariantData
       QString scale;
       Sign signSignificand;
       Sign signScale;
-      signed char baseSignificand;
-      signed char baseScale;
+      char baseSignificand;
+      char baseScale;
       Error error;
-    } RawIO;
+    } BasicIO;
     bool assign(const char*);
     operator QByteArray() const;
-    RawIO convert(int prec = -1, FmtMode mode = Scientific,
-                  char base = 10, char scalebase = 10);
-    static LongReal* convert(const RawIO&);
+    BasicIO convert(int prec = -1, FmtMode mode = Scientific,
+                    char base = 10, char scalebase = 10);
+    static Variant convert(const BasicIO&);
   private:
     static void initClass();
     static VariantData* create();
