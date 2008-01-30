@@ -38,11 +38,11 @@ void Settings::load()
   QSettings settings( /*QSettings::IniFormat,*/ QSettings::UserScope, KEY, KEY );
   QString key;
 
-  key = KEY + "/General";
+  key = KEY + "/General/";
 
   // angle mode special case
   QString angleModeStr;
-  angleModeStr   = settings.value( key + "/AngleMode", "r" ).toString();
+  angleModeStr = settings.value( key + "AngleMode", "r" ).toString();
   if ( angleModeStr != "r" && angleModeStr != "d" )
     angleMode = 'r';
   else
@@ -50,24 +50,24 @@ void Settings::load()
 
   // radix character special case
   QString radixCharStr;
-  radixCharStr = settings.value( key + "/RadixChar", 'C' ).toString();
+  radixCharStr = settings.value( key + "RadixChar", 'C' ).toString();
   if ( radixCharStr != "C" && radixCharStr != "," && radixCharStr != "." )
     radixChar = 'C';
   else
     radixChar = radixCharStr[0].toAscii();
 
-  saveSession    = settings.value( key + "/RestoreLastSession", true  ).toBool();
-  saveVariables  = settings.value( key + "/SaveVariables",      true  ).toBool();
-  autoComplete   = settings.value( key + "/AutoComplete",       true  ).toBool();
-  autoCalc       = settings.value( key + "/AutoCalc",           true  ).toBool();
-  minimizeToTray = settings.value( key + "/MinimizeToTray",     false ).toBool();
-  //language       = settings.value( key + "/Language",           QString() ).toString();
+  saveSession    = settings.value( key + "RestoreLastSession", true  ).toBool();
+  saveVariables  = settings.value( key + "SaveVariables",      true  ).toBool();
+  autoComplete   = settings.value( key + "AutoComplete",       true  ).toBool();
+  autoCalc       = settings.value( key + "AutoCalc",           true  ).toBool();
+  minimizeToTray = settings.value( key + "MinimizeToTray",     false ).toBool();
+  //language       = settings.value( key + "Language",           QString() ).toString();
 
-  key = KEY + "/Format";
+  key = KEY + "/Format/";
 
   // format special case
   QString formatStr;
-  formatStr = settings.value( key + "/Type", 'g' ).toString();
+  formatStr = settings.value( key + "Type", 'g' ).toString();
   if (    formatStr != "g" && formatStr != "f" && formatStr != "e"
        && formatStr != "n" && formatStr != "h" && formatStr != "o"
        && formatStr != "b" )
@@ -75,19 +75,19 @@ void Settings::load()
   else
     format = formatStr[0].toAscii();
 
-  precision = settings.value( key + "/Precision", -1  ).toInt();
+  precision = settings.value( key + "Precision", -1  ).toInt();
 
   if ( precision > DECPRECISION )
     precision = DECPRECISION;
 
-  key = KEY + "/Layout";
-  showFullScreen        = settings.value( key + "/ShowFullScreen",       false ).toBool();
-  showKeypad            = settings.value( key + "/ShowKeypad",           true  ).toBool();
-  showMenuBar           = settings.value( key + "/ShowMenuBar",          true  ).toBool();
-  showHistory           = settings.value( key + "/ShowHistory",          false ).toBool();
-  showFunctions         = settings.value( key + "/ShowFunctions",        false ).toBool();
-  showVariables         = settings.value( key + "/ShowVariables",        false ).toBool();
-  showConstants         = settings.value( key + "/ShowConstants",        false ).toBool();
+  key = KEY + "/Layout/";
+  showFullScreen        = settings.value( key + "ShowFullScreen",       false  ).toBool();
+  showKeypad            = settings.value( key + "ShowKeypad",           true   ).toBool();
+  showMenuBar           = settings.value( key + "ShowMenuBar",          true   ).toBool();
+  showHistory           = settings.value( key + "ShowHistory",          false  ).toBool();
+  showFunctions         = settings.value( key + "ShowFunctions",        false  ).toBool();
+  showVariables         = settings.value( key + "ShowVariables",        false  ).toBool();
+  showConstants         = settings.value( key + "ShowConstants",        false  ).toBool();
   mainWindowState       = settings.value( key + "State"                        ).toByteArray();
   stayAlwaysOnTop       = settings.value( key + "StayAlwaysOnTop",       false ).toBool();
   historyDockFloating   = settings.value( key + "HistoryDockFloating",   false ).toBool();
@@ -110,16 +110,16 @@ void Settings::load()
   constantsDockLeft     = settings.value( key + "ConstantsDockLeft",     0     ).toInt();
   constantsDockWidth    = settings.value( key + "ConstantsDockWidth",    150   ).toInt();
   constantsDockHeight   = settings.value( key + "ConstantsDockHeight",   350   ).toInt();
-  mainWindowSize        = QSize( settings.value ( key + "/WindowWidth",  350   ).toInt(),
-                                 settings.value ( key + "/WindowHeight", 400   ).toInt() );
+  mainWindowSize        = QSize( settings.value ( key + "WindowWidth",   350   ).toInt(),
+                                 settings.value ( key + "WindowHeight",  400   ).toInt() );
 
   // load history
-  key = KEY + "/History";
+  key = KEY + "/History/";
   history.clear();
-  int count = settings.value( key + "/Count", 0 ).toInt();
+  int count = settings.value( key + "Count", 0 ).toInt();
   for ( int i = 0; i < count; i++ )
   {
-    QString keyname = QString( key + "/Expression%1" ).arg( i );
+    QString keyname = QString( key + "Expression%1" ).arg( i );
     QString str = settings.value( keyname ).toString();
     if ( ! str.isEmpty() )
     {
@@ -134,7 +134,7 @@ void Settings::load()
   historyResults.clear();
   for ( int i = 0; i < count; i++ )
   {
-    QString keyname = QString( key + "/Expression%1Result" ).arg( i );
+    QString keyname = QString( key + "Expression%1Result" ).arg( i );
     QString str = settings.value( keyname ).toString();
     if ( ! str.isEmpty() )
       historyResults.append( str );
@@ -147,7 +147,7 @@ void Settings::load()
   }
 
   // load variables
-  key = KEY + "/Variables";
+  key = KEY + "/Variables/";
   variables.clear();
   settings.beginGroup( key );
   QStringList names = settings.childKeys();
@@ -155,7 +155,7 @@ void Settings::load()
   for ( int k = 0; k < names.count(); k++ )
   {
     QString name = names[k];
-    QString keyname = QString( key + "/%1" ).arg( name );
+    QString keyname = QString( key + "%1" ).arg( name );
     QString value = settings.value( keyname ).toString();
     // treat upper case escape code
     int length = name.length();
@@ -182,21 +182,21 @@ void Settings::save()
   QString key;
   int k, i;
 
-  key = KEY + "/General";
+  key = KEY + "/General/";
 
-  settings.setValue( key + "/AngleMode",          QString(QChar(angleMode)) );
-  settings.setValue( key + "/RadixChar",          QString(QChar(radixChar)) );
-  settings.setValue( key + "/RestoreLastSession", saveSession    );
-  settings.setValue( key + "/SaveVariables",      saveVariables  );
-  settings.setValue( key + "/AutoComplete",       autoComplete   );
-  settings.setValue( key + "/AutoCalc",           autoCalc       );
-  settings.setValue( key + "/MinimizeToTray",     minimizeToTray );
-  //settings.setValue( key + "/Language",           language       );
+  settings.setValue( key + "AngleMode",          QString(QChar(angleMode)) );
+  settings.setValue( key + "RadixChar",          QString(QChar(radixChar)) );
+  settings.setValue( key + "RestoreLastSession", saveSession    );
+  settings.setValue( key + "SaveVariables",      saveVariables  );
+  settings.setValue( key + "AutoComplete",       autoComplete   );
+  settings.setValue( key + "AutoCalc",           autoCalc       );
+  settings.setValue( key + "MinimizeToTray",     minimizeToTray );
+  //settings.setValue( key + "Language",           language       );
 
-  key = KEY + "/Format";
+  key = KEY + "/Format/";
 
-  settings.setValue( key + "/Type",      QString(QChar(format)) );
-  settings.setValue( key + "/Precision", precision );
+  settings.setValue( key + "Type",      QString(QChar(format)) );
+  settings.setValue( key + "Precision", precision );
 
   key = KEY + "/Layout/";
 
@@ -233,7 +233,7 @@ void Settings::save()
   settings.setValue( key + "VariablesDockWidth",    variablesDockWidth      );
 
   // save history
-  key = KEY + "/History";
+  key = KEY + "/History/";
   QStringList realHistory = history;
   QStringList realHistoryResults = historyResults;
   if ( history.count() > 100 )
@@ -254,25 +254,25 @@ void Settings::save()
 
   for ( k = 0; k < hkeys.count(); k++ )
   {
-    settings.remove( QString( key + "/Expression%1" ).arg( k )       );
-    settings.remove( QString( key + "/Expression%1Result" ).arg( k ) );
+    settings.remove( QString( key + "Expression%1" ).arg( k )       );
+    settings.remove( QString( key + "Expression%1Result" ).arg( k ) );
   }
 
-  settings.setValue( key + "/Count", (int) history.count() );
+  settings.setValue( key + "/Count/", (int) history.count() );
   for ( i = 0; i < realHistory.count(); i++ )
   {
-    settings.setValue( QString( key + "/Expression%1" ).arg( i ),       realHistory[i]        );
-    settings.setValue( QString( key + "/Expression%1Result" ).arg( i ), realHistoryResults[i] );
+    settings.setValue( QString( key + "Expression%1" ).arg( i ),       realHistory[i]        );
+    settings.setValue( QString( key + "Expression%1Result" ).arg( i ), realHistoryResults[i] );
   }
 
   // save variables
-  key = KEY + "/Variables";
+  key = KEY + "/Variables/";
   settings.beginGroup( key );
   QStringList vkeys = settings.childKeys();
   settings.endGroup();
 
   for ( k = 0; k < vkeys.count(); k++ )
-    settings.remove( QString( key + "/%1" ).arg( vkeys[k] ) );
+    settings.remove( QString( key + "%1" ).arg( vkeys[k] ) );
 
   for ( i = 0; i < variables.count(); i++ )
   {
@@ -297,7 +297,7 @@ void Settings::save()
           name += s[0][c];
         }
       }
-      settings.setValue( QString( key + "/%1").arg( name ), value );
+      settings.setValue( QString( key + "%1").arg( name ), value );
     }
   }
 }

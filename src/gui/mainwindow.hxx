@@ -108,7 +108,6 @@ class MainWindow : public QMainWindow
     void functionSelected( const QString & );
     void keypadButtonPressed( Keypad::Button );
     void minimizeToTray();
-    void restoreDocks();
     void returnPressed();
     void showTrayMessage();
     void textChanged();

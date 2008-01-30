@@ -216,6 +216,7 @@ struct MainWindow::Private
   void createDocks();
   void createConnections();
   void applySettings();
+  void restoreDocks();
   void restoreHistory();
   void restoreVariables();
   void saveSettings();
@@ -251,7 +252,7 @@ void MainWindow::Private::createUi()
   createConnections();
 
   p->setWindowTitle( "SpeedCrunch" );
-  p->setWindowIcon( QPixmap( ":/crunch.png" ) );
+  p->setWindowIcon( QPixmap( ":/speedcrunch.png" ) );
 }
 
 
@@ -666,50 +667,68 @@ void MainWindow::Private::applySettings()
   if ( settings.mainWindowSize != QSize(0, 0) )
     p->resize( settings.mainWindowSize );
 
-  // always-on-top
-  actions.optionAlwaysOnTop->setChecked( settings.stayAlwaysOnTop );
+  // window state
+  p->restoreState( settings.mainWindowState );
 
   // full screen
   actions.showFullScreen->setChecked( settings.showFullScreen );
 
+  // always-on-top
+  actions.optionAlwaysOnTop->setChecked( settings.stayAlwaysOnTop );
+
   // angle mode
-  if      ( settings.angleMode == 'r' ) actions.radian->setChecked( true );
-  else if ( settings.angleMode == 'd' ) actions.degree->setChecked( true );
+  if ( settings.angleMode == 'r' )
+    actions.radian->setChecked( true );
+  else if ( settings.angleMode == 'd' )
+    actions.degree->setChecked( true );
 
   // history
-  if ( settings.saveSession ) restoreHistory();
-  else                        p->clearHistory();
+  if ( settings.saveSession )
+    restoreHistory();
+  else
+    p->clearHistory();
 
   // variables
-  if ( settings.saveVariables ) restoreVariables();
-
-  // various toggable option
-  actions.optionAlwaysOnTop->setChecked   ( settings.stayAlwaysOnTop );
-  actions.optionAutoCalc->setChecked      ( settings.autoCalc        );
-  actions.optionAutoCompletion->setChecked( settings.autoComplete    );
-  actions.optionMinimizeToTray->setChecked( settings.minimizeToTray  );
+  if ( settings.saveVariables )
+    restoreVariables();
 
   // format
-  if      ( settings.format == 'g' ) actions.formatGeneral->setChecked    ( true );
-  else if ( settings.format == 'f' ) actions.formatFixed->setChecked      ( true );
-  else if ( settings.format == 'n' ) actions.formatEngineering->setChecked( true );
-  else if ( settings.format == 'e' ) actions.formatScientific->setChecked ( true );
-  else if ( settings.format == 'h' ) actions.formatHexadec->setChecked    ( true );
-  else if ( settings.format == 'o' ) actions.formatOctal->setChecked      ( true );
-  else if ( settings.format == 'b' ) actions.formatBinary->setChecked     ( true );
+  if ( settings.format == 'g' )
+    actions.formatGeneral->setChecked( true );
+  else if ( settings.format == 'f' )
+    actions.formatFixed->setChecked( true );
+  else if ( settings.format == 'n' )
+    actions.formatEngineering->setChecked( true );
+  else if ( settings.format == 'e' )
+    actions.formatScientific->setChecked( true );
+  else if ( settings.format == 'h' )
+    actions.formatHexadec->setChecked( true );
+  else if ( settings.format == 'o' )
+    actions.formatOctal->setChecked( true );
+  else if ( settings.format == 'b' )
+    actions.formatBinary->setChecked( true );
 
   // precision
-  if      ( settings.precision <   0 ) actions.digitsAuto->setChecked( true );
-  else if ( settings.precision ==  2 ) actions.digits2->setChecked   ( true );
-  else if ( settings.precision ==  3 ) actions.digits3->setChecked   ( true );
-  else if ( settings.precision ==  8 ) actions.digits8->setChecked   ( true );
-  else if ( settings.precision == 15 ) actions.digits15->setChecked  ( true );
-  else if ( settings.precision == 50 ) actions.digits50->setChecked  ( true );
+  if ( settings.precision <   0 )
+    actions.digitsAuto->setChecked( true );
+  else if ( settings.precision ==  2 )
+    actions.digits2->setChecked( true );
+  else if ( settings.precision ==  3 )
+    actions.digits3->setChecked( true );
+  else if ( settings.precision ==  8 )
+    actions.digits8->setChecked( true );
+  else if ( settings.precision == 15 )
+    actions.digits15->setChecked( true );
+  else if ( settings.precision == 50 )
+    actions.digits50->setChecked( true );
 
   // radix character
-  if      ( settings.radixChar == 'C' ) actions.radixCharAuto->setChecked ( true );
-  else if ( settings.radixChar == '.' ) actions.radixCharDot->setChecked  ( true );
-  else if ( settings.radixChar == ',' ) actions.radixCharComma->setChecked( true );
+  if ( settings.radixChar == 'C' )
+    actions.radixCharAuto->setChecked( true );
+  else if ( settings.radixChar == '.' )
+    actions.radixCharDot->setChecked( true );
+  else if ( settings.radixChar == ',' )
+    actions.radixCharComma->setChecked( true );
 
   // keypad
   actions.showKeypad->setChecked( settings.showKeypad );
@@ -717,43 +736,27 @@ void MainWindow::Private::applySettings()
   // menu bar
   p->menuBar()->setVisible( settings.showMenuBar );
 
-  // docks
-  actions.showConstants->setChecked ( settings.showConstants );
-  actions.showFunctions->setChecked ( settings.showFunctions );
-  actions.showHistory->setChecked   ( settings.showHistory   );
-  actions.showVariables->setChecked ( settings.showVariables );
-
-  // system tray
-  if ( settings.minimizeToTray )
-  {
-    if ( ! widgets.trayIcon && QSystemTrayIcon::isSystemTrayAvailable() )
-    {
-      conditions.trayNotify = true;
-      widgets.trayIcon = new QSystemTrayIcon( p );
-      widgets.trayIcon->setToolTip( tr("SpeedCrunch") );
-      widgets.trayIcon->setIcon( QPixmap( ":/crunch.png" ) );
-
-      menus.trayIcon = new QMenu( p );
-      menus.trayIcon->addAction( actions.editCopyResult );
-      menus.trayIcon->addSeparator();
-      menus.trayIcon->addAction( actions.sessionQuit    );
-
-      widgets.trayIcon->setContextMenu( menus.trayIcon );
-      QObject::connect( widgets.trayIcon,
-        SIGNAL( activated( QSystemTrayIcon::ActivationReason ) ),
-        p, SLOT  ( trayIconActivated( QSystemTrayIcon::ActivationReason ) ) );
-    }
-  }
+  // autocalc
+  if ( settings.autoCalc )
+    actions.optionAutoCalc->setChecked( true );
   else
-  {
-    if ( widgets.trayIcon )
-      delete widgets.trayIcon;
-    widgets.trayIcon = 0;
-  }
+    p->autoCalcToggled( false );
 
-  // changed settings should trigger auto calc nor auto complete
-  widgets.editor->stopAutoCalc();
-  widgets.editor->stopAutoComplete();
+  // autocomplete
+  if ( settings.autoComplete )
+    actions.optionAutoCompletion->setChecked( true );
+  else
+    p->autoCompletionToggled( false );
+
+  // minimize to system tray
+  actions.optionMinimizeToTray->setChecked( settings.minimizeToTray );
+
+  // docks
+  actions.showConstants->setChecked( settings.showConstants );
+  actions.showFunctions->setChecked( settings.showFunctions );
+  actions.showHistory->setChecked( settings.showHistory );
+  actions.showVariables->setChecked( settings.showVariables );
+  restoreDocks();
 }
 
 
@@ -828,7 +831,6 @@ MainWindow::MainWindow() : QMainWindow(), d( new MainWindow::Private )
   d->loadSettings();
   d->createUi();
   d->applySettings();
-  restoreDocks();
 
   setWidgetsLayoutAccordingToLanguageDirection();
 
@@ -840,8 +842,8 @@ bool MainWindow::event( QEvent * e )
 {
   if ( e->type() == QEvent::WindowStateChange )
   {
-    if ( windowState() & Qt::WindowMinimized )
-    if ( d->settings.minimizeToTray )
+    if ( (windowState() & Qt::WindowMinimized)
+         && d->settings.minimizeToTray )
       QTimer::singleShot( 100, this, SLOT( minimizeToTray() ) );
   }
 
@@ -914,6 +916,9 @@ void MainWindow::copyResult()
 
 void MainWindow::degree()
 {
+  if ( d->settings.angleMode == 'd' )
+    return;
+
   d->settings.angleMode = 'd';
   emit angleModeChanged( 'd' );
 }
@@ -987,7 +992,8 @@ void MainWindow::selectExpression()
 
 void MainWindow::gotoWebsite()
 {
-  QDesktopServices::openUrl( QUrl( QString::fromLatin1("http://www.speedcrunch.org") ) );
+  QDesktopServices::openUrl(
+    QUrl( QString::fromLatin1("http://www.speedcrunch.org") ) );
 }
 
 
@@ -1033,16 +1039,18 @@ void MainWindow::insertVariable()
 
 void MainWindow::loadSession()
 {
-  const char * errMsg= "File %1 is not a valid session";
+  QString errMsg  = tr("File %1 is not a valid session");
   QString filters = tr( "SpeedCrunch Sessions (*.sch);;All Files (*)" );
-  QString fname = QFileDialog::getOpenFileName( this, tr("Load Session"), QString::null, filters );
+  QString fname   = QFileDialog::getOpenFileName( this, tr("Load Session"),
+                                                  QString::null, filters );
   if ( fname.isEmpty() )
     return;
 
   QFile file( fname );
   if ( ! file.open( QIODevice::ReadOnly ) )
   {
-    QMessageBox::critical( this, tr("Error"), tr("Can't read from file %1").arg( fname ) );
+    QMessageBox::critical( this, tr("Error"),
+                           tr("Can't read from file %1").arg( fname ) );
     return;
   }
 
@@ -1052,7 +1060,7 @@ void MainWindow::loadSession()
   QString version = stream.readLine();
   if ( version != "0.10" )
   {
-    QMessageBox::critical( this, tr("Error"), tr(errMsg).arg( fname ) );
+    QMessageBox::critical( this, tr("Error"), errMsg.arg( fname ) );
     return;
   }
 
@@ -1061,16 +1069,19 @@ void MainWindow::loadSession()
   int noCalcs = stream.readLine().toInt( &ok );
   if ( ok == false || noCalcs < 0 )
   {
-    QMessageBox::critical( this, tr("Error"), tr(errMsg).arg( fname ) );
+    QMessageBox::critical( this, tr("Error"), errMsg.arg( fname ) );
     return;
   }
 
   // ask for merge with current session
-  const char * mergeMsg = "Merge session being loaded with current session?\n"
-                          "If no, current variables and display will be cleared.";
-  QMessageBox::StandardButton but = QMessageBox::question( this, tr("Question"), tr(mergeMsg),
-                                                           QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel,
-                                                           QMessageBox::Yes );
+  QString mergeMsg = tr("Merge session being loaded with current session?\n"
+                        "If no, current variables and display will be "
+                        "cleared.");
+  QMessageBox::StandardButton but
+    = QMessageBox::question( this, tr("Question"), mergeMsg,
+                             QMessageBox::Yes | QMessageBox::No
+                             | QMessageBox::Cancel, QMessageBox::Yes );
+
   if ( but == QMessageBox::Cancel )
   {
     return;
@@ -1089,7 +1100,7 @@ void MainWindow::loadSession()
     QString res = stream.readLine();
     if ( exp.isNull() || res.isNull() )
     {
-      QMessageBox::critical( this, tr("Error"), tr(errMsg).arg( fname ) );
+      QMessageBox::critical( this, tr("Error"), errMsg.arg( fname ) );
       return;
     }
     HNumber num( res.toAscii().data() );
@@ -1103,7 +1114,7 @@ void MainWindow::loadSession()
   int noVars = stream.readLine().toInt( &ok );
   if ( ok == false || noVars < 0 )
   {
-    QMessageBox::critical( this, tr("Error"), tr(errMsg).arg( fname ) );
+    QMessageBox::critical( this, tr("Error"), errMsg.arg( fname ) );
     return;
   }
   for ( int i = 0; i < noVars; i++ )
@@ -1112,7 +1123,7 @@ void MainWindow::loadSession()
     QString val = stream.readLine();
     if ( var.isNull() || val.isNull() )
     {
-      QMessageBox::critical( this, tr("Error"), tr(errMsg).arg( fname ) );
+      QMessageBox::critical( this, tr("Error"), errMsg.arg( fname ) );
       return;
     }
     HNumber num( val.toAscii().data() );
@@ -1128,10 +1139,12 @@ void MainWindow::alwaysOnTopToggled( bool b )
 {
   d->settings.stayAlwaysOnTop = b;
 
-  if ( d->settings.stayAlwaysOnTop )
+  QPoint cur = mapToGlobal( QPoint(0, 0) );
+  if ( b )
     setWindowFlags( windowFlags() | Qt::WindowStaysOnTopHint );
   else
     setWindowFlags( windowFlags() & (~ Qt::WindowStaysOnTopHint) );
+  move( cur );
   show();
 }
 
@@ -1152,12 +1165,39 @@ void MainWindow::autoCompletionToggled( bool b )
 
 void MainWindow::minimizeToTrayToggled( bool b )
 {
+  if ( b && ! d->widgets.trayIcon && QSystemTrayIcon::isSystemTrayAvailable() )
+  {
+    d->conditions.trayNotify = true;
+    d->widgets.trayIcon = new QSystemTrayIcon( this );
+    d->widgets.trayIcon->setToolTip( tr("SpeedCrunch") );
+    d->widgets.trayIcon->setIcon( QPixmap( ":/speedcrunch.png" ) );
+
+    d->menus.trayIcon = new QMenu( this );
+    d->menus.trayIcon->addAction( d->actions.editCopyResult );
+    d->menus.trayIcon->addSeparator();
+    d->menus.trayIcon->addAction( d->actions.sessionQuit    );
+
+    d->widgets.trayIcon->setContextMenu( d->menus.trayIcon );
+    QObject::connect( d->widgets.trayIcon,
+      SIGNAL( activated( QSystemTrayIcon::ActivationReason ) ), this,
+      SLOT( trayIconActivated( QSystemTrayIcon::ActivationReason ) ) );
+  }
+  else
+  {
+    if ( d->widgets.trayIcon )
+      delete d->widgets.trayIcon;
+    d->widgets.trayIcon = 0;
+  }
+
   d->settings.minimizeToTray = b;
 }
 
 
 void MainWindow::radian()
 {
+  if ( d->settings.angleMode == 'r' )
+    return;
+
   d->settings.angleMode = 'r';
   emit angleModeChanged( 'r' );
 }
@@ -1174,7 +1214,8 @@ void MainWindow::saveSession()
   QFile file( fname );
   if ( ! file.open( QIODevice::WriteOnly ) )
   {
-    QMessageBox::critical( this, tr("Error"), tr("Can't write to file %1").arg( fname ) );
+    QMessageBox::critical( this, tr("Error"),
+                           tr("Can't write to file %1").arg( fname ) );
     return;
   }
 
@@ -1555,30 +1596,29 @@ void MainWindow::Private::restoreVariables()
 }
 
 
-void MainWindow::restoreDocks()
+void MainWindow::Private::restoreDocks()
 {
-  restoreState( d->settings.mainWindowState );
-
-  if ( d->settings.showHistory )
-  if ( d->settings.historyDockFloating )
-  if ( ! d->docks.history->isFloating() )
+  if ( settings.showHistory && settings.historyDockFloating
+       && ! docks.history->isFloating() )
   {
-    d->docks.history->hide();
-    d->docks.history->setFloating( true );
-    d->docks.history->move( d->settings.historyDockLeft, d->settings.historyDockTop );
-    d->docks.history->resize( d->settings.historyDockWidth, d->settings.historyDockHeight );
-    QTimer::singleShot(0, d->docks.history, SLOT( show() ));
+    docks.history->hide();
+    docks.history->setFloating( true );
+    docks.history->move( settings.historyDockLeft, settings.historyDockTop );
+    docks.history->resize( settings.historyDockWidth,
+                           settings.historyDockHeight );
+    QTimer::singleShot( 0, docks.history, SLOT( show() ));
   }
 
-  if ( d->settings.showFunctions )
-  if ( d->settings.functionsDockFloating )
-  if ( ! d->docks.functions->isFloating() )
+  if ( settings.showFunctions && settings.functionsDockFloating
+       && ! docks.functions->isFloating() )
   {
-    d->docks.functions->hide();
-    d->docks.functions->setFloating( true );
-    d->docks.functions->move( d->settings.functionsDockLeft, d->settings.functionsDockTop );
-    d->docks.functions->resize( d->settings.functionsDockWidth, d->settings.functionsDockHeight );
-    QTimer::singleShot( 0, d->docks.functions, SLOT( show() ) );
+    docks.functions->hide();
+    docks.functions->setFloating( true );
+    docks.functions->move( settings.functionsDockLeft,
+                           settings.functionsDockTop );
+    docks.functions->resize( settings.functionsDockWidth,
+                             settings.functionsDockHeight );
+    QTimer::singleShot( 0, docks.functions, SLOT( show() ) );
   }
   //if ( d->settings.showFunctions && d->settings.functionsDockFloating && ! d->docks.functions->isFloating() )
   //{
@@ -1590,26 +1630,28 @@ void MainWindow::restoreDocks()
   //  QTimer::singleShot( 0, d->docks.functions, SLOT( show() ) );
   //}
 
-  if ( d->settings.showVariables )
-  if ( d->settings.variablesDockFloating )
-  if ( ! d->docks.variables->isFloating() )
+  if ( settings.showVariables && settings.variablesDockFloating
+       && ! docks.variables->isFloating() )
   {
-    d->docks.variables->hide();
-    d->docks.variables->setFloating( true );
-    d->docks.variables->move( d->settings.variablesDockLeft, d->settings.variablesDockTop );
-    d->docks.variables->resize( d->settings.variablesDockWidth, d->settings.variablesDockHeight );
-    QTimer::singleShot( 0, d->docks.variables, SLOT( show() ) );
+    docks.variables->hide();
+    docks.variables->setFloating( true );
+    docks.variables->move( settings.variablesDockLeft,
+                           settings.variablesDockTop );
+    docks.variables->resize( settings.variablesDockWidth,
+                             settings.variablesDockHeight );
+    QTimer::singleShot( 0, docks.variables, SLOT( show() ) );
   }
 
-  if ( d->settings.showConstants )
-  if ( d->settings.constantsDockFloating )
-  if ( ! d->docks.constants->isFloating() )
+  if ( settings.showConstants && settings.constantsDockFloating
+       && ! docks.constants->isFloating() )
   {
-    d->docks.constants->hide();
-    d->docks.constants->setFloating( true );
-    d->docks.constants->move( d->settings.constantsDockLeft, d->settings.constantsDockTop );
-    d->docks.constants->resize( d->settings.constantsDockWidth, d->settings.constantsDockHeight );
-    QTimer::singleShot( 0, d->docks.constants, SLOT( show() ) );
+    docks.constants->hide();
+    docks.constants->setFloating( true );
+    docks.constants->move( settings.constantsDockLeft,
+                           settings.constantsDockTop );
+    docks.constants->resize( settings.constantsDockWidth,
+                             settings.constantsDockHeight );
+    QTimer::singleShot( 0, docks.constants, SLOT( show() ) );
   }
 }
 
@@ -1652,7 +1694,7 @@ void MainWindow::returnPressed()
   else
   {
     d->widgets.display->append( str, result );
-    // FIXME format is inappropriate, because it saves values to 20 digits only.
+    // FIXME format is inappropriate because it saves values to 20 digits only
     d->widgets.editor->appendHistory( str, HMath::format( result ) );
     d->widgets.editor->setAnsAvailable( true );
     d->docks.variables->updateList( d->evaluator );
@@ -1673,9 +1715,11 @@ void MainWindow::returnPressed()
 
 void MainWindow::showTrayMessage()
 {
-  const char * msg = "SpeedCrunch is minimized.  Left click the icon to restore it or right click for options.";
+  QString msg = tr("SpeedCrunch is minimized.\nLeft click the icon to "
+                   "restore it or right click for options.");
   if ( d->widgets.trayIcon )
-    d->widgets.trayIcon->showMessage( QString(), tr(msg), QSystemTrayIcon::NoIcon, 4000 );
+    d->widgets.trayIcon->showMessage( QString(), msg, QSystemTrayIcon::NoIcon,
+                                      4000 );
 }
 
 
@@ -1804,6 +1848,9 @@ void MainWindow::closeEvent( QCloseEvent * e )
 
 void MainWindow::setPrecision( int p )
 {
+  if ( d->settings.precision == p )
+    return;
+
   d->settings.precision = p;
   emit precisionChanged( p );
 }
@@ -1811,6 +1858,9 @@ void MainWindow::setPrecision( int p )
 
 void MainWindow::setFormat( char c )
 {
+  if ( d->settings.format == c )
+    return;
+
   d->settings.format = c;
   emit formatChanged( c );
 }
@@ -1818,6 +1868,9 @@ void MainWindow::setFormat( char c )
 
 void MainWindow::setRadixChar( char c )
 {
+  if ( d->settings.radixChar == c )
+    return;
+
   d->settings.radixChar = c;
   emit radixCharChanged( c );
 }
