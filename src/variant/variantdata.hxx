@@ -34,6 +34,7 @@
 
 #include "base/errors.h"
 #include <QByteArray>
+#include <QString>
 
 class Variant;
 
@@ -106,6 +107,13 @@ class VariantData: public VariantIntf
     virtual Variant swapLe(const Variant& other) const;
     virtual Variant swapLs(const Variant& other) const;
     virtual Variant swapRaise(const Variant& base) const;
+};
+
+class FormatIntf
+{
+  public:
+    virtual ~FormatIntf() {};
+    virtual QString format(const VariantData&) = 0;
 };
 
 #endif /*_VARIANTBASE_H*/

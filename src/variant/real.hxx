@@ -110,7 +110,6 @@ class LongReal: public VariantData
     static VariantData* create();
     mutable unsigned refcount;
     floatstruct val;
-
   private: // generic function calls, helpers
     typedef char (*Fct2)(floatnum result, cfloatnum op1,
                          cfloatnum op2, int digits);
@@ -122,5 +121,3 @@ class LongReal: public VariantData
 };
 
 #endif /*_REAL_H*/
-
-
