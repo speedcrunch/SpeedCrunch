@@ -44,6 +44,8 @@ class Result : public QListWidget
 
     void    append( const QString & expr, const HNumber & value );
     void    appendError( const QString & expr, const QString & msg );
+    void    appendHistory( const QStringList & history,
+                           const QStringList & results );
     void    setCustomAppearance( bool );
     void    setCustomBackgroundColor( const QColor & bg1, const QColor & bg2 );
     void    setCustomErrorColor( const QColor & );

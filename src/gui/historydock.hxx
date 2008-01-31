@@ -33,7 +33,7 @@ class HistoryDock : public QDockWidget
   Q_OBJECT
 
   public:
-    explicit HistoryDock( QWidget * parent );
+    explicit HistoryDock( QWidget * parent = 0 );
     ~HistoryDock();
 
   public slots:

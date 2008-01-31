@@ -1666,21 +1666,8 @@ void MainWindow::Private::restoreHistory()
 
   widgets.editor->setHistory( settings.history );
   widgets.editor->setHistoryResults( settings.historyResults );
-
-  for ( int i = 0 ; i < settings.history.count(); i++ )
-  {
-    const char * resultStr = settings.historyResults[i].toAscii().data();
-    HNumber result( resultStr );
-    if ( ! result.isNan() )
-    {
-      widgets.display->append( settings.history[i], result );
-    }
-    else
-    {
-      widgets.display->appendError( settings.history[i], resultStr );
-    }
-    docks.history->append( settings.history[i] );
-  }
+  widgets.display->appendHistory( settings.history, settings.historyResults );
+  docks.history->setHistory( settings.history );
 
   // free some useless memory
   settings.history.clear();

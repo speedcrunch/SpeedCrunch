@@ -232,7 +232,7 @@ void Result::append( const QString & expr, const HNumber & value )
   d->contents.append( expr );
   d->contents.append( HMath::format( value ) );
 
-  QTimer::singleShot( 0, this, SLOT(scrollEnd()) );
+  QTimer::singleShot( 0, this, SLOT( scrollEnd() ) );
 }
 
 
@@ -246,7 +246,22 @@ void Result::appendError( const QString & expr, const QString & msg )
   d->contents.append( expr );
   d->contents.append( msg );
 
-  QTimer::singleShot( 0, this, SLOT(scrollEnd()) );
+  QTimer::singleShot( 0, this, SLOT( scrollEnd() ) );
+}
+
+
+void Result::appendHistory( const QStringList & history,
+                            const QStringList & results )
+{
+  for ( int i = 0 ; i < history.count(); i++ )
+  {
+    const char * resultStr = results[i].toAscii().data();
+    HNumber result( resultStr );
+    if ( results[i] == "NaN" || ! result.isNan() )
+      append( history[i], result );
+    else
+      appendError( history[i], resultStr );
+  }
 }
 
 
