@@ -163,9 +163,9 @@ void Settings::load()
     {
       if ( name[c] == '_' )
       {
-	name.remove( c, 1 );
+        name.remove( c, 1 );
         if ( name[c] != '_' )
-	  name[c] = name[c].toUpper();
+          name[c] = name[c].toUpper();
       }
     }
     // load
@@ -285,8 +285,6 @@ void Settings::save()
       int length = s[0].length();
       for ( int c = 0; c < length; c++ )
       {
-        // bug in QT 4.2: subscript operator[] returns a reference type that
-        // does not know about isUpper(). Use at() here, the better choice anyway.
         if ( s[0].at(c).isUpper() || s[0].at(c) == '_' )
         {
           name += '_';

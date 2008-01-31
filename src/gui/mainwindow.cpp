@@ -1241,7 +1241,11 @@ void MainWindow::saveSession()
   {
     Variable var = d->evaluator->variables()[i];
     if ( var.name != "pi" && var.name != "phi" )
-      stream << var.name << "\n" << HMath::format( var.value ) << "\n";
+    {
+      char * value = HMath::format( var.value );
+      stream << var.name << "\n" << value << "\n";
+      free( value );
+    }
   }
 
   file.close();
@@ -1595,6 +1599,9 @@ void MainWindow::Private::restoreVariables()
     evaluator->set( list[0], HNumber( list[1].toAscii().data() ) );
   }
   docks.variables->updateList( evaluator );
+
+  // free memory
+  settings.variables.clear();
 }
 
 
@@ -1695,8 +1702,9 @@ void MainWindow::returnPressed()
   else
   {
     d->widgets.display->append( str, result );
-    // FIXME format is inappropriate because it saves values to 20 digits only
-    d->widgets.editor->appendHistory( str, HMath::format( result ) );
+    char * num = HMath::formatScientific( result, DECPRECISION );
+    d->widgets.editor->appendHistory( str, num );
+    free( num );
     d->widgets.editor->setAnsAvailable( true );
     d->docks.variables->updateList( d->evaluator );
   }
