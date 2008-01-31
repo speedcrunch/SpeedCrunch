@@ -64,15 +64,21 @@ void HistoryDock::append( const QString & h )
 }
 
 
-void HistoryDock::setHistory( const QStringList & h )
+void HistoryDock::appendHistory( const QStringList & h )
 {
-  d->list->clear();
   d->list->insertItems( 0, h );
   d->list->setCurrentRow( h.count() - 1 );
   recolor();
   d->list->scrollToItem( d->list->item( h.count() ),
                          QListWidget::PositionAtTop );
   d->list->clearSelection();
+}
+
+
+void HistoryDock::setHistory( const QStringList & h )
+{
+  d->list->clear();
+  appendHistory( h );
 }
 
 

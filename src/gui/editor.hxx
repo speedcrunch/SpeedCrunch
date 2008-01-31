@@ -82,6 +82,7 @@ class Editor : public QTextEdit
 
   public slots:
     void appendHistory( const QString & result, const QString & expression );
+    void appendHistory( const QStringList & h, const QStringList & r );
     void evaluate();
     void insertConstant( const QString & );
     void insert( const QString & );

@@ -39,6 +39,7 @@ class HistoryDock : public QDockWidget
   public slots:
     void clear();
     void append( const QString & );
+    void appendHistory( const QStringList & );
     void setHistory( const QStringList & );
 
   signals:

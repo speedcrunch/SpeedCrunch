@@ -1094,6 +1094,8 @@ void MainWindow::loadSession()
   }
 
   // expressions and results
+  QStringList expLs;
+  QStringList resLs;
   for ( int i = 0; i < noCalcs; i++ )
   {
     QString exp = stream.readLine();
@@ -1103,12 +1105,12 @@ void MainWindow::loadSession()
       QMessageBox::critical( this, tr("Error"), errMsg.arg( fname ) );
       return;
     }
-    HNumber num( res.toAscii().data() );
-    if ( ! num.isNan() )
-      d->widgets.display->append( exp, num );
-    else
-      d->widgets.display->appendError( exp, res );
+    expLs.append( exp );
+    resLs.append( res );
   }
+  d->widgets.display->appendHistory( expLs, resLs );
+  d->widgets.editor->appendHistory( expLs, resLs );
+  d->docks.history->appendHistory( expLs );
 
   // variables
   int noVars = stream.readLine().toInt( &ok );

@@ -295,6 +295,14 @@ void Editor::setHistoryResults( const QStringList & results )
 }
 
 
+void Editor::appendHistory( const QStringList & h, const QStringList & r )
+{
+  d->history += h;
+  d->historyResults += r;
+  d->index = d->history.count();
+}
+
+
 void Editor::clearHistory()
 {
   d->history.clear();
