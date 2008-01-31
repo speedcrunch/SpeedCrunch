@@ -1664,15 +1664,27 @@ void MainWindow::Private::restoreHistory()
     return;
   }
 
+  widgets.editor->setHistory( settings.history );
+  widgets.editor->setHistoryResults( settings.historyResults );
+
   for ( int i = 0 ; i < settings.history.count(); i++ )
   {
     const char * resultStr = settings.historyResults[i].toAscii().data();
     HNumber result( resultStr );
     if ( ! result.isNan() )
+    {
       widgets.display->append( settings.history[i], result );
+    }
     else
+    {
       widgets.display->appendError( settings.history[i], resultStr );
+    }
+    docks.history->append( settings.history[i] );
   }
+
+  // free some useless memory
+  settings.history.clear();
+  settings.historyResults.clear();
 }
 
 
@@ -1683,7 +1695,7 @@ void MainWindow::returnPressed()
     return;
 
   d->evaluator->setExpression( str );
-  d->docks.history->setHistory( d->widgets.editor->history() );
+  d->docks.history->append( str );
 
   HNumber result = d->evaluator->evalUpdateAns();
   if ( ! d->evaluator->error().isEmpty() )

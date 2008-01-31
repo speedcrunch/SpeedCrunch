@@ -1,5 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
+// Copyright (C) 2008 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -24,7 +25,6 @@
 #include <QDockWidget>
 
 
-class HistoryDockPrivate;
 class QListWidgetItem;
 
 
@@ -33,22 +33,23 @@ class HistoryDock : public QDockWidget
   Q_OBJECT
 
   public:
-    explicit HistoryDock( QWidget* parent );
+    explicit HistoryDock( QWidget * parent );
     ~HistoryDock();
 
   public slots:
     void clear();
-    void append( const QString& h );
-    void setHistory( const QStringList& h );
+    void append( const QString & );
+    void setHistory( const QStringList & );
 
   signals:
-    void expressionSelected( const QString& e );
+    void expressionSelected( const QString & );
 
   protected slots:
-    void handleItem( QListWidgetItem* item );
+    void handleItem( QListWidgetItem * item );
 
   private:
-    HistoryDockPrivate*d;
+    struct Private;
+    Private * const d;
     void recolor();
 };
 

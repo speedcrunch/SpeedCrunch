@@ -1,5 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
+// Copyright (C) 2008 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -22,25 +23,23 @@
 #include <QListWidget>
 
 
-class HistoryDockPrivate
+struct HistoryDock::Private
 {
-  public:
-    QListWidget* list;
+  QListWidget * list;
 };
 
 
-HistoryDock::HistoryDock( QWidget* parent ): QDockWidget( tr("History"), parent )
+HistoryDock::HistoryDock( QWidget * parent )
+  : QDockWidget( tr("History"), parent ), d( new HistoryDock::Private )
 {
-  d = new HistoryDockPrivate;
-
   d->list = new QListWidget( this );
-  connect( d->list, SIGNAL( itemDoubleClicked( QListWidgetItem* ) ),
-    SLOT( handleItem( QListWidgetItem* ) ) );
+  connect( d->list, SIGNAL( itemDoubleClicked( QListWidgetItem * ) ),
+    SLOT( handleItem( QListWidgetItem * ) ) );
   setWidget( d->list );
 
   setMinimumWidth( 200 );
   setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
-  setWindowIcon( QIcon() ); // no icon
+  setWindowIcon( QIcon() );
 }
 
 
@@ -56,15 +55,16 @@ void HistoryDock::clear()
 }
 
 
-void HistoryDock::append( const QString& h )
+void HistoryDock::append( const QString & h )
 {
   d->list->addItem( h );
   recolor();
   d->list->clearSelection();
+  d->list->scrollToBottom();
 }
 
 
-void HistoryDock::setHistory( const QStringList& h )
+void HistoryDock::setHistory( const QStringList & h )
 {
   d->list->clear();
   d->list->insertItems( 0, h );
@@ -75,7 +75,7 @@ void HistoryDock::setHistory( const QStringList& h )
 }
 
 
-void HistoryDock::handleItem( QListWidgetItem* item )
+void HistoryDock::handleItem( QListWidgetItem * item )
 {
   d->list->clearSelection();
   emit expressionSelected( item->text() );
@@ -86,10 +86,11 @@ void HistoryDock::recolor()
 {
   int group = 3;
   d->list->setUpdatesEnabled( false );
-  for(int i = 0; i < d->list->count(); i++)
+  for ( int i = 0; i < d->list->count(); i++ )
   {
     QListWidgetItem* item = d->list->item(i);
-    QBrush c = ((int)(i/group))&1 ? palette().base() : palette().alternateBase();
+    QBrush c = (((int) (i / group)) & 1) ? palette().base()
+                                         : palette().alternateBase();
     item->setBackground( c );
   }
   d->list->setUpdatesEnabled( true );
