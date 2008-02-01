@@ -1455,49 +1455,59 @@ HNumber HMath::sign( const HNumber & x )
 
 
 /**
- * Returns the binomial coefficient of n and k.
+ * Returns the binomial coefficient of n and r.
+ * Is any of n and r negative or a non-integer,
+ * 1/(n+1)*B(r+1, n-r+1)) is returned, where
+ * B(x,y) is the complete Beta function
  */
 HNumber HMath::nCr( const HNumber & n, const HNumber & r )
 {
   floatstruct fn, fr;
   floatnum rnum;
 
-  if( !n.isInteger() || !r.isInteger() )
-  {
-    Error error = checkNaNParam(*n.d, r.d);
-    if (error != 0)
-      return HNumber::nan(error);
-    return HNumber::nan(TypeMismatch);
-  }
+  Error error = checkNaNParam(*n.d, r.d);
+  if (error != Success)
+    return HNumber::nan(error);
 
-  if (r > 50 && n-r > 50)
+  HNumber r1;
+  // use symmetry nCr(n, r) == nCr(n, n-r) to find r1 such
+  // 2*r1 <= n and nCr(n, r) == nCr(n, r1)
+  if ( r + r > n )
+    r1 = n - r;
+  else
+    r1 = r;
+  HNumber r2 = n - r1;
+
+  if ( r1 >= 0 )
   {
+    if ( n.isInteger() && r1.isInteger()
+          && n <= 1000 && r1 <= 50 )
+      return factorial(n, (r2+1)) / factorial(r1, 1);
     HNumber result(n);
     rnum = &result.d->fnum;
-
     float_create(&fn);
     float_create(&fr);
-    float_copy(&fr, &r.d->fnum, HMATH_EVAL_PREC);
+    float_copy(&fr, &r1.d->fnum, HMATH_EVAL_PREC);
     float_copy(&fn, rnum, EXACT);
     float_sub(rnum, rnum, &fr, HMATH_EVAL_PREC)
-    && float_add(&fn, &fn, &c1, HMATH_EVAL_PREC)
-    && float_add(&fr, &fr, &c1, HMATH_EVAL_PREC)
-    && float_add(rnum, rnum, &c1, HMATH_EVAL_PREC)
-    && float_lngamma(&fn, HMATH_EVAL_PREC)
-    && float_lngamma(&fr, HMATH_EVAL_PREC)
-    && float_lngamma(rnum, HMATH_EVAL_PREC)
-    && float_add(rnum, rnum, &fr, HMATH_EVAL_PREC)
-    && float_sub(rnum, &fn, rnum, HMATH_EVAL_PREC)
-    && float_exp(rnum, HMATH_EVAL_PREC);
+        && float_add(&fn, &fn, &c1, HMATH_EVAL_PREC)
+        && float_add(&fr, &fr, &c1, HMATH_EVAL_PREC)
+        && float_add(rnum, rnum, &c1, HMATH_EVAL_PREC)
+        && float_lngamma(&fn, HMATH_EVAL_PREC)
+        && float_lngamma(&fr, HMATH_EVAL_PREC)
+        && float_lngamma(rnum, HMATH_EVAL_PREC)
+        && float_add(rnum, rnum, &fr, HMATH_EVAL_PREC)
+        && float_sub(rnum, &fn, rnum, HMATH_EVAL_PREC)
+        && float_exp(rnum, HMATH_EVAL_PREC);
     float_free(&fn);
     float_free(&fr);
     roundSetError(result.d);
     return result;
   }
-  if (r > n/2)
-    return factorial(n, r+1) / factorial((n-r), 1);
+  else if ( r2 >= 0 || !r2.isInteger() )
+    return factorial(n, r1+1)/factorial(r2, 1);
   else
-    return factorial(n, (n-r+1)) / factorial(r, 1);
+    return 0;
 }
 
 
