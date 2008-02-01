@@ -45,8 +45,9 @@ class Editor : public QTextEdit
   public:
     enum ColorType { Number, FunctionName, Variable, MatchedPar };
 
-    explicit Editor( Evaluator *, Functions *, Constants *,
-                     char radixChar = 'C', QWidget * parent = 0 );
+    explicit Editor( Evaluator *, Functions *, Constants *, char format = 'g',
+                     int precision = -1, char radixChar = 'C',
+                     QWidget * parent = 0 );
     ~Editor();
     bool        autoCalcEnabled() const;
     bool        autoCompleteEnabled() const;

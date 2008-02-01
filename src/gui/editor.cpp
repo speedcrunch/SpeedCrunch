@@ -127,14 +127,17 @@ struct Editor::Private
 };
 
 
-Editor::Editor( Evaluator * e, Functions * f, Constants * c, char radixChar,
-                QWidget * parent )
+Editor::Editor( Evaluator * e, Functions * f, Constants * c, char format,
+                int precision, char radixChar, QWidget * parent )
   : QTextEdit( parent ), d( new Editor::Private )
 {
   if ( radixChar == 'C' )
     d->radixChar = QLocale().decimalPoint().toAscii();
   else
     d->radixChar = radixChar;
+
+  d->format = format;
+  d->precision = precision;
 
   d->eval = e;
   d->functions = f;

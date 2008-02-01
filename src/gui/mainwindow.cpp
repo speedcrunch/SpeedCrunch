@@ -520,8 +520,8 @@ void MainWindow::Private::createWidgets()
   // editor
   QHBoxLayout * editorLayout = new QHBoxLayout();
   editorLayout->setMargin( 5 );
-  widgets.editor = new Editor( evaluator, functions, constants,
-                               settings.radixChar, box );
+  widgets.editor = new Editor( evaluator, functions, constants, settings.format,
+                               settings.precision, settings.radixChar, box );
   widgets.editor->setFocus();
   widgets.editor->setStyleSheet( "QTextEdit { font: bold 16px }" );
   widgets.editor->setFixedHeight( widgets.editor->sizeHint().height() );
@@ -737,10 +737,7 @@ void MainWindow::Private::applySettings()
   p->menuBar()->setVisible( settings.showMenuBar );
 
   // autocalc
-  if ( settings.autoCalc )
-    actions.optionAutoCalc->setChecked( true );
-  else
-    p->autoCalcToggled( false );
+  actions.optionAutoCalc->setChecked( settings.autoCalc );
 
   // autocomplete
   if ( settings.autoComplete )
