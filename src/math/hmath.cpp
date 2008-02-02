@@ -1482,7 +1482,7 @@ HNumber HMath::nCr( const HNumber & n, const HNumber & r )
   {
     if ( n.isInteger() && r1.isInteger()
           && n <= 1000 && r1 <= 50 )
-      return factorial(n, (r2+1)) / factorial(r1, 1);
+      return factorial(n, r2+1) / factorial(r1, 1);
     HNumber result(n);
     rnum = &result.d->fnum;
     float_create(&fn);
