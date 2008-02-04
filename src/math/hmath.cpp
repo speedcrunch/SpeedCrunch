@@ -1176,7 +1176,7 @@ HNumber HMath::cbrt( const HNumber & n )
   }
   while (!float_iszero(rnum) && digits < HMATH_EVAL_PREC/2 + 1)
   {
-    digits = 2 * digits + 2;
+    digits = 4 * digits + 2;
     if (digits > HMATH_EVAL_PREC+2)
       digits = HMATH_EVAL_PREC+2;
     float_move(rnum, &q);
