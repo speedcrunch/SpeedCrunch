@@ -21,6 +21,7 @@ Improvements and bug fixes:
   bugfix in the pochhammer symbol evaluating routine, affecting nPr
     when n and r are negative integers, and n == r-1
   bugfix: No freeze any more when evaluating (-n+0.5)! for very large integers n
+  bugfix: cbrt fixed for values 1+x with x << 1
 
 SpeedCrunch 0.9
 ---------------------

@@ -370,3 +370,27 @@ Variant LongReal::convert(const BasicIO& io)
   Error e = float_in(&val, &tokens);
   return Variant(&val, e);
 }
+
+void RealFormat::setMode(LongReal::FmtMode m, int dgt, char b, char sb, int prec)
+{
+  mode = m;
+  base = b;
+  scalebase = sb;
+  if (prec <= 0 || prec > DECPRECISION)
+    precision = DECPRECISION;
+  else
+    precision = prec;
+  int maxdgt;
+  switch (b)
+  {
+    case  2: maxdgt = precision * 2136;
+    case  8: maxdgt = precision * 712;
+    case 16: maxdgt = precision * 534;
+    default: maxdgt = precision * 643;
+  }
+  maxdgt /= 643;
+  if (dgt <= 0 || dgt > maxdgt)
+    digits = maxdgt;
+  else
+    digits = dgt;
+}

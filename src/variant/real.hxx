@@ -120,4 +120,78 @@ class LongReal: public VariantData
     Variant callCmp(const Variant& other, char mask) const;
 };
 
+class RealFormat: public FormatIntf
+{
+  public:
+    RealFormat();
+    virtual QString format(const VariantData&);
+    void setMode(LongReal::FmtMode, int digits = -1,
+                 char base = 10, char scalebase = 10, int prec = -1);
+  protected:
+    virtual QString getSignificandPrefix();
+    virtual QString getSignificandSuffix();
+    virtual QString getScalePrefix();
+    virtual QString getScaleSuffix();
+    virtual QString formatNaN();
+    virtual QString formatZero();
+    virtual QString formatInt(const QString& seq, LongReal::Sign);
+    virtual QString formatFrac(const QString& seq);
+    virtual QString formatScale(const QString& seq, LongReal::Sign);
+  protected:
+    // format type
+    LongReal::FmtMode mode;
+    // radix to what the significand is shown
+    char base;
+    // radix to what the scale is shown
+    char scalebase;
+    // allowed error (2*10^(-precision)) in radix conversion
+    int  precision;
+    // shown digits of the significand
+    int  digits;
+    // minimum length of the significand
+    int  minSignificandLg;
+    // minimum length of the scale
+    int  minScaleLg;
+    // preferred position of the dot
+    int  dotpos;
+    // length of a digit group
+    int  grouplg;
+    // dot character
+    char dot;
+    // character for digit grouping
+    char group;
+    // padding character for the significand to achieve minimum length
+    char pad;
+    // padding character for the scale to achieve minimum length
+    char scalePad;
+    // truncate the significand instead of round it
+    bool truncSignificand;
+    // use a scale bias as is present in IEEE 754 data formats
+    bool useBiasedScale;
+    // suppress the scale altogether, if it is zero
+    bool suppressZeroScale;
+    // suppress the sign, if the significand is not negative
+    bool suppressPlus;
+    // suppress the plus if the scale is not negative
+    bool suppressScalePlus;
+    // suppress the radix tag of the significand
+    bool suppressRadix;
+    // suppress the radix tag of the scale
+    bool suppressScaleRadix;
+    // suppress a leading zero before the dot if the integer part is zero
+    bool suppressLeadingZero;
+    // suppress trailing zeros in the fractional part
+    bool suppressTrailingZero;
+    // suppress a trailing dot, if the fractional part is zero
+    bool suppressTrailingDot;
+    // do not group the digits in the significand
+    bool suppressGroups;
+    // do not group the digits in the scale
+    bool suppressScaleGroups;
+    // use lower case hex digits
+    bool lowerCaseHexDigit;
+    // pad the scale to the right
+    bool scaleLeftAlign;
+};
+
 #endif /*_REAL_H*/

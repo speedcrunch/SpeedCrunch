@@ -1161,12 +1161,22 @@ HNumber HMath::cbrt( const HNumber & n )
   float_setexponent(&a, expn % 3);
   expn /= 3;
 
-  digits = 0;
-  float_copy(&q, &a, 2);
-  float_sqrt(&q, 2);
+  if (float_cmp(&a, &c2) < 0)
+  {
+    float_sub(&q, &a, &c1, 3);
+    digits = -float_getexponent(&q);
+    float_div(&q, &q, &c3, 3);
+    float_add(&q, &q, &c1, digits+2);
+  }
+  else
+  {
+    digits = 0;
+    float_copy(&q, &a, 2);
+    float_sqrt(&q, 2);
+  }
   while (!float_iszero(rnum) && digits < HMATH_EVAL_PREC/2 + 1)
   {
-    digits = 4 * digits + 2;
+    digits = 2 * digits + 2;
     if (digits > HMATH_EVAL_PREC+2)
       digits = HMATH_EVAL_PREC+2;
     float_move(rnum, &q);
