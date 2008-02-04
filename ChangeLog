@@ -4,7 +4,7 @@ New features:
   preliminary support of logic functions
   extended output of real-valued numbers to non-decimal modes
   arithmetic integer divide and modulo
-  allow real-valued arguments for nPr
+  allow real-valued arguments for nPr and nCr
 
 New functions:
   ERF: the normalized error function (related to normal distribution)
