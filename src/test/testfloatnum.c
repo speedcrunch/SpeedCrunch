@@ -5949,7 +5949,6 @@ static int tc_out(char* value, int digits, char base, char mode, char* result)
 {
   char intbuf[150];
   char fracbuf[150];
-  char exp[33];
   char buffer[350];
   t_otokens tokens;
   floatstruct x;
@@ -5960,8 +5959,6 @@ static int tc_out(char* value, int digits, char base, char mode, char* result)
   tokens.intpart.buf = intbuf;
   tokens.fracpart.sz = 150;
   tokens.fracpart.buf = fracbuf;
-  tokens.exp.buf = exp;
-  tokens.exp.sz = 33;
   if (float_out(&tokens, &x, digits, base, base != 2? base : 16, mode) != Success)
     return result == NULL || *result == '\0';
   cattokens(buffer, 350, &tokens,
@@ -5995,13 +5992,13 @@ static int test_out()
   if (!tc_out("0", 0, 5, IO_MODE_SCIENTIFIC, "")) return 0;
   if (!tc_out("0", 0, 10, -1, "")) return 0;
   if (!tc_out("0", 0, 10, IO_MODE_SCIENTIFIC, "0")) return 0;
-  if (!tc_out("1", 0, 10, IO_MODE_SCIENTIFIC, "+0d1(0)")) return 0;
-  if (!tc_out("-1", 0, 10, IO_MODE_SCIENTIFIC, "-0d1(0)")) return 0;
-  if (!tc_out("1.000000002", 0, 10, IO_MODE_SCIENTIFIC, "+0d1(0)")) return 0;
-  if (!tc_out("1.0002", 1, 10, IO_MODE_SCIENTIFIC, "+0d1.0(0)")) return 0;
-  if (!tc_out("1.07", 1, 10, IO_MODE_SCIENTIFIC, "+0d1.1(0)")) return 0;
-  if (!tc_out("1.2", 1, 10, IO_MODE_SCIENTIFIC, "+0d1.2(0)")) return 0;
-  if (!tc_out("1.2", 2, 10, IO_MODE_SCIENTIFIC, "+0d1.20(0)")) return 0;
+  if (!tc_out("1", 0, 10, IO_MODE_SCIENTIFIC, "+0d1(+0d0)")) return 0;
+  if (!tc_out("-1", 0, 10, IO_MODE_SCIENTIFIC, "-0d1(+0d0)")) return 0;
+  if (!tc_out("1.000000002", 0, 10, IO_MODE_SCIENTIFIC, "+0d1(+0d0)")) return 0;
+  if (!tc_out("1.0002", 1, 10, IO_MODE_SCIENTIFIC, "+0d1.0(+0d0)")) return 0;
+  if (!tc_out("1.07", 1, 10, IO_MODE_SCIENTIFIC, "+0d1.1(+0d0)")) return 0;
+  if (!tc_out("1.2", 1, 10, IO_MODE_SCIENTIFIC, "+0d1.2(+0d0)")) return 0;
+  if (!tc_out("1.2", 2, 10, IO_MODE_SCIENTIFIC, "+0d1.20(+0d0)")) return 0;
   if (!tc_out("10", 0, 10, IO_MODE_SCIENTIFIC, "+0d1(+0d1)")) return 0;
   if (!tc_out("100", 0, 10, IO_MODE_SCIENTIFIC, "+0d1(+0d2)")) return 0;
   if (!tc_out("1e12345678", 0, 10, IO_MODE_SCIENTIFIC, "+0d1(+0d12345678)")) return 0;
@@ -6014,115 +6011,115 @@ static int test_out()
   if (!tc_out("1.234e-12345678", 1, 10, IO_MODE_SCIENTIFIC, "+0d1.2(-0d12345678)")) return 0;
   if (!tc_out("1.234e-12345678", 3, 10, IO_MODE_SCIENTIFIC, "+0d1.234(-0d12345678)")) return 0;
   if (!tc_out("1.234e-12345678", 4, 10, IO_MODE_SCIENTIFIC, "+0d1.2340(-0d12345678)")) return 0;
-  if (!tc_out("1", 0, 16, IO_MODE_SCIENTIFIC, "+0x1(0)")) return 0;
-  if (!tc_out("15", 0, 16, IO_MODE_SCIENTIFIC, "+0xF(0)")) return 0;
-  if (!tc_out("16", 0, 16, IO_MODE_SCIENTIFIC, "+0x1(+0x1)")) return 0;
-  if (!tc_out("17", 0, 16, IO_MODE_SCIENTIFIC, "+0x1(+0x1)")) return 0;
-  if (!tc_out("18", 1, 16, IO_MODE_SCIENTIFIC, "+0x1.2(+0x1)")) return 0;
-  if (!tc_out("4096", 0, 16, IO_MODE_SCIENTIFIC, "+0x1(+0x3)")) return 0;
-  if (!tc_out("6144", 0, 16, IO_MODE_SCIENTIFIC, "+0x2(+0x3)")) return 0;
-  if (!tc_out("1099511627776", 0, 16, IO_MODE_SCIENTIFIC, "+0x1(+0xA)")) return 0;
-  if (!tc_out("18446744073709551616", 0, 16, IO_MODE_SCIENTIFIC, "+0x1(+0x10)")) return 0;
-  if (!tc_out("18446744073709551616", 15, 16, IO_MODE_SCIENTIFIC, "+0x1.000000000000000(+0x10)")) return 0;
-  if (!tc_out("1.8", 0, 16, IO_MODE_SCIENTIFIC, "+0x2(0)")) return 0;
-  if (!tc_out("-1.5", 1, 16, IO_MODE_SCIENTIFIC, "-0x1.8(0)")) return 0;
-  if (!tc_out("0.5", 0, 16, IO_MODE_SCIENTIFIC, "+0x8(-0x1)")) return 0;
-  if (!tc_out("0.25", 0, 16, IO_MODE_SCIENTIFIC, "+0x4(-0x1)")) return 0;
-  if (!tc_out("0.125", 0, 16, IO_MODE_SCIENTIFIC, "+0x2(-0x1)")) return 0;
-  if (!tc_out("0.0625", 0, 16, IO_MODE_SCIENTIFIC, "+0x1(-0x1)")) return 0;
-  if (!tc_out("0.03125", 0, 16, IO_MODE_SCIENTIFIC, "+0x8(-0x2)")) return 0;
-  if (!tc_out("0.75", 0, 16, IO_MODE_SCIENTIFIC, "+0xC(-0x1)")) return 0;
-  if (!tc_out("0.96875", 0, 16, IO_MODE_SCIENTIFIC, "+0x1(0)")) return 0;
-  if (!tc_out("5.42101086242752217003726400434970855712890625e-20", 0, 16, IO_MODE_SCIENTIFIC, "+0x1(-0x10)")) return 0;
+  if (!tc_out("1", 0, 16, IO_MODE_SCIENTIFIC, "+0x1(+0d0)")) return 0;
+  if (!tc_out("15", 0, 16, IO_MODE_SCIENTIFIC, "+0xF(+0d0)")) return 0;
+  if (!tc_out("16", 0, 16, IO_MODE_SCIENTIFIC, "+0x1(+0d1)")) return 0;
+  if (!tc_out("17", 0, 16, IO_MODE_SCIENTIFIC, "+0x1(+0d1)")) return 0;
+  if (!tc_out("18", 1, 16, IO_MODE_SCIENTIFIC, "+0x1.2(+0d1)")) return 0;
+  if (!tc_out("4096", 0, 16, IO_MODE_SCIENTIFIC, "+0x1(+0d3)")) return 0;
+  if (!tc_out("6144", 0, 16, IO_MODE_SCIENTIFIC, "+0x2(+0d3)")) return 0;
+  if (!tc_out("1099511627776", 0, 16, IO_MODE_SCIENTIFIC, "+0x1(+0d10)")) return 0;
+  if (!tc_out("18446744073709551616", 0, 16, IO_MODE_SCIENTIFIC, "+0x1(+0d16)")) return 0;
+  if (!tc_out("18446744073709551616", 15, 16, IO_MODE_SCIENTIFIC, "+0x1.000000000000000(+0d16)")) return 0;
+  if (!tc_out("1.8", 0, 16, IO_MODE_SCIENTIFIC, "+0x2(+0d0)")) return 0;
+  if (!tc_out("-1.5", 1, 16, IO_MODE_SCIENTIFIC, "-0x1.8(+0d0)")) return 0;
+  if (!tc_out("0.5", 0, 16, IO_MODE_SCIENTIFIC, "+0x8(-0d1)")) return 0;
+  if (!tc_out("0.25", 0, 16, IO_MODE_SCIENTIFIC, "+0x4(-0d1)")) return 0;
+  if (!tc_out("0.125", 0, 16, IO_MODE_SCIENTIFIC, "+0x2(-0d1)")) return 0;
+  if (!tc_out("0.0625", 0, 16, IO_MODE_SCIENTIFIC, "+0x1(-0d1)")) return 0;
+  if (!tc_out("0.03125", 0, 16, IO_MODE_SCIENTIFIC, "+0x8(-0d2)")) return 0;
+  if (!tc_out("0.75", 0, 16, IO_MODE_SCIENTIFIC, "+0xC(-0d1)")) return 0;
+  if (!tc_out("0.96875", 0, 16, IO_MODE_SCIENTIFIC, "+0x1(+0d0)")) return 0;
+  if (!tc_out("5.42101086242752217003726400434970855712890625e-20", 0, 16, IO_MODE_SCIENTIFIC, "+0x1(-0d16)")) return 0;
   if (!tc_out("5.42101086242752217003726400434970855712890625e-20", 16, 16, IO_MODE_SCIENTIFIC,
-              "+0x1.0000000000000000(-0x10)")) return 0;
+              "+0x1.0000000000000000(-0d16)")) return 0;
   if (!tc_out("5.42101086242752217003726400434970855712890625e-20", 15, 16, IO_MODE_SCIENTIFIC,
-              "+0x1.000000000000000(-0x10)")) return 0;
+              "+0x1.000000000000000(-0d16)")) return 0;
   if (!tc_out("5.42101086242752217003726400434970855712890625e-20", 14, 16, IO_MODE_SCIENTIFIC,
-              "+0x1.00000000000000(-0x10)")) return 0;
+              "+0x1.00000000000000(-0d16)")) return 0;
   if (!tc_out("5.42101086242752217003726400434970855712890625e-20", 13, 16, IO_MODE_SCIENTIFIC,
-              "+0x1.0000000000000(-0x10)")) return 0;
+              "+0x1.0000000000000(-0d16)")) return 0;
   if (!tc_out("5.42101086242752217003726400434970855712890625e-20", 12, 16, IO_MODE_SCIENTIFIC,
-              "+0x1.000000000000(-0x10)")) return 0;
+              "+0x1.000000000000(-0d16)")) return 0;
   if (!tc_out("5.42101086242752217003726400434970855712890625e-20", 11, 16, IO_MODE_SCIENTIFIC,
-              "+0x1.00000000000(-0x10)")) return 0;
+              "+0x1.00000000000(-0d16)")) return 0;
   if (!tc_out("5.42101086242752217003726400434970855712890625e-20", 10, 16, IO_MODE_SCIENTIFIC,
-              "+0x1.0000000000(-0x10)")) return 0;
+              "+0x1.0000000000(-0d16)")) return 0;
   if (!tc_out("5.42101086242752217003726400434970855712890625e-20", 9, 16, IO_MODE_SCIENTIFIC,
-              "+0x1.000000000(-0x10)")) return 0;
+              "+0x1.000000000(-0d16)")) return 0;
   if (!tc_out("5.42101086242752217003726400434970855712890625e-20", 8, 16, IO_MODE_SCIENTIFIC,
-              "+0x1.00000000(-0x10)")) return 0;
+              "+0x1.00000000(-0d16)")) return 0;
   if (!tc_out("5.42101086242752217003726400434970855712890625e-20", 7, 16, IO_MODE_SCIENTIFIC,
-              "+0x1.0000000(-0x10)")) return 0;
+              "+0x1.0000000(-0d16)")) return 0;
   if (!tc_out("5.42101086242752217003726400434970855712890625e-20", 6, 16, IO_MODE_SCIENTIFIC,
-              "+0x1.000000(-0x10)")) return 0;
+              "+0x1.000000(-0d16)")) return 0;
   if (!tc_out("5.42101086242752217003726400434970855712890625e-20", 5, 16, IO_MODE_SCIENTIFIC,
-              "+0x1.00000(-0x10)")) return 0;
+              "+0x1.00000(-0d16)")) return 0;
   if (!tc_out("5.42101086242752217003726400434970855712890625e-20", 4, 16, IO_MODE_SCIENTIFIC,
-              "+0x1.0000(-0x10)")) return 0;
+              "+0x1.0000(-0d16)")) return 0;
   if (!tc_out("5.42101086242752217003726400434970855712890625e-20", 3, 16, IO_MODE_SCIENTIFIC,
-              "+0x1.000(-0x10)")) return 0;
+              "+0x1.000(-0d16)")) return 0;
   if (!tc_out("5.42101086242752217003726400434970855712890625e-20", 2, 16, IO_MODE_SCIENTIFIC,
-              "+0x1.00(-0x10)")) return 0;
+              "+0x1.00(-0d16)")) return 0;
   if (!tc_out("5.42101086242752217003726400434970855712890625e-20", 1, 16, IO_MODE_SCIENTIFIC,
-              "+0x1.0(-0x10)")) return 0;
-  if (!tc_out("1", 0, 2, IO_MODE_SCIENTIFIC, "+0b1(0)")) return 0;
-  if (!tc_out("2", 0, 2, IO_MODE_SCIENTIFIC, "+0b1(+0x1)")) return 0;
-  if (!tc_out("3", 0, 2, IO_MODE_SCIENTIFIC, "+0b1(+0x2)")) return 0;
-  if (!tc_out("3", 1, 2, IO_MODE_SCIENTIFIC, "+0b1.1(+0x1)")) return 0;
-  if (!tc_out("3", 2, 2, IO_MODE_SCIENTIFIC, "+0b1.10(+0x1)")) return 0;
-  if (!tc_out("0.5", 0, 2, IO_MODE_SCIENTIFIC, "+0b1(-0x1)")) return 0;
-  if (!tc_out("0.25", 0, 2, IO_MODE_SCIENTIFIC, "+0b1(-0x2)")) return 0;
-  if (!tc_out("0.75", 0, 2, IO_MODE_SCIENTIFIC, "+0b1(-0x1)")) return 0;
-  if (!tc_out("-0.75", 1, 2, IO_MODE_SCIENTIFIC, "-0b1.1(-0x1)")) return 0;
-  if (!tc_out("1", 0, 8, IO_MODE_SCIENTIFIC, "+0o1(0)")) return 0;
-  if (!tc_out("2", 0, 8, IO_MODE_SCIENTIFIC, "+0o2(0)")) return 0;
-  if (!tc_out("4", 0, 8, IO_MODE_SCIENTIFIC, "+0o4(0)")) return 0;
-  if (!tc_out("8", 0, 8, IO_MODE_SCIENTIFIC, "+0o1(+0o1)")) return 0;
-  if (!tc_out("16", 0, 8, IO_MODE_SCIENTIFIC, "+0o2(+0o1)")) return 0;
-  if (!tc_out("0.5", 0, 8, IO_MODE_SCIENTIFIC, "+0o4(-0o1)")) return 0;
-  if (!tc_out("0.75", 0, 8, IO_MODE_SCIENTIFIC, "+0o6(-0o1)")) return 0;
-  if (!tc_out("0.875", 0, 8, IO_MODE_SCIENTIFIC, "+0o7(-0o1)")) return 0;
-  if (!tc_out("0.9375", 1, 8, IO_MODE_SCIENTIFIC, "+0o7.4(-0o1)")) return 0;
-  if (!tc_out("0.9375", 0, 8, IO_MODE_SCIENTIFIC, "+0o1(0)")) return 0;
+              "+0x1.0(-0d16)")) return 0;
+  if (!tc_out("1", 0, 2, IO_MODE_SCIENTIFIC, "+0b1(+0d0)")) return 0;
+  if (!tc_out("2", 0, 2, IO_MODE_SCIENTIFIC, "+0b1(+0d1)")) return 0;
+  if (!tc_out("3", 0, 2, IO_MODE_SCIENTIFIC, "+0b1(+0d2)")) return 0;
+  if (!tc_out("3", 1, 2, IO_MODE_SCIENTIFIC, "+0b1.1(+0d1)")) return 0;
+  if (!tc_out("3", 2, 2, IO_MODE_SCIENTIFIC, "+0b1.10(+0d1)")) return 0;
+  if (!tc_out("0.5", 0, 2, IO_MODE_SCIENTIFIC, "+0b1(-0d1)")) return 0;
+  if (!tc_out("0.25", 0, 2, IO_MODE_SCIENTIFIC, "+0b1(-0d2)")) return 0;
+  if (!tc_out("0.75", 0, 2, IO_MODE_SCIENTIFIC, "+0b1(-0d1)")) return 0;
+  if (!tc_out("-0.75", 1, 2, IO_MODE_SCIENTIFIC, "-0b1.1(-0d1)")) return 0;
+  if (!tc_out("1", 0, 8, IO_MODE_SCIENTIFIC, "+0o1(+0d0)")) return 0;
+  if (!tc_out("2", 0, 8, IO_MODE_SCIENTIFIC, "+0o2(+0d0)")) return 0;
+  if (!tc_out("4", 0, 8, IO_MODE_SCIENTIFIC, "+0o4(+0d0)")) return 0;
+  if (!tc_out("8", 0, 8, IO_MODE_SCIENTIFIC, "+0o1(+0d1)")) return 0;
+  if (!tc_out("16", 0, 8, IO_MODE_SCIENTIFIC, "+0o2(+0d1)")) return 0;
+  if (!tc_out("0.5", 0, 8, IO_MODE_SCIENTIFIC, "+0o4(-0d1)")) return 0;
+  if (!tc_out("0.75", 0, 8, IO_MODE_SCIENTIFIC, "+0o6(-0d1)")) return 0;
+  if (!tc_out("0.875", 0, 8, IO_MODE_SCIENTIFIC, "+0o7(-0d1)")) return 0;
+  if (!tc_out("0.9375", 1, 8, IO_MODE_SCIENTIFIC, "+0o7.4(-0d1)")) return 0;
+  if (!tc_out("0.9375", 0, 8, IO_MODE_SCIENTIFIC, "+0o1(+0d0)")) return 0;
   if (!tc_out("NaN", 1, 10, IO_MODE_FIXPOINT, "NaN")) return 0;
   if (!tc_out("0", 1, IO_BASE_NAN, IO_MODE_FIXPOINT, "")) return 0;
   if (!tc_out("0", 1, IO_BASE_ZERO, IO_MODE_FIXPOINT, "")) return 0;
   if (!tc_out("1", 1, IO_BASE_NAN, IO_MODE_FIXPOINT, "")) return 0;
   if (!tc_out("0", 1, 5, IO_MODE_FIXPOINT, "")) return 0;
   if (!tc_out("0", 1, 10, IO_MODE_FIXPOINT, "0")) return 0;
-  if (!tc_out("1", 0, 10, IO_MODE_FIXPOINT, "+0d1")) return 0;
-  if (!tc_out("1", 1, 10, IO_MODE_FIXPOINT, "+0d1.0")) return 0;
-  if (!tc_out("10", 0, 10, IO_MODE_FIXPOINT, "+0d10")) return 0;
-  if (!tc_out("-10", 0, 10, IO_MODE_FIXPOINT, "-0d10")) return 0;
-  if (!tc_out("10", 3, 10, IO_MODE_FIXPOINT, "+0d10.000")) return 0;
-  if (!tc_out("10.1", 0, 10, IO_MODE_FIXPOINT, "+0d10")) return 0;
-  if (!tc_out("10.1", 1, 10, IO_MODE_FIXPOINT, "+0d10.1")) return 0;
-  if (!tc_out("10.1", 2, 10, IO_MODE_FIXPOINT, "+0d10.10")) return 0;
-  if (!tc_out("10.12", 1, 10, IO_MODE_FIXPOINT, "+0d10.1")) return 0;
-  if (!tc_out("10.16", 1, 10, IO_MODE_FIXPOINT, "+0d10.2")) return 0;
-  if (!tc_out("10.86", 0, 10, IO_MODE_FIXPOINT, "+0d11")) return 0;
-  if (!tc_out("0.1", 1, 10, IO_MODE_FIXPOINT, "+0d.1")) return 0;
-  if (!tc_out("0.12", 1, 10, IO_MODE_FIXPOINT, "+0d.1")) return 0;
-  if (!tc_out("0.0123", 2, 10, IO_MODE_FIXPOINT, "+0d.01")) return 0;
-  if (!tc_out("18446744073709551616", 0, 10, IO_MODE_FIXPOINT, "+0d18446744073709551616")) return 0;
-  if (!tc_out("0.75", 1, 16, IO_MODE_FIXPOINT, "+0x.C")) return 0;
-  if (!tc_out("18446744073709551616", 0, 16, IO_MODE_FIXPOINT, "+0x10000000000000000")) return 0;
-  if (!tc_out("18446744073709551615", 0, 16, IO_MODE_FIXPOINT, "+0xFFFFFFFFFFFFFFFF")) return 0;
-  if (!tc_out("18446744073709551615", 1, 16, IO_MODE_FIXPOINT, "+0xFFFFFFFFFFFFFFFF.0")) return 0;
+  if (!tc_out("1", 0, 10, IO_MODE_FIXPOINT, "+0d1(+0d0)")) return 0;
+  if (!tc_out("1", 1, 10, IO_MODE_FIXPOINT, "+0d1.0(+0d0)")) return 0;
+  if (!tc_out("10", 0, 10, IO_MODE_FIXPOINT, "+0d10(+0d0)")) return 0;
+  if (!tc_out("-10", 0, 10, IO_MODE_FIXPOINT, "-0d10(+0d0)")) return 0;
+  if (!tc_out("10", 3, 10, IO_MODE_FIXPOINT, "+0d10.000(+0d0)")) return 0;
+  if (!tc_out("10.1", 0, 10, IO_MODE_FIXPOINT, "+0d10(+0d0)")) return 0;
+  if (!tc_out("10.1", 1, 10, IO_MODE_FIXPOINT, "+0d10.1(+0d0)")) return 0;
+  if (!tc_out("10.1", 2, 10, IO_MODE_FIXPOINT, "+0d10.10(+0d0)")) return 0;
+  if (!tc_out("10.12", 1, 10, IO_MODE_FIXPOINT, "+0d10.1(+0d0)")) return 0;
+  if (!tc_out("10.16", 1, 10, IO_MODE_FIXPOINT, "+0d10.2(+0d0)")) return 0;
+  if (!tc_out("10.86", 0, 10, IO_MODE_FIXPOINT, "+0d11(+0d0)")) return 0;
+  if (!tc_out("0.1", 1, 10, IO_MODE_FIXPOINT, "+0d.1(+0d0)")) return 0;
+  if (!tc_out("0.12", 1, 10, IO_MODE_FIXPOINT, "+0d.1(+0d0)")) return 0;
+  if (!tc_out("0.0123", 2, 10, IO_MODE_FIXPOINT, "+0d.01(+0d0)")) return 0;
+  if (!tc_out("18446744073709551616", 0, 10, IO_MODE_FIXPOINT, "+0d18446744073709551616(+0d0)")) return 0;
+  if (!tc_out("0.75", 1, 16, IO_MODE_FIXPOINT, "+0x.C(+0d0)")) return 0;
+  if (!tc_out("18446744073709551616", 0, 16, IO_MODE_FIXPOINT, "+0x10000000000000000(+0d0)")) return 0;
+  if (!tc_out("18446744073709551615", 0, 16, IO_MODE_FIXPOINT, "+0xFFFFFFFFFFFFFFFF(+0d0)")) return 0;
+  if (!tc_out("18446744073709551615", 1, 16, IO_MODE_FIXPOINT, "+0xFFFFFFFFFFFFFFFF.0(+0d0)")) return 0;
   if (!tc_out("5.42101086242752217003726400434970855712890625e-20", 16, 16, IO_MODE_FIXPOINT,
-              "+0x.0000000000000001")) return 0;
-  if (!tc_out("-0.75", 2, 2, IO_MODE_FIXPOINT, "-0b.11")) return 0;
-  if (!tc_out("0.9375", 2, 8, IO_MODE_FIXPOINT, "+0o.74")) return 0;
-  if (!tc_out("4.9375", 2, 8, IO_MODE_FIXPOINT, "+0o4.74")) return 0;
-  if (!tc_out("4.9375", 1, 8, IO_MODE_FIXPOINT, "+0o5.0")) return 0;
-  if (!tc_out("4.9375", 0, 10, IO_MODE_FIXPOINT, "+0d5")) return 0;
-  if (!tc_out("4.9375", 0, 16, IO_MODE_FIXPOINT, "+0x5")) return 0;
-  if (!tc_out("4.9375", 0, 8, IO_MODE_FIXPOINT, "+0o5")) return 0;
-  if (!tc_out("4.9375", 0, 2, IO_MODE_FIXPOINT, "+0b101")) return 0;
-  if (!tc_out("1.23", 2, 10, IO_MODE_ENG, "+0d1.23(0)")) return 0;
-  if (!tc_out("12.3", 2, 10, IO_MODE_ENG, "+0d12.3(0)")) return 0;
-  if (!tc_out("123", 2, 10, IO_MODE_ENG, "+0d123(0)")) return 0;
+              "+0x.0000000000000001(+0d0)")) return 0;
+  if (!tc_out("-0.75", 2, 2, IO_MODE_FIXPOINT, "-0b.11(+0d0)")) return 0;
+  if (!tc_out("0.9375", 2, 8, IO_MODE_FIXPOINT, "+0o.74(+0d0)")) return 0;
+  if (!tc_out("4.9375", 2, 8, IO_MODE_FIXPOINT, "+0o4.74(+0d0)")) return 0;
+  if (!tc_out("4.9375", 1, 8, IO_MODE_FIXPOINT, "+0o5.0(+0d0)")) return 0;
+  if (!tc_out("4.9375", 0, 10, IO_MODE_FIXPOINT, "+0d5(+0d0)")) return 0;
+  if (!tc_out("4.9375", 0, 16, IO_MODE_FIXPOINT, "+0x5(+0d0)")) return 0;
+  if (!tc_out("4.9375", 0, 8, IO_MODE_FIXPOINT, "+0o5(+0d0)")) return 0;
+  if (!tc_out("4.9375", 0, 2, IO_MODE_FIXPOINT, "+0b101(+0d0)")) return 0;
+  if (!tc_out("1.23", 2, 10, IO_MODE_ENG, "+0d1.23(+0d0)")) return 0;
+  if (!tc_out("12.3", 2, 10, IO_MODE_ENG, "+0d12.3(+0d0)")) return 0;
+  if (!tc_out("123", 2, 10, IO_MODE_ENG, "+0d123(+0d0)")) return 0;
   if (!tc_out("1234", 2, 10, IO_MODE_ENG, "+0d1.23(+0d3)")) return 0;
   if (!tc_out("0.1234", 2, 10, IO_MODE_ENG, "+0d123(-0d3)")) return 0;
   if (!tc_out("0.0123", 2, 10, IO_MODE_ENG, "+0d12.3(-0d3)")) return 0;
@@ -6130,11 +6127,11 @@ static int test_out()
   if (!tc_out("0.000123", 2, 10, IO_MODE_ENG, "+0d123(-0d6)")) return 0;
   if (!tc_out("-0.000123", 2, 10, IO_MODE_ENG, "-0d123(-0d6)")) return 0;
   if (!tc_out("0", 0, 16, IO_MODE_COMPLEMENT, "0")) return 0;
-  if (!tc_out("1", 0, 16, IO_MODE_COMPLEMENT, "0x1")) return 0;
-  if (!tc_out("-1", 0, 16, IO_MODE_COMPLEMENT, "0xsF")) return 0;
-  if (!tc_out("-2", 0, 16, IO_MODE_COMPLEMENT, "0xsFE")) return 0;
-  if (!tc_out("-16", 0, 16, IO_MODE_COMPLEMENT, "0xsF0")) return 0;
-  if (!tc_out("-17", 0, 16, IO_MODE_COMPLEMENT, "0xsFEF")) return 0;
+  if (!tc_out("1", 0, 16, IO_MODE_COMPLEMENT, "0x1(+0d0)")) return 0;
+  if (!tc_out("-1", 0, 16, IO_MODE_COMPLEMENT, "0xsF(+0d0)")) return 0;
+  if (!tc_out("-2", 0, 16, IO_MODE_COMPLEMENT, "0xsFE(+0d0)")) return 0;
+  if (!tc_out("-16", 0, 16, IO_MODE_COMPLEMENT, "0xsF0(+0d0)")) return 0;
+  if (!tc_out("-17", 0, 16, IO_MODE_COMPLEMENT, "0xsFEF(+0d0)")) return 0;
   setioparams(&saveiop);
   return 1;
 }

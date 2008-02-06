@@ -51,7 +51,7 @@ class LongReal: public VariantData
     operator cfloatnum() const { return &val; };
     bool move(floatnum x);
     static cfloatnum NaN();
-    public: // operators
+  public: // operators
     Variant operator+() const;
     Variant operator-() const;
     Variant operator+(const Variant& other) const;
@@ -70,6 +70,9 @@ class LongReal: public VariantData
     Variant swapDiv(const Variant& other) const;
     Variant swapIdiv(const Variant& other) const;
     Variant swapMod(const Variant& other) const;
+  public: // info
+    bool isNaN() const;
+    bool isZero() const;
   public: // precision handling
     enum { precQuery = -1, precDefault = 0 };
     static int evalPrec();
@@ -88,6 +91,7 @@ class LongReal: public VariantData
       Plus,
       Minus,
       Compl2,
+      None,
     } Sign;
     typedef struct
     {
@@ -103,7 +107,7 @@ class LongReal: public VariantData
     bool assign(const char*);
     operator QByteArray() const;
     BasicIO convert(int prec = -1, FmtMode mode = Scientific,
-                    char base = 10, char scalebase = 10);
+                    char base = 10, char scalebase = 10) const;
     static Variant convert(const BasicIO&);
   private:
     static void initClass();
@@ -166,16 +170,14 @@ class RealFormat: public FormatIntf
     char scalePad;
     // truncate the significand instead of round it
     bool truncSignificand;
-    // use a scale bias as is present in IEEE 754 data formats
-    bool useBiasedScale;
     // suppress the scale altogether, if it is zero
     bool suppressZeroScale;
     // suppress the sign, if the significand is not negative
     bool suppressPlus;
     // suppress the plus if the scale is not negative
     bool suppressScalePlus;
-    // suppress the radix tag of the significand
-    bool suppressRadix;
+    // shows the radix tag of the significand
+    bool showRadix;
     // suppress the radix tag of the scale
     bool suppressScaleRadix;
     // suppress a leading zero before the dot if the integer part is zero

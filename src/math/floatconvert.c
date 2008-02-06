@@ -735,11 +735,9 @@ _emptytokens(
 {
   _emptybuffer(&tokens->intpart);
   _emptybuffer(&tokens->fracpart);
-  _emptybuffer(&tokens->exp);
   tokens->sign = IO_SIGN_NONE;
-  tokens->expsign = IO_SIGN_NONE;
   tokens->base = IO_BASE_NAN;
-  tokens->expbase = IO_BASE_NAN;
+  tokens->exp = 0;
 }
 
 Error float_out(

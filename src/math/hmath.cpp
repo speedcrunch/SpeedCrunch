@@ -664,7 +664,6 @@ _doFormat(
   char* str;
   char intbuf[BINPRECISION+1];
   char fracbuf[BINPRECISION+1];
-  char expbuf[BITS_IN_EXP+1];
 
   str = NULL;
   float_create(&tmp);
@@ -687,8 +686,6 @@ _doFormat(
   tokens.intpart.buf = intbuf;
   tokens.fracpart.sz = sz;
   tokens.fracpart.buf = fracbuf;
-  tokens.exp.sz = sizeof(expbuf);
-  tokens.exp.buf = expbuf;
   float_copy(&tmp, x, DECPRECISION + 2);
   if (float_out(&tokens, &tmp, prec, base, expbase, outmode) == Success)
   {
@@ -714,7 +711,7 @@ char * HMath::formatFixed( const HNumber & hn, int prec )
   scale = float_getlength(&hn.d->fnum) - float_getexponent(&hn.d->fnum) - 1;
   if (scale < 0)
     scale = 0;
-  flags = IO_FLAG_SUPPRESS_PLUS + IO_FLAG_SUPPRESS_DOT;
+  flags = IO_FLAG_SUPPRESS_PLUS + IO_FLAG_SUPPRESS_DOT + IO_FLAG_SUPPRESS_EXPZERO;
   if( prec < 0 )
   {
     flags |= IO_FLAG_SUPPRESS_TRL_ZERO;
@@ -819,7 +816,8 @@ char* formathexfp( floatnum x, char base,
     tmpscale = 0;
   result = _doFormat(x, base, expbase, IO_MODE_FIXPOINT,
                      tmpscale, IO_FLAG_SUPPRESS_PLUS
-                     + IO_FLAG_SUPPRESS_DOT + IO_FLAG_SHOW_BASE);
+                             + IO_FLAG_SUPPRESS_DOT + IO_FLAG_SHOW_BASE
+                             + IO_FLAG_SUPPRESS_EXPZERO);
 #endif
   if (result != NULL)
     return result;

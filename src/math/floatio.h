@@ -107,9 +107,7 @@ typedef struct{
   signed char base;
   t_buffer intpart;
   t_buffer fracpart;
-  signed char expsign;
-  signed char expbase;
-  t_buffer exp;
+  int exp;
 } t_otokens;
 typedef t_otokens* p_otokens;
 
@@ -156,6 +154,7 @@ void _clearnumber(p_number_desc n);
 
 Error str2desc(p_number_desc n, p_itokens tokens);
 Error desc2str(p_otokens tokens, p_number_desc n, int scale);
+Error exp2str(p_buffer dest, int exp, char base);
 
 /*------------   additional stuff   ------------------*/
 

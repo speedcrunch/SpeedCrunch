@@ -212,26 +212,6 @@ _getcmpldigit(
   return c == n->base? 1 : c;
 }
 
-/* gets the digits of a value encoded as integer */
-static char
-_getexpdigit(
-  int ofs,
-  p_seq_desc n)
-{
-  int count, v;
-  unsigned value, base;
-
-  base = n->base;
-  count = _intdigits(n);
-  v = *(int*)(n->param);
-  value = v < 0? (unsigned)-v : (unsigned)v;
-  if (ofs < 0 || ofs >= count)
-    return 0;
-  for (count = count - ofs; --count > 0;)
-    value /= base;
-  return value % base;
-}
-
 /* initializes a structure used for copying digit
    sequences */
 static void
@@ -247,20 +227,6 @@ _clearint(
 }
 
 /*----------------------   t_[io]token   ------------------*/
-
-/* initializes a t_otokens */
-static void
-_cleartokens(
-  p_otokens tokens)
-{
-  tokens->sign = IO_SIGN_NONE;
-  tokens->base = IO_BASE_NAN;
-  tokens->intpart.sz = 0;
-  tokens->fracpart.sz = 0;
-  tokens->expsign = IO_SIGN_NONE;
-  tokens->expbase = IO_BASE_NAN;
-  tokens->exp.sz = 0;
-}
 
 /* initializes a structure used for describing a
    floating point number */
@@ -278,31 +244,6 @@ _clearnumber(
 
 /* creates a sequence descripter from the value of an integer.
    trailing zeros are not set, n has to be initialized. */
-
-static void
-_value2seq(
-  p_ext_seq_desc n,
-  int* value,
-  int base)
-{
-  /* pre: n is initialized to describe zero,
-          base >= 2
-     post: trailing0 is always 0, regardless of
-           the trailing zeros in value.
-           That's why you cannot use the result in complement mode */
-  int v;
-
-  v = *value;
-  if (v != 0)
-    n->seq.base = base;
-  while (v != 0)
-  {
-    ++n->seq.digits;
-    v /= base;
-  }
-  n->getdigit = _getexpdigit;
-  n->seq.param = value;
-}
 
 /* converts a digit sequence to an integer. Returns
    0 should the integer overflows */
@@ -572,7 +513,7 @@ _exp2desc(
     prefix.base = tokens->expbase;
     _clearint(&digits);
     result = str2int(&digits, tokens->exp,
-                     &prefix, BITS_IN_EXP);
+                     &prefix, BITS_IN_EXP-1);
     if (result == Success)
     {
       n->expbase = prefix.base;
@@ -581,36 +522,6 @@ _exp2desc(
         result = IOExpOverflow;
     }
   }
-  return result;
-}
-
-/* create an ASCIIZ sequence from the exponent value */
-static Error
-_desc2exp(
-  p_otokens tokens,
-  p_number_desc n)
-{
-  t_otokens tmptokens;
-  t_number_desc tmpn;
-  Error result;
-
-  _cleartokens(&tmptokens);
-  tmptokens.intpart = tokens->exp;
-  _clearnumber(&tmpn);
-  if (n->exp == 0)
-  {
-    tmpn.prefix.base = IO_BASE_ZERO;
-    tmpn.prefix.sign = IO_SIGN_NONE;
-  }
-  else
-  {
-    tmpn.prefix.base = n->expbase;
-    tmpn.prefix.sign = n->exp < 0? IO_SIGN_MINUS : IO_SIGN_PLUS;
-  }
-  _value2seq(&tmpn.intpart, &n->exp, n->expbase);
-  result = int2str(&tmptokens, &tmpn, 0);
-  tokens->expsign = tmptokens.sign;
-  tokens->expbase = tmptokens.base;
   return result;
 }
 
@@ -644,7 +555,34 @@ desc2str(
   if (result != Success || _isspecial(n->prefix.base)
       || n->expbase == IO_BASE_NAN)
     return result;
-  return _desc2exp(tokens, n);
+  tokens->exp = n->exp;
+  return Success;
+}
+
+Error
+exp2str(
+  p_buffer dest,
+  int exp,
+  char base)
+{
+  char tmp[BITS_IN_EXP + 3];
+  int idx = 0;
+  if (exp < 0)
+    exp = -exp;
+  while (exp != 0)
+  {
+    tmp[idx++] = hexdigits[exp % base];
+    exp /= base;
+  }
+  if (idx == 0)
+    tmp[idx++] = hexdigits[0];
+  if (dest->sz <= idx)
+    return IOBufferOverflow;
+  int di = 0;
+  for (; --idx >= 0;)
+    dest->buf[di++] = tmp[idx];
+  dest->buf[di] = 0;
+  return Success;
 }
 
 
@@ -653,9 +591,9 @@ desc2str(
 static t_ioparams stdioparams[4] =
 {
   {10, 10, '.', "0d", "eE(", "  )", "", DECPRECISION},
-  {16, 16, '.', "0x", "(", ")", "sF", HEXPRECISION},
-  {2, 16, '.', "0b", "(", ")", "s1", BINPRECISION},
-  {8, 8, '.', "0o", "(", ")", "s7", OCTPRECISION}
+  {16, 10, '.', "0x", "(", ")", "sF", HEXPRECISION},
+  {2, 10, '.', "0b", "(", ")", "s1", BINPRECISION},
+  {8, 10, '.', "0o", "(", ")", "s7", OCTPRECISION}
 };
 
 enum {idzero, idx10, idx16, idx2, idx8, idxcount};
@@ -965,7 +903,7 @@ _cattoken(
   char enable)
 {
   if (enable && !_isempty(token))
-   strcat(buf, token);
+    strcat(buf, token);
 }
 
 int
@@ -996,10 +934,13 @@ cattokens(
   char printexpbase;
   char printexpbegin;
   char printexpend;
+  char exp[BITS_IN_EXP+3];
+  t_buffer expBuf;
 
+  expBuf.sz = sizeof(exp);
+  expBuf.buf = exp;
   cbuf[1] = '\0';
   fraclg = 0;
-  ioparams = getioparams(IO_BASE_DEFAULT);
   if (!_isempty(tokens->fracpart.buf))
   {
     fraclg = strlen(tokens->fracpart.buf) - 1;
@@ -1008,19 +949,19 @@ cattokens(
         --fraclg;
     ++fraclg;
   }
+  ioparams = getioparams(IO_BASE_DEFAULT);
   base = tokens->base;
+  printbasetag = !_isspecial(base)
+                 && (flags & IO_FLAG_SUPPRESS_BASETAG) == 0
+                 && (ioparams == NULL || ioparams->base != base);
+  ioparams = getioparams(base);
   basetag = _decodebase(base);
   cmpltag = _decodecomplement(tokens->sign, base);
-  expbasetag = _decodebase(tokens->expbase);
-  printbasetag = !_isspecial(base)
-                  && (flags & IO_FLAG_SUPPRESS_BASETAG) == 0
-                  && (ioparams == NULL
-                      || ioparams->base != base);
+  expbasetag = NULL;
   if (base == IO_BASE_DEFAULT)
-    flags |= IO_FLAG_SUPPRESS_DOT + IO_FLAG_SUPPRESS_LDG_ZERO;
+    flags |= IO_FLAG_SUPPRESS_DOT | IO_FLAG_SUPPRESS_LDG_ZERO;
   if ((flags & IO_FLAG_SHOW_BASE) != 0)
     printbasetag = 1;
-  ioparams = getioparams(base);
   printcmpl = tokens->sign == IO_SIGN_COMPLEMENT
                   && (flags & IO_FLAG_SUPPRESS_CMPL) == 0;
   printsign = !printcmpl
@@ -1030,18 +971,21 @@ cattokens(
   printleading0 = _isempty(tokens->intpart.buf)
                   && (flags & IO_FLAG_SUPPRESS_LDG_ZERO) == 0;
   printdot = fraclg > 0 || (flags & IO_FLAG_SUPPRESS_DOT) == 0;
-  printexp = !_isempty(tokens->exp.buf)
+  printexp = base != IO_BASE_NAN && base != IO_BASE_ZERO
              && ((flags & IO_FLAG_SUPPRESS_EXPZERO) == 0
-                 || strcmp(tokens->exp.buf, "0") != 0);
-  printexpsign = tokens->expsign != IO_SIGN_NONE
-                 && (tokens->expsign != IO_SIGN_PLUS
-                     || (flags & IO_FLAG_SUPPRESS_EXPPLUS) == 0);
-  printexpbase = expbasetag != NULL
-                 && (flags & IO_FLAG_SUPPRESS_EXPBASE) == 0
-                 && (_isempty(basetag)
-                     || strcmp(basetag, expbasetag) != 0);
-  if ((flags & IO_FLAG_SHOW_EXPBASE) != 0)
-    printexpbase = 1;
+                  || tokens->exp != 0);
+  if (printexp)
+  {
+    expbasetag = _decodebase(ioparams->expbase);
+    printexpsign = tokens->exp < 0
+                   || (flags & IO_FLAG_SUPPRESS_EXPPLUS) == 0;
+    printexpbase = expbasetag != NULL
+                   && (flags & IO_FLAG_SUPPRESS_EXPBASE) == 0
+                   && (_isempty(basetag)
+                       || strcmp(basetag, expbasetag) != 0);
+    if ((flags & IO_FLAG_SHOW_EXPBASE) != 0)
+      printexpbase = 1;
+  }
   dot = '.';
   expbegin = "(";
   expend = ")";
@@ -1069,13 +1013,14 @@ cattokens(
   sz += fraclg;
   if (printexp)
   {
+    exp2str(&expBuf, tokens->exp, ioparams->expbase);
     if (printexpbegin)
       ++sz;
     if (printexpsign)
       sz += 1;
     if (printexpbase)
       sz += strlen(expbasetag);
-    sz += strlen(tokens->exp.buf);
+    sz += strlen(expBuf.buf);
     if (printexpend)
       ++sz;
   }
@@ -1096,10 +1041,10 @@ cattokens(
     {
       cbuf[0] = *expbegin;
       _cattoken(buf, cbuf, printexpbegin);
-      cbuf[0] = _decodesign(tokens->expsign);
+      cbuf[0] = _decodesign(tokens->exp < 0? -1:1);
       _cattoken(buf, cbuf, printexpsign);
       _cattoken(buf, expbasetag, printexpbase);
-      strcat(buf, tokens->exp.buf);
+      strcat(buf, expBuf.buf);
       cbuf[0] = *expend;
       _cattoken(buf, cbuf, printexpend);
     }

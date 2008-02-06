@@ -55,7 +55,8 @@ static LongReal::Sign _cvtSign(signed char sign)
   {
     case IO_SIGN_COMPLEMENT: return LongReal::Compl2;
     case IO_SIGN_MINUS     : return LongReal::Minus;
-    default                : return LongReal::Plus;
+    case IO_SIGN_PLUS      : return LongReal::Plus;
+    default                : return LongReal::None;
   }
 }
 
@@ -64,8 +65,9 @@ static signed char _cvtSign(LongReal::Sign sign)
   switch (sign)
   {
     case LongReal::Compl2: return IO_SIGN_COMPLEMENT;
-    case LongReal::Minus:  return IO_SIGN_MINUS;
-    default              : return IO_SIGN_PLUS;
+    case LongReal::Minus : return IO_SIGN_MINUS;
+    case LongReal::Plus  : return IO_SIGN_PLUS;
+    default              : return IO_SIGN_NONE;
   }
 }
 
@@ -295,6 +297,16 @@ int LongReal::precision(int newprec)
   return result;
 }
 
+bool LongReal::isNaN() const
+{
+  return float_isnan(&val);
+}
+
+bool LongReal::isZero() const
+{
+  return float_iszero(&val);
+}
+
 int LongReal::evalPrec()
 {
   return longrealPrec + 5;
@@ -313,34 +325,48 @@ LongReal::operator QByteArray() const
 }
 
 LongReal::BasicIO LongReal::convert(int prec, FmtMode mode,
-                                  char base, char scalebase)
+                   char base, char scalebase) const
 {
   t_otokens tokens;
   floatstruct workcopy;
   BasicIO result;
-  char intpart[BINPRECISION+10];
-  char fracpart[BINPRECISION+10];
-  char scalepart[BITS_IN_EXP+10];
+  char intpart[BINPRECISION+5];
+  char fracpart[BINPRECISION+5];
+  char scale[BITS_IN_EXP+2];
+  t_buffer scaleBuf;
 
   tokens.intpart.buf = intpart;
   tokens.intpart.sz = sizeof(intpart);
   tokens.fracpart.buf = fracpart;
   tokens.fracpart.sz = sizeof(fracpart);
-  tokens.exp.buf = scalepart;
-  tokens.exp.sz = sizeof(scalepart);
   float_create(&workcopy);
   float_copy(&workcopy, &val, evalPrec());
+  scale[0] = 0;
+  result.signScale = LongReal::None;
   result.error = float_out(&tokens, &workcopy, prec,
                            base, scalebase, _cvtMode(mode));
+  if (result.error == Success)
+    switch (mode)
+    {
+      case LongReal::Scientific:
+      case LongReal::Engineering:
+        scaleBuf.sz = sizeof(scale);
+        scaleBuf.buf = scale;
+        if (tokens.exp > 0)
+          result.signScale = LongReal::Plus;
+        else if (tokens.exp < 0)
+          result.signScale = LongReal::Minus;
+        result.error = exp2str(&scaleBuf, tokens.exp, scalebase);
+      default: ;
+    }
   if (result.error == Success)
   {
     result.baseSignificand = base;
     result.baseScale = scalebase;
     result.signSignificand = _cvtSign(tokens.sign);
-    result.signScale = _cvtSign(tokens.expsign);
     result.intpart = QString::fromAscii(tokens.intpart.buf);
     result.fracpart = QString::fromAscii(tokens.fracpart.buf);
-    result.scale = QString::fromAscii(tokens.exp.buf);
+    result.scale = QString::fromAscii(scale);
   }
   return result;
 }
@@ -393,4 +419,64 @@ void RealFormat::setMode(LongReal::FmtMode m, int dgt, char b, char sb, int prec
     digits = maxdgt;
   else
     digits = dgt;
+}
+
+QString RealFormat::getSignificandPrefix()
+{
+  return QString();
+}
+
+QString RealFormat::getSignificandSuffix()
+{
+  return QString();
+}
+
+QString RealFormat::getScalePrefix()
+{
+  return QString();
+}
+
+QString RealFormat::getScaleSuffix()
+{
+  return QString();
+}
+
+QString RealFormat::formatNaN()
+{
+  return "NaN";
+}
+
+QString RealFormat::formatZero()
+{
+  return "0";
+}
+
+QString RealFormat::formatInt(const QString& seq, LongReal::Sign sign)
+{
+  return QString();
+}
+
+QString RealFormat::formatFrac(const QString& seq)
+{
+  return QString();
+}
+
+QString RealFormat::formatScale(const QString& seq, LongReal::Sign sign)
+{
+  return QString();
+}
+
+QString RealFormat::format(const VariantData& val)
+{
+  const LongReal* vr = dynamic_cast<const LongReal*>(&val);
+  if (!vr)
+    return QString();
+  if (vr->isNaN())
+    return formatNaN();
+  if (vr->isZero())
+    return formatZero();
+  LongReal::BasicIO basicIO = vr->convert(precision, mode, base, scalebase);
+  if (basicIO.error != Success)
+    return QString();
+  return getSignificandPrefix();
 }
