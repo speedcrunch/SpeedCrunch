@@ -85,6 +85,7 @@ class LongReal: public VariantData
       Scientific,
       Engineering,
       Complement2,
+//      IEEE754,
     } FmtMode;
     typedef enum
     {
@@ -131,16 +132,17 @@ class RealFormat: public FormatIntf
     virtual QString format(const VariantData&);
     void setMode(LongReal::FmtMode, int digits = -1,
                  char base = 10, char scalebase = 10, int prec = -1);
+    void setGroupChars(QChar dot = '.', QChar group = ',', int grouplg = 0);
   protected:
-    virtual QString getSignificandPrefix();
-    virtual QString getSignificandSuffix();
-    virtual QString getScalePrefix();
-    virtual QString getScaleSuffix();
+    virtual QString getSignificandPrefix(LongReal::BasicIO&);
+    virtual QString getSignificandSuffix(LongReal::BasicIO&);
+    virtual QString getScalePrefix(LongReal::BasicIO&);
+    virtual QString getScaleSuffix(LongReal::BasicIO&);
     virtual QString formatNaN();
     virtual QString formatZero();
-    virtual QString formatInt(const QString& seq, LongReal::Sign);
-    virtual QString formatFrac(const QString& seq);
-    virtual QString formatScale(const QString& seq, LongReal::Sign);
+    virtual QString formatInt(LongReal::BasicIO&);
+    virtual QString formatFrac(LongReal::BasicIO&);
+    virtual QString formatScale(LongReal::BasicIO&);
   protected:
     // format type
     LongReal::FmtMode mode;
@@ -161,39 +163,38 @@ class RealFormat: public FormatIntf
     // length of a digit group
     int  grouplg;
     // dot character
-    char dot;
+    QChar dot;
     // character for digit grouping
-    char group;
+    QChar groupchar;
     // padding character for the significand to achieve minimum length
     char pad;
     // padding character for the scale to achieve minimum length
     char scalePad;
     // truncate the significand instead of round it
     bool truncSignificand;
-    // suppress the scale altogether, if it is zero
-    bool suppressZeroScale;
-    // suppress the sign, if the significand is not negative
-    bool suppressPlus;
+    // show the scale, even if it is zero
+    bool showZeroScale;
+    // show the sign, even if the significand is not negative
+    bool showPlus;
     // suppress the plus if the scale is not negative
     bool suppressScalePlus;
     // shows the radix tag of the significand
     bool showRadix;
     // suppress the radix tag of the scale
     bool suppressScaleRadix;
-    // suppress a leading zero before the dot if the integer part is zero
-    bool suppressLeadingZero;
+    // shows a leading zero before the dot if the integer part is zero
+    bool showLeadingZero;
     // suppress trailing zeros in the fractional part
     bool suppressTrailingZero;
-    // suppress a trailing dot, if the fractional part is zero
-    bool suppressTrailingDot;
-    // do not group the digits in the significand
-    bool suppressGroups;
+    // shows a trailing dot, if the fractional part is zero
+    bool showTrailingDot;
     // do not group the digits in the scale
     bool suppressScaleGroups;
     // use lower case hex digits
     bool lowerCaseHexDigit;
     // pad the scale to the right
     bool scaleLeftAlign;
+    bool groupSeq() { return groupchar != 0 && grouplg > 0; };
 };
 
 #endif /*_REAL_H*/

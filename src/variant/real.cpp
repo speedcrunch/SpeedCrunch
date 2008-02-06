@@ -421,22 +421,58 @@ void RealFormat::setMode(LongReal::FmtMode m, int dgt, char b, char sb, int prec
     digits = dgt;
 }
 
-QString RealFormat::getSignificandPrefix()
+void RealFormat::setGroupChars(QChar newdot, QChar newgroup, int newgrouplg)
+{
+  dot = newdot;
+  groupchar = newgroup;
+  grouplg = newgrouplg;
+}
+
+QString RealFormat::getSignificandPrefix(LongReal::BasicIO& io)
+{
+  QString result;
+  const char* radix;
+  switch (io.signSignificand)
+  {
+    case LongReal::None:
+    case LongReal::Plus:
+      if (showPlus)
+        result = '+';
+      break;
+    default:
+      result = '-';
+  }
+  if (showRadix)
+  {
+    switch (io.baseSignificand)
+    {
+      case 16: radix = "0x"; break;
+      case  8: radix = "0o"; break;
+      case  2: radix = "0b"; break;
+      default: radix = "0d";
+    }
+    switch (mode)
+    {
+      case LongReal::Complement2:
+        result = radix + result; break;
+      default:
+        result += radix;
+    }
+  }
+  return result;
+}
+
+QString RealFormat::getSignificandSuffix(LongReal::BasicIO& io)
 {
   return QString();
 }
 
-QString RealFormat::getSignificandSuffix()
+QString RealFormat::getScalePrefix(LongReal::BasicIO& io)
 {
   return QString();
 }
 
-QString RealFormat::getScalePrefix()
-{
-  return QString();
-}
-
-QString RealFormat::getScaleSuffix()
+QString RealFormat::getScaleSuffix(LongReal::BasicIO& io)
 {
   return QString();
 }
@@ -448,20 +484,54 @@ QString RealFormat::formatNaN()
 
 QString RealFormat::formatZero()
 {
-  return "0";
+  const char* result;
+  if (showTrailingDot)
+    result = "0.";
+  else
+    result = "0";
+  return result;
 }
 
-QString RealFormat::formatInt(const QString& seq, LongReal::Sign sign)
+QString RealFormat::formatInt(LongReal::BasicIO& io)
 {
-  return QString();
+  if (!groupSeq() || grouplg >= io.intpart.size())
+  {
+    if (!showLeadingZero && io.intpart.size() == 1 && io.intpart.at(0) == '0')
+      return QString();
+    return io.intpart;
+  }
+  QString result;
+  int idx = io.intpart.size();
+  while (idx > 0)
+  {
+    idx -= grouplg;
+    if (idx <= 0)
+      result = io.intpart.mid(0, idx + grouplg) + result;
+    else
+      result = io.intpart.mid(idx, grouplg) + groupchar + result;
+  }
+  return result;
 }
 
-QString RealFormat::formatFrac(const QString& seq)
+QString RealFormat::formatFrac(LongReal::BasicIO& io)
 {
-  return QString();
+  QString result = dot;
+  if (io.fracpart.isEmpty())
+  {
+    if (showTrailingDot)
+      return result;
+    else
+      return QString();
+  }
+  if (!groupSeq() || io.fracpart.size() <= grouplg)
+    return result + io.fracpart;
+  result += io.fracpart.mid(0, grouplg);
+  for (int idx = grouplg; idx < io.fracpart.size(); idx += grouplg)
+    result += groupchar + io.fracpart.mid(idx, grouplg);
+  return result;
 }
 
-QString RealFormat::formatScale(const QString& seq, LongReal::Sign sign)
+QString RealFormat::formatScale(LongReal::BasicIO& io)
 {
   return QString();
 }
@@ -478,5 +548,11 @@ QString RealFormat::format(const VariantData& val)
   LongReal::BasicIO basicIO = vr->convert(precision, mode, base, scalebase);
   if (basicIO.error != Success)
     return QString();
-  return getSignificandPrefix();
+  return getSignificandPrefix(basicIO)
+         + formatInt(basicIO)
+         + formatFrac(basicIO)
+         + getSignificandSuffix(basicIO)
+         + getScalePrefix(basicIO)
+         + formatScale(basicIO)
+         + getScaleSuffix(basicIO);
 }
