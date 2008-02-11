@@ -62,14 +62,19 @@ QString InsertVariableDlg::Private::formatValue( const HNumber & value )
 
 // public
 
-InsertVariableDlg::InsertVariableDlg( Evaluator * eval, QWidget * parent )
-  : QDialog( parent ),
-    d( new InsertVariableDlg::Private )
+InsertVariableDlg::InsertVariableDlg( Evaluator * eval, char radixChar,
+                                      QWidget * parent )
+  : QDialog( parent ), d( new InsertVariableDlg::Private )
 {
   setWindowTitle( tr("Insert Variable") );
   setModal( true );
 
   d->eval = eval;
+
+  if ( radixChar == 'C' )
+    d->radixChar = QLocale().decimalPoint().toAscii();
+  else
+    d->radixChar = radixChar;
 
   QVBoxLayout* layout = new QVBoxLayout;
   setLayout( layout );

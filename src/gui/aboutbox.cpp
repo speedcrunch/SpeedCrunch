@@ -31,9 +31,9 @@
 class MarqueeTextPrivate
 {
   public:
-    QTextEdit     * editor;
+    QTextEdit *     editor;
     QTextDocument * doc;
-    QPixmap       * buffer;
+    QPixmap *       buffer;
     unsigned        pos;
     unsigned        scrollStep;
     unsigned        scrollTick;
@@ -61,6 +61,8 @@ MarqueeText::MarqueeText( QWidget * parent, const char * name ):
   QTimer * scrollTimer = new QTimer( this );
   connect( scrollTimer, SIGNAL(timeout()), this, SLOT(scroll()) );
   scrollTimer->start( d->scrollTick );
+
+  setBackgroundRole( QPalette::Base );
 }
 
 
@@ -90,8 +92,7 @@ void MarqueeText::setText( const QString & text )
 void MarqueeText::paintEvent( QPaintEvent * e )
 {
   QPainter painter( this );
-  //painter.fillRect( this->rect(), painter.background().color() );
-  painter.fillRect( this->rect(), Qt::black );
+  painter.fillRect( this->rect(), painter.background().color() );
   painter.end();
 
   QFrame::paintEvent( e );
@@ -129,7 +130,7 @@ void MarqueeText::scroll()
 
 void MarqueeText::layout()
 {
-  QList< QTextLayout * > layouts;
+  QList<QTextLayout *> layouts;
 
   int leading = fontMetrics().leading();
   double lineWidth = width() - d->sideMargin;
@@ -147,7 +148,7 @@ void MarqueeText::layout()
     while ( true )
     {
       QTextLine line = textLayout->createLine();
-      if( !line.isValid() )
+      if ( ! line.isValid() )
         break;
 
       line.setLineWidth( lineWidth );
@@ -169,11 +170,10 @@ void MarqueeText::layout()
   delete oldbuf;
 
   d->buffer = new QPixmap( QSize( int(lineWidth + 5), int(2 * hh + 50) ) );
-  d->buffer->fill( Qt::black );
+  d->buffer->fill( QBrush( palette().base() ).color() );
 
   // paint the lines
   QPainter painter( d->buffer );
-  painter.setPen( Qt::white );
   double ypos = 0;
   for ( int k = 0; k < layouts.count(); k++ )
   {
@@ -310,13 +310,14 @@ AboutBox::AboutBox( QWidget * parent ) : QDialog( parent )
             "GNU General Public License for more details.");
   msg += "</p>";
   msg +=  "<p>&nbsp;</p>";
-  msg += QString( "<p>%1</p>" ).arg( tr("Visit <b>http://www.speedcrunch.org</b> for more information!") );
+  msg += QString( "<p>%1</p>" )
+    .arg( tr("Visit <b>http://www.speedcrunch.org</b> for more information!") );
   marqueeText->setText( msg );
 
-  QPushButton * okButton = new QPushButton( this );
-  okButton->setObjectName( "OKButton" );
-  okButton->setText( tr("OK") );
-  QObject::connect( okButton, SIGNAL(clicked()), this, SLOT(accept()) );
+  QPushButton * closeButton = new QPushButton( this );
+  closeButton->setObjectName( "CloseButton" );
+  closeButton->setText( tr("Close") );
+  QObject::connect( closeButton, SIGNAL( clicked() ), this, SLOT( accept() ) );
 
   QSpacerItem * buttonSpacer = new QSpacerItem( 20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
 
@@ -335,7 +336,7 @@ AboutBox::AboutBox( QWidget * parent ) : QDialog( parent )
   topLayout->addWidget( iconLabel );
 
   buttonLayout->addItem( buttonSpacer );
-  buttonLayout->addWidget( okButton );
+  buttonLayout->addWidget( closeButton );
 
   setWindowTitle( tr("About SpeedCrunch") );
   setMinimumSize( 350, 400 );

@@ -22,10 +22,7 @@
 #include "gui/mainwindow.hxx"
 
 #include <QApplication>
-#include <QDir>
-#include <QFileInfo>
 #include <QLocale>
-#include <QTextCodec>
 #include <QTranslator>
 
 

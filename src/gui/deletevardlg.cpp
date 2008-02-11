@@ -1,6 +1,7 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2005 Ariya Hidayat <ariya@kde.org>
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
+// Copyright (C) 2008 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -33,7 +34,7 @@
 #include <QVBoxLayout>
 
 
-class DeleteVariableDlgPrivate
+class DeleteVariableDlg::Private
 {
 public:
   Evaluator* eval;
@@ -52,8 +53,8 @@ static QString formatValue( const HNumber& value )
 }
 
 
-DeleteVariableDlg::DeleteVariableDlg( Evaluator* eval, QWidget* parent ):
-QDialog( parent ), d( new DeleteVariableDlgPrivate)
+DeleteVariableDlg::DeleteVariableDlg( Evaluator * eval, QWidget * parent )
+  : QDialog( parent ), d( new DeleteVariableDlg::Private)
 {
   setWindowTitle( tr("Delete Variable") );
   setModal( true );

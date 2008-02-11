@@ -1,5 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2005 Ariya Hidayat <ariya@kde.org>
+// Copyright (C) 2008 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -25,7 +26,6 @@
 
 
 class Evaluator;
-class DeleteVariableDlgPrivate;
 
 
 class DeleteVariableDlg : public QDialog
@@ -33,17 +33,20 @@ class DeleteVariableDlg : public QDialog
   Q_OBJECT
 
   public:
-    explicit DeleteVariableDlg( Evaluator* eval, QWidget* parent );
+    explicit DeleteVariableDlg( Evaluator * eval, QWidget * parent = 0 );
     ~DeleteVariableDlg();
+
     void updateList();
 
   private slots:
     void deleteVar();
 
   private:
-    DeleteVariableDlgPrivate* d;
-    DeleteVariableDlg( const DeleteVariableDlg& );
-    DeleteVariableDlg& operator=( const DeleteVariableDlg& );
+    struct Private;
+    Private * const d;
+    DeleteVariableDlg();
+    DeleteVariableDlg( const DeleteVariableDlg & );
+    DeleteVariableDlg & operator=( const DeleteVariableDlg & );
 };
 
 

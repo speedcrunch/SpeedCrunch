@@ -392,7 +392,7 @@ void Editor::checkAutoCalc()
   d->autoCalcTimer->setSingleShot( true );
   d->autoCalcTimer->start( 1000 );
 
-  emit autoCalcDeactivated();
+  emit autoCalcDisabled();
 }
 
 
@@ -711,12 +711,12 @@ void Editor::autoCalc()
   if ( d->eval->error().isEmpty() )
   {
     QString ss = QString("<b>%1</b>").arg( formatNumber( num ) );
-    emit autoCalcActivated( ss );
+    emit autoCalcEnabled( ss );
   }
   else
   {
     // invalid expression
-    emit autoCalcDeactivated();
+    emit autoCalcDisabled();
   }
 }
 
@@ -882,7 +882,7 @@ void Editor::setAnsAvailable( bool avail )
 void Editor::stopAutoCalc()
 {
   d->autoCalcTimer->stop();
-  emit autoCalcDeactivated();
+  emit autoCalcDisabled();
 }
 
 

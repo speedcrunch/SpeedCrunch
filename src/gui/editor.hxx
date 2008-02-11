@@ -77,8 +77,8 @@ class Editor : public QTextEdit
     QString     text() const;
 
   signals:
-    void autoCalcActivated( const QString & );
-    void autoCalcDeactivated();
+    void autoCalcEnabled( const QString & );
+    void autoCalcDisabled();
     void returnPressed();
 
   public slots:

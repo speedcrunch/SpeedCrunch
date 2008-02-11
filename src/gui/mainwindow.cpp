@@ -165,14 +165,6 @@ struct Widgets
 };
 
 
-struct Dialogs
-{
-  DeleteVariableDlg * deleteVariable;
-  InsertFunctionDlg * insertFunction;
-  InsertVariableDlg * insertVariable;
-};
-
-
 struct Docks
 {
   ConstantsDock * constants;
@@ -201,7 +193,6 @@ struct MainWindow::Private
   ActionGroups    actionGroups;
   Menus           menus;
   Widgets         widgets;
-  Dialogs         dialogs;
   Docks           docks;
   Conditions      conditions;
 
@@ -229,9 +220,6 @@ MainWindow::Private::Private()
   conditions.autoAns             = false;
   conditions.trayNotify          = true;
   conditions.notifyMenuBarHidden = true;
-  dialogs.deleteVariable         = 0;
-  dialogs.insertFunction         = 0;
-  dialogs.insertVariable         = 0;
 };
 
 
@@ -533,10 +521,10 @@ void MainWindow::Private::createWidgets()
   widgets.keypad = new Keypad( settings.radixChar, box );
   widgets.keypad->setFocusPolicy( Qt::NoFocus );
   widgets.keypad->hide();
-  widgets.keypad->setStyleSheet( "QPushButton { background: black; font: bold;"
-                                 "color: white; border-style: solid;"
-                                 "border-color: #202020; border-radius: 10px;"
-                                 "border-width: 2px }" );
+  //widgets.keypad->setStyleSheet( "QPushButton { background: black; font: bold;"
+  //                               "color: white; border-style: solid;"
+  //                               "border-color: #202020; border-radius: 10px;"
+  //                               "border-width: 2px }" );
   keypadLayout->addStretch();
   keypadLayout->addWidget( widgets.keypad );
   keypadLayout->addStretch();
@@ -584,57 +572,57 @@ void MainWindow::Private::createDocks()
 
 void MainWindow::Private::createConnections()
 {
-  QObject::connect( actions.clearHistory,                SIGNAL( activated()                           ), p,                     SLOT( clearHistory()                        ) );
-  QObject::connect( actions.clearExpression,             SIGNAL( activated()                           ), p,                     SLOT( clearExpression()                     ) );
-  QObject::connect( actions.degree,                      SIGNAL( activated()                           ), p,                     SLOT( degree()                              ) );
-  QObject::connect( actions.deleteAllVariables,          SIGNAL( activated()                           ), p,                     SLOT( deleteAllVariables()                  ) );
-  QObject::connect( actions.deleteVariable,              SIGNAL( activated()                           ), p,                     SLOT( deleteVariable()                      ) );
-  QObject::connect( actions.digits15,                    SIGNAL( activated()                           ), p,                     SLOT( digits15()                            ) );
-  QObject::connect( actions.digits2,                     SIGNAL( activated()                           ), p,                     SLOT( digits2()                             ) );
-  QObject::connect( actions.digits3,                     SIGNAL( activated()                           ), p,                     SLOT( digits3()                             ) );
-  QObject::connect( actions.digits50,                    SIGNAL( activated()                           ), p,                     SLOT( digits50()                            ) );
-  QObject::connect( actions.digits8,                     SIGNAL( activated()                           ), p,                     SLOT( digits8()                             ) );
-  QObject::connect( actions.digitsAuto,                  SIGNAL( activated()                           ), p,                     SLOT( digitsAuto()                          ) );
-  QObject::connect( actions.editCopyResult,              SIGNAL( activated()                           ), p,                     SLOT( copyResult()                          ) );
-  QObject::connect( actions.editCopy,                    SIGNAL( activated()                           ), widgets.editor,        SLOT( copy()                                ) );
-  QObject::connect( actions.editPaste,                   SIGNAL( activated()                           ), widgets.editor,        SLOT( paste()                               ) );
-  QObject::connect( actions.selectExpression,            SIGNAL( activated()                           ), p,                     SLOT( selectExpression()                    ) );
-  QObject::connect( actions.helpAboutQt,                 SIGNAL( activated()                           ), p,                     SLOT( aboutQt()                             ) );
-  QObject::connect( actions.helpAbout,                   SIGNAL( activated()                           ), p,                     SLOT( about()                               ) );
-  QObject::connect( actions.helpGotoWebsite,             SIGNAL( activated()                           ), p,                     SLOT( gotoWebsite()                         ) );
-  QObject::connect( actions.helpTipOfTheDay,             SIGNAL( activated()                           ), p,                     SLOT( showTipOfTheDay()                     ) );
-  QObject::connect( actions.insertFunction,              SIGNAL( activated()                           ), p,                     SLOT( insertFunction()                      ) );
-  QObject::connect( actions.insertVariable,              SIGNAL( activated()                           ), p,                     SLOT( insertVariable()                      ) );
-  QObject::connect( actions.radian,                      SIGNAL( activated()                           ), p,                     SLOT( radian()                              ) );
-  QObject::connect( actions.scrollDown,                  SIGNAL( activated()                           ), p,                     SLOT( scrollDown()                          ) );
-  QObject::connect( actions.scrollUp,                    SIGNAL( activated()                           ), p,                     SLOT( scrollUp()                            ) );
-  QObject::connect( actions.sessionLoad,                 SIGNAL( activated()                           ), p,                     SLOT( loadSession()                         ) );
-  QObject::connect( actions.sessionQuit,                 SIGNAL( activated()                           ), p,                     SLOT( close()                               ) );
-  QObject::connect( actions.sessionSave,                 SIGNAL( activated()                           ), p,                     SLOT( saveSession()                         ) );
+  QObject::connect( actions.clearHistory,                SIGNAL( triggered()                           ), p,                     SLOT( clearHistory()                        ) );
+  QObject::connect( actions.clearExpression,             SIGNAL( triggered()                           ), p,                     SLOT( clearExpression()                     ) );
+  QObject::connect( actions.degree,                      SIGNAL( triggered()                           ), p,                     SLOT( degree()                              ) );
+  QObject::connect( actions.deleteAllVariables,          SIGNAL( triggered()                           ), p,                     SLOT( deleteAllVariables()                  ) );
+  QObject::connect( actions.deleteVariable,              SIGNAL( triggered()                           ), p,                     SLOT( deleteVariable()                      ) );
+  QObject::connect( actions.digits15,                    SIGNAL( triggered()                           ), p,                     SLOT( digits15()                            ) );
+  QObject::connect( actions.digits2,                     SIGNAL( triggered()                           ), p,                     SLOT( digits2()                             ) );
+  QObject::connect( actions.digits3,                     SIGNAL( triggered()                           ), p,                     SLOT( digits3()                             ) );
+  QObject::connect( actions.digits50,                    SIGNAL( triggered()                           ), p,                     SLOT( digits50()                            ) );
+  QObject::connect( actions.digits8,                     SIGNAL( triggered()                           ), p,                     SLOT( digits8()                             ) );
+  QObject::connect( actions.digitsAuto,                  SIGNAL( triggered()                           ), p,                     SLOT( digitsAuto()                          ) );
+  QObject::connect( actions.editCopyResult,              SIGNAL( triggered()                           ), p,                     SLOT( copyResult()                          ) );
+  QObject::connect( actions.editCopy,                    SIGNAL( triggered()                           ), widgets.editor,        SLOT( copy()                                ) );
+  QObject::connect( actions.editPaste,                   SIGNAL( triggered()                           ), widgets.editor,        SLOT( paste()                               ) );
+  QObject::connect( actions.selectExpression,            SIGNAL( triggered()                           ), p,                     SLOT( selectExpression()                    ) );
+  QObject::connect( actions.helpAboutQt,                 SIGNAL( triggered()                           ), p,                     SLOT( aboutQt()                             ) );
+  QObject::connect( actions.helpAbout,                   SIGNAL( triggered()                           ), p,                     SLOT( about()                               ) );
+  QObject::connect( actions.helpGotoWebsite,             SIGNAL( triggered()                           ), p,                     SLOT( gotoWebsite()                         ) );
+  QObject::connect( actions.helpTipOfTheDay,             SIGNAL( triggered()                           ), p,                     SLOT( showTipOfTheDay()                     ) );
+  QObject::connect( actions.insertFunction,              SIGNAL( triggered()                           ), p,                     SLOT( insertFunction()                      ) );
+  QObject::connect( actions.insertVariable,              SIGNAL( triggered()                           ), p,                     SLOT( insertVariable()                      ) );
+  QObject::connect( actions.radian,                      SIGNAL( triggered()                           ), p,                     SLOT( radian()                              ) );
+  QObject::connect( actions.scrollDown,                  SIGNAL( triggered()                           ), p,                     SLOT( scrollDown()                          ) );
+  QObject::connect( actions.scrollUp,                    SIGNAL( triggered()                           ), p,                     SLOT( scrollUp()                            ) );
+  QObject::connect( actions.sessionLoad,                 SIGNAL( triggered()                           ), p,                     SLOT( loadSession()                         ) );
+  QObject::connect( actions.sessionQuit,                 SIGNAL( triggered()                           ), p,                     SLOT( close()                               ) );
+  QObject::connect( actions.sessionSave,                 SIGNAL( triggered()                           ), p,                     SLOT( saveSession()                         ) );
   QObject::connect( actions.showConstants,               SIGNAL( toggled( bool )                       ), p,                     SLOT( showConstants( bool )                 ) );
   QObject::connect( actions.showFullScreen,              SIGNAL( toggled( bool )                       ), p,                     SLOT( showInFullScreen( bool )              ) );
   QObject::connect( actions.showFunctions,               SIGNAL( toggled( bool )                       ), p,                     SLOT( showFunctions( bool )                 ) );
   QObject::connect( actions.showHistory,                 SIGNAL( toggled( bool )                       ), p,                     SLOT( showHistory( bool )                   ) );
   QObject::connect( actions.showKeypad,                  SIGNAL( toggled( bool )                       ), p,                     SLOT( showKeypad( bool )                    ) );
-  QObject::connect( actions.showMenuBar,                 SIGNAL( activated()                           ), p,                     SLOT( showMenuBar()                         ) );
+  QObject::connect( actions.showMenuBar,                 SIGNAL( triggered()                           ), p,                     SLOT( showMenuBar()                         ) );
   QObject::connect( actions.showVariables,               SIGNAL( toggled( bool )                       ), p,                     SLOT( showVariables( bool )                 ) );
-  QObject::connect( actions.formatBinary,                SIGNAL( activated()                           ), p,                     SLOT( formatBinary()                        ) );
-  QObject::connect( actions.formatEngineering,           SIGNAL( activated()                           ), p,                     SLOT( formatEngineering()                   ) );
-  QObject::connect( actions.formatFixed,                 SIGNAL( activated()                           ), p,                     SLOT( formatFixed()                         ) );
-  QObject::connect( actions.formatGeneral,               SIGNAL( activated()                           ), p,                     SLOT( formatGeneral()                       ) );
-  QObject::connect( actions.formatHexadec,               SIGNAL( activated()                           ), p,                     SLOT( formatHexadec()                       ) );
-  QObject::connect( actions.formatOctal,                 SIGNAL( activated()                           ), p,                     SLOT( formatOctal()                         ) );
-  QObject::connect( actions.formatScientific,            SIGNAL( activated()                           ), p,                     SLOT( formatScientific()                    ) );
+  QObject::connect( actions.formatBinary,                SIGNAL( triggered()                           ), p,                     SLOT( formatBinary()                        ) );
+  QObject::connect( actions.formatEngineering,           SIGNAL( triggered()                           ), p,                     SLOT( formatEngineering()                   ) );
+  QObject::connect( actions.formatFixed,                 SIGNAL( triggered()                           ), p,                     SLOT( formatFixed()                         ) );
+  QObject::connect( actions.formatGeneral,               SIGNAL( triggered()                           ), p,                     SLOT( formatGeneral()                       ) );
+  QObject::connect( actions.formatHexadec,               SIGNAL( triggered()                           ), p,                     SLOT( formatHexadec()                       ) );
+  QObject::connect( actions.formatOctal,                 SIGNAL( triggered()                           ), p,                     SLOT( formatOctal()                         ) );
+  QObject::connect( actions.formatScientific,            SIGNAL( triggered()                           ), p,                     SLOT( formatScientific()                    ) );
   QObject::connect( actions.optionAutoCalc,              SIGNAL( toggled( bool )                       ), p,                     SLOT( autoCalcToggled( bool )               ) );
   QObject::connect( actions.optionAutoCompletion,        SIGNAL( toggled( bool )                       ), p,                     SLOT( autoCompletionToggled( bool )         ) );
   QObject::connect( actions.optionAlwaysOnTop,           SIGNAL( toggled( bool )                       ), p,                     SLOT( alwaysOnTopToggled( bool )            ) );
   QObject::connect( actions.optionMinimizeToTray,        SIGNAL( toggled( bool )                       ), p,                     SLOT( minimizeToTrayToggled( bool )         ) );
-  QObject::connect( actions.radixCharAuto,               SIGNAL( activated()                           ), p,                     SLOT( radixCharAutoActivated()              ) );
-  QObject::connect( actions.radixCharDot,                SIGNAL( activated()                           ), p,                     SLOT( radixCharDotActivated()               ) );
-  QObject::connect( actions.radixCharComma,              SIGNAL( activated()                           ), p,                     SLOT( radixCharCommaActivated()             ) );
+  QObject::connect( actions.radixCharAuto,               SIGNAL( triggered()                           ), p,                     SLOT( radixCharAutoActivated()              ) );
+  QObject::connect( actions.radixCharDot,                SIGNAL( triggered()                           ), p,                     SLOT( radixCharDotActivated()               ) );
+  QObject::connect( actions.radixCharComma,              SIGNAL( triggered()                           ), p,                     SLOT( radixCharCommaActivated()             ) );
   QObject::connect( widgets.keypad,                      SIGNAL( buttonPressed( Keypad::Button )       ), p,                     SLOT( keypadButtonPressed( Keypad::Button ) ) );
-  QObject::connect( widgets.editor,                      SIGNAL( autoCalcActivated( const QString & )  ), p,                     SLOT( showAutoCalc( const QString & )       ) );
-  QObject::connect( widgets.editor,                      SIGNAL( autoCalcDeactivated()                 ), p,                     SLOT( hideAutoCalc()                        ) );
+  QObject::connect( widgets.editor,                      SIGNAL( autoCalcEnabled( const QString & )    ), p,                     SLOT( showAutoCalc( const QString & )       ) );
+  QObject::connect( widgets.editor,                      SIGNAL( autoCalcDisabled()                    ), p,                     SLOT( hideAutoCalc()                        ) );
   QObject::connect( widgets.editor,                      SIGNAL( returnPressed()                       ), p,                     SLOT( returnPressed()                       ) );
   QObject::connect( widgets.editor,                      SIGNAL( textChanged()                         ), p,                     SLOT( textChanged()                         ) );
   QObject::connect( docks.constants,                     SIGNAL( constantSelected( const QString & )   ), p,                     SLOT( constantSelected( const QString & )   ) );
@@ -868,9 +856,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::about()
 {
-  AboutBox * aboutBox = new AboutBox( this );
-  aboutBox->exec();
-  delete aboutBox;
+  AboutBox dlg;
+  dlg.exec();
 }
 
 
@@ -930,14 +917,8 @@ void MainWindow::deleteAllVariables()
 
 void MainWindow::deleteVariable()
 {
-  if ( ! d->dialogs.deleteVariable )
-    d->dialogs.deleteVariable = new DeleteVariableDlg( d->evaluator, this );
-  else
-    d->dialogs.deleteVariable->updateList();
-
-  d->dialogs.deleteVariable->exec();
-  delete d->dialogs.deleteVariable;
-  d->dialogs.deleteVariable = 0;
+  DeleteVariableDlg dlg( d->evaluator );
+  dlg.exec();
 
   d->docks.variables->updateList( d->evaluator );
 }
@@ -1002,35 +983,27 @@ void MainWindow::hideAutoCalc()
 
 void MainWindow::insertFunction()
 {
-  if ( ! d->dialogs.insertFunction )
-    d->dialogs.insertFunction = new InsertFunctionDlg( d->functions, this );
+  InsertFunctionDlg dlg( d->functions );
 
-  if ( d->dialogs.insertFunction->exec() == InsertFunctionDlg::Accepted )
+  if ( dlg.exec() == InsertFunctionDlg::Accepted )
   {
-    QString funcName = d->dialogs.insertFunction->functionName();
+    QString funcName = dlg.functionName();
     if ( ! funcName.isEmpty() )
       d->widgets.editor->insert( funcName );
   }
-  delete d->dialogs.insertFunction;
-  d->dialogs.insertFunction = 0;
 }
 
 
 void MainWindow::insertVariable()
 {
-  if ( ! d->dialogs.insertVariable )
-    d->dialogs.insertVariable = new InsertVariableDlg( d->evaluator, this );
-  else
-    d->dialogs.insertVariable->updateList();
+  InsertVariableDlg dlg( d->evaluator, d->settings.radixChar );
 
-  if ( d->dialogs.insertVariable->exec() == InsertVariableDlg::Accepted )
+  if ( dlg.exec() == InsertVariableDlg::Accepted )
   {
-    QString varName = d->dialogs.insertVariable->variableName();
+    QString varName = dlg.variableName();
     if ( ! varName.isEmpty() )
       d->widgets.editor->insert( varName );
   }
-  delete d->dialogs.insertVariable;
-  d->dialogs.insertVariable = 0;
 }
 
 
@@ -1269,9 +1242,6 @@ void MainWindow::setWidgetsLayoutAccordingToLanguageDirection()
   // docks
   setWidgetLayoutAccordingToLanguageDirection( d->docks.constants );
   setWidgetLayoutAccordingToLanguageDirection( d->docks.functions );
-  // insert function dialog
-  if ( d->dialogs.insertFunction )
-    setWidgetLayoutAccordingToLanguageDirection( d->dialogs.insertFunction );
   // tip of the day
   setWidgetLayoutAccordingToLanguageDirection( d->widgets.tip );
 
@@ -1834,21 +1804,18 @@ void MainWindow::radixCharCommaActivated()
 
 void MainWindow::closeEvent( QCloseEvent * e )
 {
-  if ( d->widgets.trayIcon )
-    d->widgets.trayIcon->hide();
   d->saveSettings();
 
-  d->docks.constants->hide();
-  d->docks.variables->hide();
-  d->docks.functions->hide();
-  d->docks.history->hide();
-  delete d->docks.constants;
-  delete d->docks.variables;
-  delete d->docks.functions;
-  delete d->docks.history;
+  //if ( d->widgets.trayIcon )
+  //  d->widgets.trayIcon->hide();
+  //d->docks.constants->close();
+  //d->docks.variables->close();
+  //d->docks.functions->close();
+  //d->docks.history->close();
 
-  emit quitApplication();
-  QMainWindow::closeEvent( e );
+  //QMainWindow::closeEvent( e );
+  //emit quitApplication();
+  e->accept();
 }
 
 
