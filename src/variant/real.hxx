@@ -33,6 +33,7 @@
 #define _REAL_H
 
 #include "math/floatnum.h"
+#include "math/floathmath.h"
 
 #include "variant/variantdata.hxx"
 #include "variant/variant.hxx"
@@ -60,6 +61,7 @@ class LongReal: public VariantData
     Variant operator/(const Variant& other) const;
     Variant operator%(const Variant& other) const;
     Variant idiv(const Variant& other) const;
+    Variant raise(const Variant& other) const;
     Variant operator==(const Variant& other) const;
     Variant operator!=(const Variant& other) const;
     Variant operator>(const Variant& other) const;
@@ -70,6 +72,7 @@ class LongReal: public VariantData
     Variant swapDiv(const Variant& other) const;
     Variant swapIdiv(const Variant& other) const;
     Variant swapMod(const Variant& other) const;
+    Variant swapRaise(const Variant& other) const;
   public: // info
     bool isNaN() const;
     bool isZero() const;
@@ -85,7 +88,6 @@ class LongReal: public VariantData
       Scientific,
       Engineering,
       Complement2,
-//      IEEE754,
     } FmtMode;
     typedef enum
     {
@@ -98,18 +100,18 @@ class LongReal: public VariantData
     {
       QString intpart;
       QString fracpart;
-      QString scale;
       Sign signSignificand;
-      Sign signScale;
       char baseSignificand;
+      unsigned scale;
       char baseScale;
+      Sign signScale;
       Error error;
     } BasicIO;
     bool assign(const char*);
     operator QByteArray() const;
-    BasicIO convert(int prec = -1, FmtMode mode = Scientific,
+    BasicIO convert(int digits, FmtMode mode = Scientific,
                     char base = 10, char scalebase = 10) const;
-    static Variant convert(const BasicIO&);
+    static Variant convert(const BasicIO&, const QString& scale);
   private:
     static void initClass();
     static VariantData* create();
@@ -128,11 +130,28 @@ class LongReal: public VariantData
 class RealFormat: public FormatIntf
 {
   public:
+    typedef enum
+    {
+      fShowZeroScale = 1,
+      fShowPlus = 2,
+      fShowScalePlus = 4,
+      fShowRadix = 8,
+      fShowScaleRadix = 0x10,
+      fShowLeadingZero = 0x20,
+      fShowScaleLeadingZero = 0x40,
+      fShowTrailingZero = 0x80,
+      fShowTrailingDot = 0x100,
+      fLowerCaseDigit = 0x200,
+    };
+  public:
     RealFormat();
     virtual QString format(const VariantData&);
     void setMode(LongReal::FmtMode, int digits = -1,
-                 char base = 10, char scalebase = 10, int prec = -1);
+                 char base = 10, char scalebase = 10);
     void setGroupChars(QChar dot = '.', QChar group = ',', int grouplg = 0);
+    void setMinLengths(int newMinInt = 0, int newMinFrac = 0,
+                       int newMinScale = 0);
+    void setFlags(unsigned flags);
   protected:
     virtual QString getSignificandPrefix(LongReal::BasicIO&);
     virtual QString getSignificandSuffix(LongReal::BasicIO&);
@@ -150,51 +169,44 @@ class RealFormat: public FormatIntf
     char base;
     // radix to what the scale is shown
     char scalebase;
-    // allowed error (2*10^(-precision)) in radix conversion
-    int  precision;
-    // shown digits of the significand
+    // shown digits of the significand after the dot
     int  digits;
-    // minimum length of the significand
-    int  minSignificandLg;
+    // minimum length of the integer part
+    int  minIntLg;
+    // minimum length of the fraction part
+    int  minFracLg;
     // minimum length of the scale
     int  minScaleLg;
-    // preferred position of the dot
-    int  dotpos;
     // length of a digit group
     int  grouplg;
     // dot character
     QChar dot;
     // character for digit grouping
     QChar groupchar;
-    // padding character for the significand to achieve minimum length
-    char pad;
-    // padding character for the scale to achieve minimum length
-    char scalePad;
-    // truncate the significand instead of round it
-    bool truncSignificand;
     // show the scale, even if it is zero
     bool showZeroScale;
     // show the sign, even if the significand is not negative
     bool showPlus;
-    // suppress the plus if the scale is not negative
-    bool suppressScalePlus;
+    // show the plus sign if the scale is not negative
+    bool showScalePlus;
     // shows the radix tag of the significand
     bool showRadix;
     // suppress the radix tag of the scale
-    bool suppressScaleRadix;
-    // shows a leading zero before the dot if the integer part is zero
+    bool showScaleRadix;
+    // shows leading zeros to pad the integer part to the minimum size
     bool showLeadingZero;
-    // suppress trailing zeros in the fractional part
-    bool suppressTrailingZero;
+    // shows leading zeros to pad the scale to the minimum size
+    bool showScaleLeadingZero;
+    // show trailing zeros in the fractional part
+    bool showTrailingZero;
     // shows a trailing dot, if the fractional part is zero
     bool showTrailingDot;
-    // do not group the digits in the scale
-    bool suppressScaleGroups;
     // use lower case hex digits
     bool lowerCaseHexDigit;
-    // pad the scale to the right
-    bool scaleLeftAlign;
-    bool groupSeq() { return groupchar != 0 && grouplg > 0; };
+    // helpers
+    bool useGrouping() { return groupchar != 0 && grouplg > 0; };
+    bool useScale(const LongReal::BasicIO&);
+    QString getPrefix(LongReal::Sign, char base, bool isCompl);
 };
 
 #endif /*_REAL_H*/

@@ -67,7 +67,7 @@
    In order to avoid integer overflow, this should be at least two bits
    less than the bits in the integer type choosen for the exponent.
    The default is two bit less than the size of an int */
-#define BITS_IN_EXP 29
+#define BITS_IN_EXP 30
 
 /* floatnum puts an upper limit on the base 10 exponent of its numbers that
    is based on the size of an integer, but even for 16 bit integers this

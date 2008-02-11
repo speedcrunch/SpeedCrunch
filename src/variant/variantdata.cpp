@@ -106,6 +106,49 @@ Variant VariantIntf::operator<=(const Variant& other) const
 Variant VariantIntf::raise(const Variant& other) const
 { return NotImplemented; }
 
+// Variant VariantIntf::abs()
+// { return NotImplemented; }
+// Variant VariantIntf::signum()
+// { return NotImplemented; }
+// Variant VariantIntf::round(RoundMode)
+// { return NotImplemented; }
+// Variant VariantIntf::scale(char base)
+// { return NotImplemented; }
+// Variant VariantIntf::fraction()
+// { return NotImplemented; }
+// Variant VariantIntf::exp()
+// { return NotImplemented; }
+// Variant VariantIntf::ln()
+// { return NotImplemented; }
+// Variant VariantIntf::sinh()
+// { return NotImplemented; }
+// Variant VariantIntf::cosh()
+// { return NotImplemented; }
+// Variant VariantIntf::tanh()
+// { return NotImplemented; }
+// Variant VariantIntf::arsinh()
+// { return NotImplemented; }
+// Variant VariantIntf::arcosh()
+// { return NotImplemented; }
+// Variant VariantIntf::artanh()
+// { return NotImplemented; }
+// Variant VariantIntf::sin()
+// { return NotImplemented; }
+// Variant VariantIntf::cos()
+// { return NotImplemented; }
+// Variant VariantIntf::tan()
+// { return NotImplemented; }
+// Variant VariantIntf::arcsin()
+// { return NotImplemented; }
+// Variant VariantIntf::arccos()
+// { return NotImplemented; }
+// Variant VariantIntf::arctan()
+// { return NotImplemented; }
+// Variant VariantIntf::pochhammer(const Variant& other);
+// { return NotImplemented; }
+// Variant VariantIntf::lngamma()
+// { return NotImplemented; }
+
 Variant VariantIntf::embed() const
 { return BadCast; }
 

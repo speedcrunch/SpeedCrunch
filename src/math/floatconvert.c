@@ -787,7 +787,7 @@ float_in(
   p_itokens tokens)
 {
   t_number_desc n;
-  int result;
+  Error result;
 
   if ((result = str2desc(&n, tokens)) == Success)
     result = pack2floatnum(x, &n);

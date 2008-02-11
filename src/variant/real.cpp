@@ -219,12 +219,12 @@ Variant LongReal::operator-(const Variant& other) const
 
 Variant LongReal::operator*(const Variant& other) const
 {
-  return call2(other, float_add);
+  return call2(other, float_mul);
 }
 
 Variant LongReal::operator/(const Variant& other) const
 {
-  return call2(other, float_add);
+  return call2(other, float_div);
 }
 
 Variant LongReal::operator%(const Variant& other) const
@@ -235,6 +235,11 @@ Variant LongReal::operator%(const Variant& other) const
 Variant LongReal::idiv(const Variant& other) const
 {
   return call2ND(other, _idiv);
+}
+
+Variant LongReal::raise(const Variant& other) const
+{
+  return call2(other, float_raise);
 }
 
 Variant LongReal::operator==(const Variant& other) const
@@ -287,6 +292,11 @@ Variant LongReal::swapIdiv(const Variant& other) const
   return call2ND(other, _idiv, true);
 }
 
+Variant LongReal::swapRaise(const Variant& other) const
+{
+  return call2(other, float_raise, true);
+}
+
 int LongReal::precision(int newprec)
 {
   int result = longrealPrec;
@@ -324,7 +334,7 @@ LongReal::operator QByteArray() const
   return buffer;
 }
 
-LongReal::BasicIO LongReal::convert(int prec, FmtMode mode,
+LongReal::BasicIO LongReal::convert(int digits, FmtMode mode,
                    char base, char scalebase) const
 {
   t_otokens tokens;
@@ -332,8 +342,6 @@ LongReal::BasicIO LongReal::convert(int prec, FmtMode mode,
   BasicIO result;
   char intpart[BINPRECISION+5];
   char fracpart[BINPRECISION+5];
-  char scale[BITS_IN_EXP+2];
-  t_buffer scaleBuf;
 
   tokens.intpart.buf = intpart;
   tokens.intpart.sz = sizeof(intpart);
@@ -341,37 +349,31 @@ LongReal::BasicIO LongReal::convert(int prec, FmtMode mode,
   tokens.fracpart.sz = sizeof(fracpart);
   float_create(&workcopy);
   float_copy(&workcopy, &val, evalPrec());
-  scale[0] = 0;
-  result.signScale = LongReal::None;
-  result.error = float_out(&tokens, &workcopy, prec,
+  result.error = float_out(&tokens, &workcopy, digits,
                            base, scalebase, _cvtMode(mode));
   if (result.error == Success)
-    switch (mode)
-    {
-      case LongReal::Scientific:
-      case LongReal::Engineering:
-        scaleBuf.sz = sizeof(scale);
-        scaleBuf.buf = scale;
-        if (tokens.exp > 0)
-          result.signScale = LongReal::Plus;
-        else if (tokens.exp < 0)
-          result.signScale = LongReal::Minus;
-        result.error = exp2str(&scaleBuf, tokens.exp, scalebase);
-      default: ;
-    }
-  if (result.error == Success)
   {
+    if (tokens.exp >= 0)
+    {
+      result.scale = tokens.exp;
+      result.signScale = tokens.exp > 0? LongReal::Plus
+        : LongReal::None;
+    }
+    else
+    {
+      result.scale = -tokens.exp;
+      result.signScale = LongReal::Minus;
+    }
     result.baseSignificand = base;
     result.baseScale = scalebase;
     result.signSignificand = _cvtSign(tokens.sign);
     result.intpart = QString::fromAscii(tokens.intpart.buf);
     result.fracpart = QString::fromAscii(tokens.fracpart.buf);
-    result.scale = QString::fromAscii(scale);
   }
   return result;
 }
 
-Variant LongReal::convert(const BasicIO& io)
+Variant LongReal::convert(const BasicIO& io, const QString& scale)
 {
   t_itokens tokens;
   QByteArray intpart = io.intpart.toUtf8();
@@ -384,10 +386,10 @@ Variant LongReal::convert(const BasicIO& io)
   tokens.sign = _cvtSign(io.signSignificand);
   tokens.base = io.baseSignificand;
   tokens.maxdigits = evalPrec();
-  if (!io.scale.isEmpty())
+  if (!scale.isEmpty())
   {
-    QByteArray scale = io.scale.toUtf8();
-    tokens.exp = scale.data();
+    QByteArray bscale = scale.toUtf8();
+    tokens.exp = bscale.data();
     tokens.expbase = io.baseScale;
     tokens.expsign = io.signScale;
   }
@@ -397,24 +399,32 @@ Variant LongReal::convert(const BasicIO& io)
   return Variant(&val, e);
 }
 
-void RealFormat::setMode(LongReal::FmtMode m, int dgt, char b, char sb, int prec)
+static bool _isZero(const QString& str)
+{
+  return str.size() == 1 && str.at(0) == '0';
+}
+
+RealFormat::RealFormat()
+{
+  setMode(LongReal::Scientific);
+  setGroupChars();
+  setMinLengths();
+  setFlags(fShowRadix|fShowScaleRadix|fShowZeroScale);
+}
+
+void RealFormat::setMode(LongReal::FmtMode m, int dgt, char b, char sb)
 {
   mode = m;
   base = b;
   scalebase = sb;
-  if (prec <= 0 || prec > DECPRECISION)
-    precision = DECPRECISION;
-  else
-    precision = prec;
   int maxdgt;
   switch (b)
   {
-    case  2: maxdgt = precision * 2136;
-    case  8: maxdgt = precision * 712;
-    case 16: maxdgt = precision * 534;
-    default: maxdgt = precision * 643;
+    case  2: maxdgt = BINPRECISION;
+    case  8: maxdgt = OCTPRECISION;
+    case 16: maxdgt = HEXPRECISION;
+    default: maxdgt = DECPRECISION;
   }
-  maxdgt /= 643;
   if (dgt <= 0 || dgt > maxdgt)
     digits = maxdgt;
   else
@@ -428,11 +438,33 @@ void RealFormat::setGroupChars(QChar newdot, QChar newgroup, int newgrouplg)
   grouplg = newgrouplg;
 }
 
-QString RealFormat::getSignificandPrefix(LongReal::BasicIO& io)
+void RealFormat::setMinLengths(int newMinInt, int newMinFrac, int newMinScale)
+{
+  minIntLg = newMinInt;
+  minFracLg = newMinFrac;
+  minScaleLg = newMinScale;
+}
+
+void RealFormat::setFlags(unsigned flags)
+{
+  showZeroScale = flags & fShowZeroScale;
+  showPlus = flags & fShowPlus;
+  showScalePlus = flags & fShowScalePlus;
+  showRadix = flags & fShowRadix;
+  showScaleRadix = flags & fShowScaleRadix;
+  showLeadingZero = flags & fShowLeadingZero;
+  showScaleLeadingZero = flags & fShowScaleLeadingZero;
+  showTrailingZero = flags & fShowTrailingZero;
+  showTrailingDot = flags & fShowTrailingDot;
+  lowerCaseHexDigit = flags & fLowerCaseDigit;
+}
+
+QString RealFormat::getPrefix(LongReal::Sign sign, char base,
+                              bool isCompl)
 {
   QString result;
   const char* radix;
-  switch (io.signSignificand)
+  switch (sign)
   {
     case LongReal::None:
     case LongReal::Plus:
@@ -444,22 +476,27 @@ QString RealFormat::getSignificandPrefix(LongReal::BasicIO& io)
   }
   if (showRadix)
   {
-    switch (io.baseSignificand)
+    switch (base)
     {
       case 16: radix = "0x"; break;
       case  8: radix = "0o"; break;
       case  2: radix = "0b"; break;
       default: radix = "0d";
     }
-    switch (mode)
-    {
-      case LongReal::Complement2:
-        result = radix + result; break;
-      default:
-        result += radix;
-    }
+    if (isCompl)
+      result = radix + result;
+    else
+      result += radix;
   }
+  if (lowerCaseHexDigit)
+    result = result.toUpper();
   return result;
+}
+
+QString RealFormat::getSignificandPrefix(LongReal::BasicIO& io)
+{
+  return getPrefix(io.signSignificand, io.baseSignificand,
+                   mode == LongReal::Complement2);
 }
 
 QString RealFormat::getSignificandSuffix(LongReal::BasicIO& io)
@@ -469,12 +506,18 @@ QString RealFormat::getSignificandSuffix(LongReal::BasicIO& io)
 
 QString RealFormat::getScalePrefix(LongReal::BasicIO& io)
 {
-  return QString();
+  QString result('e');
+  if (io.baseSignificand != 10)
+    result = '(';
+  return result
+         + getPrefix(io.signScale, io.baseScale, false);
 }
 
 QString RealFormat::getScaleSuffix(LongReal::BasicIO& io)
 {
-  return QString();
+  if (io.baseSignificand == 10)
+    return QString();
+  return QString(')');
 }
 
 QString RealFormat::formatNaN()
@@ -494,65 +537,118 @@ QString RealFormat::formatZero()
 
 QString RealFormat::formatInt(LongReal::BasicIO& io)
 {
-  if (!groupSeq() || grouplg >= io.intpart.size())
+  if (minIntLg <= 0 &&!showLeadingZero && _isZero(io.intpart))
+    return QString();
+  QString intpart = io.intpart;
+  if (minIntLg < intpart.size())
   {
-    if (!showLeadingZero && io.intpart.size() == 1 && io.intpart.at(0) == '0')
-      return QString();
-    return io.intpart;
+    QChar pad = ' ';
+    if (showLeadingZero)
+      pad = '0';
+    if (io.signSignificand == LongReal::Compl2)
+      switch (io.baseSignificand)
+      {
+        case 2 : pad = '1'; break;
+        case 8 : pad = '7'; break;
+        case 16: pad = 'F'; break;
+      }
+    intpart = QString(minIntLg - intpart.size(), pad) + intpart;
   }
+  if (lowerCaseHexDigit)
+    intpart = intpart.toLower();
+  if (!useGrouping() || grouplg >= intpart.size())
+    return intpart;
   QString result;
-  int idx = io.intpart.size();
+  int idx = intpart.size();
   while (idx > 0)
   {
     idx -= grouplg;
+    QChar gchar = ' ';
+    if (intpart.at(idx) != ' ')
+      gchar = groupchar;
     if (idx <= 0)
-      result = io.intpart.mid(0, idx + grouplg) + result;
+      result = intpart.mid(0, idx + grouplg) + result;
     else
-      result = io.intpart.mid(idx, grouplg) + groupchar + result;
+      result = intpart.mid(idx, grouplg) + gchar + result;
   }
   return result;
 }
 
 QString RealFormat::formatFrac(LongReal::BasicIO& io)
 {
-  QString result = dot;
-  if (io.fracpart.isEmpty())
+  QString fracpart = io.fracpart;
+  if (fracpart.size() < minFracLg)
+  {
+    QChar pad = ' ';
+    if (showTrailingZero)
+      pad = '0';
+    fracpart += QString(minFracLg - fracpart.size());
+  }
+  else if (!showTrailingZero)
+  {
+    int i = fracpart.size();
+    while (--i >= minFracLg && fracpart.at(i) == '0');
+    fracpart = fracpart.mid(0, i);
+  }
+  if (fracpart.isEmpty())
   {
     if (showTrailingDot)
-      return result;
+      return dot;
     else
       return QString();
   }
-  if (!groupSeq() || io.fracpart.size() <= grouplg)
-    return result + io.fracpart;
-  result += io.fracpart.mid(0, grouplg);
-  for (int idx = grouplg; idx < io.fracpart.size(); idx += grouplg)
-    result += groupchar + io.fracpart.mid(idx, grouplg);
+  if (lowerCaseHexDigit)
+    fracpart = fracpart.toLower();
+  if (!useGrouping() || fracpart.size() <= grouplg)
+    return dot + fracpart;
+  QString result = dot;
+  result += fracpart.mid(0, grouplg);
+  for (int idx = grouplg; idx < fracpart.size(); idx += grouplg)
+  {
+    QChar gchar = ' ';
+    if (fracpart.at(idx) != ' ')
+      gchar = groupchar;
+    result += gchar + fracpart.mid(idx, grouplg);
+  }
   return result;
 }
 
 QString RealFormat::formatScale(LongReal::BasicIO& io)
 {
-  return QString();
+  QString result = QString::number(io.scale, (int)io.baseScale);
+  if (io.baseScale == 16 && !lowerCaseHexDigit)
+    result = result.toUpper();
+  if (result.size() < minScaleLg)
+    result = QString(result.size() - minScaleLg,
+                     showScaleLeadingZero? '0' : ' ') + result;
+  return result;
 }
 
 QString RealFormat::format(const VariantData& val)
 {
+  QString result;
   const LongReal* vr = dynamic_cast<const LongReal*>(&val);
   if (!vr)
-    return QString();
+    return result;
   if (vr->isNaN())
     return formatNaN();
   if (vr->isZero())
     return formatZero();
-  LongReal::BasicIO basicIO = vr->convert(precision, mode, base, scalebase);
+  LongReal::BasicIO basicIO = vr->convert(digits, mode, base, scalebase);
   if (basicIO.error != Success)
-    return QString();
-  return getSignificandPrefix(basicIO)
-         + formatInt(basicIO)
-         + formatFrac(basicIO)
-         + getSignificandSuffix(basicIO)
-         + getScalePrefix(basicIO)
-         + formatScale(basicIO)
-         + getScaleSuffix(basicIO);
+    return result;
+  result = getSignificandPrefix(basicIO)
+           + formatInt(basicIO)
+           + formatFrac(basicIO)
+           + getSignificandSuffix(basicIO);
+  if (useScale(basicIO))
+    result += getScalePrefix(basicIO)
+           + formatScale(basicIO)
+           + getScaleSuffix(basicIO);
+  return result;
+}
+
+bool RealFormat::useScale(const LongReal::BasicIO& io)
+{
+  return io.scale != 0 || showZeroScale;
 }

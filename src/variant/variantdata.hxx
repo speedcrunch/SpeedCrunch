@@ -47,6 +47,14 @@ class VariantIntf
       vLongReal,
       vError // has to be the last entry
     } VariantType;
+    typedef enum
+    {
+      rndNearest,
+      rndDown,
+      rndUp,
+      rndZero,
+      rndInfinity,
+    } RoundMode;
     static const char* variantTypeName(VariantType);
     static VariantType name2VariantType(const QByteArray&);
   public:
@@ -77,6 +85,31 @@ class VariantIntf
     virtual Variant operator<(const Variant& other) const;
     virtual Variant operator<=(const Variant& other) const;
     virtual Variant raise(const Variant& exp) const;
+  public: // functions
+/*    virtual Variant abs();
+    virtual Variant signum();
+    virtual Variant scale(char base);
+    virtual Variant round(RoundMode);
+    virtual Variant fraction();
+    virtual Variant exp();
+    virtual Variant ln();
+    virtual Variant sinh();
+    virtual Variant cosh();
+    virtual Variant tanh();
+    virtual Variant arsinh();
+    virtual Variant arcosh();
+    virtual Variant artanh();
+    virtual Variant sin();
+    virtual Variant cos();
+    virtual Variant tan();
+    virtual Variant arcsin();
+    virtual Variant arccos();
+    virtual Variant arctan();
+    virtual Variant pochhammer(Variant disp);
+    virtual Variant lngamma();
+    virtual Variant regBeta(const Variant& other);
+    Variant erf();
+    Variant erfc();*/
 };
 
 class VariantData: public VariantIntf

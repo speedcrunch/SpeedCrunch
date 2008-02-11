@@ -52,12 +52,17 @@ Error _floatnum2longint(t_longint* longint, floatnum f);
 void _longint2floatnum(floatnum f, t_longint* longint);
 
 /* the output process destroys x
+   'digits' are the number of digits after the dot.
+   Regardless of the value of 'digits', a conversion is always
+   done to DECPRECISION places
+   Before reducing to 'digits' places the (converted) value is rounded.
+   Trailing zeros are padded, if necessary, to fill to the right size.
    Errors: InvalidParam (if any of the parameters makes no sense
                          like digits <= 0, or a not supported base)
            IOBufferOverflow (if the caller does not provide enough
-                             buffer in tokens )
+                             buffer in tokens)
            IOConversionOverflow (request requires too much buffer
-                                 space for radix conversion )
+                                 space for radix conversion)
            IOConversionUnderflow (request would produce leading
                                   zeros only)
            IOInvalidComplement (two's complement cannot be generated) */

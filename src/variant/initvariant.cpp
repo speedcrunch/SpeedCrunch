@@ -44,10 +44,4 @@ InitVariant::InitVariant()
 {
   LongReal::initClass();
   Variant::initClass();
-/*  floatstruct x;
-  float_create(&x);
-  float_setinteger(&x, 1);
-  Variant y;
-  y.move(&x);
-  y = -y;*/
 }
