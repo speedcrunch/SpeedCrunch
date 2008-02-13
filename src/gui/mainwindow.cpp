@@ -204,22 +204,36 @@ struct MainWindow::Private
   void createActionShortcuts();
   void createMenus();
   void createWidgets();
-  void createDocks();
+  void createConstantsDock();
+  void createFunctionsDock();
+  void createHistoryDock();
+  void createVariablesDock();
   void createConnections();
   void applySettings();
-  void restoreDocks();
+  void restoreFloatingDocks();
   void restoreHistory();
   void restoreVariables();
+  void deleteConstantsDock();
+  void deleteFunctionsDock();
+  void deleteHistoryDock();
+  void deleteVariablesDock();
+  void syncWindowStateToSettings();
   void saveSettings();
 };
 
 
 MainWindow::Private::Private()
 {
-  widgets.trayIcon               = 0;
+  widgets.trayIcon      = 0;
+  conditions.trayNotify = true;
+
   conditions.autoAns             = false;
-  conditions.trayNotify          = true;
   conditions.notifyMenuBarHidden = true;
+
+  docks.history   = 0;
+  docks.functions = 0;
+  docks.variables = 0;
+  docks.constants = 0;
 };
 
 
@@ -236,7 +250,6 @@ void MainWindow::Private::createUi()
   createActionShortcuts();
   createMenus();
   createWidgets();
-  createDocks();
   createConnections();
 
   p->setWindowTitle( "SpeedCrunch" );
@@ -295,34 +308,34 @@ void MainWindow::Private::createActions()
   actions.formatOctal           = new QAction( tr("&Octal"),                   p );
   actions.formatScientific      = new QAction( tr("&Scientific"),              p );
 
-  actions.degree->setCheckable              ( true );
-  actions.digits15->setCheckable            ( true );
-  actions.digits2->setCheckable             ( true );
-  actions.digits3->setCheckable             ( true );
-  actions.digits50->setCheckable            ( true );
-  actions.digits8->setCheckable             ( true );
-  actions.digitsAuto->setCheckable          ( true );
-  actions.optionAlwaysOnTop->setCheckable   ( true );
-  actions.optionAutoCalc->setCheckable      ( true );
+  actions.degree              ->setCheckable( true );
+  actions.digits15            ->setCheckable( true );
+  actions.digits2             ->setCheckable( true );
+  actions.digits3             ->setCheckable( true );
+  actions.digits50            ->setCheckable( true );
+  actions.digits8             ->setCheckable( true );
+  actions.digitsAuto          ->setCheckable( true );
+  actions.optionAlwaysOnTop   ->setCheckable( true );
+  actions.optionAutoCalc      ->setCheckable( true );
   actions.optionAutoCompletion->setCheckable( true );
   actions.optionMinimizeToTray->setCheckable( true );
-  actions.radian->setCheckable              ( true );
-  actions.radixCharAuto->setCheckable       ( true );
-  actions.radixCharComma->setCheckable      ( true );
-  actions.radixCharDot->setCheckable        ( true );
-  actions.showConstants->setCheckable       ( true );
-  actions.showFullScreen->setCheckable      ( true );
-  actions.showFunctions->setCheckable       ( true );
-  actions.showHistory->setCheckable         ( true );
-  actions.showKeypad->setCheckable          ( true );
-  actions.showVariables->setCheckable       ( true );
-  actions.formatBinary->setCheckable        ( true );
-  actions.formatEngineering->setCheckable   ( true );
-  actions.formatFixed->setCheckable         ( true );
-  actions.formatGeneral->setCheckable       ( true );
-  actions.formatHexadec->setCheckable       ( true );
-  actions.formatOctal->setCheckable         ( true );
-  actions.formatScientific->setCheckable    ( true );
+  actions.radian              ->setCheckable( true );
+  actions.radixCharAuto       ->setCheckable( true );
+  actions.radixCharComma      ->setCheckable( true );
+  actions.radixCharDot        ->setCheckable( true );
+  actions.showConstants       ->setCheckable( true );
+  actions.showFullScreen      ->setCheckable( true );
+  actions.showFunctions       ->setCheckable( true );
+  actions.showHistory         ->setCheckable( true );
+  actions.showKeypad          ->setCheckable( true );
+  actions.showVariables       ->setCheckable( true );
+  actions.formatBinary        ->setCheckable( true );
+  actions.formatEngineering   ->setCheckable( true );
+  actions.formatFixed         ->setCheckable( true );
+  actions.formatGeneral       ->setCheckable( true );
+  actions.formatHexadec       ->setCheckable( true );
+  actions.formatOctal         ->setCheckable( true );
+  actions.formatScientific    ->setCheckable( true );
 }
 
 
@@ -358,30 +371,30 @@ void MainWindow::Private::createActionGroups()
 
 void MainWindow::Private::createActionShortcuts()
 {
-  actions.clearExpression->setShortcut (            Qt::Key_Escape   );
-  actions.clearHistory->setShortcut    ( Qt::CTRL + Qt::Key_Y        );
-  actions.degree->setShortcut          (            Qt::Key_F10      );
-  actions.deleteVariable->setShortcut  ( Qt::CTRL + Qt::Key_D        );
-  actions.editCopyResult->setShortcut  ( Qt::CTRL + Qt::Key_R        );
-  actions.editCopy->setShortcut        ( Qt::CTRL + Qt::Key_C        );
-  actions.editPaste->setShortcut       ( Qt::CTRL + Qt::Key_V        );
-  actions.helpTipOfTheDay->setShortcut ( Qt::CTRL + Qt::Key_T        );
-  actions.insertFunction->setShortcut  ( Qt::CTRL + Qt::Key_F        );
-  actions.insertVariable->setShortcut  ( Qt::CTRL + Qt::Key_I        );
-  actions.radian->setShortcut          (            Qt::Key_F9       );
-  actions.scrollDown->setShortcut      (            Qt::Key_PageDown );
-  actions.scrollUp->setShortcut        (            Qt::Key_PageUp   );
+  actions.clearExpression ->setShortcut(            Qt::Key_Escape   );
+  actions.clearHistory    ->setShortcut( Qt::CTRL + Qt::Key_Y        );
+  actions.degree          ->setShortcut(            Qt::Key_F10      );
+  actions.deleteVariable  ->setShortcut( Qt::CTRL + Qt::Key_D        );
+  actions.editCopyResult  ->setShortcut( Qt::CTRL + Qt::Key_R        );
+  actions.editCopy        ->setShortcut( Qt::CTRL + Qt::Key_C        );
+  actions.editPaste       ->setShortcut( Qt::CTRL + Qt::Key_V        );
+  actions.helpTipOfTheDay ->setShortcut( Qt::CTRL + Qt::Key_T        );
+  actions.insertFunction  ->setShortcut( Qt::CTRL + Qt::Key_F        );
+  actions.insertVariable  ->setShortcut( Qt::CTRL + Qt::Key_I        );
+  actions.radian          ->setShortcut(            Qt::Key_F9       );
+  actions.scrollDown      ->setShortcut(            Qt::Key_PageDown );
+  actions.scrollUp        ->setShortcut(            Qt::Key_PageUp   );
   actions.selectExpression->setShortcut( Qt::CTRL + Qt::Key_A        );
-  actions.sessionLoad->setShortcut     ( Qt::CTRL + Qt::Key_L        );
-  actions.sessionQuit->setShortcut     ( Qt::CTRL + Qt::Key_Q        );
-  actions.sessionSave->setShortcut     ( Qt::CTRL + Qt::Key_S        );
-  actions.showFullScreen->setShortcut  (            Qt::Key_F11      );
-  actions.showKeypad->setShortcut      ( Qt::CTRL + Qt::Key_K        );
-  actions.showMenuBar->setShortcut     ( Qt::CTRL + Qt::Key_M        );
-  actions.formatBinary->setShortcut    (            Qt::Key_F5       );
-  actions.formatGeneral->setShortcut   (            Qt::Key_F7       );
-  actions.formatHexadec->setShortcut   (            Qt::Key_F8       );
-  actions.formatOctal->setShortcut     (            Qt::Key_F6       );
+  actions.sessionLoad     ->setShortcut( Qt::CTRL + Qt::Key_L        );
+  actions.sessionQuit     ->setShortcut( Qt::CTRL + Qt::Key_Q        );
+  actions.sessionSave     ->setShortcut( Qt::CTRL + Qt::Key_S        );
+  actions.showFullScreen  ->setShortcut(            Qt::Key_F11      );
+  actions.showKeypad      ->setShortcut( Qt::CTRL + Qt::Key_K        );
+  actions.showMenuBar     ->setShortcut( Qt::CTRL + Qt::Key_M        );
+  actions.formatBinary    ->setShortcut(            Qt::Key_F5       );
+  actions.formatGeneral   ->setShortcut(            Qt::Key_F7       );
+  actions.formatHexadec   ->setShortcut(            Qt::Key_F8       );
+  actions.formatOctal     ->setShortcut(            Qt::Key_F6       );
 }
 
 
@@ -540,112 +553,168 @@ void MainWindow::Private::createWidgets()
 }
 
 
-void MainWindow::Private::createDocks()
+void MainWindow::Private::createConstantsDock()
 {
-  docks.history = new HistoryDock( p );
-  docks.history->setObjectName( "HistoryDock" );
-  p->addDockWidget( Qt::RightDockWidgetArea, docks.history );
-
-  docks.functions = new FunctionsDock( functions, p );
-  docks.functions->setObjectName( "FunctionsDock" );
-  p->addDockWidget( Qt::RightDockWidgetArea, docks.functions );
-
-  docks.variables = new VariablesDock( settings.radixChar, p );
-  docks.variables->setObjectName( "VariablesDock" );
-  p->addDockWidget( Qt::RightDockWidgetArea, docks.variables );
-
+  qDebug( "Create Constants Dock" );
   docks.constants = new ConstantsDock( constants, settings.radixChar, p );
   docks.constants->setObjectName( "ConstantsDock" );
+  docks.constants->installEventFilter( p );
   p->addDockWidget( Qt::RightDockWidgetArea, docks.constants );
 
-  p->tabifyDockWidget( docks.functions, docks.history );
-  p->tabifyDockWidget( docks.functions, docks.functions );
-  p->tabifyDockWidget( docks.functions, docks.variables );
-  p->tabifyDockWidget( docks.functions, docks.constants );
+  connect( docks.constants, SIGNAL( constantSelected( const QString & ) ),
+           p, SLOT( constantSelected( const QString & ) ) );
+  connect( p, SIGNAL( radixCharChanged( char ) ),
+           docks.constants, SLOT( setRadixChar( char ) ) );
 
-  docks.history->hide();
-  docks.functions->hide();
-  docks.variables->hide();
-  docks.constants->hide();
+  if ( docks.functions )
+    p->tabifyDockWidget( docks.functions, docks.constants );
+  else if ( docks.variables )
+    p->tabifyDockWidget( docks.variables, docks.constants );
+  else if ( docks.history )
+    p->tabifyDockWidget( docks.history, docks.constants );
+
+  settings.showConstants = true;
+}
+
+
+void MainWindow::Private::createFunctionsDock()
+{
+  qDebug( "Create Functions Dock" );
+  docks.functions = new FunctionsDock( functions, p );
+  docks.functions->setObjectName( "FunctionsDock" );
+  docks.functions->installEventFilter( p );
+  p->addDockWidget( Qt::RightDockWidgetArea, docks.functions );
+
+  connect( docks.functions, SIGNAL( functionSelected( const QString & ) ),
+           p, SLOT( functionSelected( const QString & ) ) );
+
+  if ( docks.history )
+    p->tabifyDockWidget( docks.history, docks.functions );
+  else if ( docks.variables )
+    p->tabifyDockWidget( docks.variables, docks.functions );
+  else if ( docks.constants )
+    p->tabifyDockWidget( docks.constants, docks.functions );
+
+  settings.showFunctions = true;
+}
+
+
+void MainWindow::Private::createHistoryDock()
+{
+  qDebug( "Create History Dock" );
+  docks.history = new HistoryDock( p );
+  docks.history->setObjectName( "HistoryDock" );
+  docks.history->installEventFilter( p );
+  p->addDockWidget( Qt::RightDockWidgetArea, docks.history );
+
+  connect( docks.history, SIGNAL( expressionSelected( const QString & ) ),
+           p, SLOT( expressionSelected( const QString & ) ) );
+
+  docks.history->setHistory( widgets.editor->history() );
+
+  if ( docks.functions )
+    p->tabifyDockWidget( docks.functions, docks.history );
+  else if ( docks.variables )
+    p->tabifyDockWidget( docks.variables, docks.history );
+  else if ( docks.constants )
+    p->tabifyDockWidget( docks.constants, docks.history );
+
+  settings.showHistory = true;
+}
+
+
+void MainWindow::Private::createVariablesDock()
+{
+  qDebug( "Create Variables Dock" );
+  docks.variables = new VariablesDock( settings.radixChar, p );
+  docks.variables->setObjectName( "VariablesDock" );
+  docks.variables->installEventFilter( p );
+  p->addDockWidget( Qt::RightDockWidgetArea, docks.variables );
+
+  connect( docks.variables, SIGNAL( variableSelected( const QString & ) ),
+           p, SLOT( variableSelected( const QString & ) ) );
+  connect( p, SIGNAL( radixCharChanged( char ) ),
+           docks.variables, SLOT( setRadixChar( char ) ) );
+
+  docks.variables->updateList( evaluator );
+
+  if ( docks.functions )
+    p->tabifyDockWidget( docks.functions, docks.variables );
+  else if ( docks.history )
+    p->tabifyDockWidget( docks.history, docks.variables );
+  else if ( docks.constants )
+    p->tabifyDockWidget( docks.constants, docks.variables );
+
+  settings.showVariables = true;
 }
 
 
 void MainWindow::Private::createConnections()
 {
-  QObject::connect( actions.clearHistory,                SIGNAL( triggered()                           ), p,                     SLOT( clearHistory()                        ) );
-  QObject::connect( actions.clearExpression,             SIGNAL( triggered()                           ), p,                     SLOT( clearExpression()                     ) );
-  QObject::connect( actions.degree,                      SIGNAL( triggered()                           ), p,                     SLOT( degree()                              ) );
-  QObject::connect( actions.deleteAllVariables,          SIGNAL( triggered()                           ), p,                     SLOT( deleteAllVariables()                  ) );
-  QObject::connect( actions.deleteVariable,              SIGNAL( triggered()                           ), p,                     SLOT( deleteVariable()                      ) );
-  QObject::connect( actions.digits15,                    SIGNAL( triggered()                           ), p,                     SLOT( digits15()                            ) );
-  QObject::connect( actions.digits2,                     SIGNAL( triggered()                           ), p,                     SLOT( digits2()                             ) );
-  QObject::connect( actions.digits3,                     SIGNAL( triggered()                           ), p,                     SLOT( digits3()                             ) );
-  QObject::connect( actions.digits50,                    SIGNAL( triggered()                           ), p,                     SLOT( digits50()                            ) );
-  QObject::connect( actions.digits8,                     SIGNAL( triggered()                           ), p,                     SLOT( digits8()                             ) );
-  QObject::connect( actions.digitsAuto,                  SIGNAL( triggered()                           ), p,                     SLOT( digitsAuto()                          ) );
-  QObject::connect( actions.editCopyResult,              SIGNAL( triggered()                           ), p,                     SLOT( copyResult()                          ) );
-  QObject::connect( actions.editCopy,                    SIGNAL( triggered()                           ), widgets.editor,        SLOT( copy()                                ) );
-  QObject::connect( actions.editPaste,                   SIGNAL( triggered()                           ), widgets.editor,        SLOT( paste()                               ) );
-  QObject::connect( actions.selectExpression,            SIGNAL( triggered()                           ), p,                     SLOT( selectExpression()                    ) );
-  QObject::connect( actions.helpAboutQt,                 SIGNAL( triggered()                           ), p,                     SLOT( aboutQt()                             ) );
-  QObject::connect( actions.helpAbout,                   SIGNAL( triggered()                           ), p,                     SLOT( about()                               ) );
-  QObject::connect( actions.helpGotoWebsite,             SIGNAL( triggered()                           ), p,                     SLOT( gotoWebsite()                         ) );
-  QObject::connect( actions.helpTipOfTheDay,             SIGNAL( triggered()                           ), p,                     SLOT( showTipOfTheDay()                     ) );
-  QObject::connect( actions.insertFunction,              SIGNAL( triggered()                           ), p,                     SLOT( insertFunction()                      ) );
-  QObject::connect( actions.insertVariable,              SIGNAL( triggered()                           ), p,                     SLOT( insertVariable()                      ) );
-  QObject::connect( actions.radian,                      SIGNAL( triggered()                           ), p,                     SLOT( radian()                              ) );
-  QObject::connect( actions.scrollDown,                  SIGNAL( triggered()                           ), p,                     SLOT( scrollDown()                          ) );
-  QObject::connect( actions.scrollUp,                    SIGNAL( triggered()                           ), p,                     SLOT( scrollUp()                            ) );
-  QObject::connect( actions.sessionLoad,                 SIGNAL( triggered()                           ), p,                     SLOT( loadSession()                         ) );
-  QObject::connect( actions.sessionQuit,                 SIGNAL( triggered()                           ), p,                     SLOT( close()                               ) );
-  QObject::connect( actions.sessionSave,                 SIGNAL( triggered()                           ), p,                     SLOT( saveSession()                         ) );
-  QObject::connect( actions.showConstants,               SIGNAL( toggled( bool )                       ), p,                     SLOT( showConstants( bool )                 ) );
-  QObject::connect( actions.showFullScreen,              SIGNAL( toggled( bool )                       ), p,                     SLOT( showInFullScreen( bool )              ) );
-  QObject::connect( actions.showFunctions,               SIGNAL( toggled( bool )                       ), p,                     SLOT( showFunctions( bool )                 ) );
-  QObject::connect( actions.showHistory,                 SIGNAL( toggled( bool )                       ), p,                     SLOT( showHistory( bool )                   ) );
-  QObject::connect( actions.showKeypad,                  SIGNAL( toggled( bool )                       ), p,                     SLOT( showKeypad( bool )                    ) );
-  QObject::connect( actions.showMenuBar,                 SIGNAL( triggered()                           ), p,                     SLOT( showMenuBar()                         ) );
-  QObject::connect( actions.showVariables,               SIGNAL( toggled( bool )                       ), p,                     SLOT( showVariables( bool )                 ) );
-  QObject::connect( actions.formatBinary,                SIGNAL( triggered()                           ), p,                     SLOT( formatBinary()                        ) );
-  QObject::connect( actions.formatEngineering,           SIGNAL( triggered()                           ), p,                     SLOT( formatEngineering()                   ) );
-  QObject::connect( actions.formatFixed,                 SIGNAL( triggered()                           ), p,                     SLOT( formatFixed()                         ) );
-  QObject::connect( actions.formatGeneral,               SIGNAL( triggered()                           ), p,                     SLOT( formatGeneral()                       ) );
-  QObject::connect( actions.formatHexadec,               SIGNAL( triggered()                           ), p,                     SLOT( formatHexadec()                       ) );
-  QObject::connect( actions.formatOctal,                 SIGNAL( triggered()                           ), p,                     SLOT( formatOctal()                         ) );
-  QObject::connect( actions.formatScientific,            SIGNAL( triggered()                           ), p,                     SLOT( formatScientific()                    ) );
-  QObject::connect( actions.optionAutoCalc,              SIGNAL( toggled( bool )                       ), p,                     SLOT( autoCalcToggled( bool )               ) );
-  QObject::connect( actions.optionAutoCompletion,        SIGNAL( toggled( bool )                       ), p,                     SLOT( autoCompletionToggled( bool )         ) );
-  QObject::connect( actions.optionAlwaysOnTop,           SIGNAL( toggled( bool )                       ), p,                     SLOT( alwaysOnTopToggled( bool )            ) );
-  QObject::connect( actions.optionMinimizeToTray,        SIGNAL( toggled( bool )                       ), p,                     SLOT( minimizeToTrayToggled( bool )         ) );
-  QObject::connect( actions.radixCharAuto,               SIGNAL( triggered()                           ), p,                     SLOT( radixCharAutoActivated()              ) );
-  QObject::connect( actions.radixCharDot,                SIGNAL( triggered()                           ), p,                     SLOT( radixCharDotActivated()               ) );
-  QObject::connect( actions.radixCharComma,              SIGNAL( triggered()                           ), p,                     SLOT( radixCharCommaActivated()             ) );
-  QObject::connect( widgets.keypad,                      SIGNAL( buttonPressed( Keypad::Button )       ), p,                     SLOT( keypadButtonPressed( Keypad::Button ) ) );
-  QObject::connect( widgets.editor,                      SIGNAL( autoCalcEnabled( const QString & )    ), p,                     SLOT( showAutoCalc( const QString & )       ) );
-  QObject::connect( widgets.editor,                      SIGNAL( autoCalcDisabled()                    ), p,                     SLOT( hideAutoCalc()                        ) );
-  QObject::connect( widgets.editor,                      SIGNAL( returnPressed()                       ), p,                     SLOT( returnPressed()                       ) );
-  QObject::connect( widgets.editor,                      SIGNAL( textChanged()                         ), p,                     SLOT( textChanged()                         ) );
-  QObject::connect( docks.constants,                     SIGNAL( constantSelected( const QString & )   ), p,                     SLOT( constantSelected( const QString & )   ) );
-  QObject::connect( docks.functions,                     SIGNAL( functionSelected( const QString & )   ), p,                     SLOT( functionSelected( const QString & )   ) );
-  QObject::connect( docks.history,                       SIGNAL( expressionSelected( const QString & ) ), p,                     SLOT( expressionSelected( const QString & ) ) );
-  QObject::connect( docks.variables,                     SIGNAL( variableSelected( const QString & )   ), p,                     SLOT( variableSelected( const QString & )   ) );
-  QObject::connect( docks.constants->toggleViewAction(), SIGNAL( toggled( bool )                       ), actions.showConstants, SLOT( setChecked( bool )                    ) );
-  QObject::connect( docks.functions->toggleViewAction(), SIGNAL( toggled( bool )                       ), actions.showFunctions, SLOT( setChecked( bool )                    ) );
-  QObject::connect( docks.history->toggleViewAction(),   SIGNAL( toggled( bool )                       ), actions.showHistory,   SLOT( setChecked( bool )                    ) );
-  QObject::connect( docks.variables->toggleViewAction(), SIGNAL( toggled( bool )                       ), actions.showVariables, SLOT( setChecked( bool )                    ) );
-  QObject::connect( widgets.display,                     SIGNAL( textCopied( const QString & )         ), widgets.editor,        SLOT( paste()                               ) );
-  QObject::connect( widgets.display,                     SIGNAL( textCopied( const QString & )         ), widgets.editor,        SLOT( setFocus()                            ) );
-  QObject::connect( p,                                   SIGNAL( formatChanged( char )                 ), widgets.editor,        SLOT( setFormat( char )                     ) );
-  QObject::connect( p,                                   SIGNAL( precisionChanged( int )               ), widgets.editor,        SLOT( setPrecision( int )                   ) );
-  QObject::connect( p,                                   SIGNAL( radixCharChanged( char )              ), widgets.editor,        SLOT( setRadixChar( char )                  ) );
-  QObject::connect( p,                                   SIGNAL( formatChanged( char )                 ), widgets.display,       SLOT( setFormat( char )                     ) );
-  QObject::connect( p,                                   SIGNAL( precisionChanged( int )               ), widgets.display,       SLOT( setPrecision( int )                   ) );
-  QObject::connect( p,                                   SIGNAL( radixCharChanged( char )              ), widgets.display,       SLOT( setRadixChar( char )                  ) );
-  QObject::connect( p,                                   SIGNAL( radixCharChanged( char )              ), widgets.keypad,        SLOT( setRadixChar( char )                  ) );
-  QObject::connect( p,                                   SIGNAL( radixCharChanged( char )              ), docks.constants,       SLOT( setRadixChar( char )                  ) );
-  QObject::connect( p,                                   SIGNAL( radixCharChanged( char )              ), docks.variables,       SLOT( setRadixChar( char )                  ) );
-  QObject::connect( p,                                   SIGNAL( radixCharChanged( char )              ), evaluator,             SLOT( setRadixChar( char )                  ) );
-  QObject::connect( p,                                   SIGNAL( angleModeChanged( char )              ), functions,             SLOT( setAngleMode( char )                  ) );
+  connect( actions.clearHistory,                SIGNAL( triggered()                           ), p,                     SLOT( clearHistory()                        ) );
+  connect( actions.clearExpression,             SIGNAL( triggered()                           ), p,                     SLOT( clearExpression()                     ) );
+  connect( actions.degree,                      SIGNAL( triggered()                           ), p,                     SLOT( degree()                              ) );
+  connect( actions.deleteAllVariables,          SIGNAL( triggered()                           ), p,                     SLOT( deleteAllVariables()                  ) );
+  connect( actions.deleteVariable,              SIGNAL( triggered()                           ), p,                     SLOT( deleteVariable()                      ) );
+  connect( actions.digits15,                    SIGNAL( triggered()                           ), p,                     SLOT( digits15()                            ) );
+  connect( actions.digits2,                     SIGNAL( triggered()                           ), p,                     SLOT( digits2()                             ) );
+  connect( actions.digits3,                     SIGNAL( triggered()                           ), p,                     SLOT( digits3()                             ) );
+  connect( actions.digits50,                    SIGNAL( triggered()                           ), p,                     SLOT( digits50()                            ) );
+  connect( actions.digits8,                     SIGNAL( triggered()                           ), p,                     SLOT( digits8()                             ) );
+  connect( actions.digitsAuto,                  SIGNAL( triggered()                           ), p,                     SLOT( digitsAuto()                          ) );
+  connect( actions.editCopyResult,              SIGNAL( triggered()                           ), p,                     SLOT( copyResult()                          ) );
+  connect( actions.editCopy,                    SIGNAL( triggered()                           ), widgets.editor,        SLOT( copy()                                ) );
+  connect( actions.editPaste,                   SIGNAL( triggered()                           ), widgets.editor,        SLOT( paste()                               ) );
+  connect( actions.selectExpression,            SIGNAL( triggered()                           ), p,                     SLOT( selectExpression()                    ) );
+  connect( actions.helpAboutQt,                 SIGNAL( triggered()                           ), p,                     SLOT( aboutQt()                             ) );
+  connect( actions.helpAbout,                   SIGNAL( triggered()                           ), p,                     SLOT( about()                               ) );
+  connect( actions.helpGotoWebsite,             SIGNAL( triggered()                           ), p,                     SLOT( gotoWebsite()                         ) );
+  connect( actions.helpTipOfTheDay,             SIGNAL( triggered()                           ), p,                     SLOT( showTipOfTheDay()                     ) );
+  connect( actions.insertFunction,              SIGNAL( triggered()                           ), p,                     SLOT( insertFunction()                      ) );
+  connect( actions.insertVariable,              SIGNAL( triggered()                           ), p,                     SLOT( insertVariable()                      ) );
+  connect( actions.radian,                      SIGNAL( triggered()                           ), p,                     SLOT( radian()                              ) );
+  connect( actions.scrollDown,                  SIGNAL( triggered()                           ), p,                     SLOT( scrollDown()                          ) );
+  connect( actions.scrollUp,                    SIGNAL( triggered()                           ), p,                     SLOT( scrollUp()                            ) );
+  connect( actions.sessionLoad,                 SIGNAL( triggered()                           ), p,                     SLOT( loadSession()                         ) );
+  connect( actions.sessionQuit,                 SIGNAL( triggered()                           ), p,                     SLOT( close()                               ) );
+  connect( actions.sessionSave,                 SIGNAL( triggered()                           ), p,                     SLOT( saveSession()                         ) );
+  connect( actions.showConstants,               SIGNAL( toggled( bool )                       ), p,                     SLOT( showConstants( bool )                 ) );
+  connect( actions.showFullScreen,              SIGNAL( toggled( bool )                       ), p,                     SLOT( showInFullScreen( bool )              ) );
+  connect( actions.showFunctions,               SIGNAL( toggled( bool )                       ), p,                     SLOT( showFunctions( bool )                 ) );
+  connect( actions.showHistory,                 SIGNAL( toggled( bool )                       ), p,                     SLOT( showHistory( bool )                   ) );
+  connect( actions.showKeypad,                  SIGNAL( toggled( bool )                       ), p,                     SLOT( showKeypad( bool )                    ) );
+  connect( actions.showMenuBar,                 SIGNAL( triggered()                           ), p,                     SLOT( showMenuBar()                         ) );
+  connect( actions.showVariables,               SIGNAL( toggled( bool )                       ), p,                     SLOT( showVariables( bool )                 ) );
+  connect( actions.formatBinary,                SIGNAL( triggered()                           ), p,                     SLOT( formatBinary()                        ) );
+  connect( actions.formatEngineering,           SIGNAL( triggered()                           ), p,                     SLOT( formatEngineering()                   ) );
+  connect( actions.formatFixed,                 SIGNAL( triggered()                           ), p,                     SLOT( formatFixed()                         ) );
+  connect( actions.formatGeneral,               SIGNAL( triggered()                           ), p,                     SLOT( formatGeneral()                       ) );
+  connect( actions.formatHexadec,               SIGNAL( triggered()                           ), p,                     SLOT( formatHexadec()                       ) );
+  connect( actions.formatOctal,                 SIGNAL( triggered()                           ), p,                     SLOT( formatOctal()                         ) );
+  connect( actions.formatScientific,            SIGNAL( triggered()                           ), p,                     SLOT( formatScientific()                    ) );
+  connect( actions.optionAutoCalc,              SIGNAL( toggled( bool )                       ), p,                     SLOT( autoCalcToggled( bool )               ) );
+  connect( actions.optionAutoCompletion,        SIGNAL( toggled( bool )                       ), p,                     SLOT( autoCompletionToggled( bool )         ) );
+  connect( actions.optionAlwaysOnTop,           SIGNAL( toggled( bool )                       ), p,                     SLOT( alwaysOnTopToggled( bool )            ) );
+  connect( actions.optionMinimizeToTray,        SIGNAL( toggled( bool )                       ), p,                     SLOT( minimizeToTrayToggled( bool )         ) );
+  connect( actions.radixCharAuto,               SIGNAL( triggered()                           ), p,                     SLOT( radixCharAutoActivated()              ) );
+  connect( actions.radixCharDot,                SIGNAL( triggered()                           ), p,                     SLOT( radixCharDotActivated()               ) );
+  connect( actions.radixCharComma,              SIGNAL( triggered()                           ), p,                     SLOT( radixCharCommaActivated()             ) );
+  connect( widgets.keypad,                      SIGNAL( buttonPressed( Keypad::Button )       ), p,                     SLOT( keypadButtonPressed( Keypad::Button ) ) );
+  connect( widgets.editor,                      SIGNAL( autoCalcEnabled( const QString & )    ), p,                     SLOT( showAutoCalc( const QString & )       ) );
+  connect( widgets.editor,                      SIGNAL( autoCalcDisabled()                    ), p,                     SLOT( hideAutoCalc()                        ) );
+  connect( widgets.editor,                      SIGNAL( returnPressed()                       ), p,                     SLOT( returnPressed()                       ) );
+  connect( widgets.editor,                      SIGNAL( textChanged()                         ), p,                     SLOT( textChanged()                         ) );
+  connect( widgets.display,                     SIGNAL( textCopied( const QString & )         ), widgets.editor,        SLOT( paste()                               ) );
+  connect( widgets.display,                     SIGNAL( textCopied( const QString & )         ), widgets.editor,        SLOT( setFocus()                            ) );
+  connect( p,                                   SIGNAL( formatChanged( char )                 ), widgets.editor,        SLOT( setFormat( char )                     ) );
+  connect( p,                                   SIGNAL( precisionChanged( int )               ), widgets.editor,        SLOT( setPrecision( int )                   ) );
+  connect( p,                                   SIGNAL( radixCharChanged( char )              ), widgets.editor,        SLOT( setRadixChar( char )                  ) );
+  connect( p,                                   SIGNAL( formatChanged( char )                 ), widgets.display,       SLOT( setFormat( char )                     ) );
+  connect( p,                                   SIGNAL( precisionChanged( int )               ), widgets.display,       SLOT( setPrecision( int )                   ) );
+  connect( p,                                   SIGNAL( radixCharChanged( char )              ), widgets.display,       SLOT( setRadixChar( char )                  ) );
+  connect( p,                                   SIGNAL( radixCharChanged( char )              ), widgets.keypad,        SLOT( setRadixChar( char )                  ) );
+  connect( p,                                   SIGNAL( radixCharChanged( char )              ), evaluator,             SLOT( setRadixChar( char )                  ) );
+  connect( p,                                   SIGNAL( angleModeChanged( char )              ), functions,             SLOT( setAngleMode( char )                  ) );
 }
 
 
@@ -739,18 +808,14 @@ void MainWindow::Private::applySettings()
   // docks
   actions.showConstants->setChecked( settings.showConstants );
   actions.showFunctions->setChecked( settings.showFunctions );
-  actions.showHistory->setChecked( settings.showHistory );
+  actions.showHistory  ->setChecked( settings.showHistory   );
   actions.showVariables->setChecked( settings.showVariables );
-  restoreDocks();
+  restoreFloatingDocks();
 }
 
 
 void MainWindow::Private::saveSettings()
 {
-  // main window
-  settings.mainWindowState = p->saveState();
-  settings.mainWindowSize  = p->size();
-
   // history
   settings.history        = widgets.editor->history();
   settings.historyResults = widgets.editor->historyResults();
@@ -769,32 +834,51 @@ void MainWindow::Private::saveSettings()
     }
   }
 
-  // history dock
-  settings.historyDockFloating   = docks.history->isFloating();
-  settings.historyDockLeft       = docks.history->x();
-  settings.historyDockTop        = docks.history->y();
-  settings.historyDockWidth      = docks.history->width();
-  settings.historyDockHeight     = docks.history->height();
-  // functions dock
-  settings.functionsDockFloating = docks.functions->isFloating();
-  settings.functionsDockLeft     = docks.functions->x();
-  settings.functionsDockTop      = docks.functions->y();
-  settings.functionsDockWidth    = docks.functions->width();
-  settings.functionsDockHeight   = docks.functions->height();
-  // variables dock
-  settings.variablesDockFloating = docks.variables->isFloating();
-  settings.variablesDockLeft     = docks.variables->x();
-  settings.variablesDockTop      = docks.variables->y();
-  settings.variablesDockWidth    = docks.variables->width();
-  settings.variablesDockHeight   = docks.variables->height();
-  // constants dock
-  settings.constantsDockFloating = docks.constants->isFloating();
-  settings.constantsDockLeft     = docks.constants->x();
-  settings.constantsDockTop      = docks.constants->y();
-  settings.constantsDockWidth    = docks.constants->width();
-  settings.constantsDockHeight   = docks.constants->height();
+  syncWindowStateToSettings();
 
   settings.save();
+}
+
+
+void MainWindow::Private::syncWindowStateToSettings()
+{
+  // main window
+  settings.mainWindowState = p->saveState();
+  settings.mainWindowSize  = p->size();
+
+  // docks
+  if ( docks.history )
+  {
+    settings.historyDockFloating   = docks.history->isFloating();
+    settings.historyDockLeft       = docks.history->x();
+    settings.historyDockTop        = docks.history->y();
+    settings.historyDockWidth      = docks.history->width();
+    settings.historyDockHeight     = docks.history->height();
+  }
+  if ( docks.functions )
+  {
+    settings.functionsDockFloating = docks.functions->isFloating();
+    settings.functionsDockLeft     = docks.functions->x();
+    settings.functionsDockTop      = docks.functions->y();
+    settings.functionsDockWidth    = docks.functions->width();
+    settings.functionsDockHeight   = docks.functions->height();
+  }
+  if ( docks.variables )
+  {
+    settings.variablesDockFloating = docks.variables->isFloating();
+    settings.variablesDockLeft     = docks.variables->x();
+    settings.variablesDockTop      = docks.variables->y();
+    settings.variablesDockWidth    = docks.variables->width();
+    settings.variablesDockHeight   = docks.variables->height();
+  }
+  if ( docks.constants )
+  {
+    settings.constantsDockFloating = docks.constants->isFloating();
+    settings.constantsDockLeft     = docks.constants->x();
+    settings.constantsDockTop      = docks.constants->y();
+    settings.constantsDockWidth    = docks.constants->width();
+    settings.constantsDockHeight   = docks.constants->height();
+  }
 }
 
 
@@ -827,20 +911,12 @@ bool MainWindow::event( QEvent * e )
 {
   if ( e->type() == QEvent::WindowStateChange )
   {
-    if ( (windowState() & Qt::WindowMinimized)
-         && d->settings.minimizeToTray )
-      QTimer::singleShot( 100, this, SLOT( minimizeToTray() ) );
+    if ( windowState() & Qt::WindowMinimized )
+    {
+      if ( d->settings.minimizeToTray )
+        QTimer::singleShot( 100, this, SLOT( minimizeToTray() ) );
+    }
   }
-
-  // ensure dock windows keep their state after minimize / screen switch
-  //if ( d->settings.showConstants ) QTimer::singleShot( 0, d->docks.constants,
-  //                                                     SLOT( show() ) );
-  //if ( d->settings.showFunctions ) QTimer::singleShot( 0, d->docks.functions,
-  //                                                     SLOT( show() ) );
-  //if ( d->settings.showHistory   ) QTimer::singleShot( 0, d->docks.history,
-  //                                                     SLOT( show() ) );
-  //if ( d->settings.showVariables ) QTimer::singleShot( 0, d->docks.variables,
-  //                                                     SLOT( show() ) );
 
   return QMainWindow::event( e );
 }
@@ -871,7 +947,8 @@ void MainWindow::clearHistory()
 {
   d->widgets.display->clear();
   d->widgets.editor->clearHistory();
-  d->docks.history->clear();
+  if ( d->settings.showHistory )
+    d->docks.history->clear();
   d->settings.history.clear();
   d->settings.historyResults.clear();
   QTimer::singleShot( 0, d->widgets.editor, SLOT( setFocus() ) );
@@ -911,7 +988,9 @@ void MainWindow::degree()
 void MainWindow::deleteAllVariables()
 {
   d->evaluator->clearVariables();
-  d->docks.variables->updateList( d->evaluator );
+
+  if ( d->settings.showVariables )
+    d->docks.variables->updateList( d->evaluator );
 }
 
 
@@ -920,7 +999,8 @@ void MainWindow::deleteVariable()
   DeleteVariableDlg dlg( d->evaluator );
   dlg.exec();
 
-  d->docks.variables->updateList( d->evaluator );
+  if ( d->settings.showVariables )
+    d->docks.variables->updateList( d->evaluator );
 }
 
 
@@ -1078,9 +1158,12 @@ void MainWindow::loadSession()
     expLs.append( exp );
     resLs.append( res );
   }
+
   d->widgets.display->appendHistory( expLs, resLs );
   d->widgets.editor->appendHistory( expLs, resLs );
-  d->docks.history->appendHistory( expLs );
+
+  if ( d->settings.showHistory )
+    d->docks.history->appendHistory( expLs );
 
   // variables
   int noVars = stream.readLine().toInt( &ok );
@@ -1150,9 +1233,10 @@ void MainWindow::minimizeToTrayToggled( bool b )
     d->menus.trayIcon->addAction( d->actions.sessionQuit    );
 
     d->widgets.trayIcon->setContextMenu( d->menus.trayIcon );
-    QObject::connect( d->widgets.trayIcon,
-      SIGNAL( activated( QSystemTrayIcon::ActivationReason ) ), this,
-      SLOT( trayIconActivated( QSystemTrayIcon::ActivationReason ) ) );
+    connect( d->widgets.trayIcon,
+             SIGNAL( activated( QSystemTrayIcon::ActivationReason ) ),
+             this,
+             SLOT( trayIconActivated( QSystemTrayIcon::ActivationReason ) ) );
   }
   else
   {
@@ -1240,8 +1324,10 @@ void MainWindow::setWidgetsLayoutAccordingToLanguageDirection()
   // tip of the day
   setWidgetLayoutAccordingToLanguageDirection( d->widgets.tip );
   // docks
-  setWidgetLayoutAccordingToLanguageDirection( d->docks.constants );
-  setWidgetLayoutAccordingToLanguageDirection( d->docks.functions );
+  if ( d->docks.constants )
+    setWidgetLayoutAccordingToLanguageDirection( d->docks.constants );
+  if ( d->docks.functions )
+    setWidgetLayoutAccordingToLanguageDirection( d->docks.functions );
   // tip of the day
   setWidgetLayoutAccordingToLanguageDirection( d->widgets.tip );
 
@@ -1289,36 +1375,148 @@ void MainWindow::showAutoCalc( const QString & msg )
 }
 
 
-void MainWindow::showConstants( bool b )
+void MainWindow::showInFullScreen( bool b )
 {
-  d->settings.showConstants = b;
-  d->docks.constants->setVisible( b );
-  //docks.constants->raise();
+  d->settings.showFullScreen = b;
+  b ? showFullScreen() : showNormal();
 }
 
 
-void MainWindow::showInFullScreen( bool b )
+bool MainWindow::eventFilter( QObject * o, QEvent * e )
 {
-  b ? showFullScreen() : showNormal();
-  d->settings.showFullScreen = b;
+  if ( o == d->docks.constants )
+  {
+    if ( e->type() == QEvent::Close )
+    {
+      d->deleteConstantsDock();
+      return true;
+    }
+    return false;
+  }
+
+  if ( o == d->docks.functions )
+  {
+    if ( e->type() == QEvent::Close )
+    {
+      d->deleteFunctionsDock();
+      return true;
+    }
+    return false;
+  }
+
+  if ( o == d->docks.history )
+  {
+    if ( e->type() == QEvent::Close )
+    {
+      d->deleteHistoryDock();
+      return true;
+    }
+    return false;
+  }
+
+  if ( o == d->docks.variables )
+  {
+    if ( e->type() == QEvent::Close )
+    {
+      d->deleteVariablesDock();
+      return true;
+    }
+    return false;
+  }
+
+  return QMainWindow::eventFilter( o, e );
+}
+
+
+void MainWindow::Private::deleteConstantsDock()
+{
+  qDebug( "Delete Constants Dock" );
+  p->removeDockWidget( docks.constants );
+  p->disconnect( docks.constants );
+  delete docks.constants;
+  docks.constants = 0;
+  actions.showConstants->blockSignals( true );
+  actions.showConstants->setChecked( false );
+  actions.showConstants->blockSignals( false );
+  settings.showConstants = false;
+}
+
+
+void MainWindow::Private::deleteFunctionsDock()
+{
+  qDebug( "Delete Functions Dock" );
+  p->removeDockWidget( docks.functions );
+  p->disconnect( docks.functions );
+  delete docks.functions;
+  docks.functions = 0;
+  actions.showFunctions->blockSignals( true );
+  actions.showFunctions->setChecked( false );
+  actions.showFunctions->blockSignals( false );
+  settings.showFunctions = false;
+}
+
+
+void MainWindow::Private::deleteHistoryDock()
+{
+  qDebug( "Delete History Dock" );
+  p->removeDockWidget( docks.history );
+  p->disconnect( docks.history );
+  delete docks.history;
+  docks.history = 0;
+  actions.showHistory->blockSignals( true );
+  actions.showHistory->setChecked( false );
+  actions.showHistory->blockSignals( false );
+  settings.showHistory = false;
+}
+
+
+void MainWindow::Private::deleteVariablesDock()
+{
+  qDebug( "Delete Variables Dock" );
+  p->removeDockWidget( docks.variables );
+  p->disconnect( docks.variables );
+  delete docks.variables;
+  docks.variables = 0;
+  actions.showVariables->blockSignals( true );
+  actions.showVariables->setChecked( false );
+  actions.showVariables->blockSignals( false );
+  settings.showVariables = false;
 }
 
 
 void MainWindow::showFunctions( bool b )
 {
-  if ( d->settings.showFunctions != b )
-  {
-    d->settings.showFunctions = b;
-    d->docks.functions->setVisible( b );
-  }
+  if ( b )
+    d->createFunctionsDock();
+  else
+    d->deleteFunctionsDock();
+}
+
+
+void MainWindow::showConstants( bool b )
+{
+  if ( b )
+    d->createConstantsDock();
+  else
+    d->deleteConstantsDock();
 }
 
 
 void MainWindow::showHistory( bool b )
 {
-  d->settings.showHistory = b;
-  d->docks.history->setVisible( b );
-  //docks.history->raise();
+  if ( b )
+    d->createHistoryDock();
+  else
+    d->deleteHistoryDock();
+}
+
+
+void MainWindow::showVariables( bool b )
+{
+  if ( b )
+    d->createVariablesDock();
+  else
+    d->deleteVariablesDock();
 }
 
 
@@ -1377,14 +1575,6 @@ void MainWindow::showTipOfTheDay()
   }
 
   d->widgets.tip->showText( msg, tr("Tip of the day") );
-}
-
-
-void MainWindow::showVariables( bool b )
-{
-  d->settings.showVariables = b;
-  d->docks.variables->setVisible( b );
-  //docks.variables->raise();
 }
 
 
@@ -1453,7 +1643,7 @@ void MainWindow::constantSelected( const QString & c )
     return;
 
   QString str( c );
-  str.replace( '.', d->docks.constants->radixChar() );
+  str.replace( '.', d->widgets.editor->radixChar() );
   d->widgets.editor->insert( str );
 
   QTimer::singleShot( 0, d->widgets.editor, SLOT( setFocus() ) );
@@ -1565,14 +1755,13 @@ void MainWindow::Private::restoreVariables()
     QStringList list = settings.variables[k].split( "=" );
     evaluator->set( list[0], HNumber( list[1].toAscii().data() ) );
   }
-  docks.variables->updateList( evaluator );
 
   // free memory
   settings.variables.clear();
 }
 
 
-void MainWindow::Private::restoreDocks()
+void MainWindow::Private::restoreFloatingDocks()
 {
   if ( settings.showHistory && settings.historyDockFloating
        && ! docks.history->isFloating() )
@@ -1582,7 +1771,7 @@ void MainWindow::Private::restoreDocks()
     docks.history->move( settings.historyDockLeft, settings.historyDockTop );
     docks.history->resize( settings.historyDockWidth,
                            settings.historyDockHeight );
-    QTimer::singleShot( 0, docks.history, SLOT( show() ));
+    docks.history->show();
   }
 
   if ( settings.showFunctions && settings.functionsDockFloating
@@ -1594,17 +1783,8 @@ void MainWindow::Private::restoreDocks()
                            settings.functionsDockTop );
     docks.functions->resize( settings.functionsDockWidth,
                              settings.functionsDockHeight );
-    QTimer::singleShot( 0, docks.functions, SLOT( show() ) );
+    docks.functions->show();
   }
-  //if ( d->settings.showFunctions && d->settings.functionsDockFloating && ! d->docks.functions->isFloating() )
-  //{
-  //  d->docks.functions->hide();
-  //  d->docks.functions->setFloating( true );
-  //  d->docks.functions->move( d->settings.functionsDockLeft, d->settings.functionsDockTop );
-  //  d->docks.functions->resize( d->settings.functionsDockWidth, d->settings.functionsDockHeight );
-  //  d->docks.functions->setFloating( false );
-  //  QTimer::singleShot( 0, d->docks.functions, SLOT( show() ) );
-  //}
 
   if ( settings.showVariables && settings.variablesDockFloating
        && ! docks.variables->isFloating() )
@@ -1615,7 +1795,7 @@ void MainWindow::Private::restoreDocks()
                            settings.variablesDockTop );
     docks.variables->resize( settings.variablesDockWidth,
                              settings.variablesDockHeight );
-    QTimer::singleShot( 0, docks.variables, SLOT( show() ) );
+    docks.variables->show();
   }
 
   if ( settings.showConstants && settings.constantsDockFloating
@@ -1627,7 +1807,7 @@ void MainWindow::Private::restoreDocks()
                            settings.constantsDockTop );
     docks.constants->resize( settings.constantsDockWidth,
                              settings.constantsDockHeight );
-    QTimer::singleShot( 0, docks.constants, SLOT( show() ) );
+    docks.constants->show();
   }
 }
 
@@ -1643,7 +1823,9 @@ void MainWindow::Private::restoreHistory()
   widgets.editor->setHistory( settings.history );
   widgets.editor->setHistoryResults( settings.historyResults );
   widgets.display->appendHistory( settings.history, settings.historyResults );
-  docks.history->setHistory( settings.history );
+
+  if ( docks.history )
+    docks.history->setHistory( widgets.editor->history() );
 
   // free some useless memory
   settings.history.clear();
@@ -1658,7 +1840,9 @@ void MainWindow::returnPressed()
     return;
 
   d->evaluator->setExpression( str );
-  d->docks.history->append( str );
+
+  if ( d->settings.showHistory )
+    d->docks.history->append( str );
 
   HNumber result = d->evaluator->evalUpdateAns();
   if ( ! d->evaluator->error().isEmpty() )
@@ -1673,7 +1857,8 @@ void MainWindow::returnPressed()
     d->widgets.editor->appendHistory( str, num );
     free( num );
     d->widgets.editor->setAnsAvailable( true );
-    d->docks.variables->updateList( d->evaluator );
+    if ( d->settings.showVariables )
+      d->docks.variables->updateList( d->evaluator );
   }
 
   d->widgets.editor->setText( str );
@@ -1735,31 +1920,33 @@ void MainWindow::trayIconActivated( QSystemTrayIcon::ActivationReason r )
     activateWindow();
     d->widgets.editor->setFocus();
     QTimer::singleShot( 0, d->widgets.trayIcon, SLOT( hide() ) );
-  }
 
-  // work around docks does not reappear (under KDE/Linux)
-//#ifdef Q_OS_UNIX
-//  if ( docks.history->isFloating() )
-//  {
-//    docks.history->hide();
-//    QTimer::singleShot( 0, docks.history, SLOT(show()) );
-//  }
-//  if ( docks.functions->isFloating() )
-//  {
-//    docks.functions->hide();
-//    QTimer::singleShot( 0, docks.functions, SLOT(show()) );
-//  }
-//  if ( docks.variables->isFloating() )
-//  {
-//    docks.variables->hide();
-//    QTimer::singleShot( 0, docks.variables, SLOT(show()) );
-//  }
-//  if ( docks.constants->isFloating() )
-//  {
-//    docks.constants->hide();
-//    QTimer::singleShot( 0, docks.constants, SLOT(show()) );
-//  }
-//#endif
+    // work around docks do not reappear
+    if ( d->docks.history )
+      if ( d->docks.history->isFloating() )
+      {
+        d->docks.history->hide();
+        d->docks.history->show();
+      }
+    if ( d->docks.functions )
+      if ( d->docks.functions->isFloating() )
+      {
+        d->docks.functions->hide();
+        d->docks.functions->show();
+      }
+    if ( d->docks.variables )
+      if ( d->docks.variables->isFloating() )
+      {
+        d->docks.variables->hide();
+        d->docks.variables->show();
+      }
+    if ( d->docks.constants )
+      if ( d->docks.constants->isFloating() )
+      {
+        d->docks.constants->hide();
+        d->docks.constants->show();
+      }
+  }
 }
 
 
@@ -1806,16 +1993,20 @@ void MainWindow::closeEvent( QCloseEvent * e )
 {
   d->saveSettings();
 
-  //if ( d->widgets.trayIcon )
-  //  d->widgets.trayIcon->hide();
-  //d->docks.constants->close();
-  //d->docks.variables->close();
-  //d->docks.functions->close();
-  //d->docks.history->close();
+  if ( d->widgets.trayIcon )
+    d->widgets.trayIcon->hide();
+  if ( d->docks.constants )
+    d->deleteConstantsDock();
+  if ( d->docks.variables )
+    d->deleteVariablesDock();
+  if ( d->docks.functions )
+    d->deleteFunctionsDock();
+  if ( d->docks.history )
+    d->deleteHistoryDock();
 
-  //QMainWindow::closeEvent( e );
   //emit quitApplication();
-  e->accept();
+  //e->accept();
+  QMainWindow::closeEvent( e );
 }
 
 

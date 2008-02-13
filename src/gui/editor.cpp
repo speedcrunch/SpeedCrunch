@@ -193,6 +193,12 @@ QString Editor::text() const
 }
 
 
+char Editor::radixChar() const
+{
+  return d->radixChar;
+}
+
+
 void Editor::setText( const QString & str )
 {
   setPlainText( str );

@@ -72,8 +72,11 @@ int main( int argc, char * * argv )
   MainWindow mw;
   mw.show();
 
-  app.connect( & app, SIGNAL( lastWindowClosed() ), & app, SLOT( quit() ) );
-  app.connect( & mw,  SIGNAL( quitApplication()  ), & app, SLOT( quit() ) );
+  app.connect( & app, SIGNAL( lastWindowClosed() ),
+               & app, SLOT( quit() ) );
+
+  app.connect( & mw, SIGNAL( quitApplication() ),
+               & app, SLOT( quit() ) );
 
   return app.exec();
 }

@@ -50,10 +50,10 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="318"/>
         <source>OK</source>
-        <translation>אישור</translation>
+        <translation type="obsolete">אישור</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="340"/>
+        <location filename="../gui/aboutbox.cpp" line="341"/>
         <source>About SpeedCrunch</source>
         <translation>אודות SpeedCrunch</translation>
     </message>
@@ -123,7 +123,7 @@
         <translation>כל הזכויות שמורות (C)</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="313"/>
+        <location filename="../gui/aboutbox.cpp" line="314"/>
         <source>Visit &lt;b&gt;http://www.speedcrunch.org&lt;/b&gt; for more information!</source>
         <translation>בקרו ב-&lt;b&gt;http://www.speedcrunch.org&lt;/b&gt; למידע נוסף!</translation>
     </message>
@@ -181,6 +181,11 @@
         <location filename="../src/gui/aboutbox.cpp" line="282"/>
         <source>Turkish</source>
         <translation type="obsolete">תורכית</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="319"/>
+        <source>Close</source>
+        <translation type="unfinished">סגירה</translation>
     </message>
 </context>
 <context>
@@ -342,7 +347,7 @@
 <context>
     <name>ConstantCompletion</name>
     <message>
-        <location filename="../gui/editor.cpp" line="1153"/>
+        <location filename="../gui/editor.cpp" line="1198"/>
         <source>All</source>
         <translation>הכל</translation>
     </message>
@@ -352,257 +357,515 @@
     <message>
         <location filename="../base/constants.cpp" line="47"/>
         <source>General Physics</source>
-        <translation>פיסיקה כללית</translation>
+        <translation type="obsolete">פיסיקה כללית</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="58"/>
         <source>Electromagnetic</source>
-        <translation>אלקטרומגנטי</translation>
+        <translation type="obsolete">אלקטרומגנטי</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="68"/>
         <source>Atomic &amp; Nuclear</source>
-        <translation>אטומי &amp;וגרעיני</translation>
+        <translation type="obsolete">אטומי &amp;וגרעיני</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="80"/>
         <source>Physico-chemical</source>
-        <translation>פיסי-כימי</translation>
+        <translation type="obsolete">פיסי-כימי</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="93"/>
         <source>Astronomy</source>
-        <translation>אסטרונומיה</translation>
+        <translation type="obsolete">אסטרונומיה</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="41"/>
         <source>Characteristic Impedance of Vacuum</source>
-        <translation>היגב אופייני של ריק</translation>
+        <translation type="obsolete">היגב אופייני של ריק</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="42"/>
         <source>Electric Constant</source>
-        <translation>קבוע חשמלי</translation>
+        <translation type="obsolete">קבוע חשמלי</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="43"/>
         <source>Magnetic Constant</source>
-        <translation>קבוע מגנטי</translation>
+        <translation type="obsolete">קבוע מגנטי</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="44"/>
         <source>Gravitation Constant</source>
-        <translation>קבוע כבידה</translation>
+        <translation type="obsolete">קבוע כבידה</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="45"/>
         <source>Planck&apos;s Constant</source>
-        <translation>קבוע פלנק</translation>
+        <translation type="obsolete">קבוע פלנק</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="46"/>
         <source>Dirac&apos;s Constant</source>
-        <translation>קבוע דירק</translation>
+        <translation type="obsolete">קבוע דירק</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="47"/>
         <source>Speed of Light in Vacuum</source>
-        <translation>מהירות האור בריק</translation>
+        <translation type="obsolete">מהירות האור בריק</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="50"/>
         <source>Bohr-Procopiu Magneton</source>
-        <translation>מגנטון בוהר-פרוקופיו</translation>
+        <translation type="obsolete">מגנטון בוהר-פרוקופיו</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="51"/>
         <source>Conductance Quantum</source>
-        <translation>קוונט מוליכות</translation>
+        <translation type="obsolete">קוונט מוליכות</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="52"/>
         <source>Coulomb&apos;s Constant</source>
-        <translation>קבוע קולון</translation>
+        <translation type="obsolete">קבוע קולון</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="53"/>
         <source>Elementary Charge</source>
-        <translation>מטען יסודי  </translation>
+        <translation type="obsolete">מטען יסודי  </translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="54"/>
         <source>Josephson Constant</source>
-        <translation>קבוע יוספסון</translation>
+        <translation type="obsolete">קבוע יוספסון</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="55"/>
         <source>Magnetic Flux Quantum</source>
-        <translation>קוונט שטף מגנטי</translation>
+        <translation type="obsolete">קוונט שטף מגנטי</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="56"/>
         <source>Nuclear Magneton</source>
-        <translation>מגנטון גרעיני</translation>
+        <translation type="obsolete">מגנטון גרעיני</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="57"/>
         <source>Resistance Quantum</source>
-        <translation>קוונט התנגדות </translation>
+        <translation type="obsolete">קוונט התנגדות </translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="58"/>
         <source>von Klitzing Constant</source>
-        <translation>קבוע פון קליצינג</translation>
+        <translation type="obsolete">קבוע פון קליצינג</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="61"/>
         <source>Bohr Radius</source>
-        <translation>רדיוס בוהר</translation>
+        <translation type="obsolete">רדיוס בוהר</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="62"/>
         <source>Fermi Coupling Constant</source>
-        <translation>קבוע הצימוד של פרמי</translation>
+        <translation type="obsolete">קבוע הצימוד של פרמי</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="63"/>
         <source>Fine-structure Constant</source>
-        <translation>קבוע המבנה העדין</translation>
+        <translation type="obsolete">קבוע המבנה העדין</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="64"/>
         <source>Hartree Energy</source>
-        <translation>אנרגיית הרטרי</translation>
+        <translation type="obsolete">אנרגיית הרטרי</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="65"/>
         <source>Quantum of Circulation</source>
-        <translation>קוונט סירקולציה</translation>
+        <translation type="obsolete">קוונט סירקולציה</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="66"/>
         <source>Rydberg Constant</source>
-        <translation>קבוע רידברג</translation>
+        <translation type="obsolete">קבוע רידברג</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="67"/>
         <source>Thomson Cross Section</source>
-        <translation>חתך פעולה של תומסון</translation>
+        <translation type="obsolete">חתך פעולה של תומסון</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="68"/>
         <source>Weak Mixing Angle</source>
-        <translation>זווית ערבוב חלש</translation>
+        <translation type="obsolete">זווית ערבוב חלש</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="71"/>
         <source>Atomic Mass Unit</source>
-        <translation>יחידת מסה אטומית</translation>
+        <translation type="obsolete">יחידת מסה אטומית</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="72"/>
         <source>Avogadro&apos;s Number</source>
-        <translation>מספר אבוגדרו</translation>
+        <translation type="obsolete">מספר אבוגדרו</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="73"/>
         <source>Boltzmann Constant</source>
-        <translation>קבוע בולצמן</translation>
+        <translation type="obsolete">קבוע בולצמן</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="74"/>
         <source>Faraday Constant</source>
-        <translation>קבוע פארדי</translation>
+        <translation type="obsolete">קבוע פארדי</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="75"/>
         <source>First Radiation Constant</source>
-        <translation>קבוע הקרינה הראשון</translation>
+        <translation type="obsolete">קבוע הקרינה הראשון</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="76"/>
         <source>Loschmidt Constant</source>
-        <translation>קבוע לושמידט</translation>
+        <translation type="obsolete">קבוע לושמידט</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="77"/>
         <source>Gas Constant</source>
-        <translation>קבוע הגזים</translation>
+        <translation type="obsolete">קבוע הגזים</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="78"/>
         <source>Molar Planck Constant</source>
-        <translation>קבוע פלנק מולרי</translation>
+        <translation type="obsolete">קבוע פלנק מולרי</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="79"/>
         <source>Second Radiation Constant</source>
-        <translation>קבוע הקרינה השני</translation>
+        <translation type="obsolete">קבוע הקרינה השני</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="80"/>
         <source>Stefan-Boltzmann Constant</source>
-        <translation>קבוע סטפן-בולצמן</translation>
+        <translation type="obsolete">קבוע סטפן-בולצמן</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="83"/>
         <source>Astronomical Unit</source>
-        <translation>יחידה אסטרונומית</translation>
+        <translation type="obsolete">יחידה אסטרונומית</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="84"/>
         <source>Light Year</source>
-        <translation>שנת אור</translation>
+        <translation type="obsolete">שנת אור</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="85"/>
         <source>Parsec</source>
-        <translation>פארסק</translation>
+        <translation type="obsolete">פארסק</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="86"/>
         <source>Sidereal Year</source>
-        <translation>שנת שמש</translation>
+        <translation type="obsolete">שנת שמש</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="88"/>
         <source>days</source>
-        <translation>ימים</translation>
+        <translation type="obsolete">ימים</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="87"/>
         <source>Tropical Year</source>
-        <translation>שנה טרופית</translation>
+        <translation type="obsolete">שנה טרופית</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="88"/>
         <source>Gregorian Year</source>
-        <translation>שנה גרגוריאנית</translation>
+        <translation type="obsolete">שנה גרגוריאנית</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="89"/>
         <source>Earth Mass</source>
-        <translation>מסה של כדור הארץ</translation>
+        <translation type="obsolete">מסה של כדור הארץ</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="90"/>
         <source>Sun Mass</source>
-        <translation>מסת השמש</translation>
+        <translation type="obsolete">מסת השמש</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="91"/>
         <source>Mean Earth Radius</source>
-        <translation>רדיוס ממוצע של כדור הארץ</translation>
+        <translation type="obsolete">רדיוס ממוצע של כדור הארץ</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="92"/>
         <source>Sun Radius</source>
-        <translation>רדיוס השמש</translation>
+        <translation type="obsolete">רדיוס השמש</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="93"/>
         <source>Sun Luminosity</source>
-        <translation>בהירות השמש</translation>
+        <translation type="obsolete">בהירות השמש</translation>
+    </message>
+</context>
+<context>
+    <name>Constants::Private</name>
+    <message>
+        <location filename="../base/constants.cpp" line="38"/>
+        <source>Characteristic Impedance of Vacuum</source>
+        <translation type="unfinished">היגב אופייני של ריק</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="44"/>
+        <source>General Physics</source>
+        <translation type="unfinished">פיסיקה כללית</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="39"/>
+        <source>Electric Constant</source>
+        <translation type="unfinished">קבוע חשמלי</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="40"/>
+        <source>Magnetic Constant</source>
+        <translation type="unfinished">קבוע מגנטי</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="41"/>
+        <source>Gravitation Constant</source>
+        <translation type="unfinished">קבוע כבידה</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="42"/>
+        <source>Planck&apos;s Constant</source>
+        <translation type="unfinished">קבוע פלנק</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="43"/>
+        <source>Dirac&apos;s Constant</source>
+        <translation type="unfinished">קבוע דירק</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="44"/>
+        <source>Speed of Light in Vacuum</source>
+        <translation type="unfinished">מהירות האור בריק</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="47"/>
+        <source>Bohr-Procopiu Magneton</source>
+        <translation type="unfinished">מגנטון בוהר-פרוקופיו</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="55"/>
+        <source>Electromagnetic</source>
+        <translation type="unfinished">אלקטרומגנטי</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="48"/>
+        <source>Conductance Quantum</source>
+        <translation type="unfinished">קוונט מוליכות</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="49"/>
+        <source>Coulomb&apos;s Constant</source>
+        <translation type="unfinished">קבוע קולון</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="50"/>
+        <source>Elementary Charge</source>
+        <translation type="unfinished">מטען יסודי  </translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="51"/>
+        <source>Josephson Constant</source>
+        <translation type="unfinished">קבוע יוספסון</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="52"/>
+        <source>Magnetic Flux Quantum</source>
+        <translation type="unfinished">קוונט שטף מגנטי</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="53"/>
+        <source>Nuclear Magneton</source>
+        <translation type="unfinished">מגנטון גרעיני</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="54"/>
+        <source>Resistance Quantum</source>
+        <translation type="unfinished">קוונט התנגדות </translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="55"/>
+        <source>von Klitzing Constant</source>
+        <translation type="unfinished">קבוע פון קליצינג</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="58"/>
+        <source>Bohr Radius</source>
+        <translation type="unfinished">רדיוס בוהר</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="65"/>
+        <source>Atomic &amp; Nuclear</source>
+        <translation type="unfinished">אטומי &amp;וגרעיני</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="59"/>
+        <source>Fermi Coupling Constant</source>
+        <translation type="unfinished">קבוע הצימוד של פרמי</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="60"/>
+        <source>Fine-structure Constant</source>
+        <translation type="unfinished">קבוע המבנה העדין</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="61"/>
+        <source>Hartree Energy</source>
+        <translation type="unfinished">אנרגיית הרטרי</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="62"/>
+        <source>Quantum of Circulation</source>
+        <translation type="unfinished">קוונט סירקולציה</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="63"/>
+        <source>Rydberg Constant</source>
+        <translation type="unfinished">קבוע רידברג</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="64"/>
+        <source>Thomson Cross Section</source>
+        <translation type="unfinished">חתך פעולה של תומסון</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="65"/>
+        <source>Weak Mixing Angle</source>
+        <translation type="unfinished">זווית ערבוב חלש</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="68"/>
+        <source>Atomic Mass Unit</source>
+        <translation type="unfinished">יחידת מסה אטומית</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="77"/>
+        <source>Physico-chemical</source>
+        <translation type="unfinished">פיסי-כימי</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="69"/>
+        <source>Avogadro&apos;s Number</source>
+        <translation type="unfinished">מספר אבוגדרו</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="70"/>
+        <source>Boltzmann Constant</source>
+        <translation type="unfinished">קבוע בולצמן</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="71"/>
+        <source>Faraday Constant</source>
+        <translation type="unfinished">קבוע פארדי</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="72"/>
+        <source>First Radiation Constant</source>
+        <translation type="unfinished">קבוע הקרינה הראשון</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="73"/>
+        <source>Loschmidt Constant</source>
+        <translation type="unfinished">קבוע לושמידט</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="74"/>
+        <source>Gas Constant</source>
+        <translation type="unfinished">קבוע הגזים</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="75"/>
+        <source>Molar Planck Constant</source>
+        <translation type="unfinished">קבוע פלנק מולרי</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="76"/>
+        <source>Second Radiation Constant</source>
+        <translation type="unfinished">קבוע הקרינה השני</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="77"/>
+        <source>Stefan-Boltzmann Constant</source>
+        <translation type="unfinished">קבוע סטפן-בולצמן</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="80"/>
+        <source>Astronomical Unit</source>
+        <translation type="unfinished">יחידה אסטרונומית</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="90"/>
+        <source>Astronomy</source>
+        <translation type="unfinished">אסטרונומיה</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="81"/>
+        <source>Light Year</source>
+        <translation type="unfinished">שנת אור</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="82"/>
+        <source>Parsec</source>
+        <translation type="unfinished">פארסק</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="83"/>
+        <source>Sidereal Year</source>
+        <translation type="unfinished">שנת שמש</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="85"/>
+        <source>days</source>
+        <translation type="unfinished">ימים</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="84"/>
+        <source>Tropical Year</source>
+        <translation type="unfinished">שנה טרופית</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="85"/>
+        <source>Gregorian Year</source>
+        <translation type="unfinished">שנה גרגוריאנית</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="86"/>
+        <source>Earth Mass</source>
+        <translation type="unfinished">מסה של כדור הארץ</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="87"/>
+        <source>Sun Mass</source>
+        <translation type="unfinished">מסת השמש</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="88"/>
+        <source>Mean Earth Radius</source>
+        <translation type="unfinished">רדיוס ממוצע של כדור הארץ</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="89"/>
+        <source>Sun Radius</source>
+        <translation type="unfinished">רדיוס השמש</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="90"/>
+        <source>Sun Luminosity</source>
+        <translation type="unfinished">בהירות השמש</translation>
     </message>
 </context>
 <context>
@@ -613,22 +876,22 @@
         <translation>קבועים</translation>
     </message>
     <message>
-        <location filename="../gui/constantsdock.cpp" line="55"/>
+        <location filename="../gui/constantsdock.cpp" line="62"/>
         <source>Category</source>
         <translation>קטגוריה</translation>
     </message>
     <message>
-        <location filename="../gui/constantsdock.cpp" line="70"/>
+        <location filename="../gui/constantsdock.cpp" line="77"/>
         <source>Search</source>
         <translation>חיפוש</translation>
     </message>
     <message>
-        <location filename="../gui/constantsdock.cpp" line="111"/>
+        <location filename="../gui/constantsdock.cpp" line="119"/>
         <source>No match found</source>
         <translation>לא נמצאה אף התאמה</translation>
     </message>
     <message>
-        <location filename="../gui/constantsdock.cpp" line="265"/>
+        <location filename="../gui/constantsdock.cpp" line="275"/>
         <source>All</source>
         <translation>הכל</translation>
     </message>
@@ -956,27 +1219,27 @@ Click on the icon to reactivate it.</source>
 <context>
     <name>DeleteVariableDlg</name>
     <message>
-        <location filename="../gui/deletevardlg.cpp" line="74"/>
+        <location filename="../gui/deletevardlg.cpp" line="75"/>
         <source>Name</source>
         <translation>שם</translation>
     </message>
     <message>
-        <location filename="../gui/deletevardlg.cpp" line="75"/>
+        <location filename="../gui/deletevardlg.cpp" line="76"/>
         <source>Value</source>
         <translation>ערך</translation>
     </message>
     <message>
-        <location filename="../gui/deletevardlg.cpp" line="79"/>
+        <location filename="../gui/deletevardlg.cpp" line="80"/>
         <source>&amp;Delete</source>
         <translation>&amp;מחיקה</translation>
     </message>
     <message>
-        <location filename="../gui/deletevardlg.cpp" line="83"/>
+        <location filename="../gui/deletevardlg.cpp" line="84"/>
         <source>Close</source>
         <translation>סגירה</translation>
     </message>
     <message>
-        <location filename="../gui/deletevardlg.cpp" line="58"/>
+        <location filename="../gui/deletevardlg.cpp" line="59"/>
         <source>Delete Variable</source>
         <translation>מחיקת משתנה</translation>
     </message>
@@ -986,7 +1249,7 @@ Click on the icon to reactivate it.</source>
     <message>
         <location filename="../gui/editor.cpp" line="678"/>
         <source>Result:</source>
-        <translation>תוצאה:</translation>
+        <translation type="obsolete">תוצאה:</translation>
     </message>
 </context>
 <context>
@@ -1275,352 +1538,352 @@ Click on the icon to reactivate it.</source>
 <context>
     <name>Functions</name>
     <message>
-        <location filename="../base/functions.cpp" line="1209"/>
+        <location filename="../base/functions.cpp" line="1308"/>
         <source>Absolute Value</source>
         <translation type="unfinished">ערך מוחלט</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1210"/>
+        <location filename="../base/functions.cpp" line="1309"/>
         <source>Average (Arithmetic Mean)</source>
         <translation type="unfinished">ממוצע (מתימטי)</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1211"/>
+        <location filename="../base/functions.cpp" line="1310"/>
         <source>Binary Representation</source>
         <translation type="unfinished">ייצוג בינארי</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1212"/>
+        <location filename="../base/functions.cpp" line="1311"/>
         <source>Cube Root</source>
         <translation type="unfinished">שורש שלישי</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1213"/>
+        <location filename="../base/functions.cpp" line="1312"/>
         <source>Ceiling</source>
         <translation type="unfinished">עיגול מעלה</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1214"/>
+        <location filename="../base/functions.cpp" line="1313"/>
         <source>Decimal Representation</source>
         <translation type="unfinished">הצגה דצימלית</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1215"/>
+        <location filename="../base/functions.cpp" line="1314"/>
         <source>Floor</source>
         <translation type="unfinished">עיגול מטה</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1216"/>
+        <location filename="../base/functions.cpp" line="1315"/>
         <source>Fractional Part</source>
         <translation type="unfinished">החלק השבור</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1217"/>
+        <location filename="../base/functions.cpp" line="1316"/>
         <source>Extension of Factorials [= (x-1)!]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1218"/>
+        <location filename="../base/functions.cpp" line="1317"/>
         <source>Geometric Mean</source>
         <translation type="unfinished">ממוצע הנדסי</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1219"/>
+        <location filename="../base/functions.cpp" line="1318"/>
         <source>Hexadecimal Representation</source>
         <translation type="unfinished">הצגה הקסדצימלית</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1220"/>
+        <location filename="../base/functions.cpp" line="1319"/>
         <source>Integer Part</source>
         <translation type="unfinished">החלק השלם</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1221"/>
+        <location filename="../base/functions.cpp" line="1320"/>
         <source>ln(abs(Gamma))</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1222"/>
+        <location filename="../base/functions.cpp" line="1321"/>
         <source>Maximum</source>
         <translation type="unfinished">מקסימום</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1223"/>
+        <location filename="../base/functions.cpp" line="1322"/>
         <source>Minimum</source>
         <translation type="unfinished">מינימום</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1224"/>
+        <location filename="../base/functions.cpp" line="1323"/>
         <source>Octal Representation</source>
         <translation type="unfinished">הצגה אוקטאלית</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1225"/>
+        <location filename="../base/functions.cpp" line="1324"/>
         <source>Product</source>
         <translation type="unfinished">מכפלה</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1226"/>
+        <location filename="../base/functions.cpp" line="1325"/>
         <source>Rounding</source>
         <translation type="unfinished">עיגול</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1227"/>
+        <location filename="../base/functions.cpp" line="1326"/>
         <source>Signum</source>
         <translation type="unfinished">סימן</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1228"/>
+        <location filename="../base/functions.cpp" line="1327"/>
         <source>Square Root</source>
         <translation type="unfinished">שורש ריבועי</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1229"/>
+        <location filename="../base/functions.cpp" line="1328"/>
         <source>Sum</source>
         <translation type="unfinished">סכום</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1230"/>
+        <location filename="../base/functions.cpp" line="1329"/>
         <source>Truncation</source>
         <translation type="unfinished">קיצוץ</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1233"/>
+        <location filename="../base/functions.cpp" line="1332"/>
         <source>Area Hyperbolic Cosine</source>
         <translation type="unfinished">ארק קוסינוס היפרבולי</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1234"/>
+        <location filename="../base/functions.cpp" line="1333"/>
         <source>Area Hyperbolic Sine</source>
         <translation type="unfinished">ארק סינוס היפרבולי</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1235"/>
+        <location filename="../base/functions.cpp" line="1334"/>
         <source>Area Hyperbolic Tangent</source>
         <translation type="unfinished">ארק טנגנס היפרבולי</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1236"/>
+        <location filename="../base/functions.cpp" line="1335"/>
         <source>Hyperbolic Cosine</source>
         <translation type="unfinished">קוסינוס היפרבולי</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1237"/>
+        <location filename="../base/functions.cpp" line="1336"/>
         <source>Exponential</source>
         <translation type="unfinished">אקספוננט</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1238"/>
+        <location filename="../base/functions.cpp" line="1337"/>
         <source>Base-2 Logarithm</source>
         <translation type="unfinished">לוגריתם בבסיס 2</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1239"/>
+        <location filename="../base/functions.cpp" line="1338"/>
         <source>Natural Logarithm</source>
         <translation type="unfinished">לוגריתם טבעי</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1240"/>
+        <location filename="../base/functions.cpp" line="1339"/>
         <source>Base-10 Logarithm</source>
         <translation type="unfinished">לוגריתם בבסיס 10</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1241"/>
+        <location filename="../base/functions.cpp" line="1340"/>
         <source>Hyperbolic Sine</source>
         <translation type="unfinished">סינוס היפרבולי</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1242"/>
+        <location filename="../base/functions.cpp" line="1341"/>
         <source>Hyperbolic Tangent</source>
         <translation type="unfinished">טנגנס היפרבולי</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1245"/>
+        <location filename="../base/functions.cpp" line="1344"/>
         <source>Greatest Common Divisor</source>
         <translation type="unfinished">מחלק משותף גדול ביותר</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1246"/>
+        <location filename="../base/functions.cpp" line="1345"/>
         <source>Combination (Binomial Coefficient)</source>
         <translation type="unfinished">צירוף (מקדם בינומי)</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1247"/>
+        <location filename="../base/functions.cpp" line="1346"/>
         <source>Permutation (Arrangement)</source>
         <translation type="unfinished">תמורה (סידור)</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1250"/>
+        <location filename="../base/functions.cpp" line="1349"/>
         <source>Binomial Cumulative Distribution Function</source>
         <translation type="unfinished">פונקצית התפלגות בינומית מצטברת</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1251"/>
+        <location filename="../base/functions.cpp" line="1350"/>
         <source>Binomial Distribution Mean</source>
         <translation type="unfinished">ממוצע של התפלגות בינומית</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1252"/>
+        <location filename="../base/functions.cpp" line="1351"/>
         <source>Binomial Probability Mass Function</source>
         <translation type="unfinished">פונקצית מסה של הסתברות בינומית</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1253"/>
+        <location filename="../base/functions.cpp" line="1352"/>
         <source>Binomial Distribution Variance</source>
         <translation type="unfinished">שונות של התפלגות בינומית</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1254"/>
+        <location filename="../base/functions.cpp" line="1353"/>
         <source>Error Function</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1255"/>
+        <location filename="../base/functions.cpp" line="1354"/>
         <source>Complementary Error Function</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1256"/>
+        <location filename="../base/functions.cpp" line="1355"/>
         <source>Hypergeometric Cumulative Distribution Function</source>
         <translation type="unfinished">פונקצית התפלגות היפר גיאומטרית מצטברת</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1257"/>
+        <location filename="../base/functions.cpp" line="1356"/>
         <source>Hypergeometric Distribution Mean</source>
         <translation type="unfinished">ממוצע של התפלגות היפר גיאומטרית</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1258"/>
+        <location filename="../base/functions.cpp" line="1357"/>
         <source>Hypergeometric Probability Mass Function</source>
         <translation type="unfinished">פונקצית מסה של הסתברות היפר גיאומטרית</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1259"/>
+        <location filename="../base/functions.cpp" line="1358"/>
         <source>Hypergeometric Distribution Variance</source>
         <translation type="unfinished">שונות של התפלגות היפר גיאומטרית</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1260"/>
+        <location filename="../base/functions.cpp" line="1359"/>
         <source>Poissonian Cumulative Distribution Function</source>
         <translation type="unfinished">פונקצית התפלגות פואסונית מצטברת</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1261"/>
+        <location filename="../base/functions.cpp" line="1360"/>
         <source>Poissonian Distribution Mean</source>
         <translation type="unfinished">ממוצע של התפלגות פואסונית</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1262"/>
+        <location filename="../base/functions.cpp" line="1361"/>
         <source>Poissonian Probability Mass Function</source>
         <translation type="unfinished">פונקצית מסה של הסתברות פואסונית</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1263"/>
+        <location filename="../base/functions.cpp" line="1362"/>
         <source>Poissonian Distribution Variance</source>
         <translation type="unfinished">שונות של התפלגות פואסונית</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1266"/>
+        <location filename="../base/functions.cpp" line="1365"/>
         <source>Arc Cosine</source>
         <translation type="unfinished">ארק קוסינוס</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1267"/>
+        <location filename="../base/functions.cpp" line="1366"/>
         <source>Arc Sine</source>
         <translation type="unfinished">ארק סינוס</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1268"/>
+        <location filename="../base/functions.cpp" line="1367"/>
         <source>Arc Tangent</source>
         <translation type="unfinished">ארק טנגנס</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1269"/>
+        <location filename="../base/functions.cpp" line="1368"/>
         <source>Cosine</source>
         <translation type="unfinished">קוסינוס</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1270"/>
+        <location filename="../base/functions.cpp" line="1369"/>
         <source>Cotangent</source>
         <translation type="unfinished">קוטנגנס</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1271"/>
+        <location filename="../base/functions.cpp" line="1370"/>
         <source>Cosecant</source>
         <translation type="unfinished">קוסקנס</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1272"/>
+        <location filename="../base/functions.cpp" line="1371"/>
         <source>Degrees of Arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1273"/>
+        <location filename="../base/functions.cpp" line="1372"/>
         <source>Radians</source>
         <translation type="unfinished">רדיאנים</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1274"/>
+        <location filename="../base/functions.cpp" line="1373"/>
         <source>Secant</source>
         <translation type="unfinished">סקנס</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1275"/>
+        <location filename="../base/functions.cpp" line="1374"/>
         <source>Sine</source>
         <translation type="unfinished">סינוס</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1276"/>
+        <location filename="../base/functions.cpp" line="1375"/>
         <source>Tangent</source>
         <translation type="unfinished">טנגנס</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1279"/>
+        <location filename="../base/functions.cpp" line="1378"/>
         <source>Mask to a bit size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1280"/>
+        <location filename="../base/functions.cpp" line="1379"/>
         <source>Sign-extent a value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1281"/>
+        <location filename="../base/functions.cpp" line="1380"/>
         <source>Logical NOT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1282"/>
+        <location filename="../base/functions.cpp" line="1381"/>
         <source>Logical AND</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1283"/>
+        <location filename="../base/functions.cpp" line="1382"/>
         <source>Logical OR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1284"/>
+        <location filename="../base/functions.cpp" line="1383"/>
         <source>Logical XOR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1285"/>
+        <location filename="../base/functions.cpp" line="1384"/>
         <source>Arithmetic Shift Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1286"/>
+        <location filename="../base/functions.cpp" line="1385"/>
         <source>Arithmetic Shift Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1287"/>
+        <location filename="../base/functions.cpp" line="1386"/>
         <source>Integer Quotient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1288"/>
+        <location filename="../base/functions.cpp" line="1387"/>
         <source>Modulo</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1628,17 +1891,17 @@ Click on the icon to reactivate it.</source>
 <context>
     <name>FunctionsDock</name>
     <message>
-        <location filename="../gui/functionsdock.cpp" line="49"/>
+        <location filename="../gui/functionsdock.cpp" line="50"/>
         <source>Functions</source>
         <translation>פונקציות</translation>
     </message>
     <message>
-        <location filename="../gui/functionsdock.cpp" line="54"/>
+        <location filename="../gui/functionsdock.cpp" line="55"/>
         <source>Search</source>
         <translation>חיפוש</translation>
     </message>
     <message>
-        <location filename="../gui/functionsdock.cpp" line="91"/>
+        <location filename="../gui/functionsdock.cpp" line="93"/>
         <source>No match found</source>
         <translation>לא נמצאה אף התאמה</translation>
     </message>
@@ -1646,7 +1909,7 @@ Click on the icon to reactivate it.</source>
 <context>
     <name>HistoryDock</name>
     <message>
-        <location filename="../gui/historydock.cpp" line="32"/>
+        <location filename="../gui/historydock.cpp" line="33"/>
         <source>History</source>
         <translation>היסטוריה</translation>
     </message>
@@ -1654,27 +1917,27 @@ Click on the icon to reactivate it.</source>
 <context>
     <name>InsertFunctionDlg</name>
     <message>
-        <location filename="../gui/insertfunctiondlg.cpp" line="68"/>
+        <location filename="../gui/insertfunctiondlg.cpp" line="67"/>
         <source>Name</source>
         <translation>שם</translation>
     </message>
     <message>
-        <location filename="../gui/insertfunctiondlg.cpp" line="69"/>
+        <location filename="../gui/insertfunctiondlg.cpp" line="68"/>
         <source>Description</source>
         <translation>תיאור</translation>
     </message>
     <message>
-        <location filename="../gui/insertfunctiondlg.cpp" line="73"/>
+        <location filename="../gui/insertfunctiondlg.cpp" line="72"/>
         <source>&amp;Insert</source>
         <translation>&amp;הוספה</translation>
     </message>
     <message>
-        <location filename="../gui/insertfunctiondlg.cpp" line="77"/>
+        <location filename="../gui/insertfunctiondlg.cpp" line="76"/>
         <source>Cancel</source>
         <translation>ביטול</translation>
     </message>
     <message>
-        <location filename="../gui/insertfunctiondlg.cpp" line="54"/>
+        <location filename="../gui/insertfunctiondlg.cpp" line="53"/>
         <source>Insert Function</source>
         <translation>הוספת פונקציה</translation>
     </message>
@@ -1682,27 +1945,27 @@ Click on the icon to reactivate it.</source>
 <context>
     <name>InsertVariableDlg</name>
     <message>
-        <location filename="../gui/insertvardlg.cpp" line="86"/>
+        <location filename="../gui/insertvardlg.cpp" line="90"/>
         <source>Name</source>
         <translation>שם</translation>
     </message>
     <message>
-        <location filename="../gui/insertvardlg.cpp" line="87"/>
+        <location filename="../gui/insertvardlg.cpp" line="91"/>
         <source>Value</source>
         <translation>ערך</translation>
     </message>
     <message>
-        <location filename="../gui/insertvardlg.cpp" line="91"/>
+        <location filename="../gui/insertvardlg.cpp" line="95"/>
         <source>&amp;Insert</source>
         <translation>&amp;הוספה</translation>
     </message>
     <message>
-        <location filename="../gui/insertvardlg.cpp" line="70"/>
+        <location filename="../gui/insertvardlg.cpp" line="69"/>
         <source>Insert Variable</source>
         <translation>הכנסת משתנה</translation>
     </message>
     <message>
-        <location filename="../gui/insertvardlg.cpp" line="95"/>
+        <location filename="../gui/insertvardlg.cpp" line="99"/>
         <source>Cancel</source>
         <translation>ביטול</translation>
     </message>
@@ -1856,377 +2119,399 @@ Click on the icon to reactivate it.</source>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="898"/>
+        <location filename="../gui/mainwindow.cpp" line="866"/>
         <source>About Qt</source>
         <translation type="unfinished">אודות Qt</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1177"/>
+        <location filename="../gui/mainwindow.cpp" line="1180"/>
         <source>SpeedCrunch Sessions (*.sch);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1055"/>
+        <location filename="../gui/mainwindow.cpp" line="1014"/>
         <source>Load Session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1185"/>
+        <location filename="../gui/mainwindow.cpp" line="1189"/>
         <source>Error</source>
         <translation type="unfinished">שגיאה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1062"/>
+        <location filename="../gui/mainwindow.cpp" line="1023"/>
         <source>Can&apos;t read from file %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1088"/>
+        <location filename="../gui/mainwindow.cpp" line="1051"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1178"/>
+        <location filename="../gui/mainwindow.cpp" line="1181"/>
         <source>Save Session</source>
         <translation type="unfinished">שמירת חישובים אחרונים</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1185"/>
+        <location filename="../gui/mainwindow.cpp" line="1190"/>
         <source>Can&apos;t write to file %1</source>
         <translation type="unfinished">לא ניתן לכתוב לקובץ %1</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1330"/>
+        <location filename="../gui/mainwindow.cpp" line="1336"/>
         <source>The menu bar is now hidden. To make it visible again, press Ctrl+M.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1335"/>
+        <location filename="../gui/mainwindow.cpp" line="1342"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1352"/>
+        <location filename="../gui/mainwindow.cpp" line="1360"/>
         <source>To insert a function using keyboard, use Ctrl+F shorcut. From the dialog, you can choose the function you want to insert.</source>
         <translation type="unfinished">אפשר להוסיף פונקציה בעזרת המקלדת, באמצעות הקיצור Ctrl+F.ניתן לבחור את הפונקציה הרצויה מתוך החלון שייפתח.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1357"/>
+        <location filename="../gui/mainwindow.cpp" line="1365"/>
         <source>To insert a variable using keyboard, use Ctrl+I shorcut. From the dialog, you can choose the variable you want to insert.</source>
         <translation type="unfinished">אפשר להוסיף משתנה בעזרת המקלדת, באמצעות הקיצור Ctrl+I. ניתן לבחור את המשתנה הרצוי מתוך החלון שייפתח.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1360"/>
+        <location filename="../gui/mainwindow.cpp" line="1368"/>
         <source>Use variable &lt;i&gt;pi&lt;/i&gt; to use pi constant.</source>
         <translation type="unfinished">כדי להשתמש בקבוע פיי, השתמשו ב-&lt;i&gt;pi&lt;/i&gt;.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1364"/>
+        <location filename="../gui/mainwindow.cpp" line="1373"/>
         <source>Use &lt;i&gt;;&lt;/i&gt; (semicolon) to separate the parameters in functions.</source>
         <translation type="unfinished">ניתן להשתמש ב-&lt;i&gt;:&lt;/i&gt; (נקודותיים) כדי להפריד בין פרמטרים של פונקציות.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1370"/>
+        <location filename="../gui/mainwindow.cpp" line="1379"/>
         <source>Tip of the day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/mainwindow.cpp" line="1012"/>
+        <source>File %1 is not a valid session</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/mainwindow.cpp" line="1049"/>
+        <source>Merge session being loaded with current session?
+If no, current variables and display will be cleared.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/mainwindow.cpp" line="1144"/>
+        <source>SpeedCrunch</source>
+        <translation type="unfinished">SpeedCrunch</translation>
+    </message>
+    <message>
+        <location filename="../gui/mainwindow.cpp" line="1695"/>
+        <source>SpeedCrunch is minimized.
+Left click the icon to restore it or right click for options.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>MainWindow::Private</name>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="258"/>
+        <location filename="../gui/mainwindow.cpp" line="249"/>
         <source>Clear E&amp;xpression</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="259"/>
+        <location filename="../gui/mainwindow.cpp" line="250"/>
         <source>Clear &amp;History</source>
         <translation type="unfinished">ניקוי &amp;היסטוריה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="260"/>
+        <location filename="../gui/mainwindow.cpp" line="251"/>
         <source>&amp;Degree</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="261"/>
+        <location filename="../gui/mainwindow.cpp" line="252"/>
         <source>Delete All V&amp;ariables</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="262"/>
+        <location filename="../gui/mainwindow.cpp" line="253"/>
         <source>D&amp;elete Variable...</source>
         <translation type="unfinished">מ&amp;חיקת משתנה...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="263"/>
+        <location filename="../gui/mainwindow.cpp" line="254"/>
         <source>&amp;15 Decimal Digits</source>
         <translation type="unfinished">&amp;15 ספרות עשרוניות</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="264"/>
+        <location filename="../gui/mainwindow.cpp" line="255"/>
         <source>&amp;2 Decimal Digits</source>
         <translation type="unfinished">&amp;2 ספרות עשרוניות</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="265"/>
+        <location filename="../gui/mainwindow.cpp" line="256"/>
         <source>&amp;3 Decimal Digits</source>
         <translation type="unfinished">&amp;3 ספרות עשרוניות</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="266"/>
+        <location filename="../gui/mainwindow.cpp" line="257"/>
         <source>&amp;50 Decimal Digits</source>
         <translation type="unfinished">&amp;50 ספרות עשרוניות</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="267"/>
+        <location filename="../gui/mainwindow.cpp" line="258"/>
         <source>&amp;8 Decimal Digits</source>
         <translation type="unfinished">&amp;8 ספרות עשרוניות</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="268"/>
+        <location filename="../gui/mainwindow.cpp" line="259"/>
         <source>&amp;Automatic Precision</source>
         <translation type="unfinished">&amp;דיוק אוטומטי</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="269"/>
+        <location filename="../gui/mainwindow.cpp" line="260"/>
         <source>&amp;Copy</source>
         <translation type="unfinished">ה&amp;עתקה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="270"/>
+        <location filename="../gui/mainwindow.cpp" line="261"/>
         <source>Copy Last &amp;Result</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="271"/>
+        <location filename="../gui/mainwindow.cpp" line="262"/>
         <source>&amp;Paste</source>
         <translation type="unfinished">ה&amp;דבקה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="272"/>
+        <location filename="../gui/mainwindow.cpp" line="263"/>
         <source>&amp;About</source>
         <translation type="unfinished">&amp;אודות</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="273"/>
+        <location filename="../gui/mainwindow.cpp" line="264"/>
         <source>About &amp;Qt</source>
         <translation type="unfinished">אודות &amp;Qt</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="274"/>
+        <location filename="../gui/mainwindow.cpp" line="265"/>
         <source>SpeedCrunch &amp;Web Site...</source>
         <translation type="unfinished">אתר &amp;SpeedCrunch...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="275"/>
+        <location filename="../gui/mainwindow.cpp" line="266"/>
         <source>&amp;Tip of the Day</source>
         <translation type="unfinished">ה&amp;טיפ היומי</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="276"/>
+        <location filename="../gui/mainwindow.cpp" line="267"/>
         <source>Insert &amp;Function...</source>
         <translation type="unfinished">הכנסת &amp;פונקציה...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="277"/>
+        <location filename="../gui/mainwindow.cpp" line="268"/>
         <source>Insert &amp;Variable...</source>
         <translation type="unfinished">הכנסת &amp;משתנה...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="278"/>
+        <location filename="../gui/mainwindow.cpp" line="269"/>
         <source>&amp;Partial Results</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="279"/>
+        <location filename="../gui/mainwindow.cpp" line="270"/>
         <source>Automatic &amp;Completion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="280"/>
+        <location filename="../gui/mainwindow.cpp" line="271"/>
         <source>Stay Always On &amp;Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="281"/>
+        <location filename="../gui/mainwindow.cpp" line="272"/>
         <source>&amp;Minimize To System Tray</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="282"/>
-        <source>&amp;Automatic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gui/mainwindow.cpp" line="283"/>
+        <location filename="../gui/mainwindow.cpp" line="274"/>
         <source>&amp;Dot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="284"/>
+        <location filename="../gui/mainwindow.cpp" line="275"/>
         <source>&amp;Comma</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="285"/>
+        <location filename="../gui/mainwindow.cpp" line="276"/>
         <source>&amp;Radian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="286"/>
+        <location filename="../gui/mainwindow.cpp" line="277"/>
         <source>Scroll Display Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="287"/>
+        <location filename="../gui/mainwindow.cpp" line="278"/>
         <source>Scroll Display Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="288"/>
+        <location filename="../gui/mainwindow.cpp" line="279"/>
         <source>&amp;Select Expression</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="289"/>
+        <location filename="../gui/mainwindow.cpp" line="280"/>
         <source>&amp;Load...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="290"/>
+        <location filename="../gui/mainwindow.cpp" line="281"/>
         <source>&amp;Quit</source>
         <translation type="unfinished">&amp;יציאה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="291"/>
+        <location filename="../gui/mainwindow.cpp" line="282"/>
         <source>&amp;Save...</source>
         <translation type="unfinished">&amp;שמירת חישובים אחרונים...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="292"/>
+        <location filename="../gui/mainwindow.cpp" line="283"/>
         <source>Show &amp;Constants</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="293"/>
+        <location filename="../gui/mainwindow.cpp" line="284"/>
         <source>Full &amp;Screen Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="294"/>
+        <location filename="../gui/mainwindow.cpp" line="285"/>
         <source>Show &amp;Functions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="295"/>
+        <location filename="../gui/mainwindow.cpp" line="286"/>
         <source>Show &amp;History</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="296"/>
+        <location filename="../gui/mainwindow.cpp" line="287"/>
         <source>Show &amp;Keypad</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="297"/>
+        <location filename="../gui/mainwindow.cpp" line="288"/>
         <source>Hide &amp;Menu Bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="298"/>
+        <location filename="../gui/mainwindow.cpp" line="289"/>
         <source>Show &amp;Variables</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="299"/>
+        <location filename="../gui/mainwindow.cpp" line="290"/>
         <source>&amp;Binary</source>
         <translation type="unfinished">&amp;בינארי</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="300"/>
+        <location filename="../gui/mainwindow.cpp" line="291"/>
         <source>&amp;Engineering</source>
         <translation type="unfinished">&amp;הנדסי</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="301"/>
+        <location filename="../gui/mainwindow.cpp" line="292"/>
         <source>&amp;Fixed Decimal</source>
         <translation type="unfinished">&amp;נקודה עשרונית קבועה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="302"/>
+        <location filename="../gui/mainwindow.cpp" line="293"/>
         <source>&amp;General</source>
         <translation type="unfinished">&amp;כללי</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="303"/>
+        <location filename="../gui/mainwindow.cpp" line="294"/>
         <source>&amp;Hexadecimal</source>
         <translation type="unfinished">ה&amp;קסדצימלי</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="304"/>
+        <location filename="../gui/mainwindow.cpp" line="295"/>
         <source>&amp;Octal</source>
         <translation type="unfinished">&amp;אוקטלי</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="305"/>
+        <location filename="../gui/mainwindow.cpp" line="296"/>
         <source>&amp;Scientific</source>
         <translation type="unfinished">&amp;מדעי</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="405"/>
+        <location filename="../gui/mainwindow.cpp" line="391"/>
         <source>&amp;Session</source>
         <translation type="unfinished">&amp;קובץ</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="413"/>
+        <location filename="../gui/mainwindow.cpp" line="399"/>
         <source>&amp;Edit</source>
         <translation type="unfinished">&amp;עריכה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="430"/>
+        <location filename="../gui/mainwindow.cpp" line="416"/>
         <source>&amp;Format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="435"/>
+        <location filename="../gui/mainwindow.cpp" line="421"/>
         <source>Decimal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="451"/>
+        <location filename="../gui/mainwindow.cpp" line="437"/>
         <source>&amp;Angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="457"/>
+        <location filename="../gui/mainwindow.cpp" line="443"/>
         <source>Se&amp;ttings</source>
         <translation type="unfinished">&amp;הגדרות</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="460"/>
+        <location filename="../gui/mainwindow.cpp" line="446"/>
         <source>&amp;Layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="472"/>
+        <location filename="../gui/mainwindow.cpp" line="458"/>
         <source>&amp;Behavior</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="478"/>
+        <location filename="../gui/mainwindow.cpp" line="464"/>
         <source>Radix &amp;Character</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="484"/>
+        <location filename="../gui/mainwindow.cpp" line="470"/>
         <source>&amp;Help</source>
         <translation type="unfinished">ע&amp;זרה</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="749"/>
         <source>SpeedCrunch</source>
-        <translation type="unfinished">SpeedCrunch</translation>
+        <translation type="obsolete">SpeedCrunch</translation>
+    </message>
+    <message>
+        <location filename="../gui/mainwindow.cpp" line="273"/>
+        <source>&amp;Locale Default</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2253,7 +2538,7 @@ Click on the icon to reactivate it.</source>
         <translation type="obsolete">&lt;b&gt;הטיפ היומי&lt;/b&gt;&lt;br&gt;%1</translation>
     </message>
     <message>
-        <location filename="../gui/tipwidget.cpp" line="104"/>
+        <location filename="../gui/tipwidget.cpp" line="105"/>
         <source>&lt;b&gt;%1&lt;/b&gt;&lt;br&gt;%2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2261,17 +2546,17 @@ Click on the icon to reactivate it.</source>
 <context>
     <name>VariablesDock</name>
     <message>
-        <location filename="../gui/variablesdock.cpp" line="65"/>
+        <location filename="../gui/variablesdock.cpp" line="66"/>
         <source>Variables</source>
         <translation>משתנים</translation>
     </message>
     <message>
-        <location filename="../gui/variablesdock.cpp" line="70"/>
+        <location filename="../gui/variablesdock.cpp" line="74"/>
         <source>Search</source>
         <translation>חיפוש</translation>
     </message>
     <message>
-        <location filename="../gui/variablesdock.cpp" line="107"/>
+        <location filename="../gui/variablesdock.cpp" line="113"/>
         <source>No match found</source>
         <translation>לא נמצאה אף התאמה</translation>
     </message>
@@ -2279,27 +2564,27 @@ Click on the icon to reactivate it.</source>
 <context>
     <name>evaluator</name>
     <message>
-        <location filename="../base/evaluator.cpp" line="1378"/>
+        <location filename="../base/evaluator.cpp" line="1381"/>
         <source>invalid expression</source>
         <translation>ביטוי לא חוקי</translation>
     </message>
     <message>
-        <location filename="../base/evaluator.cpp" line="1396"/>
+        <location filename="../base/evaluator.cpp" line="1400"/>
         <source>variable cannot be overwritten</source>
         <translation>לא ניתן לכתוב על המשתנה</translation>
     </message>
     <message>
-        <location filename="../base/evaluator.cpp" line="1403"/>
+        <location filename="../base/evaluator.cpp" line="1408"/>
         <source>identifier matches an existing function name</source>
         <translation>קיימת פונקציה בשם זה</translation>
     </message>
     <message>
-        <location filename="../base/evaluator.cpp" line="1306"/>
+        <location filename="../base/evaluator.cpp" line="1309"/>
         <source>division by zero</source>
         <translation>חילוק באפס</translation>
     </message>
     <message>
-        <location filename="../base/evaluator.cpp" line="1347"/>
+        <location filename="../base/evaluator.cpp" line="1350"/>
         <source>unknown function or variable</source>
         <translation>פונקציה לא מזוהה או משתנה לא ידוע</translation>
     </message>
@@ -2307,22 +2592,22 @@ Click on the icon to reactivate it.</source>
 <context>
     <name>functions</name>
     <message>
-        <location filename="../base/functions.cpp" line="175"/>
+        <location filename="../base/functions.cpp" line="339"/>
         <source>function requires 1 or 2 arguments</source>
         <translation>הפונקציה דורשת פרמטר או שני פרמטרים</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="996"/>
+        <location filename="../base/functions.cpp" line="1195"/>
         <source>function undefined for specified arguments</source>
         <translation>פונקציה לא מוגדרת בתחום הפרמטרים</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="147"/>
+        <location filename="../base/functions.cpp" line="311"/>
         <source>function requires at least 2 arguments</source>
         <translation>הפונקציה דורשת לפחות שני פרמטרים</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="155"/>
+        <location filename="../base/functions.cpp" line="319"/>
         <source>function requires integer arguments</source>
         <translation>הפונקציה דורשת פרמטרים שלמים</translation>
     </message>
@@ -2332,32 +2617,32 @@ Click on the icon to reactivate it.</source>
         <translation type="obsolete">הפונקציה דורשת שלם P2</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="572"/>
+        <location filename="../base/functions.cpp" line="759"/>
         <source>function undefined for specified argument</source>
         <translation>פונקציה לא מוגדרת בתחום הפרמטרים</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="669"/>
+        <location filename="../base/functions.cpp" line="856"/>
         <source>function requires at least 1 argument</source>
         <translation>הפונקציה דורשת פרמטר אחד לפחות</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1166"/>
+        <location filename="../base/functions.cpp" line="100"/>
         <source>cannot execute function %1</source>
         <translation>אי אפשר להפעיל את הפונקציה %1</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1175"/>
+        <location filename="../base/functions.cpp" line="108"/>
         <source>function accepts 1 argument</source>
         <translation>הפונקציה מקבלת פרמטר אחד</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="1178"/>
+        <location filename="../base/functions.cpp" line="111"/>
         <source>function accepts %1 arguments</source>
         <translation>הפונקציה מקבלת %1 פרמטרים</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="535"/>
+        <location filename="../base/functions.cpp" line="721"/>
         <source>underflow</source>
         <translation type="unfinished"></translation>
     </message>

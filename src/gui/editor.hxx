@@ -49,6 +49,7 @@ class Editor : public QTextEdit
                      int precision = -1, char radixChar = 'C',
                      QWidget * parent = 0 );
     ~Editor();
+
     bool        autoCalcEnabled() const;
     bool        autoCompleteEnabled() const;
     void        clearHistory();

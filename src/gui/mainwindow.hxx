@@ -40,7 +40,6 @@ class MainWindow : public QMainWindow
   public:
     MainWindow();
     ~MainWindow();
-    bool event( QEvent * );
 
   signals:
     void adaptToLanguageChange();
@@ -119,6 +118,8 @@ class MainWindow : public QMainWindow
 
   protected:
     virtual void closeEvent( QCloseEvent * );
+    virtual bool event( QEvent * );
+    bool         eventFilter( QObject *, QEvent * );
 
   private:
     struct Private;
