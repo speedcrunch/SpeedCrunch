@@ -77,10 +77,12 @@ class LongReal: public VariantData
     bool isNaN() const;
     bool isZero() const;
   public: // precision handling
-    enum { precQuery = -1, precDefault = 0 };
+    typedef enum { PrecQuery = -1, PrecDefault = 0 };
+    typedef enum { EvalExact, EvalRelaxed, EvalQuery } EvalMode;
     static int evalPrec();
     static int workPrec();
-    static int precision(int newprec = precQuery);
+    static int precision(int newprec = PrecQuery);
+    static EvalMode evalMode(EvalMode newMode = EvalQuery);
   public: // conversion, IO
     typedef enum
     {

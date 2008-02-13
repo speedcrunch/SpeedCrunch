@@ -37,6 +37,7 @@ enum { less = 1, equal = 2, greater = 4 };
 
 static floatstruct NaNVal;
 static int longrealPrec;
+static LongReal::EvalMode longrealEvalMode;
 
 static int _cvtMode(LongReal::FmtMode mode)
 {
@@ -96,7 +97,8 @@ static char _idiv(floatnum dest, cfloatnum dividend, cfloatnum modulo)
 
 void LongReal::initClass()
 {
-  precision(precDefault);
+  precision(PrecDefault);
+  evalMode(EvalRelaxed);
   float_create(&NaNVal);
   registerConstructor(create, vLongReal);
 }
@@ -300,10 +302,18 @@ Variant LongReal::swapRaise(const Variant& other) const
 int LongReal::precision(int newprec)
 {
   int result = longrealPrec;
-  if (newprec == 0 || newprec > DECPRECISION)
+  if (newprec == PrecDefault || newprec > DECPRECISION)
     newprec = DECPRECISION;
-  if (newprec > 0)
+  if (newprec != PrecQuery)
     longrealPrec = newprec;
+  return result;
+}
+
+LongReal::EvalMode LongReal::evalMode(EvalMode newMode)
+{
+  EvalMode result = longrealEvalMode;
+  if (newMode != EvalQuery)
+    longrealEvalMode = newMode;
   return result;
 }
 
