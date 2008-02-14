@@ -58,7 +58,6 @@ development should happen here.
 beta, or even .0 release) of version 0.8. This can be prepared by the following
 steps:
   mkdir branches/0.8
-  svn add branches/0.8
   svn copy trunk branches/0.8
 
 /tags is for tagging a release version. Think of it as a snapshot of a branch.
