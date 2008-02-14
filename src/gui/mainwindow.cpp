@@ -154,8 +154,16 @@ struct Menus
 };
 
 
+struct Layouts
+{
+  QVBoxLayout * root;
+  QHBoxLayout * keypad;
+};
+
+
 struct Widgets
 {
+  QWidget *         root;
   Editor *          editor;
   Keypad *          keypad;
   Result *          display;
@@ -192,6 +200,7 @@ struct MainWindow::Private
   Actions         actions;
   ActionGroups    actionGroups;
   Menus           menus;
+  Layouts         layouts;
   Widgets         widgets;
   Docks           docks;
   Conditions      conditions;
@@ -203,16 +212,18 @@ struct MainWindow::Private
   void createActionGroups();
   void createActionShortcuts();
   void createMenus();
-  void createWidgets();
+  void createFixedWidgets();
+  void createKeypad();
   void createConstantsDock();
   void createFunctionsDock();
   void createHistoryDock();
   void createVariablesDock();
-  void createConnections();
+  void createFixedConnections();
   void applySettings();
   void restoreFloatingDocks();
   void restoreHistory();
   void restoreVariables();
+  void deleteKeypad();
   void deleteConstantsDock();
   void deleteFunctionsDock();
   void deleteHistoryDock();
@@ -224,9 +235,10 @@ struct MainWindow::Private
 
 MainWindow::Private::Private()
 {
-  widgets.trayIcon      = 0;
-  conditions.trayNotify = true;
+  widgets.keypad   = 0;
+  widgets.trayIcon = 0;
 
+  conditions.trayNotify          = true;
   conditions.autoAns             = false;
   conditions.notifyMenuBarHidden = true;
 
@@ -249,8 +261,8 @@ void MainWindow::Private::createUi()
   createActionGroups();
   createActionShortcuts();
   createMenus();
-  createWidgets();
-  createConnections();
+  createFixedWidgets();
+  createFixedConnections();
 
   p->setWindowTitle( "SpeedCrunch" );
   p->setWindowIcon( QPixmap( ":/speedcrunch.png" ) );
@@ -390,6 +402,10 @@ void MainWindow::Private::createActionShortcuts()
   actions.sessionSave     ->setShortcut( Qt::CTRL + Qt::Key_S        );
   actions.showFullScreen  ->setShortcut(            Qt::Key_F11      );
   actions.showKeypad      ->setShortcut( Qt::CTRL + Qt::Key_K        );
+  actions.showHistory     ->setShortcut( Qt::CTRL + Qt::Key_1        );
+  actions.showFunctions   ->setShortcut( Qt::CTRL + Qt::Key_2        );
+  actions.showVariables   ->setShortcut( Qt::CTRL + Qt::Key_3        );
+  actions.showConstants   ->setShortcut( Qt::CTRL + Qt::Key_4        );
   actions.showMenuBar     ->setShortcut( Qt::CTRL + Qt::Key_M        );
   actions.formatBinary    ->setShortcut(            Qt::Key_F5       );
   actions.formatGeneral   ->setShortcut(            Qt::Key_F7       );
@@ -488,14 +504,14 @@ void MainWindow::Private::createMenus()
   menus.help->addAction( actions.helpAbout );
   menus.help->addAction( actions.helpAboutQt );
 
-  // necessary after hiding the menu bar, so shortcuts still recognized by main window
+  // necessary after hiding the menu bar, so shortcuts still recognized
   p->addActions( p->menuBar()->actions() );
   p->addAction( actions.scrollDown );
   p->addAction( actions.scrollUp );
 }
 
 
-void MainWindow::Private::createWidgets()
+void MainWindow::Private::createFixedWidgets()
 {
   // necessary objects
   constants = new Constants( p );
@@ -503,45 +519,32 @@ void MainWindow::Private::createWidgets()
   evaluator = new Evaluator( functions, settings.radixChar, p );
 
   // outer widget and layout
-  QWidget * box = new QWidget( p );
-  p->setCentralWidget( box );
+  widgets.root = new QWidget( p );
+  p->setCentralWidget( widgets.root );
 
-  QVBoxLayout * boxLayout = new QVBoxLayout( box );
-  boxLayout->setMargin( 0 );
-  boxLayout->setSpacing( 0 );
+  layouts.root = new QVBoxLayout( widgets.root );
+  layouts.root->setMargin( 0 );
+  layouts.root->setSpacing( 0 );
 
   // display
   QHBoxLayout * displayLayout = new QHBoxLayout();
   displayLayout->setMargin( 5 );
   widgets.display = new Result( settings.radixChar, settings.format,
-                                settings.precision, box );
+                                settings.precision, widgets.root );
   displayLayout->addWidget( widgets.display );
-  boxLayout->addLayout( displayLayout );
+  layouts.root->addLayout( displayLayout );
 
   // editor
   QHBoxLayout * editorLayout = new QHBoxLayout();
   editorLayout->setMargin( 5 );
   widgets.editor = new Editor( evaluator, functions, constants, settings.format,
-                               settings.precision, settings.radixChar, box );
+                               settings.precision, settings.radixChar,
+                               widgets.root );
   widgets.editor->setFocus();
   widgets.editor->setStyleSheet( "QTextEdit { font: bold 16px }" );
   widgets.editor->setFixedHeight( widgets.editor->sizeHint().height() );
   editorLayout->addWidget( widgets.editor );
-  boxLayout->addLayout( editorLayout );
-
-  // keypad
-  QHBoxLayout * keypadLayout = new QHBoxLayout();
-  widgets.keypad = new Keypad( settings.radixChar, box );
-  widgets.keypad->setFocusPolicy( Qt::NoFocus );
-  widgets.keypad->hide();
-  //widgets.keypad->setStyleSheet( "QPushButton { background: black; font: bold;"
-  //                               "color: white; border-style: solid;"
-  //                               "border-color: #202020; border-radius: 10px;"
-  //                               "border-width: 2px }" );
-  keypadLayout->addStretch();
-  keypadLayout->addWidget( widgets.keypad );
-  keypadLayout->addStretch();
-  boxLayout->addLayout( keypadLayout );
+  layouts.root->addLayout( editorLayout );
 
   // for autocalc
   widgets.autoCalcLabel = new AutoHideLabel( p );
@@ -553,9 +556,32 @@ void MainWindow::Private::createWidgets()
 }
 
 
+void MainWindow::Private::createKeypad()
+{
+  widgets.keypad = new Keypad( settings.radixChar, widgets.root );
+  widgets.keypad->setFocusPolicy( Qt::NoFocus );
+  //widgets.keypad->setStyleSheet( "QPushButton { background: black; font: bold;"
+  //                               "color: white; border-style: solid;"
+  //                               "border-color: #202020; border-radius: 10px;"
+  //                               "border-width: 2px }" );
+  //
+  connect( widgets.keypad, SIGNAL( buttonPressed( Keypad::Button ) ),
+           p, SLOT( keypadButtonPressed( Keypad::Button ) ) );
+  connect( p, SIGNAL( radixCharChanged( char ) ),
+           widgets.keypad, SLOT( setRadixChar( char ) ) );
+
+  layouts.keypad = new QHBoxLayout();
+  layouts.keypad->addStretch();
+  layouts.keypad->addWidget( widgets.keypad );
+  layouts.keypad->addStretch();
+  layouts.root->addLayout( layouts.keypad );
+
+  widgets.display->scrollEnd();
+}
+
+
 void MainWindow::Private::createConstantsDock()
 {
-  qDebug( "Create Constants Dock" );
   docks.constants = new ConstantsDock( constants, settings.radixChar, p );
   docks.constants->setObjectName( "ConstantsDock" );
   docks.constants->installEventFilter( p );
@@ -579,7 +605,6 @@ void MainWindow::Private::createConstantsDock()
 
 void MainWindow::Private::createFunctionsDock()
 {
-  qDebug( "Create Functions Dock" );
   docks.functions = new FunctionsDock( functions, p );
   docks.functions->setObjectName( "FunctionsDock" );
   docks.functions->installEventFilter( p );
@@ -601,7 +626,6 @@ void MainWindow::Private::createFunctionsDock()
 
 void MainWindow::Private::createHistoryDock()
 {
-  qDebug( "Create History Dock" );
   docks.history = new HistoryDock( p );
   docks.history->setObjectName( "HistoryDock" );
   docks.history->installEventFilter( p );
@@ -625,7 +649,6 @@ void MainWindow::Private::createHistoryDock()
 
 void MainWindow::Private::createVariablesDock()
 {
-  qDebug( "Create Variables Dock" );
   docks.variables = new VariablesDock( settings.radixChar, p );
   docks.variables->setObjectName( "VariablesDock" );
   docks.variables->installEventFilter( p );
@@ -649,7 +672,7 @@ void MainWindow::Private::createVariablesDock()
 }
 
 
-void MainWindow::Private::createConnections()
+void MainWindow::Private::createFixedConnections()
 {
   connect( actions.clearHistory,                SIGNAL( triggered()                           ), p,                     SLOT( clearHistory()                        ) );
   connect( actions.clearExpression,             SIGNAL( triggered()                           ), p,                     SLOT( clearExpression()                     ) );
@@ -699,7 +722,6 @@ void MainWindow::Private::createConnections()
   connect( actions.radixCharAuto,               SIGNAL( triggered()                           ), p,                     SLOT( radixCharAutoActivated()              ) );
   connect( actions.radixCharDot,                SIGNAL( triggered()                           ), p,                     SLOT( radixCharDotActivated()               ) );
   connect( actions.radixCharComma,              SIGNAL( triggered()                           ), p,                     SLOT( radixCharCommaActivated()             ) );
-  connect( widgets.keypad,                      SIGNAL( buttonPressed( Keypad::Button )       ), p,                     SLOT( keypadButtonPressed( Keypad::Button ) ) );
   connect( widgets.editor,                      SIGNAL( autoCalcEnabled( const QString & )    ), p,                     SLOT( showAutoCalc( const QString & )       ) );
   connect( widgets.editor,                      SIGNAL( autoCalcDisabled()                    ), p,                     SLOT( hideAutoCalc()                        ) );
   connect( widgets.editor,                      SIGNAL( returnPressed()                       ), p,                     SLOT( returnPressed()                       ) );
@@ -712,7 +734,6 @@ void MainWindow::Private::createConnections()
   connect( p,                                   SIGNAL( formatChanged( char )                 ), widgets.display,       SLOT( setFormat( char )                     ) );
   connect( p,                                   SIGNAL( precisionChanged( int )               ), widgets.display,       SLOT( setPrecision( int )                   ) );
   connect( p,                                   SIGNAL( radixCharChanged( char )              ), widgets.display,       SLOT( setRadixChar( char )                  ) );
-  connect( p,                                   SIGNAL( radixCharChanged( char )              ), widgets.keypad,        SLOT( setRadixChar( char )                  ) );
   connect( p,                                   SIGNAL( radixCharChanged( char )              ), evaluator,             SLOT( setRadixChar( char )                  ) );
   connect( p,                                   SIGNAL( angleModeChanged( char )              ), functions,             SLOT( setAngleMode( char )                  ) );
 }
@@ -1428,9 +1449,20 @@ bool MainWindow::eventFilter( QObject * o, QEvent * e )
 }
 
 
+void MainWindow::Private::deleteKeypad()
+{
+  p->disconnect( widgets.keypad );
+  delete widgets.keypad;
+  widgets.keypad = 0;
+
+  layouts.root->removeItem( layouts.keypad );
+  delete layouts.keypad;
+  layouts.keypad = 0;
+}
+
+
 void MainWindow::Private::deleteConstantsDock()
 {
-  qDebug( "Delete Constants Dock" );
   p->removeDockWidget( docks.constants );
   p->disconnect( docks.constants );
   delete docks.constants;
@@ -1444,7 +1476,6 @@ void MainWindow::Private::deleteConstantsDock()
 
 void MainWindow::Private::deleteFunctionsDock()
 {
-  qDebug( "Delete Functions Dock" );
   p->removeDockWidget( docks.functions );
   p->disconnect( docks.functions );
   delete docks.functions;
@@ -1458,7 +1489,6 @@ void MainWindow::Private::deleteFunctionsDock()
 
 void MainWindow::Private::deleteHistoryDock()
 {
-  qDebug( "Delete History Dock" );
   p->removeDockWidget( docks.history );
   p->disconnect( docks.history );
   delete docks.history;
@@ -1472,7 +1502,6 @@ void MainWindow::Private::deleteHistoryDock()
 
 void MainWindow::Private::deleteVariablesDock()
 {
-  qDebug( "Delete Variables Dock" );
   p->removeDockWidget( docks.variables );
   p->disconnect( docks.variables );
   delete docks.variables;
@@ -1523,8 +1552,10 @@ void MainWindow::showVariables( bool b )
 void MainWindow::showKeypad( bool b )
 {
   d->settings.showKeypad = b;
-  d->widgets.keypad->setVisible( b );
-  d->widgets.display->scrollEnd();
+  if ( b )
+    d->createKeypad();
+  else
+    d->deleteKeypad();
 }
 
 
@@ -2004,9 +2035,10 @@ void MainWindow::closeEvent( QCloseEvent * e )
   if ( d->docks.history )
     d->deleteHistoryDock();
 
-  //emit quitApplication();
+  emit quitApplication();
   //e->accept();
   QMainWindow::closeEvent( e );
+  qApp->quit();
 }
 
 
