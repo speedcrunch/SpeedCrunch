@@ -22,7 +22,9 @@
 
 #include "mainwindow.hxx"
 
+#include "aboutbox.hxx"
 #include "autohidelabel.hxx"
+#include "bookdock.hxx"
 #include "constantsdock.hxx"
 #include "deletevardlg.hxx"
 #include "editor.hxx"
@@ -39,7 +41,6 @@
 #include "base/evaluator.hxx"
 #include "base/functions.hxx"
 #include "base/settings.hxx"
-#include "gui/aboutbox.hxx"
 #include "math/hmath.hxx"
 
 #include <QAction>
@@ -112,6 +113,7 @@ struct Actions
   QAction * sessionLoad;
   QAction * sessionQuit;
   QAction * sessionSave;
+  QAction * showBook;
   QAction * showConstants;
   QAction * showFullScreen;
   QAction * showFunctions;
@@ -175,6 +177,7 @@ struct Widgets
 
 struct Docks
 {
+  BookDock *      book;
   ConstantsDock * constants;
   FunctionsDock * functions;
   HistoryDock *   history;
@@ -214,6 +217,7 @@ struct MainWindow::Private
   void createMenus();
   void createFixedWidgets();
   void createKeypad();
+  void createBookDock();
   void createConstantsDock();
   void createFunctionsDock();
   void createHistoryDock();
@@ -224,6 +228,7 @@ struct MainWindow::Private
   void restoreHistory();
   void restoreVariables();
   void deleteKeypad();
+  void deleteBookDock();
   void deleteConstantsDock();
   void deleteFunctionsDock();
   void deleteHistoryDock();
@@ -238,14 +243,15 @@ MainWindow::Private::Private()
   widgets.keypad   = 0;
   widgets.trayIcon = 0;
 
-  conditions.trayNotify          = true;
   conditions.autoAns             = false;
+  conditions.trayNotify          = true;
   conditions.notifyMenuBarHidden = true;
 
+  docks.book      = 0;
   docks.history   = 0;
+  docks.constants = 0;
   docks.functions = 0;
   docks.variables = 0;
-  docks.constants = 0;
 };
 
 
@@ -305,6 +311,7 @@ void MainWindow::Private::createActions()
   actions.sessionLoad           = new QAction( tr("&Load..."),                 p );
   actions.sessionQuit           = new QAction( tr("&Quit"),                    p );
   actions.sessionSave           = new QAction( tr("&Save..."),                 p );
+  actions.showBook              = new QAction( tr("Show Math &Book"),          p );
   actions.showConstants         = new QAction( tr("Show &Constants"),          p );
   actions.showFullScreen        = new QAction( tr("Full &Screen Mode"),        p );
   actions.showFunctions         = new QAction( tr("Show &Functions"),          p );
@@ -335,6 +342,7 @@ void MainWindow::Private::createActions()
   actions.radixCharAuto       ->setCheckable( true );
   actions.radixCharComma      ->setCheckable( true );
   actions.radixCharDot        ->setCheckable( true );
+  actions.showBook            ->setCheckable( true );
   actions.showConstants       ->setCheckable( true );
   actions.showFullScreen      ->setCheckable( true );
   actions.showFunctions       ->setCheckable( true );
@@ -402,10 +410,11 @@ void MainWindow::Private::createActionShortcuts()
   actions.sessionSave     ->setShortcut( Qt::CTRL + Qt::Key_S        );
   actions.showFullScreen  ->setShortcut(            Qt::Key_F11      );
   actions.showKeypad      ->setShortcut( Qt::CTRL + Qt::Key_K        );
-  actions.showHistory     ->setShortcut( Qt::CTRL + Qt::Key_1        );
-  actions.showFunctions   ->setShortcut( Qt::CTRL + Qt::Key_2        );
-  actions.showVariables   ->setShortcut( Qt::CTRL + Qt::Key_3        );
-  actions.showConstants   ->setShortcut( Qt::CTRL + Qt::Key_4        );
+  actions.showBook        ->setShortcut( Qt::CTRL + Qt::Key_1        );
+  actions.showConstants   ->setShortcut( Qt::CTRL + Qt::Key_2        );
+  actions.showFunctions   ->setShortcut( Qt::CTRL + Qt::Key_3        );
+  actions.showVariables   ->setShortcut( Qt::CTRL + Qt::Key_4        );
+  actions.showHistory     ->setShortcut( Qt::CTRL + Qt::Key_5        );
   actions.showMenuBar     ->setShortcut( Qt::CTRL + Qt::Key_M        );
   actions.formatBinary    ->setShortcut(            Qt::Key_F5       );
   actions.formatGeneral   ->setShortcut(            Qt::Key_F7       );
@@ -475,10 +484,11 @@ void MainWindow::Private::createMenus()
   menus.layout = menus.settings->addMenu( tr("&Layout") );
   menus.layout->addAction( actions.showKeypad );
   menus.layout->addSeparator();
-  menus.layout->addAction( actions.showHistory   );
+  menus.layout->addAction( actions.showBook );
+  menus.layout->addAction( actions.showConstants );
   menus.layout->addAction( actions.showFunctions );
   menus.layout->addAction( actions.showVariables );
-  menus.layout->addAction( actions.showConstants );
+  menus.layout->addAction( actions.showHistory   );
   menus.layout->addSeparator();
   menus.layout->addAction( actions.showMenuBar );
   menus.layout->addSeparator();
@@ -580,6 +590,29 @@ void MainWindow::Private::createKeypad()
 }
 
 
+void MainWindow::Private::createBookDock()
+{
+  docks.book = new BookDock;
+  docks.book->setObjectName( "BookDock" );
+  docks.book->installEventFilter( p );
+  p->addDockWidget( Qt::RightDockWidgetArea, docks.book );
+
+  connect( docks.book, SIGNAL( expressionSelected( const QString & ) ),
+           p, SLOT( expressionSelected( const QString & ) ) );
+
+  if ( docks.functions )
+    p->tabifyDockWidget( docks.functions, docks.book );
+  else if ( docks.variables )
+    p->tabifyDockWidget( docks.variables, docks.book );
+  else if ( docks.history )
+    p->tabifyDockWidget( docks.history, docks.book );
+  else if ( docks.constants )
+    p->tabifyDockWidget( docks.constants, docks.book );
+
+  settings.showBook = true;
+}
+
+
 void MainWindow::Private::createConstantsDock()
 {
   docks.constants = new ConstantsDock( constants, settings.radixChar, p );
@@ -598,6 +631,8 @@ void MainWindow::Private::createConstantsDock()
     p->tabifyDockWidget( docks.variables, docks.constants );
   else if ( docks.history )
     p->tabifyDockWidget( docks.history, docks.constants );
+  else if ( docks.book )
+    p->tabifyDockWidget( docks.book, docks.constants );
 
   settings.showConstants = true;
 }
@@ -619,6 +654,8 @@ void MainWindow::Private::createFunctionsDock()
     p->tabifyDockWidget( docks.variables, docks.functions );
   else if ( docks.constants )
     p->tabifyDockWidget( docks.constants, docks.functions );
+  else if ( docks.book )
+    p->tabifyDockWidget( docks.book, docks.functions );
 
   settings.showFunctions = true;
 }
@@ -642,6 +679,8 @@ void MainWindow::Private::createHistoryDock()
     p->tabifyDockWidget( docks.variables, docks.history );
   else if ( docks.constants )
     p->tabifyDockWidget( docks.constants, docks.history );
+  else if ( docks.book )
+    p->tabifyDockWidget( docks.book, docks.history );
 
   settings.showHistory = true;
 }
@@ -667,6 +706,8 @@ void MainWindow::Private::createVariablesDock()
     p->tabifyDockWidget( docks.history, docks.variables );
   else if ( docks.constants )
     p->tabifyDockWidget( docks.constants, docks.variables );
+  else if ( docks.book )
+    p->tabifyDockWidget( docks.book, docks.variables );
 
   settings.showVariables = true;
 }
@@ -701,6 +742,7 @@ void MainWindow::Private::createFixedConnections()
   connect( actions.sessionLoad,                 SIGNAL( triggered()                           ), p,                     SLOT( loadSession()                         ) );
   connect( actions.sessionQuit,                 SIGNAL( triggered()                           ), p,                     SLOT( close()                               ) );
   connect( actions.sessionSave,                 SIGNAL( triggered()                           ), p,                     SLOT( saveSession()                         ) );
+  connect( actions.showBook,                    SIGNAL( toggled( bool )                       ), p,                     SLOT( showBook( bool )                      ) );
   connect( actions.showConstants,               SIGNAL( toggled( bool )                       ), p,                     SLOT( showConstants( bool )                 ) );
   connect( actions.showFullScreen,              SIGNAL( toggled( bool )                       ), p,                     SLOT( showInFullScreen( bool )              ) );
   connect( actions.showFunctions,               SIGNAL( toggled( bool )                       ), p,                     SLOT( showFunctions( bool )                 ) );
@@ -827,6 +869,7 @@ void MainWindow::Private::applySettings()
   actions.optionMinimizeToTray->setChecked( settings.minimizeToTray );
 
   // docks
+  actions.showBook     ->setChecked( settings.showBook      );
   actions.showConstants->setChecked( settings.showConstants );
   actions.showFunctions->setChecked( settings.showFunctions );
   actions.showHistory  ->setChecked( settings.showHistory   );
@@ -868,6 +911,14 @@ void MainWindow::Private::syncWindowStateToSettings()
   settings.mainWindowSize  = p->size();
 
   // docks
+  if ( docks.book )
+  {
+    settings.bookDockFloating   = docks.book->isFloating();
+    settings.bookDockLeft       = docks.book->x();
+    settings.bookDockTop        = docks.book->y();
+    settings.bookDockWidth      = docks.book->width();
+    settings.bookDockHeight     = docks.book->height();
+  }
   if ( docks.history )
   {
     settings.historyDockFloating   = docks.history->isFloating();
@@ -1405,6 +1456,16 @@ void MainWindow::showInFullScreen( bool b )
 
 bool MainWindow::eventFilter( QObject * o, QEvent * e )
 {
+  if ( o == d->docks.book )
+  {
+    if ( e->type() == QEvent::Close )
+    {
+      d->deleteBookDock();
+      return true;
+    }
+    return false;
+  }
+
   if ( o == d->docks.constants )
   {
     if ( e->type() == QEvent::Close )
@@ -1458,6 +1519,19 @@ void MainWindow::Private::deleteKeypad()
   layouts.root->removeItem( layouts.keypad );
   delete layouts.keypad;
   layouts.keypad = 0;
+}
+
+
+void MainWindow::Private::deleteBookDock()
+{
+  p->removeDockWidget( docks.book );
+  p->disconnect( docks.book );
+  delete docks.book;
+  docks.book = 0;
+  actions.showBook->blockSignals( true );
+  actions.showBook->setChecked( false );
+  actions.showBook->blockSignals( false );
+  settings.showBook = false;
 }
 
 
@@ -1519,6 +1593,15 @@ void MainWindow::showFunctions( bool b )
     d->createFunctionsDock();
   else
     d->deleteFunctionsDock();
+}
+
+
+void MainWindow::showBook( bool b )
+{
+  if ( b )
+    d->createBookDock();
+  else
+    d->deleteBookDock();
 }
 
 
@@ -1794,6 +1877,16 @@ void MainWindow::Private::restoreVariables()
 
 void MainWindow::Private::restoreFloatingDocks()
 {
+  if ( settings.showBook && settings.bookDockFloating
+       && ! docks.book->isFloating() )
+  {
+    docks.book->hide();
+    docks.book->setFloating( true );
+    docks.book->move( settings.bookDockLeft, settings.bookDockTop );
+    docks.book->resize( settings.bookDockWidth, settings.bookDockHeight );
+    docks.book->show();
+  }
+
   if ( settings.showHistory && settings.historyDockFloating
        && ! docks.history->isFloating() )
   {

@@ -1,20 +1,20 @@
-project(speedcrunch)
+PROJECT(speedcrunch)
 
 IF( APPLE )
-  set( PROGNAME SpeedCrunch )
-  set( MACOSX_BUNDLE_ICON_FILE SpeedCrunch.icns )
-  set( MACOSX_BUNDLE_SHORT_VERSION_STRING trunk )
-  set( MACOSX_BUNDLE_VERSION trunk )
-  set( MACOSX_BUNDLE_LONG_VERSION_STRING Version trunk )
-  set( CMAKE_OSX_ARCHITECTURES ppc;i386 ) #Comment out if not universal binary
+  SET( PROGNAME SpeedCrunch )
+  SET( MACOSX_BUNDLE_ICON_FILE SpeedCrunch.icns )
+  SET( MACOSX_BUNDLE_SHORT_VERSION_STRING trunk )
+  SET( MACOSX_BUNDLE_VERSION trunk )
+  SET( MACOSX_BUNDLE_LONG_VERSION_STRING Version trunk )
+  SET( CMAKE_OSX_ARCHITECTURES ppc;i386 ) #Comment out if not universal binary
 ELSE( APPLE )
-  set( PROGNAME speedcrunch )
+  SET( PROGNAME speedcrunch )
 ENDIF( APPLE )
 
-cmake_minimum_required(VERSION 2.4.0)
-set(CMAKE_COLOR_MAKEFILE ON)
-set(CMAKE_VERBOSE_MAKEFILE OFF)
-set(CMAKE_INCLUDE_CURRENT_DIR TRUE)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.4.0)
+SET(CMAKE_COLOR_MAKEFILE ON)
+SET(CMAKE_VERBOSE_MAKEFILE OFF)
+SET(CMAKE_INCLUDE_CURRENT_DIR TRUE)
 
 # note: change this BEFORE making a release !!
 ADD_DEFINITIONS(-DSPEEDCRUNCH_VERSION=\"trunk\" )
@@ -30,25 +30,25 @@ ENDIF( NOT WIN32 )
 INCLUDE(SourceFiles.cmake)
 
 # resources
-set(speedcrunch_RESOURCES resources/speedcrunch.qrc)
+SET(speedcrunch_RESOURCES resources/speedcrunch.qrc)
 
 # translations
 INCLUDE(Translations.cmake)
 
-if( MINGW )
+IF( MINGW )
   # resource compilation for mingw
   ADD_CUSTOM_COMMAND( OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/speedcrunchico.o
                       COMMAND windres.exe -I${CMAKE_CURRENT_SOURCE_DIR} -i${CMAKE_CURRENT_SOURCE_DIR}/resources/speedcrunchico.rc -o ${CMAKE_CURRENT_BINARY_DIR}/speedcrunchico.o )
   SET(speedcrunch_SOURCES ${speedcrunch_SOURCES} ${CMAKE_CURRENT_BINARY_DIR}/speedcrunchico.o)
   SET(LINK_FLAGS -Wl,-subsystem,windows)
-else(MINGW)
+ELSE(MINGW)
   SET(speedcrunch_SOURCES ${speedcrunch_SOURCES} resources/speedcrunchico.rc)
-endif(MINGW)
+ENDIF(MINGW)
 
 # enable warnings
-if(CMAKE_COMPILER_IS_GNUCXX )
+IF(CMAKE_COMPILER_IS_GNUCXX )
   ADD_DEFINITIONS( -g -Wall )
-endif(CMAKE_COMPILER_IS_GNUCXX )
+ENDIF(CMAKE_COMPILER_IS_GNUCXX )
 
 # setup for Qt4
 find_package(Qt4 REQUIRED)
@@ -70,29 +70,33 @@ ELSE( APPLE )
   ADD_EXECUTABLE( ${PROGNAME} ${speedcrunch_SOURCES} ${speedcrunch_HEADERS_MOC} ${speedcrunch_RESOURCES_SOURCES} ${speedcrunch_FORMS_HEADERS} )
 ENDIF( APPLE )
 
-add_custom_target( confclean COMMAND rm -rf CMakeFiles/ CMakeCache.txt cmake_install.cmake DartTestfile.txt install_manifest.txt )
+ADD_CUSTOM_TARGET( confclean COMMAND rm -rf CMakeFiles/ CMakeCache.txt cmake_install.cmake DartTestfile.txt install_manifest.txt )
 
-target_link_libraries(${PROGNAME} ${QT_LIBRARIES} ${LINK_FLAGS})
+TARGET_LINK_LIBRARIES(${PROGNAME} ${QT_LIBRARIES} ${LINK_FLAGS})
 
 # set(EXECUTABLE_OUTPUT_PATH ${speedcrunch_BINARY_DIR}/../bin)
 
 # install executable and translation files
 # note: it will install to CMAKE_INSTALL_PREFIX, which can be set e.g
 #  cmake ../trunk  -DCMAKE_INSTALL_PREFIX=/usr
-install(TARGETS ${PROGNAME} DESTINATION bin)
-install(FILES ${speedcrunch_TRANSLATIONS} DESTINATION share/speedcrunch/locale)
+INSTALL(TARGETS ${PROGNAME} DESTINATION bin)
+INSTALL(FILES ${speedcrunch_TRANSLATIONS} DESTINATION share/speedcrunch/locale)
 
 # required for regression tests
-enable_testing()
+ENABLE_TESTING()
 
-add_executable(testhmath ${testhmath_SOURCES})
-add_test(testhmath ${EXECUTABLE_OUTPUT_PATH}/testhmath)
+ADD_EXECUTABLE(testhmath ${testhmath_SOURCES})
+ADD_TEST(testhmath ${EXECUTABLE_OUTPUT_PATH}/testhmath)
 
 #add_executable(testevaluator ${testevaluator_SOURCES})
 #target_link_libraries(testevaluator ${QT_LIBRARIES})
 #add_test(testevaluator ${EXECUTABLE_OUTPUT_PATH}/testevaluator)
 
-add_executable(testfloatnum ${testfloatnum_SOURCES})
-add_test(testfloatnum ${EXECUTABLE_OUTPUT_PATH}/testfloatnum)
+ADD_EXECUTABLE(testfloatnum ${testfloatnum_SOURCES})
+ADD_TEST(testfloatnum ${EXECUTABLE_OUTPUT_PATH}/testfloatnum)
 
 INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR} 3rdparty/util base gui main math)
+
+SET(BOOKSDIR "${CMAKE_INSTALL_PREFIX}/share/${PROGNAME}/books/")
+ADD_DEFINITIONS("-DBOOKSDIR=\\\"${BOOKSDIR}\\\"")
+ADD_SUBDIRECTORY(books)

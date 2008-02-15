@@ -1,5 +1,8 @@
 <!DOCTYPE RCC><RCC version="1.0">
     <qresource>
         <file>speedcrunch.png</file>
+        <file>book_back.png</file>
+        <file>book_forward.png</file>
+        <file>book_home.png</file>
     </qresource>
 </RCC>

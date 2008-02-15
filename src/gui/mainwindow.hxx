@@ -78,6 +78,7 @@ class MainWindow : public QMainWindow
     void saveSession();
     void setWidgetsLayoutAccordingToLanguageDirection();
     void showAutoCalc( const QString & );
+    void showBook( bool );
     void showConstants( bool );
     void showInFullScreen( bool );
     void showFunctions( bool );

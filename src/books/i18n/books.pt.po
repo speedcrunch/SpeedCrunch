@@ -1,0 +1,79 @@
+# translation of books.fi.po to Portuguese
+# Helder Correia <helder.pereira.correia@gmail.com>, 2007-2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: books.pot\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-12-13 14:26+0000\n"
+"PO-Revision-Date: 2007-01-09 00:00+0100\n"
+"Last-Translator: Helder Correia <helder.pereira.correia@gmail.com>\n"
+"Language-Team: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: circle.html.template, math_index.html.template
+msgid "Circle"
+msgstr "Círculo"
+
+#: cone.html.template, math_index.html.template
+msgid "Cone"
+msgstr "Cone"
+
+#: cube.html.template, math_index.html.template
+msgid "Cube"
+msgstr "Cubo"
+
+#: cylinder.html.template, math_index.html.template
+msgid "Cylinder"
+msgstr "Cilindro"
+
+#: math_index.html.template, index.html.template
+msgid "SpeedCrunch Book"
+msgstr "Livro do SpeedCrunch"
+
+#: index.html.template
+msgid "Chapters"
+msgstr "Capítulos"
+
+#: index.html.template
+msgid "SpeedCrunch Constants"
+msgstr "Constantes do SpeedCrunch"
+
+#: index.html.template
+msgid "SpeedCrunch Functions"
+msgstr "Funções do SpeedCrunch"
+
+#: index.html.template
+msgid "Mathematics"
+msgstr "Matemática"
+
+#: math_index.html.template
+msgid "3D Objects"
+msgstr "Objectos 3D"
+
+#: sphere.html.template, math_index.html.template
+msgid "Sphere"
+msgstr "Esfera"
+
+#: math_index.html.template
+msgid "2D Objects"
+msgstr "Objectos 2D"
+
+#: math_index.html.template, right_triangle.html.template
+msgid "Right Triangle"
+msgstr "Triângulo Rectângulo"
+
+#: math_index.html.template, sector.html.template
+msgid "Sector"
+msgstr "Sector"
+
+#: math_index.html.template
+msgid "Misc"
+msgstr "Miscelâneo"
+
+#: quadratic_equation.html.template, math_index.html.template
+msgid "Quadratic Equation"
+msgstr "Equação Quadrática"

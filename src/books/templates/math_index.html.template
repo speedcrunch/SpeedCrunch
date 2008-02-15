@@ -1,0 +1,20 @@
+<html>
+<head>
+<title><i18n>SpeedCrunch Book</i18n></title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="../books.css" />
+</head>
+<body>
+<h1><i18n>3D Objects</i18n></h1>
+<a href="sphere.html"><i18n>Sphere</i18n></a><br />
+<a href="cube.html"><i18n>Cube</i18n></a><br />
+<a href="cone.html"><i18n>Cone</i18n></a><br />
+<a href="cylinder.html"><i18n>Cylinder</i18n></a><br />
+<h1><i18n>2D Objects</i18n></h1>
+<a href="circle.html"><i18n>Circle</i18n></a><br />
+<a href="right_triangle.html"><i18n>Right Triangle</i18n></a><br />
+<a href="sector.html"><i18n>Sector</i18n></a><br />
+<h1><i18n>Misc</i18n></h1>
+<a href="quadratic_equation.html"><i18n>Quadratic Equation</i18n></a><br />
+</body>
+</html>

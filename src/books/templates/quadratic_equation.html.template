@@ -1,0 +1,16 @@
+<html>
+<head>
+<title><i18n>Quadratic Equation</i18n></title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="../books.css" />
+</head>
+<body>
+<center>
+<h1><i18n>Quadratic Equation</i18n></h1>
+<h3>ax² + bx + c = 0</h3>
+<p><img src="../images/quadratic_equation.png" /></p>
+<a href="file:#x1=(-b+sqrt(b^2-4*a*c))/2*a">x1 = (-b + sqrt(b^2 - 4*a*c)) / 2*a</a><br />
+<a href="file:#x2=(-b-sqrt(b^2-4*a*c))/2*a">x2 = (-b - sqrt(b^2 - 4*a*c)) / 2*a</a><br />
+</center>
+</body>
+</html>

@@ -11,6 +11,7 @@ base/functions.hxx
 #base/settings.hxx
 gui/aboutbox.hxx
 gui/autohidelabel.hxx
+gui/bookdock.hxx
 gui/constantsdock.hxx
 gui/deletevardlg.hxx
 gui/editor.hxx
@@ -56,6 +57,7 @@ base/functions.cpp
 base/settings.cpp
 gui/aboutbox.cpp
 gui/autohidelabel.cpp
+gui/bookdock.cpp
 gui/constantsdock.cpp
 gui/deletevardlg.cpp
 gui/editor.cpp

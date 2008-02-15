@@ -35,7 +35,7 @@ class Settings
 {
   public:
     char        radixChar; // 'C': locale (default);
-    char        angleMode; // see HMath documentation
+    char        angleMode; // 'r': radian; 'd': degree
     char        format;    // see HMath documentation
     int         precision; // see HMath documentation
 
@@ -44,6 +44,7 @@ class Settings
     bool        minimizeToTray;
     bool        saveSession;
     bool        saveVariables;
+    bool        showBook;
     bool        showConstants;
     bool        showFullScreen;
     bool        showFunctions;
@@ -53,6 +54,11 @@ class Settings
     bool        showVariables;
     bool        stayAlwaysOnTop;
 
+    bool        bookDockFloating;
+    int         bookDockTop;
+    int         bookDockLeft;
+    int         bookDockWidth;
+    int         bookDockHeight;
     bool        constantsDockFloating;
     int         constantsDockTop;
     int         constantsDockLeft;

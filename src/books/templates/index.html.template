@@ -1,0 +1,13 @@
+<html>
+<head>
+<title><i18n>SpeedCrunch Book</i18n></title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="../books.css" />
+</head>
+<body>
+<h1><i18n>Chapters</i18n></h1>
+<i18n>SpeedCrunch Constants</i18n><br />
+<i18n>SpeedCrunch Functions</i18n><br />
+<a href="math_index.html"><i18n>Mathematics</i18n></a><br />
+</body>
+</html>

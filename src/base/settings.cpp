@@ -87,6 +87,7 @@ void Settings::load()
   showHistory           = settings.value( key + "ShowHistory",          false  ).toBool();
   showFunctions         = settings.value( key + "ShowFunctions",        false  ).toBool();
   showVariables         = settings.value( key + "ShowVariables",        false  ).toBool();
+  showBook              = settings.value( key + "ShowBook",             false  ).toBool();
   showConstants         = settings.value( key + "ShowConstants",        false  ).toBool();
   mainWindowState       = settings.value( key + "State"                        ).toByteArray();
   stayAlwaysOnTop       = settings.value( key + "StayAlwaysOnTop",       false ).toBool();
@@ -100,6 +101,11 @@ void Settings::load()
   functionsDockLeft     = settings.value( key + "FunctionsDockLeft",     0     ).toInt();
   functionsDockWidth    = settings.value( key + "FunctionsDockWidth",    150   ).toInt();
   functionsDockHeight   = settings.value( key + "FunctionsDockHeight",   350   ).toInt();
+  bookDockFloating      = settings.value( key + "BookDockFloating",      false ).toBool();
+  bookDockTop           = settings.value( key + "BookDockTop",           0     ).toInt();
+  bookDockLeft          = settings.value( key + "BookDockLeft",          0     ).toInt();
+  bookDockWidth         = settings.value( key + "BookDockWidth",         150   ).toInt();
+  bookDockHeight        = settings.value( key + "BookDockHeight",        350   ).toInt();
   variablesDockFloating = settings.value( key + "VariablesDockFloating", false ).toBool();
   variablesDockTop      = settings.value( key + "VariablesDockTop",      0     ).toInt();
   variablesDockLeft     = settings.value( key + "VariablesDockLeft",     0     ).toInt();
@@ -200,6 +206,7 @@ void Settings::save()
 
   key = KEY + "/Layout/";
 
+  settings.setValue( key + "ShowBook",              showBook                );
   settings.setValue( key + "ShowConstants",         showConstants           );
   settings.setValue( key + "ShowFunctions",         showFunctions           );
   settings.setValue( key + "ShowHistory",           showHistory             );
@@ -219,6 +226,11 @@ void Settings::save()
   settings.setValue( key + "FunctionsDockLeft",     functionsDockLeft       );
   settings.setValue( key + "FunctionsDockTop",      functionsDockTop        );
   settings.setValue( key + "FunctionsDockWidth",    functionsDockWidth      );
+  settings.setValue( key + "BookDockFloating",      bookDockFloating        );
+  settings.setValue( key + "BookDockHeight",        bookDockHeight          );
+  settings.setValue( key + "BookDockLeft",          bookDockLeft            );
+  settings.setValue( key + "BookDockTop",           bookDockTop             );
+  settings.setValue( key + "BookDockWidth",         bookDockWidth           );
   settings.setValue( key + "HistoryDockFloating",   historyDockFloating     );
   settings.setValue( key + "HistoryDockHeight",     historyDockHeight       );
   settings.setValue( key + "HistoryDockLeft",       historyDockLeft         );
