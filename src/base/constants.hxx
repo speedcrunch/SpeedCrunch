@@ -57,7 +57,7 @@ class Constants : public QObject
   Q_OBJECT
 
   public:
-    Constants( QObject * parent );
+    Constants( QObject * parent = 0 );
     ~Constants();
     QList<Constant> constantList() const;
     QStringList     categoryList() const;

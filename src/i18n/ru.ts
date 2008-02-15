@@ -189,6 +189,29 @@
     </message>
 </context>
 <context>
+    <name>BookDock</name>
+    <message>
+        <location filename="../gui/bookdock.cpp" line="42"/>
+        <source>Book</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/bookdock.cpp" line="65"/>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/bookdock.cpp" line="72"/>
+        <source>Forward</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/bookdock.cpp" line="79"/>
+        <source>Home</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ConfigDlg</name>
     <message>
         <location filename="../src/gui/configdlg.cpp" line="365"/>
@@ -348,7 +371,7 @@
 <context>
     <name>ConstantCompletion</name>
     <message>
-        <location filename="../gui/editor.cpp" line="1198"/>
+        <location filename="../gui/editor.cpp" line="1204"/>
         <source>All</source>
         <translation>Все</translation>
     </message>
@@ -2120,98 +2143,98 @@ Click on the icon to reactivate it.</source>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="866"/>
+        <location filename="../gui/mainwindow.cpp" line="1014"/>
         <source>About Qt</source>
         <translation type="unfinished">О &amp;Qt</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1180"/>
+        <location filename="../gui/mainwindow.cpp" line="1336"/>
         <source>SpeedCrunch Sessions (*.sch);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1014"/>
+        <location filename="../gui/mainwindow.cpp" line="1166"/>
         <source>Load Session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1189"/>
+        <location filename="../gui/mainwindow.cpp" line="1345"/>
         <source>Error</source>
         <translation type="unfinished">Ошибка</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1023"/>
+        <location filename="../gui/mainwindow.cpp" line="1175"/>
         <source>Can&apos;t read from file %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1051"/>
+        <location filename="../gui/mainwindow.cpp" line="1203"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1181"/>
+        <location filename="../gui/mainwindow.cpp" line="1337"/>
         <source>Save Session</source>
         <translation type="unfinished">Сохранить сеанс</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1190"/>
+        <location filename="../gui/mainwindow.cpp" line="1346"/>
         <source>Can&apos;t write to file %1</source>
         <translation type="unfinished">Не могу записать файл %1</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1336"/>
+        <location filename="../gui/mainwindow.cpp" line="1648"/>
         <source>The menu bar is now hidden. To make it visible again, press Ctrl+M.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1342"/>
+        <location filename="../gui/mainwindow.cpp" line="1654"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1360"/>
+        <location filename="../gui/mainwindow.cpp" line="1672"/>
         <source>To insert a function using keyboard, use Ctrl+F shorcut. From the dialog, you can choose the function you want to insert.</source>
         <translation type="unfinished">Для вставки функции с клавиатуры используйте сочетание Ctrl+F. Вы можете также выбрать функцию из окна функций.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1365"/>
+        <location filename="../gui/mainwindow.cpp" line="1677"/>
         <source>To insert a variable using keyboard, use Ctrl+I shorcut. From the dialog, you can choose the variable you want to insert.</source>
         <translation type="unfinished">Для вставки переменной с клавиатуры используйте сочетание Ctrl+I. Вы можете также выбрать переменную из окна функций.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1368"/>
+        <location filename="../gui/mainwindow.cpp" line="1680"/>
         <source>Use variable &lt;i&gt;pi&lt;/i&gt; to use pi constant.</source>
         <translation type="unfinished">Используйте переменную &lt;i&gt;pi&lt;/i&gt; для числа Пи.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1373"/>
+        <location filename="../gui/mainwindow.cpp" line="1685"/>
         <source>Use &lt;i&gt;;&lt;/i&gt; (semicolon) to separate the parameters in functions.</source>
         <translation type="unfinished">Используйте &lt;i&gt;;&lt;/i&gt; (точку с запятой) для разделения параметров в функциях.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1379"/>
+        <location filename="../gui/mainwindow.cpp" line="1691"/>
         <source>Tip of the day</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1012"/>
+        <location filename="../gui/mainwindow.cpp" line="1164"/>
         <source>File %1 is not a valid session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1049"/>
+        <location filename="../gui/mainwindow.cpp" line="1201"/>
         <source>Merge session being loaded with current session?
 If no, current variables and display will be cleared.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1144"/>
+        <location filename="../gui/mainwindow.cpp" line="1299"/>
         <source>SpeedCrunch</source>
         <translation type="unfinished">SpeedCrunch</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1695"/>
+        <location filename="../gui/mainwindow.cpp" line="2004"/>
         <source>SpeedCrunch is minimized.
 Left click the icon to restore it or right click for options.</source>
         <translation type="unfinished"></translation>
@@ -2220,287 +2243,287 @@ Left click the icon to restore it or right click for options.</source>
 <context>
     <name>MainWindow::Private</name>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="249"/>
+        <location filename="../gui/mainwindow.cpp" line="280"/>
         <source>Clear E&amp;xpression</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="250"/>
+        <location filename="../gui/mainwindow.cpp" line="281"/>
         <source>Clear &amp;History</source>
         <translation type="unfinished">Очистить &amp;историю</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="251"/>
+        <location filename="../gui/mainwindow.cpp" line="282"/>
         <source>&amp;Degree</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="252"/>
+        <location filename="../gui/mainwindow.cpp" line="283"/>
         <source>Delete All V&amp;ariables</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="253"/>
+        <location filename="../gui/mainwindow.cpp" line="284"/>
         <source>D&amp;elete Variable...</source>
         <translation type="unfinished">&amp;Удалить переменную...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="254"/>
+        <location filename="../gui/mainwindow.cpp" line="285"/>
         <source>&amp;15 Decimal Digits</source>
         <translation type="unfinished">&amp;15 цифр после запятой</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="255"/>
+        <location filename="../gui/mainwindow.cpp" line="286"/>
         <source>&amp;2 Decimal Digits</source>
         <translation type="unfinished">&amp;2 цифры после запятой</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="256"/>
+        <location filename="../gui/mainwindow.cpp" line="287"/>
         <source>&amp;3 Decimal Digits</source>
         <translation type="unfinished">&amp;3 цифры после запятой</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="257"/>
+        <location filename="../gui/mainwindow.cpp" line="288"/>
         <source>&amp;50 Decimal Digits</source>
         <translation type="unfinished">&amp;50 цифр после запятой</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="258"/>
+        <location filename="../gui/mainwindow.cpp" line="289"/>
         <source>&amp;8 Decimal Digits</source>
         <translation type="unfinished">&amp;8 цифр после запятой</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="259"/>
+        <location filename="../gui/mainwindow.cpp" line="290"/>
         <source>&amp;Automatic Precision</source>
         <translation type="unfinished">Автоматически</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="260"/>
+        <location filename="../gui/mainwindow.cpp" line="291"/>
         <source>&amp;Copy</source>
         <translation type="unfinished">&amp;Копировать</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="261"/>
+        <location filename="../gui/mainwindow.cpp" line="292"/>
         <source>Copy Last &amp;Result</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="262"/>
+        <location filename="../gui/mainwindow.cpp" line="293"/>
         <source>&amp;Paste</source>
         <translation type="unfinished">&amp;Вставить</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="263"/>
+        <location filename="../gui/mainwindow.cpp" line="294"/>
         <source>&amp;About</source>
         <translation type="unfinished">&amp;О программе SpeedCrunch</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="264"/>
+        <location filename="../gui/mainwindow.cpp" line="295"/>
         <source>About &amp;Qt</source>
         <translation type="unfinished">О &amp;Qt</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="265"/>
+        <location filename="../gui/mainwindow.cpp" line="296"/>
         <source>SpeedCrunch &amp;Web Site...</source>
         <translation type="unfinished">Сайт SpeedCrunch...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="266"/>
+        <location filename="../gui/mainwindow.cpp" line="297"/>
         <source>&amp;Tip of the Day</source>
         <translation type="unfinished">Заметка дня</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="267"/>
+        <location filename="../gui/mainwindow.cpp" line="298"/>
         <source>Insert &amp;Function...</source>
         <translation type="unfinished">Вставить &amp;функцию...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="268"/>
+        <location filename="../gui/mainwindow.cpp" line="299"/>
         <source>Insert &amp;Variable...</source>
         <translation type="unfinished">Вставить &amp;переменную...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="269"/>
+        <location filename="../gui/mainwindow.cpp" line="300"/>
         <source>&amp;Partial Results</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="270"/>
+        <location filename="../gui/mainwindow.cpp" line="301"/>
         <source>Automatic &amp;Completion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="271"/>
+        <location filename="../gui/mainwindow.cpp" line="302"/>
         <source>Stay Always On &amp;Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="272"/>
+        <location filename="../gui/mainwindow.cpp" line="303"/>
         <source>&amp;Minimize To System Tray</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="274"/>
+        <location filename="../gui/mainwindow.cpp" line="305"/>
         <source>&amp;Dot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="275"/>
+        <location filename="../gui/mainwindow.cpp" line="306"/>
         <source>&amp;Comma</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="276"/>
+        <location filename="../gui/mainwindow.cpp" line="307"/>
         <source>&amp;Radian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="277"/>
+        <location filename="../gui/mainwindow.cpp" line="308"/>
         <source>Scroll Display Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="278"/>
+        <location filename="../gui/mainwindow.cpp" line="309"/>
         <source>Scroll Display Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="279"/>
+        <location filename="../gui/mainwindow.cpp" line="310"/>
         <source>&amp;Select Expression</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="280"/>
+        <location filename="../gui/mainwindow.cpp" line="311"/>
         <source>&amp;Load...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="281"/>
+        <location filename="../gui/mainwindow.cpp" line="312"/>
         <source>&amp;Quit</source>
         <translation type="unfinished">В&amp;ыход</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="282"/>
+        <location filename="../gui/mainwindow.cpp" line="313"/>
         <source>&amp;Save...</source>
         <translation type="unfinished">&amp;Сохранить...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="283"/>
+        <location filename="../gui/mainwindow.cpp" line="315"/>
         <source>Show &amp;Constants</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="284"/>
+        <location filename="../gui/mainwindow.cpp" line="316"/>
         <source>Full &amp;Screen Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="285"/>
+        <location filename="../gui/mainwindow.cpp" line="317"/>
         <source>Show &amp;Functions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="286"/>
+        <location filename="../gui/mainwindow.cpp" line="318"/>
         <source>Show &amp;History</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="287"/>
+        <location filename="../gui/mainwindow.cpp" line="319"/>
         <source>Show &amp;Keypad</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="288"/>
+        <location filename="../gui/mainwindow.cpp" line="320"/>
         <source>Hide &amp;Menu Bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="289"/>
+        <location filename="../gui/mainwindow.cpp" line="321"/>
         <source>Show &amp;Variables</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="290"/>
+        <location filename="../gui/mainwindow.cpp" line="322"/>
         <source>&amp;Binary</source>
         <translation type="unfinished">&amp;Двоичная</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="291"/>
+        <location filename="../gui/mainwindow.cpp" line="323"/>
         <source>&amp;Engineering</source>
         <translation type="unfinished">Технический</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="292"/>
+        <location filename="../gui/mainwindow.cpp" line="324"/>
         <source>&amp;Fixed Decimal</source>
         <translation type="unfinished">С &amp;точкой</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="293"/>
+        <location filename="../gui/mainwindow.cpp" line="325"/>
         <source>&amp;General</source>
         <translation type="unfinished">&amp;По умолчанию</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="294"/>
+        <location filename="../gui/mainwindow.cpp" line="326"/>
         <source>&amp;Hexadecimal</source>
         <translation type="unfinished">&amp;Шестнадцатеричная</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="295"/>
+        <location filename="../gui/mainwindow.cpp" line="327"/>
         <source>&amp;Octal</source>
         <translation type="unfinished">&amp;Восьмеричная</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="296"/>
+        <location filename="../gui/mainwindow.cpp" line="328"/>
         <source>&amp;Scientific</source>
         <translation type="unfinished">Научный</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="391"/>
+        <location filename="../gui/mainwindow.cpp" line="429"/>
         <source>&amp;Session</source>
         <translation type="unfinished">&amp;Сеанс</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="399"/>
+        <location filename="../gui/mainwindow.cpp" line="437"/>
         <source>&amp;Edit</source>
         <translation type="unfinished">&amp;Правка</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="416"/>
+        <location filename="../gui/mainwindow.cpp" line="454"/>
         <source>&amp;Format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="421"/>
+        <location filename="../gui/mainwindow.cpp" line="459"/>
         <source>Decimal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="437"/>
+        <location filename="../gui/mainwindow.cpp" line="475"/>
         <source>&amp;Angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="443"/>
+        <location filename="../gui/mainwindow.cpp" line="481"/>
         <source>Se&amp;ttings</source>
         <translation type="unfinished">&amp;Настройка</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="446"/>
+        <location filename="../gui/mainwindow.cpp" line="484"/>
         <source>&amp;Layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="458"/>
+        <location filename="../gui/mainwindow.cpp" line="497"/>
         <source>&amp;Behavior</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="464"/>
+        <location filename="../gui/mainwindow.cpp" line="503"/>
         <source>Radix &amp;Character</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="470"/>
+        <location filename="../gui/mainwindow.cpp" line="509"/>
         <source>&amp;Help</source>
         <translation type="unfinished">&amp;Справка</translation>
     </message>
@@ -2510,8 +2533,13 @@ Left click the icon to restore it or right click for options.</source>
         <translation type="obsolete">SpeedCrunch</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="273"/>
+        <location filename="../gui/mainwindow.cpp" line="304"/>
         <source>&amp;Locale Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/mainwindow.cpp" line="314"/>
+        <source>Show Math &amp;Book</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2567,27 +2595,27 @@ Left click the icon to restore it or right click for options.</source>
     <message>
         <location filename="../base/evaluator.cpp" line="1381"/>
         <source>invalid expression</source>
-        <translation>Не правильное выражение</translation>
+        <translation type="obsolete">Не правильное выражение</translation>
     </message>
     <message>
         <location filename="../base/evaluator.cpp" line="1400"/>
         <source>variable cannot be overwritten</source>
-        <translation>Переменная не может быть заменена</translation>
+        <translation type="obsolete">Переменная не может быть заменена</translation>
     </message>
     <message>
         <location filename="../base/evaluator.cpp" line="1408"/>
         <source>identifier matches an existing function name</source>
-        <translation>Идентификатор имет такое же имя как функция</translation>
+        <translation type="obsolete">Идентификатор имет такое же имя как функция</translation>
     </message>
     <message>
         <location filename="../base/evaluator.cpp" line="1309"/>
         <source>division by zero</source>
-        <translation>деление на ноль</translation>
+        <translation type="obsolete">деление на ноль</translation>
     </message>
     <message>
         <location filename="../base/evaluator.cpp" line="1350"/>
         <source>unknown function or variable</source>
-        <translation>неизвестная функция или переменная</translation>
+        <translation type="obsolete">неизвестная функция или переменная</translation>
     </message>
 </context>
 <context>
