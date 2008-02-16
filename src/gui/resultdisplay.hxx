@@ -18,29 +18,27 @@
 // Boston, MA 02110-1301, USA.
 
 
-#ifndef RESULT_HXX
-#define RESULT_HXX
+#ifndef RESULTDISPLAY_HXX
+#define RESULTDISPLAY_HXX
 
 
 #include <QListWidget>
 #include <QResizeEvent>
 
 
-struct ResultPrivate;
-
 class HNumber;
 
 class QListWidgetItem;
 
 
-class Result : public QListWidget
+class ResultDisplay : public QListWidget
 {
   Q_OBJECT
 
   public:
-    Result( char radixChar = 'C', char format = 'g', int precision = -1,
-            QWidget * parent = 0, const char * name = 0 );
-    ~Result();
+    ResultDisplay( char radixChar = 'C', char format = 'g', int precision = -1,
+                   QWidget * parent = 0, const char * name = 0 );
+    ~ResultDisplay();
 
     void    append( const QString & expr, const HNumber & value );
     void    appendError( const QString & expr, const QString & msg );
@@ -78,9 +76,10 @@ class Result : public QListWidget
     void refresh();
 
   private:
-    ResultPrivate * const d;
-    Result( const Result & );
-    Result & operator=( const Result & );
+    struct Private;
+    Private * const d;
+    ResultDisplay( const ResultDisplay & );
+    ResultDisplay & operator=( const ResultDisplay & );
 };
 
 

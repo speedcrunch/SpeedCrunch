@@ -33,7 +33,7 @@
 #include "insertfunctiondlg.hxx"
 #include "insertvardlg.hxx"
 #include "keypad.hxx"
-#include "result.hxx"
+#include "resultdisplay.hxx"
 #include "tipwidget.hxx"
 #include "variablesdock.hxx"
 
@@ -166,9 +166,9 @@ struct Layouts
 struct Widgets
 {
   QWidget *         root;
+  ResultDisplay *   display;
   Editor *          editor;
   Keypad *          keypad;
-  Result *          display;
   AutoHideLabel *   autoCalcLabel;
   TipWidget *       tip;
   QSystemTrayIcon * trayIcon;
@@ -539,8 +539,8 @@ void MainWindow::Private::createFixedWidgets()
   // display
   QHBoxLayout * displayLayout = new QHBoxLayout();
   displayLayout->setMargin( 5 );
-  widgets.display = new Result( settings.radixChar, settings.format,
-                                settings.precision, widgets.root );
+  widgets.display = new ResultDisplay( settings.radixChar, settings.format,
+                                       settings.precision, widgets.root );
   displayLayout->addWidget( widgets.display );
   layouts.root->addLayout( displayLayout );
 
