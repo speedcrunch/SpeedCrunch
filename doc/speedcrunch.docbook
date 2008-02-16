@@ -11,6 +11,7 @@
 <authorgroup>
 <author><firstname>Ariya</firstname> <surname>Hidayat</surname></author>
 <author><firstname>Jonathan</firstname><surname>Jesse</surname></author>
+<author><firstname>Wolf</firstname><surname>Lammen</surname></author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
 
@@ -37,7 +38,7 @@
 <chapter id="introduction">
 <title>Introduction</title>
 
-<para>This document describes SpeedCrunch version 0.8, a multiplatform desktop calculator for power users.</para>
+<para>This document describes SpeedCrunch version 0.10, a multiplatform desktop calculator for power users.</para>
 
 <para>Have fun with SpeedCrunch!</para>
 </chapter>
@@ -164,9 +165,32 @@ make
 <title>Getting Started</title>
 </chapter>
 
+<chapter id="algebraic notation">
+<title>Algebraic Notation</title>
 
 <chapter id="using-functions">
 <title>Using Functions</title>
+<sect1 id="alphabetical-listing">
+<para>Here is an alphabetical listing of functions</para>
+<varliablelist>
+<varlistentry>
+<term>abs (x)</term>
+<para>Returns |x|, turning negative numbers into positive ones, and leaving positive ones unchanged.</para>
+</varlistentry>
+<varlistentry>
+<term>acos (x)</term>
+<para>Returns the arc cos (x), the inverse function to cos y</para>
+<para>The return value is dependent on the degree setting; if “degrees” is enabled, the return value is from the range 0 <= result <= 180, else from 0 <= result <= π.</para>
+</varlistentry>
+<varlistentry>
+<term>and (x1; x2; ...)</term>
+<para>Performs a bitwise logical AND on the submitted parameter(s) (one or more).
+All parameters have to be integers from the range -2255 to +2256 – 1 (signed or unsigned 256 bit integers). The result is from -2255 to +2255 – 1 (signed integer).  Note that and(x) is not the identity, because the unsigned +2255 is mapped to the signed -2255, for example.  An error is returned, if the parameters are not from the valid range.</para
+</varlistentry>
+<varlistentry>
+<term>arcosh (x)</term>
+<para>Computes the area hyperbolic cosine of x, the inverse fuction to cosh y.  arcosh (X) is the positive solution to cosh(y)=x.  Except for 1, there exists a second solution to this equation: -arcosh (X).  The parameter x has to be >=1.</para>
+</varlistentry>
 </chapter>
 
 
