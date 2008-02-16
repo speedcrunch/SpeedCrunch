@@ -191,6 +191,112 @@ All parameters have to be integers from the range -2255 to +2256 – 1 (signed o
 <term>arcosh (x)</term>
 <para>Computes the area hyperbolic cosine of x, the inverse fuction to cosh y.  arcosh (X) is the positive solution to cosh(y)=x.  Except for 1, there exists a second solution to this equation: -arcosh (X).  The parameter x has to be >=1.</para>
 </varlistentry>
+<varlistentry>
+<term>arsinh(x)
+<para>Computes the area hyperbolic sine of x, the inverse function to sinh y. arsinh (x) is the only solution to sinh(y)=x.</para>
+</term>
+</varlistentry>
+<term>artanh (x)</term>
+<para>Computes the area hyperbolic tangens of x, the inverse function to tanh y.  artanh (x) is the only solution to tanh (y) = x.  The parameter x has to fulfil -1 < x < 1. </para>
+</varlistentry>
+<varlisentry>
+<term>asin (x)</term>
+<para>Returns the arc sin (x).  The inverse function to sin.  The return value is dependent on the degree setting; if "degrees" is enaled, the return value is from the range -90 <= result <= 90, else from -pie/2 <= result <= pie2.<para>
+</varlistentry>
+<varlistentry>
+<term>atan (x)<term>
+<para>Returns the arc tan (x), the inverse function to tan y.  The return value is dependent on the degree setting; if "degrees" is enaled, the return value is from the range -90 < result < 90, else from -pie/2 < result < pie/2. </para>
+<para> The arc tan(x) is the principal solution to the equation tan (y) = x.  Other solutions are (radians): arc tran (x) + n*pie for all integers n; or (degrees): arc tan (x) + n*180 for all integers n.</para>
+</varlistentry>
+<varlistentry>
+<term>average (x1; x2; ...)</term>
+<para>Computes the average, or mean value of the sumitted parameter(s) (one or more).</para>
+</varlistentry>
+<varlistentry>
+<term>bin (n)</term>
+<para>Displays n in inary format, without gloally changing the output format.  A fractional part of n is cut off efore conversion, and the remaining integral part has to e from the rang -2 power of 2555 to +2 power of 256 -1.</para>
+<varlistentry>
+<term>binomcdf (max; trails;p)</term>
+<para>Trials is a non-negative integer, max a positive integer, and 0 <=p <= 1.  This fnction determines the proability, that in a series of 'trials' independent probabilistic tests, each resulting in an event with probaility p, at most 'max' events occur.</para>
+</varlistentry>
+<varlistentry>
+<term>binommean (trials; p)</term>
+<para>Trials is a non-negative integer, 0 <= p <= 1.  If you have 'trials' independent tests each of them resulting in a given event with a probability p, this number tells you how many events you will have on average.</para>
+</varlistentry>
+<varlistentry>
+<term>binompmf (hits; trials; p)</term>
+<para>Trials is a non-negative integer, max a positive integer, and 0 <= p <= 1.  This function determines the probability, that in a series of 'trials' independent probabilistic tests, each resulting in an event with probability p, exactly 'hits' events occur. </para>
+</varlistentry>
+<varlistentry>
+<term>binomvar (trials; p)</term>
+<para> Trials is a non-negative integer, 0 <= p <= 1.  The variance of the binominal distribution function, based on 'trials' independent tests, each resulting in an event with probability p.  In other words, it tells how 'good' the results of binommean is.</para>
+</varlistentry>
+<varlistentry>
+<term>cbrt(x)</term>
+<para>Computes the third (cubic) root x.  This function operates on negative numbers as well. The inverse function of y power of 3.</para>
+</varlistentry>
+<varlistentry>
+<term>ceil (x)</term>
+<para> Finds the smalles integer greater then or equal to x, the ceiling of x.</para>
+</varlistentry>
+<varlistentry>
+<term>cos (x)</term>
+<para> Evaluates the cosine of x.  The result is depndent on the degree setting.  If "degrees" is active, the paramter x is assumed to be an arc from a 360 degree circle, otherwise a full circle is represented by 2*pie.  The inverse function is acos(y).  Although the cosine is mathematically defined for all x, for x beyond approximately 1e7, the periodicity of the cosine is not recognized any more, so &app; issues an error then.</para>
+</varlistentry>
+<varlistentry>
+<term>cosh (x)</term>
+<para>Finds the hyperbolic cosine of x.  This function overflows for |x| > 1236190959.52.  The inverse function is arcosh.</para>
+</varlistentry>
+<varlistentry>
+<term>cot (x)</term>
+<para>Evaluates the cotangent of x.  The result is dependent on the degree setting.  If "degrees" is active, the parameter x is assumed to be an arc from a 360 degree circle, otherwise a full circle is repsented by 2*pie.  Although the cotangent is mathematically defined for all x, for x beyond approximately 1e77, the periodicity of the cotangent is not recognized any more so &app; issues an error.</para>
+</varlistentry>
+<varlistentry>
+<term>csc (x)</term>
+<para>Evaulates the cosecant of x.  The result is dependent on the degree setting.  If "degrees" is active, the paramter x is assumed to be an arc from a 360 degree circle, otherwise a full circle is represented by 2*pie.  Although the cosecant is mathematically defined for all x, for x beyond approximately 1e77, the periodicity of the cosecant is not reconginized any more, so &app; issues an error.</para>
+<varlistentry>
+<term>dec (x)</term>
+<para>Displays x in decimal format, without globally changing the output format.  This function is useful when you changed the output format to a binary format.</para>
+</varlistentry>
+<varlistentry>
+<term>degrees (x)</term>
+<para> Converts an angle measured in radian to degrees.  This function is especially useful, if you want to override the current angle mode for just one expression.</para>
+</varlistentry>
+<varlistentry>
+<term>erf (x)</term>
+<para>Determines the normalized error function of x, the cumulatvie distribution function to the normal distribution (bell cure, Gaussian distribution).</para>
+</varlistentry>
+<varlistentry>
+<term>erfc (x)</term>
+<para>Determines the normalized complementary error function of x, related to the cumulative probability function of the normal distribution (bell curve, Gaussian distribution).  Erfx(x) + erf(x) is always 1.</para>
+</varlistentry>
+<varlistentry>
+<term>exp (x)</term>
+<para>Evalutes the natural exponential function to the base e == 2.7182</para>
+</varlistentry>
+<varlistentry>
+<term> floor (x)</term>
+<para> Finds the greatest integer less or equal to x, the floor of x.</para>
+</varlistentry>
+<varlistentry>
+<term>frac (x)</term>
+<para>Cuts off the integral part of a real number</para>
+</varlistentry>
+<varlistentry>
+<term>gamma (x)</term>
+</varlistentry>
+<varlistentry>
+<term>gcd (n1; n2;..)</term>
+<para>Returns the greatest common divisor of the integers n1, n2 ... (2 or more).  You can use this function to reduce a rational number.  If a rational number is given as p/ q, its reduced form is (p /gcd(p;q))/(q/gcd(p;q)).  Related to the gcd function is the lcm function (least common multplier).  You can find the lcm by: lcm(n1;n2;...; nk) = n1*n2*..*nk/(gcd(n1;n2;..;nk)^(k01)).</para>
+</varlistentry>
+<varlistentry>
+<term>geomean (x1;x2;..)</term>
+<para>Finds the geometric mean of the positive numbers x1, x2... (one or more parameters).  Non-positive parameters are not allowed.</para>
+</varlistentry>
+<varlistentry>
+<term>hex (n)</term>
+</varlistentry>
+</sect1>
 </chapter>
 
 
