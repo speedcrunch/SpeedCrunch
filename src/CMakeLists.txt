@@ -97,6 +97,15 @@ ADD_TEST(testfloatnum ${EXECUTABLE_OUTPUT_PATH}/testfloatnum)
 
 INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR} 3rdparty/util base gui main math)
 
+# books
 SET(BOOKSDIR "${CMAKE_INSTALL_PREFIX}/share/${PROGNAME}/books/")
 ADD_DEFINITIONS("-DBOOKSDIR=\\\"${BOOKSDIR}\\\"")
-ADD_SUBDIRECTORY(books)
+
+INSTALL(FILES       books/books.css
+        DESTINATION ${BOOKSDIR}
+)
+
+INSTALL(DIRECTORY   books/images books/en books/fi books/pt
+        DESTINATION "${BOOKSDIR}"
+        PATTERN     ".svn" EXCLUDE
+)
