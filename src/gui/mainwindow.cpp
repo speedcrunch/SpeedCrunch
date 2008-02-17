@@ -209,6 +209,7 @@ struct MainWindow::Private
   Conditions      conditions;
 
   Private();
+  ~Private();
   void loadSettings();
   void createUi();
   void createActions();
@@ -253,6 +254,23 @@ MainWindow::Private::Private()
   docks.functions = 0;
   docks.variables = 0;
 };
+
+
+MainWindow::Private::~Private()
+{
+  if ( widgets.trayIcon )
+    widgets.trayIcon->hide();
+  if ( docks.book )
+    deleteBookDock();
+  if ( docks.constants )
+    deleteConstantsDock();
+  if ( docks.variables )
+    deleteVariablesDock();
+  if ( docks.functions )
+    deleteFunctionsDock();
+  if ( docks.history )
+    deleteHistoryDock();
+}
 
 
 void MainWindow::Private::loadSettings()
@@ -965,7 +983,8 @@ void setWidgetLayoutAccordingToLanguageDirection( QWidget * widget )
 
 // public
 
-MainWindow::MainWindow() : QMainWindow(), d( new MainWindow::Private )
+MainWindow::MainWindow()
+  : QMainWindow(), d( new MainWindow::Private )
 {
   d->p = this;
 
@@ -976,6 +995,12 @@ MainWindow::MainWindow() : QMainWindow(), d( new MainWindow::Private )
   setWidgetsLayoutAccordingToLanguageDirection();
 
   QTimer::singleShot( 0, this, SLOT( activate() ) );
+}
+
+
+MainWindow::~MainWindow()
+{
+  delete d;
 }
 
 
@@ -991,12 +1016,6 @@ bool MainWindow::event( QEvent * e )
   }
 
   return QMainWindow::event( e );
-}
-
-
-MainWindow::~MainWindow()
-{
-  delete d;
 }
 
 
@@ -1524,6 +1543,8 @@ void MainWindow::Private::deleteKeypad()
 
 void MainWindow::Private::deleteBookDock()
 {
+  Q_ASSERT( docks.book );
+
   p->removeDockWidget( docks.book );
   p->disconnect( docks.book );
   delete docks.book;
@@ -1537,6 +1558,8 @@ void MainWindow::Private::deleteBookDock()
 
 void MainWindow::Private::deleteConstantsDock()
 {
+  Q_ASSERT( docks.constants );
+
   p->removeDockWidget( docks.constants );
   p->disconnect( docks.constants );
   delete docks.constants;
@@ -1550,6 +1573,8 @@ void MainWindow::Private::deleteConstantsDock()
 
 void MainWindow::Private::deleteFunctionsDock()
 {
+  Q_ASSERT( docks.functions );
+
   p->removeDockWidget( docks.functions );
   p->disconnect( docks.functions );
   delete docks.functions;
@@ -1563,6 +1588,8 @@ void MainWindow::Private::deleteFunctionsDock()
 
 void MainWindow::Private::deleteHistoryDock()
 {
+  Q_ASSERT( docks.history );
+
   p->removeDockWidget( docks.history );
   p->disconnect( docks.history );
   delete docks.history;
@@ -1576,6 +1603,8 @@ void MainWindow::Private::deleteHistoryDock()
 
 void MainWindow::Private::deleteVariablesDock()
 {
+  Q_ASSERT( docks.variables );
+
   p->removeDockWidget( docks.variables );
   p->disconnect( docks.variables );
   delete docks.variables;
@@ -2116,22 +2145,7 @@ void MainWindow::radixCharCommaActivated()
 void MainWindow::closeEvent( QCloseEvent * e )
 {
   d->saveSettings();
-
-  if ( d->widgets.trayIcon )
-    d->widgets.trayIcon->hide();
-  if ( d->docks.constants )
-    d->deleteConstantsDock();
-  if ( d->docks.variables )
-    d->deleteVariablesDock();
-  if ( d->docks.functions )
-    d->deleteFunctionsDock();
-  if ( d->docks.history )
-    d->deleteHistoryDock();
-
-  emit quitApplication();
-  //e->accept();
-  QMainWindow::closeEvent( e );
-  qApp->quit();
+  e->accept();
 }
 
 

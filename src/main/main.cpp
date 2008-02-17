@@ -69,14 +69,15 @@ int main( int argc, char * * argv )
   if ( tr )
     app.installTranslator( tr );
 
-  MainWindow mw;
-  mw.show();
+  MainWindow win;
+  win.show();
 
   app.connect( & app, SIGNAL( lastWindowClosed() ),
                & app, SLOT( quit() ) );
 
-  app.connect( & mw, SIGNAL( quitApplication() ),
-               & app, SLOT( quit() ) );
+  //app.connect( & win, SIGNAL( quitApplication() ),
+  //app.connect( & win, SIGNAL( quit() ),
+  //             & app, SLOT( quit() ) );
 
   return app.exec();
 }

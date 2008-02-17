@@ -47,7 +47,6 @@ class MainWindow : public QMainWindow
     void formatChanged( char );
     void radixCharChanged( char );
     void precisionChanged( int );
-    void quitApplication();
 
   public slots:
     void about();
@@ -118,9 +117,9 @@ class MainWindow : public QMainWindow
     void setRadixChar( char );
 
   protected:
-    virtual void closeEvent( QCloseEvent * );
-    virtual bool event( QEvent * );
-    bool         eventFilter( QObject *, QEvent * );
+    void closeEvent( QCloseEvent * );
+    bool event( QEvent * );
+    bool eventFilter( QObject *, QEvent * );
 
   private:
     struct Private;
