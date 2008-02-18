@@ -1007,13 +1007,12 @@ MainWindow::~MainWindow()
 bool MainWindow::event( QEvent * e )
 {
   if ( e->type() == QEvent::WindowStateChange )
-  {
     if ( windowState() & Qt::WindowMinimized )
-    {
       if ( d->settings.minimizeToTray )
+      {
         QTimer::singleShot( 100, this, SLOT( minimizeToTray() ) );
-    }
-  }
+        return true;
+      }
 
   return QMainWindow::event( e );
 }
@@ -1825,39 +1824,39 @@ void MainWindow::keypadButtonPressed( Keypad::Button b )
 {
   switch ( b )
   {
-    case Keypad::Key0:         d->widgets.editor->insert( "0" );     break;
-    case Keypad::Key1:         d->widgets.editor->insert( "1" );     break;
-    case Keypad::Key2:         d->widgets.editor->insert( "2" );     break;
-    case Keypad::Key3:         d->widgets.editor->insert( "3" );     break;
-    case Keypad::Key4:         d->widgets.editor->insert( "4" );     break;
-    case Keypad::Key5:         d->widgets.editor->insert( "5" );     break;
-    case Keypad::Key6:         d->widgets.editor->insert( "6" );     break;
-    case Keypad::Key7:         d->widgets.editor->insert( "7" );     break;
-    case Keypad::Key8:         d->widgets.editor->insert( "8" );     break;
-    case Keypad::Key9:         d->widgets.editor->insert( "9" );     break;
-    case Keypad::KeyPlus:      d->widgets.editor->insert( "+" );     break;
-    case Keypad::KeyMinus:     d->widgets.editor->insert( "-" );     break;
-    case Keypad::KeyTimes:     d->widgets.editor->insert( "*" );     break;
-    case Keypad::KeyDivide:    d->widgets.editor->insert( "/" );     break;
-    case Keypad::KeyEE:        d->widgets.editor->insert( "e" );     break;
-    case Keypad::KeyLeftPar:   d->widgets.editor->insert( "(" );     break;
-    case Keypad::KeyRightPar:  d->widgets.editor->insert( ")" );     break;
-    case Keypad::KeyRaise:     d->widgets.editor->insert( "^" );     break;
-    case Keypad::KeyPercent:   d->widgets.editor->insert( "%" );     break;
-    case Keypad::KeyFactorial: d->widgets.editor->insert( "!" );     break;
-    case Keypad::KeyX:         d->widgets.editor->insert( "x" );     break;
-    case Keypad::KeyXEquals:   d->widgets.editor->insert( "x=" );    break;
-    case Keypad::KeyPi:        d->widgets.editor->insert( "pi" );    break;
-    case Keypad::KeyAns:       d->widgets.editor->insert( "ans" );   break;
-    case Keypad::KeyLn:        d->widgets.editor->insert( "ln(" );   break;
-    case Keypad::KeyExp:       d->widgets.editor->insert( "exp(" );  break;
-    case Keypad::KeySin:       d->widgets.editor->insert( "sin(" );  break;
-    case Keypad::KeyCos:       d->widgets.editor->insert( "cos(" );  break;
-    case Keypad::KeyTan:       d->widgets.editor->insert( "tan(" );  break;
-    case Keypad::KeyAcos:      d->widgets.editor->insert( "acos(" ); break;
-    case Keypad::KeyAtan:      d->widgets.editor->insert( "atan(" ); break;
-    case Keypad::KeyAsin:      d->widgets.editor->insert( "asin(" ); break;
-    case Keypad::KeySqrt:      d->widgets.editor->insert( "sqrt(" ); break;
+    case Keypad::Key0        : d->widgets.editor->insert( "0"     ); break;
+    case Keypad::Key1        : d->widgets.editor->insert( "1"     ); break;
+    case Keypad::Key2        : d->widgets.editor->insert( "2"     ); break;
+    case Keypad::Key3        : d->widgets.editor->insert( "3"     ); break;
+    case Keypad::Key4        : d->widgets.editor->insert( "4"     ); break;
+    case Keypad::Key5        : d->widgets.editor->insert( "5"     ); break;
+    case Keypad::Key6        : d->widgets.editor->insert( "6"     ); break;
+    case Keypad::Key7        : d->widgets.editor->insert( "7"     ); break;
+    case Keypad::Key8        : d->widgets.editor->insert( "8"     ); break;
+    case Keypad::Key9        : d->widgets.editor->insert( "9"     ); break;
+    case Keypad::KeyPlus     : d->widgets.editor->insert( "+"     ); break;
+    case Keypad::KeyMinus    : d->widgets.editor->insert( "-"     ); break;
+    case Keypad::KeyTimes    : d->widgets.editor->insert( "*"     ); break;
+    case Keypad::KeyDivide   : d->widgets.editor->insert( "/"     ); break;
+    case Keypad::KeyEE       : d->widgets.editor->insert( "e"     ); break;
+    case Keypad::KeyLeftPar  : d->widgets.editor->insert( "("     ); break;
+    case Keypad::KeyRightPar : d->widgets.editor->insert( ")"     ); break;
+    case Keypad::KeyRaise    : d->widgets.editor->insert( "^"     ); break;
+    case Keypad::KeyPercent  : d->widgets.editor->insert( "%"     ); break;
+    case Keypad::KeyFactorial: d->widgets.editor->insert( "!"     ); break;
+    case Keypad::KeyX        : d->widgets.editor->insert( "x"     ); break;
+    case Keypad::KeyXEquals  : d->widgets.editor->insert( "x="    ); break;
+    case Keypad::KeyPi       : d->widgets.editor->insert( "pi"    ); break;
+    case Keypad::KeyAns      : d->widgets.editor->insert( "ans"   ); break;
+    case Keypad::KeyLn       : d->widgets.editor->insert( "ln("   ); break;
+    case Keypad::KeyExp      : d->widgets.editor->insert( "exp("  ); break;
+    case Keypad::KeySin      : d->widgets.editor->insert( "sin("  ); break;
+    case Keypad::KeyCos      : d->widgets.editor->insert( "cos("  ); break;
+    case Keypad::KeyTan      : d->widgets.editor->insert( "tan("  ); break;
+    case Keypad::KeyAcos     : d->widgets.editor->insert( "acos(" ); break;
+    case Keypad::KeyAtan     : d->widgets.editor->insert( "atan(" ); break;
+    case Keypad::KeyAsin     : d->widgets.editor->insert( "asin(" ); break;
+    case Keypad::KeySqrt     : d->widgets.editor->insert( "sqrt(" ); break;
 
     case Keypad::KeyRadixChar:
       d->widgets.editor->insert( QString( d->widgets.keypad->radixChar() ) );

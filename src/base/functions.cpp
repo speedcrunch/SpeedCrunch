@@ -271,7 +271,7 @@ HNumber Functions::Private::trunc( Function * f, const QVector<HNumber> & args )
 }
 
 
-HNumber Functions::Private::frac( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::frac( Function *, const QVector<HNumber> & args )
 {
   if ( args.count() != 1 )
     return HNumber::nan();
@@ -650,7 +650,7 @@ HNumber Functions::Private::tanh( Function *, const QVector<HNumber> & args )
 }
 
 
-HNumber Functions::Private::arsinh( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::arsinh( Function *, const QVector<HNumber> & args )
 {
   if ( args.count() != 1 )
     return HNumber::nan();
@@ -697,7 +697,7 @@ HNumber Functions::Private::artanh( Function * f, const QVector<HNumber> & args 
 }
 
 
-HNumber Functions::Private::erf( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::erf( Function *, const QVector<HNumber> & args )
 {
   if ( args.count() != 1 )
     return HNumber::nan();
@@ -1198,7 +1198,7 @@ HNumber Functions::Private::poivar( Function * f,
 }
 
 
-HNumber Functions::Private::mask( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::mask( Function *, const QVector<HNumber> & args )
 {
   HNumber val = args[0];
   HNumber bits = args[1];
@@ -1206,7 +1206,7 @@ HNumber Functions::Private::mask( Function * f, const QVector<HNumber> & args )
 }
 
 
-HNumber Functions::Private::unmask( Function * f,
+HNumber Functions::Private::unmask( Function *,
                                     const QVector<HNumber> & args )
 {
   HNumber val = args[0];
@@ -1215,14 +1215,14 @@ HNumber Functions::Private::unmask( Function * f,
 }
 
 
-HNumber Functions::Private::not_( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::not_( Function *, const QVector<HNumber> & args )
 {
   HNumber val = args[0];
   return ~val;
 }
 
 
-HNumber Functions::Private::and_( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::and_( Function *, const QVector<HNumber> & args )
 {
   if ( args.count() <= 0 )
     return HNumber("NaN");
@@ -1235,7 +1235,7 @@ HNumber Functions::Private::and_( Function * f, const QVector<HNumber> & args )
 }
 
 
-HNumber Functions::Private::or_( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::or_( Function *, const QVector<HNumber> & args )
 {
   if ( args.count() <= 0 )
     return HNumber("NaN");
@@ -1248,7 +1248,7 @@ HNumber Functions::Private::or_( Function * f, const QVector<HNumber> & args )
 }
 
 
-HNumber Functions::Private::xor_( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::xor_( Function *, const QVector<HNumber> & args )
 {
   if ( args.count() <= 0 )
     return HNumber("NaN");
@@ -1261,7 +1261,7 @@ HNumber Functions::Private::xor_( Function * f, const QVector<HNumber> & args )
 }
 
 
-HNumber Functions::Private::ashl( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::ashl( Function *, const QVector<HNumber> & args )
 {
   HNumber bits = args[1];
   HNumber val = args[0];
@@ -1270,7 +1270,7 @@ HNumber Functions::Private::ashl( Function * f, const QVector<HNumber> & args )
 }
 
 
-HNumber Functions::Private::ashr( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::ashr( Function *, const QVector<HNumber> & args )
 {
   HNumber bits = args[1];
   HNumber val = args[0];
@@ -1279,7 +1279,7 @@ HNumber Functions::Private::ashr( Function * f, const QVector<HNumber> & args )
 }
 
 
-HNumber Functions::Private::idiv( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::idiv( Function *, const QVector<HNumber> & args )
 {
   HNumber dividend = args[0];
   HNumber divisor = args[1];
@@ -1288,7 +1288,7 @@ HNumber Functions::Private::idiv( Function * f, const QVector<HNumber> & args )
 }
 
 
-HNumber Functions::Private::mod( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::mod( Function *, const QVector<HNumber> & args )
 {
   HNumber dividend = args[0];
   HNumber divisor = args[1];
@@ -1390,10 +1390,8 @@ Functions::Functions( char angleMode, QObject * parent )
 
 void Functions::add( Function * f )
 {
-  if ( ! f )
-    return;
-
-  d->functions.insert( f->name().toUpper(), f );
+  if ( f )
+    d->functions.insert( f->name().toUpper(), f );
 }
 
 
@@ -1419,11 +1417,9 @@ QStringList Functions::functionNames() const
 
 Functions::~Functions()
 {
-  while ( d->functions.size() > 0 )
-  {
-    delete d->functions[ 0 ];
-    d->functions.remove( 0 );
-  }
+  QList<Function *> values = d->functions.values();
+  for ( int i = 0; i < values.size(); i++ )
+    delete values[i];
 
   delete d;
 }

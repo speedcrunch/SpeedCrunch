@@ -43,7 +43,8 @@ QTranslator * createTranslator()
 
   if ( br_init( &error ) == 0 && error != BR_INIT_ERROR_DISABLED )
   {
-      printf( "Warning: BinReloc failed to initialize (error code %d)\n", error );
+      printf( "Warning: BinReloc failed to initialize (error code %d)\n",
+              error );
       printf( "Will fallback to hardcoded default path.\n" );
   }
 
@@ -61,7 +62,7 @@ QTranslator * createTranslator()
 }
 
 
-int main( int argc, char * * argv )
+int main( int argc, char * argv[] )
 {
   QApplication app( argc, argv );
 
@@ -74,10 +75,6 @@ int main( int argc, char * * argv )
 
   app.connect( & app, SIGNAL( lastWindowClosed() ),
                & app, SLOT( quit() ) );
-
-  //app.connect( & win, SIGNAL( quitApplication() ),
-  //app.connect( & win, SIGNAL( quit() ),
-  //             & app, SLOT( quit() ) );
 
   return app.exec();
 }
