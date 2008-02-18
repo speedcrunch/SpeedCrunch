@@ -147,7 +147,7 @@ class RealFormat: public FormatIntf
     };
   public:
     RealFormat();
-    virtual QString format(const VariantData&);
+    QString format(const Variant&);
     void setMode(LongReal::FmtMode, int digits = -1,
                  char base = 10, char scalebase = 10);
     void setGroupChars(QChar dot = '.', QChar group = ',', int grouplg = 0);

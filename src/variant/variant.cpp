@@ -181,6 +181,10 @@ Variant::operator Error() const
     default: return val == 0? NoOperand: Error(*val);
   }
 }
+Variant::operator const VariantData*() const
+{
+  return isBuiltinType(type())? 0 : val;
+}
 
 Variant Variant::embed() const
 {

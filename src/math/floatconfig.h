@@ -29,7 +29,7 @@
 *************************************************************************/
 
 /* this file contains the basic settings, that control the overall
-   behaviour of floatnum and derivatives.
+   behaviour of floatnum and derivates.
    Uncomment or set any of the following defines according to your needs.
 */
 
@@ -65,7 +65,7 @@
 
 /* the number of bits into which an exponent of a floatnum is encoded.
    In order to avoid integer overflow, this should be at least two bits
-   less than the bits in the integer type choosen for the exponent.
+   less than the bits in the integer type chosen for the exponent.
    The default is two bit less than the size of an int */
 #define BITS_IN_EXP 30
 
@@ -107,7 +107,7 @@
 
 /* The integer domain of logical functions is a true subset of the integer range,
    because, according to their nature, they operate modulo a power of two, so
-   the limit on their input is best choosen to be a power of 2.
+   the limit on their input is best chosen to be a power of 2.
    If you do not declare a limit here, an appropriate value is derived from
    DECPRECISION. If you change this value, make sure 2^LOGICRANGE
    is less than 10^DECPRECISION */

@@ -634,10 +634,10 @@ QString RealFormat::formatScale(LongReal::BasicIO& io)
   return result;
 }
 
-QString RealFormat::format(const VariantData& val)
+QString RealFormat::format(const Variant& val)
 {
   QString result;
-  const LongReal* vr = dynamic_cast<const LongReal*>(&val);
+  const LongReal* vr = dynamic_cast<const LongReal*>((const VariantData*)val);
   if (!vr)
     return result;
   if (vr->isNaN())

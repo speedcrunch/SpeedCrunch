@@ -119,7 +119,6 @@ class VariantData: public VariantIntf
     static void registerConstructor(Constructor, VariantType);
     static VariantData* create(VariantType);
     virtual void release() { delete this; };
-    virtual VariantData* writePtr() { return this; };
     virtual VariantData* clone() const { return 0; };
     virtual bool assign(const char*) { return false; };
     virtual operator QByteArray() const = 0;
@@ -146,7 +145,7 @@ class FormatIntf
 {
   public:
     virtual ~FormatIntf() {};
-    virtual QString format(const VariantData&) = 0;
+    virtual QString format(const Variant&) = 0;
 };
 
 #endif /*_VARIANTBASE_H*/

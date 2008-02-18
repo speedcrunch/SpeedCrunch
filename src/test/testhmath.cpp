@@ -103,10 +103,10 @@ void test_create()
   CHECK( HNumber( "1e-3" ), "0.001" );
 
   // too large or too small
-  CHECK( HNumber( "1e500000000"  ), "NaN" );
-  CHECK( HNumber( "1e-500000000" ), "NaN" );
-  CHECK_FORMAT( 'e', 2, HNumber( "1e500000000"  ), "NaN" );
-  CHECK_FORMAT( 'e', 2, HNumber( "1e-500000000" ), "NaN" );
+  CHECK( HNumber( "1e1000000000"  ), "NaN" );
+  CHECK( HNumber( "1e-1000000000" ), "NaN" );
+  CHECK_FORMAT( 'e', 2, HNumber( "1e1000000000"  ), "NaN" );
+  CHECK_FORMAT( 'e', 2, HNumber( "1e-1000000000" ), "NaN" );
 }
 
 void test_format()
@@ -477,8 +477,8 @@ void test_functions()
   CHECK( HMath::nCr( "NaN", "NaN" ), "NaN"  );
   CHECK( HMath::nCr( "NaN", 5     ), "NaN"  );
   CHECK( HMath::nCr( 5,     "NaN" ), "NaN"  );
-  CHECK( HMath::nCr( 21,    -1    ), "NaN"  );
-  CHECK( HMath::nCr( -21,   2     ), "NaN"  );
+  CHECK( HMath::nCr( 21,    -1    ), "0"    );
+  CHECK( HMath::nCr( -21,   2     ), "231"  );
   CHECK( HMath::nCr( 21,    0     ), "1"    );
   CHECK( HMath::nCr( 21,    1     ), "21"   );
   CHECK( HMath::nCr( 21,    2     ), "210"  );
@@ -486,8 +486,7 @@ void test_functions()
   CHECK( HMath::nCr( 21,    19    ), "210"  );
   CHECK( HMath::nCr( 21,    20    ), "21"   );
   CHECK( HMath::nCr( 21,    21    ), "1"    );
-  CHECK( HMath::nCr( 21,    22    ), "NaN"  );
-  CHECK( HMath::nCr( -21,   2     ), "NaN"  );
+  CHECK( HMath::nCr( 21,    22    ), "0"    );
   CHECK( HMath::nCr( 0,     0     ), "1"    );
 
   // nPr

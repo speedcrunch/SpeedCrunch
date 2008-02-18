@@ -63,9 +63,10 @@ class Variant: public VariantBase
     void operator=(const Variant&);
     bool assign(VariantType, const char*);
     bool assign(const QByteArray&);
-    public: // types & conversion
+  public: // types & conversion
     operator bool() const;
     operator Error() const;
+    operator const VariantData*() const;
     operator QByteArray() const;
     VariantType type() const { return m_type; };
     static bool isBuiltinType(VariantType);
