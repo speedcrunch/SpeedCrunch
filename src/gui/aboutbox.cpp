@@ -225,6 +225,7 @@ AboutBox::AboutBox( QWidget * parent ) : QDialog( parent )
   msg += QString( mainFmt ).arg( tr("Developers") ).arg( "Ariya Hidayat<br>"
                                                          "Helder Correia<br>"
                                                          "Johan Thelin<br>"
+                                                         "Petri Damst&eacute;n<br>"
                                                          "Wolf Lammen" );
 
   msg += QString( mainFmt ).arg( tr("Special thanks to") ).arg( "Marco Wegner<br>"
