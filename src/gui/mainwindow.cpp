@@ -319,7 +319,7 @@ void MainWindow::Private::createActions()
   actions.optionAutoCompletion  = new QAction( tr("Automatic &Completion"),    p );
   actions.optionAlwaysOnTop     = new QAction( tr("Stay Always On &Top"),      p );
   actions.optionMinimizeToTray  = new QAction( tr("&Minimize To System Tray"), p );
-  actions.radixCharAuto         = new QAction( tr("&Locale Default"),          p );
+  actions.radixCharAuto         = new QAction( tr("&System Default"),          p );
   actions.radixCharDot          = new QAction( tr("&Dot"),                     p );
   actions.radixCharComma        = new QAction( tr("&Comma"),                   p );
   actions.radian                = new QAction( tr("&Radian"),                  p );
@@ -468,13 +468,17 @@ void MainWindow::Private::createMenus()
   menus.edit->addAction( actions.clearExpression );
   menus.edit->addAction( actions.clearHistory    );
 
-  // format
-  menus.format = new QMenu( tr("&Format"), p );
-  p->menuBar()->addMenu( menus.format );
+  // settings
+  menus.settings = new QMenu( tr("Se&ttings"), p );
+  p->menuBar()->addMenu( menus.settings );
+
+  // settings / result format
+  menus.format = menus.settings->addMenu( tr("Result &Format") );
   menus.format->addAction( actions.formatBinary );
   menus.format->addAction( actions.formatOctal );
-  // settings / decimal
-  menus.decimal = menus.format->addMenu( tr("Decimal") );
+
+  // settings / result format / decimal
+  menus.decimal = menus.format->addMenu( tr("&Decimal") );
   menus.decimal->addAction( actions.formatGeneral );
   menus.decimal->addAction( actions.formatFixed );
   menus.decimal->addAction( actions.formatEngineering );
@@ -486,18 +490,15 @@ void MainWindow::Private::createMenus()
   menus.decimal->addAction( actions.digits8 );
   menus.decimal->addAction( actions.digits15 );
   menus.decimal->addAction( actions.digits50 );
-  // format (continued)
+
+  // settings / result format (continued)
   menus.format->addAction( actions.formatHexadec );
 
-  // angle
-  menus.angle = new QMenu( tr("&Angle"), p );
-  p->menuBar()->addMenu( menus.angle );
+  // settings / angle mode
+  menus.angle = menus.settings->addMenu( tr("&Angle Unit") );
   menus.angle->addAction( actions.radian );
   menus.angle->addAction( actions.degree );
 
-  // settings
-  menus.settings = new QMenu( tr("Se&ttings"), p );
-  p->menuBar()->addMenu( menus.settings );
   // settings / layout
   menus.layout = menus.settings->addMenu( tr("&Layout") );
   menus.layout->addAction( actions.showKeypad );
@@ -511,12 +512,14 @@ void MainWindow::Private::createMenus()
   menus.layout->addAction( actions.showMenuBar );
   menus.layout->addSeparator();
   menus.layout->addAction( actions.showFullScreen );
+
   // settings / behavior
   menus.behavior = menus.settings->addMenu( tr("&Behavior") );
   menus.behavior->addAction( actions.optionAutoCalc       );
   menus.behavior->addAction( actions.optionAutoCompletion );
   menus.behavior->addAction( actions.optionAlwaysOnTop    );
   menus.behavior->addAction( actions.optionMinimizeToTray );
+
   // settings / radix character
   menus.radixChar = menus.settings->addMenu( tr("Radix &Character") );
   menus.radixChar->addAction( actions.radixCharAuto  );
@@ -2073,7 +2076,7 @@ void MainWindow::trayIconActivated( QSystemTrayIcon::ActivationReason r )
     d->widgets.editor->setFocus();
     QTimer::singleShot( 0, d->widgets.trayIcon, SLOT( hide() ) );
 
-    // work around docks do not reappear
+    // work around docks do not reappear if floating
     if ( d->docks.history )
       if ( d->docks.history->isFloating() )
       {
