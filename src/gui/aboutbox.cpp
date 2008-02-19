@@ -232,8 +232,7 @@ AboutBox::AboutBox( QWidget * parent ) : QDialog( parent )
                                                                 "Jonathan Avraham<br>"
                                                                 "Witold Wysota<br>" );
 
-  msg += QString( mainFmt ).arg( tr("Artworks") ).arg( "Kuswanto (Zeus)<br>"
-                                                       "Helder Correia<br>"
+  msg += QString( mainFmt ).arg( tr("Graphics") ).arg( "Kuswanto (Zeus)<br>"
                                                        "Oxygen Project" );
 
   msg += "<p>";
