@@ -1699,7 +1699,7 @@ void MainWindow::showKeypad( bool b )
 void MainWindow::showMenuBarTip()
 {
   QString msg = tr("The menu bar is now hidden. "
-                   "To make it visible again, press Ctrl+M.");
+                   "To make it visible again, press Ctrl+Alt+M.");
 
   //QPoint p = mapFromGlobal( d->widgets.display->mapToGlobal( QPoint(0, 0) ) )
   //                          += QPoint(5, 5);
