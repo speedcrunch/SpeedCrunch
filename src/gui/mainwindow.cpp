@@ -611,6 +611,7 @@ void MainWindow::Private::createKeypad()
   layouts.keypad->addStretch();
   layouts.root->addLayout( layouts.keypad );
 
+  widgets.keypad->show();
   widgets.display->scrollEnd();
 }
 
@@ -1268,6 +1269,10 @@ void MainWindow::loadSession()
     resLs.append( res );
   }
 
+  // FIXME: this keeps the history in three (finally even four) different places.
+  // There should be just one central history and result list, and the clients
+  // editor, display, settings and historyDock should retrieve their data from there.
+  // FIXME: Actually there should be three lists: expressions, values and formats.
   d->widgets.display->appendHistory( expLs, resLs );
   d->widgets.editor->appendHistory( expLs, resLs );
 
