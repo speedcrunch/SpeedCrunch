@@ -934,7 +934,7 @@ HNumber Functions::Private::geomean( Function *, const QVector<HNumber> & args )
 
 HNumber Functions::Private::dec( Function *, const QVector<HNumber> & args )
 {
-  if ( args.count() < 1 )
+  if ( args.count() != 1 )
     return HNumber("NaN");
 
   HNumber result = args[0];
@@ -945,7 +945,7 @@ HNumber Functions::Private::dec( Function *, const QVector<HNumber> & args )
 
 HNumber Functions::Private::hex( Function *, const QVector<HNumber> & args )
 {
-  if ( args.count() < 1 )
+  if ( args.count() != 1 )
     return HNumber("NaN");
 
   HNumber result = args[0];
@@ -956,7 +956,7 @@ HNumber Functions::Private::hex( Function *, const QVector<HNumber> & args )
 
 HNumber Functions::Private::oct( Function *, const QVector<HNumber> & args )
 {
-  if( args.count() < 1 )
+  if( args.count() != 1 )
     return HNumber("NaN");
 
   HNumber result = args[0];
@@ -967,7 +967,7 @@ HNumber Functions::Private::oct( Function *, const QVector<HNumber> & args )
 
 HNumber Functions::Private::bin( Function *, const QVector<HNumber> & args )
 {
-  if ( args.count() < 1 )
+  if ( args.count() != 1 )
     return HNumber("NaN");
 
   HNumber result = args[0];
