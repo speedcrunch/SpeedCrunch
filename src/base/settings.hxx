@@ -53,6 +53,7 @@ class Settings
     bool        showMenuBar;
     bool        showVariables;
     bool        stayAlwaysOnTop;
+    bool        hiliteSyntax;
 
     bool        bookDockFloating;
     int         bookDockTop;

@@ -61,6 +61,7 @@ void Settings::load()
   autoComplete   = settings.value( key + "AutoComplete",       true  ).toBool();
   autoCalc       = settings.value( key + "AutoCalc",           true  ).toBool();
   minimizeToTray = settings.value( key + "MinimizeToTray",     false ).toBool();
+  hiliteSyntax   = settings.value( key + "HiliteSyntax",       true  ).toBool();
   //language       = settings.value( key + "Language",           QString() ).toString();
 
   key = KEY + "/Format/";
@@ -197,11 +198,12 @@ void Settings::save()
   settings.setValue( key + "AutoComplete",       autoComplete   );
   settings.setValue( key + "AutoCalc",           autoCalc       );
   settings.setValue( key + "MinimizeToTray",     minimizeToTray );
+  settings.setValue( key + "HiliteSyntax",       hiliteSyntax   );
   //settings.setValue( key + "Language",           language       );
 
   key = KEY + "/Format/";
 
-  settings.setValue( key + "Type",      QString(QChar(format)) );
+  settings.setValue( key + "Type",      QString( QChar( format ) ) );
   settings.setValue( key + "Precision", precision );
 
   key = KEY + "/Layout/";

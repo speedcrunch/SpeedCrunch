@@ -73,6 +73,7 @@ class MainWindow : public QMainWindow
     void autoCalcToggled( bool );
     void autoCompletionToggled( bool );
     void minimizeToTrayToggled( bool );
+    void hiliteSyntaxToggled( bool );
     void radian();
     void saveSession();
     void setWidgetsLayoutAccordingToLanguageDirection();

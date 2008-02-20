@@ -103,6 +103,7 @@ struct Actions
   QAction * optionDotComma;
   QAction * optionDotPoint;
   QAction * optionMinimizeToTray;
+  QAction * optionHiliteSyntax;
   QAction * radian;
   QAction * radixCharAuto;
   QAction * radixCharComma;
@@ -317,8 +318,9 @@ void MainWindow::Private::createActions()
   actions.insertVariable        = new QAction( tr("Insert &Variable..."),      p );
   actions.optionAutoCalc        = new QAction( tr("&Partial Results"),         p );
   actions.optionAutoCompletion  = new QAction( tr("Automatic &Completion"),    p );
-  actions.optionAlwaysOnTop     = new QAction( tr("Stay Always On &Top"),      p );
+  actions.optionAlwaysOnTop     = new QAction( tr("Always On &Top"),           p );
   actions.optionMinimizeToTray  = new QAction( tr("&Minimize To System Tray"), p );
+  actions.optionHiliteSyntax    = new QAction( tr("Syntax &Highlighting"),     p );
   actions.radixCharAuto         = new QAction( tr("&System Default"),          p );
   actions.radixCharDot          = new QAction( tr("&Dot"),                     p );
   actions.radixCharComma        = new QAction( tr("&Comma"),                   p );
@@ -356,6 +358,7 @@ void MainWindow::Private::createActions()
   actions.optionAutoCalc      ->setCheckable( true );
   actions.optionAutoCompletion->setCheckable( true );
   actions.optionMinimizeToTray->setCheckable( true );
+  actions.optionHiliteSyntax  ->setCheckable( true );
   actions.radian              ->setCheckable( true );
   actions.radixCharAuto       ->setCheckable( true );
   actions.radixCharComma      ->setCheckable( true );
@@ -517,6 +520,7 @@ void MainWindow::Private::createMenus()
   menus.behavior = menus.settings->addMenu( tr("&Behavior") );
   menus.behavior->addAction( actions.optionAutoCalc       );
   menus.behavior->addAction( actions.optionAutoCompletion );
+  menus.behavior->addAction( actions.optionHiliteSyntax   );
   menus.behavior->addAction( actions.optionAlwaysOnTop    );
   menus.behavior->addAction( actions.optionMinimizeToTray );
 
@@ -782,6 +786,7 @@ void MainWindow::Private::createFixedConnections()
   connect( actions.optionAutoCompletion,        SIGNAL( toggled( bool )                       ), p,                     SLOT( autoCompletionToggled( bool )         ) );
   connect( actions.optionAlwaysOnTop,           SIGNAL( toggled( bool )                       ), p,                     SLOT( alwaysOnTopToggled( bool )            ) );
   connect( actions.optionMinimizeToTray,        SIGNAL( toggled( bool )                       ), p,                     SLOT( minimizeToTrayToggled( bool )         ) );
+  connect( actions.optionHiliteSyntax,          SIGNAL( toggled( bool )                       ), p,                     SLOT( hiliteSyntaxToggled( bool )           ) );
   connect( actions.radixCharAuto,               SIGNAL( triggered()                           ), p,                     SLOT( radixCharAutoActivated()              ) );
   connect( actions.radixCharDot,                SIGNAL( triggered()                           ), p,                     SLOT( radixCharDotActivated()               ) );
   connect( actions.radixCharComma,              SIGNAL( triggered()                           ), p,                     SLOT( radixCharCommaActivated()             ) );
@@ -878,7 +883,10 @@ void MainWindow::Private::applySettings()
   p->menuBar()->setVisible( settings.showMenuBar );
 
   // autocalc
-  actions.optionAutoCalc->setChecked( settings.autoCalc );
+  if ( settings.autoCalc )
+    actions.optionAutoCalc->setChecked( true );
+  else
+    p->autoCalcToggled( false );
 
   // autocomplete
   if ( settings.autoComplete )
@@ -888,6 +896,12 @@ void MainWindow::Private::applySettings()
 
   // minimize to system tray
   actions.optionMinimizeToTray->setChecked( settings.minimizeToTray );
+
+  // syntax hilite
+  if ( settings.hiliteSyntax )
+    actions.optionHiliteSyntax->setChecked( true );
+  else
+    p->hiliteSyntaxToggled( false );
 
   // docks
   actions.showBook     ->setChecked( settings.showBook      );
@@ -914,7 +928,8 @@ void MainWindow::Private::saveSettings()
     {
       QString name = vars[i].name;
       char * value = HMath::formatScientific( vars[i].value, DECPRECISION );
-      settings.variables.append( QString( "%1=%2" ).arg( name ).arg( QString( value ) ) );
+      settings.variables.append( QString( "%1=%2" ).arg( name )
+                                                   .arg( QString( value ) ) );
       free( value );
     }
   }
@@ -934,19 +949,19 @@ void MainWindow::Private::syncWindowStateToSettings()
   // docks
   if ( docks.book )
   {
-    settings.bookDockFloating   = docks.book->isFloating();
-    settings.bookDockLeft       = docks.book->x();
-    settings.bookDockTop        = docks.book->y();
-    settings.bookDockWidth      = docks.book->width();
-    settings.bookDockHeight     = docks.book->height();
+    settings.bookDockFloating = docks.book->isFloating();
+    settings.bookDockLeft     = docks.book->x();
+    settings.bookDockTop      = docks.book->y();
+    settings.bookDockWidth    = docks.book->width();
+    settings.bookDockHeight   = docks.book->height();
   }
   if ( docks.history )
   {
-    settings.historyDockFloating   = docks.history->isFloating();
-    settings.historyDockLeft       = docks.history->x();
-    settings.historyDockTop        = docks.history->y();
-    settings.historyDockWidth      = docks.history->width();
-    settings.historyDockHeight     = docks.history->height();
+    settings.historyDockFloating = docks.history->isFloating();
+    settings.historyDockLeft     = docks.history->x();
+    settings.historyDockTop      = docks.history->y();
+    settings.historyDockWidth    = docks.history->width();
+    settings.historyDockHeight   = docks.history->height();
   }
   if ( docks.functions )
   {
@@ -1059,7 +1074,8 @@ void MainWindow::copyResult()
 {
   QClipboard * cb = QApplication::clipboard();
   HNumber num = d->evaluator->get( "ans" );
-  char * strToCopy = HMath::format( num, d->settings.format, d->settings.precision );
+  char * strToCopy = HMath::format( num, d->settings.format,
+                                    d->settings.precision );
   QString final( strToCopy );
   if ( d->widgets.display->radixChar() == ',' )
     final.replace( '.', ',' );
@@ -1183,7 +1199,7 @@ void MainWindow::insertVariable()
 void MainWindow::loadSession()
 {
   QString errMsg  = tr("File %1 is not a valid session");
-  QString filters = tr( "SpeedCrunch Sessions (*.sch);;All Files (*)" );
+  QString filters = tr("SpeedCrunch Sessions (*.sch);;All Files (*)");
   QString fname   = QFileDialog::getOpenFileName( this, tr("Load Session"),
                                                   QString::null, filters );
   if ( fname.isEmpty() )
@@ -1342,6 +1358,13 @@ void MainWindow::minimizeToTrayToggled( bool b )
 }
 
 
+void MainWindow::hiliteSyntaxToggled( bool b )
+{
+  d->widgets.editor->setSyntaxHighlight( b );
+  d->settings.hiliteSyntax = b;
+}
+
+
 void MainWindow::radian()
 {
   if ( d->settings.angleMode == 'r' )
@@ -1354,7 +1377,7 @@ void MainWindow::radian()
 
 void MainWindow::saveSession()
 {
-  QString filters = tr( "SpeedCrunch Sessions (*.sch);;All Files (*)" );
+  QString filters = tr("SpeedCrunch Sessions (*.sch);;All Files (*)");
   QString fname = QFileDialog::getSaveFileName( this, tr("Save Session"),
                                                 QString::null, filters );
   if ( fname.isEmpty() )
@@ -2045,20 +2068,23 @@ void MainWindow::textChanged()
   {
     QString expr = d->evaluator->autoFix( d->widgets.editor->text() );
     if ( expr.isEmpty() )
-	return;
+      return;
+
     Tokens tokens = d->evaluator->scan( expr );
     if ( tokens.count() == 1 )
-    if (    tokens[0].asOperator() == Token::Plus
-         || tokens[0].asOperator() == Token::Minus
-         || tokens[0].asOperator() == Token::Asterisk
-         || tokens[0].asOperator() == Token::Slash
-         || tokens[0].asOperator() == Token::Caret )
-     {
-       d->conditions.autoAns = false;
-       expr.prepend( "ans" );
-       d->widgets.editor->setText( expr );
-       d->widgets.editor->setCursorPosition( expr.length() );
-     }
+    {
+      if (    tokens[0].asOperator() == Token::Plus
+           || tokens[0].asOperator() == Token::Minus
+           || tokens[0].asOperator() == Token::Asterisk
+           || tokens[0].asOperator() == Token::Slash
+           || tokens[0].asOperator() == Token::Caret )
+      {
+        d->conditions.autoAns = false;
+        expr.prepend( "ans" );
+        d->widgets.editor->setText( expr );
+        d->widgets.editor->setCursorPosition( expr.length() );
+      }
+    }
   }
 }
 
