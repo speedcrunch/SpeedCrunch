@@ -8,7 +8,7 @@
 <center>
 <h1><i18n>Quadratic Equation</i18n></h1>
 <h3>ax² + bx + c = 0</h3>
-<p><img src="../images/quadratic_equation.png" /></p>
+<p><img src="../images/quadratic_equation.png" /></p><br />
 <a href="file:#x1=(-b+sqrt(b^2-4*a*c))/2*a">x1 = (-b + sqrt(b^2 - 4*a*c)) / 2*a</a><br />
 <a href="file:#x2=(-b-sqrt(b^2-4*a*c))/2*a">x2 = (-b - sqrt(b^2 - 4*a*c)) / 2*a</a><br />
 </center>

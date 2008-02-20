@@ -7,7 +7,7 @@
 <body>
 <center>
 <h1><i18n>Cube</i18n></h1>
-<p><img src="../images/cube.png" /></p>
+<p><img src="../images/cube.png" /></p><br />
 <a href="file:#V=s^3">V = s^3</a><br />
 <a href="file:#s=cbrt(V)">s = cbrt(V)</a><br />
 <a href="file:#a=sqrt(2)*s">a = sqrt(2) * s</a><br />
