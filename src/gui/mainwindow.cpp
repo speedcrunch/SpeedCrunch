@@ -430,7 +430,7 @@ void MainWindow::Private::createActionShortcuts()
   actions.sessionQuit     ->setShortcut( Qt::CTRL + Qt::Key_Q        );
   actions.sessionSave     ->setShortcut( Qt::CTRL + Qt::Key_S        );
   actions.showFullScreen  ->setShortcut(            Qt::Key_F11      );
-  actions.showKeypad      ->setShortcut( Qt::CTRL + Qt::Key_K        );
+  actions.showKeypad      ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_K );
   actions.showBook        ->setShortcut( Qt::CTRL + Qt::Key_1        );
   actions.showConstants   ->setShortcut( Qt::CTRL + Qt::Key_2        );
   actions.showFunctions   ->setShortcut( Qt::CTRL + Qt::Key_3        );
