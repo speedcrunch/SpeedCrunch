@@ -78,9 +78,10 @@ ConstantsDock::ConstantsDock( Constants * c, char radixChar, QWidget * parent )
 
   d->filter = new QLineEdit( this );
   d->filter->setMinimumWidth( fontMetrics().width('X') * 10 );
-  connect( d->filter, SIGNAL(textChanged( const QString& )), SLOT(triggerFilter()) );
+  connect( d->filter, SIGNAL( textChanged( const QString & ) ),
+           this, SLOT( triggerFilter() ) );
 
-  QWidget     * searchBox    = new QWidget( this );
+  QWidget *     searchBox    = new QWidget( this );
   QHBoxLayout * searchLayout = new QHBoxLayout;
   searchBox->setLayout( searchLayout );
   searchLayout->addWidget( label );
@@ -99,9 +100,11 @@ ConstantsDock::ConstantsDock( Constants * c, char radixChar, QWidget * parent )
   d->list->setEditTriggers( QTreeWidget::NoEditTriggers );
   d->list->setSelectionBehavior( QTreeWidget::SelectRows );
   connect( d->list, SIGNAL( itemDoubleClicked( QTreeWidgetItem *, int ) ),
-           SLOT(handleItem( QTreeWidgetItem* )) );
+           this, SLOT( handleItem( QTreeWidgetItem * ) ) );
+  connect( d->list, SIGNAL( itemActivated( QTreeWidgetItem *, int ) ),
+           this, SLOT( handleItem( QTreeWidgetItem * ) ) );
 
-  QWidget     * widget = new QWidget( this );
+  QWidget *     widget = new QWidget( this );
   QVBoxLayout * layout = new QVBoxLayout;
   widget->setLayout( layout );
   setWidget( widget );

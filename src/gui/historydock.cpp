@@ -34,7 +34,9 @@ HistoryDock::HistoryDock( QWidget * parent )
 {
   d->list = new QListWidget( this );
   connect( d->list, SIGNAL( itemDoubleClicked( QListWidgetItem * ) ),
-    SLOT( handleItem( QListWidgetItem * ) ) );
+           this, SLOT( handleItem( QListWidgetItem * ) ) );
+  connect( d->list, SIGNAL( itemActivated( QListWidgetItem * ) ),
+           this, SLOT( handleItem( QListWidgetItem * ) ) );
   setWidget( d->list );
 
   setMinimumWidth( 200 );

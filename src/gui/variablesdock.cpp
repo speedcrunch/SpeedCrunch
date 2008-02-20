@@ -94,9 +94,11 @@ VariablesDock::VariablesDock( char radixChar, QWidget * parent )
   d->list->setEditTriggers( QTreeWidget::NoEditTriggers );
   d->list->setSelectionBehavior( QTreeWidget::SelectRows );
   connect( d->list, SIGNAL( itemDoubleClicked( QTreeWidgetItem *, int ) ),
-           SLOT(handleItem( QTreeWidgetItem* )) );
+           this, SLOT( handleItem( QTreeWidgetItem * ) ) );
+  connect( d->list, SIGNAL( itemActivated( QTreeWidgetItem *, int ) ),
+           this, SLOT( handleItem( QTreeWidgetItem * ) ) );
 
-  QWidget     * widget = new QWidget( this );
+  QWidget *     widget = new QWidget( this );
   QVBoxLayout * layout = new QVBoxLayout;
   widget->setLayout( layout );
   setWidget( widget );
