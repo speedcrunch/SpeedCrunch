@@ -412,35 +412,35 @@ void MainWindow::Private::createActionGroups()
 
 void MainWindow::Private::createActionShortcuts()
 {
-  actions.clearExpression ->setShortcut(                      Qt::Key_Escape  );
-  actions.clearHistory    ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_N       );
-  actions.degree          ->setShortcut(                      Qt::Key_F10     );
-  actions.deleteVariable  ->setShortcut( Qt::CTRL +           Qt::Key_D       );
-  actions.editCopyResult  ->setShortcut( Qt::CTRL +           Qt::Key_R       );
-  actions.editCopy        ->setShortcut( Qt::CTRL +           Qt::Key_C       );
-  actions.editPaste       ->setShortcut( Qt::CTRL +           Qt::Key_V       );
-  actions.helpTipOfTheDay ->setShortcut( Qt::CTRL +           Qt::Key_T       );
-  actions.insertFunction  ->setShortcut( Qt::CTRL +           Qt::Key_F       );
-  actions.insertVariable  ->setShortcut( Qt::CTRL +           Qt::Key_I       );
-  actions.radian          ->setShortcut(                      Qt::Key_F9      );
-  actions.scrollDown      ->setShortcut(                      Qt::Key_PageDown);
-  actions.scrollUp        ->setShortcut(                      Qt::Key_PageUp  );
-  actions.selectExpression->setShortcut( Qt::CTRL +           Qt::Key_A       );
-  actions.sessionLoad     ->setShortcut( Qt::CTRL +           Qt::Key_L       );
-  actions.sessionQuit     ->setShortcut( Qt::CTRL +           Qt::Key_Q       );
-  actions.sessionSave     ->setShortcut( Qt::CTRL +           Qt::Key_S       );
-  actions.showFullScreen  ->setShortcut(                      Qt::Key_F11     );
-  actions.showKeypad      ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_K       );
-  actions.showBook        ->setShortcut( Qt::CTRL +           Qt::Key_1       );
-  actions.showConstants   ->setShortcut( Qt::CTRL +           Qt::Key_2       );
-  actions.showFunctions   ->setShortcut( Qt::CTRL +           Qt::Key_3       );
-  actions.showVariables   ->setShortcut( Qt::CTRL +           Qt::Key_4       );
-  actions.showHistory     ->setShortcut( Qt::CTRL +           Qt::Key_5       );
-  actions.showMenuBar     ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_M       );
-  actions.formatBinary    ->setShortcut(                      Qt::Key_F5      );
-  actions.formatGeneral   ->setShortcut(                      Qt::Key_F7      );
-  actions.formatHexadec   ->setShortcut(                      Qt::Key_F8      );
-  actions.formatOctal     ->setShortcut(                      Qt::Key_F6      );
+  actions.clearExpression ->setShortcut( Qt::Key_Escape                 );
+  actions.clearHistory    ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_N );
+  actions.degree          ->setShortcut( Qt::Key_F10                    );
+  actions.deleteVariable  ->setShortcut( Qt::CTRL + Qt::Key_D           );
+  actions.editCopyResult  ->setShortcut( Qt::CTRL + Qt::Key_R           );
+  actions.editCopy        ->setShortcut( Qt::CTRL + Qt::Key_C           );
+  actions.editPaste       ->setShortcut( Qt::CTRL + Qt::Key_V           );
+  actions.helpTipOfTheDay ->setShortcut( Qt::CTRL + Qt::Key_T           );
+  actions.insertFunction  ->setShortcut( Qt::CTRL + Qt::Key_F           );
+  actions.insertVariable  ->setShortcut( Qt::CTRL + Qt::Key_I           );
+  actions.radian          ->setShortcut( Qt::Key_F9                     );
+  actions.scrollDown      ->setShortcut( Qt::SHIFT + Qt::Key_PageDown   );
+  actions.scrollUp        ->setShortcut( Qt::SHIFT + Qt::Key_PageUp     );
+  actions.selectExpression->setShortcut( Qt::CTRL + Qt::Key_A           );
+  actions.sessionLoad     ->setShortcut( Qt::CTRL + Qt::Key_L           );
+  actions.sessionQuit     ->setShortcut( Qt::CTRL + Qt::Key_Q           );
+  actions.sessionSave     ->setShortcut( Qt::CTRL + Qt::Key_S           );
+  actions.showFullScreen  ->setShortcut( Qt::Key_F11                    );
+  actions.showKeypad      ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_K );
+  actions.showBook        ->setShortcut( Qt::CTRL + Qt::Key_1           );
+  actions.showConstants   ->setShortcut( Qt::CTRL + Qt::Key_2           );
+  actions.showFunctions   ->setShortcut( Qt::CTRL + Qt::Key_3           );
+  actions.showVariables   ->setShortcut( Qt::CTRL + Qt::Key_4           );
+  actions.showHistory     ->setShortcut( Qt::CTRL + Qt::Key_5           );
+  actions.showMenuBar     ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_M );
+  actions.formatBinary    ->setShortcut( Qt::Key_F5                     );
+  actions.formatGeneral   ->setShortcut( Qt::Key_F7                     );
+  actions.formatHexadec   ->setShortcut( Qt::Key_F8                     );
+  actions.formatOctal     ->setShortcut( Qt::Key_F6                     );
 }
 
 
