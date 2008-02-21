@@ -7,7 +7,7 @@
 <body>
 <center>
 <h1><i18n>Right Triangle</i18n></h1>
-<p><img src="../images/right_triangle.png" /></p>
+<p><img src="../images/right_triangle.png" /></p><br />
 <a href="file:#A=(a*b)/2">A = (a * b) / 2</a><br /><br />
 
 <a href="file:#c=sqrt(a^2+b^2)">c = sqrt(a^2 + b^2)</a><br />
