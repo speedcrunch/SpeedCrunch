@@ -900,8 +900,8 @@ void Editor::setHighlightScheme( Editor::HighlightScheme hs )
   if ( hs == Editor::AutoScheme )
   {
     const int NO_COLORS = 3;
-    QColor bg( QApplication::palette().color( QPalette::Base ) );
-    QColor fg( QApplication::palette().color( QPalette::Text ) );
+    QColor bg( palette().color( QPalette::Base ) );
+    QColor fg( palette().color( QPalette::Text ) );
     QList<QColor> list = d->generateColors( bg, fg, NO_COLORS );
     for ( int i = 0; i < NO_COLORS; i++ )
       d->highlightColors[static_cast<Editor::ColorType>( i )] = list[i];
