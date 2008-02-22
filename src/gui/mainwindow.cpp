@@ -71,8 +71,6 @@
 #include <QVBoxLayout>
 #include <QWidget>
 
-#include <stdlib.h> // rand()
-
 
 struct Actions
 {
@@ -1721,7 +1719,7 @@ void MainWindow::showTipOfTheDay()
   d->widgets.tip->move( 5, 10 );
   d->widgets.tip->resize( 345, d->widgets.tip->sizeHint().height() );
 
-  int tipNo = rand() % 4;
+  int tipNo = qrand() % 4;
   QString msg;
   switch ( tipNo )
   {
