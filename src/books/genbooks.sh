@@ -32,7 +32,7 @@ $T2P -o i18n/books.pot templates/*.template
 # merge and generate pages                                                     #
 #------------------------------------------------------------------------------#
 
-LANGS="en pt fi"
+LANGS="de en pt fi"
 
 for lang in $LANGS
 do
