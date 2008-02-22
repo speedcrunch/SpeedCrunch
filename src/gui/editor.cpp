@@ -118,13 +118,51 @@ struct Editor::Private
   QStringList          history;
   QStringList          historyResults;
   EditorHighlighter *  highlighter;
+  HighlightScheme      scheme;
   int                  index;
   QTimer *             matchingTimer;
   char                 radixChar;
   bool                 syntaxHighlightEnabled;
 
   QMap<Editor::ColorType, QColor> highlightColors;
+
+  QList<QColor> generateColors( const QColor & bg, const QColor & fg,
+                                int noColors );
 };
+
+
+QList<QColor> Editor::Private::generateColors( const QColor & bg,
+                                               const QColor & fg,
+                                               int noColors )
+{
+  QList<QColor> cols;
+  const int HUE_BASE = (bg.hue() == -1) ? 90 : bg.hue();
+  int h, s, v;
+
+  for ( int i = 0; i < noColors; i++ )
+  {
+    // generate "normal" colors
+    h = int( HUE_BASE + (360.0 / noColors * i) ) % 360;
+    s = 240;
+    v = int( qMax( bg.value(), fg.value() ) * 0.85 );
+
+    // adjust particular cases
+    const int M = 35;
+    if (    (h < bg.hue() + M && h > bg.hue() - M )
+         || (h < fg.hue() + M && h > fg.hue() - M ) )
+    {
+      h = ((bg.hue() + fg.hue()) / (i+1) ) % 360;
+      s = ((bg.saturation() + fg.saturation() + 2*i) / 2 ) % 255;
+      v = ((bg.value() + fg.value() + 2*i) / 2 ) % 255;
+    }
+
+    // insert into result list
+    cols.append( QColor::fromHsv( h, s, v ) );
+  }
+
+  return cols;
+}
+
 
 
 Editor::Editor( Evaluator * e, Functions * f, Constants * c, char format,
@@ -153,6 +191,9 @@ Editor::Editor( Evaluator * e, Functions * f, Constants * c, char format,
   d->autoCalcTimer = new QTimer( this );
   d->matchingTimer = new QTimer( this );
   d->ansAvailable = false;
+  d->scheme = Editor::AutoScheme;
+
+  setHighlightScheme( Editor::AutoScheme );
 
   setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
   setLineWrapMode( QTextEdit::NoWrap );
@@ -171,11 +212,6 @@ Editor::Editor( Evaluator * e, Functions * f, Constants * c, char format,
   connect( this,                  SIGNAL( textChanged()                         ), SLOT( checkAutoCalc()                   ) );
   connect( this,                  SIGNAL( textChanged()                         ), SLOT( checkAutoComplete()               ) );
   connect( this,                  SIGNAL( textChanged()                         ), SLOT( checkMatching()                   ) );
-
-  setHighlightColor( FunctionName, QColor( 85,   0,   0) );
-  setHighlightColor( MatchedPar,   QColor(255, 255, 183) );
-  setHighlightColor( Number,       QColor(  0,   0, 127) );
-  setHighlightColor( Variable,     QColor(  0,  85,   0) );
 
   adjustSize();
 }
@@ -854,6 +890,22 @@ void Editor::setSyntaxHighlight( bool enable )
 {
   d->syntaxHighlightEnabled = enable;
   d->highlighter->rehighlight();
+}
+
+
+void Editor::setHighlightScheme( Editor::HighlightScheme hs )
+{
+  d->scheme = hs;
+
+  if ( hs == Editor::AutoScheme )
+  {
+    const int NO_COLORS = 3;
+    QColor bg( QApplication::palette().color( QPalette::Base ) );
+    QColor fg( QApplication::palette().color( QPalette::Text ) );
+    QList<QColor> list = d->generateColors( bg, fg, NO_COLORS );
+    for ( int i = 0; i < NO_COLORS; i++ )
+      d->highlightColors[static_cast<Editor::ColorType>( i )] = list[i];
+  }
 }
 
 

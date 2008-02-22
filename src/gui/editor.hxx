@@ -43,7 +43,8 @@ class Editor : public QTextEdit
   Q_OBJECT
 
   public:
-    enum ColorType { Number, FunctionName, Variable, MatchedPar };
+    enum HighlightScheme { AutoScheme };
+    enum ColorType { Number = 0, FunctionName, Variable, MatchedPar };
 
     explicit Editor( Evaluator *, Functions *, Constants *, char format = 'g',
                      int precision = -1, char radixChar = 'C',
@@ -69,6 +70,7 @@ class Editor : public QTextEdit
     void        setCursorPosition( int pos );
     void        setHighlightColor( ColorType type, QColor color );
     void        setSyntaxHighlight( bool enable );
+    void        setHighlightScheme( Editor::HighlightScheme );
     void        setText( const QString & );
     void        setHistory( const QStringList & history );
     void        setHistoryResults( const QStringList & results );
