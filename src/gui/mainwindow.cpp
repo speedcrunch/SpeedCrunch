@@ -63,6 +63,7 @@
 #include <QRadioButton>
 #include <QScrollBar>
 #include <QShortcut>
+#include <QStatusBar>
 #include <QSystemTrayIcon>
 #include <QTextStream>
 #include <QTimer>
@@ -192,6 +193,15 @@ struct Conditions
 };
 
 
+struct Status
+{
+  QLabel * angleUnit;
+  QLabel * format;
+  QLabel * precision;
+  QLabel * radixChar;
+};
+
+
 struct MainWindow::Private
 {
   MainWindow *    p;
@@ -206,6 +216,7 @@ struct MainWindow::Private
   Widgets         widgets;
   Docks           docks;
   Conditions      conditions;
+  Status          status;
 
   Private();
   ~Private();
@@ -215,6 +226,7 @@ struct MainWindow::Private
   void createActionGroups();
   void createActionShortcuts();
   void createMenus();
+  void createStatus();
   void createFixedWidgets();
   void createKeypad();
   void createBookDock();
@@ -284,6 +296,7 @@ void MainWindow::Private::createUi()
   createActionGroups();
   createActionShortcuts();
   createMenus();
+  createStatus();
   createFixedWidgets();
   createFixedConnections();
 
@@ -544,6 +557,20 @@ void MainWindow::Private::createMenus()
 }
 
 
+void MainWindow::Private::createStatus()
+{
+  //status.angleUnit = new QLabel( "k", p );
+  //status.format    = new QLabel( "l", p );
+  //status.precision = new QLabel( "o", p );
+  //status.radixChar = new QLabel( "9", p );
+
+  //p->statusBar()->addPermanentWidget( status.angleUnit );
+  //p->statusBar()->addPermanentWidget( status.format    );
+  //p->statusBar()->addPermanentWidget( status.precision );
+  //p->statusBar()->addPermanentWidget( status.radixChar );
+}
+
+
 void MainWindow::Private::createFixedWidgets()
 {
   // necessary objects
@@ -564,6 +591,8 @@ void MainWindow::Private::createFixedWidgets()
   displayLayout->setMargin( 5 );
   widgets.display = new ResultDisplay( settings.radixChar, settings.format,
                                        settings.precision, widgets.root );
+  QString displayStyle( "QListWidget { font: bold }" );
+  widgets.display->setStyleSheet( displayStyle );
   displayLayout->addWidget( widgets.display );
   layouts.root->addLayout( displayLayout );
 
@@ -574,7 +603,9 @@ void MainWindow::Private::createFixedWidgets()
                                settings.precision, settings.radixChar,
                                widgets.root );
   widgets.editor->setFocus();
-  widgets.editor->setStyleSheet( "QTextEdit { font: bold 16px }" );
+  QString editorStyle( "QTextEdit { font: bold %1pt }" );
+  int editorPointSize = widgets.editor->font().pointSize();
+  widgets.editor->setStyleSheet( editorStyle.arg( editorPointSize + 3 ) );
   widgets.editor->setFixedHeight( widgets.editor->sizeHint().height() );
   editorLayout->addWidget( widgets.editor );
   layouts.root->addLayout( editorLayout );

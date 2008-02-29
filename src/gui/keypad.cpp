@@ -321,42 +321,42 @@ void Keypad::Private::setButtonTooltips()
 
 void Keypad::Private::setUpButtonPressedSignal()
 {
-  connect( key0,     SIGNAL(clicked()), p, SLOT(key0Pressed())     );
-  connect( key1,     SIGNAL(clicked()), p, SLOT(key1Pressed())     );
-  connect( key2,     SIGNAL(clicked()), p, SLOT(key2Pressed())     );
-  connect( key3,     SIGNAL(clicked()), p, SLOT(key3Pressed())     );
-  connect( key4,     SIGNAL(clicked()), p, SLOT(key4Pressed())     );
-  connect( key5,     SIGNAL(clicked()), p, SLOT(key5Pressed())     );
-  connect( key6,     SIGNAL(clicked()), p, SLOT(key6Pressed())     );
-  connect( key7,     SIGNAL(clicked()), p, SLOT(key7Pressed())     );
-  connect( key8,     SIGNAL(clicked()), p, SLOT(key8Pressed())     );
-  connect( key9,     SIGNAL(clicked()), p, SLOT(key9Pressed())     );
-  connect( keyAcos,  SIGNAL(clicked()), p, SLOT(keyAcosPressed())  );
-  connect( keyAdd,   SIGNAL(clicked()), p, SLOT(keyAddPressed())   );
-  connect( keyAns,   SIGNAL(clicked()), p, SLOT(keyAnsPressed())   );
-  connect( keyAsin,  SIGNAL(clicked()), p, SLOT(keyAsinPressed())  );
-  connect( keyAtan,  SIGNAL(clicked()), p, SLOT(keyAtanPressed())  );
-  connect( keyC,     SIGNAL(clicked()), p, SLOT(keyCPressed())     );
-  connect( keyCos,   SIGNAL(clicked()), p, SLOT(keyCosPressed())   );
-  connect( keyDiv,   SIGNAL(clicked()), p, SLOT(keyDivPressed())   );
-  connect( keyEE,    SIGNAL(clicked()), p, SLOT(keyEEPressed())    );
-  connect( keyEq,    SIGNAL(clicked()), p, SLOT(keyEqPressed())    );
-  connect( keyExp,   SIGNAL(clicked()), p, SLOT(keyExpPressed())   );
-  connect( keyFact,  SIGNAL(clicked()), p, SLOT(keyFactPressed())  );
-  connect( keyLn,    SIGNAL(clicked()), p, SLOT(keyLnPressed())    );
-  connect( keyLPar,  SIGNAL(clicked()), p, SLOT(keyLParPressed())  );
-  connect( keyMul,   SIGNAL(clicked()), p, SLOT(keyMulPressed())   );
-  connect( keyPerc,  SIGNAL(clicked()), p, SLOT(keyPercPressed())  );
-  connect( keyRaise, SIGNAL(clicked()), p, SLOT(keyRaisePressed()) );
-  connect( keyRPar,  SIGNAL(clicked()), p, SLOT(keyRParPressed())  );
-  connect( keySin,   SIGNAL(clicked()), p, SLOT(keySinPressed())   );
-  connect( keySub,   SIGNAL(clicked()), p, SLOT(keySubPressed())   );
-  connect( keyTan,   SIGNAL(clicked()), p, SLOT(keyTanPressed())   );
-  connect( keyXEq,   SIGNAL(clicked()), p, SLOT(keyXEqPressed())   );
-  connect( keyX,     SIGNAL(clicked()), p, SLOT(keyXPressed())     );
-  connect( keyDot,   SIGNAL(clicked()), p, SLOT(keyDotPressed())   );
-  connect( keyPi,    SIGNAL(clicked()), p, SLOT(keyPiPressed())    );
-  connect( keySqrt,  SIGNAL(clicked()), p, SLOT(keySqrtPressed())  );
+  connect( key0,     SIGNAL( clicked() ), p, SLOT( key0Pressed()    ) );
+  connect( key1,     SIGNAL( clicked() ), p, SLOT( key1Pressed()    ) );
+  connect( key2,     SIGNAL( clicked() ), p, SLOT( key2Pressed()    ) );
+  connect( key3,     SIGNAL( clicked() ), p, SLOT( key3Pressed()    ) );
+  connect( key4,     SIGNAL( clicked() ), p, SLOT( key4Pressed()    ) );
+  connect( key5,     SIGNAL( clicked() ), p, SLOT( key5Pressed()    ) );
+  connect( key6,     SIGNAL( clicked() ), p, SLOT( key6Pressed()    ) );
+  connect( key7,     SIGNAL( clicked() ), p, SLOT( key7Pressed()    ) );
+  connect( key8,     SIGNAL( clicked() ), p, SLOT( key8Pressed()    ) );
+  connect( key9,     SIGNAL( clicked() ), p, SLOT( key9Pressed()    ) );
+  connect( keyAcos,  SIGNAL( clicked() ), p, SLOT( keyAcosPressed() ) );
+  connect( keyAdd,   SIGNAL( clicked() ), p, SLOT( keyAddPressed()  ) );
+  connect( keyAns,   SIGNAL( clicked() ), p, SLOT( keyAnsPressed()  ) );
+  connect( keyAsin,  SIGNAL( clicked() ), p, SLOT( keyAsinPressed() ) );
+  connect( keyAtan,  SIGNAL( clicked() ), p, SLOT( keyAtanPressed() ) );
+  connect( keyC,     SIGNAL( clicked() ), p, SLOT( keyCPressed()    ) );
+  connect( keyCos,   SIGNAL( clicked() ), p, SLOT( keyCosPressed()  ) );
+  connect( keyDiv,   SIGNAL( clicked() ), p, SLOT( keyDivPressed()  ) );
+  connect( keyEE,    SIGNAL( clicked() ), p, SLOT( keyEEPressed()   ) );
+  connect( keyEq,    SIGNAL( clicked() ), p, SLOT( keyEqPressed()   ) );
+  connect( keyExp,   SIGNAL( clicked() ), p, SLOT( keyExpPressed()  ) );
+  connect( keyFact,  SIGNAL( clicked() ), p, SLOT( keyFactPressed() ) );
+  connect( keyLn,    SIGNAL( clicked() ), p, SLOT( keyLnPressed()   ) );
+  connect( keyLPar,  SIGNAL( clicked() ), p, SLOT( keyLParPressed() ) );
+  connect( keyMul,   SIGNAL( clicked() ), p, SLOT( keyMulPressed()  ) );
+  connect( keyPerc,  SIGNAL( clicked() ), p, SLOT( keyPercPressed() ) );
+  connect( keyRaise, SIGNAL( clicked() ), p, SLOT( keyRaisePressed()) );
+  connect( keyRPar,  SIGNAL( clicked() ), p, SLOT( keyRParPressed() ) );
+  connect( keySin,   SIGNAL( clicked() ), p, SLOT( keySinPressed()  ) );
+  connect( keySub,   SIGNAL( clicked() ), p, SLOT( keySubPressed()  ) );
+  connect( keyTan,   SIGNAL( clicked() ), p, SLOT( keyTanPressed()  ) );
+  connect( keyXEq,   SIGNAL( clicked() ), p, SLOT( keyXEqPressed()  ) );
+  connect( keyX,     SIGNAL( clicked() ), p, SLOT( keyXPressed()    ) );
+  connect( keyDot,   SIGNAL( clicked() ), p, SLOT( keyDotPressed()  ) );
+  connect( keyPi,    SIGNAL( clicked() ), p, SLOT( keyPiPressed()   ) );
+  connect( keySqrt,  SIGNAL( clicked() ), p, SLOT( keySqrtPressed() ) );
 }
 
 
