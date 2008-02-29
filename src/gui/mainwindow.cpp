@@ -148,11 +148,11 @@ struct Menus
   QMenu * edit;
   QMenu * format;
   QMenu * help;
-  QMenu * layout;
   QMenu * radixChar;
   QMenu * session;
   QMenu * settings;
   QMenu * trayIcon;
+  QMenu * view;
 };
 
 
@@ -342,14 +342,14 @@ void MainWindow::Private::createActions()
   actions.sessionLoad           = new QAction( tr("&Load..."),                 p );
   actions.sessionQuit           = new QAction( tr("&Quit"),                    p );
   actions.sessionSave           = new QAction( tr("&Save..."),                 p );
-  actions.showBook              = new QAction( tr("Show Math &Book"),          p );
-  actions.showConstants         = new QAction( tr("Show &Constants"),          p );
+  actions.showBook              = new QAction( tr("Math &Book"),               p );
+  actions.showConstants         = new QAction( tr("&Constants"),               p );
   actions.showFullScreen        = new QAction( tr("Full &Screen Mode"),        p );
-  actions.showFunctions         = new QAction( tr("Show &Functions"),          p );
-  actions.showHistory           = new QAction( tr("Show &History"),            p );
-  actions.showKeypad            = new QAction( tr("Show &Keypad"),             p );
+  actions.showFunctions         = new QAction( tr("&Functions"),               p );
+  actions.showHistory           = new QAction( tr("&History"),                 p );
+  actions.showKeypad            = new QAction( tr("&Keypad"),                  p );
   actions.showMenuBar           = new QAction( tr("Hide &Menu Bar"),           p );
-  actions.showVariables         = new QAction( tr("Show &Variables"),          p );
+  actions.showVariables         = new QAction( tr("&Variables"),               p );
   actions.formatBinary          = new QAction( tr("&Binary"),                  p );
   actions.formatEngineering     = new QAction( tr("&Engineering"),             p );
   actions.formatFixed           = new QAction( tr("&Fixed Decimal"),           p );
@@ -482,6 +482,21 @@ void MainWindow::Private::createMenus()
   menus.edit->addAction( actions.clearExpression );
   menus.edit->addAction( actions.clearHistory    );
 
+  // view
+  menus.view = new QMenu( tr("&View"), p );
+  p->menuBar()->addMenu( menus.view );
+  menus.view->addAction( actions.showKeypad );
+  menus.view->addSeparator();
+  menus.view->addAction( actions.showBook );
+  menus.view->addAction( actions.showConstants );
+  menus.view->addAction( actions.showFunctions );
+  menus.view->addAction( actions.showVariables );
+  menus.view->addAction( actions.showHistory   );
+  menus.view->addSeparator();
+  menus.view->addAction( actions.showMenuBar );
+  menus.view->addSeparator();
+  menus.view->addAction( actions.showFullScreen );
+
   // settings
   menus.settings = new QMenu( tr("Se&ttings"), p );
   p->menuBar()->addMenu( menus.settings );
@@ -512,20 +527,6 @@ void MainWindow::Private::createMenus()
   menus.angle = menus.settings->addMenu( tr("&Angle Unit") );
   menus.angle->addAction( actions.radian );
   menus.angle->addAction( actions.degree );
-
-  // settings / layout
-  menus.layout = menus.settings->addMenu( tr("&Layout") );
-  menus.layout->addAction( actions.showKeypad );
-  menus.layout->addSeparator();
-  menus.layout->addAction( actions.showBook );
-  menus.layout->addAction( actions.showConstants );
-  menus.layout->addAction( actions.showFunctions );
-  menus.layout->addAction( actions.showVariables );
-  menus.layout->addAction( actions.showHistory   );
-  menus.layout->addSeparator();
-  menus.layout->addAction( actions.showMenuBar );
-  menus.layout->addSeparator();
-  menus.layout->addAction( actions.showFullScreen );
 
   // settings / behavior
   menus.behavior = menus.settings->addMenu( tr("&Behavior") );
@@ -624,11 +625,6 @@ void MainWindow::Private::createKeypad()
 {
   widgets.keypad = new Keypad( settings.radixChar, widgets.root );
   widgets.keypad->setFocusPolicy( Qt::NoFocus );
-  //widgets.keypad->setStyleSheet( "QPushButton { background: black; font: bold;"
-  //                               "color: white; border-style: solid;"
-  //                               "border-color: #202020; border-radius: 10px;"
-  //                               "border-width: 2px }" );
-  //
   connect( widgets.keypad, SIGNAL( buttonPressed( Keypad::Button ) ),
            p, SLOT( keypadButtonPressed( Keypad::Button ) ) );
   connect( p, SIGNAL( radixCharChanged( char ) ),
@@ -1462,10 +1458,10 @@ void MainWindow::setWidgetsLayoutAccordingToLanguageDirection()
   setWidgetLayoutAccordingToLanguageDirection( menuBar()          );
   setWidgetLayoutAccordingToLanguageDirection( d->menus.session   );
   setWidgetLayoutAccordingToLanguageDirection( d->menus.edit      );
+  setWidgetLayoutAccordingToLanguageDirection( d->menus.view      );
   setWidgetLayoutAccordingToLanguageDirection( d->menus.format    );
   setWidgetLayoutAccordingToLanguageDirection( d->menus.decimal   );
   setWidgetLayoutAccordingToLanguageDirection( d->menus.settings  );
-  setWidgetLayoutAccordingToLanguageDirection( d->menus.layout    );
   setWidgetLayoutAccordingToLanguageDirection( d->menus.behavior  );
   setWidgetLayoutAccordingToLanguageDirection( d->menus.radixChar );
   //setWidgetLayoutAccordingToLanguageDirection( d->menus.theme     );
