@@ -197,8 +197,6 @@ struct Status
 {
   QLabel * angleUnit;
   QLabel * format;
-  QLabel * precision;
-  QLabel * radixChar;
 };
 
 
@@ -226,7 +224,7 @@ struct MainWindow::Private
   void createActionGroups();
   void createActionShortcuts();
   void createMenus();
-  void createStatus();
+  void createStatusBar();
   void createFixedWidgets();
   void createKeypad();
   void createBookDock();
@@ -240,6 +238,7 @@ struct MainWindow::Private
   void restoreHistory();
   void restoreVariables();
   void deleteKeypad();
+  void deleteStatusBar();
   void deleteBookDock();
   void deleteConstantsDock();
   void deleteFunctionsDock();
@@ -296,7 +295,7 @@ void MainWindow::Private::createUi()
   createActionGroups();
   createActionShortcuts();
   createMenus();
-  createStatus();
+  createStatusBar();
   createFixedWidgets();
   createFixedConnections();
 
@@ -558,17 +557,36 @@ void MainWindow::Private::createMenus()
 }
 
 
-void MainWindow::Private::createStatus()
+void MainWindow::Private::createStatusBar()
 {
-  //status.angleUnit = new QLabel( "k", p );
-  //status.format    = new QLabel( "l", p );
-  //status.precision = new QLabel( "o", p );
-  //status.radixChar = new QLabel( "9", p );
+  QString angleUnit = (settings.angleMode == 'r') ?
+    tr( "Radian" ) : tr( "Degree" );
 
-  //p->statusBar()->addPermanentWidget( status.angleUnit );
-  //p->statusBar()->addPermanentWidget( status.format    );
-  //p->statusBar()->addPermanentWidget( status.precision );
-  //p->statusBar()->addPermanentWidget( status.radixChar );
+  QString format;
+  switch ( settings.format )
+  {
+    case 'b' : format = tr( "Binary"              ); break;
+    case 'o' : format = tr( "Octal"               ); break;
+    case 'h' : format = tr( "Hexadecimal"         ); break;
+    case 'f' : format = tr( "Fixed decimal"       ); break;
+    case 'n' : format = tr( "Engineering decimal" ); break;
+    case 'e' : format = tr( "Scientific decimal"  ); break;
+    case 'g' : format = tr( "General decimal"     ); break;
+
+    default : break;
+  }
+
+  status.angleUnit = new QLabel( angleUnit, p );
+  status.format    = new QLabel( format,    p );
+
+  status.angleUnit->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
+  status.format   ->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
+
+  status.angleUnit->setToolTip( tr( "Angle unit"       ) );
+  status.format   ->setToolTip( tr( "Result format"    ) );
+
+  p->statusBar()->addWidget( status.angleUnit );
+  p->statusBar()->addWidget( status.format    );
 }
 
 
@@ -1116,6 +1134,10 @@ void MainWindow::degree()
     return;
 
   d->settings.angleMode = 'd';
+
+  if ( d->status.angleUnit )
+    d->status.angleUnit->setText( tr( "Degree" ) );
+
   emit angleModeChanged( 'd' );
 }
 
@@ -1401,6 +1423,10 @@ void MainWindow::radian()
     return;
 
   d->settings.angleMode = 'r';
+
+  if ( d->status.angleUnit )
+    d->status.angleUnit->setText( tr( "Radian" ) );
+
   emit angleModeChanged( 'r' );
 }
 
@@ -1780,6 +1806,9 @@ void MainWindow::formatBinary()
 {
   d->actionGroups.digits->setDisabled( true );
   setFormat( 'b' );
+
+  if ( d->status.format )
+    d->status.format->setText( tr( "Binary" ) );
 }
 
 
@@ -1787,6 +1816,9 @@ void MainWindow::formatEngineering()
 {
   d->actionGroups.digits->setEnabled( true );
   setFormat( 'n' );
+
+  if ( d->status.format )
+    d->status.format->setText( tr( "Engineering decimal" ) );
 }
 
 
@@ -1794,6 +1826,9 @@ void MainWindow::formatFixed()
 {
   d->actionGroups.digits->setEnabled( true );
   setFormat( 'f' );
+
+  if ( d->status.format )
+    d->status.format->setText( tr( "Fixed decimal" ) );
 }
 
 
@@ -1801,6 +1836,9 @@ void MainWindow::formatGeneral()
 {
   d->actionGroups.digits->setEnabled( true );
   setFormat( 'g' );
+
+  if ( d->status.format )
+    d->status.format->setText( tr( "General decimal" ) );
 }
 
 
@@ -1808,6 +1846,9 @@ void MainWindow::formatHexadec()
 {
   d->actionGroups.digits->setDisabled( true );
   setFormat( 'h' );
+
+  if ( d->status.format )
+    d->status.format->setText( tr( "Hexadecimal" ) );
 }
 
 
@@ -1815,6 +1856,9 @@ void MainWindow::formatOctal()
 {
   d->actionGroups.digits->setDisabled( true );
   setFormat( 'o' );
+
+  if ( d->status.format )
+    d->status.format->setText( tr( "Octal" ) );
 }
 
 
@@ -1822,6 +1866,9 @@ void MainWindow::formatScientific()
 {
   d->actionGroups.digits->setEnabled( true );
   setFormat( 'e' );
+
+  if ( d->status.format )
+    d->status.format->setText( tr( "Scientific decimal" ) );
 }
 
 
