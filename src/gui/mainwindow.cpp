@@ -348,7 +348,7 @@ void MainWindow::Private::createActions()
   actions.showHistory           = new QAction( tr("&History"),                 p );
   actions.showKeypad            = new QAction( tr("&Keypad"),                  p );
   actions.showMenuBar           = new QAction( tr("Hide &Menu Bar"),           p );
-  actions.showStatusBar         = new QAction( tr("Show &Status Bar"),         p );
+  actions.showStatusBar         = new QAction( tr("&Status Bar"),              p );
   actions.showVariables         = new QAction( tr("&Variables"),               p );
   actions.formatBinary          = new QAction( tr("&Binary"),                  p );
   actions.formatEngineering     = new QAction( tr("&Engineering"),             p );
