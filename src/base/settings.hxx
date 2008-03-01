@@ -51,6 +51,7 @@ class Settings
     bool        showHistory;
     bool        showKeypad;
     bool        showMenuBar;
+    bool        showStatusBar;
     bool        showVariables;
     bool        stayAlwaysOnTop;
     bool        hiliteSyntax;

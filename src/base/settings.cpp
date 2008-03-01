@@ -85,6 +85,7 @@ void Settings::load()
   showFullScreen        = settings.value( key + "ShowFullScreen",       false  ).toBool();
   showKeypad            = settings.value( key + "ShowKeypad",           true   ).toBool();
   showMenuBar           = settings.value( key + "ShowMenuBar",          true   ).toBool();
+  showStatusBar         = settings.value( key + "ShowStatusBar",        false  ).toBool();
   showHistory           = settings.value( key + "ShowHistory",          false  ).toBool();
   showFunctions         = settings.value( key + "ShowFunctions",        false  ).toBool();
   showVariables         = settings.value( key + "ShowVariables",        false  ).toBool();
@@ -215,6 +216,7 @@ void Settings::save()
   settings.setValue( key + "ShowFullScreen",        showFullScreen          );
   settings.setValue( key + "ShowKeypad",            showKeypad              );
   settings.setValue( key + "ShowMenuBar",           showMenuBar             );
+  settings.setValue( key + "ShowStatusBar",         showStatusBar           );
   settings.setValue( key + "ShowVariables",         showVariables           );
   settings.setValue( key + "WindowHeight",          mainWindowSize.height() );
   settings.setValue( key + "WindowWidth",           mainWindowSize.width()  ),

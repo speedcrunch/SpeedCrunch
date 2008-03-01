@@ -120,6 +120,7 @@ struct Actions
   QAction * showHistory;
   QAction * showKeypad;
   QAction * showMenuBar;
+  QAction * showStatusBar;
   QAction * showVariables;
   QAction * formatBinary;
   QAction * formatEngineering;
@@ -295,7 +296,6 @@ void MainWindow::Private::createUi()
   createActionGroups();
   createActionShortcuts();
   createMenus();
-  createStatusBar();
   createFixedWidgets();
   createFixedConnections();
 
@@ -348,6 +348,7 @@ void MainWindow::Private::createActions()
   actions.showHistory           = new QAction( tr("&History"),                 p );
   actions.showKeypad            = new QAction( tr("&Keypad"),                  p );
   actions.showMenuBar           = new QAction( tr("Hide &Menu Bar"),           p );
+  actions.showStatusBar         = new QAction( tr("Show &Status Bar"),         p );
   actions.showVariables         = new QAction( tr("&Variables"),               p );
   actions.formatBinary          = new QAction( tr("&Binary"),                  p );
   actions.formatEngineering     = new QAction( tr("&Engineering"),             p );
@@ -373,6 +374,7 @@ void MainWindow::Private::createActions()
   actions.radixCharAuto       ->setCheckable( true );
   actions.radixCharComma      ->setCheckable( true );
   actions.radixCharDot        ->setCheckable( true );
+  actions.showStatusBar       ->setCheckable( true );
   actions.showBook            ->setCheckable( true );
   actions.showConstants       ->setCheckable( true );
   actions.showFullScreen      ->setCheckable( true );
@@ -447,6 +449,7 @@ void MainWindow::Private::createActionShortcuts()
   actions.showVariables   ->setShortcut( Qt::CTRL + Qt::Key_4           );
   actions.showHistory     ->setShortcut( Qt::CTRL + Qt::Key_5           );
   actions.showMenuBar     ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_M );
+  actions.showStatusBar   ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_B );
   actions.formatBinary    ->setShortcut( Qt::Key_F5                     );
   actions.formatGeneral   ->setShortcut( Qt::Key_F7                     );
   actions.formatHexadec   ->setShortcut( Qt::Key_F8                     );
@@ -492,7 +495,8 @@ void MainWindow::Private::createMenus()
   menus.view->addAction( actions.showVariables );
   menus.view->addAction( actions.showHistory   );
   menus.view->addSeparator();
-  menus.view->addAction( actions.showMenuBar );
+  menus.view->addAction( actions.showMenuBar   );
+  menus.view->addAction( actions.showStatusBar );
   menus.view->addSeparator();
   menus.view->addAction( actions.showFullScreen );
 
@@ -559,6 +563,8 @@ void MainWindow::Private::createMenus()
 
 void MainWindow::Private::createStatusBar()
 {
+  QStatusBar * bar = p->statusBar();
+
   QString angleUnit = (settings.angleMode == 'r') ?
     tr( "Radian" ) : tr( "Degree" );
 
@@ -576,17 +582,17 @@ void MainWindow::Private::createStatusBar()
     default : break;
   }
 
-  status.angleUnit = new QLabel( angleUnit, p );
-  status.format    = new QLabel( format,    p );
+  status.angleUnit = new QLabel( angleUnit, bar );
+  status.format    = new QLabel( format,    bar );
 
   status.angleUnit->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
   status.format   ->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
 
-  status.angleUnit->setToolTip( tr( "Angle unit"       ) );
-  status.format   ->setToolTip( tr( "Result format"    ) );
+  status.angleUnit->setToolTip( tr( "Angle unit"    ) );
+  status.format   ->setToolTip( tr( "Result format" ) );
 
-  p->statusBar()->addWidget( status.angleUnit );
-  p->statusBar()->addWidget( status.format    );
+  bar->addWidget( status.angleUnit );
+  bar->addWidget( status.format    );
 }
 
 
@@ -818,6 +824,7 @@ void MainWindow::Private::createFixedConnections()
   connect( actions.showHistory,                 SIGNAL( toggled( bool )                       ), p,                     SLOT( showHistory( bool )                   ) );
   connect( actions.showKeypad,                  SIGNAL( toggled( bool )                       ), p,                     SLOT( showKeypad( bool )                    ) );
   connect( actions.showMenuBar,                 SIGNAL( triggered()                           ), p,                     SLOT( showMenuBar()                         ) );
+  connect( actions.showStatusBar,               SIGNAL( toggled( bool )                       ), p,                     SLOT( showStatusBar( bool )                 ) );
   connect( actions.showVariables,               SIGNAL( toggled( bool )                       ), p,                     SLOT( showVariables( bool )                 ) );
   connect( actions.formatBinary,                SIGNAL( triggered()                           ), p,                     SLOT( formatBinary()                        ) );
   connect( actions.formatEngineering,           SIGNAL( triggered()                           ), p,                     SLOT( formatEngineering()                   ) );
@@ -954,6 +961,9 @@ void MainWindow::Private::applySettings()
   actions.showHistory  ->setChecked( settings.showHistory   );
   actions.showVariables->setChecked( settings.showVariables );
   restoreFloatingDocks();
+
+  // status bar
+  actions.showStatusBar->setChecked( settings.showStatusBar );
 }
 
 
@@ -1539,6 +1549,17 @@ void MainWindow::showMenuBar()
 }
 
 
+void MainWindow::showStatusBar( bool b )
+{
+  if ( b )
+    d->createStatusBar();
+  else
+    d->deleteStatusBar();
+
+  d->settings.showStatusBar = b;
+}
+
+
 void MainWindow::showAutoCalc( const QString & msg )
 {
   QPoint p = d->widgets.editor->mapToParent( QPoint(0, 0) );
@@ -1619,6 +1640,18 @@ void MainWindow::Private::deleteKeypad()
   layouts.root->removeItem( layouts.keypad );
   delete layouts.keypad;
   layouts.keypad = 0;
+}
+
+
+void MainWindow::Private::deleteStatusBar()
+{
+  delete status.angleUnit;
+  status.angleUnit = 0;
+
+  delete status.format;
+  status.format = 0;
+
+  p->setStatusBar( 0 );
 }
 
 
