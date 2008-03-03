@@ -667,7 +667,7 @@ void MainWindow::Private::createKeypad()
 
 void MainWindow::Private::createBookDock()
 {
-  docks.book = new BookDock;
+  docks.book = new BookDock( QString( BOOKSDIR ), "math_index.html", p );
   docks.book->setObjectName( "BookDock" );
   docks.book->installEventFilter( p );
   p->addDockWidget( Qt::RightDockWidgetArea, docks.book );

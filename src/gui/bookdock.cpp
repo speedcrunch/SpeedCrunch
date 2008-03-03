@@ -31,18 +31,20 @@
 
 struct BookDock::Private
 {
-  QComboBox *    sheets;
   QTextBrowser * sheet;
   QString        path;
   QString        lang;
+  QString        file;
 };
 
 
-BookDock::BookDock( QWidget * parent )
+BookDock::BookDock( const QString & directory, const QString & file,
+                    QWidget * parent )
   : QDockWidget( tr("Book"), parent ),
     d( new BookDock::Private )
 {
-  d->path = BOOKSDIR;
+  d->path = directory;
+  d->file = file;
   QString locale = QLocale().name();
   QString localeShort = locale.left( 2 ).toLower();
   d->lang = localeShort;
@@ -55,28 +57,24 @@ BookDock::BookDock( QWidget * parent )
   d->sheet->setSearchPaths( QStringList() << d->path );
   connect( d->sheet, SIGNAL( anchorClicked ( const QUrl & ) ),
            this, SLOT( anchorClicked ( const QUrl & ) ) );
-
   QHBoxLayout * buttonLayout = new QHBoxLayout;
   buttonLayout->setSpacing( 0 );
   buttonLayout->setMargin( 0 );
-  QPushButton * button = new QPushButton( this );
+  QPushButton * button = new QPushButton( tr("Back"), this );
   button->setIcon( QPixmap( ":/book_back.png" ) );
   button->setFlat( true );
-  button->setToolTip( tr("Back") );
   connect( button, SIGNAL( clicked() ), d->sheet, SLOT( backward() ) );
   buttonLayout->addWidget( button );
 
-  button = new QPushButton( this );
+  button = new QPushButton( tr("Forward"), this );
   button->setIcon( QPixmap( ":/book_forward.png" ) );
   button->setFlat( true );
-  button->setToolTip( tr("Forward") );
   connect( button, SIGNAL( clicked() ), d->sheet, SLOT( forward() ) );
   buttonLayout->addWidget( button );
 
-  button = new QPushButton( this );
+  button = new QPushButton( tr("Home"), this );
   button->setIcon( QPixmap( ":/book_home.png" ) );
   button->setFlat( true );
-  button->setToolTip( tr("Home") );
   connect( button, SIGNAL( clicked() ), d->sheet, SLOT( home() ) );
   buttonLayout->addWidget( button );
 
@@ -91,7 +89,7 @@ BookDock::BookDock( QWidget * parent )
   setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
   setWindowIcon( QIcon() ); // no icon
 
-  d->sheet->setSource( d->path + d->lang + "/index.html" );
+  d->sheet->setSource( d->path + d->lang + "/" + d->file );
 }
 
 
