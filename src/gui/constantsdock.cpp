@@ -176,26 +176,26 @@ void ConstantsDock::filter()
   for ( int k = 0; k < c->constantList().count(); k++ )
   {
     QStringList str;
-    str << c->constantList().at(k).name;
+    str << c->constantList().at( k ).name;
     if ( QLocale().language() == QLocale::Hebrew )
     {
-      str << c->constantList().at(k).unit;
+      str << c->constantList().at( k ).unit;
       str << (d->radixChar == ',' ?
-                QString(c->constantList().at(k).value).replace( '.', ',' )
-              : c->constantList().at(k).value);
+                QString( c->constantList().at( k ).value ).replace( '.', ',' )
+              : c->constantList().at( k ).value);
     }
     else
     {
       str << (d->radixChar == ',' ?
-                QString(c->constantList().at(k).value).replace( '.', ',' )
-              : c->constantList().at(k).value);
-      str << c->constantList().at(k).unit;
+                QString( c->constantList().at( k ).value ).replace( '.', ',' )
+              : c->constantList().at( k ).value);
+      str << c->constantList().at( k ).unit;
     }
-    str << c->constantList().at(k).name.toUpper();
+    str << c->constantList().at( k ).name.toUpper();
     str << QString( "" );
 
     bool include = (chosenCategory == tr("All")) ? true:
-      c->constantList().at(k).categories.contains( chosenCategory );
+      c->constantList().at( k ).categories.contains( chosenCategory );
 
     if ( ! include )
       continue;
@@ -210,10 +210,13 @@ void ConstantsDock::filter()
     }
     if ( item )
     {
-      QString tip = QString("<b>%1</b><br>%2").arg( c->constantList().at(k).name,
-                                                    c->constantList().at(k).value);
-      if ( ! c->constantList().at(k).unit.isEmpty() )
-        tip.append( " " ).append( c->constantList().at(k).unit );
+      QString tip = QString("<b>%1</b><br>%2")
+                      .arg( c->constantList().at( k ).name,
+                            c->constantList().at( k ).value);
+      if ( ! c->constantList().at( k ).unit.isEmpty() )
+        tip.append( " " ).append( c->constantList().at( k ).unit );
+      if ( d->radixChar == ',' )
+        tip.replace( '.', ',' );
       item->setToolTip( 0, tip );
       item->setToolTip( 1, tip );
       item->setToolTip( 2, tip );
@@ -237,7 +240,8 @@ void ConstantsDock::filter()
       for ( int i = 0; i < d->list->topLevelItemCount(); i++ )
       {
         QTreeWidgetItem * item = d->list->topLevelItem( i );
-        QBrush c = ((int)(i / group)) & 1 ? palette().base() : palette().alternateBase();
+        QBrush c = ((int)(i / group)) & 1 ? palette().base()
+                                          : palette().alternateBase();
         item->setBackground( 0, c );
         item->setBackground( 1, c );
         item->setBackground( 2, c );
@@ -259,8 +263,8 @@ void ConstantsDock::handleItem( QTreeWidgetItem * item )
 {
   Constants * c = d->constants;
   for ( int k = 0; k < c->constantList().count(); k++ )
-    if ( c->constantList().at(k).name == item->text( 0 ) )
-      emit constantSelected( c->constantList().at(k).value );
+    if ( c->constantList().at( k ).name == item->text( 0 ) )
+      emit constantSelected( c->constantList().at( k ).value );
 }
 
 
