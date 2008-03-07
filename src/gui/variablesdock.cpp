@@ -227,9 +227,7 @@ void VariablesDock::filter()
 void VariablesDock::handleItem( QTreeWidgetItem * item )
 {
   d->list->clearSelection();
-  qDebug( "********" );
   emit variableSelected( item->text( 0 ) );
-  qDebug( "kkkkkkkkkk" );
 }
 
 
