@@ -39,8 +39,8 @@ struct BookDock::Private
 
 
 BookDock::BookDock( const QString & directory, const QString & file,
-                    QWidget * parent )
-  : QDockWidget( tr("Book"), parent ),
+                    const QString & title, QWidget * parent )
+  : QDockWidget( title, parent ),
     d( new BookDock::Private )
 {
   d->path = directory;
@@ -123,5 +123,7 @@ void BookDock::anchorClicked ( const QUrl & link )
   else
   {
     d->sheet->setSource( link );
+    // necessary for QTextBrowser to work properly
+    d->sheet->adjustSize();
   }
 }

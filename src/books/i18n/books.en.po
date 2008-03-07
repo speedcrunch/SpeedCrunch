@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: books.pot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-13 14:26+0000\n"
+"POT-Creation-Date: 2008-03-07 15:39+0000\n"
 "PO-Revision-Date: 2007-01-09 00:00+0100\n"
 "Last-Translator: SpeedCrunch Developers\n"
 "Language-Team: en\n"
@@ -26,24 +26,12 @@ msgstr ""
 msgid "Cylinder"
 msgstr ""
 
-#: math_index.html.template, index.html.template
+#: index.html.template
+msgid "SpeedCrunch Manual"
+msgstr ""
+
+#: math_index.html.template
 msgid "SpeedCrunch Book"
-msgstr ""
-
-#: index.html.template
-msgid "Chapters"
-msgstr ""
-
-#: index.html.template
-msgid "SpeedCrunch Constants"
-msgstr ""
-
-#: index.html.template
-msgid "SpeedCrunch Functions"
-msgstr ""
-
-#: index.html.template
-msgid "Mathematics"
 msgstr ""
 
 #: math_index.html.template

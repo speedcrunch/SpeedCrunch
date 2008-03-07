@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: books\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-21 10:38+0000\n"
+"POT-Creation-Date: 2008-03-07 15:39+0000\n"
 "PO-Revision-Date: 2008-02-21 11:52+0100\n"
 "Last-Translator: Marco Wegner <ogre.crewman@googlemail.com>\n"
 "Language-Team: German\n"
@@ -32,25 +32,14 @@ msgstr "Würfel"
 msgid "Cylinder"
 msgstr "Zylinder"
 
-#: math_index.html.template, index.html.template
-msgid "SpeedCrunch Book"
-msgstr "Das SpeedCrunch-Buch"
-
 #: index.html.template
-msgid "Chapters"
-msgstr "Kapitel"
-
-#: index.html.template
-msgid "SpeedCrunch Constants"
+#, fuzzy
+msgid "SpeedCrunch Manual"
 msgstr "Konstanten in SpeedCrunch"
 
-#: index.html.template
-msgid "SpeedCrunch Functions"
-msgstr "Funktionen in SpeedCrunch"
-
-#: index.html.template
-msgid "Mathematics"
-msgstr "Mathematik"
+#: math_index.html.template
+msgid "SpeedCrunch Book"
+msgstr "Das SpeedCrunch-Buch"
 
 #: math_index.html.template
 msgid "3D Objects"
@@ -80,3 +69,11 @@ msgstr "Verschiedenes"
 msgid "Quadratic Equation"
 msgstr "Quadratische Gleichung"
 
+#~ msgid "Chapters"
+#~ msgstr "Kapitel"
+
+#~ msgid "SpeedCrunch Functions"
+#~ msgstr "Funktionen in SpeedCrunch"
+
+#~ msgid "Mathematics"
+#~ msgstr "Mathematik"

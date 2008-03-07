@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: books.pot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-13 14:26+0000\n"
+"POT-Creation-Date: 2008-03-07 15:39+0000\n"
 "PO-Revision-Date: 2007-12-13 16:37+0200\n"
 "Last-Translator: Petri Damstén <petri.damsten@iki.fi>\n"
 "Language-Team: Finnish\n"
@@ -30,25 +30,14 @@ msgstr "Kuutio"
 msgid "Cylinder"
 msgstr "Ympyrälieriö"
 
-#: math_index.html.template, index.html.template
-msgid "SpeedCrunch Book"
-msgstr "SpeedCrunch Opas"
-
 #: index.html.template
-msgid "Chapters"
-msgstr "Kappaleet"
-
-#: index.html.template
-msgid "SpeedCrunch Constants"
+#, fuzzy
+msgid "SpeedCrunch Manual"
 msgstr "SpeedCrunch Vakiot"
 
-#: index.html.template
-msgid "SpeedCrunch Functions"
-msgstr "SpeedCrunch Functiot"
-
-#: index.html.template
-msgid "Mathematics"
-msgstr "Matematiikkaa"
+#: math_index.html.template
+msgid "SpeedCrunch Book"
+msgstr "SpeedCrunch Opas"
 
 #: math_index.html.template
 msgid "3D Objects"
@@ -78,3 +67,11 @@ msgstr "Muuta"
 msgid "Quadratic Equation"
 msgstr "Toisen Asteen Yhtälö"
 
+#~ msgid "Chapters"
+#~ msgstr "Kappaleet"
+
+#~ msgid "SpeedCrunch Functions"
+#~ msgstr "SpeedCrunch Functiot"
+
+#~ msgid "Mathematics"
+#~ msgstr "Matematiikkaa"
