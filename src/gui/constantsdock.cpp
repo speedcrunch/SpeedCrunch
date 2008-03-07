@@ -64,6 +64,7 @@ ConstantsDock::ConstantsDock( Constants * c, char radixChar, QWidget * parent )
   d->category = new QComboBox( this );
   d->category->setEditable( false );
   d->category->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
+
   connect( d->category, SIGNAL( activated( int ) ), SLOT( filter() ) );
 
   QWidget     * categoryBox    = new QWidget( this );
@@ -78,6 +79,7 @@ ConstantsDock::ConstantsDock( Constants * c, char radixChar, QWidget * parent )
 
   d->filter = new QLineEdit( this );
   d->filter->setMinimumWidth( fontMetrics().width('X') * 10 );
+
   connect( d->filter, SIGNAL( textChanged( const QString & ) ),
            this, SLOT( triggerFilter() ) );
 
@@ -99,8 +101,7 @@ ConstantsDock::ConstantsDock( Constants * c, char radixChar, QWidget * parent )
   d->list->setMouseTracking( true );
   d->list->setEditTriggers( QTreeWidget::NoEditTriggers );
   d->list->setSelectionBehavior( QTreeWidget::SelectRows );
-  connect( d->list, SIGNAL( itemDoubleClicked( QTreeWidgetItem *, int ) ),
-           this, SLOT( handleItem( QTreeWidgetItem * ) ) );
+
   connect( d->list, SIGNAL( itemActivated( QTreeWidgetItem *, int ) ),
            this, SLOT( handleItem( QTreeWidgetItem * ) ) );
 

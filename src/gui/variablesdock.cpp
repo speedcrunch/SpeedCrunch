@@ -33,17 +33,16 @@
 #include <QVBoxLayout>
 
 
-class VariablesDock::Private
+struct VariablesDock::Private
 {
-  public:
-    char          radixChar;
-    QLineEdit *   filter;
-    QTimer *      filterTimer;
-    QTreeWidget * list;
-    QLabel *      noMatchLabel;
-    QVector<Variable> variables;
+  char          radixChar;
+  QLineEdit *   filter;
+  QTimer *      filterTimer;
+  QTreeWidget * list;
+  QLabel *      noMatchLabel;
+  QVector<Variable> variables;
 
-    QString formatValue( const HNumber & value );
+  QString formatValue( const HNumber & value );
 };
 
 
@@ -74,8 +73,8 @@ VariablesDock::VariablesDock( char radixChar, QWidget * parent )
   label->setText( tr("Search") );
 
   d->filter = new QLineEdit( this );
-  connect( d->filter, SIGNAL( textChanged( const QString& ) ),
-           SLOT( triggerFilter() ) );
+  connect( d->filter, SIGNAL( textChanged( const QString & ) ),
+           this, SLOT( triggerFilter() ) );
 
   QWidget     * searchBox    = new QWidget( this );
   QHBoxLayout * searchLayout = new QHBoxLayout;
@@ -93,8 +92,7 @@ VariablesDock::VariablesDock( char radixChar, QWidget * parent )
   d->list->header()->hide();
   d->list->setEditTriggers( QTreeWidget::NoEditTriggers );
   d->list->setSelectionBehavior( QTreeWidget::SelectRows );
-  connect( d->list, SIGNAL( itemDoubleClicked( QTreeWidgetItem *, int ) ),
-           this, SLOT( handleItem( QTreeWidgetItem * ) ) );
+
   connect( d->list, SIGNAL( itemActivated( QTreeWidgetItem *, int ) ),
            this, SLOT( handleItem( QTreeWidgetItem * ) ) );
 
@@ -189,8 +187,8 @@ void VariablesDock::filter()
 
       if ( item )
       {
-        item->setTextAlignment( 0, Qt::AlignLeft  | Qt::AlignVCenter );
-        item->setTextAlignment( 1, Qt::AlignRight | Qt::AlignVCenter );
+        item->setTextAlignment( 0, Qt::AlignLeft | Qt::AlignVCenter );
+        item->setTextAlignment( 1, Qt::AlignLeft | Qt::AlignVCenter );
       }
   }
 
@@ -222,15 +220,16 @@ void VariablesDock::filter()
     d->noMatchLabel->raise();
   }
 
-
-  setUpdatesEnabled(true);
+  setUpdatesEnabled( true );
 }
 
 
 void VariablesDock::handleItem( QTreeWidgetItem * item )
 {
   d->list->clearSelection();
-  emit variableSelected( item->text(0) );
+  qDebug( "********" );
+  emit variableSelected( item->text( 0 ) );
+  qDebug( "kkkkkkkkkk" );
 }
 
 

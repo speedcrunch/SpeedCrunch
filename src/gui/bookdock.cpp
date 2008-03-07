@@ -53,26 +53,37 @@ BookDock::BookDock( const QString & directory, const QString & file,
   QVBoxLayout* bookLayout = new QVBoxLayout;
 
   d->sheet = new QTextBrowser( this );
+  d->sheet->setLineWrapMode( QTextEdit::NoWrap );
   //d->sheet->setOpenLinks(false); // remove to stick with Qt 4.2
   d->sheet->setSearchPaths( QStringList() << d->path );
-  connect( d->sheet, SIGNAL( anchorClicked ( const QUrl & ) ),
-           this, SLOT( anchorClicked ( const QUrl & ) ) );
+
+  connect( d->sheet, SIGNAL( anchorClicked( const QUrl & ) ),
+           this, SLOT( anchorClicked( const QUrl & ) ) );
+
   QHBoxLayout * buttonLayout = new QHBoxLayout;
   buttonLayout->setSpacing( 0 );
   buttonLayout->setMargin( 0 );
   QPushButton * button = new QPushButton( tr("Back"), this );
   button->setIcon( QPixmap( ":/book_back.png" ) );
   button->setFlat( true );
+
   connect( button, SIGNAL( clicked() ), d->sheet, SLOT( backward() ) );
+  connect( d->sheet, SIGNAL( backwardAvailable( bool ) ),
+           button, SLOT( setEnabled( bool ) ) );
+
   buttonLayout->addWidget( button );
 
   button = new QPushButton( tr("Forward"), this );
   button->setIcon( QPixmap( ":/book_forward.png" ) );
   button->setFlat( true );
+
   connect( button, SIGNAL( clicked() ), d->sheet, SLOT( forward() ) );
+  connect( d->sheet, SIGNAL( forwardAvailable( bool ) ),
+           button, SLOT( setEnabled( bool ) ) );
+
   buttonLayout->addWidget( button );
 
-  button = new QPushButton( tr("Home"), this );
+  button = new QPushButton( tr("Index"), this );
   button->setIcon( QPixmap( ":/book_home.png" ) );
   button->setFlat( true );
   connect( button, SIGNAL( clicked() ), d->sheet, SLOT( home() ) );
@@ -103,6 +114,10 @@ void BookDock::anchorClicked ( const QUrl & link )
 {
   if ( link.toString().startsWith( "file:#" ) )
   {
+    // avoid appended history garbage after clicking on a formula (unknown)
+    d->sheet->backward();
+    d->sheet->forward();
+
     emit expressionSelected( link.toString().mid( 6 ) );
   }
   else

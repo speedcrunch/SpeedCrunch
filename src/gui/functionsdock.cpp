@@ -74,8 +74,7 @@ FunctionsDock::FunctionsDock( Functions * f, QWidget * parent )
   d->list->header()->hide();
   d->list->setEditTriggers( QTreeWidget::NoEditTriggers );
   d->list->setSelectionBehavior( QTreeWidget::SelectRows );
-  connect( d->list, SIGNAL( itemDoubleClicked( QTreeWidgetItem *, int ) ),
-           this, SLOT( handleItem( QTreeWidgetItem * ) ) );
+
   connect( d->list, SIGNAL( itemActivated( QTreeWidgetItem *, int ) ),
            this, SLOT( handleItem( QTreeWidgetItem * ) ) );
 
@@ -90,7 +89,7 @@ FunctionsDock::FunctionsDock( Functions * f, QWidget * parent )
   d->filterTimer = new QTimer( this );
   d->filterTimer->setInterval( 500 );
   d->filterTimer->setSingleShot( true );
-  connect( d->filterTimer, SIGNAL(timeout()), SLOT(filter()) );
+  connect( d->filterTimer, SIGNAL( timeout() ), SLOT( filter() ) );
 
   d->noMatchLabel = new QLabel( this );
   d->noMatchLabel->setText( tr("No match found") );

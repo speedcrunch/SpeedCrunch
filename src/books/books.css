@@ -1,1 +1,19 @@
-body { background-color: #ffffff; } a:link { text-decoration: none; color: blue; font-size: 12pt; font-weight: bold; }
+body
+{
+  background-color: #ffffff;
+}
+
+img
+{
+  display: block;
+  margin-left: auto;
+  margin-right: auto
+}
+
+a:link
+{
+  text-decoration: none;
+  color: blue;
+  font-size: 12pt;
+  font-weight: bold;
+}
