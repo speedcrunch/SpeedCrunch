@@ -106,6 +106,7 @@ struct Editor::Private
   bool                 ansAvailable;
   bool                 autoCalcEnabled;
   QTimer *             autoCalcTimer;
+  QTimer *             autoCalcSelTimer;
   bool                 autoCompleteEnabled;
   EditorCompletion *   completion;
   QTimer *             completionTimer;
@@ -189,6 +190,7 @@ Editor::Editor( Evaluator * e, Functions * f, Constants * c, char format,
   d->syntaxHighlightEnabled = true;
   d->highlighter = new EditorHighlighter( this );
   d->autoCalcTimer = new QTimer( this );
+  d->autoCalcSelTimer = new QTimer( this );
   d->matchingTimer = new QTimer( this );
   d->ansAvailable = false;
   d->scheme = Editor::AutoScheme;
@@ -205,10 +207,12 @@ Editor::Editor( Evaluator * e, Functions * f, Constants * c, char format,
   setAutoFormatting( QTextEdit::AutoNone );
 
   connect( d->autoCalcTimer,      SIGNAL( timeout()                             ), SLOT( autoCalc()                        ) );
+  connect( d->autoCalcSelTimer,   SIGNAL( timeout()                             ), SLOT( autoCalcSelection()               ) );
   connect( d->completion,         SIGNAL( selectedCompletion( const QString & ) ), SLOT( autoComplete( const QString & )   ) );
   connect( d->completionTimer,    SIGNAL( timeout()                             ), SLOT( triggerAutoComplete()             ) );
   connect( d->constantCompletion, SIGNAL( selectedCompletion( const QString & ) ), SLOT( insertConstant( const QString & ) ) );
   connect( d->matchingTimer,      SIGNAL( timeout()                             ), SLOT( doMatchingPar()                   ) );
+  connect( this,                  SIGNAL( selectionChanged()                    ), SLOT( startSelAutoCalcTimer()           ) );
   connect( this,                  SIGNAL( textChanged()                         ), SLOT( checkAutoCalc()                   ) );
   connect( this,                  SIGNAL( textChanged()                         ), SLOT( checkAutoComplete()               ) );
   connect( this,                  SIGNAL( textChanged()                         ), SLOT( checkMatching()                   ) );
@@ -435,6 +439,17 @@ void Editor::checkAutoCalc()
   d->autoCalcTimer->start( 1000 );
 
   emit autoCalcDisabled();
+}
+
+
+void Editor::startSelAutoCalcTimer()
+{
+  if ( ! d->autoCalcEnabled )
+    return;
+
+  d->autoCalcSelTimer->stop();
+  d->autoCalcSelTimer->setSingleShot( true );
+  d->autoCalcSelTimer->start( 1000 );
 }
 
 
@@ -752,7 +767,56 @@ void Editor::autoCalc()
 
   if ( d->eval->error().isEmpty() )
   {
-    QString ss = QString("<b>%1</b>").arg( formatNumber( num ) );
+    QString ss = QString( tr("Current result: <b>%1</b>")
+                            .arg( formatNumber( num ) ) );
+    emit autoCalcEnabled( ss );
+  }
+  else
+  {
+    // invalid expression
+    emit autoCalcDisabled();
+  }
+}
+
+
+void Editor::autoCalcSelection()
+{
+  if ( ! d->autoCalcEnabled )
+    return;
+
+  QString str = d->eval->autoFix( textCursor().selectedText() );
+  if ( str.isEmpty() )
+    return;
+
+  // very short (just one token) and still no calculation, then skip
+  if ( ! d->ansAvailable )
+  {
+    Tokens tokens = d->eval->scan( text() );
+    if ( tokens.count() < 2 )
+      return;
+  }
+
+  // too short even after autofix ? do not bother either...
+  Tokens tokens = d->eval->scan( str );
+  if ( tokens.count() < 2 )
+    return;
+
+  // strip off assignment operator, e.g. "x=1+2" becomes "1+2" only
+  // the reason is that we want only to evaluate (on the fly) the expression,
+  // not to update (put the result in) the variable
+  //if( tokens.count() > 2 ) // reftk
+  //if( tokens[0].isIdentifier() )
+  //if( tokens[1].asOperator() == Token::Equal )
+  //  str.remove( 0, tokens[1].pos()+1 );
+
+  // same reason as above, do not update "ans"
+  d->eval->setExpression( str );
+  HNumber num = d->eval->evalNoAssign();
+
+  if ( d->eval->error().isEmpty() )
+  {
+    QString ss = QString( tr("Selection result: <b>%1</b>")
+                            .arg( formatNumber( num ) ) );
     emit autoCalcEnabled( ss );
   }
   else
@@ -827,6 +891,7 @@ void Editor::triggerEnter()
   d->completionTimer->stop();
   d->matchingTimer->stop();
   d->autoCalcTimer->stop();
+  d->autoCalcSelTimer->stop();
   emit returnPressed();
 }
 
@@ -946,6 +1011,7 @@ void Editor::setAnsAvailable( bool avail )
 void Editor::stopAutoCalc()
 {
   d->autoCalcTimer->stop();
+  d->autoCalcSelTimer->stop();
   emit autoCalcDisabled();
 }
 

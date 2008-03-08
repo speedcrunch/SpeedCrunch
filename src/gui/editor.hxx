@@ -96,9 +96,11 @@ class Editor : public QTextEdit
 
   protected slots:
     void autoCalc();
+    void autoCalcSelection();
     void autoComplete( const QString & item );
     void checkAutoCalc();
     void checkAutoComplete();
+    void startSelAutoCalcTimer();
     void checkMatching();
     void doMatchingLeft();
     void doMatchingPar();
