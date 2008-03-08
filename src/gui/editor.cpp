@@ -83,7 +83,7 @@ class EditorHighlighter : public QSyntaxHighlighter
             for ( int i = 0; i < fnames.count(); i++ )
             {
               if ( fnames[i].toLower() == text )
-                color = editor->highlightColor( Editor::FunctionName );
+                color = editor->highlightColor( Editor::Function );
             }
             break;
 
@@ -151,7 +151,7 @@ QList<QColor> Editor::Private::generateColors( const QColor & bg,
     if (    (h < bg.hue() + M && h > bg.hue() - M )
          || (h < fg.hue() + M && h > fg.hue() - M ) )
     {
-      h = ((bg.hue() + fg.hue()) / (i+1) ) % 360;
+      h = ((bg.hue() + fg.hue()) / (i+1) ) % 359;
       s = ((bg.saturation() + fg.saturation() + 2*i) / 2 ) % 255;
       v = ((bg.value() + fg.value() + 2*i) / 2 ) % 255;
     }
@@ -905,6 +905,12 @@ void Editor::setHighlightScheme( Editor::HighlightScheme hs )
     QList<QColor> list = d->generateColors( bg, fg, NO_COLORS );
     for ( int i = 0; i < NO_COLORS; i++ )
       d->highlightColors[static_cast<Editor::ColorType>( i )] = list[i];
+
+    // generate special case matched parenthesis
+    int h = ((bg.hue() + fg.hue()) / 2 ) % 359;
+    int s = ((bg.saturation() + fg.saturation()) / 2 ) % 255;
+    int v = ((bg.value() + fg.value()) / 2 ) % 255;
+    d->highlightColors[Editor::MatchedPar] = QColor::fromHsv( h, s, v );
   }
 }
 
