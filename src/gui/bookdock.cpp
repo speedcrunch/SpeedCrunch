@@ -123,7 +123,8 @@ void BookDock::anchorClicked ( const QUrl & link )
   else
   {
     d->sheet->setSource( link );
-    // necessary for QTextBrowser to work properly
-    d->sheet->adjustSize();
   }
+
+  // necessary for QTextBrowser to always draw correctly (why?)
+  d->sheet->adjustSize();
 }
