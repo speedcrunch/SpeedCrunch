@@ -110,6 +110,7 @@ struct Actions
   QAction * scrollDown;
   QAction * scrollUp;
   QAction * selectExpression;
+  QAction * sessionExecute;
   QAction * sessionLoad;
   QAction * sessionQuit;
   QAction * sessionSave;
@@ -338,6 +339,7 @@ void MainWindow::Private::createActions()
   actions.scrollDown            = new QAction( tr("Scroll Display Down"),      p );
   actions.scrollUp              = new QAction( tr("Scroll Display Up"),        p );
   actions.selectExpression      = new QAction( tr("&Select Expression"),       p );
+  actions.sessionExecute        = new QAction( tr("&Execute..."),              p );
   actions.sessionLoad           = new QAction( tr("&Load..."),                 p );
   actions.sessionQuit           = new QAction( tr("&Quit"),                    p );
   actions.sessionSave           = new QAction( tr("&Save..."),                 p );
@@ -464,6 +466,8 @@ void MainWindow::Private::createMenus()
   p->menuBar()->addMenu( menus.session );
   menus.session->addAction( actions.sessionLoad );
   menus.session->addAction( actions.sessionSave );
+  menus.session->addSeparator();
+  menus.session->addAction( actions.sessionExecute );
   menus.session->addSeparator();
   menus.session->addAction( actions.sessionQuit );
 
@@ -815,6 +819,7 @@ void MainWindow::Private::createFixedConnections()
   connect( actions.radian,                      SIGNAL( triggered()                           ), p,                     SLOT( radian()                              ) );
   connect( actions.scrollDown,                  SIGNAL( triggered()                           ), p,                     SLOT( scrollDown()                          ) );
   connect( actions.scrollUp,                    SIGNAL( triggered()                           ), p,                     SLOT( scrollUp()                            ) );
+  connect( actions.sessionExecute,              SIGNAL( triggered()                           ), p,                     SLOT( executeBatch()                        ) );
   connect( actions.sessionLoad,                 SIGNAL( triggered()                           ), p,                     SLOT( loadSession()                         ) );
   connect( actions.sessionQuit,                 SIGNAL( triggered()                           ), p,                     SLOT( close()                               ) );
   connect( actions.sessionSave,                 SIGNAL( triggered()                           ), p,                     SLOT( saveSession()                         ) );
@@ -1356,6 +1361,35 @@ void MainWindow::loadSession()
     HNumber num( val.toAscii().data() );
     if (  num != HNumber::nan() )
       d->evaluator->set( var, num );
+  }
+
+  file.close();
+}
+
+
+void MainWindow::executeBatch()
+{
+  QString filters = tr("All Files (*)");
+  QString fname = QFileDialog::getOpenFileName( this, tr("Execute"),
+                                                QString::null, filters );
+  if ( fname.isEmpty() )
+    return;
+
+  QFile file( fname );
+  if ( ! file.open( QIODevice::ReadOnly ) )
+  {
+    QMessageBox::critical( this, tr("Error"),
+                           tr("Can't read from file %1").arg( fname ) );
+    return;
+  }
+
+  QTextStream stream( & file );
+  QString exp = stream.readLine();
+  while ( ! exp.isNull() )
+  {
+    d->widgets.editor->setText( exp );
+    d->widgets.editor->evaluate();
+    exp = stream.readLine();
   }
 
   file.close();

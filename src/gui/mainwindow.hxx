@@ -105,6 +105,7 @@ class MainWindow : public QMainWindow
   protected slots:
     void activate();
     void constantSelected( const QString & );
+    void executeBatch();
     void expressionSelected( const QString & );
     void functionSelected( const QString & );
     void keypadButtonPressed( Keypad::Button );
