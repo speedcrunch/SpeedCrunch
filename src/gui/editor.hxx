@@ -44,7 +44,8 @@ class Editor : public QTextEdit
 
   public:
     enum HighlightScheme { AutoScheme };
-    enum ColorType { Number = 0, Function, Variable, MatchedPar };
+    //enum ColorType { Number = 0, Function, Variable, MatchedPar };
+    enum ColorType { Variable = 0, Number, Function, MatchedPar };
 
     explicit Editor( Evaluator *, Functions *, Constants *, char format = 'g',
                      int precision = -1, char radixChar = 'C',
