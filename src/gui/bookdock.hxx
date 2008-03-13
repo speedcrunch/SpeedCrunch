@@ -34,7 +34,8 @@ class BookDock : public QDockWidget
 
   public:
     explicit BookDock( const QString & directory, const QString & file,
-                       const QString & title, QWidget * parent = 0 );
+                       const QString & title, const QString & language = "C",
+                       QWidget * parent = 0 );
     ~BookDock();
 
   signals:

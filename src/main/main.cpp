@@ -20,18 +20,20 @@
 
 #include "3rdparty/util/binreloc.h"
 #include "gui/mainwindow.hxx"
+#include "base/settings.hxx"
 
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>
 
 
-QTranslator * createTranslator()
+QTranslator * createTranslator( const QString & langCode )
 {
-  QTranslator * translator = new QTranslator();
-  bool          foundTranslator = false;
-  QString       localeFile = QLocale().name();
+  QTranslator * translator = new QTranslator;
+  QString       localeFile = (langCode == "C") ? QLocale().name()
+                                               : langCode;
   QString       localeDir;
+  bool          foundTranslator = false;
 
 #ifdef Q_OS_WIN32
   if ( ! foundTranslator )
@@ -50,10 +52,8 @@ QTranslator * createTranslator()
 
   localeDir = QString( br_find_data_dir( 0 ) ) + "/speedcrunch/locale";
   if ( ! foundTranslator )
-  {
     if ( translator->load( localeFile, localeDir ) )
       foundTranslator = true;
-  }
 
   if ( foundTranslator )
     return translator;
@@ -66,11 +66,14 @@ int main( int argc, char * argv[] )
 {
   QApplication app( argc, argv );
 
-  QTranslator * tr = createTranslator();
+  Settings settings;
+  settings.load();
+
+  QTranslator * tr = createTranslator( settings.language );
   if ( tr )
     app.installTranslator( tr );
 
-  MainWindow win;
+  MainWindow win( settings );
   win.show();
 
   app.connect( & app, SIGNAL( lastWindowClosed() ),

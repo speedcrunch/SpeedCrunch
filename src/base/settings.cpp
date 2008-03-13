@@ -62,7 +62,7 @@ void Settings::load()
   autoCalc       = settings.value( key + "AutoCalc",           true  ).toBool();
   minimizeToTray = settings.value( key + "MinimizeToTray",     false ).toBool();
   hiliteSyntax   = settings.value( key + "HiliteSyntax",       true  ).toBool();
-  //language       = settings.value( key + "Language",           QString() ).toString();
+  language       = settings.value( key + "Language",           "C" ).toString();
 
   key = KEY + "/Format/";
 
@@ -200,7 +200,7 @@ void Settings::save()
   settings.setValue( key + "AutoCalc",           autoCalc       );
   settings.setValue( key + "MinimizeToTray",     minimizeToTray );
   settings.setValue( key + "HiliteSyntax",       hiliteSyntax   );
-  //settings.setValue( key + "Language",           language       );
+  settings.setValue( key + "Language",           language       );
 
   key = KEY + "/Format/";
 

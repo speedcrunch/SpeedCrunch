@@ -85,8 +85,8 @@ class Settings
     QStringList history;
     QStringList historyResults;
 
-    //QString     language;
-    //
+    QString     language;
+
     QSize       mainWindowSize;
     QByteArray  mainWindowState;
     QStringList variables;

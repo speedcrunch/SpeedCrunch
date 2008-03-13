@@ -31,6 +31,7 @@
 
 
 class Keypad;
+class Settings;
 
 
 class MainWindow : public QMainWindow
@@ -38,7 +39,7 @@ class MainWindow : public QMainWindow
   Q_OBJECT
 
   public:
-    MainWindow();
+    MainWindow( Settings & );
     ~MainWindow();
 
   signals:
@@ -77,7 +78,7 @@ class MainWindow : public QMainWindow
     void hiliteSyntaxToggled( bool );
     void radian();
     void saveSession();
-    void setWidgetsLayoutAccordingToLanguageDirection();
+    void setWidgetsDirection();
     void showAutoCalc( const QString & );
     void showBook( bool );
     void showConstants( bool );

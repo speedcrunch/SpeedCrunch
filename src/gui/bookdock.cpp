@@ -39,13 +39,15 @@ struct BookDock::Private
 
 
 BookDock::BookDock( const QString & directory, const QString & file,
-                    const QString & title, QWidget * parent )
+                    const QString & title, const QString & language,
+                    QWidget * parent )
   : QDockWidget( title, parent ),
     d( new BookDock::Private )
 {
   d->path = directory;
   d->file = file;
-  QString locale = QLocale().name();
+  QString locale = (language == "C") ? QLocale().name()
+                                     : language;
   QString localeShort = locale.left( 2 ).toLower();
   d->lang = localeShort;
 

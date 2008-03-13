@@ -209,7 +209,7 @@ struct MainWindow::Private
   Constants *     constants;
   Evaluator *     evaluator;
   Functions *     functions;
-  Settings        settings;
+  Settings &      settings;
   Actions         actions;
   ActionGroups    actionGroups;
   Menus           menus;
@@ -219,9 +219,8 @@ struct MainWindow::Private
   Conditions      conditions;
   Status          status;
 
-  Private();
+  Private( Settings & );
   ~Private();
-  void loadSettings();
   void createUi();
   void createActions();
   void createActionGroups();
@@ -252,7 +251,8 @@ struct MainWindow::Private
 };
 
 
-MainWindow::Private::Private()
+MainWindow::Private::Private( Settings & settings )
+  : settings ( settings )
 {
   widgets.keypad   = 0;
   widgets.trayIcon = 0;
@@ -284,12 +284,6 @@ MainWindow::Private::~Private()
   if ( docks.history )
     deleteHistoryDock();
 }
-
-
-void MainWindow::Private::loadSettings()
-{
-  settings.load();
-};
 
 
 void MainWindow::Private::createUi()
@@ -675,7 +669,7 @@ void MainWindow::Private::createKeypad()
 void MainWindow::Private::createBookDock()
 {
   docks.book = new BookDock( QString( BOOKSDIR ), "math_index.html",
-                             tr("Math Book"), p );
+                             tr("Math Book"), settings.language, p );
   docks.book->setObjectName( "BookDock" );
   docks.book->installEventFilter( p );
   p->addDockWidget( Qt::RightDockWidgetArea, docks.book );
@@ -1054,27 +1048,31 @@ void MainWindow::Private::syncWindowStateToSettings()
 }
 
 
-void setWidgetLayoutAccordingToLanguageDirection( QWidget * widget )
+void setWidgetDirection( const QString & language, QWidget * widget )
 {
-  if ( QLocale().language() == QLocale::Hebrew )
+  if ( (language == "C" && QLocale().language() == QLocale::Hebrew)
+       || language == "he" )
+  {
     widget->setLayoutDirection( Qt::RightToLeft );
+  }
   else
+  {
     widget->setLayoutDirection( Qt::LeftToRight );
+  }
 }
 
 
 // public
 
-MainWindow::MainWindow()
-  : QMainWindow(), d( new MainWindow::Private )
+MainWindow::MainWindow( Settings & settings )
+  : QMainWindow(), d( new MainWindow::Private( settings ) )
 {
   d->p = this;
 
-  d->loadSettings();
   d->createUi();
   d->applySettings();
 
-  setWidgetsLayoutAccordingToLanguageDirection();
+  setWidgetsDirection();
 
   QTimer::singleShot( 0, this, SLOT( activate() ) );
 }
@@ -1572,30 +1570,30 @@ void MainWindow::exportSession()
 }
 
 
-void MainWindow::setWidgetsLayoutAccordingToLanguageDirection()
+void MainWindow::setWidgetsDirection()
 {
   // menu bar and menus
-  setWidgetLayoutAccordingToLanguageDirection( menuBar()          );
-  setWidgetLayoutAccordingToLanguageDirection( d->menus.session   );
-  setWidgetLayoutAccordingToLanguageDirection( d->menus.edit      );
-  setWidgetLayoutAccordingToLanguageDirection( d->menus.view      );
-  setWidgetLayoutAccordingToLanguageDirection( d->menus.format    );
-  setWidgetLayoutAccordingToLanguageDirection( d->menus.decimal   );
-  setWidgetLayoutAccordingToLanguageDirection( d->menus.settings  );
-  setWidgetLayoutAccordingToLanguageDirection( d->menus.behavior  );
-  setWidgetLayoutAccordingToLanguageDirection( d->menus.radixChar );
-  //setWidgetLayoutAccordingToLanguageDirection( d->menus.theme     );
-  //setWidgetLayoutAccordingToLanguageDirection( d->menus.language  );
-  setWidgetLayoutAccordingToLanguageDirection( d->menus.help      );
+  setWidgetDirection( d->settings.language, menuBar()          );
+  setWidgetDirection( d->settings.language, d->menus.session   );
+  setWidgetDirection( d->settings.language, d->menus.edit      );
+  setWidgetDirection( d->settings.language, d->menus.view      );
+  setWidgetDirection( d->settings.language, d->menus.format    );
+  setWidgetDirection( d->settings.language, d->menus.decimal   );
+  setWidgetDirection( d->settings.language, d->menus.settings  );
+  setWidgetDirection( d->settings.language, d->menus.behavior  );
+  setWidgetDirection( d->settings.language, d->menus.radixChar );
+  //setWidgetDirection( d->settings.language, d->menus.theme     );
+  //setWidgetDirection( d->settings.language, d->menus.language  );
+  setWidgetDirection( d->settings.language, d->menus.help      );
   // tip of the day
-  setWidgetLayoutAccordingToLanguageDirection( d->widgets.tip );
+  setWidgetDirection( d->settings.language, d->widgets.tip );
   // docks
   if ( d->docks.constants )
-    setWidgetLayoutAccordingToLanguageDirection( d->docks.constants );
+    setWidgetDirection( d->settings.language, d->docks.constants );
   if ( d->docks.functions )
-    setWidgetLayoutAccordingToLanguageDirection( d->docks.functions );
+    setWidgetDirection( d->settings.language, d->docks.functions );
   // tip of the day
-  setWidgetLayoutAccordingToLanguageDirection( d->widgets.tip );
+  setWidgetDirection( d->settings.language, d->widgets.tip );
 
   // speedcrunch made widgets
   emit adaptToLanguageChange();
