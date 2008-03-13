@@ -822,7 +822,7 @@ void MainWindow::Private::createFixedConnections()
   connect( actions.radian,                      SIGNAL( triggered()                           ), p,                     SLOT( radian()                              ) );
   connect( actions.scrollDown,                  SIGNAL( triggered()                           ), p,                     SLOT( scrollDown()                          ) );
   connect( actions.scrollUp,                    SIGNAL( triggered()                           ), p,                     SLOT( scrollUp()                            ) );
-  connect( actions.sessionImport,               SIGNAL( triggered()                           ), p,                     SLOT( executeBatch()                        ) );
+  connect( actions.sessionImport,               SIGNAL( triggered()                           ), p,                     SLOT( importSession()                       ) );
   connect( actions.sessionLoad,                 SIGNAL( triggered()                           ), p,                     SLOT( loadSession()                         ) );
   connect( actions.sessionQuit,                 SIGNAL( triggered()                           ), p,                     SLOT( close()                               ) );
   connect( actions.sessionSave,                 SIGNAL( triggered()                           ), p,                     SLOT( saveSession()                         ) );
@@ -1371,7 +1371,7 @@ void MainWindow::loadSession()
 }
 
 
-void MainWindow::executeBatch()
+void MainWindow::importSession()
 {
   QString filters = tr("All Files (*)");
   QString fname = QFileDialog::getOpenFileName( this, tr("Import Session"),
@@ -1385,6 +1385,26 @@ void MainWindow::executeBatch()
     QMessageBox::critical( this, tr("Error"),
                            tr("Can't read from file %1").arg( fname ) );
     return;
+  }
+
+  // ask for merge with current session
+  QString mergeMsg = tr("Merge session being imported with current session?\n"
+                        "If no, current variables and display will be "
+                        "cleared.");
+  QMessageBox::StandardButton but
+    = QMessageBox::question( this, tr("Question"), mergeMsg,
+                             QMessageBox::Yes | QMessageBox::No
+                             | QMessageBox::Cancel, QMessageBox::Yes );
+
+  if ( but == QMessageBox::Cancel )
+  {
+    return;
+  }
+  else if ( but == QMessageBox::No )
+  {
+    d->widgets.display->clear();
+    deleteAllVariables();
+    clearHistory();
   }
 
   QTextStream stream( & file );
