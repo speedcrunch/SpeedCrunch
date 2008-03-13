@@ -114,6 +114,7 @@ struct Actions
   QAction * sessionLoad;
   QAction * sessionQuit;
   QAction * sessionSave;
+  QAction * sessionExport;
   QAction * showBook;
   QAction * showConstants;
   QAction * showFullScreen;
@@ -343,6 +344,7 @@ void MainWindow::Private::createActions()
   actions.sessionLoad           = new QAction( tr("&Load..."),                 p );
   actions.sessionQuit           = new QAction( tr("&Quit"),                    p );
   actions.sessionSave           = new QAction( tr("&Save..."),                 p );
+  actions.sessionExport         = new QAction( tr("E&xport..."),               p );
   actions.showBook              = new QAction( tr("Math &Book"),               p );
   actions.showConstants         = new QAction( tr("&Constants"),               p );
   actions.showFullScreen        = new QAction( tr("Full &Screen Mode"),        p );
@@ -468,25 +470,26 @@ void MainWindow::Private::createMenus()
   menus.session->addAction( actions.sessionSave );
   menus.session->addSeparator();
   menus.session->addAction( actions.sessionExecute );
+  menus.session->addAction( actions.sessionExport );
   menus.session->addSeparator();
   menus.session->addAction( actions.sessionQuit );
 
   // edit
   menus.edit = new QMenu( tr("&Edit"), p );
   p->menuBar()->addMenu( menus.edit );
-  menus.edit->addAction( actions.editCopy         );
-  menus.edit->addAction( actions.editCopyResult   );
-  menus.edit->addAction( actions.editPaste        );
+  menus.edit->addAction( actions.editCopy );
+  menus.edit->addAction( actions.editCopyResult );
+  menus.edit->addAction( actions.editPaste );
   menus.edit->addAction( actions.selectExpression );
   menus.edit->addSeparator();
   menus.edit->addAction( actions.insertFunction );
   menus.edit->addAction( actions.insertVariable );
   menus.edit->addSeparator();
-  menus.edit->addAction( actions.deleteVariable     );
+  menus.edit->addAction( actions.deleteVariable );
   menus.edit->addAction( actions.deleteAllVariables );
   menus.edit->addSeparator();
   menus.edit->addAction( actions.clearExpression );
-  menus.edit->addAction( actions.clearHistory    );
+  menus.edit->addAction( actions.clearHistory );
 
   // view
   menus.view = new QMenu( tr("&View"), p );
@@ -497,9 +500,9 @@ void MainWindow::Private::createMenus()
   menus.view->addAction( actions.showConstants );
   menus.view->addAction( actions.showFunctions );
   menus.view->addAction( actions.showVariables );
-  menus.view->addAction( actions.showHistory   );
+  menus.view->addAction( actions.showHistory );
   menus.view->addSeparator();
-  menus.view->addAction( actions.showMenuBar   );
+  menus.view->addAction( actions.showMenuBar );
   menus.view->addAction( actions.showStatusBar );
   menus.view->addSeparator();
   menus.view->addAction( actions.showFullScreen );
@@ -823,6 +826,7 @@ void MainWindow::Private::createFixedConnections()
   connect( actions.sessionLoad,                 SIGNAL( triggered()                           ), p,                     SLOT( loadSession()                         ) );
   connect( actions.sessionQuit,                 SIGNAL( triggered()                           ), p,                     SLOT( close()                               ) );
   connect( actions.sessionSave,                 SIGNAL( triggered()                           ), p,                     SLOT( saveSession()                         ) );
+  connect( actions.sessionExport,               SIGNAL( triggered()                           ), p,                     SLOT( exportSession()                       ) );
   connect( actions.showBook,                    SIGNAL( toggled( bool )                       ), p,                     SLOT( showBook( bool )                      ) );
   connect( actions.showConstants,               SIGNAL( toggled( bool )                       ), p,                     SLOT( showConstants( bool )                 ) );
   connect( actions.showFullScreen,              SIGNAL( toggled( bool )                       ), p,                     SLOT( showInFullScreen( bool )              ) );
@@ -1518,6 +1522,31 @@ void MainWindow::saveSession()
       free( value );
     }
   }
+
+  file.close();
+}
+
+
+void MainWindow::exportSession()
+{
+  QString filters = tr("All Files (*)");
+  QString fname = QFileDialog::getSaveFileName( this, tr("Export Session"),
+                                                QString::null, filters );
+  if ( fname.isEmpty() )
+    return;
+
+  QFile file( fname );
+  if ( ! file.open( QIODevice::WriteOnly ) )
+  {
+    QMessageBox::critical( this, tr("Error"),
+                           tr("Can't write to file %1").arg( fname ) );
+    return;
+  }
+
+  QTextStream stream( & file );
+
+  // expressions and results
+  stream << d->widgets.display->asText() << "\n";
 
   file.close();
 }

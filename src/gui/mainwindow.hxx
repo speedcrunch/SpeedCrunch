@@ -63,6 +63,7 @@ class MainWindow : public QMainWindow
     void digits15();
     void digits50();
     void digitsAuto();
+    void exportSession();
     void selectExpression();
     void gotoWebsite();
     void hideAutoCalc();
