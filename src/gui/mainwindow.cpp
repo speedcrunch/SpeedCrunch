@@ -110,7 +110,7 @@ struct Actions
   QAction * scrollDown;
   QAction * scrollUp;
   QAction * selectExpression;
-  QAction * sessionExecute;
+  QAction * sessionImport;
   QAction * sessionLoad;
   QAction * sessionQuit;
   QAction * sessionSave;
@@ -340,11 +340,11 @@ void MainWindow::Private::createActions()
   actions.scrollDown            = new QAction( tr("Scroll Display Down"),      p );
   actions.scrollUp              = new QAction( tr("Scroll Display Up"),        p );
   actions.selectExpression      = new QAction( tr("&Select Expression"),       p );
-  actions.sessionExecute        = new QAction( tr("&Execute..."),              p );
+  actions.sessionImport         = new QAction( tr("&Import..."),               p );
   actions.sessionLoad           = new QAction( tr("&Load..."),                 p );
   actions.sessionQuit           = new QAction( tr("&Quit"),                    p );
   actions.sessionSave           = new QAction( tr("&Save..."),                 p );
-  actions.sessionExport         = new QAction( tr("E&xport..."),               p );
+  actions.sessionExport         = new QAction( tr("&Export..."),               p );
   actions.showBook              = new QAction( tr("Math &Book"),               p );
   actions.showConstants         = new QAction( tr("&Constants"),               p );
   actions.showFullScreen        = new QAction( tr("Full &Screen Mode"),        p );
@@ -469,7 +469,7 @@ void MainWindow::Private::createMenus()
   menus.session->addAction( actions.sessionLoad );
   menus.session->addAction( actions.sessionSave );
   menus.session->addSeparator();
-  menus.session->addAction( actions.sessionExecute );
+  menus.session->addAction( actions.sessionImport );
   menus.session->addAction( actions.sessionExport );
   menus.session->addSeparator();
   menus.session->addAction( actions.sessionQuit );
@@ -822,7 +822,7 @@ void MainWindow::Private::createFixedConnections()
   connect( actions.radian,                      SIGNAL( triggered()                           ), p,                     SLOT( radian()                              ) );
   connect( actions.scrollDown,                  SIGNAL( triggered()                           ), p,                     SLOT( scrollDown()                          ) );
   connect( actions.scrollUp,                    SIGNAL( triggered()                           ), p,                     SLOT( scrollUp()                            ) );
-  connect( actions.sessionExecute,              SIGNAL( triggered()                           ), p,                     SLOT( executeBatch()                        ) );
+  connect( actions.sessionImport,               SIGNAL( triggered()                           ), p,                     SLOT( executeBatch()                        ) );
   connect( actions.sessionLoad,                 SIGNAL( triggered()                           ), p,                     SLOT( loadSession()                         ) );
   connect( actions.sessionQuit,                 SIGNAL( triggered()                           ), p,                     SLOT( close()                               ) );
   connect( actions.sessionSave,                 SIGNAL( triggered()                           ), p,                     SLOT( saveSession()                         ) );
@@ -1374,7 +1374,7 @@ void MainWindow::loadSession()
 void MainWindow::executeBatch()
 {
   QString filters = tr("All Files (*)");
-  QString fname = QFileDialog::getOpenFileName( this, tr("Execute"),
+  QString fname = QFileDialog::getOpenFileName( this, tr("Import Session"),
                                                 QString::null, filters );
   if ( fname.isEmpty() )
     return;
