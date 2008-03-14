@@ -49,7 +49,7 @@ BookDock::BookDock( const QString & directory, const QString & file,
   QString locale = (language == "C") ? QLocale().name()
                                      : language;
   QString localeShort = locale.left( 2 ).toLower();
-  d->lang = localeShort;
+  d->lang = locale;
 
   QWidget* widget = new QWidget( this );
   QVBoxLayout* bookLayout = new QVBoxLayout;

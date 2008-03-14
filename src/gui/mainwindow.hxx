@@ -103,6 +103,7 @@ class MainWindow : public QMainWindow
     void radixCharAutoActivated();
     void radixCharDotActivated();
     void radixCharCommaActivated();
+    void changeLanguage();
 
   protected slots:
     void activate();

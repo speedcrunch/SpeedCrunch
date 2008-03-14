@@ -131,6 +131,27 @@ struct Actions
   QAction * formatHexadec;
   QAction * formatOctal;
   QAction * formatScientific;
+  QAction * languageDefault;
+  QAction * languageCs;
+  QAction * languageDe;
+  QAction * languageEn;
+  QAction * languageEs;
+  QAction * languageEsAr;
+  QAction * languageFi;
+  QAction * languageFr;
+  QAction * languageHe;
+  QAction * languageId;
+  QAction * languageIt;
+  QAction * languageNl;
+  QAction * languageNo;
+  QAction * languagePl;
+  QAction * languagePt;
+  QAction * languagePtBr;
+  QAction * languageRo;
+  QAction * languageRu;
+  QAction * languageSl;
+  QAction * languageSv;
+  QAction * languageTr;
 };
 
 
@@ -139,6 +160,7 @@ struct ActionGroups
   QActionGroup * angle;
   QActionGroup * digits;
   QActionGroup * format;
+  QActionGroup * language;
   QActionGroup * radixChar;
 };
 
@@ -151,6 +173,7 @@ struct Menus
   QMenu * edit;
   QMenu * format;
   QMenu * help;
+  QMenu * language;
   QMenu * radixChar;
   QMenu * session;
   QMenu * settings;
@@ -236,6 +259,9 @@ struct MainWindow::Private
   void createVariablesDock();
   void createFixedConnections();
   void applySettings();
+  void checkInitialFormat();
+  void checkInitialPrecision();
+  void checkInitialLanguage();
   void restoreFloatingDocks();
   void restoreHistory();
   void restoreVariables();
@@ -355,6 +381,50 @@ void MainWindow::Private::createActions()
   actions.formatHexadec         = new QAction( tr("&Hexadecimal"),             p );
   actions.formatOctal           = new QAction( tr("&Octal"),                   p );
   actions.formatScientific      = new QAction( tr("&Scientific"),              p );
+  actions.languageDefault       = new QAction( tr("System &Default"),          p );
+
+  actions.languageCs   = new QAction( QString::fromUtf8( "Česky"               ), p );
+  actions.languageDe   = new QAction( QString::fromUtf8( "Deutsch"             ), p );
+  actions.languageEn   = new QAction( QString::fromUtf8( "English"             ), p );
+  actions.languageEs   = new QAction( QString::fromUtf8( "Español"             ), p );
+  actions.languageEsAr = new QAction( QString::fromUtf8( "Español Argentino"   ), p );
+  actions.languageFi   = new QAction( QString::fromUtf8( "Suomi"               ), p );
+  actions.languageFr   = new QAction( QString::fromUtf8( "Français"            ), p );
+  actions.languageHe   = new QAction( QString::fromUtf8( "עברית"               ), p );
+  actions.languageId   = new QAction( QString::fromUtf8( "Bahasa Indonesia"    ), p );
+  actions.languageIt   = new QAction( QString::fromUtf8( "Italiano"            ), p );
+  actions.languageNl   = new QAction( QString::fromUtf8( "Nederlands"          ), p );
+  actions.languageNo   = new QAction( QString::fromUtf8( "Norsk (Bokmål)"      ), p );
+  actions.languagePl   = new QAction( QString::fromUtf8( "Polski"              ), p );
+  actions.languagePt   = new QAction( QString::fromUtf8( "Português"           ), p );
+  actions.languagePtBr = new QAction( QString::fromUtf8( "Português do Brasil" ), p );
+  actions.languageRo   = new QAction( QString::fromUtf8( "Română"              ), p );
+  actions.languageRu   = new QAction( QString::fromUtf8( "Русский"             ), p );
+  actions.languageSl   = new QAction( QString::fromUtf8( "Slovenščina"         ), p );
+  actions.languageSv   = new QAction( QString::fromUtf8( "Svenska"             ), p );
+  actions.languageTr   = new QAction( QString::fromUtf8( "Türkçe"              ), p );
+
+  actions.languageDefault->setData( QString( "C"     ) );
+  actions.languageCs     ->setData( QString( "cs"    ) );
+  actions.languageDe     ->setData( QString( "de"    ) );
+  actions.languageEn     ->setData( QString( "en"    ) );
+  actions.languageEs     ->setData( QString( "es"    ) );
+  actions.languageEsAr   ->setData( QString( "es_AR" ) );
+  actions.languageFi     ->setData( QString( "fi"    ) );
+  actions.languageFr     ->setData( QString( "fr"    ) );
+  actions.languageHe     ->setData( QString( "he"    ) );
+  actions.languageId     ->setData( QString( "id"    ) );
+  actions.languageIt     ->setData( QString( "it"    ) );
+  actions.languageNl     ->setData( QString( "nl"    ) );
+  actions.languageNo     ->setData( QString( "no"    ) );
+  actions.languagePl     ->setData( QString( "pl"    ) );
+  actions.languagePt     ->setData( QString( "pt"    ) );
+  actions.languagePtBr   ->setData( QString( "pt_BR" ) );
+  actions.languageRo     ->setData( QString( "ro"    ) );
+  actions.languageRu     ->setData( QString( "ru"    ) );
+  actions.languageSl     ->setData( QString( "sl"    ) );
+  actions.languageSv     ->setData( QString( "sv"    ) );
+  actions.languageTr     ->setData( QString( "tr"    ) );
 
   actions.degree              ->setCheckable( true );
   actions.digits15            ->setCheckable( true );
@@ -387,6 +457,27 @@ void MainWindow::Private::createActions()
   actions.formatHexadec       ->setCheckable( true );
   actions.formatOctal         ->setCheckable( true );
   actions.formatScientific    ->setCheckable( true );
+  actions.languageDefault     ->setCheckable( true );
+  actions.languageCs          ->setCheckable( true );
+  actions.languageDe          ->setCheckable( true );
+  actions.languageEn          ->setCheckable( true );
+  actions.languageEs          ->setCheckable( true );
+  actions.languageEsAr        ->setCheckable( true );
+  actions.languageFi          ->setCheckable( true );
+  actions.languageFr          ->setCheckable( true );
+  actions.languageHe          ->setCheckable( true );
+  actions.languageId          ->setCheckable( true );
+  actions.languageIt          ->setCheckable( true );
+  actions.languageNl          ->setCheckable( true );
+  actions.languageNo          ->setCheckable( true );
+  actions.languagePl          ->setCheckable( true );
+  actions.languagePt          ->setCheckable( true );
+  actions.languagePtBr        ->setCheckable( true );
+  actions.languageRo          ->setCheckable( true );
+  actions.languageRu          ->setCheckable( true );
+  actions.languageSl          ->setCheckable( true );
+  actions.languageSv          ->setCheckable( true );
+  actions.languageTr          ->setCheckable( true );
 }
 
 
@@ -417,6 +508,29 @@ void MainWindow::Private::createActionGroups()
   actionGroups.radixChar->addAction( actions.radixCharAuto  );
   actionGroups.radixChar->addAction( actions.radixCharDot   );
   actionGroups.radixChar->addAction( actions.radixCharComma );
+
+  actionGroups.language = new QActionGroup( p );
+  actionGroups.language->addAction( actions.languageDefault );
+  actionGroups.language->addAction( actions.languageCs );
+  actionGroups.language->addAction( actions.languageDe );
+  actionGroups.language->addAction( actions.languageEn );
+  actionGroups.language->addAction( actions.languageEs );
+  actionGroups.language->addAction( actions.languageEsAr );
+  actionGroups.language->addAction( actions.languageFi );
+  actionGroups.language->addAction( actions.languageFr );
+  actionGroups.language->addAction( actions.languageHe );
+  actionGroups.language->addAction( actions.languageId );
+  actionGroups.language->addAction( actions.languageIt );
+  actionGroups.language->addAction( actions.languageNl );
+  actionGroups.language->addAction( actions.languageNo );
+  actionGroups.language->addAction( actions.languagePl );
+  actionGroups.language->addAction( actions.languagePt );
+  actionGroups.language->addAction( actions.languagePtBr );
+  actionGroups.language->addAction( actions.languageRo );
+  actionGroups.language->addAction( actions.languageRu );
+  actionGroups.language->addAction( actions.languageSl );
+  actionGroups.language->addAction( actions.languageSv );
+  actionGroups.language->addAction( actions.languageTr );
 }
 
 
@@ -545,6 +659,31 @@ void MainWindow::Private::createMenus()
   menus.radixChar->addAction( actions.radixCharAuto  );
   menus.radixChar->addAction( actions.radixCharDot   );
   menus.radixChar->addAction( actions.radixCharComma );
+
+  // settings / language
+  menus.language = menus.settings->addMenu( tr("&Language") );
+  menus.language->addAction( actions.languageDefault );
+  menus.language->addSeparator();
+  menus.language->addAction( actions.languageCs );
+  menus.language->addAction( actions.languageDe );
+  menus.language->addAction( actions.languageEn );
+  menus.language->addAction( actions.languageEs );
+  menus.language->addAction( actions.languageEsAr );
+  menus.language->addAction( actions.languageFi );
+  menus.language->addAction( actions.languageFr );
+  menus.language->addAction( actions.languageHe );
+  menus.language->addAction( actions.languageId );
+  menus.language->addAction( actions.languageIt );
+  menus.language->addAction( actions.languageNl );
+  menus.language->addAction( actions.languageNo );
+  menus.language->addAction( actions.languagePl );
+  menus.language->addAction( actions.languagePt );
+  menus.language->addAction( actions.languagePtBr );
+  menus.language->addAction( actions.languageRo );
+  menus.language->addAction( actions.languageRu );
+  menus.language->addAction( actions.languageSl );
+  menus.language->addAction( actions.languageSv );
+  menus.language->addAction( actions.languageTr );
 
   // help
   menus.help = new QMenu( tr("&Help"), p );
@@ -845,6 +984,27 @@ void MainWindow::Private::createFixedConnections()
   connect( actions.radixCharAuto,               SIGNAL( triggered()                           ), p,                     SLOT( radixCharAutoActivated()              ) );
   connect( actions.radixCharDot,                SIGNAL( triggered()                           ), p,                     SLOT( radixCharDotActivated()               ) );
   connect( actions.radixCharComma,              SIGNAL( triggered()                           ), p,                     SLOT( radixCharCommaActivated()             ) );
+  connect( actions.languageDefault,             SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageCs,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageDe,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageEn,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageEs,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageEsAr,                SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageFi,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageFr,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageHe,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageId,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageIt,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageNl,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageNo,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languagePl,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languagePt,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languagePtBr,                SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageRo,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageRu,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageSl,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageSv,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageTr,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
   connect( widgets.editor,                      SIGNAL( autoCalcEnabled( const QString & )    ), p,                     SLOT( showAutoCalc( const QString & )       ) );
   connect( widgets.editor,                      SIGNAL( autoCalcDisabled()                    ), p,                     SLOT( hideAutoCalc()                        ) );
   connect( widgets.editor,                      SIGNAL( returnPressed()                       ), p,                     SLOT( returnPressed()                       ) );
@@ -883,6 +1043,9 @@ void MainWindow::Private::applySettings()
   else if ( settings.angleMode == 'd' )
     actions.degree->setChecked( true );
 
+  // language
+  checkInitialLanguage();
+
   // history
   if ( settings.saveSession )
     restoreHistory();
@@ -894,34 +1057,10 @@ void MainWindow::Private::applySettings()
     restoreVariables();
 
   // format
-  if ( settings.format == 'g' )
-    actions.formatGeneral->setChecked( true );
-  else if ( settings.format == 'f' )
-    actions.formatFixed->setChecked( true );
-  else if ( settings.format == 'n' )
-    actions.formatEngineering->setChecked( true );
-  else if ( settings.format == 'e' )
-    actions.formatScientific->setChecked( true );
-  else if ( settings.format == 'h' )
-    actions.formatHexadec->setChecked( true );
-  else if ( settings.format == 'o' )
-    actions.formatOctal->setChecked( true );
-  else if ( settings.format == 'b' )
-    actions.formatBinary->setChecked( true );
+  checkInitialFormat();
 
   // precision
-  if ( settings.precision <   0 )
-    actions.digitsAuto->setChecked( true );
-  else if ( settings.precision ==  2 )
-    actions.digits2->setChecked( true );
-  else if ( settings.precision ==  3 )
-    actions.digits3->setChecked( true );
-  else if ( settings.precision ==  8 )
-    actions.digits8->setChecked( true );
-  else if ( settings.precision == 15 )
-    actions.digits15->setChecked( true );
-  else if ( settings.precision == 50 )
-    actions.digits50->setChecked( true );
+  checkInitialPrecision();
 
   // radix character
   if ( settings.radixChar == 'C' )
@@ -968,6 +1107,89 @@ void MainWindow::Private::applySettings()
 
   // status bar
   actions.showStatusBar->setChecked( settings.showStatusBar );
+}
+
+
+void MainWindow::Private::checkInitialFormat()
+{
+  if ( settings.format == 'g' )
+    actions.formatGeneral->setChecked( true );
+  else if ( settings.format == 'f' )
+    actions.formatFixed->setChecked( true );
+  else if ( settings.format == 'n' )
+    actions.formatEngineering->setChecked( true );
+  else if ( settings.format == 'e' )
+    actions.formatScientific->setChecked( true );
+  else if ( settings.format == 'h' )
+    actions.formatHexadec->setChecked( true );
+  else if ( settings.format == 'o' )
+    actions.formatOctal->setChecked( true );
+  else if ( settings.format == 'b' )
+    actions.formatBinary->setChecked( true );
+}
+
+
+void MainWindow::Private::checkInitialPrecision()
+{
+  if ( settings.precision <   0 )
+    actions.digitsAuto->setChecked( true );
+  else if ( settings.precision ==  2 )
+    actions.digits2->setChecked( true );
+  else if ( settings.precision ==  3 )
+    actions.digits3->setChecked( true );
+  else if ( settings.precision ==  8 )
+    actions.digits8->setChecked( true );
+  else if ( settings.precision == 15 )
+    actions.digits15->setChecked( true );
+  else if ( settings.precision == 50 )
+    actions.digits50->setChecked( true );
+}
+
+
+void MainWindow::Private::checkInitialLanguage()
+{
+  if ( settings.language == "cs" )
+    actions.languageCs->setChecked( true );
+  else if ( settings.language == "de" )
+    actions.languageDe->setChecked( true );
+  else if ( settings.language == "en" )
+    actions.languageEn->setChecked( true );
+  else if ( settings.language == "es" )
+    actions.languageEs->setChecked( true );
+  else if ( settings.language == "es_AR" )
+    actions.languageEsAr->setChecked( true );
+  else if ( settings.language == "fi" )
+    actions.languageFi->setChecked( true );
+  else if ( settings.language == "fr" )
+    actions.languageFr->setChecked( true );
+  else if ( settings.language == "he" )
+    actions.languageHe->setChecked( true );
+  else if ( settings.language == "id" )
+    actions.languageId->setChecked( true );
+  else if ( settings.language == "it" )
+    actions.languageIt->setChecked( true );
+  else if ( settings.language == "nl" )
+    actions.languageNl->setChecked( true );
+  else if ( settings.language == "no" )
+    actions.languageNo->setChecked( true );
+  else if ( settings.language == "pl" )
+    actions.languagePl->setChecked( true );
+  else if ( settings.language == "pt" )
+    actions.languagePt->setChecked( true );
+  else if ( settings.language == "pt_BR" )
+    actions.languagePtBr->setChecked( true );
+  else if ( settings.language == "ro" )
+    actions.languageRo->setChecked( true );
+  else if ( settings.language == "ru" )
+    actions.languageRu->setChecked( true );
+  else if ( settings.language == "sl" )
+    actions.languageSl->setChecked( true );
+  else if ( settings.language == "sv" )
+    actions.languageSv->setChecked( true );
+  else if ( settings.language == "tr" )
+    actions.languageTr->setChecked( true );
+  else
+    actions.languageDefault->setChecked( true );
 }
 
 
@@ -2396,4 +2618,13 @@ void MainWindow::setRadixChar( char c )
 
   d->settings.radixChar = c;
   emit radixCharChanged( c );
+}
+
+
+void MainWindow::changeLanguage()
+{
+  QAction * a = d->actionGroups.language->checkedAction();
+  QString lang = a->data().toString();
+  if ( lang != d->settings.language )
+    d->settings.language = a->data().toString();
 }
