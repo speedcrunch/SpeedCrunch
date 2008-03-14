@@ -21,6 +21,7 @@
 #include <gui/bookdock.hxx>
 
 #include <QComboBox>
+#include <QDir>
 #include <QFile>
 #include <QLibraryInfo>
 #include <QLocale>
@@ -48,7 +49,6 @@ BookDock::BookDock( const QString & directory, const QString & file,
   d->file = file;
   QString locale = (language == "C") ? QLocale().name()
                                      : language;
-  QString localeShort = locale.left( 2 ).toLower();
   d->lang = locale;
 
   QWidget* widget = new QWidget( this );
@@ -102,7 +102,17 @@ BookDock::BookDock( const QString & directory, const QString & file,
   setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
   setWindowIcon( QIcon() ); // no icon
 
-  d->sheet->setSource( d->path + d->lang + "/" + d->file );
+  QString path = d->path + d->lang + "/" + d->file;
+  QDir dir( path );
+  if ( dir.isReadable() )
+  {
+    d->sheet->setSource( path );
+  }
+  else
+  {
+    QString localeShort = locale.left( 2 ).toLower();
+    d->sheet->setSource( d->path + localeShort + "/" + d->file );
+  }
 }
 
 
