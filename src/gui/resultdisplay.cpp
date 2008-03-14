@@ -217,6 +217,8 @@ ResultDisplay::ResultDisplay( char radixChar, char format, int precision,
   QString colorName = QApplication::palette().background().color().name();
   verticalScrollBar()->setStyleSheet  ( QString("QVerticalScrollBar   { background: %1; }").arg( colorName ) );
   horizontalScrollBar()->setStyleSheet( QString("QHorizontalScrollBar { background: %1; }").arg( colorName ) );
+
+  setCursor( QCursor( Qt::PointingHandCursor ) );
 }
 
 
@@ -230,7 +232,7 @@ void ResultDisplay::append( const QString & expr, const HNumber & value )
 {
   ++d->count;
 
-  new ExprItem(   this, d->count, expr );
+  new ExprItem( this, d->count, expr );
   new ResultDisplayItem( this, d->count, value );
 
   d->contents.append( expr );
