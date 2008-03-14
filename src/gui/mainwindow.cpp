@@ -1629,14 +1629,60 @@ void MainWindow::importSession()
 
   QTextStream stream( & file );
   QString exp = stream.readLine();
+  bool ignoreAll = false;
   while ( ! exp.isNull() )
   {
     d->widgets.editor->setText( exp );
-    d->widgets.editor->evaluate();
+
+    QString str = d->evaluator->autoFix( exp );
+
+    d->evaluator->setExpression( str );
+
+    HNumber result = d->evaluator->evalUpdateAns();
+    if ( ! d->evaluator->error().isEmpty() )
+    {
+      if ( ! ignoreAll )
+      {
+        QMessageBox::StandardButton but
+          = QMessageBox::warning( this, tr("Error"),
+              QString( "Ignore error?" ) + "\n" + d->evaluator->error(),
+              QMessageBox::Yes | QMessageBox::YesToAll | QMessageBox::Cancel,
+              QMessageBox::Yes );
+
+        if ( but == QMessageBox::Cancel )
+          return;
+        else if ( but == QMessageBox::YesToAll )
+          ignoreAll = true;
+      }
+    }
+    else
+    {
+      d->widgets.display->append( str, result );
+      char * num = HMath::formatScientific( result, DECPRECISION );
+      d->widgets.editor->appendHistory( str, num );
+      free( num );
+      d->widgets.editor->setAnsAvailable( true );
+      if ( d->settings.showVariables )
+        d->docks.variables->updateList( d->evaluator );
+      if ( d->settings.showHistory )
+        d->docks.history->append( str );
+
+      d->widgets.editor->setText( str );
+      d->widgets.editor->selectAll();
+      d->widgets.editor->stopAutoCalc();
+      d->widgets.editor->stopAutoComplete();
+      d->conditions.autoAns = true;
+    }
+
     exp = stream.readLine();
   }
 
   file.close();
+
+  QTimer::singleShot( 0, d->widgets.editor, SLOT( setFocus() ) );
+
+  if ( ! isActiveWindow() )
+    activateWindow();
 }
 
 
@@ -2433,14 +2479,10 @@ void MainWindow::returnPressed()
 
   d->evaluator->setExpression( str );
 
-  if ( d->settings.showHistory )
-    d->docks.history->append( str );
-
   HNumber result = d->evaluator->evalUpdateAns();
   if ( ! d->evaluator->error().isEmpty() )
   {
-    d->widgets.display->appendError( str, d->evaluator->error() );
-    d->widgets.editor->appendHistory( str, d->evaluator->error() );
+    QMessageBox::warning( this, tr("Error"), d->evaluator->error() );
   }
   else
   {
@@ -2451,6 +2493,8 @@ void MainWindow::returnPressed()
     d->widgets.editor->setAnsAvailable( true );
     if ( d->settings.showVariables )
       d->docks.variables->updateList( d->evaluator );
+    if ( d->settings.showHistory )
+      d->docks.history->append( str );
   }
 
   d->widgets.editor->setText( str );

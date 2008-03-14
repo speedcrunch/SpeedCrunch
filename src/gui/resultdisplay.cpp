@@ -152,7 +152,7 @@ class ErrorItem: public BaseItem
 
     void updateItem()
     {
-      if( result->customAppearance() )
+      if ( result->customAppearance() )
       {
         setForeground( result->customErrorColor() );
         setBackground( (index & 1) ? result->customBackgroundColor1()
