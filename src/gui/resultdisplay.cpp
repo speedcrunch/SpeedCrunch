@@ -201,8 +201,10 @@ ResultDisplay::ResultDisplay( char radixChar, char format, int precision,
   setSelectionMode( NoSelection );
   setMinimumWidth( 150 );
 
-  connect( this, SIGNAL(itemClicked( QListWidgetItem * )),
-           this, SLOT(copyToClipboard( QListWidgetItem * )) );
+  connect( this, SIGNAL( itemClicked( QListWidgetItem * ) ),
+           this, SLOT( copyToClipboard( QListWidgetItem * ) ) );
+  connect( this, SIGNAL( itemDoubleClicked( QListWidgetItem * ) ),
+           this, SLOT( selectItem( QListWidgetItem * ) ) );
 
   setFocusPolicy( Qt::NoFocus );
 
@@ -441,6 +443,16 @@ void ResultDisplay::copyToClipboard( QListWidgetItem * item )
   QClipboard * cb = QApplication::clipboard();
   cb->setText( item->text(), QClipboard::Clipboard );
   emit textCopied( item->text() );
+}
+
+
+void ResultDisplay::selectItem( QListWidgetItem * item )
+{
+  if ( ! item )
+    return;
+
+  copyToClipboard( item );
+  emit textSelected( item->text() );
 }
 
 

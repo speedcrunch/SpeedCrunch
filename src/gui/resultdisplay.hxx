@@ -63,6 +63,7 @@ class ResultDisplay : public QListWidget
 
   signals:
     void textCopied( const QString & );
+    void textSelected( const QString & );
 
   public slots:
     void clear();
@@ -73,6 +74,7 @@ class ResultDisplay : public QListWidget
 
   private slots:
     void copyToClipboard( QListWidgetItem * );
+    void selectItem( QListWidgetItem * );
     void refresh();
 
   private:

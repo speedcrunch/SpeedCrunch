@@ -1009,8 +1009,8 @@ void MainWindow::Private::createFixedConnections()
   connect( widgets.editor,                      SIGNAL( autoCalcDisabled()                    ), p,                     SLOT( hideAutoCalc()                        ) );
   connect( widgets.editor,                      SIGNAL( returnPressed()                       ), p,                     SLOT( returnPressed()                       ) );
   connect( widgets.editor,                      SIGNAL( textChanged()                         ), p,                     SLOT( textChanged()                         ) );
-  connect( widgets.display,                     SIGNAL( textCopied( const QString & )         ), widgets.editor,        SLOT( paste()                               ) );
-  connect( widgets.display,                     SIGNAL( textCopied( const QString & )         ), widgets.editor,        SLOT( setFocus()                            ) );
+  connect( widgets.display,                     SIGNAL( textSelected( const QString & )       ), widgets.editor,        SLOT( paste()                               ) );
+  connect( widgets.display,                     SIGNAL( textSelected( const QString & )       ), widgets.editor,        SLOT( setFocus()                            ) );
   connect( p,                                   SIGNAL( formatChanged( char )                 ), widgets.editor,        SLOT( setFormat( char )                     ) );
   connect( p,                                   SIGNAL( precisionChanged( int )               ), widgets.editor,        SLOT( setPrecision( int )                   ) );
   connect( p,                                   SIGNAL( radixCharChanged( char )              ), widgets.editor,        SLOT( setRadixChar( char )                  ) );
