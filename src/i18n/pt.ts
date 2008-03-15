@@ -199,17 +199,17 @@
     <message>
         <location filename="../gui/bookdock.cpp" line="68"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Recuar</translation>
     </message>
     <message>
         <location filename="../gui/bookdock.cpp" line="78"/>
         <source>Forward</source>
-        <translation type="unfinished"></translation>
+        <translation>Avançar</translation>
     </message>
     <message>
         <location filename="../gui/bookdock.cpp" line="88"/>
         <source>Index</source>
-        <translation type="unfinished"></translation>
+        <translation>Índice</translation>
     </message>
 </context>
 <context>

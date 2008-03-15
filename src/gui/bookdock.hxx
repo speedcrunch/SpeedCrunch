@@ -38,6 +38,9 @@ class BookDock : public QDockWidget
                        QWidget * parent = 0 );
     ~BookDock();
 
+  public slots:
+    void setLanguage( const QString & languageCode );
+
   signals:
     void expressionSelected( const QString & );
 

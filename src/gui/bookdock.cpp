@@ -36,6 +36,9 @@ struct BookDock::Private
   QString        path;
   QString        lang;
   QString        file;
+  QPushButton *  backButton;
+  QPushButton *  forwardButton;
+  QPushButton *  indexButton;
 };
 
 
@@ -47,9 +50,6 @@ BookDock::BookDock( const QString & directory, const QString & file,
 {
   d->path = directory;
   d->file = file;
-  QString locale = (language == "C") ? QLocale().name()
-                                     : language;
-  d->lang = locale;
 
   QWidget* widget = new QWidget( this );
   QVBoxLayout* bookLayout = new QVBoxLayout;
@@ -65,31 +65,34 @@ BookDock::BookDock( const QString & directory, const QString & file,
   QHBoxLayout * buttonLayout = new QHBoxLayout;
   buttonLayout->setSpacing( 0 );
   buttonLayout->setMargin( 0 );
-  QPushButton * button = new QPushButton( tr("Back"), this );
-  button->setIcon( QPixmap( ":/book_back.png" ) );
-  button->setFlat( true );
+  d->backButton = new QPushButton( "", this );
+  d->backButton->setIcon( QPixmap( ":/book_back.png" ) );
+  d->backButton->setFlat( true );
 
-  connect( button, SIGNAL( clicked() ), d->sheet, SLOT( backward() ) );
+  connect( d->backButton, SIGNAL( clicked() ), d->sheet, SLOT( backward() ) );
   connect( d->sheet, SIGNAL( backwardAvailable( bool ) ),
-           button, SLOT( setEnabled( bool ) ) );
+           d->backButton, SLOT( setEnabled( bool ) ) );
 
-  buttonLayout->addWidget( button );
+  buttonLayout->addWidget( d->backButton );
 
-  button = new QPushButton( tr("Forward"), this );
-  button->setIcon( QPixmap( ":/book_forward.png" ) );
-  button->setFlat( true );
+  d->forwardButton = new QPushButton( "", this );
+  d->forwardButton->setIcon( QPixmap( ":/book_forward.png" ) );
+  d->forwardButton->setFlat( true );
 
-  connect( button, SIGNAL( clicked() ), d->sheet, SLOT( forward() ) );
+  connect( d->forwardButton, SIGNAL( clicked() ),
+           d->sheet, SLOT( forward() ) );
   connect( d->sheet, SIGNAL( forwardAvailable( bool ) ),
-           button, SLOT( setEnabled( bool ) ) );
+           d->forwardButton, SLOT( setEnabled( bool ) ) );
 
-  buttonLayout->addWidget( button );
+  buttonLayout->addWidget( d->forwardButton );
 
-  button = new QPushButton( tr("Index"), this );
-  button->setIcon( QPixmap( ":/book_home.png" ) );
-  button->setFlat( true );
-  connect( button, SIGNAL( clicked() ), d->sheet, SLOT( home() ) );
-  buttonLayout->addWidget( button );
+  d->indexButton = new QPushButton( "", this );
+  d->indexButton->setIcon( QPixmap( ":/book_home.png" ) );
+  d->indexButton->setFlat( true );
+
+  connect( d->indexButton, SIGNAL( clicked() ), d->sheet, SLOT( home() ) );
+
+  buttonLayout->addWidget( d->indexButton );
 
   buttonLayout->addStretch();
   bookLayout->addLayout( buttonLayout );
@@ -102,17 +105,7 @@ BookDock::BookDock( const QString & directory, const QString & file,
   setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
   setWindowIcon( QIcon() ); // no icon
 
-  QString path = d->path + d->lang + "/" + d->file;
-  QDir dir( path );
-  if ( dir.isReadable() )
-  {
-    d->sheet->setSource( path );
-  }
-  else
-  {
-    QString localeShort = locale.left( 2 ).toLower();
-    d->sheet->setSource( d->path + localeShort + "/" + d->file );
-  }
+  setLanguage( language );
 }
 
 
@@ -139,4 +132,29 @@ void BookDock::anchorClicked ( const QUrl & link )
 
   // necessary for QTextBrowser to always draw correctly (why?)
   d->sheet->adjustSize();
+}
+
+
+void BookDock::setLanguage( const QString & languageCode )
+{
+  // buttons
+  d->backButton   ->setText( tr("Back")    );
+  d->forwardButton->setText( tr("Forward") );
+  d->indexButton  ->setText( tr("Index")   );
+
+  // page
+  QString locale = (languageCode == "C") ? QLocale().name()
+                                     : languageCode;
+  d->lang = locale;
+  QString path = d->path + d->lang + "/" + d->file;
+  QDir dir( path );
+  if ( dir.isReadable() )
+  {
+    d->sheet->setSource( path );
+  }
+  else
+  {
+    QString localeShort = locale.left( 2 ).toLower();
+    d->sheet->setSource( d->path + localeShort + "/" + d->file );
+  }
 }

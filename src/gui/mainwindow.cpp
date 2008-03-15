@@ -231,6 +231,7 @@ struct Status
 struct MainWindow::Private
 {
   MainWindow *    p;
+  QTranslator *   translator;
   Constants *     constants;
   Evaluator *     evaluator;
   Functions *     functions;
@@ -284,6 +285,8 @@ struct MainWindow::Private
 
 MainWindow::Private::Private()
 {
+  translator = 0;
+
   widgets.keypad   = 0;
   widgets.trayIcon = 0;
 
@@ -524,9 +527,15 @@ void MainWindow::setAllText()
 {
   QTranslator * tr = d->createTranslator( d->settings.language );
   if ( tr )
+  {
+    if ( d->translator )
+      qApp->removeTranslator( d->translator );
     qApp->installTranslator( tr );
+    d->translator = tr;
+  }
 
   d->setActionsText();
+  d->docks.book->setLanguage( d->settings.language );
 }
 
 
