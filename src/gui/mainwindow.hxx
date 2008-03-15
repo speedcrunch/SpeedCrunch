@@ -39,15 +39,15 @@ class MainWindow : public QMainWindow
   Q_OBJECT
 
   public:
-    MainWindow( Settings & );
+    MainWindow();
     ~MainWindow();
 
   signals:
-    void adaptToLanguageChange();
     void angleModeChanged( char );
     void formatChanged( char );
     void radixCharChanged( char );
     void precisionChanged( int );
+    void retranslateText();
 
   public slots:
     void about();
@@ -121,6 +121,7 @@ class MainWindow : public QMainWindow
     void setPrecision( int );
     void setFormat( char );
     void setRadixChar( char );
+    void setAllText();
 
   protected:
     void closeEvent( QCloseEvent * );

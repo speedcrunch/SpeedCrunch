@@ -37,6 +37,7 @@
 #include "tipwidget.hxx"
 #include "variablesdock.hxx"
 
+#include "3rdparty/util/binreloc.h"
 #include "base/constants.hxx"
 #include "base/evaluator.hxx"
 #include "base/functions.hxx"
@@ -68,6 +69,7 @@
 #include <QTextStream>
 #include <QTimer>
 #include <QToolTip>
+#include <QTranslator>
 #include <QUrl>
 #include <QVBoxLayout>
 #include <QWidget>
@@ -232,7 +234,7 @@ struct MainWindow::Private
   Constants *     constants;
   Evaluator *     evaluator;
   Functions *     functions;
-  Settings &      settings;
+  Settings        settings;
   Actions         actions;
   ActionGroups    actionGroups;
   Menus           menus;
@@ -242,7 +244,7 @@ struct MainWindow::Private
   Conditions      conditions;
   Status          status;
 
-  Private( Settings & );
+  Private();
   ~Private();
   void createUi();
   void createActions();
@@ -274,11 +276,13 @@ struct MainWindow::Private
   void deleteVariablesDock();
   void syncWindowStateToSettings();
   void saveSettings();
+  void setActionsText();
+
+  static QTranslator * createTranslator( const QString & langCode );
 };
 
 
-MainWindow::Private::Private( Settings & settings )
-  : settings ( settings )
+MainWindow::Private::Private()
 {
   widgets.keypad   = 0;
   widgets.trayIcon = 0;
@@ -309,6 +313,41 @@ MainWindow::Private::~Private()
     deleteFunctionsDock();
   if ( docks.history )
     deleteHistoryDock();
+}
+
+
+QTranslator * MainWindow::Private::createTranslator( const QString & langCode )
+{
+  QTranslator * translator = new QTranslator;
+  QString       localeFile = (langCode == "C") ? QLocale().name()
+                                               : langCode;
+  QString       localeDir;
+  bool          foundTranslator = false;
+
+#ifdef Q_OS_WIN32
+  if ( ! foundTranslator )
+    if ( translator->load( localeFile ) )
+      foundTranslator = true;
+#endif // Q_OS_WIN32
+
+  BrInitError error;
+
+  if ( br_init( &error ) == 0 && error != BR_INIT_ERROR_DISABLED )
+  {
+      printf( "Warning: BinReloc failed to initialize (error code %d)\n",
+              error );
+      printf( "Will fallback to hardcoded default path.\n" );
+  }
+
+  localeDir = QString( br_find_data_dir( 0 ) ) + "/speedcrunch/locale";
+  if ( ! foundTranslator )
+    if ( translator->load( localeFile, localeDir ) )
+      foundTranslator = true;
+
+  if ( foundTranslator )
+    return translator;
+  else
+    return 0;
 }
 
 
@@ -478,6 +517,77 @@ void MainWindow::Private::createActions()
   actions.languageSl          ->setCheckable( true );
   actions.languageSv          ->setCheckable( true );
   actions.languageTr          ->setCheckable( true );
+}
+
+
+void MainWindow::setAllText()
+{
+  qDebug( "setAllText( %s )", qPrintable( d->settings.language ) );
+  QTranslator * tr = d->createTranslator( d->settings.language );
+  if ( tr )
+    qApp->installTranslator( tr );
+
+  d->setActionsText();
+}
+
+
+void MainWindow::Private::setActionsText()
+{
+  qDebug( "setActionsText()" );
+  actions.clearExpression     ->setText( tr("Clear E&xpression")        );
+  actions.clearHistory        ->setText( tr("Clear &History")           );
+  actions.degree              ->setText( tr("&Degree")                  );
+  actions.deleteAllVariables  ->setText( tr("Delete All V&ariables")    );
+  actions.deleteVariable      ->setText( tr("D&elete Variable...")      );
+  actions.digits15            ->setText( tr("&15 Decimal Digits")       );
+  actions.digits2             ->setText( tr("&2 Decimal Digits")        );
+  actions.digits3             ->setText( tr("&3 Decimal Digits")        );
+  actions.digits50            ->setText( tr("&50 Decimal Digits")       );
+  actions.digits8             ->setText( tr("&8 Decimal Digits")        );
+  actions.digitsAuto          ->setText( tr("&Automatic Precision")     );
+  actions.editCopy            ->setText( tr("&Copy")                    );
+  actions.editCopyResult      ->setText( tr("Copy Last &Result")        );
+  actions.editPaste           ->setText( tr("&Paste")                   );
+  actions.helpAbout           ->setText( tr("&About")                   );
+  actions.helpAboutQt         ->setText( tr("About &Qt")                );
+  actions.helpGotoWebsite     ->setText( tr("SpeedCrunch &Web Site...") );
+  actions.helpTipOfTheDay     ->setText( tr("&Tip of the Day")          );
+  actions.insertFunction      ->setText( tr("Insert &Function...")      );
+  actions.insertVariable      ->setText( tr("Insert &Variable...")      );
+  actions.optionAutoCalc      ->setText( tr("&Partial Results")         );
+  actions.optionAutoCompletion->setText( tr("Automatic &Completion")    );
+  actions.optionAlwaysOnTop   ->setText( tr("Always On &Top")           );
+  actions.optionMinimizeToTray->setText( tr("&Minimize To System Tray") );
+  actions.optionHiliteSyntax  ->setText( tr("Syntax &Highlighting")     );
+  actions.radixCharAuto       ->setText( tr("&System Default")          );
+  actions.radixCharDot        ->setText( tr("&Dot")                     );
+  actions.radixCharComma      ->setText( tr("&Comma")                   );
+  actions.radian              ->setText( tr("&Radian")                  );
+  actions.scrollDown          ->setText( tr("Scroll Display Down")      );
+  actions.scrollUp            ->setText( tr("Scroll Display Up")        );
+  actions.selectExpression    ->setText( tr("&Select Expression")       );
+  actions.sessionImport       ->setText( tr("&Import...")               );
+  actions.sessionLoad         ->setText( tr("&Load...")                 );
+  actions.sessionQuit         ->setText( tr("&Quit")                    );
+  actions.sessionSave         ->setText( tr("&Save...")                 );
+  actions.sessionExport       ->setText( tr("&Export...")               );
+  actions.showBook            ->setText( tr("Math &Book")               );
+  actions.showConstants       ->setText( tr("&Constants")               );
+  actions.showFullScreen      ->setText( tr("Full &Screen Mode")        );
+  actions.showFunctions       ->setText( tr("&Functions")               );
+  actions.showHistory         ->setText( tr("&History")                 );
+  actions.showKeypad          ->setText( tr("&Keypad")                  );
+  actions.showMenuBar         ->setText( tr("Hide &Menu Bar")           );
+  actions.showStatusBar       ->setText( tr("&Status Bar")              );
+  actions.showVariables       ->setText( tr("&Variables")               );
+  actions.formatBinary        ->setText( tr("&Binary")                  );
+  actions.formatEngineering   ->setText( tr("&Engineering")             );
+  actions.formatFixed         ->setText( tr("&Fixed Decimal")           );
+  actions.formatGeneral       ->setText( tr("&General")                 );
+  actions.formatHexadec       ->setText( tr("&Hexadecimal")             );
+  actions.formatOctal         ->setText( tr("&Octal")                   );
+  actions.formatScientific    ->setText( tr("&Scientific")              );
+  actions.languageDefault     ->setText( tr("System &Default")          );
 }
 
 
@@ -1019,6 +1129,7 @@ void MainWindow::Private::createFixedConnections()
   connect( p,                                   SIGNAL( radixCharChanged( char )              ), widgets.display,       SLOT( setRadixChar( char )                  ) );
   connect( p,                                   SIGNAL( radixCharChanged( char )              ), evaluator,             SLOT( setRadixChar( char )                  ) );
   connect( p,                                   SIGNAL( angleModeChanged( char )              ), functions,             SLOT( setAngleMode( char )                  ) );
+  connect( p,                                   SIGNAL( retranslateText()                     ), p,                     SLOT( setAllText()                          ) );
 }
 
 
@@ -1286,15 +1397,18 @@ void setWidgetDirection( const QString & language, QWidget * widget )
 
 // public
 
-MainWindow::MainWindow( Settings & settings )
-  : QMainWindow(), d( new MainWindow::Private( settings ) )
+MainWindow::MainWindow()
+  : QMainWindow(), d( new MainWindow::Private )
 {
   d->p = this;
+
+  d->settings.load();
 
   d->createUi();
   d->applySettings();
 
   setWidgetsDirection();
+  emit retranslateText();
 
   QTimer::singleShot( 0, this, SLOT( activate() ) );
 }
@@ -1862,9 +1976,6 @@ void MainWindow::setWidgetsDirection()
     setWidgetDirection( d->settings.language, d->docks.functions );
   // tip of the day
   setWidgetDirection( d->settings.language, d->widgets.tip );
-
-  // speedcrunch made widgets
-  emit adaptToLanguageChange();
 }
 
 
@@ -2673,4 +2784,6 @@ void MainWindow::changeLanguage()
   QString lang = a->data().toString();
   if ( lang != d->settings.language )
     d->settings.language = a->data().toString();
+
+  emit retranslateText();
 }

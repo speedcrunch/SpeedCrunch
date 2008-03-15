@@ -18,62 +18,16 @@
 // Boston, MA 02110-1301, USA.
 
 
-#include "3rdparty/util/binreloc.h"
 #include "gui/mainwindow.hxx"
-#include "base/settings.hxx"
 
 #include <QApplication>
-#include <QLocale>
-#include <QTranslator>
-
-
-QTranslator * createTranslator( const QString & langCode )
-{
-  QTranslator * translator = new QTranslator;
-  QString       localeFile = (langCode == "C") ? QLocale().name()
-                                               : langCode;
-  QString       localeDir;
-  bool          foundTranslator = false;
-
-#ifdef Q_OS_WIN32
-  if ( ! foundTranslator )
-    if ( translator->load( localeFile ) )
-      foundTranslator = true;
-#endif // Q_OS_WIN32
-
-  BrInitError error;
-
-  if ( br_init( &error ) == 0 && error != BR_INIT_ERROR_DISABLED )
-  {
-      printf( "Warning: BinReloc failed to initialize (error code %d)\n",
-              error );
-      printf( "Will fallback to hardcoded default path.\n" );
-  }
-
-  localeDir = QString( br_find_data_dir( 0 ) ) + "/speedcrunch/locale";
-  if ( ! foundTranslator )
-    if ( translator->load( localeFile, localeDir ) )
-      foundTranslator = true;
-
-  if ( foundTranslator )
-    return translator;
-  else
-    return 0;
-}
 
 
 int main( int argc, char * argv[] )
 {
   QApplication app( argc, argv );
 
-  Settings settings;
-  settings.load();
-
-  QTranslator * tr = createTranslator( settings.language );
-  if ( tr )
-    app.installTranslator( tr );
-
-  MainWindow win( settings );
+  MainWindow win;
   win.show();
 
   app.connect( & app, SIGNAL( lastWindowClosed() ),
