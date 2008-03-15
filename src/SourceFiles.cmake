@@ -1,7 +1,7 @@
 # speedcrunch
 
 set(speedcrunch_HEADERS
-#variant/variantdata.hxx
+#variant/variantbase.hxx
 #variant/variant.hxx
 #variant/real.hxx
 #3rdparty/util/binreloc.h
@@ -46,7 +46,7 @@ gui/mainwindow.hxx
 )
 
 set(speedcrunch_SOURCES
-variant/variantdata.cpp
+variant/variantbase.cpp
 variant/variant.cpp
 variant/real.cpp
 variant/initvariant.cpp

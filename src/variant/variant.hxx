@@ -33,91 +33,68 @@
 #define _VARIANT_H
 
 #include "base/errors.h"
-#include "variant/variantdata.hxx"
+#include "variant/variantbase.hxx"
 #include "variant/real.hxx"
-#include "variant/variant.hxx"
 
 class VariantBase: public VariantIntf
+// takes care of builtin data types
 {
+  public:
+    VariantBase() { setup(); };
+    VariantType type() const;
+    operator bool() const;
+    operator Error() const;
+    bool operator = (bool);
+    Error operator = (Error);
+    operator const VariantData*() const;
   protected:
-    VariantBase(): m_type(vError) {};
-    VariantType m_type;
+    bool isBuiltIn() const { return m_type != btExtern; };
+    void operator = (VariantData*);
+    VariantData* variantData() { return val; };
+    void operator = (const VariantBase& other);
+    virtual void teardown() = 0;
+    static void initClass();
   private:
+    enum
+    {
+      btError,
+      btBool,
+      btExtern
+    } m_type;
+    union
+    {
+      Error error;
+      bool boolval;
+      VariantData* val;
+    };
+    bool isBool() const { return m_type == btBool; };
+    bool isError() const { return m_type == btError; };
+    void setup();
+    static VariantData* builtInConstructor() { return 0; };
+    static VariantType vtBool;
+    static VariantType vtError;
 };
 
 class Variant: public VariantBase
 {
   friend class InitVariant;
   public: // constructors
-    Variant(Error e){ *this = e; };
-    Variant(bool b) { *this = b; };
-    Variant() { *this = NoOperand; };
-    Variant(VariantData* d) { *this = d; };
-    Variant(const Variant& other) { *this = other; };
-    Variant(VariantType t, const char* value) { assign(t, value); };
-    ~Variant() { *this = Success; };
+    Variant() { };
+    Variant(bool v) { *this = v; };
+    Variant(Error e) { *this = e; };
+    Variant(VariantData* vd) { *this = vd; };
+    ~Variant() { teardown(); };
   public: // assignment
-    void operator=(Error);
-    void operator=(bool);
-    void operator=(VariantData*);
-    void operator=(const Variant&);
-    bool assign(VariantType, const char*);
-    bool assign(const QByteArray&);
+    Variant& operator = (const Variant& other);
+    void operator = (VariantData*);
   public: // types & conversion
-    operator bool() const;
-    operator Error() const;
-    operator const VariantData*() const;
-    operator QByteArray() const;
-    VariantType type() const { return m_type; };
-    static bool isBuiltinType(VariantType);
-    Variant embed() const;
-    void clear();
   public: // operators & functions
-    Variant operator+() const;
-    Variant operator-() const;
-    Variant operator~() const;
-    Variant operator!() const;
-    Variant operator+(const Variant&) const;
-    Variant operator-(const Variant&) const;
-    Variant operator*(const Variant& other) const;
-    Variant operator/(const Variant& other) const;
-    Variant operator%(const Variant& other) const;
-    Variant idiv(const Variant& other) const;
-    Variant raise(const Variant& exp) const;
-    Variant operator&(const Variant& other) const;
-    Variant operator|(const Variant& other) const;
-    Variant operator^(const Variant& other) const;
-    Variant operator==(const Variant& other) const;
-    Variant operator!=(const Variant& other) const;
-    Variant operator>(const Variant& other) const;
-    Variant operator>=(const Variant& other) const;
-    Variant operator<(const Variant& other) const;
-    Variant operator<=(const Variant& other) const;
   protected:
-    typedef Variant (VariantData::*Method1)() const;
-    typedef Variant (VariantData::*Method2)(const Variant& other) const;
-
-    // retype sets val to 0, defaultType creates a default value
-    void defaultType(VariantType);
-    void retype(VariantType);
-    Variant overloadfct(Method1) const;
-    Variant overloadfct(Method2, const Variant& other) const;
+    void teardown();
   private:
-    union{
-      Error error;
-      bool boolval;
-      VariantData* val;
-    };
     static void initClass();
-    static VariantData* create();
-
-    Variant call2(Method2, Method2, const Variant& other) const;
-  // support of LongReal
-  public:
-    operator cfloatnum() const;
-    // this frees x
-    Variant(floatnum x, Error e = Success) { move(x, e); };
-    void move(floatnum x, Error e = Success);
+  public: // support of LongReal
+    Variant(floatnum, Error);
 };
 
 #endif /*_VARIANT_H*/

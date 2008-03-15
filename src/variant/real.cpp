@@ -33,7 +33,8 @@
 #include "math/floatconfig.h"
 #include "math/floatconvert.h"
 
-enum { less = 1, equal = 2, greater = 4 };
+const char* VariantIntf::nLongReal = "LongReal";
+VariantIntf::VariantType LongReal::vtLongReal;
 
 static floatstruct NaNVal;
 static int longrealPrec;
@@ -72,46 +73,35 @@ static signed char _cvtSign(LongReal::Sign sign)
   }
 }
 
-static char _mod(floatnum dest, cfloatnum dividend, cfloatnum modulo)
-{
-  enum { maxdivloops = 250 };
-  int save = float_setprecision(int(maxdivloops));
-  floatstruct dummy;
-  float_create(&dummy);
-  char result = float_divmod(&dummy, dest, dividend, modulo, INTQUOT);
-  float_free(&dummy);
-  float_setprecision(save);
-  return result;
-}
-
-static char _idiv(floatnum dest, cfloatnum dividend, cfloatnum modulo)
-{
-  int save = float_setprecision(DECPRECISION);
-  floatstruct dummy;
-  float_create(&dummy);
-  char result = float_divmod(dest, &dummy, dividend, modulo, INTQUOT);
-  float_free(&dummy);
-  float_setprecision(save);
-  return result;
-}
+// static char _mod(floatnum dest, cfloatnum dividend, cfloatnum modulo)
+// {
+//   enum { maxdivloops = 250 };
+//   int save = float_setprecision(int(maxdivloops));
+//   floatstruct dummy;
+//   float_create(&dummy);
+//   char result = float_divmod(&dummy, dest, dividend, modulo, INTQUOT);
+//   float_free(&dummy);
+//   float_setprecision(save);
+//   return result;
+// }
+// 
+// static char _idiv(floatnum dest, cfloatnum dividend, cfloatnum modulo)
+// {
+//   int save = float_setprecision(DECPRECISION);
+//   floatstruct dummy;
+//   float_create(&dummy);
+//   char result = float_divmod(dest, &dummy, dividend, modulo, INTQUOT);
+//   float_free(&dummy);
+//   float_setprecision(save);
+//   return result;
+// }
 
 void LongReal::initClass()
 {
   precision(PrecDefault);
   evalMode(EvalRelaxed);
   float_create(&NaNVal);
-  registerConstructor(create, vLongReal);
-}
-
-LongReal::LongReal()
-  : refcount(1)
-{
-  float_create(&val);
-}
-
-LongReal::~LongReal()
-{
-  float_free(&val);
+  vtLongReal = registerType(create, nLongReal);
 }
 
 VariantData* LongReal::create()
@@ -119,16 +109,11 @@ VariantData* LongReal::create()
   return new LongReal;
 }
 
-void LongReal::release()
+LongReal* LongReal::create(floatnum f)
 {
-  if (--refcount <= 0)
-    delete this;
-}
-
-VariantData* LongReal::clone() const
-{
-  ++refcount;
-  return const_cast<LongReal*>(this);
+  LongReal* lr = static_cast<LongReal*>(create());
+  lr->move(f);
+  return lr;
 }
 
 cfloatnum LongReal::NaN()
@@ -138,165 +123,10 @@ cfloatnum LongReal::NaN()
 
 bool LongReal::move(floatnum x)
 {
-  if (refcount != 1)
+  if (!isUnique())
     return false;
   float_move(&val, x);
   return true;
-}
-
-bool LongReal::assign(const char* str)
-{
-  if (refcount != 1)
-    return false;
-  float_setscientific(&val, str, NULLTERMINATED);
-  return !float_isnan(&val);
-}
-
-Variant LongReal::call2(const Variant& other, Fct2 fct, bool swap) const
-{
-  if (type() != other.type())
-    return NotImplemented;
-  floatstruct result;
-  float_create(&result);
-  (swap? fct(&result, other, *this, evalPrec())
-       : fct(&result, *this, other, evalPrec()))
-    && float_round(&result, &result, workPrec(), TONEAREST);
-  return Variant(&result, float_geterror());
-}
-
-Variant LongReal::call2ND(const Variant& other, Fct2ND fct, bool swap) const
-{
-  if (type() != other.type())
-    return NotImplemented;
-  floatstruct result;
-  float_create(&result);
-  if (swap)
-    fct(&result, other, *this);
-  else
-    fct(&result, *this, other);
-  return Variant(&result, float_geterror());
-}
-
-Variant LongReal::callCmp(const Variant& other, char mask) const
-{
-  if (type() != other.type())
-    return NotImplemented;
-  signed char cmp = float_cmp(*this, other);
-  if (cmp == UNORDERED)
-    return NoOperand;
-  if (cmp < 0 && (mask & less) != 0)
-    return true;
-  if (cmp > 0 && (mask & greater) != 0)
-    return true;
-  if (cmp == 0 && (mask & equal) != 0)
-    return true;
-  return false;
-}
-
-Variant LongReal::operator+() const
-{
-  if (float_isnan(&val))
-    return NoOperand;
-  return this;
-}
-
-Variant LongReal::operator-() const
-{
-  floatstruct result;
-  float_create(&result);
-  float_copy(&result, &val, EXACT);
-  float_neg(&result);
-  return Variant(&result, float_geterror());
-}
-
-Variant LongReal::operator+(const Variant& other) const
-{
-  return call2(other, float_add);
-}
-
-Variant LongReal::operator-(const Variant& other) const
-{
-  return call2(other, float_sub);
-}
-
-Variant LongReal::operator*(const Variant& other) const
-{
-  return call2(other, float_mul);
-}
-
-Variant LongReal::operator/(const Variant& other) const
-{
-  return call2(other, float_div);
-}
-
-Variant LongReal::operator%(const Variant& other) const
-{
-  return call2ND(other, _mod);
-}
-
-Variant LongReal::idiv(const Variant& other) const
-{
-  return call2ND(other, _idiv);
-}
-
-Variant LongReal::raise(const Variant& other) const
-{
-  return call2(other, float_raise);
-}
-
-Variant LongReal::operator==(const Variant& other) const
-{
-  return callCmp(other, equal);
-}
-
-Variant LongReal::operator!=(const Variant& other) const
-{
-  return callCmp(other, less | greater);
-}
-
-Variant LongReal::operator>(const Variant& other) const
-{
-  return callCmp(other, greater);
-}
-
-Variant LongReal::operator>=(const Variant& other) const
-{
-  return callCmp(other, greater | equal);
-}
-
-Variant LongReal::operator<(const Variant& other) const
-{
-  return callCmp(other, less);
-}
-
-Variant LongReal::operator<=(const Variant& other) const
-{
-  return callCmp(other, less | equal);
-}
-
-Variant LongReal::swapSub(const Variant& other) const
-{
-  return call2(other, float_sub, true);
-}
-
-Variant LongReal::swapDiv(const Variant& other) const
-{
-  return call2(other, float_div, true);
-}
-
-Variant LongReal::swapMod(const Variant& other) const
-{
-  return call2ND(other, _mod, true);
-}
-
-Variant LongReal::swapIdiv(const Variant& other) const
-{
-  return call2ND(other, _idiv, true);
-}
-
-Variant LongReal::swapRaise(const Variant& other) const
-{
-  return call2(other, float_raise, true);
 }
 
 int LongReal::precision(int newprec)
@@ -335,13 +165,6 @@ int LongReal::evalPrec()
 int LongReal::workPrec()
 {
   return longrealPrec + 3;
-}
-
-LongReal::operator QByteArray() const
-{
-  char buffer[DECPRECISION+30];
-  float_getscientific(buffer, sizeof(buffer), &val);
-  return buffer;
 }
 
 LongReal::BasicIO LongReal::convert(int digits, FmtMode mode,

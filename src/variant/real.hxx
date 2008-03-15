@@ -35,50 +35,29 @@
 #include "math/floatnum.h"
 #include "math/floathmath.h"
 
-#include "variant/variantdata.hxx"
+#include "variant/variantbase.hxx"
 #include "variant/variant.hxx"
 #include <QString>
 
-class LongReal: public VariantData
+class LongReal: public VariantRefData
 {
   friend class InitVariant;
   public: // creating & destructing
-    LongReal();
-    ~LongReal();
-    void release();
-    VariantData* clone() const;
+    LongReal() { float_create(&val); };
+    ~LongReal() { float_free(&val); };
+    static LongReal* create(floatnum);
   public: // type, casting, assignment
-    VariantType type() const { return vLongReal; };
+    VariantType type() const { return vtLongReal; };
     operator cfloatnum() const { return &val; };
     bool move(floatnum x);
     static cfloatnum NaN();
-  public: // operators
-    Variant operator+() const;
-    Variant operator-() const;
-    Variant operator+(const Variant& other) const;
-    Variant operator-(const Variant& other) const;
-    Variant operator*(const Variant& other) const;
-    Variant operator/(const Variant& other) const;
-    Variant operator%(const Variant& other) const;
-    Variant idiv(const Variant& other) const;
-    Variant raise(const Variant& other) const;
-    Variant operator==(const Variant& other) const;
-    Variant operator!=(const Variant& other) const;
-    Variant operator>(const Variant& other) const;
-    Variant operator>=(const Variant& other) const;
-    Variant operator<(const Variant& other) const;
-    Variant operator<=(const Variant& other) const;
-    Variant swapSub(const Variant& other) const;
-    Variant swapDiv(const Variant& other) const;
-    Variant swapIdiv(const Variant& other) const;
-    Variant swapMod(const Variant& other) const;
-    Variant swapRaise(const Variant& other) const;
   public: // info
     bool isNaN() const;
     bool isZero() const;
   public: // precision handling
     typedef enum { PrecQuery = -1, PrecDefault = 0 };
     typedef enum { EvalExact, EvalRelaxed, EvalQuery } EvalMode;
+
     static int evalPrec();
     static int workPrec();
     static int precision(int newprec = PrecQuery);
@@ -109,24 +88,15 @@ class LongReal: public VariantData
       Sign signScale;
       Error error;
     } BasicIO;
-    bool assign(const char*);
-    operator QByteArray() const;
     BasicIO convert(int digits, FmtMode mode = Scientific,
                     char base = 10, char scalebase = 10) const;
     static Variant convert(const BasicIO&, const QString& scale);
   private:
-    static void initClass();
-    static VariantData* create();
-    mutable unsigned refcount;
     floatstruct val;
+    static void initClass();
+    static VariantType vtLongReal;
+    static VariantData* create();
   private: // generic function calls, helpers
-    typedef char (*Fct2)(floatnum result, cfloatnum op1,
-                         cfloatnum op2, int digits);
-    typedef char (*Fct2ND)(floatnum result, cfloatnum op1,
-                           cfloatnum op2);
-    Variant call2(const Variant& other, Fct2, bool swap = false) const;
-    Variant call2ND(const Variant& other, Fct2ND, bool swap = false) const;
-    Variant callCmp(const Variant& other, char mask) const;
 };
 
 class RealFormat: public FormatIntf

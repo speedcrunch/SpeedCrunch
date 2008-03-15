@@ -31,350 +31,114 @@
 
 #include "variant/variant.hxx"
 
-const char cFalse[] = "false";
-const char cTrue[] = "true";
+typedef VariantIntf::VariantType VariantType;
+
+const char* VariantIntf::nBool = "Boolean";
+const char* VariantIntf::nError = "Error";
+VariantType VariantBase::vtBool;
+VariantType VariantBase::vtError;
+
+void VariantBase::initClass()
+{
+  vtBool = registerType(builtInConstructor, nBool);
+  vtError = registerType(builtInConstructor, nError);
+}
 
 void Variant::initClass()
 {
-  VariantData::registerConstructor(0, vError);
-  VariantData::registerConstructor(0, vBoolean);
+  VariantIntf::initClass();
+  VariantBase::initClass();
 }
 
-bool Variant::isBuiltinType(VariantType t)
+VariantBase::operator Error() const
 {
-  switch(t)
-  {
-    case vError:
-    case vBoolean: return true;
-    default: return false;
-  }
+  return isError()? error : Success;
 }
 
-void Variant::retype(VariantType t)
+VariantBase::operator bool() const
 {
-  if (!isBuiltinType(type()))
-    val->release();
-  m_type = t;
-  val = 0;
+  return isBool()? boolval : (Error)(*this) == Success;
 }
 
-void Variant::clear()
+VariantBase::operator const VariantData*() const
 {
-  retype(vError);
+  return isBuiltIn()? 0 : val;
+}
+
+void VariantBase::setup()
+{
+  m_type = btError;
   error = NoOperand;
 }
 
-void Variant::defaultType(VariantType t)
+VariantType VariantBase::type() const
 {
-  retype(t);
-  switch (t)
-  {
-    case vBoolean: boolval = false; break;
-    case vError: error = NoOperand; break;
-    default: val = VariantData::create(t); break;
-  }
+  if (m_type == btBool)
+    return vtBool;
+  return vtError;
 }
 
-void Variant::operator=(Error e)
+bool VariantBase::operator = (bool newval)
 {
-  retype(vError);
-  error = e;
+  teardown();
+  m_type = btBool;
+  boolval = newval;
+  return newval;
 }
 
-void Variant::operator=(bool b)
+Error VariantBase::operator = (Error newval)
 {
-  retype(vBoolean);
-  boolval = b;
+  teardown();
+  m_type = btError;
+  error = newval;
+  return newval;
 }
 
-void Variant::operator=(VariantData* newval)
+void VariantBase::operator = (VariantData* newval)
 {
-  if (newval == 0)
-    clear();
+  m_type = btExtern;
+  val = newval;
+}
+
+void VariantBase::operator = (const VariantBase& other)
+{
+  if (other.isBool())
+    *this = (bool)other;
   else
+    *this = (Error)other;
+}
+
+void Variant::operator = (VariantData* newval)
+{
+  if (newval != (VariantData*)this || !isBuiltIn())
   {
-    retype(newval->type());
-    val = newval;
+    teardown();
+    VariantBase::operator = (newval->lock());
   }
 }
 
-void Variant::operator=(const Variant& other)
+Variant& Variant::operator = (const Variant& other)
 {
-  switch (other.type())
+  if (&other != this)
   {
-    case vBoolean: *this = other.boolval; break;
-    case vError: *this = other.error; break;
-    default: *this = other.val->clone();
+    if (!other.isBuiltIn())
+      *this = other.operator const VariantData*()->clone();
+    else
+      VariantBase::operator = (other);
   }
+  return *this;
 }
 
-bool Variant::assign(VariantType t, const char* s)
+void Variant::teardown()
 {
-  defaultType(t);
-  bool ok = true;
-  switch (t)
-  {
-    case vBoolean:
-      if (qstrcmp(s, cTrue) == 0)
-        boolval = true;
-      else if (qstrcmp(s, cFalse) == 0)
-        boolval = false;
-      else ok = false;
-      break;
-    case vError:
-      error = Error(QByteArray(s).toInt(&ok));
-      break;
-    default:
-      ok = val->assign(s);
-      break;
-  }
-  if (!ok)
-    *this = BadLiteral;
-  return ok;
+  if (!isBuiltIn())
+    variantData()->release();
 }
 
-bool Variant::assign(const QByteArray& typeValue)
-{
-  VariantType t = name2VariantType(typeValue);
-  if (t > vError)
-    return false;
-  return assign(t, typeValue.data() + qstrlen(variantTypeName(t)));
-}
-
-Variant::operator QByteArray() const
-{
-  QByteArray result;
-  switch (type())
-  {
-    case vBoolean:
-      if (boolval)
-        result = cTrue;
-      else
-        result = cFalse;
-      break;
-    case vError:
-      result.setNum(int(error));
-      break;
-    default:
-      result = *val;
-      break;
-  }
-  return variantTypeName(type()) + result;
-}
-
-Variant::operator bool() const
-{
-  switch (type())
-  {
-    case vBoolean: return boolval;
-    case vError: return error == Success;
-    default: return Error(*val) == Success;
-  }
-}
-
-Variant::operator Error() const
-{
-  switch (type())
-  {
-    case vBoolean: return Success;
-    case vError: return error;
-    default: return val == 0? NoOperand: Error(*val);
-  }
-}
-Variant::operator const VariantData*() const
-{
-  return isBuiltinType(type())? 0 : val;
-}
-
-Variant Variant::embed() const
-{
-  if (isBuiltinType(type()))
-    return BadCast;
-  return val->embed();
-}
-
-Variant Variant::overloadfct(Method1 fct) const
-{
-  switch (type())
-  {
-    case vError: return *this;
-    case vBoolean: return TypeMismatch;
-    default: ;
-  }
-  Variant v = (val->*fct)();
-  if (Error(v) == NotImplemented)
-  {
-    v = embed();
-    if (Error(v) == BadCast)
-      return TypeMismatch;
-    return v.overloadfct(fct);
-  }
-  return v;
-}
-
-Variant Variant::overloadfct(Method2 fct, const Variant& other) const
-{
-  switch (type())
-  {
-    case vError: return *this;
-    case vBoolean: return TypeMismatch;
-    default: ;
-  }
-  Variant v = (val->*fct)(other);
-  while (Error(v) == TypeMismatch)
-  {
-    v = other.embed();
-    if (Error(v) == BadCast || cmpType(v.type()) < 0)
-    {
-      v = NotImplemented;
-      break;
-    }
-    v = (val->*fct)(v);
-  }
-  if (Error(v) == NotImplemented)
-  {
-    v = embed();
-    if (Error(v) == BadCast)
-      return TypeMismatch;
-    return v.overloadfct(fct, other);
-  }
-  return v;
-}
-
-Variant Variant::operator+() const
-{
-  return overloadfct(&VariantData::operator+);
-}
-
-Variant Variant::operator-() const
-{
-  return overloadfct(&VariantData::operator-);
-}
-
-Variant Variant::operator~() const
-{
-  return overloadfct(&VariantData::operator~);
-}
-
-Variant Variant::operator!() const
-{
-  if (type() == vBoolean)
-    return !boolval;
-  return overloadfct(&VariantData::operator!);
-}
-
-Variant Variant::call2(Method2 normal, Method2 swapped,
-                       const Variant& other) const
-{
-  if (cmpType(other.type()) >= 0)
-    return overloadfct(normal, other);
-  return other.overloadfct(swapped, *this);
-}
-
-Variant Variant::operator+(const Variant& other) const
-{
-  return call2(&VariantData::operator+, &VariantData::swapAdd, other);
-}
-
-Variant Variant::operator-(const Variant& other) const
-{
-  return call2(&VariantData::operator-, &VariantData::swapSub, other);
-}
-
-Variant Variant::operator*(const Variant& other) const
-{
-  return call2(&VariantData::operator*, &VariantData::swapMul, other);
-}
-
-Variant Variant::operator/(const Variant& other) const
-{
-  return call2(&VariantData::operator/, &VariantData::swapDiv, other);
-}
-
-Variant Variant::operator%(const Variant& other) const
-{
-  return call2(&VariantData::operator%, &VariantData::swapMod, other);
-}
-
-Variant Variant::idiv(const Variant& other) const
-{
-  return call2(&VariantData::idiv, &VariantData::swapIdiv, other);
-}
-
-Variant Variant::operator&(const Variant& other) const
-{
-  if (type() == vBoolean && other.type() == vBoolean)
-    return bool(*this) && bool(other);
-  return call2(&VariantData::operator&, &VariantData::swapAnd, other);
-}
-
-Variant Variant::operator|(const Variant& other) const
-{
-  if (type() == vBoolean && other.type() == vBoolean)
-    return bool(*this) || bool(other);
-  return call2(&VariantData::operator|, &VariantData::swapOr, other);
-}
-
-Variant Variant::operator^(const Variant& other) const
-{
-  if (type() == vBoolean && other.type() == vBoolean)
-    return bool(*this) ^ bool(other);
-  return call2(&VariantData::operator^, &VariantData::swapXor, other);
-}
-
-Variant Variant::operator==(const Variant& other) const
-{
-  if (type() == vBoolean && other.type() == vBoolean)
-    return bool(*this) == bool(other);
-  return call2(&VariantData::operator==, &VariantData::swapEq, other);
-}
-
-Variant Variant::operator!=(const Variant& other) const
-{
-  if (type() == vBoolean && other.type() == vBoolean)
-    return bool(*this) != bool(other);
-  return call2(&VariantData::operator!=, &VariantData::swapNe, other);
-}
-
-Variant Variant::operator>(const Variant& other) const
-{
-  return call2(&VariantData::operator>, &VariantData::swapGt, other);
-}
-
-Variant Variant::operator>=(const Variant& other) const
-{
-  return call2(&VariantData::operator>=, &VariantData::swapGe, other);
-}
-
-Variant Variant::operator<(const Variant& other) const
-{
-  return call2(&VariantData::operator<, &VariantData::swapLs, other);
-}
-
-Variant Variant::operator<=(const Variant& other) const
-{
-  return call2(&VariantData::operator<=, &VariantData::swapLe, other);
-}
-
-Variant Variant::raise(const Variant& other) const
-{
-  return call2(&VariantData::raise, &VariantData::swapRaise, other);
-}
-
-Variant::operator cfloatnum() const
-{
-  if (type() == vLongReal)
-    return (cfloatnum)(*static_cast<LongReal*>(val));
-  return LongReal::NaN();
-}
-
-void Variant::move(floatnum x, Error e)
+Variant::Variant(floatnum f, Error e)
 {
   if (e != Success)
     *this = e;
   else
-  {
-    defaultType(vLongReal);
-    static_cast<LongReal*>(val)->move(x);
-  }
+    *this = LongReal::create(f);
 }

@@ -42,6 +42,6 @@ InitVariant instance;
 
 InitVariant::InitVariant()
 {
-  LongReal::initClass();
   Variant::initClass();
+  LongReal::initClass();
 }

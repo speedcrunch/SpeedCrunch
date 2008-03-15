@@ -62,8 +62,8 @@ typedef enum
   OutOfIntegerRange,
 
 /* This error indicates a failed conversion from an ASCII string.
-   Functions setting this error may report a more detailed IO... error code,
-   too */
+   Functions setting this error may also report a more detailed IO... error
+   code*/
   BadLiteral,
 
 /* A request to calculate something to more places than is (currently)
@@ -142,6 +142,7 @@ typedef enum
 /* this value is used internally to indicate the absence of
   any error information altogether */
   NotAnError,
+
 } Error;
 
 #ifdef __cplusplus
