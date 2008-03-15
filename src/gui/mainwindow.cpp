@@ -2281,10 +2281,12 @@ void MainWindow::constantSelected( const QString & c )
 }
 
 
-void MainWindow::expressionSelected( const QString & e )
+void MainWindow::expressionSelected( const QString & expr )
 {
-  d->widgets.editor->setText( e );
-  returnPressed();
+  QTextCursor cursor = d->widgets.editor->textCursor();
+  cursor.insertText( expr );
+  QTimer::singleShot( 0, d->widgets.editor, SLOT( setFocus() ) );
+  d->widgets.editor->setTextCursor( cursor );
 
   if ( ! isActiveWindow () )
     activateWindow();
