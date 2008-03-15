@@ -367,60 +367,60 @@ void MainWindow::Private::createUi()
 
 void MainWindow::Private::createActions()
 {
-  actions.clearExpression       = new QAction( tr("Clear E&xpression"),        p );
-  actions.clearHistory          = new QAction( tr("Clear &History"),           p );
-  actions.degree                = new QAction( tr("&Degree"),                  p );
-  actions.deleteAllVariables    = new QAction( tr("Delete All V&ariables"),    p );
-  actions.deleteVariable        = new QAction( tr("D&elete Variable..."),      p );
-  actions.digits15              = new QAction( tr("&15 Decimal Digits"),       p );
-  actions.digits2               = new QAction( tr("&2 Decimal Digits"),        p );
-  actions.digits3               = new QAction( tr("&3 Decimal Digits"),        p );
-  actions.digits50              = new QAction( tr("&50 Decimal Digits"),       p );
-  actions.digits8               = new QAction( tr("&8 Decimal Digits"),        p );
-  actions.digitsAuto            = new QAction( tr("&Automatic Precision"),     p );
-  actions.editCopy              = new QAction( tr("&Copy"),                    p );
-  actions.editCopyResult        = new QAction( tr("Copy Last &Result"),        p );
-  actions.editPaste             = new QAction( tr("&Paste"),                   p );
-  actions.helpAbout             = new QAction( tr("&About"),                   p );
-  actions.helpAboutQt           = new QAction( tr("About &Qt"),                p );
-  actions.helpGotoWebsite       = new QAction( tr("SpeedCrunch &Web Site..."), p );
-  actions.helpTipOfTheDay       = new QAction( tr("&Tip of the Day"),          p );
-  actions.insertFunction        = new QAction( tr("Insert &Function..."),      p );
-  actions.insertVariable        = new QAction( tr("Insert &Variable..."),      p );
-  actions.optionAutoCalc        = new QAction( tr("&Partial Results"),         p );
-  actions.optionAutoCompletion  = new QAction( tr("Automatic &Completion"),    p );
-  actions.optionAlwaysOnTop     = new QAction( tr("Always On &Top"),           p );
-  actions.optionMinimizeToTray  = new QAction( tr("&Minimize To System Tray"), p );
-  actions.optionHiliteSyntax    = new QAction( tr("Syntax &Highlighting"),     p );
-  actions.radixCharAuto         = new QAction( tr("&System Default"),          p );
-  actions.radixCharDot          = new QAction( tr("&Dot"),                     p );
-  actions.radixCharComma        = new QAction( tr("&Comma"),                   p );
-  actions.radian                = new QAction( tr("&Radian"),                  p );
-  actions.scrollDown            = new QAction( tr("Scroll Display Down"),      p );
-  actions.scrollUp              = new QAction( tr("Scroll Display Up"),        p );
-  actions.selectExpression      = new QAction( tr("&Select Expression"),       p );
-  actions.sessionImport         = new QAction( tr("&Import..."),               p );
-  actions.sessionLoad           = new QAction( tr("&Load..."),                 p );
-  actions.sessionQuit           = new QAction( tr("&Quit"),                    p );
-  actions.sessionSave           = new QAction( tr("&Save..."),                 p );
-  actions.sessionExport         = new QAction( tr("&Export..."),               p );
-  actions.showBook              = new QAction( tr("Math &Book"),               p );
-  actions.showConstants         = new QAction( tr("&Constants"),               p );
-  actions.showFullScreen        = new QAction( tr("Full &Screen Mode"),        p );
-  actions.showFunctions         = new QAction( tr("&Functions"),               p );
-  actions.showHistory           = new QAction( tr("&History"),                 p );
-  actions.showKeypad            = new QAction( tr("&Keypad"),                  p );
-  actions.showMenuBar           = new QAction( tr("Hide &Menu Bar"),           p );
-  actions.showStatusBar         = new QAction( tr("&Status Bar"),              p );
-  actions.showVariables         = new QAction( tr("&Variables"),               p );
-  actions.formatBinary          = new QAction( tr("&Binary"),                  p );
-  actions.formatEngineering     = new QAction( tr("&Engineering"),             p );
-  actions.formatFixed           = new QAction( tr("&Fixed Decimal"),           p );
-  actions.formatGeneral         = new QAction( tr("&General"),                 p );
-  actions.formatHexadec         = new QAction( tr("&Hexadecimal"),             p );
-  actions.formatOctal           = new QAction( tr("&Octal"),                   p );
-  actions.formatScientific      = new QAction( tr("&Scientific"),              p );
-  actions.languageDefault       = new QAction( tr("System &Default"),          p );
+  actions.clearExpression       = new QAction( "",  p );
+  actions.clearHistory          = new QAction( "",  p );
+  actions.degree                = new QAction( "",  p );
+  actions.deleteAllVariables    = new QAction( "",  p );
+  actions.deleteVariable        = new QAction( "",  p );
+  actions.digits15              = new QAction( "",  p );
+  actions.digits2               = new QAction( "",  p );
+  actions.digits3               = new QAction( "",  p );
+  actions.digits50              = new QAction( "",  p );
+  actions.digits8               = new QAction( "",  p );
+  actions.digitsAuto            = new QAction( "",  p );
+  actions.editCopy              = new QAction( "",  p );
+  actions.editCopyResult        = new QAction( "",  p );
+  actions.editPaste             = new QAction( "",  p );
+  actions.helpAbout             = new QAction( "",  p );
+  actions.helpAboutQt           = new QAction( "",  p );
+  actions.helpGotoWebsite       = new QAction( "",  p );
+  actions.helpTipOfTheDay       = new QAction( "",  p );
+  actions.insertFunction        = new QAction( "",  p );
+  actions.insertVariable        = new QAction( "",  p );
+  actions.optionAutoCalc        = new QAction( "",  p );
+  actions.optionAutoCompletion  = new QAction( "",  p );
+  actions.optionAlwaysOnTop     = new QAction( "",  p );
+  actions.optionMinimizeToTray  = new QAction( "",  p );
+  actions.optionHiliteSyntax    = new QAction( "",  p );
+  actions.radixCharAuto         = new QAction( "",  p );
+  actions.radixCharDot          = new QAction( "",  p );
+  actions.radixCharComma        = new QAction( "",  p );
+  actions.radian                = new QAction( "",  p );
+  actions.scrollDown            = new QAction( "",  p );
+  actions.scrollUp              = new QAction( "",  p );
+  actions.selectExpression      = new QAction( "",  p );
+  actions.sessionImport         = new QAction( "",  p );
+  actions.sessionLoad           = new QAction( "",  p );
+  actions.sessionQuit           = new QAction( "",  p );
+  actions.sessionSave           = new QAction( "",  p );
+  actions.sessionExport         = new QAction( "",  p );
+  actions.showBook              = new QAction( "",  p );
+  actions.showConstants         = new QAction( "",  p );
+  actions.showFullScreen        = new QAction( "",  p );
+  actions.showFunctions         = new QAction( "",  p );
+  actions.showHistory           = new QAction( "",  p );
+  actions.showKeypad            = new QAction( "",  p );
+  actions.showMenuBar           = new QAction( "",  p );
+  actions.showStatusBar         = new QAction( "",  p );
+  actions.showVariables         = new QAction( "",  p );
+  actions.formatBinary          = new QAction( "",  p );
+  actions.formatEngineering     = new QAction( "",  p );
+  actions.formatFixed           = new QAction( "",  p );
+  actions.formatGeneral         = new QAction( "",  p );
+  actions.formatHexadec         = new QAction( "",  p );
+  actions.formatOctal           = new QAction( "",  p );
+  actions.formatScientific      = new QAction( "",  p );
+  actions.languageDefault       = new QAction( "",  p );
 
   actions.languageCs   = new QAction( QString::fromUtf8( "Česky"               ), p );
   actions.languageDe   = new QAction( QString::fromUtf8( "Deutsch"             ), p );
@@ -522,7 +522,6 @@ void MainWindow::Private::createActions()
 
 void MainWindow::setAllText()
 {
-  qDebug( "setAllText( %s )", qPrintable( d->settings.language ) );
   QTranslator * tr = d->createTranslator( d->settings.language );
   if ( tr )
     qApp->installTranslator( tr );
@@ -533,7 +532,6 @@ void MainWindow::setAllText()
 
 void MainWindow::Private::setActionsText()
 {
-  qDebug( "setActionsText()" );
   actions.clearExpression     ->setText( tr("Clear E&xpression")        );
   actions.clearHistory        ->setText( tr("Clear &History")           );
   actions.degree              ->setText( tr("&Degree")                  );
