@@ -16,6 +16,5 @@ i18n/pt.qm
 i18n/ro.qm
 i18n/ru.qm
 i18n/sv.qm
-i18n/sl.qm
 i18n/tr.qm
 )

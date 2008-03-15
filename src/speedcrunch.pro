@@ -51,7 +51,6 @@ TRANSLATIONS += i18n/pt_BR.ts
 TRANSLATIONS += i18n/ro.ts
 TRANSLATIONS += i18n/ru.ts
 TRANSLATIONS += i18n/sv.ts
-TRANSLATIONS += i18n/sl.ts
 TRANSLATIONS += i18n/tr.ts
 
 translations.files += i18n/cs.qm
@@ -71,5 +70,4 @@ translations.files += i18n/pt_BR.qm
 translations.files += i18n/ro.qm
 translations.files += i18n/ru.qm
 translations.files += i18n/sv.qm
-translations.files += i18n/sl.qm
 translations.files += i18n/tr.qm
