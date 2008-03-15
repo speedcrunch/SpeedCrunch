@@ -278,6 +278,7 @@ struct MainWindow::Private
   void syncWindowStateToSettings();
   void saveSettings();
   void setActionsText();
+  void setMenusText();
 
   static QTranslator * createTranslator( const QString & langCode );
 };
@@ -534,8 +535,11 @@ void MainWindow::setAllText()
     d->translator = tr;
   }
 
+  d->setMenusText();
   d->setActionsText();
-  d->docks.book->setLanguage( d->settings.language );
+
+  if ( d->docks.book )
+    d->docks.book->setLanguage( d->settings.language );
 }
 
 
@@ -689,7 +693,7 @@ void MainWindow::Private::createActionShortcuts()
 void MainWindow::Private::createMenus()
 {
   // session
-  menus.session = new QMenu( tr("&Session"), p );
+  menus.session = new QMenu( "", p );
   p->menuBar()->addMenu( menus.session );
   menus.session->addAction( actions.sessionLoad );
   menus.session->addAction( actions.sessionSave );
@@ -700,7 +704,7 @@ void MainWindow::Private::createMenus()
   menus.session->addAction( actions.sessionQuit );
 
   // edit
-  menus.edit = new QMenu( tr("&Edit"), p );
+  menus.edit = new QMenu( "", p );
   p->menuBar()->addMenu( menus.edit );
   menus.edit->addAction( actions.editCopy );
   menus.edit->addAction( actions.editCopyResult );
@@ -717,7 +721,7 @@ void MainWindow::Private::createMenus()
   menus.edit->addAction( actions.clearHistory );
 
   // view
-  menus.view = new QMenu( tr("&View"), p );
+  menus.view = new QMenu( "", p );
   p->menuBar()->addMenu( menus.view );
   menus.view->addAction( actions.showKeypad );
   menus.view->addSeparator();
@@ -733,16 +737,16 @@ void MainWindow::Private::createMenus()
   menus.view->addAction( actions.showFullScreen );
 
   // settings
-  menus.settings = new QMenu( tr("Se&ttings"), p );
+  menus.settings = new QMenu( "", p );
   p->menuBar()->addMenu( menus.settings );
 
   // settings / result format
-  menus.format = menus.settings->addMenu( tr("Result &Format") );
+  menus.format = menus.settings->addMenu( "" );
   menus.format->addAction( actions.formatBinary );
   menus.format->addAction( actions.formatOctal );
 
   // settings / result format / decimal
-  menus.decimal = menus.format->addMenu( tr("&Decimal") );
+  menus.decimal = menus.format->addMenu( "" );
   menus.decimal->addAction( actions.formatGeneral );
   menus.decimal->addAction( actions.formatFixed );
   menus.decimal->addAction( actions.formatEngineering );
@@ -759,12 +763,12 @@ void MainWindow::Private::createMenus()
   menus.format->addAction( actions.formatHexadec );
 
   // settings / angle mode
-  menus.angle = menus.settings->addMenu( tr("&Angle Unit") );
+  menus.angle = menus.settings->addMenu( "" );
   menus.angle->addAction( actions.radian );
   menus.angle->addAction( actions.degree );
 
   // settings / behavior
-  menus.behavior = menus.settings->addMenu( tr("&Behavior") );
+  menus.behavior = menus.settings->addMenu( "" );
   menus.behavior->addAction( actions.optionAutoCalc       );
   menus.behavior->addAction( actions.optionAutoCompletion );
   menus.behavior->addAction( actions.optionHiliteSyntax   );
@@ -772,13 +776,13 @@ void MainWindow::Private::createMenus()
   menus.behavior->addAction( actions.optionMinimizeToTray );
 
   // settings / radix character
-  menus.radixChar = menus.settings->addMenu( tr("Radix &Character") );
+  menus.radixChar = menus.settings->addMenu( "" );
   menus.radixChar->addAction( actions.radixCharAuto  );
   menus.radixChar->addAction( actions.radixCharDot   );
   menus.radixChar->addAction( actions.radixCharComma );
 
   // settings / language
-  menus.language = menus.settings->addMenu( tr("&Language") );
+  menus.language = menus.settings->addMenu( "" );
   menus.language->addAction( actions.languageDefault );
   menus.language->addSeparator();
   menus.language->addAction( actions.languageCs );
@@ -803,7 +807,7 @@ void MainWindow::Private::createMenus()
   menus.language->addAction( actions.languageTr );
 
   // help
-  menus.help = new QMenu( tr("&Help"), p );
+  menus.help = new QMenu( "", p );
   p->menuBar()->addMenu( menus.help );
   menus.help->addAction( actions.helpTipOfTheDay );
   menus.help->addAction( actions.helpGotoWebsite );
@@ -815,6 +819,22 @@ void MainWindow::Private::createMenus()
   p->addActions( p->menuBar()->actions() );
   p->addAction( actions.scrollDown );
   p->addAction( actions.scrollUp );
+}
+
+
+void MainWindow::Private::setMenusText()
+{
+  menus.session  ->setTitle( tr("&Session")         );
+  menus.edit     ->setTitle( tr("&Edit")            );
+  menus.view     ->setTitle( tr("&View")            );
+  menus.settings ->setTitle( tr("Se&ttings")        );
+  menus.format   ->setTitle( tr("Result &Format")   );
+  menus.decimal  ->setTitle( tr("&Decimal")         );
+  menus.angle    ->setTitle( tr("&Angle Unit")      );
+  menus.behavior ->setTitle( tr("&Behavior")        );
+  menus.radixChar->setTitle( tr("Radix &Character") );
+  menus.language ->setTitle( tr("&Language")        );
+  menus.help     ->setTitle( tr("&Help")            );
 }
 
 
