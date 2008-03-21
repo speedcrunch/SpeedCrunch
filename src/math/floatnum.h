@@ -229,7 +229,7 @@ void float_setexponent(floatnum f, int exponent);
    `bufsz' may assume the special value NULLTERMINATED, in which case
    the first found \0 character terminates the input.
    The input format is
-   [+|-][digit...][.[digit...][(e|E)[+|-]digit...]
+   [+|-][digit...][.[digit...][(e|E)[+|-]digit...]]
    At least one digit of the significand has to be present.
    Any non-valid input is converted into a NaN.
    This function never reports an error. */
@@ -290,7 +290,7 @@ char float_neg(floatnum f);
 char float_abs(floatnum f);
 
 /* compares two values and returns +1 if val1 > val2, 0 if val1 == val2
-   and -1 if val1 ` val2.
+   and -1 if val1 < val2.
    This function is not intended to be used with NaN's. If you
    pass it as an argument, UNORDERED is returned to indicate an error.
    errors: NaNOperand */

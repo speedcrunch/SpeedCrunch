@@ -91,6 +91,8 @@ class LongReal: public VariantRefData
     BasicIO convert(int digits, FmtMode mode = Scientific,
                     char base = 10, char scalebase = 10) const;
     static Variant convert(const BasicIO&, const QString& scale);
+    QByteArray xmlWrite() const;
+    bool xmlRead(const char*);
   private:
     floatstruct val;
     static void initClass();

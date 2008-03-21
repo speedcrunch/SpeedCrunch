@@ -173,6 +173,46 @@ VariantData* VariantIntf::construct(VariantType vt)
   return TypeNodes::typeNode(vt)->construct();
 }
 
+int VariantIntf::xmlDataLength(const char* txt)
+{
+  const char* p = txt;
+  while (*p && *p != '<')
+    ++p;
+  while (p != txt)
+    switch (*--p)
+    {
+      case ' ':
+      case 0x9:
+      case 0xA:
+      case 0xD: break;
+      default: return p - txt + 1;
+    }
+  return 0;
+}
+
+int VariantIntf::xmlTrimLeft(const char* txt)
+{
+  const char* p = txt;
+  while (*p)
+    switch (*p)
+    {
+      case ' ':
+      case 0x9:
+      case 0xA:
+      case 0xD: ++p; break;
+      default: return p - txt;
+    }
+    return p - txt;
+}
+
+QByteArray VariantIntf::xmlSetAttr(const char* key, const char* value)
+{
+  QByteArray result(key);
+  result += "=\"";
+  result += value;
+  return result + '"';
+}
+
 VariantData* VariantData::clone() const
 {
   VariantData* newval = construct(type());

@@ -47,6 +47,8 @@ class VariantBase: public VariantIntf
     bool operator = (bool);
     Error operator = (Error);
     operator const VariantData*() const;
+    QByteArray xmlWrite() const;
+    bool xmlRead(const char*);
   protected:
     bool isBuiltIn() const { return m_type != btExtern; };
     void operator = (VariantData*);

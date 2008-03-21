@@ -719,7 +719,7 @@ void Evaluator::compile( const Tokens& tokens ) const
     // helper token: InvalidOp is end-of-expression
     Token token =  ( i < tokens.count() ) ? tokens[i] : Token( Token::stxOperator );
     Token::Type tokenType = token.type();
-    if (tokenType >= Token::stxOperator) //refty
+    if (tokenType >= Token::stxOperator)
       tokenType = Token::stxOperator;
 
 #ifdef EVALUATOR_DEBUG
@@ -833,6 +833,53 @@ void Evaluator::compile( const Tokens& tokens ) const
             }
         }
 
+        // rule for postfix operators
+            if( !ruleFound )
+            if( syntaxStack.itemCount() >= 2 )
+            {
+              Token postfix = syntaxStack.top();
+              Token y = syntaxStack.top( 1 );
+              if ( postfix.isOperator() )
+              if ( !y.isOperator() )
+              switch ( postfix.asOperator() )
+              {
+                case Token::Exclamation:
+                  ruleFound = true;
+                  syntaxStack.pop();
+                  syntaxStack.pop();
+                  syntaxStack.push(y);
+                  d->codes.append( Opcode( Opcode::Fact ) );
+#ifdef EVALUATOR_DEBUG
+                  dbg << "    Rule for postfix operator" << "\n";
+#endif
+                  break;
+                  default:;
+              }
+        }
+
+        // rule for parenthesis:  ( Y ) -> Y
+            if( !ruleFound )
+            if( syntaxStack.itemCount() >= 3 )
+            {
+              Token right = syntaxStack.top();
+              Token y = syntaxStack.top( 1 );
+              Token left = syntaxStack.top( 2 );
+              if( right.isOperator() )
+              if( !y.isOperator() )
+              if( left.isOperator() )
+              if( right.asOperator() == Token::RightPar )
+              if( left.asOperator() == Token::LeftPar )
+              {
+                ruleFound = true;
+                syntaxStack.pop();
+                syntaxStack.pop();
+                syntaxStack.pop();
+                syntaxStack.push( y );
+#ifdef EVALUATOR_DEBUG
+                dbg << "    Rule for (Y) -> Y" << "\n";
+#endif
+              }
+            }
 
         // rule for simplified syntax for function e.g. "sin pi" or "cos 1.2"
         // i.e no need for parentheses like "sin(pi)" or "cos(1.2)"
@@ -883,6 +930,7 @@ void Evaluator::compile( const Tokens& tokens ) const
             }
           }
 
+#if 0
          // rule for unary postfix operator in simplified function syntax
          // this handles case like "sin 90!"
          if( !ruleFound )
@@ -907,7 +955,7 @@ void Evaluator::compile( const Tokens& tokens ) const
                }
             }
          }
-
+#endif
 
         // rule for function arguments, if token is , or )
         // id ( arg1 ; arg2 -> id ( arg
@@ -958,30 +1006,6 @@ void Evaluator::compile( const Tokens& tokens ) const
             d->codes.append( Opcode( Opcode::Function, 0 ) );
 #ifdef EVALUATOR_DEBUG
           dbg << "    Rule for function call with parentheses, but without argument" << "\n";
-#endif
-          }
-        }
-
-        // rule for parenthesis:  ( Y ) -> Y
-        if( !ruleFound )
-        if( syntaxStack.itemCount() >= 3 )
-        {
-          Token right = syntaxStack.top();
-          Token y = syntaxStack.top( 1 );
-          Token left = syntaxStack.top( 2 );
-          if( right.isOperator() )
-          if( !y.isOperator() )
-          if( left.isOperator() )
-          if( right.asOperator() == Token::RightPar )
-          if( left.asOperator() == Token::LeftPar )
-          {
-            ruleFound = true;
-            syntaxStack.pop();
-            syntaxStack.pop();
-            syntaxStack.pop();
-            syntaxStack.push( y );
-#ifdef EVALUATOR_DEBUG
-          dbg << "    Rule for (Y) -> Y" << "\n";
 #endif
           }
         }
@@ -1046,6 +1070,7 @@ void Evaluator::compile( const Tokens& tokens ) const
                if( op2.asOperator() == Token::Minus )
                   d->codes.append( Opcode( Opcode::Neg ) );
             }
+#if 0
             else // maybe postfix
             {
                x = op2; op2 = syntaxStack.top();
@@ -1056,6 +1081,7 @@ void Evaluator::compile( const Tokens& tokens ) const
                   d->codes.append( Opcode( Opcode::Fact ) );
                }
             }
+#endif
             if (ruleFound)
             {
                syntaxStack.pop();
@@ -1072,7 +1098,7 @@ void Evaluator::compile( const Tokens& tokens ) const
          // action: push (op) to result
          if( !ruleFound )
          if( token.asOperator() != Token::LeftPar )
-         if( token.asOperator() != Token::Caret )
+//         if( token.asOperator() != Token::Caret )
          if( token.asOperator() != Token::Exclamation)
          if( syntaxStack.itemCount() == 2 )
          {
@@ -1106,8 +1132,8 @@ void Evaluator::compile( const Tokens& tokens ) const
             }
           }
 
-        if( !ruleFound ) break;
-      }
+         if( !ruleFound ) break;
+       }
 
       // can't apply rules anymore, push the token
       if( token.asOperator() != Token::Percent )

@@ -108,6 +108,27 @@ void VariantBase::operator = (const VariantBase& other)
     *this = (Error)other;
 }
 
+QByteArray VariantBase::xmlWrite() const
+{
+  QByteArray result;
+  if (isBool())
+    result.setNum(int(boolval));
+  else
+    result.setNum(int(Error(*this)));
+  return result;
+}
+
+bool VariantBase::xmlRead(const char* data)
+{
+  unsigned val = QByteArray::fromRawData(data,
+                        xmlDataLength(data + xmlTrimLeft(data))).toUInt();
+  if (isBool())
+    boolval = val != 0;
+  else
+    error = Error(val);
+  return error <= NotAnError;
+}
+
 void Variant::operator = (VariantData* newval)
 {
   if (newval != (VariantData*)this || !isBuiltIn())
@@ -122,7 +143,7 @@ Variant& Variant::operator = (const Variant& other)
   if (&other != this)
   {
     if (!other.isBuiltIn())
-      *this = other.operator const VariantData*()->clone();
+      *this = ((const VariantData*)(other))->clone();
     else
       VariantBase::operator = (other);
   }

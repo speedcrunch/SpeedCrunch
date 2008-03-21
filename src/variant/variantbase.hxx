@@ -43,6 +43,7 @@ class VariantIntf
 {
   public: // virtual constructor
     typedef VariantData* (*Constructor)();
+    virtual ~VariantIntf() {};
   public: // variant types
     typedef const void* VariantType;
     virtual VariantType type() const = 0;
@@ -51,12 +52,17 @@ class VariantIntf
     static const char* nLongReal;
     static VariantType variantType(const char* name);
     static const char* typeName(VariantType);
-  public:
-    virtual ~VariantIntf() {};
+  public: // IO
+    virtual QByteArray xmlWrite() const = 0;
+    virtual bool xmlRead(const char*) = 0;
   protected:
     static void initClass();
     static VariantType registerType(Constructor, const char* name);
     static VariantData* construct(VariantType);
+  protected: // XML primitives
+    static int xmlDataLength(const char*);
+    static int xmlTrimLeft(const char*);
+    static QByteArray xmlSetAttr(const char* key, const char* value);
 };
 
 class VariantData: public VariantIntf

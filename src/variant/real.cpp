@@ -167,6 +167,23 @@ int LongReal::workPrec()
   return longrealPrec + 3;
 }
 
+QByteArray LongReal::xmlWrite() const
+{
+  QByteArray result;
+  int lg = float_getlength(&val) + BITS_IN_EXP + 2;
+  result.resize(lg);
+  result.resize(float_getscientific(result.data(), lg, &val));
+  return result;
+}
+
+bool LongReal::xmlRead(const char* txt)
+{
+  txt += xmlTrimLeft(txt);
+  int lg = xmlDataLength(txt);
+  float_setscientific(&val, txt, lg);
+  return float_isnan(&val) == 0;
+}
+
 LongReal::BasicIO LongReal::convert(int digits, FmtMode mode,
                    char base, char scalebase) const
 {
