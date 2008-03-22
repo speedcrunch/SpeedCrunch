@@ -308,18 +308,12 @@ MainWindow::Private::Private()
 
 MainWindow::Private::~Private()
 {
-  if ( widgets.trayIcon )
-    widgets.trayIcon->hide();
-  if ( docks.book )
-    deleteBookDock();
-  if ( docks.constants )
-    deleteConstantsDock();
-  if ( docks.variables )
-    deleteVariablesDock();
-  if ( docks.functions )
-    deleteFunctionsDock();
-  if ( docks.history )
-    deleteHistoryDock();
+  if ( widgets.trayIcon ) widgets.trayIcon->hide();
+  if ( docks.book       ) deleteBookDock();
+  if ( docks.constants  ) deleteConstantsDock();
+  if ( docks.variables  ) deleteVariablesDock();
+  if ( docks.functions  ) deleteFunctionsDock();
+  if ( docks.history    ) deleteHistoryDock();
 }
 
 
@@ -529,79 +523,87 @@ void MainWindow::Private::createActions()
 
 void MainWindow::setAllText()
 {
-  QTranslator * tr = d->createTranslator( d->settings.language );
+  QTranslator * tr = 0;
+  tr = d->createTranslator( d->settings.language );
   if ( tr )
   {
+    qDebug( "created new translator (%s)", qPrintable( d->settings.language ) );
     if ( d->translator )
+    {
       qApp->removeTranslator( d->translator );
+      delete d->translator;
+    }
+
     qApp->installTranslator( tr );
     d->translator = tr;
+
+    d->setMenusText();
+    d->setActionsText();
+
+    if ( d->docks.book )
+      d->docks.book->setLanguage( d->settings.language );
   }
-
-  d->setMenusText();
-  d->setActionsText();
-
-  if ( d->docks.book )
-    d->docks.book->setLanguage( d->settings.language );
 }
 
 
 void MainWindow::Private::setActionsText()
 {
-  actions.clearExpression     ->setText( tr("Clear E&xpression")        );
-  actions.clearHistory        ->setText( tr("Clear &History")           );
-  actions.degree              ->setText( tr("&Degree")                  );
-  actions.deleteAllVariables  ->setText( tr("Delete All V&ariables")    );
-  actions.deleteVariable      ->setText( tr("D&elete Variable...")      );
-  actions.digits15            ->setText( tr("&15 Decimal Digits")       );
-  actions.digits2             ->setText( tr("&2 Decimal Digits")        );
-  actions.digits3             ->setText( tr("&3 Decimal Digits")        );
-  actions.digits50            ->setText( tr("&50 Decimal Digits")       );
-  actions.digits8             ->setText( tr("&8 Decimal Digits")        );
-  actions.digitsAuto          ->setText( tr("&Automatic Precision")     );
-  actions.editCopy            ->setText( tr("&Copy")                    );
-  actions.editCopyResult      ->setText( tr("Copy Last &Result")        );
-  actions.editPaste           ->setText( tr("&Paste")                   );
-  actions.helpAbout           ->setText( tr("&About")                   );
-  actions.helpAboutQt         ->setText( tr("About &Qt")                );
-  actions.helpGotoWebsite     ->setText( tr("SpeedCrunch &Web Site...") );
-  actions.helpTipOfTheDay     ->setText( tr("&Tip of the Day")          );
-  actions.insertFunction      ->setText( tr("Insert &Function...")      );
-  actions.insertVariable      ->setText( tr("Insert &Variable...")      );
-  actions.optionAutoCalc      ->setText( tr("&Partial Results")         );
-  actions.optionAutoCompletion->setText( tr("Automatic &Completion")    );
-  actions.optionAlwaysOnTop   ->setText( tr("Always On &Top")           );
-  actions.optionMinimizeToTray->setText( tr("&Minimize To System Tray") );
-  actions.optionHiliteSyntax  ->setText( tr("Syntax &Highlighting")     );
-  actions.radixCharAuto       ->setText( tr("&System Default")          );
-  actions.radixCharDot        ->setText( tr("&Dot")                     );
-  actions.radixCharComma      ->setText( tr("&Comma")                   );
-  actions.radian              ->setText( tr("&Radian")                  );
-  actions.scrollDown          ->setText( tr("Scroll Display Down")      );
-  actions.scrollUp            ->setText( tr("Scroll Display Up")        );
-  actions.selectExpression    ->setText( tr("&Select Expression")       );
-  actions.sessionImport       ->setText( tr("&Import...")               );
-  actions.sessionLoad         ->setText( tr("&Load...")                 );
-  actions.sessionQuit         ->setText( tr("&Quit")                    );
-  actions.sessionSave         ->setText( tr("&Save...")                 );
-  actions.sessionExport       ->setText( tr("&Export...")               );
-  actions.showBook            ->setText( tr("Math &Book")               );
-  actions.showConstants       ->setText( tr("&Constants")               );
-  actions.showFullScreen      ->setText( tr("Full &Screen Mode")        );
-  actions.showFunctions       ->setText( tr("&Functions")               );
-  actions.showHistory         ->setText( tr("&History")                 );
-  actions.showKeypad          ->setText( tr("&Keypad")                  );
-  actions.showMenuBar         ->setText( tr("Hide &Menu Bar")           );
-  actions.showStatusBar       ->setText( tr("&Status Bar")              );
-  actions.showVariables       ->setText( tr("&Variables")               );
-  actions.formatBinary        ->setText( tr("&Binary")                  );
-  actions.formatEngineering   ->setText( tr("&Engineering")             );
-  actions.formatFixed         ->setText( tr("&Fixed Decimal")           );
-  actions.formatGeneral       ->setText( tr("&General")                 );
-  actions.formatHexadec       ->setText( tr("&Hexadecimal")             );
-  actions.formatOctal         ->setText( tr("&Octal")                   );
-  actions.formatScientific    ->setText( tr("&Scientific")              );
-  actions.languageDefault     ->setText( tr("System &Default")          );
+  qDebug( "%s", qPrintable( MainWindow::tr( "&Session" ) ) );
+
+  actions.clearExpression     ->setText( MainWindow::tr( "Clear E&xpression"        ) );
+  actions.clearHistory        ->setText( MainWindow::tr( "Clear &History"           ) );
+  actions.degree              ->setText( MainWindow::tr( "&Degree"                  ) );
+  actions.deleteAllVariables  ->setText( MainWindow::tr( "Delete All V&ariables"    ) );
+  actions.deleteVariable      ->setText( MainWindow::tr( "D&elete Variable..."      ) );
+  actions.digits15            ->setText( MainWindow::tr( "&15 Decimal Digits"       ) );
+  actions.digits2             ->setText( MainWindow::tr( "&2 Decimal Digits"        ) );
+  actions.digits3             ->setText( MainWindow::tr( "&3 Decimal Digits"        ) );
+  actions.digits50            ->setText( MainWindow::tr( "&50 Decimal Digits"       ) );
+  actions.digits8             ->setText( MainWindow::tr( "&8 Decimal Digits"        ) );
+  actions.digitsAuto          ->setText( MainWindow::tr( "&Automatic Precision"     ) );
+  actions.editCopy            ->setText( MainWindow::tr( "&Copy"                    ) );
+  actions.editCopyResult      ->setText( MainWindow::tr( "Copy Last &Result"        ) );
+  actions.editPaste           ->setText( MainWindow::tr( "&Paste"                   ) );
+  actions.helpAbout           ->setText( MainWindow::tr( "&About"                   ) );
+  actions.helpAboutQt         ->setText( MainWindow::tr( "About &Qt"                ) );
+  actions.helpGotoWebsite     ->setText( MainWindow::tr( "SpeedCrunch &Web Site..." ) );
+  actions.helpTipOfTheDay     ->setText( MainWindow::tr( "&Tip of the Day"          ) );
+  actions.insertFunction      ->setText( MainWindow::tr( "Insert &Function..."      ) );
+  actions.insertVariable      ->setText( MainWindow::tr( "Insert &Variable..."      ) );
+  actions.optionAutoCalc      ->setText( MainWindow::tr( "&Partial Results"         ) );
+  actions.optionAutoCompletion->setText( MainWindow::tr( "Automatic &Completion"    ) );
+  actions.optionAlwaysOnTop   ->setText( MainWindow::tr( "Always On &Top"           ) );
+  actions.optionMinimizeToTray->setText( MainWindow::tr( "&Minimize To System Tray" ) );
+  actions.optionHiliteSyntax  ->setText( MainWindow::tr( "Syntax &Highlighting"     ) );
+  actions.radixCharAuto       ->setText( MainWindow::tr( "&System Default"          ) );
+  actions.radixCharDot        ->setText( MainWindow::tr( "&Dot"                     ) );
+  actions.radixCharComma      ->setText( MainWindow::tr( "&Comma"                   ) );
+  actions.radian              ->setText( MainWindow::tr( "&Radian"                  ) );
+  actions.scrollDown          ->setText( MainWindow::tr( "Scroll Display Down"      ) );
+  actions.scrollUp            ->setText( MainWindow::tr( "Scroll Display Up"        ) );
+  actions.selectExpression    ->setText( MainWindow::tr( "&Select Expression"       ) );
+  actions.sessionImport       ->setText( MainWindow::tr( "&Import..."               ) );
+  actions.sessionLoad         ->setText( MainWindow::tr( "&Load..."                 ) );
+  actions.sessionQuit         ->setText( MainWindow::tr( "&Quit"                    ) );
+  actions.sessionSave         ->setText( MainWindow::tr( "&Save..."                 ) );
+  actions.sessionExport       ->setText( MainWindow::tr( "&Export..."               ) );
+  actions.showBook            ->setText( MainWindow::tr( "Math &Book"               ) );
+  actions.showConstants       ->setText( MainWindow::tr( "&Constants"               ) );
+  actions.showFullScreen      ->setText( MainWindow::tr( "Full &Screen Mode"        ) );
+  actions.showFunctions       ->setText( MainWindow::tr( "&Functions"               ) );
+  actions.showHistory         ->setText( MainWindow::tr( "&History"                 ) );
+  actions.showKeypad          ->setText( MainWindow::tr( "&Keypad"                  ) );
+  actions.showMenuBar         ->setText( MainWindow::tr( "Hide &Menu Bar"           ) );
+  actions.showStatusBar       ->setText( MainWindow::tr( "&Status Bar"              ) );
+  actions.showVariables       ->setText( MainWindow::tr( "&Variables"               ) );
+  actions.formatBinary        ->setText( MainWindow::tr( "&Binary"                  ) );
+  actions.formatEngineering   ->setText( MainWindow::tr( "&Engineering"             ) );
+  actions.formatFixed         ->setText( MainWindow::tr( "&Fixed Decimal"           ) );
+  actions.formatGeneral       ->setText( MainWindow::tr( "&General"                 ) );
+  actions.formatHexadec       ->setText( MainWindow::tr( "&Hexadecimal"             ) );
+  actions.formatOctal         ->setText( MainWindow::tr( "&Octal"                   ) );
+  actions.formatScientific    ->setText( MainWindow::tr( "&Scientific"              ) );
+  actions.languageDefault     ->setText( MainWindow::tr( "System &Default"          ) );
 }
 
 
@@ -827,17 +829,17 @@ void MainWindow::Private::createMenus()
 
 void MainWindow::Private::setMenusText()
 {
-  menus.session  ->setTitle( tr("&Session")         );
-  menus.edit     ->setTitle( tr("&Edit")            );
-  menus.view     ->setTitle( tr("&View")            );
-  menus.settings ->setTitle( tr("Se&ttings")        );
-  menus.format   ->setTitle( tr("Result &Format")   );
-  menus.decimal  ->setTitle( tr("&Decimal")         );
-  menus.angle    ->setTitle( tr("&Angle Unit")      );
-  menus.behavior ->setTitle( tr("&Behavior")        );
-  menus.radixChar->setTitle( tr("Radix &Character") );
-  menus.language ->setTitle( tr("&Language")        );
-  menus.help     ->setTitle( tr("&Help")            );
+  menus.session  ->setTitle( MainWindow::tr("&Session")         );
+  menus.edit     ->setTitle( MainWindow::tr("&Edit")            );
+  menus.view     ->setTitle( MainWindow::tr("&View")            );
+  menus.settings ->setTitle( MainWindow::tr("Se&ttings")        );
+  menus.format   ->setTitle( MainWindow::tr("Result &Format")   );
+  menus.decimal  ->setTitle( MainWindow::tr("&Decimal")         );
+  menus.angle    ->setTitle( MainWindow::tr("&Angle Unit")      );
+  menus.behavior ->setTitle( MainWindow::tr("&Behavior")        );
+  menus.radixChar->setTitle( MainWindow::tr("Radix &Character") );
+  menus.language ->setTitle( MainWindow::tr("&Language")        );
+  menus.help     ->setTitle( MainWindow::tr("&Help")            );
 }
 
 
@@ -846,18 +848,18 @@ void MainWindow::Private::createStatusBar()
   QStatusBar * bar = p->statusBar();
 
   QString angleUnit = (settings.angleMode == 'r') ?
-    tr( "Radian" ) : tr( "Degree" );
+    MainWindow::tr( "Radian" ) : MainWindow::tr( "Degree" );
 
   QString format;
   switch ( settings.format )
   {
-    case 'b' : format = tr( "Binary"              ); break;
-    case 'o' : format = tr( "Octal"               ); break;
-    case 'h' : format = tr( "Hexadecimal"         ); break;
-    case 'f' : format = tr( "Fixed decimal"       ); break;
-    case 'n' : format = tr( "Engineering decimal" ); break;
-    case 'e' : format = tr( "Scientific decimal"  ); break;
-    case 'g' : format = tr( "General decimal"     ); break;
+    case 'b' : format = MainWindow::tr( "Binary"              ); break;
+    case 'o' : format = MainWindow::tr( "Octal"               ); break;
+    case 'h' : format = MainWindow::tr( "Hexadecimal"         ); break;
+    case 'f' : format = MainWindow::tr( "Fixed decimal"       ); break;
+    case 'n' : format = MainWindow::tr( "Engineering decimal" ); break;
+    case 'e' : format = MainWindow::tr( "Scientific decimal"  ); break;
+    case 'g' : format = MainWindow::tr( "General decimal"     ); break;
 
     default : break;
   }
@@ -868,8 +870,8 @@ void MainWindow::Private::createStatusBar()
   status.angleUnit->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
   status.format   ->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
 
-  status.angleUnit->setToolTip( tr( "Angle unit"    ) );
-  status.format   ->setToolTip( tr( "Result format" ) );
+  status.angleUnit->setToolTip( MainWindow::tr( "Angle unit"    ) );
+  status.format   ->setToolTip( MainWindow::tr( "Result format" ) );
 
   bar->addWidget( status.angleUnit );
   bar->addWidget( status.format    );
@@ -948,7 +950,7 @@ void MainWindow::Private::createKeypad()
 void MainWindow::Private::createBookDock()
 {
   docks.book = new BookDock( QString( BOOKSDIR ), "math_index.html",
-                             tr("Math Book"), settings.language, p );
+                             MainWindow::tr("Math Book"), settings.language, p );
   docks.book->setObjectName( "BookDock" );
   docks.book->installEventFilter( p );
   p->addDockWidget( Qt::RightDockWidgetArea, docks.book );
@@ -1475,7 +1477,7 @@ void MainWindow::about()
 
 void MainWindow::aboutQt()
 {
-  QMessageBox::aboutQt( this, tr("About Qt") );
+  QMessageBox::aboutQt( this, tr( "About Qt" ) );
 }
 
 
@@ -1630,9 +1632,9 @@ void MainWindow::insertVariable()
 
 void MainWindow::loadSession()
 {
-  QString errMsg  = tr("File %1 is not a valid session");
-  QString filters = tr("SpeedCrunch Sessions (*.sch);;All Files (*)");
-  QString fname   = QFileDialog::getOpenFileName( this, tr("Load Session"),
+  QString errMsg  = tr( "File %1 is not a valid session" );
+  QString filters = tr( "SpeedCrunch Sessions (*.sch);;All Files (*)" );
+  QString fname   = QFileDialog::getOpenFileName( this, tr( "Load Session" ),
                                                   QString::null, filters );
   if ( fname.isEmpty() )
     return;
@@ -1640,8 +1642,8 @@ void MainWindow::loadSession()
   QFile file( fname );
   if ( ! file.open( QIODevice::ReadOnly ) )
   {
-    QMessageBox::critical( this, tr("Error"),
-                           tr("Can't read from file %1").arg( fname ) );
+    QMessageBox::critical( this, tr( "Error" ),
+                           tr( "Can't read from file %1" ).arg( fname ) );
     return;
   }
 
@@ -1651,7 +1653,7 @@ void MainWindow::loadSession()
   QString version = stream.readLine();
   if ( version != "0.10" )
   {
-    QMessageBox::critical( this, tr("Error"), errMsg.arg( fname ) );
+    QMessageBox::critical( this, tr( "Error" ), errMsg.arg( fname ) );
     return;
   }
 
@@ -1660,16 +1662,16 @@ void MainWindow::loadSession()
   int noCalcs = stream.readLine().toInt( &ok );
   if ( ok == false || noCalcs < 0 )
   {
-    QMessageBox::critical( this, tr("Error"), errMsg.arg( fname ) );
+    QMessageBox::critical( this, tr( "Error" ), errMsg.arg( fname ) );
     return;
   }
 
   // ask for merge with current session
-  QString mergeMsg = tr("Merge session being loaded with current session?\n"
-                        "If no, current variables and display will be "
-                        "cleared.");
+  QString mergeMsg = tr( "Merge session being loaded with current session?\n"
+                         "If no, current variables and display will be "
+                         "cleared." );
   QMessageBox::StandardButton but
-    = QMessageBox::question( this, tr("Question"), mergeMsg,
+    = QMessageBox::question( this, tr( "Question" ), mergeMsg,
                              QMessageBox::Yes | QMessageBox::No
                              | QMessageBox::Cancel, QMessageBox::Yes );
 
@@ -1693,7 +1695,7 @@ void MainWindow::loadSession()
     QString res = stream.readLine();
     if ( exp.isNull() || res.isNull() )
     {
-      QMessageBox::critical( this, tr("Error"), errMsg.arg( fname ) );
+      QMessageBox::critical( this, tr( "Error" ), errMsg.arg( fname ) );
       return;
     }
     expLs.append( exp );
@@ -1714,7 +1716,7 @@ void MainWindow::loadSession()
   int noVars = stream.readLine().toInt( &ok );
   if ( ok == false || noVars < 0 )
   {
-    QMessageBox::critical( this, tr("Error"), errMsg.arg( fname ) );
+    QMessageBox::critical( this, tr( "Error" ), errMsg.arg( fname ) );
     return;
   }
   for ( int i = 0; i < noVars; i++ )
@@ -1723,7 +1725,7 @@ void MainWindow::loadSession()
     QString val = stream.readLine();
     if ( var.isNull() || val.isNull() )
     {
-      QMessageBox::critical( this, tr("Error"), errMsg.arg( fname ) );
+      QMessageBox::critical( this, tr( "Error" ), errMsg.arg( fname ) );
       return;
     }
     HNumber num( val.toAscii().data() );
@@ -1737,8 +1739,8 @@ void MainWindow::loadSession()
 
 void MainWindow::importSession()
 {
-  QString filters = tr("All Files (*)");
-  QString fname = QFileDialog::getOpenFileName( this, tr("Import Session"),
+  QString filters = tr( "All Files (*)" );
+  QString fname = QFileDialog::getOpenFileName( this, tr( "Import Session" ),
                                                 QString::null, filters );
   if ( fname.isEmpty() )
     return;
@@ -1746,17 +1748,17 @@ void MainWindow::importSession()
   QFile file( fname );
   if ( ! file.open( QIODevice::ReadOnly ) )
   {
-    QMessageBox::critical( this, tr("Error"),
-                           tr("Can't read from file %1").arg( fname ) );
+    QMessageBox::critical( this, tr( "Error" ),
+                           tr( "Can't read from file %1" ).arg( fname ) );
     return;
   }
 
   // ask for merge with current session
-  QString mergeMsg = tr("Merge session being imported with current session?\n"
-                        "If no, current variables and display will be "
-                        "cleared.");
+  QString mergeMsg = tr( "Merge session being imported with current session?\n"
+                         "If no, current variables and display will be "
+                         "cleared." );
   QMessageBox::StandardButton but
-    = QMessageBox::question( this, tr("Question"), mergeMsg,
+    = QMessageBox::question( this, tr( "Question" ), mergeMsg,
                              QMessageBox::Yes | QMessageBox::No
                              | QMessageBox::Cancel, QMessageBox::Yes );
 
@@ -1788,8 +1790,8 @@ void MainWindow::importSession()
       if ( ! ignoreAll )
       {
         QMessageBox::StandardButton but
-          = QMessageBox::warning( this, tr("Error"),
-              QString( "Ignore error?" ) + "\n" + d->evaluator->error(),
+          = QMessageBox::warning( this, tr( "Error" ),
+              tr( "Ignore error?" ) + "\n" + d->evaluator->error(),
               QMessageBox::Yes | QMessageBox::YesToAll | QMessageBox::Cancel,
               QMessageBox::Yes );
 
@@ -1864,7 +1866,7 @@ void MainWindow::minimizeToTrayToggled( bool b )
   {
     d->conditions.trayNotify = true;
     d->widgets.trayIcon = new QSystemTrayIcon( this );
-    d->widgets.trayIcon->setToolTip( tr("SpeedCrunch") );
+    d->widgets.trayIcon->setToolTip( tr( "SpeedCrunch" ) );
     d->widgets.trayIcon->setIcon( QPixmap( ":/speedcrunch.png" ) );
 
     d->menus.trayIcon = new QMenu( this );
@@ -1912,8 +1914,8 @@ void MainWindow::radian()
 
 void MainWindow::saveSession()
 {
-  QString filters = tr("SpeedCrunch Sessions (*.sch);;All Files (*)");
-  QString fname = QFileDialog::getSaveFileName( this, tr("Save Session"),
+  QString filters = tr( "SpeedCrunch Sessions (*.sch);;All Files (*)" );
+  QString fname = QFileDialog::getSaveFileName( this, tr( "Save Session" ),
                                                 QString::null, filters );
   if ( fname.isEmpty() )
     return;
@@ -1921,8 +1923,8 @@ void MainWindow::saveSession()
   QFile file( fname );
   if ( ! file.open( QIODevice::WriteOnly ) )
   {
-    QMessageBox::critical( this, tr("Error"),
-                           tr("Can't write to file %1").arg( fname ) );
+    QMessageBox::critical( this, tr( "Error" ),
+                           tr( "Can't write to file %1" ).arg( fname ) );
     return;
   }
 
@@ -1959,8 +1961,8 @@ void MainWindow::saveSession()
 
 void MainWindow::exportSession()
 {
-  QString filters = tr("All Files (*)");
-  QString fname = QFileDialog::getSaveFileName( this, tr("Export Session"),
+  QString filters = tr( "All Files (*)" );
+  QString fname = QFileDialog::getSaveFileName( this, tr( "Export Session" ),
                                                 QString::null, filters );
   if ( fname.isEmpty() )
     return;
@@ -1968,8 +1970,8 @@ void MainWindow::exportSession()
   QFile file( fname );
   if ( ! file.open( QIODevice::WriteOnly ) )
   {
-    QMessageBox::critical( this, tr("Error"),
-                           tr("Can't write to file %1").arg( fname ) );
+    QMessageBox::critical( this, tr( "Error" ),
+                           tr( "Can't write to file %1" ).arg( fname ) );
     return;
   }
 
@@ -2278,14 +2280,14 @@ void MainWindow::showKeypad( bool b )
 
 void MainWindow::showMenuBarTip()
 {
-  QString msg = tr("The menu bar is now hidden. "
-                   "To make it visible again, press Ctrl+Alt+M.");
+  QString msg = tr( "The menu bar is now hidden. "
+                    "To make it visible again, press Ctrl+Alt+M." );
 
   //QPoint p = mapFromGlobal( d->widgets.display->mapToGlobal( QPoint(0, 0) ) )
   //                          += QPoint(5, 5);
   d->widgets.tip->move( 5, 10 );
   d->widgets.tip->resize( 345, d->widgets.tip->sizeHint().height() );
-  d->widgets.tip->showText( msg, tr("Warning") );
+  d->widgets.tip->showText( msg, tr( "Warning" ) );
 }
 
 
@@ -2301,28 +2303,28 @@ void MainWindow::showTipOfTheDay()
   switch ( tipNo )
   {
     case 0:
-      msg = tr("To insert a function using keyboard, use Ctrl+F shorcut. "
-               "From the dialog, you can choose the function you want to "
-               "insert." );
+      msg = tr( "To insert a function using keyboard, use Ctrl+F shorcut. "
+                "From the dialog, you can choose the function you want to "
+                "insert." );
       break;
     case 1:
-      msg = tr("To insert a variable using keyboard, use Ctrl+I shorcut. "
-               "From the dialog, you can choose the variable you want to "
-               "insert." );
+      msg = tr( "To insert a variable using keyboard, use Ctrl+I shorcut. "
+                "From the dialog, you can choose the variable you want to "
+                "insert." );
       break;
     case 2:
-      msg = tr("Use variable <i>pi</i> to use pi constant." );
+      msg = tr( "Use variable <i>pi</i> to use pi constant." );
       break;
 
     case 3:
-      msg = tr("Use <i>;</i> (semicolon) to separate the parameters in "
-               "functions." );
+      msg = tr( "Use <i>;</i> (semicolon) to separate the parameters in "
+                "functions." );
       break;
     default:
       break;
   }
 
-  d->widgets.tip->showText( msg, tr("Tip of the day") );
+  d->widgets.tip->showText( msg, tr( "Tip of the day" ) );
 }
 
 
@@ -2625,7 +2627,7 @@ void MainWindow::returnPressed()
   HNumber result = d->evaluator->evalUpdateAns();
   if ( ! d->evaluator->error().isEmpty() )
   {
-    QMessageBox::warning( this, tr("Error"), d->evaluator->error() );
+    QMessageBox::warning( this, tr( "Error" ), d->evaluator->error() );
   }
   else
   {
@@ -2655,8 +2657,8 @@ void MainWindow::returnPressed()
 
 void MainWindow::showTrayMessage()
 {
-  QString msg = tr("SpeedCrunch is minimized.\nLeft click the icon to "
-                   "restore it or right click for options.");
+  QString msg = tr( "SpeedCrunch is minimized.\nLeft click the icon to "
+                    "restore it or right click for options." );
   if ( d->widgets.trayIcon )
     d->widgets.trayIcon->showMessage( QString(), msg, QSystemTrayIcon::NoIcon,
                                       4000 );

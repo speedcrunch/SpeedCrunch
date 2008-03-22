@@ -104,6 +104,7 @@ class MainWindow : public QMainWindow
     void radixCharDotActivated();
     void radixCharCommaActivated();
     void changeLanguage();
+    void setAllText();
 
   protected slots:
     void activate();
@@ -121,7 +122,6 @@ class MainWindow : public QMainWindow
     void setPrecision( int );
     void setFormat( char );
     void setRadixChar( char );
-    void setAllText();
 
   protected:
     void closeEvent( QCloseEvent * );
