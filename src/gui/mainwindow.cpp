@@ -527,7 +527,6 @@ void MainWindow::setAllText()
   tr = d->createTranslator( d->settings.language );
   if ( tr )
   {
-    qDebug( "created new translator (%s)", qPrintable( d->settings.language ) );
     if ( d->translator )
     {
       qApp->removeTranslator( d->translator );
@@ -548,8 +547,6 @@ void MainWindow::setAllText()
 
 void MainWindow::Private::setActionsText()
 {
-  qDebug( "%s", qPrintable( MainWindow::tr( "&Session" ) ) );
-
   actions.clearExpression     ->setText( MainWindow::tr( "Clear E&xpression"        ) );
   actions.clearHistory        ->setText( MainWindow::tr( "Clear &History"           ) );
   actions.degree              ->setText( MainWindow::tr( "&Degree"                  ) );
