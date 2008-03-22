@@ -1991,10 +1991,10 @@ void MainWindow::setWidgetsDirection()
   setWidgetDirection( d->settings.language, d->menus.format    );
   setWidgetDirection( d->settings.language, d->menus.decimal   );
   setWidgetDirection( d->settings.language, d->menus.settings  );
+  setWidgetDirection( d->settings.language, d->menus.angle     );
   setWidgetDirection( d->settings.language, d->menus.behavior  );
   setWidgetDirection( d->settings.language, d->menus.radixChar );
   //setWidgetDirection( d->settings.language, d->menus.theme     );
-  //setWidgetDirection( d->settings.language, d->menus.language  );
   setWidgetDirection( d->settings.language, d->menus.help      );
   // tip of the day
   setWidgetDirection( d->settings.language, d->widgets.tip );
