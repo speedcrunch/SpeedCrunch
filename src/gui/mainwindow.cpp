@@ -300,6 +300,9 @@ MainWindow::Private::Private()
   docks.constants = 0;
   docks.functions = 0;
   docks.variables = 0;
+
+  status.angleUnit = 0;
+  status.format    = 0;
 };
 
 
