@@ -39,13 +39,13 @@ typedef HNumber (*FunctionPtr)( Function *, const QVector<HNumber> & );
 class Function
 {
   public:
-    Function( const QString & name, int argc, FunctionPtr ptr, const QString & desc,
+    Function( const QString & name, int argc, FunctionPtr ptr,
               Functions * parent );
-    Function( const QString & name, FunctionPtr ptr, const QString & desc,
-              Functions * parent );
+    Function( const QString & name, FunctionPtr ptr, Functions * parent );
     ~Function();
 
     QString     description() const;
+    void        setDescription( const QString & );
     QString     error() const;
     HNumber     exec( const QVector<HNumber> & args );
     QString     name() const;
@@ -55,6 +55,7 @@ class Function
   private:
     struct Private;
     Private * const d;
+    Function();
     Function( const Function & );
     Function & operator=( const Function & );
 };
@@ -71,10 +72,11 @@ class Functions : public QObject
     void        add( Function * );
     Function *  function( const QString & ) const;
     QStringList functionNames() const;
+    char        angleMode();
 
   public slots:
-    char angleMode();          // 'r': radian (default)
-    void setAngleMode( char ); // 'd': degree
+    void setAngleMode( char ); // 'r': radian (default) / 'd': degree
+    void retranslateText();
 
   private:
     struct Private;

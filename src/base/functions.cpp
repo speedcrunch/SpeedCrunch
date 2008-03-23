@@ -50,25 +50,22 @@ struct Function::Private
 // public (Function)
 
 Function::Function( const QString & name, int argc, FunctionPtr ptr,
-                    const QString & desc, Functions * parent )
-  : d( new Function::Private )
-{
-  d->functions = parent;
-  d->name      = name;
-  d->argc      = argc;
-  d->desc      = QApplication::translate( "Functions", desc.toLatin1() );
-  d->ptr       = ptr;
-}
-
-
-Function::Function( const QString & name, FunctionPtr ptr, const QString & desc,
                     Functions * parent )
   : d( new Function::Private )
 {
   d->functions = parent;
   d->name      = name;
+  d->argc      = argc;
+  d->ptr       = ptr;
+}
+
+
+Function::Function( const QString & name, FunctionPtr ptr, Functions * parent )
+  : d( new Function::Private )
+{
+  d->functions = parent;
+  d->name      = name;
   d->argc      = -1;
-  d->desc      = QApplication::translate( "Functions", desc.toLatin1() );
   d->ptr       = ptr;
 }
 
@@ -76,6 +73,12 @@ Function::Function( const QString & name, FunctionPtr ptr, const QString & desc,
 QString Function::description() const
 {
   return d->desc;
+}
+
+
+void Function::setDescription( const QString & description )
+{
+  d->desc = description;
 }
 
 
@@ -96,7 +99,7 @@ HNumber Function::exec( const QVector<HNumber> & args )
   d->error = QString();
   if ( ! d->ptr )
   {
-    setError( QString("error"), QString( QApplication::translate( "functions",
+    setError( QString("error"), QString( Functions::tr(
                 "cannot execute function %1") ).arg( name() ) );
     return HNumber(0);
   }
@@ -104,10 +107,10 @@ HNumber Function::exec( const QVector<HNumber> & args )
   if ( d->argc >= 0 && args.count() != d->argc )
   {
     if ( d->argc == 1 )
-      setError( d->name, QString( QApplication::translate( "functions",
+      setError( d->name, QString( Functions::tr(
                   "function accepts 1 argument" ) ) );
     else
-      setError( d->name, QString( QApplication::translate( "functions",
+      setError( d->name, QString( Functions::tr(
                   "function accepts %1 arguments" ) ).arg( d->argc ) );
 
     return HNumber(0);
@@ -137,8 +140,10 @@ Function::~Function()
 
 struct Functions::Private
 {
+  Functions * p;
   QHash<QString, Function *> functions;
   char angleMode;
+  void createBuiltInFunctions();
 
   static HNumber abs( Function *, const QVector<HNumber> & args );
   static HNumber integer( Function *, const QVector<HNumber> & args );
@@ -239,7 +244,7 @@ HNumber Functions::Private::trunc( Function * f, const QVector<HNumber> & args )
 
   if ( nArgs != 1 && nArgs != 2 )
   {
-    f->setError( f->name(), QApplication::translate( "functions",
+    f->setError( f->name(), Functions::tr(
       "function requires 1 or 2 arguments" ) );
     return HNumber::nan();
   }
@@ -255,7 +260,7 @@ HNumber Functions::Private::trunc( Function * f, const QVector<HNumber> & args )
     {
       if ( ! argprec.isInteger() )
       {
-        f->setError( f->name(), QApplication::translate( "functions",
+        f->setError( f->name(), Functions::tr(
                               "function undefined for specified arguments" ) );
         return HNumber::nan();
       }
@@ -307,7 +312,7 @@ HNumber Functions::Private::gcd( Function * f, const QVector<HNumber> & args )
 
   if ( nArgs < 2 )
   {
-    f->setError( f->name(), QApplication::translate( "functions",
+    f->setError( f->name(), Functions::tr(
                    "function requires at least 2 arguments" ) );
     return HNumber::nan();
   }
@@ -315,7 +320,7 @@ HNumber Functions::Private::gcd( Function * f, const QVector<HNumber> & args )
   for ( int i = 0; i < args.count(); i++ )
     if ( ! args[i].isInteger() )
     {
-      f->setError( f->name(), QApplication::translate( "functions",
+      f->setError( f->name(), Functions::tr(
                      "function requires integer arguments" ) );
       return HNumber::nan();
     }
@@ -335,7 +340,7 @@ HNumber Functions::Private::round( Function * f, const QVector<HNumber> & args )
 
   if ( nArgs != 1 && nArgs != 2 )
   {
-    f->setError( f->name(), QApplication::translate( "functions",
+    f->setError( f->name(), Functions::tr(
                     "function requires 1 or 2 arguments" ) );
     return HNumber::nan();
   }
@@ -351,7 +356,7 @@ HNumber Functions::Private::round( Function * f, const QVector<HNumber> & args )
     {
       if( !argprec.isInteger() )
       {
-        f->setError( f->name(), QApplication::translate( "functions",
+        f->setError( f->name(), Functions::tr(
                         "function undefined for specified arguments" ) );
         return HNumber::nan();
       }
@@ -375,7 +380,7 @@ HNumber Functions::Private::sqrt( Function * f, const QVector<HNumber> & args )
   HNumber num = args[0];
   if( num < HNumber(0) )
   {
-    f->setError( f->name(), QApplication::translate( "functions",
+    f->setError( f->name(), Functions::tr(
                     "function undefined for specified argument" ) );
     return HNumber::nan();
   }
@@ -413,7 +418,7 @@ HNumber Functions::Private::ln( Function * f, const QVector<HNumber> & args )
   HNumber result = HMath::ln( x );
 
   if ( result.isNan() )
-    f->setError( f->name(), QApplication::translate( "functions",
+    f->setError( f->name(), Functions::tr(
                     "function undefined for specified argument" ) );
 
   return result;
@@ -429,7 +434,7 @@ HNumber Functions::Private::log( Function * f, const QVector<HNumber> & args )
   HNumber result = HMath::log( x );
 
   if ( result.isNan() )
-    f->setError( f->name(), QApplication::translate( "functions",
+    f->setError( f->name(), Functions::tr(
                     "function undefined for specified argument" ) );
 
   return result;
@@ -445,7 +450,7 @@ HNumber Functions::Private::lg( Function * f, const QVector<HNumber> & args )
   HNumber result = HMath::lg( x );
 
   if ( result.isNan() )
-    f->setError( f->name(), QApplication::translate( "functions",
+    f->setError( f->name(), Functions::tr(
                     "function undefined for specified argument" ) );
 
   return result;
@@ -490,7 +495,7 @@ HNumber Functions::Private::tan( Function * f, const QVector<HNumber> & args )
   HNumber result = HMath::tan( angle );
   if ( result.isNan() )
   {
-    f->setError( f->name(), QApplication::translate( "functions",
+    f->setError( f->name(), Functions::tr(
                     "function undefined for specified argument" ) );
     return HNumber::nan();
   }
@@ -511,7 +516,7 @@ HNumber Functions::Private::cot( Function * f, const QVector<HNumber> & args )
   HNumber result = HMath::cot( angle );
   if ( result.isNan() )
   {
-    f->setError( f->name(), QApplication::translate( "functions",
+    f->setError( f->name(), Functions::tr(
                     "function undefined for specified argument" ) );
     return HNumber::nan();
   }
@@ -532,7 +537,7 @@ HNumber Functions::Private::sec( Function * f, const QVector<HNumber> & args )
   HNumber result = HMath::sec( angle );
   if ( result.isNan() )
   {
-    f->setError( f->name(), QApplication::translate( "functions",
+    f->setError( f->name(), Functions::tr(
                     "function undefined for specified argument" ) );
     return HNumber::nan();
   }
@@ -553,7 +558,7 @@ HNumber Functions::Private::csc( Function * f, const QVector<HNumber> & args )
   HNumber result = HMath::csc( angle );
   if ( result.isNan() )
   {
-    f->setError( f->name(), QApplication::translate( "functions",
+    f->setError( f->name(), Functions::tr(
                     "function undefined for specified argument" ) );
     return HNumber::nan();
   }
@@ -573,7 +578,7 @@ HNumber Functions::Private::asin( Function * f, const QVector<HNumber> & args )
 
   if ( result.isNan() )
   {
-    f->setError( f->name(), QApplication::translate( "functions",
+    f->setError( f->name(), Functions::tr(
                           "function undefined for specified argument" ) );
     return HNumber::nan();
   }
@@ -595,7 +600,7 @@ HNumber Functions::Private::acos( Function * f, const QVector<HNumber> & args )
 
   if ( result.isNan() )
   {
-    f->setError( f->name(), QApplication::translate( "functions",
+    f->setError( f->name(), Functions::tr(
                         "function undefined for specified argument" ) );
     return HNumber::nan();
   }
@@ -669,7 +674,7 @@ HNumber Functions::Private::arcosh( Function * f, const QVector<HNumber> & args 
 
   if ( result.isNan() )
   {
-    f->setError( f->name(), QApplication::translate( "functions",
+    f->setError( f->name(), Functions::tr(
                           "function undefined for specified argument" ) );
     return HNumber::nan();
   }
@@ -688,7 +693,7 @@ HNumber Functions::Private::artanh( Function * f, const QVector<HNumber> & args 
 
   if ( result.isNan() )
   {
-    f->setError( f->name(), QApplication::translate( "functions",
+    f->setError( f->name(), Functions::tr(
                           "function undefined for specified argument" ) );
     return HNumber::nan();
   }
@@ -717,7 +722,7 @@ HNumber Functions::Private::erfc( Function * f, const QVector<HNumber> & args )
 
   if ( result.isNan() && ! x.isNan() )
   {
-    f->setError( f->name(), QApplication::translate( "functions",
+    f->setError( f->name(), Functions::tr(
                           "underflow" ) );
   }
 
@@ -735,7 +740,7 @@ HNumber Functions::Private::Gamma( Function * f, const QVector<HNumber> & args )
 
   if ( result.isNan() )
   {
-    f->setError( f->name(), QApplication::translate( "functions",
+    f->setError( f->name(), Functions::tr(
                           "function undefined for specified argument" ) );
     return HNumber::nan();
   }
@@ -755,7 +760,7 @@ HNumber Functions::Private::lnGamma( Function * f,
 
   if ( result.isNan() )
   {
-    f->setError( f->name(), QApplication::translate( "functions",
+    f->setError( f->name(), Functions::tr(
                           "function undefined for specified argument" ) );
     return HNumber::nan();
   }
@@ -784,7 +789,7 @@ HNumber Functions::Private::nCr( Function * f, const QVector<HNumber> & args )
   // FIX ME: overflow causes a NaN, too, so the message is sometimes
   // misleading
   if ( result.isNan() )
-    f->setError( f->name(), QApplication::translate( "functions",
+    f->setError( f->name(), Functions::tr(
                           "function undefined for specified arguments" ) );
 
   return result;
@@ -802,7 +807,7 @@ HNumber Functions::Private::nPr( Function * f, const QVector<HNumber> & args )
   // FIX ME: overflow causes a NaN, too, so the message is sometimes
   // misleading
   if ( result.isNan() )
-    f->setError( f->name(), QApplication::translate( "functions",
+    f->setError( f->name(), Functions::tr(
                           "function undefined for specified arguments" ) );
 
   return result;
@@ -833,7 +838,7 @@ HNumber Functions::Private::max( Function * f, const QVector<HNumber> & args )
 {
   if ( args.count() < 1 )
   {
-    f->setError( f->name(), QApplication::translate( "functions",
+    f->setError( f->name(), Functions::tr(
                           "function requires at least 1 argument" ) );
     return HNumber::nan();
   }
@@ -852,7 +857,7 @@ HNumber Functions::Private::min( Function * f, const QVector<HNumber> & args )
 {
   if ( args.count() < 1 )
   {
-    f->setError( f->name(), QApplication::translate( "functions",
+    f->setError( f->name(), Functions::tr(
                           "function requires at least 1 argument" ) );
     return HNumber::nan();
   }
@@ -988,7 +993,7 @@ HNumber Functions::Private::binompmf( Function * f,
   HNumber result = HMath::binomialPmf( k, n, p );
 
   if ( result.isNan() )
-    f->setError( f->name(), QApplication::translate( "functions",
+    f->setError( f->name(), Functions::tr(
                           "function undefined for specified arguments" ) );
 
   return result;
@@ -1007,7 +1012,7 @@ HNumber Functions::Private::binomcdf( Function * f,
   HNumber result = HMath::binomialCdf( k, n, p );
 
   if ( result.isNan() )
-    f->setError( f->name(), QApplication::translate( "functions",
+    f->setError( f->name(), Functions::tr(
                           "function undefined for specified arguments" ) );
 
   return result;
@@ -1025,7 +1030,7 @@ HNumber Functions::Private::binommean( Function * f,
   HNumber result = HMath::binomialMean( n, p );
 
   if ( result.isNan() )
-    f->setError( f->name(), QApplication::translate( "functions",
+    f->setError( f->name(), Functions::tr(
                           "function undefined for specified arguments" ) );
 
   return result;
@@ -1043,7 +1048,7 @@ HNumber Functions::Private::binomvar( Function * f,
   HNumber result = HMath::binomialVariance( n, p );
 
   if ( result.isNan() )
-    f->setError( f->name(), QApplication::translate( "functions",
+    f->setError( f->name(), Functions::tr(
                           "function undefined for specified arguments" ) );
 
   return result;
@@ -1063,7 +1068,7 @@ HNumber Functions::Private::hyperpmf( Function * f,
   HNumber result = HMath::hypergeometricPmf( k, N, M, n );
 
   if ( result.isNan() )
-    f->setError( f->name(), QApplication::translate( "functions",
+    f->setError( f->name(), Functions::tr(
                           "function undefined for specified arguments" ) );
 
   return result;
@@ -1083,7 +1088,7 @@ HNumber Functions::Private::hypercdf( Function * f,
   HNumber result = HMath::hypergeometricCdf( k, N, M, n );
 
   if ( result.isNan() )
-    f->setError( f->name(), QApplication::translate( "functions",
+    f->setError( f->name(), Functions::tr(
                           "function undefined for specified arguments" ) );
 
   return result;
@@ -1102,7 +1107,7 @@ HNumber Functions::Private::hypermean( Function * f,
   HNumber result = HMath::hypergeometricMean( N, M, n );
 
   if ( result.isNan() )
-    f->setError( f->name(), QApplication::translate( "functions",
+    f->setError( f->name(), Functions::tr(
                           "function undefined for specified arguments" ) );
 
   return result;
@@ -1121,7 +1126,7 @@ HNumber Functions::Private::hypervar( Function * f,
   HNumber result = HMath::hypergeometricVariance( N, M, n );
 
   if ( result.isNan() )
-    f->setError( f->name(), QApplication::translate( "functions",
+    f->setError( f->name(), Functions::tr(
                           "function undefined for specified arguments" ) );
 
   return result;
@@ -1139,7 +1144,7 @@ HNumber Functions::Private::poipmf( Function * f,
   HNumber result = HMath::poissonPmf( k, l );
 
   if ( result.isNan() )
-    f->setError( f->name(), QApplication::translate( "functions",
+    f->setError( f->name(), Functions::tr(
                           "function undefined for specified arguments" ) );
 
   return result;
@@ -1157,7 +1162,7 @@ HNumber Functions::Private::poicdf( Function * f,
   HNumber result = HMath::poissonCdf( k, l );
 
   if ( result.isNan() )
-    f->setError( f->name(), QApplication::translate( "functions",
+    f->setError( f->name(), Functions::tr(
                           "function undefined for specified arguments" ) );
 
   return result;
@@ -1174,7 +1179,7 @@ HNumber Functions::Private::poimean( Function * f,
   HNumber result = HMath::poissonMean( l );
 
   if ( result.isNan() )
-    f->setError( f->name(), QApplication::translate( "functions",
+    f->setError( f->name(), Functions::tr(
                           "function undefined for specified arguments" ) );
 
   return result;
@@ -1191,7 +1196,7 @@ HNumber Functions::Private::poivar( Function * f,
   HNumber result = HMath::poissonVariance( l );
 
   if ( result.isNan() )
-    f->setError( f->name(), QApplication::translate( "functions",
+    f->setError( f->name(), Functions::tr(
                           "function undefined for specified arguments" ) );
 
   return result;
@@ -1297,94 +1302,102 @@ HNumber Functions::Private::mod( Function *, const QVector<HNumber> & args )
 }
 
 
+void Functions::Private::createBuiltInFunctions()
+{
+  // ANALYSIS
+  p->add( new Function( "abs",     1, abs,     p ) );
+  p->add( new Function( "average",    average, p ) );
+  p->add( new Function( "bin",        bin,     p ) );
+  p->add( new Function( "cbrt",    1, cbrt,    p ) );
+  p->add( new Function( "ceil",    1, ceil,    p ) );
+  p->add( new Function( "dec",        dec,     p ) );
+  p->add( new Function( "floor",   1, floor,   p ) );
+  p->add( new Function( "frac",    1, frac,    p ) );
+  p->add( new Function( "gamma",      Gamma,   p ) );
+  p->add( new Function( "geomean",    geomean, p ) );
+  p->add( new Function( "hex",        hex,     p ) );
+  p->add( new Function( "int",     1, integer, p ) );
+  p->add( new Function( "lngamma",    lnGamma, p ) );
+  p->add( new Function( "max",        max,     p ) );
+  p->add( new Function( "min",        min,     p ) );
+  p->add( new Function( "oct",        oct,     p ) );
+  p->add( new Function( "product",    product, p ) );
+  p->add( new Function( "round",      round,   p ) );
+  p->add( new Function( "sign",    1, sign,    p ) );
+  p->add( new Function( "sqrt",    1, sqrt,    p ) );
+  p->add( new Function( "sum",        sum,     p ) );
+  p->add( new Function( "trunc",      trunc,   p ) );
+
+  // LOGARITHM
+  p->add( new Function( "arcosh", 1, arcosh, p ) );
+  p->add( new Function( "arsinh", 1, arsinh, p ) );
+  p->add( new Function( "artanh", 1, artanh, p ) );
+  p->add( new Function( "cosh",   1, cosh,   p ) );
+  p->add( new Function( "exp",    1, exp,    p ) );
+  p->add( new Function( "lg",     1, lg,     p ) );
+  p->add( new Function( "ln",     1, ln,     p ) );
+  p->add( new Function( "log",    1, log,    p ) );
+  p->add( new Function( "sinh",   1, sinh,   p ) );
+  p->add( new Function( "tanh",   1, tanh,   p ) );
+
+  // DISCRETE
+  p->add( new Function( "gcd",    gcd, p ) );
+  p->add( new Function( "ncr", 2, nCr, p ) );
+  p->add( new Function( "npr", 2, nPr, p ) );
+
+  // PROBABILITY
+  p->add( new Function( "binomcdf",  3, binomcdf,  p ) );
+  p->add( new Function( "binommean", 2, binommean, p ) );
+  p->add( new Function( "binompmf",  3, binompmf,  p ) );
+  p->add( new Function( "binomvar",  2, binomvar,  p ) );
+  p->add( new Function( "erf",       1, erf,       p ) );
+  p->add( new Function( "erfc",      1, erfc,      p ) );
+  p->add( new Function( "hypercdf",  4, hypercdf,  p ) );
+  p->add( new Function( "hypermean", 3, hypermean, p ) );
+  p->add( new Function( "hyperpmf",  4, hyperpmf,  p ) );
+  p->add( new Function( "hypervar",  3, hypervar,  p ) );
+  p->add( new Function( "poicdf",    2, poicdf,    p ) );
+  p->add( new Function( "poimean",   1, poimean,   p ) );
+  p->add( new Function( "poipmf",    2, poipmf,    p ) );
+  p->add( new Function( "poivar",    1, poivar,    p ) );
+
+  // TRIGONOMETRY
+  p->add( new Function( "acos",    1, acos,    p ) );
+  p->add( new Function( "asin",    1, asin,    p ) );
+  p->add( new Function( "atan",    1, atan,    p ) );
+  p->add( new Function( "cos",     1, cos,     p ) );
+  p->add( new Function( "cot",     1, cot,     p ) );
+  p->add( new Function( "csc",     1, csc,     p ) );
+  p->add( new Function( "degrees", 1, degrees, p ) );
+  p->add( new Function( "radians", 1, radians, p ) );
+  p->add( new Function( "sec",     1, sec,     p ) );
+  p->add( new Function( "sin",     1, sin,     p ) );
+  p->add( new Function( "tan",     1, tan,     p ) );
+
+  // LOGIC
+  p->add( new Function( "mask",   2, mask,   p ) );
+  p->add( new Function( "unmask", 2, unmask, p ) );
+  p->add( new Function( "not",    1, not_,   p ) );
+  p->add( new Function( "and",       and_,   p ) );
+  p->add( new Function( "or",        or_,    p ) );
+  p->add( new Function( "xor",       xor_,   p ) );
+  p->add( new Function( "shl",    2, ashl,   p ) );
+  p->add( new Function( "shr",    2, ashr,   p ) );
+  p->add( new Function( "idiv",   2, idiv,   p ) );
+  p->add( new Function( "mod",    2, mod,    p ) );
+}
+
+
 // public (Functions)
 
 Functions::Functions( char angleMode, QObject * parent )
   : QObject( parent ), d( new Functions::Private )
 {
-  d->angleMode = angleMode;
+  d->p = this;
+  setAngleMode( angleMode );
+  d->createBuiltInFunctions();
 
-  // ANALYSIS
-  add( new Function( "abs",     1, d->abs,     tr("Absolute Value"),                     this ) );
-  add( new Function( "average",    d->average, tr("Average (Arithmetic Mean)"),          this ) );
-  add( new Function( "bin",        d->bin,     tr("Binary Representation"),              this ) );
-  add( new Function( "cbrt",    1, d->cbrt,    tr("Cube Root"),                          this ) );
-  add( new Function( "ceil",    1, d->ceil,    tr("Ceiling"),                            this ) );
-  add( new Function( "dec",        d->dec,     tr("Decimal Representation"),             this ) );
-  add( new Function( "floor",   1, d->floor,   tr("Floor"),                              this ) );
-  add( new Function( "frac",    1, d->frac,    tr("Fractional Part"),                    this ) );
-  add( new Function( "gamma",      d->Gamma,   tr("Extension of Factorials [= (x-1)!]"), this ) );
-  add( new Function( "geomean",    d->geomean, tr("Geometric Mean"),                     this ) );
-  add( new Function( "hex",        d->hex,     tr("Hexadecimal Representation"),         this ) );
-  add( new Function( "int",     1, d->integer, tr("Integer Part"),                       this ) );
-  add( new Function( "lngamma",    d->lnGamma, tr("ln(abs(Gamma))"),                     this ) );
-  add( new Function( "max",        d->max,     tr("Maximum"),                            this ) );
-  add( new Function( "min",        d->min,     tr("Minimum"),                            this ) );
-  add( new Function( "oct",        d->oct,     tr("Octal Representation"),               this ) );
-  add( new Function( "product",    d->product, tr("Product"),                            this ) );
-  add( new Function( "round",      d->round,   tr("Rounding"),                           this ) );
-  add( new Function( "sign",    1, d->sign,    tr("Signum"),                             this ) );
-  add( new Function( "sqrt",    1, d->sqrt,    tr("Square Root"),                        this ) );
-  add( new Function( "sum",        d->sum,     tr("Sum"),                                this ) );
-  add( new Function( "trunc",      d->trunc,   tr("Truncation"),                         this ) );
-
-  // LOGARITHM
-  add( new Function( "arcosh", 1, d->arcosh, tr("Area Hyperbolic Cosine"),  this ) );
-  add( new Function( "arsinh", 1, d->arsinh, tr("Area Hyperbolic Sine"),    this ) );
-  add( new Function( "artanh", 1, d->artanh, tr("Area Hyperbolic Tangent"), this ) );
-  add( new Function( "cosh",   1, d->cosh,   tr("Hyperbolic Cosine"),       this ) );
-  add( new Function( "exp",    1, d->exp,    tr("Exponential"),             this ) );
-  add( new Function( "lg",     1, d->lg,     tr("Base-2 Logarithm"),        this ) );
-  add( new Function( "ln",     1, d->ln,     tr("Natural Logarithm"),       this ) );
-  add( new Function( "log",    1, d->log,    tr("Base-10 Logarithm"),       this ) );
-  add( new Function( "sinh",   1, d->sinh,   tr("Hyperbolic Sine"),         this ) );
-  add( new Function( "tanh",   1, d->tanh,   tr("Hyperbolic Tangent"),      this ) );
-
-  // DISCRETE
-  add( new Function( "gcd",    d->gcd, tr("Greatest Common Divisor"),            this ) );
-  add( new Function( "ncr", 2, d->nCr, tr("Combination (Binomial Coefficient)"), this ) );
-  add( new Function( "npr", 2, d->nPr, tr("Permutation (Arrangement)"),          this ) );
-
-  // PROBABILITY
-  add( new Function( "binomcdf",  3, d->binomcdf,  tr("Binomial Cumulative Distribution Function"),       this ) );
-  add( new Function( "binommean", 2, d->binommean, tr("Binomial Distribution Mean"),                      this ) );
-  add( new Function( "binompmf",  3, d->binompmf,  tr("Binomial Probability Mass Function"),              this ) );
-  add( new Function( "binomvar",  2, d->binomvar,  tr("Binomial Distribution Variance"),                  this ) );
-  add( new Function( "erf",       1, d->erf,       tr("Error Function"),                                  this ) );
-  add( new Function( "erfc",      1, d->erfc,      tr("Complementary Error Function"),                    this ) );
-  add( new Function( "hypercdf",  4, d->hypercdf,  tr("Hypergeometric Cumulative Distribution Function"), this ) );
-  add( new Function( "hypermean", 3, d->hypermean, tr("Hypergeometric Distribution Mean"),                this ) );
-  add( new Function( "hyperpmf",  4, d->hyperpmf,  tr("Hypergeometric Probability Mass Function"),        this ) );
-  add( new Function( "hypervar",  3, d->hypervar,  tr("Hypergeometric Distribution Variance"),            this ) );
-  add( new Function( "poicdf",    2, d->poicdf,    tr("Poissonian Cumulative Distribution Function"),     this ) );
-  add( new Function( "poimean",   1, d->poimean,   tr("Poissonian Distribution Mean"),                    this ) );
-  add( new Function( "poipmf",    2, d->poipmf,    tr("Poissonian Probability Mass Function"),            this ) );
-  add( new Function( "poivar",    1, d->poivar,    tr("Poissonian Distribution Variance"),                this ) );
-
-  // TRIGONOMETRY
-  add( new Function( "acos",    1, d->acos,    tr("Arc Cosine"),     this ) );
-  add( new Function( "asin",    1, d->asin,    tr("Arc Sine"),       this ) );
-  add( new Function( "atan",    1, d->atan,    tr("Arc Tangent"),    this ) );
-  add( new Function( "cos",     1, d->cos,     tr("Cosine"),         this ) );
-  add( new Function( "cot",     1, d->cot,     tr("Cotangent"),      this ) );
-  add( new Function( "csc",     1, d->csc,     tr("Cosecant"),       this ) );
-  add( new Function( "degrees", 1, d->degrees, tr("Degrees of Arc"), this ) );
-  add( new Function( "radians", 1, d->radians, tr("Radians"),        this ) );
-  add( new Function( "sec",     1, d->sec,     tr("Secant"),         this ) );
-  add( new Function( "sin",     1, d->sin,     tr("Sine"),           this ) );
-  add( new Function( "tan",     1, d->tan,     tr("Tangent"),        this ) );
-
-  // LOGIC
-  add( new Function( "mask",   2, d->mask,   tr("Mask to a bit size"),     this ) );
-  add( new Function( "unmask", 2, d->unmask, tr("Sign-extent a value"),    this ) );
-  add( new Function( "not",    1, d->not_,   tr("Logical NOT"),            this ) );
-  add( new Function( "and",       d->and_,   tr("Logical AND"),            this ) );
-  add( new Function( "or",        d->or_,    tr("Logical OR"),             this ) );
-  add( new Function( "xor",       d->xor_,   tr("Logical XOR"),            this ) );
-  add( new Function( "shl",   2,  d->ashl,   tr("Arithmetic Shift Left"),  this ) );
-  add( new Function( "shr",   2,  d->ashr,   tr("Arithmetic Shift Right"), this ) );
-  add( new Function( "idiv",  2,  d->idiv,   tr("Integer Quotient"),       this ) );
-  add( new Function( "mod",   2,  d->mod,    tr("Modulo"),                 this ) );
+  retranslateText();
 }
 
 
@@ -1434,4 +1447,90 @@ char Functions::angleMode()
 void Functions::setAngleMode( char c )
 {
   d->angleMode = c;
+}
+
+
+void Functions::retranslateText()
+{
+  // ANALYSIS
+  function( "abs"     )->setDescription( tr( "Absolute Value"                     ) );
+  function( "average" )->setDescription( tr( "Average (Arithmetic Mean)"          ) );
+  function( "bin"     )->setDescription( tr( "Binary Representation"              ) );
+  function( "cbrt"    )->setDescription( tr( "Cube Root"                          ) );
+  function( "ceil"    )->setDescription( tr( "Ceiling"                            ) );
+  function( "dec"     )->setDescription( tr( "Decimal Representation"             ) );
+  function( "floor"   )->setDescription( tr( "Floor"                              ) );
+  function( "frac"    )->setDescription( tr( "Fractional Part"                    ) );
+  function( "gamma"   )->setDescription( tr( "Extension of Factorials [= (x-1)!]" ) );
+  function( "geomean" )->setDescription( tr( "Geometric Mean"                     ) );
+  function( "hex"     )->setDescription( tr( "Hexadecimal Representation"         ) );
+  function( "int"     )->setDescription( tr( "Integer Part"                       ) );
+  function( "lngamma" )->setDescription( tr( "ln(abs(Gamma))"                     ) );
+  function( "max"     )->setDescription( tr( "Maximum"                            ) );
+  function( "min"     )->setDescription( tr( "Minimum"                            ) );
+  function( "oct"     )->setDescription( tr( "Octal Representation"               ) );
+  function( "product" )->setDescription( tr( "Product"                            ) );
+  function( "round"   )->setDescription( tr( "Rounding"                           ) );
+  function( "sign"    )->setDescription( tr( "Signum"                             ) );
+  function( "sqrt"    )->setDescription( tr( "Square Root"                        ) );
+  function( "sum"     )->setDescription( tr( "Sum"                                ) );
+  function( "trunc"   )->setDescription( tr( "Truncation"                         ) );
+
+  //// LOGARITHM
+  function( "arcosh" )->setDescription( tr( "Area Hyperbolic Cosine"  ) );
+  function( "arsinh" )->setDescription( tr( "Area Hyperbolic Sine"    ) );
+  function( "artanh" )->setDescription( tr( "Area Hyperbolic Tangent" ) );
+  function( "cosh"   )->setDescription( tr( "Hyperbolic Cosine"       ) );
+  function( "exp"    )->setDescription( tr( "Exponential"             ) );
+  function( "lg"     )->setDescription( tr( "Base-2 Logarithm"        ) );
+  function( "ln"     )->setDescription( tr( "Natural Logarithm"       ) );
+  function( "log"    )->setDescription( tr( "Base-10 Logarithm"       ) );
+  function( "sinh"   )->setDescription( tr( "Hyperbolic Sine"         ) );
+  function( "tanh"   )->setDescription( tr( "Hyperbolic Tangent"      ) );
+
+  //// DISCRETE
+  function( "gcd" )->setDescription( tr( "Greatest Common Divisor"            ) );
+  function( "ncr" )->setDescription( tr( "Combination (Binomial Coefficient)" ) );
+  function( "npr" )->setDescription( tr( "Permutation (Arrangement)"          ) );
+
+  //// PROBABILITY
+  function( "binomcdf"  )->setDescription( tr( "Binomial Cumulative Distribution Function"       ) );
+  function( "binommean" )->setDescription( tr( "Binomial Distribution Mean"                      ) );
+  function( "binompmf"  )->setDescription( tr( "Binomial Probability Mass Function"              ) );
+  function( "binomvar"  )->setDescription( tr( "Binomial Distribution Variance"                  ) );
+  function( "erf"       )->setDescription( tr( "Error Function"                                  ) );
+  function( "erfc"      )->setDescription( tr( "Complementary Error Function"                    ) );
+  function( "hypercdf"  )->setDescription( tr( "Hypergeometric Cumulative Distribution Function" ) );
+  function( "hypermean" )->setDescription( tr( "Hypergeometric Distribution Mean"                ) );
+  function( "hyperpmf"  )->setDescription( tr( "Hypergeometric Probability Mass Function"        ) );
+  function( "hypervar"  )->setDescription( tr( "Hypergeometric Distribution Variance"            ) );
+  function( "poicdf"    )->setDescription( tr( "Poissonian Cumulative Distribution Function"     ) );
+  function( "poimean"   )->setDescription( tr( "Poissonian Distribution Mean"                    ) );
+  function( "poipmf"    )->setDescription( tr( "Poissonian Probability Mass Function"            ) );
+  function( "poivar"    )->setDescription( tr( "Poissonian Distribution Variance"                ) );
+
+  //// TRIGONOMETRY
+  function( "acos"    )->setDescription( tr( "Arc Cosine"     ) );
+  function( "asin"    )->setDescription( tr( "Arc Sine"       ) );
+  function( "atan"    )->setDescription( tr( "Arc Tangent"    ) );
+  function( "cos"     )->setDescription( tr( "Cosine"         ) );
+  function( "cot"     )->setDescription( tr( "Cotangent"      ) );
+  function( "csc"     )->setDescription( tr( "Cosecant"       ) );
+  function( "degrees" )->setDescription( tr( "Degrees of Arc" ) );
+  function( "radians" )->setDescription( tr( "Radians"        ) );
+  function( "sec"     )->setDescription( tr( "Secant"         ) );
+  function( "sin"     )->setDescription( tr( "Sine"           ) );
+  function( "tan"     )->setDescription( tr( "Tangent"        ) );
+
+  //// LOGIC
+  function( "mask"   )->setDescription( tr( "Mask to a bit size"     ) );
+  function( "unmask" )->setDescription( tr( "Sign-extent a value"    ) );
+  function( "not"    )->setDescription( tr( "Logical NOT"            ) );
+  function( "and"    )->setDescription( tr( "Logical AND"            ) );
+  function( "or"     )->setDescription( tr( "Logical OR"             ) );
+  function( "xor"    )->setDescription( tr( "Logical XOR"            ) );
+  function( "shl"    )->setDescription( tr( "Arithmetic Shift Left"  ) );
+  function( "shr"    )->setDescription( tr( "Arithmetic Shift Right" ) );
+  function( "idiv"   )->setDescription( tr( "Integer Quotient"       ) );
+  function( "mod"    )->setDescription( tr( "Modulo"                 ) );
 }

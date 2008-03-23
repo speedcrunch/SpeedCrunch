@@ -34,34 +34,33 @@
 class FunctionsDock::Private
 {
   public:
-    Functions *   functions;
-    QLineEdit *   filter;
-    QTimer *      filterTimer;
-    QStringList   functionDesc;
-    QStringList   functionNames;
-    QTreeWidget * list;
-    QLabel *      noMatchLabel;
+    const Functions * functions;
+    QLineEdit *       filter;
+    QTimer *          filterTimer;
+    QStringList       functionDesc;
+    QStringList       functionNames;
+    QTreeWidget *     list;
+    QLabel *          label;
+    QLabel *          noMatchLabel;
 };
 
 
 // public
 
-FunctionsDock::FunctionsDock( Functions * f, QWidget * parent )
-  : QDockWidget( tr("Functions"), parent ), d( new FunctionsDock::Private )
+FunctionsDock::FunctionsDock( const Functions * f, QWidget * parent )
+  : QDockWidget( parent ), d( new FunctionsDock::Private )
 {
   d->functions = f;
-
-  QLabel * label = new QLabel( this );
-  label->setText( tr("Search") );
-
+  d->label = new QLabel( this );
   d->filter = new QLineEdit( this );
+
   connect( d->filter, SIGNAL( textChanged( const QString & ) ),
            SLOT( triggerFilter()) );
 
   QWidget * searchBox = new QWidget( this );
   QHBoxLayout * searchLayout = new QHBoxLayout;
   searchBox->setLayout( searchLayout );
-  searchLayout->addWidget( label );
+  searchLayout->addWidget( d->label );
   searchLayout->addWidget( d->filter );
   searchLayout->setMargin( 0 );
 
@@ -92,7 +91,6 @@ FunctionsDock::FunctionsDock( Functions * f, QWidget * parent )
   connect( d->filterTimer, SIGNAL( timeout() ), SLOT( filter() ) );
 
   d->noMatchLabel = new QLabel( this );
-  d->noMatchLabel->setText( tr("No match found") );
   d->noMatchLabel->setAlignment( Qt::AlignCenter );
   d->noMatchLabel->adjustSize();
   d->noMatchLabel->hide();
@@ -101,20 +99,7 @@ FunctionsDock::FunctionsDock( Functions * f, QWidget * parent )
   setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
   setWindowIcon( QIcon() ); // no icon
 
-  //QStringList functionNames = Functions::self()->functionNames();
-  QStringList functionNames = d->functions->functionNames();
-  for ( int i = 0; i < functionNames.count(); i++ )
-  {
-    //Function * f = Functions::self()->function( functionNames[i] );
-    Function * f = d->functions->function( functionNames[i] );
-    if ( f )
-    {
-      d->functionNames << f->name();
-      d->functionDesc  << f->description();
-    }
-  }
-
-  filter();
+  retranslateText();
 }
 
 
@@ -125,9 +110,33 @@ FunctionsDock::~FunctionsDock()
 }
 
 
-Functions * FunctionsDock::functions() const
+const Functions * FunctionsDock::functions() const
 {
   return d->functions;
+}
+
+
+// public slots
+void FunctionsDock::retranslateText()
+{
+  setWindowTitle( tr( "Functions" ) );
+  d->label->setText( tr( "Search" ) );
+  d->noMatchLabel->setText( tr( "No match found" ) );
+
+  d->functionNames.clear();
+  d->functionDesc.clear();
+  QStringList functionNames = d->functions->functionNames();
+  for ( int i = 0; i < functionNames.count(); i++ )
+  {
+    Function * f = d->functions->function( functionNames[i] );
+    if ( f )
+    {
+      d->functionNames << f->name();
+      d->functionDesc  << f->description();
+    }
+  }
+
+  filter();
 }
 
 
@@ -186,7 +195,7 @@ void FunctionsDock::filter()
     d->noMatchLabel->raise();
   }
 
-  setUpdatesEnabled(true);
+  setUpdatesEnabled( true );
 }
 
 

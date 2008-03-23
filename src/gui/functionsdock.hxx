@@ -35,12 +35,15 @@ class FunctionsDock : public QDockWidget
   Q_OBJECT
 
   public:
-    explicit FunctionsDock( Functions *, QWidget * parent );
+    explicit FunctionsDock( const Functions *, QWidget * parent );
     ~FunctionsDock();
-    Functions * functions() const;
+    const Functions * functions() const;
 
   signals:
     void functionSelected( const QString & );
+
+  public slots:
+    void retranslateText();
 
   protected slots:
     void filter();

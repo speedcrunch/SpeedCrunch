@@ -538,11 +538,17 @@ void MainWindow::setAllText()
 
     d->setMenusText();
     d->setActionsText();
+    d->functions->retranslateText(); // can't be signal/slot to ensure order
 
     if ( d->docks.book )
     {
       d->docks.book->setLanguage( d->settings.language );
-      d->docks.book->setTitle( MainWindow::tr( "Math Book" ) );
+      d->docks.book->setWindowTitle( MainWindow::tr( "Math Book" ) );
+    }
+
+    if ( d->docks.functions )
+    {
+
     }
   }
 }
@@ -1006,6 +1012,8 @@ void MainWindow::Private::createFunctionsDock()
 
   connect( docks.functions, SIGNAL( functionSelected( const QString & ) ),
            p, SLOT( functionSelected( const QString & ) ) );
+  connect( p, SIGNAL( retranslateText() ),
+           docks.functions, SLOT( retranslateText() ) );
 
   if ( docks.history )
     p->tabifyDockWidget( docks.history, docks.functions );
