@@ -1,51 +1,51 @@
 #: circle.html.template, math_index.html.template
 msgid "Circle"
-msgstr ""
+msgstr "מעגל"
 
 #: cone.html.template, math_index.html.template
 msgid "Cone"
-msgstr ""
+msgstr "חרוט"
 
 #: cube.html.template, math_index.html.template
 msgid "Cube"
-msgstr ""
+msgstr "קוביה"
 
 #: cylinder.html.template, math_index.html.template
 msgid "Cylinder"
-msgstr ""
+msgstr "גליל"
 
 #: index.html.template
 msgid "SpeedCrunch Manual"
-msgstr ""
+msgstr "המדריך למשתמש של SpeedCrunch"
 
 #: math_index.html.template
 msgid "SpeedCrunch Book"
-msgstr ""
+msgstr "ספר SpeedCrunch"
 
 #: math_index.html.template
 msgid "3D Objects"
-msgstr ""
+msgstr "עצמים תלת-מימדיים"
 
 #: sphere.html.template, math_index.html.template
 msgid "Sphere"
-msgstr ""
+msgstr "כדור"
 
 #: math_index.html.template
 msgid "2D Objects"
-msgstr ""
+msgstr "עצמים דו-מימדיים"
 
 #: math_index.html.template, right_triangle.html.template
 msgid "Right Triangle"
-msgstr ""
+msgstr "משולש ישר-זוית"
 
 #: math_index.html.template, sector.html.template
 msgid "Sector"
-msgstr ""
+msgstr "גיזרה"
 
 #: math_index.html.template
 msgid "Misc"
-msgstr ""
+msgstr "שונות"
 
 #: quadratic_equation.html.template, math_index.html.template
 msgid "Quadratic Equation"
-msgstr ""
+msgstr "משוואה ריבועית"
