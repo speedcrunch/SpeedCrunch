@@ -43,10 +43,8 @@ struct BookDock::Private
 
 
 BookDock::BookDock( const QString & directory, const QString & file,
-                    const QString & title, const QString & language,
-                    QWidget * parent )
-  : QDockWidget( title, parent ),
-    d( new BookDock::Private )
+                    const QString & language, QWidget * parent )
+  : QDockWidget( parent ), d( new BookDock::Private )
 {
   d->path = directory;
   d->file = file;
@@ -138,9 +136,9 @@ void BookDock::anchorClicked ( const QUrl & link )
 void BookDock::setLanguage( const QString & languageCode )
 {
   // buttons
-  d->backButton   ->setText( tr("Back")    );
-  d->forwardButton->setText( tr("Forward") );
-  d->indexButton  ->setText( tr("Index")   );
+  d->backButton   ->setText( tr( "Back"    ) );
+  d->forwardButton->setText( tr( "Forward" ) );
+  d->indexButton  ->setText( tr( "Index"   ) );
 
   // page
   QString locale = (languageCode == "C") ? QLocale().name()
@@ -157,4 +155,10 @@ void BookDock::setLanguage( const QString & languageCode )
     QString localeShort = locale.left( 2 ).toLower();
     d->sheet->setSource( d->path + localeShort + "/" + d->file );
   }
+}
+
+
+void BookDock::setTitle( const QString & title )
+{
+  setWindowTitle( title );
 }

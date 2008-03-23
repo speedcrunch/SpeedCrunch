@@ -540,7 +540,10 @@ void MainWindow::setAllText()
     d->setActionsText();
 
     if ( d->docks.book )
+    {
       d->docks.book->setLanguage( d->settings.language );
+      d->docks.book->setTitle( MainWindow::tr( "Math Book" ) );
+    }
   }
 }
 
@@ -947,8 +950,9 @@ void MainWindow::Private::createKeypad()
 void MainWindow::Private::createBookDock()
 {
   docks.book = new BookDock( QString( BOOKSDIR ), "math_index.html",
-                             MainWindow::tr("Math Book"), settings.language, p );
+                             settings.language, p );
   docks.book->setObjectName( "BookDock" );
+  docks.book->setTitle( MainWindow::tr( "Math Book" ) );
   docks.book->installEventFilter( p );
   p->addDockWidget( Qt::RightDockWidgetArea, docks.book );
 

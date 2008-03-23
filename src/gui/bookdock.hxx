@@ -34,12 +34,12 @@ class BookDock : public QDockWidget
 
   public:
     explicit BookDock( const QString & directory, const QString & file,
-                       const QString & title, const QString & language = "C",
-                       QWidget * parent = 0 );
+                       const QString & language = "C", QWidget * parent = 0 );
     ~BookDock();
 
   public slots:
     void setLanguage( const QString & languageCode );
+    void setTitle( const QString & );
 
   signals:
     void expressionSelected( const QString & );
