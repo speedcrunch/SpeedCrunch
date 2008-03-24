@@ -1,51 +1,63 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-03-24 22:06+0000\n"
+"PO-Revision-Date: 2008-03-24 16:01-0300\n"
+"Last-Translator: Fabio Margarido <fabiomargarido@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
 #: circle.html.template, math_index.html.template
 msgid "Circle"
-msgstr ""
+msgstr "Círculo"
 
 #: cone.html.template, math_index.html.template
 msgid "Cone"
-msgstr ""
+msgstr "Cone"
 
 #: cube.html.template, math_index.html.template
 msgid "Cube"
-msgstr ""
+msgstr "Cubo"
 
 #: cylinder.html.template, math_index.html.template
 msgid "Cylinder"
-msgstr ""
+msgstr "Cilindro"
 
 #: index.html.template
 msgid "SpeedCrunch Manual"
-msgstr ""
+msgstr "Manual da SpeedCrunch"
 
 #: math_index.html.template
 msgid "SpeedCrunch Book"
-msgstr ""
+msgstr "Livro da SpeedCrunch"
 
 #: math_index.html.template
 msgid "3D Objects"
-msgstr ""
+msgstr "Objetos 3D"
 
 #: sphere.html.template, math_index.html.template
 msgid "Sphere"
-msgstr ""
+msgstr "Esfera"
 
 #: math_index.html.template
 msgid "2D Objects"
-msgstr ""
+msgstr "Objetos 2D"
 
 #: math_index.html.template, right_triangle.html.template
 msgid "Right Triangle"
-msgstr ""
+msgstr "Triângulo Direito"
 
 #: math_index.html.template, sector.html.template
 msgid "Sector"
-msgstr ""
+msgstr "Setor"
 
 #: math_index.html.template
 msgid "Misc"
-msgstr ""
+msgstr "Miscelânea"
 
 #: quadratic_equation.html.template, math_index.html.template
 msgid "Quadratic Equation"
-msgstr ""
+msgstr "Equação Quadrática"
