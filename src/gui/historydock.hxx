@@ -45,6 +45,9 @@ class HistoryDock : public QDockWidget
   signals:
     void expressionSelected( const QString & );
 
+  public slots:
+    void retranslateText();
+
   protected slots:
     void handleItem( QListWidgetItem * item );
 

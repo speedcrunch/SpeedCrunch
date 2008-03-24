@@ -1037,6 +1037,8 @@ void MainWindow::Private::createHistoryDock()
 
   connect( docks.history, SIGNAL( expressionSelected( const QString & ) ),
            p, SLOT( expressionSelected( const QString & ) ) );
+  connect( p, SIGNAL( retranslateText() ),
+           docks.history, SLOT( retranslateText() ) );
 
   docks.history->setHistory( widgets.editor->history() );
 

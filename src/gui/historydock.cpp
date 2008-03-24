@@ -30,7 +30,7 @@ struct HistoryDock::Private
 
 
 HistoryDock::HistoryDock( QWidget * parent )
-  : QDockWidget( tr("History"), parent ), d( new HistoryDock::Private )
+  : QDockWidget( parent ), d( new HistoryDock::Private )
 {
   d->list = new QListWidget( this );
 
@@ -42,6 +42,8 @@ HistoryDock::HistoryDock( QWidget * parent )
   setMinimumWidth( 200 );
   setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
   setWindowIcon( QIcon() );
+
+  retranslateText();
 }
 
 
@@ -81,6 +83,12 @@ void HistoryDock::setHistory( const QStringList & h )
 {
   d->list->clear();
   appendHistory( h );
+}
+
+
+void HistoryDock::retranslateText()
+{
+  setWindowTitle( tr( "History" ) );
 }
 
 
