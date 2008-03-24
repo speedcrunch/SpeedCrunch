@@ -368,60 +368,60 @@ void MainWindow::Private::createUi()
 
 void MainWindow::Private::createActions()
 {
-  actions.clearExpression       = new QAction( "",  p );
-  actions.clearHistory          = new QAction( "",  p );
-  actions.degree                = new QAction( "",  p );
-  actions.deleteAllVariables    = new QAction( "",  p );
-  actions.deleteVariable        = new QAction( "",  p );
-  actions.digits15              = new QAction( "",  p );
-  actions.digits2               = new QAction( "",  p );
-  actions.digits3               = new QAction( "",  p );
-  actions.digits50              = new QAction( "",  p );
-  actions.digits8               = new QAction( "",  p );
-  actions.digitsAuto            = new QAction( "",  p );
-  actions.editCopy              = new QAction( "",  p );
-  actions.editCopyResult        = new QAction( "",  p );
-  actions.editPaste             = new QAction( "",  p );
-  actions.helpAbout             = new QAction( "",  p );
-  actions.helpAboutQt           = new QAction( "",  p );
-  actions.helpGotoWebsite       = new QAction( "",  p );
-  actions.helpTipOfTheDay       = new QAction( "",  p );
-  actions.insertFunction        = new QAction( "",  p );
-  actions.insertVariable        = new QAction( "",  p );
-  actions.optionAutoCalc        = new QAction( "",  p );
-  actions.optionAutoCompletion  = new QAction( "",  p );
-  actions.optionAlwaysOnTop     = new QAction( "",  p );
-  actions.optionMinimizeToTray  = new QAction( "",  p );
-  actions.optionHiliteSyntax    = new QAction( "",  p );
-  actions.radixCharAuto         = new QAction( "",  p );
-  actions.radixCharDot          = new QAction( "",  p );
-  actions.radixCharComma        = new QAction( "",  p );
-  actions.radian                = new QAction( "",  p );
-  actions.scrollDown            = new QAction( "",  p );
-  actions.scrollUp              = new QAction( "",  p );
-  actions.selectExpression      = new QAction( "",  p );
-  actions.sessionImport         = new QAction( "",  p );
-  actions.sessionLoad           = new QAction( "",  p );
-  actions.sessionQuit           = new QAction( "",  p );
-  actions.sessionSave           = new QAction( "",  p );
-  actions.sessionExport         = new QAction( "",  p );
-  actions.showBook              = new QAction( "",  p );
-  actions.showConstants         = new QAction( "",  p );
-  actions.showFullScreen        = new QAction( "",  p );
-  actions.showFunctions         = new QAction( "",  p );
-  actions.showHistory           = new QAction( "",  p );
-  actions.showKeypad            = new QAction( "",  p );
-  actions.showMenuBar           = new QAction( "",  p );
-  actions.showStatusBar         = new QAction( "",  p );
-  actions.showVariables         = new QAction( "",  p );
-  actions.formatBinary          = new QAction( "",  p );
-  actions.formatEngineering     = new QAction( "",  p );
-  actions.formatFixed           = new QAction( "",  p );
-  actions.formatGeneral         = new QAction( "",  p );
-  actions.formatHexadec         = new QAction( "",  p );
-  actions.formatOctal           = new QAction( "",  p );
-  actions.formatScientific      = new QAction( "",  p );
-  actions.languageDefault       = new QAction( "",  p );
+  actions.clearExpression       = new QAction( p );
+  actions.clearHistory          = new QAction( p );
+  actions.degree                = new QAction( p );
+  actions.deleteAllVariables    = new QAction( p );
+  actions.deleteVariable        = new QAction( p );
+  actions.digits15              = new QAction( p );
+  actions.digits2               = new QAction( p );
+  actions.digits3               = new QAction( p );
+  actions.digits50              = new QAction( p );
+  actions.digits8               = new QAction( p );
+  actions.digitsAuto            = new QAction( p );
+  actions.editCopy              = new QAction( p );
+  actions.editCopyResult        = new QAction( p );
+  actions.editPaste             = new QAction( p );
+  actions.helpAbout             = new QAction( p );
+  actions.helpAboutQt           = new QAction( p );
+  actions.helpGotoWebsite       = new QAction( p );
+  actions.helpTipOfTheDay       = new QAction( p );
+  actions.insertFunction        = new QAction( p );
+  actions.insertVariable        = new QAction( p );
+  actions.optionAutoCalc        = new QAction( p );
+  actions.optionAutoCompletion  = new QAction( p );
+  actions.optionAlwaysOnTop     = new QAction( p );
+  actions.optionMinimizeToTray  = new QAction( p );
+  actions.optionHiliteSyntax    = new QAction( p );
+  actions.radixCharAuto         = new QAction( p );
+  actions.radixCharDot          = new QAction( p );
+  actions.radixCharComma        = new QAction( p );
+  actions.radian                = new QAction( p );
+  actions.scrollDown            = new QAction( p );
+  actions.scrollUp              = new QAction( p );
+  actions.selectExpression      = new QAction( p );
+  actions.sessionImport         = new QAction( p );
+  actions.sessionLoad           = new QAction( p );
+  actions.sessionQuit           = new QAction( p );
+  actions.sessionSave           = new QAction( p );
+  actions.sessionExport         = new QAction( p );
+  actions.showBook              = new QAction( p );
+  actions.showConstants         = new QAction( p );
+  actions.showFullScreen        = new QAction( p );
+  actions.showFunctions         = new QAction( p );
+  actions.showHistory           = new QAction( p );
+  actions.showKeypad            = new QAction( p );
+  actions.showMenuBar           = new QAction( p );
+  actions.showStatusBar         = new QAction( p );
+  actions.showVariables         = new QAction( p );
+  actions.formatBinary          = new QAction( p );
+  actions.formatEngineering     = new QAction( p );
+  actions.formatFixed           = new QAction( p );
+  actions.formatGeneral         = new QAction( p );
+  actions.formatHexadec         = new QAction( p );
+  actions.formatOctal           = new QAction( p );
+  actions.formatScientific      = new QAction( p );
+  actions.languageDefault       = new QAction( p );
 
   actions.languageCs   = new QAction( QString::fromUtf8( "Česky"               ), p );
   actions.languageDe   = new QAction( QString::fromUtf8( "Deutsch"             ), p );
@@ -532,7 +532,6 @@ void MainWindow::setAllText()
       qApp->removeTranslator( d->translator );
       delete d->translator;
     }
-
     qApp->installTranslator( tr );
     d->translator = tr;
 
@@ -544,11 +543,6 @@ void MainWindow::setAllText()
     {
       d->docks.book->setLanguage( d->settings.language );
       d->docks.book->setWindowTitle( MainWindow::tr( "Math Book" ) );
-    }
-
-    if ( d->docks.functions )
-    {
-
     }
   }
 }
@@ -835,17 +829,17 @@ void MainWindow::Private::createMenus()
 
 void MainWindow::Private::setMenusText()
 {
-  menus.session  ->setTitle( MainWindow::tr("&Session")         );
-  menus.edit     ->setTitle( MainWindow::tr("&Edit")            );
-  menus.view     ->setTitle( MainWindow::tr("&View")            );
-  menus.settings ->setTitle( MainWindow::tr("Se&ttings")        );
-  menus.format   ->setTitle( MainWindow::tr("Result &Format")   );
-  menus.decimal  ->setTitle( MainWindow::tr("&Decimal")         );
-  menus.angle    ->setTitle( MainWindow::tr("&Angle Unit")      );
-  menus.behavior ->setTitle( MainWindow::tr("&Behavior")        );
-  menus.radixChar->setTitle( MainWindow::tr("Radix &Character") );
-  menus.language ->setTitle( MainWindow::tr("&Language")        );
-  menus.help     ->setTitle( MainWindow::tr("&Help")            );
+  menus.session  ->setTitle( MainWindow::tr( "&Session"         ) );
+  menus.edit     ->setTitle( MainWindow::tr( "&Edit"            ) );
+  menus.view     ->setTitle( MainWindow::tr( "&View"            ) );
+  menus.settings ->setTitle( MainWindow::tr( "Se&ttings"        ) );
+  menus.format   ->setTitle( MainWindow::tr( "Result &Format"   ) );
+  menus.decimal  ->setTitle( MainWindow::tr( "&Decimal"         ) );
+  menus.angle    ->setTitle( MainWindow::tr( "&Angle Unit"      ) );
+  menus.behavior ->setTitle( MainWindow::tr( "&Behavior"        ) );
+  menus.radixChar->setTitle( MainWindow::tr( "Radix &Character" ) );
+  menus.language ->setTitle( MainWindow::tr( "&Language"        ) );
+  menus.help     ->setTitle( MainWindow::tr( "&Help"            ) );
 }
 
 
@@ -2057,11 +2051,7 @@ void MainWindow::showMenuBar()
 
 void MainWindow::showStatusBar( bool b )
 {
-  if ( b )
-    d->createStatusBar();
-  else
-    d->deleteStatusBar();
-
+  b ? d->createStatusBar() : d->deleteStatusBar();
   d->settings.showStatusBar = b;
 }
 

@@ -1181,7 +1181,7 @@ HNumber Evaluator::evalNoAssign()
     // invalid expression ?
     if( !tokens.valid() )
     {
-      d->error = qApp->translate( "evaluator", "invalid expression" );
+      d->error = tr( "invalid expression" );
       return HNumber( 0 );
     }
 
@@ -1219,7 +1219,7 @@ HNumber Evaluator::evalNoAssign()
       case Opcode::Neg:
         if( stack.count() < 1 )
         {
-          d->error = qApp->translate( "evaluator", "invalid expression" );
+          d->error = tr( "invalid expression" );
           return HNumber( 0 );
         }
         val1 = stack.pop();
@@ -1232,7 +1232,7 @@ HNumber Evaluator::evalNoAssign()
       case Opcode::Add:
         if( stack.count() < 2 )
         {
-          d->error = qApp->translate( "evaluator", "invalid expression" );
+          d->error = tr( "invalid expression" );
           return HNumber( 0 );
         }
         val1 = stack.pop();
@@ -1244,7 +1244,7 @@ HNumber Evaluator::evalNoAssign()
       case Opcode::Sub:
         if( stack.count() < 2 )
         {
-          d->error = qApp->translate( "evaluator", "invalid expression" );
+          d->error = tr( "invalid expression" );
           return HNumber( 0 );
         }
         val1 = stack.pop();
@@ -1256,7 +1256,7 @@ HNumber Evaluator::evalNoAssign()
       case Opcode::Mul:
         if( stack.count() < 2 )
         {
-          d->error = qApp->translate( "evaluator", "invalid expression" );
+          d->error = tr( "invalid expression" );
           return HNumber( 0 );
         }
         val1 = stack.pop();
@@ -1268,14 +1268,14 @@ HNumber Evaluator::evalNoAssign()
       case Opcode::Div:
         if( stack.count() < 2 )
         {
-          d->error = qApp->translate( "evaluator", "invalid expression" );
+          d->error = tr( "invalid expression" );
           return HNumber( 0 );
         }
         val1 = stack.pop();
         val2 = stack.pop();
         if( val1.isZero() )
         {
-          d->error = qApp->translate( "evaluator", "division by zero" );
+          d->error = tr( "division by zero" );
           return HNumber( 0 );
         }
         val2 /= val1;
@@ -1285,7 +1285,7 @@ HNumber Evaluator::evalNoAssign()
       case Opcode::Pow:
         if( stack.count() < 2 )
         {
-          d->error = qApp->translate( "evaluator", "invalid expression" );
+          d->error = tr( "invalid expression" );
           return HNumber( 0 );
         }
         val1 = stack.pop();
@@ -1297,7 +1297,7 @@ HNumber Evaluator::evalNoAssign()
       case Opcode::Fact:
         if( stack.count() < 1 )
         {
-          d->error = qApp->translate( "evaluator", "invalid expression" );
+          d->error = tr( "invalid expression" );
           return HNumber( 0 );
         }
         val1 = stack.pop();
@@ -1308,14 +1308,14 @@ HNumber Evaluator::evalNoAssign()
       case Opcode::Modulo:
         if( stack.count() < 2 )
         {
-          d->error = qApp->translate( "evaluator", "invalid expression" );
+          d->error = tr( "invalid expression" );
           return HNumber( 0 );
         }
         val1 = stack.pop();
         val2 = stack.pop();
         if( val1.isZero() )
         {
-          d->error = qApp->translate( "evaluator", "division by zero" );
+          d->error = tr( "division by zero" );
           return HNumber( 0 );
         }
         val2 = val2 % val1;
@@ -1325,14 +1325,14 @@ HNumber Evaluator::evalNoAssign()
       case Opcode::IntDiv:
         if( stack.count() < 2 )
         {
-          d->error = qApp->translate( "evaluator", "invalid expression" );
+          d->error = tr( "invalid expression" );
           return HNumber( 0 );
         }
         val1 = stack.pop();
         val2 = stack.pop();
         if( val1.isZero() )
         {
-          d->error = qApp->translate( "evaluator", "division by zero" );
+          d->error = tr( "division by zero" );
           return HNumber( 0 );
         }
         val2 /= val1;
@@ -1355,8 +1355,7 @@ HNumber Evaluator::evalNoAssign()
             refs.push( fname );
           else
           {
-            d->error = fname + ": " + qApp->translate( "evaluator",
-              "unknown function or variable" );
+            d->error = fname + ": " + tr( "unknown function or variable" );
             return HNumber( 0 );
           }
         }
@@ -1372,14 +1371,13 @@ HNumber Evaluator::evalNoAssign()
         function = d->functions->function( fname );
         if( !function )
         {
-          d->error = fname + ": " + qApp->translate( "evaluator",
-            "unknown function or variable" );
+          d->error = fname + ": " + tr( "unknown function or variable" );
           return HNumber( 0 );
         }
 
         if( stack.count() < index )
         {
-          d->error = qApp->translate( "evaluator", "invalid expression" );
+          d->error = tr( "invalid expression" );
           return HNumber( 0 );
         }
 
@@ -1404,7 +1402,7 @@ HNumber Evaluator::evalNoAssign()
   // more than one value in stack ? unsuccesfull execution...
   if( stack.count() != 1 )
   {
-    d->error = qApp->translate( "evaluator", "invalid expression" );
+    d->error = tr( "invalid expression" );
     return HNumber( 0 );
   }
 
@@ -1422,16 +1420,15 @@ HNumber Evaluator::eval()
        || d->assignId == QString("phi")
        || d->assignId == QString("ans") )
   {
-    d->error = d->assignId + ": " + qApp->translate( "evaluator",
-        "variable cannot be overwritten" );
+    d->error = d->assignId + ": " + tr( "variable cannot be overwritten" );
     return HNumber::nan();
   }
 
   // variable can't have the same name as function
   if ( d->functions->function( d->assignId ) )
   {
-    d->error = d->assignId + ": " + qApp->translate( "evaluator",
-        "identifier matches an existing function name" );
+    d->error = d->assignId + ": "
+                 + tr( "identifier matches an existing function name" );
     return HNumber::nan();
   }
 

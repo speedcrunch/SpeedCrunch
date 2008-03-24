@@ -1,4 +1,5 @@
 HEADERS += base/constants.hxx
+HEADERS += base/evaluator.hxx
 HEADERS += base/functions.hxx
 HEADERS += gui/aboutbox.hxx
 HEADERS += gui/autohidelabel.hxx
@@ -17,6 +18,7 @@ HEADERS += gui/tipwidget.hxx
 HEADERS += gui/variablesdock.hxx
 
 SOURCES += base/constants.cpp
+HEADERS += base/evaluator.cpp
 SOURCES += base/functions.cpp
 SOURCES += gui/aboutbox.cpp
 SOURCES += gui/autohidelabel.cpp

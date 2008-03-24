@@ -96,6 +96,7 @@ class Evaluator : public QObject
   public:
     Evaluator( Functions *, char radixChar = 'C', QObject * parent = 0 );
     ~Evaluator();
+
     bool    has( const QString & id );
     bool    isValid() const;
     HNumber eval();
