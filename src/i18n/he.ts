@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="he">
+<defaultcodec></defaultcodec>
 <context>
     <name>AboutBox</name>
     <message>
@@ -559,402 +560,402 @@
     <message>
         <location filename="../base/functions.cpp" line="1456"/>
         <source>Absolute Value</source>
-        <translation type="unfinished">ערך מוחלט</translation>
+        <translation>ערך מוחלט</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1457"/>
         <source>Average (Arithmetic Mean)</source>
-        <translation type="unfinished">ממוצע (מתימטי)</translation>
+        <translation>ממוצע (מתימטי)</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1458"/>
         <source>Binary Representation</source>
-        <translation type="unfinished">ייצוג בינארי</translation>
+        <translation>ייצוג בינארי</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1459"/>
         <source>Cube Root</source>
-        <translation type="unfinished">שורש שלישי</translation>
+        <translation>שורש שלישי</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1460"/>
         <source>Ceiling</source>
-        <translation type="unfinished">עיגול מעלה</translation>
+        <translation>עיגול מעלה</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1461"/>
         <source>Decimal Representation</source>
-        <translation type="unfinished">הצגה דצימלית</translation>
+        <translation>הצגה דצימלית</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1462"/>
         <source>Floor</source>
-        <translation type="unfinished">עיגול מטה</translation>
+        <translation>עיגול מטה</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1463"/>
         <source>Fractional Part</source>
-        <translation type="unfinished">החלק השבור</translation>
+        <translation>החלק השבור</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1464"/>
         <source>Extension of Factorials [= (x-1)!]</source>
-        <translation type="unfinished">הרחבת עצרת [= (x-1)!]</translation>
+        <translation>הרחבת עצרת [= (x-1)!]</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1465"/>
         <source>Geometric Mean</source>
-        <translation type="unfinished">ממוצע הנדסי</translation>
+        <translation>ממוצע הנדסי</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1466"/>
         <source>Hexadecimal Representation</source>
-        <translation type="unfinished">הצגה הקסדצימלית</translation>
+        <translation>הצגה הקסדצימלית</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1467"/>
         <source>Integer Part</source>
-        <translation type="unfinished">החלק השלם</translation>
+        <translation>החלק השלם</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1468"/>
         <source>ln(abs(Gamma))</source>
-        <translation type="unfinished">ln(abs(Gamma))</translation>
+        <translation>ln(abs(Gamma))</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1469"/>
         <source>Maximum</source>
-        <translation type="unfinished">מקסימום</translation>
+        <translation>מקסימום</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1470"/>
         <source>Minimum</source>
-        <translation type="unfinished">מינימום</translation>
+        <translation>מינימום</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1471"/>
         <source>Octal Representation</source>
-        <translation type="unfinished">הצגה אוקטאלית</translation>
+        <translation>הצגה אוקטאלית</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1472"/>
         <source>Product</source>
-        <translation type="unfinished">מכפלה</translation>
+        <translation>מכפלה</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1473"/>
         <source>Rounding</source>
-        <translation type="unfinished">עיגול</translation>
+        <translation>עיגול</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1474"/>
         <source>Signum</source>
-        <translation type="unfinished">סימן</translation>
+        <translation>סימן</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1475"/>
         <source>Square Root</source>
-        <translation type="unfinished">שורש ריבועי</translation>
+        <translation>שורש ריבועי</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1476"/>
         <source>Sum</source>
-        <translation type="unfinished">סכום</translation>
+        <translation>סכום</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1477"/>
         <source>Truncation</source>
-        <translation type="unfinished">קיצוץ</translation>
+        <translation>קיצוץ</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1480"/>
         <source>Area Hyperbolic Cosine</source>
-        <translation type="unfinished">ארק קוסינוס היפרבולי</translation>
+        <translation>ארק קוסינוס היפרבולי</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1481"/>
         <source>Area Hyperbolic Sine</source>
-        <translation type="unfinished">ארק סינוס היפרבולי</translation>
+        <translation>ארק סינוס היפרבולי</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1482"/>
         <source>Area Hyperbolic Tangent</source>
-        <translation type="unfinished">ארק טנגנס היפרבולי</translation>
+        <translation>ארק טנגנס היפרבולי</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1483"/>
         <source>Hyperbolic Cosine</source>
-        <translation type="unfinished">קוסינוס היפרבולי</translation>
+        <translation>קוסינוס היפרבולי</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1484"/>
         <source>Exponential</source>
-        <translation type="unfinished">אקספוננט</translation>
+        <translation>אקספוננט</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1485"/>
         <source>Base-2 Logarithm</source>
-        <translation type="unfinished">לוגריתם בבסיס 2</translation>
+        <translation>לוגריתם בבסיס 2</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1486"/>
         <source>Natural Logarithm</source>
-        <translation type="unfinished">לוגריתם טבעי</translation>
+        <translation>לוגריתם טבעי</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1487"/>
         <source>Base-10 Logarithm</source>
-        <translation type="unfinished">לוגריתם בבסיס 10</translation>
+        <translation>לוגריתם בבסיס 10</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1488"/>
         <source>Hyperbolic Sine</source>
-        <translation type="unfinished">סינוס היפרבולי</translation>
+        <translation>סינוס היפרבולי</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1489"/>
         <source>Hyperbolic Tangent</source>
-        <translation type="unfinished">טנגנס היפרבולי</translation>
+        <translation>טנגנס היפרבולי</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1492"/>
         <source>Greatest Common Divisor</source>
-        <translation type="unfinished">מחלק משותף גדול ביותר</translation>
+        <translation>מחלק משותף גדול ביותר</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1493"/>
         <source>Combination (Binomial Coefficient)</source>
-        <translation type="unfinished">צירוף (מקדם בינומי)</translation>
+        <translation>צירוף (מקדם בינומי)</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1494"/>
         <source>Permutation (Arrangement)</source>
-        <translation type="unfinished">תמורה (סידור)</translation>
+        <translation>תמורה (סידור)</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1497"/>
         <source>Binomial Cumulative Distribution Function</source>
-        <translation type="unfinished">פונקצית התפלגות בינומית מצטברת</translation>
+        <translation>פונקצית התפלגות בינומית מצטברת</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1498"/>
         <source>Binomial Distribution Mean</source>
-        <translation type="unfinished">ממוצע של התפלגות בינומית</translation>
+        <translation>ממוצע של התפלגות בינומית</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1499"/>
         <source>Binomial Probability Mass Function</source>
-        <translation type="unfinished">פונקצית מסה של הסתברות בינומית</translation>
+        <translation>פונקצית מסה של הסתברות בינומית</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1500"/>
         <source>Binomial Distribution Variance</source>
-        <translation type="unfinished">שונות של התפלגות בינומית</translation>
+        <translation>שונות של התפלגות בינומית</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1501"/>
         <source>Error Function</source>
-        <translation type="unfinished">פונקצית שגיאה</translation>
+        <translation>פונקצית שגיאה</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1502"/>
         <source>Complementary Error Function</source>
-        <translation type="unfinished">פונקצית שגיאה משלימה</translation>
+        <translation>פונקצית שגיאה משלימה</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1503"/>
         <source>Hypergeometric Cumulative Distribution Function</source>
-        <translation type="unfinished">פונקצית התפלגות היפר גיאומטרית מצטברת</translation>
+        <translation>פונקצית התפלגות היפר גיאומטרית מצטברת</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1504"/>
         <source>Hypergeometric Distribution Mean</source>
-        <translation type="unfinished">ממוצע של התפלגות היפר גיאומטרית</translation>
+        <translation>ממוצע של התפלגות היפר גיאומטרית</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1505"/>
         <source>Hypergeometric Probability Mass Function</source>
-        <translation type="unfinished">פונקצית מסה של הסתברות היפר גיאומטרית</translation>
+        <translation>פונקצית מסה של הסתברות היפר גיאומטרית</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1506"/>
         <source>Hypergeometric Distribution Variance</source>
-        <translation type="unfinished">שונות של התפלגות היפר גיאומטרית</translation>
+        <translation>שונות של התפלגות היפר גיאומטרית</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1507"/>
         <source>Poissonian Cumulative Distribution Function</source>
-        <translation type="unfinished">פונקצית התפלגות פואסונית מצטברת</translation>
+        <translation>פונקצית התפלגות פואסונית מצטברת</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1508"/>
         <source>Poissonian Distribution Mean</source>
-        <translation type="unfinished">ממוצע של התפלגות פואסונית</translation>
+        <translation>ממוצע של התפלגות פואסונית</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1509"/>
         <source>Poissonian Probability Mass Function</source>
-        <translation type="unfinished">פונקצית מסה של הסתברות פואסונית</translation>
+        <translation>פונקצית מסה של הסתברות פואסונית</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1510"/>
         <source>Poissonian Distribution Variance</source>
-        <translation type="unfinished">שונות של התפלגות פואסונית</translation>
+        <translation>שונות של התפלגות פואסונית</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1513"/>
         <source>Arc Cosine</source>
-        <translation type="unfinished">ארק קוסינוס</translation>
+        <translation>ארק קוסינוס</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1514"/>
         <source>Arc Sine</source>
-        <translation type="unfinished">ארק סינוס</translation>
+        <translation>ארק סינוס</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1515"/>
         <source>Arc Tangent</source>
-        <translation type="unfinished">ארק טנגנס</translation>
+        <translation>ארק טנגנס</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1516"/>
         <source>Cosine</source>
-        <translation type="unfinished">קוסינוס</translation>
+        <translation>קוסינוס</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1517"/>
         <source>Cotangent</source>
-        <translation type="unfinished">קוטנגנס</translation>
+        <translation>קוטנגנס</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1518"/>
         <source>Cosecant</source>
-        <translation type="unfinished">קוסקנס</translation>
+        <translation>קוסקנס</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1519"/>
         <source>Degrees of Arc</source>
-        <translation type="unfinished">מעלות קשת</translation>
+        <translation>מעלות קשת</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1520"/>
         <source>Radians</source>
-        <translation type="unfinished">רדיאנים</translation>
+        <translation>רדיאנים</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1521"/>
         <source>Secant</source>
-        <translation type="unfinished">סקנס</translation>
+        <translation>סקנס</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1522"/>
         <source>Sine</source>
-        <translation type="unfinished">סינוס</translation>
+        <translation>סינוס</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1523"/>
         <source>Tangent</source>
-        <translation type="unfinished">טנגנס</translation>
+        <translation>טנגנס</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1526"/>
         <source>Mask to a bit size</source>
-        <translation type="unfinished">מיסוך לגודל בסיביות</translation>
+        <translation>מיסוך לגודל בסיביות</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1527"/>
         <source>Sign-extent a value</source>
-        <translation type="unfinished">הרחבת-סימן לערך</translation>
+        <translation>הרחבת-סימן לערך</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1528"/>
         <source>Logical NOT</source>
-        <translation type="unfinished">NOT לוגי</translation>
+        <translation>NOT לוגי</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1529"/>
         <source>Logical AND</source>
-        <translation type="unfinished">AND לוגי</translation>
+        <translation>AND לוגי</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1530"/>
         <source>Logical OR</source>
-        <translation type="unfinished">OR לוגי</translation>
+        <translation>OR לוגי</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1531"/>
         <source>Logical XOR</source>
-        <translation type="unfinished">XOR לוגי</translation>
+        <translation>XOR לוגי</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1532"/>
         <source>Arithmetic Shift Left</source>
-        <translation type="unfinished">הזזה אריתמטית שמאלה</translation>
+        <translation>הזזה אריתמטית שמאלה</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1533"/>
         <source>Arithmetic Shift Right</source>
-        <translation type="unfinished">הזזה אריתמטית ימינה</translation>
+        <translation>הזזה אריתמטית ימינה</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1534"/>
         <source>Integer Quotient</source>
-        <translation type="unfinished">מנה שלמה</translation>
+        <translation>מנה שלמה</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1535"/>
         <source>Modulo</source>
-        <translation type="unfinished">מודולו</translation>
+        <translation>מודולו</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="103"/>
         <source>cannot execute function %1</source>
-        <translation type="unfinished">אי אפשר להפעיל את הפונקציה %1</translation>
+        <translation>אי אפשר להפעיל את הפונקציה %1</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="111"/>
         <source>function accepts 1 argument</source>
-        <translation type="unfinished">הפונקציה מקבלת פרמטר אחד</translation>
+        <translation>הפונקציה מקבלת פרמטר אחד</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="114"/>
         <source>function accepts %1 arguments</source>
-        <translation type="unfinished">הפונקציה מקבלת %1 פרמטרים</translation>
+        <translation>הפונקציה מקבלת %1 פרמטרים</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="344"/>
         <source>function requires 1 or 2 arguments</source>
-        <translation type="unfinished">הפונקציה דורשת פרמטר או שני פרמטרים</translation>
+        <translation>הפונקציה דורשת פרמטר או שני פרמטרים</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1200"/>
         <source>function undefined for specified arguments</source>
-        <translation type="unfinished">פונקציה לא מוגדרת בתחום הפרמטרים</translation>
+        <translation>פונקציה לא מוגדרת בתחום הפרמטרים</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="316"/>
         <source>function requires at least 2 arguments</source>
-        <translation type="unfinished">הפונקציה דורשת לפחות שני פרמטרים</translation>
+        <translation>הפונקציה דורשת לפחות שני פרמטרים</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="324"/>
         <source>function requires integer arguments</source>
-        <translation type="unfinished">הפונקציה דורשת פרמטרים שלמים</translation>
+        <translation>הפונקציה דורשת פרמטרים שלמים</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="764"/>
         <source>function undefined for specified argument</source>
-        <translation type="unfinished">פונקציה לא מוגדרת בתחום הפרמטרים</translation>
+        <translation>פונקציה לא מוגדרת בתחום הפרמטרים</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="726"/>
         <source>underflow</source>
-        <translation type="unfinished">חמיקה (underflow)</translation>
+        <translation>חמיקה (underflow)</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="861"/>
         <source>function requires at least 1 argument</source>
-        <translation type="unfinished">הפונקציה דורשת פרמטר אחד לפחות</translation>
+        <translation>הפונקציה דורשת פרמטר אחד לפחות</translation>
     </message>
 </context>
 <context>
