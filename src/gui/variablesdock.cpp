@@ -39,6 +39,7 @@ struct VariablesDock::Private
   QLineEdit *   filter;
   QTimer *      filterTimer;
   QTreeWidget * list;
+  QLabel *      label;
   QLabel *      noMatchLabel;
   QVector<Variable> variables;
 
@@ -62,15 +63,14 @@ QString VariablesDock::Private::formatValue( const HNumber & value )
 // public
 
 VariablesDock::VariablesDock( char radixChar, QWidget * parent )
-  : QDockWidget( tr("Variables"), parent ), d( new VariablesDock::Private )
+  : QDockWidget( parent ), d( new VariablesDock::Private )
 {
   if ( radixChar == 'C' )
     d->radixChar = QLocale().decimalPoint().toAscii();
   else
     d->radixChar = radixChar;
 
-  QLabel * label = new QLabel( this );
-  label->setText( tr("Search") );
+  d->label = new QLabel( this );
 
   d->filter = new QLineEdit( this );
   connect( d->filter, SIGNAL( textChanged( const QString & ) ),
@@ -79,7 +79,7 @@ VariablesDock::VariablesDock( char radixChar, QWidget * parent )
   QWidget     * searchBox    = new QWidget( this );
   QHBoxLayout * searchLayout = new QHBoxLayout;
   searchBox->setLayout( searchLayout );
-  searchLayout->addWidget( label );
+  searchLayout->addWidget( d->label );
   searchLayout->addWidget( d->filter );
   searchLayout->setMargin( 0 );
 
@@ -110,7 +110,6 @@ VariablesDock::VariablesDock( char radixChar, QWidget * parent )
   connect( d->filterTimer, SIGNAL( timeout() ), SLOT( filter() ) );
 
   d->noMatchLabel = new QLabel( this );
-  d->noMatchLabel->setText( tr("No match found") );
   d->noMatchLabel->setAlignment( Qt::AlignCenter );
   d->noMatchLabel->adjustSize();
   d->noMatchLabel->hide();
@@ -118,6 +117,8 @@ VariablesDock::VariablesDock( char radixChar, QWidget * parent )
   setMinimumWidth( 200 );
   setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
   setWindowIcon( QIcon() );
+
+  retranslateText();
 }
 
 
@@ -152,6 +153,14 @@ void VariablesDock::setRadixChar( char c )
     d->radixChar = c;
     filter();
   }
+}
+
+
+void VariablesDock::retranslateText()
+{
+  setWindowTitle( tr( "Variables" ) );
+  d->label->setText( tr( "Search" ) );
+  d->noMatchLabel->setText( tr( "No match found" ) );
 }
 
 

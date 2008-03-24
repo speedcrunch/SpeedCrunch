@@ -1064,6 +1064,8 @@ void MainWindow::Private::createVariablesDock()
            p, SLOT( variableSelected( const QString & ) ) );
   connect( p, SIGNAL( radixCharChanged( char ) ),
            docks.variables, SLOT( setRadixChar( char ) ) );
+  connect( p, SIGNAL( retranslateText() ),
+           docks.variables, SLOT( retranslateText() ) );
 
   docks.variables->updateList( evaluator );
 

@@ -1087,165 +1087,165 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1489"/>
+        <location filename="../gui/mainwindow.cpp" line="1491"/>
         <source>About Qt</source>
         <translation type="unfinished">Qt Hakkında</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1644"/>
+        <location filename="../gui/mainwindow.cpp" line="1646"/>
         <source>File %1 is not a valid session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1926"/>
+        <location filename="../gui/mainwindow.cpp" line="1928"/>
         <source>SpeedCrunch Sessions (*.sch);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1646"/>
+        <location filename="../gui/mainwindow.cpp" line="1648"/>
         <source>Load Session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2639"/>
+        <location filename="../gui/mainwindow.cpp" line="2641"/>
         <source>Error</source>
         <translation type="unfinished">Hata</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1761"/>
+        <location filename="../gui/mainwindow.cpp" line="1763"/>
         <source>Can&apos;t read from file %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1681"/>
+        <location filename="../gui/mainwindow.cpp" line="1683"/>
         <source>Merge session being loaded with current session?
 If no, current variables and display will be cleared.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1770"/>
+        <location filename="../gui/mainwindow.cpp" line="1772"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1878"/>
+        <location filename="../gui/mainwindow.cpp" line="1880"/>
         <source>SpeedCrunch</source>
         <translation type="unfinished">SpeedCrunch</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1927"/>
+        <location filename="../gui/mainwindow.cpp" line="1929"/>
         <source>Save Session</source>
         <translation type="unfinished">Oturumu Kaydet</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1983"/>
+        <location filename="../gui/mainwindow.cpp" line="1985"/>
         <source>Can&apos;t write to file %1</source>
         <translation type="unfinished">%1 dosyasına yazılamıyor</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2299"/>
+        <location filename="../gui/mainwindow.cpp" line="2301"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2317"/>
+        <location filename="../gui/mainwindow.cpp" line="2319"/>
         <source>To insert a function using keyboard, use Ctrl+F shorcut. From the dialog, you can choose the function you want to insert.</source>
         <translation type="unfinished">Klavyeyi kullanarak fonksiyon girmek için Ctrl+F kısayolunu kullanın. Girmek istediğiniz fonksiyonu pencereden seçebilirsiniz.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2322"/>
+        <location filename="../gui/mainwindow.cpp" line="2324"/>
         <source>To insert a variable using keyboard, use Ctrl+I shorcut. From the dialog, you can choose the variable you want to insert.</source>
         <translation type="unfinished">Klavyeyi kullanarak değişken girmek için Ctrl+I kısayolunu kullanın. Girmek istediğiniz değişkeni pencereden seçebilirsiniz.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2325"/>
+        <location filename="../gui/mainwindow.cpp" line="2327"/>
         <source>Use variable &lt;i&gt;pi&lt;/i&gt; to use pi constant.</source>
         <translation type="unfinished">Pi sabiti için &lt;i&gt;pi&lt;/i&gt; değişkenini kullan.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2330"/>
+        <location filename="../gui/mainwindow.cpp" line="2332"/>
         <source>Use &lt;i&gt;;&lt;/i&gt; (semicolon) to separate the parameters in functions.</source>
         <translation type="unfinished">Fonksiyonlarda parametreleri ayırmak için &lt;i&gt;;&lt;/i&gt; (noktalı virgül) kullanın.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2336"/>
+        <location filename="../gui/mainwindow.cpp" line="2338"/>
         <source>Tip of the day</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2670"/>
+        <location filename="../gui/mainwindow.cpp" line="2672"/>
         <source>SpeedCrunch is minimized.
 Left click the icon to restore it or right click for options.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1534"/>
+        <location filename="../gui/mainwindow.cpp" line="1536"/>
         <source>Degree</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1973"/>
+        <location filename="../gui/mainwindow.cpp" line="1975"/>
         <source>All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1918"/>
+        <location filename="../gui/mainwindow.cpp" line="1920"/>
         <source>Radian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2293"/>
+        <location filename="../gui/mainwindow.cpp" line="2295"/>
         <source>The menu bar is now hidden. To make it visible again, press Ctrl+Alt+M.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2346"/>
+        <location filename="../gui/mainwindow.cpp" line="2348"/>
         <source>Binary</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2356"/>
+        <location filename="../gui/mainwindow.cpp" line="2358"/>
         <source>Engineering decimal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2366"/>
+        <location filename="../gui/mainwindow.cpp" line="2368"/>
         <source>Fixed decimal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2376"/>
+        <location filename="../gui/mainwindow.cpp" line="2378"/>
         <source>General decimal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2386"/>
+        <location filename="../gui/mainwindow.cpp" line="2388"/>
         <source>Hexadecimal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2396"/>
+        <location filename="../gui/mainwindow.cpp" line="2398"/>
         <source>Octal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2406"/>
+        <location filename="../gui/mainwindow.cpp" line="2408"/>
         <source>Scientific decimal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1752"/>
+        <location filename="../gui/mainwindow.cpp" line="1754"/>
         <source>Import Session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1768"/>
+        <location filename="../gui/mainwindow.cpp" line="1770"/>
         <source>Merge session being imported with current session?
 If no, current variables and display will be cleared.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1974"/>
+        <location filename="../gui/mainwindow.cpp" line="1976"/>
         <source>Export Session</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1590,7 +1590,7 @@ If no, current variables and display will be cleared.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1803"/>
+        <location filename="../gui/mainwindow.cpp" line="1805"/>
         <source>Ignore error?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1759,17 +1759,17 @@ If no, current variables and display will be cleared.</source>
 <context>
     <name>VariablesDock</name>
     <message>
-        <location filename="../gui/variablesdock.cpp" line="65"/>
+        <location filename="../gui/variablesdock.cpp" line="159"/>
         <source>Variables</source>
         <translation>Değişkenler</translation>
     </message>
     <message>
-        <location filename="../gui/variablesdock.cpp" line="73"/>
+        <location filename="../gui/variablesdock.cpp" line="160"/>
         <source>Search</source>
         <translation>Ara</translation>
     </message>
     <message>
-        <location filename="../gui/variablesdock.cpp" line="113"/>
+        <location filename="../gui/variablesdock.cpp" line="161"/>
         <source>No match found</source>
         <translation>Eşleşen bulunamadı</translation>
     </message>

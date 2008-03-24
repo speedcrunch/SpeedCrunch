@@ -45,6 +45,7 @@ class VariablesDock : public QDockWidget
 
   public slots:
     void setRadixChar( char );
+    void retranslateText();
 
   protected slots:
     void filter();
