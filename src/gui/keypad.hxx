@@ -46,6 +46,7 @@ class Keypad : public QWidget
 
   public slots:
     void setRadixChar( char );
+    void retranslateText();
 
   protected slots:
     void key0Pressed();

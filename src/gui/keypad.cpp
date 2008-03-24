@@ -130,6 +130,12 @@ void Keypad::setRadixChar( char c )
 }
 
 
+void Keypad::retranslateText()
+{
+  d->setButtonTooltips();;
+}
+
+
 // protected slots
 
 void Keypad::key0Pressed()     { emit buttonPressed( Keypad::Key0         ); };
@@ -302,20 +308,20 @@ void Keypad::Private::layoutButtons()
 
 void Keypad::Private::setButtonTooltips()
 {
-  keyAcos->setToolTip( tr("Inverse cosine")      );
-  keyAns->setToolTip ( tr("The last result")     );
-  keyAsin->setToolTip( tr("Inverse sine")        );
-  keyAtan->setToolTip( tr("Inverse tangent")     );
-  keyC->setToolTip   ( tr("Clear expression")    );
-  keyCos->setToolTip ( tr("Cosine")              );
-  keyEE->setToolTip  ( tr("Scientific notation") );
-  keyExp->setToolTip ( tr("Exponential")         );
-  keyLn->setToolTip  ( tr("Natural logarithm")   );
-  keySin->setToolTip ( tr("Sine")                );
-  keySqrt->setToolTip( tr("Square root")         );
-  keyTan->setToolTip ( tr("Tangent")             );
-  keyXEq->setToolTip ( tr("Assign variable x")   );
-  keyX->setToolTip   ( tr("The variable x")      );
+  keyAcos->setToolTip( Keypad::tr( "Inverse cosine"      ) );
+  keyAns->setToolTip ( Keypad::tr( "The last result"     ) );
+  keyAsin->setToolTip( Keypad::tr( "Inverse sine"        ) );
+  keyAtan->setToolTip( Keypad::tr( "Inverse tangent"     ) );
+  keyC->setToolTip   ( Keypad::tr( "Clear expression"    ) );
+  keyCos->setToolTip ( Keypad::tr( "Cosine"              ) );
+  keyEE->setToolTip  ( Keypad::tr( "Scientific notation" ) );
+  keyExp->setToolTip ( Keypad::tr( "Exponential"         ) );
+  keyLn->setToolTip  ( Keypad::tr( "Natural logarithm"   ) );
+  keySin->setToolTip ( Keypad::tr( "Sine"                ) );
+  keySqrt->setToolTip( Keypad::tr( "Square root"         ) );
+  keyTan->setToolTip ( Keypad::tr( "Tangent"             ) );
+  keyXEq->setToolTip ( Keypad::tr( "Assign variable x"   ) );
+  keyX->setToolTip   ( Keypad::tr( "The variable x"      ) );
 }
 
 

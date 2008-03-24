@@ -539,6 +539,12 @@ void MainWindow::setAllText()
     d->setActionsText();
     d->functions->retranslateText(); // can't be signal/slot to ensure order
 
+    if ( d->status.angleUnit )
+    {
+      d->deleteStatusBar();
+      d->createStatusBar();
+    }
+
     if ( d->docks.book )
     {
       d->docks.book->setLanguage( d->settings.language );
@@ -931,10 +937,13 @@ void MainWindow::Private::createKeypad()
 {
   widgets.keypad = new Keypad( settings.radixChar, widgets.root );
   widgets.keypad->setFocusPolicy( Qt::NoFocus );
+
   connect( widgets.keypad, SIGNAL( buttonPressed( Keypad::Button ) ),
            p, SLOT( keypadButtonPressed( Keypad::Button ) ) );
   connect( p, SIGNAL( radixCharChanged( char ) ),
            widgets.keypad, SLOT( setRadixChar( char ) ) );
+  connect( p, SIGNAL( retranslateText() ),
+           widgets.keypad, SLOT( retranslateText() ) );
 
   layouts.keypad = new QHBoxLayout();
   layouts.keypad->addStretch();
