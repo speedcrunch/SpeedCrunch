@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="he">
+<defaultcodec></defaultcodec>
 <context>
     <name>AboutBox</name>
     <message>
@@ -789,27 +790,27 @@
     <message>
         <location filename="../base/evaluator.cpp" line="1405"/>
         <source>invalid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>ביטוי לא מובן</translation>
     </message>
     <message>
         <location filename="../base/evaluator.cpp" line="1335"/>
         <source>division by zero</source>
-        <translation type="unfinished"></translation>
+        <translation>חלוקה באפס</translation>
     </message>
     <message>
         <location filename="../base/evaluator.cpp" line="1374"/>
         <source>unknown function or variable</source>
-        <translation type="unfinished"></translation>
+        <translation>פונקציה או משתנה לא מזוהה</translation>
     </message>
     <message>
         <location filename="../base/evaluator.cpp" line="1423"/>
         <source>variable cannot be overwritten</source>
-        <translation type="unfinished"></translation>
+        <translation>לא ניתן להחליף את ערך המשתנה</translation>
     </message>
     <message>
         <location filename="../base/evaluator.cpp" line="1431"/>
         <source>identifier matches an existing function name</source>
-        <translation type="unfinished"></translation>
+        <translation>קיימת כבר פונקציה בשם זה</translation>
     </message>
 </context>
 <context>
