@@ -279,9 +279,13 @@ struct MainWindow::Private
   void saveSettings();
   void setActionsText();
   void setMenusText();
+  void setStatusBarText();
 
   static QTranslator * createTranslator( const QString & langCode );
 };
+
+
+void setWidgetDirection( const QString & language, QWidget * widget );
 
 
 MainWindow::Private::Private()
@@ -537,20 +541,53 @@ void MainWindow::setAllText()
 
     d->setMenusText();
     d->setActionsText();
+    d->setStatusBarText();
     d->functions->retranslateText(); // can't be signal/slot to ensure order
     d->constants->retranslateText(); // same as above
 
-    if ( d->status.angleUnit )
-    {
-      d->deleteStatusBar();
-      d->createStatusBar();
-    }
+    //if ( d->status.angleUnit )
+    //{
+    //  d->deleteStatusBar();
+    //  d->createStatusBar();
+    //}
 
     if ( d->docks.book )
     {
       d->docks.book->setLanguage( d->settings.language );
       d->docks.book->setWindowTitle( MainWindow::tr( "Math Book" ) );
     }
+  }
+
+  // layout direction
+  setWidgetsDirection();
+}
+
+
+void MainWindow::Private::setStatusBarText()
+{
+  if ( status.angleUnit )
+  {
+    QString angleUnit = (settings.angleMode == 'r') ?
+      MainWindow::tr( "Radian" ) : MainWindow::tr( "Degree" );
+
+    QString format;
+    switch ( settings.format )
+    {
+      case 'b' : format = MainWindow::tr( "Binary"              ); break;
+      case 'o' : format = MainWindow::tr( "Octal"               ); break;
+      case 'h' : format = MainWindow::tr( "Hexadecimal"         ); break;
+      case 'f' : format = MainWindow::tr( "Fixed decimal"       ); break;
+      case 'n' : format = MainWindow::tr( "Engineering decimal" ); break;
+      case 'e' : format = MainWindow::tr( "Scientific decimal"  ); break;
+      case 'g' : format = MainWindow::tr( "General decimal"     ); break;
+      default : break;
+    }
+
+    status.angleUnit->setText( angleUnit );
+    status.format   ->setText( format    );
+
+    status.angleUnit->setToolTip( MainWindow::tr( "Angle unit"    ) );
+    status.format   ->setToolTip( MainWindow::tr( "Result format" ) );
   }
 }
 
@@ -855,34 +892,17 @@ void MainWindow::Private::createStatusBar()
 {
   QStatusBar * bar = p->statusBar();
 
-  QString angleUnit = (settings.angleMode == 'r') ?
-    MainWindow::tr( "Radian" ) : MainWindow::tr( "Degree" );
-
-  QString format;
-  switch ( settings.format )
-  {
-    case 'b' : format = MainWindow::tr( "Binary"              ); break;
-    case 'o' : format = MainWindow::tr( "Octal"               ); break;
-    case 'h' : format = MainWindow::tr( "Hexadecimal"         ); break;
-    case 'f' : format = MainWindow::tr( "Fixed decimal"       ); break;
-    case 'n' : format = MainWindow::tr( "Engineering decimal" ); break;
-    case 'e' : format = MainWindow::tr( "Scientific decimal"  ); break;
-    case 'g' : format = MainWindow::tr( "General decimal"     ); break;
-
-    default : break;
-  }
-
-  status.angleUnit = new QLabel( angleUnit, bar );
-  status.format    = new QLabel( format,    bar );
+  status.angleUnit = new QLabel( bar );
+  status.format    = new QLabel( bar );
 
   status.angleUnit->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
   status.format   ->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
 
-  status.angleUnit->setToolTip( MainWindow::tr( "Angle unit"    ) );
-  status.format   ->setToolTip( MainWindow::tr( "Result format" ) );
-
   bar->addWidget( status.angleUnit );
   bar->addWidget( status.format    );
+
+  setStatusBarText();
+  setWidgetDirection( settings.language, bar );
 }
 
 
@@ -1459,7 +1479,6 @@ MainWindow::MainWindow()
   d->createUi();
   d->applySettings();
 
-  setWidgetsDirection();
   emit retranslateText();
 
   QTimer::singleShot( 0, this, SLOT( activate() ) );
@@ -2028,6 +2047,8 @@ void MainWindow::setWidgetsDirection()
     setWidgetDirection( d->settings.language, d->docks.functions );
   // tip of the day
   //setWidgetDirection( d->settings.language, d->widgets.tip );
+  if ( d->status.angleUnit )
+    setWidgetDirection( d->settings.language, statusBar() );
 }
 
 
