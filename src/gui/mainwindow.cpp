@@ -326,33 +326,25 @@ QTranslator * MainWindow::Private::createTranslator( const QString & langCode )
   QTranslator * translator = new QTranslator;
   QString       localeFile = (langCode == "C") ? QLocale().name()
                                                : langCode;
-  QString       localeDir;
-  bool          foundTranslator = false;
 
 #ifdef Q_OS_WIN32
-  if ( ! foundTranslator )
-    if ( translator->load( localeFile ) )
-      foundTranslator = true;
-#endif // Q_OS_WIN32
+  translator->load( QString( "locale/" ) + localeFile );
+  return translator;
+#else
 
   BrInitError error;
-
-  if ( br_init( &error ) == 0 && error != BR_INIT_ERROR_DISABLED )
+  if ( br_init( & error ) == 0 && error != BR_INIT_ERROR_DISABLED )
   {
-      printf( "Warning: BinReloc failed to initialize (error code %d)\n",
-              error );
-      printf( "Will fallback to hardcoded default path.\n" );
+      qDebug( "Warning: BinReloc failed to initialize (error code %d)", error );
+      qDebug( "Will fallback to hardcoded default path." );
   }
 
-  localeDir = QString( br_find_data_dir( 0 ) ) + "/speedcrunch/locale";
-  if ( ! foundTranslator )
-    if ( translator->load( localeFile, localeDir ) )
-      foundTranslator = true;
-
-  if ( foundTranslator )
+  QString localeDir = QString( br_find_data_dir( 0 ) ) + "/speedcrunch/locale";
+  if ( translator->load( localeFile, localeDir ) )
     return translator;
   else
     return 0;
+#endif
 }
 
 
@@ -980,8 +972,25 @@ void MainWindow::Private::createKeypad()
 
 void MainWindow::Private::createBookDock()
 {
-  docks.book = new BookDock( QString( BOOKSDIR ), "math_index.html",
-                             settings.language, p );
+  QString booksDir;
+  QString localeDir = (settings.language == "C") ?
+                        QLocale().name() : settings.language;
+
+#ifdef Q_OS_WIN32
+  booksdir = QString( "books/" ) + localeDir;
+#else
+  BrInitError error;
+  if ( br_init( & error ) == 0 && error != BR_INIT_ERROR_DISABLED )
+  {
+      qDebug( "Warning: BinReloc failed to initialize (error code %d)", error );
+      qDebug( "Will fallback to hardcoded default path." );
+  }
+
+  booksDir = QString( br_find_data_dir( 0 ) ) + "/speedcrunch/books/";
+#endif
+
+  docks.book = new BookDock( booksDir, "math_index.html", settings.language,
+                             p );
   docks.book->setObjectName( "BookDock" );
   docks.book->setTitle( MainWindow::tr( "Math Book" ) );
   docks.book->installEventFilter( p );
