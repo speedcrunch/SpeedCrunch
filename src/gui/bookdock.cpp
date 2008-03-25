@@ -40,6 +40,7 @@ struct BookDock::Private
   QPushButton *  backButton;
   QPushButton *  forwardButton;
   QPushButton *  indexButton;
+  QWidget *      buttonLayoutWidget;
 };
 
 
@@ -62,9 +63,11 @@ BookDock::BookDock( const QString & directory, const QString & file,
   connect( d->sheet, SIGNAL( anchorClicked( const QUrl & ) ),
            this, SLOT( anchorClicked( const QUrl & ) ) );
 
-  QHBoxLayout * buttonLayout = new QHBoxLayout;
+  d->buttonLayoutWidget = new QWidget;
+  QHBoxLayout * buttonLayout = new QHBoxLayout( d->buttonLayoutWidget );
   buttonLayout->setSpacing( 0 );
   buttonLayout->setMargin( 0 );
+
   d->backButton = new QPushButton( "", this );
   d->backButton->setIcon( QPixmap( ":/book_back.png" ) );
   d->backButton->setFlat( true );
@@ -93,9 +96,9 @@ BookDock::BookDock( const QString & directory, const QString & file,
   connect( d->indexButton, SIGNAL( clicked() ), this, SLOT( home() ) );
 
   buttonLayout->addWidget( d->indexButton );
-
   buttonLayout->addStretch();
-  bookLayout->addLayout( buttonLayout );
+
+  bookLayout->addWidget( d->buttonLayoutWidget );
   bookLayout->addWidget( d->sheet );
 
   widget->setLayout( bookLayout );
@@ -170,6 +173,12 @@ void BookDock::setLanguage( const QString & languageCode )
     QString localeShort = locale.left( 2 ).toLower();
     d->sheet->setSource( d->path + localeShort + "/" + d->file );
   }
+
+  if ( languageCode == "he" )
+    setLayoutDirection( Qt::RightToLeft );
+  else
+    setLayoutDirection( Qt::LeftToRight );
+  d->buttonLayoutWidget->setLayoutDirection( Qt::LeftToRight );
 }
 
 

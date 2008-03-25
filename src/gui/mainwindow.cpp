@@ -2027,7 +2027,7 @@ void MainWindow::setWidgetsDirection()
   if ( d->docks.functions )
     setWidgetDirection( d->settings.language, d->docks.functions );
   // tip of the day
-  setWidgetDirection( d->settings.language, d->widgets.tip );
+  //setWidgetDirection( d->settings.language, d->widgets.tip );
 }
 
 
