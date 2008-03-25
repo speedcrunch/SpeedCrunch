@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="stylesheet" type="text/css" href="../books.css" />
   </head>
-  <body>
+  <body <i18n>align="left"</i18n>>
     <h1><i18n>Sector</i18n></h1>
     <center><img src="../images/sector.png" /></center>
     <br />

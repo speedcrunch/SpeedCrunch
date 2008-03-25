@@ -131,7 +131,6 @@ void BookDock::anchorClicked ( const QUrl & link )
   {
     d->sheet->setSource( link );
     d->file = QFileInfo( link.path() ).fileName();
-    qDebug( "%s", qPrintable( d->file ) );
   }
 
   // necessary for QTextBrowser to always draw correctly (why?)

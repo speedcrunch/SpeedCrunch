@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-24 22:06+0000\n"
+"POT-Creation-Date: 2008-03-25 14:33+0000\n"
 "PO-Revision-Date: 2008-03-24 16:01-0300\n"
 "Last-Translator: Fabio Margarido <fabiomargarido@gmail.com>\n"
 "Language-Team: \n"
@@ -13,6 +13,13 @@ msgstr ""
 #: circle.html.template, math_index.html.template
 msgid "Circle"
 msgstr "Círculo"
+
+#: cube.html.template, circle.html.template, right_triangle.html.template,
+#: math_index.html.template, cone.html.template, sphere.html.template,
+#: sector.html.template, cylinder.html.template,
+#: quadratic_equation.html.template
+msgid "align=\"left\""
+msgstr ""
 
 #: cone.html.template, math_index.html.template
 msgid "Cone"

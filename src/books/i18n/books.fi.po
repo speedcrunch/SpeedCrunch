@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: books.pot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-07 15:39+0000\n"
+"POT-Creation-Date: 2008-03-25 14:33+0000\n"
 "PO-Revision-Date: 2007-12-13 16:37+0200\n"
 "Last-Translator: Petri Damstén <petri.damsten@iki.fi>\n"
 "Language-Team: Finnish\n"
@@ -17,6 +17,13 @@ msgstr ""
 #: circle.html.template, math_index.html.template
 msgid "Circle"
 msgstr "Ympyrä"
+
+#: cube.html.template, circle.html.template, right_triangle.html.template,
+#: math_index.html.template, cone.html.template, sphere.html.template,
+#: sector.html.template, cylinder.html.template,
+#: quadratic_equation.html.template
+msgid "align=\"left\""
+msgstr ""
 
 #: cone.html.template, math_index.html.template
 msgid "Cone"

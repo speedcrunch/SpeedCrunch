@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: books.pot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-07 15:39+0000\n"
+"POT-Creation-Date: 2008-03-25 14:33+0000\n"
 "PO-Revision-Date: 2007-01-09 00:00+0100\n"
 "Last-Translator: SpeedCrunch Developers\n"
 "Language-Team: en\n"
@@ -12,6 +12,13 @@ msgstr ""
 
 #: circle.html.template, math_index.html.template
 msgid "Circle"
+msgstr ""
+
+#: cube.html.template, circle.html.template, right_triangle.html.template,
+#: math_index.html.template, cone.html.template, sphere.html.template,
+#: sector.html.template, cylinder.html.template,
+#: quadratic_equation.html.template
+msgid "align=\"left\""
 msgstr ""
 
 #: cone.html.template, math_index.html.template

@@ -2,6 +2,13 @@
 msgid "Circle"
 msgstr ""
 
+#: cube.html.template, circle.html.template, right_triangle.html.template,
+#: math_index.html.template, cone.html.template, sphere.html.template,
+#: sector.html.template, cylinder.html.template,
+#: quadratic_equation.html.template
+msgid "align=\"left\""
+msgstr ""
+
 #: cone.html.template, math_index.html.template
 msgid "Cone"
 msgstr ""

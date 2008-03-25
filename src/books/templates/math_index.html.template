@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="stylesheet" type="text/css" href="../books.css" />
   </head>
-  <body>
+  <body <i18n>align="left"</i18n>>
     <h1><i18n>3D Objects</i18n></h1><br />
     <a href="sphere.html"><i18n>Sphere</i18n></a><br />
     <a href="cube.html"><i18n>Cube</i18n></a><br />
