@@ -103,15 +103,17 @@ class ResultDisplayItem : public BaseItem
       value = v;
       result = r;
       index = i;
-      setTextAlignment( Qt::AlignRight );
-      setText( result->formatNumber( value ) );
-      //printf( "%s\n", qPrintable(text()) );
+      setTextAlignment( Qt::AlignLeft );
+      QFont f = font();
+      f.setBold( true );
+      f.setPointSize( f.pointSize() + 2 );
+      setFont( f );
       updateItem();
     }
 
     void updateItem()
     {
-      setText( result->formatNumber( value ) );
+      setText( QString( "   " ) + result->formatNumber( value ) );
 
       if ( result->customAppearance() )
       {
@@ -398,8 +400,8 @@ void ResultDisplay::clear()
 
 void ResultDisplay::scrollEnd()
 {
-  QScrollBar * hBar = horizontalScrollBar();
-  hBar->setValue( hBar->maximum() );
+  //QScrollBar * hBar = horizontalScrollBar();
+  //hBar->setValue( hBar->maximum() );
   scrollToBottom();
 }
 

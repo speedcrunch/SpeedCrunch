@@ -918,8 +918,6 @@ void MainWindow::Private::createFixedWidgets()
   displayLayout->setMargin( 5 );
   widgets.display = new ResultDisplay( settings.radixChar, settings.format,
                                        settings.precision, widgets.root );
-  QString displayStyle( "QListWidget { font: bold }" );
-  widgets.display->setStyleSheet( displayStyle );
   displayLayout->addWidget( widgets.display );
   layouts.root->addLayout( displayLayout );
 
