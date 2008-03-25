@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="pl">
+<defaultcodec></defaultcodec>
 <context>
     <name>AboutBox</name>
     <message>
@@ -156,12 +157,12 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="285"/>
         <source>Polish</source>
-        <translation type="unfinished">Polski</translation>
+        <translation>Polski</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="291"/>
         <source>Turkish</source>
-        <translation type="unfinished">Turecki</translation>
+        <translation>Turecki</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="321"/>
@@ -560,212 +561,212 @@
     <message>
         <location filename="../base/functions.cpp" line="1456"/>
         <source>Absolute Value</source>
-        <translation type="unfinished">Wartość bezwzględna</translation>
+        <translation>Wartość bezwzględna</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1457"/>
         <source>Average (Arithmetic Mean)</source>
-        <translation type="unfinished">Średnia arytmetyczna</translation>
+        <translation>Średnia arytmetyczna</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1458"/>
         <source>Binary Representation</source>
-        <translation type="unfinished">Reprezentacja dwójkowa</translation>
+        <translation>Reprezentacja dwójkowa</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1459"/>
         <source>Cube Root</source>
-        <translation type="unfinished">Pierwiastek sześcienny</translation>
+        <translation>Pierwiastek sześcienny</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1461"/>
         <source>Decimal Representation</source>
-        <translation type="unfinished">Reprezentacja dziesiętna</translation>
+        <translation>Reprezentacja dziesiętna</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1463"/>
         <source>Fractional Part</source>
-        <translation type="unfinished">Część ułamkowa</translation>
+        <translation>Część ułamkowa</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1465"/>
         <source>Geometric Mean</source>
-        <translation type="unfinished">Średnia geometryczna</translation>
+        <translation>Średnia geometryczna</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1466"/>
         <source>Hexadecimal Representation</source>
-        <translation type="unfinished">Reprezentacja szesnastkowa</translation>
+        <translation>Reprezentacja szesnastkowa</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1467"/>
         <source>Integer Part</source>
-        <translation type="unfinished">Część całkowita</translation>
+        <translation>Część całkowita</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1469"/>
         <source>Maximum</source>
-        <translation type="unfinished">Maksimum</translation>
+        <translation>Maksimum</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1470"/>
         <source>Minimum</source>
-        <translation type="unfinished">Minimum</translation>
+        <translation>Minimum</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1471"/>
         <source>Octal Representation</source>
-        <translation type="unfinished">Reprezentacja ósemkowa</translation>
+        <translation>Reprezentacja ósemkowa</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1472"/>
         <source>Product</source>
-        <translation type="unfinished">Iloczyn</translation>
+        <translation>Iloczyn</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1473"/>
         <source>Rounding</source>
-        <translation type="unfinished">Zaokrąglenie</translation>
+        <translation>Zaokrąglenie</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1474"/>
         <source>Signum</source>
-        <translation type="unfinished">Signum</translation>
+        <translation>Signum</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1475"/>
         <source>Square Root</source>
-        <translation type="unfinished">Pierwiastek kwadratowy</translation>
+        <translation>Pierwiastek kwadratowy</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1476"/>
         <source>Sum</source>
-        <translation type="unfinished">Suma</translation>
+        <translation>Suma</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1477"/>
         <source>Truncation</source>
-        <translation type="unfinished">Obcięcie</translation>
+        <translation>Obcięcie</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1483"/>
         <source>Hyperbolic Cosine</source>
-        <translation type="unfinished">Kosinus hiperboliczny</translation>
+        <translation>Kosinus hiperboliczny</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1485"/>
         <source>Base-2 Logarithm</source>
-        <translation type="unfinished">Logarytm o podstawie 2</translation>
+        <translation>Logarytm o podstawie 2</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1486"/>
         <source>Natural Logarithm</source>
-        <translation type="unfinished">Logarytm naturalny</translation>
+        <translation>Logarytm naturalny</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1487"/>
         <source>Base-10 Logarithm</source>
-        <translation type="unfinished">Logarytm dziesiętny</translation>
+        <translation>Logarytm dziesiętny</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1488"/>
         <source>Hyperbolic Sine</source>
-        <translation type="unfinished">Sinus hiperboliczny</translation>
+        <translation>Sinus hiperboliczny</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1489"/>
         <source>Hyperbolic Tangent</source>
-        <translation type="unfinished">Tangens hiperboliczny</translation>
+        <translation>Tangens hiperboliczny</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1492"/>
         <source>Greatest Common Divisor</source>
-        <translation type="unfinished">Największy wspólny dzielnik</translation>
+        <translation>Największy wspólny dzielnik</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1493"/>
         <source>Combination (Binomial Coefficient)</source>
-        <translation type="unfinished">Kombinacja</translation>
+        <translation>Kombinacja</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1494"/>
         <source>Permutation (Arrangement)</source>
-        <translation type="unfinished">Permutacja</translation>
+        <translation>Permutacja</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1513"/>
         <source>Arc Cosine</source>
-        <translation type="unfinished">Arkus kosinus</translation>
+        <translation>Arkus kosinus</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1514"/>
         <source>Arc Sine</source>
-        <translation type="unfinished">Arkus sinus</translation>
+        <translation>Arkus sinus</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1515"/>
         <source>Arc Tangent</source>
-        <translation type="unfinished">Arkus tangens</translation>
+        <translation>Arkus tangens</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1516"/>
         <source>Cosine</source>
-        <translation type="unfinished">Kosinus</translation>
+        <translation>Kosinus</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1520"/>
         <source>Radians</source>
-        <translation type="unfinished">Radiany</translation>
+        <translation>Radiany</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1522"/>
         <source>Sine</source>
-        <translation type="unfinished">Sinus</translation>
+        <translation>Sinus</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1523"/>
         <source>Tangent</source>
-        <translation type="unfinished">Tangens</translation>
+        <translation>Tangens</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="103"/>
         <source>cannot execute function %1</source>
-        <translation type="unfinished">nie można wykonać funkcji %1</translation>
+        <translation>nie można wykonać funkcji %1</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="111"/>
         <source>function accepts 1 argument</source>
-        <translation type="unfinished">funkcja przyjmuje jeden argument</translation>
+        <translation>funkcja przyjmuje jeden argument</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="114"/>
         <source>function accepts %1 arguments</source>
-        <translation type="unfinished">funkcja przyjmuje %1 argumentów</translation>
+        <translation>funkcja przyjmuje %1 argumentów</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="344"/>
         <source>function requires 1 or 2 arguments</source>
-        <translation type="unfinished">funkcja wymaga jednego lub dwóch argumentów</translation>
+        <translation>funkcja wymaga jednego lub dwóch argumentów</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1200"/>
         <source>function undefined for specified arguments</source>
-        <translation type="unfinished">funkcja dla podanych argumentów nie jest zdefiniowana</translation>
+        <translation>funkcja dla podanych argumentów nie jest zdefiniowana</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="316"/>
         <source>function requires at least 2 arguments</source>
-        <translation type="unfinished">funkcja wymaga przynajmniej dwóch argumentów</translation>
+        <translation>funkcja wymaga przynajmniej dwóch argumentów</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="324"/>
         <source>function requires integer arguments</source>
-        <translation type="unfinished">funkcja wymaga argumentów całkowitoliczbowych</translation>
+        <translation>funkcja wymaga argumentów całkowitoliczbowych</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="764"/>
         <source>function undefined for specified argument</source>
-        <translation type="unfinished">funkcja dla podanego argumentu nie jest zdefiniowana</translation>
+        <translation>funkcja dla podanego argumentu nie jest zdefiniowana</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="726"/>
@@ -775,7 +776,7 @@
     <message>
         <location filename="../base/functions.cpp" line="861"/>
         <source>function requires at least 1 argument</source>
-        <translation type="unfinished">funkcja wymaga przynajmniej jednego argumentu</translation>
+        <translation>funkcja wymaga przynajmniej jednego argumentu</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1460"/>
@@ -1045,7 +1046,7 @@
     <message>
         <location filename="../gui/keypad.cpp" line="311"/>
         <source>Inverse cosine</source>
-        <translation type="unfinished">Odwrotny kosinus</translation>
+        <translation>Odwrotny kosinus</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="312"/>
@@ -1055,27 +1056,27 @@
     <message>
         <location filename="../gui/keypad.cpp" line="313"/>
         <source>Inverse sine</source>
-        <translation type="unfinished">Odwotny sinus</translation>
+        <translation>Odwotny sinus</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="314"/>
         <source>Inverse tangent</source>
-        <translation type="unfinished">Odwrotny tangens</translation>
+        <translation>Odwrotny tangens</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="315"/>
         <source>Clear expression</source>
-        <translation type="unfinished">Usuń wyrażenie</translation>
+        <translation>Usuń wyrażenie</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="316"/>
         <source>Cosine</source>
-        <translation type="unfinished">Kosinus</translation>
+        <translation>Kosinus</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="317"/>
         <source>Scientific notation</source>
-        <translation type="unfinished">Notacja naukowa</translation>
+        <translation>Notacja naukowa</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="318"/>
@@ -1085,32 +1086,32 @@
     <message>
         <location filename="../gui/keypad.cpp" line="319"/>
         <source>Natural logarithm</source>
-        <translation type="unfinished">Logarytm naturalny</translation>
+        <translation>Logarytm naturalny</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="320"/>
         <source>Sine</source>
-        <translation type="unfinished">Sinus</translation>
+        <translation>Sinus</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="321"/>
         <source>Square root</source>
-        <translation type="unfinished">Pierwiastek kwadratowy</translation>
+        <translation>Pierwiastek kwadratowy</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="322"/>
         <source>Tangent</source>
-        <translation type="unfinished">Tangens</translation>
+        <translation>Tangens</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="323"/>
         <source>Assign variable x</source>
-        <translation type="unfinished">Podstaw zmienną x</translation>
+        <translation>Podstaw zmienną x</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="324"/>
         <source>The variable x</source>
-        <translation type="unfinished">Zmienna x</translation>
+        <translation>Zmienna x</translation>
     </message>
 </context>
 <context>
@@ -1351,17 +1352,17 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="838"/>
         <source>&amp;Session</source>
-        <translation type="unfinished">&amp;Sesja</translation>
+        <translation>&amp;Sesja</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="559"/>
         <source>Clear E&amp;xpression</source>
-        <translation type="unfinished">&amp;Wyczyść Wyrażenie</translation>
+        <translation>&amp;Wyczyść Wyrażenie</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="560"/>
         <source>Clear &amp;History</source>
-        <translation type="unfinished">Wyczyść &amp;historię</translation>
+        <translation>Wyczyść &amp;historię</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="561"/>
@@ -1376,42 +1377,42 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="563"/>
         <source>D&amp;elete Variable...</source>
-        <translation type="unfinished">Usuń &amp;zmienną...</translation>
+        <translation>Usuń &amp;zmienną...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="564"/>
         <source>&amp;15 Decimal Digits</source>
-        <translation type="unfinished">&amp;15 cyfr dziesiętnych</translation>
+        <translation>&amp;15 cyfr dziesiętnych</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="565"/>
         <source>&amp;2 Decimal Digits</source>
-        <translation type="unfinished">&amp;2 cyfry dziesiętne</translation>
+        <translation>&amp;2 cyfry dziesiętne</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="566"/>
         <source>&amp;3 Decimal Digits</source>
-        <translation type="unfinished">&amp;3 cyfry dziesiętne</translation>
+        <translation>&amp;3 cyfry dziesiętne</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="567"/>
         <source>&amp;50 Decimal Digits</source>
-        <translation type="unfinished">&amp;50 cyfr dziesiętnych</translation>
+        <translation>&amp;50 cyfr dziesiętnych</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="568"/>
         <source>&amp;8 Decimal Digits</source>
-        <translation type="unfinished">&amp;8 cyfr dziesiętnych</translation>
+        <translation>&amp;8 cyfr dziesiętnych</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="569"/>
         <source>&amp;Automatic Precision</source>
-        <translation type="unfinished">Domyślna dokład&amp;ność</translation>
+        <translation>Domyślna dokład&amp;ność</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="570"/>
         <source>&amp;Copy</source>
-        <translation type="unfinished">&amp;Kopiuj</translation>
+        <translation>&amp;Kopiuj</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="571"/>
@@ -1421,37 +1422,37 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="572"/>
         <source>&amp;Paste</source>
-        <translation type="unfinished">&amp;Wklej</translation>
+        <translation>&amp;Wklej</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="573"/>
         <source>&amp;About</source>
-        <translation type="unfinished">&amp;O programie</translation>
+        <translation>&amp;O programie</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="574"/>
         <source>About &amp;Qt</source>
-        <translation type="unfinished">O &amp;Qt</translation>
+        <translation>O &amp;Qt</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="575"/>
         <source>SpeedCrunch &amp;Web Site...</source>
-        <translation type="unfinished">Strona &amp;WWW SpeedCrunch...</translation>
+        <translation>Strona &amp;WWW SpeedCrunch...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="576"/>
         <source>&amp;Tip of the Day</source>
-        <translation type="unfinished">&amp;Podpowiedź dnia</translation>
+        <translation>&amp;Podpowiedź dnia</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="577"/>
         <source>Insert &amp;Function...</source>
-        <translation type="unfinished">Wstaw &amp;funkcję...</translation>
+        <translation>Wstaw &amp;funkcję...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="578"/>
         <source>Insert &amp;Variable...</source>
-        <translation type="unfinished">Wstaw &amp;zmienną...</translation>
+        <translation>Wstaw &amp;zmienną...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="579"/>
@@ -1461,7 +1462,7 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="580"/>
         <source>Automatic &amp;Completion</source>
-        <translation type="unfinished">Automatyczne &amp;dopełnianie</translation>
+        <translation>Automatyczne &amp;dopełnianie</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="581"/>
@@ -1471,7 +1472,7 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="582"/>
         <source>&amp;Minimize To System Tray</source>
-        <translation type="unfinished">&amp;Minimalizuj do tacki systemowej</translation>
+        <translation>&amp;Minimalizuj do tacki systemowej</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="583"/>
@@ -1486,17 +1487,17 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="585"/>
         <source>&amp;Dot</source>
-        <translation type="unfinished">&amp;Kropka</translation>
+        <translation>&amp;Kropka</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="586"/>
         <source>&amp;Comma</source>
-        <translation type="unfinished">&amp;Przecinek</translation>
+        <translation>&amp;Przecinek</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="587"/>
         <source>&amp;Radian</source>
-        <translation type="unfinished">&amp;Radiany</translation>
+        <translation>&amp;Radiany</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="588"/>
@@ -1521,17 +1522,17 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="592"/>
         <source>&amp;Load...</source>
-        <translation type="unfinished">Załaduj...</translation>
+        <translation>&amp;Załaduj...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="593"/>
         <source>&amp;Quit</source>
-        <translation type="unfinished">&amp;Zakończ</translation>
+        <translation>&amp;Zakończ</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="594"/>
         <source>&amp;Save...</source>
-        <translation type="unfinished">&amp;Zapisz...</translation>
+        <translation>&amp;Zapisz...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="595"/>
@@ -1551,7 +1552,7 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="598"/>
         <source>Full &amp;Screen Mode</source>
-        <translation type="unfinished">Tryb pełnoekranowy</translation>
+        <translation>&amp;Tryb pełnoekranowy</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="599"/>
@@ -1571,7 +1572,7 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="602"/>
         <source>Hide &amp;Menu Bar</source>
-        <translation type="unfinished">Ukryj belkę &amp;menu</translation>
+        <translation>Ukryj belkę &amp;menu</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="603"/>
@@ -1586,37 +1587,37 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="605"/>
         <source>&amp;Binary</source>
-        <translation type="unfinished">Dwój&amp;kowy</translation>
+        <translation>Dwój&amp;kowy</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="606"/>
         <source>&amp;Engineering</source>
-        <translation type="unfinished">&amp;Inżynierski</translation>
+        <translation>&amp;Inżynierski</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="607"/>
         <source>&amp;Fixed Decimal</source>
-        <translation type="unfinished">&amp;Stałoprzecinkowe</translation>
+        <translation>&amp;Stałoprzecinkowe</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="608"/>
         <source>&amp;General</source>
-        <translation type="unfinished">O&amp;gólne</translation>
+        <translation>O&amp;gólne</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="609"/>
         <source>&amp;Hexadecimal</source>
-        <translation type="unfinished">&amp;Szesnastkowy</translation>
+        <translation>&amp;Szesnastkowy</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="610"/>
         <source>&amp;Octal</source>
-        <translation type="unfinished">Ósemk&amp;owy</translation>
+        <translation>Ósemk&amp;owy</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="611"/>
         <source>&amp;Scientific</source>
-        <translation type="unfinished">&amp;Naukowy</translation>
+        <translation>&amp;Naukowy</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="612"/>
@@ -1626,17 +1627,17 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="839"/>
         <source>&amp;Edit</source>
-        <translation type="unfinished">&amp;Edycja</translation>
+        <translation>&amp;Edycja</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="840"/>
         <source>&amp;View</source>
-        <translation type="unfinished">&amp;Widok</translation>
+        <translation>&amp;Widok</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="841"/>
         <source>Se&amp;ttings</source>
-        <translation type="unfinished">Us&amp;tawienia</translation>
+        <translation>Us&amp;tawienia</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="842"/>
@@ -1656,7 +1657,7 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="845"/>
         <source>&amp;Behavior</source>
-        <translation type="unfinished">&amp;Zachowanie</translation>
+        <translation>&amp;Zachowanie</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="846"/>
@@ -1671,7 +1672,7 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="848"/>
         <source>&amp;Help</source>
-        <translation type="unfinished">&amp;Pomoc</translation>
+        <translation>&amp;Pomoc</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="879"/>

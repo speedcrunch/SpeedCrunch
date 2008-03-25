@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="he">
+<defaultcodec></defaultcodec>
 <context>
     <name>AboutBox</name>
     <message>
@@ -1044,72 +1045,72 @@
     <message>
         <location filename="../gui/keypad.cpp" line="311"/>
         <source>Inverse cosine</source>
-        <translation type="unfinished">קוסינוס הפוך</translation>
+        <translation>קוסינוס הפוך</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="312"/>
         <source>The last result</source>
-        <translation type="unfinished">התוצאה האחרונה</translation>
+        <translation>התוצאה האחרונה</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="313"/>
         <source>Inverse sine</source>
-        <translation type="unfinished">סינוס הפוך</translation>
+        <translation>סינוס הפוך</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="314"/>
         <source>Inverse tangent</source>
-        <translation type="unfinished">טנגנס הפוך</translation>
+        <translation>טנגנס הפוך</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="315"/>
         <source>Clear expression</source>
-        <translation type="unfinished">ניקוי ביטוי</translation>
+        <translation>ניקוי ביטוי</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="316"/>
         <source>Cosine</source>
-        <translation type="unfinished">קוסינוס</translation>
+        <translation>קוסינוס</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="317"/>
         <source>Scientific notation</source>
-        <translation type="unfinished">סימון מדעי</translation>
+        <translation>סימון מדעי</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="318"/>
         <source>Exponential</source>
-        <translation type="unfinished">אקספוננט</translation>
+        <translation>אקספוננט</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="319"/>
         <source>Natural logarithm</source>
-        <translation type="unfinished">לוגריתם טבעי</translation>
+        <translation>לוגריתם טבעי</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="320"/>
         <source>Sine</source>
-        <translation type="unfinished">סינוס</translation>
+        <translation>סינוס</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="321"/>
         <source>Square root</source>
-        <translation type="unfinished">שורש ריבועי</translation>
+        <translation>שורש ריבועי</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="322"/>
         <source>Tangent</source>
-        <translation type="unfinished">טנגנס</translation>
+        <translation>טנגנס</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="323"/>
         <source>Assign variable x</source>
-        <translation type="unfinished">הצב ערך למשתנה x</translation>
+        <translation>הצב ערך למשתנה x</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="324"/>
         <source>The variable x</source>
-        <translation type="unfinished">המשתנה x</translation>
+        <translation>המשתנה x</translation>
     </message>
 </context>
 <context>

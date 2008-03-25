@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="en_US">
+<defaultcodec></defaultcodec>
 <context>
     <name>AboutBox</name>
     <message>
@@ -1044,72 +1045,72 @@
     <message>
         <location filename="../gui/keypad.cpp" line="311"/>
         <source>Inverse cosine</source>
-        <translation type="unfinished">Inverso do cosseno</translation>
+        <translation>Inverso do cosseno</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="312"/>
         <source>The last result</source>
-        <translation type="unfinished">Último resultado</translation>
+        <translation>Último resultado</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="313"/>
         <source>Inverse sine</source>
-        <translation type="unfinished">Inverso do seno</translation>
+        <translation>Inverso do seno</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="314"/>
         <source>Inverse tangent</source>
-        <translation type="unfinished">Inverso da tangente</translation>
+        <translation>Inverso da tangente</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="315"/>
         <source>Clear expression</source>
-        <translation type="unfinished">Limpar expressão</translation>
+        <translation>Limpar expressão</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="316"/>
         <source>Cosine</source>
-        <translation type="unfinished">Cosseno</translation>
+        <translation>Cosseno</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="317"/>
         <source>Scientific notation</source>
-        <translation type="unfinished">Notação científica</translation>
+        <translation>Notação científica</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="318"/>
         <source>Exponential</source>
-        <translation type="unfinished">Exponencial</translation>
+        <translation>Exponencial</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="319"/>
         <source>Natural logarithm</source>
-        <translation type="unfinished">Logaritmo natural</translation>
+        <translation>Logaritmo natural</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="320"/>
         <source>Sine</source>
-        <translation type="unfinished">Seno</translation>
+        <translation>Seno</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="321"/>
         <source>Square root</source>
-        <translation type="unfinished">Raiz quadrada</translation>
+        <translation>Raiz quadrada</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="322"/>
         <source>Tangent</source>
-        <translation type="unfinished">Tangente</translation>
+        <translation>Tangente</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="323"/>
         <source>Assign variable x</source>
-        <translation type="unfinished">Atribuir valor à variável x</translation>
+        <translation>Atribuir valor à variável x</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="324"/>
         <source>The variable x</source>
-        <translation type="unfinished">A variável x</translation>
+        <translation>A variável x</translation>
     </message>
 </context>
 <context>
