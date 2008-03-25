@@ -445,8 +445,9 @@ void ResultDisplay::copyToClipboard( QListWidgetItem * item )
     return;
 
   QClipboard * cb = QApplication::clipboard();
-  cb->setText( item->text(), QClipboard::Clipboard );
-  emit textCopied( item->text() );
+  QString text = item->text().trimmed();
+  cb->setText( text, QClipboard::Clipboard );
+  emit textCopied( text );
 }
 
 
@@ -455,8 +456,9 @@ void ResultDisplay::selectItem( QListWidgetItem * item )
   if ( ! item )
     return;
 
+  QString text = item->text().trimmed();
   copyToClipboard( item );
-  emit textSelected( item->text() );
+  emit textSelected( text );
 }
 
 
