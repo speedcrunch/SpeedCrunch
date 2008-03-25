@@ -541,6 +541,7 @@ void MainWindow::setAllText()
   d->setMenusText();
   d->setActionsText();
   d->setStatusBarText();
+
   d->functions->retranslateText(); // can't be signal/slot to ensure order
   d->constants->retranslateText(); // same as above
 

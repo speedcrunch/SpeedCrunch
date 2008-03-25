@@ -129,7 +129,7 @@ ConstantsDock::ConstantsDock( Constants * c, char radixChar, QWidget * parent )
   setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
   setWindowIcon( QIcon() ); // no icon
 
-  updateList();
+  retranslateText();
 }
 
 
