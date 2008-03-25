@@ -200,277 +200,485 @@
     </message>
 </context>
 <context>
-    <name>Constants::Private</name>
+    <name>Constants</name>
     <message>
-        <location filename="../base/constants.cpp" line="38"/>
+        <location filename="../base/constants.cpp" line="41"/>
         <source>Characteristic Impedance of Vacuum</source>
         <translation type="unfinished">Impedance vakua</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="44"/>
+        <location filename="../base/constants.cpp" line="47"/>
         <source>General Physics</source>
         <translation type="unfinished">Obecná fyzika</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="39"/>
+        <location filename="../base/constants.cpp" line="42"/>
         <source>Electric Constant</source>
         <translation type="unfinished">Elektrická konstanta</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="40"/>
+        <location filename="../base/constants.cpp" line="43"/>
         <source>Magnetic Constant</source>
         <translation type="unfinished">magnetická konstanta</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="41"/>
+        <location filename="../base/constants.cpp" line="44"/>
         <source>Gravitation Constant</source>
         <translation type="unfinished">Gravitační konstanta</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="42"/>
+        <location filename="../base/constants.cpp" line="45"/>
         <source>Planck&apos;s Constant</source>
         <translation type="unfinished">Planckova konstanta</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="43"/>
+        <location filename="../base/constants.cpp" line="46"/>
         <source>Dirac&apos;s Constant</source>
         <translation type="unfinished">Dirackova konstanta</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="44"/>
+        <location filename="../base/constants.cpp" line="47"/>
         <source>Speed of Light in Vacuum</source>
         <translation type="unfinished">Rychlost světla ve vákuu</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="47"/>
+        <location filename="../base/constants.cpp" line="50"/>
         <source>Bohr-Procopiu Magneton</source>
         <translation type="unfinished">Bohrův magneton</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="55"/>
+        <location filename="../base/constants.cpp" line="58"/>
         <source>Electromagnetic</source>
         <translation type="unfinished">Elektromagmetismus</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="48"/>
+        <location filename="../base/constants.cpp" line="51"/>
         <source>Conductance Quantum</source>
         <translation type="unfinished">Kvantum elektrické vodivosti</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="49"/>
+        <location filename="../base/constants.cpp" line="52"/>
         <source>Coulomb&apos;s Constant</source>
         <translation type="unfinished">Coulombova konstanta</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="50"/>
+        <location filename="../base/constants.cpp" line="53"/>
         <source>Elementary Charge</source>
         <translation type="unfinished">Elementární náboj</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="51"/>
+        <location filename="../base/constants.cpp" line="54"/>
         <source>Josephson Constant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="52"/>
+        <location filename="../base/constants.cpp" line="55"/>
         <source>Magnetic Flux Quantum</source>
         <translation type="unfinished">Kvantum magnetického toku</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="53"/>
+        <location filename="../base/constants.cpp" line="56"/>
         <source>Nuclear Magneton</source>
         <translation type="unfinished">Jaderný magneton</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="54"/>
+        <location filename="../base/constants.cpp" line="57"/>
         <source>Resistance Quantum</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="55"/>
+        <location filename="../base/constants.cpp" line="58"/>
         <source>von Klitzing Constant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="58"/>
+        <location filename="../base/constants.cpp" line="61"/>
         <source>Bohr Radius</source>
         <translation type="unfinished">Bohrův poloměr</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="65"/>
+        <location filename="../base/constants.cpp" line="68"/>
         <source>Atomic &amp; Nuclear</source>
         <translation type="unfinished">atom &amp; jádro</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="59"/>
+        <location filename="../base/constants.cpp" line="62"/>
         <source>Fermi Coupling Constant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="60"/>
+        <location filename="../base/constants.cpp" line="63"/>
         <source>Fine-structure Constant</source>
         <translation type="unfinished">Konstanta jemné struktury</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="61"/>
+        <location filename="../base/constants.cpp" line="64"/>
         <source>Hartree Energy</source>
         <translation type="unfinished">Hartreejova energie</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="62"/>
+        <location filename="../base/constants.cpp" line="65"/>
         <source>Quantum of Circulation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="63"/>
+        <location filename="../base/constants.cpp" line="66"/>
         <source>Rydberg Constant</source>
         <translation type="unfinished">Rydbergova konstanta</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="64"/>
+        <location filename="../base/constants.cpp" line="67"/>
         <source>Thomson Cross Section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="65"/>
+        <location filename="../base/constants.cpp" line="68"/>
         <source>Weak Mixing Angle</source>
         <translation type="unfinished">Slabý směšovací ůhel</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="68"/>
+        <location filename="../base/constants.cpp" line="71"/>
         <source>Atomic Mass Unit</source>
         <translation type="unfinished">Atomová hmotnostní konstanta</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="77"/>
+        <location filename="../base/constants.cpp" line="80"/>
         <source>Physico-chemical</source>
         <translation type="unfinished">Fyzikálně-chemické</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="69"/>
+        <location filename="../base/constants.cpp" line="72"/>
         <source>Avogadro&apos;s Number</source>
         <translation type="unfinished">Avogadrova konstanta</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="70"/>
+        <location filename="../base/constants.cpp" line="73"/>
         <source>Boltzmann Constant</source>
         <translation type="unfinished">Boltzmannova konstanta</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="71"/>
+        <location filename="../base/constants.cpp" line="74"/>
         <source>Faraday Constant</source>
         <translation type="unfinished">Faradayova konstanta</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="72"/>
+        <location filename="../base/constants.cpp" line="75"/>
         <source>First Radiation Constant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="73"/>
+        <location filename="../base/constants.cpp" line="76"/>
         <source>Loschmidt Constant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="74"/>
+        <location filename="../base/constants.cpp" line="77"/>
         <source>Gas Constant</source>
         <translation type="unfinished">Molární plynová konstanta</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="75"/>
+        <location filename="../base/constants.cpp" line="78"/>
         <source>Molar Planck Constant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="76"/>
+        <location filename="../base/constants.cpp" line="79"/>
         <source>Second Radiation Constant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="77"/>
+        <location filename="../base/constants.cpp" line="80"/>
         <source>Stefan-Boltzmann Constant</source>
         <translation type="unfinished">Stefanova-Boltzmannova konstanta</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="80"/>
+        <location filename="../base/constants.cpp" line="83"/>
         <source>Astronomical Unit</source>
         <translation type="unfinished">Astronomická jednotka</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="90"/>
+        <location filename="../base/constants.cpp" line="93"/>
         <source>Astronomy</source>
         <translation type="unfinished">Astronomie</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="81"/>
+        <location filename="../base/constants.cpp" line="84"/>
         <source>Light Year</source>
         <translation type="unfinished">Světelný rok</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="82"/>
+        <location filename="../base/constants.cpp" line="85"/>
         <source>Parsec</source>
         <translation type="unfinished">Parsek</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="83"/>
+        <location filename="../base/constants.cpp" line="86"/>
         <source>Sidereal Year</source>
         <translation type="unfinished">Hvězdný (siderický) rok</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="85"/>
+        <location filename="../base/constants.cpp" line="88"/>
         <source>days</source>
         <translation type="unfinished">dní</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="84"/>
+        <location filename="../base/constants.cpp" line="87"/>
         <source>Tropical Year</source>
         <translation type="unfinished">Tropický rok</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="85"/>
+        <location filename="../base/constants.cpp" line="88"/>
         <source>Gregorian Year</source>
         <translation type="unfinished">Gregoriánský rok</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="86"/>
+        <location filename="../base/constants.cpp" line="89"/>
         <source>Earth Mass</source>
         <translation type="unfinished">Hmotnost Země</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="87"/>
+        <location filename="../base/constants.cpp" line="90"/>
         <source>Sun Mass</source>
         <translation type="unfinished">Hmotnost slunce</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="88"/>
+        <location filename="../base/constants.cpp" line="91"/>
         <source>Mean Earth Radius</source>
         <translation type="unfinished">Střední poloměr Země</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="89"/>
+        <location filename="../base/constants.cpp" line="92"/>
         <source>Sun Radius</source>
         <translation type="unfinished">Poloměr slunce</translation>
     </message>
     <message>
-        <location filename="../base/constants.cpp" line="90"/>
+        <location filename="../base/constants.cpp" line="93"/>
         <source>Sun Luminosity</source>
         <translation type="unfinished">Světelnost slunce</translation>
     </message>
 </context>
 <context>
+    <name>Constants::Private</name>
+    <message>
+        <location filename="../base/constants.cpp" line="38"/>
+        <source>Characteristic Impedance of Vacuum</source>
+        <translation type="obsolete">Impedance vakua</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="44"/>
+        <source>General Physics</source>
+        <translation type="obsolete">Obecná fyzika</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="39"/>
+        <source>Electric Constant</source>
+        <translation type="obsolete">Elektrická konstanta</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="40"/>
+        <source>Magnetic Constant</source>
+        <translation type="obsolete">magnetická konstanta</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="41"/>
+        <source>Gravitation Constant</source>
+        <translation type="obsolete">Gravitační konstanta</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="42"/>
+        <source>Planck&apos;s Constant</source>
+        <translation type="obsolete">Planckova konstanta</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="43"/>
+        <source>Dirac&apos;s Constant</source>
+        <translation type="obsolete">Dirackova konstanta</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="44"/>
+        <source>Speed of Light in Vacuum</source>
+        <translation type="obsolete">Rychlost světla ve vákuu</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="47"/>
+        <source>Bohr-Procopiu Magneton</source>
+        <translation type="obsolete">Bohrův magneton</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="55"/>
+        <source>Electromagnetic</source>
+        <translation type="obsolete">Elektromagmetismus</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="48"/>
+        <source>Conductance Quantum</source>
+        <translation type="obsolete">Kvantum elektrické vodivosti</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="49"/>
+        <source>Coulomb&apos;s Constant</source>
+        <translation type="obsolete">Coulombova konstanta</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="50"/>
+        <source>Elementary Charge</source>
+        <translation type="obsolete">Elementární náboj</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="52"/>
+        <source>Magnetic Flux Quantum</source>
+        <translation type="obsolete">Kvantum magnetického toku</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="53"/>
+        <source>Nuclear Magneton</source>
+        <translation type="obsolete">Jaderný magneton</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="58"/>
+        <source>Bohr Radius</source>
+        <translation type="obsolete">Bohrův poloměr</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="65"/>
+        <source>Atomic &amp; Nuclear</source>
+        <translation type="obsolete">atom &amp; jádro</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="60"/>
+        <source>Fine-structure Constant</source>
+        <translation type="obsolete">Konstanta jemné struktury</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="61"/>
+        <source>Hartree Energy</source>
+        <translation type="obsolete">Hartreejova energie</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="63"/>
+        <source>Rydberg Constant</source>
+        <translation type="obsolete">Rydbergova konstanta</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="65"/>
+        <source>Weak Mixing Angle</source>
+        <translation type="obsolete">Slabý směšovací ůhel</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="68"/>
+        <source>Atomic Mass Unit</source>
+        <translation type="obsolete">Atomová hmotnostní konstanta</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="77"/>
+        <source>Physico-chemical</source>
+        <translation type="obsolete">Fyzikálně-chemické</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="69"/>
+        <source>Avogadro&apos;s Number</source>
+        <translation type="obsolete">Avogadrova konstanta</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="70"/>
+        <source>Boltzmann Constant</source>
+        <translation type="obsolete">Boltzmannova konstanta</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="71"/>
+        <source>Faraday Constant</source>
+        <translation type="obsolete">Faradayova konstanta</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="74"/>
+        <source>Gas Constant</source>
+        <translation type="obsolete">Molární plynová konstanta</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="77"/>
+        <source>Stefan-Boltzmann Constant</source>
+        <translation type="obsolete">Stefanova-Boltzmannova konstanta</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="80"/>
+        <source>Astronomical Unit</source>
+        <translation type="obsolete">Astronomická jednotka</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="90"/>
+        <source>Astronomy</source>
+        <translation type="obsolete">Astronomie</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="81"/>
+        <source>Light Year</source>
+        <translation type="obsolete">Světelný rok</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="82"/>
+        <source>Parsec</source>
+        <translation type="obsolete">Parsek</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="83"/>
+        <source>Sidereal Year</source>
+        <translation type="obsolete">Hvězdný (siderický) rok</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="85"/>
+        <source>days</source>
+        <translation type="obsolete">dní</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="84"/>
+        <source>Tropical Year</source>
+        <translation type="obsolete">Tropický rok</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="85"/>
+        <source>Gregorian Year</source>
+        <translation type="obsolete">Gregoriánský rok</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="86"/>
+        <source>Earth Mass</source>
+        <translation type="obsolete">Hmotnost Země</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="87"/>
+        <source>Sun Mass</source>
+        <translation type="obsolete">Hmotnost slunce</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="88"/>
+        <source>Mean Earth Radius</source>
+        <translation type="obsolete">Střední poloměr Země</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="89"/>
+        <source>Sun Radius</source>
+        <translation type="obsolete">Poloměr slunce</translation>
+    </message>
+    <message>
+        <location filename="../base/constants.cpp" line="90"/>
+        <source>Sun Luminosity</source>
+        <translation type="obsolete">Světelnost slunce</translation>
+    </message>
+</context>
+<context>
     <name>ConstantsDock</name>
     <message>
-        <location filename="../gui/constantsdock.cpp" line="52"/>
+        <location filename="../gui/constantsdock.cpp" line="165"/>
         <source>Constants</source>
         <translation>Konstanty</translation>
     </message>
     <message>
-        <location filename="../gui/constantsdock.cpp" line="62"/>
+        <location filename="../gui/constantsdock.cpp" line="166"/>
         <source>Category</source>
         <translation>Kategorie</translation>
     </message>
     <message>
-        <location filename="../gui/constantsdock.cpp" line="78"/>
+        <location filename="../gui/constantsdock.cpp" line="167"/>
         <source>Search</source>
         <translation>Hledání</translation>
     </message>
@@ -480,7 +688,7 @@
         <translation>Nenalezena žádná shoda</translation>
     </message>
     <message>
-        <location filename="../gui/constantsdock.cpp" line="283"/>
+        <location filename="../gui/constantsdock.cpp" line="292"/>
         <source>All</source>
         <translation>Vše</translation>
     </message>
@@ -1149,510 +1357,510 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1496"/>
+        <location filename="../gui/mainwindow.cpp" line="1499"/>
         <source>About Qt</source>
         <translation type="unfinished">O Qt</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1933"/>
+        <location filename="../gui/mainwindow.cpp" line="1936"/>
         <source>SpeedCrunch Sessions (*.sch);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1653"/>
+        <location filename="../gui/mainwindow.cpp" line="1656"/>
         <source>Load Session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2642"/>
+        <location filename="../gui/mainwindow.cpp" line="2645"/>
         <source>Error</source>
         <translation type="unfinished">Chyba</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1768"/>
+        <location filename="../gui/mainwindow.cpp" line="1771"/>
         <source>Can&apos;t read from file %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1777"/>
+        <location filename="../gui/mainwindow.cpp" line="1780"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1934"/>
+        <location filename="../gui/mainwindow.cpp" line="1937"/>
         <source>Save Session</source>
         <translation type="unfinished">Uložit sezení</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1990"/>
+        <location filename="../gui/mainwindow.cpp" line="1993"/>
         <source>Can&apos;t write to file %1</source>
         <translation type="unfinished">Nemohu zapisovat do souboru %1</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2302"/>
+        <location filename="../gui/mainwindow.cpp" line="2305"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2320"/>
+        <location filename="../gui/mainwindow.cpp" line="2323"/>
         <source>To insert a function using keyboard, use Ctrl+F shorcut. From the dialog, you can choose the function you want to insert.</source>
         <translation type="unfinished">Pro vložení funkce pomocí klávesnnice použijte klávesovou zkratku Ctrl+F. Z dialogu si můžete vybrat funkci, kterou chcete vložit.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2325"/>
+        <location filename="../gui/mainwindow.cpp" line="2328"/>
         <source>To insert a variable using keyboard, use Ctrl+I shorcut. From the dialog, you can choose the variable you want to insert.</source>
         <translation type="unfinished">Pro vložení proměnné pomocí klávesnnice použijte klávesovou zkratku Ctrl+I. Z dialogu si můžete vybrat proměnnou, kterou chcete vložit.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2328"/>
+        <location filename="../gui/mainwindow.cpp" line="2331"/>
         <source>Use variable &lt;i&gt;pi&lt;/i&gt; to use pi constant.</source>
         <translation type="unfinished">Použijte proměnou &lt;i&gt;pi&lt;/i&gt; pro konstantu pí.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2333"/>
+        <location filename="../gui/mainwindow.cpp" line="2336"/>
         <source>Use &lt;i&gt;;&lt;/i&gt; (semicolon) to separate the parameters in functions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2339"/>
+        <location filename="../gui/mainwindow.cpp" line="2342"/>
         <source>Tip of the day</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1651"/>
+        <location filename="../gui/mainwindow.cpp" line="1654"/>
         <source>File %1 is not a valid session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1688"/>
+        <location filename="../gui/mainwindow.cpp" line="1691"/>
         <source>Merge session being loaded with current session?
 If no, current variables and display will be cleared.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1885"/>
+        <location filename="../gui/mainwindow.cpp" line="1888"/>
         <source>SpeedCrunch</source>
-        <translation type="unfinished">SpeedCrunch</translation>
+        <translation type="obsolete">SpeedCrunch</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2673"/>
+        <location filename="../gui/mainwindow.cpp" line="2676"/>
         <source>SpeedCrunch is minimized.
 Left click the icon to restore it or right click for options.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1541"/>
+        <location filename="../gui/mainwindow.cpp" line="1544"/>
         <source>Degree</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1980"/>
+        <location filename="../gui/mainwindow.cpp" line="1983"/>
         <source>All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1925"/>
+        <location filename="../gui/mainwindow.cpp" line="1928"/>
         <source>Radian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2296"/>
+        <location filename="../gui/mainwindow.cpp" line="2299"/>
         <source>The menu bar is now hidden. To make it visible again, press Ctrl+Alt+M.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2349"/>
+        <location filename="../gui/mainwindow.cpp" line="2352"/>
         <source>Binary</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2359"/>
+        <location filename="../gui/mainwindow.cpp" line="2362"/>
         <source>Engineering decimal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2369"/>
+        <location filename="../gui/mainwindow.cpp" line="2372"/>
         <source>Fixed decimal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2379"/>
+        <location filename="../gui/mainwindow.cpp" line="2382"/>
         <source>General decimal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2389"/>
+        <location filename="../gui/mainwindow.cpp" line="2392"/>
         <source>Hexadecimal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2399"/>
+        <location filename="../gui/mainwindow.cpp" line="2402"/>
         <source>Octal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2409"/>
+        <location filename="../gui/mainwindow.cpp" line="2412"/>
         <source>Scientific decimal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1759"/>
+        <location filename="../gui/mainwindow.cpp" line="1762"/>
         <source>Import Session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1775"/>
+        <location filename="../gui/mainwindow.cpp" line="1778"/>
         <source>Merge session being imported with current session?
 If no, current variables and display will be cleared.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1981"/>
+        <location filename="../gui/mainwindow.cpp" line="1984"/>
         <source>Export Session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="964"/>
+        <location filename="../gui/mainwindow.cpp" line="965"/>
         <source>Math Book</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="838"/>
+        <location filename="../gui/mainwindow.cpp" line="839"/>
         <source>&amp;Session</source>
         <translation type="unfinished">&amp;Sezení</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="559"/>
+        <location filename="../gui/mainwindow.cpp" line="560"/>
         <source>Clear E&amp;xpression</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="560"/>
+        <location filename="../gui/mainwindow.cpp" line="561"/>
         <source>Clear &amp;History</source>
         <translation type="unfinished">Smazat &amp;historii</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="561"/>
+        <location filename="../gui/mainwindow.cpp" line="562"/>
         <source>&amp;Degree</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="562"/>
+        <location filename="../gui/mainwindow.cpp" line="563"/>
         <source>Delete All V&amp;ariables</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="563"/>
+        <location filename="../gui/mainwindow.cpp" line="564"/>
         <source>D&amp;elete Variable...</source>
         <translation type="unfinished">Smazat &amp;proměnou...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="564"/>
+        <location filename="../gui/mainwindow.cpp" line="565"/>
         <source>&amp;15 Decimal Digits</source>
         <translation type="unfinished">&amp;15 Desetiných míst</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="565"/>
+        <location filename="../gui/mainwindow.cpp" line="566"/>
         <source>&amp;2 Decimal Digits</source>
         <translation type="unfinished">&amp;2 Desetiná místa</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="566"/>
+        <location filename="../gui/mainwindow.cpp" line="567"/>
         <source>&amp;3 Decimal Digits</source>
         <translation type="unfinished">&amp;3 Desetiná místa</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="567"/>
+        <location filename="../gui/mainwindow.cpp" line="568"/>
         <source>&amp;50 Decimal Digits</source>
         <translation type="unfinished">&amp;50 Desetiných míst</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="568"/>
+        <location filename="../gui/mainwindow.cpp" line="569"/>
         <source>&amp;8 Decimal Digits</source>
         <translation type="unfinished">&amp;8 Desetiných míst</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="569"/>
+        <location filename="../gui/mainwindow.cpp" line="570"/>
         <source>&amp;Automatic Precision</source>
         <translation type="unfinished">&amp;Automatická přesnost</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="570"/>
+        <location filename="../gui/mainwindow.cpp" line="571"/>
         <source>&amp;Copy</source>
         <translation type="unfinished">K&amp;opírovat</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="571"/>
+        <location filename="../gui/mainwindow.cpp" line="572"/>
         <source>Copy Last &amp;Result</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="572"/>
+        <location filename="../gui/mainwindow.cpp" line="573"/>
         <source>&amp;Paste</source>
         <translation type="unfinished">&amp;Vložit</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="573"/>
+        <location filename="../gui/mainwindow.cpp" line="574"/>
         <source>&amp;About</source>
         <translation type="unfinished">O &amp;aplikaci</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="574"/>
+        <location filename="../gui/mainwindow.cpp" line="575"/>
         <source>About &amp;Qt</source>
         <translation type="unfinished">O &amp;Qt</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="575"/>
+        <location filename="../gui/mainwindow.cpp" line="576"/>
         <source>SpeedCrunch &amp;Web Site...</source>
         <translation type="unfinished">&amp;Webstránky SpeedCrunch...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="576"/>
+        <location filename="../gui/mainwindow.cpp" line="577"/>
         <source>&amp;Tip of the Day</source>
         <translation type="unfinished">&amp;Tip dne</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="577"/>
+        <location filename="../gui/mainwindow.cpp" line="578"/>
         <source>Insert &amp;Function...</source>
         <translation type="unfinished">Vložit &amp;funkci...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="578"/>
+        <location filename="../gui/mainwindow.cpp" line="579"/>
         <source>Insert &amp;Variable...</source>
         <translation type="unfinished">&amp;Vložit proměnou...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="579"/>
+        <location filename="../gui/mainwindow.cpp" line="580"/>
         <source>&amp;Partial Results</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="580"/>
+        <location filename="../gui/mainwindow.cpp" line="581"/>
         <source>Automatic &amp;Completion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="581"/>
+        <location filename="../gui/mainwindow.cpp" line="582"/>
         <source>Always On &amp;Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="582"/>
+        <location filename="../gui/mainwindow.cpp" line="583"/>
         <source>&amp;Minimize To System Tray</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="583"/>
+        <location filename="../gui/mainwindow.cpp" line="584"/>
         <source>Syntax &amp;Highlighting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="584"/>
+        <location filename="../gui/mainwindow.cpp" line="585"/>
         <source>&amp;System Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="585"/>
+        <location filename="../gui/mainwindow.cpp" line="586"/>
         <source>&amp;Dot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="586"/>
+        <location filename="../gui/mainwindow.cpp" line="587"/>
         <source>&amp;Comma</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="587"/>
+        <location filename="../gui/mainwindow.cpp" line="588"/>
         <source>&amp;Radian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="588"/>
+        <location filename="../gui/mainwindow.cpp" line="589"/>
         <source>Scroll Display Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="589"/>
+        <location filename="../gui/mainwindow.cpp" line="590"/>
         <source>Scroll Display Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="590"/>
+        <location filename="../gui/mainwindow.cpp" line="591"/>
         <source>&amp;Select Expression</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="591"/>
+        <location filename="../gui/mainwindow.cpp" line="592"/>
         <source>&amp;Import...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="592"/>
+        <location filename="../gui/mainwindow.cpp" line="593"/>
         <source>&amp;Load...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="593"/>
+        <location filename="../gui/mainwindow.cpp" line="594"/>
         <source>&amp;Quit</source>
         <translation type="unfinished">&amp;Konec</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="594"/>
+        <location filename="../gui/mainwindow.cpp" line="595"/>
         <source>&amp;Save...</source>
         <translation type="unfinished">&amp;Uložit...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="595"/>
+        <location filename="../gui/mainwindow.cpp" line="596"/>
         <source>&amp;Export...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="596"/>
+        <location filename="../gui/mainwindow.cpp" line="597"/>
         <source>Math &amp;Book</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="597"/>
+        <location filename="../gui/mainwindow.cpp" line="598"/>
         <source>&amp;Constants</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="598"/>
+        <location filename="../gui/mainwindow.cpp" line="599"/>
         <source>Full &amp;Screen Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="599"/>
+        <location filename="../gui/mainwindow.cpp" line="600"/>
         <source>&amp;Functions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="600"/>
+        <location filename="../gui/mainwindow.cpp" line="601"/>
         <source>&amp;History</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="601"/>
+        <location filename="../gui/mainwindow.cpp" line="602"/>
         <source>&amp;Keypad</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="602"/>
+        <location filename="../gui/mainwindow.cpp" line="603"/>
         <source>Hide &amp;Menu Bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="603"/>
+        <location filename="../gui/mainwindow.cpp" line="604"/>
         <source>&amp;Status Bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="604"/>
+        <location filename="../gui/mainwindow.cpp" line="605"/>
         <source>&amp;Variables</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="605"/>
+        <location filename="../gui/mainwindow.cpp" line="606"/>
         <source>&amp;Binary</source>
         <translation type="unfinished">&amp;Binární</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="606"/>
+        <location filename="../gui/mainwindow.cpp" line="607"/>
         <source>&amp;Engineering</source>
         <translation type="unfinished">Inž&amp;enýrský</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="607"/>
+        <location filename="../gui/mainwindow.cpp" line="608"/>
         <source>&amp;Fixed Decimal</source>
         <translation type="unfinished">&amp;Pevný počet desetiných míst</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="608"/>
+        <location filename="../gui/mainwindow.cpp" line="609"/>
         <source>&amp;General</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="609"/>
+        <location filename="../gui/mainwindow.cpp" line="610"/>
         <source>&amp;Hexadecimal</source>
         <translation type="unfinished">&amp;Hexadecimální</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="610"/>
+        <location filename="../gui/mainwindow.cpp" line="611"/>
         <source>&amp;Octal</source>
         <translation type="unfinished">&amp;Osmičková</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="611"/>
+        <location filename="../gui/mainwindow.cpp" line="612"/>
         <source>&amp;Scientific</source>
         <translation type="unfinished">&amp;Vědecký</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="612"/>
+        <location filename="../gui/mainwindow.cpp" line="613"/>
         <source>System &amp;Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="839"/>
+        <location filename="../gui/mainwindow.cpp" line="840"/>
         <source>&amp;Edit</source>
         <translation type="unfinished">&amp;Editovat</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="840"/>
+        <location filename="../gui/mainwindow.cpp" line="841"/>
         <source>&amp;View</source>
         <translation type="unfinished">&amp;Zobrazení</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="841"/>
+        <location filename="../gui/mainwindow.cpp" line="842"/>
         <source>Se&amp;ttings</source>
         <translation type="unfinished">Nas&amp;tavení</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="842"/>
+        <location filename="../gui/mainwindow.cpp" line="843"/>
         <source>Result &amp;Format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="843"/>
+        <location filename="../gui/mainwindow.cpp" line="844"/>
         <source>&amp;Decimal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="844"/>
+        <location filename="../gui/mainwindow.cpp" line="845"/>
         <source>&amp;Angle Unit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="845"/>
+        <location filename="../gui/mainwindow.cpp" line="846"/>
         <source>&amp;Behavior</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="846"/>
+        <location filename="../gui/mainwindow.cpp" line="847"/>
         <source>Radix &amp;Character</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="847"/>
+        <location filename="../gui/mainwindow.cpp" line="848"/>
         <source>&amp;Language</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="848"/>
+        <location filename="../gui/mainwindow.cpp" line="849"/>
         <source>&amp;Help</source>
         <translation type="unfinished">&amp;Nápověda</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="879"/>
+        <location filename="../gui/mainwindow.cpp" line="880"/>
         <source>Angle unit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="880"/>
+        <location filename="../gui/mainwindow.cpp" line="881"/>
         <source>Result format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1810"/>
+        <location filename="../gui/mainwindow.cpp" line="1813"/>
         <source>Ignore error?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1807,11 +2015,6 @@ If no, current variables and display will be cleared.</source>
 </context>
 <context>
     <name>TipWidget</name>
-    <message>
-        <location filename="../gui/tipwidget.cpp" line="105"/>
-        <source>&lt;b&gt;%1&lt;/b&gt;&lt;br&gt;%2</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>VariablesDock</name>

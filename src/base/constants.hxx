@@ -59,8 +59,12 @@ class Constants : public QObject
   public:
     Constants( QObject * parent = 0 );
     ~Constants();
+
     QList<Constant> constantList() const;
     QStringList     categoryList() const;
+
+  public slots:
+    void retranslateText();
 
   private:
     struct Private;

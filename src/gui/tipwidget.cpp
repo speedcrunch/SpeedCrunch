@@ -102,7 +102,7 @@ void TipWidget::showText( const QString & msg, const QString & title )
 {
   setPalette( QToolTip::palette() );
 
-  QString text = tr("<b>%1</b><br>%2").arg( title ).arg( msg );
+  QString text = QString( "<b>%1</b><br>%2" ).arg( title ).arg( msg );
   d->tipLabel->setText( text );
   d->tipLabel->adjustSize();
   d->tipLabel->resize( width(), d->tipLabel->sizeHint().height() );

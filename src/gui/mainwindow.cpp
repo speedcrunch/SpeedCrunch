@@ -538,6 +538,7 @@ void MainWindow::setAllText()
     d->setMenusText();
     d->setActionsText();
     d->functions->retranslateText(); // can't be signal/slot to ensure order
+    d->constants->retranslateText(); // same as above
 
     if ( d->status.angleUnit )
     {
@@ -992,6 +993,8 @@ void MainWindow::Private::createConstantsDock()
            p, SLOT( constantSelected( const QString & ) ) );
   connect( p, SIGNAL( radixCharChanged( char ) ),
            docks.constants, SLOT( setRadixChar( char ) ) );
+  connect( p, SIGNAL( retranslateText() ),
+           docks.constants, SLOT( retranslateText() ) );
 
   if ( docks.functions )
     p->tabifyDockWidget( docks.functions, docks.constants );
@@ -1882,7 +1885,7 @@ void MainWindow::minimizeToTrayToggled( bool b )
   {
     d->conditions.trayNotify = true;
     d->widgets.trayIcon = new QSystemTrayIcon( this );
-    d->widgets.trayIcon->setToolTip( tr( "SpeedCrunch" ) );
+    d->widgets.trayIcon->setToolTip( "SpeedCrunch" );
     d->widgets.trayIcon->setIcon( QPixmap( ":/speedcrunch.png" ) );
 
     d->menus.trayIcon = new QMenu( this );

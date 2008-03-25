@@ -42,6 +42,8 @@ struct ConstantsDock::Private
   QLineEdit *   filter;
   QTimer *      filterTimer;
   QTreeWidget * list;
+  QLabel *      label;
+  QLabel *      categoryLabel;
   QLabel *      noMatchLabel;
 };
 
@@ -49,7 +51,7 @@ struct ConstantsDock::Private
 // public
 
 ConstantsDock::ConstantsDock( Constants * c, char radixChar, QWidget * parent )
-  : QDockWidget( tr("Constants"), parent ), d( new ConstantsDock::Private )
+  : QDockWidget( parent ), d( new ConstantsDock::Private )
 {
   if ( radixChar == 'C' )
     d->radixChar = QLocale().decimalPoint().toAscii();
@@ -58,8 +60,7 @@ ConstantsDock::ConstantsDock( Constants * c, char radixChar, QWidget * parent )
 
   d->constants = c;
 
-  QLabel * categorylabel = new QLabel( this );
-  categorylabel->setText( tr("Category") );
+  d->categoryLabel = new QLabel( this );
 
   d->category = new QComboBox( this );
   d->category->setEditable( false );
@@ -70,12 +71,11 @@ ConstantsDock::ConstantsDock( Constants * c, char radixChar, QWidget * parent )
   QWidget     * categoryBox    = new QWidget( this );
   QHBoxLayout * categoryLayout = new QHBoxLayout;
   categoryBox->setLayout( categoryLayout );
-  categoryLayout->addWidget( categorylabel );
+  categoryLayout->addWidget( d->categoryLabel );
   categoryLayout->addWidget( d->category );
   categoryLayout->setMargin( 0 );
 
-  QLabel * label = new QLabel( this );
-  label->setText( tr("Search") );
+  d->label = new QLabel( this );
 
   d->filter = new QLineEdit( this );
   d->filter->setMinimumWidth( fontMetrics().width('X') * 10 );
@@ -86,7 +86,7 @@ ConstantsDock::ConstantsDock( Constants * c, char radixChar, QWidget * parent )
   QWidget *     searchBox    = new QWidget( this );
   QHBoxLayout * searchLayout = new QHBoxLayout;
   searchBox->setLayout( searchLayout );
-  searchLayout->addWidget( label );
+  searchLayout->addWidget( d->label );
   searchLayout->addWidget( d->filter );
   searchLayout->setMargin( 0 );
 
@@ -157,6 +157,15 @@ void ConstantsDock::setRadixChar( char c )
     d->radixChar = c;
     updateList();
   }
+}
+
+
+void ConstantsDock::retranslateText()
+{
+  setWindowTitle( tr( "Constants" ) );
+  d->categoryLabel->setText( tr( "Category" ) );
+  d->label->setText( tr( "Search" ) );
+  updateList();
 }
 
 
