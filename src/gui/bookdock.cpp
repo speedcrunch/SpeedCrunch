@@ -34,8 +34,9 @@ struct BookDock::Private
 {
   QTextBrowser * sheet;
   QString        path;
-  QString        lang;
+  QString        index;
   QString        file;
+  QString        language;
   QPushButton *  backButton;
   QPushButton *  forwardButton;
   QPushButton *  indexButton;
@@ -46,8 +47,9 @@ BookDock::BookDock( const QString & directory, const QString & file,
                     const QString & language, QWidget * parent )
   : QDockWidget( parent ), d( new BookDock::Private )
 {
-  d->path = directory;
-  d->file = file;
+  d->path  = directory;
+  d->file  = file;
+  d->index = file;
 
   QWidget* widget = new QWidget( this );
   QVBoxLayout* bookLayout = new QVBoxLayout;
@@ -88,7 +90,7 @@ BookDock::BookDock( const QString & directory, const QString & file,
   d->indexButton->setIcon( QPixmap( ":/book_home.png" ) );
   d->indexButton->setFlat( true );
 
-  connect( d->indexButton, SIGNAL( clicked() ), d->sheet, SLOT( home() ) );
+  connect( d->indexButton, SIGNAL( clicked() ), this, SLOT( home() ) );
 
   buttonLayout->addWidget( d->indexButton );
 
@@ -113,6 +115,8 @@ BookDock::~BookDock()
 }
 
 
+// public slots
+
 void BookDock::anchorClicked ( const QUrl & link )
 {
   if ( link.toString().startsWith( "file:#" ) )
@@ -126,6 +130,8 @@ void BookDock::anchorClicked ( const QUrl & link )
   else
   {
     d->sheet->setSource( link );
+    d->file = QFileInfo( link.path() ).fileName();
+    qDebug( "%s", qPrintable( d->file ) );
   }
 
   // necessary for QTextBrowser to always draw correctly (why?)
@@ -133,8 +139,18 @@ void BookDock::anchorClicked ( const QUrl & link )
 }
 
 
+void BookDock::home()
+{
+  d->sheet->setSource( d->index );
+  d->file = d->index;
+  setLanguage( d->language );
+}
+
+
 void BookDock::setLanguage( const QString & languageCode )
 {
+  d->language = languageCode;
+
   // buttons
   d->backButton   ->setText( tr( "Back"    ) );
   d->forwardButton->setText( tr( "Forward" ) );
@@ -143,8 +159,8 @@ void BookDock::setLanguage( const QString & languageCode )
   // page
   QString locale = (languageCode == "C") ? QLocale().name()
                                      : languageCode;
-  d->lang = locale;
-  QString path = d->path + d->lang + "/" + d->file;
+  d->language = locale;
+  QString path = d->path + d->language + "/" + d->file;
   QDir dir( path );
   if ( dir.isReadable() )
   {

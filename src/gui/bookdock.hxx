@@ -38,6 +38,7 @@ class BookDock : public QDockWidget
     ~BookDock();
 
   public slots:
+    void home();
     void setLanguage( const QString & languageCode );
     void setTitle( const QString & );
 

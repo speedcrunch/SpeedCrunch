@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="pt">
+<defaultcodec></defaultcodec>
 <context>
     <name>AboutBox</name>
     <message>
@@ -1853,7 +1854,7 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="606"/>
         <source>&amp;Binary</source>
-        <translation>&amp;Binária</translation>
+        <translation>&amp;Binário</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="607"/>
@@ -1883,7 +1884,7 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="612"/>
         <source>&amp;Scientific</source>
-        <translation>&amp;Científica</translation>
+        <translation>&amp;Científico</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="613"/>
@@ -1928,7 +1929,7 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="847"/>
         <source>Radix &amp;Character</source>
-        <translation>&amp;Separador Partes Inteira e Fraccionária</translation>
+        <translation>&amp;Separador Fraccionário</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="848"/>

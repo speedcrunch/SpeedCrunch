@@ -790,6 +790,7 @@ void MainWindow::Private::createMenus()
   // settings / radix character
   menus.radixChar = menus.settings->addMenu( "" );
   menus.radixChar->addAction( actions.radixCharAuto  );
+  menus.radixChar->addSeparator();
   menus.radixChar->addAction( actions.radixCharDot   );
   menus.radixChar->addAction( actions.radixCharComma );
 
@@ -797,26 +798,26 @@ void MainWindow::Private::createMenus()
   menus.language = menus.settings->addMenu( "" );
   menus.language->addAction( actions.languageDefault );
   menus.language->addSeparator();
-  menus.language->addAction( actions.languageCs );
-  menus.language->addAction( actions.languageDe );
-  menus.language->addAction( actions.languageEn );
-  menus.language->addAction( actions.languageEs );
+  menus.language->addAction( actions.languageCs   );
+  menus.language->addAction( actions.languageDe   );
+  menus.language->addAction( actions.languageEn   );
+  menus.language->addAction( actions.languageEs   );
   menus.language->addAction( actions.languageEsAr );
-  menus.language->addAction( actions.languageFi );
-  menus.language->addAction( actions.languageFr );
-  menus.language->addAction( actions.languageHe );
-  menus.language->addAction( actions.languageId );
-  menus.language->addAction( actions.languageIt );
-  menus.language->addAction( actions.languageNl );
-  menus.language->addAction( actions.languageNo );
-  menus.language->addAction( actions.languagePl );
-  menus.language->addAction( actions.languagePt );
+  menus.language->addAction( actions.languageFi   );
+  menus.language->addAction( actions.languageFr   );
+  menus.language->addAction( actions.languageHe   );
+  menus.language->addAction( actions.languageId   );
+  menus.language->addAction( actions.languageIt   );
+  menus.language->addAction( actions.languageNl   );
+  menus.language->addAction( actions.languageNo   );
+  menus.language->addAction( actions.languagePl   );
+  menus.language->addAction( actions.languagePt   );
   menus.language->addAction( actions.languagePtBr );
-  menus.language->addAction( actions.languageRo );
-  menus.language->addAction( actions.languageRu );
-  menus.language->addAction( actions.languageSl );
-  menus.language->addAction( actions.languageSv );
-  menus.language->addAction( actions.languageTr );
+  menus.language->addAction( actions.languageRo   );
+  menus.language->addAction( actions.languageRu   );
+  menus.language->addAction( actions.languageSl   );
+  menus.language->addAction( actions.languageSv   );
+  menus.language->addAction( actions.languageTr   );
 
   // help
   menus.help = new QMenu( "", p );
