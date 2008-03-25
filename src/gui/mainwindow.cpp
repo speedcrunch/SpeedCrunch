@@ -528,26 +528,26 @@ void MainWindow::setAllText()
       qApp->removeTranslator( d->translator );
       delete d->translator;
     }
+
     qApp->installTranslator( tr );
     d->translator = tr;
+  }
+  else
+  {
+    qApp->removeTranslator( d->translator );
+    d->translator = 0;
+  }
 
-    d->setMenusText();
-    d->setActionsText();
-    d->setStatusBarText();
-    d->functions->retranslateText(); // can't be signal/slot to ensure order
-    d->constants->retranslateText(); // same as above
+  d->setMenusText();
+  d->setActionsText();
+  d->setStatusBarText();
+  d->functions->retranslateText(); // can't be signal/slot to ensure order
+  d->constants->retranslateText(); // same as above
 
-    //if ( d->status.angleUnit )
-    //{
-    //  d->deleteStatusBar();
-    //  d->createStatusBar();
-    //}
-
-    if ( d->docks.book )
-    {
-      d->docks.book->setLanguage( d->settings.language );
-      d->docks.book->setWindowTitle( MainWindow::tr( "Math Book" ) );
-    }
+  if ( d->docks.book )
+  {
+    d->docks.book->setLanguage( d->settings.language );
+    d->docks.book->setWindowTitle( MainWindow::tr( "Math Book" ) );
   }
 
   // layout direction
@@ -2860,8 +2860,8 @@ void MainWindow::changeLanguage()
 {
   QAction * a = d->actionGroups.language->checkedAction();
   QString lang = a->data().toString();
-  if ( lang != d->settings.language )
-    d->settings.language = a->data().toString();
+  if ( d->settings.language != lang )
+    d->settings.language = lang;
 
   emit retranslateText();
 }
