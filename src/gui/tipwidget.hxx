@@ -25,13 +25,14 @@
 #include <QFrame>
 
 
-class TipWidget : public QFrame
+class TipWidget: public QFrame
 {
   Q_OBJECT
 
   public:
     explicit TipWidget( QWidget * parent );
     ~TipWidget();
+
     QSize sizeHint() const;
 
   public slots:

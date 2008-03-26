@@ -18,7 +18,7 @@
 // Boston, MA 02110-1301, USA.
 
 
-#include "tipwidget.hxx"
+#include <gui/tipwidget.hxx>
 
 #include <QLabel>
 #include <QPushButton>
@@ -30,15 +30,15 @@
 
 struct TipWidget::Private
 {
-  QTimeLine *   fadeTimeLine;
-  QTimer *      hideTimer;
-  QPushButton * nextButton;
   QLabel *      tipLabel;
+  //QPushButton * nextButton;
+  QTimer *      hideTimer;
+  QTimeLine *   fadeTimeLine;
 };
 
 
-TipWidget::TipWidget( QWidget * parent ) : QFrame( parent ),
-  d( new TipWidget::Private )
+TipWidget::TipWidget( QWidget * parent ) :
+  QFrame( parent ), d( new TipWidget::Private )
 {
   setObjectName( "TipWidget" );
 
@@ -46,9 +46,9 @@ TipWidget::TipWidget( QWidget * parent ) : QFrame( parent ),
   d->tipLabel->setWordWrap( true );
 //  d->tipLabel->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
 
-  d->nextButton = new QPushButton( this );
+//  d->nextButton = new QPushButton( this );
 //  d->nextButton->setText( tr("Next") );
-  d->nextButton->hide();
+//  d->nextButton->hide();
 
   d->hideTimer = new QTimer( this );
   d->hideTimer->setInterval( 4000 );
@@ -60,7 +60,7 @@ TipWidget::TipWidget( QWidget * parent ) : QFrame( parent ),
   //d->fadeTimeLine->setUpdateInterval( 25 );
   d->fadeTimeLine->setCurveShape( QTimeLine::EaseInCurve );
   connect( d->fadeTimeLine, SIGNAL( frameChanged( int ) ),
-           SLOT( animateFade(int) ) );
+           this, SLOT( animateFade( int ) ) );
 
 //  QPalette normal = palette();
   setPalette( QToolTip::palette() );
@@ -72,6 +72,7 @@ TipWidget::TipWidget( QWidget * parent ) : QFrame( parent ),
   setFrameShape( QFrame::Box );
   setAutoFillBackground( true );
 
+  setFixedWidth( fontMetrics().width( 'X' ) * 50 );
   setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
 }
 
@@ -82,52 +83,32 @@ TipWidget::~TipWidget()
 }
 
 
-QSize TipWidget::sizeHint() const
-{
-  return d->tipLabel->sizeHint() + QSize(100, 0);
-}
-
-
-void TipWidget::hideText()
-{
-  if ( d->fadeTimeLine->state() == QTimeLine::NotRunning )
-  {
-    d->hideTimer->stop();
-    QTimer::singleShot( 0, this, SLOT( disappear() ) );
-  }
-}
-
-
 void TipWidget::showText( const QString & msg, const QString & title )
 {
   setPalette( QToolTip::palette() );
 
   QString text = QString( "<b>%1</b><br>%2" ).arg( title ).arg( msg );
   d->tipLabel->setText( text );
+
+  int spacing = 4;
+  int margin  = 10;
+
   d->tipLabel->adjustSize();
-  d->tipLabel->resize( width(), d->tipLabel->sizeHint().height() );
+  d->tipLabel->move( margin, 0 );
+  d->tipLabel->resize( width() - spacing - margin,
+                       d->tipLabel->sizeHint().height() );
 
   QTimer::singleShot( 0, this, SLOT( appear() ) );
 }
 
 
-void TipWidget::animateFade( int v )
+void TipWidget::hideText()
 {
-  resize( width(), d->fadeTimeLine->endFrame() - v );
-  d->tipLabel->move( 10, -v );
-
-  int a = qMax( 0, 240 - v * 4 );
-
-  QPalette pal = QToolTip::palette();
-  QColor c1 = pal.window().color();
-  QColor c2 = pal.windowText().color();
-
-  c1.setAlpha( a );
-  c2.setAlpha( a );
-
-  pal.setBrush( QPalette::Window,     c1 );
-  pal.setBrush( QPalette::WindowText, c2 );
-  setPalette( pal );
+  if( d->fadeTimeLine->state() == QTimeLine::NotRunning )
+  {
+    d->hideTimer->stop();
+    QTimer::singleShot( 0, this, SLOT(disappear()) );
+  }
 }
 
 
@@ -151,4 +132,30 @@ void TipWidget::disappear()
 {
   d->fadeTimeLine->setFrameRange( 0, height() );
   d->fadeTimeLine->start();
+}
+
+
+void TipWidget::animateFade( int v )
+{
+  resize( width(), d->fadeTimeLine->endFrame() - v );
+  d->tipLabel->move( 10, -v );
+
+  int a = qMax( 0, 240 - v*4 );
+
+  QPalette pal = QToolTip::palette();
+  QColor c1 = pal.window().color();
+  QColor c2 = pal.windowText().color();
+
+  c1.setAlpha(a);
+  c2.setAlpha(a);
+
+  pal.setBrush( QPalette::Window, c1 );
+  pal.setBrush( QPalette::WindowText, c2 );
+  setPalette( pal );
+}
+
+
+QSize TipWidget::sizeHint() const
+{
+  return d->tipLabel->sizeHint() + QSize( 100, 0 );
 }

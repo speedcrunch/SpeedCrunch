@@ -2330,8 +2330,7 @@ void MainWindow::showMenuBarTip()
 
   //QPoint p = mapFromGlobal( d->widgets.display->mapToGlobal( QPoint(0, 0) ) )
   //                          += QPoint(5, 5);
-  d->widgets.tip->move( 5, 10 );
-  d->widgets.tip->resize( 345, d->widgets.tip->sizeHint().height() );
+  d->widgets.tip->move( 0, 0 );
   d->widgets.tip->showText( msg, tr( "Warning" ) );
 }
 
@@ -2340,8 +2339,7 @@ void MainWindow::showTipOfTheDay()
 {
   //QPoint p = mapFromGlobal( d->widgets.display->mapToGlobal( QPoint(0, 0) ) )
   //                          += QPoint(5, 5);
-  d->widgets.tip->move( 5, 10 );
-  d->widgets.tip->resize( 345, d->widgets.tip->sizeHint().height() );
+  d->widgets.tip->move( 0, 35 );
 
   int tipNo = qrand() % 4;
   QString msg;
