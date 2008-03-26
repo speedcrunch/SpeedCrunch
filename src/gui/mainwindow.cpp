@@ -328,7 +328,12 @@ QTranslator * MainWindow::Private::createTranslator( const QString & langCode )
                                                : langCode;
 
 #ifdef Q_OS_WIN32
-  translator->load( QString( "locale/" ) + localeFile );
+  QString appPath = QApplication::applicationFilePath();
+  int ii = appPath.lastIndexOf('/');
+  if(ii > 0)
+      appPath.remove(ii, appPath.length());
+  QString fname = appPath + '/' + QString( "locale/" ) + localeFile;
+  translator->load( fname );
   return translator;
 #else
 
