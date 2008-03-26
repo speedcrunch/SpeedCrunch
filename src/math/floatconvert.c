@@ -505,8 +505,9 @@ _fixp2longint(
   floatnum x,
   int scale)
 {
+  Error result;
   _scale2int(x, scale, n->prefix.base);
-  Error result = _floatnum2longint(l, x);
+  result = _floatnum2longint(l, x);
   if (result != Success)
     return result;
   _setlongintdesc(&n->fracpart, l, n->prefix.base);
@@ -588,9 +589,10 @@ _outscihex(
   int scale)
 {
   t_longint l;
+  Error result;
 
   n->exp = _extractexp(x, scale, n->prefix.base);
-  Error result = _fixp2longint(n, &l, x, scale);
+  result = _fixp2longint(n, &l, x, scale);
   if (result != Success)
     return result;
   /* rounding in _fixp2longint may have increased the exponent */
