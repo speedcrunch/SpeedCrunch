@@ -192,7 +192,7 @@ _getseqdigit(
 {
   if (ofs < 0 || ofs > _ofslastnz(n))
     return 0;
-  return _ascii2digit(*((char*)(n->param) + ofs));
+  return _ascii2digit(*(char*)(n->param + ofs));
 }
 
 /* returns a digit from an ASCIIZ string containing
@@ -240,30 +240,6 @@ _clearnumber(
   _clearint(&n->fracpart);
   n->expbase = IO_BASE_NAN;
   n->exp = 0;
-}
-
-/* creates a sequence descripter from the value of an integer.
-   trailing zeros are not set, n has to be initialized. */
-
-/* converts a digit sequence to an integer. Returns
-   0 should the integer overflows */
-static char
-_seq2value(
-  int* value,
-  p_ext_seq_desc n,
-  int sign)
-{
-  int i, ubound;
-
-  *value = 0;
-  ubound = _intdigits(&n->seq);
-  for (i = 0; i < ubound; ++i)
-  {
-    if (!_checkmul(value, n->seq.base)
-        || !_checkadd(value, sign * n->getdigit(i, &n->seq)))
-      return 0;
-  }
-  return 1;
 }
 
 /* creates a sequence descriptor from an ASCII digit
@@ -458,7 +434,7 @@ str2fixp(
   n->prefix.base = tokens->base;
   n->prefix.sign = tokens->sign;
   if (tokens->sign == IO_SIGN_COMPLEMENT
-      && (!_isempty(tokens->fracpart) || !_isempty(tokens->exp)))
+      && (!_isempty(tokens->fracpart) || tokens->exp))
     return IOInvalidComplement;
   result = str2int(&n->intpart, tokens->intpart, &n->prefix, maxdigits);
   if (_isspecial(n->prefix.base))
@@ -497,32 +473,35 @@ _exp2desc(
   p_number_desc n,
   p_itokens tokens)
 {
-  t_prefix prefix;
-  t_ext_seq_desc digits;
-  Error result;
-
-  result = Success;
   if (tokens->expsign != IO_SIGN_NONE || tokens->expbase != IO_BASE_NAN
-      || !_isempty(tokens->exp))
+      || tokens->exp)
   {
-    prefix.sign = tokens->expsign;
-    if (prefix.sign == IO_SIGN_COMPLEMENT)
-      return IOBadExp;
-    if (prefix.sign == IO_SIGN_NONE)
-      prefix.sign = IO_SIGN_PLUS;
-    prefix.base = tokens->expbase;
-    _clearint(&digits);
-    result = str2int(&digits, tokens->exp,
-                     &prefix, BITS_IN_EXP-1);
-    if (result == Success)
+    unsigned upperLimit;
+    switch (tokens->expbase)
     {
-      n->expbase = prefix.base;
-      if (prefix.base != IO_BASE_ZERO
-               && !_seq2value(&n->exp, &digits, prefix.sign))
-        result = IOExpOverflow;
+      case 2 : upperLimit = BITS_IN_BINEXP; break;
+      case 8 : upperLimit = BITS_IN_OCTEXP; break;
+      case 16: upperLimit = BITS_IN_HEXEXP; break;
+      default: upperLimit = BITS_IN_EXP; break;
     }
+    upperLimit = 1 << upperLimit;
+    signed char sign = tokens->expsign;
+    switch (sign)
+    {
+      case IO_SIGN_COMPLEMENT:
+        return IOBadExp;
+      case IO_SIGN_NONE:
+        sign = IO_SIGN_PLUS; break;
+      case IO_SIGN_MINUS:
+        --upperLimit; break;
+      default:;
+    }
+    if (tokens->exp > upperLimit)
+      return IOExpOverflow;
+    n->exp = sign < 0? -(int)(tokens->exp) : tokens->exp;
+    n->expbase = tokens->expbase;
   }
-  return result;
+  return Success;
 }
 
 /* create a descriptor from the floating point number given in
@@ -567,7 +546,6 @@ exp2str(
 {
   char tmp[BITS_IN_EXP + 3];
   int idx = 0;
-  int di = 0;
   if (exp < 0)
     exp = -exp;
   while (exp != 0)
@@ -579,6 +557,7 @@ exp2str(
     tmp[idx++] = hexdigits[0];
   if (dest->sz <= idx)
     return IOBufferOverflow;
+  int di = 0;
   for (; --idx >= 0;)
     dest->buf[di++] = tmp[idx];
   dest->buf[di] = 0;
@@ -801,7 +780,7 @@ parse(
   char* expend;
 
   tokens->fracpart = NULL;
-  tokens->exp = NULL;
+  tokens->exp = 0;
   tokens->expbase = IO_BASE_NAN;
   tokens->expsign = IO_SIGN_NONE;
   tokens->maxdigits = 0;
@@ -848,9 +827,18 @@ parse(
     idx = expchar - expbegin;
     tokens->expsign = _parsesign(&p);
     tokens->expbase = _parsebase(&p, base);
-    tokens->exp = _scandigits(&p, tokens->expbase);
-    if (!tokens->exp || (*(expend + idx) != ' ' && *(expend + idx) != *p))
+    const char* expptr = _scandigits(&p, tokens->expbase);
+    if (!expptr || (*(expend + idx) != ' ' && *(expend + idx) != *p))
       return IOBadExp;
+    int i;
+    int e = 0;
+    for (i = 0; i < p-expptr; ++i)
+    {
+      if (!_checkmul(&e, tokens->expbase)
+           || !_checkadd(&e, _ascii2digit(*(expptr+i))))
+        return IOExpOverflow;
+    }
+    tokens->exp = e;
   }
   *buffer = p;
   return Success;
