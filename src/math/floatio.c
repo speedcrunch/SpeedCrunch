@@ -192,7 +192,7 @@ _getseqdigit(
 {
   if (ofs < 0 || ofs > _ofslastnz(n))
     return 0;
-  return _ascii2digit(*((char*)(n->param + ofs)));
+  return _ascii2digit(*((char*)(n->param) + ofs));
 }
 
 /* returns a digit from an ASCIIZ string containing
