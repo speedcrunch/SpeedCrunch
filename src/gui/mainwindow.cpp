@@ -981,15 +981,13 @@ void MainWindow::Private::createKeypad()
 void MainWindow::Private::createBookDock()
 {
   QString booksDir;
-  QString localeDir = (settings.language == "C") ?
-                        QLocale().name() : settings.language;
-
-  // fallback to English
-  if(localeDir == "C")
-    localeDir = "en";
 
 #ifdef Q_OS_WIN32
-  booksDir = QString( "books/" ) + localeDir;
+  QString appPath = QApplication::applicationFilePath();
+  int ii = appPath.lastIndexOf('/');
+  if(ii > 0)
+      appPath.remove(ii, appPath.length());
+  booksDir = appPath + '/' + QString( "books/" );
 #else
   BrInitError error;
   if ( br_init( & error ) == 0 && error != BR_INIT_ERROR_DISABLED )
