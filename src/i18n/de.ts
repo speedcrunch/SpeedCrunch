@@ -1789,7 +1789,7 @@ Falls nein, werden aktuelle Variablen und Anzeigen gelöscht.</translation>
     <message>
         <location filename="../gui/mainwindow.cpp" line="636"/>
         <source>Full &amp;Screen Mode</source>
-        <translation>&Ganzer Bildschirm</translation>
+        <translation>&amp;Ganzer Bildschirm</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="637"/>
