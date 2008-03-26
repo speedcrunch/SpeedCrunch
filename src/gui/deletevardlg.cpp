@@ -34,9 +34,8 @@
 #include <QVBoxLayout>
 
 
-class DeleteVariableDlg::Private
+struct DeleteVariableDlg::Private
 {
-public:
   Evaluator* eval;
   QTreeWidget* list;
   QPushButton* deleteButton;

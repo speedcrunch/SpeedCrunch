@@ -31,17 +31,16 @@
 #include <QVBoxLayout>
 
 
-class FunctionsDock::Private
+struct FunctionsDock::Private
 {
-  public:
-    const Functions * functions;
-    QLineEdit *       filter;
-    QTimer *          filterTimer;
-    QStringList       functionDesc;
-    QStringList       functionNames;
-    QTreeWidget *     list;
-    QLabel *          label;
-    QLabel *          noMatchLabel;
+  const Functions * functions;
+  QLineEdit *       filter;
+  QTimer *          filterTimer;
+  QStringList       functionDesc;
+  QStringList       functionNames;
+  QTreeWidget *     list;
+  QLabel *          label;
+  QLabel *          noMatchLabel;
 };
 
 

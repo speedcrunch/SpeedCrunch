@@ -371,15 +371,16 @@ void Keypad::Private::sizeButtons()
   // The same font in all buttons, so just pick one
   QFontMetrics fm = key0->fontMetrics();
 
-  int maxWidth = fm.width( keyAcos->text() );
-  int textHeight = qMax( fm.lineSpacing(), 14 );
-  QSize size =
-#ifdef Q_WS_MAC
-               key0->style()->sizeFromContents( QStyle::CT_PushButton,
-#else
-               key0->style()->sizeFromContents( QStyle::CT_ToolButton,
-#endif
-                 0, QSize( int(maxWidth), int(textHeight) ).expandedTo( QApplication::globalStrut() ), keyAcos );
+  //int maxWidth = fm.width( keyAcos->text() );
+  //int textHeight = qMax( fm.lineSpacing(), 14 );
+  //QSize size =
+  QSize size( 45, 35 );
+//#ifdef Q_WS_MAC
+//               key0->style()->sizeFromContents( QStyle::CT_PushButton,
+//#else
+//               key0->style()->sizeFromContents( QStyle::CT_ToolButton,
+//#endif
+//                 0, QSize( int(maxWidth), int(textHeight) ).expandedTo( QApplication::globalStrut() ), keyAcos );
 
   // limit the size of the buttons
   key0->setMaximumSize     ( size ); key0->setMinimumSize     ( size );

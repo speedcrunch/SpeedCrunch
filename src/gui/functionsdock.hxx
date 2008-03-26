@@ -53,6 +53,9 @@ class FunctionsDock : public QDockWidget
   private:
     struct Private;
     Private * const d;
+    FunctionsDock();
+    FunctionsDock( const FunctionsDock & );
+    FunctionsDock & operator=( const FunctionsDock & );
 };
 
 
