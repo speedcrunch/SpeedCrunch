@@ -327,6 +327,10 @@ QTranslator * MainWindow::Private::createTranslator( const QString & langCode )
   QString       localeFile = (langCode == "C") ? QLocale().name()
                                                : langCode;
 
+  // fallback to English
+  if(localeFile == "C")
+    localeFile = "en";
+
 #ifdef Q_OS_WIN32
   QString appPath = QApplication::applicationFilePath();
   int ii = appPath.lastIndexOf('/');
@@ -979,6 +983,10 @@ void MainWindow::Private::createBookDock()
   QString booksDir;
   QString localeDir = (settings.language == "C") ?
                         QLocale().name() : settings.language;
+
+  // fallback to English
+  if(localeDir == "C")
+    localeDir = "en";
 
 #ifdef Q_OS_WIN32
   booksDir = QString( "books/" ) + localeDir;
