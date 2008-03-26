@@ -118,7 +118,7 @@ void Settings::load()
   constantsDockLeft     = settings.value( key + "ConstantsDockLeft",     0     ).toInt();
   constantsDockWidth    = settings.value( key + "ConstantsDockWidth",    150   ).toInt();
   constantsDockHeight   = settings.value( key + "ConstantsDockHeight",   350   ).toInt();
-  mainWindowSize        = QSize( settings.value ( key + "WindowWidth",   350   ).toInt(),
+  mainWindowSize        = QSize( settings.value ( key + "WindowWidth",   300   ).toInt(),
                                  settings.value ( key + "WindowHeight",  400   ).toInt() );
 
   // load history
