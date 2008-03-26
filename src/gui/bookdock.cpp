@@ -168,16 +168,16 @@ void BookDock::setLanguage( const QString & languageCode )
 
   d->language = locale;
   QString path = d->path + d->language + "/" + d->file;
+  QString src = path;
+
   QDir dir( path );
-  if ( dir.isReadable() )
-  {
-    d->sheet->setSource( path );
-  }
-  else
+  if ( !dir.isReadable() )
   {
     QString localeShort = locale.left( 2 ).toLower();
-    d->sheet->setSource( d->path + localeShort + "/" + d->file );
+    src = d->path + localeShort + "/" + d->file;
   }
+
+  d->sheet->setSource( QUrl::fromLocalFile(src) );
 
   if ( languageCode == "he" )
     setLayoutDirection( Qt::RightToLeft );
