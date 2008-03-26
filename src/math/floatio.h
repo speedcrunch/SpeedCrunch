@@ -124,7 +124,8 @@ typedef struct{
   const char* fracpart;
   signed char expsign;
   signed char expbase;
-  const char* exp;
+  unsigned exp;
+//  const char* exp;
   unsigned maxdigits;
 } t_itokens;
 typedef t_itokens* p_itokens;
