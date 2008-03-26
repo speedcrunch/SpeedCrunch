@@ -192,7 +192,7 @@ _getseqdigit(
 {
   if (ofs < 0 || ofs > _ofslastnz(n))
     return 0;
-  return _ascii2digit(*(char*)(n->param + ofs));
+  return _ascii2digit(*((char*)(n->param + ofs)));
 }
 
 /* returns a digit from an ASCIIZ string containing
@@ -546,6 +546,7 @@ exp2str(
 {
   char tmp[BITS_IN_EXP + 3];
   int idx = 0;
+  int di = 0;
   if (exp < 0)
     exp = -exp;
   while (exp != 0)
@@ -557,7 +558,6 @@ exp2str(
     tmp[idx++] = hexdigits[0];
   if (dest->sz <= idx)
     return IOBufferOverflow;
-  int di = 0;
   for (; --idx >= 0;)
     dest->buf[di++] = tmp[idx];
   dest->buf[di] = 0;
