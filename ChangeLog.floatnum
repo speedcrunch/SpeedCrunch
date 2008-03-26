@@ -1,3 +1,10 @@
+2008-03-25
+let most of the IO conversion code see the exponent as an integer value
+(instead of an ASCII string)
+
+floatio
+- refactor: keep exponents as integers, not strings
+
 2008-02-04
 separate the formatting of the scale from that of the significand
 clarify semantics of BITS_IN_EXP
