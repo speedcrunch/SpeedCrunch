@@ -47,14 +47,17 @@ class VariantBase: public VariantIntf
     bool operator = (bool);
     Error operator = (Error);
     operator const VariantData*() const;
-    QByteArray xmlWrite() const;
-    bool xmlRead(const char*);
+    void xmlWrite(QDomDocument&, QDomNode&) const;
+    bool xmlRead(QDomNode&);
   protected:
     bool isBuiltIn() const { return m_type != btExtern; };
+    bool toBuiltInType(const char* typeName);
     void operator = (VariantData*);
     VariantData* variantData() { return val; };
+    const VariantData* variantData() const { return val; };
     void operator = (const VariantBase& other);
     virtual void teardown() = 0;
+    static QByteArray xmlTypeAttr(const QDomNode&);
     static void initClass();
   private:
     enum
@@ -85,15 +88,23 @@ class Variant: public VariantBase
     Variant(bool v) { *this = v; };
     Variant(Error e) { *this = e; };
     Variant(VariantData* vd) { *this = vd; };
+    Variant(const Variant& other) { *this = other; };
     ~Variant() { teardown(); };
   public: // assignment
     Variant& operator = (const Variant& other);
     void operator = (VariantData*);
+  public: // IO
+    void xmlWrite(QDomDocument&, QDomNode&) const;
+    bool xmlRead(QDomNode&);
+    QByteArray toUtf8() const;
+    static Variant fromUtf8(const char* utf8, const char* type = 0);
+    static const char* xmlTagName;
   public: // types & conversion
   public: // operators & functions
   protected:
     void teardown();
   private:
+    static QDomElement createEmptyElement(QDomDocument&, const char* type);
     static void initClass();
   public: // support of LongReal
     Variant(floatnum, Error);

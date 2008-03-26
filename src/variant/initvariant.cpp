@@ -32,6 +32,8 @@
 #include "variant/variant.hxx"
 #include "variant/real.hxx"
 
+#include <QtXml/QDomDocument>
+
 class InitVariant
 {
   public:
@@ -40,8 +42,15 @@ class InitVariant
 
 InitVariant instance;
 
+void test()
+{
+  Variant x = Variant::fromUtf8("1.23", VariantIntf::nLongReal);
+}
+
 InitVariant::InitVariant()
 {
   Variant::initClass();
   LongReal::initClass();
+
+  test();
 }

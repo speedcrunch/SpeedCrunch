@@ -32,6 +32,7 @@
 #include "variant/real.hxx"
 #include "math/floatconfig.h"
 #include "math/floatconvert.h"
+#include <QtXml/QDomText>
 
 const char* VariantIntf::nLongReal = "LongReal";
 VariantIntf::VariantType LongReal::vtLongReal;
@@ -40,36 +41,36 @@ static floatstruct NaNVal;
 static int longrealPrec;
 static LongReal::EvalMode longrealEvalMode;
 
-static int _cvtMode(LongReal::FmtMode mode)
+static int _cvtMode(FmtMode mode)
 {
   switch (mode)
   {
-    case LongReal::FixPoint: return IO_MODE_FIXPOINT;
-    case LongReal::Engineering: return IO_MODE_ENG;
-    case LongReal::Complement2: return IO_MODE_COMPLEMENT;
+    case FixPoint: return IO_MODE_FIXPOINT;
+    case Engineering: return IO_MODE_ENG;
+    case Complement2: return IO_MODE_COMPLEMENT;
     default: return IO_MODE_SCIENTIFIC;
   }
 }
 
-static LongReal::Sign _cvtSign(signed char sign)
+static Sign _cvtSign(signed char sign)
 {
   switch (sign)
   {
-    case IO_SIGN_COMPLEMENT: return LongReal::Compl2;
-    case IO_SIGN_MINUS     : return LongReal::Minus;
-    case IO_SIGN_PLUS      : return LongReal::Plus;
-    default                : return LongReal::None;
+    case IO_SIGN_COMPLEMENT: return Compl2;
+    case IO_SIGN_MINUS     : return Minus;
+    case IO_SIGN_PLUS      : return Plus;
+    default                : return None;
   }
 }
 
-static signed char _cvtSign(LongReal::Sign sign)
+static signed char _cvtSign(Sign sign)
 {
   switch (sign)
   {
-    case LongReal::Compl2: return IO_SIGN_COMPLEMENT;
-    case LongReal::Minus : return IO_SIGN_MINUS;
-    case LongReal::Plus  : return IO_SIGN_PLUS;
-    default              : return IO_SIGN_NONE;
+    case Compl2: return IO_SIGN_COMPLEMENT;
+    case Minus : return IO_SIGN_MINUS;
+    case Plus  : return IO_SIGN_PLUS;
+    default    : return IO_SIGN_NONE;
   }
 }
 
@@ -167,29 +168,31 @@ int LongReal::workPrec()
   return longrealPrec + 3;
 }
 
-QByteArray LongReal::xmlWrite() const
+void LongReal::xmlWrite(QDomDocument& doc, QDomNode& parent) const
 {
-  QByteArray result;
+  // fill a buffer with a description of val in ASCII
   int lg = float_getlength(&val) + BITS_IN_EXP + 2;
-  result.resize(lg);
-  result.resize(float_getscientific(result.data(), lg, &val));
-  return result;
+  QByteArray buf(lg, 0);
+  float_getscientific(buf.data(), lg, &val);
+
+  // copy the buffer to the text portion of the given element
+  parent.appendChild(doc.createTextNode(buf));
 }
 
-bool LongReal::xmlRead(const char* txt)
+bool LongReal::xmlRead(QDomNode& node)
 {
-  txt += xmlTrimLeft(txt);
-  int lg = xmlDataLength(txt);
-  float_setscientific(&val, txt, lg);
-  return float_isnan(&val) == 0;
+  // pre: node is an element
+  QByteArray buf = node.toElement().text().toUtf8();
+  float_setscientific(&val, buf.data(), NULLTERMINATED);
+  return !float_isnan(&val);
 }
 
-LongReal::BasicIO LongReal::convert(int digits, FmtMode mode,
+RawFloatIO LongReal::convert(int digits, FmtMode mode,
                    char base, char scalebase) const
 {
   t_otokens tokens;
   floatstruct workcopy;
-  BasicIO result;
+  RawFloatIO result;
   char intpart[BINPRECISION+5];
   char fracpart[BINPRECISION+5];
 
@@ -206,13 +209,12 @@ LongReal::BasicIO LongReal::convert(int digits, FmtMode mode,
     if (tokens.exp >= 0)
     {
       result.scale = tokens.exp;
-      result.signScale = tokens.exp > 0? LongReal::Plus
-        : LongReal::None;
+      result.signScale = tokens.exp > 0? Plus : None;
     }
     else
     {
       result.scale = -tokens.exp;
-      result.signScale = LongReal::Minus;
+      result.signScale = Minus;
     }
     result.baseSignificand = base;
     result.baseScale = scalebase;
@@ -223,26 +225,27 @@ LongReal::BasicIO LongReal::convert(int digits, FmtMode mode,
   return result;
 }
 
-Variant LongReal::convert(const BasicIO& io, const QString& scale)
+Variant LongReal::convert(const RawFloatIO& io)
 {
+  if (io.error != Success)
+    return io.error;
   t_itokens tokens;
   QByteArray intpart = io.intpart.toUtf8();
   QByteArray fracpart = io.fracpart.toUtf8();
   tokens.intpart = intpart.data();
   tokens.fracpart = intpart.data();
+  tokens.sign = _cvtSign(io.signSignificand);
+  tokens.base = io.baseSignificand;
   tokens.exp = 0;
   tokens.expbase = IO_BASE_NAN;
   tokens.expsign = IO_SIGN_NONE;
-  tokens.sign = _cvtSign(io.signSignificand);
-  tokens.base = io.baseSignificand;
-  tokens.maxdigits = evalPrec();
-  if (!scale.isEmpty())
+  if (io.scale != 0)
   {
-    QByteArray bscale = scale.toUtf8();
-    tokens.exp = bscale.data();
+    tokens.exp = io.scale;
     tokens.expbase = io.baseScale;
     tokens.expsign = io.signScale;
   }
+  tokens.maxdigits = evalPrec();
   floatstruct val;
   float_create(&val);
   Error e = float_in(&val, &tokens);
@@ -256,13 +259,13 @@ static bool _isZero(const QString& str)
 
 RealFormat::RealFormat()
 {
-  setMode(LongReal::Scientific);
+  setMode(Scientific);
   setGroupChars();
   setMinLengths();
   setFlags(fShowRadix|fShowScaleRadix|fShowZeroScale);
 }
 
-void RealFormat::setMode(LongReal::FmtMode m, int dgt, char b, char sb)
+void RealFormat::setMode(FmtMode m, int dgt, char b, char sb)
 {
   mode = m;
   base = b;
@@ -309,15 +312,15 @@ void RealFormat::setFlags(unsigned flags)
   lowerCaseHexDigit = flags & fLowerCaseDigit;
 }
 
-QString RealFormat::getPrefix(LongReal::Sign sign, char base,
+QString RealFormat::getPrefix(Sign sign, char base,
                               bool isCompl)
 {
   QString result;
   const char* radix;
   switch (sign)
   {
-    case LongReal::None:
-    case LongReal::Plus:
+    case None:
+    case Plus:
       if (showPlus)
         result = '+';
       break;
@@ -343,18 +346,18 @@ QString RealFormat::getPrefix(LongReal::Sign sign, char base,
   return result;
 }
 
-QString RealFormat::getSignificandPrefix(LongReal::BasicIO& io)
+QString RealFormat::getSignificandPrefix(RawFloatIO& io)
 {
   return getPrefix(io.signSignificand, io.baseSignificand,
-                   mode == LongReal::Complement2);
+                   mode == Complement2);
 }
 
-QString RealFormat::getSignificandSuffix(LongReal::BasicIO& io)
+QString RealFormat::getSignificandSuffix(RawFloatIO& io)
 {
   return QString();
 }
 
-QString RealFormat::getScalePrefix(LongReal::BasicIO& io)
+QString RealFormat::getScalePrefix(RawFloatIO& io)
 {
   QString result('e');
   if (io.baseSignificand != 10)
@@ -363,7 +366,7 @@ QString RealFormat::getScalePrefix(LongReal::BasicIO& io)
          + getPrefix(io.signScale, io.baseScale, false);
 }
 
-QString RealFormat::getScaleSuffix(LongReal::BasicIO& io)
+QString RealFormat::getScaleSuffix(RawFloatIO& io)
 {
   if (io.baseSignificand == 10)
     return QString();
@@ -385,7 +388,7 @@ QString RealFormat::formatZero()
   return result;
 }
 
-QString RealFormat::formatInt(LongReal::BasicIO& io)
+QString RealFormat::formatInt(RawFloatIO& io)
 {
   if (minIntLg <= 0 &&!showLeadingZero && _isZero(io.intpart))
     return QString();
@@ -395,7 +398,7 @@ QString RealFormat::formatInt(LongReal::BasicIO& io)
     QChar pad = ' ';
     if (showLeadingZero)
       pad = '0';
-    if (io.signSignificand == LongReal::Compl2)
+    if (io.signSignificand == Compl2)
       switch (io.baseSignificand)
       {
         case 2 : pad = '1'; break;
@@ -424,7 +427,7 @@ QString RealFormat::formatInt(LongReal::BasicIO& io)
   return result;
 }
 
-QString RealFormat::formatFrac(LongReal::BasicIO& io)
+QString RealFormat::formatFrac(RawFloatIO& io)
 {
   QString fracpart = io.fracpart;
   if (fracpart.size() < minFracLg)
@@ -463,7 +466,7 @@ QString RealFormat::formatFrac(LongReal::BasicIO& io)
   return result;
 }
 
-QString RealFormat::formatScale(LongReal::BasicIO& io)
+QString RealFormat::formatScale(RawFloatIO& io)
 {
   QString result = QString::number(io.scale, (int)io.baseScale);
   if (io.baseScale == 16 && !lowerCaseHexDigit)
@@ -484,21 +487,21 @@ QString RealFormat::format(const Variant& val)
     return formatNaN();
   if (vr->isZero())
     return formatZero();
-  LongReal::BasicIO basicIO = vr->convert(digits, mode, base, scalebase);
-  if (basicIO.error != Success)
+  RawFloatIO RawFloatIO = vr->convert(digits, mode, base, scalebase);
+  if (RawFloatIO.error != Success)
     return result;
-  result = getSignificandPrefix(basicIO)
-           + formatInt(basicIO)
-           + formatFrac(basicIO)
-           + getSignificandSuffix(basicIO);
-  if (useScale(basicIO))
-    result += getScalePrefix(basicIO)
-           + formatScale(basicIO)
-           + getScaleSuffix(basicIO);
+  result = getSignificandPrefix(RawFloatIO)
+           + formatInt(RawFloatIO)
+           + formatFrac(RawFloatIO)
+           + getSignificandSuffix(RawFloatIO);
+  if (useScale(RawFloatIO))
+    result += getScalePrefix(RawFloatIO)
+           + formatScale(RawFloatIO)
+           + getScaleSuffix(RawFloatIO);
   return result;
 }
 
-bool RealFormat::useScale(const LongReal::BasicIO& io)
+bool RealFormat::useScale(const RawFloatIO& io)
 {
   return io.scale != 0 || showZeroScale;
 }

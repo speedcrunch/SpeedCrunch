@@ -30,9 +30,12 @@
 *************************************************************************/
 
 #include "variant/variant.hxx"
+#include <QtXml/QDomText>
 
 typedef VariantIntf::VariantType VariantType;
 
+const char* Variant::xmlTagName = "variant";
+const char* xmlTypeAttrName = "type";
 const char* VariantIntf::nBool = "Boolean";
 const char* VariantIntf::nError = "Error";
 VariantType VariantBase::vtBool;
@@ -108,25 +111,52 @@ void VariantBase::operator = (const VariantBase& other)
     *this = (Error)other;
 }
 
-QByteArray VariantBase::xmlWrite() const
+bool VariantBase::toBuiltInType(const char* name)
 {
-  QByteArray result;
-  if (isBool())
-    result.setNum(int(boolval));
+  if (qstrcmp(name, nBool) == 0)
+    *this = true;
+  else if (qstrcmp(name, nError) == 0)
+    *this = NoOperand;
   else
-    result.setNum(int(Error(*this)));
-  return result;
+    return false;
+  return true;
 }
 
-bool VariantBase::xmlRead(const char* data)
+QByteArray VariantBase::xmlTypeAttr(const QDomNode& node)
 {
-  unsigned val = QByteArray::fromRawData(data,
-                        xmlDataLength(data + xmlTrimLeft(data))).toUInt();
+  // pre: node is an element
+  return node.toElement().attribute(xmlTypeAttrName, "").toUtf8();
+}
+
+void VariantBase::xmlWrite(QDomDocument& doc, QDomNode& parent) const
+{
+  QString buf;
   if (isBool())
-    boolval = val != 0;
+    buf.setNum(int(boolval));
   else
-    error = Error(val);
-  return error <= NotAnError;
+    buf.setNum(int(Error(*this)));
+  parent.appendChild(doc.createTextNode(buf));
+}
+
+bool VariantBase::xmlRead(QDomNode& node)
+{
+  // pre: node is an element
+  bool ok;
+  QByteArray typeName = xmlTypeAttr(node);
+  unsigned newval = node.toElement().text().toUInt(&ok);
+  ok |= newval <= unsigned(NotAnError);
+  if (ok && qstrcmp(typeName, nBool) == 0)
+  {
+    switch (newval)
+    {
+      case 0:
+      case 1: *this = bool(newval); break;
+      default: ok = false;
+    }
+  }
+  else if (ok && qstrcmp(typeName, nError) == 0)
+    *this = Error(newval);
+  return ok;
 }
 
 void Variant::operator = (VariantData* newval)
@@ -154,6 +184,75 @@ void Variant::teardown()
 {
   if (!isBuiltIn())
     variantData()->release();
+}
+
+QDomElement Variant::createEmptyElement(QDomDocument& doc, const char* type)
+{
+  QDomElement result = doc.createElement(xmlTagName);
+  doc.appendChild(result);
+  result.setAttribute(xmlTypeAttrName, type);
+  return result;
+}
+
+
+void Variant::xmlWrite(QDomDocument& doc, QDomNode& node) const
+{
+  QDomElement elem = createEmptyElement(doc, typeName(type()));
+  if (isBuiltIn())
+    VariantBase::xmlWrite(doc, elem);
+  else
+    variantData()->xmlWrite(doc, elem);
+}
+
+bool Variant::xmlRead(QDomNode& node)
+{
+  bool ok = node.isElement();
+  if (ok)
+  {
+    VariantType vt = variantType(xmlTypeAttr(node));
+    ok = node.toElement().tagName().toUtf8() == xmlTagName
+         && vt != 0;
+    if (ok)
+    {
+      VariantData* vd = construct(vt);
+      if (vd)
+      {
+        ok = vd->xmlRead(node);
+        if (ok)
+          *this = vd;
+        else
+          vd->release();
+      }
+      else
+        ok = VariantBase::xmlRead(node);
+    }
+  }
+  return ok;
+}
+
+QByteArray Variant::toUtf8() const
+{
+  QDomDocument doc;
+  xmlWrite(doc, doc);
+  QByteArray result = doc.toByteArray(0);
+  return result.simplified();
+}
+
+Variant Variant::fromUtf8(const char* utf8, const char* type)
+{
+  // pre: type must be an UTF8 encoded, valid XML attribute string value
+  // without the enclosing "
+  QByteArray data = QByteArray::fromRawData(utf8, qstrlen(utf8));
+  QDomDocument doc;
+  if (type)
+    createEmptyElement(doc, type).appendChild(doc.createTextNode(data));
+  else
+    doc.setContent(data);
+  Variant result;
+  QDomNode variantElem = doc.firstChild();
+  if (result.xmlRead(variantElem))
+    return result;
+  return BadLiteral;
 }
 
 Variant::Variant(floatnum f, Error e)

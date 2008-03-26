@@ -39,6 +39,34 @@
 #include "variant/variant.hxx"
 #include <QString>
 
+typedef enum
+{
+  FixPoint,
+  Scientific,
+  Engineering,
+  Complement2,
+} FmtMode;
+
+typedef enum
+{
+  Plus,
+  Minus,
+  Compl2,
+  None,
+} Sign;
+
+typedef struct
+{
+  QString intpart;
+  QString fracpart;
+  Sign signSignificand;
+  char baseSignificand;
+  unsigned scale;
+  char baseScale;
+  Sign signScale;
+  Error error;
+} RawFloatIO;
+
 class LongReal: public VariantRefData
 {
   friend class InitVariant;
@@ -63,36 +91,11 @@ class LongReal: public VariantRefData
     static int precision(int newprec = PrecQuery);
     static EvalMode evalMode(EvalMode newMode = EvalQuery);
   public: // conversion, IO
-    typedef enum
-    {
-      FixPoint,
-      Scientific,
-      Engineering,
-      Complement2,
-    } FmtMode;
-    typedef enum
-    {
-      Plus,
-      Minus,
-      Compl2,
-      None,
-    } Sign;
-    typedef struct
-    {
-      QString intpart;
-      QString fracpart;
-      Sign signSignificand;
-      char baseSignificand;
-      unsigned scale;
-      char baseScale;
-      Sign signScale;
-      Error error;
-    } BasicIO;
-    BasicIO convert(int digits, FmtMode mode = Scientific,
+    RawFloatIO convert(int digits, FmtMode mode = Scientific,
                     char base = 10, char scalebase = 10) const;
-    static Variant convert(const BasicIO&, const QString& scale);
-    QByteArray xmlWrite() const;
-    bool xmlRead(const char*);
+    static Variant convert(const RawFloatIO&);
+    void xmlWrite(QDomDocument&, QDomNode&) const;
+    bool xmlRead(QDomNode&);
   private:
     floatstruct val;
     static void initClass();
@@ -120,25 +123,25 @@ class RealFormat: public FormatIntf
   public:
     RealFormat();
     QString format(const Variant&);
-    void setMode(LongReal::FmtMode, int digits = -1,
+    void setMode(FmtMode, int digits = -1,
                  char base = 10, char scalebase = 10);
     void setGroupChars(QChar dot = '.', QChar group = ',', int grouplg = 0);
     void setMinLengths(int newMinInt = 0, int newMinFrac = 0,
                        int newMinScale = 0);
     void setFlags(unsigned flags);
   protected:
-    virtual QString getSignificandPrefix(LongReal::BasicIO&);
-    virtual QString getSignificandSuffix(LongReal::BasicIO&);
-    virtual QString getScalePrefix(LongReal::BasicIO&);
-    virtual QString getScaleSuffix(LongReal::BasicIO&);
+    virtual QString getSignificandPrefix(RawFloatIO&);
+    virtual QString getSignificandSuffix(RawFloatIO&);
+    virtual QString getScalePrefix(RawFloatIO&);
+    virtual QString getScaleSuffix(RawFloatIO&);
     virtual QString formatNaN();
     virtual QString formatZero();
-    virtual QString formatInt(LongReal::BasicIO&);
-    virtual QString formatFrac(LongReal::BasicIO&);
-    virtual QString formatScale(LongReal::BasicIO&);
+    virtual QString formatInt(RawFloatIO&);
+    virtual QString formatFrac(RawFloatIO&);
+    virtual QString formatScale(RawFloatIO&);
   protected:
     // format type
-    LongReal::FmtMode mode;
+    FmtMode mode;
     // radix to what the significand is shown
     char base;
     // radix to what the scale is shown
@@ -179,8 +182,8 @@ class RealFormat: public FormatIntf
     bool lowerCaseHexDigit;
     // helpers
     bool useGrouping() { return groupchar != 0 && grouplg > 0; };
-    bool useScale(const LongReal::BasicIO&);
-    QString getPrefix(LongReal::Sign, char base, bool isCompl);
+    bool useScale(const RawFloatIO&);
+    QString getPrefix(Sign, char base, bool isCompl);
 };
 
 #endif /*_REAL_H*/

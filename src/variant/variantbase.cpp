@@ -92,7 +92,7 @@ class TypeNode
     TypeNode(const char* name, Constructor c)
       : m_name(name), m_constructor(c) {};
     const char* name() const { return m_name; };
-    VariantData* construct() const;
+    VariantData* construct() const { return m_constructor(); };
     bool operator == (const TypeNode& other) const;
   private:
     const char* m_name;
@@ -141,13 +141,6 @@ VariantType TypeNodes::registerType(Constructor c, const char* name)
   return (VariantType) inst()->add(new TypeNode(name, c));
 }
 
-VariantData* TypeNode::construct() const
-{
-  if (!m_constructor)
-    return 0;
-  return m_constructor();
-}
-
 void VariantIntf::initClass()
 {
   TypeNodes::create();
@@ -171,46 +164,6 @@ const char* VariantIntf::typeName(VariantType vt)
 VariantData* VariantIntf::construct(VariantType vt)
 {
   return TypeNodes::typeNode(vt)->construct();
-}
-
-int VariantIntf::xmlDataLength(const char* txt)
-{
-  const char* p = txt;
-  while (*p && *p != '<')
-    ++p;
-  while (p != txt)
-    switch (*--p)
-    {
-      case ' ':
-      case 0x9:
-      case 0xA:
-      case 0xD: break;
-      default: return p - txt + 1;
-    }
-  return 0;
-}
-
-int VariantIntf::xmlTrimLeft(const char* txt)
-{
-  const char* p = txt;
-  while (*p)
-    switch (*p)
-    {
-      case ' ':
-      case 0x9:
-      case 0xA:
-      case 0xD: ++p; break;
-      default: return p - txt;
-    }
-    return p - txt;
-}
-
-QByteArray VariantIntf::xmlSetAttr(const char* key, const char* value)
-{
-  QByteArray result(key);
-  result += "=\"";
-  result += value;
-  return result + '"';
 }
 
 VariantData* VariantData::clone() const

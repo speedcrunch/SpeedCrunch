@@ -35,6 +35,8 @@
 #include "base/errors.h"
 #include <QByteArray>
 #include <QString>
+#include <QtXml/QDomNode>
+#include <QtXml/QDomDocument>
 
 class Variant;
 class VariantData;
@@ -53,16 +55,12 @@ class VariantIntf
     static VariantType variantType(const char* name);
     static const char* typeName(VariantType);
   public: // IO
-    virtual QByteArray xmlWrite() const = 0;
-    virtual bool xmlRead(const char*) = 0;
+    virtual void xmlWrite(QDomDocument& doc, QDomNode& parent) const = 0;
+    virtual bool xmlRead(QDomNode&) = 0;
   protected:
     static void initClass();
     static VariantType registerType(Constructor, const char* name);
     static VariantData* construct(VariantType);
-  protected: // XML primitives
-    static int xmlDataLength(const char*);
-    static int xmlTrimLeft(const char*);
-    static QByteArray xmlSetAttr(const char* key, const char* value);
 };
 
 class VariantData: public VariantIntf
