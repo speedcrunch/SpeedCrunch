@@ -218,6 +218,26 @@ void Keypad::Private::createButtons()
   keyDot    = new QPushButton( QString( radixChar ),     p );
   keyPi     = new QPushButton( QString::fromUtf8( "π" ), p );
   keySqrt   = new QPushButton( QString::fromUtf8( "√" ), p );
+
+  QFont f = key0->font();
+  f.setBold( true );
+  f.setPointSize( f.pointSize() + 1 );
+  key0->setFont( f );
+  key1->setFont( f );
+  key2->setFont( f );
+  key3->setFont( f );
+  key4->setFont( f );
+  key5->setFont( f );
+  key6->setFont( f );
+  key7->setFont( f );
+  key8->setFont( f );
+  key9->setFont( f );
+  keyEq->setFont( f );
+  keyMul->setFont( f );
+  keyDiv->setFont( f );
+  keyAdd->setFont( f );
+  keySub->setFont( f );
+  keyDot->setFont( f );
 }
 
 
@@ -374,7 +394,7 @@ void Keypad::Private::sizeButtons()
 
   int maxWidth = fm.width( keyAcos->text() );
   int textHeight = qMax( fm.lineSpacing(), 14 );
-  int ls = fm.lineSpacing();
+  //int ls = fm.lineSpacing();
 
   QStyle::ContentsType type = QStyle::CT_PushButton;
 #ifdef Q_WS_MAC
@@ -382,7 +402,7 @@ void Keypad::Private::sizeButtons()
 #endif
   QStyleOptionButton opt;
   opt.initFrom(key0);
-  QSize size = key0->style()->sizeFromContents( type, &opt, 
+  QSize size = key0->style()->sizeFromContents( type, &opt,
     QSize( int(maxWidth), int(textHeight) ).expandedTo( QApplication::globalStrut() ), keyAcos );
   size += QSize(4, 0);
 
