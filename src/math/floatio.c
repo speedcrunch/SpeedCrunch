@@ -477,6 +477,7 @@ _exp2desc(
       || tokens->exp)
   {
     unsigned upperLimit;
+    signed char sign;
     switch (tokens->expbase)
     {
       case 2 : upperLimit = BITS_IN_BINEXP; break;
@@ -485,7 +486,7 @@ _exp2desc(
       default: upperLimit = BITS_IN_EXP; break;
     }
     upperLimit = 1 << upperLimit;
-    signed char sign = tokens->expsign;
+    sign = tokens->expsign;
     switch (sign)
     {
       case IO_SIGN_COMPLEMENT:
@@ -823,15 +824,16 @@ parse(
   expchar = strchr(expbegin, *p);
   if (!_isempty(expchar))
   {
+    const char* expptr;
+    int i;
+    int e = 0;
     ++p;
     idx = expchar - expbegin;
     tokens->expsign = _parsesign(&p);
     tokens->expbase = _parsebase(&p, base);
-    const char* expptr = _scandigits(&p, tokens->expbase);
+    expptr = _scandigits(&p, tokens->expbase);
     if (!expptr || (*(expend + idx) != ' ' && *(expend + idx) != *p))
       return IOBadExp;
-    int i;
-    int e = 0;
     for (i = 0; i < p-expptr; ++i)
     {
       if (!_checkmul(&e, tokens->expbase)
