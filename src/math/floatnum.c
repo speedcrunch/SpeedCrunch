@@ -1170,8 +1170,9 @@ float_frac(
     float_setzero(f);
   else
   {
+    int leadingzeros = 0;
     _hidefirst(f, f->exponent + 1);
-    int leadingzeros = _scan_digit(_valueof(f), float_getlength(f), 0);
+    leadingzeros = _scan_digit(_valueof(f), float_getlength(f), 0);
     _hidefirst(f, leadingzeros);
     f->exponent = -leadingzeros - 1;
 #ifdef FLOATDEBUG
