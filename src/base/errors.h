@@ -120,24 +120,24 @@ typedef enum
   TypeMismatch,
 
 /* cannot overwrite an existing key in a table */
-  KeyExists,
+//  KeyExists,
 
 /* could not retrieve a symbol by the submitted key */
-  SymbolNotFound,
+//  SymbolNotFound,
 
 /* no matching close token for an open token */
-  CloseSymbolMissing,
+//  CloseSymbolMissing,
 
 /* unable to clone a symbol, most probably because it
    was of a special type, like a close parenthesis */
-  SymbolCloneError,
+//  SymbolCloneError,
 
 /* unable to perform a requested type cast */
-  BadCast,
+//  BadCast,
 
 /* used with variants, when an operation is not implemented
   for a particular data type */
-  NotImplemented,
+//   NotImplemented,
 
 /* this value is used internally to indicate the absence of
   any error information altogether */
