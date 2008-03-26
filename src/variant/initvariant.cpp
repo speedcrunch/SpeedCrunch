@@ -42,15 +42,15 @@ class InitVariant
 
 InitVariant instance;
 
-void test()
-{
-  Variant x = Variant::fromUtf8("1.23", VariantIntf::nLongReal);
-}
+// void test()
+// {
+//   Variant x = Variant::fromUtf8("1.23", VariantIntf::nLongReal);
+// }
 
 InitVariant::InitVariant()
 {
   Variant::initClass();
   LongReal::initClass();
 
-  test();
+//   test();
 }
