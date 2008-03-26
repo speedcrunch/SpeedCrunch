@@ -396,15 +396,23 @@ void Keypad::Private::sizeButtons()
   int textHeight = qMax( fm.lineSpacing(), 14 );
   //int ls = fm.lineSpacing();
 
-  QStyle::ContentsType type = QStyle::CT_PushButton;
-#ifdef Q_WS_MAC
-  type = QStyle::CT_ToolButton;
-#endif
+  QStyle::ContentsType type = QStyle::CT_ToolButton;
   QStyleOptionButton opt;
-  opt.initFrom(key0);
-  QSize size = key0->style()->sizeFromContents( type, &opt,
+  opt.initFrom(keyAcos);
+  QSize size = keyAcos->style()->sizeFromContents( type, &opt,
     QSize( int(maxWidth), int(textHeight) ).expandedTo( QApplication::globalStrut() ), keyAcos );
-  size += QSize(4, 0);
+
+#ifdef Q_WS_X11
+  // we would like to use the button size as indicated by the widget style,
+  // but in some cases, e.g. KDE's Plastik or Oxygen, another few pixels 
+  // (typically 5) are added as the content margin, thereby making the button 
+  // incredibly wider than necessary
+  // workaround: take only the hinted height, adjust the width ourselves (with our own margin)
+  maxWidth += 6;
+  int hh = size.height();
+  int ww = hh * 1.61; // use golden ratio
+  size = QSize(qMax(ww, maxWidth), hh);
+#endif
 
   // limit the size of the buttons
   key0->setMaximumSize     ( size ); key0->setMinimumSize     ( size );
