@@ -976,7 +976,7 @@ void MainWindow::Private::createBookDock()
                         QLocale().name() : settings.language;
 
 #ifdef Q_OS_WIN32
-  booksdir = QString( "books/" ) + localeDir;
+  booksDir = QString( "books/" ) + localeDir;
 #else
   BrInitError error;
   if ( br_init( & error ) == 0 && error != BR_INIT_ERROR_DISABLED )
