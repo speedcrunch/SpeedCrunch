@@ -41,6 +41,7 @@ struct BookDock::Private
   QPushButton *  forwardButton;
   QPushButton *  indexButton;
   QWidget *      buttonLayoutWidget;
+  QHBoxLayout *  buttonLayout;
 };
 
 
@@ -57,16 +58,16 @@ BookDock::BookDock( const QString & directory, const QString & file,
 
   d->sheet = new QTextBrowser( this );
   d->sheet->setLineWrapMode( QTextEdit::NoWrap );
-  //d->sheet->setOpenLinks(false); // remove to stick with Qt 4.2
+  //d->sheet->setOpenLinks( false ); // remove to stick with Qt 4.2
   d->sheet->setSearchPaths( QStringList() << d->path );
 
   connect( d->sheet, SIGNAL( anchorClicked( const QUrl & ) ),
            this, SLOT( anchorClicked( const QUrl & ) ) );
 
   d->buttonLayoutWidget = new QWidget;
-  QHBoxLayout * buttonLayout = new QHBoxLayout( d->buttonLayoutWidget );
-  buttonLayout->setSpacing( 0 );
-  buttonLayout->setMargin( 0 );
+  d->buttonLayout = new QHBoxLayout( d->buttonLayoutWidget );
+  d->buttonLayout->setSpacing( 0 );
+  d->buttonLayout->setMargin( 0 );
 
   d->backButton = new QPushButton( "", this );
   d->backButton->setIcon( QPixmap( ":/book_back.png" ) );
@@ -76,7 +77,7 @@ BookDock::BookDock( const QString & directory, const QString & file,
   connect( d->sheet, SIGNAL( backwardAvailable( bool ) ),
            d->backButton, SLOT( setEnabled( bool ) ) );
 
-  buttonLayout->addWidget( d->backButton );
+  d->buttonLayout->addWidget( d->backButton );
 
   d->forwardButton = new QPushButton( "", this );
   d->forwardButton->setIcon( QPixmap( ":/book_forward.png" ) );
@@ -87,7 +88,7 @@ BookDock::BookDock( const QString & directory, const QString & file,
   connect( d->sheet, SIGNAL( forwardAvailable( bool ) ),
            d->forwardButton, SLOT( setEnabled( bool ) ) );
 
-  buttonLayout->addWidget( d->forwardButton );
+  d->buttonLayout->addWidget( d->forwardButton );
 
   d->indexButton = new QPushButton( "", this );
   d->indexButton->setIcon( QPixmap( ":/book_home.png" ) );
@@ -95,8 +96,8 @@ BookDock::BookDock( const QString & directory, const QString & file,
 
   connect( d->indexButton, SIGNAL( clicked() ), this, SLOT( home() ) );
 
-  buttonLayout->addWidget( d->indexButton );
-  buttonLayout->addStretch();
+  d->buttonLayout->addWidget( d->indexButton );
+  d->buttonLayout->addStretch();
 
   bookLayout->addWidget( d->buttonLayoutWidget );
   bookLayout->addWidget( d->sheet );
@@ -163,7 +164,7 @@ void BookDock::setLanguage( const QString & languageCode )
                                      : languageCode;
 
   // fallback to English
-  if(locale == "C")
+  if ( locale == "C" )
     locale = "en";
 
   d->language = locale;
@@ -171,19 +172,26 @@ void BookDock::setLanguage( const QString & languageCode )
   QString src = path;
 
   QDir dir( path );
-  if ( !dir.isReadable() )
+  if ( ! dir.isReadable() )
   {
     QString localeShort = locale.left( 2 ).toLower();
     src = d->path + localeShort + "/" + d->file;
   }
 
-  d->sheet->setSource( QUrl::fromLocalFile(src) );
+  d->sheet->setSource( QUrl::fromLocalFile( src ) );
 
   if ( languageCode == "he" )
+  {
     setLayoutDirection( Qt::RightToLeft );
+    d->buttonLayout->removeWidget( d->forwardButton );
+    d->buttonLayout->insertWidget( 0, d->forwardButton );
+  }
   else
+  {
     setLayoutDirection( Qt::LeftToRight );
-  d->buttonLayoutWidget->setLayoutDirection( Qt::LeftToRight );
+    d->buttonLayout->removeWidget( d->backButton );
+    d->buttonLayout->insertWidget( 0, d->backButton );
+  }
 }
 
 
