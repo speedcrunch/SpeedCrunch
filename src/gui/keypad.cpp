@@ -221,7 +221,7 @@ void Keypad::Private::createButtons()
 
   QFont f = key0->font();
   f.setBold( true );
-  f.setPointSize( f.pointSize() + 1 );
+  f.setPointSize( f.pointSize() + 3 );
   key0->setFont( f );
   key1->setFont( f );
   key2->setFont( f );
@@ -404,13 +404,13 @@ void Keypad::Private::sizeButtons()
 
 #ifdef Q_WS_X11
   // we would like to use the button size as indicated by the widget style,
-  // but in some cases, e.g. KDE's Plastik or Oxygen, another few pixels 
-  // (typically 5) are added as the content margin, thereby making the button 
+  // but in some cases, e.g. KDE's Plastik or Oxygen, another few pixels
+  // (typically 5) are added as the content margin, thereby making the button
   // incredibly wider than necessary
   // workaround: take only the hinted height, adjust the width ourselves (with our own margin)
   maxWidth += 6;
   int hh = size.height();
-  int ww = hh * 1.61; // use golden ratio
+  int ww = int( hh * 1.61); // use golden ratio
   size = QSize(qMax(ww, maxWidth), hh);
 #endif
 
