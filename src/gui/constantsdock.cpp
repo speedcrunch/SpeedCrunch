@@ -187,18 +187,17 @@ void ConstantsDock::filter()
   {
     QStringList str;
     str << c->constantList().at( k ).name;
+    QString radCh = (d->radixChar == ',' ?
+        QString( c->constantList().at( k ).value ).replace( '.', ',' )
+      : c->constantList().at( k ).value);
     if ( layoutDirection() == Qt::RightToLeft )
     {
       str << c->constantList().at( k ).unit;
-      str << (d->radixChar == ',' ?
-                QString( c->constantList().at( k ).value ).replace( '.', ',' )
-              : c->constantList().at( k ).value);
+      str << radCh;
     }
     else
     {
-      str << (d->radixChar == ',' ?
-                QString( c->constantList().at( k ).value ).replace( '.', ',' )
-              : c->constantList().at( k ).value);
+      str << radCh;
       str << c->constantList().at( k ).unit;
     }
     str << c->constantList().at( k ).name.toUpper();
@@ -298,7 +297,7 @@ void ConstantsDock::updateList()
   Constants * c = d->constants;
   d->category->clear();
   d->category->addItems( c->categoryList() );
-  d->category->insertItem( 0, tr("All") );
+  d->category->insertItem( 0, tr( "All" ) );
   d->category->setCurrentIndex( 0 );
   filter();
 }
