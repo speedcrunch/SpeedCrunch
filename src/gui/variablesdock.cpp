@@ -162,6 +162,7 @@ void VariablesDock::retranslateText()
   setWindowTitle( tr( "Variables" ) );
   d->label->setText( tr( "Search" ) );
   d->noMatchLabel->setText( tr( "No match found" ) );
+  d->list->setLayoutDirection( Qt::LeftToRight );
   filter();
 }
 
@@ -198,11 +199,7 @@ void VariablesDock::filter()
 
       if ( item )
       {
-        if ( layoutDirection() == Qt::RightToLeft )
-          item->setTextAlignment( 0, Qt::AlignRight | Qt::AlignVCenter );
-        else
-          item->setTextAlignment( 0, Qt::AlignLeft | Qt::AlignVCenter );
-
+        item->setTextAlignment( 0, Qt::AlignLeft | Qt::AlignVCenter );
         item->setTextAlignment( 1, Qt::AlignLeft  | Qt::AlignVCenter );
       }
   }
