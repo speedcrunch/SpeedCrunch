@@ -2065,6 +2065,8 @@ void MainWindow::setWidgetsDirection()
   setWidgetDirection( d->settings.language, d->menus.help      );
   setWidgetDirection( d->settings.language, d->widgets.tip     );
 
+  if ( d->docks.book )
+    setWidgetDirection( d->settings.language, d->docks.book );
   if ( d->docks.constants )
     setWidgetDirection( d->settings.language, d->docks.constants );
   if ( d->docks.functions )
