@@ -52,6 +52,9 @@ class VariablesDock : public QDockWidget
     void handleItem( QTreeWidgetItem * );
     void triggerFilter();
 
+  protected:
+    virtual void changeEvent( QEvent * );
+
   private:
     struct Private;
     Private * const d;

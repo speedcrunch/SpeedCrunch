@@ -24,6 +24,7 @@
 #include "base/functions.hxx"
 #include "base/settings.hxx"
 
+#include <QEvent>
 #include <QHeaderView>
 #include <QLabel>
 #include <QLineEdit>
@@ -161,6 +162,7 @@ void VariablesDock::retranslateText()
   setWindowTitle( tr( "Variables" ) );
   d->label->setText( tr( "Search" ) );
   d->noMatchLabel->setText( tr( "No match found" ) );
+  filter();
 }
 
 
@@ -196,8 +198,12 @@ void VariablesDock::filter()
 
       if ( item )
       {
-        item->setTextAlignment( 0, Qt::AlignLeft | Qt::AlignVCenter );
-        item->setTextAlignment( 1, Qt::AlignLeft | Qt::AlignVCenter );
+        if ( layoutDirection() == Qt::RightToLeft )
+          item->setTextAlignment( 0, Qt::AlignRight | Qt::AlignVCenter );
+        else
+          item->setTextAlignment( 0, Qt::AlignLeft | Qt::AlignVCenter );
+
+        item->setTextAlignment( 1, Qt::AlignLeft  | Qt::AlignVCenter );
       }
   }
 
@@ -244,4 +250,15 @@ void VariablesDock::triggerFilter()
 {
   d->filterTimer->stop();
   d->filterTimer->start();
+}
+
+
+// protected
+
+void VariablesDock::changeEvent( QEvent * e )
+{
+  if ( e->type() == QEvent::LayoutDirectionChange )
+    retranslateText();
+  else
+    QDockWidget::changeEvent( e );
 }

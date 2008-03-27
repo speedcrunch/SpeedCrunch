@@ -171,8 +171,8 @@ void FunctionsDock::filter()
 
       if ( item && layoutDirection() == Qt::RightToLeft )
       {
-        item->setTextAlignment( 0, Qt::AlignRight );
-        item->setTextAlignment( 1, Qt::AlignLeft );
+        item->setTextAlignment( 0, Qt::AlignRight | Qt::AlignVCenter );
+        item->setTextAlignment( 1, Qt::AlignLeft  | Qt::AlignVCenter );
       }
   }
 
