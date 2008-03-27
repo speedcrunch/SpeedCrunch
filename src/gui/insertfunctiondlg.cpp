@@ -50,7 +50,7 @@ InsertFunctionDlg::InsertFunctionDlg( Functions * f, QWidget * parent )
 {
   d->functions = f;
 
-  setWindowTitle( tr("Insert Function") );
+  setWindowTitle( tr( "Insert Function" ) );
   setModal( true );
 
   QVBoxLayout * layout = new QVBoxLayout;
@@ -64,16 +64,16 @@ InsertFunctionDlg::InsertFunctionDlg( Functions * f, QWidget * parent )
   d->list->setSelectionBehavior( QTreeWidget::SelectRows );
 
   QStringList titles;
-  titles << tr("Name");
-  titles << tr("Description");
+  titles << tr( "Name" );
+  titles << tr( "Description" );
   d->list->setHeaderLabels( titles );
 
   d->insertButton = new QPushButton( this );
-  d->insertButton->setText( tr("&Insert") );
+  d->insertButton->setText( tr( "&Insert" ) );
   d->insertButton->setDefault( true );
 
   d->cancelButton = new QPushButton( this );
-  d->cancelButton->setText( tr("Cancel") );
+  d->cancelButton->setText( tr( "Cancel" ) );
 
   QWidget * box = new QWidget( this );
   QHBoxLayout * boxLayout = new QHBoxLayout;
@@ -81,7 +81,8 @@ InsertFunctionDlg::InsertFunctionDlg( Functions * f, QWidget * parent )
   box->setLayout( boxLayout );
 
   boxLayout->addWidget( d->insertButton );
-  boxLayout->addItem( new QSpacerItem( 50, 0, QSizePolicy::MinimumExpanding, QSizePolicy::Minimum ) );
+  boxLayout->addItem( new QSpacerItem( 50, 0, QSizePolicy::MinimumExpanding,
+                                       QSizePolicy::Minimum ) );
   boxLayout->addWidget( d->cancelButton );
 
   layout->addWidget( d->list );
@@ -89,8 +90,10 @@ InsertFunctionDlg::InsertFunctionDlg( Functions * f, QWidget * parent )
 
   connect( d->insertButton, SIGNAL(clicked()), this, SLOT(accept()) );
   connect( d->cancelButton, SIGNAL(clicked()), this, SLOT(reject()) );
-  connect( d->list, SIGNAL(itemActivated( QTreeWidgetItem *, int )),     this, SLOT(accept()) );
-  connect( d->list, SIGNAL(itemDoubleClicked( QTreeWidgetItem *, int )), this, SLOT(accept()) );
+  connect( d->list, SIGNAL( itemActivated( QTreeWidgetItem *, int ) ),
+           this, SLOT( accept() ) );
+  connect( d->list, SIGNAL( itemDoubleClicked( QTreeWidgetItem *, int ) ),
+           this, SLOT( accept() ) );
 
   QTimer::singleShot( 0, this, SLOT(initUI()) );
 }
@@ -99,7 +102,9 @@ InsertFunctionDlg::InsertFunctionDlg( Functions * f, QWidget * parent )
 QString InsertFunctionDlg::functionName() const
 {
   QTreeWidgetItem * item = d->list->currentItem();
-  return item ? item->text(0).toLower() : QString();
+  return item ?
+      item->text( 0 ).toLower()
+    : QString();
 }
 
 
@@ -123,7 +128,9 @@ void InsertFunctionDlg::initUI()
       QStringList str;
       str << f->name();
       str << f->description();
-      new QTreeWidgetItem( d->list, str );
+      QTreeWidgetItem * item = new QTreeWidgetItem( d->list, str );
+      if ( item && layoutDirection() == Qt::RightToLeft )
+        item->setTextAlignment( 0, Qt::AlignRight );
     }
   }
 

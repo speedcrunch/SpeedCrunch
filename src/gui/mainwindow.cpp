@@ -1675,6 +1675,7 @@ void MainWindow::hideAutoCalc()
 void MainWindow::insertFunction()
 {
   InsertFunctionDlg dlg( d->functions );
+  setWidgetDirection( d->settings.language, & dlg );
 
   if ( dlg.exec() == InsertFunctionDlg::Accepted )
   {
