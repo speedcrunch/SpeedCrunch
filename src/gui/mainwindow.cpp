@@ -1036,6 +1036,8 @@ void MainWindow::Private::createConstantsDock()
   connect( p, SIGNAL( retranslateText() ),
            docks.constants, SLOT( retranslateText() ) );
 
+  setWidgetDirection( settings.language, docks.constants );
+
   if ( docks.functions )
     p->tabifyDockWidget( docks.functions, docks.constants );
   else if ( docks.variables )
@@ -1061,6 +1063,8 @@ void MainWindow::Private::createFunctionsDock()
   connect( p, SIGNAL( retranslateText() ),
            docks.functions, SLOT( retranslateText() ) );
 
+  setWidgetDirection( settings.language, docks.functions );
+
   if ( docks.history )
     p->tabifyDockWidget( docks.history, docks.functions );
   else if ( docks.variables )
@@ -1085,6 +1089,8 @@ void MainWindow::Private::createHistoryDock()
            p, SLOT( expressionSelected( const QString & ) ) );
   connect( p, SIGNAL( retranslateText() ),
            docks.history, SLOT( retranslateText() ) );
+
+  setWidgetDirection( settings.language, docks.history );
 
   docks.history->setHistory( widgets.editor->history() );
 
@@ -1114,6 +1120,8 @@ void MainWindow::Private::createVariablesDock()
            docks.variables, SLOT( setRadixChar( char ) ) );
   connect( p, SIGNAL( retranslateText() ),
            docks.variables, SLOT( retranslateText() ) );
+
+  setWidgetDirection( settings.language, docks.variables );
 
   docks.variables->updateList( evaluator );
 
@@ -2044,7 +2052,6 @@ void MainWindow::exportSession()
 
 void MainWindow::setWidgetsDirection()
 {
-  // menu bar and menus
   setWidgetDirection( d->settings.language, menuBar()          );
   setWidgetDirection( d->settings.language, d->menus.session   );
   setWidgetDirection( d->settings.language, d->menus.edit      );
@@ -2055,17 +2062,18 @@ void MainWindow::setWidgetsDirection()
   setWidgetDirection( d->settings.language, d->menus.angle     );
   setWidgetDirection( d->settings.language, d->menus.behavior  );
   setWidgetDirection( d->settings.language, d->menus.radixChar );
-  //setWidgetDirection( d->settings.language, d->menus.theme     );
   setWidgetDirection( d->settings.language, d->menus.help      );
-  // tip of the day
-  setWidgetDirection( d->settings.language, d->widgets.tip );
-  // docks
+  setWidgetDirection( d->settings.language, d->widgets.tip     );
+
   if ( d->docks.constants )
     setWidgetDirection( d->settings.language, d->docks.constants );
   if ( d->docks.functions )
     setWidgetDirection( d->settings.language, d->docks.functions );
-  // tip of the day
-  //setWidgetDirection( d->settings.language, d->widgets.tip );
+  if ( d->docks.history )
+    setWidgetDirection( d->settings.language, d->docks.history );
+  if ( d->docks.variables )
+    setWidgetDirection( d->settings.language, d->docks.variables );
+
   if ( d->status.angleUnit )
     setWidgetDirection( d->settings.language, statusBar() );
 }

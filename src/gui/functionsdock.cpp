@@ -155,17 +155,27 @@ void FunctionsDock::filter()
       str << d->functionDesc[k];
       str << QString( "" );
 
+      QTreeWidgetItem * item = 0;
+
       if ( term.isEmpty() )
       {
-        new QTreeWidgetItem( d->list, str );
+        item = new QTreeWidgetItem( d->list, str );
       }
       else
       {
         if (    str[0].contains( term, Qt::CaseInsensitive )
              || str[1].contains( term, Qt::CaseInsensitive ) )
-          new QTreeWidgetItem( d->list, str );
+          item = new QTreeWidgetItem( d->list, str );
+      }
+
+      if ( item && layoutDirection() == Qt::RightToLeft )
+      {
+        item->setTextAlignment( 0, Qt::AlignRight );
+        item->setTextAlignment( 1, Qt::AlignLeft );
       }
   }
+  //if ( layoutDirection() == Qt::RightToLeft )
+  //  d->list->setLayoutDirection( Qt::LeftToRight );
 
   d->list->resizeColumnToContents( 0 );
   d->list->resizeColumnToContents( 1 );
