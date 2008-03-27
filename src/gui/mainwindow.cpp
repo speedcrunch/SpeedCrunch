@@ -1009,6 +1009,8 @@ void MainWindow::Private::createBookDock()
   connect( docks.book, SIGNAL( expressionSelected( const QString & ) ),
            p, SLOT( expressionSelected( const QString & ) ) );
 
+  setWidgetDirection( settings.language, docks.book );
+
   if ( docks.functions )
     p->tabifyDockWidget( docks.functions, docks.book );
   else if ( docks.variables )
