@@ -124,9 +124,9 @@ class MainWindow : public QMainWindow
     void setRadixChar( char );
 
   protected:
-    void closeEvent( QCloseEvent * );
-    bool event( QEvent * );
-    bool eventFilter( QObject *, QEvent * );
+    virtual void closeEvent( QCloseEvent * );
+    virtual bool event( QEvent * );
+    virtual bool eventFilter( QObject *, QEvent * );
 
   private:
     struct Private;

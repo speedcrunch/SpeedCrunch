@@ -22,6 +22,7 @@
 
 #include "base/functions.hxx"
 
+#include <QEvent>
 #include <QHBoxLayout>
 #include <QHeaderView>
 #include <QLabel>
@@ -174,8 +175,6 @@ void FunctionsDock::filter()
         item->setTextAlignment( 1, Qt::AlignLeft );
       }
   }
-  //if ( layoutDirection() == Qt::RightToLeft )
-  //  d->list->setLayoutDirection( Qt::LeftToRight );
 
   d->list->resizeColumnToContents( 0 );
   d->list->resizeColumnToContents( 1 );
@@ -219,4 +218,15 @@ void FunctionsDock::triggerFilter()
 {
   d->filterTimer->stop();
   d->filterTimer->start();
+}
+
+
+// protected
+
+void FunctionsDock::changeEvent( QEvent * e )
+{
+  if ( e->type() == QEvent::LayoutDirectionChange )
+    retranslateText();
+  else
+    QDockWidget::changeEvent( e );
 }
