@@ -23,6 +23,7 @@
 #include "base/constants.hxx"
 
 #include <QComboBox>
+#include <QEvent>
 #include <QHBoxLayout>
 #include <QHeaderView>
 #include <QLabel>
@@ -173,11 +174,11 @@ void ConstantsDock::retranslateText()
 
 void ConstantsDock::filter()
 {
-  Constants * c    = d->constants;
-  QString     term = d->filter->text();
+  Constants * c = d->constants;
+  QString term = d->filter->text();
 
   d->filterTimer->stop();
-  setUpdatesEnabled(false);
+  setUpdatesEnabled( false );
 
   QString chosenCategory = d->category->currentText();
 
@@ -186,7 +187,7 @@ void ConstantsDock::filter()
   {
     QStringList str;
     str << c->constantList().at( k ).name;
-    if ( QLocale().language() == QLocale::Hebrew )
+    if ( layoutDirection() == Qt::RightToLeft )
     {
       str << c->constantList().at( k ).unit;
       str << (d->radixChar == ',' ?
@@ -203,8 +204,8 @@ void ConstantsDock::filter()
     str << c->constantList().at( k ).name.toUpper();
     str << QString( "" );
 
-    bool include = (chosenCategory == tr("All")) ? true:
-      c->constantList().at( k ).categories.contains( chosenCategory );
+    bool include = (chosenCategory == tr( "All" )) ?
+      true : c->constantList().at( k ).categories.contains( chosenCategory );
 
     if ( ! include )
       continue;
@@ -219,7 +220,7 @@ void ConstantsDock::filter()
     }
     if ( item )
     {
-      QString tip = QString("<b>%1</b><br>%2")
+      QString tip = QString( "<b>%1</b><br>%2" )
                       .arg( c->constantList().at( k ).name,
                             c->constantList().at( k ).value);
       if ( ! c->constantList().at( k ).unit.isEmpty() )
@@ -230,8 +231,16 @@ void ConstantsDock::filter()
       item->setToolTip( 1, tip );
       item->setToolTip( 2, tip );
 
-      item->setTextAlignment( 1, Qt::AlignRight );
-      item->setTextAlignment( 2, Qt::AlignLeft  );
+      if ( layoutDirection() == Qt::RightToLeft )
+      {
+        item->setTextAlignment( 1, Qt::AlignRight  );
+        item->setTextAlignment( 2, Qt::AlignRight );
+      }
+      else
+      {
+        item->setTextAlignment( 1, Qt::AlignLeft );
+        item->setTextAlignment( 2, Qt::AlignLeft  );
+      }
     }
   }
 
@@ -292,4 +301,15 @@ void ConstantsDock::updateList()
   d->category->insertItem( 0, tr("All") );
   d->category->setCurrentIndex( 0 );
   filter();
+}
+
+
+// protected
+
+void ConstantsDock::changeEvent( QEvent * e )
+{
+  if ( e->type() == QEvent::LayoutDirectionChange )
+    retranslateText();
+  else
+    QDockWidget::changeEvent( e );
 }

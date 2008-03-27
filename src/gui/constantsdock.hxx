@@ -52,6 +52,9 @@ class ConstantsDock : public QDockWidget
     void triggerFilter();
     void updateList();
 
+  protected:
+    virtual void changeEvent( QEvent * );
+
   private:
     struct Private;
     Private * const d;
