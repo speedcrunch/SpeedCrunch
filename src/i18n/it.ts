@@ -790,27 +790,27 @@
     <message>
         <location filename="../base/evaluator.cpp" line="1405"/>
         <source>invalid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>espressione non valida</translation>
     </message>
     <message>
         <location filename="../base/evaluator.cpp" line="1335"/>
         <source>division by zero</source>
-        <translation type="unfinished"></translation>
+        <translation>divisione per zero</translation>
     </message>
     <message>
         <location filename="../base/evaluator.cpp" line="1374"/>
         <source>unknown function or variable</source>
-        <translation type="unfinished"></translation>
+        <translation>variabile o funzione sconosciute</translation>
     </message>
     <message>
         <location filename="../base/evaluator.cpp" line="1423"/>
         <source>variable cannot be overwritten</source>
-        <translation type="unfinished"></translation>
+        <translation>la variabile non può essere sovrascritta</translation>
     </message>
     <message>
         <location filename="../base/evaluator.cpp" line="1431"/>
         <source>identifier matches an existing function name</source>
-        <translation type="unfinished"></translation>
+        <translation>l&apos;identificatore ha lo stesso nome di una funzione esistente</translation>
     </message>
 </context>
 <context>
@@ -1954,7 +1954,7 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1860"/>
         <source>Ignore error?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ignorare l&apos;errore?</translation>
     </message>
 </context>
 <context>
