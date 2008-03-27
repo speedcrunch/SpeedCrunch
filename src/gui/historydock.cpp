@@ -89,6 +89,7 @@ void HistoryDock::setHistory( const QStringList & h )
 void HistoryDock::retranslateText()
 {
   setWindowTitle( tr( "History" ) );
+  d->list->setLayoutDirection( Qt::LeftToRight );
 }
 
 
