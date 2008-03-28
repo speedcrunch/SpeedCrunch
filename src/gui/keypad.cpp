@@ -411,7 +411,7 @@ void Keypad::Private::sizeButtons()
   // workaround: take only the hinted height, adjust the width ourselves (with our own margin)
   maxWidth += 6;
   int hh = size.height();
-  int ww = int( hh * 1.61); // use golden ratio
+  int ww = hh * 162 / 100; // use golden ratio
   size = QSize(qMax(ww, maxWidth), hh);
 #endif
 
