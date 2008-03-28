@@ -232,13 +232,13 @@ void ConstantsDock::filter()
 
       if ( layoutDirection() == Qt::RightToLeft )
       {
-        item->setTextAlignment( 1, Qt::AlignRight  );
-        item->setTextAlignment( 2, Qt::AlignRight );
+        item->setTextAlignment( 1, Qt::AlignRight );
+        item->setTextAlignment( 2, Qt::AlignLeft  );
       }
       else
       {
         item->setTextAlignment( 1, Qt::AlignLeft );
-        item->setTextAlignment( 2, Qt::AlignLeft  );
+        item->setTextAlignment( 2, Qt::AlignLeft );
       }
     }
   }
