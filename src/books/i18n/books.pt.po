@@ -1,11 +1,11 @@
-# translation of books.fi.po to Portuguese
+# translation of books.pot to Portuguese
 # Helder Correia <helder.pereira.correia@gmail.com>, 2007-2008.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: books.pot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-25 14:33+0000\n"
+"POT-Creation-Date: 2008-03-28 15:49+0000\n"
 "PO-Revision-Date: 2007-03-25 15:42+0100\n"
 "Last-Translator: Helder Correia <helder.pereira.correia@gmail.com>\n"
 "Language-Team: pt\n"
@@ -23,7 +23,7 @@ msgstr "Círculo"
 #: sector.html.template, cylinder.html.template,
 #: quadratic_equation.html.template
 msgid "align=\"left\""
-msgstr ""
+msgstr "align=\"left\""
 
 #: cone.html.template, math_index.html.template
 msgid "Cone"
@@ -36,10 +36,6 @@ msgstr "Cubo"
 #: cylinder.html.template, math_index.html.template
 msgid "Cylinder"
 msgstr "Cilindro"
-
-#: index.html.template
-msgid "SpeedCrunch Manual"
-msgstr "Manual do SpeedCrunch"
 
 #: math_index.html.template
 msgid "SpeedCrunch Book"
@@ -72,6 +68,9 @@ msgstr "Miscelâneo"
 #: quadratic_equation.html.template, math_index.html.template
 msgid "Quadratic Equation"
 msgstr "Equação Quadrática"
+
+#~ msgid "SpeedCrunch Manual"
+#~ msgstr "Manual do SpeedCrunch"
 
 #~ msgid "Chapters"
 #~ msgstr "Capítulos"

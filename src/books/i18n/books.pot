@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-25 14:44+0000\n"
+"POT-Creation-Date: 2008-03-28 15:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,10 +32,6 @@ msgstr ""
 
 #: cylinder.html.template, math_index.html.template
 msgid "Cylinder"
-msgstr ""
-
-#: index.html.template
-msgid "SpeedCrunch Manual"
 msgstr ""
 
 #: math_index.html.template

@@ -1,11 +1,11 @@
-# translation of books.he.po to Hebrew
+# translation of books.pot to Hebrew
 # Yonatan Avraham <shambler.com@gmail.com>, 2008.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: books.pot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-25 14:44+0000\n"
+"POT-Creation-Date: 2008-03-28 15:49+0000\n"
 "PO-Revision-Date: 2007-03-25 15:42+0100\n"
 "Last-Translator: Yonatan Avraham <shambler.com@gmail.com>\n"
 "Language-Team: he\n"
@@ -35,10 +35,6 @@ msgstr "קוביה"
 #: cylinder.html.template, math_index.html.template
 msgid "Cylinder"
 msgstr "גליל"
-
-#: index.html.template
-msgid "SpeedCrunch Manual"
-msgstr "המדריך למשתמש של SpeedCrunch"
 
 #: math_index.html.template
 msgid "SpeedCrunch Book"
@@ -71,3 +67,6 @@ msgstr "שונות"
 #: quadratic_equation.html.template, math_index.html.template
 msgid "Quadratic Equation"
 msgstr "משוואה ריבועית"
+
+#~ msgid "SpeedCrunch Manual"
+#~ msgstr "המדריך למשתמש של SpeedCrunch"

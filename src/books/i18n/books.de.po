@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: books\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-25 14:33+0000\n"
+"POT-Creation-Date: 2008-03-28 15:49+0000\n"
 "PO-Revision-Date: 2008-02-21 11:52+0100\n"
 "Last-Translator: Marco Wegner <ogre.crewman@googlemail.com>\n"
 "Language-Team: German\n"
@@ -25,7 +25,7 @@ msgstr "Kreis"
 #: sector.html.template, cylinder.html.template,
 #: quadratic_equation.html.template
 msgid "align=\"left\""
-msgstr ""
+msgstr "align=\"left\""
 
 #: cone.html.template, math_index.html.template
 msgid "Cone"
@@ -38,11 +38,6 @@ msgstr "Würfel"
 #: cylinder.html.template, math_index.html.template
 msgid "Cylinder"
 msgstr "Zylinder"
-
-#: index.html.template
-#, fuzzy
-msgid "SpeedCrunch Manual"
-msgstr "Konstanten in SpeedCrunch"
 
 #: math_index.html.template
 msgid "SpeedCrunch Book"
@@ -75,12 +70,3 @@ msgstr "Verschiedenes"
 #: quadratic_equation.html.template, math_index.html.template
 msgid "Quadratic Equation"
 msgstr "Quadratische Gleichung"
-
-#~ msgid "Chapters"
-#~ msgstr "Kapitel"
-
-#~ msgid "SpeedCrunch Functions"
-#~ msgstr "Funktionen in SpeedCrunch"
-
-#~ msgid "Mathematics"
-#~ msgstr "Mathematik"

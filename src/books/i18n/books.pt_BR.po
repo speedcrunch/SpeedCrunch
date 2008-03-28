@@ -1,11 +1,13 @@
+# translation of books.pot to Brazilian Portuguese
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-25 14:33+0000\n"
+"POT-Creation-Date: 2008-03-28 15:49+0000\n"
 "PO-Revision-Date: 2008-03-24 16:01-0300\n"
 "Last-Translator: Fabio Margarido <fabiomargarido@gmail.com>\n"
-"Language-Team: \n"
+"Language-Team: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,7 +21,7 @@ msgstr "Círculo"
 #: sector.html.template, cylinder.html.template,
 #: quadratic_equation.html.template
 msgid "align=\"left\""
-msgstr ""
+msgstr "align=\"left\""
 
 #: cone.html.template, math_index.html.template
 msgid "Cone"
@@ -32,10 +34,6 @@ msgstr "Cubo"
 #: cylinder.html.template, math_index.html.template
 msgid "Cylinder"
 msgstr "Cilindro"
-
-#: index.html.template
-msgid "SpeedCrunch Manual"
-msgstr "Manual da SpeedCrunch"
 
 #: math_index.html.template
 msgid "SpeedCrunch Book"
@@ -68,3 +66,6 @@ msgstr "Miscelânea"
 #: quadratic_equation.html.template, math_index.html.template
 msgid "Quadratic Equation"
 msgstr "Equação Quadrática"
+
+#~ msgid "SpeedCrunch Manual"
+#~ msgstr "Manual da SpeedCrunch"

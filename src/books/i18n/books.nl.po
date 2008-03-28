@@ -1,11 +1,11 @@
-# translation of books.nl.po to Dutch
+# translation of books.pot to Dutch
 # Maarten Fonville <maarten.fonville@gmail.com>, 2008.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: books.pot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-25 14:33+0000\n"
+"POT-Creation-Date: 2008-03-28 15:49+0000\n"
 "PO-Revision-Date: 2008-03-25 18:10+0100\n"
 "Last-Translator: Maarten Fonville <maarten.fonville@gmail.com>\n"
 "Language-Team: nl\n"
@@ -22,7 +22,7 @@ msgstr ""
 #: sector.html.template, cylinder.html.template,
 #: quadratic_equation.html.template
 msgid "align=\"left\""
-msgstr ""
+msgstr "align=\"left\""
 
 #: cone.html.template, math_index.html.template
 msgid "Cone"
@@ -34,10 +34,6 @@ msgstr ""
 
 #: cylinder.html.template, math_index.html.template
 msgid "Cylinder"
-msgstr ""
-
-#: index.html.template
-msgid "SpeedCrunch Manual"
 msgstr ""
 
 #: math_index.html.template

@@ -1,11 +1,11 @@
-# translation of books.fi.po to Finnish
+# translation of books.pot to Finnish
 # Petri Damstén <petri.damsten@iki.fi>, 2007.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: books.pot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-25 14:33+0000\n"
+"POT-Creation-Date: 2008-03-28 15:49+0000\n"
 "PO-Revision-Date: 2007-12-13 16:37+0200\n"
 "Last-Translator: Petri Damstén <petri.damsten@iki.fi>\n"
 "Language-Team: Finnish\n"
@@ -23,7 +23,7 @@ msgstr "Ympyrä"
 #: sector.html.template, cylinder.html.template,
 #: quadratic_equation.html.template
 msgid "align=\"left\""
-msgstr ""
+msgstr "align=\"left\""
 
 #: cone.html.template, math_index.html.template
 msgid "Cone"
@@ -36,11 +36,6 @@ msgstr "Kuutio"
 #: cylinder.html.template, math_index.html.template
 msgid "Cylinder"
 msgstr "Ympyrälieriö"
-
-#: index.html.template
-#, fuzzy
-msgid "SpeedCrunch Manual"
-msgstr "SpeedCrunch Vakiot"
 
 #: math_index.html.template
 msgid "SpeedCrunch Book"
