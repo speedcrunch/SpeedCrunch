@@ -1608,6 +1608,7 @@ void MainWindow::deleteAllVariables()
 void MainWindow::deleteVariable()
 {
   DeleteVariableDlg dlg( d->evaluator );
+  setWidgetDirection( d->settings.language, & dlg );
   dlg.exec();
 
   if ( d->settings.showVariables )

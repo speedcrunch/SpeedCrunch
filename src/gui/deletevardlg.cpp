@@ -36,14 +36,14 @@
 
 struct DeleteVariableDlg::Private
 {
-  Evaluator* eval;
-  QTreeWidget* list;
-  QPushButton* deleteButton;
-  QPushButton* closeButton;
+  Evaluator *   eval;
+  QTreeWidget * list;
+  QPushButton * deleteButton;
+  QPushButton * closeButton;
 };
 
 
-static QString formatValue( const HNumber& value )
+static QString formatValue( const HNumber & value )
 {
   char* str = HMath::format( value, 'g' );
   QString s = QString::fromLatin1( str );
@@ -53,14 +53,14 @@ static QString formatValue( const HNumber& value )
 
 
 DeleteVariableDlg::DeleteVariableDlg( Evaluator * eval, QWidget * parent )
-  : QDialog( parent ), d( new DeleteVariableDlg::Private)
+  : QDialog( parent ), d( new DeleteVariableDlg::Private )
 {
-  setWindowTitle( tr("Delete Variable") );
+  setWindowTitle( tr( "Delete Variable" ) );
   setModal( true );
 
   d->eval = eval;
 
-  QVBoxLayout* layout = new QVBoxLayout;
+  QVBoxLayout * layout = new QVBoxLayout;
   setLayout( layout );
 
   d->list = new QTreeWidget( this );
@@ -71,31 +71,34 @@ DeleteVariableDlg::DeleteVariableDlg( Evaluator * eval, QWidget * parent )
   d->list->setSelectionBehavior( QTreeWidget::SelectRows );
 
   QStringList titles;
-  titles << tr("Name");
-  titles << tr("Value");
+  titles << tr( "Name"  );
+  titles << tr( "Value" );
   d->list->setHeaderLabels( titles );
 
   d->deleteButton = new QPushButton( this );
-  d->deleteButton->setText( tr("&Delete") );
+  d->deleteButton->setText( tr( "&Delete" ) );
   d->deleteButton->setDefault( true );
 
   d->closeButton = new QPushButton( this );
-  d->closeButton->setText( tr("Close") );
+  d->closeButton->setText( tr( "Close" ) );
 
-  QWidget* box = new QWidget( this );
+  QWidget * box = new QWidget( this );
   QHBoxLayout* boxLayout = new QHBoxLayout;
   boxLayout->setMargin( 0 );
   box->setLayout( boxLayout );
 
   boxLayout->addWidget( d->deleteButton );
-  boxLayout->addItem( new QSpacerItem( 50, 0, QSizePolicy::MinimumExpanding, QSizePolicy::Minimum ) );
+  boxLayout->addItem( new QSpacerItem( 50, 0, QSizePolicy::MinimumExpanding,
+                                       QSizePolicy::Minimum ) );
   boxLayout->addWidget( d->closeButton );
 
   layout->addWidget( d->list );
   layout->addWidget( box );
 
-  connect( d->deleteButton, SIGNAL( clicked() ), this, SLOT(deleteVar() ) );
-  connect( d->closeButton, SIGNAL( clicked() ), this, SLOT( reject() ) );
+  connect( d->deleteButton, SIGNAL( clicked() ), this, SLOT( deleteVar() ) );
+  connect( d->closeButton,  SIGNAL( clicked() ), this, SLOT( reject()    ) );
+
+  d->list->setLayoutDirection( Qt::LeftToRight );
 
   updateList();
   adjustSize();
@@ -114,7 +117,7 @@ void DeleteVariableDlg::updateList()
 
   d->list->clear();
   QVector<Variable> variables = d->eval->variables();
-  for( int k = 0; k < variables.count(); k++ )
+  for ( int k = 0; k < variables.count(); k++ )
   {
       QStringList str;
       str << variables[k].name;
@@ -124,10 +127,10 @@ void DeleteVariableDlg::updateList()
       if( str[0].toUpper() == "PI"  ) continue;
       if( str[0].toUpper() == "PHI" ) continue;
 
-      QTreeWidgetItem* item = 0;
+      QTreeWidgetItem * item = 0;
       item = new QTreeWidgetItem( d->list, str );
       item->setTextAlignment( 0, Qt::AlignLeft | Qt::AlignVCenter );
-      item->setTextAlignment( 1, Qt::AlignRight | Qt::AlignVCenter );
+      item->setTextAlignment( 1, Qt::AlignLeft | Qt::AlignVCenter );
   }
   d->list->sortItems( 0, Qt::AscendingOrder );
 
@@ -137,10 +140,10 @@ void DeleteVariableDlg::updateList()
 
 void DeleteVariableDlg::deleteVar()
 {
-  if( d->list->selectedItems().count() > 0 )
+  if ( d->list->selectedItems().count() > 0 )
   {
-    QTreeWidgetItem *item = d->list->selectedItems()[0];
-    d->eval->remove( item->text(0) );
+    QTreeWidgetItem * item = d->list->selectedItems()[0];
+    d->eval->remove( item->text( 0 ) );
     delete item;
   }
 }
