@@ -192,7 +192,7 @@ void ConstantsDock::filter()
       : c->constantList().at( k ).value);
     if ( layoutDirection() == Qt::RightToLeft )
     {
-      str << c->constantList().at( k ).unit;
+      str << c->constantList().at( k ).unit + QChar( 0x200e ); // Unicode LRM
       str << radCh;
     }
     else
