@@ -1415,9 +1415,11 @@ void ConstantCompletion::doneCompletion()
   d->popup->hide();
   d->editor->setFocus();
   QTreeWidgetItem * item = d->constantList->currentItem();
-  for ( int k = 0; k < d->constants.count(); k++ )
-    if ( d->constants[k].name == item->text( 0 ) )
-      emit selectedCompletion( d->constants[k].value );
+  if ( item )
+    for ( int k = 0; k < d->constants.count(); k++ )
+      if ( d->constants[k].name == item->text( 0 ) )
+        emit selectedCompletion( d->constants[k].value );
+
 }
 
 
