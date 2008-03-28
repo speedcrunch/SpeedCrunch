@@ -66,7 +66,7 @@ InsertVariableDlg::InsertVariableDlg( Evaluator * eval, char radixChar,
                                       QWidget * parent )
   : QDialog( parent ), d( new InsertVariableDlg::Private )
 {
-  setWindowTitle( tr("Insert Variable") );
+  setWindowTitle( tr( "Insert Variable" ) );
   setModal( true );
 
   d->eval = eval;
@@ -87,8 +87,8 @@ InsertVariableDlg::InsertVariableDlg( Evaluator * eval, char radixChar,
   d->list->setSelectionBehavior( QTreeWidget::SelectRows );
 
   QStringList titles;
-  titles << tr("Name");
-  titles << tr("Value");
+  titles << tr( "Name"  );
+  titles << tr( "Value" );
   d->list->setHeaderLabels( titles );
 
   d->insertButton = new QPushButton( this );
@@ -104,16 +104,21 @@ InsertVariableDlg::InsertVariableDlg( Evaluator * eval, char radixChar,
   box->setLayout( boxLayout );
 
   boxLayout->addWidget( d->insertButton );
-  boxLayout->addItem( new QSpacerItem( 50, 0, QSizePolicy::MinimumExpanding, QSizePolicy::Minimum ) );
+  boxLayout->addItem( new QSpacerItem( 50, 0, QSizePolicy::MinimumExpanding,
+                                       QSizePolicy::Minimum ) );
   boxLayout->addWidget( d->cancelButton );
 
   layout->addWidget( d->list );
   layout->addWidget( box );
 
-  connect( d->insertButton, SIGNAL(clicked()), this, SLOT(accept()) );
-  connect( d->cancelButton, SIGNAL(clicked()), this, SLOT(reject()) );
-  connect( d->list, SIGNAL(itemActivated( QTreeWidgetItem *, int )),     this, SLOT(accept()) );
-  connect( d->list, SIGNAL(itemDoubleClicked( QTreeWidgetItem *, int )), this, SLOT(accept()) );
+  connect( d->insertButton, SIGNAL( clicked() ), this, SLOT( accept() ) );
+  connect( d->cancelButton, SIGNAL( clicked() ), this, SLOT( reject() ) );
+  connect( d->list, SIGNAL( itemActivated( QTreeWidgetItem *, int ) ),
+           this, SLOT(accept()) );
+  connect( d->list, SIGNAL( itemDoubleClicked( QTreeWidgetItem *, int ) ),
+           this, SLOT(accept()) );
+
+  d->list->setLayoutDirection( Qt::LeftToRight );
 
   updateList();
   adjustSize();
@@ -132,10 +137,10 @@ void InsertVariableDlg::updateList()
       str << variables[k].name;
       str << d->formatValue( variables[k].value );
 
-      QTreeWidgetItem* item = 0;
+      QTreeWidgetItem * item = 0;
       item = new QTreeWidgetItem( d->list, str );
-      item->setTextAlignment( 0, Qt::AlignLeft  | Qt::AlignVCenter );
-      item->setTextAlignment( 1, Qt::AlignRight | Qt::AlignVCenter );
+      item->setTextAlignment( 0, Qt::AlignLeft | Qt::AlignVCenter );
+      item->setTextAlignment( 1, Qt::AlignLeft | Qt::AlignVCenter );
   }
   d->list->sortItems( 0, Qt::AscendingOrder );
 

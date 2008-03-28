@@ -1689,6 +1689,7 @@ void MainWindow::insertFunction()
 void MainWindow::insertVariable()
 {
   InsertVariableDlg dlg( d->evaluator, d->settings.radixChar );
+  setWidgetDirection( d->settings.language, & dlg );
 
   if ( dlg.exec() == InsertVariableDlg::Accepted )
   {
