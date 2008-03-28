@@ -323,11 +323,10 @@ MainWindow::Private::~Private()
 QTranslator * MainWindow::Private::createTranslator( const QString & langCode )
 {
   QTranslator * translator = new QTranslator;
-  QString       localeFile = (langCode == "C") ? QLocale().name()
-                                               : langCode;
+  QString localeFile = (langCode == "C") ? QLocale().name() : langCode;
 
   // fallback to English
-  if(localeFile == "C")
+  if ( localeFile == "C" )
     localeFile = "en";
 
 #ifdef Q_OS_WIN32
@@ -903,7 +902,6 @@ void MainWindow::Private::createStatusBar()
   bar->addWidget( status.format    );
 
   setStatusBarText();
-  //setWidgetDirection( settings.language, bar );
 }
 
 
@@ -1008,8 +1006,6 @@ void MainWindow::Private::createBookDock()
   connect( docks.book, SIGNAL( expressionSelected( const QString & ) ),
            p, SLOT( expressionSelected( const QString & ) ) );
 
-  //setWidgetDirection( settings.language, docks.book );
-
   if ( docks.functions )
     p->tabifyDockWidget( docks.functions, docks.book );
   else if ( docks.variables )
@@ -1037,8 +1033,6 @@ void MainWindow::Private::createConstantsDock()
   connect( p, SIGNAL( retranslateText() ),
            docks.constants, SLOT( retranslateText() ) );
 
-  //setWidgetDirection( settings.language, docks.constants );
-
   if ( docks.functions )
     p->tabifyDockWidget( docks.functions, docks.constants );
   else if ( docks.variables )
@@ -1064,8 +1058,6 @@ void MainWindow::Private::createFunctionsDock()
   connect( p, SIGNAL( retranslateText() ),
            docks.functions, SLOT( retranslateText() ) );
 
-  //setWidgetDirection( settings.language, docks.functions );
-
   if ( docks.history )
     p->tabifyDockWidget( docks.history, docks.functions );
   else if ( docks.variables )
@@ -1090,8 +1082,6 @@ void MainWindow::Private::createHistoryDock()
            p, SLOT( expressionSelected( const QString & ) ) );
   connect( p, SIGNAL( retranslateText() ),
            docks.history, SLOT( retranslateText() ) );
-
-  //setWidgetDirection( settings.language, docks.history );
 
   docks.history->setHistory( widgets.editor->history() );
 
@@ -1121,8 +1111,6 @@ void MainWindow::Private::createVariablesDock()
            docks.variables, SLOT( setRadixChar( char ) ) );
   connect( p, SIGNAL( retranslateText() ),
            docks.variables, SLOT( retranslateText() ) );
-
-  //setWidgetDirection( settings.language, docks.variables );
 
   docks.variables->updateList( evaluator );
 
@@ -1481,20 +1469,6 @@ void MainWindow::Private::syncWindowStateToSettings()
 }
 
 
-//void setWidgetDirection( const QString & language, QWidget * widget )
-//{
-//  if ( (language == "C" && QLocale().language() == QLocale::Hebrew)
-//       || language == "he" )
-//  {
-//    widget->setLayoutDirection( Qt::RightToLeft );
-//  }
-//  else
-//  {
-//    widget->setLayoutDirection( Qt::LeftToRight );
-//  }
-//}
-
-
 // public
 
 MainWindow::MainWindow()
@@ -1607,7 +1581,6 @@ void MainWindow::deleteAllVariables()
 void MainWindow::deleteVariable()
 {
   DeleteVariableDlg dlg( d->evaluator );
-  //setWidgetDirection( d->settings.language, & dlg );
   dlg.exec();
 
   if ( d->settings.showVariables )
@@ -1675,7 +1648,6 @@ void MainWindow::hideAutoCalc()
 void MainWindow::insertFunction()
 {
   InsertFunctionDlg dlg( d->functions );
-  //setWidgetDirection( d->settings.language, & dlg );
 
   if ( dlg.exec() == InsertFunctionDlg::Accepted )
   {
@@ -1689,7 +1661,6 @@ void MainWindow::insertFunction()
 void MainWindow::insertVariable()
 {
   InsertVariableDlg dlg( d->evaluator, d->settings.radixChar );
-  //setWidgetDirection( d->settings.language, & dlg );
 
   if ( dlg.exec() == InsertVariableDlg::Accepted )
   {
@@ -2065,35 +2036,6 @@ void MainWindow::setWidgetsDirection()
   {
     qApp->setLayoutDirection( Qt::LeftToRight );
   }
-  //setWidgetDirection( d->settings.language, menuBar()          );
-  //setWidgetDirection( d->settings.language, d->menus.session   );
-  //setWidgetDirection( d->settings.language, d->menus.edit      );
-  //setWidgetDirection( d->settings.language, d->menus.view      );
-  //setWidgetDirection( d->settings.language, d->menus.format    );
-  //setWidgetDirection( d->settings.language, d->menus.decimal   );
-  //setWidgetDirection( d->settings.language, d->menus.settings  );
-  //setWidgetDirection( d->settings.language, d->menus.angle     );
-  //setWidgetDirection( d->settings.language, d->menus.behavior  );
-  //setWidgetDirection( d->settings.language, d->menus.radixChar );
-  //setWidgetDirection( d->settings.language, d->menus.help      );
-  //setWidgetDirection( d->settings.language, d->widgets.tip     );
-
-  //if ( d->menus.trayIcon )
-  //  setWidgetDirection( d->settings.language, d->menus.trayIcon );
-
-  //if ( d->docks.book )
-  //  setWidgetDirection( d->settings.language, d->docks.book );
-  //if ( d->docks.constants )
-  //  setWidgetDirection( d->settings.language, d->docks.constants );
-  //if ( d->docks.functions )
-  //  setWidgetDirection( d->settings.language, d->docks.functions );
-  //if ( d->docks.history )
-  //  setWidgetDirection( d->settings.language, d->docks.history );
-  //if ( d->docks.variables )
-  //  setWidgetDirection( d->settings.language, d->docks.variables );
-
-  //if ( d->status.angleUnit )
-  //  setWidgetDirection( d->settings.language, statusBar() );
 }
 
 
