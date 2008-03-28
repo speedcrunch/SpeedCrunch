@@ -22,6 +22,7 @@
 
 #include <QComboBox>
 #include <QDir>
+#include <QEvent>
 #include <QFile>
 #include <QLibraryInfo>
 #include <QLocale>
@@ -32,6 +33,7 @@
 
 struct BookDock::Private
 {
+  BookDock *     p;
   QTextBrowser * sheet;
   QString        path;
   QString        index;
@@ -42,13 +44,31 @@ struct BookDock::Private
   QPushButton *  indexButton;
   QWidget *      buttonLayoutWidget;
   QHBoxLayout *  buttonLayout;
+
+  void handleLayoutDirection();
 };
+
+
+void BookDock::Private::handleLayoutDirection()
+{
+  if ( p->layoutDirection() == Qt::RightToLeft )
+  {
+    buttonLayout->removeWidget( forwardButton );
+    buttonLayout->insertWidget( 0, forwardButton );
+  }
+  else
+  {
+    buttonLayout->removeWidget( backButton );
+    buttonLayout->insertWidget( 0, backButton );
+  }
+}
 
 
 BookDock::BookDock( const QString & directory, const QString & file,
                     const QString & language, QWidget * parent )
   : QDockWidget( parent ), d( new BookDock::Private )
 {
+  d->p = this;
   d->path  = directory;
   d->file  = file;
   d->index = file;
@@ -179,23 +199,22 @@ void BookDock::setLanguage( const QString & languageCode )
   }
 
   d->sheet->setSource( QUrl::fromLocalFile( src ) );
-
-  if ( languageCode == "he" )
-  {
-    setLayoutDirection( Qt::RightToLeft );
-    d->buttonLayout->removeWidget( d->forwardButton );
-    d->buttonLayout->insertWidget( 0, d->forwardButton );
-  }
-  else
-  {
-    setLayoutDirection( Qt::LeftToRight );
-    d->buttonLayout->removeWidget( d->backButton );
-    d->buttonLayout->insertWidget( 0, d->backButton );
-  }
+  d->handleLayoutDirection();
 }
 
 
 void BookDock::setTitle( const QString & title )
 {
   setWindowTitle( title );
+}
+
+
+// protected
+
+void BookDock::changeEvent( QEvent * e )
+{
+  if ( e->type() == QEvent::LayoutDirectionChange )
+    d->handleLayoutDirection();
+  else
+    QDockWidget::changeEvent( e );
 }

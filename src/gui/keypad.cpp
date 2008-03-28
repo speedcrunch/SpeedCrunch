@@ -102,6 +102,7 @@ Keypad::Keypad( char radixChar, QWidget * parent )
   d->setButtonTooltips();
   d->setUpButtonPressedSignal();
   d->disableButtonFocus();
+  setLayoutDirection( Qt::LeftToRight );
 }
 
 

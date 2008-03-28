@@ -176,17 +176,17 @@
 <context>
     <name>BookDock</name>
     <message>
-        <location filename="../gui/bookdock.cpp" line="157"/>
+        <location filename="../gui/bookdock.cpp" line="158"/>
         <source>Back</source>
         <translation>Anterior</translation>
     </message>
     <message>
-        <location filename="../gui/bookdock.cpp" line="158"/>
+        <location filename="../gui/bookdock.cpp" line="159"/>
         <source>Forward</source>
         <translation>Próximo</translation>
     </message>
     <message>
-        <location filename="../gui/bookdock.cpp" line="159"/>
+        <location filename="../gui/bookdock.cpp" line="160"/>
         <source>Index</source>
         <translation>Índice</translation>
     </message>
@@ -196,7 +196,7 @@
     <message>
         <location filename="../gui/editor.cpp" line="1328"/>
         <source>All</source>
-        <translation>Todas</translation>
+        <translation type="obsolete">Todas</translation>
     </message>
 </context>
 <context>
@@ -718,27 +718,27 @@
 <context>
     <name>ConstantsDock</name>
     <message>
-        <location filename="../gui/constantsdock.cpp" line="165"/>
+        <location filename="../gui/constantsdock.cpp" line="166"/>
         <source>Constants</source>
         <translation>Constantes</translation>
     </message>
     <message>
-        <location filename="../gui/constantsdock.cpp" line="166"/>
+        <location filename="../gui/constantsdock.cpp" line="167"/>
         <source>Category</source>
         <translation>Categoria</translation>
     </message>
     <message>
-        <location filename="../gui/constantsdock.cpp" line="167"/>
+        <location filename="../gui/constantsdock.cpp" line="168"/>
         <source>Search</source>
         <translation>Pesquisar</translation>
     </message>
     <message>
-        <location filename="../gui/constantsdock.cpp" line="123"/>
+        <location filename="../gui/constantsdock.cpp" line="124"/>
         <source>No match found</source>
         <translation>Nenhum resultado encontrado</translation>
     </message>
     <message>
-        <location filename="../gui/constantsdock.cpp" line="292"/>
+        <location filename="../gui/constantsdock.cpp" line="300"/>
         <source>All</source>
         <translation>Todas</translation>
     </message>
@@ -782,6 +782,11 @@
         <location filename="../gui/editor.cpp" line="819"/>
         <source>Selection result: &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>Resultado da seleção: &lt;b&gt;%1&lt;/b&gt;</translation>
+    </message>
+    <message>
+        <location filename="../gui/editor.cpp" line="1328"/>
+        <source>All</source>
+        <translation type="unfinished">Todas</translation>
     </message>
 </context>
 <context>
@@ -1218,17 +1223,17 @@
 <context>
     <name>FunctionsDock</name>
     <message>
-        <location filename="../gui/functionsdock.cpp" line="121"/>
+        <location filename="../gui/functionsdock.cpp" line="122"/>
         <source>Functions</source>
         <translation>Funções</translation>
     </message>
     <message>
-        <location filename="../gui/functionsdock.cpp" line="122"/>
+        <location filename="../gui/functionsdock.cpp" line="123"/>
         <source>Search</source>
         <translation>Pesquisar</translation>
     </message>
     <message>
-        <location filename="../gui/functionsdock.cpp" line="123"/>
+        <location filename="../gui/functionsdock.cpp" line="124"/>
         <source>No match found</source>
         <translation>Nenhum resultado encontrado</translation>
     </message>
@@ -1446,82 +1451,82 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1546"/>
+        <location filename="../gui/mainwindow.cpp" line="1548"/>
         <source>About Qt</source>
         <translation>Sobre a Qt</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1983"/>
+        <location filename="../gui/mainwindow.cpp" line="1988"/>
         <source>SpeedCrunch Sessions (*.sch);;All Files (*)</source>
         <translation>Sessões SpeedCrunch (*.sch);;Todos os Arquivos (*)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1703"/>
+        <location filename="../gui/mainwindow.cpp" line="1708"/>
         <source>Load Session</source>
         <translation>Carregar Sessão</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2692"/>
+        <location filename="../gui/mainwindow.cpp" line="2699"/>
         <source>Error</source>
         <translation>Erro</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1818"/>
+        <location filename="../gui/mainwindow.cpp" line="1823"/>
         <source>Can&apos;t read from file %1</source>
         <translation>Não foi possível ler o arquivo %1</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1827"/>
+        <location filename="../gui/mainwindow.cpp" line="1832"/>
         <source>Question</source>
         <translation>Pergunta</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1984"/>
+        <location filename="../gui/mainwindow.cpp" line="1989"/>
         <source>Save Session</source>
         <translation>Salvar a Sessão</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2040"/>
+        <location filename="../gui/mainwindow.cpp" line="2045"/>
         <source>Can&apos;t write to file %1</source>
         <translation>Não foi possível escrever no arquivo %1</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2353"/>
+        <location filename="../gui/mainwindow.cpp" line="2360"/>
         <source>Warning</source>
         <translation>Advertência</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2370"/>
+        <location filename="../gui/mainwindow.cpp" line="2377"/>
         <source>To insert a function using keyboard, use Ctrl+F shorcut. From the dialog, you can choose the function you want to insert.</source>
         <translation>Para inserir uma função utilizando o teclado, digite Ctrl+F. Da caixa de diálogo que aparecerá você pode escolher a função que deseja inserir.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2375"/>
+        <location filename="../gui/mainwindow.cpp" line="2382"/>
         <source>To insert a variable using keyboard, use Ctrl+I shorcut. From the dialog, you can choose the variable you want to insert.</source>
         <translation>Para inserir uma variável utilizando o teclado, digite Ctrl+I. Da caixa de diálogo que aparecerá você pode escolher a variável que deseja inserir.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2378"/>
+        <location filename="../gui/mainwindow.cpp" line="2385"/>
         <source>Use variable &lt;i&gt;pi&lt;/i&gt; to use pi constant.</source>
         <translation>Utilize a variável &lt;i&gt;pi&lt;/i&gt; para usar a constante pi.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2383"/>
+        <location filename="../gui/mainwindow.cpp" line="2390"/>
         <source>Use &lt;i&gt;;&lt;/i&gt; (semicolon) to separate the parameters in functions.</source>
         <translation>Utiliza &lt;i&gt;;&lt;/i&gt; (ponto-e-vírgula) para separar os parâmetros de funções.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2389"/>
+        <location filename="../gui/mainwindow.cpp" line="2396"/>
         <source>Tip of the day</source>
         <translation>Dica do dia</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1701"/>
+        <location filename="../gui/mainwindow.cpp" line="1706"/>
         <source>File %1 is not a valid session</source>
         <translation>O arquivo %1 não é uma sessão válida</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1738"/>
+        <location filename="../gui/mainwindow.cpp" line="1743"/>
         <source>Merge session being loaded with current session?
 If no, current variables and display will be cleared.</source>
         <translation>Unir a sessão a ser carregada com a sessão atual?
@@ -1533,81 +1538,81 @@ Em caso negativo, as variáveis e a tela atuais serão apagadas.</translation>
         <translation type="obsolete">SpeedCrunch</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2723"/>
+        <location filename="../gui/mainwindow.cpp" line="2730"/>
         <source>SpeedCrunch is minimized.
 Left click the icon to restore it or right click for options.</source>
         <translation>SpeedCrunch foi minimizada.
 Clique com o botão esquerdo para restaurar ou com o botão direito para outras opções.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1591"/>
+        <location filename="../gui/mainwindow.cpp" line="1593"/>
         <source>Degree</source>
         <translation>Grau</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2030"/>
+        <location filename="../gui/mainwindow.cpp" line="2035"/>
         <source>All Files (*)</source>
         <translation>Todos os Arquivos (*)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1975"/>
+        <location filename="../gui/mainwindow.cpp" line="1980"/>
         <source>Radian</source>
         <translation>Radianos</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2348"/>
+        <location filename="../gui/mainwindow.cpp" line="2355"/>
         <source>The menu bar is now hidden. To make it visible again, press Ctrl+Alt+M.</source>
         <translation>A barra de menus agora está oculta. Para torná-la visível novamente, pressione Ctrl+Alt+M.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2399"/>
+        <location filename="../gui/mainwindow.cpp" line="2406"/>
         <source>Binary</source>
         <translation>Binário</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2409"/>
+        <location filename="../gui/mainwindow.cpp" line="2416"/>
         <source>Engineering decimal</source>
         <translation>Decimal para engenharia</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2419"/>
+        <location filename="../gui/mainwindow.cpp" line="2426"/>
         <source>Fixed decimal</source>
         <translation>Decimal fixo</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2429"/>
+        <location filename="../gui/mainwindow.cpp" line="2436"/>
         <source>General decimal</source>
         <translation>Decimal geral</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2439"/>
+        <location filename="../gui/mainwindow.cpp" line="2446"/>
         <source>Hexadecimal</source>
         <translation>Hexadecimal</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2449"/>
+        <location filename="../gui/mainwindow.cpp" line="2456"/>
         <source>Octal</source>
         <translation>Octal</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2459"/>
+        <location filename="../gui/mainwindow.cpp" line="2466"/>
         <source>Scientific decimal</source>
         <translation>Decimal científico</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1809"/>
+        <location filename="../gui/mainwindow.cpp" line="1814"/>
         <source>Import Session</source>
         <translation>Importar Sessão</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1825"/>
+        <location filename="../gui/mainwindow.cpp" line="1830"/>
         <source>Merge session being imported with current session?
 If no, current variables and display will be cleared.</source>
         <translation>Unir a sessão a ser importada com a sessão atual?
 Em caso negativo, as variáveis e a tela atuais serão apagadas.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2031"/>
+        <location filename="../gui/mainwindow.cpp" line="2036"/>
         <source>Export Session</source>
         <translation>Exportar Sessão</translation>
     </message>
@@ -1952,7 +1957,7 @@ Em caso negativo, as variáveis e a tela atuais serão apagadas.</translation>
         <translation>Formato do resultado</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1860"/>
+        <location filename="../gui/mainwindow.cpp" line="1865"/>
         <source>Ignore error?</source>
         <translation>Ignorar erro?</translation>
     </message>
@@ -2121,17 +2126,17 @@ Em caso negativo, as variáveis e a tela atuais serão apagadas.</translation>
 <context>
     <name>VariablesDock</name>
     <message>
-        <location filename="../gui/variablesdock.cpp" line="161"/>
+        <location filename="../gui/variablesdock.cpp" line="162"/>
         <source>Variables</source>
         <translation>Variáveis</translation>
     </message>
     <message>
-        <location filename="../gui/variablesdock.cpp" line="162"/>
+        <location filename="../gui/variablesdock.cpp" line="163"/>
         <source>Search</source>
         <translation>Pesquisar</translation>
     </message>
     <message>
-        <location filename="../gui/variablesdock.cpp" line="163"/>
+        <location filename="../gui/variablesdock.cpp" line="164"/>
         <source>No match found</source>
         <translation>Nenhum resultado encontrado</translation>
     </message>

@@ -221,6 +221,7 @@ ResultDisplay::ResultDisplay( char radixChar, char format, int precision,
   horizontalScrollBar()->setStyleSheet( QString("QHorizontalScrollBar { background: %1; }").arg( colorName ) );
 
   setCursor( QCursor( Qt::PointingHandCursor ) );
+  setLayoutDirection( Qt::LeftToRight );
 }
 
 

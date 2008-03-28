@@ -47,6 +47,7 @@ class BookDock : public QDockWidget
 
   protected slots:
     void anchorClicked ( const QUrl & );
+    virtual void changeEvent( QEvent * e );
 
   private:
     struct Private;

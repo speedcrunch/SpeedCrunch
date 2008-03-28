@@ -767,7 +767,7 @@ void Editor::autoCalc()
 
   if ( d->eval->error().isEmpty() )
   {
-    QString ss = QString( tr("Current result: <b>%1</b>")
+    QString ss = QString( tr( "Current result: <b>%1</b>" )
                             .arg( formatNumber( num ) ) );
     emit autoCalcEnabled( ss );
   }
@@ -815,7 +815,7 @@ void Editor::autoCalcSelection()
 
   if ( d->eval->error().isEmpty() )
   {
-    QString ss = QString( tr("Selection result: <b>%1</b>")
+    QString ss = QString( tr( "Selection result: <b>%1</b>" )
                             .arg( formatNumber( num ) ) );
     emit autoCalcEnabled( ss );
   }
@@ -1121,7 +1121,7 @@ void EditorCompletion::doneCompletion()
   d->popup->hide();
 #endif
   d->editor->setFocus();
-  QTreeWidgetItem* item = d->popup->currentItem();
+  QTreeWidgetItem * item = d->popup->currentItem();
   emit selectedCompletion( item ? item->text( 0 ) : QString() );
 }
 
@@ -1139,7 +1139,12 @@ void EditorCompletion::showCompletion( const QStringList & choices )
   d->popup->setUpdatesEnabled( false );
   d->popup->clear();
   for ( int i = 0; i < choices.count(); i++ )
-    new QTreeWidgetItem( d->popup, choices[i].split( ':' ) );
+  {
+    QTreeWidgetItem * item = new QTreeWidgetItem( d->popup,
+                                                  choices[i].split( ':' ) );
+    if ( item && d->editor->layoutDirection() == Qt::RightToLeft )
+      item->setTextAlignment( 0, Qt::AlignRight );
+  }
   d->popup->sortItems( 0, Qt::AscendingOrder );
   d->popup->sortItems( 1, Qt::AscendingOrder );
   d->popup->setCurrentItem( d->popup->topLevelItem(0) );
@@ -1245,15 +1250,15 @@ ConstantCompletion::ConstantCompletion( Editor * editor ) : QObject( editor ),
 
   d->slider = new QTimeLine( 250, this );
   d->slider->setCurveShape( QTimeLine::EaseInCurve );
-  connect( d->slider, SIGNAL(frameChanged( int )), SLOT(slide( int )) );
+  connect( d->slider, SIGNAL( frameChanged( int ) ), SLOT(slide( int )) );
 
   Constants * ct = d->editor->constants();
   d->constants = ct->constantList();
 
   // populate categories
   QStringList str;
-  str << tr("All");
-  QTreeWidgetItem* all = new QTreeWidgetItem( d->categoryList, str );
+  str << Editor::tr( "All" );
+  QTreeWidgetItem * all = new QTreeWidgetItem( d->categoryList, str );
   for ( int k = 0; k < ct->categoryList().count(); k++ )
   {
     str.clear();
@@ -1263,12 +1268,12 @@ ConstantCompletion::ConstantCompletion( Editor * editor ) : QObject( editor ),
   d->categoryList->setCurrentItem( all );
 
   // populate constants
-  d->lastCategory = tr("All");
+  d->lastCategory = Editor::tr( "All" );
   for ( int k = 0; k < ct->constantList().count(); k++ )
   {
     QStringList str;
-    str << ct->constantList().at(k).name;
-    str << ct->constantList().at(k).name.toUpper();
+    str << ct->constantList().at( k ).name;
+    str << ct->constantList().at( k ).name.toUpper();
     new QTreeWidgetItem( d->constantList, str );
   }
 
@@ -1277,9 +1282,9 @@ ConstantCompletion::ConstantCompletion( Editor * editor ) : QObject( editor ),
   d->categoryList->resizeColumnToContents( 0 );
   int ww = qMax( d->constantList->width(), d->categoryList->width() );
   int h1 = d->constantList->sizeHintForRow( 0 ) * qMin(7, d->constants.count())
-           + 3;
+             + 3;
   int h2 = d->categoryList->sizeHintForRow( 0 )
-           * qMin(7, ct->categoryList().count()) + 3;
+             * qMin(7, ct->categoryList().count()) + 3;
   int hh = qMax( h1, h2 );
   ww += 200; // extra space (FIXME scrollbar size?)
 
@@ -1315,7 +1320,7 @@ void ConstantCompletion::showConstants()
   if ( d->categoryList->currentItem() )
     chosenCategory = d->categoryList->currentItem()->text( 0 );
 
-  if( d->lastCategory == chosenCategory )
+  if ( d->lastCategory == chosenCategory )
     return;
 
   d->constantList->clear();
@@ -1325,7 +1330,7 @@ void ConstantCompletion::showConstants()
     str << d->constants[k].name;
     str << d->constants[k].name.toUpper();
 
-    bool include = (chosenCategory == tr("All")) ?
+    bool include = (chosenCategory == Editor::tr( "All" )) ?
       true : d->constants[k].categories.contains( chosenCategory );
 
     if ( ! include )

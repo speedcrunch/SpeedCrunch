@@ -219,13 +219,17 @@ void ConstantsDock::filter()
     }
     if ( item )
     {
-      QString tip = QString( "<b>%1</b><br>%2" )
+      QString tip;
+      tip += QString( QChar( 0x200E ) );
+      tip += QString( "<b>%1</b><br>%2" )
                       .arg( c->constantList().at( k ).name,
-                            c->constantList().at( k ).value);
+                            c->constantList().at( k ).value );
+      tip += QString( QChar( 0x200E ) );
       if ( ! c->constantList().at( k ).unit.isEmpty() )
         tip.append( " " ).append( c->constantList().at( k ).unit );
       if ( d->radixChar == ',' )
         tip.replace( '.', ',' );
+      tip += QString( QChar( 0x200E ) );
       item->setToolTip( 0, tip );
       item->setToolTip( 1, tip );
       item->setToolTip( 2, tip );
