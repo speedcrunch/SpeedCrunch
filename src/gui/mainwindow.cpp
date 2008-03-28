@@ -2449,9 +2449,12 @@ void MainWindow::constantSelected( const QString & c )
 void MainWindow::expressionSelected( const QString & expr )
 {
   QTextCursor cursor = d->widgets.editor->textCursor();
+  d->widgets.editor->blockSignals( true );
   cursor.insertText( expr );
+  d->widgets.editor->blockSignals( false );
   QTimer::singleShot( 0, d->widgets.editor, SLOT( setFocus() ) );
   d->widgets.editor->setTextCursor( cursor );
+  QTimer::singleShot( 0, d->widgets.editor, SLOT( () ) );
 
   if ( ! isActiveWindow () )
     activateWindow();
@@ -2475,6 +2478,7 @@ void MainWindow::functionSelected( const QString & e )
 
 void MainWindow::keypadButtonPressed( Keypad::Button b )
 {
+  d->widgets.editor->blockSignals( true ); // prevent completion
   switch ( b )
   {
     case Keypad::Key0        : d->widgets.editor->insert( "0"     ); break;
@@ -2525,6 +2529,7 @@ void MainWindow::keypadButtonPressed( Keypad::Button b )
   }
 
   QTimer::singleShot( 0, d->widgets.editor, SLOT( setFocus() ) );
+  d->widgets.editor->blockSignals( false );
 }
 
 
@@ -2762,7 +2767,10 @@ void MainWindow::variableSelected( const QString & v )
 {
   if ( v.isEmpty() )
     return;
+
+  d->widgets.editor->blockSignals( true );
   d->widgets.editor->insert( v );
+  d->widgets.editor->blockSignals( false );
 
   QTimer::singleShot( 0, d->widgets.editor, SLOT( setFocus() ) );
 
