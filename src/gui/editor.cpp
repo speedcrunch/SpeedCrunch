@@ -1429,8 +1429,9 @@ bool ConstantCompletion::eventFilter( QObject * obj, QEvent * ev )
       d->constantList->releaseMouse();
       if ( ke->key() != Qt::Key_Escape )
         QApplication::sendEvent( d->editor, ev );
-      // fool doneCompletion() in order to prevent insertion of text
-      d->constantList->currentItem()->setText( 0, "X" );
+      //// fool doneCompletion() in order to prevent insertion of text
+      if ( d->constantList->currentItem() )
+        d->constantList->currentItem()->setText( 0, "X" );
       emit doneCompletion();
       return true;
     }
