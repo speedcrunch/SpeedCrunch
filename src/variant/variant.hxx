@@ -35,6 +35,7 @@
 #include "base/errors.h"
 #include "variant/variantbase.hxx"
 #include "variant/real.hxx"
+#include "variant/vstring.hxx"
 
 class VariantBase: public VariantIntf
 // takes care of builtin data types
@@ -108,7 +109,11 @@ class Variant: public VariantBase
     static QDomElement createEmptyElement(QDomDocument&, const char* type);
     static void initClass();
   public: // support of LongReal
-    Variant(floatnum, Error);
+    Variant(floatnum, Error = Success);
+  public: // support of Strings
+    Variant(QString, Error = Success);
+    void operator = (const QString& s);
+    operator QString() const;
 };
 
 #endif /*_VARIANT_H*/

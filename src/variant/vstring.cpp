@@ -44,6 +44,19 @@ VariantData* VString::create()
   return new VString;
 }
 
+VString* VString::create(const QString& s)
+{
+  QString val = s;
+  for (int i = -1; ++i < val.size();)
+  {
+    if (val[i] < ' ')
+      val[i] = ' ';
+  }
+  VString* result = static_cast<VString*>(create());
+  result->val = s;
+  return result;
+}
+
 void VString::xmlWrite(QDomDocument& doc, QDomNode& node) const
 {
   xmlWriteText(doc, node, val);

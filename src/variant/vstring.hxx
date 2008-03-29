@@ -44,6 +44,7 @@ class VString: public VariantRefData
     VariantType type() const { return vtString; };
     void xmlWrite(QDomDocument&, QDomNode&) const;
     bool xmlRead(QDomNode&);
+    operator QString() const { return val; };
   private:
     QString val;
     static void initClass();

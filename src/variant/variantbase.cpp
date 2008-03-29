@@ -235,8 +235,11 @@ FormatIntf::FormatIntf(FormatIntf* aBase)
 
 void FormatIntf::releaseBase()
 {
-  m_base->release();
-  m_base = 0;
+  if (m_base)
+  {
+    m_base->release();
+    m_base = 0;
+  }
 }
 
 void FormatIntf::release()

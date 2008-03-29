@@ -273,3 +273,23 @@ Variant::Variant(floatnum f, Error e)
   else
     *this = LongReal::create(f);
 }
+
+Variant::Variant(QString s, Error e)
+{
+  if (e != Success)
+    *this = e;
+  else
+    *this = s;
+}
+
+void Variant::operator = (const QString& s)
+{
+  *this = VString::create(s);
+}
+
+Variant::operator QString() const
+{
+  if (typeName(type()) != nString)
+    return QString();
+  return *static_cast<const VString*>(variantData());
+}
