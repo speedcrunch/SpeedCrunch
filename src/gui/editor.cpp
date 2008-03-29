@@ -184,7 +184,7 @@ Editor::Editor( Evaluator * e, Functions * f, Constants * c, char format,
   d->index = 0;
   d->autoCompleteEnabled = true;
   d->completion = new EditorCompletion( this );
-  d->constantCompletion = new ConstantCompletion( this );
+  d->constantCompletion = 0;
   d->completionTimer = new QTimer( this );
   d->autoCalcEnabled = true;
   d->syntaxHighlightEnabled = true;
@@ -210,7 +210,6 @@ Editor::Editor( Evaluator * e, Functions * f, Constants * c, char format,
   connect( d->autoCalcSelTimer,   SIGNAL( timeout()                             ), SLOT( autoCalcSelection()               ) );
   connect( d->completion,         SIGNAL( selectedCompletion( const QString & ) ), SLOT( autoComplete( const QString & )   ) );
   connect( d->completionTimer,    SIGNAL( timeout()                             ), SLOT( triggerAutoComplete()             ) );
-  connect( d->constantCompletion, SIGNAL( selectedCompletion( const QString & ) ), SLOT( insertConstant( const QString & ) ) );
   connect( d->matchingTimer,      SIGNAL( timeout()                             ), SLOT( doMatchingPar()                   ) );
   connect( this,                  SIGNAL( selectionChanged()                    ), SLOT( startSelAutoCalcTimer()           ) );
   connect( this,                  SIGNAL( textChanged()                         ), SLOT( checkAutoCalc()                   ) );
@@ -829,10 +828,15 @@ void Editor::autoCalcSelection()
 
 void Editor::insertConstant( const QString & c )
 {
+  qDebug("destroy");
   QString s( c );
   if ( d->radixChar == ',' )
     s.replace( '.', ',' );
-  insert( s );
+  if ( ! c.isNull() )
+    insert( s );
+  disconnect( d->constantCompletion );
+  delete d->constantCompletion;
+  d->constantCompletion = 0;
 }
 
 
@@ -931,6 +935,10 @@ void Editor::keyPressEvent( QKeyEvent * e )
 
   if ( e->key() == Qt::Key_Space && e->modifiers() == Qt::ControlModifier )
   {
+    qDebug("create");
+    d->constantCompletion = new ConstantCompletion( this );
+    connect( d->constantCompletion, SIGNAL( selectedCompletion( const QString & ) ),
+             this, SLOT( insertConstant( const QString & ) ) );
     d->constantCompletion->showCompletion();
     e->accept();
     return;
@@ -1147,7 +1155,7 @@ void EditorCompletion::showCompletion( const QStringList & choices )
   }
   d->popup->sortItems( 0, Qt::AscendingOrder );
   d->popup->sortItems( 1, Qt::AscendingOrder );
-  d->popup->setCurrentItem( d->popup->topLevelItem(0) );
+  d->popup->setCurrentItem( d->popup->topLevelItem( 0 ) );
   d->popup->adjustSize();
   d->popup->setUpdatesEnabled( true );
 
@@ -1216,11 +1224,10 @@ ConstantCompletion::ConstantCompletion( Editor * editor ) : QObject( editor ),
 {
   d->editor = editor;
 
-  d->popup = new QFrame( 0 );
+  d->popup = new QFrame;
   d->popup->hide();
   d->popup->setParent( 0, Qt::Popup );
   d->popup->setFocusPolicy( Qt::NoFocus );
-  d->popup->setFocusProxy( editor );
   d->popup->setFrameStyle( QFrame::Box | QFrame::Plain );
 
   d->categoryList = new QTreeWidget( d->popup );
@@ -1232,8 +1239,10 @@ ConstantCompletion::ConstantCompletion( Editor * editor ) : QObject( editor ),
   d->categoryList->setSelectionBehavior( QTreeWidget::SelectRows );
   d->categoryList->setMouseTracking( true );
   d->categoryList->installEventFilter( this );
+  //d->categoryList->setVerticalScrollBarPolicy( Qt::ScrollBarAsNeeded );
+
   connect( d->categoryList, SIGNAL( itemClicked( QTreeWidgetItem *, int ) ),
-           SLOT( doneCompletion() ) );
+           this, SLOT( showConstants() ) );
 
   d->constantList = new QTreeWidget( d->popup );
   d->constantList->setFrameShape( QFrame::NoFrame );
@@ -1245,30 +1254,35 @@ ConstantCompletion::ConstantCompletion( Editor * editor ) : QObject( editor ),
   d->constantList->setSelectionBehavior( QTreeWidget::SelectRows );
   d->constantList->setMouseTracking( true );
   d->constantList->installEventFilter( this );
-  connect( d->constantList, SIGNAL(itemClicked( QTreeWidgetItem *, int )),
-           SLOT(doneCompletion()) );
+  d->constantList->setVerticalScrollBarPolicy( Qt::ScrollBarAsNeeded );
+  d->constantList->grabMouse();
+
+  // FIXME: why does it crash when clicking a constant description?
+  //connect( d->constantList, SIGNAL( itemClicked( QTreeWidgetItem *, int ) ),
+  //         this, SLOT( doneCompletion() ) );
 
   d->slider = new QTimeLine( 250, this );
   d->slider->setCurveShape( QTimeLine::EaseInCurve );
-  connect( d->slider, SIGNAL( frameChanged( int ) ), SLOT(slide( int )) );
+  connect( d->slider, SIGNAL( frameChanged( int ) ),
+           this, SLOT( slide( int ) ) );
 
   Constants * ct = d->editor->constants();
   d->constants = ct->constantList();
 
   // populate categories
   QStringList str;
-  str << Editor::tr( "All" );
+  str << tr( "All" );
   QTreeWidgetItem * all = new QTreeWidgetItem( d->categoryList, str );
   for ( int k = 0; k < ct->categoryList().count(); k++ )
   {
     str.clear();
-    str << ct->categoryList().at(k);
+    str << ct->categoryList().at( k );
     new QTreeWidgetItem( d->categoryList, str );
   }
   d->categoryList->setCurrentItem( all );
 
   // populate constants
-  d->lastCategory = Editor::tr( "All" );
+  d->lastCategory = tr( "All" );
   for ( int k = 0; k < ct->constantList().count(); k++ )
   {
     QStringList str;
@@ -1276,6 +1290,7 @@ ConstantCompletion::ConstantCompletion( Editor * editor ) : QObject( editor ),
     str << ct->constantList().at( k ).name.toUpper();
     new QTreeWidgetItem( d->constantList, str );
   }
+  d->constantList->sortItems( 0, Qt::AscendingOrder );
 
   // find size, the biggest between both
   d->constantList->resizeColumnToContents( 0 );
@@ -1330,7 +1345,7 @@ void ConstantCompletion::showConstants()
     str << d->constants[k].name;
     str << d->constants[k].name.toUpper();
 
-    bool include = (chosenCategory == Editor::tr( "All" )) ?
+    bool include = (chosenCategory == tr( "All" )) ?
       true : d->constants[k].categories.contains( chosenCategory );
 
     if ( ! include )
@@ -1339,7 +1354,7 @@ void ConstantCompletion::showConstants()
     QTreeWidgetItem * item = 0;
     item = new QTreeWidgetItem( d->constantList, str );
   }
-  d->constantList->sortItems( 1, Qt::AscendingOrder );
+  d->constantList->sortItems( 0, Qt::AscendingOrder );
 
   d->lastCategory = chosenCategory;
 }
@@ -1371,9 +1386,20 @@ bool ConstantCompletion::eventFilter( QObject * obj, QEvent * ev )
         return false;
       }
 
-      d->popup->hide();
-      d->editor->setFocus();
-      QApplication::sendEvent( d->editor, ev );
+      qDebug("AQUI2");
+      d->constantList->releaseMouse();
+      if ( ke->key() != Qt::Key_Escape )
+        QApplication::sendEvent( d->editor, ev );
+      // fool doneCompletion() in order to prevent insertion of text
+      d->constantList->currentItem()->setText( 0, "X" );
+      emit doneCompletion();
+      return true;
+    }
+    else if ( ev->type() == QEvent::MouseButtonPress )
+    {
+      qDebug("AQUI2");
+      d->constantList->releaseMouse();
+      emit doneCompletion();
       return true;
     }
   }
@@ -1399,9 +1425,20 @@ bool ConstantCompletion::eventFilter( QObject * obj, QEvent * ev )
         return false;
       }
 
-      d->popup->hide();
-      d->editor->setFocus();
-      QApplication::sendEvent( d->editor, ev );
+      qDebug("AQUI1");
+      d->constantList->releaseMouse();
+      if ( ke->key() != Qt::Key_Escape )
+        QApplication::sendEvent( d->editor, ev );
+      // fool doneCompletion() in order to prevent insertion of text
+      d->constantList->currentItem()->setText( 0, "X" );
+      emit doneCompletion();
+      return true;
+    }
+    else if ( ev->type() == QEvent::MouseButtonPress )
+    {
+      qDebug("AQUI1");
+      d->constantList->releaseMouse();
+      emit doneCompletion();
       return true;
     }
   }
@@ -1414,12 +1451,20 @@ void ConstantCompletion::doneCompletion()
 {
   d->popup->hide();
   d->editor->setFocus();
-  QTreeWidgetItem * item = d->constantList->currentItem();
+  QTreeWidgetItem * item = 0;
+  item = d->constantList->currentItem();
+  QString c;
   if ( item )
     for ( int k = 0; k < d->constants.count(); k++ )
       if ( d->constants[k].name == item->text( 0 ) )
-        emit selectedCompletion( d->constants[k].value );
-
+      {
+        c = d->constants[k].value;
+        break;
+      }
+  if ( ! c.isNull() )
+    emit selectedCompletion( c );
+  else
+    emit selectedCompletion( QString() );
 }
 
 
@@ -1440,7 +1485,7 @@ void ConstantCompletion::showCompletion()
   if ( pos.y() + h > screen.y() + screen.height() )
     pos.setY( pos.y() - h - d->editor->height() );
   if ( pos.x() + w > screen.x() + screen.width() )
-    pos.setX(  screen.x() + screen.width() - w );
+    pos.setX( screen.x() + screen.width() - w );
 
   // start with category
   d->categoryList->setFocus();

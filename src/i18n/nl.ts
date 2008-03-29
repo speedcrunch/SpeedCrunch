@@ -192,6 +192,14 @@
     </message>
 </context>
 <context>
+    <name>ConstantCompletion</name>
+    <message>
+        <location filename="../gui/editor.cpp" line="1348"/>
+        <source>All</source>
+        <translation>Alle</translation>
+    </message>
+</context>
+<context>
     <name>Constants</name>
     <message>
         <location filename="../base/constants.cpp" line="41"/>
@@ -508,19 +516,19 @@
 <context>
     <name>Editor</name>
     <message>
-        <location filename="../gui/editor.cpp" line="771"/>
+        <location filename="../gui/editor.cpp" line="770"/>
         <source>Current result: &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>Huidige resultaat: &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../gui/editor.cpp" line="819"/>
+        <location filename="../gui/editor.cpp" line="818"/>
         <source>Selection result: &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>Geselecteerde resultaat: &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../gui/editor.cpp" line="1333"/>
         <source>All</source>
-        <translation>Alle</translation>
+        <translation type="obsolete">Alle</translation>
     </message>
 </context>
 <context>
@@ -1127,7 +1135,7 @@
         <translation>Laad Sessie</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2652"/>
+        <location filename="../gui/mainwindow.cpp" line="2656"/>
         <source>Error</source>
         <translation>Fout</translation>
     </message>
@@ -1193,7 +1201,7 @@ If no, current variables and display will be cleared.</source>
         <translation>Moet de geladen sessie worden samengevoeg met de huidige sessie?Zo niet, worden de huidige variabelen en weergave gewist.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2683"/>
+        <location filename="../gui/mainwindow.cpp" line="2687"/>
         <source>SpeedCrunch is minimized.
 Left click the icon to restore it or right click for options.</source>
         <translation>SpeedCrunch is geminimaliseerd.Klik met links op het icoon om het te herstellen of met rechts voor opties.</translation>
