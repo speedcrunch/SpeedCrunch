@@ -2454,7 +2454,6 @@ void MainWindow::expressionSelected( const QString & expr )
   d->widgets.editor->blockSignals( false );
   QTimer::singleShot( 0, d->widgets.editor, SLOT( setFocus() ) );
   d->widgets.editor->setTextCursor( cursor );
-  QTimer::singleShot( 0, d->widgets.editor, SLOT( () ) );
 
   if ( ! isActiveWindow () )
     activateWindow();
