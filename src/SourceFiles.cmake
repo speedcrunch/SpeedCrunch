@@ -49,6 +49,7 @@ set(speedcrunch_SOURCES
 variant/variantbase.cpp
 variant/variant.cpp
 variant/real.cpp
+variant/vstring.cpp
 variant/initvariant.cpp
 3rdparty/util/binreloc.c
 base/constants.cpp
