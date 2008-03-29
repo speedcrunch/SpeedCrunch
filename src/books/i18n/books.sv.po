@@ -14,7 +14,7 @@ msgstr ""
 
 #: circle.html.template, math_index.html.template
 msgid "Circle"
-msgstr ""
+msgstr "Cirkel"
 
 #: cube.html.template, circle.html.template, right_triangle.html.template,
 #: math_index.html.template, cone.html.template, sphere.html.template,
@@ -25,44 +25,44 @@ msgstr "align=\"left\""
 
 #: cone.html.template, math_index.html.template
 msgid "Cone"
-msgstr ""
+msgstr "Kon"
 
 #: cube.html.template, math_index.html.template
 msgid "Cube"
-msgstr ""
+msgstr "Kub"
 
 #: cylinder.html.template, math_index.html.template
 msgid "Cylinder"
-msgstr ""
+msgstr "Cylinder"
 
 #: math_index.html.template
 msgid "SpeedCrunch Book"
-msgstr ""
+msgstr "SpeedCrunch boken"
 
 #: math_index.html.template
 msgid "3D Objects"
-msgstr ""
+msgstr "3D-objekt"
 
 #: sphere.html.template, math_index.html.template
 msgid "Sphere"
-msgstr ""
+msgstr "Sfär"
 
 #: math_index.html.template
 msgid "2D Objects"
-msgstr ""
+msgstr "2D-object"
 
 #: math_index.html.template, right_triangle.html.template
 msgid "Right Triangle"
-msgstr ""
+msgstr "Höger triangel"
 
 #: math_index.html.template, sector.html.template
 msgid "Sector"
-msgstr ""
+msgstr "Sektor"
 
 #: math_index.html.template
 msgid "Misc"
-msgstr ""
+msgstr "Övrigt"
 
 #: quadratic_equation.html.template, math_index.html.template
 msgid "Quadratic Equation"
-msgstr ""
+msgstr "Kvadratisk ekvation"

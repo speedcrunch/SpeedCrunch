@@ -525,11 +525,6 @@
         <source>Selection result: &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>Valinnan tulos: &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="1333"/>
-        <source>All</source>
-        <translation type="obsolete">Kaikki</translation>
-    </message>
 </context>
 <context>
     <name>Evaluator</name>
