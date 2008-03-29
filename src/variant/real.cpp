@@ -35,7 +35,7 @@
 #include <QtXml/QDomText>
 
 const char* VariantIntf::nLongReal = "LongReal";
-VariantIntf::VariantType LongReal::vtLongReal;
+VariantType LongReal::vtLongReal;
 
 static floatstruct NaNVal;
 static int longrealPrec;
@@ -176,15 +176,24 @@ void LongReal::xmlWrite(QDomDocument& doc, QDomNode& parent) const
   float_getscientific(buf.data(), lg, &val);
 
   // copy the buffer to the text portion of the given element
-  parent.appendChild(doc.createTextNode(buf));
+  xmlWriteText(doc, parent, buf);
 }
 
 bool LongReal::xmlRead(QDomNode& node)
 {
   // pre: node is an element
-  QByteArray buf = node.toElement().text().toUtf8();
-  float_setscientific(&val, buf.data(), NULLTERMINATED);
-  return !float_isnan(&val);
+  floatstruct newval;
+  float_create(&newval);
+  bool ok;
+  QByteArray buf = xmlReadText(node, &ok).toUtf8();
+  if (ok)
+  {
+    float_setscientific(&newval, buf.data(), NULLTERMINATED);
+    ok = (!float_isnan(&newval) || buf == "NaN");
+  }
+  if (ok)
+    float_move(&val, &newval);
+  return ok;
 }
 
 RawFloatIO LongReal::convert(int digits, FmtMode mode,

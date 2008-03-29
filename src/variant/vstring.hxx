@@ -1,4 +1,4 @@
-/* initvariant.cpp: initialization on startup */
+/* vstring.hxx: variant string class */
 /*
     Copyright (C) 2008 Wolf Lammen.
 
@@ -29,35 +29,26 @@
 
 *************************************************************************/
 
-#include "variant/variant.hxx"
-#include "variant/real.hxx"
-#include "variant/vstring.hxx"
+#ifndef _VSTRING_H
+#define _VSTRING_H
 
-class InitVariant
+#include "variant/variantbase.hxx"
+#include "variant/variant.hxx"
+#include <QString>
+
+class VString: public VariantRefData
 {
+  friend class InitVariant;
   public:
-    InitVariant();
+    static VString* create(const QString&);
+    VariantType type() const { return vtString; };
+    void xmlWrite(QDomDocument&, QDomNode&) const;
+    bool xmlRead(QDomNode&);
+  private:
+    QString val;
+    static void initClass();
+    static VariantType vtString;
+    static VariantData* create();
 };
 
-InitVariant instance;
-
-/*void test()
-{
-  const char* txt;
-  Variant x = Variant::fromUtf8("%a;", VariantIntf::nString);
-  QByteArray bx = x.toUtf8();
-  x = Variant::fromUtf8(bx.data());
-  bx = x.toUtf8();
-  txt = bx.data();
-  if (txt)
-    txt += 1;
-}
-*/
-InitVariant::InitVariant()
-{
-  Variant::initClass();
-  LongReal::initClass();
-  VString::initClass();
-
-//   test();
-}
+#endif /*_VSTRING_H*/

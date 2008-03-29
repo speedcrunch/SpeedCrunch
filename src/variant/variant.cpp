@@ -32,8 +32,6 @@
 #include "variant/variant.hxx"
 #include <QtXml/QDomText>
 
-typedef VariantIntf::VariantType VariantType;
-
 const char* Variant::xmlTagName = "variant";
 const char* xmlTypeAttrName = "type";
 const char* VariantIntf::nBool = "Boolean";
@@ -135,15 +133,18 @@ void VariantBase::xmlWrite(QDomDocument& doc, QDomNode& parent) const
     buf.setNum(int(boolval));
   else
     buf.setNum(int(Error(*this)));
-  parent.appendChild(doc.createTextNode(buf));
+  xmlWriteText(doc, parent, buf);
 }
 
 bool VariantBase::xmlRead(QDomNode& node)
 {
   // pre: node is an element
   bool ok;
+  unsigned newval;
   QByteArray typeName = xmlTypeAttr(node);
-  unsigned newval = node.toElement().text().toUInt(&ok);
+  QString txt = xmlReadText(node, &ok);
+  if (ok)
+    newval = txt.toUInt(&ok);
   ok |= newval <= unsigned(NotAnError);
   if (ok && qstrcmp(typeName, nBool) == 0)
   {
@@ -157,6 +158,13 @@ bool VariantBase::xmlRead(QDomNode& node)
   else if (ok && qstrcmp(typeName, nError) == 0)
     *this = Error(newval);
   return ok;
+}
+
+VariantType Variant::type() const
+{
+  if (isBuiltIn())
+    return VariantBase::type();
+  return variantData()->type();
 }
 
 void Variant::operator = (VariantData* newval)
@@ -245,7 +253,10 @@ Variant Variant::fromUtf8(const char* utf8, const char* type)
   QByteArray data = QByteArray::fromRawData(utf8, qstrlen(utf8));
   QDomDocument doc;
   if (type)
-    createEmptyElement(doc, type).appendChild(doc.createTextNode(data));
+  {
+    QDomNode elem = createEmptyElement(doc, type);
+    xmlWriteText(doc, elem, data);
+  }
   else
     doc.setContent(data);
   Variant result;

@@ -100,6 +100,7 @@ class Variant: public VariantBase
     static Variant fromUtf8(const char* utf8, const char* type = 0);
     static const char* xmlTagName;
   public: // types & conversion
+    VariantType type() const;
   public: // operators & functions
   protected:
     void teardown();

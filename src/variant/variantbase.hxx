@@ -35,11 +35,16 @@
 #include "base/errors.h"
 #include <QByteArray>
 #include <QString>
+#include <QList>
+#include <QMap>
+#include <QStringList>
 #include <QtXml/QDomNode>
 #include <QtXml/QDomDocument>
 
 class Variant;
 class VariantData;
+
+typedef const void* VariantType;
 
 class VariantIntf
 {
@@ -47,17 +52,19 @@ class VariantIntf
     typedef VariantData* (*Constructor)();
     virtual ~VariantIntf() {};
   public: // variant types
-    typedef const void* VariantType;
     virtual VariantType type() const = 0;
     static const char* nBool;
     static const char* nError;
     static const char* nLongReal;
+    static const char* nString;
     static VariantType variantType(const char* name);
     static const char* typeName(VariantType);
   public: // IO
     virtual void xmlWrite(QDomDocument& doc, QDomNode& parent) const = 0;
     virtual bool xmlRead(QDomNode&) = 0;
   protected:
+    static void xmlWriteText(QDomDocument& doc, QDomNode& parent, QString val);
+    static QString xmlReadText(QDomNode& parent, bool* textOnly);
     static void initClass();
     static VariantType registerType(Constructor, const char* name);
     static VariantData* construct(VariantType);
@@ -87,8 +94,52 @@ class VariantRefData: public VariantData
 class FormatIntf
 {
   public:
-    virtual ~FormatIntf() {};
-    virtual QString format(const Variant&) = 0;
+    typedef const char* FmtType;
+    FormatIntf(FormatIntf* aBase = 0);
+    virtual ~FormatIntf() { releaseBase(); };
+    virtual FmtType type() const = 0;
+    virtual bool isLocale() const { return false; };
+    void lock() { ++refcount; };
+    void release();
+    virtual FormatIntf* clone() = 0;
+    virtual QString format(const Variant&) const = 0;
+    virtual bool setProp(const QString& prop, const Variant& val) = 0;
+    virtual Variant getProp(const QString& prop) const = 0;
+    virtual QStringList getProps() const = 0;
+    virtual bool canHandle(VariantType vt) const = 0;
+  protected:
+    virtual bool isCompatible(const FormatIntf*) const;
+    void releaseBase();
+  private:
+    int refcount;
+    FormatIntf* m_base;
+};
+
+class Format
+{
+  public:
+    typedef FormatIntf::FmtType FmtType;
+    Format(const Format&);
+    Format(const QString& key, VariantType);
+    ~Format();
+    Format& operator = (const Format&);
+    Format clone() const;
+    FmtType type() const;
+    QString format(const Variant&) const;
+    bool isValid() const { return p != 0; };
+    bool canHandle(VariantType vt) const;
+    QStringList getProps() const;
+    bool setProp(const QString& prop, const Variant& val);
+    Variant getProp(const QString& prop) const;
+    static Format find(const QString& key, VariantType);
+    static Format findByType(const QString& key,FmtType aType);
+    static Format add(const QString& key, FormatIntf*);
+    static void remove(const QString& key, FmtType aType);
+  private:
+    Format(FormatIntf*);
+    operator FormatIntf*() const { return p;};
+    void operator = (FormatIntf*);
+    FormatIntf* p;
 };
 
 #endif /*_VARIANTBASE_H*/
