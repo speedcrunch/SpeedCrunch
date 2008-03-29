@@ -687,11 +687,11 @@ _doFormat(
   tokens.fracpart.sz = sz;
   tokens.fracpart.buf = fracbuf;
   float_copy(&tmp, x, DECPRECISION + 2);
-  if (float_out(&tokens, &tmp, prec, base, expbase, outmode) == Success)
+  if (float_out(&tokens, &tmp, prec, base, outmode) == Success)
   {
-    sz = cattokens(NULL, -1, &tokens, flags);
+    sz = cattokens(NULL, -1, &tokens, expbase, flags);
     str = (char*)malloc( sz );
-    cattokens(str, sz, &tokens, flags);
+    cattokens(str, sz, &tokens, expbase, flags);
   }
   float_free(&tmp);
   return str;

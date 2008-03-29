@@ -67,16 +67,20 @@ typedef struct
   Error error;
 } RawFloatIO;
 
-class LongReal: public VariantRefData
+class LongReal: public VariantData
 {
   friend class InitVariant;
   public: // creating & destructing
     LongReal() { float_create(&val); };
     ~LongReal() { float_free(&val); };
+
+    // post: sets the argument to NaN
     static LongReal* create(floatnum);
   public: // type, casting, assignment
     VariantType type() const { return vtLongReal; };
     operator cfloatnum() const { return &val; };
+    operator double() const;
+    void operator = (double);
     bool move(floatnum x);
     static cfloatnum NaN();
   public: // info

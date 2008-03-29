@@ -268,10 +268,34 @@ Variant Variant::fromUtf8(const char* utf8, const char* type)
 
 Variant::Variant(floatnum f, Error e)
 {
+  // f may be set to NaN
   if (e != Success)
     *this = e;
   else
-    *this = LongReal::create(f);
+  {
+    LongReal* vr = LongReal::create(f);
+    if (vr->isNaN())
+    {
+      vr->release();
+      *this = NoOperand;
+    }
+    else
+      *this = vr;
+  }
+}
+
+Variant::operator cfloatnum() const
+{
+  if (is(nLongReal))
+    return *static_cast<const LongReal*>(variantData());
+  return LongReal::NaN();
+}
+
+Variant::operator double() const
+{
+  if (is(nLongReal))
+    return *static_cast<const LongReal*>(variantData());
+  return 0;
 }
 
 Variant::Variant(QString s, Error e)
@@ -289,7 +313,7 @@ void Variant::operator = (const QString& s)
 
 Variant::operator QString() const
 {
-  if (typeName(type()) != nString)
-    return QString();
-  return *static_cast<const VString*>(variantData());
+  if (is(nString))
+    return *static_cast<const VString*>(variantData());
+  return QString();
 }

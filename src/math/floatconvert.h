@@ -67,8 +67,8 @@ void _longint2floatnum(floatnum f, t_longint* longint);
                                   zeros only)
            IOInvalidComplement (two's complement cannot be generated) */
 Error float_out(p_otokens tokens, floatnum x, int digits, signed char base,
-               signed char expbase, char outmode);
-/* returns one of the IO... codes
+               /*signed char expbase,*/ char outmode);
+/* returns Success or one of the IO... codes
    Errors: BadLiteral, set in addition to the returned result */
 Error float_in(floatnum x, p_itokens tokens);
 

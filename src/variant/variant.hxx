@@ -102,6 +102,7 @@ class Variant: public VariantBase
     static const char* xmlTagName;
   public: // types & conversion
     VariantType type() const;
+    bool is(const char* name) const { return typeName(type()) == name; };
   public: // operators & functions
   protected:
     void teardown();
@@ -110,6 +111,8 @@ class Variant: public VariantBase
     static void initClass();
   public: // support of LongReal
     Variant(floatnum, Error = Success);
+    operator cfloatnum() const;
+    operator double() const;
   public: // support of Strings
     Variant(QString, Error = Success);
     void operator = (const QString& s);

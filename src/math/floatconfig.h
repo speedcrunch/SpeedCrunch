@@ -67,7 +67,7 @@
    In order to avoid integer overflow, this should be at least two bits
    less than the bits in the integer type chosen for the exponent.
    The default is two bit less than the size of an int */
-#define BITS_IN_EXP 30
+// #define BITS_IN_EXP 30
 
 /* floatnum puts an upper limit on the base 10 exponent of its numbers that
    is based on the size of an integer, but even for 16 bit integers this
@@ -138,14 +138,14 @@
 #ifndef BITS_IN_EXP
 /* we need 2 extra bits during conversion, so that the exponent
    does not overflow while computing a base 2 expression */
-# define BITS_IN_EXP (MAXBITS_IN_EXP)
+# define BITS_IN_EXP MAXBITS_IN_EXP
 #endif
 
 /* necessary width of an integer to hold all possible
    exponents after a conversion to another base */
-#define BITS_IN_HEXEXP   ((BITS_IN_EXP*8305)/10000 + 1)
-#define BITS_IN_OCTEXP   ((BITS_IN_EXP*11073)/10000 + 1)
-#define BITS_IN_BINEXP   ((BITS_IN_EXP*33219)/10000 + 1)
+#define BITS_IN_HEXEXP   BITS_IN_EXP
+#define BITS_IN_OCTEXP   (BITS_IN_EXP + 1)
+#define BITS_IN_BINEXP   (BITS_IN_EXP + 2)
 
 #ifndef MAXDIGITS
 #  define MAXDIGITS 500

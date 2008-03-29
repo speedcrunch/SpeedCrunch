@@ -43,14 +43,10 @@ InitVariant instance;
 
 /*void test()
 {
-  const char* txt;
-  Variant x = Variant::fromUtf8("%a;", VariantIntf::nString);
-  QByteArray bx = x.toUtf8();
-  x = Variant::fromUtf8(bx.data());
-  bx = x.toUtf8();
-  txt = bx.data();
-  if (txt)
-    txt += 1;
+  Variant x = Variant::fromUtf8("-1e308", VariantIntf::nLongReal);
+  double d = x;
+  if (d == 0)
+    d += 1;
 }
 */
 InitVariant::InitVariant()

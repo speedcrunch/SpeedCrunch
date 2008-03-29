@@ -213,14 +213,6 @@ QString VariantIntf::xmlReadText(QDomNode& parent, bool* textOnly)
   return result;
 }
 
-VariantData* VariantData::clone() const
-{
-  VariantData* newval = construct(type());
-  if (newval)
-    *newval = *this;
-  return newval;
-}
-
 /*-------------------------   Formats   ------------------------------------*/
 
 FormatIntf::FormatIntf(FormatIntf* aBase)

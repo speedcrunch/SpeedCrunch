@@ -36,7 +36,7 @@
 #include "variant/variant.hxx"
 #include <QString>
 
-class VString: public VariantRefData
+class VString: public VariantData
 {
   friend class InitVariant;
   public:

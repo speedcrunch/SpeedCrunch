@@ -123,9 +123,7 @@ typedef struct{
   const char* intpart;
   const char* fracpart;
   signed char expsign;
-  signed char expbase;
   unsigned exp;
-//  const char* exp;
   unsigned maxdigits;
 } t_itokens;
 typedef t_itokens* p_itokens;
@@ -146,7 +144,6 @@ typedef struct{
   t_prefix prefix;
   t_ext_seq_desc intpart;
   t_ext_seq_desc fracpart;
-  signed char expbase;
   int exp;
 } t_number_desc;
 typedef t_number_desc* p_number_desc;
@@ -177,7 +174,8 @@ typedef t_ioparams* p_ioparams;
 
 const char* basePrefix(char base);
 Error parse(p_itokens tokens, const char** buf);
-int cattokens(char* buf, int bufsz, p_otokens tokens, unsigned flags);
+int cattokens(char* buf, int bufsz, p_otokens tokens,
+              signed char expbase, unsigned flags);
 void float_stdconvert();
 char setioparams(p_ioparams params);
 char delioparams(signed char base);

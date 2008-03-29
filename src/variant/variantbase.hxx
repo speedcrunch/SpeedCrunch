@@ -53,12 +53,13 @@ class VariantIntf
     virtual ~VariantIntf() {};
   public: // variant types
     virtual VariantType type() const = 0;
+    static VariantType variantType(const char* name);
+    static const char* typeName(VariantType);
+    // currently supported types
     static const char* nBool;
     static const char* nError;
     static const char* nLongReal;
     static const char* nString;
-    static VariantType variantType(const char* name);
-    static const char* typeName(VariantType);
   public: // IO
     virtual void xmlWrite(QDomDocument& doc, QDomNode& parent) const = 0;
     virtual bool xmlRead(QDomNode&) = 0;
@@ -72,20 +73,12 @@ class VariantIntf
 
 class VariantData: public VariantIntf
 {
-  public: // deep copy, no reference counting
-    virtual void release() { delete this; };
-    virtual VariantData* lock() { return this; };
-    virtual VariantData* clone() const;
-};
-
-class VariantRefData: public VariantData
-{
   public: // shallow copy, reference counting
-    VariantRefData() : refcount(0) { };
+    VariantData() : refcount(0) { };
     void release() { if (--refcount <= 0) delete this; };
     VariantData* lock() { ++refcount; return this; };
     VariantData* clone() const
-      { return const_cast<VariantRefData*>(this); }
+      { return const_cast<VariantData*>(this); }
     bool isUnique() { return refcount == 1; };
   private:
     int refcount;

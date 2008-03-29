@@ -1,3 +1,14 @@
+2008-03-29
+fixed a semantic error in floatconfig
+remove expbase from structures in floatio
+
+floatio, floatconvert
+- refactor: remove unnecessary expbase field from structures
+floatconfig
+- bug fix: corrected semantic errors in BITS_IN_*EXP
+  that could lead to failures when converting huge numbers to
+  non-decimal bases
+
 2008-03-25
 let most of the IO conversion code see the exponent as an integer value
 (instead of an ASCII string)

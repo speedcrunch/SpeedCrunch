@@ -238,7 +238,6 @@ _clearnumber(
   n->prefix.base = IO_BASE_NAN;
   _clearint(&n->intpart);
   _clearint(&n->fracpart);
-  n->expbase = IO_BASE_NAN;
   n->exp = 0;
 }
 
@@ -473,19 +472,18 @@ _exp2desc(
   p_number_desc n,
   p_itokens tokens)
 {
-  if (tokens->expsign != IO_SIGN_NONE || tokens->expbase != IO_BASE_NAN
-      || tokens->exp)
+  if (tokens->expsign != IO_SIGN_NONE || tokens->exp)
   {
     unsigned upperLimit;
     signed char sign;
-    switch (tokens->expbase)
+    switch (tokens->base)
     {
-      case 2 : upperLimit = BITS_IN_BINEXP; break;
-      case 8 : upperLimit = BITS_IN_OCTEXP; break;
-      case 16: upperLimit = BITS_IN_HEXEXP; break;
-      default: upperLimit = BITS_IN_EXP; break;
+      case 2 : upperLimit = BITS_IN_BINEXP - 1; break;
+      case 8 : upperLimit = BITS_IN_OCTEXP - 1; break;
+      case 16: upperLimit = BITS_IN_HEXEXP - 1; break;
+      default: upperLimit = BITS_IN_EXP - 1; break;
     }
-    upperLimit = 1 << upperLimit;
+    upperLimit = (1 << (upperLimit)) - 1;
     sign = tokens->expsign;
     switch (sign)
     {
@@ -494,13 +492,12 @@ _exp2desc(
       case IO_SIGN_NONE:
         sign = IO_SIGN_PLUS; break;
       case IO_SIGN_MINUS:
-        --upperLimit; break;
+        ++upperLimit; break;
       default:;
     }
     if (tokens->exp > upperLimit)
       return IOExpOverflow;
     n->exp = sign < 0? -(int)(tokens->exp) : tokens->exp;
-    n->expbase = tokens->expbase;
   }
   return Success;
 }
@@ -532,8 +529,7 @@ desc2str(
   Error result;
 
   result = fixp2str(tokens, n, scale);
-  if (result != Success || _isspecial(n->prefix.base)
-      || n->expbase == IO_BASE_NAN)
+  if (result != Success || _isspecial(n->prefix.base))
     return result;
   tokens->exp = n->exp;
   return Success;
@@ -782,7 +778,6 @@ parse(
 
   tokens->fracpart = NULL;
   tokens->exp = 0;
-  tokens->expbase = IO_BASE_NAN;
   tokens->expsign = IO_SIGN_NONE;
   tokens->maxdigits = 0;
   dot = '.';
@@ -830,13 +825,13 @@ parse(
     ++p;
     idx = expchar - expbegin;
     tokens->expsign = _parsesign(&p);
-    tokens->expbase = _parsebase(&p, base);
-    expptr = _scandigits(&p, tokens->expbase);
+    int expbase = _parsebase(&p, base);
+    expptr = _scandigits(&p, expbase);
     if (!expptr || (*(expend + idx) != ' ' && *(expend + idx) != *p))
       return IOBadExp;
     for (i = 0; i < p-expptr; ++i)
     {
-      if (!_checkmul(&e, tokens->expbase)
+      if (!_checkmul(&e, expbase)
            || !_checkadd(&e, _ascii2digit(*(expptr+i))))
         return IOExpOverflow;
     }
@@ -901,6 +896,7 @@ cattokens(
   char* buf,
   int bufsz,
   p_otokens tokens,
+  signed char expbase,
   unsigned flags)
 {
   int sz;
@@ -924,7 +920,7 @@ cattokens(
   char printexpbase;
   char printexpbegin;
   char printexpend;
-  char exp[BITS_IN_EXP+3];
+  char exp[BITS_IN_BINEXP+2];
   t_buffer expBuf;
 
   expBuf.sz = sizeof(exp);
@@ -966,7 +962,9 @@ cattokens(
                   || tokens->exp != 0);
   if (printexp)
   {
-    expbasetag = _decodebase(ioparams->expbase);
+    if (expbase < 2)
+      expbase = ioparams->expbase;
+    expbasetag = _decodebase(expbase);
     printexpsign = tokens->exp < 0
                    || (flags & IO_FLAG_SUPPRESS_EXPPLUS) == 0;
     printexpbase = expbasetag != NULL
@@ -1003,7 +1001,7 @@ cattokens(
   sz += fraclg;
   if (printexp)
   {
-    exp2str(&expBuf, tokens->exp, ioparams->expbase);
+    exp2str(&expBuf, tokens->exp, expbase);
     if (printexpbegin)
       ++sz;
     if (printexpsign)

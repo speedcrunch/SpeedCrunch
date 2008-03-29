@@ -635,7 +635,6 @@ _outfixpdec(
     return IOConversionUnderflow;
   float_round(x, x, digits, TONEAREST);
   _setfndesc(n, x);
-  n->expbase = IO_BASE_NAN;
   return desc2str(tokens, n, scale);
 }
 
@@ -656,7 +655,6 @@ _outfixphex(
   if (l.length == 0)
     return IOConversionUnderflow;
   _setscale(n, &l, scale);
-  n->expbase = IO_BASE_NAN;
   return desc2str(tokens, n, scale);
 }
 
@@ -747,24 +745,19 @@ Error float_out(
   floatnum x,
   int scale,
   signed char base,
-  signed char expbase,
   char outmode)
 {
   t_number_desc n;
 
   _emptytokens(tokens);
   /* do some sanity checks first */
-  if (!_validmode(outmode) || scale < 0 || !_isvalidbase(base)
-       || !_isvalidbase(expbase))
+  if (!_validmode(outmode) || scale < 0 || !_isvalidbase(base))
     return InvalidParam;
   _clearnumber(&n);
   if (float_iszero(x))
     n.prefix.base = IO_BASE_ZERO;
   else if (!float_isnan(x))
-  {
     n.prefix.base = base;
-    n.expbase = expbase;
-  }
   if (!_isvalidbase(n.prefix.base))
     /* NaN and 0 are handled here */
     return desc2str(tokens, &n, 0);

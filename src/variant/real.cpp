@@ -34,6 +34,8 @@
 #include "math/floatconvert.h"
 #include <QtXml/QDomText>
 
+#include <math.h>
+
 const char* VariantIntf::nLongReal = "LongReal";
 VariantType LongReal::vtLongReal;
 
@@ -112,6 +114,7 @@ VariantData* LongReal::create()
 
 LongReal* LongReal::create(floatnum f)
 {
+  // post: sets f to NaN
   LongReal* lr = static_cast<LongReal*>(create());
   lr->move(f);
   return lr;
@@ -168,6 +171,67 @@ int LongReal::workPrec()
   return longrealPrec + 3;
 }
 
+const double explist[] = { 10, 100, 10000, 1e8, 1e16, 1e32, 1e64, 1e128, 1e256 };
+enum { lastexplist = sizeof(explist)/sizeof(double) - 1 };
+
+double pwr10(int posexp)
+{
+  double result = 1;
+  int expidx = 0;
+  while (posexp && expidx <= lastexplist)
+  {
+    if ((posexp & 1) != 0)
+      result *= explist[expidx];
+    posexp >>= 1;
+    ++expidx;
+  }
+  if (posexp)
+    result = explist[lastexplist] * explist[lastexplist]; // create infinity
+  return result;
+}
+
+LongReal::operator double() const
+{
+  // post: converts all integers < 2^50 without rounding error
+  qint64 sgnf = 0;
+  double result;
+  for (int i = -1; ++i <= 17;)
+    sgnf = sgnf * 10 + float_getdigit(&val, i);
+  if (float_getsign(&val) < 0)
+    sgnf = -sgnf;
+  int exp = float_getexponent(&val);
+  if (exp < -100)
+  {
+    result = 1e20;
+    exp += 3;
+  }
+  else
+  {
+    result = 1;
+    exp -= 17;
+  }
+  bool negexp = (exp < 0);
+  if (negexp)
+    exp = -exp;
+  result = sgnf / result;
+  if (negexp)
+    result /= pwr10(exp);
+  else
+    result *= pwr10(exp);
+  return result;
+}
+
+void LongReal::operator = (double x)
+{
+/*  if (x == 0)
+  {
+    float_setzero(&val);
+    return;
+  }
+  int exp;
+  double sgnf = frexp(x, &exp);*/
+}
+
 void LongReal::xmlWrite(QDomDocument& doc, QDomNode& parent) const
 {
   // fill a buffer with a description of val in ASCII
@@ -212,7 +276,7 @@ RawFloatIO LongReal::convert(int digits, FmtMode mode,
   float_create(&workcopy);
   float_copy(&workcopy, &val, evalPrec());
   result.error = float_out(&tokens, &workcopy, digits,
-                           base, scalebase, _cvtMode(mode));
+                           base, _cvtMode(mode));
   if (result.error == Success)
   {
     if (tokens.exp >= 0)
@@ -246,12 +310,12 @@ Variant LongReal::convert(const RawFloatIO& io)
   tokens.sign = _cvtSign(io.signSignificand);
   tokens.base = io.baseSignificand;
   tokens.exp = 0;
-  tokens.expbase = IO_BASE_NAN;
+//   tokens.expbase = IO_BASE_NAN;
   tokens.expsign = IO_SIGN_NONE;
   if (io.scale != 0)
   {
     tokens.exp = io.scale;
-    tokens.expbase = io.baseScale;
+//     tokens.expbase = io.baseScale;
     tokens.expsign = io.signScale;
   }
   tokens.maxdigits = evalPrec();
