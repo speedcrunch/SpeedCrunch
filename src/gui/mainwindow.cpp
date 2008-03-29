@@ -437,7 +437,7 @@ void MainWindow::Private::createActions()
   actions.languageId   = new QAction( QString::fromUtf8( "Bahasa Indonesia"    ), p );
   actions.languageIt   = new QAction( QString::fromUtf8( "Italiano"            ), p );
   actions.languageNl   = new QAction( QString::fromUtf8( "Nederlands"          ), p );
-  actions.languageNo   = new QAction( QString::fromUtf8( "Norsk (Bokmål)"      ), p );
+  actions.languageNo   = new QAction( QString::fromUtf8( "Norsk (Bokmål)"      ) + QChar( 0x200E ), p );
   actions.languagePl   = new QAction( QString::fromUtf8( "Polski"              ), p );
   actions.languagePt   = new QAction( QString::fromUtf8( "Português"           ), p );
   actions.languagePtBr = new QAction( QString::fromUtf8( "Português do Brasil" ), p );
