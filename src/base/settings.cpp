@@ -21,6 +21,7 @@
 
 #include "settings.hxx"
 
+#include "3rdparty/util/binreloc.h"
 #include "math/floatconfig.h"
 
 #include <QApplication>
@@ -42,24 +43,43 @@ void Settings::load()
 {
   const QString KEY = "SpeedCrunch";
 
-#ifdef Q_OS_WIN32
-
+#ifdef Q_WS_WIN
 #ifdef SPEEDCRUNCH_PORTABLE
-  // Portable Win32 version: settings are from INI file in the same directory
+  // Portable Windows version: settings are from INI file in the same directory
   QString appPath = QApplication::applicationFilePath();
-  int ii = appPath.lastIndexOf('/');
-  if(ii > 0)
+  int ii = appPath.lastIndexOf( '/' );
+  if ( ii > 0)
       appPath.remove(ii, appPath.length());
   QString iniFile = appPath + '/' + KEY + ".ini";
   QSettings settings( iniFile, QSettings::IniFormat );
 #else
-  // Regular Win32 version: settings are from the registry HKEY_CURRENT_USER\Software\SpeedCrunch
+  // Regular Windows version:
+  //   settings are from the registry HKEY_CURRENT_USER\Software\SpeedCrunch
   QSettings settings( QSettings::NativeFormat, QSettings::UserScope, KEY, KEY );
-#endif
+#endif // SPEEDCRUNCH_PORTABLE
+#endif // Q_WS_WIN
 
+#ifdef Q_WS_MAC
+  QSettings settings( QSettings::NativeFormat, QSettings::UserScope, KEY, KEY );
+#endif // Q_WS_MAC
+
+#ifdef Q_WS_X11
+#ifdef SPEEDCRUNCH_PORTABLE
+  // Portable X11 version: settings are from INI file in the same directory
+  BrInitError error;
+  if ( br_init( & error ) == 0 && error != BR_INIT_ERROR_DISABLED )
+  {
+      qDebug( "Warning: BinReloc failed to initialize (error code %d)", error );
+      qDebug( "Will fallback to hardcoded default path." );
+  }
+
+  QString iniFile = QString( br_find_prefix( 0 ) ) + '/' + KEY + ".ini";
+  QSettings settings( iniFile, QSettings::IniFormat );
 #else
-  QSettings settings( /*QSettings::IniFormat,*/ QSettings::UserScope, KEY, KEY );
-#endif
+  // Regular Unix (not Mac) version: settings are from $HOME/.conf/SpeedCrunch
+  QSettings settings( QSettings::NativeFormat, QSettings::UserScope, KEY, KEY );
+#endif // SPEEDCRUNCH_PORTABLE
+#endif // Q_WS_X11
 
   QString key;
 
@@ -212,24 +232,43 @@ void Settings::save()
 {
   const QString KEY = "SpeedCrunch";
 
-#ifdef Q_OS_WIN32
-
+#ifdef Q_WS_WIN
 #ifdef SPEEDCRUNCH_PORTABLE
-  // Portable Win32 version: settings are from INI file in the same directory
+  // Portable Windows version: settings are from INI file in the same directory
   QString appPath = QApplication::applicationFilePath();
-  int ii = appPath.lastIndexOf('/');
-  if(ii > 0)
+  int ii = appPath.lastIndexOf( '/' );
+  if ( ii > 0)
       appPath.remove(ii, appPath.length());
   QString iniFile = appPath + '/' + KEY + ".ini";
   QSettings settings( iniFile, QSettings::IniFormat );
 #else
-  // Regular Win32 version: settings are from the registry HKEY_CURRENT_USER\Software\SpeedCrunch
+  // Regular Windows version:
+  //   settings are from the registry HKEY_CURRENT_USER\Software\SpeedCrunch
   QSettings settings( QSettings::NativeFormat, QSettings::UserScope, KEY, KEY );
-#endif
+#endif // SPEEDCRUNCH_PORTABLE
+#endif // Q_WS_WIN
 
+#ifdef Q_WS_MAC
+  QSettings settings( QSettings::NativeFormat, QSettings::UserScope, KEY, KEY );
+#endif // Q_WS_MAC
+
+#ifdef Q_WS_X11
+#ifdef SPEEDCRUNCH_PORTABLE
+  // Portable X11 version: settings are from INI file in the same directory
+  BrInitError error;
+  if ( br_init( & error ) == 0 && error != BR_INIT_ERROR_DISABLED )
+  {
+      qDebug( "Warning: BinReloc failed to initialize (error code %d)", error );
+      qDebug( "Will fallback to hardcoded default path." );
+  }
+
+  QString iniFile = QString( br_find_prefix( 0 ) ) + '/' + KEY + ".ini";
+  QSettings settings( iniFile, QSettings::IniFormat );
 #else
-  QSettings settings( /*QSettings::IniFormat,*/ QSettings::UserScope, KEY, KEY );
-#endif
+  // Regular Unix (not Mac) version: settings are from $HOME/.conf/SpeedCrunch
+  QSettings settings( QSettings::NativeFormat, QSettings::UserScope, KEY, KEY );
+#endif // SPEEDCRUNCH_PORTABLE
+#endif // Q_WS_X11
 
   QString key;
   int k, i;
