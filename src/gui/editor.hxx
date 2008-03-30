@@ -88,6 +88,7 @@ class Editor : public QTextEdit
   public slots:
     void appendHistory( const QString & result, const QString & expression );
     void appendHistory( const QStringList & h, const QStringList & r );
+    void cancelConstantCompletion();
     void evaluate();
     void insertConstant( const QString & );
     void insert( const QString & );
@@ -165,6 +166,7 @@ class ConstantCompletion : public QObject
 
   signals:
     void selectedCompletion( const QString & item );
+    void canceledCompletion();
 
   public slots:
     void doneCompletion();

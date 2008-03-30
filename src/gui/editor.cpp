@@ -835,10 +835,18 @@ void Editor::insertConstant( const QString & c )
     insert( s );
   if ( d->constantCompletion )
   {
-    qDebug("destroy");
     disconnect( d->constantCompletion );
-    delete d->constantCompletion;
-    d->constantCompletion = 0;
+    d->constantCompletion->deleteLater();
+  }
+}
+
+
+void Editor::cancelConstantCompletion()
+{
+  if ( d->constantCompletion )
+  {
+    disconnect( d->constantCompletion );
+    d->constantCompletion->deleteLater();
   }
 }
 
@@ -938,10 +946,12 @@ void Editor::keyPressEvent( QKeyEvent * e )
 
   if ( e->key() == Qt::Key_Space && e->modifiers() == Qt::ControlModifier )
   {
-    qDebug("create");
     d->constantCompletion = new ConstantCompletion( this );
-    connect( d->constantCompletion, SIGNAL( selectedCompletion( const QString & ) ),
+    connect( d->constantCompletion,
+             SIGNAL( selectedCompletion( const QString & ) ),
              this, SLOT( insertConstant( const QString & ) ) );
+    connect( d->constantCompletion, SIGNAL( canceledCompletion() ),
+             this, SLOT( cancelConstantCompletion() ) );
     d->constantCompletion->showCompletion();
     e->accept();
     return;
@@ -1229,11 +1239,9 @@ ConstantCompletion::ConstantCompletion( Editor * editor ) : QObject( editor ),
   d->editor = editor;
 
   d->popup = new QFrame;
-  //d->popup->hide();
   d->popup->setParent( 0, Qt::Popup );
   d->popup->setFocusPolicy( Qt::NoFocus );
   d->popup->setFrameStyle( QFrame::Box | QFrame::Plain );
-  //d->popup->setAttribute( Qt::WA_DeleteOnClose, true );
 
   d->categoryList = new QTreeWidget( d->popup );
   d->categoryList->setFrameShape( QFrame::NoFrame );
@@ -1370,9 +1378,7 @@ bool ConstantCompletion::eventFilter( QObject * obj, QEvent * ev )
 {
   if ( ev->type() == QEvent::Hide )
   {
-    // fool doneCompletion() in order to prevent insertion of text
-    d->constantList->currentItem()->setText( 0, "X" );
-    emit doneCompletion();
+    emit canceledCompletion();
     return true;
   }
 
@@ -1402,9 +1408,7 @@ bool ConstantCompletion::eventFilter( QObject * obj, QEvent * ev )
 
       if ( ke->key() != Qt::Key_Escape )
         QApplication::sendEvent( d->editor, ev );
-      // fool doneCompletion() in order to prevent insertion of text
-      d->constantList->currentItem()->setText( 0, "X" );
-      emit doneCompletion();
+      emit canceledCompletion();
       return true;
     }
   }
@@ -1432,10 +1436,7 @@ bool ConstantCompletion::eventFilter( QObject * obj, QEvent * ev )
 
       if ( ke->key() != Qt::Key_Escape )
         QApplication::sendEvent( d->editor, ev );
-      // fool doneCompletion() in order to prevent insertion of text
-      if ( d->constantList->currentItem() )
-        d->constantList->currentItem()->setText( 0, "X" );
-      emit doneCompletion();
+      emit canceledCompletion();
       return true;
     }
   }
@@ -1446,7 +1447,6 @@ bool ConstantCompletion::eventFilter( QObject * obj, QEvent * ev )
 
 void ConstantCompletion::doneCompletion()
 {
-  //d->popup->hide();
   d->editor->setFocus();
   QTreeWidgetItem * item = 0;
   item = d->constantList->currentItem();
