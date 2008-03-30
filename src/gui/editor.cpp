@@ -1064,7 +1064,7 @@ EditorCompletion::EditorCompletion( Editor * editor ) : QObject( editor ),
 {
   d->editor = editor;
 
-  d->popup = new QTreeWidget( 0 );
+  d->popup = new QTreeWidget;
   d->popup->setFrameShape( QFrame::NoFrame );
   d->popup->setColumnCount( 2 );
   d->popup->setRootIsDecorated( false );
@@ -1127,6 +1127,12 @@ bool EditorCompletion::eventFilter( QObject * obj, QEvent * ev )
       d->editor->setFocus();
       if ( ke->key() != Qt::Key_Escape )
         QApplication::sendEvent( d->editor, ev );
+      return true;
+    }
+    else if ( ev->type() == QEvent::MouseButtonPress )
+    {
+      d->popup->hide();
+      d->editor->setFocus();
       return true;
     }
   }
