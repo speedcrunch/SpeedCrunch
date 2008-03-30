@@ -1130,6 +1130,7 @@ bool EditorCompletion::eventFilter( QObject * obj, QEvent * ev )
       return true;
     }
   }
+
   return false;
 }
 
@@ -1252,7 +1253,7 @@ ConstantCompletion::ConstantCompletion( Editor * editor ) : QObject( editor ),
   d->categoryList->setSelectionBehavior( QTreeWidget::SelectRows );
   d->categoryList->setMouseTracking( true );
   d->categoryList->installEventFilter( this );
-  //d->categoryList->setVerticalScrollBarPolicy( Qt::ScrollBarAsNeeded );
+  d->categoryList->setVerticalScrollBarPolicy( Qt::ScrollBarAsNeeded );
 
   connect( d->categoryList, SIGNAL( itemClicked( QTreeWidgetItem *, int ) ),
            this, SLOT( showConstants() ) );
@@ -1270,8 +1271,8 @@ ConstantCompletion::ConstantCompletion( Editor * editor ) : QObject( editor ),
   d->constantList->setVerticalScrollBarPolicy( Qt::ScrollBarAsNeeded );
 
   // FIXME: why does it crash when clicking a constant description?
-  //connect( d->constantList, SIGNAL( itemClicked( QTreeWidgetItem *, int ) ),
-  //         this, SLOT( doneCompletion() ) );
+  connect( d->constantList, SIGNAL( itemClicked( QTreeWidgetItem *, int ) ),
+           this, SLOT( doneCompletion() ) );
 
   d->slider = new QTimeLine( 250, d->popup );
   d->slider->setCurveShape( QTimeLine::EaseInCurve );
@@ -1376,7 +1377,7 @@ void ConstantCompletion::showConstants()
 
 bool ConstantCompletion::eventFilter( QObject * obj, QEvent * ev )
 {
-  if ( ev->type() == QEvent::Hide )
+  if ( ev->type() == QEvent::MouseButtonPress )
   {
     emit canceledCompletion();
     return true;
