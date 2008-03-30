@@ -1,27 +1,81 @@
-SpeedCrunch post-0.9
+SpeedCrunch 0.10
 ---------------------
 New features:
-  preliminary support of logic functions
-  extended output of real-valued numbers to non-decimal modes
-  arithmetic integer divide and modulo
-  allow real-valued arguments for nPr and nCr
+  Preliminary support of logic functions
+  Extended output of real-valued numbers to non-decimal modes
+  Allow real-valued arguments for nPr and nCr
+	Restore last session
+	Save and load session
+	Ability to change language on-the-fly
+	Context menu for tray icon
+	Support for RTL (right to left) written languages
+  Batch calculation
+	Minimal view version
+	Default desktop file for menu integration
+	New Turkish (incomplete) translation
+  Math Book browsable pages in a dock window
+  Compile-time option to build a "portable" target
+	Full screen mode
+	Automatic syntax highlighting color generation
+	Status bar
+	Auto-calc of the selected text
+
 
 New functions:
   ERF: the normalized error function (related to normal distribution)
   ERFC: the complementary error function
   GAMMA: the extension of the factorials (x-1)!
   LNGAMMA: ln(Gamma(x)) for x > 0
+	IDIV: integer division
+	MOD: modulo
 
-Improvements and bug fixes:
+Improvements:
+  Improved binomCdf evaluation allows n to be as big as 20000 now
+	Improved keypad
+  Testevaluator independent of locale (does not use ',' any more)
+	Exp/Log inconsistency
+	New keyboard shortcuts (including PagDown/PgUp to scroll result display)
+	Redesigned menus
+	Optional widgets created and destroyed on the fly, optimal for mobile
+	  devices
+	Click to copy and double click to insert an expression from the display into
+	  the expression editor
+  Errors displayed in modal dialog instead of result display
+	Selecting and inserting an expression does not trigger evaluation
+
+Bug fixes:
   Fixed loss of precision on variable saving
   Fixed clobbering of ans on radix change
-  improved binomCdf evaluation allows n to be as big as 20000 now
-  testevaluator independent of locale (does not use ',' any more)
-  Fixed a bug in the math engine (float_frac) that could cause memory corruption
-  bugfix in the pochhammer symbol evaluating routine, affecting nPr
+	Fixed a bug in the math engine (float_frac) that could cause memory corruption
+  Bugfix in the pochhammer symbol evaluating routine, affecting nPr
     when n and r are negative integers, and n == r-1
-  bugfix: No freeze any more when evaluating (-n+0.5)! for very large integers n
-  bugfix: cbrt fixed for values 1+x with x << 1
+  Bugfix: No freeze any more when evaluating (-n+0.5)! for very large integers n
+  Bugfix: cbrt fixed for values 1+x with x << 1
+	No more short freeze after restoring from system tray on Windows
+	All widgets reflect current preference for the radix character
+	Results copied according to selected number base
+	Translations work on Windows
+	Restoring from minimize state hides dock windows
+  Resizing of expression editor
+	Loss of precision on saved variables
+	Clole button closes dock windows instead
+	Can't save session
+	Bad shortcuts on Windows installer
+  Operator color set to system foreground in highlight mode
+	Virtual desktop switching hides open dock windows
+	Unsecure built-in variables
+	Ans is saved but not recovered on startup
+	Copy result usls prefered radix character
+  Result window does not scroll to latest result
+	Result screen resizing issues
+	Docks windows don't close
+  Result display scroll bar doesn't hale system background color
+	Autocalc tip according to prefered result format, precision and radix char
+	Cbrt() fails
+	Docks don't react to Return or Enter
+  Display of completion popup when pasting text to the expression editor
+	Hide function/variable completion after clicking mouse button somewhere else
+
 
 SpeedCrunch 0.9
 ---------------------
