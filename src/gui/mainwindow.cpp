@@ -346,7 +346,9 @@ QTranslator * MainWindow::Private::createTranslator( const QString & langCode )
       qDebug( "Will fallback to hardcoded default path." );
   }
 
-  QString localeDir = QString( br_find_data_dir( 0 ) ) + "/speedcrunch/locale";
+  char * dataDir = br_find_data_dir( 0 );
+  QString localeDir = QString( dataDir ) + "/speedcrunch/locale";
+  free( dataDir );
   if ( translator->load( localeFile, localeDir ) )
     return translator;
   else
@@ -981,9 +983,9 @@ void MainWindow::Private::createBookDock()
 
 #ifdef Q_OS_WIN32
   QString appPath = QApplication::applicationFilePath();
-  int ii = appPath.lastIndexOf('/');
-  if(ii > 0)
-      appPath.remove(ii, appPath.length());
+  int ii = appPath.lastIndexOf( '/' );
+  if ( ii > 0 )
+      appPath.remove( ii, appPath.length() );
   booksDir = appPath + '/' + QString( "books/" );
 #else
   BrInitError error;
@@ -993,7 +995,9 @@ void MainWindow::Private::createBookDock()
       qDebug( "Will fallback to hardcoded default path." );
   }
 
-  booksDir = QString( br_find_data_dir( 0 ) ) + "/speedcrunch/books/";
+  char * dataDir = br_find_data_dir( 0 );
+  booksDir = QString( dataDir ) + "/speedcrunch/books/";
+  free( dataDir );
 #endif
 
   docks.book = new BookDock( booksDir, "math_index.html", settings.language,

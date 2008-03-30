@@ -376,7 +376,9 @@ QSettings * createQSettings( const QString & KEY )
         qDebug( "Will fallback to hardcoded default path." );
     }
 
-    QString iniFile = QString( br_find_prefix( 0 ) ) + '/' + KEY + ".ini";
+    char * prefix = br_find_prefix( 0 );
+    QString iniFile = QString( prefix ) + '/' + KEY + ".ini";
+    free( prefix );
     settings = new QSettings( iniFile, QSettings::IniFormat );
   #else
     // Regular Unix (not Mac) version: settings from $HOME/.conf/SpeedCrunch
