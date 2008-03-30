@@ -1,5 +1,5 @@
 // This file is part of the SpeedCrunch project
-// Copyright (C) 2004, 2005, 2007 Ariya Hidayat <ariya@kde.org>
+// Copyright (C) 2004, 2005, 2007, 2008 Ariya Hidayat <ariya@kde.org>
 // Copyright (C) 2005-2006 Johan Thelin <e8johan@gmail.com>
 // Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
 //
@@ -32,10 +32,47 @@
 
 // public
 
+
+Settings::Settings()
+{
+  //escape = "\\"; //reftbl
+
+#ifdef Q_OS_WIN32
+#ifdef SPEEDCRUNCH_PORTABLE
+  // Portable Win32 version: settings are from INI file in the same directory
+  QString appPath = QApplication::applicationFilePath();
+  int ii = appPath.lastIndexOf('/');
+  if(ii > 0)
+      appPath.remove(ii, appPath.length());
+  QSettings::setPath( QSettings::IniFormat, QSettings::UserScope, appPath);
+#endif
+#endif
+
+}
+
 void Settings::load()
 {
   const QString KEY = "SpeedCrunch";
+
+#ifdef Q_OS_WIN32
+
+#ifdef SPEEDCRUNCH_PORTABLE
+  // Portable Win32 version: settings are from INI file in the same directory
+  QString appPath = QApplication::applicationFilePath();
+  int ii = appPath.lastIndexOf('/');
+  if(ii > 0)
+      appPath.remove(ii, appPath.length());
+  QString iniFile = appPath + '/' + KEY + ".ini";
+  QSettings settings( iniFile, QSettings::IniFormat );
+#else
+  // Regular Win32 version: settings are from the registry HKEY_CURRENT_USER\Software\SpeedCrunch
+  QSettings settings( QSettings::NativeFormat, QSettings::UserScope, KEY, KEY );
+#endif
+
+#else
   QSettings settings( /*QSettings::IniFormat,*/ QSettings::UserScope, KEY, KEY );
+#endif
+
   QString key;
 
   key = KEY + "/General/";
@@ -186,7 +223,26 @@ void Settings::load()
 void Settings::save()
 {
   const QString KEY = "SpeedCrunch";
+
+#ifdef Q_OS_WIN32
+
+#ifdef SPEEDCRUNCH_PORTABLE
+  // Portable Win32 version: settings are from INI file in the same directory
+  QString appPath = QApplication::applicationFilePath();
+  int ii = appPath.lastIndexOf('/');
+  if(ii > 0)
+      appPath.remove(ii, appPath.length());
+  QString iniFile = appPath + '/' + KEY + ".ini";
+  QSettings settings( iniFile, QSettings::IniFormat );
+#else
+  // Regular Win32 version: settings are from the registry HKEY_CURRENT_USER\Software\SpeedCrunch
+  QSettings settings( QSettings::NativeFormat, QSettings::UserScope, KEY, KEY );
+#endif
+
+#else
   QSettings settings( /*QSettings::IniFormat,*/ QSettings::UserScope, KEY, KEY );
+#endif
+
   QString key;
   int k, i;
 
@@ -318,8 +374,3 @@ void Settings::save()
 
 
 // private
-
-Settings::Settings()
-{
-  //escape = "\\"; //reftbl
-}
