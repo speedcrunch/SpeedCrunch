@@ -264,7 +264,9 @@ void ResultDisplay::appendHistory( const QStringList & history,
 {
   for ( int i = 0 ; i < history.count(); i++ )
   {
-    const char * resultStr = results[i].toAscii().data();
+    QByteArray a = results[i].toLatin1();
+    const char * resultStr = a.constData();
+
     HNumber result( resultStr );
     if ( results[i] == "NaN" || ! result.isNan() )
       append( history[i], result );
