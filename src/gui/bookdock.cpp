@@ -158,7 +158,8 @@ void BookDock::anchorClicked ( const QUrl & link )
   }
 
   // necessary for QTextBrowser to always draw correctly (why?)
-  d->sheet->adjustSize();
+  // causes a bug on Window or maybe just about the version number
+  //d->sheet->adjustSize();
 }
 
 
