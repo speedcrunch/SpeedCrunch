@@ -1225,7 +1225,7 @@ ConstantCompletion::ConstantCompletion( Editor * editor ) : QObject( editor ),
   d->editor = editor;
 
   d->popup = new QFrame;
-  d->popup->hide();
+  //d->popup->hide();
   d->popup->setParent( 0, Qt::Popup );
   d->popup->setFocusPolicy( Qt::NoFocus );
   d->popup->setFrameStyle( QFrame::Box | QFrame::Plain );
@@ -1255,7 +1255,7 @@ ConstantCompletion::ConstantCompletion( Editor * editor ) : QObject( editor ),
   d->constantList->setMouseTracking( true );
   d->constantList->installEventFilter( this );
   d->constantList->setVerticalScrollBarPolicy( Qt::ScrollBarAsNeeded );
-  d->constantList->grabMouse();
+  //d->constantList->grabMouse();
 
   // FIXME: why does it crash when clicking a constant description?
   //connect( d->constantList, SIGNAL( itemClicked( QTreeWidgetItem *, int ) ),
@@ -1320,6 +1320,7 @@ ConstantCompletion::~ConstantCompletion()
 void ConstantCompletion::showCategory()
 {
   d->slider->setFrameRange( d->popup->width(), 0 );
+  d->slider->stop();
   d->slider->start();
   d->categoryList->setFocus();
 }
@@ -1328,6 +1329,7 @@ void ConstantCompletion::showCategory()
 void ConstantCompletion::showConstants()
 {
   d->slider->setFrameRange( 0, d->popup->width() );
+  d->slider->stop();
   d->slider->start();
   d->constantList->setFocus();
 
@@ -1386,8 +1388,7 @@ bool ConstantCompletion::eventFilter( QObject * obj, QEvent * ev )
         return false;
       }
 
-      qDebug("AQUI2");
-      d->constantList->releaseMouse();
+      //d->constantList->releaseMouse();
       if ( ke->key() != Qt::Key_Escape )
         QApplication::sendEvent( d->editor, ev );
       // fool doneCompletion() in order to prevent insertion of text
@@ -1395,13 +1396,13 @@ bool ConstantCompletion::eventFilter( QObject * obj, QEvent * ev )
       emit doneCompletion();
       return true;
     }
-    else if ( ev->type() == QEvent::MouseButtonPress )
-    {
-      qDebug("AQUI2");
-      d->constantList->releaseMouse();
-      emit doneCompletion();
-      return true;
-    }
+    //else if ( ev->type() == QEvent::MouseButtonPress )
+    //{
+    //  qDebug("AQUI2");
+    //  d->constantList->releaseMouse();
+    //  emit doneCompletion();
+    //  return true;
+    //}
   }
 
   if ( obj == d->categoryList )
@@ -1425,8 +1426,7 @@ bool ConstantCompletion::eventFilter( QObject * obj, QEvent * ev )
         return false;
       }
 
-      qDebug("AQUI1");
-      d->constantList->releaseMouse();
+      //d->constantList->releaseMouse();
       if ( ke->key() != Qt::Key_Escape )
         QApplication::sendEvent( d->editor, ev );
       //// fool doneCompletion() in order to prevent insertion of text
@@ -1435,13 +1435,13 @@ bool ConstantCompletion::eventFilter( QObject * obj, QEvent * ev )
       emit doneCompletion();
       return true;
     }
-    else if ( ev->type() == QEvent::MouseButtonPress )
-    {
-      qDebug("AQUI1");
-      d->constantList->releaseMouse();
-      emit doneCompletion();
-      return true;
-    }
+    //else if ( ev->type() == QEvent::MouseButtonPress )
+    //{
+    //  qDebug("AQUI1");
+    //  d->constantList->releaseMouse();
+    //  emit doneCompletion();
+    //  return true;
+    //}
   }
 
   return false;
@@ -1450,7 +1450,7 @@ bool ConstantCompletion::eventFilter( QObject * obj, QEvent * ev )
 
 void ConstantCompletion::doneCompletion()
 {
-  d->popup->hide();
+  //d->popup->hide();
   d->editor->setFocus();
   QTreeWidgetItem * item = 0;
   item = d->constantList->currentItem();
