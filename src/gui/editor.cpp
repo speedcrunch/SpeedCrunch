@@ -828,15 +828,18 @@ void Editor::autoCalcSelection()
 
 void Editor::insertConstant( const QString & c )
 {
-  qDebug("destroy");
   QString s( c );
   if ( d->radixChar == ',' )
     s.replace( '.', ',' );
   if ( ! c.isNull() )
     insert( s );
-  disconnect( d->constantCompletion );
-  delete d->constantCompletion;
-  d->constantCompletion = 0;
+  if ( d->constantCompletion )
+  {
+    qDebug("destroy");
+    disconnect( d->constantCompletion );
+    delete d->constantCompletion;
+    d->constantCompletion = 0;
+  }
 }
 
 
@@ -1112,7 +1115,8 @@ bool EditorCompletion::eventFilter( QObject * obj, QEvent * ev )
 
       d->popup->hide();
       d->editor->setFocus();
-      QApplication::sendEvent( d->editor, ev );
+      if ( ke->key() != Qt::Key_Escape )
+        QApplication::sendEvent( d->editor, ev );
       return true;
     }
   }
@@ -1124,7 +1128,7 @@ void EditorCompletion::doneCompletion()
 {
 #ifdef COMPLETION_FADE_EFFECT
   d->fader->start();
-  QTimer::singleShot( 750, d->popup, SLOT(hide()) ); // sentinel
+  QTimer::singleShot( 750, d->popup, SLOT( hide() ) ); // sentinel
 #else
   d->popup->hide();
 #endif
@@ -1229,6 +1233,7 @@ ConstantCompletion::ConstantCompletion( Editor * editor ) : QObject( editor ),
   d->popup->setParent( 0, Qt::Popup );
   d->popup->setFocusPolicy( Qt::NoFocus );
   d->popup->setFrameStyle( QFrame::Box | QFrame::Plain );
+  //d->popup->setAttribute( Qt::WA_DeleteOnClose, true );
 
   d->categoryList = new QTreeWidget( d->popup );
   d->categoryList->setFrameShape( QFrame::NoFrame );
@@ -1255,13 +1260,12 @@ ConstantCompletion::ConstantCompletion( Editor * editor ) : QObject( editor ),
   d->constantList->setMouseTracking( true );
   d->constantList->installEventFilter( this );
   d->constantList->setVerticalScrollBarPolicy( Qt::ScrollBarAsNeeded );
-  //d->constantList->grabMouse();
 
   // FIXME: why does it crash when clicking a constant description?
   //connect( d->constantList, SIGNAL( itemClicked( QTreeWidgetItem *, int ) ),
   //         this, SLOT( doneCompletion() ) );
 
-  d->slider = new QTimeLine( 250, this );
+  d->slider = new QTimeLine( 250, d->popup );
   d->slider->setCurveShape( QTimeLine::EaseInCurve );
   connect( d->slider, SIGNAL( frameChanged( int ) ),
            this, SLOT( slide( int ) ) );
@@ -1364,6 +1368,14 @@ void ConstantCompletion::showConstants()
 
 bool ConstantCompletion::eventFilter( QObject * obj, QEvent * ev )
 {
+  if ( ev->type() == QEvent::Hide )
+  {
+    // fool doneCompletion() in order to prevent insertion of text
+    d->constantList->currentItem()->setText( 0, "X" );
+    emit doneCompletion();
+    return true;
+  }
+
   if ( obj == d->constantList )
   {
     if ( ev->type() == QEvent::KeyPress )
@@ -1388,7 +1400,6 @@ bool ConstantCompletion::eventFilter( QObject * obj, QEvent * ev )
         return false;
       }
 
-      //d->constantList->releaseMouse();
       if ( ke->key() != Qt::Key_Escape )
         QApplication::sendEvent( d->editor, ev );
       // fool doneCompletion() in order to prevent insertion of text
@@ -1396,13 +1407,6 @@ bool ConstantCompletion::eventFilter( QObject * obj, QEvent * ev )
       emit doneCompletion();
       return true;
     }
-    //else if ( ev->type() == QEvent::MouseButtonPress )
-    //{
-    //  qDebug("AQUI2");
-    //  d->constantList->releaseMouse();
-    //  emit doneCompletion();
-    //  return true;
-    //}
   }
 
   if ( obj == d->categoryList )
@@ -1426,22 +1430,14 @@ bool ConstantCompletion::eventFilter( QObject * obj, QEvent * ev )
         return false;
       }
 
-      //d->constantList->releaseMouse();
       if ( ke->key() != Qt::Key_Escape )
         QApplication::sendEvent( d->editor, ev );
-      //// fool doneCompletion() in order to prevent insertion of text
+      // fool doneCompletion() in order to prevent insertion of text
       if ( d->constantList->currentItem() )
         d->constantList->currentItem()->setText( 0, "X" );
       emit doneCompletion();
       return true;
     }
-    //else if ( ev->type() == QEvent::MouseButtonPress )
-    //{
-    //  qDebug("AQUI1");
-    //  d->constantList->releaseMouse();
-    //  emit doneCompletion();
-    //  return true;
-    //}
   }
 
   return false;
@@ -1462,10 +1458,7 @@ void ConstantCompletion::doneCompletion()
         c = d->constants[k].value;
         break;
       }
-  if ( ! c.isNull() )
-    emit selectedCompletion( c );
-  else
-    emit selectedCompletion( QString() );
+  emit selectedCompletion( item ? c : QString() );
 }
 
 
