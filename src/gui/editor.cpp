@@ -1357,7 +1357,7 @@ void ConstantCompletion::showConstants()
     item = new QTreeWidgetItem( d->constantList, str );
   }
   d->constantList->sortItems( 0, Qt::AscendingOrder );
-
+  d->constantList->setCurrentItem( d->constantList->itemAt( 0, 0 ) );
   d->lastCategory = chosenCategory;
 }
 
