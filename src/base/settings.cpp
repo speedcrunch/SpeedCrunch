@@ -36,18 +36,6 @@
 Settings::Settings()
 {
   //escape = "\\"; //reftbl
-
-#ifdef Q_OS_WIN32
-#ifdef SPEEDCRUNCH_PORTABLE
-  // Portable Win32 version: settings are from INI file in the same directory
-  QString appPath = QApplication::applicationFilePath();
-  int ii = appPath.lastIndexOf('/');
-  if(ii > 0)
-      appPath.remove(ii, appPath.length());
-  QSettings::setPath( QSettings::IniFormat, QSettings::UserScope, appPath);
-#endif
-#endif
-
 }
 
 void Settings::load()
