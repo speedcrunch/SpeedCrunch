@@ -822,10 +822,11 @@ parse(
     const char* expptr;
     int i;
     int e = 0;
+    int expbase;
     ++p;
     idx = expchar - expbegin;
     tokens->expsign = _parsesign(&p);
-    int expbase = _parsebase(&p, base);
+    expbase = _parsebase(&p, base);
     expptr = _scandigits(&p, expbase);
     if (!expptr || (*(expend + idx) != ' ' && *(expend + idx) != *p))
       return IOBadExp;
