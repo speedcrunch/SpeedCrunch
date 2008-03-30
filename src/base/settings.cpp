@@ -31,8 +31,9 @@
 #include <stdlib.h>
 
 
-// public
+QSettings * createQSettings( const QString & key );
 
+// public
 
 Settings::Settings()
 {
@@ -43,43 +44,9 @@ void Settings::load()
 {
   const QString KEY = "SpeedCrunch";
 
-#ifdef Q_WS_WIN
-#ifdef SPEEDCRUNCH_PORTABLE
-  // Portable Windows version: settings are from INI file in the same directory
-  QString appPath = QApplication::applicationFilePath();
-  int ii = appPath.lastIndexOf( '/' );
-  if ( ii > 0)
-      appPath.remove(ii, appPath.length());
-  QString iniFile = appPath + '/' + KEY + ".ini";
-  QSettings settings( iniFile, QSettings::IniFormat );
-#else
-  // Regular Windows version:
-  //   settings are from the registry HKEY_CURRENT_USER\Software\SpeedCrunch
-  QSettings settings( QSettings::NativeFormat, QSettings::UserScope, KEY, KEY );
-#endif // SPEEDCRUNCH_PORTABLE
-#endif // Q_WS_WIN
-
-#ifdef Q_WS_MAC
-  QSettings settings( QSettings::NativeFormat, QSettings::UserScope, KEY, KEY );
-#endif // Q_WS_MAC
-
-#ifdef Q_WS_X11
-#ifdef SPEEDCRUNCH_PORTABLE
-  // Portable X11 version: settings are from INI file in the same directory
-  BrInitError error;
-  if ( br_init( & error ) == 0 && error != BR_INIT_ERROR_DISABLED )
-  {
-      qDebug( "Warning: BinReloc failed to initialize (error code %d)", error );
-      qDebug( "Will fallback to hardcoded default path." );
-  }
-
-  QString iniFile = QString( br_find_prefix( 0 ) ) + '/' + KEY + ".ini";
-  QSettings settings( iniFile, QSettings::IniFormat );
-#else
-  // Regular Unix (not Mac) version: settings are from $HOME/.conf/SpeedCrunch
-  QSettings settings( QSettings::NativeFormat, QSettings::UserScope, KEY, KEY );
-#endif // SPEEDCRUNCH_PORTABLE
-#endif // Q_WS_X11
+  QSettings * settings = createQSettings( KEY );
+  if ( ! settings )
+    return;
 
   QString key;
 
@@ -87,7 +54,7 @@ void Settings::load()
 
   // angle mode special case
   QString angleModeStr;
-  angleModeStr = settings.value( key + "AngleMode", "r" ).toString();
+  angleModeStr = settings->value( key + "AngleMode", "r" ).toString();
   if ( angleModeStr != "r" && angleModeStr != "d" )
     angleMode = 'r';
   else
@@ -95,25 +62,25 @@ void Settings::load()
 
   // radix character special case
   QString radixCharStr;
-  radixCharStr = settings.value( key + "RadixChar", 'C' ).toString();
+  radixCharStr = settings->value( key + "RadixChar", 'C' ).toString();
   if ( radixCharStr != "C" && radixCharStr != "," && radixCharStr != "." )
     radixChar = 'C';
   else
     radixChar = radixCharStr[0].toAscii();
 
-  saveSession    = settings.value( key + "RestoreLastSession", true  ).toBool();
-  saveVariables  = settings.value( key + "SaveVariables",      true  ).toBool();
-  autoComplete   = settings.value( key + "AutoComplete",       true  ).toBool();
-  autoCalc       = settings.value( key + "AutoCalc",           true  ).toBool();
-  minimizeToTray = settings.value( key + "MinimizeToTray",     false ).toBool();
-  hiliteSyntax   = settings.value( key + "HiliteSyntax",       true  ).toBool();
-  language       = settings.value( key + "Language",           "C" ).toString();
+  saveSession    = settings->value( key + "RestoreLastSession", true  ).toBool();
+  saveVariables  = settings->value( key + "SaveVariables",      true  ).toBool();
+  autoComplete   = settings->value( key + "AutoComplete",       true  ).toBool();
+  autoCalc       = settings->value( key + "AutoCalc",           true  ).toBool();
+  minimizeToTray = settings->value( key + "MinimizeToTray",     false ).toBool();
+  hiliteSyntax   = settings->value( key + "HiliteSyntax",       true  ).toBool();
+  language       = settings->value( key + "Language",           "C"   ).toString();
 
   key = KEY + "/Format/";
 
   // format special case
   QString formatStr;
-  formatStr = settings.value( key + "Type", 'g' ).toString();
+  formatStr = settings->value( key + "Type", 'g' ).toString();
   if (    formatStr != "g" && formatStr != "f" && formatStr != "e"
        && formatStr != "n" && formatStr != "h" && formatStr != "o"
        && formatStr != "b" )
@@ -121,59 +88,59 @@ void Settings::load()
   else
     format = formatStr[0].toAscii();
 
-  precision = settings.value( key + "Precision", -1  ).toInt();
+  precision = settings->value( key + "Precision", -1  ).toInt();
 
   if ( precision > DECPRECISION )
     precision = DECPRECISION;
 
   key = KEY + "/Layout/";
-  showFullScreen        = settings.value( key + "ShowFullScreen",       false  ).toBool();
-  showKeypad            = settings.value( key + "ShowKeypad",           true   ).toBool();
-  showMenuBar           = settings.value( key + "ShowMenuBar",          true   ).toBool();
-  showStatusBar         = settings.value( key + "ShowStatusBar",        false  ).toBool();
-  showHistory           = settings.value( key + "ShowHistory",          false  ).toBool();
-  showFunctions         = settings.value( key + "ShowFunctions",        false  ).toBool();
-  showVariables         = settings.value( key + "ShowVariables",        false  ).toBool();
-  showBook              = settings.value( key + "ShowBook",             false  ).toBool();
-  showConstants         = settings.value( key + "ShowConstants",        false  ).toBool();
-  mainWindowState       = settings.value( key + "State"                        ).toByteArray();
-  stayAlwaysOnTop       = settings.value( key + "StayAlwaysOnTop",       false ).toBool();
-  historyDockFloating   = settings.value( key + "HistoryDockFloating",   false ).toBool();
-  historyDockTop        = settings.value( key + "HistoryDockTop",        0     ).toInt();
-  historyDockLeft       = settings.value( key + "HistoryDockLeft",       0     ).toInt();
-  historyDockWidth      = settings.value( key + "HistoryDockWidth",      150   ).toInt();
-  historyDockHeight     = settings.value( key + "HistoryDockHeight",     350   ).toInt();
-  functionsDockFloating = settings.value( key + "FunctionsDockFloating", false ).toBool();
-  functionsDockTop      = settings.value( key + "FunctionsDockTop",      0     ).toInt();
-  functionsDockLeft     = settings.value( key + "FunctionsDockLeft",     0     ).toInt();
-  functionsDockWidth    = settings.value( key + "FunctionsDockWidth",    150   ).toInt();
-  functionsDockHeight   = settings.value( key + "FunctionsDockHeight",   350   ).toInt();
-  bookDockFloating      = settings.value( key + "BookDockFloating",      false ).toBool();
-  bookDockTop           = settings.value( key + "BookDockTop",           0     ).toInt();
-  bookDockLeft          = settings.value( key + "BookDockLeft",          0     ).toInt();
-  bookDockWidth         = settings.value( key + "BookDockWidth",         150   ).toInt();
-  bookDockHeight        = settings.value( key + "BookDockHeight",        350   ).toInt();
-  variablesDockFloating = settings.value( key + "VariablesDockFloating", false ).toBool();
-  variablesDockTop      = settings.value( key + "VariablesDockTop",      0     ).toInt();
-  variablesDockLeft     = settings.value( key + "VariablesDockLeft",     0     ).toInt();
-  variablesDockWidth    = settings.value( key + "VariablesDockWidth",    150   ).toInt();
-  variablesDockHeight   = settings.value( key + "VariablesDockHeight",   350   ).toInt();
-  constantsDockFloating = settings.value( key + "ConstantsDockFloating", false ).toBool();
-  constantsDockTop      = settings.value( key + "ConstantsDockTop",      0     ).toInt();
-  constantsDockLeft     = settings.value( key + "ConstantsDockLeft",     0     ).toInt();
-  constantsDockWidth    = settings.value( key + "ConstantsDockWidth",    150   ).toInt();
-  constantsDockHeight   = settings.value( key + "ConstantsDockHeight",   350   ).toInt();
-  mainWindowSize        = QSize( settings.value ( key + "WindowWidth",   300   ).toInt(),
-                                 settings.value ( key + "WindowHeight",  400   ).toInt() );
+  showFullScreen        = settings->value( key + "ShowFullScreen",       false  ).toBool();
+  showKeypad            = settings->value( key + "ShowKeypad",           true   ).toBool();
+  showMenuBar           = settings->value( key + "ShowMenuBar",          true   ).toBool();
+  showStatusBar         = settings->value( key + "ShowStatusBar",        false  ).toBool();
+  showHistory           = settings->value( key + "ShowHistory",          false  ).toBool();
+  showFunctions         = settings->value( key + "ShowFunctions",        false  ).toBool();
+  showVariables         = settings->value( key + "ShowVariables",        false  ).toBool();
+  showBook              = settings->value( key + "ShowBook",             false  ).toBool();
+  showConstants         = settings->value( key + "ShowConstants",        false  ).toBool();
+  mainWindowState       = settings->value( key + "State"                        ).toByteArray();
+  stayAlwaysOnTop       = settings->value( key + "StayAlwaysOnTop",       false ).toBool();
+  historyDockFloating   = settings->value( key + "HistoryDockFloating",   false ).toBool();
+  historyDockTop        = settings->value( key + "HistoryDockTop",        0     ).toInt();
+  historyDockLeft       = settings->value( key + "HistoryDockLeft",       0     ).toInt();
+  historyDockWidth      = settings->value( key + "HistoryDockWidth",      150   ).toInt();
+  historyDockHeight     = settings->value( key + "HistoryDockHeight",     350   ).toInt();
+  functionsDockFloating = settings->value( key + "FunctionsDockFloating", false ).toBool();
+  functionsDockTop      = settings->value( key + "FunctionsDockTop",      0     ).toInt();
+  functionsDockLeft     = settings->value( key + "FunctionsDockLeft",     0     ).toInt();
+  functionsDockWidth    = settings->value( key + "FunctionsDockWidth",    150   ).toInt();
+  functionsDockHeight   = settings->value( key + "FunctionsDockHeight",   350   ).toInt();
+  bookDockFloating      = settings->value( key + "BookDockFloating",      false ).toBool();
+  bookDockTop           = settings->value( key + "BookDockTop",           0     ).toInt();
+  bookDockLeft          = settings->value( key + "BookDockLeft",          0     ).toInt();
+  bookDockWidth         = settings->value( key + "BookDockWidth",         150   ).toInt();
+  bookDockHeight        = settings->value( key + "BookDockHeight",        350   ).toInt();
+  variablesDockFloating = settings->value( key + "VariablesDockFloating", false ).toBool();
+  variablesDockTop      = settings->value( key + "VariablesDockTop",      0     ).toInt();
+  variablesDockLeft     = settings->value( key + "VariablesDockLeft",     0     ).toInt();
+  variablesDockWidth    = settings->value( key + "VariablesDockWidth",    150   ).toInt();
+  variablesDockHeight   = settings->value( key + "VariablesDockHeight",   350   ).toInt();
+  constantsDockFloating = settings->value( key + "ConstantsDockFloating", false ).toBool();
+  constantsDockTop      = settings->value( key + "ConstantsDockTop",      0     ).toInt();
+  constantsDockLeft     = settings->value( key + "ConstantsDockLeft",     0     ).toInt();
+  constantsDockWidth    = settings->value( key + "ConstantsDockWidth",    150   ).toInt();
+  constantsDockHeight   = settings->value( key + "ConstantsDockHeight",   350   ).toInt();
+  mainWindowSize        = QSize( settings->value ( key + "WindowWidth",   300   ).toInt(),
+                                 settings->value ( key + "WindowHeight",  400   ).toInt() );
 
   // load history
   key = KEY + "/History/";
   history.clear();
-  int count = settings.value( key + "Count", 0 ).toInt();
+  int count = settings->value( key + "Count", 0 ).toInt();
   for ( int i = 0; i < count; i++ )
   {
     QString keyname = QString( key + "Expression%1" ).arg( i );
-    QString str = settings.value( keyname ).toString();
+    QString str = settings->value( keyname ).toString();
     if ( ! str.isEmpty() )
     {
       QString expr;
@@ -188,7 +155,7 @@ void Settings::load()
   for ( int i = 0; i < count; i++ )
   {
     QString keyname = QString( key + "Expression%1Result" ).arg( i );
-    QString str = settings.value( keyname ).toString();
+    QString str = settings->value( keyname ).toString();
     if ( ! str.isEmpty() )
       historyResults.append( str );
   }
@@ -202,14 +169,14 @@ void Settings::load()
   // load variables
   key = KEY + "/Variables/";
   variables.clear();
-  settings.beginGroup( key );
-  QStringList names = settings.childKeys();
-  settings.endGroup();
+  settings->beginGroup( key );
+  QStringList names = settings->childKeys();
+  settings->endGroup();
   for ( int k = 0; k < names.count(); k++ )
   {
     QString name = names[k];
     QString keyname = QString( key + "%1" ).arg( name );
-    QString value = settings.value( keyname ).toString();
+    QString value = settings->value( keyname ).toString();
     // treat upper case escape code
     int length = name.length();
     for ( int c = 0; c < length; c++ )
@@ -225,6 +192,8 @@ void Settings::load()
     if ( ! value.isEmpty() && name != "pi" && name != "phi" )
       variables.append( QString( "%1=%2" ).arg( name ).arg( value ) );
   }
+
+  delete settings;
 }
 
 
@@ -232,104 +201,70 @@ void Settings::save()
 {
   const QString KEY = "SpeedCrunch";
 
-#ifdef Q_WS_WIN
-#ifdef SPEEDCRUNCH_PORTABLE
-  // Portable Windows version: settings are from INI file in the same directory
-  QString appPath = QApplication::applicationFilePath();
-  int ii = appPath.lastIndexOf( '/' );
-  if ( ii > 0)
-      appPath.remove(ii, appPath.length());
-  QString iniFile = appPath + '/' + KEY + ".ini";
-  QSettings settings( iniFile, QSettings::IniFormat );
-#else
-  // Regular Windows version:
-  //   settings are from the registry HKEY_CURRENT_USER\Software\SpeedCrunch
-  QSettings settings( QSettings::NativeFormat, QSettings::UserScope, KEY, KEY );
-#endif // SPEEDCRUNCH_PORTABLE
-#endif // Q_WS_WIN
-
-#ifdef Q_WS_MAC
-  QSettings settings( QSettings::NativeFormat, QSettings::UserScope, KEY, KEY );
-#endif // Q_WS_MAC
-
-#ifdef Q_WS_X11
-#ifdef SPEEDCRUNCH_PORTABLE
-  // Portable X11 version: settings are from INI file in the same directory
-  BrInitError error;
-  if ( br_init( & error ) == 0 && error != BR_INIT_ERROR_DISABLED )
-  {
-      qDebug( "Warning: BinReloc failed to initialize (error code %d)", error );
-      qDebug( "Will fallback to hardcoded default path." );
-  }
-
-  QString iniFile = QString( br_find_prefix( 0 ) ) + '/' + KEY + ".ini";
-  QSettings settings( iniFile, QSettings::IniFormat );
-#else
-  // Regular Unix (not Mac) version: settings are from $HOME/.conf/SpeedCrunch
-  QSettings settings( QSettings::NativeFormat, QSettings::UserScope, KEY, KEY );
-#endif // SPEEDCRUNCH_PORTABLE
-#endif // Q_WS_X11
+  QSettings * settings = createQSettings( KEY );
+  if ( ! settings )
+    return;
 
   QString key;
   int k, i;
 
   key = KEY + "/General/";
 
-  settings.setValue( key + "AngleMode",          QString(QChar(angleMode)) );
-  settings.setValue( key + "RadixChar",          QString(QChar(radixChar)) );
-  settings.setValue( key + "RestoreLastSession", saveSession    );
-  settings.setValue( key + "SaveVariables",      saveVariables  );
-  settings.setValue( key + "AutoComplete",       autoComplete   );
-  settings.setValue( key + "AutoCalc",           autoCalc       );
-  settings.setValue( key + "MinimizeToTray",     minimizeToTray );
-  settings.setValue( key + "HiliteSyntax",       hiliteSyntax   );
-  settings.setValue( key + "Language",           language       );
+  settings->setValue( key + "AngleMode",          QString( QChar( angleMode ) ) );
+  settings->setValue( key + "RadixChar",          QString( QChar( radixChar ) ) );
+  settings->setValue( key + "RestoreLastSession", saveSession    );
+  settings->setValue( key + "SaveVariables",      saveVariables  );
+  settings->setValue( key + "AutoComplete",       autoComplete   );
+  settings->setValue( key + "AutoCalc",           autoCalc       );
+  settings->setValue( key + "MinimizeToTray",     minimizeToTray );
+  settings->setValue( key + "HiliteSyntax",       hiliteSyntax   );
+  settings->setValue( key + "Language",           language       );
 
   key = KEY + "/Format/";
 
-  settings.setValue( key + "Type",      QString( QChar( format ) ) );
-  settings.setValue( key + "Precision", precision );
+  settings->setValue( key + "Type",      QString( QChar( format ) ) );
+  settings->setValue( key + "Precision", precision );
 
   key = KEY + "/Layout/";
 
-  settings.setValue( key + "ShowBook",              showBook                );
-  settings.setValue( key + "ShowConstants",         showConstants           );
-  settings.setValue( key + "ShowFunctions",         showFunctions           );
-  settings.setValue( key + "ShowHistory",           showHistory             );
-  settings.setValue( key + "ShowFullScreen",        showFullScreen          );
-  settings.setValue( key + "ShowKeypad",            showKeypad              );
-  settings.setValue( key + "ShowMenuBar",           showMenuBar             );
-  settings.setValue( key + "ShowStatusBar",         showStatusBar           );
-  settings.setValue( key + "ShowVariables",         showVariables           );
-  settings.setValue( key + "WindowHeight",          mainWindowSize.height() );
-  settings.setValue( key + "WindowWidth",           mainWindowSize.width()  ),
-  settings.setValue( key + "ConstantsDockFloating", constantsDockFloating   );
-  settings.setValue( key + "ConstantsDockHeight",   constantsDockHeight     );
-  settings.setValue( key + "ConstantsDockLeft",     constantsDockLeft       );
-  settings.setValue( key + "ConstantsDockTop",      constantsDockTop        );
-  settings.setValue( key + "ConstantsDockWidth",    constantsDockWidth      );
-  settings.setValue( key + "FunctionsDockFloating", functionsDockFloating   );
-  settings.setValue( key + "FunctionsDockHeight",   functionsDockHeight     );
-  settings.setValue( key + "FunctionsDockLeft",     functionsDockLeft       );
-  settings.setValue( key + "FunctionsDockTop",      functionsDockTop        );
-  settings.setValue( key + "FunctionsDockWidth",    functionsDockWidth      );
-  settings.setValue( key + "BookDockFloating",      bookDockFloating        );
-  settings.setValue( key + "BookDockHeight",        bookDockHeight          );
-  settings.setValue( key + "BookDockLeft",          bookDockLeft            );
-  settings.setValue( key + "BookDockTop",           bookDockTop             );
-  settings.setValue( key + "BookDockWidth",         bookDockWidth           );
-  settings.setValue( key + "HistoryDockFloating",   historyDockFloating     );
-  settings.setValue( key + "HistoryDockHeight",     historyDockHeight       );
-  settings.setValue( key + "HistoryDockLeft",       historyDockLeft         );
-  settings.setValue( key + "HistoryDockTop",        historyDockTop          );
-  settings.setValue( key + "HistoryDockWidth",      historyDockWidth        );
-  settings.setValue( key + "State",                 mainWindowState         );
-  settings.setValue( key + "StayAlwaysOnTop",       stayAlwaysOnTop         );
-  settings.setValue( key + "VariablesDockFloating", variablesDockFloating   );
-  settings.setValue( key + "VariablesDockHeight",   variablesDockHeight     );
-  settings.setValue( key + "VariablesDockLeft",     variablesDockLeft       );
-  settings.setValue( key + "VariablesDockTop",      variablesDockTop        );
-  settings.setValue( key + "VariablesDockWidth",    variablesDockWidth      );
+  settings->setValue( key + "ShowBook",              showBook                );
+  settings->setValue( key + "ShowConstants",         showConstants           );
+  settings->setValue( key + "ShowFunctions",         showFunctions           );
+  settings->setValue( key + "ShowHistory",           showHistory             );
+  settings->setValue( key + "ShowFullScreen",        showFullScreen          );
+  settings->setValue( key + "ShowKeypad",            showKeypad              );
+  settings->setValue( key + "ShowMenuBar",           showMenuBar             );
+  settings->setValue( key + "ShowStatusBar",         showStatusBar           );
+  settings->setValue( key + "ShowVariables",         showVariables           );
+  settings->setValue( key + "WindowHeight",          mainWindowSize.height() );
+  settings->setValue( key + "WindowWidth",           mainWindowSize.width()  ),
+  settings->setValue( key + "ConstantsDockFloating", constantsDockFloating   );
+  settings->setValue( key + "ConstantsDockHeight",   constantsDockHeight     );
+  settings->setValue( key + "ConstantsDockLeft",     constantsDockLeft       );
+  settings->setValue( key + "ConstantsDockTop",      constantsDockTop        );
+  settings->setValue( key + "ConstantsDockWidth",    constantsDockWidth      );
+  settings->setValue( key + "FunctionsDockFloating", functionsDockFloating   );
+  settings->setValue( key + "FunctionsDockHeight",   functionsDockHeight     );
+  settings->setValue( key + "FunctionsDockLeft",     functionsDockLeft       );
+  settings->setValue( key + "FunctionsDockTop",      functionsDockTop        );
+  settings->setValue( key + "FunctionsDockWidth",    functionsDockWidth      );
+  settings->setValue( key + "BookDockFloating",      bookDockFloating        );
+  settings->setValue( key + "BookDockHeight",        bookDockHeight          );
+  settings->setValue( key + "BookDockLeft",          bookDockLeft            );
+  settings->setValue( key + "BookDockTop",           bookDockTop             );
+  settings->setValue( key + "BookDockWidth",         bookDockWidth           );
+  settings->setValue( key + "HistoryDockFloating",   historyDockFloating     );
+  settings->setValue( key + "HistoryDockHeight",     historyDockHeight       );
+  settings->setValue( key + "HistoryDockLeft",       historyDockLeft         );
+  settings->setValue( key + "HistoryDockTop",        historyDockTop          );
+  settings->setValue( key + "HistoryDockWidth",      historyDockWidth        );
+  settings->setValue( key + "State",                 mainWindowState         );
+  settings->setValue( key + "StayAlwaysOnTop",       stayAlwaysOnTop         );
+  settings->setValue( key + "VariablesDockFloating", variablesDockFloating   );
+  settings->setValue( key + "VariablesDockHeight",   variablesDockHeight     );
+  settings->setValue( key + "VariablesDockLeft",     variablesDockLeft       );
+  settings->setValue( key + "VariablesDockTop",      variablesDockTop        );
+  settings->setValue( key + "VariablesDockWidth",    variablesDockWidth      );
 
   // save history
   key = KEY + "/History/";
@@ -347,31 +282,31 @@ void Settings::save()
     }
   }
 
-  settings.beginGroup( key );
-  QStringList hkeys = settings.childKeys();
-  settings.endGroup();
+  settings->beginGroup( key );
+  QStringList hkeys = settings->childKeys();
+  settings->endGroup();
 
   for ( k = 0; k < hkeys.count(); k++ )
   {
-    settings.remove( QString( key + "Expression%1" ).arg( k )       );
-    settings.remove( QString( key + "Expression%1Result" ).arg( k ) );
+    settings->remove( QString( key + "Expression%1" ).arg( k )       );
+    settings->remove( QString( key + "Expression%1Result" ).arg( k ) );
   }
 
-  settings.setValue( key + "/Count/", (int) history.count() );
+  settings->setValue( key + "/Count/", (int) history.count() );
   for ( i = 0; i < realHistory.count(); i++ )
   {
-    settings.setValue( QString( key + "Expression%1" ).arg( i ),       realHistory[i]        );
-    settings.setValue( QString( key + "Expression%1Result" ).arg( i ), realHistoryResults[i] );
+    settings->setValue( QString( key + "Expression%1" ).arg( i ),       realHistory[i]        );
+    settings->setValue( QString( key + "Expression%1Result" ).arg( i ), realHistoryResults[i] );
   }
 
   // save variables
   key = KEY + "/Variables/";
-  settings.beginGroup( key );
-  QStringList vkeys = settings.childKeys();
-  settings.endGroup();
+  settings->beginGroup( key );
+  QStringList vkeys = settings->childKeys();
+  settings->endGroup();
 
   for ( k = 0; k < vkeys.count(); k++ )
-    settings.remove( QString( key + "%1" ).arg( vkeys[k] ) );
+    settings->remove( QString( key + "%1" ).arg( vkeys[k] ) );
 
   for ( i = 0; i < variables.count(); i++ )
   {
@@ -389,15 +324,66 @@ void Settings::save()
           name += '_';
           name += s[0][c].toLower();
         }
-	else
+        else
         {
           name += s[0][c];
         }
       }
-      settings.setValue( QString( key + "%1").arg( name ), value );
+      settings->setValue( QString( key + "%1").arg( name ), value );
     }
   }
+
+  delete settings;
 }
 
 
-// private
+QSettings * createQSettings( const QString & KEY )
+{
+  QSettings * settings = 0;
+
+  #ifdef Q_WS_WIN
+  #ifdef SPEEDCRUNCH_PORTABLE
+    // Portable Windows version: settings are from INI file in the same directory
+    QString appPath = QApplication::applicationFilePath();
+    int ii = appPath.lastIndexOf( '/' );
+    if ( ii > 0)
+        appPath.remove(ii, appPath.length());
+    QString iniFile = appPath + '/' + KEY + ".ini";
+    settings = new QSettings( iniFile, QSettings::IniFormat );
+  #else
+    // Regular Windows version:
+    //   settings are from the registry HKEY_CURRENT_USER\Software\SpeedCrunch
+    settings = new QSettings( QSettings::NativeFormat, QSettings::UserScope,
+                              KEY, KEY );
+  #endif // SPEEDCRUNCH_PORTABLE
+  #endif // Q_WS_WIN
+
+
+  #ifdef Q_WS_MAC
+    settings = new QSettings( QSettings::NativeFormat, QSettings::UserScope,
+                              KEY, KEY );
+  #endif // Q_WS_MAC
+
+
+  #ifdef Q_WS_X11
+  #ifdef SPEEDCRUNCH_PORTABLE
+    // Portable X11 version: settings are from INI file in the same directory
+    BrInitError error;
+    if ( br_init( & error ) == 0 && error != BR_INIT_ERROR_DISABLED )
+    {
+        qDebug( "Warning: BinReloc failed to initialize (error code %d)",
+                error );
+        qDebug( "Will fallback to hardcoded default path." );
+    }
+
+    QString iniFile = QString( br_find_prefix( 0 ) ) + '/' + KEY + ".ini";
+    settings = new QSettings( iniFile, QSettings::IniFormat );
+  #else
+    // Regular Unix (not Mac) version: settings from $HOME/.conf/SpeedCrunch
+    settings = new QSettings( QSettings::NativeFormat, QSettings::UserScope,
+                              KEY, KEY );
+  #endif // SPEEDCRUNCH_PORTABLE
+  #endif // Q_WS_X11
+
+  return settings;
+}
