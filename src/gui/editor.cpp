@@ -1073,6 +1073,7 @@ EditorCompletion::EditorCompletion( Editor * editor ) : QObject( editor ),
   d->popup->setSelectionBehavior( QTreeWidget::SelectRows );
   d->popup->setMouseTracking( true );
   d->popup->installEventFilter( this );
+
   connect( d->popup, SIGNAL( itemClicked( QTreeWidgetItem *, int ) ),
            SLOT( doneCompletion() ) );
 
@@ -1080,7 +1081,6 @@ EditorCompletion::EditorCompletion( Editor * editor ) : QObject( editor ),
   d->popup->setParent( 0, Qt::Popup );
   d->popup->setFocusPolicy( Qt::NoFocus );
   d->popup->setFocusProxy( editor );
-
   d->popup->setFrameStyle( QFrame::Box | QFrame::Plain );
 
 #ifdef COMPLETION_FADE_EFFECT
@@ -1237,11 +1237,13 @@ struct ConstantCompletion::Private
 ConstantCompletion::ConstantCompletion( Editor * editor ) : QObject( editor ),
     d( new ConstantCompletion::Private )
 {
+  qDebug( "create" );
   d->editor = editor;
 
   d->popup = new QFrame;
   d->popup->setParent( 0, Qt::Popup );
   d->popup->setFocusPolicy( Qt::NoFocus );
+  d->popup->setFocusProxy( editor );
   d->popup->setFrameStyle( QFrame::Box | QFrame::Plain );
 
   d->categoryList = new QTreeWidget( d->popup );
@@ -1325,8 +1327,10 @@ ConstantCompletion::ConstantCompletion( Editor * editor ) : QObject( editor ),
 
 ConstantCompletion::~ConstantCompletion()
 {
+  qDebug("deleteLater");
   delete d->popup;
   delete d;
+  d->editor->setFocus();
 }
 
 
@@ -1366,8 +1370,7 @@ void ConstantCompletion::showConstants()
     if ( ! include )
       continue;
 
-    QTreeWidgetItem * item = 0;
-    item = new QTreeWidgetItem( d->constantList, str );
+    new QTreeWidgetItem( d->constantList, str );
   }
   d->constantList->sortItems( 0, Qt::AscendingOrder );
   d->constantList->setCurrentItem( d->constantList->itemAt( 0, 0 ) );
@@ -1377,7 +1380,7 @@ void ConstantCompletion::showConstants()
 
 bool ConstantCompletion::eventFilter( QObject * obj, QEvent * ev )
 {
-  if ( ev->type() == QEvent::MouseButtonPress )
+  if ( ev->type() == QEvent::Hide )
   {
     emit canceledCompletion();
     return true;
