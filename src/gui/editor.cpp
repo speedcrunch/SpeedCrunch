@@ -837,6 +837,7 @@ void Editor::insertConstant( const QString & c )
   {
     disconnect( d->constantCompletion );
     d->constantCompletion->deleteLater();
+    d->constantCompletion = 0;
   }
 }
 
@@ -847,6 +848,7 @@ void Editor::cancelConstantCompletion()
   {
     disconnect( d->constantCompletion );
     d->constantCompletion->deleteLater();
+    d->constantCompletion = 0;
   }
 }
 
@@ -944,7 +946,8 @@ void Editor::keyPressEvent( QKeyEvent * e )
   if ( e->key() == Qt::Key_Home  ) checkMatching();
   if ( e->key() == Qt::Key_End   ) checkMatching();
 
-  if ( e->key() == Qt::Key_Space && e->modifiers() == Qt::ControlModifier )
+  if ( e->key() == Qt::Key_Space && e->modifiers() == Qt::ControlModifier
+       && ! d->constantCompletion )
   {
     d->constantCompletion = new ConstantCompletion( this );
     connect( d->constantCompletion,
@@ -1243,7 +1246,6 @@ struct ConstantCompletion::Private
 ConstantCompletion::ConstantCompletion( Editor * editor ) : QObject( editor ),
     d( new ConstantCompletion::Private )
 {
-  qDebug( "create" );
   d->editor = editor;
 
   d->popup = new QFrame;
@@ -1333,7 +1335,6 @@ ConstantCompletion::ConstantCompletion( Editor * editor ) : QObject( editor ),
 
 ConstantCompletion::~ConstantCompletion()
 {
-  qDebug("deleteLater");
   delete d->popup;
   delete d;
   d->editor->setFocus();
