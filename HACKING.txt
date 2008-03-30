@@ -128,3 +128,10 @@ This is a checklist of things that must be done to prepare a release:
   For a non-stable release (e.g. 0.8-alpha, 0.8-beta, 0-8-RC)
     update sidebar in download.htm
 
+PORTABLE VERSION
+----------------
+
+Build the "portable version" using the following command:
+
+  cmake -DCMAKE_CXX_FLAGS:STRING="-DSPEEDCRUNCH_PORTABLE" <path to source directory>\src
+

@@ -216,7 +216,12 @@ AboutBox::AboutBox( QWidget * parent ) : QDialog( parent )
   QString msg = "<br><br><br><br><br><center>";
   msg += "<p><b><i>";
   msg += tr( "SpeedCrunch version %1").arg( MAKE_STRING(SPEEDCRUNCH_VERSION) );
-  msg += "</i></b><br></p>";
+  msg += "</i></b><br>";
+#ifdef SPEEDCRUNCH_PORTABLE
+  msg += "(Portable Edition)";
+  msg += "<br>";
+#endif
+  msg += "</p>";
 
   const char * mainFmt = "<p><b>%1</b><br>%2";
   msg += QString( mainFmt ).arg( tr("Based on original idea from") ).arg( "Roberto Alsina" );
