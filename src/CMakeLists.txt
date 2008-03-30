@@ -110,3 +110,12 @@ INSTALL(DIRECTORY   books/images books/cs books/de books/es books/es_AR books/en
         DESTINATION "${BOOKSDIR}"
         PATTERN     ".svn" EXCLUDE
 )
+
+# freedesktop file
+INSTALL(FILES       speedcrunch.desktop
+        DESTINATION "${CMAKE_INSTALL_PREFIX}/share/applications/"
+)
+
+INSTALL(FILES       resources/speedcrunch.png
+        DESTINATION "${CMAKE_INSTALL_PREFIX}/share/pixmaps/"
+)
