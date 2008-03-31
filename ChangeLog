@@ -37,9 +37,9 @@ Improvements:
   New keyboard shortcuts (including PagDown/PgUp to scroll result display)
   Redesigned menus
   Optional widgets created and destroyed on the fly, optimal for mobile
-      devices
+    devices
   Click to copy and double click to insert an expression from the display into
-      the expression editor
+    the expression editor
   Errors displayed in modal dialog instead of result display
   Selecting and inserting an expression does not trigger evaluation
 
@@ -48,14 +48,14 @@ Bug fixes:
   Fixed clobbering of ans on radix change
   Fixed a bug in the math engine (float_frac) that could cause memory corruption
   Bugfix in the pochhammer symbol evaluating routine, affecting nPr
-      when n and r are negative integers, and n == r-1
+    when n and r are negative integers, and n == r-1
   Bugfix: No freeze any more when evaluating (-n+0.5)! for very large integers n
   Bugfix: cbrt fixed for values 1+x with x << 1
   No more short freeze after restoring from system tray on Windows
   All widgets reflect current preference for the radix character
   Results copied according to selected number base
   Translations work on Windows
-  estoring from minimize state hides dock windows
+  Restoring from minimize state hides dock windows
   Resizing of expression editor
   Close button closes dock windows instead
   Can't save session
