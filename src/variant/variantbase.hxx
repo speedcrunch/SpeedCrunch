@@ -79,7 +79,7 @@ class VariantData: public VariantIntf
     VariantData* lock() { ++refcount; return this; };
     VariantData* clone() const
       { return const_cast<VariantData*>(this); }
-    bool isUnique() { return refcount == 1; };
+    bool isUnique() { return refcount <= 1; };
   private:
     int refcount;
 };

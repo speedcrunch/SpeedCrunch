@@ -113,9 +113,10 @@ class Variant: public VariantBase
     Variant(floatnum, Error = Success);
     operator cfloatnum() const;
     operator double() const;
+    double operator = (double);
   public: // support of Strings
     Variant(QString, Error = Success);
-    void operator = (const QString& s);
+    const QString& operator = (const QString& s);
     operator QString() const;
 };
 

@@ -88,7 +88,7 @@ static void h_init()
   if( !h_initialized )
   {
     h_initialized = true;
-    floatmath_init();
+//     floatmath_init();
     float_stdconvert();
   }
 }

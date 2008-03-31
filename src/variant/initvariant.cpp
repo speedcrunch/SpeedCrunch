@@ -41,14 +41,17 @@ class InitVariant
 
 InitVariant instance;
 
-/*void test()
-{
-  Variant x = Variant::fromUtf8("-1e308", VariantIntf::nLongReal);
-  double d = x;
-  if (d == 0)
-    d += 1;
-}
-*/
+// void test()
+// {
+//   char buf[100];
+//   Variant x = Variant::fromUtf8("12345678912345", VariantIntf::nLongReal);
+//   double d = x;
+//   x = d;
+//   float_getscientific(buf, 100, x);
+//   if (d == 0)
+//     d += 1;
+// }
+
 InitVariant::InitVariant()
 {
   Variant::initClass();

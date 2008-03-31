@@ -298,6 +298,20 @@ Variant::operator double() const
   return 0;
 }
 
+double Variant::operator = (double val)
+{
+  LongReal* vr = static_cast<LongReal*>(construct(variantType(nLongReal)));
+  *vr = val;
+  if (vr->isNaN())
+  {
+    vr->release();
+    *this = InvalidParam;
+  }
+  else
+    *this = vr;
+  return val;
+}
+
 Variant::Variant(QString s, Error e)
 {
   if (e != Success)
@@ -306,9 +320,10 @@ Variant::Variant(QString s, Error e)
     *this = s;
 }
 
-void Variant::operator = (const QString& s)
+const QString& Variant::operator = (const QString& s)
 {
   *this = VString::create(s);
+  return s;
 }
 
 Variant::operator QString() const

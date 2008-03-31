@@ -41,9 +41,17 @@
 
 typedef enum
 {
+  // try to keep the size of the fractional part fixed
   FixPoint,
+  // try to keep the overall length of the output fixed
+  FixSize,
+  // scientific format with normalized significand
   Scientific,
+  // scientific format with biased exponent
+  IEEE754,
+  // scientific format with exponent adjusted to be a multiple of 3
   Engineering,
+  // two's complement
   Complement2,
 } FmtMode;
 
@@ -62,7 +70,6 @@ typedef struct
   Sign signSignificand;
   char baseSignificand;
   unsigned scale;
-  char baseScale;
   Sign signScale;
   Error error;
 } RawFloatIO;
@@ -96,7 +103,7 @@ class LongReal: public VariantData
     static EvalMode evalMode(EvalMode newMode = EvalQuery);
   public: // conversion, IO
     RawFloatIO convert(int digits, FmtMode mode = Scientific,
-                    char base = 10, char scalebase = 10) const;
+                       char base = 10) const;
     static Variant convert(const RawFloatIO&);
     void xmlWrite(QDomDocument&, QDomNode&) const;
     bool xmlRead(QDomNode&);
@@ -122,39 +129,45 @@ class RealFormat: public FormatIntf
       fShowScaleLeadingZero = 0x40,
       fShowTrailingZero = 0x80,
       fShowTrailingDot = 0x100,
-      fLowerCaseDigit = 0x200,
+      fShortScale = 0x200,
+      fLowerCaseDigit = 0x400,
     };
   public:
     RealFormat();
-    QString format(const Variant&);
+    QString format(const Variant&) const;
     void setMode(FmtMode, int digits = -1,
-                 char base = 10, char scalebase = 10);
-    void setGroupChars(QChar dot = '.', QChar group = ',', int grouplg = 0);
+                 char base = 10, char scalebase = 10, char sgnfbase = 0);
+    void setChars(QChar dot = '.', QChar exp = ' ', QChar group = ',', int grouplg = -1);
     void setMinLengths(int newMinInt = 0, int newMinFrac = 0,
                        int newMinScale = 0);
     void setFlags(unsigned flags);
   protected:
-    virtual QString getSignificandPrefix(RawFloatIO&);
-    virtual QString getSignificandSuffix(RawFloatIO&);
-    virtual QString getScalePrefix(RawFloatIO&);
-    virtual QString getScaleSuffix(RawFloatIO&);
-    virtual QString formatNaN();
-    virtual QString formatZero();
-    virtual QString formatInt(RawFloatIO&);
-    virtual QString formatFrac(RawFloatIO&);
-    virtual QString formatScale(RawFloatIO&);
+    virtual QString getSignificandPrefix(const RawFloatIO&) const;
+    virtual QString getSignificandSuffix(const RawFloatIO&) const;
+    virtual QString getScalePrefix(const RawFloatIO&) const;
+    virtual QString getScaleSuffix(const RawFloatIO&) const;
+    virtual QString formatNaN() const;
+    virtual QString formatZero() const;
+    virtual QString formatInt(const RawFloatIO&) const;
+    virtual QString formatFrac(const RawFloatIO&) const;
+    virtual QString formatScale(const RawFloatIO&) const;
+    virtual QString intPart(const RawFloatIO&) const;
+    virtual QString fracPart(const RawFloatIO&) const;
   protected:
     // format type
     FmtMode mode;
-    // radix to what the significand is shown
+    // base of the scale
     char base;
     // radix to what the scale is shown
     char scalebase;
-    // shown digits of the significand after the dot
+    // radix to what the significand is shown, != 10
+    // ignored for base = 10
+    char significandbase;
+    // shown digits of the fraction of the significand
     int  digits;
     // minimum length of the integer part
     int  minIntLg;
-    // minimum length of the fraction part
+    // minimum lensgth of the fraction part
     int  minFracLg;
     // minimum length of the scale
     int  minScaleLg;
@@ -164,6 +177,10 @@ class RealFormat: public FormatIntf
     QChar dot;
     // character for digit grouping
     QChar groupchar;
+    // character used to indicate the beginning of the scale
+    // if ' ': 'e' is used for decimal bases, 'p' else
+    // for better readability the case is opposite to lowerCaseHexDigit
+    QChar scalechar;
     // show the scale, even if it is zero
     bool showZeroScale;
     // show the sign, even if the significand is not negative
@@ -172,7 +189,7 @@ class RealFormat: public FormatIntf
     bool showScalePlus;
     // shows the radix tag of the significand
     bool showRadix;
-    // suppress the radix tag of the scale
+    // show the radix tag of the scale
     bool showScaleRadix;
     // shows leading zeros to pad the integer part to the minimum size
     bool showLeadingZero;
@@ -182,12 +199,16 @@ class RealFormat: public FormatIntf
     bool showTrailingZero;
     // shows a trailing dot, if the fractional part is zero
     bool showTrailingDot;
+    // use 'e' or 'p' as scale prefix only if significandbase == base
+    bool shortScale;
     // use lower case hex digits
     bool lowerCaseHexDigit;
     // helpers
-    bool useGrouping() { return groupchar != 0 && grouplg > 0; };
-    bool useScale(const RawFloatIO&);
-    QString getPrefix(Sign, char base, bool isCompl);
+    bool useGrouping() const { return groupchar != 0 && grouplg > 0; };
+    bool useScale(const RawFloatIO&) const;
+    bool useShortScale() const;
+    QChar getScaleChar() const;
+    QString getPrefix(Sign, char base, bool isCompl) const;
 };
 
 #endif /*_REAL_H*/
