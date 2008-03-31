@@ -1418,7 +1418,7 @@ Falls nein, werden aktuelle Variablen und Anzeigen gelöscht.</translation>
     <message>
         <location filename="../gui/mainwindow.cpp" line="623"/>
         <source>&amp;Dot</source>
-        <translation>&amp;Dezimalkomma</translation>
+        <translation>&amp;Punkt</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="624"/>

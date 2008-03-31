@@ -58,7 +58,6 @@ Bug fixes:
   Restoring from minimize state hides dock windows
   Resizing of expression editor
   Close button closes dock windows instead
-  Can't save session
   Bad shortcuts on Windows installer
   Operator color set to system foreground in highlight mode
   Virtual desktop switching hides open dock windows
@@ -68,7 +67,7 @@ Bug fixes:
   Result window does not scroll to latest result
   Result screen resizing issues
   Docks windows don't close
-  Result display scroll bar doesn't hale system background color
+  Result display scroll bar doesn't have system background color
   Autocalc tip according to prefered result format, precision and radix char
   Docks don't react to Return or Enter
   Display of completion popup when pasting text to the expression editor
