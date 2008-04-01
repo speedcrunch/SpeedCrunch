@@ -295,6 +295,23 @@ All parameters have to be integers from the range -2255 to +2256 – 1 (signed o
 </varlistentry>
 <varlistentry>
 <term>hex (n)</term>
+<para>Displays n in hexagesimal format, without globally changing the output format.  A fractional part of of n is cutt of before converstion</para>
+</varlistentry>
+<varlistentry>
+<term>hypercdf (max; total; hits; trials)</term>
+<para>All parameters are integers, 0 <= max <= hits <= trials <= trials <= total, and 0 < total.  Assume there are 'h its' events in a series of 'total' tests.  Then this function evaluates the probability, that you will find up to max events of them in a subseries of 'trials' tests.</para>
+</varlistentry>
+<varlistentry>
+<term>hypermean (total; hits; trials)</term>
+<para>All parameters are integers, 0 <= hits <= total, 0 <= trials <= total, and 0 < total.  Assume there are ' h its' events in a series of 'total' tests.  Then this function evalutes the expected count of events in a suberies of 'trials' tests.</para>
+</varlistentry>
+<varlistentry>
+<term>hyperpmf (count; total; hits; trials)</term>
+<para>All parameters are integers, 0 <= max <= hits <= total, 0 <=trials <= total, and 0 < total.</para>
+</varlistentry>
+<varlistentry>
+<term>hyptermean (total; hits; trials)</term>
+<para>All paramters are integers, 0 <= max <= hits <= total, 0 <= trials <= total, and 0 < total.  Assume there are 'h its' events in a series of 'total tests.  Then this function evalutates the variance of the count of events in a subseries of 'trials' tests.  Or, in other words, it tells, how 'good' the result of hypermean is matched on the average, if you repeat your subseries of trials very often.</para>
 </varlistentry>
 </sect1>
 </chapter>
