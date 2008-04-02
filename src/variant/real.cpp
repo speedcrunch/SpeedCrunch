@@ -41,6 +41,10 @@
 
 #define LLRINT_AVAILABLE
 
+#ifndef llrint
+#undef LLRINT_AVAILABLE
+#endif
+
 const char* VariantIntf::nLongReal = "LongReal";
 VariantType LongReal::vtLongReal;
 
