@@ -51,8 +51,8 @@ variant/variant.cpp
 variant/real.cpp
 variant/vstring.cpp
 variant/initvariant.cpp
-#variant/formatbase.cpp
-#variant/formatreal.cpp
+variant/formatbase.cpp
+variant/formatreal.cpp
 3rdparty/util/binreloc.c
 base/constants.cpp
 base/evaluator.cpp

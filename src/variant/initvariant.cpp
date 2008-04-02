@@ -44,7 +44,7 @@ InitVariant instance;
 // void test()
 // {
 //   char buf[100];
-//   Variant x = Variant::fromUtf8("12345678912345", VariantIntf::nLongReal);
+//   Variant x = Variant::fromUtf8("1.e52", VariantIntf::nLongReal);
 //   double d = x;
 //   x = d;
 //   float_getscientific(buf, 100, x);

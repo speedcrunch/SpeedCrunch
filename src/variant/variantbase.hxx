@@ -33,11 +33,7 @@
 #define _VARIANTBASE_H
 
 #include "base/errors.h"
-#include <QByteArray>
 #include <QString>
-#include <QList>
-#include <QMap>
-#include <QStringList>
 #include <QtXml/QDomNode>
 #include <QtXml/QDomDocument>
 
@@ -82,57 +78,6 @@ class VariantData: public VariantIntf
     bool isUnique() { return refcount <= 1; };
   private:
     int refcount;
-};
-
-class FormatIntf
-{
-  public:
-    typedef const char* FmtType;
-    FormatIntf(FormatIntf* aBase = 0);
-    virtual ~FormatIntf() { releaseBase(); };
-    virtual FmtType type() const = 0;
-    virtual bool isLocale() const { return false; };
-    void lock() { ++refcount; };
-    void release();
-    virtual FormatIntf* clone() = 0;
-    virtual QString format(const Variant&) const = 0;
-    virtual bool setProp(const QString& prop, const Variant& val) = 0;
-    virtual Variant getProp(const QString& prop) const = 0;
-    virtual QStringList getProps() const = 0;
-    virtual bool canHandle(VariantType vt) const = 0;
-  protected:
-    virtual bool isCompatible(const FormatIntf*) const;
-    void releaseBase();
-  private:
-    int refcount;
-    FormatIntf* m_base;
-};
-
-class Format
-{
-  public:
-    typedef FormatIntf::FmtType FmtType;
-    Format(const Format&);
-    Format(const QString& key, VariantType);
-    ~Format();
-    Format& operator = (const Format&);
-    Format clone() const;
-    FmtType type() const;
-    QString format(const Variant&) const;
-    bool isValid() const { return p != 0; };
-    bool canHandle(VariantType vt) const;
-    QStringList getProps() const;
-    bool setProp(const QString& prop, const Variant& val);
-    Variant getProp(const QString& prop) const;
-    static Format find(const QString& key, VariantType);
-    static Format findByType(const QString& key,FmtType aType);
-    static Format add(const QString& key, FormatIntf*);
-    static void remove(const QString& key, FmtType aType);
-  private:
-    Format(FormatIntf*);
-    operator FormatIntf*() const { return p;};
-    void operator = (FormatIntf*);
-    FormatIntf* p;
 };
 
 #endif /*_VARIANTBASE_H*/
