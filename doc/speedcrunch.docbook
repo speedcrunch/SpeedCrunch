@@ -2,6 +2,7 @@
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % English "INCLUDE" > <!-- change language only here -->
+<!ENTITY app "<application>Speedcrunch</application>">
 ]>
 
 <book lang="&language;">
@@ -38,9 +39,9 @@
 <chapter id="introduction">
 <title>Introduction</title>
 
-<para>This document describes SpeedCrunch version 0.10, a multiplatform desktop calculator for power users.</para>
+<para>This document describes &app; version 0.10, a multiplatform desktop calculator for power users.</para>
 
-<para>Have fun with SpeedCrunch!</para>
+<para>Have fun with &app;!</para>
 </chapter>
 
 <chapter id="installation">
@@ -49,13 +50,13 @@
 <sect1 id="installation-windows">
 <title>Installation for &Microsoft; &Windows;</title>
 <para>									
-To install &app; on &Microsoft; &Windows;, download the installer from the <ulink="http://speedcrunch.org/download.htm">Speedcrunch website</ulink>.  Once the installer is downloaded, launch the application to install &app;.  By default &app; is found in the Start Menu, under All Programs, Speedcrunch and is stored in C:\Program Files\Speedcrunch.			
+To install &app; on &Microsoft; &Windows;, download the installer from the <ulink="http://speedcrunch.org/download.htm">&app; website</ulink>.  Once the installer is downloaded, launch the application to install &app;.  By default &app; is found in the Start Menu, under All Programs, &app; and is stored in C:\Program Files\Speedcrunch.			
 </para>
 </sect1>
 
 <sect1 id="installation-macos">
 <title>Installation for &Mac; OS X</title>
-<para>To install &app; on &Mac; OS X (10.3 (Panther), 10.4 (Tiger), and 10.5 (Leopard)), download the installer from the <ulink="speedcrunch.org/download.htm">Speedcrunch Website</ulink>.  Once the file is downloaded, click on the binary file, and then follow the step-by-step instructions.
+<para>To install &app; on &Mac; OS X (10.3 (Panther), 10.4 (Tiger), and 10.5 (Leopard)), download the installer from the <ulink="speedcrunch.org/download.htm">&app; Website</ulink>.  Once the file is downloaded, click on the binary file, and then follow the step-by-step instructions.
 </para>
 </sect1>
 
@@ -84,7 +85,7 @@ It is located in the K Menu, Utilities, Calculator (SpeedCrunch).</para>
 <sect2 id="installation-ubuntu">
 <title>Installation for &ubuntu;</title>
 
-<para>Speedcrunch is installed by default as a part of &kubuntu;, however in &ubuntu;, it is as simple as sudo apt-get install speedcrunch.</para>
+<para>&app; is installed by default as a part of &kubuntu;, however in &ubuntu;, it is as simple as sudo apt-get install speedcrunch.</para>
 
 <screen>
 <command>apt-get install speedcrunch</command>
@@ -95,7 +96,7 @@ It is located in the K Menu, Utilities, Calculator (SpeedCrunch).</para>
 <sect2 id="installation-fedora">
 <title>Installation for Fedora Core</title>
 
-<para>Speedcrunch is part of Fedora Extras and is provided by the
+<para>&app; is part of Fedora Extras and is provided by the
 package <varname>speedcrunch</varname>. This package can be installed
 either with the graphical software management program Pirut,
 or with the terminal command:</para>
@@ -310,8 +311,143 @@ All parameters have to be integers from the range -2255 to +2256 – 1 (signed o
 <para>All parameters are integers, 0 <= max <= hits <= total, 0 <=trials <= total, and 0 < total.</para>
 </varlistentry>
 <varlistentry>
-<term>hyptermean (total; hits; trials)</term>
+<term>hypermean (total; hits; trials)</term>
 <para>All paramters are integers, 0 <= max <= hits <= total, 0 <= trials <= total, and 0 < total.  Assume there are 'h its' events in a series of 'total tests.  Then this function evalutates the variance of the count of events in a subseries of 'trials' tests.  Or, in other words, it tells, how 'good' the result of hypermean is matched on the average, if you repeat your subseries of trials very often.</para>
+</varlistentry>
+<varlistentry>
+<term>idiv (dividend; divisor)</term>
+<para>Evaluates the integer part of divdend/divisor.  The result is always exact.  Since &app; can hold integers up to 78 digits, this function overflows even if the ordinary division operator would yeild an approximate (but huge) quotient.</para>
+<para>It is possible to apply the idiv function to non-integers as well, but be aware that rounding errors might be lead to off-by-one erros.  If idiv detects, that a result depends on the validity of the guard digits, it returns a NaN as a warning.</para>
+</varlistentry>
+<varlistentry>
+<term>init (x)</term>
+<para>Returns the signed integer part of x.</para>
+</varlistentry>
+<varlistentry>
+<term>lg (x)</term>
+<para>Returns the base 2 logarathim of of x, where x has to be positive.  The inverse function is exp (y).</para>
+</varlistentry>
+<varlistentry>
+<term>lngamma (x)</term>
+<para>Evaluates ln(factorial(x)). Returns a function even when the ! operator overflows.</para>
+</varlistentry>
+<varlistentry>
+<term>log (x)</term>
+<para>Returns the base 10 logarathm of x where x has to be positive.</para>
+</varlistentry>
+<varlistentry>
+<term>mask (n; bits)</term>
+<para>Returns the lower 'bits' bits of the integer n.  The result is always unsigned.  N has to be from -2^255 to +2^256-1 (signed or unsigned 256 bit integers), bits is an integer ranging from 1 to 255 inclusive.  One application of this function is to find the two complemnt repestation of a value.  So hex (mask (-1; 16)) returns 0xFFFF, the 16-bit two's complement bit pattern of -1.</para>
+</varlistentry>
+<varlistentry>
+<term>max (x1; x2 ..)</term>
+<para>Takes one or more parameter(s), which returns the maximum value of the submitted parametrs.  Example max(17; log 1000; exp(3)).</para>
+</varlistentry>
+<term>min(x1; x2 ..)</term>
+<para>Takes one or more paramater(s) and returns the maximum value of the submitted parameters.  Example:  min(-0.4; log 0.1; exp(-3)).</para>
+</varlistentry>
+<varlistentry>
+<term>mod (value; modulo)</term>
+<para>Evaluates the value mod modulo, which is the remainder after finding the integer quootient value / modulo.  This function always returns an exact result, if the paramters are exact.  'Modulo' has to be non-zero and if the remainder is non-zero, it takes the sign of valu.  You can use this function with non-integers as well, but rounding errors might lead to off-by-one errros.  This function can potentially be very time consuming, so mod is restricted to at most 250 division loops.</para>
+</varlistentry>
+<varlistentry>
+<term>nCR (x1; x2)</term>
+<para>For integeger paramaters this function is equal to the number of cominations (order is of no importance) of x2 elements from an x1-sized of elements or to the binominal coefficient x1 over x2.</para>
+<para>For arbitrary real valued x1, x2 the result is 1/(x1+1)*B(x2+1,x1-x2+1)), where B(a,b) is the complete Beta function.</para>
+</term>
+</varlistentry>
+<varlistentry>
+<term>not (n)</term>
+<para>Evaluates the bitwise (one-) complement of n.  The result is a signed 256-bit integer.  n has to be an integer from the range -2^255 to +2^256-1 (signed or unsigned 256 bit integers).<para>
+</varlistentry>
+<varlistentry>
+<term>nPr (x1; x2)</term>
+</varlistentry>
+<varlistentry>
+<term>oct (n)</term>
+<para>Displays n in octal format, without globally changing the output format.  A fractional part of n is cut off before conversion, and the reamining integral part has to be from the range -2^255 to +2^256 -1.</para>
+</varlistentry>
+<varlistentry>
+<term>or (x1; x2; ...)</term>
+<para>Performs a bitwise logical OR on the submitted parameter(s) (one or more).  All parameters have to be integers from the range -2^255 to +2^255 -1 (signed integer).  Note that or(x) is not the identity, because the unsigned +2^255 is mapped to the signed -2^255, for example.</para>
+</varlistentry>
+<varlistentry>
+<term>poicdf (events; avgevnts)</term>
+<para>'events' is a non-negative integer, 'avgevents' a positive real number.</para>
+<para>If you have on the average 'avgevents' independent events in an interval, this function returns the probability, that you will see up to 'events' events when you test an interval.</para>
+</varlistentry>
+<varlistentry>
+<term>poimean (avgevents)</term>
+<para>avgevents >=0.  Returns the average number of events in an interval, when this average is 'avgevents'.</para>
+</varlistentry>
+<varlistentry>
+<term>pipmf (events; avgevnts)</term>
+<para>'events' is a non-negative integer, 'avgevents' a positive real number.  If you have on the average 'avgevents' independent events in an interval, this function returns the probability, that you will see exactly 'events' events when you test an interval.</para>
+</varlistentry>
+<varlistentry>
+<term>poivar (avgevents)</term>
+<para>avgevents >= 0.  The Poisson distribution assumes, that the variance equals the expected value 'avgevnts'.</para>
+</varlistentry>
+<varlistentry>
+<term>radians (x)</term>
+<para>Converts an angle measured in degrees to radians.  This fucntion is especially useful, if you ant to ovrride the current angle mode for just one expression.</para>
+</varlistentry>
+<varlistentry>
+<term>round (x; digits)</term>
+<para>Rounds x to 'digits' decimial places after the decimal point where 'digits' has to be an integer.</para>
+</varlistentry>
+<varlistentry>
+<term>sec (x)</term>
+<para>Evaluates the secant of x.  The result is dependent on the degree setting.  If "degrees" is active, the parameter x is assumed to be from a 360 degree circle.</para>
+<para>Although the secant is mathematically defined for all x, for x beyond approximately 1e77, the periodicity of the secant is not recognized any more, so &app; issues an error.</para>
+</varlistentry>
+<varlistentry>
+<term>shl (n, bits)</term>
+<para>Shifts the bit pattern of n 'bits' bit to the left, if 'bits' >=0, otherwise shifts n arithmetically by -'bits' to the right.  =255 <= bits <= 255, and n has to be an integer from the range -2^255 to +2^256 -1 (signed or unsigned 256 bit integers).  The rsult is from -2^255 to +255 -1 (signed integer).</para>
+<para>On a shift left, zero bits are fed in to the right, and shifted out bits are dropped on the left.  On a shift right, bit 255 (the leftmost bit) is copied and shifted in from the left, and shifted out bits on the right are dropped.</para>
+</varlistentry>
+<varlistentry>
+<term>shr (n, bits)</term>
+<para>Shifts the bit pattern of n 'bits' to the right, if 'bits' >=0, otherwise shifts n arthmetically by -'bits' to the left.</para>
+<para>On a shift left, zero bits are fed in to the right, and shifted out bits are dropped on the left.  On a shift right, bit 255 (the leftmost bit) is copied and shifted in from the left, and shifted out bits on the right are dropped.</para>  
+<varlistentry>
+<term>sign (x)</term>
+Returns the sign of x, -1 if negative, 1 if positive, and 0 for 0.</para>
+</varlistentry>
+<varlistentry>
+<term>sin (x)</term>
+<para>Evaluates the sine of x, which is dependent on the degree setting.  If "degress" is active, the parameter x is assumed to be an arc from a 360 degree circle.  The inverse function is asin(y).</para>
+<para>Although the sine is mathematically defined for all x, for x beyond approximately 1e77, the periodicity of the sine is not recognized any more, so &app; issues an error.</para>
+</varlistentry>
+<varlistentry>
+<term>sinh (x)</term>
+<para>Finds the hyperbolic sine of x, with the inverse function being arsinh.</para>
+</varlistentry>
+<varlistentry>
+<term>sqrt (x)</term>
+<para>Computes the square root of x, which is not defined for x <0 </para>
+</varlistentry>
+<varlistentry>
+<term>tan (x)</term>
+<para>Evaultes th tangent of x.  The result is dependent on the degree setting.  If "degress" is active, the paramater x is assumed to be an arc from a 360 degree circle.  The inverse function is atan(y).</para>
+<para>Alothough the tangent is mathematically defined for all x, for x beyond approximately 1e77, the periodicity of the tangent is not recognized any more, so &app; issues an error.</para>
+</varlistentry>
+<varlistentry>
+<term>tanh (x)</term>
+<para>Finds the hyperbolic sine of x, where the inverse function is artanh.</para>
+</varlistentry>
+<varlistentry>
+<term>trunc (x; digits)</term>
+<para>truncates x after 'digits' decimal places behind the decimal point where 'digits' has to be an integer.</para>
+</varlistentry>
+<varlistentry>
+<term>unmask (n; bits)</term>
+<para>Takes the lower 'bits bits of n and sign-extends them to full 256 bit, meaning bit number 'bits'-1 is copied to all upper bits.  n has to be an integer from the range -2^255 to +2^256-1 (signed or unsigned 256 bit integers), and 'bits' is an integer with 1 <=bits <= 255.  This function can revert the effect of a mask function in many cases.</para>
+<para>If you are given a negative integer in two's complement notation, it is not possible to enter it directly as a constant, because binary, hex or octal encoded constants are always recognized as unsigned in &app;.
+</varlistentry>
+<varlistentry>
+<term>xor x1; x2; ..)</term>
+<para>Performs a bitwise logical XOR on the submitted parameter(s) (one or more).  All paramters have to be integers from the range -2^255 to +2^255 -1 (signed integer).  Note that xor(x) is not the identity, because the unsigned +2^255 is mapped to the signed -2^255, for example.</para>
 </varlistentry>
 </sect1>
 </chapter>
