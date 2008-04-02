@@ -196,6 +196,13 @@ _br_find_exe_for_symbol (const void *symbol, BrInitError *error)
 
 	address_string_len = 4;
 	address_string = (char *) malloc (address_string_len);
+	/* Handle OOM (Tracker issue #35) */
+	if (!address_string)
+	{
+		if (error)
+			*error = BR_INIT_ERROR_NOMEM;
+		return (char *) NULL;
+	}
 	found = (char *) NULL;
 
 	while (!feof (f)) {
@@ -248,6 +255,13 @@ _br_find_exe_for_symbol (const void *symbol, BrInitError *error)
 		if (address_string_len < len + 3) {
 			address_string_len = len + 3;
 			address_string = (char *) realloc (address_string, address_string_len);
+			/* Handle OOM (Tracker issue #35) */
+			if (!address_string)
+			{
+				if (error)
+					*error = BR_INIT_ERROR_NOMEM;
+				return (char *) NULL;
+			}
 		}
 
 		memcpy (address_string, "0x", 2);
@@ -280,7 +294,7 @@ _br_find_exe_for_symbol (const void *symbol, BrInitError *error)
 
 #ifndef BINRELOC_RUNNING_DOXYGEN
 	#undef NULL
-	#define NULL ((void *) 0) /* typecasted as char* for C++ type safeness */
+	#define NULL ((char *) 0) /* typecasted as char* for C++ type safeness */
 #endif
 
 static char *exe = (char *) NULL;
@@ -293,6 +307,8 @@ static char *exe = (char *) NULL;
  *
  * @note If you want to use BinReloc for a library, then you should call
  *       br_init_lib() instead.
+ * @note Initialization failure is not fatal. BinReloc functions will just
+ *       fallback to the supplied default path.
  *
  * @param error  If BinReloc failed to initialize, then the error code will
  *               be stored in this variable. Set to NULL if you want to
@@ -315,6 +331,8 @@ br_init (BrInitError *error)
  *
  * @note The BinReloc source code MUST be included in your library, or this
  *       function won't work correctly.
+ * @note Initialization failure is not fatal. BinReloc functions will just
+ *       fallback to the supplied default path.
  *
  * @param error  If BinReloc failed to initialize, then the error code will
  *               be stored in this variable. Set to NULL if you want to
@@ -672,10 +690,13 @@ br_strcat (const char *str1, const char *str2)
 	len2 = strlen (str2);
 
 	result = (char *) malloc (len1 + len2 + 1);
-	memcpy (result, str1, len1);
-	memcpy (result + len1, str2, len2);
-	result[len1 + len2] = '\0';
-
+	/* Handle OOM (Tracker issue #35) */
+	if (result)
+	{
+		memcpy (result, str1, len1);
+		memcpy (result + len1, str2, len2);
+		result[len1 + len2] = '\0';
+	}
 	return result;
 }
 
@@ -718,8 +739,12 @@ br_strndup (const char *str, size_t size)
 		size = len;
 
 	result = (char *) malloc (len + 1);
-	memcpy (result, str, size);
-	result[size] = '\0';
+	/* Handle OOM (Tracker issue #35) */
+	if (result)
+	{
+		memcpy (result, str, size);
+		result[size] = '\0';
+	}
 	return result;
 }
 

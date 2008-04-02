@@ -34,25 +34,26 @@ typedef enum {
 
 
 #ifndef BINRELOC_RUNNING_DOXYGEN
-/* Mangle symbol names to avoid symbol collisions with other ELF objects. */
-	#define br_init             xkVj81509933889635_br_init
-	#define br_init_lib         xkVj81509933889635_br_init_lib
-	#define br_find_exe         xkVj81509933889635_br_find_exe
-	#define br_find_exe_dir     xkVj81509933889635_br_find_exe_dir
-	#define br_find_prefix      xkVj81509933889635_br_find_prefix
-	#define br_find_bin_dir     xkVj81509933889635_br_find_bin_dir
-	#define br_find_sbin_dir    xkVj81509933889635_br_find_sbin_dir
-	#define br_find_data_dir    xkVj81509933889635_br_find_data_dir
-	#define br_find_locale_dir  xkVj81509933889635_br_find_locale_dir
-	#define br_find_lib_dir     xkVj81509933889635_br_find_lib_dir
-	#define br_find_libexec_dir xkVj81509933889635_br_find_libexec_dir
-	#define br_find_etc_dir     xkVj81509933889635_br_find_etc_dir
-	#define br_strcat           xkVj81509933889635_br_strcat
-	#define br_build_path       xkVj81509933889635_br_build_path
-	#define br_dirname          xkVj81509933889635_br_dirname
-
-
+	/* Mangle symbol names to avoid symbol
+	 * collisions with other ELF objects.
+	 */
+	#define br_init             FRTf54694648844913_br_init
+	#define br_init_lib         FRTf54694648844913_br_init_lib
+	#define br_find_exe         FRTf54694648844913_br_find_exe
+	#define br_find_exe_dir     FRTf54694648844913_br_find_exe_dir
+	#define br_find_prefix      FRTf54694648844913_br_find_prefix
+	#define br_find_bin_dir     FRTf54694648844913_br_find_bin_dir
+	#define br_find_sbin_dir    FRTf54694648844913_br_find_sbin_dir
+	#define br_find_data_dir    FRTf54694648844913_br_find_data_dir
+	#define br_find_locale_dir  FRTf54694648844913_br_find_locale_dir
+	#define br_find_lib_dir     FRTf54694648844913_br_find_lib_dir
+	#define br_find_libexec_dir FRTf54694648844913_br_find_libexec_dir
+	#define br_find_etc_dir     FRTf54694648844913_br_find_etc_dir
+	#define br_strcat           FRTf54694648844913_br_strcat
+	#define br_build_path       FRTf54694648844913_br_build_path
+	#define br_dirname          FRTf54694648844913_br_dirname
 #endif
+
 int   br_init             (BrInitError *error);
 int   br_init_lib         (BrInitError *error);
 
