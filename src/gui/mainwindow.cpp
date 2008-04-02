@@ -2521,9 +2521,7 @@ void MainWindow::keypadButtonPressed( Keypad::Button b )
     case Keypad::KeyRadixChar:
       d->widgets.editor->insert( QString( d->widgets.keypad->radixChar() ) );
       break;
-    case Keypad::KeyEquals:
-      d->widgets.editor->evaluate();
-      break;
+
     case Keypad::KeyClear:
       clearExpression();
       break;
@@ -2533,6 +2531,9 @@ void MainWindow::keypadButtonPressed( Keypad::Button b )
 
   QTimer::singleShot( 0, d->widgets.editor, SLOT( setFocus() ) );
   d->widgets.editor->blockSignals( false );
+
+  if ( b == Keypad::KeyEquals)
+    d->widgets.editor->evaluate();
 }
 
 
