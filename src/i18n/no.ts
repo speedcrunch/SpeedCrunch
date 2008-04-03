@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="nb">
+<defaultcodec></defaultcodec>
 <context>
     <name>AboutBox</name>
     <message>
@@ -145,12 +146,12 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="225"/>
         <source>Developers</source>
-        <translation type="unfinished"></translation>
+        <translation>Utviklere</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="282"/>
         <source>Indonesian</source>
-        <translation type="unfinished"></translation>
+        <translation>Indonesisk</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="321"/>
@@ -160,17 +161,17 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="236"/>
         <source>Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Grafikk</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="285"/>
         <source>Polish</source>
-        <translation type="unfinished"></translation>
+        <translation>Polsk</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="291"/>
         <source>Turkish</source>
-        <translation type="unfinished"></translation>
+        <translation>Tyrkisk</translation>
     </message>
 </context>
 <context>
@@ -178,17 +179,17 @@
     <message>
         <location filename="../gui/bookdock.cpp" line="178"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilbake</translation>
     </message>
     <message>
         <location filename="../gui/bookdock.cpp" line="179"/>
         <source>Forward</source>
-        <translation type="unfinished"></translation>
+        <translation>Framover</translation>
     </message>
     <message>
         <location filename="../gui/bookdock.cpp" line="180"/>
         <source>Index</source>
-        <translation type="unfinished"></translation>
+        <translation>Stikkord</translation>
     </message>
 </context>
 <context>
@@ -518,12 +519,12 @@
     <message>
         <location filename="../gui/editor.cpp" line="770"/>
         <source>Current result: &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Resultat</translation>
     </message>
     <message>
         <location filename="../gui/editor.cpp" line="818"/>
         <source>Selection result: &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Resultat av utvalg</translation>
     </message>
 </context>
 <context>
@@ -531,27 +532,27 @@
     <message>
         <location filename="../base/evaluator.cpp" line="1405"/>
         <source>invalid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Ugyldig uttrykk</translation>
     </message>
     <message>
         <location filename="../base/evaluator.cpp" line="1335"/>
         <source>division by zero</source>
-        <translation type="unfinished"></translation>
+        <translation>Deling på null</translation>
     </message>
     <message>
         <location filename="../base/evaluator.cpp" line="1374"/>
         <source>unknown function or variable</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukjent funskjon eller variabel</translation>
     </message>
     <message>
         <location filename="../base/evaluator.cpp" line="1423"/>
         <source>variable cannot be overwritten</source>
-        <translation type="unfinished"></translation>
+        <translation>Variabel kan ikke endres</translation>
     </message>
     <message>
         <location filename="../base/evaluator.cpp" line="1431"/>
         <source>identifier matches an existing function name</source>
-        <translation type="unfinished"></translation>
+        <translation>Identifikator navn kolliderer med et eksisternede funksjons navn</translation>
     </message>
 </context>
 <context>
@@ -894,7 +895,7 @@
     <message>
         <location filename="../base/functions.cpp" line="1501"/>
         <source>Error Function</source>
-        <translation type="unfinished"></translation>
+        <translation>Feilfunksjon</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1502"/>
@@ -909,7 +910,7 @@
     <message>
         <location filename="../base/functions.cpp" line="1526"/>
         <source>Mask to a bit size</source>
-        <translation type="unfinished"></translation>
+        <translation>Maskere til en bit størrelse</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1527"/>
@@ -919,22 +920,22 @@
     <message>
         <location filename="../base/functions.cpp" line="1528"/>
         <source>Logical NOT</source>
-        <translation type="unfinished"></translation>
+        <translation>Logisk IKKE</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1529"/>
         <source>Logical AND</source>
-        <translation type="unfinished"></translation>
+        <translation>Logisk OG</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1530"/>
         <source>Logical OR</source>
-        <translation type="unfinished"></translation>
+        <translation>Logisk ELLER</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1531"/>
         <source>Logical XOR</source>
-        <translation type="unfinished"></translation>
+        <translation>Logisk EKSKLUSIV ELLER</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1532"/>
@@ -949,12 +950,12 @@
     <message>
         <location filename="../base/functions.cpp" line="1534"/>
         <source>Integer Quotient</source>
-        <translation type="unfinished"></translation>
+        <translation>Integer kvotient</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1535"/>
         <source>Modulo</source>
-        <translation type="unfinished"></translation>
+        <translation>Modulo</translation>
     </message>
 </context>
 <context>
@@ -1049,7 +1050,7 @@
     <message>
         <location filename="../gui/keypad.cpp" line="334"/>
         <source>The last result</source>
-        <translation type="unfinished"></translation>
+        <translation>Siste resultat</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="335"/>
@@ -1064,7 +1065,7 @@
     <message>
         <location filename="../gui/keypad.cpp" line="337"/>
         <source>Clear expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjern uttrykk</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="338"/>
@@ -1074,7 +1075,7 @@
     <message>
         <location filename="../gui/keypad.cpp" line="339"/>
         <source>Scientific notation</source>
-        <translation type="unfinished"></translation>
+        <translation>Teknisk notasjon</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="340"/>
@@ -1084,7 +1085,7 @@
     <message>
         <location filename="../gui/keypad.cpp" line="341"/>
         <source>Natural logarithm</source>
-        <translation type="unfinished"></translation>
+        <translation>Naturlig logaritme</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="342"/>
@@ -1104,12 +1105,12 @@
     <message>
         <location filename="../gui/keypad.cpp" line="345"/>
         <source>Assign variable x</source>
-        <translation type="unfinished"></translation>
+        <translation>Gi variabel x en verdi</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="346"/>
         <source>The variable x</source>
-        <translation type="unfinished"></translation>
+        <translation>Variabelen x</translation>
     </message>
 </context>
 <context>
@@ -1122,12 +1123,12 @@
     <message>
         <location filename="../gui/mainwindow.cpp" line="1958"/>
         <source>SpeedCrunch Sessions (*.sch);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>SpeedCrunch økt (*.sch);;Alle filer (*)</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1678"/>
         <source>Load Session</source>
-        <translation type="unfinished"></translation>
+        <translation>Åpne økt</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2656"/>
@@ -1137,17 +1138,17 @@
     <message>
         <location filename="../gui/mainwindow.cpp" line="1793"/>
         <source>Can&apos;t read from file %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ikke lese fra fil %1</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1802"/>
         <source>Question</source>
-        <translation type="unfinished"></translation>
+        <translation>Spørsmål</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1959"/>
         <source>Save Session</source>
-        <translation>Lagre Sesjon</translation>
+        <translation>Lagre økt</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2015"/>
@@ -1157,7 +1158,7 @@
     <message>
         <location filename="../gui/mainwindow.cpp" line="2313"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Advarsel</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2330"/>
@@ -1177,39 +1178,41 @@
     <message>
         <location filename="../gui/mainwindow.cpp" line="2343"/>
         <source>Use &lt;i&gt;;&lt;/i&gt; (semicolon) to separate the parameters in functions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bruk &lt;i&gt;;&lt;/i&gt; (semikolon) for å skille funksjonsparameter fra hverandre.</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2349"/>
         <source>Tip of the day</source>
-        <translation type="unfinished"></translation>
+        <translation>Dagens hint</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1676"/>
         <source>File %1 is not a valid session</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 er ikke en gyldig øktfil</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1713"/>
         <source>Merge session being loaded with current session?
 If no, current variables and display will be cleared.</source>
-        <translation type="unfinished"></translation>
+        <translation>Flett åpnet økt med pågående økt
+Hvis ikke vil inneværende variabler og skjerm bil tømt.</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2687"/>
         <source>SpeedCrunch is minimized.
 Left click the icon to restore it or right click for options.</source>
-        <translation type="unfinished"></translation>
+        <translation>SpeedCrunch er minimert
+Venstreklikk på ikonet for å gjenopprette eller høyreklikk for innstillinger.</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1566"/>
         <source>Degree</source>
-        <translation type="unfinished"></translation>
+        <translation>Grader</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2005"/>
         <source>All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle filer (*)</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1950"/>
@@ -1219,47 +1222,47 @@ Left click the icon to restore it or right click for options.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2308"/>
         <source>The menu bar is now hidden. To make it visible again, press Ctrl+Alt+M.</source>
-        <translation type="unfinished"></translation>
+        <translation>Meny linjen er skjult. For å gjøre den synlig igjen trykk Ctrl+Alt+M.</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2359"/>
         <source>Binary</source>
-        <translation type="unfinished"></translation>
+        <translation>Binær</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2369"/>
         <source>Engineering decimal</source>
-        <translation type="unfinished"></translation>
+        <translation>Teknisk desimal</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2379"/>
         <source>Fixed decimal</source>
-        <translation type="unfinished"></translation>
+        <translation>Fast desimal</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2389"/>
         <source>General decimal</source>
-        <translation type="unfinished"></translation>
+        <translation>Generell desimal</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2399"/>
         <source>Hexadecimal</source>
-        <translation type="unfinished"></translation>
+        <translation>Heksadesimal</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2409"/>
         <source>Octal</source>
-        <translation type="unfinished"></translation>
+        <translation>Oktal</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2419"/>
         <source>Scientific decimal</source>
-        <translation type="unfinished"></translation>
+        <translation>Vitenskapelig desimal</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1784"/>
         <source>Import Session</source>
-        <translation type="unfinished"></translation>
+        <translation>Importer økt</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1800"/>
@@ -1270,22 +1273,22 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2006"/>
         <source>Export Session</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksporter økt</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1002"/>
         <source>Math Book</source>
-        <translation type="unfinished"></translation>
+        <translation>Mattebok</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="877"/>
         <source>&amp;Session</source>
-        <translation>&amp;Sessjon</translation>
+        <translation>&amp;Økt</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="597"/>
         <source>Clear E&amp;xpression</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjern &amp;uttryk</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="598"/>
@@ -1295,12 +1298,12 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="599"/>
         <source>&amp;Degree</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Grader</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="600"/>
         <source>Delete All V&amp;ariables</source>
-        <translation type="unfinished"></translation>
+        <translation>Slett alle v&amp;ariabler</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="601"/>
@@ -1345,7 +1348,7 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="609"/>
         <source>Copy Last &amp;Result</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopier &amp;siste resultat</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="610"/>
@@ -1385,12 +1388,12 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="617"/>
         <source>&amp;Partial Results</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Delresultat</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="618"/>
         <source>Automatic &amp;Completion</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatisk &amp;fullføring</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="619"/>
@@ -1400,27 +1403,27 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="620"/>
         <source>&amp;Minimize To System Tray</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimer til system &amp;kurv</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="621"/>
         <source>Syntax &amp;Highlighting</source>
-        <translation type="unfinished"></translation>
+        <translation>Syntaks &amp;fremheving</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="622"/>
         <source>&amp;System Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Systemets standard&amp;verdi</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="623"/>
         <source>&amp;Dot</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Punktum</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="624"/>
         <source>&amp;Comma</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Komma</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="625"/>
@@ -1430,27 +1433,27 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="626"/>
         <source>Scroll Display Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Rull skjerm ned</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="627"/>
         <source>Scroll Display Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Rull skjerm opp</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="628"/>
         <source>&amp;Select Expression</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Velg uttrykk</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="629"/>
         <source>&amp;Import...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Importer...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="630"/>
         <source>&amp;Load...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Åpne...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="631"/>
@@ -1465,52 +1468,52 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="633"/>
         <source>&amp;Export...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Eksporter...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="634"/>
         <source>Math &amp;Book</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Mattebok</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="635"/>
         <source>&amp;Constants</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Konstanter</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="636"/>
         <source>Full &amp;Screen Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Fullskjerm modus</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="637"/>
         <source>&amp;Functions</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Funksjoner</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="638"/>
         <source>&amp;History</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Historie</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="639"/>
         <source>&amp;Keypad</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nummertastatur</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="640"/>
         <source>Hide &amp;Menu Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Skjul &amp;menulinje</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="641"/>
         <source>&amp;Status Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Status &amp;linje</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="642"/>
         <source>&amp;Variables</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Variabler</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="643"/>
@@ -1550,7 +1553,7 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="650"/>
         <source>System &amp;Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Systemets standard&amp;verdi</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="878"/>
@@ -1575,7 +1578,7 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="882"/>
         <source>&amp;Decimal</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Desimal</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="883"/>
@@ -1585,17 +1588,17 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="884"/>
         <source>&amp;Behavior</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Oppførsel</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="885"/>
         <source>Radix &amp;Character</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Tegn</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="886"/>
         <source>&amp;Language</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Språk</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="887"/>
@@ -1615,7 +1618,7 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1835"/>
         <source>Ignore error?</source>
-        <translation type="unfinished"></translation>
+        <translation>Overse feil?</translation>
     </message>
 </context>
 <context>

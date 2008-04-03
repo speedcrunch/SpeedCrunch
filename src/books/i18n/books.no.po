@@ -37,11 +37,11 @@ msgstr "Sylinder"
 
 #: math_index.html.template
 msgid "SpeedCrunch Book"
-msgstr ""
+msgstr "SpeedCrunch bok"
 
 #: math_index.html.template
 msgid "3D Objects"
-msgstr ""
+msgstr "3D figur"
 
 #: sphere.html.template, math_index.html.template
 msgid "Sphere"
@@ -49,7 +49,7 @@ msgstr "Kule"
 
 #: math_index.html.template
 msgid "2D Objects"
-msgstr ""
+msgstr "2D figur"
 
 #: math_index.html.template, right_triangle.html.template
 msgid "Right Triangle"
@@ -61,7 +61,7 @@ msgstr "Sirkelsektor"
 
 #: math_index.html.template
 msgid "Misc"
-msgstr "Blandet"
+msgstr "Annet"
 
 #: quadratic_equation.html.template, math_index.html.template
 msgid "Quadratic Equation"
