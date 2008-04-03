@@ -47,6 +47,7 @@ class FormatIntf;
 class Format
 {
   friend class FormatIntf;
+  friend class FormatList;
   public:
     Format(const Format&);
     Format(FormatIntf* = 0);
@@ -67,7 +68,6 @@ class Format
     static void add(const QString& key, FormatIntf*);
     static void remove(const QString& key, FmtType aType);
   private:
-    Format clone() const;
     operator FormatIntf*() const { return p;};
     void operator = (FormatIntf*);
     FormatIntf* p;
@@ -81,17 +81,17 @@ class FormatIntf
     operator Format() { return Format(this); };
     virtual ~FormatIntf() { releaseBase(); };
     virtual FmtType type() const = 0;
-    virtual FormatIntf* clone() = 0;
-    virtual QString format(const Variant&) const = 0;
+    virtual QString format(const Variant&) const { return QString(); };
     virtual bool setProp(const QString& prop, const Variant& val) = 0;
     virtual Variant getProp(const QString& prop) const = 0;
     virtual const QStringList& getProps() const = 0;
     virtual bool canHandle(VariantType vt) const { return false; };
-    virtual bool isCompatible(FmtType) const = 0;
+    virtual bool isCompatible(FmtType ft) const { return ft == type(); };
     bool setBase(const QString& aBase, quint64 iflags, FmtLinkage = fmtRelaxed);
     void lock() { ++refcount; };
     void release();
     QString base() const;
+    bool accessible;
   protected:
     void releaseBase();
     void import();
@@ -102,5 +102,7 @@ class FormatIntf
     Format m_base;
     quint64 m_importmask;
 };
+
+extern const char* fmtSettings;
 
 #endif /*_FORMATBASE_H*/

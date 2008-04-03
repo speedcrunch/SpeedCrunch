@@ -42,6 +42,10 @@
 #define LLRINT_AVAILABLE
 
 #ifndef llrint
+// llrint is part of the ISO C99 standard
+// FIXME: the above #ifndef does not always test the
+// availability of llrint correctly, because llrint is
+// in many cases a builtin function, not a macro
 #undef LLRINT_AVAILABLE
 #endif
 
@@ -197,7 +201,8 @@ LongReal::operator double() const
 qint64 llrint(double x)
 {
   qint64 result = 0;
-  x = ldexp(x, -52);
+  bool neg = x < 0;
+  x = ldexp(fabs(x), -52);
   for (int i = -1; ++i <= 52;)
   {
     result <<= 1;
@@ -208,7 +213,7 @@ qint64 llrint(double x)
     }
     x *= 2;
   }
-  return result;
+  return neg? -result : result;
 }
 #endif
 

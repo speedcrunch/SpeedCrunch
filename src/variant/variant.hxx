@@ -110,6 +110,7 @@ class Variant: public VariantBase
     static QDomElement createEmptyElement(QDomDocument&, const char* type);
     static void initClass();
   public: // support of LongReal
+    Variant(double d) { *this = d; };
     Variant(floatnum, Error = Success);
     operator cfloatnum() const;
     operator double() const;

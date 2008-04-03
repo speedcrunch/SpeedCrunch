@@ -44,11 +44,26 @@ class FormatList: public QMultiMap<QString, Format>
     Format find(const QString& key, VariantType);
     void remove(const QString& key, FmtType ft);
     void remove(const Format&);
+    void add(const QString& key, const Format&);
   private:
     static FormatList* list;
+    void deleteFromList(Iterator);
 };
 
 FormatList* FormatList::list = 0;
+
+void FormatList::deleteFromList(Iterator i)
+{
+  ((FormatIntf*)i.value())->accessible = false;
+  erase(i);
+}
+
+void FormatList::add(const QString& key, const Format& fmt)
+{
+  remove(key, fmt.type());
+  ((FormatIntf*)(fmt))->accessible = true;
+  insert(key, fmt);
+}
 
 Format FormatList::findBase(const QString& key, const Format& derived)
 {
@@ -78,12 +93,14 @@ void FormatList::remove(const QString& key, FmtType ft)
 {
   Iterator i = Base::find(key);
   while (i != end() && i.key() == key)
+  {
     if (i.value().type() == ft)
     {
-      erase(i);
+      deleteFromList(i);
       return;
-    ++i;
     }
+    ++i;
+  }
 }
 
 void FormatList::remove(const Format& fmt)
@@ -92,7 +109,7 @@ void FormatList::remove(const Format& fmt)
   while (i != end() && i.value() != fmt)
     ++i;
   if (i != end())
-    erase(i);
+    deleteFromList(i);
 }
 
 /*----------------------------   FormatIntf   --------------------------*/
@@ -100,6 +117,7 @@ void FormatList::remove(const Format& fmt)
 FormatIntf::FormatIntf()
   : m_base(0)
 {
+  accessible = false;
 }
 
 FormatIntf* FormatIntf::findBase()
@@ -234,13 +252,6 @@ QString Format::format(const Variant& value) const
   return QString();
 }
 
-Format Format::clone() const
-{
-  if (isValid())
-    return p->clone();
-  return 0;
-}
-
 const QStringList* Format::getProps() const
 {
   if (isValid())
@@ -271,7 +282,18 @@ void Format::add(const QString& key, FormatIntf* fmt)
 {
   if (!fmt)
     return;
-  Format f = fmt;
-  FormatList::inst().remove(key, f.type());
-  FormatList::inst().insert(key, f);
+  FormatList::inst().add(key, fmt);
 }
+
+/*----------------------   FmtSettings   -----------------------*/
+
+const char* fmtSettings = "settings";
+
+class FmtSettings: public FormatIntf
+{
+  public:
+    FmtType type() const { return fmtSettings; };
+    virtual bool setProp(const QString& prop, const Variant& val) = 0;
+    virtual Variant getProp(const QString& prop) const = 0;
+    virtual const QStringList& getProps() const = 0;
+};

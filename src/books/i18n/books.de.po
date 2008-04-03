@@ -61,7 +61,7 @@ msgstr "Rechtwinkliges Dreieck"
 
 #: math_index.html.template, sector.html.template
 msgid "Sector"
-msgstr "Abschnitt"
+msgstr "Kreissegment"
 
 #: math_index.html.template
 msgid "Misc"
