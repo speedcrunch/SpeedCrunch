@@ -1,4 +1,5 @@
 # translation of books.pot to Italian
+# Alessio Sclocco <alessio.sclocco@gmail.com>, 2008.
 #
 msgid ""
 msgstr ""
@@ -6,7 +7,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-03-28 15:49+0000\n"
 "PO-Revision-Date: 2007-03-25 15:42+0100\n"
-"Last-Translator: \n"
+"Last-Translator: Alessio Sclocco <alessio.sclocco@gmail.com>\n"
 "Language-Team: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -14,7 +15,7 @@ msgstr ""
 
 #: circle.html.template, math_index.html.template
 msgid "Circle"
-msgstr ""
+msgstr "Circonferenza"
 
 #: cube.html.template, circle.html.template, right_triangle.html.template,
 #: math_index.html.template, cone.html.template, sphere.html.template,
@@ -25,44 +26,47 @@ msgstr "align=\"left\""
 
 #: cone.html.template, math_index.html.template
 msgid "Cone"
-msgstr ""
+msgstr "Cono"
 
 #: cube.html.template, math_index.html.template
 msgid "Cube"
-msgstr ""
+msgstr "Cubo"
 
 #: cylinder.html.template, math_index.html.template
 msgid "Cylinder"
-msgstr ""
+msgstr "Cilindro"
 
 #: math_index.html.template
 msgid "SpeedCrunch Book"
-msgstr ""
+msgstr "Libro di SpeedCrunch"
 
 #: math_index.html.template
 msgid "3D Objects"
-msgstr ""
+msgstr "Oggetti tridimensionali"
 
 #: sphere.html.template, math_index.html.template
 msgid "Sphere"
-msgstr ""
+msgstr "Sfera"
 
 #: math_index.html.template
 msgid "2D Objects"
-msgstr ""
+msgstr "Oggetti bidimensionali"
 
 #: math_index.html.template, right_triangle.html.template
 msgid "Right Triangle"
-msgstr ""
+msgstr "Triangolo Rettangolo"
 
 #: math_index.html.template, sector.html.template
 msgid "Sector"
-msgstr ""
+msgstr "Settore"
 
 #: math_index.html.template
 msgid "Misc"
-msgstr ""
+msgstr "Vari"
 
 #: quadratic_equation.html.template, math_index.html.template
 msgid "Quadratic Equation"
-msgstr ""
+msgstr "Equazione Quadratica"
+
+#~ msgid "SpeedCrunch Manual"
+#~ msgstr "Manuale di SpeedCrunch"
