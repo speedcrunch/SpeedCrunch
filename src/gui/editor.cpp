@@ -33,7 +33,6 @@
 #include <QHeaderView>
 #include <QKeyEvent>
 #include <QLineEdit>
-#include <QLocale>
 #include <QStyle>
 #include <QSyntaxHighlighter>
 #include <QTimeLine>

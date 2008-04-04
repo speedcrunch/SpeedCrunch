@@ -36,10 +36,10 @@ class Settings
     // do not expose internals to the interface.
     // A client wants to know the result and does not care
     // whether it is retrieved from the OS or not.
-    char        getRadixChar();
+    char        getRadixChar() const;
     // The default value means: fall back to locale settings
     void        setRadixChar(char c = 0) { radixChar = c; };
-    bool        useLocaleRadixChar() { return radixChar == 0; };
+    bool        useLocaleRadixChar() const { return radixChar == 0; };
 
     char        angleMode; // 'r': radian; 'd': degree
     char        format;    // see HMath documentation
@@ -108,6 +108,5 @@ class Settings
     Settings( const Settings & );
     Settings & operator=( const Settings & );
 };
-
 
 #endif

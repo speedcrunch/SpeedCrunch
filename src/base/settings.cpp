@@ -29,8 +29,6 @@
 #include <QSettings>
 #include <QLocale>
 
-#include <stdlib.h>
-
 
 QSettings * createQSettings( const QString & key );
 
@@ -41,7 +39,7 @@ Settings::Settings()
   //escape = "\\"; //reftbl
 }
 
-char Settings::getRadixChar()
+char Settings::getRadixChar() const
 {
   if (radixChar == 0)
     return QLocale().decimalPoint().toAscii();

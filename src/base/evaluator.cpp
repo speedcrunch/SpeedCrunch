@@ -294,7 +294,7 @@ Evaluator::Evaluator( Functions * f, char radixChar, QObject * parent )
   d->p = this;
   d->functions = f;
 
-  setRadixChar( radixChar );
+  d->radixChar = radixChar;
 
   clear();
 
