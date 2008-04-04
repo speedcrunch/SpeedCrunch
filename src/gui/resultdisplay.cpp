@@ -27,7 +27,6 @@
 
 #include <QApplication>
 #include <QClipboard>
-#include <QLocale>
 #include <QResizeEvent>
 #include <QScrollBar>
 #include <QTimer>
@@ -181,10 +180,7 @@ ResultDisplay::ResultDisplay( char radixChar, char format, int precision,
                               QWidget * parent, const char * name )
   : QListWidget( parent ), d( new ResultDisplay::Private )
 {
-  if ( radixChar == 'C' )
-    d->radixChar = QLocale().decimalPoint().toAscii();
-  else
-    d->radixChar = radixChar;
+  d->radixChar = radixChar;
 
   d->format    = format;
   d->precision = precision;
@@ -336,8 +332,8 @@ QString ResultDisplay::formatNumber( const HNumber & value ) const
                                        value.format() : d->format, d->precision );
   QString s = QString::fromLatin1( str );
   free( str );
-  if ( d->radixChar == ',' )
-    s.replace( '.', ',' );
+  if ( radixChar() != '.' )
+    s.replace( '.', radixChar() );
   return s;
 }
 
@@ -431,11 +427,10 @@ void ResultDisplay::setPrecision( int p )
 
 void ResultDisplay::setRadixChar( char c )
 {
-  if ( c == 'C' )
-    c = QLocale().decimalPoint().toAscii();
-  if ( d->radixChar != c )
+  if ( radixChar() != c )
   {
     d->radixChar = c;
+    refresh();
   }
 }
 

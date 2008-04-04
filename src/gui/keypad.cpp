@@ -22,7 +22,6 @@
 
 #include <QApplication>
 #include <QGridLayout>
-#include <QLocale>
 #include <QPushButton>
 #include <QStyle>
 #include <QStyleOptionButton>
@@ -91,10 +90,7 @@ Keypad::Keypad( char radixChar, QWidget * parent )
 {
   d->p = this;
 
-  if ( radixChar == 'C' )
-    d->radixChar = QLocale().decimalPoint().toAscii();
-  else
-    d->radixChar = radixChar;
+  d->radixChar = radixChar;
 
   d->createButtons();
   d->sizeButtons();
@@ -122,9 +118,7 @@ char Keypad::radixChar() const
 
 void Keypad::setRadixChar( char c )
 {
-  if ( c == 'C' )
-    c = QLocale().decimalPoint().toAscii();
-  if ( d->radixChar != c )
+  if ( radixChar() != c )
   {
     d->radixChar = c;
     d->keyDot->setText( QString( c ) );

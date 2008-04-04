@@ -912,7 +912,7 @@ void MainWindow::Private::createFixedWidgets()
   // necessary objects
   constants = new Constants( p );
   functions = new Functions( settings.angleMode, p );
-  evaluator = new Evaluator( functions, settings.radixChar, p );
+  evaluator = new Evaluator( functions, settings.getRadixChar(), p );
 
   // outer widget and layout
   widgets.root = new QWidget( p );
@@ -925,7 +925,7 @@ void MainWindow::Private::createFixedWidgets()
   // display
   QHBoxLayout * displayLayout = new QHBoxLayout();
   displayLayout->setMargin( 5 );
-  widgets.display = new ResultDisplay( settings.radixChar, settings.format,
+  widgets.display = new ResultDisplay( settings.getRadixChar(), settings.format,
                                        settings.precision, widgets.root );
   displayLayout->addWidget( widgets.display );
   layouts.root->addLayout( displayLayout );
@@ -934,7 +934,7 @@ void MainWindow::Private::createFixedWidgets()
   QHBoxLayout * editorLayout = new QHBoxLayout();
   editorLayout->setMargin( 5 );
   widgets.editor = new Editor( evaluator, functions, constants, settings.format,
-                               settings.precision, settings.radixChar,
+                               settings.precision, settings.getRadixChar(),
                                widgets.root );
   widgets.editor->setFocus();
   QString editorStyle( "QTextEdit { font: bold %1pt }" );
@@ -956,7 +956,7 @@ void MainWindow::Private::createFixedWidgets()
 
 void MainWindow::Private::createKeypad()
 {
-  widgets.keypad = new Keypad( settings.radixChar, widgets.root );
+  widgets.keypad = new Keypad( settings.getRadixChar(), widgets.root );
   widgets.keypad->setFocusPolicy( Qt::NoFocus );
 
   connect( widgets.keypad, SIGNAL( buttonPressed( Keypad::Button ) ),
@@ -1025,7 +1025,7 @@ void MainWindow::Private::createBookDock()
 
 void MainWindow::Private::createConstantsDock()
 {
-  docks.constants = new ConstantsDock( constants, settings.radixChar, p );
+  docks.constants = new ConstantsDock( constants, settings.getRadixChar(), p );
   docks.constants->setObjectName( "ConstantsDock" );
   docks.constants->installEventFilter( p );
   p->addDockWidget( Qt::RightDockWidgetArea, docks.constants );
@@ -1104,7 +1104,7 @@ void MainWindow::Private::createHistoryDock()
 
 void MainWindow::Private::createVariablesDock()
 {
-  docks.variables = new VariablesDock( settings.radixChar, p );
+  docks.variables = new VariablesDock( settings.getRadixChar(), p );
   docks.variables->setObjectName( "VariablesDock" );
   docks.variables->installEventFilter( p );
   p->addDockWidget( Qt::RightDockWidgetArea, docks.variables );
@@ -1266,11 +1266,11 @@ void MainWindow::Private::applySettings()
   checkInitialPrecision();
 
   // radix character
-  if ( settings.radixChar == 'C' )
+  if ( settings.useLocaleRadixChar() )
     actions.radixCharAuto->setChecked( true );
-  else if ( settings.radixChar == '.' )
+  else if ( settings.getRadixChar() == '.' )
     actions.radixCharDot->setChecked( true );
-  else if ( settings.radixChar == ',' )
+  else if ( settings.getRadixChar() == ',' )
     actions.radixCharComma->setChecked( true );
 
   // keypad
@@ -1664,7 +1664,7 @@ void MainWindow::insertFunction()
 
 void MainWindow::insertVariable()
 {
-  InsertVariableDlg dlg( d->evaluator, d->settings.radixChar );
+  InsertVariableDlg dlg( d->evaluator, d->settings.getRadixChar() );
 
   if ( dlg.exec() == InsertVariableDlg::Accepted )
   {
@@ -2785,25 +2785,19 @@ void MainWindow::variableSelected( const QString & v )
 
 void MainWindow::radixCharAutoActivated()
 {
-  char c = 'C';
-  d->settings.radixChar = c;
-  emit radixCharChanged( c );
+  setRadixChar(0);
 }
 
 
 void MainWindow::radixCharDotActivated()
 {
-  char c = '.';
-  d->settings.radixChar = c;
-  emit radixCharChanged( c );
+  setRadixChar('.');
 }
 
 
 void MainWindow::radixCharCommaActivated()
 {
-  char c = ',';
-  d->settings.radixChar = c;
-  emit radixCharChanged( c );
+  setRadixChar(',');
 }
 
 
@@ -2838,11 +2832,10 @@ void MainWindow::setFormat( char c )
 
 void MainWindow::setRadixChar( char c )
 {
-  if ( d->settings.radixChar == c )
-    return;
-
-  d->settings.radixChar = c;
-  emit radixCharChanged( c );
+  char oldRadixChar = d->settings.getRadixChar();
+  d->settings.setRadixChar( c );
+  if ( oldRadixChar != d->settings.getRadixChar() )
+    emit radixCharChanged( d->settings.getRadixChar() );
 }
 
 

@@ -30,11 +30,17 @@
 #include <QString>
 #include <QStringList>
 
-
 class Settings
 {
   public:
-    char        radixChar; // 'C': locale (default);
+    // do not expose internals to the interface.
+    // A client wants to know the result and does not care
+    // whether it is retrieved from the OS or not.
+    char        getRadixChar();
+    // The default value means: fall back to locale settings
+    void        setRadixChar(char c = 0) { radixChar = c; };
+    bool        useLocaleRadixChar() { return radixChar == 0; };
+
     char        angleMode; // 'r': radian; 'd': degree
     char        format;    // see HMath documentation
     int         precision; // see HMath documentation
@@ -98,6 +104,7 @@ class Settings
     void save();
 
   private:
+    char        radixChar; // 0: locale (default);
     Settings( const Settings & );
     Settings & operator=( const Settings & );
 };

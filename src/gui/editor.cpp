@@ -170,10 +170,7 @@ Editor::Editor( Evaluator * e, Functions * f, Constants * c, char format,
                 int precision, char radixChar, QWidget * parent )
   : QTextEdit( parent ), d( new Editor::Private )
 {
-  if ( radixChar == 'C' )
-    d->radixChar = QLocale().decimalPoint().toAscii();
-  else
-    d->radixChar = radixChar;
+  d->radixChar = radixChar;
 
   d->format = format;
   d->precision = precision;
@@ -252,9 +249,7 @@ void Editor::insert( const QString & str )
 
 void Editor::setRadixChar( char c )
 {
-  if ( c == 'C' )
-    c = QLocale().decimalPoint().toAscii();
-  if ( d->radixChar != c )
+  if ( radixChar() != c )
   {
     d->radixChar = c;
     if ( syntaxHighlight() )
@@ -829,8 +824,8 @@ void Editor::autoCalcSelection()
 void Editor::insertConstant( const QString & c )
 {
   QString s( c );
-  if ( d->radixChar == ',' )
-    s.replace( '.', ',' );
+  if ( radixChar() == '.' )
+    s.replace( '.', radixChar() );
   if ( ! c.isNull() )
     insert( s );
   if ( d->constantCompletion )
@@ -863,8 +858,8 @@ QString Editor::formatNumber( const HNumber & value ) const
 {
   char * str = HMath::format( value, d->format, d->precision );
   QString s = QString::fromLatin1( str );
-  if ( d->radixChar == ',' )
-    s.replace( '.', ',' );
+  if ( radixChar() != '.' )
+    s.replace( '.', radixChar() );
   free( str );
   return s;
 }

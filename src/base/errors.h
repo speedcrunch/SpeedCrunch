@@ -136,8 +136,9 @@ typedef enum
 //  BadCast,
 
 /* used with variants, when an operation is not implemented
-  for a particular data type */
-//   NotImplemented,
+  for a particular data type.
+  used with formats to indicate a not implemented property */
+   NotImplemented,
 
 /* this value is used internally to indicate the absence of
   any error information altogether */

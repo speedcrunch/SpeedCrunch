@@ -26,7 +26,6 @@
 #endif
 
 #include <QApplication>
-#include <QLocale>
 #include <QMap>
 #include <QString>
 #include <QStringList>
@@ -295,10 +294,7 @@ Evaluator::Evaluator( Functions * f, char radixChar, QObject * parent )
   d->p = this;
   d->functions = f;
 
-  if ( radixChar == 'C' )
-    d->radixChar = QLocale().decimalPoint().toAscii();
-  else
-    d->radixChar = radixChar;
+  setRadixChar( radixChar );
 
   clear();
 
@@ -1573,12 +1569,7 @@ char Evaluator::radixChar() const
 
 void Evaluator::setRadixChar( char c )
 {
-  if ( c == 'C' )
-    c = QLocale().decimalPoint().toAscii();
-  if ( d->radixChar != c )
-  {
-    d->radixChar = c;
-  }
+  d->radixChar = c;
 }
 
 

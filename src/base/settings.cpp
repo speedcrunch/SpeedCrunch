@@ -27,6 +27,7 @@
 #include <QApplication>
 #include <QDir>
 #include <QSettings>
+#include <QLocale>
 
 #include <stdlib.h>
 
@@ -38,6 +39,13 @@ QSettings * createQSettings( const QString & key );
 Settings::Settings()
 {
   //escape = "\\"; //reftbl
+}
+
+char Settings::getRadixChar()
+{
+  if (radixChar == 0)
+    return QLocale().decimalPoint().toAscii();
+  return radixChar;
 }
 
 void Settings::load()

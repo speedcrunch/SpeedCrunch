@@ -29,7 +29,6 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QList>
-#include <QLocale>
 #include <QTimer>
 #include <QTreeWidget>
 #include <QVBoxLayout>
@@ -54,10 +53,7 @@ struct ConstantsDock::Private
 ConstantsDock::ConstantsDock( Constants * c, char radixChar, QWidget * parent )
   : QDockWidget( parent ), d( new ConstantsDock::Private )
 {
-  if ( radixChar == 'C' )
-    d->radixChar = QLocale().decimalPoint().toAscii();
-  else
-    d->radixChar = radixChar;
+  d->radixChar = radixChar;
 
   d->constants = c;
 
@@ -151,9 +147,7 @@ char ConstantsDock::radixChar() const
 
 void ConstantsDock::setRadixChar( char c )
 {
-  if ( c == 'C' )
-    c = QLocale().decimalPoint().toAscii();
-  if ( d->radixChar != c )
+  if ( radixChar() != c )
   {
     d->radixChar = c;
     updateList();
@@ -187,8 +181,8 @@ void ConstantsDock::filter()
   {
     QStringList str;
     str << c->constantList().at( k ).name;
-    QString radCh = (d->radixChar == ',' ?
-        QString( c->constantList().at( k ).value ).replace( '.', ',' )
+    QString radCh = (radixChar() != '.' ?
+        QString( c->constantList().at( k ).value ).replace( '.', radixChar() )
       : c->constantList().at( k ).value);
     if ( layoutDirection() == Qt::RightToLeft )
     {
@@ -227,8 +221,8 @@ void ConstantsDock::filter()
       tip += QString( QChar( 0x200E ) );
       if ( ! c->constantList().at( k ).unit.isEmpty() )
         tip.append( " " ).append( c->constantList().at( k ).unit );
-      if ( d->radixChar == ',' )
-        tip.replace( '.', ',' );
+      if ( radixChar() != '.' )
+        tip.replace( '.', radixChar());
       tip += QString( QChar( 0x200E ) );
       item->setToolTip( 0, tip );
       item->setToolTip( 1, tip );

@@ -28,7 +28,6 @@
 #include <QHeaderView>
 #include <QLabel>
 #include <QLineEdit>
-#include <QLocale>
 #include <QTimer>
 #include <QTreeWidget>
 #include <QVBoxLayout>
@@ -52,10 +51,9 @@ QString VariablesDock::Private::formatValue( const HNumber & value )
 {
   char * str = HMath::format( value, 'g' );
   QString s;
-  if ( radixChar == '.' )
-    s = QString::fromLatin1( str );
-  else
-    s = QString::fromLatin1( str ).replace( '.', ',' );
+  s = QString::fromLatin1( str );
+  if ( radixChar != '.' )
+    s = s.replace( '.', radixChar );
   free( str );
   return s;
 }
@@ -66,10 +64,7 @@ QString VariablesDock::Private::formatValue( const HNumber & value )
 VariablesDock::VariablesDock( char radixChar, QWidget * parent )
   : QDockWidget( parent ), d( new VariablesDock::Private )
 {
-  if ( radixChar == 'C' )
-    d->radixChar = QLocale().decimalPoint().toAscii();
-  else
-    d->radixChar = radixChar;
+  d->radixChar = radixChar;
 
   d->label = new QLabel( this );
 
@@ -147,9 +142,7 @@ VariablesDock::~VariablesDock()
 
 void VariablesDock::setRadixChar( char c )
 {
-  if ( c == 'C' )
-    c = QLocale().decimalPoint().toAscii();
-  if ( d->radixChar != c )
+  if ( radixChar() != c )
   {
     d->radixChar = c;
     filter();
