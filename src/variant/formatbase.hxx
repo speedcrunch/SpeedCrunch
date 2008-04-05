@@ -46,6 +46,7 @@ class FormatIntf;
 
 class Format
 {
+  friend class InitVariant;
   friend class FormatIntf;
   friend class FormatList;
   public:
@@ -55,19 +56,21 @@ class Format
     bool operator == (const Format& other) const { return p == other.p; }
     bool operator != (const Format& other) const { return p != other.p; }
     Format& operator = (const Format&);
-    void setBase(const Format& base, FmtLinkage);
+    bool setBase(const QString&, quint64, FmtLinkage);
     FmtType type() const;
     QString format(const Variant&) const;
     bool isValid() const { return p != 0; };
     bool canHandle(VariantType vt) const;
     bool isCompatible(const Format&) const;
+    bool isAccessible() const;
     const QStringList* getProps() const;
-    bool setProp(const QString& prop, const Variant& val);
+    bool setProp(const QString& prop, const Variant& val, bool inherit = false);
     Variant getProp(const QString& prop) const;
     static Format find(const QString& key, VariantType);
-    static void add(const QString& key, FormatIntf*);
+    static void add(const QString& key, Format);
     static void remove(const QString& key, FmtType aType);
   private:
+    static void initClass();
     operator FormatIntf*() const { return p;};
     void operator = (FormatIntf*);
     FormatIntf* p;
@@ -75,32 +78,38 @@ class Format
 
 class FormatIntf
 {
-  friend class FormatList;
   public:
     FormatIntf();
     operator Format() { return Format(this); };
     virtual ~FormatIntf() { releaseBase(); };
     virtual FmtType type() const = 0;
     virtual QString format(const Variant&) const { return QString(); };
-    virtual bool setProp(const QString& prop, const Variant& val) = 0;
-    virtual Variant getProp(const QString& prop) const = 0;
     virtual const QStringList& getProps() const = 0;
     virtual bool canHandle(VariantType vt) const { return false; };
-    virtual bool isCompatible(FmtType ft) const { return ft == type(); };
+    virtual bool isCompatible(FmtType ft) const;
+    bool setProp(const QString& prop, const Variant& val, bool inherit);
+    Variant getProp(const QString& prop);
     bool setBase(const QString& aBase, quint64 iflags, FmtLinkage = fmtRelaxed);
+    bool isBaseImport(const QString& prop) const;
     void lock() { ++refcount; };
     void release();
     QString base() const;
     bool accessible;
   protected:
+    virtual bool setValue(int idx, const Variant& val) { return false; };
+    virtual Variant getValue(int idx) const = 0;
     void releaseBase();
     void import();
-    FormatIntf* findBase();
+    Format findBase();
+    int indexOfProp(const QString& prop) const;
+    bool setChar(QChar& dest, const Variant& val);
+    static void initClass(QStringList** propList, const char** props);
   private:
     int refcount;
     QString m_baseName;
     Format m_base;
     quint64 m_importmask;
+    static quint64 flag(char ofs);
 };
 
 extern const char* fmtSettings;

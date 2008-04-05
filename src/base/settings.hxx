@@ -34,12 +34,13 @@ class Settings
 {
   public:
     // do not expose internals to the interface.
-    // A client wants to know the result and does not care
-    // whether it is retrieved from the OS or not.
+    // Most clients just want to know the radix char and do not
+    // care a lot whether it is retrieved from the OS or not.
     char        getRadixChar() const;
-    // The default value means: fall back to locale settings
+    // extensions for classes maintaining the radix char field.
+    // The value 0 means: use locale settings
     void        setRadixChar(char c = 0) { radixChar = c; };
-    bool        useLocaleRadixChar() const { return radixChar == 0; };
+    bool        isLocaleRadixChar() const { return radixChar == 0; };
 
     char        angleMode; // 'r': radian; 'd': degree
     char        format;    // see HMath documentation
@@ -102,6 +103,17 @@ class Settings
     Settings();
     void load();
     void save();
+
+/*  FIXME
+    formats need frequent access to the current settings, which should offer
+    their data publicly. IMO, a singleton serves this idea better than
+    a hidden instance in MainWindow.
+    Classes like editor, evaluator, format can update their knowledge
+    about the settings (radix char) at the beginning of an operation,
+    and, technically, do not need a real-time update by the QT messaging system.
+    Of course, this does not hold for GUI elements. (wl)
+    This is a workaround. */
+    static Settings* settings; // maintained by the MainWindow (awkward)
 
   private:
     char        radixChar; // 0: locale (default);

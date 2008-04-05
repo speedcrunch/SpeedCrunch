@@ -306,6 +306,8 @@ MainWindow::Private::Private()
 
   status.angleUnit = 0;
   status.format    = 0;
+
+  Settings::settings = &settings;
 };
 
 
@@ -317,6 +319,7 @@ MainWindow::Private::~Private()
   if ( docks.variables  ) deleteVariablesDock();
   if ( docks.functions  ) deleteFunctionsDock();
   if ( docks.history    ) deleteHistoryDock();
+  Settings::settings = 0;
 }
 
 
@@ -1266,7 +1269,7 @@ void MainWindow::Private::applySettings()
   checkInitialPrecision();
 
   // radix character
-  if ( settings.useLocaleRadixChar() )
+  if ( settings.isLocaleRadixChar() )
     actions.radixCharAuto->setChecked( true );
   else if ( settings.getRadixChar() == '.' )
     actions.radixCharDot->setChecked( true );
@@ -2833,9 +2836,13 @@ void MainWindow::setFormat( char c )
 void MainWindow::setRadixChar( char c )
 {
   char oldRadixChar = d->settings.getRadixChar();
-  d->settings.setRadixChar( c );
-  if ( oldRadixChar != d->settings.getRadixChar() )
-    emit radixCharChanged( d->settings.getRadixChar() );
+  if (c == 0)
+    d->settings.setRadixChar();
+  else
+    d->settings.setRadixChar( c );
+  c = d->settings.getRadixChar();
+  if ( oldRadixChar != c )
+    emit radixCharChanged( c );
 }
 
 

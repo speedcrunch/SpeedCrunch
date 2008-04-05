@@ -34,8 +34,13 @@
 
 #include "variant/formatbase.hxx"
 
+extern const char* fmtLongReal;
+
 class RealFormat: public FormatIntf
 {
+  friend class InitVariant;
+  public:
+    FmtType type() { return fmtLongReal; };
   public:
     typedef enum
     {
@@ -128,6 +133,9 @@ class RealFormat: public FormatIntf
     bool useShortScale() const;
     QChar getScaleChar() const;
     QString getPrefix(Sign, char base, bool isCompl) const;
+  private:
+    static void initClass();
+    static QStringList* propList;
 };
 
 #endif /*_FORMATREAL_H*/

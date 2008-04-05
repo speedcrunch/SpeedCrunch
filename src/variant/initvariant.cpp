@@ -32,6 +32,7 @@
 #include "variant/variant.hxx"
 #include "variant/real.hxx"
 #include "variant/vstring.hxx"
+#include "variant/formatbase.hxx"
 
 class InitVariant
 {
@@ -57,6 +58,8 @@ InitVariant::InitVariant()
   Variant::initClass();
   LongReal::initClass();
   VString::initClass();
+
+  Format::initClass();
 
 //   test();
 }

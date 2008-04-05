@@ -32,6 +32,8 @@
 
 QSettings * createQSettings( const QString & key );
 
+Settings* Settings::settings = 0;
+
 // public
 
 Settings::Settings()

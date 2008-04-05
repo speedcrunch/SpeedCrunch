@@ -36,6 +36,21 @@ static bool _isZero(const QString& str)
   return str.size() == 1 && str.at(0) == '0';
 }
 
+const char* fmtLongReal = "longreal";
+
+QStringList* RealFormat::propList;
+
+static const char* fmtRealProps[] =
+{
+  "dot",
+  0
+};
+
+void RealFormat::initClass()
+{
+  FormatIntf::initClass(&propList, &fmtRealProps[0]);
+}
+
 RealFormat::RealFormat()
 {
   setMode(Scientific);
