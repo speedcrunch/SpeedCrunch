@@ -34,6 +34,8 @@
 #include <QMultiMap>
 #include <QStringList>
 
+const char* fmtDefault = "default";
+
 /*------------------------   FormatList   -------------------------*/
 
 class FormatList: public QMultiMap<QString, Format>
@@ -61,14 +63,15 @@ void FormatList::initClass()
 
 void FormatList::deleteFromList(Iterator i)
 {
-  ((FormatIntf*)i.value())->accessible = false;
+  ((FormatIntf*)i.value())->key.clear();
   erase(i);
 }
 
 void FormatList::add(const QString& key, const Format& fmt)
 {
+  remove(fmt.key(), fmt.type());
   remove(key, fmt.type());
-  ((FormatIntf*)(fmt))->accessible = true;
+  ((FormatIntf*)(fmt))->key = key;
   insert(key, fmt);
 }
 
@@ -124,7 +127,6 @@ void FormatList::remove(const Format& fmt)
 FormatIntf::FormatIntf()
   : m_base(0), m_importmask(0)
 {
-  accessible = false;
 }
 
 bool FormatIntf::isCompatible(FmtType ft) const
@@ -180,32 +182,26 @@ Format FormatIntf::findBase()
 {
   if (m_baseName.isEmpty())
   {
-    if (m_base.isValid() && !m_base.isAccessible())
+    if (m_base.isValid() && m_base.key().isEmpty())
     {
       import();
-      releaseBase();
+      m_base = 0;
     }
     return m_base;
   }
   return FormatList::inst().find(m_baseName, this);
 }
 
-void FormatIntf::releaseBase()
-{
-  if (m_base)
-  {
-    ((FormatIntf*)m_base)->release();
-    m_base = 0;
-  }
-}
-
 void FormatIntf::release()
 {
-  if (--refcount <= 0)
-  {
-    releaseBase();
+  if (--refcount <= 0);
     delete this;
-  }
+}
+
+bool FormatIntf::usesBase() const
+{
+  return m_importmask != 0
+         && (m_base.isValid() || !m_baseName.isEmpty());
 }
 
 bool FormatIntf::setBase(const QString& aBase, quint64 imask, FmtLinkage lk)
@@ -214,43 +210,42 @@ bool FormatIntf::setBase(const QString& aBase, quint64 imask, FmtLinkage lk)
   m_baseName = aBase;
   if (lk == fmtRelaxed)
   {
-    releaseBase();
+    m_base = 0;
     return true;
   }
-  FormatIntf* newBase = findBase();
+  m_base = findBase();
   m_baseName.clear();
-  if (newBase != m_base)
-    releaseBase();
-  m_base = newBase;
   if (lk == fmtInclude)
   {
     import();
     m_base = 0;
   }
-  else if (newBase) // fmtFixed
-    ((FormatIntf*)m_base)->lock();
-  return newBase != 0 || imask == 0;
+  return aBase.isEmpty() ^ m_base.isValid();
 }
 
 void FormatIntf::import()
 {
   if (m_importmask != 0)
   {
-    FormatIntf* base = findBase();
-    if (!base)
-      return;
-    Variant value;
-    QString propName;
-    const QStringList& props = getProps();
-    for (int i = -1; ++i < props.size();)
-      if ((m_importmask & (1ll << i)) != 0)
-      {
-        propName = props.at(i);
-        value = base->getProp(propName);
-        if (!value.is(VariantIntf::nError))
-          setProp(propName, value, false);
-      }
+    Format base = findBase();
+    if (base.isValid())
+      cloneFrom(base);
   }
+}
+
+void FormatIntf::cloneFrom(Format basedOn)
+{
+  Variant value;
+  QString propName;
+  const QStringList& props = getProps();
+  for (int i = -1; ++i < props.size();)
+    if ((m_importmask & flag(i)) != 0)
+    {
+      propName = props.at(i);
+      value = basedOn.getProp(propName);
+      if (!value.is(VariantIntf::nError))
+        setProp(propName, value, false);
+    }
 }
 
 bool FormatIntf::setChar(QChar& dest, const Variant& val)
@@ -259,6 +254,18 @@ bool FormatIntf::setChar(QChar& dest, const Variant& val)
   bool result = val.is(VariantIntf::nString) && s.size() == 1;
   if (result)
     dest = s.at(0);
+  return result;
+}
+
+bool FormatIntf::setInt(int& dest, const Variant& val)
+{
+  bool result = val.is(VariantIntf::nLongReal);
+  if (result)
+  {
+    double v = val;
+    dest = (int)v;
+    result = dest == v;
+  }
   return result;
 }
 
@@ -370,18 +377,17 @@ bool Format::isCompatible(const Format& other) const
   return false;
 }
 
-bool Format::isAccessible() const
-{
-  if (isValid())
-    return p->accessible;
-  return false;
-}
-
 QString Format::format(const Variant& value) const
 {
   if (canHandle(value.type()))
     return p->format(value);
   return QString();
+}
+
+QString Format::format(const Variant& val, const QString& key)
+{
+  QString aKey = key.isEmpty()? key : fmtDefault;
+  return find(aKey, val.type()).format(val);
 }
 
 const QStringList* Format::getProps() const
@@ -410,6 +416,13 @@ Variant Format::getProp(const QString& prop) const
   if (isValid())
     return p->getProp(prop);
   return NotImplemented;
+}
+
+QString Format::key() const
+{
+  if (isValid())
+    return QString();
+  return p->key;
 }
 
 Format Format::find(const QString& key, VariantType vt)

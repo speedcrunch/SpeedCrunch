@@ -36,13 +36,30 @@ static bool _isZero(const QString& str)
   return str.size() == 1 && str.at(0) == '0';
 }
 
+static char _digitsz(char base)
+{
+  char result = 1;
+  switch (base)
+  {
+    case 16: ++result;
+    case 8:  result+=2;
+    default: ;
+  }
+  return result;
+}
+
 const char* fmtLongReal = "longreal";
 
 QStringList* RealFormat::propList;
 
 static const char* fmtRealProps[] =
 {
-  "dot",
+  "formatMode",
+  "base",
+  "significandBase",
+  "scaleBase",
+  "precision",
+//  "dot",
   0
 };
 
@@ -54,9 +71,18 @@ void RealFormat::initClass()
 RealFormat::RealFormat()
 {
   setMode(Scientific);
-  setChars();
-  setMinLengths();
-  setFlags(fShowRadix|fShowScaleRadix|fShowZeroScale);
+}
+
+bool RealFormat::isValidBase(char base)
+{
+  switch (base)
+  {
+    case 2:
+    case 8:
+    case 10:
+    case 16: return true;
+    default: return false;
+  }
 }
 
 bool RealFormat::canHandle(VariantType vt) const
@@ -67,10 +93,25 @@ bool RealFormat::canHandle(VariantType vt) const
 bool RealFormat::setValue(int idx, const Variant& val)
 {
   bool result;
+  int tmp;
   switch (idx)
   {
     case 0:
-      result = setChar(dot, val); break;
+      result = setInt(tmp, val) && setMode((FmtMode)tmp);
+      break;
+    case 1:
+      result = setInt(tmp, val) && setBase(tmp);
+      break;
+    case 2:
+      result = setInt(tmp, val) && setSignificandBase(tmp);
+      break;
+    case 3:
+      result = setInt(tmp, val) && setScaleBase(tmp);
+      break;
+    case 4:
+      result = setInt(tmp, val) && setPrecision(tmp);
+      break;
+//      result = setChar(dot, val); break;
     default:
       result = false;
   }
@@ -83,71 +124,139 @@ Variant RealFormat::getValue(int idx) const
   switch (idx)
   {
     case 0: getChar(result, dot); break;
+    case 1: getInt(result, (int)mode); break;
     default: ;
   }
   return result;
 }
 
-void RealFormat::setMode(FmtMode m, int dgt, char b, char eb, char sb)
+bool RealFormat::setMode(FmtMode fm)
 {
-  mode = m;
-  switch (mode)
+  if (fm > FmtLastMode)
+    return false;
+  mode = fm;
+  return true;
+}
+
+bool RealFormat::setBase(char aBase)
+{
+  if (!isValidBase(aBase))
+    return false;
+  base = aBase;
+  return true;
+}
+
+char RealFormat::getBase() const
+{
+  char result = base;
+  switch (getMode())
   {
+    case Engineering:
+      result = 10; break;
+    case Complement2:
+      if (result == 10) result = 16; break;
+    default: ;
+  }
+  return result;
+}
+
+bool RealFormat::setSignificandBase(char aBase)
+{
+  if (!isValidBase(aBase))
+    return false;
+  significandbase = aBase;
+  return true;
+}
+
+char RealFormat::getSignificandBase() const
+{
+  char result = significandbase;
+  if (getBase() == 10)
+    result = 10;
+  else
+    switch (getMode())
+    {
+      case Scientific:
+      case IEEE754: break;
+      default: result = getBase();
+    }
+  return result;
+}
+
+bool RealFormat::setScaleBase(char aBase)
+{
+  if (!isValidBase(aBase))
+    return false;
+  scalebase = aBase;
+  return true;
+}
+
+char RealFormat::getScaleBase() const
+{
+  char result = scalebase;
+  switch (getMode())
+  {
+    case FixSize:
     case FixPoint:
-      case FixSize: sb = 0; break;
-      case Engineering: b = 10; break;
-    case IEEE754:
-      case Complement2: if (b == 10) mode = Scientific; break;
-      default:;
+    case Complement2: result = 0; break;
+    default: ;
   }
-  if (b == 10 || sb == 10 || sb == 0)
-    sb = b;
-  base = b;
-  scalebase = eb;
-  significandbase = sb;
-  int maxdgt;
-  switch (b)
+  return result;
+}
+
+bool RealFormat::setPrecision(int prec)
+{
+  if (prec < 0 && prec > BINPRECISION)
+    return false;
+  precision = prec;
+  return true;
+}
+
+bool RealFormat::setDigits(int digits)
+{
+  if (digits < 0 || digits > BINPRECISION)
+    return false;
+  int prec;
+  switch (base)
   {
-    case  2: maxdgt = BINPRECISION;
-    case  8: maxdgt = OCTPRECISION;
-    case 16: maxdgt = HEXPRECISION;
-    default: maxdgt = DECPRECISION;
+    case 10:
+      prec = 2136 * digits / 643; break;
+    default:
+      prec = digits * _digitsz(significandbase); break;
   }
-  digits = dgt <= 0 || dgt > maxdgt? maxdgt : dgt;
+  switch (getMode())
+  {
+    case Complement2:
+      if (digits != 0) return false; break;
+    case Scientific:
+    case Engineering:
+    case IEEE754:
+      ++prec; break;
+    default: ;
+  }
+  return setPrecision(prec);
 }
 
-void RealFormat::setChars(QChar newdot, QChar newexp, QChar newgroup, int newgrouplg)
+int RealFormat::getDigits() const
 {
-  if (dot == 0)
-    dot = newdot;
-  if (newgroup == 0)
-    groupchar = newgroup;
-  if (newexp == 0)
-    scalechar = newexp;
-  if (newgrouplg >= 0)
-    grouplg = newgrouplg;
-}
-
-void RealFormat::setMinLengths(int newMinInt, int newMinFrac, int newMinScale)
-{
-  minIntLg = newMinInt;
-  minFracLg = newMinFrac;
-  minScaleLg = newMinScale;
-}
-
-void RealFormat::setFlags(unsigned flags)
-{
-  showZeroScale = flags & fShowZeroScale;
-  showPlus = flags & fShowPlus;
-  showScalePlus = flags & fShowScalePlus;
-  showRadix = flags & fShowRadix;
-  showScaleRadix = flags & fShowScaleRadix;
-  showLeadingZero = flags & fShowLeadingZero;
-  showScaleLeadingZero = flags & fShowScaleLeadingZero;
-  showTrailingZero = flags & fShowTrailingZero;
-  showTrailingDot = flags & fShowTrailingDot;
-  shortScale = flags & fShortScale;
-  lowerCaseHexDigit = flags & fLowerCaseDigit;
+  int prec = getPrecision();
+  if (prec == 0)
+    return 0;
+  switch (getMode())
+  {
+    case Complement2: return 0;
+    case Scientific:
+    case Engineering:
+    case IEEE754: --prec; break;
+    default: ;
+  }
+  switch (base)
+  {
+    case 10:
+      return 643 * precision / 2136 + 1;
+    default:
+      return (prec - 1) / _digitsz(base) + 1;
+  }
 }
 
 QString RealFormat::getPrefix(Sign sign, char base,
@@ -278,7 +387,7 @@ QString RealFormat::formatInt(const RawFloatIO& io) const
 
 QString RealFormat::formatFrac(const RawFloatIO& io) const
 {
-  QString fracpart = io.fracpart;
+  QString fracpart = fracPart(io);
   if (fracpart.size() < minFracLg)
   {
     QChar pad = ' ';
@@ -326,18 +435,6 @@ QString RealFormat::formatScale(const RawFloatIO& io) const
   return result;
 }
 
-static char digitsz(char base)
-{
-  char result = 1;
-  switch (base)
-  {
-    case 16: ++result;
-    case 8:  result+=2;
-    default: ;
-  }
-  return result;
-}
-
 static QString changeBase(int idigitsz, int odigitsz, int osz,
                           QString input, int bufofs, bool lc)
 {
@@ -367,7 +464,7 @@ QString RealFormat::intPart(const RawFloatIO& io) const
 {
   if (significandbase == base)
     return io.intpart;
-  int idigitsz = digitsz(base);
+  int idigitsz = _digitsz(base);
   int ibitlg = (io.intpart.size() << idigitsz);
   // reduce length by count of leading zero bits in the first digit
   const char* p = "1248";
@@ -377,7 +474,7 @@ QString RealFormat::intPart(const RawFloatIO& io) const
       --ibitlg;
   if (ibitlg == 0)
     return "0";
-  int odigitsz = digitsz(significandbase);
+  int odigitsz = _digitsz(significandbase);
   int osz = ((ibitlg - 1) >> odigitsz) + 1;
   return changeBase(idigitsz, odigitsz, osz, io.intpart,
                     (osz << odigitsz) - ibitlg, lowerCaseHexDigit);
@@ -385,13 +482,26 @@ QString RealFormat::intPart(const RawFloatIO& io) const
 
 QString RealFormat::fracPart(const RawFloatIO& io) const
 {
-  if (significandbase == base || digits == 0)
+  if (significandbase == base || precision == 0)
     return io.fracpart;
-  return changeBase(digitsz(base), digitsz(significandbase), digits,
+  return changeBase(_digitsz(base), _digitsz(significandbase), getDigits(),
                     io.fracpart, 0, lowerCaseHexDigit);
 }
 
-QString RealFormat::format(const Variant& val) const
+QString RealFormat::format(const Variant& val)
+{
+  if (usesBase())
+  {
+    RealFormat* formatter = new RealFormat;
+    formatter->cloneFrom(this);
+    QString result = formatter->format(val);
+    delete formatter;
+    return result;
+  }
+  return doFormat(val);
+}
+
+QString RealFormat::doFormat(const Variant& val) const
 {
   QString result;
   const LongReal* vr = dynamic_cast<const LongReal*>((const VariantData*)val);
@@ -401,9 +511,9 @@ QString RealFormat::format(const Variant& val) const
     return formatNaN();
   if (vr->isZero())
     return formatZero();
-  int usedigits = significandbase == base || digits == 0?
-                  digits :
-      (digitsz(significandbase) * digits - 1) / digitsz(base) + 1;
+  int usedigits = significandbase == base || precision == 0?
+                  getDigits() :
+                  (precision - 1) / _digitsz(base) + 1;
   RawFloatIO RawFloatIO = vr->convert(usedigits, mode, base);
   if (RawFloatIO.error != Success)
     return result;

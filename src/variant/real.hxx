@@ -51,6 +51,7 @@ typedef enum
   Engineering,
   // two's complement
   Complement2,
+  FmtLastMode = Complement2,
 } FmtMode;
 
 typedef enum

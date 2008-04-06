@@ -40,9 +40,12 @@ class RealFormat: public FormatIntf
 {
   friend class InitVariant;
   public:
-    FmtType type() { return fmtLongReal; };
+    FmtType type() const { return fmtLongReal; };
     const QStringList& getProps() const { return *propList; };
     bool canHandle(VariantType vt) const;
+    QString format(const Variant&);
+    bool setDigits(int);
+    int getDigits() const;
   protected:
     bool setValue(int idx, const Variant& val);
     Variant getValue(int idx) const;
@@ -63,13 +66,6 @@ class RealFormat: public FormatIntf
     };
   public:
     RealFormat();
-    QString format(const Variant&) const;
-    void setMode(FmtMode, int digits = -1,
-                 char base = 10, char scalebase = 10, char sgnfbase = 0);
-    void setChars(QChar dot = '.', QChar exp = ' ', QChar group = ',', int grouplg = -1);
-    void setMinLengths(int newMinInt = 0, int newMinFrac = 0,
-                       int newMinScale = 0);
-    void setFlags(unsigned flags);
   protected:
     virtual QString getSignificandPrefix(const RawFloatIO&) const;
     virtual QString getSignificandSuffix(const RawFloatIO&) const;
@@ -82,18 +78,19 @@ class RealFormat: public FormatIntf
     virtual QString formatScale(const RawFloatIO&) const;
     virtual QString intPart(const RawFloatIO&) const;
     virtual QString fracPart(const RawFloatIO&) const;
+    static bool isValidBase(char);
   protected:
     // format type
     FmtMode mode;
     // base of the scale
     char base;
-    // radix to what the scale is shown
-    char scalebase;
     // radix to what the significand is shown, != 10
     // ignored for base = 10
     char significandbase;
-    // shown digits of the fraction of the significand
-    int  digits;
+    // radix to what the scale is shown
+    char scalebase;
+    // bits of the fractional part covered by the output
+    int precision;
     // minimum length of the integer part
     int  minIntLg;
     // minimum lensgth of the fraction part
@@ -138,7 +135,18 @@ class RealFormat: public FormatIntf
     bool useShortScale() const;
     QChar getScaleChar() const;
     QString getPrefix(Sign, char base, bool isCompl) const;
+    bool setMode(FmtMode fm);
+    FmtMode getMode() const { return mode; };
+    bool setBase(char);
+    char getBase() const;
+    bool setSignificandBase(char);
+    char getSignificandBase() const;
+    bool setPrecision(int);
+    int getPrecision() const { return precision; };
+    bool setScaleBase(char);
+    char getScaleBase() const;
   private:
+    QString doFormat(const Variant&) const;
     static void initClass();
     static QStringList* propList;
 };
