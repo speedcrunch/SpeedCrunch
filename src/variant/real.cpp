@@ -39,17 +39,19 @@
 
 #include <math.h>
 
+// assume the best, i.e. llrint is available...
+// (llrint is part of the ISO C99 standard)
 #define LLRINT_AVAILABLE
 
-#ifndef llrint
-// llrint is part of the ISO C99 standard
-// FIXME: the above #ifndef does not always test the
+// ...but in some systems, set to use our own implementation
+// (the following #ifndef does not always test the
 // availability of llrint correctly, because llrint is
-// in many cases a builtin function, not a macro
+// in many cases a builtin function, not a macro)
+#ifndef llrint
 #undef LLRINT_AVAILABLE
 #endif
 
-// at least stdlib of GNU's compiler properly implements llrint
+// at least GCC properly implements llrint
 #ifdef Q_CC_GNU
 #define LLRINT_AVAILABLE
 #endif
