@@ -51,6 +51,11 @@
 #undef LLRINT_AVAILABLE
 #endif
 
+// MS Visual C++ does not have it
+#ifdef Q_CC_MSVC
+#undef LLRINT_AVAILABLE
+#endif
+
 // at least GCC properly implements llrint
 #ifdef Q_CC_GNU
 #define LLRINT_AVAILABLE
