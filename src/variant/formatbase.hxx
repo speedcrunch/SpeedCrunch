@@ -90,7 +90,7 @@ class FormatIntf
     bool setProp(const QString& prop, const Variant& val, bool inherit);
     Variant getProp(const QString& prop);
     bool setBase(const QString& aBase, quint64 iflags, FmtLinkage = fmtRelaxed);
-    bool isBaseImport(const QString& prop) const;
+    bool isImporting(const QString& prop) const;
     void lock() { ++refcount; };
     void release();
     QString base() const;
@@ -102,7 +102,8 @@ class FormatIntf
     void import();
     Format findBase();
     int indexOfProp(const QString& prop) const;
-    bool setChar(QChar& dest, const Variant& val);
+    static bool setChar(QChar& dest, const Variant& val);
+    static void getChar(Variant& v, QChar val) { v = QString(val); };
     static void initClass(QStringList** propList, const char** props);
   private:
     int refcount;

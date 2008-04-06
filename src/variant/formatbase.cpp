@@ -170,7 +170,7 @@ Variant FormatIntf::getProp(const QString& prop)
   return getValue(idx);
 }
 
-bool FormatIntf::isBaseImport(const QString& prop) const
+bool FormatIntf::isImporting(const QString& prop) const
 {
   int idx = indexOfProp(prop);
   return idx < 0? false : (flag(idx) & m_importmask) != 0;

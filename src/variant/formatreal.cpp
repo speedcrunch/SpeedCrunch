@@ -59,6 +59,35 @@ RealFormat::RealFormat()
   setFlags(fShowRadix|fShowScaleRadix|fShowZeroScale);
 }
 
+bool RealFormat::canHandle(VariantType vt) const
+{
+  return vt == VariantIntf::variantType(VariantIntf::nLongReal);
+}
+
+bool RealFormat::setValue(int idx, const Variant& val)
+{
+  bool result;
+  switch (idx)
+  {
+    case 0:
+      result = setChar(dot, val); break;
+    default:
+      result = false;
+  }
+  return result;
+}
+
+Variant RealFormat::getValue(int idx) const
+{
+  Variant result;
+  switch (idx)
+  {
+    case 0: getChar(result, dot); break;
+    default: ;
+  }
+  return result;
+}
+
 void RealFormat::setMode(FmtMode m, int dgt, char b, char eb, char sb)
 {
   mode = m;

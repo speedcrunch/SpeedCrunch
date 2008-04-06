@@ -41,6 +41,11 @@ class RealFormat: public FormatIntf
   friend class InitVariant;
   public:
     FmtType type() { return fmtLongReal; };
+    const QStringList& getProps() const { return *propList; };
+    bool canHandle(VariantType vt) const;
+  protected:
+    bool setValue(int idx, const Variant& val);
+    Variant getValue(int idx) const;
   public:
     typedef enum
     {
