@@ -49,6 +49,11 @@
 #undef LLRINT_AVAILABLE
 #endif
 
+// at least stdlib of GNU's compiler properly implements llrint
+#ifdef Q_CC_GNU
+#define LLRINT_AVAILABLE
+#endif
+
 const char* VariantIntf::nLongReal = "LongReal";
 VariantType LongReal::vtLongReal;
 
@@ -100,7 +105,7 @@ static signed char _cvtSign(Sign sign)
 //   float_setprecision(save);
 //   return result;
 // }
-// 
+//
 // static char _idiv(floatnum dest, cfloatnum dividend, cfloatnum modulo)
 // {
 //   int save = float_setprecision(DECPRECISION);
