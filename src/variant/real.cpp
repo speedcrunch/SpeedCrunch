@@ -39,28 +39,6 @@
 
 #include <math.h>
 
-// assume the best, i.e. llrint is available...
-// (llrint is part of the ISO C99 standard)
-#define LLRINT_AVAILABLE
-
-// ...but in some systems, set to use our own implementation
-// (the following #ifndef does not always test the
-// availability of llrint correctly, because llrint is
-// in many cases a builtin function, not a macro)
-#ifndef llrint
-#undef LLRINT_AVAILABLE
-#endif
-
-// MS Visual C++ does not have it
-#ifdef Q_CC_MSVC
-#undef LLRINT_AVAILABLE
-#endif
-
-// at least GCC properly implements llrint
-#ifdef Q_CC_GNU
-#define LLRINT_AVAILABLE
-#endif
-
 const char* VariantIntf::nLongReal = "LongReal";
 VariantType LongReal::vtLongReal;
 
@@ -201,33 +179,15 @@ LongReal::operator double() const
 {
   if (isZero())
     return 0;
+  // returns in io.intpart 1 and in io.fracpart the 52 bits
+  // following the leading 1
   RawFloatIO io = convert(52, Scientific, 2);
-  qint64 sgnf = Q_INT64_C(4503599627370496)
+  qint64 sgnf = Q_INT64_C(4503599627370496) // = 2^52
                 + io.fracpart.toLongLong(0, 2);
   double r = io.signSignificand == Plus? sgnf : -sgnf;
   int exp = io.scale;
   return ldexp(ldexp(r, -52), io.signScale == Plus? exp : -exp);
 }
-
-#ifndef LLRINT_AVAILABLE
-qint64 llrint(double x)
-{
-  qint64 result = 0;
-  bool neg = x < 0;
-  x = ldexp(fabs(x), -52);
-  for (int i = -1; ++i <= 52;)
-  {
-    result <<= 1;
-    if (x >= 1)
-    {
-      ++result;
-      x -= 1;
-    }
-    x *= 2;
-  }
-  return neg? -result : result;
-}
-#endif
 
 void LongReal::operator = (double x)
 {
@@ -239,7 +199,7 @@ void LongReal::operator = (double x)
   }
   int exp;
   QByteArray sgnf;
-  sgnf.setNum(llrint(ldexp(frexp(x, &exp), 53)));
+  sgnf.setNum((qint64)(ldexp(frexp(x, &exp), 53)));
   floatstruct fs;
   float_create(&fs);
   float_setscientific(&fs, sgnf.data(), NULLTERMINATED);
