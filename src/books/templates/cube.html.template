@@ -9,8 +9,8 @@
     <center><img src="../images/cube.png" /></center>
     <br />
     <div align="left">
-      <a href="file:#V=s^3">V = s^3</a><br />
-      <a href="file:#A=6*s^2">A = 6 * s^2</a><br />
+      <a href="file:#V=s%5e3">V = s^3</a><br />
+      <a href="file:#A=6*s%5e2">A = 6 * s^2</a><br />
       <br />
       <a href="file:#s=cbrt(V)">s = cbrt(V)</a><br />
       <a href="file:#a=sqrt(2)*s">a = sqrt(2) * s</a><br />

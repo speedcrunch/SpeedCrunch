@@ -149,7 +149,16 @@ void BookDock::anchorClicked ( const QUrl & link )
     d->sheet->backward();
     d->sheet->forward();
 
-    emit expressionSelected( link.toString().mid( 6 ) );
+    QString expr = link.toString().mid( 6 );
+
+#if QT_VERSION < 0x040400
+    // Qt 4.3 and earlier do not properly decode the URL
+    // and thus %5E does not become ^
+    // We do it manually here
+    expr.replace( QLatin1String("%5E"), QLatin1String("^"), Qt::CaseInsensitive );
+#endif
+
+    emit expressionSelected( expr );
   }
   else
   {
