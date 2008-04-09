@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1" language="es">
+<!DOCTYPE TS><TS version="1.1" language="es_AR">
+<defaultcodec></defaultcodec>
 <context>
     <name>AboutBox</name>
     <message>
