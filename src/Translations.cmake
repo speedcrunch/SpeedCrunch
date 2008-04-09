@@ -3,6 +3,7 @@ i18n/cs.qm
 i18n/de.qm
 i18n/es_AR.qm
 i18n/es.qm
+i18n/eu.qm
 i18n/fi.qm
 i18n/fr.qm
 i18n/he.qm
