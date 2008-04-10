@@ -947,7 +947,7 @@ _normalize(
 void
 float_setinteger(floatnum dest, int value)
 {
-  char buf[BITS_IN_UNSIGNED/3 + 1];
+  char buf[BITS_IN_UNSIGNED/3 + 3];
 
   sprintf(buf, "%d", value);
   float_setscientific(dest, buf, NULLTERMINATED);
