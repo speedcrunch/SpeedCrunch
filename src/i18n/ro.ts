@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="ro">
-<defaultcodec></defaultcodec>
 <context>
     <name>AboutBox</name>
     <message>
@@ -9,37 +8,37 @@
         <translation>Mulţumiri speciale pentru</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="283"/>
+        <location filename="../gui/aboutbox.cpp" line="284"/>
         <source>French</source>
         <translation>Franceză</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="285"/>
+        <location filename="../gui/aboutbox.cpp" line="286"/>
         <source>German</source>
         <translation>Germană</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="291"/>
+        <location filename="../gui/aboutbox.cpp" line="292"/>
         <source>Portuguese</source>
         <translation>Portugheză</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="293"/>
+        <location filename="../gui/aboutbox.cpp" line="294"/>
         <source>Russian</source>
         <translation>Rusă</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="288"/>
+        <location filename="../gui/aboutbox.cpp" line="289"/>
         <source>Italian</source>
         <translation>Italiană</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="311"/>
+        <location filename="../gui/aboutbox.cpp" line="312"/>
         <source>This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version</source>
         <translation>Acest program este liber; îl puteţi redistribui şi/sau modifica în conformitate cu termenii Licenţei Publice Generale GNU aşa cum este ea publicată de Free Software Foundation; fie versiunea 2 a Licenţei, fie (la latitudinea dumneavoastră) orice versiune ulterioară</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="317"/>
+        <location filename="../gui/aboutbox.cpp" line="318"/>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.</source>
         <translation>Acest program este distribuit cu speranţa că vă va fi util, dar FĂRĂ NICI O GARANŢIE, chiar fără garanţia implicită de vandabilitate sau conformitate unui anumit scop.  Citiţi Licenţa Publică Generală GNU pentru detalii.</translation>
     </message>
@@ -49,17 +48,17 @@
         <translation>SpeedCrunch versiunea %1</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="348"/>
+        <location filename="../gui/aboutbox.cpp" line="349"/>
         <source>About SpeedCrunch</source>
         <translation>Despre SpeedCrunch</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="289"/>
+        <location filename="../gui/aboutbox.cpp" line="290"/>
         <source>Norwegian</source>
         <translation>Norvegiană</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="294"/>
+        <location filename="../gui/aboutbox.cpp" line="295"/>
         <source>Spanish</source>
         <translation>Spaniolă</translation>
     </message>
@@ -94,17 +93,17 @@
         <translation>Traduceri</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="280"/>
+        <location filename="../gui/aboutbox.cpp" line="281"/>
         <source>Brazilian Portuguese</source>
         <translation>Portugheză Braziliană</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="304"/>
+        <location filename="../gui/aboutbox.cpp" line="305"/>
         <source>Copyright (C)</source>
         <translation>Copyright (C)</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="321"/>
+        <location filename="../gui/aboutbox.cpp" line="322"/>
         <source>Visit &lt;b&gt;http://www.speedcrunch.org&lt;/b&gt; for more information!</source>
         <translation>Vizitează &lt;b&gt;http://www.speedcrunch.org&lt;/b&gt; pentru mai multă informaţie!</translation>
     </message>
@@ -114,32 +113,32 @@
         <translation>Spaniolă Argentinină</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="282"/>
+        <location filename="../gui/aboutbox.cpp" line="283"/>
         <source>Dutch</source>
         <translation>Olandeză</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="286"/>
+        <location filename="../gui/aboutbox.cpp" line="287"/>
         <source>Hebrew</source>
         <translation>Ebraică</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="295"/>
+        <location filename="../gui/aboutbox.cpp" line="296"/>
         <source>Swedish</source>
         <translation>Suedeză</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="284"/>
+        <location filename="../gui/aboutbox.cpp" line="285"/>
         <source>Finnish</source>
         <translation>Finlandeză</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="281"/>
+        <location filename="../gui/aboutbox.cpp" line="282"/>
         <source>Czech</source>
         <translation>Cehă</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="292"/>
+        <location filename="../gui/aboutbox.cpp" line="293"/>
         <source>Romanian</source>
         <translation>Română</translation>
     </message>
@@ -149,12 +148,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="287"/>
+        <location filename="../gui/aboutbox.cpp" line="288"/>
         <source>Indonesian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="326"/>
+        <location filename="../gui/aboutbox.cpp" line="327"/>
         <source>Close</source>
         <translation>Închide</translation>
     </message>
@@ -164,13 +163,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="290"/>
+        <location filename="../gui/aboutbox.cpp" line="291"/>
         <source>Polish</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="296"/>
+        <location filename="../gui/aboutbox.cpp" line="297"/>
         <source>Turkish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="280"/>
+        <source>Basque</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

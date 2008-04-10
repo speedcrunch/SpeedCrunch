@@ -13,52 +13,52 @@
         <translation>תודה מיוחדת ל</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="283"/>
+        <location filename="../gui/aboutbox.cpp" line="284"/>
         <source>French</source>
         <translation>צרפתית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="285"/>
+        <location filename="../gui/aboutbox.cpp" line="286"/>
         <source>German</source>
         <translation>גרמנית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="291"/>
+        <location filename="../gui/aboutbox.cpp" line="292"/>
         <source>Portuguese</source>
         <translation>פורטוגזית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="293"/>
+        <location filename="../gui/aboutbox.cpp" line="294"/>
         <source>Russian</source>
         <translation>רוסית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="288"/>
+        <location filename="../gui/aboutbox.cpp" line="289"/>
         <source>Italian</source>
         <translation>איטלקית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="311"/>
+        <location filename="../gui/aboutbox.cpp" line="312"/>
         <source>This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version</source>
         <translation>תכנית זו היא תוכנה חופשית; מותר להפיץ אותה ו/או לשנות אותה תחת תנאי הרישיון הציבורי הכללי של GNUהמפורסם על-ידי קרן התוכנה החופשית; גירסה 2 של הרישיון, או (לבחירתך) כל גירסה מאוחרת יותר</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="317"/>
+        <location filename="../gui/aboutbox.cpp" line="318"/>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.</source>
         <translation>תכנית זו מופצת בתקווה שתהיה מועילה, אך ללא אחריות כלשהי; ואפילו ללא האחריות המשתמעת בדבר מסחריותה או התאמתה למטרה מסוימת.  לפרטים נוספים, ראה את הרישיון הציבורי הכללי של GNU.</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="348"/>
+        <location filename="../gui/aboutbox.cpp" line="349"/>
         <source>About SpeedCrunch</source>
         <translation>אודות SpeedCrunch</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="289"/>
+        <location filename="../gui/aboutbox.cpp" line="290"/>
         <source>Norwegian</source>
         <translation>נורבגית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="294"/>
+        <location filename="../gui/aboutbox.cpp" line="295"/>
         <source>Spanish</source>
         <translation>ספרדית</translation>
     </message>
@@ -93,17 +93,17 @@
         <translation>תרגומים</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="280"/>
+        <location filename="../gui/aboutbox.cpp" line="281"/>
         <source>Brazilian Portuguese</source>
         <translation>פורטוגזית ברזילאית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="304"/>
+        <location filename="../gui/aboutbox.cpp" line="305"/>
         <source>Copyright (C)</source>
         <translation>כל הזכויות שמורות (C)</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="321"/>
+        <location filename="../gui/aboutbox.cpp" line="322"/>
         <source>Visit &lt;b&gt;http://www.speedcrunch.org&lt;/b&gt; for more information!</source>
         <translation>בקרו ב-&lt;b&gt;http://www.speedcrunch.org&lt;/b&gt; למידע נוסף!</translation>
     </message>
@@ -113,32 +113,32 @@
         <translation>ספרדית ארגנטינאית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="282"/>
+        <location filename="../gui/aboutbox.cpp" line="283"/>
         <source>Dutch</source>
         <translation>הולנדית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="286"/>
+        <location filename="../gui/aboutbox.cpp" line="287"/>
         <source>Hebrew</source>
         <translation>עברית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="295"/>
+        <location filename="../gui/aboutbox.cpp" line="296"/>
         <source>Swedish</source>
         <translation>שבדית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="284"/>
+        <location filename="../gui/aboutbox.cpp" line="285"/>
         <source>Finnish</source>
         <translation>פינית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="281"/>
+        <location filename="../gui/aboutbox.cpp" line="282"/>
         <source>Czech</source>
         <translation>צ&apos;כית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="292"/>
+        <location filename="../gui/aboutbox.cpp" line="293"/>
         <source>Romanian</source>
         <translation>רומנית</translation>
     </message>
@@ -148,22 +148,22 @@
         <translation>מפתחים</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="287"/>
+        <location filename="../gui/aboutbox.cpp" line="288"/>
         <source>Indonesian</source>
         <translation>אינדונזית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="290"/>
+        <location filename="../gui/aboutbox.cpp" line="291"/>
         <source>Polish</source>
         <translation>פולנית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="296"/>
+        <location filename="../gui/aboutbox.cpp" line="297"/>
         <source>Turkish</source>
         <translation>תורכית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="326"/>
+        <location filename="../gui/aboutbox.cpp" line="327"/>
         <source>Close</source>
         <translation>סגירה</translation>
     </message>
@@ -171,6 +171,11 @@
         <location filename="../gui/aboutbox.cpp" line="241"/>
         <source>Graphics</source>
         <translation>גרפיקה</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="280"/>
+        <source>Basque</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

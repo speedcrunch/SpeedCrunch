@@ -1,20 +1,23 @@
+# translation of books.po to Euskara
 # translation of books.pot to Basque
 #
+# Iñigo Salvador Azurmendi <xalba@euskalnet.net>, 2008.
 msgid ""
 msgstr ""
-"Project-Id-Version: books.pot\n"
+"Project-Id-Version: books\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-03-28 15:49+0000\n"
-"PO-Revision-Date: 2007-03-25 15:42+0100\n"
-"Last-Translator: \n"
-"Language-Team: eu\n"
+"PO-Revision-Date: 2008-04-10 00:51+0200\n"
+"Last-Translator: Iñigo Salvador Azurmendi <xalba@euskalnet.net>\n"
+"Language-Team: Euskara <eu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #: circle.html.template, math_index.html.template
 msgid "Circle"
-msgstr ""
+msgstr "Zirkulu"
 
 #: cube.html.template, circle.html.template, right_triangle.html.template,
 #: math_index.html.template, cone.html.template, sphere.html.template,
@@ -25,39 +28,39 @@ msgstr "align=\"left\""
 
 #: cone.html.template, math_index.html.template
 msgid "Cone"
-msgstr ""
+msgstr "Kono"
 
 #: cube.html.template, math_index.html.template
 msgid "Cube"
-msgstr ""
+msgstr "Kubo"
 
 #: cylinder.html.template, math_index.html.template
 msgid "Cylinder"
-msgstr ""
+msgstr "Zilindro"
 
 #: math_index.html.template
 msgid "SpeedCrunch Book"
-msgstr ""
+msgstr "SpeedCrunch Liburua"
 
 #: math_index.html.template
 msgid "3D Objects"
-msgstr ""
+msgstr "3D Objektuak"
 
 #: sphere.html.template, math_index.html.template
 msgid "Sphere"
-msgstr ""
+msgstr "Esfera"
 
 #: math_index.html.template
 msgid "2D Objects"
-msgstr ""
+msgstr "2D Objektuak"
 
 #: math_index.html.template, right_triangle.html.template
 msgid "Right Triangle"
-msgstr ""
+msgstr "Triangelu Zuzen"
 
 #: math_index.html.template, sector.html.template
 msgid "Sector"
-msgstr ""
+msgstr "Sektore"
 
 #: math_index.html.template
 msgid "Misc"
@@ -65,4 +68,5 @@ msgstr ""
 
 #: quadratic_equation.html.template, math_index.html.template
 msgid "Quadratic Equation"
-msgstr ""
+msgstr "Ekuazio Koadratiko"
+
