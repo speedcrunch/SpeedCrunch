@@ -155,6 +155,7 @@ void BookDock::anchorClicked ( const QUrl & link )
     // Qt 4.3 and earlier do not properly decode the URL
     // and thus %5E does not become ^
     // We do it manually here
+    // FIXME: should we check this at run-time?
     expr.replace( QLatin1String("%5E"), QLatin1String("^"), Qt::CaseInsensitive );
 #endif
 
