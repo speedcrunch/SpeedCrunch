@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1" language="eu">
+<!DOCTYPE TS><TS version="1.1">
 <context>
     <name>AboutBox</name>
     <message>
@@ -13,24 +13,14 @@
         <translation>SpeedCrunch %1 bertsioa</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="227"/>
+        <location filename="../gui/aboutbox.cpp" line="234"/>
         <source>Based on original idea from</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="228"/>
-        <source>Original author</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="229"/>
-        <source>Current maintainer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="230"/>
+        <location filename="" line="135069524"/>
         <source>Developers</source>
-        <translation>Garatzaileak</translation>
+        <translation type="obsolete">Garatzaileak</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="236"/>
@@ -177,21 +167,46 @@
         <source>Basque</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="228"/>
+        <source>Maintainer and core developer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="229"/>
+        <source>Original author and core developer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="230"/>
+        <source>Math engine and parser developer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="231"/>
+        <source>Former maintainer and core developer, Windows packager</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="232"/>
+        <source>Original math book Developer</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BookDock</name>
     <message>
-        <location filename="../gui/bookdock.cpp" line="188"/>
+        <location filename="../gui/bookdock.cpp" line="189"/>
         <source>Back</source>
         <translation>Atzera</translation>
     </message>
     <message>
-        <location filename="../gui/bookdock.cpp" line="189"/>
+        <location filename="../gui/bookdock.cpp" line="190"/>
         <source>Forward</source>
         <translation>Aurrera</translation>
     </message>
     <message>
-        <location filename="../gui/bookdock.cpp" line="190"/>
+        <location filename="../gui/bookdock.cpp" line="191"/>
         <source>Index</source>
         <translation>Aurkibidea</translation>
     </message>

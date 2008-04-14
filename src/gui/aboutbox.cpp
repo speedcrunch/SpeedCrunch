@@ -225,11 +225,11 @@ AboutBox::AboutBox( QWidget * parent ) : QDialog( parent )
 
   const char * mainFmt = "<p><b>%1</b><br>%2";
 
-  msg += QString( mainFmt ).arg( tr("Helder Correia") ).arg( "Maintaner, core developer, translator" );
-  msg += QString( mainFmt ).arg( tr("Ariya Hidayat") ).arg( "Original author, core developer" );
-  msg += QString( mainFmt ).arg( tr("Wolf Lammen") ).arg( "Math engine developer" );
-  msg += QString( mainFmt ).arg( tr("Johan Thelin") ).arg( "Former maintainer, packager" );
-  msg += QString( mainFmt ).arg( tr("Petri Damst&eacute;n") ).arg( "Developer" );
+  msg += QString( mainFmt ).arg( "Helder Correia"       ).arg( tr( "Maintainer and core developer"                          ) );
+  msg += QString( mainFmt ).arg( "Ariya Hidayat"        ).arg( tr( "Original author and core developer"                     ) );
+  msg += QString( mainFmt ).arg( "Wolf Lammen"          ).arg( tr( "Math engine and parser developer"                       ) );
+  msg += QString( mainFmt ).arg( "Johan Thelin"         ).arg( tr( "Former maintainer and core developer, Windows packager" ) );
+  msg += QString( mainFmt ).arg( "Petri Damst&eacute;n" ).arg( tr( "Original math book Developer"                           ) );
 
   msg += QString( mainFmt ).arg( tr("Based on original idea from") ).arg( "Roberto Alsina" );
 

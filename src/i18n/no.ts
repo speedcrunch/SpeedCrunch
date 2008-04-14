@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1" language="nb">
+<!DOCTYPE TS><TS version="1.1">
 <context>
     <name>AboutBox</name>
     <message>
@@ -13,17 +13,17 @@
         <translation>SpeedCrunch versjon %1</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="228"/>
+        <location filename="" line="135119852"/>
         <source>Original author</source>
-        <translation>Opprinnelig forfatter</translation>
+        <translation type="obsolete">Opprinnelig forfatter</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="229"/>
+        <location filename="" line="135119852"/>
         <source>Current maintainer</source>
-        <translation>Nåværende vedlikeholder</translation>
+        <translation type="obsolete">Nåværende vedlikeholder</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="227"/>
+        <location filename="../gui/aboutbox.cpp" line="234"/>
         <source>Based on original idea from</source>
         <translation>Basert på en orginal idé av</translation>
     </message>
@@ -143,9 +143,9 @@
         <translation>Rumensk</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="230"/>
+        <location filename="" line="135119852"/>
         <source>Developers</source>
-        <translation>Utviklere</translation>
+        <translation type="obsolete">Utviklere</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="288"/>
@@ -177,21 +177,46 @@
         <source>Basque</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="228"/>
+        <source>Maintainer and core developer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="229"/>
+        <source>Original author and core developer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="230"/>
+        <source>Math engine and parser developer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="231"/>
+        <source>Former maintainer and core developer, Windows packager</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="232"/>
+        <source>Original math book Developer</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BookDock</name>
     <message>
-        <location filename="../gui/bookdock.cpp" line="188"/>
+        <location filename="../gui/bookdock.cpp" line="189"/>
         <source>Back</source>
         <translation>Tilbake</translation>
     </message>
     <message>
-        <location filename="../gui/bookdock.cpp" line="189"/>
+        <location filename="../gui/bookdock.cpp" line="190"/>
         <source>Forward</source>
         <translation>Framover</translation>
     </message>
     <message>
-        <location filename="../gui/bookdock.cpp" line="190"/>
+        <location filename="../gui/bookdock.cpp" line="191"/>
         <source>Index</source>
         <translation>Stikkord</translation>
     </message>

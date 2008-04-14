@@ -18,4 +18,5 @@ i18n/ro.qm
 i18n/ru.qm
 i18n/sv.qm
 i18n/tr.qm
+i18n/zh_CN.qm
 )
