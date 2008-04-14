@@ -4,6 +4,7 @@ fixed a buffer overflow
 floatnum.c:
 - a temporary buffer in float_setinteger holding the ASCII
   representation of an int, was 1 byte too short.
+
 2008-03-29
 fixed a semantic error in floatconfig
 remove expbase from structures in floatio
