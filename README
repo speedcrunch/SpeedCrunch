@@ -84,7 +84,7 @@ version of Qt, so it is likely that you need to worry about this. However,
 you need the development package as well (sometimes named as qt-devel or
 qt4-devel, it varies depends on the distributions).
 
-You also need CMake (from Kitware) at least version 2.4.0. CMake is available 
+You also need CMake (from Kitware) at least version 2.4.4. CMake is available 
 for Windows, Linux, and Mac OS X.
 
 To compile, simply extract the source tarball. Then create a build directory 
