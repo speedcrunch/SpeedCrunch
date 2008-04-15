@@ -51,11 +51,11 @@
     </message>
     <message>
         <source>Original author</source>
-        <translation>Ursprünglicher Autor</translation>
+        <translation type="obsolete">Ursprünglicher Autor</translation>
     </message>
     <message>
         <source>Current maintainer</source>
-        <translation>Aktueller Betreuer</translation>
+        <translation type="obsolete">Aktueller Betreuer</translation>
     </message>
     <message>
         <source>Based on original idea from</source>
@@ -87,7 +87,7 @@
     </message>
     <message>
         <source>Argentinian Spanish</source>
-        <translation>Argentinisches Spanisch</translation>
+        <translation>Argentinisches Spanischen</translation>
     </message>
     <message>
         <source>Dutch</source>
@@ -115,7 +115,7 @@
     </message>
     <message>
         <source>Developers</source>
-        <translation>Entwickler</translation>
+        <translation type="obsolete">Entwickler</translation>
     </message>
     <message>
         <source>Indonesian</source>
@@ -139,11 +139,31 @@
     </message>
     <message>
         <source>Basque</source>
-        <translation type="Baskisch"></translation>
+    <translation>Baskisch</translation>
+    </message>
+    <message>
+        <source>Maintainer and core developer</source>
+        <translation>Betreuer und Kernentwickler</translation>
+    </message>
+    <message>
+        <source>Original author and core developer</source>
+        <translation>Ursprünglicher Autor und Kernentwickler</translation>
+    </message>
+    <message>
+        <source>Math engine and parser developer</source>
+        <translation>Entwickler vom Mathematikmodul und Parser</translation>
+    </message>
+    <message>
+        <source>Former maintainer and core developer, Windows packager</source>
+        <translation>Vormaliger Betreuer und Kernentwickler, Windows Version</translation>
+    </message>
+    <message>
+        <source>Original math book Developer</source>
+        <translation>Ursprünglicher Entwickler des Mathematik Buchs</translation>
     </message>
     <message>
         <source>Simplified Chinese</source>
-        <translation type="Chinesisch, Kurzzeichen"></translation>
+        <translation>Chinesisch, Kurzzeichen</translation>
     </message>
 </context>
 <context>
@@ -1151,7 +1171,7 @@ Falls nein, werden aktuelle Variablen und Anzeigen gelöscht.</translation>
     </message>
     <message>
         <source>&amp;Dot</source>
-        <translation>&amp;Dezimalkomma</translation>
+        <translation>&amp;Punkt</translation>
     </message>
     <message>
         <source>&amp;Comma</source>
