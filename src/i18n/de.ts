@@ -51,11 +51,11 @@
     </message>
     <message>
         <source>Original author</source>
-        <translation type="obsolete">Ursprünglicher Autor</translation>
+        <translation>Ursprünglicher Autor</translation>
     </message>
     <message>
         <source>Current maintainer</source>
-        <translation type="obsolete">Aktueller Betreuer</translation>
+        <translation>Aktueller Betreuer</translation>
     </message>
     <message>
         <source>Based on original idea from</source>
@@ -87,7 +87,7 @@
     </message>
     <message>
         <source>Argentinian Spanish</source>
-        <translation>Argentinisches Spanischen</translation>
+        <translation>Argentinisches Spanisch</translation>
     </message>
     <message>
         <source>Dutch</source>
@@ -115,7 +115,7 @@
     </message>
     <message>
         <source>Developers</source>
-        <translation type="obsolete">Entwickler</translation>
+        <translation>Entwickler</translation>
     </message>
     <message>
         <source>Indonesian</source>
@@ -139,31 +139,11 @@
     </message>
     <message>
         <source>Basque</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Maintainer and core developer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Original author and core developer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Math engine and parser developer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Former maintainer and core developer, Windows packager</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Original math book Developer</source>
-        <translation type="unfinished"></translation>
+        <translation type="Baskisch"></translation>
     </message>
     <message>
         <source>Simplified Chinese</source>
-        <translation type="unfinished"></translation>
+        <translation type="Chinesisch, Kurzzeichen"></translation>
     </message>
 </context>
 <context>
@@ -1171,7 +1151,7 @@ Falls nein, werden aktuelle Variablen und Anzeigen gelöscht.</translation>
     </message>
     <message>
         <source>&amp;Dot</source>
-        <translation>&amp;Punkt</translation>
+        <translation>&amp;Dezimalkomma</translation>
     </message>
     <message>
         <source>&amp;Comma</source>
