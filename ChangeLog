@@ -1,3 +1,21 @@
+SpeedCrunch 0.10.1
+---------------------
+New features:
+  New Simplified Chinese translation
+
+Bug fixes:
+  Fixed potential crashes [#180]
+  Fixed keypad button "=" [#176]
+  Fixed incomplete math book link upon clicking [#177]
+  Fixed missing window update on radix character change
+  Updated binreloc to build in LSB environments
+
+Improvements:
+  Better handling of math book translations wilh language codes that contain
+    the country component and now correct behaviour defaulting to English when
+    the system language (selected option) is not supported
+
+
 SpeedCrunch 0.10
 ---------------------
 New features:
@@ -19,7 +37,6 @@ New features:
   Automatic syntax highlighting color generation
   Status bar
   Auto-calc of the selected text
-
 
 New functions:
   ERF: the normalized error function (related to normal distribution)
@@ -77,9 +94,9 @@ Bug fixes:
 SpeedCrunch 0.9
 ---------------------
 New features:
-  greatly extended number range
-  factorials extended to real values
-  stay always-on-top (#106)
+  Greatly extended number range
+  Factorials extended to real values
+  Stay always-on-top (#106)
 
 New functions:
   ARSINH: area hyperbolic sine, the reverse of sinh
@@ -87,238 +104,245 @@ New functions:
   ARTANH: area hyperbolic tangent, the reverse of tanh
 
 Improvements and bug fixes:
-  replaced the math engine,
-    solving issue #53, #78, #98,
-    preparing a solution for issue #16, #62, #90,
-    better support for issue #47
-    uniform and predictable accuracy
-    correct rounding (2.5 is rounded to 2 [even last digit rule])
-    stable algorithms covering the whole range of numbers
-    faster evaluation of higher mathematical function (factor 9 on the average)
-    supports stable evaluation of basic higher functions near poles and zeros
-    built-in support of conversion of all (integer, real, huge, tiny) values to other bases
-    built-in support of logic operations
-    built-in support of the missing area hyperbolic functions
-    built-in support of a new class of functions, Gamma and friends
-  fixed incorrect evaluation of GEOMEAN
-  fixed dependency of sinh, cosh, tanh on degree setting
-  extended TRUNC to the new range of exponents. In addition, TRUNC accepts a negative
+  Replaced the math engine,
+    Solving issue #53, #78, #98,
+    Preparing a solution for issue #16, #62, #90,
+    Better support for issue #47
+    Uniform and predictable accuracy
+    Correct rounding (2.5 is rounded to 2 [even last digit rule])
+    Stable algorithms covering the whole range of numbers
+    Faster evaluation of higher mathematical function (factor 9 on the average)
+    Supports stable evaluation of basic higher functions near poles and zeros
+    Built-in support of conversion of all (integer, real, huge, tiny) values to
+      other bases
+    Built-in support of logic operations
+    Built-in support of the missing area hyperbolic functions
+    Built-in support of a new class of functions, Gamma and friends
+  Fixed incorrect evaluation of GEOMEAN
+  Fixed dependency of sinh, cosh, tanh on degree setting
+  Extended TRUNC to the new range of exponents. In addition, TRUNC accepts a negative
     second parameter now: TRUNC(1234.56; -2) is 1200, so not only digits from the
     fractional part can be cleared, but also the least significant digits from the
     integer part.
-  extended ROUND in a way similiar to TRUNC
+  Extended ROUND in a way similar to TRUNC
+
 
 SpeedCrunch 0.8
 ---------------------
 New features:
- support for different bases: hex, octal and binary
- postfix factorial operator (!)
- support inserting important physics constants
- history, functions, variables, constants in docked/floated windows
- added engineering notation
- added unmutable variable "phi" (golden number = 1.6180339887498948482...)
- "tip of the day"
- option to hide from taskbar and minimize to system tray
- support for right-to-left languages (not perfect, but very close to it)
- translations: de es es_AR fi fr he it nl no pt pt_BR ro ru sv (see TRANSLATORS)
+  Support for different bases: hex, octal and binary
+  Postfix factorial operator (!)
+  Support inserting important physics constants
+  History, functions, variables, constants in docked/floated windows
+  Added engineering notation
+  Added unmutable variable "phi" (golden number = 1.6180339887498948482...)
+  "Tip of the day"
+  Option to hide from taskbar and minimize to system tray
+  Support for right-to-left languages (not perfect, but very close to it)
+  Translations: de es es_AR fi fr he it nl no pt pt_BR ro ru sv (see TRANSLATORS)
 
 New functions:
- MIN: get the minimum
- MAX: get the maximum
- SUM: sum of all numbers
- PRODUCT: product of all numbers
- AVERAGE: average or mean
- GEOMEAN: geometrical mean
- SIGN: signum
- DEGREES: convert radian to degree
- RADIANS: convert degree to radian
- LG: base-2 logarithm
- CBRT: cube root
- TRUNC: truncate digits
- FLOOR: floor
- CEIL: ceiling
- ROUND: round number
- NCR: combination
- NPR: permutation
- GCD: greatest common divisor
- SEC: secant
- CSC: cosecant
- COT: cotangent
- BINOMPMF: binomial probability mass function
- BINOMCDF: binomial cumulative distribution function
- BINOMMEAN: binomial distribution mean
- BINOMVAR: binomial distribution variance
- HYPERPMF: hypergeometric probability mass function
- HYPERCDF: hypergeometric cumulative distribution function
- HYPERMEAN: hypergeometric distribution mean
- HYPERVAR: hypergeometric distribution variance
- POIPMF: poissonian probability mass function
- POICDF: poissonian cumulative distribution function
- POIMEAN: poissonian distribution mean
- POIVAR: poissonian distribution variance
+  MIN: get the minimum
+  MAX: get the maximum
+  SUM: sum of all numbers
+  PRODUCT: product of all numbers
+  AVERAGE: average or mean
+  GEOMEAN: geometrical mean
+  SIGN: signum
+  DEGREES: convert radian to degree
+  RADIANS: convert degree to radian
+  LG: base-2 logarithm
+  CBRT: cube root
+  TRUNC: truncate digits
+  FLOOR: floor
+  CEIL: ceiling
+  ROUND: round number
+  NCR: combination
+  NPR: permutation
+  GCD: greatest common divisor
+  SEC: secant
+  CSC: cosecant
+  COT: cotangent
+  BINOMPMF: binomial probability mass function
+  BINOMCDF: binomial cumulative distribution function
+  BINOMMEAN: binomial distribution mean
+  BINOMVAR: binomial distribution variance
+  HYPERPMF: hypergeometric probability mass function
+  HYPERCDF: hypergeometric cumulative distribution function
+  HYPERMEAN: hypergeometric distribution mean
+  HYPERVAR: hypergeometric distribution variance
+  POIPMF: poissonian probability mass function
+  POICDF: poissonian cumulative distribution function
+  POIMEAN: poissonian distribution mean
+  POIVAR: poissonian distribution variance
 
 Improvements and bug fixes:
- fixed accuracy problem when calculating 10^x where x is integer
- variable names are now case sensitive in and between sessions
- shortcut Ctrl+Q to quit (ubuntu bug#102734)
- shortcut key F6 to focus and select input
- shortcut key Esc to clear the input
- improved (and non-intrusive) autocalc tip
- reserved variable names are now case sensitive "pi" and "ans"
- color for error messages can be customized
- fixed exp(x) when x is large
- improved error system and messages, introduced Px notation to refer parameters
- fixed issue #33: exponential notation misnamed
- fixed issue #32: crash when inserting ( after variable
- minor fixed function tan(x)
- binary is now relocatable (using BinReloc)
- all divisions by zero are now caught
- fixed issue #63: incorrect acos(x) return value
- arrow keys now work to hide completion popup
+  Fixed accuracy problem when calculating 10^x where x is integer
+  Variable names are now case sensitive in and between sessions
+  Shortcut Ctrl+Q to quit (ubuntu bug#102734)
+  Shortcut key F6 to focus and select input
+  Shortcut key Esc to clear the input
+  Improved (and non-intrusive) autocalc tip
+  Reserved variable names are now case sensitive "pi" and "ans"
+  Color for error messages can be customized
+  Fixed exp(x) when x is large
+  Improved error system and messages, introduced Px notation to refer parameters
+  Fixed issue #33: exponential notation misnamed
+  Fixed issue #32: crash when inserting ( after variable
+  Minor fixed function tan(x)
+  Binary is now relocatable (using BinReloc)
+  All divisions by zero are now caught
+  Fixed issue #63: incorrect acos(x) return value
+  Arrow keys now work to hide completion popup
+
 
 SpeedCrunch 0.7
 ---------------
-fixed CMake build under Mac OS X
-fixed very wide buttons when using Cleanlooks style
-updated link to new homepage
-fixed issue #17: crash with segmentation fault
-fixed issue #22: segfault after equal,backspace,evaluate, operator
-fixed issue #27: program closed unexpectedly
-fixed issue #28: crash on pressing "/"
+  Fixed CMake build under Mac OS X
+  Fixed very wide buttons when using Cleanlooks style
+  Updated link to new homepage
+  Fixed issue #17: crash with segmentation fault
+  Fixed issue #22: segfault after equal,backspace,evaluate, operator
+  Fixed issue #27: program closed unexpectedly
+  Fixed issue #28: crash on pressing "/"
+  Support for building using CMake
+  Fixed issue #9: unary minus before a function
+  Fixed issue #7: function argument in brackets
+  Fixed issue #6: exponentiation of a negative number returns NaN
+  Fixed issue #5: auto calculation shows up even on the first run
+  Fixed issue #4: should scroll automatically to show the result
+  Fixed issue #3: function argument starts with unary minus
+  Patched crunch.pro to fix "make install" (thanks to Vladimir Pouzanov)
+  Made the application look for translations in the current directory too
+  Updated the russian, french and portuguese translations
+  Changed from Qt 3 to Qt 4
+  Changed the configure script to be compatible with Qt 4
+  Converted the layout system from container widgets to layouts
+  Added the keypad
+  Added an application icon for windows systems
 
-SpeedCrunch 0.7-beta2
----------------------
-support for building using CMake
-fixed issue #9: unary minus before a function
-fixed issue #7: function argument in brackets
-fixed issue #6: exponentiation of a negative number returns NaN
-fixed issue #5: auto calculation shows up even on the first run
-fixed issue #4: should scroll automatically to show the result
-fixed issue #3: function argument starts with unary minus
-patched crunch.pro to fix "make install" (thanks to Vladimir Pouzanov)
-made the application look for translations in the current directory too
-updated the russian, french and portuguese translations - thanks all translators
-
-SpeedCrunch 0-7-beta1
----------------------
-changed from Qt 3 to Qt 4
-changed the configure script to be compatible with Qt 4
-converted the layout system from container widgets to layouts
-added the keypad
-added an application icon for windows systems
 
 SpeedCrunch 0.6-beta2
 ---------------------
-fixed mouse wheel scrolls do not recally history
-too large or too small number yields NaN, instead of silently becomes 0
-added (partial) Czech translation by Blondak (blondak@neser.cz)
-added Portuguese BR by Henrique Pinto (henrique.pinto@kdemail.net)
-fixed Enter in numeric keypad does not evaluate
-flicker-free about box, by Michael Pyne (pynm0001@comcast.net)
-comma key is also mapped as gives decimal digit, by Thomas Luebking
-copy displayed item by clicking on it, by Gary Cramblitt
-MS visual C++ fixes, by Philippe Fremy
+  Fixed mouse wheel scrolls do not recally history
+  Too large or too small number yields NaN, instead of silently becomes 0
+  Added (partial) Czech translation by Blondak (blondak@neser.cz)
+  Added Portuguese BR by Henrique Pinto (henrique.pinto@kdemail.net)
+  Fixed Enter in numeric keypad does not evaluate
+  Flicker-free about box, by Michael Pyne (pynm0001@comcast.net)
+  Comma key is also mapped as gives decimal digit, by Thomas Luebking
+  Copy displayed item by clicking on it, by Gary Cramblitt
+  MS visual C++ fixes, by Philippe Fremy
 
-SpeedCrunch 0.6-beta1 (8 June 2005)
+
+SpeedCrunch 0.6-beta1
 -----------------------------------
-support for syntax highlight, with matched parenthesis indicator
-Calc-As-You-Type: show result even before you finish typing
-autocomplete now also works for variables
-fixed invisible pop-up completion for very long expression
-show function description in function name autocomplete
-show variable value in variable name autocomplete
-dialog position/size are not saved anymore (leave it to the WM)
-better display of long error message, Pieter Pareit (pieter.pareit@scarlet.be)
-prompt error when trying to overwrite variable PI
-translation (i18n) of all error messages
-error when unknown variable is in the expression
-always reuse already shown dialog, do not recreate
-support deleting variable(s) (Ctrl+D)
-prevent variable name like 'sin', 'tan', etc
-simple tooltip on "clear input" button
+  Support for syntax highlight, with matched parenthesis indicator
+  Calc-As-You-Type: show result even before you finish typing
+  Autocomplete now also works for variables
+  Fixed invisible pop-up completion for very long expression
+  Show function description in function name autocomplete
+  Show variable value in variable name autocomplete
+  Dialog position/size are not saved anymore (leave it to the WM)
+  Better display of long error message, Pieter Pareit (pieter.pareit@scarlet.be)
+  Prompt error when trying to overwrite variable PI
+  Translation (i18n) of all error messages
+  Error when unknown variable is in the expression
+  Always reuse already shown dialog, do not recreate
+  Support deleting variable(s) (Ctrl+D)
+  Prevent variable name like 'sin', 'tan', etc
+  Simple tooltip on "clear input" button
+
 
 SpeedCrunch 0.5.4
 -----------------
-German translation by Damir Perisa (damir.perisa@solnet.ch)
-fixed i18n problem caused by errorneous handling of LANG
-minor fix in Portuguese translation
-Indonesian translation by Yolla Indria (yolla.indria@gmail.com)
+  German translation by Damir Perisa (damir.perisa@solnet.ch)
+  Fixed i18n problem caused by errorneous handling of LANG
+  Minor fix in Portuguese translation
+  Indonesian translation by Yolla Indria (yolla.indria@gmail.com)
+
 
 SpeedCrunch 0.5.3
 -----------------
-fixed bug with function asin and acos
-Portuguese translation by Helder Correia (helder.pereira.correia@gmail.com)
-Russian translation by Alexey Kouznetsov (kouznetsov@phtf.stu.neva.ru)
-Italian translation by Francesco di Cugno (fdicugno@gmail.com)
-fixed invisible popup completion in maximized window
-removed unnecessary artwork in dialog box
-fixed autocomplete in the middle of expression
+  Fixed bug with function asin and acos
+  Portuguese translation by Helder Correia (helder.pereira.correia@gmail.com)
+  Russian translation by Alexey Kouznetsov (kouznetsov@phtf.stu.neva.ru)
+  Italian translation by Francesco di Cugno (fdicugno@gmail.com)
+  Fixed invisible popup completion in maximized window
+  Removed unnecessary artwork in dialog box
+  Fixed autocomplete in the middle of expression
+
 
 SpeedCrunch 0.5.2
 -----------------
-fixed grave bug which made percentage operator did not work
-French translation by Vibet Alexis (bevi@netcourrier.com)
+  Fixed grave bug which made percentage operator did not work
+  French translation by Vibet Alexis (bevi@netcourrier.com)
+
 
 SpeedCrunch 0.5.1
 -----------------
-fixed bug related to degrees mode
-fixed compile in FreeBSD
+  Fixed bug related to degrees mode
+  Fixed compile in FreeBSD
+
 
 SpeedCrunch 0.5
 ---------------
-higher precision, up to 50 decimal digits
-format for numbers: general, fixed decimals or exponential
-shown decimal digits can vary from 2 to 50
-merge Insert menu to Edit menu
-optional clear input button
-optional evaluate button
-fixed shortcut conflict between Session and Settings menus
-error messages shown in red color
-pixmaps are handled better in the build system
+  Higher precision, up to 50 decimal digits
+  Format for numbers: general, fixed decimals or exponential
+  Shown decimal digits can vary from 2 to 50
+  Merge Insert menu to Edit menu
+  Optional clear input button
+  Optional evaluate button
+  Fixed shortcut conflict between Session and Settings menus
+  Error messages shown in red color
+  Pixmaps are handled better in the build system
+
 
 SpeedCrunch 0.4
 ---------------
-configuration dialog
-session can be exported to text file (Ctrl+S)
-customize font and color for the display
-history and variables are saved between sessions
-auto-completion for function name
-new functions: int, frac, round
-little margins (left and right) for the display
-application icon, thanks to Kuswanto (aka Zeus)
-every dialog's settings (size+position) are always saved
-fixed wrong parsing for "sin -90" and similar syntax
-show license and credits in the (new and fancier) about box
+  Configuration dialog
+  Session can be exported to text file (Ctrl+S)
+  Customize font and color for the display
+  History and variables are saved between sessions
+  Auto-completion for function name
+  New functions: int, frac, round
+  Little margins (left and right) for the display
+  Application icon, thanks to Kuswanto (aka Zeus)
+  Every dialog's settings (size+position) are always saved
+  Fixed wrong parsing for "sin -90" and similar syntax
+  Show license and credits in the (new and fancier) about box
+
 
 SpeedCrunch 0.3
 ---------------
-now it has menubar
-clear the screen, history, and/or variables
-Ctrl+I to activate Insert Variable dialog
-Ctrl+F to activate Insert Function dialog
-simple function, e.g "cos" is treated as "cos(ans)"
-Ctrl+R to copy last result to clipboard
-anything shown in the screen is also dumped to stdout
-tan 90 and tan 270 correctly gives error
-about box, to show program version
+  Now it has menubar
+  Clear the screen, history, and/or variables
+  Ctrl+I to activate Insert Variable dialog
+  Ctrl+F to activate Insert Function dialog
+  Simple function, e.g "cos" is treated as "cos(ans)"
+  Ctrl+R to copy last result to clipboard
+  Anything shown in the screen is also dumped to stdout
+  tan 90 and tan 270 correctly gives error
+  About box, to show program version
+
 
 SpeedCrunch 0.2
 ---------------
-percent operator, try e.g. "45%*75" or "price/80%"
-support for simplified syntax, e.g. "sin x" instead of "sin(x)"
-angle mode: Alt+D for degrees, Alt+R for radians
-horizontal scrollbar appears when result becomes wider
-fixed bug where built-in function always returns error
-fixed wrong operator precedence ("2**3**2" now correctly gives 512)
-source tarball includes GPL license file
+  Percent operator, try e.g. "45%*75" or "price/80%"
+  Support for simplified syntax, e.g. "sin x" instead of "sin(x)"
+  Angle mode: Alt+D for degrees, Alt+R for radians
+  Horizontal scrollbar appears when result becomes wider
+  Fixed bug where built-in function always returns error
+  Fixed wrong operator precedence ("2**3**2" now correctly gives 512)
+  Source tarball includes GPL license file
+
 
 SpeedCrunch 0.1
 ---------------
-history of last expressions (use up and down arrow)
-result shown in scrollable window
-built-in functions: abs, sqrt, pi, log, exp, ln, sin, cos, tan, sinh,
-  cosh, tanh, asin, acos, atan
-support for variables, e.g try "x=pi/3" and then "sin(x)"
-special variable ans holds the last calculation result
-automatic parentheses closing, e.g. "cos(pi/4" becomes "cos(pi/4)"
-
+  History of last expressions (use up and down arrow)
+  Result shown in scrollable window
+  Built-in functions: abs, sqrt, pi, log, exp, ln, sin, cos, tan, sinh,
+    cosh, tanh, asin, acos, atan
+  Support for variables, e.g try "x=pi/3" and then "sin(x)"
+  Special variable ans holds the last calculation result
+  Automatic parentheses closing, e.g. "cos(pi/4" becomes "cos(pi/4)"
