@@ -36,6 +36,7 @@ SOURCES += gui/mainwindow.cpp
 SOURCES += gui/tipwidget.cpp
 SOURCES += gui/variablesdock.cpp
 
+TRANSLATIONS += i18n/ca.ts
 TRANSLATIONS += i18n/cs.ts
 TRANSLATIONS += i18n/de.ts
 TRANSLATIONS += i18n/es.ts
@@ -57,6 +58,7 @@ TRANSLATIONS += i18n/sv.ts
 TRANSLATIONS += i18n/tr.ts
 TRANSLATIONS += i18n/zh_CN.ts
 
+translations.files += i18n/ca.qm
 translations.files += i18n/cs.qm
 translations.files += i18n/de.qm
 translations.files += i18n/es.qm

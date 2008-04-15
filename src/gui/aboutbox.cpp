@@ -236,13 +236,14 @@ AboutBox::AboutBox( QWidget * parent ) : QDialog( parent )
   msg += QString( mainFmt ).arg( tr("Special thanks to") ).arg( "Marco Wegner<br>"
                                                                 "Michael Pyne<br>"
                                                                 "Jonathan Avraham<br>"
+                                                                "Jonathan Riddell<br>"
                                                                 "Witold Wysota<br>" );
 
   msg += QString( mainFmt ).arg( tr("Graphics") ).arg( "Kuswanto (Zeus)<br>"
                                                        "Oxygen Project" );
 
   msg += "<p>";
-  msg += QString( "<b>%1</b><br><br>" ).arg( tr("Thanks to") );
+  msg += QString( "<b>%1</b><br>" ).arg( tr( "Thanks to" ) );
   msg += "Alejandro Villarreal<br>"
          "Alexey Kouznetsov<br>"
          "Anders Lund<br>"
@@ -268,7 +269,6 @@ AboutBox::AboutBox( QWidget * parent ) : QDialog( parent )
          "Thomas Nagy<br>"
          "Vibet Alexis<br>"
          "Vladimir Pouzanov<br>"
-         "Yolla Indria<br>"
          ;
   msg += QString( "<i>%1</i><br>" ).arg( tr("...and many others...") );
   msg += "</p>";
@@ -279,6 +279,7 @@ AboutBox::AboutBox( QWidget * parent ) : QDialog( parent )
   msg += QString( i18nFmt ).arg( tr( "Argentinian Spanish"  ) ).arg( "Lucas Sallovitz"                 );
   msg += QString( i18nFmt ).arg( tr( "Basque"               ) ).arg( "I&ntilde;igo Salvador Azurmendi" );
   msg += QString( i18nFmt ).arg( tr( "Brazilian Portuguese" ) ).arg( "F&aacute;bio Margarido"          );
+  msg += QString( i18nFmt ).arg( tr( "Catalan"              ) ).arg( "Francesc Farf&aacute;n"          );
   msg += QString( i18nFmt ).arg( tr( "Czech"                ) ).arg( "Blond'&aacute;k"                 );
   msg += QString( i18nFmt ).arg( tr( "Dutch"                ) ).arg( "Maarten Fonville"                );
   msg += QString( i18nFmt ).arg( tr( "French"               ) ).arg( "Gr&eacute;gory Treiber"          );
@@ -293,7 +294,7 @@ AboutBox::AboutBox( QWidget * parent ) : QDialog( parent )
   msg += QString( i18nFmt ).arg( tr( "Romanian"             ) ).arg( "Eugeniu Plamadeala"              );
   msg += QString( i18nFmt ).arg( tr( "Russian"              ) ).arg( "Irek Khasyanov"                  );
   msg += QString( i18nFmt ).arg( tr( "Simplified Chinese"   ) ).arg( "Liang Qi"                        );
-  msg += QString( i18nFmt ).arg( tr( "Spanish"              ) ).arg( "F Chris Carrera"                 );
+  msg += QString( i18nFmt ).arg( tr( "Spanish"              ) ).arg( "Francesc Farf&aacute;n"          );
   msg += QString( i18nFmt ).arg( tr( "Swedish"              ) ).arg( "Johan Thelin"                    );
   msg += QString( i18nFmt ).arg( tr( "Turkish"              ) ).arg( "Serdar Soytetir"                 );
   msg += "</p>";
@@ -303,7 +304,7 @@ AboutBox::AboutBox( QWidget * parent ) : QDialog( parent )
   msg += QString( copyFmt ).arg( tr("Copyright (C)") ).arg( "2004-2007" ).arg( "Ariya Hidayat"  ).arg( "ariya@kde.org"                    );
   msg += QString( copyFmt ).arg( tr("Copyright (C)") ).arg( "2005-2006" ).arg( "Johan Thelin"   ).arg( "e8johan@gmail.com"                );
   msg += QString( copyFmt ).arg( tr("Copyright (C)") ).arg( "2007-2008" ).arg( "Helder Correia" ).arg( "helder.pereira.correia@gmail.com" );
-  msg += QString( copyFmt ).arg( tr("Copyright (C)") ).arg( "2007-2008" ).arg( "Wolf Lammen"    ).arg( "ookami1@gmx.de" );
+  msg += QString( copyFmt ).arg( tr("Copyright (C)") ).arg( "2007-2008" ).arg( "Wolf Lammen"    ).arg( "ookami1@gmx.de"                   );
   msg += "</p>";
 
   msg += "<p>";

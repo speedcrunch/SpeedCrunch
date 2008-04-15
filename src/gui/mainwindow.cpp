@@ -134,6 +134,7 @@ struct Actions
   QAction * formatOctal;
   QAction * formatScientific;
   QAction * languageDefault;
+  QAction * languageCa;
   QAction * languageCs;
   QAction * languageDe;
   QAction * languageEn;
@@ -433,6 +434,7 @@ void MainWindow::Private::createActions()
   actions.formatScientific      = new QAction( p );
   actions.languageDefault       = new QAction( p );
 
+  actions.languageCa   = new QAction( QString::fromUtf8( "Català"              ), p );
   actions.languageCs   = new QAction( QString::fromUtf8( "Česky"               ), p );
   actions.languageDe   = new QAction( QString::fromUtf8( "Deutsch"             ), p );
   actions.languageEn   = new QAction( QString::fromUtf8( "English"             ), p );
@@ -457,6 +459,7 @@ void MainWindow::Private::createActions()
   actions.languageZhCn = new QAction( QString::fromUtf8( "简化字"              ), p );
 
   actions.languageDefault->setData( QString( "C"     ) );
+  actions.languageCa     ->setData( QString( "ca"    ) );
   actions.languageCs     ->setData( QString( "cs"    ) );
   actions.languageDe     ->setData( QString( "de"    ) );
   actions.languageEn     ->setData( QString( "en"    ) );
@@ -512,6 +515,7 @@ void MainWindow::Private::createActions()
   actions.formatOctal         ->setCheckable( true );
   actions.formatScientific    ->setCheckable( true );
   actions.languageDefault     ->setCheckable( true );
+  actions.languageCa          ->setCheckable( true );
   actions.languageCs          ->setCheckable( true );
   actions.languageDe          ->setCheckable( true );
   actions.languageEn          ->setCheckable( true );
@@ -694,6 +698,7 @@ void MainWindow::Private::createActionGroups()
 
   actionGroups.language = new QActionGroup( p );
   actionGroups.language->addAction( actions.languageDefault );
+  actionGroups.language->addAction( actions.languageCa );
   actionGroups.language->addAction( actions.languageCs );
   actionGroups.language->addAction( actions.languageDe );
   actionGroups.language->addAction( actions.languageEn );
@@ -850,6 +855,7 @@ void MainWindow::Private::createMenus()
   menus.language = menus.settings->addMenu( "" );
   menus.language->addAction( actions.languageDefault );
   menus.language->addSeparator();
+  menus.language->addAction( actions.languageCa   );
   menus.language->addAction( actions.languageCs   );
   menus.language->addAction( actions.languageDe   );
   menus.language->addAction( actions.languageEn   );
@@ -1202,6 +1208,7 @@ void MainWindow::Private::createFixedConnections()
   connect( actions.radixCharDot,                SIGNAL( triggered()                           ), p,                     SLOT( radixCharDotActivated()               ) );
   connect( actions.radixCharComma,              SIGNAL( triggered()                           ), p,                     SLOT( radixCharCommaActivated()             ) );
   connect( actions.languageDefault,             SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageCa,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
   connect( actions.languageCs,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
   connect( actions.languageDe,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
   connect( actions.languageEn,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
@@ -1368,7 +1375,9 @@ void MainWindow::Private::checkInitialPrecision()
 
 void MainWindow::Private::checkInitialLanguage()
 {
-  if ( settings.language == "cs" )
+  if ( settings.language == "ca" )
+    actions.languageCa->setChecked( true );
+  else if ( settings.language == "cs" )
     actions.languageCs->setChecked( true );
   else if ( settings.language == "de" )
     actions.languageDe->setChecked( true );

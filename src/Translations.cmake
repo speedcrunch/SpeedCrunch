@@ -1,4 +1,5 @@
 set(speedcrunch_TRANSLATIONS
+i18n/ca.qm
 i18n/cs.qm
 i18n/de.qm
 i18n/es_AR.qm

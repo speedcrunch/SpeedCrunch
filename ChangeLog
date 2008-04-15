@@ -1,6 +1,7 @@
 SpeedCrunch 0.10.1
 ---------------------
 New features:
+  New Catalan translation
   New Simplified Chinese translation
 
 Bug fixes:
@@ -14,6 +15,7 @@ Improvements:
   Better handling of math book translations wilh language codes that contain
     the country component and now correct behaviour defaulting to English when
     the system language (selected option) is not supported
+  Updated translations
 
 
 SpeedCrunch 0.10
