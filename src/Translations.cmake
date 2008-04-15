@@ -9,8 +9,8 @@ i18n/fr.qm
 i18n/he.qm
 i18n/id.qm
 i18n/it.qm
+i18n/nb.qm
 i18n/nl.qm
-i18n/no.qm
 i18n/pl.qm
 i18n/pt_BR.qm
 i18n/pt.qm

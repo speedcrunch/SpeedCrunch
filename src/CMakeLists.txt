@@ -106,7 +106,7 @@ INSTALL(FILES       books/books.css
         DESTINATION ${BOOKSDIR}
 )
 
-INSTALL(DIRECTORY   books/images books/cs books/de books/en books/es books/es_AR books/eu books/fi books/fr books/he books/id books/it books/nl books/no books/pt books/pt_BR books/pl books/ro books/ru books/sv books/tr books/zh_CN
+INSTALL(DIRECTORY   books/images books/cs books/de books/en books/es books/es_AR books/eu books/fi books/fr books/he books/id books/it books/nb books/nl books/pt books/pt_BR books/pl books/ro books/ru books/sv books/tr books/zh_CN
         DESTINATION "${BOOKSDIR}"
         PATTERN     ".svn" EXCLUDE
 )

@@ -145,8 +145,8 @@ struct Actions
   QAction * languageHe;
   QAction * languageId;
   QAction * languageIt;
+  QAction * languageNb;
   QAction * languageNl;
-  QAction * languageNo;
   QAction * languagePl;
   QAction * languagePt;
   QAction * languagePtBr;
@@ -444,8 +444,8 @@ void MainWindow::Private::createActions()
   actions.languageHe   = new QAction( QString::fromUtf8( "עברית"               ), p );
   actions.languageId   = new QAction( QString::fromUtf8( "Bahasa Indonesia"    ), p );
   actions.languageIt   = new QAction( QString::fromUtf8( "Italiano"            ), p );
+  actions.languageNb   = new QAction( QString::fromUtf8( "Norsk (Bokmål)"      ) + QChar( 0x200E ), p );
   actions.languageNl   = new QAction( QString::fromUtf8( "Nederlands"          ), p );
-  actions.languageNo   = new QAction( QString::fromUtf8( "Norsk (Bokmål)"      ) + QChar( 0x200E ), p );
   actions.languagePl   = new QAction( QString::fromUtf8( "Polski"              ), p );
   actions.languagePt   = new QAction( QString::fromUtf8( "Português"           ), p );
   actions.languagePtBr = new QAction( QString::fromUtf8( "Português do Brasil" ), p );
@@ -468,8 +468,8 @@ void MainWindow::Private::createActions()
   actions.languageHe     ->setData( QString( "he"    ) );
   actions.languageId     ->setData( QString( "id"    ) );
   actions.languageIt     ->setData( QString( "it"    ) );
+  actions.languageNb     ->setData( QString( "nb"    ) );
   actions.languageNl     ->setData( QString( "nl"    ) );
-  actions.languageNo     ->setData( QString( "no"    ) );
   actions.languagePl     ->setData( QString( "pl"    ) );
   actions.languagePt     ->setData( QString( "pt"    ) );
   actions.languagePtBr   ->setData( QString( "pt_BR" ) );
@@ -523,8 +523,8 @@ void MainWindow::Private::createActions()
   actions.languageHe          ->setCheckable( true );
   actions.languageId          ->setCheckable( true );
   actions.languageIt          ->setCheckable( true );
+  actions.languageNb          ->setCheckable( true );
   actions.languageNl          ->setCheckable( true );
-  actions.languageNo          ->setCheckable( true );
   actions.languagePl          ->setCheckable( true );
   actions.languagePt          ->setCheckable( true );
   actions.languagePtBr        ->setCheckable( true );
@@ -705,8 +705,8 @@ void MainWindow::Private::createActionGroups()
   actionGroups.language->addAction( actions.languageHe );
   actionGroups.language->addAction( actions.languageId );
   actionGroups.language->addAction( actions.languageIt );
+  actionGroups.language->addAction( actions.languageNb );
   actionGroups.language->addAction( actions.languageNl );
-  actionGroups.language->addAction( actions.languageNo );
   actionGroups.language->addAction( actions.languagePl );
   actionGroups.language->addAction( actions.languagePt );
   actionGroups.language->addAction( actions.languagePtBr );
@@ -861,8 +861,8 @@ void MainWindow::Private::createMenus()
   menus.language->addAction( actions.languageHe   );
   menus.language->addAction( actions.languageId   );
   menus.language->addAction( actions.languageIt   );
+  menus.language->addAction( actions.languageNb   );
   menus.language->addAction( actions.languageNl   );
-  menus.language->addAction( actions.languageNo   );
   menus.language->addAction( actions.languagePl   );
   menus.language->addAction( actions.languagePt   );
   menus.language->addAction( actions.languagePtBr );
@@ -1213,8 +1213,8 @@ void MainWindow::Private::createFixedConnections()
   connect( actions.languageHe,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
   connect( actions.languageId,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
   connect( actions.languageIt,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageNb,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
   connect( actions.languageNl,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
-  connect( actions.languageNo,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
   connect( actions.languagePl,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
   connect( actions.languagePt,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
   connect( actions.languagePtBr,                SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
@@ -1390,10 +1390,10 @@ void MainWindow::Private::checkInitialLanguage()
     actions.languageId->setChecked( true );
   else if ( settings.language == "it" )
     actions.languageIt->setChecked( true );
+  else if ( settings.language == "nb" )
+    actions.languageNb->setChecked( true );
   else if ( settings.language == "nl" )
     actions.languageNl->setChecked( true );
-  else if ( settings.language == "no" )
-    actions.languageNo->setChecked( true );
   else if ( settings.language == "pl" )
     actions.languagePl->setChecked( true );
   else if ( settings.language == "pt" )
