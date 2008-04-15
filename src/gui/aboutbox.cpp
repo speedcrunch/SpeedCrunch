@@ -283,7 +283,7 @@ AboutBox::AboutBox( QWidget * parent ) : QDialog( parent )
   msg += QString( i18nFmt ).arg( tr( "Dutch"                ) ).arg( "Maarten Fonville"                );
   msg += QString( i18nFmt ).arg( tr( "French"               ) ).arg( "Gr&eacute;gory Treiber"          );
   msg += QString( i18nFmt ).arg( tr( "Finnish"              ) ).arg( "J-P Nurmi"                       );
-  msg += QString( i18nFmt ).arg( tr( "German"               ) ).arg( "Marco Wegner"                    );
+  msg += QString( i18nFmt ).arg( tr( "German"               ) ).arg( "Wolf Lammen"                     );
   msg += QString( i18nFmt ).arg( tr( "Hebrew"               ) ).arg( "Jonathan Avraham"                );
   msg += QString( i18nFmt ).arg( tr( "Indonesian"           ) ).arg( "Yolla Indria"                    );
   msg += QString( i18nFmt ).arg( tr( "Italian"              ) ).arg( "Alessio Sclocco"                 );
