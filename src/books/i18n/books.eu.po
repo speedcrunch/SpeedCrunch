@@ -1,15 +1,14 @@
-# translation of books.po to Euskara
 # translation of books.pot to Basque
-#
 # Iñigo Salvador Azurmendi <xalba@euskalnet.net>, 2008.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: books\n"
+"Project-Id-Version: books.pot\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-03-28 15:49+0000\n"
-"PO-Revision-Date: 2008-04-10 00:51+0200\n"
+"PO-Revision-Date: 2008-04-13 04:20+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@euskalnet.net>\n"
-"Language-Team: Euskara <eu@li.org>\n"
+"Language-Team: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -64,7 +63,7 @@ msgstr "Sektore"
 
 #: math_index.html.template
 msgid "Misc"
-msgstr ""
+msgstr "Hainbat"
 
 #: quadratic_equation.html.template, math_index.html.template
 msgid "Quadratic Equation"
