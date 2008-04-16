@@ -12,7 +12,7 @@ Bug fixes:
   Updated binreloc to build in LSB environments
 
 Improvements:
-  Better handling of math book translations wilh language codes that contain
+  Better handling of math book translations with language codes that contain
     the country component and now correct behaviour defaulting to English when
     the system language (selected option) is not supported
   Updated translations
