@@ -53,13 +53,13 @@ void BookDock::Private::handleLayoutDirection()
 {
   if ( p->layoutDirection() == Qt::RightToLeft )
   {
-    buttonLayout->removeWidget( forwardButton );
-    buttonLayout->insertWidget( 0, forwardButton );
+    backButton->setIcon( QPixmap( ":/book_forward.png" ) );
+    forwardButton->setIcon( QPixmap( ":/book_back.png" ) );
   }
   else
   {
-    buttonLayout->removeWidget( backButton );
-    buttonLayout->insertWidget( 0, backButton );
+    backButton->setIcon( QPixmap( ":/book_back.png" ) );
+    forwardButton->setIcon( QPixmap( ":/book_forward.png" ) );
   }
 }
 
