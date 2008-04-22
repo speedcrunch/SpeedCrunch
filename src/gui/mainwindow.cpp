@@ -153,7 +153,6 @@ struct Actions
   QAction * languagePtBr;
   QAction * languageRo;
   QAction * languageRu;
-  QAction * languageSl;
   QAction * languageSv;
   QAction * languageTr;
   QAction * languageZhCn;
@@ -453,7 +452,6 @@ void MainWindow::Private::createActions()
   actions.languagePtBr = new QAction( QString::fromUtf8( "Português do Brasil" ), p );
   actions.languageRo   = new QAction( QString::fromUtf8( "Română"              ), p );
   actions.languageRu   = new QAction( QString::fromUtf8( "Русский"             ), p );
-  actions.languageSl   = new QAction( QString::fromUtf8( "Slovenščina"         ), p );
   actions.languageSv   = new QAction( QString::fromUtf8( "Svenska"             ), p );
   actions.languageTr   = new QAction( QString::fromUtf8( "Türkçe"              ), p );
   actions.languageZhCn = new QAction( QString::fromUtf8( "简化字"              ), p );
@@ -478,7 +476,6 @@ void MainWindow::Private::createActions()
   actions.languagePtBr   ->setData( QString( "pt_BR" ) );
   actions.languageRo     ->setData( QString( "ro"    ) );
   actions.languageRu     ->setData( QString( "ru"    ) );
-  actions.languageSl     ->setData( QString( "sl"    ) );
   actions.languageSv     ->setData( QString( "sv"    ) );
   actions.languageTr     ->setData( QString( "tr"    ) );
   actions.languageZhCn   ->setData( QString( "zh_CN" ) );
@@ -534,7 +531,6 @@ void MainWindow::Private::createActions()
   actions.languagePtBr        ->setCheckable( true );
   actions.languageRo          ->setCheckable( true );
   actions.languageRu          ->setCheckable( true );
-  actions.languageSl          ->setCheckable( true );
   actions.languageSv          ->setCheckable( true );
   actions.languageTr          ->setCheckable( true );
   actions.languageZhCn        ->setCheckable( true );
@@ -717,7 +713,6 @@ void MainWindow::Private::createActionGroups()
   actionGroups.language->addAction( actions.languagePtBr );
   actionGroups.language->addAction( actions.languageRo );
   actionGroups.language->addAction( actions.languageRu );
-  actionGroups.language->addAction( actions.languageSl );
   actionGroups.language->addAction( actions.languageSv );
   actionGroups.language->addAction( actions.languageTr );
   actionGroups.language->addAction( actions.languageZhCn );
@@ -874,7 +869,6 @@ void MainWindow::Private::createMenus()
   menus.language->addAction( actions.languagePtBr );
   menus.language->addAction( actions.languageRo   );
   menus.language->addAction( actions.languageRu   );
-  menus.language->addAction( actions.languageSl   );
   menus.language->addAction( actions.languageSv   );
   menus.language->addAction( actions.languageTr   );
   menus.language->addAction( actions.languageZhCn );
@@ -1227,7 +1221,6 @@ void MainWindow::Private::createFixedConnections()
   connect( actions.languagePtBr,                SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
   connect( actions.languageRo,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
   connect( actions.languageRu,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
-  connect( actions.languageSl,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
   connect( actions.languageSv,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
   connect( actions.languageTr,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
   connect( actions.languageZhCn,                SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
@@ -1413,8 +1406,6 @@ void MainWindow::Private::checkInitialLanguage()
     actions.languageRo->setChecked( true );
   else if ( settings.language == "ru" )
     actions.languageRu->setChecked( true );
-  else if ( settings.language == "sl" )
-    actions.languageSl->setChecked( true );
   else if ( settings.language == "sv" )
     actions.languageSv->setChecked( true );
   else if ( settings.language == "tr" )
