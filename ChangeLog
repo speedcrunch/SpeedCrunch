@@ -4,9 +4,10 @@ New features:
   New Basque, Catalan and Simplified Chinese translation
 
 Bug fixes:
-  Fixed potential crashes [#180]
   Fixed keypad button "=" [#176]
   Fixed incomplete math book link upon clicking [#177]
+  Fixed potential crashes [#180]
+  Fixed back and forward buttons have the opposite meaning in RTL [#185]
   Fixed missing window update on radix character change
   Updated binreloc to build in LSB environments
 
@@ -15,6 +16,8 @@ Improvements:
     the country component and now correct behaviour defaulting to English when
     the system language (selected option) is not supported
   Updated translations
+  Removed Slovenian language menu entry, since there is no such translation
+    available
 
 
 SpeedCrunch 0.10
