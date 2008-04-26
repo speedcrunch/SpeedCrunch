@@ -1155,508 +1155,508 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1555"/>
+        <location filename="../gui/mainwindow.cpp" line="1546"/>
         <source>About Qt</source>
         <translation>Tietoja Qt:sta</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1992"/>
+        <location filename="../gui/mainwindow.cpp" line="1983"/>
         <source>SpeedCrunch Sessions (*.sch);;All Files (*)</source>
         <translation>SpeedCrunch Istunnot (*.sch);;Kaikki Tiedostot (*)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1712"/>
+        <location filename="../gui/mainwindow.cpp" line="1703"/>
         <source>Load Session</source>
         <translation>Avaa Istunto</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2691"/>
+        <location filename="../gui/mainwindow.cpp" line="2682"/>
         <source>Error</source>
         <translation>Virhe</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1827"/>
+        <location filename="../gui/mainwindow.cpp" line="1818"/>
         <source>Can&apos;t read from file %1</source>
         <translation>Tiedoston %1 lukeminen ei onnistu</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1836"/>
+        <location filename="../gui/mainwindow.cpp" line="1827"/>
         <source>Question</source>
         <translation>Kysymys</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1993"/>
+        <location filename="../gui/mainwindow.cpp" line="1984"/>
         <source>Save Session</source>
         <translation>Tallenna Istunto</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2049"/>
+        <location filename="../gui/mainwindow.cpp" line="2040"/>
         <source>Can&apos;t write to file %1</source>
         <translation>Tiedostoon %1 ei voida kirjoittaa</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2347"/>
+        <location filename="../gui/mainwindow.cpp" line="2338"/>
         <source>Warning</source>
         <translation>Varoitus</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2364"/>
+        <location filename="../gui/mainwindow.cpp" line="2355"/>
         <source>To insert a function using keyboard, use Ctrl+F shorcut. From the dialog, you can choose the function you want to insert.</source>
         <translation>Voit lisätä funtion pikanäppäimellä Ctrl+F. Valitse funktio avautuvasta valintaikkunasta.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2369"/>
+        <location filename="../gui/mainwindow.cpp" line="2360"/>
         <source>To insert a variable using keyboard, use Ctrl+I shorcut. From the dialog, you can choose the variable you want to insert.</source>
         <translation>Voit lisätä muuttujan pikanäppäimellä Ctrl+I. Valitse muuttuja avautuvasta valintaikkunasta.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2372"/>
+        <location filename="../gui/mainwindow.cpp" line="2363"/>
         <source>Use variable &lt;i&gt;pi&lt;/i&gt; to use pi constant.</source>
         <translation>Voit käyttää muuttujaa &lt;i&gt;pi&lt;/i&gt; piin arvona.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2377"/>
+        <location filename="../gui/mainwindow.cpp" line="2368"/>
         <source>Use &lt;i&gt;;&lt;/i&gt; (semicolon) to separate the parameters in functions.</source>
         <translation>Käytä &lt;i&gt;;&lt;/i&gt; (puolipistettä) erottamaan funktioiden parametrit.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2383"/>
+        <location filename="../gui/mainwindow.cpp" line="2374"/>
         <source>Tip of the day</source>
         <translation>Päivän vihje</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1710"/>
+        <location filename="../gui/mainwindow.cpp" line="1701"/>
         <source>File %1 is not a valid session</source>
         <translation>Tiedosto %1 ei ole kelvollinen istunto</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1747"/>
+        <location filename="../gui/mainwindow.cpp" line="1738"/>
         <source>Merge session being loaded with current session?
 If no, current variables and display will be cleared.</source>
         <translation>Yhdistetäänkö avattava istunto nykyiseen istuntoon?
 Jos ei, nykyiset muuttujat ja näyttö tyhjennetään.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2722"/>
+        <location filename="../gui/mainwindow.cpp" line="2713"/>
         <source>SpeedCrunch is minimized.
 Left click the icon to restore it or right click for options.</source>
         <translation>SpeedCrunch on pienennetty.
 Palauta ikonista vasemmalla painikkeella tai näytä valikko oikealla painikkeella.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1600"/>
+        <location filename="../gui/mainwindow.cpp" line="1591"/>
         <source>Degree</source>
         <translation>Asteet</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2039"/>
+        <location filename="../gui/mainwindow.cpp" line="2030"/>
         <source>All Files (*)</source>
         <translation>Kaikki Tiedostot (*)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1984"/>
+        <location filename="../gui/mainwindow.cpp" line="1975"/>
         <source>Radian</source>
         <translation>Radiaanit</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2342"/>
+        <location filename="../gui/mainwindow.cpp" line="2333"/>
         <source>The menu bar is now hidden. To make it visible again, press Ctrl+Alt+M.</source>
         <translation>Valikkopalkki on nyt piilossa. Tuo se näkyviin painamalla Ctrl+Alt+M.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2393"/>
+        <location filename="../gui/mainwindow.cpp" line="2384"/>
         <source>Binary</source>
         <translation>Binääri</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2403"/>
+        <location filename="../gui/mainwindow.cpp" line="2394"/>
         <source>Engineering decimal</source>
         <translation>Tekninen desimaali</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2413"/>
+        <location filename="../gui/mainwindow.cpp" line="2404"/>
         <source>Fixed decimal</source>
         <translation>Kiintopistedesimaali</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2423"/>
+        <location filename="../gui/mainwindow.cpp" line="2414"/>
         <source>General decimal</source>
         <translation>Yleinen desimaali</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2433"/>
+        <location filename="../gui/mainwindow.cpp" line="2424"/>
         <source>Hexadecimal</source>
         <translation>Heksadesimaali</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2443"/>
+        <location filename="../gui/mainwindow.cpp" line="2434"/>
         <source>Octal</source>
         <translation>Oktaali</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2453"/>
+        <location filename="../gui/mainwindow.cpp" line="2444"/>
         <source>Scientific decimal</source>
         <translation>Tieteellinen desimaali</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1818"/>
+        <location filename="../gui/mainwindow.cpp" line="1809"/>
         <source>Import Session</source>
         <translation>Tuo Istunto</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1834"/>
+        <location filename="../gui/mainwindow.cpp" line="1825"/>
         <source>Merge session being imported with current session?
 If no, current variables and display will be cleared.</source>
         <translation>Yhdistetäänkö tuotava istunto nykyiseen istuntoon?
 Jos ei, nykyiset muuttujat ja näyttö tyhjennetään.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2040"/>
+        <location filename="../gui/mainwindow.cpp" line="2031"/>
         <source>Export Session</source>
         <translation>Vie Istunto</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1027"/>
+        <location filename="../gui/mainwindow.cpp" line="1021"/>
         <source>Math Book</source>
         <translation>Matematiikkaopas</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="900"/>
+        <location filename="../gui/mainwindow.cpp" line="894"/>
         <source>&amp;Session</source>
         <translation>&amp;Istunto</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="614"/>
+        <location filename="../gui/mainwindow.cpp" line="610"/>
         <source>Clear E&amp;xpression</source>
         <translation>Tyhjennä L&amp;auseke</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="615"/>
+        <location filename="../gui/mainwindow.cpp" line="611"/>
         <source>Clear &amp;History</source>
         <translation>Tyhjennä &amp;Historia</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="616"/>
+        <location filename="../gui/mainwindow.cpp" line="612"/>
         <source>&amp;Degree</source>
         <translation>&amp;Asteet</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="617"/>
+        <location filename="../gui/mainwindow.cpp" line="613"/>
         <source>Delete All V&amp;ariables</source>
         <translation>Poista &amp;Kaikki Muuttujat</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="618"/>
+        <location filename="../gui/mainwindow.cpp" line="614"/>
         <source>D&amp;elete Variable...</source>
         <translation>&amp;Poista Muuttuja...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="619"/>
+        <location filename="../gui/mainwindow.cpp" line="615"/>
         <source>&amp;15 Decimal Digits</source>
         <translation>&amp;15 Desimaalia</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="620"/>
+        <location filename="../gui/mainwindow.cpp" line="616"/>
         <source>&amp;2 Decimal Digits</source>
         <translation>&amp;2 Desimaalia</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="621"/>
+        <location filename="../gui/mainwindow.cpp" line="617"/>
         <source>&amp;3 Decimal Digits</source>
         <translation>&amp;3 Desimaalia</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="622"/>
+        <location filename="../gui/mainwindow.cpp" line="618"/>
         <source>&amp;50 Decimal Digits</source>
         <translation>&amp;50 Desimaalia</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="623"/>
+        <location filename="../gui/mainwindow.cpp" line="619"/>
         <source>&amp;8 Decimal Digits</source>
         <translation>&amp;8 Desimaalia</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="624"/>
+        <location filename="../gui/mainwindow.cpp" line="620"/>
         <source>&amp;Automatic Precision</source>
         <translation>&amp;Automaattinen Tarkkuus</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="625"/>
+        <location filename="../gui/mainwindow.cpp" line="621"/>
         <source>&amp;Copy</source>
         <translation>&amp;Kopioi</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="626"/>
+        <location filename="../gui/mainwindow.cpp" line="622"/>
         <source>Copy Last &amp;Result</source>
         <translation>Kopioi &amp;Tulos</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="627"/>
+        <location filename="../gui/mainwindow.cpp" line="623"/>
         <source>&amp;Paste</source>
         <translation>&amp;Liitä</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="628"/>
+        <location filename="../gui/mainwindow.cpp" line="624"/>
         <source>&amp;About</source>
         <translation>&amp;Tietoja</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="629"/>
+        <location filename="../gui/mainwindow.cpp" line="625"/>
         <source>About &amp;Qt</source>
         <translation>Tietoja &amp;Qt:sta</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="630"/>
+        <location filename="../gui/mainwindow.cpp" line="626"/>
         <source>SpeedCrunch &amp;Web Site...</source>
         <translation>SpeedCrunch &amp;WWW-sivusto...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="631"/>
+        <location filename="../gui/mainwindow.cpp" line="627"/>
         <source>&amp;Tip of the Day</source>
         <translation>Päivän &amp;Vihje</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="632"/>
+        <location filename="../gui/mainwindow.cpp" line="628"/>
         <source>Insert &amp;Function...</source>
         <translation>Lisää &amp;Funktio...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="633"/>
+        <location filename="../gui/mainwindow.cpp" line="629"/>
         <source>Insert &amp;Variable...</source>
         <translation>Lisää &amp;Muuttuja...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="634"/>
+        <location filename="../gui/mainwindow.cpp" line="630"/>
         <source>&amp;Partial Results</source>
         <translation>&amp;Osittaiset Tulokset</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="635"/>
+        <location filename="../gui/mainwindow.cpp" line="631"/>
         <source>Automatic &amp;Completion</source>
         <translation>Automaattinen &amp;Täydennys</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="636"/>
+        <location filename="../gui/mainwindow.cpp" line="632"/>
         <source>Always On &amp;Top</source>
         <translation>Aina &amp;Päällä</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="637"/>
+        <location filename="../gui/mainwindow.cpp" line="633"/>
         <source>&amp;Minimize To System Tray</source>
         <translation>Pienennä &amp;Järjestelmäpalkkiin</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="638"/>
+        <location filename="../gui/mainwindow.cpp" line="634"/>
         <source>Syntax &amp;Highlighting</source>
         <translation>&amp;Syntaksin Merkkaus</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="639"/>
+        <location filename="../gui/mainwindow.cpp" line="635"/>
         <source>&amp;System Default</source>
         <translation>&amp;Järjestelmän Oletus</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="640"/>
+        <location filename="../gui/mainwindow.cpp" line="636"/>
         <source>&amp;Dot</source>
         <translation>Pil&amp;kku</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="641"/>
+        <location filename="../gui/mainwindow.cpp" line="637"/>
         <source>&amp;Comma</source>
         <translation>Pi&amp;ste</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="642"/>
+        <location filename="../gui/mainwindow.cpp" line="638"/>
         <source>&amp;Radian</source>
         <translation>&amp;Radiaanit</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="643"/>
+        <location filename="../gui/mainwindow.cpp" line="639"/>
         <source>Scroll Display Down</source>
         <translation>Vieritä Näyttöä Alas</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="644"/>
+        <location filename="../gui/mainwindow.cpp" line="640"/>
         <source>Scroll Display Up</source>
         <translation>Vieritä Näyttöä Ylös</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="645"/>
+        <location filename="../gui/mainwindow.cpp" line="641"/>
         <source>&amp;Select Expression</source>
         <translation>&amp;Valitse Lauseke</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="646"/>
+        <location filename="../gui/mainwindow.cpp" line="642"/>
         <source>&amp;Import...</source>
         <translation>T&amp;uo...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="647"/>
+        <location filename="../gui/mainwindow.cpp" line="643"/>
         <source>&amp;Load...</source>
         <translation>&amp;Avaa...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="648"/>
+        <location filename="../gui/mainwindow.cpp" line="644"/>
         <source>&amp;Quit</source>
         <translation>&amp;Lopeta</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="649"/>
+        <location filename="../gui/mainwindow.cpp" line="645"/>
         <source>&amp;Save...</source>
         <translation>&amp;Tallenna...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="650"/>
+        <location filename="../gui/mainwindow.cpp" line="646"/>
         <source>&amp;Export...</source>
         <translation>&amp;Vie...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="651"/>
+        <location filename="../gui/mainwindow.cpp" line="647"/>
         <source>Math &amp;Book</source>
         <translation>Matematiikka&amp;opas</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="652"/>
+        <location filename="../gui/mainwindow.cpp" line="648"/>
         <source>&amp;Constants</source>
         <translation>&amp;Vakiot</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="653"/>
+        <location filename="../gui/mainwindow.cpp" line="649"/>
         <source>Full &amp;Screen Mode</source>
         <translation>Koko&amp;ruututila</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="654"/>
+        <location filename="../gui/mainwindow.cpp" line="650"/>
         <source>&amp;Functions</source>
         <translation>&amp;Funktiot</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="655"/>
+        <location filename="../gui/mainwindow.cpp" line="651"/>
         <source>&amp;History</source>
         <translation>&amp;Historia</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="656"/>
+        <location filename="../gui/mainwindow.cpp" line="652"/>
         <source>&amp;Keypad</source>
         <translation>&amp;Näppäimistö</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="657"/>
+        <location filename="../gui/mainwindow.cpp" line="653"/>
         <source>Hide &amp;Menu Bar</source>
         <translation>&amp;Piilota Valikkopalkki</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="658"/>
+        <location filename="../gui/mainwindow.cpp" line="654"/>
         <source>&amp;Status Bar</source>
         <translation>&amp;Tilapalkki</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="659"/>
+        <location filename="../gui/mainwindow.cpp" line="655"/>
         <source>&amp;Variables</source>
         <translation>&amp;Muuttujat</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="660"/>
+        <location filename="../gui/mainwindow.cpp" line="656"/>
         <source>&amp;Binary</source>
         <translation>&amp;Binääri</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="661"/>
+        <location filename="../gui/mainwindow.cpp" line="657"/>
         <source>&amp;Engineering</source>
         <translation>T&amp;ekninen</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="662"/>
+        <location filename="../gui/mainwindow.cpp" line="658"/>
         <source>&amp;Fixed Decimal</source>
         <translation>&amp;Kiintopiste</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="663"/>
+        <location filename="../gui/mainwindow.cpp" line="659"/>
         <source>&amp;General</source>
         <translation>&amp;Yleinen</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="664"/>
+        <location filename="../gui/mainwindow.cpp" line="660"/>
         <source>&amp;Hexadecimal</source>
         <translation>&amp;Heksadesimaali</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="665"/>
+        <location filename="../gui/mainwindow.cpp" line="661"/>
         <source>&amp;Octal</source>
         <translation>&amp;Oktaali</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="666"/>
+        <location filename="../gui/mainwindow.cpp" line="662"/>
         <source>&amp;Scientific</source>
         <translation>&amp;Tieteellinen</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="667"/>
+        <location filename="../gui/mainwindow.cpp" line="663"/>
         <source>System &amp;Default</source>
         <translation>&amp;Järjestelmän Oletus</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="901"/>
+        <location filename="../gui/mainwindow.cpp" line="895"/>
         <source>&amp;Edit</source>
         <translation>&amp;Muokkaa</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="902"/>
+        <location filename="../gui/mainwindow.cpp" line="896"/>
         <source>&amp;View</source>
         <translation>&amp;Näkymä</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="903"/>
+        <location filename="../gui/mainwindow.cpp" line="897"/>
         <source>Se&amp;ttings</source>
         <translation>&amp;Asetukset</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="904"/>
+        <location filename="../gui/mainwindow.cpp" line="898"/>
         <source>Result &amp;Format</source>
         <translation>&amp;Tulosmuoto</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="905"/>
+        <location filename="../gui/mainwindow.cpp" line="899"/>
         <source>&amp;Decimal</source>
         <translation>&amp;Desimaali</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="906"/>
+        <location filename="../gui/mainwindow.cpp" line="900"/>
         <source>&amp;Angle Unit</source>
         <translation>&amp;Kulmayksikkö</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="907"/>
+        <location filename="../gui/mainwindow.cpp" line="901"/>
         <source>&amp;Behavior</source>
         <translation>&amp;Toiminta</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="908"/>
+        <location filename="../gui/mainwindow.cpp" line="902"/>
         <source>Radix &amp;Character</source>
         <translation>&amp;Juurimerkki</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="909"/>
+        <location filename="../gui/mainwindow.cpp" line="903"/>
         <source>&amp;Language</source>
         <translation>&amp;Kieli</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="910"/>
+        <location filename="../gui/mainwindow.cpp" line="904"/>
         <source>&amp;Help</source>
         <translation>A&amp;pua</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="606"/>
+        <location filename="../gui/mainwindow.cpp" line="602"/>
         <source>Angle unit</source>
         <translation>Kulmayksikkö</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="607"/>
+        <location filename="../gui/mainwindow.cpp" line="603"/>
         <source>Result format</source>
         <translation>Tulosmuoto</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1869"/>
+        <location filename="../gui/mainwindow.cpp" line="1860"/>
         <source>Ignore error?</source>
         <translation>Sivuuta virhe?</translation>
     </message>
