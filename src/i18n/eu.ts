@@ -173,6 +173,21 @@
         <translation>Itxi</translation>
     </message>
     <message>
+        <location filename="../gui/aboutbox.cpp" line="280"/>
+        <source>Basque</source>
+        <translation>Euskara</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="282"/>
+        <source>Catalan</source>
+        <translation>Katalana</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="296"/>
+        <source>Simplified Chinese</source>
+        <translation>Txinera Erraztua</translation>
+    </message>
+    <message>
         <location filename="../gui/aboutbox.cpp" line="228"/>
         <source>Maintainer and core developer</source>
         <translation type="unfinished"></translation>
@@ -195,21 +210,6 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="232"/>
         <source>Original math book Developer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="280"/>
-        <source>Basque</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="282"/>
-        <source>Catalan</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="296"/>
-        <source>Simplified Chinese</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -924,7 +924,7 @@
     <message>
         <location filename="../base/functions.cpp" line="1519"/>
         <source>Degrees of Arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Arku Graduak</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1520"/>
@@ -949,7 +949,7 @@
     <message>
         <location filename="../base/functions.cpp" line="1526"/>
         <source>Mask to a bit size</source>
-        <translation type="unfinished"></translation>
+        <translation>Maskaratu bit kopuru batera</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1527"/>
