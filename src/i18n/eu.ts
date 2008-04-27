@@ -173,21 +173,6 @@
         <translation>Itxi</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="280"/>
-        <source>Basque</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="282"/>
-        <source>Catalan</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="296"/>
-        <source>Simplified Chinese</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../gui/aboutbox.cpp" line="228"/>
         <source>Maintainer and core developer</source>
         <translation type="unfinished"></translation>
@@ -210,6 +195,21 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="232"/>
         <source>Original math book Developer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="280"/>
+        <source>Basque</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="282"/>
+        <source>Catalan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="296"/>
+        <source>Simplified Chinese</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -689,7 +689,7 @@
     <message>
         <location filename="../base/functions.cpp" line="1464"/>
         <source>Extension of Factorials [= (x-1)!]</source>
-        <translation type="unfinished"></translation>
+        <translation>Faktorialen Hedapena [= (x-1)!]</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1465"/>
@@ -989,7 +989,7 @@
     <message>
         <location filename="../base/functions.cpp" line="1534"/>
         <source>Integer Quotient</source>
-        <translation type="unfinished"></translation>
+        <translation>Zatidura Osoa</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1535"/>
@@ -1527,7 +1527,7 @@
     <message>
         <location filename="../gui/mainwindow.cpp" line="902"/>
         <source>Radix &amp;Character</source>
-        <translation type="unfinished"></translation>
+        <translation>Hamartar Banatzeko &amp;Karakterea</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="903"/>
