@@ -252,6 +252,7 @@ AboutBox::AboutBox( QWidget * parent ) : QDialog( parent )
          "Damir Perisa<br>"
          "Derek O'Connor<br>"
          "Eugeniu Plamadeala<br>"
+         "F Chris Carrera<br>"
          "Francesco di Cugno<br>"
          "Gary Cramblitt<br>"
          "Henrique Pinto<br>"
