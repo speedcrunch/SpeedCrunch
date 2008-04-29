@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1" language="es">
+<!DOCTYPE TS><TS version="1.1">
 <context>
     <name>AboutBox</name>
     <message>
@@ -63,12 +63,12 @@
         <translation>Quant a SpeedCrunch</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="228"/>
+        <location filename="" line="3080296"/>
         <source>Original author</source>
         <translation type="obsolete">Autor original</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="229"/>
+        <location filename="" line="3080296"/>
         <source>Current maintainer</source>
         <translation type="obsolete">Responsable actual</translation>
     </message>
@@ -143,7 +143,7 @@
         <translation>Romanès</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="230"/>
+        <location filename="" line="3080296"/>
         <source>Developers</source>
         <translation type="obsolete">Desenvolupadors</translation>
     </message>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1" language="eu">
+<!DOCTYPE TS><TS version="1.1">
 <context>
     <name>AboutBox</name>
     <message>
@@ -18,17 +18,17 @@
         <translation>Jatorrizko ideia</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="228"/>
+        <location filename="" line="3080296"/>
         <source>Original author</source>
         <translation type="obsolete">Jatorrizko egilea</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="229"/>
+        <location filename="" line="3080296"/>
         <source>Current maintainer</source>
         <translation type="obsolete">Mantentze lanak</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="230"/>
+        <location filename="" line="3080296"/>
         <source>Developers</source>
         <translation type="obsolete">Garatzaileak</translation>
     </message>

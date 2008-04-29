@@ -59,17 +59,17 @@
         <translation>Berdasarkan idea dari</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
+        <location filename="" line="3080296"/>
         <source>Original author</source>
         <translation type="obsolete">Pembuat</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
+        <location filename="" line="3080296"/>
         <source>Current maintainer</source>
         <translation type="obsolete">Pemelihara</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
+        <location filename="" line="3080296"/>
         <source>Developers</source>
         <translation type="obsolete">Pengembang</translation>
     </message>

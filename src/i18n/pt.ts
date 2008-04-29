@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1" language="nb_NO">
+<!DOCTYPE TS><TS version="1.1">
 <context>
     <name>AboutBox</name>
     <message>
@@ -63,12 +63,12 @@
         <translation>Espanhol</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
+        <location filename="" line="3080296"/>
         <source>Original author</source>
         <translation type="obsolete">Autor original</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
+        <location filename="" line="3080296"/>
         <source>Current maintainer</source>
         <translation type="obsolete">Responsável actual</translation>
     </message>
@@ -143,7 +143,7 @@
         <translation>Romeno</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
+        <location filename="" line="3080296"/>
         <source>Developers</source>
         <translation type="obsolete">Autores</translation>
     </message>

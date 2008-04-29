@@ -13,12 +13,12 @@
         <translation>SpeedCrunch sürüm %1</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
+        <location filename="" line="3080296"/>
         <source>Original author</source>
         <translation type="obsolete">İlk Yazar</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
+        <location filename="" line="3080296"/>
         <source>Current maintainer</source>
         <translation type="obsolete">Projeyi Yürüten</translation>
     </message>
@@ -143,7 +143,7 @@
         <translation>Daha fazla bilgi için &lt;b&gt;http://www.speedcrunch.org&lt;/b&gt; adresini ziyaret edin!</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
+        <location filename="" line="3080296"/>
         <source>Developers</source>
         <translation type="obsolete">Geliştiriciler</translation>
     </message>

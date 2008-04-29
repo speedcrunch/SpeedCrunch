@@ -63,12 +63,12 @@
         <translation>Spanisch</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
+        <location filename="" line="3080296"/>
         <source>Original author</source>
         <translation type="obsolete">Ursprünglicher Autor</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
+        <location filename="" line="3080296"/>
         <source>Current maintainer</source>
         <translation type="obsolete">Aktueller Betreuer</translation>
     </message>
@@ -143,7 +143,7 @@
         <translation>Rumänisch</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
+        <location filename="" line="3080296"/>
         <source>Developers</source>
         <translation type="obsolete">Entwickler</translation>
     </message>

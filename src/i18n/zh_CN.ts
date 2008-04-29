@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1" language="en_US">
+<!DOCTYPE TS><TS version="1.1">
 <context>
     <name>AboutBox</name>
     <message>
@@ -18,17 +18,17 @@
         <translation>最初概念来自于</translation>
     </message>
     <message>
-        <location filename="" line="136178892"/>
+        <location filename="" line="7471221"/>
         <source>Original author</source>
         <translation type="obsolete">最初作者</translation>
     </message>
     <message>
-        <location filename="" line="136178892"/>
+        <location filename="" line="7471221"/>
         <source>Current maintainer</source>
         <translation type="obsolete">当前维护者</translation>
     </message>
     <message>
-        <location filename="" line="136178892"/>
+        <location filename="" line="7471221"/>
         <source>Developers</source>
         <translation type="obsolete">开发人员</translation>
     </message>

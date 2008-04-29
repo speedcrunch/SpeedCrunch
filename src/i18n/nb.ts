@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1" language="nb">
-<defaultcodec></defaultcodec>
+<!DOCTYPE TS><TS version="1.1">
 <context>
     <name>AboutBox</name>
     <message>
@@ -14,12 +13,12 @@
         <translation>SpeedCrunch versjon %1</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="228"/>
+        <location filename="" line="3080296"/>
         <source>Original author</source>
         <translation type="obsolete">Opprinnelig forfatter</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="229"/>
+        <location filename="" line="3080296"/>
         <source>Current maintainer</source>
         <translation type="obsolete">Nåværende vedlikeholder</translation>
     </message>
@@ -144,7 +143,7 @@
         <translation>Rumensk</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="230"/>
+        <location filename="" line="3080296"/>
         <source>Developers</source>
         <translation type="obsolete">Utviklere</translation>
     </message>

@@ -5,7 +5,7 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="236"/>
         <source>Special thanks to</source>
-        <translation>Mulţumiri speciale pentru</translation>
+        <translation>Mulţumiri speciale</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="285"/>
@@ -63,24 +63,24 @@
         <translation>Spaniolă</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
+        <location filename="" line="3080296"/>
         <source>Original author</source>
-        <translation type="obsolete">Autor original</translation>
+        <translation type="obsolete">Autor </translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
+        <location filename="" line="3080296"/>
         <source>Current maintainer</source>
-        <translation type="obsolete">Responsabil curent</translation>
+        <translation type="obsolete">Mentenanţă</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="234"/>
         <source>Based on original idea from</source>
-        <translation>În baza ideei originale de</translation>
+        <translation>În baza unei idei originale</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="246"/>
         <source>Thanks to</source>
-        <translation>Mulţumiri pentru</translation>
+        <translation>Mulţumiri următorilor</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="273"/>
@@ -105,12 +105,12 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="324"/>
         <source>Visit &lt;b&gt;http://www.speedcrunch.org&lt;/b&gt; for more information!</source>
-        <translation>Vizitează &lt;b&gt;http://www.speedcrunch.org&lt;/b&gt; pentru mai multă informaţie!</translation>
+        <translation>Vizitează &lt;b&gt;http://www.speedcrunch.org&lt;/b&gt; pentru mai multe informaţii!</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="279"/>
         <source>Argentinian Spanish</source>
-        <translation>Spaniolă Argentinină</translation>
+        <translation>Spaniolă Argentiniană</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="284"/>
@@ -143,9 +143,14 @@
         <translation>Română</translation>
     </message>
     <message>
+        <location filename="" line="3080296"/>
+        <source>Developers</source>
+        <translation type="obsolete">Dezvoltatori</translation>
+    </message>
+    <message>
         <location filename="../gui/aboutbox.cpp" line="289"/>
         <source>Indonesian</source>
-        <translation type="unfinished"></translation>
+        <translation>Indoneziană</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="329"/>
@@ -155,22 +160,32 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="242"/>
         <source>Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Grafică  </translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="292"/>
         <source>Polish</source>
-        <translation type="unfinished"></translation>
+        <translation>Poloneză</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="299"/>
         <source>Turkish</source>
-        <translation type="unfinished"></translation>
+        <translation>Turcă</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="280"/>
         <source>Basque</source>
-        <translation type="unfinished"></translation>
+        <translation>Bască</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="296"/>
+        <source>Simplified Chinese</source>
+        <translation>Chineză simplificată</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="282"/>
+        <source>Catalan</source>
+        <translation>Catalană</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="228"/>
@@ -197,33 +212,23 @@
         <source>Original math book Developer</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="296"/>
-        <source>Simplified Chinese</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="282"/>
-        <source>Catalan</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>BookDock</name>
     <message>
         <location filename="../gui/bookdock.cpp" line="189"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Înapoi</translation>
     </message>
     <message>
         <location filename="../gui/bookdock.cpp" line="190"/>
         <source>Forward</source>
-        <translation type="unfinished"></translation>
+        <translation>Înainte</translation>
     </message>
     <message>
         <location filename="../gui/bookdock.cpp" line="191"/>
         <source>Index</source>
-        <translation type="unfinished"></translation>
+        <translation>Index</translation>
     </message>
 </context>
 <context>
@@ -231,7 +236,7 @@
     <message>
         <location filename="../gui/editor.cpp" line="1368"/>
         <source>All</source>
-        <translation>Totul</translation>
+        <translation>Toate</translation>
     </message>
 </context>
 <context>
@@ -379,7 +384,7 @@
     <message>
         <location filename="../base/constants.cpp" line="80"/>
         <source>Physico-chemical</source>
-        <translation>Fizico-chimic</translation>
+        <translation>Fizico-chimie</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="72"/>
@@ -507,7 +512,7 @@
     <message>
         <location filename="../gui/constantsdock.cpp" line="162"/>
         <source>Search</source>
-        <translation>Căutare</translation>
+        <translation>Caută</translation>
     </message>
     <message>
         <location filename="../gui/constantsdock.cpp" line="120"/>
@@ -517,7 +522,7 @@
     <message>
         <location filename="../gui/constantsdock.cpp" line="298"/>
         <source>All</source>
-        <translation>Totul</translation>
+        <translation>Toate</translation>
     </message>
 </context>
 <context>
@@ -535,7 +540,7 @@
     <message>
         <location filename="../gui/deletevardlg.cpp" line="79"/>
         <source>&amp;Delete</source>
-        <translation>&amp;Retrage</translation>
+        <translation>&amp;Şterge</translation>
     </message>
     <message>
         <location filename="../gui/deletevardlg.cpp" line="83"/>
@@ -545,7 +550,7 @@
     <message>
         <location filename="../gui/deletevardlg.cpp" line="58"/>
         <source>Delete Variable</source>
-        <translation>Retrage Variabila</translation>
+        <translation>Şterge variabila</translation>
     </message>
 </context>
 <context>
@@ -553,12 +558,12 @@
     <message>
         <location filename="../gui/editor.cpp" line="764"/>
         <source>Current result: &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Rezultatul curent: &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../gui/editor.cpp" line="812"/>
         <source>Selection result: &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Rezultatul selecţiei: &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -566,27 +571,27 @@
     <message>
         <location filename="../base/evaluator.cpp" line="1401"/>
         <source>invalid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>expresie invalidă</translation>
     </message>
     <message>
         <location filename="../base/evaluator.cpp" line="1331"/>
         <source>division by zero</source>
-        <translation type="unfinished"></translation>
+        <translation>împartire la zero</translation>
     </message>
     <message>
         <location filename="../base/evaluator.cpp" line="1370"/>
         <source>unknown function or variable</source>
-        <translation type="unfinished"></translation>
+        <translation>funcţie/variabilă necunoscută</translation>
     </message>
     <message>
         <location filename="../base/evaluator.cpp" line="1419"/>
         <source>variable cannot be overwritten</source>
-        <translation type="unfinished"></translation>
+        <translation>variabila nu poate fi suprascrisă</translation>
     </message>
     <message>
         <location filename="../base/evaluator.cpp" line="1427"/>
         <source>identifier matches an existing function name</source>
-        <translation type="unfinished"></translation>
+        <translation>exista deja o funcţie cu acelasi nume</translation>
     </message>
 </context>
 <context>
@@ -614,7 +619,7 @@
     <message>
         <location filename="../base/functions.cpp" line="1461"/>
         <source>Decimal Representation</source>
-        <translation>Reprezentare Decimală</translation>
+        <translation>Reprezentare Zecimală</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1463"/>
@@ -629,7 +634,7 @@
     <message>
         <location filename="../base/functions.cpp" line="1466"/>
         <source>Hexadecimal Representation</source>
-        <translation>Reprezentare Hexadecimala</translation>
+        <translation>Reprezentare Hexazecimala</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1467"/>
@@ -659,7 +664,7 @@
     <message>
         <location filename="../base/functions.cpp" line="1473"/>
         <source>Rounding</source>
-        <translation>Rotungire</translation>
+        <translation>Rotunjire</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1474"/>
@@ -884,7 +889,7 @@
     <message>
         <location filename="../base/functions.cpp" line="726"/>
         <source>underflow</source>
-        <translation type="unfinished"></translation>
+        <translation>În afara limitelor</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="861"/>
@@ -894,102 +899,102 @@
     <message>
         <location filename="../base/functions.cpp" line="1460"/>
         <source>Ceiling</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotunjire prin adaos</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1462"/>
         <source>Floor</source>
-        <translation type="unfinished"></translation>
+        <translation>Rontunjire prin lipsa</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1464"/>
         <source>Extension of Factorials [= (x-1)!]</source>
-        <translation type="unfinished"></translation>
+        <translation>Factorial extins </translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1468"/>
         <source>ln(abs(Gamma))</source>
-        <translation type="unfinished"></translation>
+        <translation>ln(abs(Gamma))</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1480"/>
         <source>Area Hyperbolic Cosine</source>
-        <translation type="unfinished"></translation>
+        <translation>Arc Cosinus Hiperbolic</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1481"/>
         <source>Area Hyperbolic Sine</source>
-        <translation type="unfinished"></translation>
+        <translation>Arc Sinus Hiperbolic</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1482"/>
         <source>Area Hyperbolic Tangent</source>
-        <translation type="unfinished"></translation>
+        <translation>Arc Tangenta Hiperbolica</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1501"/>
         <source>Error Function</source>
-        <translation type="unfinished"></translation>
+        <translation>Funcţie de eroare</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1502"/>
         <source>Complementary Error Function</source>
-        <translation type="unfinished"></translation>
+        <translation>Funcţie de eroare complementară</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1519"/>
         <source>Degrees of Arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Degrees of Arc</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1526"/>
         <source>Mask to a bit size</source>
-        <translation type="unfinished"></translation>
+        <translation>Mască de biţi</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1527"/>
         <source>Sign-extent a value</source>
-        <translation type="unfinished"></translation>
+        <translation>Elimină masca</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1528"/>
         <source>Logical NOT</source>
-        <translation type="unfinished"></translation>
+        <translation>NOT logic</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1529"/>
         <source>Logical AND</source>
-        <translation type="unfinished"></translation>
+        <translation>SI logic</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1530"/>
         <source>Logical OR</source>
-        <translation type="unfinished"></translation>
+        <translation>OR logic</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1531"/>
         <source>Logical XOR</source>
-        <translation type="unfinished"></translation>
+        <translation>XOR logic</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1532"/>
         <source>Arithmetic Shift Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Deplasare aritmetică la stânga</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1533"/>
         <source>Arithmetic Shift Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Deplasare aritmetică la dreapta</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1534"/>
         <source>Integer Quotient</source>
-        <translation type="unfinished"></translation>
+        <translation>Cat intreg</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1535"/>
         <source>Modulo</source>
-        <translation type="unfinished"></translation>
+        <translation>Rest</translation>
     </message>
 </context>
 <context>
@@ -1002,7 +1007,7 @@
     <message>
         <location filename="../gui/functionsdock.cpp" line="123"/>
         <source>Search</source>
-        <translation>Căutare</translation>
+        <translation>Caută</translation>
     </message>
     <message>
         <location filename="../gui/functionsdock.cpp" line="124"/>
@@ -1015,7 +1020,7 @@
     <message>
         <location filename="../gui/historydock.cpp" line="91"/>
         <source>History</source>
-        <translation>Istoria</translation>
+        <translation>Istoric</translation>
     </message>
 </context>
 <context>
@@ -1043,7 +1048,7 @@
     <message>
         <location filename="../gui/insertfunctiondlg.cpp" line="53"/>
         <source>Insert Function</source>
-        <translation>Inserarea Funcţiei</translation>
+        <translation>Inserare Funcţie</translation>
     </message>
 </context>
 <context>
@@ -1071,7 +1076,7 @@
     <message>
         <location filename="../gui/insertvardlg.cpp" line="69"/>
         <source>Insert Variable</source>
-        <translation>Inserarea Variabilei</translation>
+        <translation>Inserarează variabila</translation>
     </message>
 </context>
 <context>
@@ -1079,27 +1084,27 @@
     <message>
         <location filename="../gui/keypad.cpp" line="327"/>
         <source>Inverse cosine</source>
-        <translation>Arc Cosinus</translation>
+        <translation>Invers cosinus</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="328"/>
         <source>The last result</source>
-        <translation type="unfinished"></translation>
+        <translation>Ultimul rezultat</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="329"/>
         <source>Inverse sine</source>
-        <translation>Arc Sinus</translation>
+        <translation>Invers sinus</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="330"/>
         <source>Inverse tangent</source>
-        <translation>Arc Tangenta</translation>
+        <translation>Invers tangenta</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="331"/>
         <source>Clear expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Curăţă expresia</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="332"/>
@@ -1109,7 +1114,7 @@
     <message>
         <location filename="../gui/keypad.cpp" line="333"/>
         <source>Scientific notation</source>
-        <translation type="unfinished"></translation>
+        <translation>Notaţia ştiinţifică</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="334"/>
@@ -1119,7 +1124,7 @@
     <message>
         <location filename="../gui/keypad.cpp" line="335"/>
         <source>Natural logarithm</source>
-        <translation type="unfinished"></translation>
+        <translation>Logaritm Natural</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="336"/>
@@ -1139,12 +1144,12 @@
     <message>
         <location filename="../gui/keypad.cpp" line="339"/>
         <source>Assign variable x</source>
-        <translation type="unfinished"></translation>
+        <translation>Atribuie variabila x</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="340"/>
         <source>The variable x</source>
-        <translation type="unfinished"></translation>
+        <translation>Variabila X</translation>
     </message>
 </context>
 <context>
@@ -1157,12 +1162,12 @@
     <message>
         <location filename="../gui/mainwindow.cpp" line="1983"/>
         <source>SpeedCrunch Sessions (*.sch);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Sesiune SpeedCrunch (*.sch);; Toate fişierele (*)</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1703"/>
         <source>Load Session</source>
-        <translation type="unfinished"></translation>
+        <translation>Incarcă Sesiune</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2682"/>
@@ -1172,12 +1177,12 @@
     <message>
         <location filename="../gui/mainwindow.cpp" line="1818"/>
         <source>Can&apos;t read from file %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nu se poate citi fişierul %1</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1827"/>
         <source>Question</source>
-        <translation type="unfinished"></translation>
+        <translation>Întrebare</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1984"/>
@@ -1187,17 +1192,17 @@
     <message>
         <location filename="../gui/mainwindow.cpp" line="2040"/>
         <source>Can&apos;t write to file %1</source>
-        <translation>Nu pot scrie in fişierul %1</translation>
+        <translation>Nu se poate scrie în fişierul %1</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2338"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Avertisment</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2355"/>
         <source>To insert a function using keyboard, use Ctrl+F shorcut. From the dialog, you can choose the function you want to insert.</source>
-        <translation>Pentru a insera o funcţie utilizînd tastatura, foloseşte scurtătura Ctrl+F. Din dialog poţi alege ce funcţie doreşti să inserezi.</translation>
+        <translation>Pentru a insera o funcţie utilizând tastatura, foloseşte scurtătura Ctrl+F. Din dialog poţi alege ce funcţie doreşti să inserezi.</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2360"/>
@@ -1207,110 +1212,113 @@
     <message>
         <location filename="../gui/mainwindow.cpp" line="2363"/>
         <source>Use variable &lt;i&gt;pi&lt;/i&gt; to use pi constant.</source>
-        <translation>Utilizeaza variabila &lt;i&gt;pi&lt;/i&gt; pentru a utiliza constanta pi.</translation>
+        <translation>Foloseşte variabila &lt;i&gt;pi&lt;/i&gt; pentru constanta pi.</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2368"/>
         <source>Use &lt;i&gt;;&lt;/i&gt; (semicolon) to separate the parameters in functions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Foloseşte &lt;i&gt;;&lt;/i&gt; (punct şi virgulă) pentru a separa parametrii în funcţii.</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2374"/>
         <source>Tip of the day</source>
-        <translation type="unfinished"></translation>
+        <translation>Sugestia zilei</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1701"/>
         <source>File %1 is not a valid session</source>
-        <translation type="unfinished"></translation>
+        <translation>Fişierul %1 nu este o sesiune validă</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1738"/>
         <source>Merge session being loaded with current session?
 If no, current variables and display will be cleared.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vrei sa faci merge la sesiunea care se încarcă cu cea curentă?
+Daca nu, variabilele curente şi ecranul vor fi curaţate.</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2713"/>
         <source>SpeedCrunch is minimized.
 Left click the icon to restore it or right click for options.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fereastra SpeedCrunch este minimizată.￼
+Apasă iconiţa din stânga pentru a o aduce la dimensiunile iniţiale sau click dreapta pentru alte opţiuni.</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1591"/>
         <source>Degree</source>
-        <translation type="unfinished"></translation>
+        <translation>Grad</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2030"/>
         <source>All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Toate fişierele (*)</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1975"/>
         <source>Radian</source>
-        <translation type="unfinished"></translation>
+        <translation>Radian</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2333"/>
         <source>The menu bar is now hidden. To make it visible again, press Ctrl+Alt+M.</source>
-        <translation type="unfinished"></translation>
+        <translation>Meniul aplicaţiei este acum ascuns. Pentru a-l face vizibil din nou, apasă Ctrl+Alt+M.</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2384"/>
         <source>Binary</source>
-        <translation type="unfinished"></translation>
+        <translation>Binar</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2394"/>
         <source>Engineering decimal</source>
-        <translation type="unfinished"></translation>
+        <translation>Punct zecimal ingineresc</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2404"/>
         <source>Fixed decimal</source>
-        <translation type="unfinished"></translation>
+        <translation>Punct zecimal fix</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2414"/>
         <source>General decimal</source>
-        <translation type="unfinished"></translation>
+        <translation>Punct zecimal general</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2424"/>
         <source>Hexadecimal</source>
-        <translation type="unfinished"></translation>
+        <translation>Hexazecimal</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2434"/>
         <source>Octal</source>
-        <translation type="unfinished"></translation>
+        <translation>Octal</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2444"/>
         <source>Scientific decimal</source>
-        <translation type="unfinished"></translation>
+        <translation>Punct zecimal sciinţific</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1809"/>
         <source>Import Session</source>
-        <translation type="unfinished"></translation>
+        <translation>Importă Sesiune</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1825"/>
         <source>Merge session being imported with current session?
 If no, current variables and display will be cleared.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vrei sa faci merge la sesiunea care este importată cu cea curentă?
+Daca nu, variabilele curente şi ecranul vor fi curaţate.</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2031"/>
         <source>Export Session</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportă Sesiune</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1021"/>
         <source>Math Book</source>
-        <translation type="unfinished"></translation>
+        <translation>Carte de matematică</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="894"/>
@@ -1320,57 +1328,57 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="610"/>
         <source>Clear E&amp;xpression</source>
-        <translation type="unfinished"></translation>
+        <translation>Curătă e&amp;xpresia</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="611"/>
         <source>Clear &amp;History</source>
-        <translation>Goleşte &amp;Istoria</translation>
+        <translation>Goleşte &amp;Istoricul</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="612"/>
         <source>&amp;Degree</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Grad</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="613"/>
         <source>Delete All V&amp;ariables</source>
-        <translation type="unfinished"></translation>
+        <translation>Şterge toate v&amp;ariabilele</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="614"/>
         <source>D&amp;elete Variable...</source>
-        <translation>Re&amp;trage Variabila...</translation>
+        <translation>Şt&amp;erge variabila...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="615"/>
         <source>&amp;15 Decimal Digits</source>
-        <translation>&amp;15 Cifre Decimale</translation>
+        <translation>&amp;15 Cifre zecimale</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="616"/>
         <source>&amp;2 Decimal Digits</source>
-        <translation>&amp;2 Cifre Decimale</translation>
+        <translation>&amp;2 Cifre zecimale</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="617"/>
         <source>&amp;3 Decimal Digits</source>
-        <translation>&amp;3 Cifre Decimale</translation>
+        <translation>&amp;3 Cifre zecimale</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="618"/>
         <source>&amp;50 Decimal Digits</source>
-        <translation>&amp;50 Cifre Decimale</translation>
+        <translation>&amp;50 Cifre zecimale</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="619"/>
         <source>&amp;8 Decimal Digits</source>
-        <translation>&amp;8 Cifre Decimale</translation>
+        <translation>&amp;8 Cifre zecimale</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="620"/>
         <source>&amp;Automatic Precision</source>
-        <translation>Precizie &amp;Automatica</translation>
+        <translation>Precizie &amp;Automatică</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="621"/>
@@ -1380,7 +1388,7 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="622"/>
         <source>Copy Last &amp;Result</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiază ultimul &amp;rezultat</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="623"/>
@@ -1400,97 +1408,97 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="626"/>
         <source>SpeedCrunch &amp;Web Site...</source>
-        <translation>&amp;Pagina Web a programului...</translation>
+        <translation>SpeedCrunch &amp;site...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="627"/>
         <source>&amp;Tip of the Day</source>
-        <translation>&amp;Sfatul Zilei</translation>
+        <translation>&amp;Sugestia zilei</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="628"/>
         <source>Insert &amp;Function...</source>
-        <translation>Inserează &amp;Funcţia...</translation>
+        <translation>Inserează &amp;funcţia...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="629"/>
         <source>Insert &amp;Variable...</source>
-        <translation>Inserează &amp;Variabila...</translation>
+        <translation>Inserează &amp;variabila...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="630"/>
         <source>&amp;Partial Results</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Rezultate Parţiale</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="631"/>
         <source>Automatic &amp;Completion</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Completare Automată</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="632"/>
         <source>Always On &amp;Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Întotdeauna în &amp;partea cea mai de sus</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="633"/>
         <source>&amp;Minimize To System Tray</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimizează în system &amp;tray</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="634"/>
         <source>Syntax &amp;Highlighting</source>
-        <translation type="unfinished"></translation>
+        <translation>Sintaxă şi &amp;Subliniere</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="635"/>
         <source>&amp;System Default</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Valoarea implicită a sistemului</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="636"/>
         <source>&amp;Dot</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Punct</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="637"/>
         <source>&amp;Comma</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Virgulă</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="638"/>
         <source>&amp;Radian</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Radian</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="639"/>
         <source>Scroll Display Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Scroll în jos</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="640"/>
         <source>Scroll Display Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Scroll în sus</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="641"/>
         <source>&amp;Select Expression</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Selectează expresia</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="642"/>
         <source>&amp;Import...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Importă...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="643"/>
         <source>&amp;Load...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Încarcă...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="644"/>
         <source>&amp;Quit</source>
-        <translation>&amp;Încetare</translation>
+        <translation>&amp;Ieşire</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="645"/>
@@ -1500,52 +1508,52 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="646"/>
         <source>&amp;Export...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Exportă...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="647"/>
         <source>Math &amp;Book</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Carte de Matematică</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="648"/>
         <source>&amp;Constants</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Constante</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="649"/>
         <source>Full &amp;Screen Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Afisează pe tot &amp;ecranul</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="650"/>
         <source>&amp;Functions</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Funcţii</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="651"/>
         <source>&amp;History</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Istoric</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="652"/>
         <source>&amp;Keypad</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Keypad</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="653"/>
         <source>Hide &amp;Menu Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Ascunde &amp;meniul aplicaţiei</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="654"/>
         <source>&amp;Status Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Bara de status</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="655"/>
         <source>&amp;Variables</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Variabile</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="656"/>
@@ -1560,7 +1568,7 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="658"/>
         <source>&amp;Fixed Decimal</source>
-        <translation>Punct Decimal &amp;Fixat</translation>
+        <translation>Punct Zecimal &amp;Fix</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="659"/>
@@ -1580,17 +1588,17 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="662"/>
         <source>&amp;Scientific</source>
-        <translation>&amp;Ştiiţific</translation>
+        <translation>&amp;Ştiinţific</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="663"/>
         <source>System &amp;Default</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Valoarea implicită a sistemului</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="895"/>
         <source>&amp;Edit</source>
-        <translation>&amp;Editează</translation>
+        <translation>&amp;Editare</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="896"/>
@@ -1605,32 +1613,32 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="898"/>
         <source>Result &amp;Format</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Formatul rezultatului</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="899"/>
         <source>&amp;Decimal</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Zecimal</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="900"/>
         <source>&amp;Angle Unit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Unitatea de masură a unghiului</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="901"/>
         <source>&amp;Behavior</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Setări</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="902"/>
         <source>Radix &amp;Character</source>
-        <translation type="unfinished"></translation>
+        <translation>Reprezentare punct &amp;zecimal</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="903"/>
         <source>&amp;Language</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Limbaj</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="904"/>
@@ -1640,17 +1648,17 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="602"/>
         <source>Angle unit</source>
-        <translation type="unfinished"></translation>
+        <translation>Unitatea de masură a unui unghi</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="603"/>
         <source>Result format</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatul rezultatului</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1860"/>
         <source>Ignore error?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vrei să  ignori eroarea?</translation>
     </message>
 </context>
 <context>
@@ -1663,7 +1671,7 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/variablesdock.cpp" line="156"/>
         <source>Search</source>
-        <translation>Căutare</translation>
+        <translation>Caută</translation>
     </message>
     <message>
         <location filename="../gui/variablesdock.cpp" line="157"/>

@@ -63,12 +63,12 @@
         <translation>Acerca de SpeedCrunch</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
+        <location filename="" line="3080296"/>
         <source>Original author</source>
         <translation type="obsolete">Autor original</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
+        <location filename="" line="3080296"/>
         <source>Current maintainer</source>
         <translation type="obsolete">Responsable actual</translation>
     </message>
@@ -143,7 +143,7 @@
         <translation>Rumano</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
+        <location filename="" line="3080296"/>
         <source>Developers</source>
         <translation type="obsolete">Desarrolladores</translation>
     </message>

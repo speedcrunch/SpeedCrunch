@@ -251,6 +251,7 @@ AboutBox::AboutBox( QWidget * parent ) : QDialog( parent )
          "Bernhard Schiffner<br>"
          "Damir Perisa<br>"
          "Derek O'Connor<br>"
+         "Eugeniu Plamadeala<br>"
          "Francesco di Cugno<br>"
          "Gary Cramblitt<br>"
          "Henrique Pinto<br>"
@@ -291,7 +292,7 @@ AboutBox::AboutBox( QWidget * parent ) : QDialog( parent )
   msg += QString( i18nFmt ).arg( tr( "Norwegian"            ) ).arg( "Thomas Finneid"                  );
   msg += QString( i18nFmt ).arg( tr( "Polish"               ) ).arg( "Witold Wysota"                   );
   msg += QString( i18nFmt ).arg( tr( "Portuguese"           ) ).arg( "Helder Correia"                  );
-  msg += QString( i18nFmt ).arg( tr( "Romanian"             ) ).arg( "Eugeniu Plamadeala"              );
+  msg += QString( i18nFmt ).arg( tr( "Romanian"             ) ).arg( "Iulia Taulescu"                  );
   msg += QString( i18nFmt ).arg( tr( "Russian"              ) ).arg( "Irek Khasyanov"                  );
   msg += QString( i18nFmt ).arg( tr( "Simplified Chinese"   ) ).arg( "Liang Qi"                        );
   msg += QString( i18nFmt ).arg( tr( "Spanish"              ) ).arg( "Francesc Farf&aacute;n"          );

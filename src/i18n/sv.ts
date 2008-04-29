@@ -13,12 +13,12 @@
         <translation>SpeedCrunch version %1</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
+        <location filename="" line="3080296"/>
         <source>Original author</source>
         <translation type="obsolete">Ursprunglig skapare</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
+        <location filename="" line="3080296"/>
         <source>Current maintainer</source>
         <translation type="obsolete">Nuvarande projektledare</translation>
     </message>
@@ -143,7 +143,7 @@
         <translation>Rumänska</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
+        <location filename="" line="3080296"/>
         <source>Developers</source>
         <translation type="obsolete">Utvecklare</translation>
     </message>
