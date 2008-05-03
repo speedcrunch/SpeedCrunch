@@ -22,6 +22,10 @@
 
 #include <QApplication>
 #include <QGridLayout>
+#include <QLocale>
+#if QT_VERSION >= 0x040400 && defined(Q_WS_MAC) && !defined(QT_NO_STYLE_MAC)
+#include <QMacStyle>
+#endif
 #include <QPushButton>
 #include <QStyle>
 #include <QStyleOptionButton>
@@ -279,9 +283,17 @@ void Keypad::Private::disableButtonFocus()
 
 void Keypad::Private::layoutButtons()
 {
+  int layoutSpacing = 3;
+
+#if QT_VERSION >= 0x040400 && defined(Q_WS_MAC) && !defined(QT_NO_STYLE_MAC)
+  // Workaround for a layouting bug in QMacStyle, Qt 4.4.0. Buttons would overlap
+  if ( qobject_cast<QMacStyle *>(p->style()) )
+    layoutSpacing = -1;
+#endif
+
   QGridLayout * layout = new QGridLayout( p );
   layout->setMargin( 3 );
-  layout->setSpacing( 3 );
+  layout->setSpacing( layoutSpacing );
 
   layout->addWidget( key0,      3, 0 );
   layout->addWidget( key1,      2, 0 );
