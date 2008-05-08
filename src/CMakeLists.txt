@@ -1,11 +1,14 @@
 PROJECT(speedcrunch)
 
+# note: change this BEFORE making a release !!
+SET( speedcrunch_VERSION "trunk" )
+
 IF( APPLE )
   SET( PROGNAME SpeedCrunch )
   SET( MACOSX_BUNDLE_ICON_FILE speedcrunch.icns )
-  SET( MACOSX_BUNDLE_SHORT_VERSION_STRING trunk )
-  SET( MACOSX_BUNDLE_VERSION trunk )
-  SET( MACOSX_BUNDLE_LONG_VERSION_STRING Version trunk )
+  SET( MACOSX_BUNDLE_SHORT_VERSION_STRING ${speedcrunch_VERSION} )
+  SET( MACOSX_BUNDLE_VERSION ${speedcrunch_VERSION} )
+  SET( MACOSX_BUNDLE_LONG_VERSION_STRING Version ${speedcrunch_VERSION} )
   SET( CMAKE_OSX_ARCHITECTURES ppc;i386 ) #Comment out if not universal binary
 ELSE( APPLE )
   SET( PROGNAME speedcrunch )
@@ -16,8 +19,7 @@ SET(CMAKE_COLOR_MAKEFILE ON)
 SET(CMAKE_VERBOSE_MAKEFILE OFF)
 SET(CMAKE_INCLUDE_CURRENT_DIR TRUE)
 
-# note: change this BEFORE making a release !!
-ADD_DEFINITIONS(-DSPEEDCRUNCH_VERSION=\"trunk\" )
+ADD_DEFINITIONS("-DSPEEDCRUNCH_VERSION=\\\"${speedcrunch_VERSION}\\\"")
 
 IF( NOT WIN32 )
 IF( NOT APPLE )
