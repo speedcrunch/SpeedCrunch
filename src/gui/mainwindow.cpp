@@ -745,7 +745,9 @@ void MainWindow::Private::createActionShortcuts()
   actions.showFunctions   ->setShortcut( Qt::CTRL + Qt::Key_3           );
   actions.showVariables   ->setShortcut( Qt::CTRL + Qt::Key_4           );
   actions.showHistory     ->setShortcut( Qt::CTRL + Qt::Key_5           );
+#ifndef Q_OS_MAC
   actions.showMenuBar     ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_M );
+#endif
   actions.showStatusBar   ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_B );
   actions.formatBinary    ->setShortcut( Qt::Key_F5                     );
   actions.formatGeneral   ->setShortcut( Qt::Key_F7                     );
@@ -795,7 +797,9 @@ void MainWindow::Private::createMenus()
   menus.view->addAction( actions.showVariables );
   menus.view->addAction( actions.showHistory );
   menus.view->addSeparator();
+#ifndef Q_OS_MAC
   menus.view->addAction( actions.showMenuBar );
+#endif
   menus.view->addAction( actions.showStatusBar );
   menus.view->addSeparator();
   menus.view->addAction( actions.showFullScreen );
