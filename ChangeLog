@@ -19,6 +19,9 @@ Internationalization:
   Removed Slovenian language menu entry, since there is no such translation
     available
 
+Packaging:
+  New Mac OS X Universal Binary finally available (first since version 0.7)
+
 
 SpeedCrunch 0.10
 ---------------------
