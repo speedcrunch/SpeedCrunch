@@ -1,30 +1,4 @@
-Source tarball:  Helder Correia            <helder.pereira.correia@gmail.com>
-Win32 installer: Johan Thelin              <e8johan@gmail.com>
-Mac OS X bundle: Matthew J Smith           <indigojo@blogistan.co.uk>
-Gentoo ebuild:   Marco Wegner              <marco.wegner@informatik.uni-luebeck.de>
-Fedora Core RPM: Roland "liquidat" Wolters <liquidat@gmail.com>
-OpenSUSE RPM:    Stephan Binner            <stbinner@suse.de>
-Ubuntu .deb:     Sarah Hobbs               <hobbsee@ubuntu.com>
-Debian .deb:     Bart Martens              <bartm@knars.be>
-
-
-Where to find package information:
-
-General
-  http://code.google.com/p/speedcrunch/downloads/list
-
-Gentoo
-  http://marcowegner.eu/project/speedcrunch
-
-Ubuntu
-  https://launchpad.net/ubuntu/+source/speedcrunch/
-  http://packages.ubuntu.com/feisty/kde/speedcrunch
-
-Debian
-  http://packages.debian.org/unstable/math/speedcrunch
-
-Fedora
-  http://download.fedora.redhat.com/pub/fedora/linux/extras/development/i386/repoview/speedcrunch.html
-
-FreeBSD:
-  http://www.freshports.org/science/speedcrunch/
+Gentoo ebuild   | Marco Wegner        | marco.wegner@informatik.uni-luebeck.de
+Mac OS X bundle | Alessandro Portale  | alessandro.portale@googlemail.com
+Source tarball  | Helder Correia      | helder.pereira.correia@gmail.com
+Win32 installer | Christian Ehrlicher | Ch.Ehrlicher@gmx.de
