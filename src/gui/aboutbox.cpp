@@ -209,7 +209,7 @@ AboutBox::AboutBox( QWidget * parent ) : QDialog( parent )
   infoLabel->setOpenExternalLinks( true );
 
   QLabel * iconLabel = new QLabel( this );
-  iconLabel->setPixmap( QPixmap( ":/crunch.png" ) );
+  iconLabel->setPixmap( QPixmap( ":/speedcrunch.png" ) );
   iconLabel->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
 
   MarqueeText * marqueeText = new MarqueeText( this );
