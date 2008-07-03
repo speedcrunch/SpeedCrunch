@@ -55,9 +55,6 @@ the parentheses if you pass simple number or variable, sin 0.1 is as valid as
 sin(0.1). Speaking about parentheses, closing them can be left to SpeedCrunch,
 e.g. cos(pi/4 is automatically corrected to cos(pi/4).
 
-For your convenience, it is even possible to customize the font and color used
-for the display.
-
 Keyboard Shortcuts
 ------------------
 Up/Down   recall last expression
@@ -74,37 +71,39 @@ Installation
 
 Download is available from http://www.speedcrunch.org, the official website.
 
-If you are installing SpeedCrunch from a disk image on an Apple Mac, all you 
-need do is drag the SpeedCrunch application icon to your Applications folder.  
+If you are installing SpeedCrunch from a disk image on an Apple Mac, all you
+need do is drag the SpeedCrunch application icon to your Applications folder.
 The application, and Qt itself, is in the bundle represented by the icon.
 
 You need Qt (from Trolltech) at least version 4.2 to be able to compile
 SpeedCrunch. Most Linux distributions normally already package the latest
 version of Qt, so it is likely that you need to worry about this. However,
 you need the development package as well (sometimes named as qt-devel or
-qt4-devel, it varies depends on the distributions).
+qt4-devel, it depends on the distribution).
 
-You also need CMake (from Kitware) at least version 2.4.4. CMake is available 
+You also need CMake (from Kitware) at least version 2.4.4. CMake is available
 for Windows, Linux, and Mac OS X.
 
-To compile, simply extract the source tarball. Then create a build directory 
-(where the program will be compiled and linked). From the build directory, 
+To compile, simply extract the source tarball. Then create a build directory
+(where the program will be compiled and linked). From the build directory,
 first run:
   cmake <path to source directory>\src
 
 and then:
   make
 
-Note: the build directory can not be the same as the source directory.  
+Note: the build directory should not be the same as the source directory.
 
 
 License
 -------
 
-Copyright (C) 2004-2005 Ariya Hidayat  <ariya@kde.org>
-              2005-2006 Johan Thelin   <e8johan@gmail.com>
-              2007      Helder Correia <helder.pereira.correia@gmail.com>
-              2007      Wolf Lammen    <ookami1@gmx.de>
+Copyright (C) 2004-2005 Ariya Hidayat      <ariya@kde.org>
+Copyright (C) 2005-2006 Johan Thelin       <e8johan@gmail.com>
+Copyright (C) 2007-2008 Helder Correia     <helder.pereira.correia@gmail.com>
+Copyright (C) 2007-2008 Wolf Lammen        <ookami1@gmx.de>
+Copyright (C) 2007      Petri Damstén      <damu@iki.fi>
+Copyright (C) 2008      Alessandro Portale <alessandro.portale@googlemail.com>
 Portions Copyright (C) 1991-1994, 1997, 2000 Free Software Foundation, Inc.
 
 SpeedCrunch is free software; you can redistribute it and/or modify it under
