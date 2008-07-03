@@ -1038,6 +1038,9 @@ void MainWindow::Private::createBookDock()
   else if ( docks.constants )
     p->tabifyDockWidget( docks.constants, docks.book );
 
+  docks.book->show();
+  docks.book->raise();
+
   settings.showBook = true;
 }
 
@@ -1065,6 +1068,9 @@ void MainWindow::Private::createConstantsDock()
   else if ( docks.book )
     p->tabifyDockWidget( docks.book, docks.constants );
 
+  docks.constants->show();
+  docks.constants->raise();
+
   settings.showConstants = true;
 }
 
@@ -1089,6 +1095,9 @@ void MainWindow::Private::createFunctionsDock()
     p->tabifyDockWidget( docks.constants, docks.functions );
   else if ( docks.book )
     p->tabifyDockWidget( docks.book, docks.functions );
+
+  docks.functions->show();
+  docks.functions->raise();
 
   settings.showFunctions = true;
 }
@@ -1116,6 +1125,9 @@ void MainWindow::Private::createHistoryDock()
     p->tabifyDockWidget( docks.constants, docks.history );
   else if ( docks.book )
     p->tabifyDockWidget( docks.book, docks.history );
+
+  docks.history->show();
+  docks.history->raise();
 
   settings.showHistory = true;
 }
@@ -1145,6 +1157,9 @@ void MainWindow::Private::createVariablesDock()
     p->tabifyDockWidget( docks.constants, docks.variables );
   else if ( docks.book )
     p->tabifyDockWidget( docks.book, docks.variables );
+
+  docks.variables->show();
+  docks.variables->raise();
 
   settings.showVariables = true;
 }
