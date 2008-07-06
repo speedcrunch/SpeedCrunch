@@ -235,7 +235,7 @@ void ResultDisplay::append( const QString & expr, const HNumber & value )
   new ResultDisplayItem( this, d->count, value );
 
   d->contents.append( expr );
-  d->contents.append( HMath::format( value ) );
+  d->contents.append( HMath::formatScientific( value, DECPRECISION ) );
 
   QTimer::singleShot( 0, this, SLOT( scrollEnd() ) );
 }
@@ -328,8 +328,9 @@ QColor ResultDisplay::customTextColor() const
 
 QString ResultDisplay::formatNumber( const HNumber & value ) const
 {
-  char * str = HMath::format( value, value.format() ?
-                                       value.format() : d->format, d->precision );
+  char * str = HMath::format( value,
+                              value.format() ? value.format() : d->format,
+                              d->precision );
   QString s = QString::fromLatin1( str );
   free( str );
   if ( radixChar() != '.' )
