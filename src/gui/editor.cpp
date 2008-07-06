@@ -151,9 +151,9 @@ QList<QColor> Editor::Private::generateColors( const QColor & bg,
     if (    (h < bg.hue() + M && h > bg.hue() - M )
          || (h < fg.hue() + M && h > fg.hue() - M ) )
     {
-      h = ((bg.hue() + fg.hue()) / (i+1) ) % 359;
-      s = ((bg.saturation() + fg.saturation() + 2*i) / 2 ) % 255;
-      v = ((bg.value() + fg.value() + 2*i) / 2 ) % 255;
+      h = ((bg.hue() + fg.hue()) / (i+1) ) % 360;
+      s = ((bg.saturation() + fg.saturation() + 2*i) / 2 ) % 256;
+      v = ((bg.value() + fg.value() + 2*i) / 2 ) % 256;
     }
 
     // insert into result list
