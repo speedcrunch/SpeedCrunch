@@ -1,7 +1,7 @@
 Instruction to compile SpeedCrunch from source code
 
 Requirements:
-- CMake 2.4 or newer
+- CMake 2.4.4 or newer
 - Qt 4.2 or newer
 
 Steps:
@@ -11,7 +11,7 @@ Steps:
     cmake ../src
 - Then run make
     make
-- To install, run (you might need administration priveleges)
+- To install, run (you might need administration privileges)
     make install
 
 NOTE: if you want to run SpeedCrunch translated in one of the supported
