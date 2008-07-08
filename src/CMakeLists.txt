@@ -98,7 +98,7 @@ ADD_TEST(testfloatnum ${EXECUTABLE_OUTPUT_PATH}/testfloatnum)
 INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR} 3rdparty/util base gui main math)
 
 
-################################# INSTALLATION #################################
+################################# INSTALL ######################################
 
 # macros and definitions
 SET(SHAREDIR  "share/")
@@ -126,6 +126,8 @@ INSTALL(DIRECTORY   locale/
 INSTALL(DIRECTORY   books/
         DESTINATION ${BOOKSDIR}
         PATTERN     "i18n" EXCLUDE
+        PATTERN     "books/images/*.mml" EXCLUDE
+        PATTERN     "books/images/*.sh" EXCLUDE
         PATTERN     "books/images/*.svgz" EXCLUDE
         PATTERN     "books/images/*.sh" EXCLUDE
         PATTERN     ".svn" EXCLUDE
@@ -140,3 +142,12 @@ INSTALL(FILES       speedcrunch.desktop
 INSTALL(FILES       resources/speedcrunch.png
         DESTINATION ${ICONDIR}
 )
+
+
+################################ UNINSTALL #####################################
+
+CONFIGURE_FILE( "${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in"
+                "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
+                IMMEDIATE @ONLY)
+
+ADD_CUSTOM_TARGET(uninstall "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
