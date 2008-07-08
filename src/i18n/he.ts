@@ -8,57 +8,57 @@
         <translation>SpeedCrunch גירסה %1</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="236"/>
+        <location filename="../gui/aboutbox.cpp" line="237"/>
         <source>Special thanks to</source>
         <translation>תודה מיוחדת ל</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="285"/>
+        <location filename="../gui/aboutbox.cpp" line="288"/>
         <source>French</source>
         <translation>צרפתית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="287"/>
+        <location filename="../gui/aboutbox.cpp" line="290"/>
         <source>German</source>
         <translation>גרמנית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="293"/>
+        <location filename="../gui/aboutbox.cpp" line="296"/>
         <source>Portuguese</source>
         <translation>פורטוגזית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="295"/>
+        <location filename="../gui/aboutbox.cpp" line="298"/>
         <source>Russian</source>
         <translation>רוסית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="290"/>
+        <location filename="../gui/aboutbox.cpp" line="293"/>
         <source>Italian</source>
         <translation>איטלקית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="314"/>
+        <location filename="../gui/aboutbox.cpp" line="318"/>
         <source>This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version</source>
         <translation>תכנית זו היא תוכנה חופשית; מותר להפיץ אותה ו/או לשנות אותה תחת תנאי הרישיון הציבורי הכללי של GNUהמפורסם על-ידי קרן התוכנה החופשית; גירסה 2 של הרישיון, או (לבחירתך) כל גירסה מאוחרת יותר</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="320"/>
+        <location filename="../gui/aboutbox.cpp" line="324"/>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.</source>
         <translation>תכנית זו מופצת בתקווה שתהיה מועילה, אך ללא אחריות כלשהי; ואפילו ללא האחריות המשתמעת בדבר מסחריותה או התאמתה למטרה מסוימת.  לפרטים נוספים, ראה את הרישיון הציבורי הכללי של GNU.</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="351"/>
+        <location filename="../gui/aboutbox.cpp" line="355"/>
         <source>About SpeedCrunch</source>
         <translation>אודות SpeedCrunch</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="291"/>
+        <location filename="../gui/aboutbox.cpp" line="294"/>
         <source>Norwegian</source>
         <translation>נורבגית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="297"/>
+        <location filename="../gui/aboutbox.cpp" line="300"/>
         <source>Spanish</source>
         <translation>ספרדית</translation>
     </message>
@@ -73,72 +73,72 @@
         <translation type="obsolete">מתחזק נוכחי</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="234"/>
+        <location filename="../gui/aboutbox.cpp" line="235"/>
         <source>Based on original idea from</source>
         <translation>מבוסס על רעיון מקורי של</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="246"/>
+        <location filename="../gui/aboutbox.cpp" line="247"/>
         <source>Thanks to</source>
         <translation>תודה ל</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="273"/>
+        <location filename="../gui/aboutbox.cpp" line="276"/>
         <source>...and many others...</source>
         <translation>...ורבים אחרים...</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="277"/>
+        <location filename="../gui/aboutbox.cpp" line="280"/>
         <source>Translations</source>
         <translation>תרגומים</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="281"/>
+        <location filename="../gui/aboutbox.cpp" line="284"/>
         <source>Brazilian Portuguese</source>
         <translation>פורטוגזית ברזילאית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="307"/>
+        <location filename="../gui/aboutbox.cpp" line="311"/>
         <source>Copyright (C)</source>
         <translation>כל הזכויות שמורות (C)</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="324"/>
+        <location filename="../gui/aboutbox.cpp" line="328"/>
         <source>Visit &lt;b&gt;http://www.speedcrunch.org&lt;/b&gt; for more information!</source>
         <translation>בקרו ב-&lt;b&gt;http://www.speedcrunch.org&lt;/b&gt; למידע נוסף!</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="279"/>
+        <location filename="../gui/aboutbox.cpp" line="282"/>
         <source>Argentinian Spanish</source>
         <translation>ספרדית ארגנטינאית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="284"/>
+        <location filename="../gui/aboutbox.cpp" line="287"/>
         <source>Dutch</source>
         <translation>הולנדית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="288"/>
+        <location filename="../gui/aboutbox.cpp" line="291"/>
         <source>Hebrew</source>
         <translation>עברית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="298"/>
+        <location filename="../gui/aboutbox.cpp" line="301"/>
         <source>Swedish</source>
         <translation>שבדית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="286"/>
+        <location filename="../gui/aboutbox.cpp" line="289"/>
         <source>Finnish</source>
         <translation>פינית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="283"/>
+        <location filename="../gui/aboutbox.cpp" line="286"/>
         <source>Czech</source>
         <translation>צ&apos;כית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="294"/>
+        <location filename="../gui/aboutbox.cpp" line="297"/>
         <source>Romanian</source>
         <translation>רומנית</translation>
     </message>
@@ -148,32 +148,32 @@
         <translation type="obsolete">מפתחים</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="289"/>
+        <location filename="../gui/aboutbox.cpp" line="292"/>
         <source>Indonesian</source>
         <translation>אינדונזית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="292"/>
+        <location filename="../gui/aboutbox.cpp" line="295"/>
         <source>Polish</source>
         <translation>פולנית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="299"/>
+        <location filename="../gui/aboutbox.cpp" line="302"/>
         <source>Turkish</source>
         <translation>תורכית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="329"/>
+        <location filename="../gui/aboutbox.cpp" line="333"/>
         <source>Close</source>
         <translation>סגירה</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="242"/>
+        <location filename="../gui/aboutbox.cpp" line="243"/>
         <source>Graphics</source>
         <translation>גרפיקה</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="280"/>
+        <location filename="../gui/aboutbox.cpp" line="283"/>
         <source>Basque</source>
         <translation type="unfinished"></translation>
     </message>
@@ -193,23 +193,28 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="231"/>
-        <source>Former maintainer and core developer, Windows packager</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="232"/>
-        <source>Original math book Developer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="296"/>
+        <location filename="../gui/aboutbox.cpp" line="299"/>
         <source>Simplified Chinese</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="282"/>
+        <location filename="../gui/aboutbox.cpp" line="285"/>
         <source>Catalan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="231"/>
+        <source>Former maintainer and core developer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="232"/>
+        <source>Mac OS X developer and packager</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="233"/>
+        <source>Original math book developer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1082,72 +1087,72 @@
 <context>
     <name>Keypad</name>
     <message>
-        <location filename="../gui/keypad.cpp" line="327"/>
+        <location filename="../gui/keypad.cpp" line="339"/>
         <source>Inverse cosine</source>
         <translation>קוסינוס הפוך</translation>
     </message>
     <message>
-        <location filename="../gui/keypad.cpp" line="328"/>
+        <location filename="../gui/keypad.cpp" line="340"/>
         <source>The last result</source>
         <translation>התוצאה האחרונה</translation>
     </message>
     <message>
-        <location filename="../gui/keypad.cpp" line="329"/>
+        <location filename="../gui/keypad.cpp" line="341"/>
         <source>Inverse sine</source>
         <translation>סינוס הפוך</translation>
     </message>
     <message>
-        <location filename="../gui/keypad.cpp" line="330"/>
+        <location filename="../gui/keypad.cpp" line="342"/>
         <source>Inverse tangent</source>
         <translation>טנגנס הפוך</translation>
     </message>
     <message>
-        <location filename="../gui/keypad.cpp" line="331"/>
+        <location filename="../gui/keypad.cpp" line="343"/>
         <source>Clear expression</source>
         <translation>ניקוי ביטוי</translation>
     </message>
     <message>
-        <location filename="../gui/keypad.cpp" line="332"/>
+        <location filename="../gui/keypad.cpp" line="344"/>
         <source>Cosine</source>
         <translation>קוסינוס</translation>
     </message>
     <message>
-        <location filename="../gui/keypad.cpp" line="333"/>
+        <location filename="../gui/keypad.cpp" line="345"/>
         <source>Scientific notation</source>
         <translation>סימון מדעי</translation>
     </message>
     <message>
-        <location filename="../gui/keypad.cpp" line="334"/>
+        <location filename="../gui/keypad.cpp" line="346"/>
         <source>Exponential</source>
         <translation>אקספוננט</translation>
     </message>
     <message>
-        <location filename="../gui/keypad.cpp" line="335"/>
+        <location filename="../gui/keypad.cpp" line="347"/>
         <source>Natural logarithm</source>
         <translation>לוגריתם טבעי</translation>
     </message>
     <message>
-        <location filename="../gui/keypad.cpp" line="336"/>
+        <location filename="../gui/keypad.cpp" line="348"/>
         <source>Sine</source>
         <translation>סינוס</translation>
     </message>
     <message>
-        <location filename="../gui/keypad.cpp" line="337"/>
+        <location filename="../gui/keypad.cpp" line="349"/>
         <source>Square root</source>
         <translation>שורש ריבועי</translation>
     </message>
     <message>
-        <location filename="../gui/keypad.cpp" line="338"/>
+        <location filename="../gui/keypad.cpp" line="350"/>
         <source>Tangent</source>
         <translation>טנגנס</translation>
     </message>
     <message>
-        <location filename="../gui/keypad.cpp" line="339"/>
+        <location filename="../gui/keypad.cpp" line="351"/>
         <source>Assign variable x</source>
         <translation>הצב ערך למשתנה x</translation>
     </message>
     <message>
-        <location filename="../gui/keypad.cpp" line="340"/>
+        <location filename="../gui/keypad.cpp" line="352"/>
         <source>The variable x</source>
         <translation>המשתנה x</translation>
     </message>
@@ -1155,167 +1160,167 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1546"/>
+        <location filename="../gui/mainwindow.cpp" line="1565"/>
         <source>About Qt</source>
         <translation>אודות Qt</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1983"/>
+        <location filename="../gui/mainwindow.cpp" line="2002"/>
         <source>SpeedCrunch Sessions (*.sch);;All Files (*)</source>
         <translation>חישובי SpeedCrunch (*.sch);;כל הקבצים (*)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1703"/>
+        <location filename="../gui/mainwindow.cpp" line="1722"/>
         <source>Load Session</source>
         <translation>טעינת חישוב</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2682"/>
+        <location filename="../gui/mainwindow.cpp" line="2701"/>
         <source>Error</source>
         <translation>שגיאה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1818"/>
+        <location filename="../gui/mainwindow.cpp" line="1837"/>
         <source>Can&apos;t read from file %1</source>
         <translation>לא ניתן לקרוא מהקובץ %1</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1827"/>
+        <location filename="../gui/mainwindow.cpp" line="1846"/>
         <source>Question</source>
         <translation>שאלה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1984"/>
+        <location filename="../gui/mainwindow.cpp" line="2003"/>
         <source>Save Session</source>
         <translation>שמירת חישובים אחרונים</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2040"/>
+        <location filename="../gui/mainwindow.cpp" line="2059"/>
         <source>Can&apos;t write to file %1</source>
         <translation>לא ניתן לכתוב לקובץ %1</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2338"/>
+        <location filename="../gui/mainwindow.cpp" line="2357"/>
         <source>Warning</source>
         <translation>אזהרה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2355"/>
+        <location filename="../gui/mainwindow.cpp" line="2374"/>
         <source>To insert a function using keyboard, use Ctrl+F shorcut. From the dialog, you can choose the function you want to insert.</source>
         <translation>אפשר להוסיף פונקציה בעזרת המקלדת, באמצעות הקיצור Ctrl+F.ניתן לבחור את הפונקציה הרצויה מתוך החלון שייפתח.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2360"/>
+        <location filename="../gui/mainwindow.cpp" line="2379"/>
         <source>To insert a variable using keyboard, use Ctrl+I shorcut. From the dialog, you can choose the variable you want to insert.</source>
         <translation>אפשר להוסיף משתנה בעזרת המקלדת, באמצעות הקיצור Ctrl+I. ניתן לבחור את המשתנה הרצוי מתוך החלון שייפתח.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2363"/>
+        <location filename="../gui/mainwindow.cpp" line="2382"/>
         <source>Use variable &lt;i&gt;pi&lt;/i&gt; to use pi constant.</source>
         <translation>כדי להשתמש בקבוע פיי, השתמשו ב-&lt;i&gt;pi&lt;/i&gt;.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2368"/>
+        <location filename="../gui/mainwindow.cpp" line="2387"/>
         <source>Use &lt;i&gt;;&lt;/i&gt; (semicolon) to separate the parameters in functions.</source>
         <translation>ניתן להשתמש ב-&lt;i&gt;:&lt;/i&gt; (נקודותיים) כדי להפריד בין פרמטרים של פונקציות.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2374"/>
+        <location filename="../gui/mainwindow.cpp" line="2393"/>
         <source>Tip of the day</source>
         <translation>טיפ היום</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1701"/>
+        <location filename="../gui/mainwindow.cpp" line="1720"/>
         <source>File %1 is not a valid session</source>
         <translation>הקובץ %1 אינו מכיל חישוב</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1738"/>
+        <location filename="../gui/mainwindow.cpp" line="1757"/>
         <source>Merge session being loaded with current session?
 If no, current variables and display will be cleared.</source>
         <translation>להוסיף את החישוב שנטען לחישוב הנוכחי?
 אם לא, המשתנים הנוכחיים והתצוגה יימחקו.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2713"/>
+        <location filename="../gui/mainwindow.cpp" line="2732"/>
         <source>SpeedCrunch is minimized.
 Left click the icon to restore it or right click for options.</source>
         <translation>SpeedCrunch ממוזערת.
 לחץ על האיקון לחיצה שמאלית כדי לשחזר אותה או לחיצה ימנית לאפשרויות.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1591"/>
+        <location filename="../gui/mainwindow.cpp" line="1610"/>
         <source>Degree</source>
         <translation>מעלה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2030"/>
+        <location filename="../gui/mainwindow.cpp" line="2049"/>
         <source>All Files (*)</source>
         <translation>כל הקבצים (*)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1975"/>
+        <location filename="../gui/mainwindow.cpp" line="1994"/>
         <source>Radian</source>
         <translation>רדיאן</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2333"/>
+        <location filename="../gui/mainwindow.cpp" line="2352"/>
         <source>The menu bar is now hidden. To make it visible again, press Ctrl+Alt+M.</source>
         <translation>פס התפריט הוסתר. כדי להחזיר אותו, לחץ Ctrl+Alt+M.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2384"/>
+        <location filename="../gui/mainwindow.cpp" line="2403"/>
         <source>Binary</source>
         <translation>בינארי</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2394"/>
+        <location filename="../gui/mainwindow.cpp" line="2413"/>
         <source>Engineering decimal</source>
         <translation>נקודה עשרונית הנדסית</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2404"/>
+        <location filename="../gui/mainwindow.cpp" line="2423"/>
         <source>Fixed decimal</source>
         <translation>נקודה עשרונית קבועה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2414"/>
+        <location filename="../gui/mainwindow.cpp" line="2433"/>
         <source>General decimal</source>
         <translation>נקודה עשרונית כללית</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2424"/>
+        <location filename="../gui/mainwindow.cpp" line="2443"/>
         <source>Hexadecimal</source>
         <translation>הקסדצימלי</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2434"/>
+        <location filename="../gui/mainwindow.cpp" line="2453"/>
         <source>Octal</source>
         <translation>אוקטלי</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2444"/>
+        <location filename="../gui/mainwindow.cpp" line="2463"/>
         <source>Scientific decimal</source>
         <translation>נקודה עשרונית מדעית</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1809"/>
+        <location filename="../gui/mainwindow.cpp" line="1828"/>
         <source>Import Session</source>
         <translation>יבוא חישוב</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1825"/>
+        <location filename="../gui/mainwindow.cpp" line="1844"/>
         <source>Merge session being imported with current session?
 If no, current variables and display will be cleared.</source>
         <translation>להוסיף את החישוב שמיובא לחישוב הנוכחי?אם לא, המשתנים הנוכחיים והתצוגה יימחקו.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2031"/>
+        <location filename="../gui/mainwindow.cpp" line="2050"/>
         <source>Export Session</source>
         <translation>יצוא חישוב</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="894"/>
+        <location filename="../gui/mainwindow.cpp" line="898"/>
         <source>&amp;Session</source>
         <translation>&amp;קובץ</translation>
     </message>
@@ -1590,52 +1595,52 @@ If no, current variables and display will be cleared.</source>
         <translation>&amp;ברירת מחדל</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="895"/>
+        <location filename="../gui/mainwindow.cpp" line="899"/>
         <source>&amp;Edit</source>
         <translation>&amp;עריכה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="896"/>
+        <location filename="../gui/mainwindow.cpp" line="900"/>
         <source>&amp;View</source>
         <translation>&amp;תצוגה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="897"/>
+        <location filename="../gui/mainwindow.cpp" line="901"/>
         <source>Se&amp;ttings</source>
         <translation>&amp;הגדרות</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="898"/>
+        <location filename="../gui/mainwindow.cpp" line="902"/>
         <source>Result &amp;Format</source>
         <translation>&amp;תסדיר תוצאה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="899"/>
+        <location filename="../gui/mainwindow.cpp" line="903"/>
         <source>&amp;Decimal</source>
         <translation>&amp;דצימלי</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="900"/>
+        <location filename="../gui/mainwindow.cpp" line="904"/>
         <source>&amp;Angle Unit</source>
         <translation>יחידות &amp;זוית</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="901"/>
+        <location filename="../gui/mainwindow.cpp" line="905"/>
         <source>&amp;Behavior</source>
         <translation>&amp;התנהגות</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="902"/>
+        <location filename="../gui/mainwindow.cpp" line="906"/>
         <source>Radix &amp;Character</source>
         <translation>&amp;תו בסיס</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="903"/>
+        <location filename="../gui/mainwindow.cpp" line="907"/>
         <source>&amp;Language</source>
         <translation>&amp;שפה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="904"/>
+        <location filename="../gui/mainwindow.cpp" line="908"/>
         <source>&amp;Help</source>
         <translation>ע&amp;זרה</translation>
     </message>
@@ -1650,12 +1655,12 @@ If no, current variables and display will be cleared.</source>
         <translation>תסדיר תוצאה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1021"/>
+        <location filename="../gui/mainwindow.cpp" line="1025"/>
         <source>Math Book</source>
         <translation>ספר מתימטיקה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1860"/>
+        <location filename="../gui/mainwindow.cpp" line="1879"/>
         <source>Ignore error?</source>
         <translation>להתעלם מהשגיאה?</translation>
     </message>

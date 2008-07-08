@@ -8,57 +8,57 @@
         <translation>SpeedCrunch versie %1</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="236"/>
+        <location filename="../gui/aboutbox.cpp" line="237"/>
         <source>Special thanks to</source>
         <translation>Met dank aan</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="285"/>
+        <location filename="../gui/aboutbox.cpp" line="288"/>
         <source>French</source>
         <translation>Frans</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="287"/>
+        <location filename="../gui/aboutbox.cpp" line="290"/>
         <source>German</source>
         <translation>Duits</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="293"/>
+        <location filename="../gui/aboutbox.cpp" line="296"/>
         <source>Portuguese</source>
         <translation>Portugees</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="295"/>
+        <location filename="../gui/aboutbox.cpp" line="298"/>
         <source>Russian</source>
         <translation>Russisch</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="290"/>
+        <location filename="../gui/aboutbox.cpp" line="293"/>
         <source>Italian</source>
         <translation>Italiaans</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="314"/>
+        <location filename="../gui/aboutbox.cpp" line="318"/>
         <source>This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version</source>
         <translation>Dit Programma is vrije software; U kan het verspreiden en/of wijzigen onder de bepalingen van de GNU Algemene Publieke Licentie, zoals uitgegeven door de Free Software Foundation; oftewel versie 2 van de Licentie, of (naar vrije keuze) een latere versie</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="320"/>
+        <location filename="../gui/aboutbox.cpp" line="324"/>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.</source>
         <translation>Dit Programma is verspreid met de hoop dat het nuttig zal zijn maar ZONDER EENDER WELKE GARANTIE; zelfs zonder de impliciete garantie van VERKOOPBAARHEID of GESCHIKTHEID VOOR EEN BEPAALD DOEL. Zie de GNU Algemene Publieke Licentie voor meer details.</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="351"/>
+        <location filename="../gui/aboutbox.cpp" line="355"/>
         <source>About SpeedCrunch</source>
         <translation>Over SpeedCrunch</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="291"/>
+        <location filename="../gui/aboutbox.cpp" line="294"/>
         <source>Norwegian</source>
         <translation>Noors</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="297"/>
+        <location filename="../gui/aboutbox.cpp" line="300"/>
         <source>Spanish</source>
         <translation>Spaans</translation>
     </message>
@@ -73,72 +73,72 @@
         <translation type="obsolete">Huidige beheerder</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="234"/>
+        <location filename="../gui/aboutbox.cpp" line="235"/>
         <source>Based on original idea from</source>
         <translation>Gebaseerd op het idee van</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="246"/>
+        <location filename="../gui/aboutbox.cpp" line="247"/>
         <source>Thanks to</source>
         <translation>Met dank aan</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="273"/>
+        <location filename="../gui/aboutbox.cpp" line="276"/>
         <source>...and many others...</source>
         <translation>... en vele anderen...</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="277"/>
+        <location filename="../gui/aboutbox.cpp" line="280"/>
         <source>Translations</source>
         <translation>Vertalingen</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="281"/>
+        <location filename="../gui/aboutbox.cpp" line="284"/>
         <source>Brazilian Portuguese</source>
         <translation>Braziliaans Portugees</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="307"/>
+        <location filename="../gui/aboutbox.cpp" line="311"/>
         <source>Copyright (C)</source>
         <translation>Auteursrecht (C)</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="324"/>
+        <location filename="../gui/aboutbox.cpp" line="328"/>
         <source>Visit &lt;b&gt;http://www.speedcrunch.org&lt;/b&gt; for more information!</source>
         <translation>Bezoek &lt;b&gt;http://www.spreedcrunch.org&lt;/b&gt; voor meer informatie!</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="279"/>
+        <location filename="../gui/aboutbox.cpp" line="282"/>
         <source>Argentinian Spanish</source>
         <translation>Argentijnse Spaans</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="284"/>
+        <location filename="../gui/aboutbox.cpp" line="287"/>
         <source>Dutch</source>
         <translation>Nederlands</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="288"/>
+        <location filename="../gui/aboutbox.cpp" line="291"/>
         <source>Hebrew</source>
         <translation>Hebreeuws</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="298"/>
+        <location filename="../gui/aboutbox.cpp" line="301"/>
         <source>Swedish</source>
         <translation>Zweeds</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="286"/>
+        <location filename="../gui/aboutbox.cpp" line="289"/>
         <source>Finnish</source>
         <translation>Fins</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="283"/>
+        <location filename="../gui/aboutbox.cpp" line="286"/>
         <source>Czech</source>
         <translation>Tsjechisch</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="294"/>
+        <location filename="../gui/aboutbox.cpp" line="297"/>
         <source>Romanian</source>
         <translation>Roemeens</translation>
     </message>
@@ -148,32 +148,32 @@
         <translation type="obsolete">Ontwikkelaars</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="289"/>
+        <location filename="../gui/aboutbox.cpp" line="292"/>
         <source>Indonesian</source>
         <translation>Indonesisch</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="292"/>
+        <location filename="../gui/aboutbox.cpp" line="295"/>
         <source>Polish</source>
         <translation>Pools</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="299"/>
+        <location filename="../gui/aboutbox.cpp" line="302"/>
         <source>Turkish</source>
         <translation>Turks</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="329"/>
+        <location filename="../gui/aboutbox.cpp" line="333"/>
         <source>Close</source>
         <translation>Afsluiten</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="242"/>
+        <location filename="../gui/aboutbox.cpp" line="243"/>
         <source>Graphics</source>
         <translation>Grafische Werk</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="280"/>
+        <location filename="../gui/aboutbox.cpp" line="283"/>
         <source>Basque</source>
         <translation type="unfinished"></translation>
     </message>
@@ -193,23 +193,28 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="231"/>
-        <source>Former maintainer and core developer, Windows packager</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="232"/>
-        <source>Original math book Developer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="296"/>
+        <location filename="../gui/aboutbox.cpp" line="299"/>
         <source>Simplified Chinese</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="282"/>
+        <location filename="../gui/aboutbox.cpp" line="285"/>
         <source>Catalan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="231"/>
+        <source>Former maintainer and core developer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="232"/>
+        <source>Mac OS X developer and packager</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="233"/>
+        <source>Original math book developer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1082,72 +1087,72 @@
 <context>
     <name>Keypad</name>
     <message>
-        <location filename="../gui/keypad.cpp" line="327"/>
+        <location filename="../gui/keypad.cpp" line="339"/>
         <source>Inverse cosine</source>
         <translation>Inverse cosinus</translation>
     </message>
     <message>
-        <location filename="../gui/keypad.cpp" line="328"/>
+        <location filename="../gui/keypad.cpp" line="340"/>
         <source>The last result</source>
         <translation>Het laatste resultaat</translation>
     </message>
     <message>
-        <location filename="../gui/keypad.cpp" line="329"/>
+        <location filename="../gui/keypad.cpp" line="341"/>
         <source>Inverse sine</source>
         <translation>Inverse sinus</translation>
     </message>
     <message>
-        <location filename="../gui/keypad.cpp" line="330"/>
+        <location filename="../gui/keypad.cpp" line="342"/>
         <source>Inverse tangent</source>
         <translation>Inverse tangens</translation>
     </message>
     <message>
-        <location filename="../gui/keypad.cpp" line="331"/>
+        <location filename="../gui/keypad.cpp" line="343"/>
         <source>Clear expression</source>
         <translation>Wis expressie</translation>
     </message>
     <message>
-        <location filename="../gui/keypad.cpp" line="332"/>
+        <location filename="../gui/keypad.cpp" line="344"/>
         <source>Cosine</source>
         <translation>Cosinus</translation>
     </message>
     <message>
-        <location filename="../gui/keypad.cpp" line="333"/>
+        <location filename="../gui/keypad.cpp" line="345"/>
         <source>Scientific notation</source>
         <translation>Wetenschappelijke notering</translation>
     </message>
     <message>
-        <location filename="../gui/keypad.cpp" line="334"/>
+        <location filename="../gui/keypad.cpp" line="346"/>
         <source>Exponential</source>
         <translation>Exponentieel</translation>
     </message>
     <message>
-        <location filename="../gui/keypad.cpp" line="335"/>
+        <location filename="../gui/keypad.cpp" line="347"/>
         <source>Natural logarithm</source>
         <translation>Natuurlijk logaritme</translation>
     </message>
     <message>
-        <location filename="../gui/keypad.cpp" line="336"/>
+        <location filename="../gui/keypad.cpp" line="348"/>
         <source>Sine</source>
         <translation>Sinus</translation>
     </message>
     <message>
-        <location filename="../gui/keypad.cpp" line="337"/>
+        <location filename="../gui/keypad.cpp" line="349"/>
         <source>Square root</source>
         <translation>Vierkantswortel</translation>
     </message>
     <message>
-        <location filename="../gui/keypad.cpp" line="338"/>
+        <location filename="../gui/keypad.cpp" line="350"/>
         <source>Tangent</source>
         <translation>Tangens</translation>
     </message>
     <message>
-        <location filename="../gui/keypad.cpp" line="339"/>
+        <location filename="../gui/keypad.cpp" line="351"/>
         <source>Assign variable x</source>
         <translation>Ken variabele x toe</translation>
     </message>
     <message>
-        <location filename="../gui/keypad.cpp" line="340"/>
+        <location filename="../gui/keypad.cpp" line="352"/>
         <source>The variable x</source>
         <translation>De variabele x</translation>
     </message>
@@ -1155,170 +1160,170 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1546"/>
+        <location filename="../gui/mainwindow.cpp" line="1565"/>
         <source>About Qt</source>
         <translation>Over Qt</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1983"/>
+        <location filename="../gui/mainwindow.cpp" line="2002"/>
         <source>SpeedCrunch Sessions (*.sch);;All Files (*)</source>
         <translation>SpeedCrunch Sessies (*.sch);;Alle Bestanden (*)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1703"/>
+        <location filename="../gui/mainwindow.cpp" line="1722"/>
         <source>Load Session</source>
         <translation>Laad Sessie</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2682"/>
+        <location filename="../gui/mainwindow.cpp" line="2701"/>
         <source>Error</source>
         <translation>Fout</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1818"/>
+        <location filename="../gui/mainwindow.cpp" line="1837"/>
         <source>Can&apos;t read from file %1</source>
         <translation>Kan niet van bestand %1 lezen</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1827"/>
+        <location filename="../gui/mainwindow.cpp" line="1846"/>
         <source>Question</source>
         <translation>Vraag</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1984"/>
+        <location filename="../gui/mainwindow.cpp" line="2003"/>
         <source>Save Session</source>
         <translation>Sessie Opslaan</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2040"/>
+        <location filename="../gui/mainwindow.cpp" line="2059"/>
         <source>Can&apos;t write to file %1</source>
         <translation>Kan niet naar bestand %1 schrijven</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2338"/>
+        <location filename="../gui/mainwindow.cpp" line="2357"/>
         <source>Warning</source>
         <translation>Waarschuwing</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2355"/>
+        <location filename="../gui/mainwindow.cpp" line="2374"/>
         <source>To insert a function using keyboard, use Ctrl+F shorcut. From the dialog, you can choose the function you want to insert.</source>
         <translation>Voeg een functie toe met het toetsenbord met sneltoets Ctrl+F. Vanuit het venster kan je kiezen welke functie je wilt invoegen.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2360"/>
+        <location filename="../gui/mainwindow.cpp" line="2379"/>
         <source>To insert a variable using keyboard, use Ctrl+I shorcut. From the dialog, you can choose the variable you want to insert.</source>
         <translation>Voeg een variabele toe met het toetsenbord met sneltoets Ctrl+I. Vanuit het venster kan je kiezen welke variabele je wilt invoegen.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2363"/>
+        <location filename="../gui/mainwindow.cpp" line="2382"/>
         <source>Use variable &lt;i&gt;pi&lt;/i&gt; to use pi constant.</source>
         <translation>Gebruik variabele &lt;i&gt;pi&lt;/i&gt; om constante pi te gebruiken.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2368"/>
+        <location filename="../gui/mainwindow.cpp" line="2387"/>
         <source>Use &lt;i&gt;;&lt;/i&gt; (semicolon) to separate the parameters in functions.</source>
         <translation>Gebruik &lt;i&gt;;&lt;/i&gt; (puntkomma) om de parameters in fucties te scheiden.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2374"/>
+        <location filename="../gui/mainwindow.cpp" line="2393"/>
         <source>Tip of the day</source>
         <translation>Tip van de dag</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1701"/>
+        <location filename="../gui/mainwindow.cpp" line="1720"/>
         <source>File %1 is not a valid session</source>
         <translation>Bestand %1 is geen geldige sessie</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1738"/>
+        <location filename="../gui/mainwindow.cpp" line="1757"/>
         <source>Merge session being loaded with current session?
 If no, current variables and display will be cleared.</source>
         <translation>Moet de geladen sessie worden samengevoeg met de huidige sessie?Zo niet, worden de huidige variabelen en weergave gewist.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2713"/>
+        <location filename="../gui/mainwindow.cpp" line="2732"/>
         <source>SpeedCrunch is minimized.
 Left click the icon to restore it or right click for options.</source>
         <translation>SpeedCrunch is geminimaliseerd.Klik met links op het icoon om het te herstellen of met rechts voor opties.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1591"/>
+        <location filename="../gui/mainwindow.cpp" line="1610"/>
         <source>Degree</source>
         <translation>Graden</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2030"/>
+        <location filename="../gui/mainwindow.cpp" line="2049"/>
         <source>All Files (*)</source>
         <translation>Alle Bestanden (*)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1975"/>
+        <location filename="../gui/mainwindow.cpp" line="1994"/>
         <source>Radian</source>
         <translation>Radiaal</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2333"/>
+        <location filename="../gui/mainwindow.cpp" line="2352"/>
         <source>The menu bar is now hidden. To make it visible again, press Ctrl+Alt+M.</source>
         <translation>De menubalk is nu verborgen. Om hem weer zichtbaar te maken, druk op Ctrl+Alt+M.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2384"/>
+        <location filename="../gui/mainwindow.cpp" line="2403"/>
         <source>Binary</source>
         <translation>Binair</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2394"/>
+        <location filename="../gui/mainwindow.cpp" line="2413"/>
         <source>Engineering decimal</source>
         <translation>Technische decimaal</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2404"/>
+        <location filename="../gui/mainwindow.cpp" line="2423"/>
         <source>Fixed decimal</source>
         <translation>Gefixeerde decimaal</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2414"/>
+        <location filename="../gui/mainwindow.cpp" line="2433"/>
         <source>General decimal</source>
         <translation>Algemene decimaal</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2424"/>
+        <location filename="../gui/mainwindow.cpp" line="2443"/>
         <source>Hexadecimal</source>
         <translation>Hexadecimaal</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2434"/>
+        <location filename="../gui/mainwindow.cpp" line="2453"/>
         <source>Octal</source>
         <translation>Octaal</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2444"/>
+        <location filename="../gui/mainwindow.cpp" line="2463"/>
         <source>Scientific decimal</source>
         <translation>Wetenschappelijke decimaal</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1809"/>
+        <location filename="../gui/mainwindow.cpp" line="1828"/>
         <source>Import Session</source>
         <translation>Importeer Sessie</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1825"/>
+        <location filename="../gui/mainwindow.cpp" line="1844"/>
         <source>Merge session being imported with current session?
 If no, current variables and display will be cleared.</source>
         <translation>Moet de geïmporteerde sessie worden samengevoeg met de huidige sessie?Zo niet, worden de huidige variabelen en weergave gewist.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2031"/>
+        <location filename="../gui/mainwindow.cpp" line="2050"/>
         <source>Export Session</source>
         <translation>Exporteer Sessie</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1021"/>
+        <location filename="../gui/mainwindow.cpp" line="1025"/>
         <source>Math Book</source>
         <translation>Wiskunde Boek</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="894"/>
+        <location filename="../gui/mainwindow.cpp" line="898"/>
         <source>&amp;Session</source>
         <translation>&amp;Sessie</translation>
     </message>
@@ -1593,52 +1598,52 @@ If no, current variables and display will be cleared.</source>
         <translation>Systeem &amp;Standaard</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="895"/>
+        <location filename="../gui/mainwindow.cpp" line="899"/>
         <source>&amp;Edit</source>
         <translation>&amp;Bewerken</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="896"/>
+        <location filename="../gui/mainwindow.cpp" line="900"/>
         <source>&amp;View</source>
         <translation>&amp;Beeld</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="897"/>
+        <location filename="../gui/mainwindow.cpp" line="901"/>
         <source>Se&amp;ttings</source>
         <translation>&amp;Instellingen</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="898"/>
+        <location filename="../gui/mainwindow.cpp" line="902"/>
         <source>Result &amp;Format</source>
         <translation>Resultaat &amp;Opmaak</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="899"/>
+        <location filename="../gui/mainwindow.cpp" line="903"/>
         <source>&amp;Decimal</source>
         <translation>&amp;Decimaal</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="900"/>
+        <location filename="../gui/mainwindow.cpp" line="904"/>
         <source>&amp;Angle Unit</source>
         <translation>&amp;Hoek Eenheid</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="901"/>
+        <location filename="../gui/mainwindow.cpp" line="905"/>
         <source>&amp;Behavior</source>
         <translation>&amp;Gedrag</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="902"/>
+        <location filename="../gui/mainwindow.cpp" line="906"/>
         <source>Radix &amp;Character</source>
         <translation>Grondtal &amp;Teken</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="903"/>
+        <location filename="../gui/mainwindow.cpp" line="907"/>
         <source>&amp;Language</source>
         <translation>&amp;Taal</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="904"/>
+        <location filename="../gui/mainwindow.cpp" line="908"/>
         <source>&amp;Help</source>
         <translation>&amp;Help</translation>
     </message>
@@ -1653,7 +1658,7 @@ If no, current variables and display will be cleared.</source>
         <translation>Resultaat opmaak</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1860"/>
+        <location filename="../gui/mainwindow.cpp" line="1879"/>
         <source>Ignore error?</source>
         <translation>Fout negeren?</translation>
     </message>
