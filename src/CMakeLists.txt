@@ -1,6 +1,5 @@
 PROJECT(speedcrunch)
 
-# note: change this BEFORE making a release !!
 SET( speedcrunch_VERSION "trunk" )
 
 IF( APPLE )
@@ -9,21 +8,20 @@ IF( APPLE )
   SET( MACOSX_BUNDLE_SHORT_VERSION_STRING ${speedcrunch_VERSION} )
   SET( MACOSX_BUNDLE_VERSION ${speedcrunch_VERSION} )
   SET( MACOSX_BUNDLE_LONG_VERSION_STRING Version ${speedcrunch_VERSION} )
-  SET( CMAKE_OSX_ARCHITECTURES ppc;i386 ) #Comment out if not universal binary
+  SET( CMAKE_OSX_ARCHITECTURES ppc;i386 )
 ELSE( APPLE )
   SET( PROGNAME speedcrunch )
 ENDIF( APPLE )
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.4.4)
-SET(CMAKE_COLOR_MAKEFILE ON)
-SET(CMAKE_VERBOSE_MAKEFILE OFF)
+SET(CMAKE_COLOR_MAKEFILE      ON)
+SET(CMAKE_VERBOSE_MAKEFILE    OFF)
 SET(CMAKE_INCLUDE_CURRENT_DIR TRUE)
 
 ADD_DEFINITIONS("-DSPEEDCRUNCH_VERSION=\\\"${speedcrunch_VERSION}\\\"")
 
 IF( NOT WIN32 )
 IF( NOT APPLE )
-  # for BinReloc stuff
   ADD_DEFINITIONS( -DENABLE_BINRELOC )
 ENDIF( NOT APPLE )
 ENDIF( NOT WIN32 )
@@ -33,9 +31,6 @@ INCLUDE(SourceFiles.cmake)
 
 # resources
 SET(speedcrunch_RESOURCES resources/speedcrunch.qrc)
-
-# translations
-INCLUDE(Translations.cmake)
 
 IF( MINGW )
   # resource compilation for mingw
@@ -87,12 +82,6 @@ TARGET_LINK_LIBRARIES(${PROGNAME} ${QT_LIBRARIES} ${LINK_FLAGS})
 
 # set(EXECUTABLE_OUTPUT_PATH ${speedcrunch_BINARY_DIR}/../bin)
 
-# install executable and translation files
-# note: it will install to CMAKE_INSTALL_PREFIX, which can be set e.g
-#  cmake ../trunk  -DCMAKE_INSTALL_PREFIX=/usr
-INSTALL(TARGETS ${PROGNAME} DESTINATION bin)
-INSTALL(FILES ${speedcrunch_TRANSLATIONS} DESTINATION share/speedcrunch/locale)
-
 # required for regression tests
 ENABLE_TESTING()
 
@@ -108,24 +97,46 @@ ADD_TEST(testfloatnum ${EXECUTABLE_OUTPUT_PATH}/testfloatnum)
 
 INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR} 3rdparty/util base gui main math)
 
-# books
-SET(BOOKSDIR "${CMAKE_INSTALL_PREFIX}/share/${PROGNAME}/books/")
+
+################################# INSTALLATION #################################
+
+# macros and definitions
+SET(SHAREDIR  "share/")
+SET(BOOKSDIR  "${SHAREDIR}/${PROGNAME}/books/")
+SET(LOCALEDIR "${SHAREDIR}/${PROGNAME}/locale/")
+SET(MENUDIR   "${SHAREDIR}/applications/")
+SET(ICONDIR   "${SHAREDIR}/pixmaps/")
 ADD_DEFINITIONS("-DBOOKSDIR=\\\"${BOOKSDIR}\\\"")
 
-INSTALL(FILES       books/books.css
-        DESTINATION ${BOOKSDIR}
+# executable
+INSTALL(TARGETS     ${PROGNAME}
+        DESTINATION bin
 )
 
-INSTALL(DIRECTORY   books/images books/ca books/cs books/de books/en books/es books/es_AR books/eu books/fi books/fr books/he books/id books/it books/nb books/nl books/pt books/pt_BR books/pl books/ro books/ru books/sv books/tr books/zh_CN
-        DESTINATION "${BOOKSDIR}"
+# translations (.qm files)
+INSTALL(DIRECTORY   locale/
+        DESTINATION ${LOCALEDIR}
+        PATTERN     "locale/*.qm"
+        PATTERN     "locale/*.ts" EXCLUDE
+        PATTERN     "locale/.svn" EXCLUDE
         PATTERN     ".svn" EXCLUDE
 )
 
-# freedesktop file
-INSTALL(FILES       speedcrunch.desktop
-        DESTINATION "${CMAKE_INSTALL_PREFIX}/share/applications/"
+# books
+INSTALL(DIRECTORY   books/
+        DESTINATION ${BOOKSDIR}
+        PATTERN     "i18n" EXCLUDE
+        PATTERN     "books/images/*.svgz" EXCLUDE
+        PATTERN     "books/images/*.sh" EXCLUDE
+        PATTERN     ".svn" EXCLUDE
 )
 
+# freedesktop menu
+INSTALL(FILES       speedcrunch.desktop
+        DESTINATION ${MENUDIR}
+)
+
+# icon
 INSTALL(FILES       resources/speedcrunch.png
-        DESTINATION "${CMAKE_INSTALL_PREFIX}/share/pixmaps/"
+        DESTINATION ${ICONDIR}
 )
