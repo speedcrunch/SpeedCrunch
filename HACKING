@@ -1,8 +1,6 @@
-HACKING file for SpeedCrunch
-
-
-BUGS AND FEATURE REQUEST
-----------------------------
+--------------------------------------------------------------------------------
+BUGS AND FEATURE REQUESTS
+--------------------------------------------------------------------------------
 
 The issue tracker location is http://code.google.com/p/speedcrunch/issues/list.
 
@@ -21,8 +19,9 @@ the targeted milestone is not available yet, add it using tab Administer, Issue
 Tracking.
 
 
+--------------------------------------------------------------------------------
 TEST SUITE
-----------
+--------------------------------------------------------------------------------
 
 In order to catch regressions as early as possible, automatic test suite is
 already implemented (and should always be updated).
@@ -47,8 +46,9 @@ make sure also to add test cases for that function (the more, the better)
 in testevaluator.cpp.
 
 
+--------------------------------------------------------------------------------
 REPOSITORY
-------------
+--------------------------------------------------------------------------------
 
 /trunk is the main development tree. This is considered unstable. Features
 development should happen here.
@@ -77,27 +77,29 @@ content (http://www.speedcrunch.org) with this directory every now
 and then.
 
 
-WEB SITE
----------
-Files for the web site is stored in the Subversion repository under directory
+--------------------------------------------------------------------------------
+WEBSITE
+--------------------------------------------------------------------------------
+Files for the web site are stored in the Subversion repository under directory
 /www.
 
 When making changes to HTML files, please make sure that the HTML code is still
 valid. Use http://validator.w3.org/ to verify it.
 
 For convenience, the ChangeLog is linked directly to the file in the repository,
-e.g. http://speedcrunch.googlecode.com/svn/branches/0.7/ChangeLog
+e.g. http://speedcrunch.googlecode.com/svn/tags/0.8/ChangeLog
 
 The web site pages must be updated just prior to make a release. See in details
 under the topic 'Preparing a release' below.
 
-The web site can also updated without a release. This is the case e.g. when
+The web site can also be updated without a release. This is the case e.g. when
 putting a new interesting screenshot or adding a question (and answer) in FAQ
 section.
 
 
-PREPARING A RELEASE
----------------------
+--------------------------------------------------------------------------------
+RELEASES
+--------------------------------------------------------------------------------
 This is a checklist of things that must be done to prepare a release:
 
 * Make sure that ChangeLog is up to date
@@ -106,20 +108,16 @@ This is a checklist of things that must be done to prepare a release:
   0.8.1, 0.8.2), create a branch (e.g /branch/0.8).
 
 * Tag the repository with a good name, e.g /tags/0.8-beta and change version
-  numbers in CMakeLists.txt and crunch.pro.
+  number in CMakeLists.txt.
 
 * Create the source code package, e.g. speedcrunch-0.8-beta.tar.gz. Place it
   in the download location.
 
-* Calculate the MD5 sum of the source code package
-
 * Notify packagers to make them aware of the new release.
 
-* Update the website. Most important is the link to new source code package
-  and its MD5 sum.
+* Update the website. Most important is the link to new source code package.
 
   For a stable release (e.g. 0.8 or 0.8.1):
-    update "download version xx" link in all pages
     update main content in download.htm
     add or change features description in features.htm
     create new screenshots for screenshots.htm
@@ -128,10 +126,11 @@ This is a checklist of things that must be done to prepare a release:
   For a non-stable release (e.g. 0.8-alpha, 0.8-beta, 0-8-RC)
     update sidebar in download.htm
 
-PORTABLE VERSION
-----------------
+
+--------------------------------------------------------------------------------
+PORTABLE EDITION
+--------------------------------------------------------------------------------
 
 Build the "portable version" using the following command:
 
   cmake -DCMAKE_CXX_FLAGS:STRING="-DSPEEDCRUNCH_PORTABLE" <path to source directory>\src
-

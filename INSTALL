@@ -1,20 +1,25 @@
-Instruction to compile SpeedCrunch from source code
+Download is available from http://www.speedcrunch.org, the official website.
 
-Requirements:
-- CMake 2.4.4 or newer
-- Qt 4.2 or newer
+If you are installing SpeedCrunch from a disk image on an Apple Mac, all you
+need do is drag the SpeedCrunch application icon to your Applications folder.
+The application, and Qt itself, is in the bundle represented by the icon.
 
-Steps:
-- Create a sub-directory named 'build'
-- Go to this sub-directory
-- Run CMake like this:
-    cmake ../src
-- Then run make
-    make
-- To install, run (you might need administration privileges)
-    make install
+You need Qt (from Trolltech) at least version 4.2 to be able to compile
+SpeedCrunch. Most Linux distributions normally already package the latest
+version of Qt, so it is likely that you need to worry about this. However,
+you need the development package as well (sometimes named as qt-devel or
+qt4-devel, it depends on the distribution).
 
-NOTE: if you want to run SpeedCrunch translated in one of the supported
-languages, you really need to perform the last step in order to install
-the translation files (*.qm) to the directory where SpeedCrunch will look
-at for them.
+You also need CMake (from Kitware) at least version 2.4.4. CMake is available
+for Windows, Linux, and Mac OS X.
+
+Steps to install:
+
+    - Create a sub-directory named 'build'
+    - Go to this sub-directory
+    - Run CMake like this:
+        cmake ../src
+    - Then run:
+        make
+    - To install, run (you might need administration privileges):
+        make install
