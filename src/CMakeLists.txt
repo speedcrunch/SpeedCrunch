@@ -114,6 +114,7 @@ INSTALL(TARGETS     ${PROGNAME}
 )
 
 # translations (.qm files)
+INSTALL(CODE "EXECUTE_PROCESS(COMMAND lrelease ${CMAKE_CURRENT_SOURCE_DIR}/speedcrunch.pro)")
 INSTALL(DIRECTORY   locale/
         DESTINATION ${LOCALEDIR}
         PATTERN     "locale/*.qm"
