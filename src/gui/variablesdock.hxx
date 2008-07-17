@@ -35,7 +35,7 @@ class VariablesDock : public QDockWidget
   Q_OBJECT
 
   public:
-    VariablesDock( char radixChar = 'C', QWidget * parent = 0 );
+    VariablesDock( char radixChar, QWidget * parent = 0 );
     ~VariablesDock();
     char radixChar() const;
     void updateList( const Evaluator * );

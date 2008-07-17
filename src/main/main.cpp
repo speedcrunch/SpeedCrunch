@@ -21,11 +21,15 @@
 #include "gui/mainwindow.hxx"
 
 #include <QApplication>
+#include <QCoreApplication>
 
 
 int main( int argc, char * argv[] )
 {
   QApplication app( argc, argv );
+  QCoreApplication::setApplicationName( "speedcrunch" );
+  QCoreApplication::setOrganizationDomain( "speedcrunch.org" );
+  QCoreApplication::setOrganizationName( "SpeedCrunch" );
 
   MainWindow win;
   win.show();

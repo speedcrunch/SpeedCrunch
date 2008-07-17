@@ -100,9 +100,9 @@ class MainWindow : public QMainWindow
     void formatHexadec();
     void formatOctal();
     void formatScientific();
-    void radixCharAutoActivated();
-    void radixCharDotActivated();
-    void radixCharCommaActivated();
+    void radixCharAutoTriggered();
+    void radixCharDotTriggered();
+    void radixCharCommaTriggered();
     void changeLanguage();
     void setAllText();
 

@@ -35,7 +35,7 @@ class ConstantsDock : public QDockWidget
   Q_OBJECT
 
   public:
-    ConstantsDock( Constants *, char radixChar = 'C', QWidget * parent = 0 );
+    ConstantsDock( Constants *, char radixChar, QWidget * parent = 0 );
     ~ConstantsDock();
     char radixChar() const;
 

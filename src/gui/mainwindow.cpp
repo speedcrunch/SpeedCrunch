@@ -50,6 +50,7 @@
 #include <QClipboard>
 #include <QCloseEvent>
 #include <QDesktopServices>
+#include <QDesktopWidget>
 #include <QFile>
 #include <QFileDialog>
 #include <QHBoxLayout>
@@ -267,7 +268,8 @@ struct MainWindow::Private
   void checkInitialFormat();
   void checkInitialPrecision();
   void checkInitialLanguage();
-  void restoreFloatingDocks();
+  // THIS IS NOT NEEDED ANYMORE, BUT NEEDS TO BE TESTED WITH Qt 4.2
+  //void restoreFloatingDocks();
   void restoreHistory();
   void restoreVariables();
   void deleteKeypad();
@@ -1217,9 +1219,9 @@ void MainWindow::Private::createFixedConnections()
   connect( actions.optionAlwaysOnTop,           SIGNAL( toggled( bool )                       ), p,                     SLOT( alwaysOnTopToggled( bool )            ) );
   connect( actions.optionMinimizeToTray,        SIGNAL( toggled( bool )                       ), p,                     SLOT( minimizeToTrayToggled( bool )         ) );
   connect( actions.optionHiliteSyntax,          SIGNAL( toggled( bool )                       ), p,                     SLOT( hiliteSyntaxToggled( bool )           ) );
-  connect( actions.radixCharAuto,               SIGNAL( triggered()                           ), p,                     SLOT( radixCharAutoActivated()              ) );
-  connect( actions.radixCharDot,                SIGNAL( triggered()                           ), p,                     SLOT( radixCharDotActivated()               ) );
-  connect( actions.radixCharComma,              SIGNAL( triggered()                           ), p,                     SLOT( radixCharCommaActivated()             ) );
+  connect( actions.radixCharAuto,               SIGNAL( triggered()                           ), p,                     SLOT( radixCharAutoTriggered()              ) );
+  connect( actions.radixCharDot,                SIGNAL( triggered()                           ), p,                     SLOT( radixCharDotTriggered()               ) );
+  connect( actions.radixCharComma,              SIGNAL( triggered()                           ), p,                     SLOT( radixCharCommaTriggered()             ) );
   connect( actions.languageDefault,             SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
   connect( actions.languageCa,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
   connect( actions.languageCs,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
@@ -1263,12 +1265,28 @@ void MainWindow::Private::createFixedConnections()
 
 void MainWindow::Private::applySettings()
 {
-  // window size
-  if ( settings.mainWindowSize != QSize(0, 0) )
-    p->resize( settings.mainWindowSize );
-
   // window state
-  p->restoreState( settings.mainWindowState );
+  //
+  actions.showBook     ->setChecked( settings.showBook      );
+  actions.showConstants->setChecked( settings.showConstants );
+  actions.showFunctions->setChecked( settings.showFunctions );
+  actions.showHistory  ->setChecked( settings.showHistory   );
+  actions.showVariables->setChecked( settings.showVariables );
+  // THIS IS NOT NEEDED ANYMORE, BUT NEEDS TO BE TESTED WITH Qt 4.2
+  //restoreFloatingDocks();
+  //
+  p->resize( settings.windowSize );
+  //
+  if ( settings.windowPosition.isNull() )
+  {
+      QDesktopWidget * desktop = QApplication::desktop();
+      QRect screen = desktop->availableGeometry( p );
+      p->move( screen.center() - p->rect().center() );
+  }
+  else
+      p->move( settings.windowPosition );
+  //
+  p->restoreState( settings.windowState );
 
   // full screen
   actions.showFullScreen->setChecked( settings.showFullScreen );
@@ -1303,7 +1321,7 @@ void MainWindow::Private::applySettings()
 
   // radix character
   if ( settings.isLocaleRadixChar() )
-    actions.radixCharAuto->setChecked( true );
+      actions.radixCharAuto->setChecked( true );
   else if ( settings.getRadixChar() == '.' )
     actions.radixCharDot->setChecked( true );
   else if ( settings.getRadixChar() == ',' )
@@ -1335,14 +1353,6 @@ void MainWindow::Private::applySettings()
     actions.optionHiliteSyntax->setChecked( true );
   else
     p->hiliteSyntaxToggled( false );
-
-  // docks
-  actions.showBook     ->setChecked( settings.showBook      );
-  actions.showConstants->setChecked( settings.showConstants );
-  actions.showFunctions->setChecked( settings.showFunctions );
-  actions.showHistory  ->setChecked( settings.showHistory   );
-  actions.showVariables->setChecked( settings.showVariables );
-  restoreFloatingDocks();
 
   // status bar
   actions.showStatusBar->setChecked( settings.showStatusBar );
@@ -1466,50 +1476,52 @@ void MainWindow::Private::saveSettings()
 void MainWindow::Private::syncWindowStateToSettings()
 {
   // main window
-  settings.mainWindowState = p->saveState();
-  settings.mainWindowSize  = p->size();
+  settings.windowPosition = p->pos();
+  settings.windowSize     = p->size();
+  settings.windowState    = p->saveState();
 
+  // THIS IS NOT NEEDED ANYMORE, BUT NEEDS TO BE TESTED WITH Qt 4.2
   // docks
-  if ( docks.book )
-  {
-    settings.bookDockFloating = docks.book->isFloating();
-    settings.bookDockLeft     = docks.book->x();
-    settings.bookDockTop      = docks.book->y();
-    settings.bookDockWidth    = docks.book->width();
-    settings.bookDockHeight   = docks.book->height();
-  }
-  if ( docks.history )
-  {
-    settings.historyDockFloating = docks.history->isFloating();
-    settings.historyDockLeft     = docks.history->x();
-    settings.historyDockTop      = docks.history->y();
-    settings.historyDockWidth    = docks.history->width();
-    settings.historyDockHeight   = docks.history->height();
-  }
-  if ( docks.functions )
-  {
-    settings.functionsDockFloating = docks.functions->isFloating();
-    settings.functionsDockLeft     = docks.functions->x();
-    settings.functionsDockTop      = docks.functions->y();
-    settings.functionsDockWidth    = docks.functions->width();
-    settings.functionsDockHeight   = docks.functions->height();
-  }
-  if ( docks.variables )
-  {
-    settings.variablesDockFloating = docks.variables->isFloating();
-    settings.variablesDockLeft     = docks.variables->x();
-    settings.variablesDockTop      = docks.variables->y();
-    settings.variablesDockWidth    = docks.variables->width();
-    settings.variablesDockHeight   = docks.variables->height();
-  }
-  if ( docks.constants )
-  {
-    settings.constantsDockFloating = docks.constants->isFloating();
-    settings.constantsDockLeft     = docks.constants->x();
-    settings.constantsDockTop      = docks.constants->y();
-    settings.constantsDockWidth    = docks.constants->width();
-    settings.constantsDockHeight   = docks.constants->height();
-  }
+  //if ( docks.book )
+  //{
+  //  settings.bookDockFloating = docks.book->isFloating();
+  //  settings.bookDockLeft     = docks.book->x();
+  //  settings.bookDockTop      = docks.book->y();
+  //  settings.bookDockWidth    = docks.book->width();
+  //  settings.bookDockHeight   = docks.book->height();
+  //}
+  //if ( docks.history )
+  //{
+  //  settings.historyDockFloating = docks.history->isFloating();
+  //  settings.historyDockLeft     = docks.history->x();
+  //  settings.historyDockTop      = docks.history->y();
+  //  settings.historyDockWidth    = docks.history->width();
+  //  settings.historyDockHeight   = docks.history->height();
+  //}
+  //if ( docks.functions )
+  //{
+  //  settings.functionsDockFloating = docks.functions->isFloating();
+  //  settings.functionsDockLeft     = docks.functions->x();
+  //  settings.functionsDockTop      = docks.functions->y();
+  //  settings.functionsDockWidth    = docks.functions->width();
+  //  settings.functionsDockHeight   = docks.functions->height();
+  //}
+  //if ( docks.variables )
+  //{
+  //  settings.variablesDockFloating = docks.variables->isFloating();
+  //  settings.variablesDockLeft     = docks.variables->x();
+  //  settings.variablesDockTop      = docks.variables->y();
+  //  settings.variablesDockWidth    = docks.variables->width();
+  //  settings.variablesDockHeight   = docks.variables->height();
+  //}
+  //if ( docks.constants )
+  //{
+  //  settings.constantsDockFloating = docks.constants->isFloating();
+  //  settings.constantsDockLeft     = docks.constants->x();
+  //  settings.constantsDockTop      = docks.constants->y();
+  //  settings.constantsDockWidth    = docks.constants->width();
+  //  settings.constantsDockHeight   = docks.constants->height();
+  //}
 }
 
 
@@ -1519,14 +1531,10 @@ MainWindow::MainWindow()
   : QMainWindow(), d( new MainWindow::Private )
 {
   d->p = this;
-
   d->settings.load();
-
   d->createUi();
   d->applySettings();
-
   emit retranslateText();
-
   QTimer::singleShot( 0, this, SLOT( activate() ) );
 }
 
@@ -2605,65 +2613,66 @@ void MainWindow::Private::restoreVariables()
 }
 
 
-void MainWindow::Private::restoreFloatingDocks()
-{
-  if ( settings.showBook && settings.bookDockFloating
-       && ! docks.book->isFloating() )
-  {
-    docks.book->hide();
-    docks.book->setFloating( true );
-    docks.book->move( settings.bookDockLeft, settings.bookDockTop );
-    docks.book->resize( settings.bookDockWidth, settings.bookDockHeight );
-    docks.book->show();
-  }
-
-  if ( settings.showHistory && settings.historyDockFloating
-       && ! docks.history->isFloating() )
-  {
-    docks.history->hide();
-    docks.history->setFloating( true );
-    docks.history->move( settings.historyDockLeft, settings.historyDockTop );
-    docks.history->resize( settings.historyDockWidth,
-                           settings.historyDockHeight );
-    docks.history->show();
-  }
-
-  if ( settings.showFunctions && settings.functionsDockFloating
-       && ! docks.functions->isFloating() )
-  {
-    docks.functions->hide();
-    docks.functions->setFloating( true );
-    docks.functions->move( settings.functionsDockLeft,
-                           settings.functionsDockTop );
-    docks.functions->resize( settings.functionsDockWidth,
-                             settings.functionsDockHeight );
-    docks.functions->show();
-  }
-
-  if ( settings.showVariables && settings.variablesDockFloating
-       && ! docks.variables->isFloating() )
-  {
-    docks.variables->hide();
-    docks.variables->setFloating( true );
-    docks.variables->move( settings.variablesDockLeft,
-                           settings.variablesDockTop );
-    docks.variables->resize( settings.variablesDockWidth,
-                             settings.variablesDockHeight );
-    docks.variables->show();
-  }
-
-  if ( settings.showConstants && settings.constantsDockFloating
-       && ! docks.constants->isFloating() )
-  {
-    docks.constants->hide();
-    docks.constants->setFloating( true );
-    docks.constants->move( settings.constantsDockLeft,
-                           settings.constantsDockTop );
-    docks.constants->resize( settings.constantsDockWidth,
-                             settings.constantsDockHeight );
-    docks.constants->show();
-  }
-}
+// THIS IS NOT NEEDED ANYMORE, BUT NEEDS TO BE TESTED WITH Qt 4.2
+//void MainWindow::Private::restoreFloatingDocks()
+//{
+//  if ( settings.showBook && settings.bookDockFloating
+//       && ! docks.book->isFloating() )
+//  {
+//    docks.book->hide();
+//    docks.book->setFloating( true );
+//    docks.book->move( settings.bookDockLeft, settings.bookDockTop );
+//    docks.book->resize( settings.bookDockWidth, settings.bookDockHeight );
+//    docks.book->show();
+//  }
+//
+//  if ( settings.showHistory && settings.historyDockFloating
+//       && ! docks.history->isFloating() )
+//  {
+//    docks.history->hide();
+//    docks.history->setFloating( true );
+//    docks.history->move( settings.historyDockLeft, settings.historyDockTop );
+//    docks.history->resize( settings.historyDockWidth,
+//                           settings.historyDockHeight );
+//    docks.history->show();
+//  }
+//
+//  if ( settings.showFunctions && settings.functionsDockFloating
+//       && ! docks.functions->isFloating() )
+//  {
+//    docks.functions->hide();
+//    docks.functions->setFloating( true );
+//    docks.functions->move( settings.functionsDockLeft,
+//                           settings.functionsDockTop );
+//    docks.functions->resize( settings.functionsDockWidth,
+//                             settings.functionsDockHeight );
+//    docks.functions->show();
+//  }
+//
+//  if ( settings.showVariables && settings.variablesDockFloating
+//       && ! docks.variables->isFloating() )
+//  {
+//    docks.variables->hide();
+//    docks.variables->setFloating( true );
+//    docks.variables->move( settings.variablesDockLeft,
+//                           settings.variablesDockTop );
+//    docks.variables->resize( settings.variablesDockWidth,
+//                             settings.variablesDockHeight );
+//    docks.variables->show();
+//  }
+//
+//  if ( settings.showConstants && settings.constantsDockFloating
+//       && ! docks.constants->isFloating() )
+//  {
+//    docks.constants->hide();
+//    docks.constants->setFloating( true );
+//    docks.constants->move( settings.constantsDockLeft,
+//                           settings.constantsDockTop );
+//    docks.constants->resize( settings.constantsDockWidth,
+//                             settings.constantsDockHeight );
+//    docks.constants->show();
+//  }
+//}
 
 
 void MainWindow::Private::restoreHistory()
@@ -2823,21 +2832,21 @@ void MainWindow::variableSelected( const QString & v )
 }
 
 
-void MainWindow::radixCharAutoActivated()
+void MainWindow::radixCharAutoTriggered()
 {
-  setRadixChar(0);
+  setRadixChar( 0 );
 }
 
 
-void MainWindow::radixCharDotActivated()
+void MainWindow::radixCharDotTriggered()
 {
-  setRadixChar('.');
+  setRadixChar( '.' );
 }
 
 
-void MainWindow::radixCharCommaActivated()
+void MainWindow::radixCharCommaTriggered()
 {
-  setRadixChar(',');
+  setRadixChar( ',' );
 }
 
 
@@ -2873,10 +2882,7 @@ void MainWindow::setFormat( char c )
 void MainWindow::setRadixChar( char c )
 {
   char oldRadixChar = d->settings.getRadixChar();
-  if (c == 0)
-    d->settings.setRadixChar();
-  else
-    d->settings.setRadixChar( c );
+  d->settings.setRadixChar( c );
   c = d->settings.getRadixChar();
   if ( oldRadixChar != c )
     emit radixCharChanged( c );

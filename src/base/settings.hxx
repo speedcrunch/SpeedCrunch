@@ -39,7 +39,7 @@ class Settings
     char        getRadixChar() const;
     // extensions for classes maintaining the radix char field.
     // The value 0 means: use locale settings
-    void        setRadixChar(char c = 0) { radixChar = c; };
+    void        setRadixChar( char c = 0 ) { radixChar = c; };
     bool        isLocaleRadixChar() const { return radixChar == 0; };
 
     char        angleMode; // 'r': radian; 'd': degree
@@ -94,8 +94,9 @@ class Settings
 
     QString     language;
 
-    QSize       mainWindowSize;
-    QByteArray  mainWindowState;
+    QPoint      windowPosition;
+    QSize       windowSize;
+    QByteArray  windowState;
     QStringList variables;
 
     //static QString escape; //reftbl
@@ -110,13 +111,13 @@ class Settings
     a hidden instance in MainWindow.
     Classes like editor, evaluator, format can update their knowledge
     about the settings (radix char) at the beginning of an operation,
-    and, technically, do not need a real-time update by the QT messaging system.
+    and, technically, do not need a real-time update by the Qt messaging system.
     Of course, this does not hold for GUI elements. (wl)
     This is a workaround. */
     static Settings* settings; // maintained by the MainWindow (awkward)
 
   private:
-    char        radixChar; // 0: locale (default);
+    char radixChar; // 0: locale (default);
     Settings( const Settings & );
     Settings & operator=( const Settings & );
 };

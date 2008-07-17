@@ -183,7 +183,7 @@ void ConstantsDock::filter()
     str << c->constantList().at( k ).name;
     QString radCh = (radixChar() != '.' ?
         QString( c->constantList().at( k ).value ).replace( '.', radixChar() )
-      : c->constantList().at( k ).value);
+      : c->constantList().at( k ).value );
     if ( layoutDirection() == Qt::RightToLeft )
     {
       str << c->constantList().at( k ).unit + QChar( 0x200e ); // Unicode LRM
