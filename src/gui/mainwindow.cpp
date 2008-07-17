@@ -1026,6 +1026,7 @@ void MainWindow::Private::createBookDock()
   docks.book->setObjectName( "BookDock" );
   docks.book->setTitle( MainWindow::tr( "Math Book" ) );
   docks.book->installEventFilter( p );
+  docks.book->setAllowedAreas( Qt::AllDockWidgetAreas );
   p->addDockWidget( Qt::RightDockWidgetArea, docks.book );
 
   connect( docks.book, SIGNAL( expressionSelected( const QString & ) ),
@@ -1052,6 +1053,7 @@ void MainWindow::Private::createConstantsDock()
   docks.constants = new ConstantsDock( constants, settings.getRadixChar(), p );
   docks.constants->setObjectName( "ConstantsDock" );
   docks.constants->installEventFilter( p );
+  docks.constants->setAllowedAreas( Qt::AllDockWidgetAreas );
   p->addDockWidget( Qt::RightDockWidgetArea, docks.constants );
 
   connect( docks.constants, SIGNAL( constantSelected( const QString & ) ),
@@ -1082,6 +1084,7 @@ void MainWindow::Private::createFunctionsDock()
   docks.functions = new FunctionsDock( functions, p );
   docks.functions->setObjectName( "FunctionsDock" );
   docks.functions->installEventFilter( p );
+  docks.functions->setAllowedAreas( Qt::AllDockWidgetAreas );
   p->addDockWidget( Qt::RightDockWidgetArea, docks.functions );
 
   connect( docks.functions, SIGNAL( functionSelected( const QString & ) ),
@@ -1110,6 +1113,7 @@ void MainWindow::Private::createHistoryDock()
   docks.history = new HistoryDock( p );
   docks.history->setObjectName( "HistoryDock" );
   docks.history->installEventFilter( p );
+  docks.history->setAllowedAreas( Qt::AllDockWidgetAreas );
   p->addDockWidget( Qt::RightDockWidgetArea, docks.history );
 
   connect( docks.history, SIGNAL( expressionSelected( const QString & ) ),
@@ -1140,6 +1144,7 @@ void MainWindow::Private::createVariablesDock()
   docks.variables = new VariablesDock( settings.getRadixChar(), p );
   docks.variables->setObjectName( "VariablesDock" );
   docks.variables->installEventFilter( p );
+  docks.variables->setAllowedAreas( Qt::AllDockWidgetAreas );
   p->addDockWidget( Qt::RightDockWidgetArea, docks.variables );
 
   connect( docks.variables, SIGNAL( variableSelected( const QString & ) ),
