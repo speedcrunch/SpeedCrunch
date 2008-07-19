@@ -73,6 +73,8 @@ class MainWindow : public QMainWindow
     void loadSession();
     void alwaysOnTopToggled( bool );
     void autoCalcToggled( bool );
+    void saveHistoryOnExitToggled( bool );
+    void saveVariablesOnExitToggled( bool );
     void autoCompletionToggled( bool );
     void minimizeToTrayToggled( bool );
     void hiliteSyntaxToggled( bool );

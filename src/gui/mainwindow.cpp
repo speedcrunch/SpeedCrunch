@@ -100,6 +100,8 @@ struct Actions
   QAction * insertVariable;
   QAction * optionAlwaysOnTop;
   QAction * optionAutoCalc;
+  QAction * optionSaveHistoryOnExit;
+  QAction * optionSaveVariablesOnExit;
   QAction * optionAutoCompletion;
   QAction * optionDotAuto;
   QAction * optionDotComma;
@@ -380,60 +382,62 @@ void MainWindow::Private::createUi()
 
 void MainWindow::Private::createActions()
 {
-  actions.clearExpression       = new QAction( p );
-  actions.clearHistory          = new QAction( p );
-  actions.degree                = new QAction( p );
-  actions.deleteAllVariables    = new QAction( p );
-  actions.deleteVariable        = new QAction( p );
-  actions.digits15              = new QAction( p );
-  actions.digits2               = new QAction( p );
-  actions.digits3               = new QAction( p );
-  actions.digits50              = new QAction( p );
-  actions.digits8               = new QAction( p );
-  actions.digitsAuto            = new QAction( p );
-  actions.editCopy              = new QAction( p );
-  actions.editCopyResult        = new QAction( p );
-  actions.editPaste             = new QAction( p );
-  actions.helpAbout             = new QAction( p );
-  actions.helpAboutQt           = new QAction( p );
-  actions.helpGotoWebsite       = new QAction( p );
-  actions.helpTipOfTheDay       = new QAction( p );
-  actions.insertFunction        = new QAction( p );
-  actions.insertVariable        = new QAction( p );
-  actions.optionAutoCalc        = new QAction( p );
-  actions.optionAutoCompletion  = new QAction( p );
-  actions.optionAlwaysOnTop     = new QAction( p );
-  actions.optionMinimizeToTray  = new QAction( p );
-  actions.optionHiliteSyntax    = new QAction( p );
-  actions.radixCharAuto         = new QAction( p );
-  actions.radixCharDot          = new QAction( p );
-  actions.radixCharComma        = new QAction( p );
-  actions.radian                = new QAction( p );
-  actions.scrollDown            = new QAction( p );
-  actions.scrollUp              = new QAction( p );
-  actions.selectExpression      = new QAction( p );
-  actions.sessionImport         = new QAction( p );
-  actions.sessionLoad           = new QAction( p );
-  actions.sessionQuit           = new QAction( p );
-  actions.sessionSave           = new QAction( p );
-  actions.sessionExport         = new QAction( p );
-  actions.showBook              = new QAction( p );
-  actions.showConstants         = new QAction( p );
-  actions.showFullScreen        = new QAction( p );
-  actions.showFunctions         = new QAction( p );
-  actions.showHistory           = new QAction( p );
-  actions.showKeypad            = new QAction( p );
-  actions.showMenuBar           = new QAction( p );
-  actions.showStatusBar         = new QAction( p );
-  actions.showVariables         = new QAction( p );
-  actions.formatBinary          = new QAction( p );
-  actions.formatEngineering     = new QAction( p );
-  actions.formatFixed           = new QAction( p );
-  actions.formatGeneral         = new QAction( p );
-  actions.formatHexadec         = new QAction( p );
-  actions.formatOctal           = new QAction( p );
-  actions.formatScientific      = new QAction( p );
-  actions.languageDefault       = new QAction( p );
+  actions.clearExpression           = new QAction( p );
+  actions.clearHistory              = new QAction( p );
+  actions.degree                    = new QAction( p );
+  actions.deleteAllVariables        = new QAction( p );
+  actions.deleteVariable            = new QAction( p );
+  actions.digits15                  = new QAction( p );
+  actions.digits2                   = new QAction( p );
+  actions.digits3                   = new QAction( p );
+  actions.digits50                  = new QAction( p );
+  actions.digits8                   = new QAction( p );
+  actions.digitsAuto                = new QAction( p );
+  actions.editCopy                  = new QAction( p );
+  actions.editCopyResult            = new QAction( p );
+  actions.editPaste                 = new QAction( p );
+  actions.helpAbout                 = new QAction( p );
+  actions.helpAboutQt               = new QAction( p );
+  actions.helpGotoWebsite           = new QAction( p );
+  actions.helpTipOfTheDay           = new QAction( p );
+  actions.insertFunction            = new QAction( p );
+  actions.insertVariable            = new QAction( p );
+  actions.optionAutoCalc            = new QAction( p );
+  actions.optionSaveHistoryOnExit   = new QAction( p );
+  actions.optionSaveVariablesOnExit = new QAction( p );
+  actions.optionAutoCompletion      = new QAction( p );
+  actions.optionAlwaysOnTop         = new QAction( p );
+  actions.optionMinimizeToTray      = new QAction( p );
+  actions.optionHiliteSyntax        = new QAction( p );
+  actions.radixCharAuto             = new QAction( p );
+  actions.radixCharDot              = new QAction( p );
+  actions.radixCharComma            = new QAction( p );
+  actions.radian                    = new QAction( p );
+  actions.scrollDown                = new QAction( p );
+  actions.scrollUp                  = new QAction( p );
+  actions.selectExpression          = new QAction( p );
+  actions.sessionImport             = new QAction( p );
+  actions.sessionLoad               = new QAction( p );
+  actions.sessionQuit               = new QAction( p );
+  actions.sessionSave               = new QAction( p );
+  actions.sessionExport             = new QAction( p );
+  actions.showBook                  = new QAction( p );
+  actions.showConstants             = new QAction( p );
+  actions.showFullScreen            = new QAction( p );
+  actions.showFunctions             = new QAction( p );
+  actions.showHistory               = new QAction( p );
+  actions.showKeypad                = new QAction( p );
+  actions.showMenuBar               = new QAction( p );
+  actions.showStatusBar             = new QAction( p );
+  actions.showVariables             = new QAction( p );
+  actions.formatBinary              = new QAction( p );
+  actions.formatEngineering         = new QAction( p );
+  actions.formatFixed               = new QAction( p );
+  actions.formatGeneral             = new QAction( p );
+  actions.formatHexadec             = new QAction( p );
+  actions.formatOctal               = new QAction( p );
+  actions.formatScientific          = new QAction( p );
+  actions.languageDefault           = new QAction( p );
 
   actions.languageCa   = new QAction( QString::fromUtf8( "Català"              ), p );
   actions.languageCs   = new QAction( QString::fromUtf8( "Česky"               ), p );
@@ -482,60 +486,62 @@ void MainWindow::Private::createActions()
   actions.languageTr     ->setData( QString( "tr"    ) );
   actions.languageZhCn   ->setData( QString( "zh_CN" ) );
 
-  actions.degree              ->setCheckable( true );
-  actions.digits15            ->setCheckable( true );
-  actions.digits2             ->setCheckable( true );
-  actions.digits3             ->setCheckable( true );
-  actions.digits50            ->setCheckable( true );
-  actions.digits8             ->setCheckable( true );
-  actions.digitsAuto          ->setCheckable( true );
-  actions.optionAlwaysOnTop   ->setCheckable( true );
-  actions.optionAutoCalc      ->setCheckable( true );
-  actions.optionAutoCompletion->setCheckable( true );
-  actions.optionMinimizeToTray->setCheckable( true );
-  actions.optionHiliteSyntax  ->setCheckable( true );
-  actions.radian              ->setCheckable( true );
-  actions.radixCharAuto       ->setCheckable( true );
-  actions.radixCharComma      ->setCheckable( true );
-  actions.radixCharDot        ->setCheckable( true );
-  actions.showStatusBar       ->setCheckable( true );
-  actions.showBook            ->setCheckable( true );
-  actions.showConstants       ->setCheckable( true );
-  actions.showFullScreen      ->setCheckable( true );
-  actions.showFunctions       ->setCheckable( true );
-  actions.showHistory         ->setCheckable( true );
-  actions.showKeypad          ->setCheckable( true );
-  actions.showVariables       ->setCheckable( true );
-  actions.formatBinary        ->setCheckable( true );
-  actions.formatEngineering   ->setCheckable( true );
-  actions.formatFixed         ->setCheckable( true );
-  actions.formatGeneral       ->setCheckable( true );
-  actions.formatHexadec       ->setCheckable( true );
-  actions.formatOctal         ->setCheckable( true );
-  actions.formatScientific    ->setCheckable( true );
-  actions.languageDefault     ->setCheckable( true );
-  actions.languageCa          ->setCheckable( true );
-  actions.languageCs          ->setCheckable( true );
-  actions.languageDe          ->setCheckable( true );
-  actions.languageEn          ->setCheckable( true );
-  actions.languageEs          ->setCheckable( true );
-  actions.languageEsAr        ->setCheckable( true );
-  actions.languageEu          ->setCheckable( true );
-  actions.languageFi          ->setCheckable( true );
-  actions.languageFr          ->setCheckable( true );
-  actions.languageHe          ->setCheckable( true );
-  actions.languageId          ->setCheckable( true );
-  actions.languageIt          ->setCheckable( true );
-  actions.languageNb          ->setCheckable( true );
-  actions.languageNl          ->setCheckable( true );
-  actions.languagePl          ->setCheckable( true );
-  actions.languagePt          ->setCheckable( true );
-  actions.languagePtBr        ->setCheckable( true );
-  actions.languageRo          ->setCheckable( true );
-  actions.languageRu          ->setCheckable( true );
-  actions.languageSv          ->setCheckable( true );
-  actions.languageTr          ->setCheckable( true );
-  actions.languageZhCn        ->setCheckable( true );
+  actions.degree                   ->setCheckable( true );
+  actions.digits15                 ->setCheckable( true );
+  actions.digits2                  ->setCheckable( true );
+  actions.digits3                  ->setCheckable( true );
+  actions.digits50                 ->setCheckable( true );
+  actions.digits8                  ->setCheckable( true );
+  actions.digitsAuto               ->setCheckable( true );
+  actions.optionAlwaysOnTop        ->setCheckable( true );
+  actions.optionAutoCalc           ->setCheckable( true );
+  actions.optionSaveHistoryOnExit  ->setCheckable( true );
+  actions.optionSaveVariablesOnExit->setCheckable( true );
+  actions.optionAutoCompletion     ->setCheckable( true );
+  actions.optionMinimizeToTray     ->setCheckable( true );
+  actions.optionHiliteSyntax       ->setCheckable( true );
+  actions.radian                   ->setCheckable( true );
+  actions.radixCharAuto            ->setCheckable( true );
+  actions.radixCharComma           ->setCheckable( true );
+  actions.radixCharDot             ->setCheckable( true );
+  actions.showStatusBar            ->setCheckable( true );
+  actions.showBook                 ->setCheckable( true );
+  actions.showConstants            ->setCheckable( true );
+  actions.showFullScreen           ->setCheckable( true );
+  actions.showFunctions            ->setCheckable( true );
+  actions.showHistory              ->setCheckable( true );
+  actions.showKeypad               ->setCheckable( true );
+  actions.showVariables            ->setCheckable( true );
+  actions.formatBinary             ->setCheckable( true );
+  actions.formatEngineering        ->setCheckable( true );
+  actions.formatFixed              ->setCheckable( true );
+  actions.formatGeneral            ->setCheckable( true );
+  actions.formatHexadec            ->setCheckable( true );
+  actions.formatOctal              ->setCheckable( true );
+  actions.formatScientific         ->setCheckable( true );
+  actions.languageDefault          ->setCheckable( true );
+  actions.languageCa               ->setCheckable( true );
+  actions.languageCs               ->setCheckable( true );
+  actions.languageDe               ->setCheckable( true );
+  actions.languageEn               ->setCheckable( true );
+  actions.languageEs               ->setCheckable( true );
+  actions.languageEsAr             ->setCheckable( true );
+  actions.languageEu               ->setCheckable( true );
+  actions.languageFi               ->setCheckable( true );
+  actions.languageFr               ->setCheckable( true );
+  actions.languageHe               ->setCheckable( true );
+  actions.languageId               ->setCheckable( true );
+  actions.languageIt               ->setCheckable( true );
+  actions.languageNb               ->setCheckable( true );
+  actions.languageNl               ->setCheckable( true );
+  actions.languagePl               ->setCheckable( true );
+  actions.languagePt               ->setCheckable( true );
+  actions.languagePtBr             ->setCheckable( true );
+  actions.languageRo               ->setCheckable( true );
+  actions.languageRu               ->setCheckable( true );
+  actions.languageSv               ->setCheckable( true );
+  actions.languageTr               ->setCheckable( true );
+  actions.languageZhCn             ->setCheckable( true );
 }
 
 
@@ -609,60 +615,62 @@ void MainWindow::Private::setStatusBarText()
 
 void MainWindow::Private::setActionsText()
 {
-  actions.clearExpression     ->setText( MainWindow::tr( "Clear E&xpression"        ) );
-  actions.clearHistory        ->setText( MainWindow::tr( "Clear &History"           ) );
-  actions.degree              ->setText( MainWindow::tr( "&Degree"                  ) );
-  actions.deleteAllVariables  ->setText( MainWindow::tr( "Delete All V&ariables"    ) );
-  actions.deleteVariable      ->setText( MainWindow::tr( "D&elete Variable..."      ) );
-  actions.digits15            ->setText( MainWindow::tr( "&15 Decimal Digits"       ) );
-  actions.digits2             ->setText( MainWindow::tr( "&2 Decimal Digits"        ) );
-  actions.digits3             ->setText( MainWindow::tr( "&3 Decimal Digits"        ) );
-  actions.digits50            ->setText( MainWindow::tr( "&50 Decimal Digits"       ) );
-  actions.digits8             ->setText( MainWindow::tr( "&8 Decimal Digits"        ) );
-  actions.digitsAuto          ->setText( MainWindow::tr( "&Automatic Precision"     ) );
-  actions.editCopy            ->setText( MainWindow::tr( "&Copy"                    ) );
-  actions.editCopyResult      ->setText( MainWindow::tr( "Copy Last &Result"        ) );
-  actions.editPaste           ->setText( MainWindow::tr( "&Paste"                   ) );
-  actions.helpAbout           ->setText( MainWindow::tr( "&About"                   ) );
-  actions.helpAboutQt         ->setText( MainWindow::tr( "About &Qt"                ) );
-  actions.helpGotoWebsite     ->setText( MainWindow::tr( "SpeedCrunch &Web Site..." ) );
-  actions.helpTipOfTheDay     ->setText( MainWindow::tr( "&Tip of the Day"          ) );
-  actions.insertFunction      ->setText( MainWindow::tr( "Insert &Function..."      ) );
-  actions.insertVariable      ->setText( MainWindow::tr( "Insert &Variable..."      ) );
-  actions.optionAutoCalc      ->setText( MainWindow::tr( "&Partial Results"         ) );
-  actions.optionAutoCompletion->setText( MainWindow::tr( "Automatic &Completion"    ) );
-  actions.optionAlwaysOnTop   ->setText( MainWindow::tr( "Always On &Top"           ) );
-  actions.optionMinimizeToTray->setText( MainWindow::tr( "&Minimize To System Tray" ) );
-  actions.optionHiliteSyntax  ->setText( MainWindow::tr( "Syntax &Highlighting"     ) );
-  actions.radixCharAuto       ->setText( MainWindow::tr( "&System Default"          ) );
-  actions.radixCharDot        ->setText( MainWindow::tr( "&Dot"                     ) );
-  actions.radixCharComma      ->setText( MainWindow::tr( "&Comma"                   ) );
-  actions.radian              ->setText( MainWindow::tr( "&Radian"                  ) );
-  actions.scrollDown          ->setText( MainWindow::tr( "Scroll Display Down"      ) );
-  actions.scrollUp            ->setText( MainWindow::tr( "Scroll Display Up"        ) );
-  actions.selectExpression    ->setText( MainWindow::tr( "&Select Expression"       ) );
-  actions.sessionImport       ->setText( MainWindow::tr( "&Import..."               ) );
-  actions.sessionLoad         ->setText( MainWindow::tr( "&Load..."                 ) );
-  actions.sessionQuit         ->setText( MainWindow::tr( "&Quit"                    ) );
-  actions.sessionSave         ->setText( MainWindow::tr( "&Save..."                 ) );
-  actions.sessionExport       ->setText( MainWindow::tr( "&Export..."               ) );
-  actions.showBook            ->setText( MainWindow::tr( "Math &Book"               ) );
-  actions.showConstants       ->setText( MainWindow::tr( "&Constants"               ) );
-  actions.showFullScreen      ->setText( MainWindow::tr( "Full &Screen Mode"        ) );
-  actions.showFunctions       ->setText( MainWindow::tr( "&Functions"               ) );
-  actions.showHistory         ->setText( MainWindow::tr( "&History"                 ) );
-  actions.showKeypad          ->setText( MainWindow::tr( "&Keypad"                  ) );
-  actions.showMenuBar         ->setText( MainWindow::tr( "Hide &Menu Bar"           ) );
-  actions.showStatusBar       ->setText( MainWindow::tr( "&Status Bar"              ) );
-  actions.showVariables       ->setText( MainWindow::tr( "&Variables"               ) );
-  actions.formatBinary        ->setText( MainWindow::tr( "&Binary"                  ) );
-  actions.formatEngineering   ->setText( MainWindow::tr( "&Engineering"             ) );
-  actions.formatFixed         ->setText( MainWindow::tr( "&Fixed Decimal"           ) );
-  actions.formatGeneral       ->setText( MainWindow::tr( "&General"                 ) );
-  actions.formatHexadec       ->setText( MainWindow::tr( "&Hexadecimal"             ) );
-  actions.formatOctal         ->setText( MainWindow::tr( "&Octal"                   ) );
-  actions.formatScientific    ->setText( MainWindow::tr( "&Scientific"              ) );
-  actions.languageDefault     ->setText( MainWindow::tr( "System &Default"          ) );
+  actions.clearExpression          ->setText( MainWindow::tr( "Clear E&xpression"        ) );
+  actions.clearHistory             ->setText( MainWindow::tr( "Clear &History"           ) );
+  actions.degree                   ->setText( MainWindow::tr( "&Degree"                  ) );
+  actions.deleteAllVariables       ->setText( MainWindow::tr( "Delete All V&ariables"    ) );
+  actions.deleteVariable           ->setText( MainWindow::tr( "D&elete Variable..."      ) );
+  actions.digits15                 ->setText( MainWindow::tr( "&15 Decimal Digits"       ) );
+  actions.digits2                  ->setText( MainWindow::tr( "&2 Decimal Digits"        ) );
+  actions.digits3                  ->setText( MainWindow::tr( "&3 Decimal Digits"        ) );
+  actions.digits50                 ->setText( MainWindow::tr( "&50 Decimal Digits"       ) );
+  actions.digits8                  ->setText( MainWindow::tr( "&8 Decimal Digits"        ) );
+  actions.digitsAuto               ->setText( MainWindow::tr( "&Automatic Precision"     ) );
+  actions.editCopy                 ->setText( MainWindow::tr( "&Copy"                    ) );
+  actions.editCopyResult           ->setText( MainWindow::tr( "Copy Last &Result"        ) );
+  actions.editPaste                ->setText( MainWindow::tr( "&Paste"                   ) );
+  actions.helpAbout                ->setText( MainWindow::tr( "&About"                   ) );
+  actions.helpAboutQt              ->setText( MainWindow::tr( "About &Qt"                ) );
+  actions.helpGotoWebsite          ->setText( MainWindow::tr( "SpeedCrunch &Web Site..." ) );
+  actions.helpTipOfTheDay          ->setText( MainWindow::tr( "&Tip of the Day"          ) );
+  actions.insertFunction           ->setText( MainWindow::tr( "Insert &Function..."      ) );
+  actions.insertVariable           ->setText( MainWindow::tr( "Insert &Variable..."      ) );
+  actions.optionAutoCalc           ->setText( MainWindow::tr( "&Partial Results"         ) );
+  actions.optionSaveHistoryOnExit  ->setText( MainWindow::tr( "Save &History on Exit"    ) );
+  actions.optionSaveVariablesOnExit->setText( MainWindow::tr( "Save &Variables on Exit"  ) );
+  actions.optionAutoCompletion     ->setText( MainWindow::tr( "Automatic &Completion"    ) );
+  actions.optionAlwaysOnTop        ->setText( MainWindow::tr( "Always On &Top"           ) );
+  actions.optionMinimizeToTray     ->setText( MainWindow::tr( "&Minimize To System Tray" ) );
+  actions.optionHiliteSyntax       ->setText( MainWindow::tr( "Syntax &Highlighting"     ) );
+  actions.radixCharAuto            ->setText( MainWindow::tr( "&System Default"          ) );
+  actions.radixCharDot             ->setText( MainWindow::tr( "&Dot"                     ) );
+  actions.radixCharComma           ->setText( MainWindow::tr( "&Comma"                   ) );
+  actions.radian                   ->setText( MainWindow::tr( "&Radian"                  ) );
+  actions.scrollDown               ->setText( MainWindow::tr( "Scroll Display Down"      ) );
+  actions.scrollUp                 ->setText( MainWindow::tr( "Scroll Display Up"        ) );
+  actions.selectExpression         ->setText( MainWindow::tr( "&Select Expression"       ) );
+  actions.sessionImport            ->setText( MainWindow::tr( "&Import..."               ) );
+  actions.sessionLoad              ->setText( MainWindow::tr( "&Load..."                 ) );
+  actions.sessionQuit              ->setText( MainWindow::tr( "&Quit"                    ) );
+  actions.sessionSave              ->setText( MainWindow::tr( "&Save..."                 ) );
+  actions.sessionExport            ->setText( MainWindow::tr( "&Export..."               ) );
+  actions.showBook                 ->setText( MainWindow::tr( "Math &Book"               ) );
+  actions.showConstants            ->setText( MainWindow::tr( "&Constants"               ) );
+  actions.showFullScreen           ->setText( MainWindow::tr( "Full &Screen Mode"        ) );
+  actions.showFunctions            ->setText( MainWindow::tr( "&Functions"               ) );
+  actions.showHistory              ->setText( MainWindow::tr( "&History"                 ) );
+  actions.showKeypad               ->setText( MainWindow::tr( "&Keypad"                  ) );
+  actions.showMenuBar              ->setText( MainWindow::tr( "Hide &Menu Bar"           ) );
+  actions.showStatusBar            ->setText( MainWindow::tr( "&Status Bar"              ) );
+  actions.showVariables            ->setText( MainWindow::tr( "&Variables"               ) );
+  actions.formatBinary             ->setText( MainWindow::tr( "&Binary"                  ) );
+  actions.formatEngineering        ->setText( MainWindow::tr( "&Engineering"             ) );
+  actions.formatFixed              ->setText( MainWindow::tr( "&Fixed Decimal"           ) );
+  actions.formatGeneral            ->setText( MainWindow::tr( "&General"                 ) );
+  actions.formatHexadec            ->setText( MainWindow::tr( "&Hexadecimal"             ) );
+  actions.formatOctal              ->setText( MainWindow::tr( "&Octal"                   ) );
+  actions.formatScientific         ->setText( MainWindow::tr( "&Scientific"              ) );
+  actions.languageDefault          ->setText( MainWindow::tr( "System &Default"          ) );
 }
 
 
@@ -839,11 +847,15 @@ void MainWindow::Private::createMenus()
 
   // settings / behavior
   menus.behavior = menus.settings->addMenu( "" );
-  menus.behavior->addAction( actions.optionAutoCalc       );
-  menus.behavior->addAction( actions.optionAutoCompletion );
-  menus.behavior->addAction( actions.optionHiliteSyntax   );
-  menus.behavior->addAction( actions.optionAlwaysOnTop    );
-  menus.behavior->addAction( actions.optionMinimizeToTray );
+  menus.behavior->addAction( actions.optionSaveHistoryOnExit   );
+  menus.behavior->addAction( actions.optionSaveVariablesOnExit );
+  menus.behavior->addSeparator();
+  menus.behavior->addAction( actions.optionAutoCalc            );
+  menus.behavior->addAction( actions.optionAutoCompletion      );
+  menus.behavior->addAction( actions.optionHiliteSyntax        );
+  menus.behavior->addSeparator();
+  menus.behavior->addAction( actions.optionAlwaysOnTop         );
+  menus.behavior->addAction( actions.optionMinimizeToTray      );
 
   // settings / radix character
   menus.radixChar = menus.settings->addMenu( "" );
@@ -1174,97 +1186,99 @@ void MainWindow::Private::createVariablesDock()
 
 void MainWindow::Private::createFixedConnections()
 {
-  connect( actions.clearHistory,                SIGNAL( triggered()                           ), p,                     SLOT( clearHistory()                        ) );
-  connect( actions.clearExpression,             SIGNAL( triggered()                           ), p,                     SLOT( clearExpression()                     ) );
-  connect( actions.degree,                      SIGNAL( triggered()                           ), p,                     SLOT( degree()                              ) );
-  connect( actions.deleteAllVariables,          SIGNAL( triggered()                           ), p,                     SLOT( deleteAllVariables()                  ) );
-  connect( actions.deleteVariable,              SIGNAL( triggered()                           ), p,                     SLOT( deleteVariable()                      ) );
-  connect( actions.digits15,                    SIGNAL( triggered()                           ), p,                     SLOT( digits15()                            ) );
-  connect( actions.digits2,                     SIGNAL( triggered()                           ), p,                     SLOT( digits2()                             ) );
-  connect( actions.digits3,                     SIGNAL( triggered()                           ), p,                     SLOT( digits3()                             ) );
-  connect( actions.digits50,                    SIGNAL( triggered()                           ), p,                     SLOT( digits50()                            ) );
-  connect( actions.digits8,                     SIGNAL( triggered()                           ), p,                     SLOT( digits8()                             ) );
-  connect( actions.digitsAuto,                  SIGNAL( triggered()                           ), p,                     SLOT( digitsAuto()                          ) );
-  connect( actions.editCopyResult,              SIGNAL( triggered()                           ), p,                     SLOT( copyResult()                          ) );
-  connect( actions.editCopy,                    SIGNAL( triggered()                           ), widgets.editor,        SLOT( copy()                                ) );
-  connect( actions.editPaste,                   SIGNAL( triggered()                           ), widgets.editor,        SLOT( paste()                               ) );
-  connect( actions.selectExpression,            SIGNAL( triggered()                           ), p,                     SLOT( selectExpression()                    ) );
-  connect( actions.helpAboutQt,                 SIGNAL( triggered()                           ), p,                     SLOT( aboutQt()                             ) );
-  connect( actions.helpAbout,                   SIGNAL( triggered()                           ), p,                     SLOT( about()                               ) );
-  connect( actions.helpGotoWebsite,             SIGNAL( triggered()                           ), p,                     SLOT( gotoWebsite()                         ) );
-  connect( actions.helpTipOfTheDay,             SIGNAL( triggered()                           ), p,                     SLOT( showTipOfTheDay()                     ) );
-  connect( actions.insertFunction,              SIGNAL( triggered()                           ), p,                     SLOT( insertFunction()                      ) );
-  connect( actions.insertVariable,              SIGNAL( triggered()                           ), p,                     SLOT( insertVariable()                      ) );
-  connect( actions.radian,                      SIGNAL( triggered()                           ), p,                     SLOT( radian()                              ) );
-  connect( actions.scrollDown,                  SIGNAL( triggered()                           ), p,                     SLOT( scrollDown()                          ) );
-  connect( actions.scrollUp,                    SIGNAL( triggered()                           ), p,                     SLOT( scrollUp()                            ) );
-  connect( actions.sessionImport,               SIGNAL( triggered()                           ), p,                     SLOT( importSession()                       ) );
-  connect( actions.sessionLoad,                 SIGNAL( triggered()                           ), p,                     SLOT( loadSession()                         ) );
-  connect( actions.sessionQuit,                 SIGNAL( triggered()                           ), p,                     SLOT( close()                               ) );
-  connect( actions.sessionSave,                 SIGNAL( triggered()                           ), p,                     SLOT( saveSession()                         ) );
-  connect( actions.sessionExport,               SIGNAL( triggered()                           ), p,                     SLOT( exportSession()                       ) );
-  connect( actions.showBook,                    SIGNAL( toggled( bool )                       ), p,                     SLOT( showBook( bool )                      ) );
-  connect( actions.showConstants,               SIGNAL( toggled( bool )                       ), p,                     SLOT( showConstants( bool )                 ) );
-  connect( actions.showFullScreen,              SIGNAL( toggled( bool )                       ), p,                     SLOT( showInFullScreen( bool )              ) );
-  connect( actions.showFunctions,               SIGNAL( toggled( bool )                       ), p,                     SLOT( showFunctions( bool )                 ) );
-  connect( actions.showHistory,                 SIGNAL( toggled( bool )                       ), p,                     SLOT( showHistory( bool )                   ) );
-  connect( actions.showKeypad,                  SIGNAL( toggled( bool )                       ), p,                     SLOT( showKeypad( bool )                    ) );
-  connect( actions.showMenuBar,                 SIGNAL( triggered()                           ), p,                     SLOT( showMenuBar()                         ) );
-  connect( actions.showStatusBar,               SIGNAL( toggled( bool )                       ), p,                     SLOT( showStatusBar( bool )                 ) );
-  connect( actions.showVariables,               SIGNAL( toggled( bool )                       ), p,                     SLOT( showVariables( bool )                 ) );
-  connect( actions.formatBinary,                SIGNAL( triggered()                           ), p,                     SLOT( formatBinary()                        ) );
-  connect( actions.formatEngineering,           SIGNAL( triggered()                           ), p,                     SLOT( formatEngineering()                   ) );
-  connect( actions.formatFixed,                 SIGNAL( triggered()                           ), p,                     SLOT( formatFixed()                         ) );
-  connect( actions.formatGeneral,               SIGNAL( triggered()                           ), p,                     SLOT( formatGeneral()                       ) );
-  connect( actions.formatHexadec,               SIGNAL( triggered()                           ), p,                     SLOT( formatHexadec()                       ) );
-  connect( actions.formatOctal,                 SIGNAL( triggered()                           ), p,                     SLOT( formatOctal()                         ) );
-  connect( actions.formatScientific,            SIGNAL( triggered()                           ), p,                     SLOT( formatScientific()                    ) );
-  connect( actions.optionAutoCalc,              SIGNAL( toggled( bool )                       ), p,                     SLOT( autoCalcToggled( bool )               ) );
-  connect( actions.optionAutoCompletion,        SIGNAL( toggled( bool )                       ), p,                     SLOT( autoCompletionToggled( bool )         ) );
-  connect( actions.optionAlwaysOnTop,           SIGNAL( toggled( bool )                       ), p,                     SLOT( alwaysOnTopToggled( bool )            ) );
-  connect( actions.optionMinimizeToTray,        SIGNAL( toggled( bool )                       ), p,                     SLOT( minimizeToTrayToggled( bool )         ) );
-  connect( actions.optionHiliteSyntax,          SIGNAL( toggled( bool )                       ), p,                     SLOT( hiliteSyntaxToggled( bool )           ) );
-  connect( actions.radixCharAuto,               SIGNAL( triggered()                           ), p,                     SLOT( radixCharAutoTriggered()              ) );
-  connect( actions.radixCharDot,                SIGNAL( triggered()                           ), p,                     SLOT( radixCharDotTriggered()               ) );
-  connect( actions.radixCharComma,              SIGNAL( triggered()                           ), p,                     SLOT( radixCharCommaTriggered()             ) );
-  connect( actions.languageDefault,             SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
-  connect( actions.languageCa,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
-  connect( actions.languageCs,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
-  connect( actions.languageDe,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
-  connect( actions.languageEn,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
-  connect( actions.languageEs,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
-  connect( actions.languageEsAr,                SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
-  connect( actions.languageEu,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
-  connect( actions.languageFi,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
-  connect( actions.languageFr,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
-  connect( actions.languageHe,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
-  connect( actions.languageId,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
-  connect( actions.languageIt,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
-  connect( actions.languageNb,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
-  connect( actions.languageNl,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
-  connect( actions.languagePl,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
-  connect( actions.languagePt,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
-  connect( actions.languagePtBr,                SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
-  connect( actions.languageRo,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
-  connect( actions.languageRu,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
-  connect( actions.languageSv,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
-  connect( actions.languageTr,                  SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
-  connect( actions.languageZhCn,                SIGNAL( triggered()                           ), p,                     SLOT( changeLanguage()                      ) );
-  connect( widgets.editor,                      SIGNAL( autoCalcEnabled( const QString & )    ), p,                     SLOT( showAutoCalc( const QString & )       ) );
-  connect( widgets.editor,                      SIGNAL( autoCalcDisabled()                    ), p,                     SLOT( hideAutoCalc()                        ) );
-  connect( widgets.editor,                      SIGNAL( returnPressed()                       ), p,                     SLOT( returnPressed()                       ) );
-  connect( widgets.editor,                      SIGNAL( textChanged()                         ), p,                     SLOT( textChanged()                         ) );
-  connect( widgets.display,                     SIGNAL( textSelected( const QString & )       ), widgets.editor,        SLOT( paste()                               ) );
-  connect( widgets.display,                     SIGNAL( textSelected( const QString & )       ), widgets.editor,        SLOT( setFocus()                            ) );
-  connect( p,                                   SIGNAL( formatChanged( char )                 ), widgets.editor,        SLOT( setFormat( char )                     ) );
-  connect( p,                                   SIGNAL( precisionChanged( int )               ), widgets.editor,        SLOT( setPrecision( int )                   ) );
-  connect( p,                                   SIGNAL( radixCharChanged( char )              ), widgets.editor,        SLOT( setRadixChar( char )                  ) );
-  connect( p,                                   SIGNAL( formatChanged( char )                 ), widgets.display,       SLOT( setFormat( char )                     ) );
-  connect( p,                                   SIGNAL( precisionChanged( int )               ), widgets.display,       SLOT( setPrecision( int )                   ) );
-  connect( p,                                   SIGNAL( radixCharChanged( char )              ), widgets.display,       SLOT( setRadixChar( char )                  ) );
-  connect( p,                                   SIGNAL( radixCharChanged( char )              ), evaluator,             SLOT( setRadixChar( char )                  ) );
-  connect( p,                                   SIGNAL( angleModeChanged( char )              ), functions,             SLOT( setAngleMode( char )                  ) );
-  connect( p,                                   SIGNAL( retranslateText()                     ), p,                     SLOT( setAllText()                          ) );
+  connect( actions.clearHistory,                SIGNAL( triggered()                        ), p,                     SLOT( clearHistory()                        ) );
+  connect( actions.clearExpression,             SIGNAL( triggered()                        ), p,                     SLOT( clearExpression()                     ) );
+  connect( actions.degree,                      SIGNAL( triggered()                        ), p,                     SLOT( degree()                              ) );
+  connect( actions.deleteAllVariables,          SIGNAL( triggered()                        ), p,                     SLOT( deleteAllVariables()                  ) );
+  connect( actions.deleteVariable,              SIGNAL( triggered()                        ), p,                     SLOT( deleteVariable()                      ) );
+  connect( actions.digits15,                    SIGNAL( triggered()                        ), p,                     SLOT( digits15()                            ) );
+  connect( actions.digits2,                     SIGNAL( triggered()                        ), p,                     SLOT( digits2()                             ) );
+  connect( actions.digits3,                     SIGNAL( triggered()                        ), p,                     SLOT( digits3()                             ) );
+  connect( actions.digits50,                    SIGNAL( triggered()                        ), p,                     SLOT( digits50()                            ) );
+  connect( actions.digits8,                     SIGNAL( triggered()                        ), p,                     SLOT( digits8()                             ) );
+  connect( actions.digitsAuto,                  SIGNAL( triggered()                        ), p,                     SLOT( digitsAuto()                          ) );
+  connect( actions.editCopyResult,              SIGNAL( triggered()                        ), p,                     SLOT( copyResult()                          ) );
+  connect( actions.editCopy,                    SIGNAL( triggered()                        ), widgets.editor,        SLOT( copy()                                ) );
+  connect( actions.editPaste,                   SIGNAL( triggered()                        ), widgets.editor,        SLOT( paste()                               ) );
+  connect( actions.selectExpression,            SIGNAL( triggered()                        ), p,                     SLOT( selectExpression()                    ) );
+  connect( actions.helpAboutQt,                 SIGNAL( triggered()                        ), p,                     SLOT( aboutQt()                             ) );
+  connect( actions.helpAbout,                   SIGNAL( triggered()                        ), p,                     SLOT( about()                               ) );
+  connect( actions.helpGotoWebsite,             SIGNAL( triggered()                        ), p,                     SLOT( gotoWebsite()                         ) );
+  connect( actions.helpTipOfTheDay,             SIGNAL( triggered()                        ), p,                     SLOT( showTipOfTheDay()                     ) );
+  connect( actions.insertFunction,              SIGNAL( triggered()                        ), p,                     SLOT( insertFunction()                      ) );
+  connect( actions.insertVariable,              SIGNAL( triggered()                        ), p,                     SLOT( insertVariable()                      ) );
+  connect( actions.radian,                      SIGNAL( triggered()                        ), p,                     SLOT( radian()                              ) );
+  connect( actions.scrollDown,                  SIGNAL( triggered()                        ), p,                     SLOT( scrollDown()                          ) );
+  connect( actions.scrollUp,                    SIGNAL( triggered()                        ), p,                     SLOT( scrollUp()                            ) );
+  connect( actions.sessionImport,               SIGNAL( triggered()                        ), p,                     SLOT( importSession()                       ) );
+  connect( actions.sessionLoad,                 SIGNAL( triggered()                        ), p,                     SLOT( loadSession()                         ) );
+  connect( actions.sessionQuit,                 SIGNAL( triggered()                        ), p,                     SLOT( close()                               ) );
+  connect( actions.sessionSave,                 SIGNAL( triggered()                        ), p,                     SLOT( saveSession()                         ) );
+  connect( actions.sessionExport,               SIGNAL( triggered()                        ), p,                     SLOT( exportSession()                       ) );
+  connect( actions.showBook,                    SIGNAL( toggled( bool )                    ), p,                     SLOT( showBook( bool )                      ) );
+  connect( actions.showConstants,               SIGNAL( toggled( bool )                    ), p,                     SLOT( showConstants( bool )                 ) );
+  connect( actions.showFullScreen,              SIGNAL( toggled( bool )                    ), p,                     SLOT( showInFullScreen( bool )              ) );
+  connect( actions.showFunctions,               SIGNAL( toggled( bool )                    ), p,                     SLOT( showFunctions( bool )                 ) );
+  connect( actions.showHistory,                 SIGNAL( toggled( bool )                    ), p,                     SLOT( showHistory( bool )                   ) );
+  connect( actions.showKeypad,                  SIGNAL( toggled( bool )                    ), p,                     SLOT( showKeypad( bool )                    ) );
+  connect( actions.showMenuBar,                 SIGNAL( triggered()                        ), p,                     SLOT( showMenuBar()                         ) );
+  connect( actions.showStatusBar,               SIGNAL( toggled( bool )                    ), p,                     SLOT( showStatusBar( bool )                 ) );
+  connect( actions.showVariables,               SIGNAL( toggled( bool )                    ), p,                     SLOT( showVariables( bool )                 ) );
+  connect( actions.formatBinary,                SIGNAL( triggered()                        ), p,                     SLOT( formatBinary()                        ) );
+  connect( actions.formatEngineering,           SIGNAL( triggered()                        ), p,                     SLOT( formatEngineering()                   ) );
+  connect( actions.formatFixed,                 SIGNAL( triggered()                        ), p,                     SLOT( formatFixed()                         ) );
+  connect( actions.formatGeneral,               SIGNAL( triggered()                        ), p,                     SLOT( formatGeneral()                       ) );
+  connect( actions.formatHexadec,               SIGNAL( triggered()                        ), p,                     SLOT( formatHexadec()                       ) );
+  connect( actions.formatOctal,                 SIGNAL( triggered()                        ), p,                     SLOT( formatOctal()                         ) );
+  connect( actions.formatScientific,            SIGNAL( triggered()                        ), p,                     SLOT( formatScientific()                    ) );
+  connect( actions.optionAutoCalc,              SIGNAL( toggled( bool )                    ), p,                     SLOT( autoCalcToggled( bool )               ) );
+  connect( actions.optionSaveHistoryOnExit,     SIGNAL( toggled( bool )                    ), p,                     SLOT( saveHistoryOnExitToggled( bool )      ) );
+  connect( actions.optionSaveVariablesOnExit,   SIGNAL( toggled( bool )                    ), p,                     SLOT( saveVariablesOnExitToggled( bool )    ) );
+  connect( actions.optionAutoCompletion,        SIGNAL( toggled( bool )                    ), p,                     SLOT( autoCompletionToggled( bool )         ) );
+  connect( actions.optionAlwaysOnTop,           SIGNAL( toggled( bool )                    ), p,                     SLOT( alwaysOnTopToggled( bool )            ) );
+  connect( actions.optionMinimizeToTray,        SIGNAL( toggled( bool )                    ), p,                     SLOT( minimizeToTrayToggled( bool )         ) );
+  connect( actions.optionHiliteSyntax,          SIGNAL( toggled( bool )                    ), p,                     SLOT( hiliteSyntaxToggled( bool )           ) );
+  connect( actions.radixCharAuto,               SIGNAL( triggered()                        ), p,                     SLOT( radixCharAutoTriggered()              ) );
+  connect( actions.radixCharDot,                SIGNAL( triggered()                        ), p,                     SLOT( radixCharDotTriggered()               ) );
+  connect( actions.radixCharComma,              SIGNAL( triggered()                        ), p,                     SLOT( radixCharCommaTriggered()             ) );
+  connect( actions.languageDefault,             SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageCa,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageCs,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageDe,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageEn,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageEs,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageEsAr,                SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageEu,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageFi,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageFr,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageHe,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageId,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageIt,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageNb,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageNl,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languagePl,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languagePt,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languagePtBr,                SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageRo,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageRu,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageSv,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageTr,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                      ) );
+  connect( actions.languageZhCn,                SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                      ) );
+  connect( widgets.editor,                      SIGNAL( autoCalcEnabled( const QString & ) ), p,                     SLOT( showAutoCalc( const QString & )       ) );
+  connect( widgets.editor,                      SIGNAL( autoCalcDisabled()                 ), p,                     SLOT( hideAutoCalc()                        ) );
+  connect( widgets.editor,                      SIGNAL( returnPressed()                    ), p,                     SLOT( returnPressed()                       ) );
+  connect( widgets.editor,                      SIGNAL( textChanged()                      ), p,                     SLOT( textChanged()                         ) );
+  connect( widgets.display,                     SIGNAL( textSelected( const QString & )    ), widgets.editor,        SLOT( paste()                               ) );
+  connect( widgets.display,                     SIGNAL( textSelected( const QString & )    ), widgets.editor,        SLOT( setFocus()                            ) );
+  connect( p,                                   SIGNAL( formatChanged( char )              ), widgets.editor,        SLOT( setFormat( char )                     ) );
+  connect( p,                                   SIGNAL( precisionChanged( int )            ), widgets.editor,        SLOT( setPrecision( int )                   ) );
+  connect( p,                                   SIGNAL( radixCharChanged( char )           ), widgets.editor,        SLOT( setRadixChar( char )                  ) );
+  connect( p,                                   SIGNAL( formatChanged( char )              ), widgets.display,       SLOT( setFormat( char )                     ) );
+  connect( p,                                   SIGNAL( precisionChanged( int )            ), widgets.display,       SLOT( setPrecision( int )                   ) );
+  connect( p,                                   SIGNAL( radixCharChanged( char )           ), widgets.display,       SLOT( setRadixChar( char )                  ) );
+  connect( p,                                   SIGNAL( radixCharChanged( char )           ), evaluator,             SLOT( setRadixChar( char )                  ) );
+  connect( p,                                   SIGNAL( angleModeChanged( char )           ), functions,             SLOT( setAngleMode( char )                  ) );
+  connect( p,                                   SIGNAL( retranslateText()                  ), p,                     SLOT( setAllText()                          ) );
 }
 
 
@@ -1309,14 +1323,18 @@ void MainWindow::Private::applySettings()
   checkInitialLanguage();
 
   // history
-  if ( settings.saveSession )
+  if ( settings.saveHistory )
+  {
+    actions.optionSaveHistoryOnExit->setChecked( true );
     restoreHistory();
-  else
-    p->clearHistory();
+  }
 
   // variables
   if ( settings.saveVariables )
+  {
+    actions.optionSaveVariablesOnExit->setChecked( true );
     restoreVariables();
+  }
 
   // format
   checkInitialFormat();
@@ -1454,8 +1472,16 @@ void MainWindow::Private::checkInitialLanguage()
 void MainWindow::Private::saveSettings()
 {
   // history
-  settings.history        = widgets.editor->history();
-  settings.historyResults = widgets.editor->historyResults();
+  if ( settings.saveHistory )
+  {
+    settings.history        = widgets.editor->history();
+    settings.historyResults = widgets.editor->historyResults();
+  }
+  else
+  {
+    settings.history.clear();
+    settings.historyResults.clear();
+  }
 
   // variables
   if ( settings.saveVariables )
@@ -1948,6 +1974,18 @@ void MainWindow::autoCalcToggled( bool b )
 {
   d->settings.autoCalc = b;
   d->widgets.editor->setAutoCalcEnabled( b );
+}
+
+
+void MainWindow::saveHistoryOnExitToggled( bool b )
+{
+  d->settings.saveHistory = b;
+}
+
+
+void MainWindow::saveVariablesOnExitToggled( bool b )
+{
+  d->settings.saveVariables = b;
 }
 
 
@@ -2612,6 +2650,9 @@ void MainWindow::Private::restoreVariables()
     QStringList list = settings.variables[k].split( "=" );
     evaluator->set( list[0], HNumber( list[1].toAscii().data() ) );
   }
+
+  if ( docks.variables )
+    docks.variables->updateList( evaluator );
 
   // free memory
   settings.variables.clear();
