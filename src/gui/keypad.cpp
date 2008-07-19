@@ -191,15 +191,12 @@ void Keypad::Private::createButtons()
   key8      = new QPushButton( "8",    p );
   key9      = new QPushButton( "9",    p );
   keyAcos   = new QPushButton( "acos", p );
-  keyAdd    = new QPushButton( "+",    p );
   keyAns    = new QPushButton( "ans",  p );
   keyAsin   = new QPushButton( "asin", p );
   keyAtan   = new QPushButton( "atan", p );
   keyC      = new QPushButton( "C",    p );
   keyCos    = new QPushButton( "cos",  p );
-  keyDiv    = new QPushButton( "/",    p );
   keyEE     = new QPushButton( "E",    p );
-  keyEq     = new QPushButton( "=",    p );
   keyExp    = new QPushButton( "exp",  p );
   keyFact   = new QPushButton( "!",    p );
   keyLn     = new QPushButton( "ln",   p );
@@ -212,7 +209,10 @@ void Keypad::Private::createButtons()
   keyXEq    = new QPushButton( "x=",   p );
   keyX      = new QPushButton( "x",    p );
 
+  keyDiv    = new QPushButton( QString::fromUtf8( "÷" ), p );
+  keyEq     = new QPushButton( QString::fromUtf8( "=" ), p );
   keyMul    = new QPushButton( QString::fromUtf8( "∗" ), p );
+  keyAdd    = new QPushButton( QString::fromUtf8( "+" ), p );
   keySub    = new QPushButton( QString::fromUtf8( "−" ), p );
   keyPi     = new QPushButton( QString::fromUtf8( "π" ), p );
   keySqrt   = new QPushButton( QString::fromUtf8( "√" ), p );
