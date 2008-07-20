@@ -93,7 +93,7 @@ class MainWindow : public QMainWindow
     void showVariables( bool );
     void scrollDown();
     void scrollUp();
-    void showMenuBar();
+    void showMenuBar( bool );
     void showStatusBar( bool );
     void formatBinary();
     void formatEngineering();

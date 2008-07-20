@@ -30,7 +30,7 @@ class TipWidget: public QFrame
   Q_OBJECT
 
   public:
-    explicit TipWidget( QWidget * parent );
+    explicit TipWidget( QWidget * parent = 0 );
     ~TipWidget();
 
     QSize sizeHint() const;

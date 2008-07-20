@@ -98,15 +98,15 @@ struct Actions
   QAction * editClearHistory;
 
   // view
-  QAction * showKeypad;
-  QAction * showBook;
-  QAction * showConstants;
-  QAction * showFunctions;
-  QAction * showVariables;
-  QAction * showHistory;
-  QAction * showMenuBar;
-  QAction * showStatusBar;
-  QAction * showFullScreen;
+  QAction * viewKeypad;
+  QAction * viewMathBook;
+  QAction * viewConstants;
+  QAction * viewFunctions;
+  QAction * viewVariables;
+  QAction * viewHistory;
+  QAction * viewMenuBar;
+  QAction * viewStatusBar;
+  QAction * viewFullScreenMode;
 
   // settings / result format / decimal
   QAction * formatGeneral;
@@ -168,6 +168,8 @@ struct Actions
   QAction * helpGotoWebsite;
   QAction * helpAbout;
   QAction * helpAboutQt;
+
+  // shortcuts
   QAction * scrollDown;
   QAction * scrollUp;
 };
@@ -433,15 +435,15 @@ void MainWindow::Private::createActions()
   actions.sessionQuit               = new QAction( p );
   actions.sessionSave               = new QAction( p );
   actions.sessionExport             = new QAction( p );
-  actions.showBook                  = new QAction( p );
-  actions.showConstants             = new QAction( p );
-  actions.showFullScreen            = new QAction( p );
-  actions.showFunctions             = new QAction( p );
-  actions.showHistory               = new QAction( p );
-  actions.showKeypad                = new QAction( p );
-  actions.showMenuBar               = new QAction( p );
-  actions.showStatusBar             = new QAction( p );
-  actions.showVariables             = new QAction( p );
+  actions.viewMathBook              = new QAction( p );
+  actions.viewConstants             = new QAction( p );
+  actions.viewFullScreenMode        = new QAction( p );
+  actions.viewFunctions             = new QAction( p );
+  actions.viewHistory               = new QAction( p );
+  actions.viewKeypad                = new QAction( p );
+  actions.viewMenuBar               = new QAction( p );
+  actions.viewStatusBar             = new QAction( p );
+  actions.viewVariables             = new QAction( p );
   actions.formatBinary              = new QAction( p );
   actions.formatEngineering         = new QAction( p );
   actions.formatFixed               = new QAction( p );
@@ -516,14 +518,15 @@ void MainWindow::Private::createActions()
   actions.radixCharAuto            ->setCheckable( true );
   actions.radixCharComma           ->setCheckable( true );
   actions.radixCharDot             ->setCheckable( true );
-  actions.showStatusBar            ->setCheckable( true );
-  actions.showBook                 ->setCheckable( true );
-  actions.showConstants            ->setCheckable( true );
-  actions.showFullScreen           ->setCheckable( true );
-  actions.showFunctions            ->setCheckable( true );
-  actions.showHistory              ->setCheckable( true );
-  actions.showKeypad               ->setCheckable( true );
-  actions.showVariables            ->setCheckable( true );
+  actions.viewMenuBar              ->setCheckable( true );
+  actions.viewStatusBar            ->setCheckable( true );
+  actions.viewMathBook             ->setCheckable( true );
+  actions.viewConstants            ->setCheckable( true );
+  actions.viewFullScreenMode       ->setCheckable( true );
+  actions.viewFunctions            ->setCheckable( true );
+  actions.viewHistory              ->setCheckable( true );
+  actions.viewKeypad               ->setCheckable( true );
+  actions.viewVariables            ->setCheckable( true );
   actions.formatBinary             ->setCheckable( true );
   actions.formatEngineering        ->setCheckable( true );
   actions.formatFixed              ->setCheckable( true );
@@ -666,15 +669,15 @@ void MainWindow::Private::setActionsText()
   actions.sessionQuit              ->setText( MainWindow::tr( "&Quit"                    ) );
   actions.sessionSave              ->setText( MainWindow::tr( "&Save..."                 ) );
   actions.sessionExport            ->setText( MainWindow::tr( "&Export..."               ) );
-  actions.showBook                 ->setText( MainWindow::tr( "Math &Book"               ) );
-  actions.showConstants            ->setText( MainWindow::tr( "&Constants"               ) );
-  actions.showFullScreen           ->setText( MainWindow::tr( "Full &Screen Mode"        ) );
-  actions.showFunctions            ->setText( MainWindow::tr( "&Functions"               ) );
-  actions.showHistory              ->setText( MainWindow::tr( "&History"                 ) );
-  actions.showKeypad               ->setText( MainWindow::tr( "&Keypad"                  ) );
-  actions.showMenuBar              ->setText( MainWindow::tr( "Hide &Menu Bar"           ) );
-  actions.showStatusBar            ->setText( MainWindow::tr( "&Status Bar"              ) );
-  actions.showVariables            ->setText( MainWindow::tr( "&Variables"               ) );
+  actions.viewMathBook             ->setText( MainWindow::tr( "Math &Book"               ) );
+  actions.viewConstants            ->setText( MainWindow::tr( "&Constants"               ) );
+  actions.viewFullScreenMode       ->setText( MainWindow::tr( "F&ull Screen Mode"        ) );
+  actions.viewFunctions            ->setText( MainWindow::tr( "&Functions"               ) );
+  actions.viewHistory              ->setText( MainWindow::tr( "&History"                 ) );
+  actions.viewKeypad               ->setText( MainWindow::tr( "&Keypad"                  ) );
+  actions.viewMenuBar              ->setText( MainWindow::tr( "&Menu Bar"                ) );
+  actions.viewStatusBar            ->setText( MainWindow::tr( "&Status Bar"              ) );
+  actions.viewVariables            ->setText( MainWindow::tr( "&Variables"               ) );
   actions.formatBinary             ->setText( MainWindow::tr( "&Binary"                  ) );
   actions.formatEngineering        ->setText( MainWindow::tr( "&Engineering"             ) );
   actions.formatFixed              ->setText( MainWindow::tr( "&Fixed Decimal"           ) );
@@ -743,16 +746,16 @@ void MainWindow::Private::createActionGroups()
 
 void MainWindow::Private::createActionShortcuts()
 {
-  actions.editClearExpression     ->setShortcut( Qt::Key_Escape                 );
-  actions.editClearHistory        ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_N );
+  actions.editClearExpression ->setShortcut( Qt::Key_Escape                 );
+  actions.editClearHistory    ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_N );
   actions.degree              ->setShortcut( Qt::Key_F10                    );
-  actions.editDeleteVariable      ->setShortcut( Qt::CTRL + Qt::Key_D           );
+  actions.editDeleteVariable  ->setShortcut( Qt::CTRL + Qt::Key_D           );
   actions.editCopyLastResult  ->setShortcut( Qt::CTRL + Qt::Key_R           );
   actions.editCopy            ->setShortcut( Qt::CTRL + Qt::Key_C           );
   actions.editPaste           ->setShortcut( Qt::CTRL + Qt::Key_V           );
   actions.helpTipOfTheDay     ->setShortcut( Qt::CTRL + Qt::Key_T           );
-  actions.editInsertFunction      ->setShortcut( Qt::CTRL + Qt::Key_F           );
-  actions.editInsertVariable      ->setShortcut( Qt::CTRL + Qt::Key_I           );
+  actions.editInsertFunction  ->setShortcut( Qt::CTRL + Qt::Key_F           );
+  actions.editInsertVariable  ->setShortcut( Qt::CTRL + Qt::Key_I           );
   actions.radian              ->setShortcut( Qt::Key_F9                     );
   actions.scrollDown          ->setShortcut( Qt::SHIFT + Qt::Key_PageDown   );
   actions.scrollUp            ->setShortcut( Qt::SHIFT + Qt::Key_PageUp     );
@@ -760,17 +763,17 @@ void MainWindow::Private::createActionShortcuts()
   actions.sessionLoad         ->setShortcut( Qt::CTRL + Qt::Key_L           );
   actions.sessionQuit         ->setShortcut( Qt::CTRL + Qt::Key_Q           );
   actions.sessionSave         ->setShortcut( Qt::CTRL + Qt::Key_S           );
-  actions.showFullScreen      ->setShortcut( Qt::Key_F11                    );
-  actions.showKeypad          ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_K );
-  actions.showBook            ->setShortcut( Qt::CTRL + Qt::Key_1           );
-  actions.showConstants       ->setShortcut( Qt::CTRL + Qt::Key_2           );
-  actions.showFunctions       ->setShortcut( Qt::CTRL + Qt::Key_3           );
-  actions.showVariables       ->setShortcut( Qt::CTRL + Qt::Key_4           );
-  actions.showHistory         ->setShortcut( Qt::CTRL + Qt::Key_5           );
+  actions.viewFullScreenMode  ->setShortcut( Qt::Key_F11                    );
+  actions.viewKeypad          ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_K );
+  actions.viewMathBook        ->setShortcut( Qt::CTRL + Qt::Key_1           );
+  actions.viewConstants       ->setShortcut( Qt::CTRL + Qt::Key_2           );
+  actions.viewFunctions       ->setShortcut( Qt::CTRL + Qt::Key_3           );
+  actions.viewVariables       ->setShortcut( Qt::CTRL + Qt::Key_4           );
+  actions.viewHistory         ->setShortcut( Qt::CTRL + Qt::Key_5           );
 #ifndef Q_OS_MAC
-  actions.showMenuBar         ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_M );
+  actions.viewMenuBar         ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_M );
 #endif
-  actions.showStatusBar       ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_B );
+  actions.viewStatusBar       ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_B );
   actions.formatBinary        ->setShortcut( Qt::Key_F5                     );
   actions.formatGeneral       ->setShortcut( Qt::Key_F7                     );
   actions.formatHexadec       ->setShortcut( Qt::Key_F8                     );
@@ -811,20 +814,20 @@ void MainWindow::Private::createMenus()
   // view
   menus.view = new QMenu( "", p );
   p->menuBar()->addMenu( menus.view );
-  menus.view->addAction( actions.showKeypad );
+  menus.view->addAction( actions.viewKeypad );
   menus.view->addSeparator();
-  menus.view->addAction( actions.showBook );
-  menus.view->addAction( actions.showConstants );
-  menus.view->addAction( actions.showFunctions );
-  menus.view->addAction( actions.showVariables );
-  menus.view->addAction( actions.showHistory );
+  menus.view->addAction( actions.viewMathBook );
+  menus.view->addAction( actions.viewConstants );
+  menus.view->addAction( actions.viewFunctions );
+  menus.view->addAction( actions.viewVariables );
+  menus.view->addAction( actions.viewHistory );
   menus.view->addSeparator();
+  menus.view->addAction( actions.viewStatusBar );
 #ifndef Q_OS_MAC
-  menus.view->addAction( actions.showMenuBar );
+  menus.view->addAction( actions.viewMenuBar );
 #endif
-  menus.view->addAction( actions.showStatusBar );
   menus.view->addSeparator();
-  menus.view->addAction( actions.showFullScreen );
+  menus.view->addAction( actions.viewFullScreenMode );
 
   // settings
   menus.settings = new QMenu( "", p );
@@ -1227,15 +1230,15 @@ void MainWindow::Private::createFixedConnections()
   connect( actions.sessionQuit,                 SIGNAL( triggered()                        ), p,                     SLOT( close()                            ) );
   connect( actions.sessionSave,                 SIGNAL( triggered()                        ), p,                     SLOT( saveSession()                      ) );
   connect( actions.sessionExport,               SIGNAL( triggered()                        ), p,                     SLOT( exportSession()                    ) );
-  connect( actions.showBook,                    SIGNAL( toggled( bool )                    ), p,                     SLOT( showBook( bool )                   ) );
-  connect( actions.showConstants,               SIGNAL( toggled( bool )                    ), p,                     SLOT( showConstants( bool )              ) );
-  connect( actions.showFullScreen,              SIGNAL( toggled( bool )                    ), p,                     SLOT( showInFullScreen( bool )           ) );
-  connect( actions.showFunctions,               SIGNAL( toggled( bool )                    ), p,                     SLOT( showFunctions( bool )              ) );
-  connect( actions.showHistory,                 SIGNAL( toggled( bool )                    ), p,                     SLOT( showHistory( bool )                ) );
-  connect( actions.showKeypad,                  SIGNAL( toggled( bool )                    ), p,                     SLOT( showKeypad( bool )                 ) );
-  connect( actions.showMenuBar,                 SIGNAL( triggered()                        ), p,                     SLOT( showMenuBar()                      ) );
-  connect( actions.showStatusBar,               SIGNAL( toggled( bool )                    ), p,                     SLOT( showStatusBar( bool )              ) );
-  connect( actions.showVariables,               SIGNAL( toggled( bool )                    ), p,                     SLOT( showVariables( bool )              ) );
+  connect( actions.viewMathBook,                SIGNAL( toggled( bool )                    ), p,                     SLOT( showBook( bool )                   ) );
+  connect( actions.viewConstants,               SIGNAL( toggled( bool )                    ), p,                     SLOT( showConstants( bool )              ) );
+  connect( actions.viewFullScreenMode,          SIGNAL( toggled( bool )                    ), p,                     SLOT( showInFullScreen( bool )           ) );
+  connect( actions.viewFunctions,               SIGNAL( toggled( bool )                    ), p,                     SLOT( showFunctions( bool )              ) );
+  connect( actions.viewHistory,                 SIGNAL( toggled( bool )                    ), p,                     SLOT( showHistory( bool )                ) );
+  connect( actions.viewKeypad,                  SIGNAL( toggled( bool )                    ), p,                     SLOT( showKeypad( bool )                 ) );
+  connect( actions.viewMenuBar,                 SIGNAL( toggled( bool )                    ), p,                     SLOT( showMenuBar( bool )                ) );
+  connect( actions.viewStatusBar,               SIGNAL( toggled( bool )                    ), p,                     SLOT( showStatusBar( bool )              ) );
+  connect( actions.viewVariables,               SIGNAL( toggled( bool )                    ), p,                     SLOT( showVariables( bool )              ) );
   connect( actions.formatBinary,                SIGNAL( triggered()                        ), p,                     SLOT( formatBinary()                     ) );
   connect( actions.formatEngineering,           SIGNAL( triggered()                        ), p,                     SLOT( formatEngineering()                ) );
   connect( actions.formatFixed,                 SIGNAL( triggered()                        ), p,                     SLOT( formatFixed()                      ) );
@@ -1298,11 +1301,11 @@ void MainWindow::Private::applySettings()
 {
   // window state
   //
-  actions.showBook     ->setChecked( settings.showBook      );
-  actions.showConstants->setChecked( settings.showConstants );
-  actions.showFunctions->setChecked( settings.showFunctions );
-  actions.showHistory  ->setChecked( settings.showHistory   );
-  actions.showVariables->setChecked( settings.showVariables );
+  actions.viewMathBook ->setChecked( settings.showBook      );
+  actions.viewConstants->setChecked( settings.showConstants );
+  actions.viewFunctions->setChecked( settings.showFunctions );
+  actions.viewHistory  ->setChecked( settings.showHistory   );
+  actions.viewVariables->setChecked( settings.showVariables );
   // THIS IS NOT NEEDED ANYMORE, BUT NEEDS TO BE TESTED WITH Qt 4.2
   //restoreFloatingDocks();
   //
@@ -1320,7 +1323,7 @@ void MainWindow::Private::applySettings()
   p->restoreState( settings.windowState );
 
   // full screen
-  actions.showFullScreen->setChecked( settings.showFullScreen );
+  actions.viewFullScreenMode->setChecked( settings.showFullScreen );
 
   // always-on-top
   actions.optionAlwaysOnTop->setChecked( settings.stayAlwaysOnTop );
@@ -1363,10 +1366,7 @@ void MainWindow::Private::applySettings()
     actions.radixCharComma->setChecked( true );
 
   // keypad
-  actions.showKeypad->setChecked( settings.showKeypad );
-
-  // menu bar
-  p->menuBar()->setVisible( settings.showMenuBar );
+  actions.viewKeypad->setChecked( settings.showKeypad );
 
   // autocalc
   if ( settings.autoCalc )
@@ -1390,7 +1390,13 @@ void MainWindow::Private::applySettings()
     p->hiliteSyntaxToggled( false );
 
   // status bar
-  actions.showStatusBar->setChecked( settings.showStatusBar );
+  actions.viewStatusBar->setChecked( settings.showStatusBar );
+
+  // menu bar
+#ifndef Q_OS_MAC
+  actions.viewMenuBar->setChecked( settings.showMenuBar );
+  p->menuBar()->setVisible( settings.showMenuBar );
+#endif
 }
 
 
@@ -2156,12 +2162,12 @@ void MainWindow::scrollUp()
 }
 
 
-void MainWindow::showMenuBar()
+void MainWindow::showMenuBar( bool b )
 {
-  menuBar()->setVisible( ! menuBar()->isVisible() );
-  d->settings.showMenuBar = menuBar()->isVisible();
+  menuBar()->setVisible( b );
+  d->settings.showMenuBar = b;
 
-  if ( ! menuBar()->isVisible() && d->conditions.notifyMenuBarHidden )
+  if ( ! b && d->conditions.notifyMenuBarHidden )
   {
     showMenuBarTip();
     d->conditions.notifyMenuBarHidden = false;
@@ -2281,9 +2287,9 @@ void MainWindow::Private::deleteBookDock()
   p->disconnect( docks.book );
   delete docks.book;
   docks.book = 0;
-  actions.showBook->blockSignals( true );
-  actions.showBook->setChecked( false );
-  actions.showBook->blockSignals( false );
+  actions.viewMathBook->blockSignals( true );
+  actions.viewMathBook->setChecked( false );
+  actions.viewMathBook->blockSignals( false );
   settings.showBook = false;
 }
 
@@ -2296,9 +2302,9 @@ void MainWindow::Private::deleteConstantsDock()
   p->disconnect( docks.constants );
   delete docks.constants;
   docks.constants = 0;
-  actions.showConstants->blockSignals( true );
-  actions.showConstants->setChecked( false );
-  actions.showConstants->blockSignals( false );
+  actions.viewConstants->blockSignals( true );
+  actions.viewConstants->setChecked( false );
+  actions.viewConstants->blockSignals( false );
   settings.showConstants = false;
 }
 
@@ -2311,9 +2317,9 @@ void MainWindow::Private::deleteFunctionsDock()
   p->disconnect( docks.functions );
   delete docks.functions;
   docks.functions = 0;
-  actions.showFunctions->blockSignals( true );
-  actions.showFunctions->setChecked( false );
-  actions.showFunctions->blockSignals( false );
+  actions.viewFunctions->blockSignals( true );
+  actions.viewFunctions->setChecked( false );
+  actions.viewFunctions->blockSignals( false );
   settings.showFunctions = false;
 }
 
@@ -2326,9 +2332,9 @@ void MainWindow::Private::deleteHistoryDock()
   p->disconnect( docks.history );
   delete docks.history;
   docks.history = 0;
-  actions.showHistory->blockSignals( true );
-  actions.showHistory->setChecked( false );
-  actions.showHistory->blockSignals( false );
+  actions.viewHistory->blockSignals( true );
+  actions.viewHistory->setChecked( false );
+  actions.viewHistory->blockSignals( false );
   settings.showHistory = false;
 }
 
@@ -2341,9 +2347,9 @@ void MainWindow::Private::deleteVariablesDock()
   p->disconnect( docks.variables );
   delete docks.variables;
   docks.variables = 0;
-  actions.showVariables->blockSignals( true );
-  actions.showVariables->setChecked( false );
-  actions.showVariables->blockSignals( false );
+  actions.viewVariables->blockSignals( true );
+  actions.viewVariables->setChecked( false );
+  actions.viewVariables->blockSignals( false );
   settings.showVariables = false;
 }
 
