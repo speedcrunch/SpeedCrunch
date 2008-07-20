@@ -109,35 +109,35 @@ struct Actions
   QAction * viewFullScreenMode;
 
   // settings / result format / decimal
-  QAction * formatGeneral;
-  QAction * formatFixed;
-  QAction * formatEngineering;
-  QAction * formatScientific;
-  QAction * digitsAuto;
-  QAction * digits2;
-  QAction * digits3;
-  QAction * digits8;
-  QAction * digits15;
-  QAction * digits50;
+  QAction * settingsResultFormatGeneral;
+  QAction * settingsResultFormatFixed;
+  QAction * settingsResultFormatEngineering;
+  QAction * settingsResultFormatScientific;
+  QAction * settingsResultFormatAutoPrecision;
+  QAction * settingsResultFormat2Digits;
+  QAction * settingsResultFormat3Digits;
+  QAction * settingsResultFormat8Digits;
+  QAction * settingsResultFormat15Digits;
+  QAction * settingsResultFormat50Digits;
   // settings / result format
-  QAction * formatBinary;
-  QAction * formatOctal;
-  QAction * formatHexadec;
+  QAction * settingsResultFormatBinary;
+  QAction * settingsResultFormatOctal;
+  QAction * settingsResultFormatHexadecimal;
   // settings / angle unit
-  QAction * radian;
-  QAction * degree;
+  QAction * settingsAngleUnitRadian;
+  QAction * settingsAngleUnitDegree;
   // settings / behavior
-  QAction * optionSaveHistoryOnExit;
-  QAction * optionSaveVariablesOnExit;
-  QAction * optionAutoCalc;
-  QAction * optionAutoCompletion;
-  QAction * optionHiliteSyntax;
-  QAction * optionAlwaysOnTop;
-  QAction * optionMinimizeToTray;
+  QAction * settingsBehaviorSaveHistoryOnExit;
+  QAction * settingsBehaviorSaveVariablesOnExit;
+  QAction * settingsBehaviorPartialResults;
+  QAction * settingsBehaviorAutoCompletion;
+  QAction * settingsBehaviorSyntaxHilite;
+  QAction * settingsBehaviorAlwaysOnTop;
+  QAction * settingsBehaviorMinimizeToTray;
   // settings / radix character
-  QAction * radixCharAuto;
-  QAction * radixCharDot;
-  QAction * radixCharComma;
+  QAction * settingsRadixCharDefault;
+  QAction * settingsRadixCharDot;
+  QAction * settingsRadixCharComma;
   // settings / language
   QAction * languageDefault;
   QAction * languageCa;
@@ -165,7 +165,7 @@ struct Actions
 
   // help
   QAction * helpTipOfTheDay;
-  QAction * helpGotoWebsite;
+  QAction * helpWebsite;
   QAction * helpAbout;
   QAction * helpAboutQt;
 
@@ -396,63 +396,71 @@ void MainWindow::Private::createUi()
 
 void MainWindow::Private::createActions()
 {
-  actions.editClearExpression       = new QAction( p );
-  actions.editClearHistory          = new QAction( p );
-  actions.degree                    = new QAction( p );
-  actions.editDeleteAllVariables    = new QAction( p );
-  actions.editDeleteVariable        = new QAction( p );
-  actions.digits15                  = new QAction( p );
-  actions.digits2                   = new QAction( p );
-  actions.digits3                   = new QAction( p );
-  actions.digits50                  = new QAction( p );
-  actions.digits8                   = new QAction( p );
-  actions.digitsAuto                = new QAction( p );
-  actions.editCopy                  = new QAction( p );
-  actions.editCopyLastResult        = new QAction( p );
-  actions.editPaste                 = new QAction( p );
-  actions.helpAbout                 = new QAction( p );
-  actions.helpAboutQt               = new QAction( p );
-  actions.helpGotoWebsite           = new QAction( p );
-  actions.helpTipOfTheDay           = new QAction( p );
-  actions.editInsertFunction        = new QAction( p );
-  actions.editInsertVariable        = new QAction( p );
-  actions.optionAutoCalc            = new QAction( p );
-  actions.optionSaveHistoryOnExit   = new QAction( p );
-  actions.optionSaveVariablesOnExit = new QAction( p );
-  actions.optionAutoCompletion      = new QAction( p );
-  actions.optionAlwaysOnTop         = new QAction( p );
-  actions.optionMinimizeToTray      = new QAction( p );
-  actions.optionHiliteSyntax        = new QAction( p );
-  actions.radixCharAuto             = new QAction( p );
-  actions.radixCharDot              = new QAction( p );
-  actions.radixCharComma            = new QAction( p );
-  actions.radian                    = new QAction( p );
-  actions.scrollDown                = new QAction( p );
-  actions.scrollUp                  = new QAction( p );
-  actions.editSelectExpression      = new QAction( p );
-  actions.sessionImport             = new QAction( p );
-  actions.sessionLoad               = new QAction( p );
-  actions.sessionQuit               = new QAction( p );
-  actions.sessionSave               = new QAction( p );
-  actions.sessionExport             = new QAction( p );
-  actions.viewMathBook              = new QAction( p );
-  actions.viewConstants             = new QAction( p );
-  actions.viewFullScreenMode        = new QAction( p );
-  actions.viewFunctions             = new QAction( p );
-  actions.viewHistory               = new QAction( p );
-  actions.viewKeypad                = new QAction( p );
-  actions.viewMenuBar               = new QAction( p );
-  actions.viewStatusBar             = new QAction( p );
-  actions.viewVariables             = new QAction( p );
-  actions.formatBinary              = new QAction( p );
-  actions.formatEngineering         = new QAction( p );
-  actions.formatFixed               = new QAction( p );
-  actions.formatGeneral             = new QAction( p );
-  actions.formatHexadec             = new QAction( p );
-  actions.formatOctal               = new QAction( p );
-  actions.formatScientific          = new QAction( p );
-  actions.languageDefault           = new QAction( p );
+  actions.sessionExport = new QAction( p );
+  actions.sessionImport = new QAction( p );
+  actions.sessionLoad   = new QAction( p );
+  actions.sessionQuit   = new QAction( p );
+  actions.sessionSave   = new QAction( p );
 
+  actions.editClearExpression    = new QAction( p );
+  actions.editClearHistory       = new QAction( p );
+  actions.editCopyLastResult     = new QAction( p );
+  actions.editCopy               = new QAction( p );
+  actions.editDeleteAllVariables = new QAction( p );
+  actions.editDeleteVariable     = new QAction( p );
+  actions.editInsertFunction     = new QAction( p );
+  actions.editInsertVariable     = new QAction( p );
+  actions.editPaste              = new QAction( p );
+  actions.editSelectExpression   = new QAction( p );
+
+  actions.viewConstants      = new QAction( p );
+  actions.viewFullScreenMode = new QAction( p );
+  actions.viewFunctions      = new QAction( p );
+  actions.viewHistory        = new QAction( p );
+  actions.viewKeypad         = new QAction( p );
+  actions.viewMathBook       = new QAction( p );
+  actions.viewMenuBar        = new QAction( p );
+  actions.viewStatusBar      = new QAction( p );
+  actions.viewVariables      = new QAction( p );
+
+  actions.settingsAngleUnitDegree = new QAction( p );
+  actions.settingsAngleUnitRadian = new QAction( p );
+
+  actions.settingsBehaviorAlwaysOnTop         = new QAction( p );
+  actions.settingsBehaviorAutoCompletion      = new QAction( p );
+  actions.settingsBehaviorMinimizeToTray      = new QAction( p );
+  actions.settingsBehaviorPartialResults      = new QAction( p );
+  actions.settingsBehaviorSaveHistoryOnExit   = new QAction( p );
+  actions.settingsBehaviorSaveVariablesOnExit = new QAction( p );
+  actions.settingsBehaviorSyntaxHilite        = new QAction( p );
+
+  actions.settingsRadixCharComma   = new QAction( p );
+  actions.settingsRadixCharDefault = new QAction( p );
+  actions.settingsRadixCharDot     = new QAction( p );
+
+  actions.settingsResultFormat15Digits      = new QAction( p );
+  actions.settingsResultFormat2Digits       = new QAction( p );
+  actions.settingsResultFormat3Digits       = new QAction( p );
+  actions.settingsResultFormat50Digits      = new QAction( p );
+  actions.settingsResultFormat8Digits       = new QAction( p );
+  actions.settingsResultFormatAutoPrecision = new QAction( p );
+  actions.settingsResultFormatBinary        = new QAction( p );
+  actions.settingsResultFormatEngineering   = new QAction( p );
+  actions.settingsResultFormatFixed         = new QAction( p );
+  actions.settingsResultFormatGeneral       = new QAction( p );
+  actions.settingsResultFormatHexadecimal   = new QAction( p );
+  actions.settingsResultFormatOctal         = new QAction( p );
+  actions.settingsResultFormatScientific    = new QAction( p );
+
+  actions.helpAbout       = new QAction( p );
+  actions.helpAboutQt     = new QAction( p );
+  actions.helpTipOfTheDay = new QAction( p );
+  actions.helpWebsite     = new QAction( p );
+
+  actions.scrollDown = new QAction( p );
+  actions.scrollUp   = new QAction( p );
+
+  actions.languageDefault = new QAction( p );
   actions.languageCa   = new QAction( QString::fromUtf8( "Català"              ), p );
   actions.languageCs   = new QAction( QString::fromUtf8( "Česky"               ), p );
   actions.languageDe   = new QAction( QString::fromUtf8( "Deutsch"             ), p );
@@ -500,63 +508,68 @@ void MainWindow::Private::createActions()
   actions.languageTr     ->setData( QString( "tr"    ) );
   actions.languageZhCn   ->setData( QString( "zh_CN" ) );
 
-  actions.degree                   ->setCheckable( true );
-  actions.digits15                 ->setCheckable( true );
-  actions.digits2                  ->setCheckable( true );
-  actions.digits3                  ->setCheckable( true );
-  actions.digits50                 ->setCheckable( true );
-  actions.digits8                  ->setCheckable( true );
-  actions.digitsAuto               ->setCheckable( true );
-  actions.optionAlwaysOnTop        ->setCheckable( true );
-  actions.optionAutoCalc           ->setCheckable( true );
-  actions.optionSaveHistoryOnExit  ->setCheckable( true );
-  actions.optionSaveVariablesOnExit->setCheckable( true );
-  actions.optionAutoCompletion     ->setCheckable( true );
-  actions.optionMinimizeToTray     ->setCheckable( true );
-  actions.optionHiliteSyntax       ->setCheckable( true );
-  actions.radian                   ->setCheckable( true );
-  actions.radixCharAuto            ->setCheckable( true );
-  actions.radixCharComma           ->setCheckable( true );
-  actions.radixCharDot             ->setCheckable( true );
-  actions.viewMenuBar              ->setCheckable( true );
-  actions.viewStatusBar            ->setCheckable( true );
-  actions.viewMathBook             ->setCheckable( true );
-  actions.viewConstants            ->setCheckable( true );
-  actions.viewFullScreenMode       ->setCheckable( true );
-  actions.viewFunctions            ->setCheckable( true );
-  actions.viewHistory              ->setCheckable( true );
-  actions.viewKeypad               ->setCheckable( true );
-  actions.viewVariables            ->setCheckable( true );
-  actions.formatBinary             ->setCheckable( true );
-  actions.formatEngineering        ->setCheckable( true );
-  actions.formatFixed              ->setCheckable( true );
-  actions.formatGeneral            ->setCheckable( true );
-  actions.formatHexadec            ->setCheckable( true );
-  actions.formatOctal              ->setCheckable( true );
-  actions.formatScientific         ->setCheckable( true );
-  actions.languageDefault          ->setCheckable( true );
-  actions.languageCa               ->setCheckable( true );
-  actions.languageCs               ->setCheckable( true );
-  actions.languageDe               ->setCheckable( true );
-  actions.languageEn               ->setCheckable( true );
-  actions.languageEs               ->setCheckable( true );
-  actions.languageEsAr             ->setCheckable( true );
-  actions.languageEu               ->setCheckable( true );
-  actions.languageFi               ->setCheckable( true );
-  actions.languageFr               ->setCheckable( true );
-  actions.languageHe               ->setCheckable( true );
-  actions.languageId               ->setCheckable( true );
-  actions.languageIt               ->setCheckable( true );
-  actions.languageNb               ->setCheckable( true );
-  actions.languageNl               ->setCheckable( true );
-  actions.languagePl               ->setCheckable( true );
-  actions.languagePt               ->setCheckable( true );
-  actions.languagePtBr             ->setCheckable( true );
-  actions.languageRo               ->setCheckable( true );
-  actions.languageRu               ->setCheckable( true );
-  actions.languageSv               ->setCheckable( true );
-  actions.languageTr               ->setCheckable( true );
-  actions.languageZhCn             ->setCheckable( true );
+  actions.settingsAngleUnitDegree->setCheckable( true );
+  actions.settingsAngleUnitRadian->setCheckable( true );
+
+  actions.settingsBehaviorAlwaysOnTop        ->setCheckable( true );
+  actions.settingsBehaviorAutoCompletion     ->setCheckable( true );
+  actions.settingsBehaviorMinimizeToTray     ->setCheckable( true );
+  actions.settingsBehaviorPartialResults     ->setCheckable( true );
+  actions.settingsBehaviorSaveHistoryOnExit  ->setCheckable( true );
+  actions.settingsBehaviorSaveVariablesOnExit->setCheckable( true );
+  actions.settingsBehaviorSyntaxHilite       ->setCheckable( true );
+
+  actions.settingsRadixCharComma  ->setCheckable( true );
+  actions.settingsRadixCharDefault->setCheckable( true );
+  actions.settingsRadixCharDot    ->setCheckable( true );
+
+  actions.settingsResultFormat15Digits     ->setCheckable( true );
+  actions.settingsResultFormat2Digits      ->setCheckable( true );
+  actions.settingsResultFormat3Digits      ->setCheckable( true );
+  actions.settingsResultFormat50Digits     ->setCheckable( true );
+  actions.settingsResultFormat8Digits      ->setCheckable( true );
+  actions.settingsResultFormatAutoPrecision->setCheckable( true );
+  actions.settingsResultFormatBinary       ->setCheckable( true );
+  actions.settingsResultFormatEngineering  ->setCheckable( true );
+  actions.settingsResultFormatFixed        ->setCheckable( true );
+  actions.settingsResultFormatGeneral      ->setCheckable( true );
+  actions.settingsResultFormatHexadecimal  ->setCheckable( true );
+  actions.settingsResultFormatOctal        ->setCheckable( true );
+  actions.settingsResultFormatScientific   ->setCheckable( true );
+
+  actions.viewConstants     ->setCheckable( true );
+  actions.viewFullScreenMode->setCheckable( true );
+  actions.viewFunctions     ->setCheckable( true );
+  actions.viewHistory       ->setCheckable( true );
+  actions.viewKeypad        ->setCheckable( true );
+  actions.viewMathBook      ->setCheckable( true );
+  actions.viewMenuBar       ->setCheckable( true );
+  actions.viewStatusBar     ->setCheckable( true );
+  actions.viewVariables     ->setCheckable( true );
+
+  actions.languageDefault->setCheckable( true );
+  actions.languageCa     ->setCheckable( true );
+  actions.languageCs     ->setCheckable( true );
+  actions.languageDe     ->setCheckable( true );
+  actions.languageEn     ->setCheckable( true );
+  actions.languageEs     ->setCheckable( true );
+  actions.languageEsAr   ->setCheckable( true );
+  actions.languageEu     ->setCheckable( true );
+  actions.languageFi     ->setCheckable( true );
+  actions.languageFr     ->setCheckable( true );
+  actions.languageHe     ->setCheckable( true );
+  actions.languageId     ->setCheckable( true );
+  actions.languageIt     ->setCheckable( true );
+  actions.languageNb     ->setCheckable( true );
+  actions.languageNl     ->setCheckable( true );
+  actions.languagePl     ->setCheckable( true );
+  actions.languagePt     ->setCheckable( true );
+  actions.languagePtBr   ->setCheckable( true );
+  actions.languageRo     ->setCheckable( true );
+  actions.languageRu     ->setCheckable( true );
+  actions.languageSv     ->setCheckable( true );
+  actions.languageTr     ->setCheckable( true );
+  actions.languageZhCn   ->setCheckable( true );
 }
 
 
@@ -630,92 +643,94 @@ void MainWindow::Private::setStatusBarText()
 
 void MainWindow::Private::setActionsText()
 {
-  actions.editClearExpression      ->setText( MainWindow::tr( "Clear E&xpression"        ) );
-  actions.editClearHistory         ->setText( MainWindow::tr( "Clear &History"           ) );
-  actions.degree                   ->setText( MainWindow::tr( "&Degree"                  ) );
-  actions.editDeleteAllVariables   ->setText( MainWindow::tr( "Delete All V&ariables"    ) );
-  actions.editDeleteVariable       ->setText( MainWindow::tr( "D&elete Variable..."      ) );
-  actions.digits15                 ->setText( MainWindow::tr( "&15 Decimal Digits"       ) );
-  actions.digits2                  ->setText( MainWindow::tr( "&2 Decimal Digits"        ) );
-  actions.digits3                  ->setText( MainWindow::tr( "&3 Decimal Digits"        ) );
-  actions.digits50                 ->setText( MainWindow::tr( "&50 Decimal Digits"       ) );
-  actions.digits8                  ->setText( MainWindow::tr( "&8 Decimal Digits"        ) );
-  actions.digitsAuto               ->setText( MainWindow::tr( "&Automatic Precision"     ) );
-  actions.editCopy                 ->setText( MainWindow::tr( "&Copy"                    ) );
-  actions.editCopyLastResult       ->setText( MainWindow::tr( "Copy Last &Result"        ) );
-  actions.editPaste                ->setText( MainWindow::tr( "&Paste"                   ) );
-  actions.helpAbout                ->setText( MainWindow::tr( "&About"                   ) );
-  actions.helpAboutQt              ->setText( MainWindow::tr( "About &Qt"                ) );
-  actions.helpGotoWebsite          ->setText( MainWindow::tr( "SpeedCrunch &Web Site..." ) );
-  actions.helpTipOfTheDay          ->setText( MainWindow::tr( "&Tip of the Day"          ) );
-  actions.editInsertFunction       ->setText( MainWindow::tr( "Insert &Function..."      ) );
-  actions.editInsertVariable       ->setText( MainWindow::tr( "Insert &Variable..."      ) );
-  actions.optionAutoCalc           ->setText( MainWindow::tr( "&Partial Results"         ) );
-  actions.optionSaveHistoryOnExit  ->setText( MainWindow::tr( "Save &History on Exit"    ) );
-  actions.optionSaveVariablesOnExit->setText( MainWindow::tr( "Save &Variables on Exit"  ) );
-  actions.optionAutoCompletion     ->setText( MainWindow::tr( "Automatic &Completion"    ) );
-  actions.optionAlwaysOnTop        ->setText( MainWindow::tr( "Always On &Top"           ) );
-  actions.optionMinimizeToTray     ->setText( MainWindow::tr( "&Minimize To System Tray" ) );
-  actions.optionHiliteSyntax       ->setText( MainWindow::tr( "Syntax &Highlighting"     ) );
-  actions.radixCharAuto            ->setText( MainWindow::tr( "&System Default"          ) );
-  actions.radixCharDot             ->setText( MainWindow::tr( "&Dot"                     ) );
-  actions.radixCharComma           ->setText( MainWindow::tr( "&Comma"                   ) );
-  actions.radian                   ->setText( MainWindow::tr( "&Radian"                  ) );
-  actions.scrollDown               ->setText( MainWindow::tr( "Scroll Display Down"      ) );
-  actions.scrollUp                 ->setText( MainWindow::tr( "Scroll Display Up"        ) );
-  actions.editSelectExpression     ->setText( MainWindow::tr( "&Select Expression"       ) );
-  actions.sessionImport            ->setText( MainWindow::tr( "&Import..."               ) );
-  actions.sessionLoad              ->setText( MainWindow::tr( "&Load..."                 ) );
-  actions.sessionQuit              ->setText( MainWindow::tr( "&Quit"                    ) );
-  actions.sessionSave              ->setText( MainWindow::tr( "&Save..."                 ) );
-  actions.sessionExport            ->setText( MainWindow::tr( "&Export..."               ) );
-  actions.viewMathBook             ->setText( MainWindow::tr( "Math &Book"               ) );
-  actions.viewConstants            ->setText( MainWindow::tr( "&Constants"               ) );
-  actions.viewFullScreenMode       ->setText( MainWindow::tr( "F&ull Screen Mode"        ) );
-  actions.viewFunctions            ->setText( MainWindow::tr( "&Functions"               ) );
-  actions.viewHistory              ->setText( MainWindow::tr( "&History"                 ) );
-  actions.viewKeypad               ->setText( MainWindow::tr( "&Keypad"                  ) );
-  actions.viewMenuBar              ->setText( MainWindow::tr( "&Menu Bar"                ) );
-  actions.viewStatusBar            ->setText( MainWindow::tr( "&Status Bar"              ) );
-  actions.viewVariables            ->setText( MainWindow::tr( "&Variables"               ) );
-  actions.formatBinary             ->setText( MainWindow::tr( "&Binary"                  ) );
-  actions.formatEngineering        ->setText( MainWindow::tr( "&Engineering"             ) );
-  actions.formatFixed              ->setText( MainWindow::tr( "&Fixed Decimal"           ) );
-  actions.formatGeneral            ->setText( MainWindow::tr( "&General"                 ) );
-  actions.formatHexadec            ->setText( MainWindow::tr( "&Hexadecimal"             ) );
-  actions.formatOctal              ->setText( MainWindow::tr( "&Octal"                   ) );
-  actions.formatScientific         ->setText( MainWindow::tr( "&Scientific"              ) );
-  actions.languageDefault          ->setText( MainWindow::tr( "System &Default"          ) );
+  actions.editClearExpression                ->setText( MainWindow::tr( "Clear E&xpression"        ) );
+  actions.editClearHistory                   ->setText( MainWindow::tr( "Clear &History"           ) );
+  actions.editCopyLastResult                 ->setText( MainWindow::tr( "Copy Last &Result"        ) );
+  actions.editCopy                           ->setText( MainWindow::tr( "&Copy"                    ) );
+  actions.editDeleteAllVariables             ->setText( MainWindow::tr( "Delete All V&ariables"    ) );
+  actions.editDeleteVariable                 ->setText( MainWindow::tr( "D&elete Variable..."      ) );
+  actions.editInsertFunction                 ->setText( MainWindow::tr( "Insert &Function..."      ) );
+  actions.editInsertVariable                 ->setText( MainWindow::tr( "Insert &Variable..."      ) );
+  actions.editPaste                          ->setText( MainWindow::tr( "&Paste"                   ) );
+  actions.editSelectExpression               ->setText( MainWindow::tr( "&Select Expression"       ) );
+  actions.helpAboutQt                        ->setText( MainWindow::tr( "About &Qt"                ) );
+  actions.helpAbout                          ->setText( MainWindow::tr( "&About"                   ) );
+  actions.helpTipOfTheDay                    ->setText( MainWindow::tr( "&Tip of the Day"          ) );
+  actions.helpWebsite                        ->setText( MainWindow::tr( "SpeedCrunch &Web Site..." ) );
+  actions.sessionExport                      ->setText( MainWindow::tr( "&Export..."               ) );
+  actions.sessionImport                      ->setText( MainWindow::tr( "&Import..."               ) );
+  actions.sessionLoad                        ->setText( MainWindow::tr( "&Load..."                 ) );
+  actions.sessionQuit                        ->setText( MainWindow::tr( "&Quit"                    ) );
+  actions.sessionSave                        ->setText( MainWindow::tr( "&Save..."                 ) );
+  actions.settingsAngleUnitDegree            ->setText( MainWindow::tr( "&Degree"                  ) );
+  actions.settingsAngleUnitRadian            ->setText( MainWindow::tr( "&Radian"                  ) );
+  actions.settingsBehaviorAlwaysOnTop        ->setText( MainWindow::tr( "Always On &Top"           ) );
+  actions.settingsBehaviorAutoCompletion     ->setText( MainWindow::tr( "Automatic &Completion"    ) );
+  actions.settingsBehaviorMinimizeToTray     ->setText( MainWindow::tr( "&Minimize To System Tray" ) );
+  actions.settingsBehaviorPartialResults     ->setText( MainWindow::tr( "&Partial Results"         ) );
+  actions.settingsBehaviorSaveHistoryOnExit  ->setText( MainWindow::tr( "Save &History on Exit"    ) );
+  actions.settingsBehaviorSaveVariablesOnExit->setText( MainWindow::tr( "Save &Variables on Exit"  ) );
+  actions.settingsBehaviorSyntaxHilite       ->setText( MainWindow::tr( "Syntax &Highlighting"     ) );
+  actions.settingsRadixCharComma             ->setText( MainWindow::tr( "&Comma"                   ) );
+  actions.settingsRadixCharDefault           ->setText( MainWindow::tr( "&System Default"          ) );
+  actions.settingsRadixCharDot               ->setText( MainWindow::tr( "&Dot"                     ) );
+  actions.settingsResultFormat15Digits       ->setText( MainWindow::tr( "&15 Decimal Digits"       ) );
+  actions.settingsResultFormat2Digits        ->setText( MainWindow::tr( "&2 Decimal Digits"        ) );
+  actions.settingsResultFormat3Digits        ->setText( MainWindow::tr( "&3 Decimal Digits"        ) );
+  actions.settingsResultFormat50Digits       ->setText( MainWindow::tr( "&50 Decimal Digits"       ) );
+  actions.settingsResultFormat8Digits        ->setText( MainWindow::tr( "&8 Decimal Digits"        ) );
+  actions.settingsResultFormatAutoPrecision  ->setText( MainWindow::tr( "&Automatic Precision"     ) );
+  actions.settingsResultFormatBinary         ->setText( MainWindow::tr( "&Binary"                  ) );
+  actions.settingsResultFormatEngineering    ->setText( MainWindow::tr( "&Engineering"             ) );
+  actions.settingsResultFormatFixed          ->setText( MainWindow::tr( "&Fixed Decimal"           ) );
+  actions.settingsResultFormatGeneral        ->setText( MainWindow::tr( "&General"                 ) );
+  actions.settingsResultFormatHexadecimal    ->setText( MainWindow::tr( "&Hexadecimal"             ) );
+  actions.settingsResultFormatOctal          ->setText( MainWindow::tr( "&Octal"                   ) );
+  actions.settingsResultFormatScientific     ->setText( MainWindow::tr( "&Scientific"              ) );
+  actions.viewConstants                      ->setText( MainWindow::tr( "&Constants"               ) );
+  actions.viewFullScreenMode                 ->setText( MainWindow::tr( "F&ull Screen Mode"        ) );
+  actions.viewFunctions                      ->setText( MainWindow::tr( "&Functions"               ) );
+  actions.viewHistory                        ->setText( MainWindow::tr( "&History"                 ) );
+  actions.viewKeypad                         ->setText( MainWindow::tr( "&Keypad"                  ) );
+  actions.viewMathBook                       ->setText( MainWindow::tr( "Math &Book"               ) );
+  actions.viewMenuBar                        ->setText( MainWindow::tr( "&Menu Bar"                ) );
+  actions.viewStatusBar                      ->setText( MainWindow::tr( "&Status Bar"              ) );
+  actions.viewVariables                      ->setText( MainWindow::tr( "&Variables"               ) );
+
+  actions.scrollDown                         ->setText( MainWindow::tr( "Scroll Display Down"      ) );
+  actions.scrollUp                           ->setText( MainWindow::tr( "Scroll Display Up"        ) );
+
+  actions.languageDefault                    ->setText( MainWindow::tr( "System &Default"          ) );
 }
 
 
 void MainWindow::Private::createActionGroups()
 {
   actionGroups.resultFormat = new QActionGroup( p );
-  actionGroups.resultFormat->addAction( actions.formatBinary );
-  actionGroups.resultFormat->addAction( actions.formatGeneral );
-  actionGroups.resultFormat->addAction( actions.formatFixed );
-  actionGroups.resultFormat->addAction( actions.formatEngineering );
-  actionGroups.resultFormat->addAction( actions.formatScientific );
-  actionGroups.resultFormat->addAction( actions.formatOctal );
-  actionGroups.resultFormat->addAction( actions.formatHexadec );
+  actionGroups.resultFormat->addAction( actions.settingsResultFormatBinary );
+  actionGroups.resultFormat->addAction( actions.settingsResultFormatGeneral );
+  actionGroups.resultFormat->addAction( actions.settingsResultFormatFixed );
+  actionGroups.resultFormat->addAction( actions.settingsResultFormatEngineering );
+  actionGroups.resultFormat->addAction( actions.settingsResultFormatScientific );
+  actionGroups.resultFormat->addAction( actions.settingsResultFormatOctal );
+  actionGroups.resultFormat->addAction( actions.settingsResultFormatHexadecimal );
 
   actionGroups.digits = new QActionGroup( p );
-  actionGroups.digits->addAction( actions.digitsAuto );
-  actionGroups.digits->addAction( actions.digits2 );
-  actionGroups.digits->addAction( actions.digits3 );
-  actionGroups.digits->addAction( actions.digits8 );
-  actionGroups.digits->addAction( actions.digits15 );
-  actionGroups.digits->addAction( actions.digits50 );
+  actionGroups.digits->addAction( actions.settingsResultFormatAutoPrecision );
+  actionGroups.digits->addAction( actions.settingsResultFormat2Digits );
+  actionGroups.digits->addAction( actions.settingsResultFormat3Digits );
+  actionGroups.digits->addAction( actions.settingsResultFormat8Digits );
+  actionGroups.digits->addAction( actions.settingsResultFormat15Digits );
+  actionGroups.digits->addAction( actions.settingsResultFormat50Digits );
 
   actionGroups.angle = new QActionGroup( p );
-  actionGroups.angle->addAction( actions.radian );
-  actionGroups.angle->addAction( actions.degree );
+  actionGroups.angle->addAction( actions.settingsAngleUnitRadian );
+  actionGroups.angle->addAction( actions.settingsAngleUnitDegree );
 
   actionGroups.radixChar = new QActionGroup( p );
-  actionGroups.radixChar->addAction( actions.radixCharAuto  );
-  actionGroups.radixChar->addAction( actions.radixCharDot   );
-  actionGroups.radixChar->addAction( actions.radixCharComma );
+  actionGroups.radixChar->addAction( actions.settingsRadixCharDefault  );
+  actionGroups.radixChar->addAction( actions.settingsRadixCharDot   );
+  actionGroups.radixChar->addAction( actions.settingsRadixCharComma );
 
   actionGroups.language = new QActionGroup( p );
   actionGroups.language->addAction( actions.languageDefault );
@@ -746,38 +761,38 @@ void MainWindow::Private::createActionGroups()
 
 void MainWindow::Private::createActionShortcuts()
 {
-  actions.editClearExpression ->setShortcut( Qt::Key_Escape                 );
-  actions.editClearHistory    ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_N );
-  actions.degree              ->setShortcut( Qt::Key_F10                    );
-  actions.editDeleteVariable  ->setShortcut( Qt::CTRL + Qt::Key_D           );
-  actions.editCopyLastResult  ->setShortcut( Qt::CTRL + Qt::Key_R           );
-  actions.editCopy            ->setShortcut( Qt::CTRL + Qt::Key_C           );
-  actions.editPaste           ->setShortcut( Qt::CTRL + Qt::Key_V           );
-  actions.helpTipOfTheDay     ->setShortcut( Qt::CTRL + Qt::Key_T           );
-  actions.editInsertFunction  ->setShortcut( Qt::CTRL + Qt::Key_F           );
-  actions.editInsertVariable  ->setShortcut( Qt::CTRL + Qt::Key_I           );
-  actions.radian              ->setShortcut( Qt::Key_F9                     );
-  actions.scrollDown          ->setShortcut( Qt::SHIFT + Qt::Key_PageDown   );
-  actions.scrollUp            ->setShortcut( Qt::SHIFT + Qt::Key_PageUp     );
-  actions.editSelectExpression->setShortcut( Qt::CTRL + Qt::Key_A           );
-  actions.sessionLoad         ->setShortcut( Qt::CTRL + Qt::Key_L           );
-  actions.sessionQuit         ->setShortcut( Qt::CTRL + Qt::Key_Q           );
-  actions.sessionSave         ->setShortcut( Qt::CTRL + Qt::Key_S           );
-  actions.viewFullScreenMode  ->setShortcut( Qt::Key_F11                    );
-  actions.viewKeypad          ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_K );
-  actions.viewMathBook        ->setShortcut( Qt::CTRL + Qt::Key_1           );
-  actions.viewConstants       ->setShortcut( Qt::CTRL + Qt::Key_2           );
-  actions.viewFunctions       ->setShortcut( Qt::CTRL + Qt::Key_3           );
-  actions.viewVariables       ->setShortcut( Qt::CTRL + Qt::Key_4           );
-  actions.viewHistory         ->setShortcut( Qt::CTRL + Qt::Key_5           );
+  actions.editClearExpression            ->setShortcut( Qt::Key_Escape                 );
+  actions.editClearHistory               ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_N );
+  actions.editCopyLastResult             ->setShortcut( Qt::CTRL + Qt::Key_R           );
+  actions.editCopy                       ->setShortcut( Qt::CTRL + Qt::Key_C           );
+  actions.editDeleteVariable             ->setShortcut( Qt::CTRL + Qt::Key_D           );
+  actions.editInsertFunction             ->setShortcut( Qt::CTRL + Qt::Key_F           );
+  actions.editInsertVariable             ->setShortcut( Qt::CTRL + Qt::Key_I           );
+  actions.editPaste                      ->setShortcut( Qt::CTRL + Qt::Key_V           );
+  actions.editSelectExpression           ->setShortcut( Qt::CTRL + Qt::Key_A           );
+  actions.helpTipOfTheDay                ->setShortcut( Qt::CTRL + Qt::Key_T           );
+  actions.scrollDown                     ->setShortcut( Qt::SHIFT + Qt::Key_PageDown   );
+  actions.scrollUp                       ->setShortcut( Qt::SHIFT + Qt::Key_PageUp     );
+  actions.sessionLoad                    ->setShortcut( Qt::CTRL + Qt::Key_L           );
+  actions.sessionQuit                    ->setShortcut( Qt::CTRL + Qt::Key_Q           );
+  actions.sessionSave                    ->setShortcut( Qt::CTRL + Qt::Key_S           );
+  actions.settingsAngleUnitDegree        ->setShortcut( Qt::Key_F10                    );
+  actions.settingsAngleUnitRadian        ->setShortcut( Qt::Key_F9                     );
+  actions.settingsResultFormatBinary     ->setShortcut( Qt::Key_F5                     );
+  actions.settingsResultFormatGeneral    ->setShortcut( Qt::Key_F7                     );
+  actions.settingsResultFormatHexadecimal->setShortcut( Qt::Key_F8                     );
+  actions.settingsResultFormatOctal      ->setShortcut( Qt::Key_F6                     );
+  actions.viewConstants                  ->setShortcut( Qt::CTRL + Qt::Key_2           );
+  actions.viewFullScreenMode             ->setShortcut( Qt::Key_F11                    );
+  actions.viewFunctions                  ->setShortcut( Qt::CTRL + Qt::Key_3           );
+  actions.viewHistory                    ->setShortcut( Qt::CTRL + Qt::Key_5           );
+  actions.viewKeypad                     ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_K );
+  actions.viewMathBook                   ->setShortcut( Qt::CTRL + Qt::Key_1           );
 #ifndef Q_OS_MAC
-  actions.viewMenuBar         ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_M );
+  actions.viewMenuBar                    ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_M );
 #endif
-  actions.viewStatusBar       ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_B );
-  actions.formatBinary        ->setShortcut( Qt::Key_F5                     );
-  actions.formatGeneral       ->setShortcut( Qt::Key_F7                     );
-  actions.formatHexadec       ->setShortcut( Qt::Key_F8                     );
-  actions.formatOctal         ->setShortcut( Qt::Key_F6                     );
+  actions.viewStatusBar                  ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_B );
+  actions.viewVariables                  ->setShortcut( Qt::CTRL + Qt::Key_4           );
 }
 
 
@@ -835,49 +850,49 @@ void MainWindow::Private::createMenus()
 
   // settings / result format
   menus.resultFormat = menus.settings->addMenu( "" );
-  menus.resultFormat->addAction( actions.formatBinary );
-  menus.resultFormat->addAction( actions.formatOctal );
+  menus.resultFormat->addAction( actions.settingsResultFormatBinary );
+  menus.resultFormat->addAction( actions.settingsResultFormatOctal );
 
   // settings / result format / decimal
   menus.decimal = menus.resultFormat->addMenu( "" );
-  menus.decimal->addAction( actions.formatGeneral );
-  menus.decimal->addAction( actions.formatFixed );
-  menus.decimal->addAction( actions.formatEngineering );
-  menus.decimal->addAction( actions.formatScientific );
+  menus.decimal->addAction( actions.settingsResultFormatGeneral );
+  menus.decimal->addAction( actions.settingsResultFormatFixed );
+  menus.decimal->addAction( actions.settingsResultFormatEngineering );
+  menus.decimal->addAction( actions.settingsResultFormatScientific );
   menus.decimal->addSeparator();
-  menus.decimal->addAction( actions.digitsAuto );
-  menus.decimal->addAction( actions.digits2 );
-  menus.decimal->addAction( actions.digits3 );
-  menus.decimal->addAction( actions.digits8 );
-  menus.decimal->addAction( actions.digits15 );
-  menus.decimal->addAction( actions.digits50 );
+  menus.decimal->addAction( actions.settingsResultFormatAutoPrecision );
+  menus.decimal->addAction( actions.settingsResultFormat2Digits );
+  menus.decimal->addAction( actions.settingsResultFormat3Digits );
+  menus.decimal->addAction( actions.settingsResultFormat8Digits );
+  menus.decimal->addAction( actions.settingsResultFormat15Digits );
+  menus.decimal->addAction( actions.settingsResultFormat50Digits );
 
   // settings / result format (continued)
-  menus.resultFormat->addAction( actions.formatHexadec );
+  menus.resultFormat->addAction( actions.settingsResultFormatHexadecimal );
 
   // settings / angle mode
   menus.angleUnit = menus.settings->addMenu( "" );
-  menus.angleUnit->addAction( actions.radian );
-  menus.angleUnit->addAction( actions.degree );
+  menus.angleUnit->addAction( actions.settingsAngleUnitRadian );
+  menus.angleUnit->addAction( actions.settingsAngleUnitDegree );
 
   // settings / behavior
   menus.behavior = menus.settings->addMenu( "" );
-  menus.behavior->addAction( actions.optionSaveHistoryOnExit   );
-  menus.behavior->addAction( actions.optionSaveVariablesOnExit );
+  menus.behavior->addAction( actions.settingsBehaviorSaveHistoryOnExit   );
+  menus.behavior->addAction( actions.settingsBehaviorSaveVariablesOnExit );
   menus.behavior->addSeparator();
-  menus.behavior->addAction( actions.optionAutoCalc            );
-  menus.behavior->addAction( actions.optionAutoCompletion      );
-  menus.behavior->addAction( actions.optionHiliteSyntax        );
+  menus.behavior->addAction( actions.settingsBehaviorPartialResults            );
+  menus.behavior->addAction( actions.settingsBehaviorAutoCompletion      );
+  menus.behavior->addAction( actions.settingsBehaviorSyntaxHilite        );
   menus.behavior->addSeparator();
-  menus.behavior->addAction( actions.optionAlwaysOnTop         );
-  menus.behavior->addAction( actions.optionMinimizeToTray      );
+  menus.behavior->addAction( actions.settingsBehaviorAlwaysOnTop         );
+  menus.behavior->addAction( actions.settingsBehaviorMinimizeToTray      );
 
   // settings / radix character
   menus.radixChar = menus.settings->addMenu( "" );
-  menus.radixChar->addAction( actions.radixCharAuto  );
+  menus.radixChar->addAction( actions.settingsRadixCharDefault  );
   menus.radixChar->addSeparator();
-  menus.radixChar->addAction( actions.radixCharDot   );
-  menus.radixChar->addAction( actions.radixCharComma );
+  menus.radixChar->addAction( actions.settingsRadixCharDot   );
+  menus.radixChar->addAction( actions.settingsRadixCharComma );
 
   // settings / language
   menus.language = menus.settings->addMenu( "" );
@@ -910,7 +925,7 @@ void MainWindow::Private::createMenus()
   menus.help = new QMenu( "", p );
   p->menuBar()->addMenu( menus.help );
   menus.help->addAction( actions.helpTipOfTheDay );
-  menus.help->addAction( actions.helpGotoWebsite );
+  menus.help->addAction( actions.helpWebsite );
   menus.help->addSeparator();
   menus.help->addAction( actions.helpAbout );
   menus.help->addAction( actions.helpAboutQt );
@@ -1201,99 +1216,111 @@ void MainWindow::Private::createVariablesDock()
 
 void MainWindow::Private::createFixedConnections()
 {
-  connect( actions.editClearHistory,            SIGNAL( triggered()                        ), p,                     SLOT( clearHistory()                     ) );
-  connect( actions.editClearExpression,         SIGNAL( triggered()                        ), p,                     SLOT( clearExpression()                  ) );
-  connect( actions.degree,                      SIGNAL( triggered()                        ), p,                     SLOT( degree()                           ) );
-  connect( actions.editDeleteAllVariables,      SIGNAL( triggered()                        ), p,                     SLOT( deleteAllVariables()               ) );
-  connect( actions.editDeleteVariable,          SIGNAL( triggered()                        ), p,                     SLOT( deleteVariable()                   ) );
-  connect( actions.digits15,                    SIGNAL( triggered()                        ), p,                     SLOT( digits15()                         ) );
-  connect( actions.digits2,                     SIGNAL( triggered()                        ), p,                     SLOT( digits2()                          ) );
-  connect( actions.digits3,                     SIGNAL( triggered()                        ), p,                     SLOT( digits3()                          ) );
-  connect( actions.digits50,                    SIGNAL( triggered()                        ), p,                     SLOT( digits50()                         ) );
-  connect( actions.digits8,                     SIGNAL( triggered()                        ), p,                     SLOT( digits8()                          ) );
-  connect( actions.digitsAuto,                  SIGNAL( triggered()                        ), p,                     SLOT( digitsAuto()                       ) );
-  connect( actions.editCopyLastResult,          SIGNAL( triggered()                        ), p,                     SLOT( copyResult()                       ) );
-  connect( actions.editCopy,                    SIGNAL( triggered()                        ), widgets.editor,        SLOT( copy()                             ) );
-  connect( actions.editPaste,                   SIGNAL( triggered()                        ), widgets.editor,        SLOT( paste()                            ) );
-  connect( actions.editSelectExpression,        SIGNAL( triggered()                        ), p,                     SLOT( selectExpression()                 ) );
-  connect( actions.helpAboutQt,                 SIGNAL( triggered()                        ), p,                     SLOT( aboutQt()                          ) );
-  connect( actions.helpAbout,                   SIGNAL( triggered()                        ), p,                     SLOT( about()                            ) );
-  connect( actions.helpGotoWebsite,             SIGNAL( triggered()                        ), p,                     SLOT( gotoWebsite()                      ) );
-  connect( actions.helpTipOfTheDay,             SIGNAL( triggered()                        ), p,                     SLOT( showTipOfTheDay()                  ) );
-  connect( actions.editInsertFunction,          SIGNAL( triggered()                        ), p,                     SLOT( insertFunction()                   ) );
-  connect( actions.editInsertVariable,          SIGNAL( triggered()                        ), p,                     SLOT( insertVariable()                   ) );
-  connect( actions.radian,                      SIGNAL( triggered()                        ), p,                     SLOT( radian()                           ) );
-  connect( actions.scrollDown,                  SIGNAL( triggered()                        ), p,                     SLOT( scrollDown()                       ) );
-  connect( actions.scrollUp,                    SIGNAL( triggered()                        ), p,                     SLOT( scrollUp()                         ) );
-  connect( actions.sessionImport,               SIGNAL( triggered()                        ), p,                     SLOT( importSession()                    ) );
-  connect( actions.sessionLoad,                 SIGNAL( triggered()                        ), p,                     SLOT( loadSession()                      ) );
-  connect( actions.sessionQuit,                 SIGNAL( triggered()                        ), p,                     SLOT( close()                            ) );
-  connect( actions.sessionSave,                 SIGNAL( triggered()                        ), p,                     SLOT( saveSession()                      ) );
-  connect( actions.sessionExport,               SIGNAL( triggered()                        ), p,                     SLOT( exportSession()                    ) );
-  connect( actions.viewMathBook,                SIGNAL( toggled( bool )                    ), p,                     SLOT( showBook( bool )                   ) );
-  connect( actions.viewConstants,               SIGNAL( toggled( bool )                    ), p,                     SLOT( showConstants( bool )              ) );
-  connect( actions.viewFullScreenMode,          SIGNAL( toggled( bool )                    ), p,                     SLOT( showInFullScreen( bool )           ) );
-  connect( actions.viewFunctions,               SIGNAL( toggled( bool )                    ), p,                     SLOT( showFunctions( bool )              ) );
-  connect( actions.viewHistory,                 SIGNAL( toggled( bool )                    ), p,                     SLOT( showHistory( bool )                ) );
-  connect( actions.viewKeypad,                  SIGNAL( toggled( bool )                    ), p,                     SLOT( showKeypad( bool )                 ) );
-  connect( actions.viewMenuBar,                 SIGNAL( toggled( bool )                    ), p,                     SLOT( showMenuBar( bool )                ) );
-  connect( actions.viewStatusBar,               SIGNAL( toggled( bool )                    ), p,                     SLOT( showStatusBar( bool )              ) );
-  connect( actions.viewVariables,               SIGNAL( toggled( bool )                    ), p,                     SLOT( showVariables( bool )              ) );
-  connect( actions.formatBinary,                SIGNAL( triggered()                        ), p,                     SLOT( formatBinary()                     ) );
-  connect( actions.formatEngineering,           SIGNAL( triggered()                        ), p,                     SLOT( formatEngineering()                ) );
-  connect( actions.formatFixed,                 SIGNAL( triggered()                        ), p,                     SLOT( formatFixed()                      ) );
-  connect( actions.formatGeneral,               SIGNAL( triggered()                        ), p,                     SLOT( formatGeneral()                    ) );
-  connect( actions.formatHexadec,               SIGNAL( triggered()                        ), p,                     SLOT( formatHexadec()                    ) );
-  connect( actions.formatOctal,                 SIGNAL( triggered()                        ), p,                     SLOT( formatOctal()                      ) );
-  connect( actions.formatScientific,            SIGNAL( triggered()                        ), p,                     SLOT( formatScientific()                 ) );
-  connect( actions.optionAutoCalc,              SIGNAL( toggled( bool )                    ), p,                     SLOT( autoCalcToggled( bool )            ) );
-  connect( actions.optionSaveHistoryOnExit,     SIGNAL( toggled( bool )                    ), p,                     SLOT( saveHistoryOnExitToggled( bool )   ) );
-  connect( actions.optionSaveVariablesOnExit,   SIGNAL( toggled( bool )                    ), p,                     SLOT( saveVariablesOnExitToggled( bool ) ) );
-  connect( actions.optionAutoCompletion,        SIGNAL( toggled( bool )                    ), p,                     SLOT( autoCompletionToggled( bool )      ) );
-  connect( actions.optionAlwaysOnTop,           SIGNAL( toggled( bool )                    ), p,                     SLOT( alwaysOnTopToggled( bool )         ) );
-  connect( actions.optionMinimizeToTray,        SIGNAL( toggled( bool )                    ), p,                     SLOT( minimizeToTrayToggled( bool )      ) );
-  connect( actions.optionHiliteSyntax,          SIGNAL( toggled( bool )                    ), p,                     SLOT( hiliteSyntaxToggled( bool )        ) );
-  connect( actions.radixCharAuto,               SIGNAL( triggered()                        ), p,                     SLOT( radixCharAutoTriggered()           ) );
-  connect( actions.radixCharDot,                SIGNAL( triggered()                        ), p,                     SLOT( radixCharDotTriggered()            ) );
-  connect( actions.radixCharComma,              SIGNAL( triggered()                        ), p,                     SLOT( radixCharCommaTriggered()          ) );
-  connect( actions.languageDefault,             SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                   ) );
-  connect( actions.languageCa,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                   ) );
-  connect( actions.languageCs,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                   ) );
-  connect( actions.languageDe,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                   ) );
-  connect( actions.languageEn,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                   ) );
-  connect( actions.languageEs,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                   ) );
-  connect( actions.languageEsAr,                SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                   ) );
-  connect( actions.languageEu,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                   ) );
-  connect( actions.languageFi,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                   ) );
-  connect( actions.languageFr,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                   ) );
-  connect( actions.languageHe,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                   ) );
-  connect( actions.languageId,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                   ) );
-  connect( actions.languageIt,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                   ) );
-  connect( actions.languageNb,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                   ) );
-  connect( actions.languageNl,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                   ) );
-  connect( actions.languagePl,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                   ) );
-  connect( actions.languagePt,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                   ) );
-  connect( actions.languagePtBr,                SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                   ) );
-  connect( actions.languageRo,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                   ) );
-  connect( actions.languageRu,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                   ) );
-  connect( actions.languageSv,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                   ) );
-  connect( actions.languageTr,                  SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                   ) );
-  connect( actions.languageZhCn,                SIGNAL( triggered()                        ), p,                     SLOT( changeLanguage()                   ) );
-  connect( widgets.editor,                      SIGNAL( autoCalcEnabled( const QString & ) ), p,                     SLOT( showAutoCalc( const QString & )    ) );
-  connect( widgets.editor,                      SIGNAL( autoCalcDisabled()                 ), p,                     SLOT( hideAutoCalc()                     ) );
-  connect( widgets.editor,                      SIGNAL( returnPressed()                    ), p,                     SLOT( returnPressed()                    ) );
-  connect( widgets.editor,                      SIGNAL( textChanged()                      ), p,                     SLOT( textChanged()                      ) );
-  connect( widgets.display,                     SIGNAL( textSelected( const QString & )    ), widgets.editor,        SLOT( paste()                            ) );
-  connect( widgets.display,                     SIGNAL( textSelected( const QString & )    ), widgets.editor,        SLOT( setFocus()                         ) );
-  connect( p,                                   SIGNAL( resultFormatChanged( char )        ), widgets.editor,        SLOT( setFormat( char )                  ) );
-  connect( p,                                   SIGNAL( resultPrecisionChanged( int )      ), widgets.editor,        SLOT( setPrecision( int )                ) );
-  connect( p,                                   SIGNAL( radixCharChanged( char )           ), widgets.editor,        SLOT( setRadixChar( char )               ) );
-  connect( p,                                   SIGNAL( resultFormatChanged( char )        ), widgets.display,       SLOT( setFormat( char )                  ) );
-  connect( p,                                   SIGNAL( resultPrecisionChanged( int )      ), widgets.display,       SLOT( setPrecision( int )                ) );
-  connect( p,                                   SIGNAL( radixCharChanged( char )           ), widgets.display,       SLOT( setRadixChar( char )               ) );
-  connect( p,                                   SIGNAL( radixCharChanged( char )           ), evaluator,             SLOT( setRadixChar( char )               ) );
-  connect( p,                                   SIGNAL( angleUnitChanged( char )           ), functions,             SLOT( setAngleMode( char )               ) );
-  connect( p,                                   SIGNAL( languageChanged()                  ), p,                     SLOT( setAllText()                       ) );
+  connect( actions.editClearExpression,    SIGNAL( triggered() ), p,              SLOT( clearExpression()    ) );
+  connect( actions.editClearHistory,       SIGNAL( triggered() ), p,              SLOT( clearHistory()       ) );
+  connect( actions.editCopyLastResult,     SIGNAL( triggered() ), p,              SLOT( copyResult()         ) );
+  connect( actions.editCopy,               SIGNAL( triggered() ), widgets.editor, SLOT( copy()               ) );
+  connect( actions.editDeleteAllVariables, SIGNAL( triggered() ), p,              SLOT( deleteAllVariables() ) );
+  connect( actions.editDeleteVariable,     SIGNAL( triggered() ), p,              SLOT( deleteVariable()     ) );
+  connect( actions.editInsertFunction,     SIGNAL( triggered() ), p,              SLOT( insertFunction()     ) );
+  connect( actions.editInsertVariable,     SIGNAL( triggered() ), p,              SLOT( insertVariable()     ) );
+  connect( actions.editPaste,              SIGNAL( triggered() ), widgets.editor, SLOT( paste()              ) );
+  connect( actions.editSelectExpression,   SIGNAL( triggered() ), p,              SLOT( selectExpression()   ) );
+
+  connect( actions.helpAboutQt,     SIGNAL( triggered() ), p, SLOT( aboutQt()         ) );
+  connect( actions.helpAbout,       SIGNAL( triggered() ), p, SLOT( about()           ) );
+  connect( actions.helpTipOfTheDay, SIGNAL( triggered() ), p, SLOT( showTipOfTheDay() ) );
+  connect( actions.helpWebsite,     SIGNAL( triggered() ), p, SLOT( gotoWebsite()     ) );
+
+  connect( actions.sessionExport, SIGNAL( triggered() ), p, SLOT( exportSession() ) );
+  connect( actions.sessionImport, SIGNAL( triggered() ), p, SLOT( importSession() ) );
+  connect( actions.sessionLoad,   SIGNAL( triggered() ), p, SLOT( loadSession()   ) );
+  connect( actions.sessionQuit,   SIGNAL( triggered() ), p, SLOT( close()         ) );
+  connect( actions.sessionSave,   SIGNAL( triggered() ), p, SLOT( saveSession()   ) );
+
+  connect( actions.settingsAngleUnitDegree, SIGNAL( triggered() ), p, SLOT( degree() ) );
+  connect( actions.settingsAngleUnitRadian, SIGNAL( triggered() ), p, SLOT( radian() ) );
+
+  connect( actions.settingsBehaviorAlwaysOnTop,         SIGNAL( toggled( bool )                    ), p,                     SLOT( alwaysOnTopToggled( bool )         ) );
+  connect( actions.settingsBehaviorAutoCompletion,      SIGNAL( toggled( bool )                    ), p,                     SLOT( autoCompletionToggled( bool )      ) );
+  connect( actions.settingsBehaviorMinimizeToTray,      SIGNAL( toggled( bool )                    ), p,                     SLOT( minimizeToTrayToggled( bool )      ) );
+  connect( actions.settingsBehaviorPartialResults,      SIGNAL( toggled( bool )                    ), p,                     SLOT( autoCalcToggled( bool )            ) );
+  connect( actions.settingsBehaviorSaveHistoryOnExit,   SIGNAL( toggled( bool )                    ), p,                     SLOT( saveHistoryOnExitToggled( bool )   ) );
+  connect( actions.settingsBehaviorSaveVariablesOnExit, SIGNAL( toggled( bool )                    ), p,                     SLOT( saveVariablesOnExitToggled( bool ) ) );
+  connect( actions.settingsBehaviorSyntaxHilite,        SIGNAL( toggled( bool )                    ), p,                     SLOT( hiliteSyntaxToggled( bool )        ) );
+
+  connect( actions.settingsRadixCharComma,   SIGNAL( triggered() ), p, SLOT( radixCharCommaTriggered() ) );
+  connect( actions.settingsRadixCharDefault, SIGNAL( triggered() ), p, SLOT( radixCharAutoTriggered()  ) );
+  connect( actions.settingsRadixCharDot,     SIGNAL( triggered() ), p, SLOT( radixCharDotTriggered()   ) );
+
+  connect( actions.settingsResultFormat15Digits,      SIGNAL( triggered() ), p, SLOT( digits15()          ) );
+  connect( actions.settingsResultFormat2Digits,       SIGNAL( triggered() ), p, SLOT( digits2()           ) );
+  connect( actions.settingsResultFormat3Digits,       SIGNAL( triggered() ), p, SLOT( digits3()           ) );
+  connect( actions.settingsResultFormat50Digits,      SIGNAL( triggered() ), p, SLOT( digits50()          ) );
+  connect( actions.settingsResultFormat8Digits,       SIGNAL( triggered() ), p, SLOT( digits8()           ) );
+  connect( actions.settingsResultFormatAutoPrecision, SIGNAL( triggered() ), p, SLOT( digitsAuto()        ) );
+  connect( actions.settingsResultFormatBinary,        SIGNAL( triggered() ), p, SLOT( formatBinary()      ) );
+  connect( actions.settingsResultFormatEngineering,   SIGNAL( triggered() ), p, SLOT( formatEngineering() ) );
+  connect( actions.settingsResultFormatFixed,         SIGNAL( triggered() ), p, SLOT( formatFixed()       ) );
+  connect( actions.settingsResultFormatGeneral,       SIGNAL( triggered() ), p, SLOT( formatGeneral()     ) );
+  connect( actions.settingsResultFormatHexadecimal,   SIGNAL( triggered() ), p, SLOT( formatHexadec()     ) );
+  connect( actions.settingsResultFormatOctal,         SIGNAL( triggered() ), p, SLOT( formatOctal()       ) );
+  connect( actions.settingsResultFormatScientific,    SIGNAL( triggered() ), p, SLOT( formatScientific()  ) );
+
+  connect( actions.viewConstants,      SIGNAL( toggled( bool ) ), p, SLOT( showConstants( bool )    ) );
+  connect( actions.viewFullScreenMode, SIGNAL( toggled( bool ) ), p, SLOT( showInFullScreen( bool ) ) );
+  connect( actions.viewFunctions,      SIGNAL( toggled( bool ) ), p, SLOT( showFunctions( bool )    ) );
+  connect( actions.viewHistory,        SIGNAL( toggled( bool ) ), p, SLOT( showHistory( bool )      ) );
+  connect( actions.viewKeypad,         SIGNAL( toggled( bool ) ), p, SLOT( showKeypad( bool )       ) );
+  connect( actions.viewMathBook,       SIGNAL( toggled( bool ) ), p, SLOT( showBook( bool )         ) );
+  connect( actions.viewMenuBar,        SIGNAL( toggled( bool ) ), p, SLOT( showMenuBar( bool )      ) );
+  connect( actions.viewStatusBar,      SIGNAL( toggled( bool ) ), p, SLOT( showStatusBar( bool )    ) );
+  connect( actions.viewVariables,      SIGNAL( toggled( bool ) ), p, SLOT( showVariables( bool )    ) );
+
+  connect( actions.languageDefault, SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
+  connect( actions.languageCa,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
+  connect( actions.languageCs,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
+  connect( actions.languageDe,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
+  connect( actions.languageEn,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
+  connect( actions.languageEs,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
+  connect( actions.languageEsAr,    SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
+  connect( actions.languageEu,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
+  connect( actions.languageFi,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
+  connect( actions.languageFr,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
+  connect( actions.languageHe,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
+  connect( actions.languageId,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
+  connect( actions.languageIt,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
+  connect( actions.languageNb,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
+  connect( actions.languageNl,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
+  connect( actions.languagePl,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
+  connect( actions.languagePt,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
+  connect( actions.languagePtBr,    SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
+  connect( actions.languageRo,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
+  connect( actions.languageRu,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
+  connect( actions.languageSv,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
+  connect( actions.languageTr,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
+  connect( actions.languageZhCn,    SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
+
+  connect( actions.scrollDown, SIGNAL( triggered() ), p, SLOT( scrollDown() ) );
+  connect( actions.scrollUp,   SIGNAL( triggered() ), p, SLOT( scrollUp()   ) );
+
+  connect( widgets.display, SIGNAL( textSelected( const QString & ) ), widgets.editor, SLOT( paste()                            ) );
+  connect( widgets.display, SIGNAL( textSelected( const QString & ) ), widgets.editor, SLOT( setFocus()                         ) );
+
+  connect( widgets.editor, SIGNAL( autoCalcDisabled()                 ), p, SLOT( hideAutoCalc()                  ) );
+  connect( widgets.editor, SIGNAL( autoCalcEnabled( const QString & ) ), p, SLOT( showAutoCalc( const QString & ) ) );
+  connect( widgets.editor, SIGNAL( returnPressed()                    ), p, SLOT( returnPressed()                 ) );
+  connect( widgets.editor, SIGNAL( textChanged()                      ), p, SLOT( textChanged()                   ) );
+
+  connect( p, SIGNAL( resultFormatChanged( char )   ), widgets.editor,  SLOT( setFormat( char )    ) );
+  connect( p, SIGNAL( resultPrecisionChanged( int ) ), widgets.editor,  SLOT( setPrecision( int )  ) );
+  connect( p, SIGNAL( radixCharChanged( char )      ), widgets.editor,  SLOT( setRadixChar( char ) ) );
+  connect( p, SIGNAL( resultFormatChanged( char )   ), widgets.display, SLOT( setFormat( char )    ) );
+  connect( p, SIGNAL( resultPrecisionChanged( int ) ), widgets.display, SLOT( setPrecision( int )  ) );
+  connect( p, SIGNAL( radixCharChanged( char )      ), widgets.display, SLOT( setRadixChar( char ) ) );
+  connect( p, SIGNAL( radixCharChanged( char )      ), evaluator,       SLOT( setRadixChar( char ) ) );
+  connect( p, SIGNAL( angleUnitChanged( char )      ), functions,       SLOT( setAngleMode( char ) ) );
+  connect( p, SIGNAL( languageChanged()             ), p,               SLOT( setAllText()         ) );
 }
 
 
@@ -1326,13 +1353,13 @@ void MainWindow::Private::applySettings()
   actions.viewFullScreenMode->setChecked( settings.showFullScreen );
 
   // always-on-top
-  actions.optionAlwaysOnTop->setChecked( settings.stayAlwaysOnTop );
+  actions.settingsBehaviorAlwaysOnTop->setChecked( settings.stayAlwaysOnTop );
 
   // angle mode
   if ( settings.angleMode == 'r' )
-    actions.radian->setChecked( true );
+    actions.settingsAngleUnitRadian->setChecked( true );
   else if ( settings.angleMode == 'd' )
-    actions.degree->setChecked( true );
+    actions.settingsAngleUnitDegree->setChecked( true );
 
   // language
   checkInitialLanguage();
@@ -1340,14 +1367,14 @@ void MainWindow::Private::applySettings()
   // history
   if ( settings.saveHistory )
   {
-    actions.optionSaveHistoryOnExit->setChecked( true );
+    actions.settingsBehaviorSaveHistoryOnExit->setChecked( true );
     restoreHistory();
   }
 
   // variables
   if ( settings.saveVariables )
   {
-    actions.optionSaveVariablesOnExit->setChecked( true );
+    actions.settingsBehaviorSaveVariablesOnExit->setChecked( true );
     restoreVariables();
   }
 
@@ -1359,33 +1386,33 @@ void MainWindow::Private::applySettings()
 
   // radix character
   if ( settings.isLocaleRadixChar() )
-      actions.radixCharAuto->setChecked( true );
+      actions.settingsRadixCharDefault->setChecked( true );
   else if ( settings.getRadixChar() == '.' )
-    actions.radixCharDot->setChecked( true );
+    actions.settingsRadixCharDot->setChecked( true );
   else if ( settings.getRadixChar() == ',' )
-    actions.radixCharComma->setChecked( true );
+    actions.settingsRadixCharComma->setChecked( true );
 
   // keypad
   actions.viewKeypad->setChecked( settings.showKeypad );
 
   // autocalc
   if ( settings.autoCalc )
-    actions.optionAutoCalc->setChecked( true );
+    actions.settingsBehaviorPartialResults->setChecked( true );
   else
     p->autoCalcToggled( false );
 
   // autocomplete
   if ( settings.autoComplete )
-    actions.optionAutoCompletion->setChecked( true );
+    actions.settingsBehaviorAutoCompletion->setChecked( true );
   else
     p->autoCompletionToggled( false );
 
   // minimize to system tray
-  actions.optionMinimizeToTray->setChecked( settings.minimizeToTray );
+  actions.settingsBehaviorMinimizeToTray->setChecked( settings.minimizeToTray );
 
   // syntax hilite
   if ( settings.hiliteSyntax )
-    actions.optionHiliteSyntax->setChecked( true );
+    actions.settingsBehaviorSyntaxHilite->setChecked( true );
   else
     p->hiliteSyntaxToggled( false );
 
@@ -1404,13 +1431,13 @@ void MainWindow::Private::checkInitialResultFormat()
 {
   switch ( settings.resultFormat )
   {
-    case 'f': actions.formatFixed      ->setChecked( true ); break;
-    case 'n': actions.formatEngineering->setChecked( true ); break;
-    case 'e': actions.formatScientific ->setChecked( true ); break;
-    case 'h': actions.formatHexadec    ->setChecked( true ); break;
-    case 'o': actions.formatOctal      ->setChecked( true ); break;
-    case 'b': actions.formatBinary     ->setChecked( true ); break;
-    default : actions.formatGeneral    ->setChecked( true );
+    case 'f': actions.settingsResultFormatFixed      ->setChecked( true ); break;
+    case 'n': actions.settingsResultFormatEngineering->setChecked( true ); break;
+    case 'e': actions.settingsResultFormatScientific ->setChecked( true ); break;
+    case 'h': actions.settingsResultFormatHexadecimal->setChecked( true ); break;
+    case 'o': actions.settingsResultFormatOctal      ->setChecked( true ); break;
+    case 'b': actions.settingsResultFormatBinary     ->setChecked( true ); break;
+    default : actions.settingsResultFormatGeneral    ->setChecked( true );
   }
 }
 
@@ -1419,12 +1446,12 @@ void MainWindow::Private::checkInitialPrecision()
 {
   switch ( settings.resultPrecision )
   {
-    case 2 : actions.digits2   ->setChecked( true ); break;
-    case 3 : actions.digits3   ->setChecked( true ); break;
-    case 8 : actions.digits8   ->setChecked( true ); break;
-    case 15: actions.digits15  ->setChecked( true ); break;
-    case 50: actions.digits50  ->setChecked( true ); break;
-    default: actions.digitsAuto->setChecked( true );
+    case 2 : actions.settingsResultFormat2Digits      ->setChecked( true ); break;
+    case 3 : actions.settingsResultFormat3Digits      ->setChecked( true ); break;
+    case 8 : actions.settingsResultFormat8Digits      ->setChecked( true ); break;
+    case 15: actions.settingsResultFormat15Digits     ->setChecked( true ); break;
+    case 50: actions.settingsResultFormat50Digits     ->setChecked( true ); break;
+    default: actions.settingsResultFormatAutoPrecision->setChecked( true );
   }
 }
 
@@ -1730,7 +1757,7 @@ void MainWindow::selectExpression()
 void MainWindow::gotoWebsite()
 {
   QDesktopServices::openUrl(
-    QUrl( QString::fromLatin1("http://www.speedcrunch.org") ) );
+    QUrl( QString::fromLatin1( "http://www.speedcrunch.org" ) ) );
 }
 
 
@@ -2587,39 +2614,43 @@ void MainWindow::keypadButtonPressed( Keypad::Button b )
   d->widgets.editor->blockSignals( true ); // prevent completion
   switch ( b )
   {
-    case Keypad::Key0        : d->widgets.editor->insert( "0"     ); break;
-    case Keypad::Key1        : d->widgets.editor->insert( "1"     ); break;
-    case Keypad::Key2        : d->widgets.editor->insert( "2"     ); break;
-    case Keypad::Key3        : d->widgets.editor->insert( "3"     ); break;
-    case Keypad::Key4        : d->widgets.editor->insert( "4"     ); break;
-    case Keypad::Key5        : d->widgets.editor->insert( "5"     ); break;
-    case Keypad::Key6        : d->widgets.editor->insert( "6"     ); break;
-    case Keypad::Key7        : d->widgets.editor->insert( "7"     ); break;
-    case Keypad::Key8        : d->widgets.editor->insert( "8"     ); break;
-    case Keypad::Key9        : d->widgets.editor->insert( "9"     ); break;
-    case Keypad::KeyPlus     : d->widgets.editor->insert( "+"     ); break;
-    case Keypad::KeyMinus    : d->widgets.editor->insert( "-"     ); break;
-    case Keypad::KeyTimes    : d->widgets.editor->insert( "*"     ); break;
-    case Keypad::KeyDivide   : d->widgets.editor->insert( "/"     ); break;
-    case Keypad::KeyEE       : d->widgets.editor->insert( "e"     ); break;
-    case Keypad::KeyLeftPar  : d->widgets.editor->insert( "("     ); break;
-    case Keypad::KeyRightPar : d->widgets.editor->insert( ")"     ); break;
-    case Keypad::KeyRaise    : d->widgets.editor->insert( "^"     ); break;
-    case Keypad::KeyPercent  : d->widgets.editor->insert( "%"     ); break;
-    case Keypad::KeyFactorial: d->widgets.editor->insert( "!"     ); break;
-    case Keypad::KeyX        : d->widgets.editor->insert( "x"     ); break;
-    case Keypad::KeyXEquals  : d->widgets.editor->insert( "x="    ); break;
-    case Keypad::KeyPi       : d->widgets.editor->insert( "pi"    ); break;
-    case Keypad::KeyAns      : d->widgets.editor->insert( "ans"   ); break;
-    case Keypad::KeyLn       : d->widgets.editor->insert( "ln("   ); break;
-    case Keypad::KeyExp      : d->widgets.editor->insert( "exp("  ); break;
-    case Keypad::KeySin      : d->widgets.editor->insert( "sin("  ); break;
-    case Keypad::KeyCos      : d->widgets.editor->insert( "cos("  ); break;
-    case Keypad::KeyTan      : d->widgets.editor->insert( "tan("  ); break;
-    case Keypad::KeyAcos     : d->widgets.editor->insert( "acos(" ); break;
-    case Keypad::KeyAtan     : d->widgets.editor->insert( "atan(" ); break;
-    case Keypad::KeyAsin     : d->widgets.editor->insert( "asin(" ); break;
-    case Keypad::KeySqrt     : d->widgets.editor->insert( "sqrt(" ); break;
+    case Keypad::Key0: d->widgets.editor->insert( "0" ); break;
+    case Keypad::Key1: d->widgets.editor->insert( "1" ); break;
+    case Keypad::Key2: d->widgets.editor->insert( "2" ); break;
+    case Keypad::Key3: d->widgets.editor->insert( "3" ); break;
+    case Keypad::Key4: d->widgets.editor->insert( "4" ); break;
+    case Keypad::Key5: d->widgets.editor->insert( "5" ); break;
+    case Keypad::Key6: d->widgets.editor->insert( "6" ); break;
+    case Keypad::Key7: d->widgets.editor->insert( "7" ); break;
+    case Keypad::Key8: d->widgets.editor->insert( "8" ); break;
+    case Keypad::Key9: d->widgets.editor->insert( "9" ); break;
+
+    case Keypad::KeyPlus  : d->widgets.editor->insert( "+" ); break;
+    case Keypad::KeyMinus : d->widgets.editor->insert( "-" ); break;
+    case Keypad::KeyTimes : d->widgets.editor->insert( "*" ); break;
+    case Keypad::KeyDivide: d->widgets.editor->insert( "/" ); break;
+
+    case Keypad::KeyEE       : d->widgets.editor->insert( "e" ); break;
+    case Keypad::KeyLeftPar  : d->widgets.editor->insert( "(" ); break;
+    case Keypad::KeyRightPar : d->widgets.editor->insert( ")" ); break;
+    case Keypad::KeyRaise    : d->widgets.editor->insert( "^" ); break;
+    case Keypad::KeyPercent  : d->widgets.editor->insert( "%" ); break;
+    case Keypad::KeyFactorial: d->widgets.editor->insert( "!" ); break;
+
+    case Keypad::KeyX      : d->widgets.editor->insert( "x"   ); break;
+    case Keypad::KeyXEquals: d->widgets.editor->insert( "x="  ); break;
+    case Keypad::KeyPi     : d->widgets.editor->insert( "pi"  ); break;
+    case Keypad::KeyAns    : d->widgets.editor->insert( "ans" ); break;
+
+    case Keypad::KeySqrt: d->widgets.editor->insert( "sqrt(" ); break;
+    case Keypad::KeyLn  : d->widgets.editor->insert( "ln("   ); break;
+    case Keypad::KeyExp : d->widgets.editor->insert( "exp("  ); break;
+    case Keypad::KeySin : d->widgets.editor->insert( "sin("  ); break;
+    case Keypad::KeyCos : d->widgets.editor->insert( "cos("  ); break;
+    case Keypad::KeyTan : d->widgets.editor->insert( "tan("  ); break;
+    case Keypad::KeyAcos: d->widgets.editor->insert( "acos(" ); break;
+    case Keypad::KeyAtan: d->widgets.editor->insert( "atan(" ); break;
+    case Keypad::KeyAsin: d->widgets.editor->insert( "asin(" ); break;
 
     case Keypad::KeyRadixChar:
       d->widgets.editor->insert( QString( d->widgets.keypad->radixChar() ) );
