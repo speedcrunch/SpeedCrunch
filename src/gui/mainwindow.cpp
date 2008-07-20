@@ -84,17 +84,19 @@ struct Actions
   QAction * sessionImport;
   QAction * sessionExport;
   QAction * sessionQuit;
+
   // edit
   QAction * editCopy;
   QAction * editCopyLastResult;
   QAction * editPaste;
   QAction * editSelectExpression;
   QAction * editInsertFunction;
-  QAction * insertVariable;
-  QAction * deleteVariable;
-  QAction * deleteAllVariables;
-  QAction * clearHistory;
-  QAction * clearExpression;
+  QAction * editInsertVariable;
+  QAction * editDeleteVariable;
+  QAction * editDeleteAllVariables;
+  QAction * editClearExpression;
+  QAction * editClearHistory;
+
   // view
   QAction * showKeypad;
   QAction * showBook;
@@ -105,9 +107,8 @@ struct Actions
   QAction * showMenuBar;
   QAction * showStatusBar;
   QAction * showFullScreen;
-  // settings
-  //   result format
-  //     decimal
+
+  // settings / result format / decimal
   QAction * formatGeneral;
   QAction * formatFixed;
   QAction * formatEngineering;
@@ -118,14 +119,14 @@ struct Actions
   QAction * digits8;
   QAction * digits15;
   QAction * digits50;
-  //   result format
+  // settings / result format
   QAction * formatBinary;
   QAction * formatOctal;
   QAction * formatHexadec;
-  //   angle unit
+  // settings / angle unit
   QAction * radian;
   QAction * degree;
-  //   behavior
+  // settings / behavior
   QAction * optionSaveHistoryOnExit;
   QAction * optionSaveVariablesOnExit;
   QAction * optionAutoCalc;
@@ -133,11 +134,11 @@ struct Actions
   QAction * optionHiliteSyntax;
   QAction * optionAlwaysOnTop;
   QAction * optionMinimizeToTray;
-  //   radix character
+  // settings / radix character
   QAction * radixCharAuto;
   QAction * radixCharDot;
   QAction * radixCharComma;
-  //   language
+  // settings / language
   QAction * languageDefault;
   QAction * languageCa;
   QAction * languageCs;
@@ -161,6 +162,7 @@ struct Actions
   QAction * languageSv;
   QAction * languageTr;
   QAction * languageZhCn;
+
   // help
   QAction * helpTipOfTheDay;
   QAction * helpGotoWebsite;
@@ -392,11 +394,11 @@ void MainWindow::Private::createUi()
 
 void MainWindow::Private::createActions()
 {
-  actions.clearExpression           = new QAction( p );
-  actions.clearHistory              = new QAction( p );
+  actions.editClearExpression       = new QAction( p );
+  actions.editClearHistory          = new QAction( p );
   actions.degree                    = new QAction( p );
-  actions.deleteAllVariables        = new QAction( p );
-  actions.deleteVariable            = new QAction( p );
+  actions.editDeleteAllVariables    = new QAction( p );
+  actions.editDeleteVariable        = new QAction( p );
   actions.digits15                  = new QAction( p );
   actions.digits2                   = new QAction( p );
   actions.digits3                   = new QAction( p );
@@ -410,8 +412,8 @@ void MainWindow::Private::createActions()
   actions.helpAboutQt               = new QAction( p );
   actions.helpGotoWebsite           = new QAction( p );
   actions.helpTipOfTheDay           = new QAction( p );
-  actions.editInsertFunction            = new QAction( p );
-  actions.insertVariable            = new QAction( p );
+  actions.editInsertFunction        = new QAction( p );
+  actions.editInsertVariable        = new QAction( p );
   actions.optionAutoCalc            = new QAction( p );
   actions.optionSaveHistoryOnExit   = new QAction( p );
   actions.optionSaveVariablesOnExit = new QAction( p );
@@ -425,7 +427,7 @@ void MainWindow::Private::createActions()
   actions.radian                    = new QAction( p );
   actions.scrollDown                = new QAction( p );
   actions.scrollUp                  = new QAction( p );
-  actions.editSelectExpression          = new QAction( p );
+  actions.editSelectExpression      = new QAction( p );
   actions.sessionImport             = new QAction( p );
   actions.sessionLoad               = new QAction( p );
   actions.sessionQuit               = new QAction( p );
@@ -614,22 +616,22 @@ void MainWindow::Private::setStatusBarText()
       default : break;
     }
 
-    status.angleUnit->setText( angleUnit );
-    status.resultFormat   ->setText( format    );
+    status.angleUnit   ->setText( angleUnit );
+    status.resultFormat->setText( format    );
 
-    status.angleUnit->setToolTip( MainWindow::tr( "Angle unit"    ) );
-    status.resultFormat   ->setToolTip( MainWindow::tr( "Result format" ) );
+    status.angleUnit   ->setToolTip( MainWindow::tr( "Angle unit"    ) );
+    status.resultFormat->setToolTip( MainWindow::tr( "Result format" ) );
   }
 }
 
 
 void MainWindow::Private::setActionsText()
 {
-  actions.clearExpression          ->setText( MainWindow::tr( "Clear E&xpression"        ) );
-  actions.clearHistory             ->setText( MainWindow::tr( "Clear &History"           ) );
+  actions.editClearExpression      ->setText( MainWindow::tr( "Clear E&xpression"        ) );
+  actions.editClearHistory         ->setText( MainWindow::tr( "Clear &History"           ) );
   actions.degree                   ->setText( MainWindow::tr( "&Degree"                  ) );
-  actions.deleteAllVariables       ->setText( MainWindow::tr( "Delete All V&ariables"    ) );
-  actions.deleteVariable           ->setText( MainWindow::tr( "D&elete Variable..."      ) );
+  actions.editDeleteAllVariables   ->setText( MainWindow::tr( "Delete All V&ariables"    ) );
+  actions.editDeleteVariable       ->setText( MainWindow::tr( "D&elete Variable..."      ) );
   actions.digits15                 ->setText( MainWindow::tr( "&15 Decimal Digits"       ) );
   actions.digits2                  ->setText( MainWindow::tr( "&2 Decimal Digits"        ) );
   actions.digits3                  ->setText( MainWindow::tr( "&3 Decimal Digits"        ) );
@@ -643,8 +645,8 @@ void MainWindow::Private::setActionsText()
   actions.helpAboutQt              ->setText( MainWindow::tr( "About &Qt"                ) );
   actions.helpGotoWebsite          ->setText( MainWindow::tr( "SpeedCrunch &Web Site..." ) );
   actions.helpTipOfTheDay          ->setText( MainWindow::tr( "&Tip of the Day"          ) );
-  actions.editInsertFunction           ->setText( MainWindow::tr( "Insert &Function..."      ) );
-  actions.insertVariable           ->setText( MainWindow::tr( "Insert &Variable..."      ) );
+  actions.editInsertFunction       ->setText( MainWindow::tr( "Insert &Function..."      ) );
+  actions.editInsertVariable       ->setText( MainWindow::tr( "Insert &Variable..."      ) );
   actions.optionAutoCalc           ->setText( MainWindow::tr( "&Partial Results"         ) );
   actions.optionSaveHistoryOnExit  ->setText( MainWindow::tr( "Save &History on Exit"    ) );
   actions.optionSaveVariablesOnExit->setText( MainWindow::tr( "Save &Variables on Exit"  ) );
@@ -658,7 +660,7 @@ void MainWindow::Private::setActionsText()
   actions.radian                   ->setText( MainWindow::tr( "&Radian"                  ) );
   actions.scrollDown               ->setText( MainWindow::tr( "Scroll Display Down"      ) );
   actions.scrollUp                 ->setText( MainWindow::tr( "Scroll Display Up"        ) );
-  actions.editSelectExpression         ->setText( MainWindow::tr( "&Select Expression"       ) );
+  actions.editSelectExpression     ->setText( MainWindow::tr( "&Select Expression"       ) );
   actions.sessionImport            ->setText( MainWindow::tr( "&Import..."               ) );
   actions.sessionLoad              ->setText( MainWindow::tr( "&Load..."                 ) );
   actions.sessionQuit              ->setText( MainWindow::tr( "&Quit"                    ) );
@@ -741,16 +743,16 @@ void MainWindow::Private::createActionGroups()
 
 void MainWindow::Private::createActionShortcuts()
 {
-  actions.clearExpression     ->setShortcut( Qt::Key_Escape                 );
-  actions.clearHistory        ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_N );
+  actions.editClearExpression     ->setShortcut( Qt::Key_Escape                 );
+  actions.editClearHistory        ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_N );
   actions.degree              ->setShortcut( Qt::Key_F10                    );
-  actions.deleteVariable      ->setShortcut( Qt::CTRL + Qt::Key_D           );
+  actions.editDeleteVariable      ->setShortcut( Qt::CTRL + Qt::Key_D           );
   actions.editCopyLastResult  ->setShortcut( Qt::CTRL + Qt::Key_R           );
   actions.editCopy            ->setShortcut( Qt::CTRL + Qt::Key_C           );
   actions.editPaste           ->setShortcut( Qt::CTRL + Qt::Key_V           );
   actions.helpTipOfTheDay     ->setShortcut( Qt::CTRL + Qt::Key_T           );
   actions.editInsertFunction      ->setShortcut( Qt::CTRL + Qt::Key_F           );
-  actions.insertVariable      ->setShortcut( Qt::CTRL + Qt::Key_I           );
+  actions.editInsertVariable      ->setShortcut( Qt::CTRL + Qt::Key_I           );
   actions.radian              ->setShortcut( Qt::Key_F9                     );
   actions.scrollDown          ->setShortcut( Qt::SHIFT + Qt::Key_PageDown   );
   actions.scrollUp            ->setShortcut( Qt::SHIFT + Qt::Key_PageUp     );
@@ -798,13 +800,13 @@ void MainWindow::Private::createMenus()
   menus.edit->addAction( actions.editSelectExpression );
   menus.edit->addSeparator();
   menus.edit->addAction( actions.editInsertFunction );
-  menus.edit->addAction( actions.insertVariable );
+  menus.edit->addAction( actions.editInsertVariable );
   menus.edit->addSeparator();
-  menus.edit->addAction( actions.deleteVariable );
-  menus.edit->addAction( actions.deleteAllVariables );
+  menus.edit->addAction( actions.editDeleteVariable );
+  menus.edit->addAction( actions.editDeleteAllVariables );
   menus.edit->addSeparator();
-  menus.edit->addAction( actions.clearExpression );
-  menus.edit->addAction( actions.clearHistory );
+  menus.edit->addAction( actions.editClearExpression );
+  menus.edit->addAction( actions.editClearHistory );
 
   // view
   menus.view = new QMenu( "", p );
@@ -1196,11 +1198,11 @@ void MainWindow::Private::createVariablesDock()
 
 void MainWindow::Private::createFixedConnections()
 {
-  connect( actions.clearHistory,                SIGNAL( triggered()                        ), p,                     SLOT( clearHistory()                     ) );
-  connect( actions.clearExpression,             SIGNAL( triggered()                        ), p,                     SLOT( clearExpression()                  ) );
+  connect( actions.editClearHistory,            SIGNAL( triggered()                        ), p,                     SLOT( clearHistory()                     ) );
+  connect( actions.editClearExpression,         SIGNAL( triggered()                        ), p,                     SLOT( clearExpression()                  ) );
   connect( actions.degree,                      SIGNAL( triggered()                        ), p,                     SLOT( degree()                           ) );
-  connect( actions.deleteAllVariables,          SIGNAL( triggered()                        ), p,                     SLOT( deleteAllVariables()               ) );
-  connect( actions.deleteVariable,              SIGNAL( triggered()                        ), p,                     SLOT( deleteVariable()                   ) );
+  connect( actions.editDeleteAllVariables,      SIGNAL( triggered()                        ), p,                     SLOT( deleteAllVariables()               ) );
+  connect( actions.editDeleteVariable,          SIGNAL( triggered()                        ), p,                     SLOT( deleteVariable()                   ) );
   connect( actions.digits15,                    SIGNAL( triggered()                        ), p,                     SLOT( digits15()                         ) );
   connect( actions.digits2,                     SIGNAL( triggered()                        ), p,                     SLOT( digits2()                          ) );
   connect( actions.digits3,                     SIGNAL( triggered()                        ), p,                     SLOT( digits3()                          ) );
@@ -1216,7 +1218,7 @@ void MainWindow::Private::createFixedConnections()
   connect( actions.helpGotoWebsite,             SIGNAL( triggered()                        ), p,                     SLOT( gotoWebsite()                      ) );
   connect( actions.helpTipOfTheDay,             SIGNAL( triggered()                        ), p,                     SLOT( showTipOfTheDay()                  ) );
   connect( actions.editInsertFunction,          SIGNAL( triggered()                        ), p,                     SLOT( insertFunction()                   ) );
-  connect( actions.insertVariable,              SIGNAL( triggered()                        ), p,                     SLOT( insertVariable()                   ) );
+  connect( actions.editInsertVariable,          SIGNAL( triggered()                        ), p,                     SLOT( insertVariable()                   ) );
   connect( actions.radian,                      SIGNAL( triggered()                        ), p,                     SLOT( radian()                           ) );
   connect( actions.scrollDown,                  SIGNAL( triggered()                        ), p,                     SLOT( scrollDown()                       ) );
   connect( actions.scrollUp,                    SIGNAL( triggered()                        ), p,                     SLOT( scrollUp()                         ) );
