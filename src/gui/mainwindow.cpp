@@ -86,7 +86,7 @@ struct Actions
   QAction * sessionQuit;
   // edit
   QAction * editCopy;
-  QAction * editCopyResult;
+  QAction * editCopyLastResult;
   QAction * editPaste;
   QAction * selectExpression;
   QAction * insertFunction;
@@ -175,7 +175,7 @@ struct ActionGroups
 {
   QActionGroup * angle;
   QActionGroup * digits;
-  QActionGroup * format;
+  QActionGroup * resultFormat;
   QActionGroup * language;
   QActionGroup * radixChar;
 };
@@ -183,11 +183,11 @@ struct ActionGroups
 
 struct Menus
 {
-  QMenu * angle;
+  QMenu * angleUnit;
   QMenu * behavior;
   QMenu * decimal;
   QMenu * edit;
-  QMenu * format;
+  QMenu * resultFormat;
   QMenu * help;
   QMenu * language;
   QMenu * radixChar;
@@ -238,7 +238,7 @@ struct Conditions
 struct Status
 {
   QLabel * angleUnit;
-  QLabel * format;
+  QLabel * resultFormat;
 };
 
 
@@ -276,7 +276,7 @@ struct MainWindow::Private
   void createVariablesDock();
   void createFixedConnections();
   void applySettings();
-  void checkInitialFormat();
+  void checkInitialResultFormat();
   void checkInitialPrecision();
   void checkInitialLanguage();
   // THIS IS NOT NEEDED ANYMORE, BUT NEEDS TO BE TESTED WITH Qt 4.2
@@ -290,7 +290,8 @@ struct MainWindow::Private
   void deleteFunctionsDock();
   void deleteHistoryDock();
   void deleteVariablesDock();
-  void syncWindowStateToSettings();
+  // THIS IS NOT NEEDED ANYMORE, BUT NEEDS TO BE TESTED WITH Qt 4.2
+  //void syncWindowStateToSettings();
   void saveSettings();
   void setActionsText();
   void setMenusText();
@@ -319,8 +320,8 @@ MainWindow::Private::Private()
   docks.functions = 0;
   docks.variables = 0;
 
-  status.angleUnit = 0;
-  status.format    = 0;
+  status.angleUnit    = 0;
+  status.resultFormat = 0;
 
   Settings::settings = &settings;
 };
@@ -403,7 +404,7 @@ void MainWindow::Private::createActions()
   actions.digits8                   = new QAction( p );
   actions.digitsAuto                = new QAction( p );
   actions.editCopy                  = new QAction( p );
-  actions.editCopyResult            = new QAction( p );
+  actions.editCopyLastResult        = new QAction( p );
   actions.editPaste                 = new QAction( p );
   actions.helpAbout                 = new QAction( p );
   actions.helpAboutQt               = new QAction( p );
@@ -601,23 +602,23 @@ void MainWindow::Private::setStatusBarText()
       MainWindow::tr( "Radian" ) : MainWindow::tr( "Degree" );
 
     QString format;
-    switch ( settings.format )
+    switch ( settings.resultFormat )
     {
-      case 'b' : format = MainWindow::tr( "Binary"              ); break;
-      case 'o' : format = MainWindow::tr( "Octal"               ); break;
-      case 'h' : format = MainWindow::tr( "Hexadecimal"         ); break;
-      case 'f' : format = MainWindow::tr( "Fixed decimal"       ); break;
-      case 'n' : format = MainWindow::tr( "Engineering decimal" ); break;
-      case 'e' : format = MainWindow::tr( "Scientific decimal"  ); break;
-      case 'g' : format = MainWindow::tr( "General decimal"     ); break;
+      case 'b': format = MainWindow::tr( "Binary"              ); break;
+      case 'o': format = MainWindow::tr( "Octal"               ); break;
+      case 'h': format = MainWindow::tr( "Hexadecimal"         ); break;
+      case 'f': format = MainWindow::tr( "Fixed decimal"       ); break;
+      case 'n': format = MainWindow::tr( "Engineering decimal" ); break;
+      case 'e': format = MainWindow::tr( "Scientific decimal"  ); break;
+      case 'g': format = MainWindow::tr( "General decimal"     ); break;
       default : break;
     }
 
     status.angleUnit->setText( angleUnit );
-    status.format   ->setText( format    );
+    status.resultFormat   ->setText( format    );
 
     status.angleUnit->setToolTip( MainWindow::tr( "Angle unit"    ) );
-    status.format   ->setToolTip( MainWindow::tr( "Result format" ) );
+    status.resultFormat   ->setToolTip( MainWindow::tr( "Result format" ) );
   }
 }
 
@@ -636,7 +637,7 @@ void MainWindow::Private::setActionsText()
   actions.digits8                  ->setText( MainWindow::tr( "&8 Decimal Digits"        ) );
   actions.digitsAuto               ->setText( MainWindow::tr( "&Automatic Precision"     ) );
   actions.editCopy                 ->setText( MainWindow::tr( "&Copy"                    ) );
-  actions.editCopyResult           ->setText( MainWindow::tr( "Copy Last &Result"        ) );
+  actions.editCopyLastResult       ->setText( MainWindow::tr( "Copy Last &Result"        ) );
   actions.editPaste                ->setText( MainWindow::tr( "&Paste"                   ) );
   actions.helpAbout                ->setText( MainWindow::tr( "&About"                   ) );
   actions.helpAboutQt              ->setText( MainWindow::tr( "About &Qt"                ) );
@@ -685,14 +686,14 @@ void MainWindow::Private::setActionsText()
 
 void MainWindow::Private::createActionGroups()
 {
-  actionGroups.format = new QActionGroup( p );
-  actionGroups.format->addAction( actions.formatBinary );
-  actionGroups.format->addAction( actions.formatGeneral );
-  actionGroups.format->addAction( actions.formatFixed );
-  actionGroups.format->addAction( actions.formatEngineering );
-  actionGroups.format->addAction( actions.formatScientific );
-  actionGroups.format->addAction( actions.formatOctal );
-  actionGroups.format->addAction( actions.formatHexadec );
+  actionGroups.resultFormat = new QActionGroup( p );
+  actionGroups.resultFormat->addAction( actions.formatBinary );
+  actionGroups.resultFormat->addAction( actions.formatGeneral );
+  actionGroups.resultFormat->addAction( actions.formatFixed );
+  actionGroups.resultFormat->addAction( actions.formatEngineering );
+  actionGroups.resultFormat->addAction( actions.formatScientific );
+  actionGroups.resultFormat->addAction( actions.formatOctal );
+  actionGroups.resultFormat->addAction( actions.formatHexadec );
 
   actionGroups.digits = new QActionGroup( p );
   actionGroups.digits->addAction( actions.digitsAuto );
@@ -740,38 +741,38 @@ void MainWindow::Private::createActionGroups()
 
 void MainWindow::Private::createActionShortcuts()
 {
-  actions.clearExpression ->setShortcut( Qt::Key_Escape                 );
-  actions.clearHistory    ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_N );
-  actions.degree          ->setShortcut( Qt::Key_F10                    );
-  actions.deleteVariable  ->setShortcut( Qt::CTRL + Qt::Key_D           );
-  actions.editCopyResult  ->setShortcut( Qt::CTRL + Qt::Key_R           );
-  actions.editCopy        ->setShortcut( Qt::CTRL + Qt::Key_C           );
-  actions.editPaste       ->setShortcut( Qt::CTRL + Qt::Key_V           );
-  actions.helpTipOfTheDay ->setShortcut( Qt::CTRL + Qt::Key_T           );
-  actions.insertFunction  ->setShortcut( Qt::CTRL + Qt::Key_F           );
-  actions.insertVariable  ->setShortcut( Qt::CTRL + Qt::Key_I           );
-  actions.radian          ->setShortcut( Qt::Key_F9                     );
-  actions.scrollDown      ->setShortcut( Qt::SHIFT + Qt::Key_PageDown   );
-  actions.scrollUp        ->setShortcut( Qt::SHIFT + Qt::Key_PageUp     );
-  actions.selectExpression->setShortcut( Qt::CTRL + Qt::Key_A           );
-  actions.sessionLoad     ->setShortcut( Qt::CTRL + Qt::Key_L           );
-  actions.sessionQuit     ->setShortcut( Qt::CTRL + Qt::Key_Q           );
-  actions.sessionSave     ->setShortcut( Qt::CTRL + Qt::Key_S           );
-  actions.showFullScreen  ->setShortcut( Qt::Key_F11                    );
-  actions.showKeypad      ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_K );
-  actions.showBook        ->setShortcut( Qt::CTRL + Qt::Key_1           );
-  actions.showConstants   ->setShortcut( Qt::CTRL + Qt::Key_2           );
-  actions.showFunctions   ->setShortcut( Qt::CTRL + Qt::Key_3           );
-  actions.showVariables   ->setShortcut( Qt::CTRL + Qt::Key_4           );
-  actions.showHistory     ->setShortcut( Qt::CTRL + Qt::Key_5           );
+  actions.clearExpression   ->setShortcut( Qt::Key_Escape                 );
+  actions.clearHistory      ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_N );
+  actions.degree            ->setShortcut( Qt::Key_F10                    );
+  actions.deleteVariable    ->setShortcut( Qt::CTRL + Qt::Key_D           );
+  actions.editCopyLastResult->setShortcut( Qt::CTRL + Qt::Key_R           );
+  actions.editCopy          ->setShortcut( Qt::CTRL + Qt::Key_C           );
+  actions.editPaste         ->setShortcut( Qt::CTRL + Qt::Key_V           );
+  actions.helpTipOfTheDay   ->setShortcut( Qt::CTRL + Qt::Key_T           );
+  actions.insertFunction    ->setShortcut( Qt::CTRL + Qt::Key_F           );
+  actions.insertVariable    ->setShortcut( Qt::CTRL + Qt::Key_I           );
+  actions.radian            ->setShortcut( Qt::Key_F9                     );
+  actions.scrollDown        ->setShortcut( Qt::SHIFT + Qt::Key_PageDown   );
+  actions.scrollUp          ->setShortcut( Qt::SHIFT + Qt::Key_PageUp     );
+  actions.selectExpression  ->setShortcut( Qt::CTRL + Qt::Key_A           );
+  actions.sessionLoad       ->setShortcut( Qt::CTRL + Qt::Key_L           );
+  actions.sessionQuit       ->setShortcut( Qt::CTRL + Qt::Key_Q           );
+  actions.sessionSave       ->setShortcut( Qt::CTRL + Qt::Key_S           );
+  actions.showFullScreen    ->setShortcut( Qt::Key_F11                    );
+  actions.showKeypad        ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_K );
+  actions.showBook          ->setShortcut( Qt::CTRL + Qt::Key_1           );
+  actions.showConstants     ->setShortcut( Qt::CTRL + Qt::Key_2           );
+  actions.showFunctions     ->setShortcut( Qt::CTRL + Qt::Key_3           );
+  actions.showVariables     ->setShortcut( Qt::CTRL + Qt::Key_4           );
+  actions.showHistory       ->setShortcut( Qt::CTRL + Qt::Key_5           );
 #ifndef Q_OS_MAC
-  actions.showMenuBar     ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_M );
+  actions.showMenuBar       ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_M );
 #endif
-  actions.showStatusBar   ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_B );
-  actions.formatBinary    ->setShortcut( Qt::Key_F5                     );
-  actions.formatGeneral   ->setShortcut( Qt::Key_F7                     );
-  actions.formatHexadec   ->setShortcut( Qt::Key_F8                     );
-  actions.formatOctal     ->setShortcut( Qt::Key_F6                     );
+  actions.showStatusBar     ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_B );
+  actions.formatBinary      ->setShortcut( Qt::Key_F5                     );
+  actions.formatGeneral     ->setShortcut( Qt::Key_F7                     );
+  actions.formatHexadec     ->setShortcut( Qt::Key_F8                     );
+  actions.formatOctal       ->setShortcut( Qt::Key_F6                     );
 }
 
 
@@ -792,7 +793,7 @@ void MainWindow::Private::createMenus()
   menus.edit = new QMenu( "", p );
   p->menuBar()->addMenu( menus.edit );
   menus.edit->addAction( actions.editCopy );
-  menus.edit->addAction( actions.editCopyResult );
+  menus.edit->addAction( actions.editCopyLastResult );
   menus.edit->addAction( actions.editPaste );
   menus.edit->addAction( actions.selectExpression );
   menus.edit->addSeparator();
@@ -828,12 +829,12 @@ void MainWindow::Private::createMenus()
   p->menuBar()->addMenu( menus.settings );
 
   // settings / result format
-  menus.format = menus.settings->addMenu( "" );
-  menus.format->addAction( actions.formatBinary );
-  menus.format->addAction( actions.formatOctal );
+  menus.resultFormat = menus.settings->addMenu( "" );
+  menus.resultFormat->addAction( actions.formatBinary );
+  menus.resultFormat->addAction( actions.formatOctal );
 
   // settings / result format / decimal
-  menus.decimal = menus.format->addMenu( "" );
+  menus.decimal = menus.resultFormat->addMenu( "" );
   menus.decimal->addAction( actions.formatGeneral );
   menus.decimal->addAction( actions.formatFixed );
   menus.decimal->addAction( actions.formatEngineering );
@@ -847,12 +848,12 @@ void MainWindow::Private::createMenus()
   menus.decimal->addAction( actions.digits50 );
 
   // settings / result format (continued)
-  menus.format->addAction( actions.formatHexadec );
+  menus.resultFormat->addAction( actions.formatHexadec );
 
   // settings / angle mode
-  menus.angle = menus.settings->addMenu( "" );
-  menus.angle->addAction( actions.radian );
-  menus.angle->addAction( actions.degree );
+  menus.angleUnit = menus.settings->addMenu( "" );
+  menus.angleUnit->addAction( actions.radian );
+  menus.angleUnit->addAction( actions.degree );
 
   // settings / behavior
   menus.behavior = menus.settings->addMenu( "" );
@@ -918,17 +919,17 @@ void MainWindow::Private::createMenus()
 
 void MainWindow::Private::setMenusText()
 {
-  menus.session  ->setTitle( MainWindow::tr( "&Session"         ) );
-  menus.edit     ->setTitle( MainWindow::tr( "&Edit"            ) );
-  menus.view     ->setTitle( MainWindow::tr( "&View"            ) );
-  menus.settings ->setTitle( MainWindow::tr( "Se&ttings"        ) );
-  menus.format   ->setTitle( MainWindow::tr( "Result &Format"   ) );
-  menus.decimal  ->setTitle( MainWindow::tr( "&Decimal"         ) );
-  menus.angle    ->setTitle( MainWindow::tr( "&Angle Unit"      ) );
-  menus.behavior ->setTitle( MainWindow::tr( "&Behavior"        ) );
-  menus.radixChar->setTitle( MainWindow::tr( "Radix &Character" ) );
-  menus.language ->setTitle( MainWindow::tr( "&Language"        ) );
-  menus.help     ->setTitle( MainWindow::tr( "&Help"            ) );
+  menus.session     ->setTitle( MainWindow::tr( "&Session"         ) );
+  menus.edit        ->setTitle( MainWindow::tr( "&Edit"            ) );
+  menus.view        ->setTitle( MainWindow::tr( "&View"            ) );
+  menus.settings    ->setTitle( MainWindow::tr( "Se&ttings"        ) );
+  menus.resultFormat->setTitle( MainWindow::tr( "Result &Format"   ) );
+  menus.decimal     ->setTitle( MainWindow::tr( "&Decimal"         ) );
+  menus.angleUnit   ->setTitle( MainWindow::tr( "&Angle Unit"      ) );
+  menus.behavior    ->setTitle( MainWindow::tr( "&Behavior"        ) );
+  menus.radixChar   ->setTitle( MainWindow::tr( "Radix &Character" ) );
+  menus.language    ->setTitle( MainWindow::tr( "&Language"        ) );
+  menus.help        ->setTitle( MainWindow::tr( "&Help"            ) );
 }
 
 
@@ -936,14 +937,14 @@ void MainWindow::Private::createStatusBar()
 {
   QStatusBar * bar = p->statusBar();
 
-  status.angleUnit = new QLabel( bar );
-  status.format    = new QLabel( bar );
+  status.angleUnit    = new QLabel( bar );
+  status.resultFormat = new QLabel( bar );
 
-  status.angleUnit->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
-  status.format   ->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
+  status.angleUnit   ->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
+  status.resultFormat->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
 
-  bar->addWidget( status.angleUnit );
-  bar->addWidget( status.format    );
+  bar->addWidget( status.angleUnit    );
+  bar->addWidget( status.resultFormat );
 
   setStatusBarText();
 }
@@ -967,16 +968,16 @@ void MainWindow::Private::createFixedWidgets()
   // display
   QHBoxLayout * displayLayout = new QHBoxLayout();
   displayLayout->setMargin( 5 );
-  widgets.display = new ResultDisplay( settings.getRadixChar(), settings.format,
-                                       settings.precision, widgets.root );
+  widgets.display = new ResultDisplay( settings.getRadixChar(), settings.resultFormat,
+                                       settings.resultPrecision, widgets.root );
   displayLayout->addWidget( widgets.display );
   layouts.root->addLayout( displayLayout );
 
   // editor
   QHBoxLayout * editorLayout = new QHBoxLayout();
   editorLayout->setMargin( 5 );
-  widgets.editor = new Editor( evaluator, functions, constants, settings.format,
-                               settings.precision, settings.getRadixChar(),
+  widgets.editor = new Editor( evaluator, functions, constants, settings.resultFormat,
+                               settings.resultPrecision, settings.getRadixChar(),
                                widgets.root );
   widgets.editor->setFocus();
   QString editorStyle( "QTextEdit { font: bold %1pt }" );
@@ -1005,7 +1006,7 @@ void MainWindow::Private::createKeypad()
            p, SLOT( keypadButtonPressed( Keypad::Button ) ) );
   connect( p, SIGNAL( radixCharChanged( char ) ),
            widgets.keypad, SLOT( setRadixChar( char ) ) );
-  connect( p, SIGNAL( retranslateText() ),
+  connect( p, SIGNAL( languageChanged() ),
            widgets.keypad, SLOT( retranslateText() ) );
 
   layouts.keypad = new QHBoxLayout();
@@ -1081,7 +1082,7 @@ void MainWindow::Private::createConstantsDock()
            p, SLOT( constantSelected( const QString & ) ) );
   connect( p, SIGNAL( radixCharChanged( char ) ),
            docks.constants, SLOT( setRadixChar( char ) ) );
-  connect( p, SIGNAL( retranslateText() ),
+  connect( p, SIGNAL( languageChanged() ),
            docks.constants, SLOT( retranslateText() ) );
 
   if ( docks.functions )
@@ -1110,7 +1111,7 @@ void MainWindow::Private::createFunctionsDock()
 
   connect( docks.functions, SIGNAL( functionSelected( const QString & ) ),
            p, SLOT( functionSelected( const QString & ) ) );
-  connect( p, SIGNAL( retranslateText() ),
+  connect( p, SIGNAL( languageChanged() ),
            docks.functions, SLOT( retranslateText() ) );
 
   if ( docks.history )
@@ -1139,7 +1140,7 @@ void MainWindow::Private::createHistoryDock()
 
   connect( docks.history, SIGNAL( expressionSelected( const QString & ) ),
            p, SLOT( expressionSelected( const QString & ) ) );
-  connect( p, SIGNAL( retranslateText() ),
+  connect( p, SIGNAL( languageChanged() ),
            docks.history, SLOT( retranslateText() ) );
 
   docks.history->setHistory( widgets.editor->history() );
@@ -1172,7 +1173,7 @@ void MainWindow::Private::createVariablesDock()
            p, SLOT( variableSelected( const QString & ) ) );
   connect( p, SIGNAL( radixCharChanged( char ) ),
            docks.variables, SLOT( setRadixChar( char ) ) );
-  connect( p, SIGNAL( retranslateText() ),
+  connect( p, SIGNAL( languageChanged() ),
            docks.variables, SLOT( retranslateText() ) );
 
   docks.variables->updateList( evaluator );
@@ -1206,7 +1207,7 @@ void MainWindow::Private::createFixedConnections()
   connect( actions.digits50,                    SIGNAL( triggered()                        ), p,                     SLOT( digits50()                            ) );
   connect( actions.digits8,                     SIGNAL( triggered()                        ), p,                     SLOT( digits8()                             ) );
   connect( actions.digitsAuto,                  SIGNAL( triggered()                        ), p,                     SLOT( digitsAuto()                          ) );
-  connect( actions.editCopyResult,              SIGNAL( triggered()                        ), p,                     SLOT( copyResult()                          ) );
+  connect( actions.editCopyLastResult,          SIGNAL( triggered()                        ), p,                     SLOT( copyResult()                          ) );
   connect( actions.editCopy,                    SIGNAL( triggered()                        ), widgets.editor,        SLOT( copy()                                ) );
   connect( actions.editPaste,                   SIGNAL( triggered()                        ), widgets.editor,        SLOT( paste()                               ) );
   connect( actions.selectExpression,            SIGNAL( triggered()                        ), p,                     SLOT( selectExpression()                    ) );
@@ -1279,15 +1280,15 @@ void MainWindow::Private::createFixedConnections()
   connect( widgets.editor,                      SIGNAL( textChanged()                      ), p,                     SLOT( textChanged()                         ) );
   connect( widgets.display,                     SIGNAL( textSelected( const QString & )    ), widgets.editor,        SLOT( paste()                               ) );
   connect( widgets.display,                     SIGNAL( textSelected( const QString & )    ), widgets.editor,        SLOT( setFocus()                            ) );
-  connect( p,                                   SIGNAL( formatChanged( char )              ), widgets.editor,        SLOT( setFormat( char )                     ) );
-  connect( p,                                   SIGNAL( precisionChanged( int )            ), widgets.editor,        SLOT( setPrecision( int )                   ) );
+  connect( p,                                   SIGNAL( resultFormatChanged( char )              ), widgets.editor,        SLOT( setResultFormat( char )         ) );
+  connect( p,                                   SIGNAL( resultPrecisionChanged( int )            ), widgets.editor,        SLOT( setResultPrecision( int )       ) );
   connect( p,                                   SIGNAL( radixCharChanged( char )           ), widgets.editor,        SLOT( setRadixChar( char )                  ) );
-  connect( p,                                   SIGNAL( formatChanged( char )              ), widgets.display,       SLOT( setFormat( char )                     ) );
-  connect( p,                                   SIGNAL( precisionChanged( int )            ), widgets.display,       SLOT( setPrecision( int )                   ) );
+  connect( p,                                   SIGNAL( resultFormatChanged( char )              ), widgets.display,       SLOT( setResultFormat( char )         ) );
+  connect( p,                                   SIGNAL( resultPrecisionChanged( int )            ), widgets.display,       SLOT( setResultPrecision( int )       ) );
   connect( p,                                   SIGNAL( radixCharChanged( char )           ), widgets.display,       SLOT( setRadixChar( char )                  ) );
   connect( p,                                   SIGNAL( radixCharChanged( char )           ), evaluator,             SLOT( setRadixChar( char )                  ) );
-  connect( p,                                   SIGNAL( angleModeChanged( char )           ), functions,             SLOT( setAngleMode( char )                  ) );
-  connect( p,                                   SIGNAL( retranslateText()                  ), p,                     SLOT( setAllText()                          ) );
+  connect( p,                                   SIGNAL( angleUnitChanged( char )           ), functions,             SLOT( setAngleMode( char )                  ) );
+  connect( p,                                   SIGNAL( languageChanged()                  ), p,                     SLOT( setAllText()                          ) );
 }
 
 
@@ -1345,8 +1346,8 @@ void MainWindow::Private::applySettings()
     restoreVariables();
   }
 
-  // format
-  checkInitialFormat();
+  // resultFormat
+  checkInitialResultFormat();
 
   // precision
   checkInitialPrecision();
@@ -1391,39 +1392,32 @@ void MainWindow::Private::applySettings()
 }
 
 
-void MainWindow::Private::checkInitialFormat()
+void MainWindow::Private::checkInitialResultFormat()
 {
-  if ( settings.format == 'g' )
-    actions.formatGeneral->setChecked( true );
-  else if ( settings.format == 'f' )
-    actions.formatFixed->setChecked( true );
-  else if ( settings.format == 'n' )
-    actions.formatEngineering->setChecked( true );
-  else if ( settings.format == 'e' )
-    actions.formatScientific->setChecked( true );
-  else if ( settings.format == 'h' )
-    actions.formatHexadec->setChecked( true );
-  else if ( settings.format == 'o' )
-    actions.formatOctal->setChecked( true );
-  else if ( settings.format == 'b' )
-    actions.formatBinary->setChecked( true );
+  switch ( settings.resultFormat )
+  {
+    case 'f': actions.formatFixed      ->setChecked( true ); break;
+    case 'n': actions.formatEngineering->setChecked( true ); break;
+    case 'e': actions.formatScientific ->setChecked( true ); break;
+    case 'h': actions.formatHexadec    ->setChecked( true ); break;
+    case 'o': actions.formatOctal      ->setChecked( true ); break;
+    case 'b': actions.formatBinary     ->setChecked( true ); break;
+    default : actions.formatGeneral    ->setChecked( true );
+  }
 }
 
 
 void MainWindow::Private::checkInitialPrecision()
 {
-  if ( settings.precision <   0 )
-    actions.digitsAuto->setChecked( true );
-  else if ( settings.precision ==  2 )
-    actions.digits2->setChecked( true );
-  else if ( settings.precision ==  3 )
-    actions.digits3->setChecked( true );
-  else if ( settings.precision ==  8 )
-    actions.digits8->setChecked( true );
-  else if ( settings.precision == 15 )
-    actions.digits15->setChecked( true );
-  else if ( settings.precision == 50 )
-    actions.digits50->setChecked( true );
+  switch ( settings.resultPrecision )
+  {
+    case 2 : actions.digits2   ->setChecked( true ); break;
+    case 3 : actions.digits3   ->setChecked( true ); break;
+    case 8 : actions.digits8   ->setChecked( true ); break;
+    case 15: actions.digits15  ->setChecked( true ); break;
+    case 50: actions.digits50  ->setChecked( true ); break;
+    default: actions.digitsAuto->setChecked( true );
+  }
 }
 
 
@@ -1507,62 +1501,63 @@ void MainWindow::Private::saveSettings()
     }
   }
 
-  syncWindowStateToSettings();
-
-  settings.save();
-}
-
-
-void MainWindow::Private::syncWindowStateToSettings()
-{
-  // main window
+  // window
   settings.windowPosition = p->pos();
   settings.windowSize     = p->size();
   settings.windowState    = p->saveState();
 
   // THIS IS NOT NEEDED ANYMORE, BUT NEEDS TO BE TESTED WITH Qt 4.2
-  // docks
-  //if ( docks.book )
-  //{
-  //  settings.bookDockFloating = docks.book->isFloating();
-  //  settings.bookDockLeft     = docks.book->x();
-  //  settings.bookDockTop      = docks.book->y();
-  //  settings.bookDockWidth    = docks.book->width();
-  //  settings.bookDockHeight   = docks.book->height();
-  //}
-  //if ( docks.history )
-  //{
-  //  settings.historyDockFloating = docks.history->isFloating();
-  //  settings.historyDockLeft     = docks.history->x();
-  //  settings.historyDockTop      = docks.history->y();
-  //  settings.historyDockWidth    = docks.history->width();
-  //  settings.historyDockHeight   = docks.history->height();
-  //}
-  //if ( docks.functions )
-  //{
-  //  settings.functionsDockFloating = docks.functions->isFloating();
-  //  settings.functionsDockLeft     = docks.functions->x();
-  //  settings.functionsDockTop      = docks.functions->y();
-  //  settings.functionsDockWidth    = docks.functions->width();
-  //  settings.functionsDockHeight   = docks.functions->height();
-  //}
-  //if ( docks.variables )
-  //{
-  //  settings.variablesDockFloating = docks.variables->isFloating();
-  //  settings.variablesDockLeft     = docks.variables->x();
-  //  settings.variablesDockTop      = docks.variables->y();
-  //  settings.variablesDockWidth    = docks.variables->width();
-  //  settings.variablesDockHeight   = docks.variables->height();
-  //}
-  //if ( docks.constants )
-  //{
-  //  settings.constantsDockFloating = docks.constants->isFloating();
-  //  settings.constantsDockLeft     = docks.constants->x();
-  //  settings.constantsDockTop      = docks.constants->y();
-  //  settings.constantsDockWidth    = docks.constants->width();
-  //  settings.constantsDockHeight   = docks.constants->height();
-  //}
+  //syncWindowStateToSettings();
+
+  settings.save();
 }
+
+
+// THIS IS NOT NEEDED ANYMORE, BUT NEEDS TO BE TESTED WITH Qt 4.2
+//void MainWindow::Private::syncWindowStateToSettings()
+//{
+//   docks
+//  if ( docks.book )
+//  {
+//    settings.bookDockFloating = docks.book->isFloating();
+//    settings.bookDockLeft     = docks.book->x();
+//    settings.bookDockTop      = docks.book->y();
+//    settings.bookDockWidth    = docks.book->width();
+//    settings.bookDockHeight   = docks.book->height();
+//  }
+//  if ( docks.history )
+//  {
+//    settings.historyDockFloating = docks.history->isFloating();
+//    settings.historyDockLeft     = docks.history->x();
+//    settings.historyDockTop      = docks.history->y();
+//    settings.historyDockWidth    = docks.history->width();
+//    settings.historyDockHeight   = docks.history->height();
+//  }
+//  if ( docks.functions )
+//  {
+//    settings.functionsDockFloating = docks.functions->isFloating();
+//    settings.functionsDockLeft     = docks.functions->x();
+//    settings.functionsDockTop      = docks.functions->y();
+//    settings.functionsDockWidth    = docks.functions->width();
+//    settings.functionsDockHeight   = docks.functions->height();
+//  }
+//  if ( docks.variables )
+//  {
+//    settings.variablesDockFloating = docks.variables->isFloating();
+//    settings.variablesDockLeft     = docks.variables->x();
+//    settings.variablesDockTop      = docks.variables->y();
+//    settings.variablesDockWidth    = docks.variables->width();
+//    settings.variablesDockHeight   = docks.variables->height();
+//  }
+//  if ( docks.constants )
+//  {
+//    settings.constantsDockFloating = docks.constants->isFloating();
+//    settings.constantsDockLeft     = docks.constants->x();
+//    settings.constantsDockTop      = docks.constants->y();
+//    settings.constantsDockWidth    = docks.constants->width();
+//    settings.constantsDockHeight   = docks.constants->height();
+//  }
+//}
 
 
 // public
@@ -1574,7 +1569,7 @@ MainWindow::MainWindow()
   d->settings.load();
   d->createUi();
   d->applySettings();
-  emit retranslateText();
+  emit languageChanged();
   QTimer::singleShot( 0, this, SLOT( activate() ) );
 }
 
@@ -1637,8 +1632,8 @@ void MainWindow::copyResult()
 {
   QClipboard * cb = QApplication::clipboard();
   HNumber num = d->evaluator->get( "ans" );
-  char * strToCopy = HMath::format( num, d->settings.format,
-                                    d->settings.precision );
+  char * strToCopy = HMath::format( num, d->settings.resultFormat,
+                                    d->settings.resultPrecision );
   QString final( strToCopy );
   if ( d->widgets.display->radixChar() == ',' )
     final.replace( '.', ',' );
@@ -1657,7 +1652,7 @@ void MainWindow::degree()
   if ( d->status.angleUnit )
     d->status.angleUnit->setText( tr( "Degree" ) );
 
-  emit angleModeChanged( 'd' );
+  emit angleUnitChanged( 'd' );
 }
 
 
@@ -1682,37 +1677,37 @@ void MainWindow::deleteVariable()
 
 void MainWindow::digits2()
 {
-  setPrecision( 2 );
+  setResultPrecision( 2 );
 }
 
 
 void MainWindow::digits3()
 {
-  setPrecision( 3 );
+  setResultPrecision( 3 );
 }
 
 
 void MainWindow::digits8()
 {
-  setPrecision( 8 );
+  setResultPrecision( 8 );
 }
 
 
 void MainWindow::digits15()
 {
-  setPrecision( 15 );
+  setResultPrecision( 15 );
 }
 
 
 void MainWindow::digits50()
 {
-  setPrecision( 50 );
+  setResultPrecision( 50 );
 }
 
 
 void MainWindow::digitsAuto()
 {
-  setPrecision( -1 );
+  setResultPrecision( -1 );
 }
 
 
@@ -2015,7 +2010,7 @@ void MainWindow::minimizeToTrayToggled( bool b )
     d->widgets.trayIcon->setIcon( QPixmap( ":/speedcrunch.png" ) );
 
     d->menus.trayIcon = new QMenu( this );
-    d->menus.trayIcon->addAction( d->actions.editCopyResult );
+    d->menus.trayIcon->addAction( d->actions.editCopyLastResult );
     d->menus.trayIcon->addSeparator();
     d->menus.trayIcon->addAction( d->actions.sessionQuit    );
 
@@ -2053,7 +2048,7 @@ void MainWindow::radian()
   if ( d->status.angleUnit )
     d->status.angleUnit->setText( tr( "Radian" ) );
 
-  emit angleModeChanged( 'r' );
+  emit angleUnitChanged( 'r' );
 }
 
 
@@ -2269,8 +2264,8 @@ void MainWindow::Private::deleteStatusBar()
   delete status.angleUnit;
   status.angleUnit = 0;
 
-  delete status.format;
-  status.format = 0;
+  delete status.resultFormat;
+  status.resultFormat = 0;
 
   p->setStatusBar( 0 );
 }
@@ -2457,70 +2452,70 @@ void MainWindow::showTipOfTheDay()
 void MainWindow::formatBinary()
 {
   d->actionGroups.digits->setDisabled( true );
-  setFormat( 'b' );
+  setResultFormat( 'b' );
 
-  if ( d->status.format )
-    d->status.format->setText( tr( "Binary" ) );
+  if ( d->status.resultFormat )
+    d->status.resultFormat->setText( tr( "Binary" ) );
 }
 
 
 void MainWindow::formatEngineering()
 {
   d->actionGroups.digits->setEnabled( true );
-  setFormat( 'n' );
+  setResultFormat( 'n' );
 
-  if ( d->status.format )
-    d->status.format->setText( tr( "Engineering decimal" ) );
+  if ( d->status.resultFormat )
+    d->status.resultFormat->setText( tr( "Engineering decimal" ) );
 }
 
 
 void MainWindow::formatFixed()
 {
   d->actionGroups.digits->setEnabled( true );
-  setFormat( 'f' );
+  setResultFormat( 'f' );
 
-  if ( d->status.format )
-    d->status.format->setText( tr( "Fixed decimal" ) );
+  if ( d->status.resultFormat )
+    d->status.resultFormat->setText( tr( "Fixed decimal" ) );
 }
 
 
 void MainWindow::formatGeneral()
 {
   d->actionGroups.digits->setEnabled( true );
-  setFormat( 'g' );
+  setResultFormat( 'g' );
 
-  if ( d->status.format )
-    d->status.format->setText( tr( "General decimal" ) );
+  if ( d->status.resultFormat )
+    d->status.resultFormat->setText( tr( "General decimal" ) );
 }
 
 
 void MainWindow::formatHexadec()
 {
   d->actionGroups.digits->setDisabled( true );
-  setFormat( 'h' );
+  setResultFormat( 'h' );
 
-  if ( d->status.format )
-    d->status.format->setText( tr( "Hexadecimal" ) );
+  if ( d->status.resultFormat )
+    d->status.resultFormat->setText( tr( "Hexadecimal" ) );
 }
 
 
 void MainWindow::formatOctal()
 {
   d->actionGroups.digits->setDisabled( true );
-  setFormat( 'o' );
+  setResultFormat( 'o' );
 
-  if ( d->status.format )
-    d->status.format->setText( tr( "Octal" ) );
+  if ( d->status.resultFormat )
+    d->status.resultFormat->setText( tr( "Octal" ) );
 }
 
 
 void MainWindow::formatScientific()
 {
   d->actionGroups.digits->setEnabled( true );
-  setFormat( 'e' );
+  setResultFormat( 'e' );
 
-  if ( d->status.format )
-    d->status.format->setText( tr( "Scientific decimal" ) );
+  if ( d->status.resultFormat )
+    d->status.resultFormat->setText( tr( "Scientific decimal" ) );
 }
 
 
@@ -2914,23 +2909,23 @@ void MainWindow::closeEvent( QCloseEvent * e )
 }
 
 
-void MainWindow::setPrecision( int p )
+void MainWindow::setResultPrecision( int p )
 {
-  if ( d->settings.precision == p )
+  if ( d->settings.resultPrecision == p )
     return;
 
-  d->settings.precision = p;
-  emit precisionChanged( p );
+  d->settings.resultPrecision = p;
+  emit resultPrecisionChanged( p );
 }
 
 
-void MainWindow::setFormat( char c )
+void MainWindow::setResultFormat( char c )
 {
-  if ( d->settings.format == c )
+  if ( d->settings.resultFormat == c )
     return;
 
-  d->settings.format = c;
-  emit formatChanged( c );
+  d->settings.resultFormat = c;
+  emit resultFormatChanged( c );
 }
 
 
@@ -2951,5 +2946,5 @@ void MainWindow::changeLanguage()
   if ( d->settings.language != lang )
     d->settings.language = lang;
 
-  emit retranslateText();
+  emit languageChanged();
 }

@@ -43,13 +43,12 @@ class Settings
     bool isLocaleRadixChar() const { return radixChar == 0; };
 
     char angleMode; // 'r': radian; 'd': degree
-    char format;    // see HMath documentation
-    int  precision; // see HMath documentation
+    char resultFormat;    // see HMath documentation
+    int  resultPrecision; // see HMath documentation
 
     bool autoCalc;
     bool autoComplete;
     bool minimizeToTray;
-    //bool saveSession;
     bool saveHistory;
     bool saveVariables;
     bool showBook;

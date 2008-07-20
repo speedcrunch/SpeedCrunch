@@ -94,14 +94,14 @@ void Settings::load()
   if (    formatStr != "g" && formatStr != "f" && formatStr != "e"
        && formatStr != "n" && formatStr != "h" && formatStr != "o"
        && formatStr != "b" )
-    format = 'g';
+    resultFormat = 'g';
   else
-    format = formatStr[0].toAscii();
+    resultFormat = formatStr[0].toAscii();
 
-  precision = settings->value( key + "Precision", -1  ).toInt();
+  resultPrecision = settings->value( key + "Precision", -1  ).toInt();
 
-  if ( precision > DECPRECISION )
-    precision = DECPRECISION;
+  if ( resultPrecision > DECPRECISION )
+    resultPrecision = DECPRECISION;
 
   key = KEY + "/Layout/";
   showFullScreen        = settings->value( key + "ShowFullScreen",  false ).toBool();
@@ -238,8 +238,8 @@ void Settings::save()
 
   key = KEY + "/Format/";
 
-  settings->setValue( key + "Type",      QString( QChar( format ) ) );
-  settings->setValue( key + "Precision", precision );
+  settings->setValue( key + "Type",      QString( QChar( resultFormat ) ) );
+  settings->setValue( key + "Precision", resultPrecision );
 
   key = KEY + "/Layout/";
 

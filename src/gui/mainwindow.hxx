@@ -43,13 +43,13 @@ class MainWindow : public QMainWindow
     ~MainWindow();
 
   signals:
-    void angleModeChanged( char );
-    void formatChanged( char );
+    void angleUnitChanged( char );
+    void languageChanged();
     void radixCharChanged( char );
-    void precisionChanged( int );
-    void retranslateText();
+    void resultFormatChanged( char );
+    void resultPrecisionChanged( int );
 
-  public slots:
+  protected slots:
     void about();
     void aboutQt();
     void clearHistory();
@@ -107,8 +107,6 @@ class MainWindow : public QMainWindow
     void radixCharCommaTriggered();
     void changeLanguage();
     void setAllText();
-
-  protected slots:
     void activate();
     void constantSelected( const QString & );
     void importSession();
@@ -121,8 +119,8 @@ class MainWindow : public QMainWindow
     void textChanged();
     void trayIconActivated( QSystemTrayIcon::ActivationReason );
     void variableSelected( const QString & );
-    void setPrecision( int );
-    void setFormat( char );
+    void setResultPrecision( int );
+    void setResultFormat( char );
     void setRadixChar( char );
 
   protected:
