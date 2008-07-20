@@ -78,64 +78,66 @@
 
 struct Actions
 {
-  QAction * clearExpression;
-  QAction * clearHistory;
-  QAction * degree;
-  QAction * deleteAllVariables;
-  QAction * deleteVariable;
-  QAction * digits15;
-  QAction * digits2;
-  QAction * digits3;
-  QAction * digits50;
-  QAction * digits8;
-  QAction * digitsAuto;
+  // session
+  QAction * sessionLoad;
+  QAction * sessionSave;
+  QAction * sessionImport;
+  QAction * sessionExport;
+  QAction * sessionQuit;
+  // edit
   QAction * editCopy;
   QAction * editCopyResult;
   QAction * editPaste;
-  QAction * helpAbout;
-  QAction * helpAboutQt;
-  QAction * helpGotoWebsite;
-  QAction * helpTipOfTheDay;
+  QAction * selectExpression;
   QAction * insertFunction;
   QAction * insertVariable;
-  QAction * optionAlwaysOnTop;
-  QAction * optionAutoCalc;
-  QAction * optionSaveHistoryOnExit;
-  QAction * optionSaveVariablesOnExit;
-  QAction * optionAutoCompletion;
-  QAction * optionDotAuto;
-  QAction * optionDotComma;
-  QAction * optionDotPoint;
-  QAction * optionMinimizeToTray;
-  QAction * optionHiliteSyntax;
-  QAction * radian;
-  QAction * radixCharAuto;
-  QAction * radixCharComma;
-  QAction * radixCharDot;
-  QAction * scrollDown;
-  QAction * scrollUp;
-  QAction * selectExpression;
-  QAction * sessionImport;
-  QAction * sessionLoad;
-  QAction * sessionQuit;
-  QAction * sessionSave;
-  QAction * sessionExport;
+  QAction * deleteVariable;
+  QAction * deleteAllVariables;
+  QAction * clearHistory;
+  QAction * clearExpression;
+  // view
+  QAction * showKeypad;
   QAction * showBook;
   QAction * showConstants;
-  QAction * showFullScreen;
   QAction * showFunctions;
+  QAction * showVariables;
   QAction * showHistory;
-  QAction * showKeypad;
   QAction * showMenuBar;
   QAction * showStatusBar;
-  QAction * showVariables;
-  QAction * formatBinary;
-  QAction * formatEngineering;
-  QAction * formatFixed;
+  QAction * showFullScreen;
+  // settings
+  //   result format
+  //     decimal
   QAction * formatGeneral;
-  QAction * formatHexadec;
-  QAction * formatOctal;
+  QAction * formatFixed;
+  QAction * formatEngineering;
   QAction * formatScientific;
+  QAction * digitsAuto;
+  QAction * digits2;
+  QAction * digits3;
+  QAction * digits8;
+  QAction * digits15;
+  QAction * digits50;
+  //   result format
+  QAction * formatBinary;
+  QAction * formatOctal;
+  QAction * formatHexadec;
+  //   angle unit
+  QAction * radian;
+  QAction * degree;
+  //   behavior
+  QAction * optionSaveHistoryOnExit;
+  QAction * optionSaveVariablesOnExit;
+  QAction * optionAutoCalc;
+  QAction * optionAutoCompletion;
+  QAction * optionHiliteSyntax;
+  QAction * optionAlwaysOnTop;
+  QAction * optionMinimizeToTray;
+  //   radix character
+  QAction * radixCharAuto;
+  QAction * radixCharDot;
+  QAction * radixCharComma;
+  //   language
   QAction * languageDefault;
   QAction * languageCa;
   QAction * languageCs;
@@ -159,6 +161,13 @@ struct Actions
   QAction * languageSv;
   QAction * languageTr;
   QAction * languageZhCn;
+  // help
+  QAction * helpTipOfTheDay;
+  QAction * helpGotoWebsite;
+  QAction * helpAbout;
+  QAction * helpAboutQt;
+  QAction * scrollDown;
+  QAction * scrollUp;
 };
 
 
