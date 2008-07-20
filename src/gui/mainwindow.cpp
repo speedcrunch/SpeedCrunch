@@ -1280,11 +1280,11 @@ void MainWindow::Private::createFixedConnections()
   connect( widgets.editor,                      SIGNAL( textChanged()                      ), p,                     SLOT( textChanged()                      ) );
   connect( widgets.display,                     SIGNAL( textSelected( const QString & )    ), widgets.editor,        SLOT( paste()                            ) );
   connect( widgets.display,                     SIGNAL( textSelected( const QString & )    ), widgets.editor,        SLOT( setFocus()                         ) );
-  connect( p,                                   SIGNAL( resultFormatChanged( char )        ), widgets.editor,        SLOT( setResultFormat( char )            ) );
-  connect( p,                                   SIGNAL( resultPrecisionChanged( int )      ), widgets.editor,        SLOT( setResultPrecision( int )          ) );
+  connect( p,                                   SIGNAL( resultFormatChanged( char )        ), widgets.editor,        SLOT( setFormat( char )                  ) );
+  connect( p,                                   SIGNAL( resultPrecisionChanged( int )      ), widgets.editor,        SLOT( setPrecision( int )                ) );
   connect( p,                                   SIGNAL( radixCharChanged( char )           ), widgets.editor,        SLOT( setRadixChar( char )               ) );
-  connect( p,                                   SIGNAL( resultFormatChanged( char )        ), widgets.display,       SLOT( setResultFormat( char )            ) );
-  connect( p,                                   SIGNAL( resultPrecisionChanged( int )      ), widgets.display,       SLOT( setResultPrecision( int )          ) );
+  connect( p,                                   SIGNAL( resultFormatChanged( char )        ), widgets.display,       SLOT( setFormat( char )                  ) );
+  connect( p,                                   SIGNAL( resultPrecisionChanged( int )      ), widgets.display,       SLOT( setPrecision( int )                ) );
   connect( p,                                   SIGNAL( radixCharChanged( char )           ), widgets.display,       SLOT( setRadixChar( char )               ) );
   connect( p,                                   SIGNAL( radixCharChanged( char )           ), evaluator,             SLOT( setRadixChar( char )               ) );
   connect( p,                                   SIGNAL( angleUnitChanged( char )           ), functions,             SLOT( setAngleMode( char )               ) );
