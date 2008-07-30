@@ -273,33 +273,34 @@ AboutBox::AboutBox( QWidget * parent ) : QDialog( parent )
          "Vibet Alexis<br>"
          "Vladimir Pouzanov<br>"
          ;
-  msg += QString( "<i>%1</i><br>" ).arg( tr("...and many others...") );
+  msg += QString( "<i>%1</i><br>" ).arg( tr( "...and many others..." ) );
   msg += "</p>";
 
   msg += "<p>";
-  msg += QString( "<b>%1</b><br><br>"  ).arg( tr("Translations") );
+  msg += QString( "<b>%1</b><br><br>"  ).arg( tr( "Translations" ) );
   const char * i18nFmt = "<b>%1</b><br>%2<br><br>";
-  msg += QString( i18nFmt ).arg( tr( "Argentinian Spanish"  ) ).arg( "Lucas Sallovitz"                 );
-  msg += QString( i18nFmt ).arg( tr( "Basque"               ) ).arg( "I&ntilde;igo Salvador Azurmendi" );
-  msg += QString( i18nFmt ).arg( tr( "Brazilian Portuguese" ) ).arg( "F&aacute;bio Margarido"          );
-  msg += QString( i18nFmt ).arg( tr( "Catalan"              ) ).arg( "Francesc Farf&aacute;n"          );
-  msg += QString( i18nFmt ).arg( tr( "Czech"                ) ).arg( "Blond'&aacute;k"                 );
-  msg += QString( i18nFmt ).arg( tr( "Dutch"                ) ).arg( "Maarten Fonville"                );
-  msg += QString( i18nFmt ).arg( tr( "French"               ) ).arg( "Gr&eacute;gory Treiber"          );
-  msg += QString( i18nFmt ).arg( tr( "Finnish"              ) ).arg( "J-P Nurmi"                       );
-  msg += QString( i18nFmt ).arg( tr( "German"               ) ).arg( "Wolf Lammen"                     );
-  msg += QString( i18nFmt ).arg( tr( "Hebrew"               ) ).arg( "Jonathan Avraham"                );
-  msg += QString( i18nFmt ).arg( tr( "Indonesian"           ) ).arg( "Yolla Indria"                    );
-  msg += QString( i18nFmt ).arg( tr( "Italian"              ) ).arg( "Alessio Sclocco"                 );
-  msg += QString( i18nFmt ).arg( tr( "Norwegian"            ) ).arg( "Thomas Finneid"                  );
-  msg += QString( i18nFmt ).arg( tr( "Polish"               ) ).arg( "Witold Wysota"                   );
-  msg += QString( i18nFmt ).arg( tr( "Portuguese"           ) ).arg( "Helder Correia"                  );
-  msg += QString( i18nFmt ).arg( tr( "Romanian"             ) ).arg( "Iulia Taulescu"                  );
-  msg += QString( i18nFmt ).arg( tr( "Russian"              ) ).arg( "Irek Khasyanov"                  );
-  msg += QString( i18nFmt ).arg( tr( "Simplified Chinese"   ) ).arg( "Liang Qi"                        );
-  msg += QString( i18nFmt ).arg( tr( "Spanish"              ) ).arg( "Francesc Farf&aacute;n"          );
-  msg += QString( i18nFmt ).arg( tr( "Swedish"              ) ).arg( "Johan Thelin"                    );
-  msg += QString( i18nFmt ).arg( tr( "Turkish"              ) ).arg( "Serdar Soytetir"                 );
+  msg += QString( i18nFmt ).arg( tr( "Arabic"               ) ).arg( "Ali Issa, Nancy Mattur, Kefah Issa" );
+  msg += QString( i18nFmt ).arg( tr( "Argentinian Spanish"  ) ).arg( "Lucas Sallovitz"                    );
+  msg += QString( i18nFmt ).arg( tr( "Basque"               ) ).arg( "I&ntilde;igo Salvador Azurmendi"    );
+  msg += QString( i18nFmt ).arg( tr( "Brazilian Portuguese" ) ).arg( "F&aacute;bio Margarido"             );
+  msg += QString( i18nFmt ).arg( tr( "Catalan"              ) ).arg( "Francesc Farf&aacute;n"             );
+  msg += QString( i18nFmt ).arg( tr( "Czech"                ) ).arg( "Blond'&aacute;k"                    );
+  msg += QString( i18nFmt ).arg( tr( "Dutch"                ) ).arg( "Maarten Fonville"                   );
+  msg += QString( i18nFmt ).arg( tr( "French"               ) ).arg( "Gr&eacute;gory Treiber"             );
+  msg += QString( i18nFmt ).arg( tr( "Finnish"              ) ).arg( "J-P Nurmi"                          );
+  msg += QString( i18nFmt ).arg( tr( "German"               ) ).arg( "Wolf Lammen"                        );
+  msg += QString( i18nFmt ).arg( tr( "Hebrew"               ) ).arg( "Jonathan Avraham"                   );
+  msg += QString( i18nFmt ).arg( tr( "Indonesian"           ) ).arg( "Yolla Indria"                       );
+  msg += QString( i18nFmt ).arg( tr( "Italian"              ) ).arg( "Alessio Sclocco"                    );
+  msg += QString( i18nFmt ).arg( tr( "Norwegian"            ) ).arg( "Thomas Finneid"                     );
+  msg += QString( i18nFmt ).arg( tr( "Polish"               ) ).arg( "Witold Wysota"                      );
+  msg += QString( i18nFmt ).arg( tr( "Portuguese"           ) ).arg( "Helder Correia"                     );
+  msg += QString( i18nFmt ).arg( tr( "Romanian"             ) ).arg( "Iulia Taulescu"                     );
+  msg += QString( i18nFmt ).arg( tr( "Russian"              ) ).arg( "Irek Khasyanov"                     );
+  msg += QString( i18nFmt ).arg( tr( "Simplified Chinese"   ) ).arg( "Liang Qi"                           );
+  msg += QString( i18nFmt ).arg( tr( "Spanish"              ) ).arg( "Francesc Farf&aacute;n"             );
+  msg += QString( i18nFmt ).arg( tr( "Swedish"              ) ).arg( "Johan Thelin"                       );
+  msg += QString( i18nFmt ).arg( tr( "Turkish"              ) ).arg( "Serdar Soytetir"                    );
   msg += "</p>";
 
   msg += "<p>";
