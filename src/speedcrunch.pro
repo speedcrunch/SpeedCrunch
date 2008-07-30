@@ -36,6 +36,7 @@ SOURCES += gui/mainwindow.cpp
 SOURCES += gui/tipwidget.cpp
 SOURCES += gui/variablesdock.cpp
 
+TRANSLATIONS += locale/ar.ts
 TRANSLATIONS += locale/ca.ts
 TRANSLATIONS += locale/cs.ts
 TRANSLATIONS += locale/de.ts

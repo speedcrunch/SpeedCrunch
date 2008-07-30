@@ -2702,6 +2702,7 @@ void MainWindow::showLanguageChooserDialog()
   map.insert( QString          ( "Suomi" ),                            QString( "fi"    ) );
   map.insert( QString          ( "Svenska" ),                          QString( "sv"    ) );
   map.insert( QString::fromUtf8( "Türkçe" ),                           QString( "tr"    ) );
+  map.insert( QString::fromUtf8( "العربية" ),                          QString( "ar"    ) );
   map.insert( QString::fromUtf8( "עברית" ),                            QString( "he"    ) );
   map.insert( QString::fromUtf8( "Русский" ),                          QString( "ru"    ) );
   map.insert( QString::fromUtf8( "简化字" ),                           QString( "zh_CN" ) );
