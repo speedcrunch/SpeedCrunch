@@ -358,7 +358,7 @@ bool Editor::autoCompleteEnabled() const
 }
 
 
-void Editor::setAutoCompleteEnabled( bool enable )
+void Editor::setAutoCompletionEnabled( bool enable )
 {
   d->autoCompleteEnabled = enable;
 }
@@ -969,7 +969,7 @@ void Editor::wheelEvent( QWheelEvent * e )
 }
 
 
-void Editor::setSyntaxHighlight( bool enable )
+void Editor::setSyntaxHighlightingEnabled( bool enable )
 {
   d->syntaxHighlightEnabled = enable;
   d->highlighter->rehighlight();

@@ -71,20 +71,19 @@ void Settings::load()
 
   // radix character special case
   QString radixCharStr;
-  radixCharStr = settings->value( key + "RadixChar", 0 ).toString();
+  radixCharStr = settings->value( key + "RadixCharacter", 0 ).toString();
   if ( radixCharStr != "," && radixCharStr != "." )
     radixChar = 0;
   else
     radixChar = radixCharStr[0].toAscii();
 
-  //saveSession    = settings->value( key + "RestoreLastSession", true  ).toBool();
-  saveHistory    = settings->value( key + "SaveHistory",        true  ).toBool();
-  saveVariables  = settings->value( key + "SaveVariables",      true  ).toBool();
-  autoComplete   = settings->value( key + "AutoComplete",       true  ).toBool();
-  autoCalc       = settings->value( key + "AutoCalc",           true  ).toBool();
-  minimizeToTray = settings->value( key + "MinimizeToTray",     false ).toBool();
-  hiliteSyntax   = settings->value( key + "HiliteSyntax",       true  ).toBool();
-  language       = settings->value( key + "Language",           "C"   ).toString();
+  historySave           = settings->value( key + "HistorySave",           true  ).toBool();
+  variableSave          = settings->value( key + "VariableSave",          true  ).toBool();
+  autoCompletion        = settings->value( key + "AutoCompletion",        true  ).toBool();
+  autoCalc              = settings->value( key + "AutoCalc",              true  ).toBool();
+  systemTrayIconVisible = settings->value( key + "SystemTrayIconVisible", false ).toBool();
+  syntaxHighlighting    = settings->value( key + "SyntaxHilighting",      true  ).toBool();
+  language              = settings->value( key + "Language",              "C"   ).toString();
 
   key = KEY + "/Format/";
 
@@ -104,45 +103,20 @@ void Settings::load()
     resultPrecision = DECPRECISION;
 
   key = KEY + "/Layout/";
-  showFullScreen        = settings->value( key + "ShowFullScreen",  false ).toBool();
-  showKeypad            = settings->value( key + "ShowKeypad",      true  ).toBool();
-  showMenuBar           = settings->value( key + "ShowMenuBar",     true  ).toBool();
-  showStatusBar         = settings->value( key + "ShowStatusBar",   false ).toBool();
-  showHistory           = settings->value( key + "ShowHistory",     false ).toBool();
-  showFunctions         = settings->value( key + "ShowFunctions",   false ).toBool();
-  showVariables         = settings->value( key + "ShowVariables",   false ).toBool();
-  showBook              = settings->value( key + "ShowBook",        false ).toBool();
-  showConstants         = settings->value( key + "ShowConstants",   false ).toBool();
-  stayAlwaysOnTop       = settings->value( key + "StayAlwaysOnTop", false ).toBool();
+  windowOnfullScreen   = settings->value( key + "WindowOnFullScreen",   false ).toBool();
+  keypadVisible        = settings->value( key + "KeypadVisible",        true  ).toBool();
+  menuBarVisible       = settings->value( key + "MenuBarVisible",       true  ).toBool();
+  statusBarVisible     = settings->value( key + "StatusBarVisible",     false ).toBool();
+  historyDockVisible   = settings->value( key + "HistoryDockVisible",   false ).toBool();
+  functionsDockVisible = settings->value( key + "FunctionsDockVisible", false ).toBool();
+  variablesDockVisible = settings->value( key + "VariablesDockVisible", false ).toBool();
+  mathBookDockVisible  = settings->value( key + "MathBookDockVisible",  false ).toBool();
+  constantsDockVisible = settings->value( key + "ConstantsDockVisible", false ).toBool();
+  windowAlwaysOnTop    = settings->value( key + "WindowAlwaysOnTop",    false ).toBool();
 
-  windowSize            = settings->value( key + "WindowSize",      QSize( 400, 300 ) ).toSize(),
-  windowPosition        = settings->value( key + "WindowPosition",  QPoint()          ).toPoint();
-  windowState           = settings->value( key + "State"                              ).toByteArray();
-  //historyDockFloating   = settings->value( key + "HistoryDockFloating",   false ).toBool();
-  //historyDockTop        = settings->value( key + "HistoryDockTop",        0     ).toInt();
-  //historyDockLeft       = settings->value( key + "HistoryDockLeft",       0     ).toInt();
-  //historyDockWidth      = settings->value( key + "HistoryDockWidth",      150   ).toInt();
-  //historyDockHeight     = settings->value( key + "HistoryDockHeight",     350   ).toInt();
-  //functionsDockFloating = settings->value( key + "FunctionsDockFloating", false ).toBool();
-  //functionsDockTop      = settings->value( key + "FunctionsDockTop",      0     ).toInt();
-  //functionsDockLeft     = settings->value( key + "FunctionsDockLeft",     0     ).toInt();
-  //functionsDockWidth    = settings->value( key + "FunctionsDockWidth",    150   ).toInt();
-  //functionsDockHeight   = settings->value( key + "FunctionsDockHeight",   350   ).toInt();
-  //bookDockFloating      = settings->value( key + "BookDockFloating",      false ).toBool();
-  //bookDockTop           = settings->value( key + "BookDockTop",           0     ).toInt();
-  //bookDockLeft          = settings->value( key + "BookDockLeft",          0     ).toInt();
-  //bookDockWidth         = settings->value( key + "BookDockWidth",         150   ).toInt();
-  //bookDockHeight        = settings->value( key + "BookDockHeight",        350   ).toInt();
-  //variablesDockFloating = settings->value( key + "VariablesDockFloating", false ).toBool();
-  //variablesDockTop      = settings->value( key + "VariablesDockTop",      0     ).toInt();
-  //variablesDockLeft     = settings->value( key + "VariablesDockLeft",     0     ).toInt();
-  //variablesDockWidth    = settings->value( key + "VariablesDockWidth",    150   ).toInt();
-  //variablesDockHeight   = settings->value( key + "VariablesDockHeight",   350   ).toInt();
-  //constantsDockFloating = settings->value( key + "ConstantsDockFloating", false ).toBool();
-  //constantsDockTop      = settings->value( key + "ConstantsDockTop",      0     ).toInt();
-  //constantsDockLeft     = settings->value( key + "ConstantsDockLeft",     0     ).toInt();
-  //constantsDockWidth    = settings->value( key + "ConstantsDockWidth",    150   ).toInt();
-  //constantsDockHeight   = settings->value( key + "ConstantsDockHeight",   350   ).toInt();
+  windowSize           = settings->value( key + "WindowSize",      QSize( 400, 300 ) ).toSize(),
+  windowPosition       = settings->value( key + "WindowPosition",  QPoint()          ).toPoint();
+  windowState          = settings->value( key + "State"                              ).toByteArray();
 
   // load history
   key = KEY + "/History/";
@@ -221,20 +195,20 @@ void Settings::save()
 
   key = KEY + "/General/";
 
-  settings->setValue( key + "SaveHistory",    saveHistory    );
-  settings->setValue( key + "SaveVariables",  saveVariables  );
-  settings->setValue( key + "AutoComplete",   autoComplete   );
-  settings->setValue( key + "AutoCalc",       autoCalc       );
-  settings->setValue( key + "MinimizeToTray", minimizeToTray );
-  settings->setValue( key + "HiliteSyntax",   hiliteSyntax   );
-  settings->setValue( key + "Language",       language       );
+  settings->setValue( key + "HistorySave",           historySave           );
+  settings->setValue( key + "VariableSave",          variableSave          );
+  settings->setValue( key + "AutoCompletion",        autoCompletion        );
+  settings->setValue( key + "AutoCalc",              autoCalc              );
+  settings->setValue( key + "SystemTrayIconVisible", systemTrayIconVisible );
+  settings->setValue( key + "SyntaxHilighting",      syntaxHighlighting    );
+  settings->setValue( key + "Language",              language              );
 
   settings->setValue( key + "AngleMode", QString( QChar( angleMode ) ) );
 
   char c = 'C';
   if ( radixChar != 0 )
       c = radixChar;
-  settings->setValue( key + "RadixChar", QString( QChar( c ) ) );
+  settings->setValue( key + "RadixCharacter", QString( QChar( c ) ) );
 
   key = KEY + "/Format/";
 
@@ -243,47 +217,22 @@ void Settings::save()
 
   key = KEY + "/Layout/";
 
-  settings->setValue( key + "ShowBook",        showBook        );
-  settings->setValue( key + "ShowConstants",   showConstants   );
-  settings->setValue( key + "ShowFunctions",   showFunctions   );
-  settings->setValue( key + "ShowHistory",     showHistory     );
-  settings->setValue( key + "ShowFullScreen",  showFullScreen  );
-  settings->setValue( key + "ShowKeypad",      showKeypad      );
-  settings->setValue( key + "ShowMenuBar",     showMenuBar     );
-  settings->setValue( key + "ShowStatusBar",   showStatusBar   );
-  settings->setValue( key + "ShowVariables",   showVariables   );
-  settings->setValue( key + "WindowPosition",  windowPosition  );
-  settings->setValue( key + "WindowSize",      windowSize      );
-  settings->setValue( key + "State",           windowState     );
-  settings->setValue( key + "StayAlwaysOnTop", stayAlwaysOnTop );
-  //settings->setValue( key + "ConstantsDockFloating", constantsDockFloating );
-  //settings->setValue( key + "ConstantsDockHeight",   constantsDockHeight   );
-  //settings->setValue( key + "ConstantsDockLeft",     constantsDockLeft     );
-  //settings->setValue( key + "ConstantsDockTop",      constantsDockTop      );
-  //settings->setValue( key + "ConstantsDockWidth",    constantsDockWidth    );
-  //settings->setValue( key + "FunctionsDockFloating", functionsDockFloating );
-  //settings->setValue( key + "FunctionsDockHeight",   functionsDockHeight   );
-  //settings->setValue( key + "FunctionsDockLeft",     functionsDockLeft     );
-  //settings->setValue( key + "FunctionsDockTop",      functionsDockTop      );
-  //settings->setValue( key + "FunctionsDockWidth",    functionsDockWidth    );
-  //settings->setValue( key + "BookDockFloating",      bookDockFloating      );
-  //settings->setValue( key + "BookDockHeight",        bookDockHeight        );
-  //settings->setValue( key + "BookDockLeft",          bookDockLeft          );
-  //settings->setValue( key + "BookDockTop",           bookDockTop           );
-  //settings->setValue( key + "BookDockWidth",         bookDockWidth         );
-  //settings->setValue( key + "HistoryDockFloating",   historyDockFloating   );
-  //settings->setValue( key + "HistoryDockHeight",     historyDockHeight     );
-  //settings->setValue( key + "HistoryDockLeft",       historyDockLeft       );
-  //settings->setValue( key + "HistoryDockTop",        historyDockTop        );
-  //settings->setValue( key + "HistoryDockWidth",      historyDockWidth      );
-  //settings->setValue( key + "VariablesDockFloating", variablesDockFloating );
-  //settings->setValue( key + "VariablesDockHeight",   variablesDockHeight   );
-  //settings->setValue( key + "VariablesDockLeft",     variablesDockLeft     );
-  //settings->setValue( key + "VariablesDockTop",      variablesDockTop      );
-  //settings->setValue( key + "VariablesDockWidth",    variablesDockWidth    );
+  settings->setValue( key + "MathBookDockVisible",  mathBookDockVisible  );
+  settings->setValue( key + "ConstantsDockVisible", constantsDockVisible );
+  settings->setValue( key + "FunctionsDockVisible", functionsDockVisible );
+  settings->setValue( key + "HistoryDockVisible",   historyDockVisible   );
+  settings->setValue( key + "WindowOnFullScreen",   windowOnfullScreen   );
+  settings->setValue( key + "KeypadVisible",        keypadVisible        );
+  settings->setValue( key + "MenuBarVisible",       menuBarVisible       );
+  settings->setValue( key + "StatusBarVisible",     statusBarVisible     );
+  settings->setValue( key + "VariablesDockVisible", variablesDockVisible );
+  settings->setValue( key + "WindowPosition",       windowPosition       );
+  settings->setValue( key + "WindowSize",           windowSize           );
+  settings->setValue( key + "WindowAlwaysOnTop",    windowAlwaysOnTop    );
+  settings->setValue( key + "State",                windowState          );
 
   // save history
-  if ( saveHistory )
+  if ( historySave )
   {
     key = KEY + "/History/";
     QStringList realHistory = history;
@@ -320,7 +269,7 @@ void Settings::save()
   }
 
   // save variables
-  if ( saveVariables )
+  if ( variableSave )
   {
     key = KEY + "/Variables/";
     settings->beginGroup( key );

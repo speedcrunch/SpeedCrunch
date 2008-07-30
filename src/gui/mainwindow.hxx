@@ -19,8 +19,8 @@
 // Boston, MA 02110-1301, USA.
 
 
-#ifndef CRUNCH_HXX
-#define CRUNCH_HXX
+#ifndef MAINWINDOW_HXX
+#define MAINWINDOW_HXX
 
 
 #include "keypad.hxx"
@@ -45,83 +45,83 @@ class MainWindow : public QMainWindow
   signals:
     void angleUnitChanged( char );
     void languageChanged();
-    void radixCharChanged( char );
+    void radixCharacterChanged( char );
     void resultFormatChanged( char );
     void resultPrecisionChanged( int );
 
-  protected slots:
-    void about();
-    void aboutQt();
+  private slots:
+    void activate();
+    void clearEditor();
     void clearHistory();
-    void clearExpression();
-    void copyResult();
-    void degree();
+    void copyResultToClipboard();
     void deleteAllVariables();
-    void deleteVariable();
-    void digits2();
-    void digits3();
-    void digits8();
-    void digits15();
-    void digits50();
-    void digitsAuto();
-    void exportSession();
-    void selectExpression();
-    void gotoWebsite();
-    void hideAutoCalc();
-    void insertFunction();
-    void insertVariable();
-    void loadSession();
-    void alwaysOnTopToggled( bool );
-    void autoCalcToggled( bool );
-    void saveHistoryOnExitToggled( bool );
-    void saveVariablesOnExitToggled( bool );
-    void autoCompletionToggled( bool );
-    void minimizeToTrayToggled( bool );
-    void hiliteSyntaxToggled( bool );
-    void radian();
+    void evaluateEditorExpression();
+    void handleEditorTextChange();
+    void handleKeypadButtonPress( Keypad::Button );
+    void handleSystemTrayIconActivation( QSystemTrayIcon::ActivationReason );
+    void hideAutoCalcTip();
+    void insertConstantIntoEditor( const QString & );
+    void insertFunctionIntoEditor( const QString & );
+    void insertTextIntoEditor( const QString & );
+    void insertVariableIntoEditor( const QString & );
+    void minimizeToSystemTray();
+    void openHomePageInSystemBrowser();
+    void retranslateText();
     void saveSession();
-    void setWidgetsDirection();
-    void showAutoCalc( const QString & );
-    void showBook( bool );
-    void showConstants( bool );
-    void showInFullScreen( bool );
-    void showFunctions( bool );
-    void showHistory( bool );
-    void showKeypad( bool );
-    void showMenuBarTip();
-    void showTipOfTheDay();
-    void showVariables( bool );
     void scrollDown();
     void scrollUp();
-    void showMenuBar( bool );
-    void showStatusBar( bool );
-    void formatBinary();
-    void formatEngineering();
-    void formatFixed();
-    void formatGeneral();
-    void formatHexadec();
-    void formatOctal();
-    void formatScientific();
-    void radixCharAutoTriggered();
-    void radixCharDotTriggered();
-    void radixCharCommaTriggered();
-    void changeLanguage();
-    void setAllText();
-    void activate();
-    void constantSelected( const QString & );
-    void importSession();
-    void expressionSelected( const QString & );
-    void functionSelected( const QString & );
-    void keypadButtonPressed( Keypad::Button );
-    void minimizeToTray();
-    void returnPressed();
-    void showTrayMessage();
-    void textChanged();
-    void trayIconActivated( QSystemTrayIcon::ActivationReason );
-    void variableSelected( const QString & );
-    void setResultPrecision( int );
+    void selectEditorExpression();
+    void setAlwaysOnTopEnabled( bool );
+    void setAngleModeDegree();
+    void setAngleModeRadian();
+    void setAutoCalcEnabled( bool );
+    void setAutoCompletionEnabled( bool );
+    void setConstantsDockVisible( bool );
+    void setFullScreenEnabled( bool );
+    void setFunctionsDockVisible( bool );
+    void setHistoryDockVisible( bool );
+    void setHistorySaveEnabled( bool );
+    void setKeypadVisible( bool );
+    void setMathBookDockVisible( bool );
+    void setMenuBarVisible( bool );
+    void setRadixCharacterAutomatic();
+    void setRadixCharacter( char );
+    void setRadixCharacterComma();
+    void setRadixCharacterDot();
+    void setResultFormatBinary();
     void setResultFormat( char );
-    void setRadixChar( char );
+    void setResultFormatEngineering();
+    void setResultFormatFixed();
+    void setResultFormatGeneral();
+    void setResultFormatHexadecimal();
+    void setResultFormatOctal();
+    void setResultFormatScientific();
+    void setResultPrecision15Digits();
+    void setResultPrecision2Digits();
+    void setResultPrecision3Digits();
+    void setResultPrecision50Digits();
+    void setResultPrecision8Digits();
+    void setResultPrecisionAutomatic();
+    void setResultPrecision( int );
+    void setStatusBarVisible( bool );
+    void setSyntaxHighlightingEnabled( bool );
+    void setSystemTrayIconEnabled( bool );
+    void setVariableSaveEnabled( bool );
+    void setVariablesDockVisible( bool );
+    void setWidgetsDirection();
+    void showAboutDialog();
+    void showAboutQtDialog();
+    void showAutoCalcTip( const QString & );
+    void showFunctionInsertionDialog();
+    void showLanguageChooserDialog();
+    void showMenuBarTip();
+    void showSessionExportDialog();
+    void showSessionImportDialog();
+    void showSessionLoadDialog();
+    void showSystemTrayMessage();
+    void showTipOfTheDay();
+    void showVariableDeletionDialog();
+    void showVariableInsertionDialog();
 
   protected:
     virtual void closeEvent( QCloseEvent * );

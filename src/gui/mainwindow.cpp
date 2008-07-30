@@ -54,6 +54,7 @@
 #include <QFile>
 #include <QFileDialog>
 #include <QHBoxLayout>
+#include <QInputDialog>
 #include <QLabel>
 #include <QLocale>
 #include <QMainWindow>
@@ -139,29 +140,7 @@ struct Actions
   QAction * settingsRadixCharDot;
   QAction * settingsRadixCharComma;
   // settings / language
-  QAction * languageDefault;
-  QAction * languageCa;
-  QAction * languageCs;
-  QAction * languageDe;
-  QAction * languageEn;
-  QAction * languageEs;
-  QAction * languageEsAr;
-  QAction * languageEu;
-  QAction * languageFi;
-  QAction * languageFr;
-  QAction * languageHe;
-  QAction * languageId;
-  QAction * languageIt;
-  QAction * languageNb;
-  QAction * languageNl;
-  QAction * languagePl;
-  QAction * languagePt;
-  QAction * languagePtBr;
-  QAction * languageRo;
-  QAction * languageRu;
-  QAction * languageSv;
-  QAction * languageTr;
-  QAction * languageZhCn;
+  QAction * settingsLanguage;
 
   // help
   QAction * helpTipOfTheDay;
@@ -180,7 +159,6 @@ struct ActionGroups
   QActionGroup * angle;
   QActionGroup * digits;
   QActionGroup * resultFormat;
-  QActionGroup * language;
   QActionGroup * radixChar;
 };
 
@@ -193,7 +171,6 @@ struct Menus
   QMenu * edit;
   QMenu * resultFormat;
   QMenu * help;
-  QMenu * language;
   QMenu * radixChar;
   QMenu * session;
   QMenu * settings;
@@ -215,7 +192,7 @@ struct Widgets
   ResultDisplay *   display;
   Editor *          editor;
   Keypad *          keypad;
-  AutoHideLabel *   autoCalcLabel;
+  AutoHideLabel *   autoCalcTip;
   TipWidget *       tip;
   QSystemTrayIcon * trayIcon;
 };
@@ -281,10 +258,8 @@ struct MainWindow::Private
   void createFixedConnections();
   void applySettings();
   void checkInitialResultFormat();
-  void checkInitialPrecision();
+  void checkInitialResultPrecision();
   void checkInitialLanguage();
-  // THIS IS NOT NEEDED ANYMORE, BUT NEEDS TO BE TESTED WITH Qt 4.2
-  //void restoreFloatingDocks();
   void restoreHistory();
   void restoreVariables();
   void deleteKeypad();
@@ -294,8 +269,6 @@ struct MainWindow::Private
   void deleteFunctionsDock();
   void deleteHistoryDock();
   void deleteVariablesDock();
-  // THIS IS NOT NEEDED ANYMORE, BUT NEEDS TO BE TESTED WITH Qt 4.2
-  //void syncWindowStateToSettings();
   void saveSettings();
   void setActionsText();
   void setMenusText();
@@ -460,53 +433,7 @@ void MainWindow::Private::createActions()
   actions.scrollDown = new QAction( p );
   actions.scrollUp   = new QAction( p );
 
-  actions.languageDefault = new QAction( p );
-  actions.languageCa   = new QAction( QString::fromUtf8( "Català"              ), p );
-  actions.languageCs   = new QAction( QString::fromUtf8( "Česky"               ), p );
-  actions.languageDe   = new QAction( QString::fromUtf8( "Deutsch"             ), p );
-  actions.languageEn   = new QAction( QString::fromUtf8( "English"             ), p );
-  actions.languageEs   = new QAction( QString::fromUtf8( "Español"             ), p );
-  actions.languageEsAr = new QAction( QString::fromUtf8( "Español Argentino"   ), p );
-  actions.languageEu   = new QAction( QString::fromUtf8( "Euskara"             ), p );
-  actions.languageFi   = new QAction( QString::fromUtf8( "Suomi"               ), p );
-  actions.languageFr   = new QAction( QString::fromUtf8( "Français"            ), p );
-  actions.languageHe   = new QAction( QString::fromUtf8( "עברית"               ), p );
-  actions.languageId   = new QAction( QString::fromUtf8( "Bahasa Indonesia"    ), p );
-  actions.languageIt   = new QAction( QString::fromUtf8( "Italiano"            ), p );
-  actions.languageNb   = new QAction( QString::fromUtf8( "Norsk (Bokmål)"      ) + QChar( 0x200E ), p );
-  actions.languageNl   = new QAction( QString::fromUtf8( "Nederlands"          ), p );
-  actions.languagePl   = new QAction( QString::fromUtf8( "Polski"              ), p );
-  actions.languagePt   = new QAction( QString::fromUtf8( "Português"           ), p );
-  actions.languagePtBr = new QAction( QString::fromUtf8( "Português do Brasil" ), p );
-  actions.languageRo   = new QAction( QString::fromUtf8( "Română"              ), p );
-  actions.languageRu   = new QAction( QString::fromUtf8( "Русский"             ), p );
-  actions.languageSv   = new QAction( QString::fromUtf8( "Svenska"             ), p );
-  actions.languageTr   = new QAction( QString::fromUtf8( "Türkçe"              ), p );
-  actions.languageZhCn = new QAction( QString::fromUtf8( "简化字"              ), p );
-
-  actions.languageDefault->setData( QString( "C"     ) );
-  actions.languageCa     ->setData( QString( "ca"    ) );
-  actions.languageCs     ->setData( QString( "cs"    ) );
-  actions.languageDe     ->setData( QString( "de"    ) );
-  actions.languageEn     ->setData( QString( "en"    ) );
-  actions.languageEs     ->setData( QString( "es"    ) );
-  actions.languageEsAr   ->setData( QString( "es_AR" ) );
-  actions.languageEu     ->setData( QString( "eu"    ) );
-  actions.languageFi     ->setData( QString( "fi"    ) );
-  actions.languageFr     ->setData( QString( "fr"    ) );
-  actions.languageHe     ->setData( QString( "he"    ) );
-  actions.languageId     ->setData( QString( "id"    ) );
-  actions.languageIt     ->setData( QString( "it"    ) );
-  actions.languageNb     ->setData( QString( "nb"    ) );
-  actions.languageNl     ->setData( QString( "nl"    ) );
-  actions.languagePl     ->setData( QString( "pl"    ) );
-  actions.languagePt     ->setData( QString( "pt"    ) );
-  actions.languagePtBr   ->setData( QString( "pt_BR" ) );
-  actions.languageRo     ->setData( QString( "ro"    ) );
-  actions.languageRu     ->setData( QString( "ru"    ) );
-  actions.languageSv     ->setData( QString( "sv"    ) );
-  actions.languageTr     ->setData( QString( "tr"    ) );
-  actions.languageZhCn   ->setData( QString( "zh_CN" ) );
+  actions.settingsLanguage = new QAction( p );
 
   actions.settingsAngleUnitDegree->setCheckable( true );
   actions.settingsAngleUnitRadian->setCheckable( true );
@@ -546,34 +473,10 @@ void MainWindow::Private::createActions()
   actions.viewMenuBar       ->setCheckable( true );
   actions.viewStatusBar     ->setCheckable( true );
   actions.viewVariables     ->setCheckable( true );
-
-  actions.languageDefault->setCheckable( true );
-  actions.languageCa     ->setCheckable( true );
-  actions.languageCs     ->setCheckable( true );
-  actions.languageDe     ->setCheckable( true );
-  actions.languageEn     ->setCheckable( true );
-  actions.languageEs     ->setCheckable( true );
-  actions.languageEsAr   ->setCheckable( true );
-  actions.languageEu     ->setCheckable( true );
-  actions.languageFi     ->setCheckable( true );
-  actions.languageFr     ->setCheckable( true );
-  actions.languageHe     ->setCheckable( true );
-  actions.languageId     ->setCheckable( true );
-  actions.languageIt     ->setCheckable( true );
-  actions.languageNb     ->setCheckable( true );
-  actions.languageNl     ->setCheckable( true );
-  actions.languagePl     ->setCheckable( true );
-  actions.languagePt     ->setCheckable( true );
-  actions.languagePtBr   ->setCheckable( true );
-  actions.languageRo     ->setCheckable( true );
-  actions.languageRu     ->setCheckable( true );
-  actions.languageSv     ->setCheckable( true );
-  actions.languageTr     ->setCheckable( true );
-  actions.languageZhCn   ->setCheckable( true );
 }
 
 
-void MainWindow::setAllText()
+void MainWindow::retranslateText()
 {
   QTranslator * tr = 0;
   tr = d->createTranslator( d->settings.language );
@@ -582,7 +485,7 @@ void MainWindow::setAllText()
     if ( d->translator )
     {
       qApp->removeTranslator( d->translator );
-      delete d->translator;
+      d->translator->deleteLater();
     }
 
     qApp->installTranslator( tr );
@@ -643,25 +546,33 @@ void MainWindow::Private::setStatusBarText()
 
 void MainWindow::Private::setActionsText()
 {
-  actions.editClearExpression                ->setText( MainWindow::tr( "Clear E&xpression"        ) );
-  actions.editClearHistory                   ->setText( MainWindow::tr( "Clear &History"           ) );
-  actions.editCopyLastResult                 ->setText( MainWindow::tr( "Copy Last &Result"        ) );
-  actions.editCopy                           ->setText( MainWindow::tr( "&Copy"                    ) );
-  actions.editDeleteAllVariables             ->setText( MainWindow::tr( "Delete All V&ariables"    ) );
-  actions.editDeleteVariable                 ->setText( MainWindow::tr( "D&elete Variable..."      ) );
-  actions.editInsertFunction                 ->setText( MainWindow::tr( "Insert &Function..."      ) );
-  actions.editInsertVariable                 ->setText( MainWindow::tr( "Insert &Variable..."      ) );
-  actions.editPaste                          ->setText( MainWindow::tr( "&Paste"                   ) );
-  actions.editSelectExpression               ->setText( MainWindow::tr( "&Select Expression"       ) );
-  actions.helpAboutQt                        ->setText( MainWindow::tr( "About &Qt"                ) );
-  actions.helpAbout                          ->setText( MainWindow::tr( "&About"                   ) );
-  actions.helpTipOfTheDay                    ->setText( MainWindow::tr( "&Tip of the Day"          ) );
-  actions.helpWebsite                        ->setText( MainWindow::tr( "SpeedCrunch &Web Site..." ) );
-  actions.sessionExport                      ->setText( MainWindow::tr( "&Export..."               ) );
-  actions.sessionImport                      ->setText( MainWindow::tr( "&Import..."               ) );
-  actions.sessionLoad                        ->setText( MainWindow::tr( "&Load..."                 ) );
-  actions.sessionQuit                        ->setText( MainWindow::tr( "&Quit"                    ) );
-  actions.sessionSave                        ->setText( MainWindow::tr( "&Save..."                 ) );
+  actions.sessionExport->setText( MainWindow::tr( "&Export..." ) );
+  actions.sessionImport->setText( MainWindow::tr( "&Import..." ) );
+  actions.sessionLoad  ->setText( MainWindow::tr( "&Load..."   ) );
+  actions.sessionQuit  ->setText( MainWindow::tr( "&Quit"      ) );
+  actions.sessionSave  ->setText( MainWindow::tr( "&Save..."   ) );
+
+  actions.editClearExpression   ->setText( MainWindow::tr( "Clear E&xpression"     ) );
+  actions.editClearHistory      ->setText( MainWindow::tr( "Clear &History"        ) );
+  actions.editCopyLastResult    ->setText( MainWindow::tr( "Copy Last &Result"     ) );
+  actions.editCopy              ->setText( MainWindow::tr( "&Copy"                 ) );
+  actions.editDeleteAllVariables->setText( MainWindow::tr( "Delete All V&ariables" ) );
+  actions.editDeleteVariable    ->setText( MainWindow::tr( "D&elete Variable..."   ) );
+  actions.editInsertFunction    ->setText( MainWindow::tr( "Insert &Function..."   ) );
+  actions.editInsertVariable    ->setText( MainWindow::tr( "Insert &Variable..."   ) );
+  actions.editPaste             ->setText( MainWindow::tr( "&Paste"                ) );
+  actions.editSelectExpression  ->setText( MainWindow::tr( "&Select Expression"    ) );
+
+  actions.viewConstants     ->setText( MainWindow::tr( "&Constants"        ) );
+  actions.viewFullScreenMode->setText( MainWindow::tr( "F&ull Screen Mode" ) );
+  actions.viewFunctions     ->setText( MainWindow::tr( "&Functions"        ) );
+  actions.viewHistory       ->setText( MainWindow::tr( "&History"          ) );
+  actions.viewKeypad        ->setText( MainWindow::tr( "&Keypad"           ) );
+  actions.viewMathBook      ->setText( MainWindow::tr( "Math &Book"        ) );
+  actions.viewMenuBar       ->setText( MainWindow::tr( "&Menu Bar"         ) );
+  actions.viewStatusBar     ->setText( MainWindow::tr( "&Status Bar"       ) );
+  actions.viewVariables     ->setText( MainWindow::tr( "&Variables"        ) );
+
   actions.settingsAngleUnitDegree            ->setText( MainWindow::tr( "&Degree"                  ) );
   actions.settingsAngleUnitRadian            ->setText( MainWindow::tr( "&Radian"                  ) );
   actions.settingsBehaviorAlwaysOnTop        ->setText( MainWindow::tr( "Always On &Top"           ) );
@@ -687,118 +598,92 @@ void MainWindow::Private::setActionsText()
   actions.settingsResultFormatHexadecimal    ->setText( MainWindow::tr( "&Hexadecimal"             ) );
   actions.settingsResultFormatOctal          ->setText( MainWindow::tr( "&Octal"                   ) );
   actions.settingsResultFormatScientific     ->setText( MainWindow::tr( "&Scientific"              ) );
-  actions.viewConstants                      ->setText( MainWindow::tr( "&Constants"               ) );
-  actions.viewFullScreenMode                 ->setText( MainWindow::tr( "F&ull Screen Mode"        ) );
-  actions.viewFunctions                      ->setText( MainWindow::tr( "&Functions"               ) );
-  actions.viewHistory                        ->setText( MainWindow::tr( "&History"                 ) );
-  actions.viewKeypad                         ->setText( MainWindow::tr( "&Keypad"                  ) );
-  actions.viewMathBook                       ->setText( MainWindow::tr( "Math &Book"               ) );
-  actions.viewMenuBar                        ->setText( MainWindow::tr( "&Menu Bar"                ) );
-  actions.viewStatusBar                      ->setText( MainWindow::tr( "&Status Bar"              ) );
-  actions.viewVariables                      ->setText( MainWindow::tr( "&Variables"               ) );
+  actions.settingsLanguage                   ->setText( MainWindow::tr( "&Language..."             ) );
 
-  actions.scrollDown                         ->setText( MainWindow::tr( "Scroll Display Down"      ) );
-  actions.scrollUp                           ->setText( MainWindow::tr( "Scroll Display Up"        ) );
+  actions.helpAboutQt    ->setText( MainWindow::tr( "About &Qt"                ) );
+  actions.helpAbout      ->setText( MainWindow::tr( "&About"                   ) );
+  actions.helpTipOfTheDay->setText( MainWindow::tr( "&Tip of the Day"          ) );
+  actions.helpWebsite    ->setText( MainWindow::tr( "SpeedCrunch &Web Site..." ) );
 
-  actions.languageDefault                    ->setText( MainWindow::tr( "System &Default"          ) );
+  actions.scrollDown->setText( MainWindow::tr( "Scroll Display Down" ) );
+  actions.scrollUp  ->setText( MainWindow::tr( "Scroll Display Up"   ) );
 }
 
 
 void MainWindow::Private::createActionGroups()
 {
   actionGroups.resultFormat = new QActionGroup( p );
-  actionGroups.resultFormat->addAction( actions.settingsResultFormatBinary );
-  actionGroups.resultFormat->addAction( actions.settingsResultFormatGeneral );
-  actionGroups.resultFormat->addAction( actions.settingsResultFormatFixed );
+  actionGroups.resultFormat->addAction( actions.settingsResultFormatBinary      );
+  actionGroups.resultFormat->addAction( actions.settingsResultFormatGeneral     );
+  actionGroups.resultFormat->addAction( actions.settingsResultFormatFixed       );
   actionGroups.resultFormat->addAction( actions.settingsResultFormatEngineering );
-  actionGroups.resultFormat->addAction( actions.settingsResultFormatScientific );
-  actionGroups.resultFormat->addAction( actions.settingsResultFormatOctal );
+  actionGroups.resultFormat->addAction( actions.settingsResultFormatScientific  );
+  actionGroups.resultFormat->addAction( actions.settingsResultFormatOctal       );
   actionGroups.resultFormat->addAction( actions.settingsResultFormatHexadecimal );
 
   actionGroups.digits = new QActionGroup( p );
   actionGroups.digits->addAction( actions.settingsResultFormatAutoPrecision );
-  actionGroups.digits->addAction( actions.settingsResultFormat2Digits );
-  actionGroups.digits->addAction( actions.settingsResultFormat3Digits );
-  actionGroups.digits->addAction( actions.settingsResultFormat8Digits );
-  actionGroups.digits->addAction( actions.settingsResultFormat15Digits );
-  actionGroups.digits->addAction( actions.settingsResultFormat50Digits );
+  actionGroups.digits->addAction( actions.settingsResultFormat2Digits       );
+  actionGroups.digits->addAction( actions.settingsResultFormat3Digits       );
+  actionGroups.digits->addAction( actions.settingsResultFormat8Digits       );
+  actionGroups.digits->addAction( actions.settingsResultFormat15Digits      );
+  actionGroups.digits->addAction( actions.settingsResultFormat50Digits      );
 
   actionGroups.angle = new QActionGroup( p );
   actionGroups.angle->addAction( actions.settingsAngleUnitRadian );
   actionGroups.angle->addAction( actions.settingsAngleUnitDegree );
 
   actionGroups.radixChar = new QActionGroup( p );
-  actionGroups.radixChar->addAction( actions.settingsRadixCharDefault  );
-  actionGroups.radixChar->addAction( actions.settingsRadixCharDot   );
-  actionGroups.radixChar->addAction( actions.settingsRadixCharComma );
-
-  actionGroups.language = new QActionGroup( p );
-  actionGroups.language->addAction( actions.languageDefault );
-  actionGroups.language->addAction( actions.languageCa );
-  actionGroups.language->addAction( actions.languageCs );
-  actionGroups.language->addAction( actions.languageDe );
-  actionGroups.language->addAction( actions.languageEn );
-  actionGroups.language->addAction( actions.languageEs );
-  actionGroups.language->addAction( actions.languageEsAr );
-  actionGroups.language->addAction( actions.languageEu );
-  actionGroups.language->addAction( actions.languageFi );
-  actionGroups.language->addAction( actions.languageFr );
-  actionGroups.language->addAction( actions.languageHe );
-  actionGroups.language->addAction( actions.languageId );
-  actionGroups.language->addAction( actions.languageIt );
-  actionGroups.language->addAction( actions.languageNb );
-  actionGroups.language->addAction( actions.languageNl );
-  actionGroups.language->addAction( actions.languagePl );
-  actionGroups.language->addAction( actions.languagePt );
-  actionGroups.language->addAction( actions.languagePtBr );
-  actionGroups.language->addAction( actions.languageRo );
-  actionGroups.language->addAction( actions.languageRu );
-  actionGroups.language->addAction( actions.languageSv );
-  actionGroups.language->addAction( actions.languageTr );
-  actionGroups.language->addAction( actions.languageZhCn );
+  actionGroups.radixChar->addAction( actions.settingsRadixCharDefault );
+  actionGroups.radixChar->addAction( actions.settingsRadixCharDot     );
+  actionGroups.radixChar->addAction( actions.settingsRadixCharComma   );
 }
 
 
 void MainWindow::Private::createActionShortcuts()
 {
-  actions.editClearExpression            ->setShortcut( Qt::Key_Escape                 );
-  actions.editClearHistory               ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_N );
-  actions.editCopyLastResult             ->setShortcut( Qt::CTRL + Qt::Key_R           );
-  actions.editCopy                       ->setShortcut( Qt::CTRL + Qt::Key_C           );
-  actions.editDeleteVariable             ->setShortcut( Qt::CTRL + Qt::Key_D           );
-  actions.editInsertFunction             ->setShortcut( Qt::CTRL + Qt::Key_F           );
-  actions.editInsertVariable             ->setShortcut( Qt::CTRL + Qt::Key_I           );
-  actions.editPaste                      ->setShortcut( Qt::CTRL + Qt::Key_V           );
-  actions.editSelectExpression           ->setShortcut( Qt::CTRL + Qt::Key_A           );
-  actions.helpTipOfTheDay                ->setShortcut( Qt::CTRL + Qt::Key_T           );
-  actions.scrollDown                     ->setShortcut( Qt::SHIFT + Qt::Key_PageDown   );
-  actions.scrollUp                       ->setShortcut( Qt::SHIFT + Qt::Key_PageUp     );
-  actions.sessionLoad                    ->setShortcut( Qt::CTRL + Qt::Key_L           );
-  actions.sessionQuit                    ->setShortcut( Qt::CTRL + Qt::Key_Q           );
-  actions.sessionSave                    ->setShortcut( Qt::CTRL + Qt::Key_S           );
-  actions.settingsAngleUnitDegree        ->setShortcut( Qt::Key_F10                    );
-  actions.settingsAngleUnitRadian        ->setShortcut( Qt::Key_F9                     );
-  actions.settingsResultFormatBinary     ->setShortcut( Qt::Key_F5                     );
-  actions.settingsResultFormatGeneral    ->setShortcut( Qt::Key_F7                     );
-  actions.settingsResultFormatHexadecimal->setShortcut( Qt::Key_F8                     );
-  actions.settingsResultFormatOctal      ->setShortcut( Qt::Key_F6                     );
-  actions.viewConstants                  ->setShortcut( Qt::CTRL + Qt::Key_2           );
-  actions.viewFullScreenMode             ->setShortcut( Qt::Key_F11                    );
-  actions.viewFunctions                  ->setShortcut( Qt::CTRL + Qt::Key_3           );
-  actions.viewHistory                    ->setShortcut( Qt::CTRL + Qt::Key_5           );
-  actions.viewKeypad                     ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_K );
-  actions.viewMathBook                   ->setShortcut( Qt::CTRL + Qt::Key_1           );
+  actions.sessionLoad->setShortcut( Qt::CTRL + Qt::Key_L );
+  actions.sessionQuit->setShortcut( Qt::CTRL + Qt::Key_Q );
+  actions.sessionSave->setShortcut( Qt::CTRL + Qt::Key_S );
+
+  actions.editClearExpression ->setShortcut( Qt::Key_Escape                 );
+  actions.editClearHistory    ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_N );
+  actions.editCopyLastResult  ->setShortcut( Qt::CTRL + Qt::Key_R           );
+  actions.editCopy            ->setShortcut( Qt::CTRL + Qt::Key_C           );
+  actions.editDeleteVariable  ->setShortcut( Qt::CTRL + Qt::Key_D           );
+  actions.editInsertFunction  ->setShortcut( Qt::CTRL + Qt::Key_F           );
+  actions.editInsertVariable  ->setShortcut( Qt::CTRL + Qt::Key_I           );
+  actions.editPaste           ->setShortcut( Qt::CTRL + Qt::Key_V           );
+  actions.editSelectExpression->setShortcut( Qt::CTRL + Qt::Key_A           );
+
+  actions.viewConstants     ->setShortcut( Qt::CTRL + Qt::Key_2           );
+  actions.viewFullScreenMode->setShortcut( Qt::Key_F11                    );
+  actions.viewFunctions     ->setShortcut( Qt::CTRL + Qt::Key_3           );
+  actions.viewHistory       ->setShortcut( Qt::CTRL + Qt::Key_5           );
+  actions.viewKeypad        ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_K );
+  actions.viewMathBook      ->setShortcut( Qt::CTRL + Qt::Key_1           );
 #ifndef Q_OS_MAC
-  actions.viewMenuBar                    ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_M );
+  actions.viewMenuBar       ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_M );
 #endif
-  actions.viewStatusBar                  ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_B );
-  actions.viewVariables                  ->setShortcut( Qt::CTRL + Qt::Key_4           );
+  actions.viewStatusBar     ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_B );
+  actions.viewVariables     ->setShortcut( Qt::CTRL + Qt::Key_4           );
+
+  actions.settingsAngleUnitDegree        ->setShortcut( Qt::Key_F10 );
+  actions.settingsAngleUnitRadian        ->setShortcut( Qt::Key_F9  );
+  actions.settingsResultFormatBinary     ->setShortcut( Qt::Key_F5  );
+  actions.settingsResultFormatGeneral    ->setShortcut( Qt::Key_F7  );
+  actions.settingsResultFormatHexadecimal->setShortcut( Qt::Key_F8  );
+  actions.settingsResultFormatOctal      ->setShortcut( Qt::Key_F6  );
+
+  actions.helpTipOfTheDay->setShortcut( Qt::CTRL + Qt::Key_T );
+
+  actions.scrollDown->setShortcut( Qt::SHIFT + Qt::Key_PageDown   );
+  actions.scrollUp  ->setShortcut( Qt::SHIFT + Qt::Key_PageUp     );
 }
 
 
 void MainWindow::Private::createMenus()
 {
-  // session
   menus.session = new QMenu( "", p );
   p->menuBar()->addMenu( menus.session );
   menus.session->addAction( actions.sessionLoad );
@@ -809,7 +694,6 @@ void MainWindow::Private::createMenus()
   menus.session->addSeparator();
   menus.session->addAction( actions.sessionQuit );
 
-  // edit
   menus.edit = new QMenu( "", p );
   p->menuBar()->addMenu( menus.edit );
   menus.edit->addAction( actions.editCopy );
@@ -826,7 +710,6 @@ void MainWindow::Private::createMenus()
   menus.edit->addAction( actions.editClearExpression );
   menus.edit->addAction( actions.editClearHistory );
 
-  // view
   menus.view = new QMenu( "", p );
   p->menuBar()->addMenu( menus.view );
   menus.view->addAction( actions.viewKeypad );
@@ -844,16 +727,13 @@ void MainWindow::Private::createMenus()
   menus.view->addSeparator();
   menus.view->addAction( actions.viewFullScreenMode );
 
-  // settings
   menus.settings = new QMenu( "", p );
   p->menuBar()->addMenu( menus.settings );
 
-  // settings / result format
   menus.resultFormat = menus.settings->addMenu( "" );
   menus.resultFormat->addAction( actions.settingsResultFormatBinary );
   menus.resultFormat->addAction( actions.settingsResultFormatOctal );
 
-  // settings / result format / decimal
   menus.decimal = menus.resultFormat->addMenu( "" );
   menus.decimal->addAction( actions.settingsResultFormatGeneral );
   menus.decimal->addAction( actions.settingsResultFormatFixed );
@@ -867,15 +747,12 @@ void MainWindow::Private::createMenus()
   menus.decimal->addAction( actions.settingsResultFormat15Digits );
   menus.decimal->addAction( actions.settingsResultFormat50Digits );
 
-  // settings / result format (continued)
   menus.resultFormat->addAction( actions.settingsResultFormatHexadecimal );
 
-  // settings / angle mode
   menus.angleUnit = menus.settings->addMenu( "" );
   menus.angleUnit->addAction( actions.settingsAngleUnitRadian );
   menus.angleUnit->addAction( actions.settingsAngleUnitDegree );
 
-  // settings / behavior
   menus.behavior = menus.settings->addMenu( "" );
   menus.behavior->addAction( actions.settingsBehaviorSaveHistoryOnExit   );
   menus.behavior->addAction( actions.settingsBehaviorSaveVariablesOnExit );
@@ -887,41 +764,14 @@ void MainWindow::Private::createMenus()
   menus.behavior->addAction( actions.settingsBehaviorAlwaysOnTop         );
   menus.behavior->addAction( actions.settingsBehaviorMinimizeToTray      );
 
-  // settings / radix character
   menus.radixChar = menus.settings->addMenu( "" );
   menus.radixChar->addAction( actions.settingsRadixCharDefault  );
   menus.radixChar->addSeparator();
   menus.radixChar->addAction( actions.settingsRadixCharDot   );
   menus.radixChar->addAction( actions.settingsRadixCharComma );
 
-  // settings / language
-  menus.language = menus.settings->addMenu( "" );
-  menus.language->addAction( actions.languageDefault );
-  menus.language->addSeparator();
-  menus.language->addAction( actions.languageCa   );
-  menus.language->addAction( actions.languageCs   );
-  menus.language->addAction( actions.languageDe   );
-  menus.language->addAction( actions.languageEn   );
-  menus.language->addAction( actions.languageEs   );
-  menus.language->addAction( actions.languageEsAr );
-  menus.language->addAction( actions.languageEu   );
-  menus.language->addAction( actions.languageFi   );
-  menus.language->addAction( actions.languageFr   );
-  menus.language->addAction( actions.languageHe   );
-  menus.language->addAction( actions.languageId   );
-  menus.language->addAction( actions.languageIt   );
-  menus.language->addAction( actions.languageNb   );
-  menus.language->addAction( actions.languageNl   );
-  menus.language->addAction( actions.languagePl   );
-  menus.language->addAction( actions.languagePt   );
-  menus.language->addAction( actions.languagePtBr );
-  menus.language->addAction( actions.languageRo   );
-  menus.language->addAction( actions.languageRu   );
-  menus.language->addAction( actions.languageSv   );
-  menus.language->addAction( actions.languageTr   );
-  menus.language->addAction( actions.languageZhCn );
+  menus.settings->addAction( actions.settingsLanguage );
 
-  // help
   menus.help = new QMenu( "", p );
   p->menuBar()->addMenu( menus.help );
   menus.help->addAction( actions.helpTipOfTheDay );
@@ -930,7 +780,6 @@ void MainWindow::Private::createMenus()
   menus.help->addAction( actions.helpAbout );
   menus.help->addAction( actions.helpAboutQt );
 
-  // necessary after hiding the menu bar, so shortcuts still recognized
   p->addActions( p->menuBar()->actions() );
   p->addAction( actions.scrollDown );
   p->addAction( actions.scrollUp );
@@ -948,7 +797,6 @@ void MainWindow::Private::setMenusText()
   menus.angleUnit   ->setTitle( MainWindow::tr( "&Angle Unit"      ) );
   menus.behavior    ->setTitle( MainWindow::tr( "&Behavior"        ) );
   menus.radixChar   ->setTitle( MainWindow::tr( "Radix &Character" ) );
-  menus.language    ->setTitle( MainWindow::tr( "&Language"        ) );
   menus.help        ->setTitle( MainWindow::tr( "&Help"            ) );
 }
 
@@ -1008,8 +856,8 @@ void MainWindow::Private::createFixedWidgets()
   layouts.root->addLayout( editorLayout );
 
   // for autocalc
-  widgets.autoCalcLabel = new AutoHideLabel( p );
-  widgets.autoCalcLabel->hide();
+  widgets.autoCalcTip = new AutoHideLabel( p );
+  widgets.autoCalcTip->hide();
 
   // for tip of the day and menu bar hiding message
   widgets.tip = new TipWidget( p );
@@ -1023,8 +871,8 @@ void MainWindow::Private::createKeypad()
   widgets.keypad->setFocusPolicy( Qt::NoFocus );
 
   connect( widgets.keypad, SIGNAL( buttonPressed( Keypad::Button ) ),
-           p, SLOT( keypadButtonPressed( Keypad::Button ) ) );
-  connect( p, SIGNAL( radixCharChanged( char ) ),
+           p, SLOT( handleKeypadButtonPress( Keypad::Button ) ) );
+  connect( p, SIGNAL( radixCharacterChanged( char ) ),
            widgets.keypad, SLOT( setRadixChar( char ) ) );
   connect( p, SIGNAL( languageChanged() ),
            widgets.keypad, SLOT( retranslateText() ) );
@@ -1072,7 +920,7 @@ void MainWindow::Private::createBookDock()
   p->addDockWidget( Qt::RightDockWidgetArea, docks.book );
 
   connect( docks.book, SIGNAL( expressionSelected( const QString & ) ),
-           p, SLOT( expressionSelected( const QString & ) ) );
+           p, SLOT( insertTextIntoEditor( const QString & ) ) );
 
   if ( docks.functions )
     p->tabifyDockWidget( docks.functions, docks.book );
@@ -1086,7 +934,7 @@ void MainWindow::Private::createBookDock()
   docks.book->show();
   docks.book->raise();
 
-  settings.showBook = true;
+  settings.mathBookDockVisible = true;
 }
 
 
@@ -1099,8 +947,8 @@ void MainWindow::Private::createConstantsDock()
   p->addDockWidget( Qt::RightDockWidgetArea, docks.constants );
 
   connect( docks.constants, SIGNAL( constantSelected( const QString & ) ),
-           p, SLOT( constantSelected( const QString & ) ) );
-  connect( p, SIGNAL( radixCharChanged( char ) ),
+           p, SLOT( insertConstantIntoEditor( const QString & ) ) );
+  connect( p, SIGNAL( radixCharacterChanged( char ) ),
            docks.constants, SLOT( setRadixChar( char ) ) );
   connect( p, SIGNAL( languageChanged() ),
            docks.constants, SLOT( retranslateText() ) );
@@ -1117,7 +965,7 @@ void MainWindow::Private::createConstantsDock()
   docks.constants->show();
   docks.constants->raise();
 
-  settings.showConstants = true;
+  settings.constantsDockVisible = true;
 }
 
 
@@ -1130,7 +978,7 @@ void MainWindow::Private::createFunctionsDock()
   p->addDockWidget( Qt::RightDockWidgetArea, docks.functions );
 
   connect( docks.functions, SIGNAL( functionSelected( const QString & ) ),
-           p, SLOT( functionSelected( const QString & ) ) );
+           p, SLOT( insertFunctionIntoEditor( const QString & ) ) );
   connect( p, SIGNAL( languageChanged() ),
            docks.functions, SLOT( retranslateText() ) );
 
@@ -1146,7 +994,7 @@ void MainWindow::Private::createFunctionsDock()
   docks.functions->show();
   docks.functions->raise();
 
-  settings.showFunctions = true;
+  settings.functionsDockVisible = true;
 }
 
 
@@ -1159,7 +1007,7 @@ void MainWindow::Private::createHistoryDock()
   p->addDockWidget( Qt::RightDockWidgetArea, docks.history );
 
   connect( docks.history, SIGNAL( expressionSelected( const QString & ) ),
-           p, SLOT( expressionSelected( const QString & ) ) );
+           p, SLOT( insertTextIntoEditor( const QString & ) ) );
   connect( p, SIGNAL( languageChanged() ),
            docks.history, SLOT( retranslateText() ) );
 
@@ -1177,7 +1025,7 @@ void MainWindow::Private::createHistoryDock()
   docks.history->show();
   docks.history->raise();
 
-  settings.showHistory = true;
+  settings.historyDockVisible = true;
 }
 
 
@@ -1190,8 +1038,8 @@ void MainWindow::Private::createVariablesDock()
   p->addDockWidget( Qt::RightDockWidgetArea, docks.variables );
 
   connect( docks.variables, SIGNAL( variableSelected( const QString & ) ),
-           p, SLOT( variableSelected( const QString & ) ) );
-  connect( p, SIGNAL( radixCharChanged( char ) ),
+           p, SLOT( insertVariableIntoEditor( const QString & ) ) );
+  connect( p, SIGNAL( radixCharacterChanged( char ) ),
            docks.variables, SLOT( setRadixChar( char ) ) );
   connect( p, SIGNAL( languageChanged() ),
            docks.variables, SLOT( retranslateText() ) );
@@ -1210,117 +1058,95 @@ void MainWindow::Private::createVariablesDock()
   docks.variables->show();
   docks.variables->raise();
 
-  settings.showVariables = true;
+  settings.variablesDockVisible = true;
 }
 
 
 void MainWindow::Private::createFixedConnections()
 {
-  connect( actions.editClearExpression,    SIGNAL( triggered() ), p,              SLOT( clearExpression()    ) );
-  connect( actions.editClearHistory,       SIGNAL( triggered() ), p,              SLOT( clearHistory()       ) );
-  connect( actions.editCopyLastResult,     SIGNAL( triggered() ), p,              SLOT( copyResult()         ) );
-  connect( actions.editCopy,               SIGNAL( triggered() ), widgets.editor, SLOT( copy()               ) );
-  connect( actions.editDeleteAllVariables, SIGNAL( triggered() ), p,              SLOT( deleteAllVariables() ) );
-  connect( actions.editDeleteVariable,     SIGNAL( triggered() ), p,              SLOT( deleteVariable()     ) );
-  connect( actions.editInsertFunction,     SIGNAL( triggered() ), p,              SLOT( insertFunction()     ) );
-  connect( actions.editInsertVariable,     SIGNAL( triggered() ), p,              SLOT( insertVariable()     ) );
-  connect( actions.editPaste,              SIGNAL( triggered() ), widgets.editor, SLOT( paste()              ) );
-  connect( actions.editSelectExpression,   SIGNAL( triggered() ), p,              SLOT( selectExpression()   ) );
+  connect( actions.sessionExport, SIGNAL( triggered() ), p, SLOT( showSessionExportDialog() ) );
+  connect( actions.sessionImport, SIGNAL( triggered() ), p, SLOT( showSessionImportDialog() ) );
+  connect( actions.sessionLoad,   SIGNAL( triggered() ), p, SLOT( showSessionLoadDialog()   ) );
+  connect( actions.sessionQuit,   SIGNAL( triggered() ), p, SLOT( close()                   ) );
+  connect( actions.sessionSave,   SIGNAL( triggered() ), p, SLOT( saveSession()             ) );
 
-  connect( actions.helpAboutQt,     SIGNAL( triggered() ), p, SLOT( aboutQt()         ) );
-  connect( actions.helpAbout,       SIGNAL( triggered() ), p, SLOT( about()           ) );
-  connect( actions.helpTipOfTheDay, SIGNAL( triggered() ), p, SLOT( showTipOfTheDay() ) );
-  connect( actions.helpWebsite,     SIGNAL( triggered() ), p, SLOT( gotoWebsite()     ) );
+  connect( actions.editClearExpression,    SIGNAL( triggered() ), p,              SLOT( clearEditor()                 ) );
+  connect( actions.editClearHistory,       SIGNAL( triggered() ), p,              SLOT( clearHistory()                ) );
+  connect( actions.editCopyLastResult,     SIGNAL( triggered() ), p,              SLOT( copyResultToClipboard()       ) );
+  connect( actions.editCopy,               SIGNAL( triggered() ), widgets.editor, SLOT( copy()                        ) );
+  connect( actions.editDeleteAllVariables, SIGNAL( triggered() ), p,              SLOT( deleteAllVariables()          ) );
+  connect( actions.editDeleteVariable,     SIGNAL( triggered() ), p,              SLOT( showVariableDeletionDialog()  ) );
+  connect( actions.editInsertFunction,     SIGNAL( triggered() ), p,              SLOT( showFunctionInsertionDialog() ) );
+  connect( actions.editInsertVariable,     SIGNAL( triggered() ), p,              SLOT( showVariableInsertionDialog() ) );
+  connect( actions.editPaste,              SIGNAL( triggered() ), widgets.editor, SLOT( paste()                       ) );
+  connect( actions.editSelectExpression,   SIGNAL( triggered() ), p,              SLOT( selectEditorExpression()      ) );
 
-  connect( actions.sessionExport, SIGNAL( triggered() ), p, SLOT( exportSession() ) );
-  connect( actions.sessionImport, SIGNAL( triggered() ), p, SLOT( importSession() ) );
-  connect( actions.sessionLoad,   SIGNAL( triggered() ), p, SLOT( loadSession()   ) );
-  connect( actions.sessionQuit,   SIGNAL( triggered() ), p, SLOT( close()         ) );
-  connect( actions.sessionSave,   SIGNAL( triggered() ), p, SLOT( saveSession()   ) );
+  connect( actions.viewConstants,      SIGNAL( toggled( bool ) ), p, SLOT( setConstantsDockVisible( bool ) ) );
+  connect( actions.viewFullScreenMode, SIGNAL( toggled( bool ) ), p, SLOT( setFullScreenEnabled( bool )    ) );
+  connect( actions.viewFunctions,      SIGNAL( toggled( bool ) ), p, SLOT( setFunctionsDockVisible( bool ) ) );
+  connect( actions.viewHistory,        SIGNAL( toggled( bool ) ), p, SLOT( setHistoryDockVisible( bool )   ) );
+  connect( actions.viewKeypad,         SIGNAL( toggled( bool ) ), p, SLOT( setKeypadVisible( bool )        ) );
+  connect( actions.viewMathBook,       SIGNAL( toggled( bool ) ), p, SLOT( setMathBookDockVisible( bool )  ) );
+  connect( actions.viewMenuBar,        SIGNAL( toggled( bool ) ), p, SLOT( setMenuBarVisible( bool )       ) );
+  connect( actions.viewStatusBar,      SIGNAL( toggled( bool ) ), p, SLOT( setStatusBarVisible( bool )     ) );
+  connect( actions.viewVariables,      SIGNAL( toggled( bool ) ), p, SLOT( setVariablesDockVisible( bool ) ) );
 
-  connect( actions.settingsAngleUnitDegree, SIGNAL( triggered() ), p, SLOT( degree() ) );
-  connect( actions.settingsAngleUnitRadian, SIGNAL( triggered() ), p, SLOT( radian() ) );
+  connect( actions.settingsAngleUnitDegree, SIGNAL( triggered() ), p, SLOT( setAngleModeDegree() ) );
+  connect( actions.settingsAngleUnitRadian, SIGNAL( triggered() ), p, SLOT( setAngleModeRadian() ) );
 
-  connect( actions.settingsBehaviorAlwaysOnTop,         SIGNAL( toggled( bool )                    ), p,                     SLOT( alwaysOnTopToggled( bool )         ) );
-  connect( actions.settingsBehaviorAutoCompletion,      SIGNAL( toggled( bool )                    ), p,                     SLOT( autoCompletionToggled( bool )      ) );
-  connect( actions.settingsBehaviorMinimizeToTray,      SIGNAL( toggled( bool )                    ), p,                     SLOT( minimizeToTrayToggled( bool )      ) );
-  connect( actions.settingsBehaviorPartialResults,      SIGNAL( toggled( bool )                    ), p,                     SLOT( autoCalcToggled( bool )            ) );
-  connect( actions.settingsBehaviorSaveHistoryOnExit,   SIGNAL( toggled( bool )                    ), p,                     SLOT( saveHistoryOnExitToggled( bool )   ) );
-  connect( actions.settingsBehaviorSaveVariablesOnExit, SIGNAL( toggled( bool )                    ), p,                     SLOT( saveVariablesOnExitToggled( bool ) ) );
-  connect( actions.settingsBehaviorSyntaxHilite,        SIGNAL( toggled( bool )                    ), p,                     SLOT( hiliteSyntaxToggled( bool )        ) );
+  connect( actions.settingsBehaviorAlwaysOnTop,         SIGNAL( toggled( bool ) ), p, SLOT( setAlwaysOnTopEnabled( bool )        ) );
+  connect( actions.settingsBehaviorAutoCompletion,      SIGNAL( toggled( bool ) ), p, SLOT( setAutoCompletionEnabled( bool )     ) );
+  connect( actions.settingsBehaviorMinimizeToTray,      SIGNAL( toggled( bool ) ), p, SLOT( setSystemTrayIconEnabled( bool )     ) );
+  connect( actions.settingsBehaviorPartialResults,      SIGNAL( toggled( bool ) ), p, SLOT( setAutoCalcEnabled( bool )           ) );
+  connect( actions.settingsBehaviorSaveHistoryOnExit,   SIGNAL( toggled( bool ) ), p, SLOT( setHistorySaveEnabled( bool )        ) );
+  connect( actions.settingsBehaviorSaveVariablesOnExit, SIGNAL( toggled( bool ) ), p, SLOT( setVariableSaveEnabled( bool )       ) );
+  connect( actions.settingsBehaviorSyntaxHilite,        SIGNAL( toggled( bool ) ), p, SLOT( setSyntaxHighlightingEnabled( bool ) ) );
 
-  connect( actions.settingsRadixCharComma,   SIGNAL( triggered() ), p, SLOT( radixCharCommaTriggered() ) );
-  connect( actions.settingsRadixCharDefault, SIGNAL( triggered() ), p, SLOT( radixCharAutoTriggered()  ) );
-  connect( actions.settingsRadixCharDot,     SIGNAL( triggered() ), p, SLOT( radixCharDotTriggered()   ) );
+  connect( actions.settingsRadixCharComma,   SIGNAL( triggered() ), p, SLOT( setRadixCharacterComma()     ) );
+  connect( actions.settingsRadixCharDefault, SIGNAL( triggered() ), p, SLOT( setRadixCharacterAutomatic() ) );
+  connect( actions.settingsRadixCharDot,     SIGNAL( triggered() ), p, SLOT( setRadixCharacterDot()       ) );
 
-  connect( actions.settingsResultFormat15Digits,      SIGNAL( triggered() ), p, SLOT( digits15()          ) );
-  connect( actions.settingsResultFormat2Digits,       SIGNAL( triggered() ), p, SLOT( digits2()           ) );
-  connect( actions.settingsResultFormat3Digits,       SIGNAL( triggered() ), p, SLOT( digits3()           ) );
-  connect( actions.settingsResultFormat50Digits,      SIGNAL( triggered() ), p, SLOT( digits50()          ) );
-  connect( actions.settingsResultFormat8Digits,       SIGNAL( triggered() ), p, SLOT( digits8()           ) );
-  connect( actions.settingsResultFormatAutoPrecision, SIGNAL( triggered() ), p, SLOT( digitsAuto()        ) );
-  connect( actions.settingsResultFormatBinary,        SIGNAL( triggered() ), p, SLOT( formatBinary()      ) );
-  connect( actions.settingsResultFormatEngineering,   SIGNAL( triggered() ), p, SLOT( formatEngineering() ) );
-  connect( actions.settingsResultFormatFixed,         SIGNAL( triggered() ), p, SLOT( formatFixed()       ) );
-  connect( actions.settingsResultFormatGeneral,       SIGNAL( triggered() ), p, SLOT( formatGeneral()     ) );
-  connect( actions.settingsResultFormatHexadecimal,   SIGNAL( triggered() ), p, SLOT( formatHexadec()     ) );
-  connect( actions.settingsResultFormatOctal,         SIGNAL( triggered() ), p, SLOT( formatOctal()       ) );
-  connect( actions.settingsResultFormatScientific,    SIGNAL( triggered() ), p, SLOT( formatScientific()  ) );
+  connect( actions.settingsResultFormat15Digits,      SIGNAL( triggered() ), p, SLOT( setResultPrecision15Digits()  ) );
+  connect( actions.settingsResultFormat2Digits,       SIGNAL( triggered() ), p, SLOT( setResultPrecision2Digits()   ) );
+  connect( actions.settingsResultFormat3Digits,       SIGNAL( triggered() ), p, SLOT( setResultPrecision3Digits()   ) );
+  connect( actions.settingsResultFormat50Digits,      SIGNAL( triggered() ), p, SLOT( setResultPrecision50Digits()  ) );
+  connect( actions.settingsResultFormat8Digits,       SIGNAL( triggered() ), p, SLOT( setResultPrecision8Digits()   ) );
+  connect( actions.settingsResultFormatAutoPrecision, SIGNAL( triggered() ), p, SLOT( setResultPrecisionAutomatic() ) );
+  connect( actions.settingsResultFormatBinary,        SIGNAL( triggered() ), p, SLOT( setResultFormatBinary()       ) );
+  connect( actions.settingsResultFormatEngineering,   SIGNAL( triggered() ), p, SLOT( setResultFormatEngineering()  ) );
+  connect( actions.settingsResultFormatFixed,         SIGNAL( triggered() ), p, SLOT( setResultFormatFixed()        ) );
+  connect( actions.settingsResultFormatGeneral,       SIGNAL( triggered() ), p, SLOT( setResultFormatGeneral()      ) );
+  connect( actions.settingsResultFormatHexadecimal,   SIGNAL( triggered() ), p, SLOT( setResultFormatHexadecimal()  ) );
+  connect( actions.settingsResultFormatOctal,         SIGNAL( triggered() ), p, SLOT( setResultFormatOctal()        ) );
+  connect( actions.settingsResultFormatScientific,    SIGNAL( triggered() ), p, SLOT( setResultFormatScientific()   ) );
 
-  connect( actions.viewConstants,      SIGNAL( toggled( bool ) ), p, SLOT( showConstants( bool )    ) );
-  connect( actions.viewFullScreenMode, SIGNAL( toggled( bool ) ), p, SLOT( showInFullScreen( bool ) ) );
-  connect( actions.viewFunctions,      SIGNAL( toggled( bool ) ), p, SLOT( showFunctions( bool )    ) );
-  connect( actions.viewHistory,        SIGNAL( toggled( bool ) ), p, SLOT( showHistory( bool )      ) );
-  connect( actions.viewKeypad,         SIGNAL( toggled( bool ) ), p, SLOT( showKeypad( bool )       ) );
-  connect( actions.viewMathBook,       SIGNAL( toggled( bool ) ), p, SLOT( showBook( bool )         ) );
-  connect( actions.viewMenuBar,        SIGNAL( toggled( bool ) ), p, SLOT( showMenuBar( bool )      ) );
-  connect( actions.viewStatusBar,      SIGNAL( toggled( bool ) ), p, SLOT( showStatusBar( bool )    ) );
-  connect( actions.viewVariables,      SIGNAL( toggled( bool ) ), p, SLOT( showVariables( bool )    ) );
+  connect( actions.settingsLanguage, SIGNAL( triggered() ), p, SLOT( showLanguageChooserDialog() ) );
 
-  connect( actions.languageDefault, SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
-  connect( actions.languageCa,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
-  connect( actions.languageCs,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
-  connect( actions.languageDe,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
-  connect( actions.languageEn,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
-  connect( actions.languageEs,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
-  connect( actions.languageEsAr,    SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
-  connect( actions.languageEu,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
-  connect( actions.languageFi,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
-  connect( actions.languageFr,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
-  connect( actions.languageHe,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
-  connect( actions.languageId,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
-  connect( actions.languageIt,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
-  connect( actions.languageNb,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
-  connect( actions.languageNl,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
-  connect( actions.languagePl,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
-  connect( actions.languagePt,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
-  connect( actions.languagePtBr,    SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
-  connect( actions.languageRo,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
-  connect( actions.languageRu,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
-  connect( actions.languageSv,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
-  connect( actions.languageTr,      SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
-  connect( actions.languageZhCn,    SIGNAL( triggered() ), p, SLOT( changeLanguage() ) );
+  connect( actions.helpAboutQt,     SIGNAL( triggered() ), p, SLOT( showAboutQtDialog()           ) );
+  connect( actions.helpAbout,       SIGNAL( triggered() ), p, SLOT( showAboutDialog()             ) );
+  connect( actions.helpTipOfTheDay, SIGNAL( triggered() ), p, SLOT( showTipOfTheDay()             ) );
+  connect( actions.helpWebsite,     SIGNAL( triggered() ), p, SLOT( openHomePageInSystemBrowser() ) );
 
-  connect( actions.scrollDown, SIGNAL( triggered() ), p, SLOT( scrollDown() ) );
-  connect( actions.scrollUp,   SIGNAL( triggered() ), p, SLOT( scrollUp()   ) );
+  connect( widgets.display, SIGNAL( textSelected( const QString & ) ), widgets.editor, SLOT( paste()    ) );
+  connect( widgets.display, SIGNAL( textSelected( const QString & ) ), widgets.editor, SLOT( setFocus() ) );
 
-  connect( widgets.display, SIGNAL( textSelected( const QString & ) ), widgets.editor, SLOT( paste()                            ) );
-  connect( widgets.display, SIGNAL( textSelected( const QString & ) ), widgets.editor, SLOT( setFocus()                         ) );
-
-  connect( widgets.editor, SIGNAL( autoCalcDisabled()                 ), p, SLOT( hideAutoCalc()                  ) );
-  connect( widgets.editor, SIGNAL( autoCalcEnabled( const QString & ) ), p, SLOT( showAutoCalc( const QString & ) ) );
-  connect( widgets.editor, SIGNAL( returnPressed()                    ), p, SLOT( returnPressed()                 ) );
-  connect( widgets.editor, SIGNAL( textChanged()                      ), p, SLOT( textChanged()                   ) );
+  connect( widgets.editor, SIGNAL( autoCalcDisabled()                 ), p, SLOT( hideAutoCalcTip()                  ) );
+  connect( widgets.editor, SIGNAL( autoCalcEnabled( const QString & ) ), p, SLOT( showAutoCalcTip( const QString & ) ) );
+  connect( widgets.editor, SIGNAL( returnPressed()                    ), p, SLOT( evaluateEditorExpression()         ) );
+  connect( widgets.editor, SIGNAL( textChanged()                      ), p, SLOT( handleEditorTextChange()           ) );
 
   connect( p, SIGNAL( resultFormatChanged( char )   ), widgets.editor,  SLOT( setFormat( char )    ) );
   connect( p, SIGNAL( resultPrecisionChanged( int ) ), widgets.editor,  SLOT( setPrecision( int )  ) );
-  connect( p, SIGNAL( radixCharChanged( char )      ), widgets.editor,  SLOT( setRadixChar( char ) ) );
+  connect( p, SIGNAL( radixCharacterChanged( char ) ), widgets.editor,  SLOT( setRadixChar( char ) ) );
   connect( p, SIGNAL( resultFormatChanged( char )   ), widgets.display, SLOT( setFormat( char )    ) );
   connect( p, SIGNAL( resultPrecisionChanged( int ) ), widgets.display, SLOT( setPrecision( int )  ) );
-  connect( p, SIGNAL( radixCharChanged( char )      ), widgets.display, SLOT( setRadixChar( char ) ) );
-  connect( p, SIGNAL( radixCharChanged( char )      ), evaluator,       SLOT( setRadixChar( char ) ) );
+  connect( p, SIGNAL( radixCharacterChanged( char ) ), widgets.display, SLOT( setRadixChar( char ) ) );
+  connect( p, SIGNAL( radixCharacterChanged( char ) ), evaluator,       SLOT( setRadixChar( char ) ) );
   connect( p, SIGNAL( angleUnitChanged( char )      ), functions,       SLOT( setAngleMode( char ) ) );
-  connect( p, SIGNAL( languageChanged()             ), p,               SLOT( setAllText()         ) );
+  connect( p, SIGNAL( languageChanged()             ), p,               SLOT( retranslateText()    ) );
+
+  connect( actions.scrollDown, SIGNAL( triggered() ), p, SLOT( scrollDown() ) );
+  connect( actions.scrollUp,   SIGNAL( triggered() ), p, SLOT( scrollUp()   ) );
 }
 
 
@@ -1328,13 +1154,11 @@ void MainWindow::Private::applySettings()
 {
   // window state
   //
-  actions.viewMathBook ->setChecked( settings.showBook      );
-  actions.viewConstants->setChecked( settings.showConstants );
-  actions.viewFunctions->setChecked( settings.showFunctions );
-  actions.viewHistory  ->setChecked( settings.showHistory   );
-  actions.viewVariables->setChecked( settings.showVariables );
-  // THIS IS NOT NEEDED ANYMORE, BUT NEEDS TO BE TESTED WITH Qt 4.2
-  //restoreFloatingDocks();
+  actions.viewMathBook ->setChecked( settings.mathBookDockVisible  );
+  actions.viewConstants->setChecked( settings.constantsDockVisible );
+  actions.viewFunctions->setChecked( settings.functionsDockVisible );
+  actions.viewHistory  ->setChecked( settings.historyDockVisible   );
+  actions.viewVariables->setChecked( settings.variablesDockVisible );
   //
   p->resize( settings.windowSize );
   //
@@ -1350,10 +1174,10 @@ void MainWindow::Private::applySettings()
   p->restoreState( settings.windowState );
 
   // full screen
-  actions.viewFullScreenMode->setChecked( settings.showFullScreen );
+  actions.viewFullScreenMode->setChecked( settings.windowOnfullScreen );
 
   // always-on-top
-  actions.settingsBehaviorAlwaysOnTop->setChecked( settings.stayAlwaysOnTop );
+  actions.settingsBehaviorAlwaysOnTop->setChecked( settings.windowAlwaysOnTop );
 
   // angle mode
   if ( settings.angleMode == 'r' )
@@ -1365,14 +1189,14 @@ void MainWindow::Private::applySettings()
   checkInitialLanguage();
 
   // history
-  if ( settings.saveHistory )
+  if ( settings.historySave )
   {
     actions.settingsBehaviorSaveHistoryOnExit->setChecked( true );
     restoreHistory();
   }
 
   // variables
-  if ( settings.saveVariables )
+  if ( settings.variableSave )
   {
     actions.settingsBehaviorSaveVariablesOnExit->setChecked( true );
     restoreVariables();
@@ -1382,7 +1206,7 @@ void MainWindow::Private::applySettings()
   checkInitialResultFormat();
 
   // precision
-  checkInitialPrecision();
+  checkInitialResultPrecision();
 
   // radix character
   if ( settings.isLocaleRadixChar() )
@@ -1393,37 +1217,39 @@ void MainWindow::Private::applySettings()
     actions.settingsRadixCharComma->setChecked( true );
 
   // keypad
-  actions.viewKeypad->setChecked( settings.showKeypad );
+  actions.viewKeypad->setChecked( settings.keypadVisible );
 
   // autocalc
   if ( settings.autoCalc )
     actions.settingsBehaviorPartialResults->setChecked( true );
   else
-    p->autoCalcToggled( false );
+    p->setAutoCalcEnabled( false );
 
   // autocomplete
-  if ( settings.autoComplete )
+  if ( settings.autoCompletion )
     actions.settingsBehaviorAutoCompletion->setChecked( true );
   else
-    p->autoCompletionToggled( false );
+    p->setAutoCompletionEnabled( false );
 
   // minimize to system tray
-  actions.settingsBehaviorMinimizeToTray->setChecked( settings.minimizeToTray );
+  actions.settingsBehaviorMinimizeToTray->setChecked( settings.systemTrayIconVisible );
 
   // syntax hilite
-  if ( settings.hiliteSyntax )
+  if ( settings.syntaxHighlighting )
     actions.settingsBehaviorSyntaxHilite->setChecked( true );
   else
-    p->hiliteSyntaxToggled( false );
+    p->setSyntaxHighlightingEnabled( false );
 
   // status bar
-  actions.viewStatusBar->setChecked( settings.showStatusBar );
+  actions.viewStatusBar->setChecked( settings.statusBarVisible );
 
   // menu bar
 #ifndef Q_OS_MAC
-  actions.viewMenuBar->setChecked( settings.showMenuBar );
-  p->menuBar()->setVisible( settings.showMenuBar );
+  actions.viewMenuBar->setChecked( settings.menuBarVisible );
+  p->menuBar()->setVisible( settings.menuBarVisible );
 #endif
+
+  emit p->languageChanged();
 }
 
 
@@ -1442,7 +1268,7 @@ void MainWindow::Private::checkInitialResultFormat()
 }
 
 
-void MainWindow::Private::checkInitialPrecision()
+void MainWindow::Private::checkInitialResultPrecision()
 {
   switch ( settings.resultPrecision )
   {
@@ -1458,59 +1284,36 @@ void MainWindow::Private::checkInitialPrecision()
 
 void MainWindow::Private::checkInitialLanguage()
 {
-  if ( settings.language == "ca" )
-    actions.languageCa->setChecked( true );
-  else if ( settings.language == "cs" )
-    actions.languageCs->setChecked( true );
-  else if ( settings.language == "de" )
-    actions.languageDe->setChecked( true );
-  else if ( settings.language == "en" )
-    actions.languageEn->setChecked( true );
-  else if ( settings.language == "es" )
-    actions.languageEs->setChecked( true );
-  else if ( settings.language == "es_AR" )
-    actions.languageEsAr->setChecked( true );
-  else if ( settings.language == "eu" )
-    actions.languageEu->setChecked( true );
-  else if ( settings.language == "fi" )
-    actions.languageFi->setChecked( true );
-  else if ( settings.language == "fr" )
-    actions.languageFr->setChecked( true );
-  else if ( settings.language == "he" )
-    actions.languageHe->setChecked( true );
-  else if ( settings.language == "id" )
-    actions.languageId->setChecked( true );
-  else if ( settings.language == "it" )
-    actions.languageIt->setChecked( true );
-  else if ( settings.language == "nb" )
-    actions.languageNb->setChecked( true );
-  else if ( settings.language == "nl" )
-    actions.languageNl->setChecked( true );
-  else if ( settings.language == "pl" )
-    actions.languagePl->setChecked( true );
-  else if ( settings.language == "pt" )
-    actions.languagePt->setChecked( true );
-  else if ( settings.language == "pt_BR" )
-    actions.languagePtBr->setChecked( true );
-  else if ( settings.language == "ro" )
-    actions.languageRo->setChecked( true );
-  else if ( settings.language == "ru" )
-    actions.languageRu->setChecked( true );
-  else if ( settings.language == "sv" )
-    actions.languageSv->setChecked( true );
-  else if ( settings.language == "tr" )
-    actions.languageTr->setChecked( true );
-  else if ( settings.language == "zn_CN" )
-    actions.languageZhCn->setChecked( true );
-  else
-    actions.languageDefault->setChecked( true );
+  //if ( settings.language == "ca" )
+  //else if ( settings.language == "cs" )
+  //else if ( settings.language == "de" )
+  //else if ( settings.language == "en" )
+  //else if ( settings.language == "es" )
+  //else if ( settings.language == "es_AR" )
+  //else if ( settings.language == "eu" )
+  //else if ( settings.language == "fi" )
+  //else if ( settings.language == "fr" )
+  //else if ( settings.language == "he" )
+  //else if ( settings.language == "id" )
+  //else if ( settings.language == "it" )
+  //else if ( settings.language == "nb" )
+  //else if ( settings.language == "nl" )
+  //else if ( settings.language == "pl" )
+  //else if ( settings.language == "pt" )
+  //else if ( settings.language == "pt_BR" )
+  //else if ( settings.language == "ro" )
+  //else if ( settings.language == "ru" )
+  //else if ( settings.language == "sv" )
+  //else if ( settings.language == "tr" )
+  //else if ( settings.language == "zn_CN" )
+  //else
 }
 
 
 void MainWindow::Private::saveSettings()
 {
   // history
-  if ( settings.saveHistory )
+  if ( settings.historySave )
   {
     settings.history        = widgets.editor->history();
     settings.historyResults = widgets.editor->historyResults();
@@ -1522,7 +1325,7 @@ void MainWindow::Private::saveSettings()
   }
 
   // variables
-  if ( settings.saveVariables )
+  if ( settings.variableSave )
   {
     settings.variables.clear();
     QVector<Variable> vars = evaluator->variables();
@@ -1541,58 +1344,8 @@ void MainWindow::Private::saveSettings()
   settings.windowSize     = p->size();
   settings.windowState    = p->saveState();
 
-  // THIS IS NOT NEEDED ANYMORE, BUT NEEDS TO BE TESTED WITH Qt 4.2
-  //syncWindowStateToSettings();
-
   settings.save();
 }
-
-
-// THIS IS NOT NEEDED ANYMORE, BUT NEEDS TO BE TESTED WITH Qt 4.2
-//void MainWindow::Private::syncWindowStateToSettings()
-//{
-//   docks
-//  if ( docks.book )
-//  {
-//    settings.bookDockFloating = docks.book->isFloating();
-//    settings.bookDockLeft     = docks.book->x();
-//    settings.bookDockTop      = docks.book->y();
-//    settings.bookDockWidth    = docks.book->width();
-//    settings.bookDockHeight   = docks.book->height();
-//  }
-//  if ( docks.history )
-//  {
-//    settings.historyDockFloating = docks.history->isFloating();
-//    settings.historyDockLeft     = docks.history->x();
-//    settings.historyDockTop      = docks.history->y();
-//    settings.historyDockWidth    = docks.history->width();
-//    settings.historyDockHeight   = docks.history->height();
-//  }
-//  if ( docks.functions )
-//  {
-//    settings.functionsDockFloating = docks.functions->isFloating();
-//    settings.functionsDockLeft     = docks.functions->x();
-//    settings.functionsDockTop      = docks.functions->y();
-//    settings.functionsDockWidth    = docks.functions->width();
-//    settings.functionsDockHeight   = docks.functions->height();
-//  }
-//  if ( docks.variables )
-//  {
-//    settings.variablesDockFloating = docks.variables->isFloating();
-//    settings.variablesDockLeft     = docks.variables->x();
-//    settings.variablesDockTop      = docks.variables->y();
-//    settings.variablesDockWidth    = docks.variables->width();
-//    settings.variablesDockHeight   = docks.variables->height();
-//  }
-//  if ( docks.constants )
-//  {
-//    settings.constantsDockFloating = docks.constants->isFloating();
-//    settings.constantsDockLeft     = docks.constants->x();
-//    settings.constantsDockTop      = docks.constants->y();
-//    settings.constantsDockWidth    = docks.constants->width();
-//    settings.constantsDockHeight   = docks.constants->height();
-//  }
-//}
 
 
 // public
@@ -1604,7 +1357,6 @@ MainWindow::MainWindow()
   d->settings.load();
   d->createUi();
   d->applySettings();
-  emit languageChanged();
   QTimer::singleShot( 0, this, SLOT( activate() ) );
 }
 
@@ -1619,9 +1371,9 @@ bool MainWindow::event( QEvent * e )
 {
   if ( e->type() == QEvent::WindowStateChange )
     if ( windowState() & Qt::WindowMinimized )
-      if ( d->settings.minimizeToTray )
+      if ( d->settings.systemTrayIconVisible )
       {
-        QTimer::singleShot( 100, this, SLOT( minimizeToTray() ) );
+        QTimer::singleShot( 100, this, SLOT( minimizeToSystemTray() ) );
         return true;
       }
 
@@ -1631,14 +1383,14 @@ bool MainWindow::event( QEvent * e )
 
 // public slots
 
-void MainWindow::about()
+void MainWindow::showAboutDialog()
 {
   AboutBox dlg;
   dlg.exec();
 }
 
 
-void MainWindow::aboutQt()
+void MainWindow::showAboutQtDialog()
 {
   QMessageBox::aboutQt( this, tr( "About Qt" ) );
 }
@@ -1648,7 +1400,7 @@ void MainWindow::clearHistory()
 {
   d->widgets.display->clear();
   d->widgets.editor->clearHistory();
-  if ( d->settings.showHistory )
+  if ( d->settings.historyDockVisible )
     d->docks.history->clear();
   d->settings.history.clear();
   d->settings.historyResults.clear();
@@ -1656,14 +1408,14 @@ void MainWindow::clearHistory()
 }
 
 
-void MainWindow::clearExpression()
+void MainWindow::clearEditor()
 {
   d->widgets.editor->clear();
   QTimer::singleShot( 0, d->widgets.editor, SLOT( setFocus() ) );
 }
 
 
-void MainWindow::copyResult()
+void MainWindow::copyResultToClipboard()
 {
   QClipboard * cb = QApplication::clipboard();
   HNumber num = d->evaluator->get( "ans" );
@@ -1677,7 +1429,7 @@ void MainWindow::copyResult()
 }
 
 
-void MainWindow::degree()
+void MainWindow::setAngleModeDegree()
 {
   if ( d->settings.angleMode == 'd' )
     return;
@@ -1695,58 +1447,58 @@ void MainWindow::deleteAllVariables()
 {
   d->evaluator->clearVariables();
 
-  if ( d->settings.showVariables )
+  if ( d->settings.variablesDockVisible )
     d->docks.variables->updateList( d->evaluator );
 }
 
 
-void MainWindow::deleteVariable()
+void MainWindow::showVariableDeletionDialog()
 {
   DeleteVariableDlg dlg( d->evaluator );
   dlg.exec();
 
-  if ( d->settings.showVariables )
+  if ( d->settings.variablesDockVisible )
     d->docks.variables->updateList( d->evaluator );
 }
 
 
-void MainWindow::digits2()
+void MainWindow::setResultPrecision2Digits()
 {
   setResultPrecision( 2 );
 }
 
 
-void MainWindow::digits3()
+void MainWindow::setResultPrecision3Digits()
 {
   setResultPrecision( 3 );
 }
 
 
-void MainWindow::digits8()
+void MainWindow::setResultPrecision8Digits()
 {
   setResultPrecision( 8 );
 }
 
 
-void MainWindow::digits15()
+void MainWindow::setResultPrecision15Digits()
 {
   setResultPrecision( 15 );
 }
 
 
-void MainWindow::digits50()
+void MainWindow::setResultPrecision50Digits()
 {
   setResultPrecision( 50 );
 }
 
 
-void MainWindow::digitsAuto()
+void MainWindow::setResultPrecisionAutomatic()
 {
   setResultPrecision( -1 );
 }
 
 
-void MainWindow::selectExpression()
+void MainWindow::selectEditorExpression()
 {
   activateWindow();
   d->widgets.editor->selectAll();
@@ -1754,20 +1506,20 @@ void MainWindow::selectExpression()
 }
 
 
-void MainWindow::gotoWebsite()
+void MainWindow::openHomePageInSystemBrowser()
 {
   QDesktopServices::openUrl(
     QUrl( QString::fromLatin1( "http://www.speedcrunch.org" ) ) );
 }
 
 
-void MainWindow::hideAutoCalc()
+void MainWindow::hideAutoCalcTip()
 {
-  d->widgets.autoCalcLabel->hideText();
+  d->widgets.autoCalcTip->hideText();
 }
 
 
-void MainWindow::insertFunction()
+void MainWindow::showFunctionInsertionDialog()
 {
   InsertFunctionDlg dlg( d->functions );
 
@@ -1780,7 +1532,7 @@ void MainWindow::insertFunction()
 }
 
 
-void MainWindow::insertVariable()
+void MainWindow::showVariableInsertionDialog()
 {
   InsertVariableDlg dlg( d->evaluator, d->settings.getRadixChar() );
 
@@ -1793,7 +1545,7 @@ void MainWindow::insertVariable()
 }
 
 
-void MainWindow::loadSession()
+void MainWindow::showSessionLoadDialog()
 {
   QString errMsg  = tr( "File %1 is not a valid session" );
   QString filters = tr( "SpeedCrunch Sessions (*.sch);;All Files (*)" );
@@ -1872,7 +1624,7 @@ void MainWindow::loadSession()
   d->widgets.display->appendHistory( expLs, resLs );
   d->widgets.editor->appendHistory( expLs, resLs );
 
-  if ( d->settings.showHistory )
+  if ( d->settings.historyDockVisible )
     d->docks.history->appendHistory( expLs );
 
   // variables
@@ -1900,7 +1652,7 @@ void MainWindow::loadSession()
 }
 
 
-void MainWindow::importSession()
+void MainWindow::showSessionImportDialog()
 {
   QString filters = tr( "All Files (*)" );
   QString fname = QFileDialog::getOpenFileName( this, tr( "Import Session" ),
@@ -1971,9 +1723,9 @@ void MainWindow::importSession()
       d->widgets.editor->appendHistory( str, num );
       free( num );
       d->widgets.editor->setAnsAvailable( true );
-      if ( d->settings.showVariables )
+      if ( d->settings.variablesDockVisible )
         d->docks.variables->updateList( d->evaluator );
-      if ( d->settings.showHistory )
+      if ( d->settings.historyDockVisible )
         d->docks.history->append( str );
 
       d->widgets.editor->setText( str );
@@ -1995,9 +1747,9 @@ void MainWindow::importSession()
 }
 
 
-void MainWindow::alwaysOnTopToggled( bool b )
+void MainWindow::setAlwaysOnTopEnabled( bool b )
 {
-  d->settings.stayAlwaysOnTop = b;
+  d->settings.windowAlwaysOnTop = b;
 
   QPoint cur = mapToGlobal( QPoint(0, 0) );
   if ( b )
@@ -2009,33 +1761,33 @@ void MainWindow::alwaysOnTopToggled( bool b )
 }
 
 
-void MainWindow::autoCalcToggled( bool b )
+void MainWindow::setAutoCalcEnabled( bool b )
 {
   d->settings.autoCalc = b;
   d->widgets.editor->setAutoCalcEnabled( b );
 }
 
 
-void MainWindow::saveHistoryOnExitToggled( bool b )
+void MainWindow::setHistorySaveEnabled( bool b )
 {
-  d->settings.saveHistory = b;
+  d->settings.historySave = b;
 }
 
 
-void MainWindow::saveVariablesOnExitToggled( bool b )
+void MainWindow::setVariableSaveEnabled( bool b )
 {
-  d->settings.saveVariables = b;
+  d->settings.variableSave = b;
 }
 
 
-void MainWindow::autoCompletionToggled( bool b )
+void MainWindow::setAutoCompletionEnabled( bool b )
 {
-  d->settings.autoComplete = b;
-  d->widgets.editor->setAutoCompleteEnabled( b );
+  d->settings.autoCompletion = b;
+  d->widgets.editor->setAutoCompletionEnabled( b );
 }
 
 
-void MainWindow::minimizeToTrayToggled( bool b )
+void MainWindow::setSystemTrayIconEnabled( bool b )
 {
   if ( b && ! d->widgets.trayIcon && QSystemTrayIcon::isSystemTrayAvailable() )
   {
@@ -2053,27 +1805,27 @@ void MainWindow::minimizeToTrayToggled( bool b )
     connect( d->widgets.trayIcon,
              SIGNAL( activated( QSystemTrayIcon::ActivationReason ) ),
              this,
-             SLOT( trayIconActivated( QSystemTrayIcon::ActivationReason ) ) );
+             SLOT( handleSystemTrayIconActivation( QSystemTrayIcon::ActivationReason ) ) );
   }
   else
   {
     if ( d->widgets.trayIcon )
-      delete d->widgets.trayIcon;
+      d->widgets.trayIcon->deleteLater();
     d->widgets.trayIcon = 0;
   }
 
-  d->settings.minimizeToTray = b;
+  d->settings.systemTrayIconVisible = b;
 }
 
 
-void MainWindow::hiliteSyntaxToggled( bool b )
+void MainWindow::setSyntaxHighlightingEnabled( bool b )
 {
-  d->widgets.editor->setSyntaxHighlight( b );
-  d->settings.hiliteSyntax = b;
+  d->widgets.editor->setSyntaxHighlightingEnabled( b );
+  d->settings.syntaxHighlighting = b;
 }
 
 
-void MainWindow::radian()
+void MainWindow::setAngleModeRadian()
 {
   if ( d->settings.angleMode == 'r' )
     return;
@@ -2134,7 +1886,7 @@ void MainWindow::saveSession()
 }
 
 
-void MainWindow::exportSession()
+void MainWindow::showSessionExportDialog()
 {
   QString filters = tr( "All Files (*)" );
   QString fname = QFileDialog::getSaveFileName( this, tr( "Export Session" ),
@@ -2161,15 +1913,16 @@ void MainWindow::exportSession()
 
 void MainWindow::setWidgetsDirection()
 {
-  if ( (d->settings.language == "C" && QLocale().language() == QLocale::Hebrew)
-       || d->settings.language == "he" )
-  {
+  QLocale::Language lang = QLocale().language();
+  bool rtlSystem = (lang == QLocale::Hebrew || lang == QLocale::Arabic);
+
+  QString code = d->settings.language;
+  bool rtlCustom = (code == "he" || code == "ar");
+
+  if ( (d->settings.language == "C" && rtlSystem) || rtlCustom )
     qApp->setLayoutDirection( Qt::RightToLeft );
-  }
   else
-  {
     qApp->setLayoutDirection( Qt::LeftToRight );
-  }
 }
 
 
@@ -2189,10 +1942,10 @@ void MainWindow::scrollUp()
 }
 
 
-void MainWindow::showMenuBar( bool b )
+void MainWindow::setMenuBarVisible( bool b )
 {
   menuBar()->setVisible( b );
-  d->settings.showMenuBar = b;
+  d->settings.menuBarVisible = b;
 
   if ( ! b && d->conditions.notifyMenuBarHidden )
   {
@@ -2204,24 +1957,24 @@ void MainWindow::showMenuBar( bool b )
 }
 
 
-void MainWindow::showStatusBar( bool b )
+void MainWindow::setStatusBarVisible( bool b )
 {
   b ? d->createStatusBar() : d->deleteStatusBar();
-  d->settings.showStatusBar = b;
+  d->settings.statusBarVisible = b;
 }
 
 
-void MainWindow::showAutoCalc( const QString & msg )
+void MainWindow::showAutoCalcTip( const QString & msg )
 {
   QPoint p = d->widgets.editor->mapToParent( QPoint(0, 0) );
-  d->widgets.autoCalcLabel->move( p );
-  d->widgets.autoCalcLabel->showText( msg );
+  d->widgets.autoCalcTip->move( p );
+  d->widgets.autoCalcTip->showText( msg );
 }
 
 
-void MainWindow::showInFullScreen( bool b )
+void MainWindow::setFullScreenEnabled( bool b )
 {
-  d->settings.showFullScreen = b;
+  d->settings.windowOnfullScreen = b;
   b ? showFullScreen() : showNormal();
 }
 
@@ -2285,21 +2038,21 @@ bool MainWindow::eventFilter( QObject * o, QEvent * e )
 void MainWindow::Private::deleteKeypad()
 {
   p->disconnect( widgets.keypad );
-  delete widgets.keypad;
+  widgets.keypad->deleteLater();
   widgets.keypad = 0;
 
   layouts.root->removeItem( layouts.keypad );
-  delete layouts.keypad;
+  layouts.keypad->deleteLater();
   layouts.keypad = 0;
 }
 
 
 void MainWindow::Private::deleteStatusBar()
 {
-  delete status.angleUnit;
+  status.angleUnit->deleteLater();
   status.angleUnit = 0;
 
-  delete status.resultFormat;
+  status.resultFormat->deleteLater();
   status.resultFormat = 0;
 
   p->setStatusBar( 0 );
@@ -2312,12 +2065,12 @@ void MainWindow::Private::deleteBookDock()
 
   p->removeDockWidget( docks.book );
   p->disconnect( docks.book );
-  delete docks.book;
+  docks.book->deleteLater();
   docks.book = 0;
   actions.viewMathBook->blockSignals( true );
   actions.viewMathBook->setChecked( false );
   actions.viewMathBook->blockSignals( false );
-  settings.showBook = false;
+  settings.mathBookDockVisible = false;
 }
 
 
@@ -2327,12 +2080,12 @@ void MainWindow::Private::deleteConstantsDock()
 
   p->removeDockWidget( docks.constants );
   p->disconnect( docks.constants );
-  delete docks.constants;
+  docks.constants->deleteLater();
   docks.constants = 0;
   actions.viewConstants->blockSignals( true );
   actions.viewConstants->setChecked( false );
   actions.viewConstants->blockSignals( false );
-  settings.showConstants = false;
+  settings.constantsDockVisible = false;
 }
 
 
@@ -2342,12 +2095,12 @@ void MainWindow::Private::deleteFunctionsDock()
 
   p->removeDockWidget( docks.functions );
   p->disconnect( docks.functions );
-  delete docks.functions;
+  docks.functions->deleteLater();
   docks.functions = 0;
   actions.viewFunctions->blockSignals( true );
   actions.viewFunctions->setChecked( false );
   actions.viewFunctions->blockSignals( false );
-  settings.showFunctions = false;
+  settings.functionsDockVisible = false;
 }
 
 
@@ -2357,12 +2110,12 @@ void MainWindow::Private::deleteHistoryDock()
 
   p->removeDockWidget( docks.history );
   p->disconnect( docks.history );
-  delete docks.history;
+  docks.history->deleteLater();
   docks.history = 0;
   actions.viewHistory->blockSignals( true );
   actions.viewHistory->setChecked( false );
   actions.viewHistory->blockSignals( false );
-  settings.showHistory = false;
+  settings.historyDockVisible = false;
 }
 
 
@@ -2372,16 +2125,16 @@ void MainWindow::Private::deleteVariablesDock()
 
   p->removeDockWidget( docks.variables );
   p->disconnect( docks.variables );
-  delete docks.variables;
+  docks.variables->deleteLater();
   docks.variables = 0;
   actions.viewVariables->blockSignals( true );
   actions.viewVariables->setChecked( false );
   actions.viewVariables->blockSignals( false );
-  settings.showVariables = false;
+  settings.variablesDockVisible = false;
 }
 
 
-void MainWindow::showFunctions( bool b )
+void MainWindow::setFunctionsDockVisible( bool b )
 {
   if ( b )
     d->createFunctionsDock();
@@ -2390,7 +2143,7 @@ void MainWindow::showFunctions( bool b )
 }
 
 
-void MainWindow::showBook( bool b )
+void MainWindow::setMathBookDockVisible( bool b )
 {
   if ( b )
     d->createBookDock();
@@ -2399,7 +2152,7 @@ void MainWindow::showBook( bool b )
 }
 
 
-void MainWindow::showConstants( bool b )
+void MainWindow::setConstantsDockVisible( bool b )
 {
   if ( b )
     d->createConstantsDock();
@@ -2408,7 +2161,7 @@ void MainWindow::showConstants( bool b )
 }
 
 
-void MainWindow::showHistory( bool b )
+void MainWindow::setHistoryDockVisible( bool b )
 {
   if ( b )
     d->createHistoryDock();
@@ -2417,7 +2170,7 @@ void MainWindow::showHistory( bool b )
 }
 
 
-void MainWindow::showVariables( bool b )
+void MainWindow::setVariablesDockVisible( bool b )
 {
   if ( b )
     d->createVariablesDock();
@@ -2426,9 +2179,9 @@ void MainWindow::showVariables( bool b )
 }
 
 
-void MainWindow::showKeypad( bool b )
+void MainWindow::setKeypadVisible( bool b )
 {
-  d->settings.showKeypad = b;
+  d->settings.keypadVisible = b;
   if ( b )
     d->createKeypad();
   else
@@ -2484,7 +2237,7 @@ void MainWindow::showTipOfTheDay()
 }
 
 
-void MainWindow::formatBinary()
+void MainWindow::setResultFormatBinary()
 {
   d->actionGroups.digits->setDisabled( true );
   setResultFormat( 'b' );
@@ -2494,7 +2247,7 @@ void MainWindow::formatBinary()
 }
 
 
-void MainWindow::formatEngineering()
+void MainWindow::setResultFormatEngineering()
 {
   d->actionGroups.digits->setEnabled( true );
   setResultFormat( 'n' );
@@ -2504,7 +2257,7 @@ void MainWindow::formatEngineering()
 }
 
 
-void MainWindow::formatFixed()
+void MainWindow::setResultFormatFixed()
 {
   d->actionGroups.digits->setEnabled( true );
   setResultFormat( 'f' );
@@ -2514,7 +2267,7 @@ void MainWindow::formatFixed()
 }
 
 
-void MainWindow::formatGeneral()
+void MainWindow::setResultFormatGeneral()
 {
   d->actionGroups.digits->setEnabled( true );
   setResultFormat( 'g' );
@@ -2524,7 +2277,7 @@ void MainWindow::formatGeneral()
 }
 
 
-void MainWindow::formatHexadec()
+void MainWindow::setResultFormatHexadecimal()
 {
   d->actionGroups.digits->setDisabled( true );
   setResultFormat( 'h' );
@@ -2534,7 +2287,7 @@ void MainWindow::formatHexadec()
 }
 
 
-void MainWindow::formatOctal()
+void MainWindow::setResultFormatOctal()
 {
   d->actionGroups.digits->setDisabled( true );
   setResultFormat( 'o' );
@@ -2544,7 +2297,7 @@ void MainWindow::formatOctal()
 }
 
 
-void MainWindow::formatScientific()
+void MainWindow::setResultFormatScientific()
 {
   d->actionGroups.digits->setEnabled( true );
   setResultFormat( 'e' );
@@ -2564,52 +2317,63 @@ void MainWindow::activate()
 }
 
 
-void MainWindow::constantSelected( const QString & c )
+void MainWindow::insertConstantIntoEditor( const QString & c )
 {
   if ( c.isEmpty() )
     return;
 
-  QString str( c );
-  str.replace( '.', d->widgets.editor->radixChar() );
-  d->widgets.editor->insert( str );
+  QString s( c );
+  s.replace( '.', d->widgets.editor->radixChar() );
+  //d->widgets.editor->insert( s );
 
-  QTimer::singleShot( 0, d->widgets.editor, SLOT( setFocus() ) );
+  //QTimer::singleShot( 0, d->widgets.editor, SLOT( setFocus() ) );
 
-  if ( ! isActiveWindow () )
-    activateWindow();
+  //if ( ! isActiveWindow () )
+  //  activateWindow();
+
+  insertTextIntoEditor( s );
 }
 
 
-void MainWindow::expressionSelected( const QString & expr )
+void MainWindow::insertTextIntoEditor( const QString & s )
 {
-  QTextCursor cursor = d->widgets.editor->textCursor();
+  //QTextCursor cursor = d->widgets.editor->textCursor();
+  //d->widgets.editor->blockSignals( true );
+  //cursor.insertText( expr );
+  //d->widgets.editor->blockSignals( false );
+  //QTimer::singleShot( 0, d->widgets.editor, SLOT( setFocus() ) );
+  //d->widgets.editor->setTextCursor( cursor );
+
+  if ( s.isEmpty() )
+      return;
+
   d->widgets.editor->blockSignals( true );
-  cursor.insertText( expr );
+  d->widgets.editor->insert( s );
   d->widgets.editor->blockSignals( false );
-  QTimer::singleShot( 0, d->widgets.editor, SLOT( setFocus() ) );
-  d->widgets.editor->setTextCursor( cursor );
 
   if ( ! isActiveWindow () )
     activateWindow();
 }
 
 
-void MainWindow::functionSelected( const QString & e )
+void MainWindow::insertFunctionIntoEditor( const QString & f )
 {
-  if ( e.isEmpty() )
+  if ( f.isEmpty() )
     return;
 
-  d->widgets.editor->insert( e );
-  d->widgets.editor->insert( "(" );
+  //d->widgets.editor->insert( f );
+  //d->widgets.editor->insert( "(" );
 
-  QTimer::singleShot( 0, d->widgets.editor, SLOT( setFocus() ) );
+  //QTimer::singleShot( 0, d->widgets.editor, SLOT( setFocus() ) );
 
-  if ( ! isActiveWindow () )
-    activateWindow();
+  //if ( ! isActiveWindow () )
+  //  activateWindow();
+
+  insertTextIntoEditor( f + "(" );
 }
 
 
-void MainWindow::keypadButtonPressed( Keypad::Button b )
+void MainWindow::handleKeypadButtonPress( Keypad::Button b )
 {
   d->widgets.editor->blockSignals( true ); // prevent completion
   switch ( b )
@@ -2657,7 +2421,7 @@ void MainWindow::keypadButtonPressed( Keypad::Button b )
       break;
 
     case Keypad::KeyClear:
-      clearExpression();
+      clearEditor();
       break;
 
     default: break;
@@ -2666,19 +2430,19 @@ void MainWindow::keypadButtonPressed( Keypad::Button b )
   QTimer::singleShot( 0, d->widgets.editor, SLOT( setFocus() ) );
   d->widgets.editor->blockSignals( false );
 
-  if ( b == Keypad::KeyEquals)
+  if ( b == Keypad::KeyEquals )
     d->widgets.editor->evaluate();
 }
 
 
-void MainWindow::minimizeToTray()
+void MainWindow::minimizeToSystemTray()
 {
   if ( d->widgets.trayIcon )
   {
     hide();
     d->widgets.trayIcon->show();
     if ( d->conditions.trayNotify )
-      QTimer::singleShot( 500, this, SLOT( showTrayMessage() ) );
+      QTimer::singleShot( 500, this, SLOT( showSystemTrayMessage() ) );
     d->conditions.trayNotify = false;
   }
 }
@@ -2702,68 +2466,6 @@ void MainWindow::Private::restoreVariables()
 }
 
 
-// THIS IS NOT NEEDED ANYMORE, BUT NEEDS TO BE TESTED WITH Qt 4.2
-//void MainWindow::Private::restoreFloatingDocks()
-//{
-//  if ( settings.showBook && settings.bookDockFloating
-//       && ! docks.book->isFloating() )
-//  {
-//    docks.book->hide();
-//    docks.book->setFloating( true );
-//    docks.book->move( settings.bookDockLeft, settings.bookDockTop );
-//    docks.book->resize( settings.bookDockWidth, settings.bookDockHeight );
-//    docks.book->show();
-//  }
-//
-//  if ( settings.showHistory && settings.historyDockFloating
-//       && ! docks.history->isFloating() )
-//  {
-//    docks.history->hide();
-//    docks.history->setFloating( true );
-//    docks.history->move( settings.historyDockLeft, settings.historyDockTop );
-//    docks.history->resize( settings.historyDockWidth,
-//                           settings.historyDockHeight );
-//    docks.history->show();
-//  }
-//
-//  if ( settings.showFunctions && settings.functionsDockFloating
-//       && ! docks.functions->isFloating() )
-//  {
-//    docks.functions->hide();
-//    docks.functions->setFloating( true );
-//    docks.functions->move( settings.functionsDockLeft,
-//                           settings.functionsDockTop );
-//    docks.functions->resize( settings.functionsDockWidth,
-//                             settings.functionsDockHeight );
-//    docks.functions->show();
-//  }
-//
-//  if ( settings.showVariables && settings.variablesDockFloating
-//       && ! docks.variables->isFloating() )
-//  {
-//    docks.variables->hide();
-//    docks.variables->setFloating( true );
-//    docks.variables->move( settings.variablesDockLeft,
-//                           settings.variablesDockTop );
-//    docks.variables->resize( settings.variablesDockWidth,
-//                             settings.variablesDockHeight );
-//    docks.variables->show();
-//  }
-//
-//  if ( settings.showConstants && settings.constantsDockFloating
-//       && ! docks.constants->isFloating() )
-//  {
-//    docks.constants->hide();
-//    docks.constants->setFloating( true );
-//    docks.constants->move( settings.constantsDockLeft,
-//                           settings.constantsDockTop );
-//    docks.constants->resize( settings.constantsDockWidth,
-//                             settings.constantsDockHeight );
-//    docks.constants->show();
-//  }
-//}
-
-
 void MainWindow::Private::restoreHistory()
 {
   if ( settings.historyResults.count() != settings.history.count() )
@@ -2785,7 +2487,7 @@ void MainWindow::Private::restoreHistory()
 }
 
 
-void MainWindow::returnPressed()
+void MainWindow::evaluateEditorExpression()
 {
   QString str = d->evaluator->autoFix( d->widgets.editor->text() );
   if ( str.isEmpty() )
@@ -2805,9 +2507,9 @@ void MainWindow::returnPressed()
     d->widgets.editor->appendHistory( str, num );
     free( num );
     d->widgets.editor->setAnsAvailable( true );
-    if ( d->settings.showVariables )
+    if ( d->settings.variablesDockVisible )
       d->docks.variables->updateList( d->evaluator );
-    if ( d->settings.showHistory )
+    if ( d->settings.historyDockVisible )
       d->docks.history->append( str );
   }
 
@@ -2824,7 +2526,7 @@ void MainWindow::returnPressed()
 }
 
 
-void MainWindow::showTrayMessage()
+void MainWindow::showSystemTrayMessage()
 {
   QString msg = tr( "SpeedCrunch is minimized.\nLeft click the icon to "
                     "restore it or right click for options." );
@@ -2836,7 +2538,7 @@ void MainWindow::showTrayMessage()
 }
 
 
-void MainWindow::textChanged()
+void MainWindow::handleEditorTextChange()
 {
   if ( d->conditions.autoAns )
   {
@@ -2863,7 +2565,7 @@ void MainWindow::textChanged()
 }
 
 
-void MainWindow::trayIconActivated( QSystemTrayIcon::ActivationReason r )
+void MainWindow::handleSystemTrayIconActivation( QSystemTrayIcon::ActivationReason r )
 {
   if ( r == QSystemTrayIcon::Context )
   {
@@ -2905,37 +2607,36 @@ void MainWindow::trayIconActivated( QSystemTrayIcon::ActivationReason r )
 }
 
 
-void MainWindow::variableSelected( const QString & v )
+void MainWindow::insertVariableIntoEditor( const QString & v )
 {
-  if ( v.isEmpty() )
-    return;
+  //d->widgets.editor->blockSignals( true );
+  //d->widgets.editor->insert( v );
+  //d->widgets.editor->blockSignals( false );
 
-  d->widgets.editor->blockSignals( true );
-  d->widgets.editor->insert( v );
-  d->widgets.editor->blockSignals( false );
+  //QTimer::singleShot( 0, d->widgets.editor, SLOT( setFocus() ) );
 
-  QTimer::singleShot( 0, d->widgets.editor, SLOT( setFocus() ) );
+  //if ( ! isActiveWindow () )
+  //  activateWindow();
 
-  if ( ! isActiveWindow () )
-    activateWindow();
+  insertTextIntoEditor( v );
 }
 
 
-void MainWindow::radixCharAutoTriggered()
+void MainWindow::setRadixCharacterAutomatic()
 {
-  setRadixChar( 0 );
+  setRadixCharacter( 0 );
 }
 
 
-void MainWindow::radixCharDotTriggered()
+void MainWindow::setRadixCharacterDot()
 {
-  setRadixChar( '.' );
+  setRadixCharacter( '.' );
 }
 
 
-void MainWindow::radixCharCommaTriggered()
+void MainWindow::setRadixCharacterComma()
 {
-  setRadixChar( ',' );
+  setRadixCharacter( ',' );
 }
 
 
@@ -2968,22 +2669,76 @@ void MainWindow::setResultFormat( char c )
 }
 
 
-void MainWindow::setRadixChar( char c )
+void MainWindow::setRadixCharacter( char c )
 {
   char oldRadixChar = d->settings.getRadixChar();
-  d->settings.setRadixChar( c );
+  d->settings.setRadixCharacter( c );
   c = d->settings.getRadixChar();
   if ( oldRadixChar != c )
-    emit radixCharChanged( c );
+    emit radixCharacterChanged( c );
 }
 
 
-void MainWindow::changeLanguage()
+void MainWindow::showLanguageChooserDialog()
 {
-  QAction * a = d->actionGroups.language->checkedAction();
-  QString lang = a->data().toString();
-  if ( d->settings.language != lang )
-    d->settings.language = lang;
+  QMap<QString, QString> map;
 
-  emit languageChanged();
+  map.insert( QString          ( "Bahasa Indonesia" ),                 QString( "id"    ) );
+  map.insert( QString::fromUtf8( "Català" ),                           QString( "ca"    ) );
+  map.insert( QString::fromUtf8( "Česky" ),                            QString( "cs"    ) );
+  map.insert( QString          ( "Deutsch" ),                          QString( "de"    ) );
+  map.insert( QString          ( "English" ),                          QString( "en"    ) );
+  map.insert( QString::fromUtf8( "Español Argentino" ),                QString( "es_AR" ) );
+  map.insert( QString::fromUtf8( "Español" ),                          QString( "es"    ) );
+  map.insert( QString          ( "Euskara" ),                          QString( "eu"    ) );
+  map.insert( QString::fromUtf8( "Français" ),                         QString( "fr"    ) );
+  map.insert( QString          ( "Italiano" ),                         QString( "it"    ) );
+  map.insert( QString          ( "Nederlands" ),                       QString( "nl"    ) );
+  map.insert( QString::fromUtf8( "Norsk (Bokmål)" ) + QChar( 0x200E ), QString( "nb"    ) );
+  map.insert( QString          ( "Polski" ),                           QString( "pl"    ) );
+  map.insert( QString::fromUtf8( "Português do Brasil" ),              QString( "pt_BR" ) );
+  map.insert( QString::fromUtf8( "Português" ),                        QString( "pt"    ) );
+  map.insert( QString::fromUtf8( "Română" ),                           QString( "ro"    ) );
+  map.insert( QString          ( "Suomi" ),                            QString( "fi"    ) );
+  map.insert( QString          ( "Svenska" ),                          QString( "sv"    ) );
+  map.insert( QString::fromUtf8( "Türkçe" ),                           QString( "tr"    ) );
+  map.insert( QString::fromUtf8( "עברית" ),                            QString( "he"    ) );
+  map.insert( QString::fromUtf8( "Русский" ),                          QString( "ru"    ) );
+  map.insert( QString::fromUtf8( "简化字" ),                           QString( "zh_CN" ) );
+
+  int current = 0;
+  QList<QString> values = map.values();
+  for ( int i = 0; i < values.size(); ++i )
+  {
+      if ( values[i] == d->settings.language )
+      {
+          current = i + 1;
+          break;
+      }
+  }
+
+  QString defaultKey = tr( "System Default" );
+  QStringList keys;
+  keys << defaultKey;
+  keys << map.keys();
+
+  bool ok;
+  QString langName = QInputDialog::getItem( this, tr( "Language" ),
+                                            tr( "Select the language:" ),
+                                            keys, current, false, & ok );
+  if ( ok && ! langName.isEmpty() )
+  {
+    QString value;
+
+    if ( langName == defaultKey )
+        value = "C";
+    else
+        value = map[langName];
+
+    if ( d->settings.language != value )
+    {
+        d->settings.language = value;
+        emit languageChanged();
+    }
+  }
 }

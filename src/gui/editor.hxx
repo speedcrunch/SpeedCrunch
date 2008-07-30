@@ -44,7 +44,6 @@ class Editor : public QTextEdit
 
   public:
     enum HighlightScheme { AutoScheme };
-    //enum ColorType { Number = 0, Function, Variable, MatchedPar };
     enum ColorType { Variable = 0, Number, Function, MatchedPar };
 
     explicit Editor( Evaluator *, Functions *, Constants *, char format = 'g',
@@ -65,12 +64,12 @@ class Editor : public QTextEdit
     QColor      highlightColor( ColorType type );
     bool        syntaxHighlight() const;
     char        radixChar() const;
-    void        setAnsAvailable( bool avail );
-    void        setAutoCalcEnabled( bool enable );
-    void        setAutoCompleteEnabled( bool enable );
+    void        setAnsAvailable( bool );
+    void        setAutoCalcEnabled( bool );
+    void        setAutoCompletionEnabled( bool );
     void        setCursorPosition( int pos );
     void        setHighlightColor( ColorType type, QColor color );
-    void        setSyntaxHighlight( bool enable );
+    void        setSyntaxHighlightingEnabled( bool );
     void        setHighlightScheme( Editor::HighlightScheme );
     void        setText( const QString & );
     void        setHistory( const QStringList & history );

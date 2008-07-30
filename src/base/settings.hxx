@@ -39,7 +39,7 @@ class Settings
     char getRadixChar() const;
     // extensions for classes maintaining the radix char field.
     // The value 0 means: use locale settings
-    void setRadixChar( char c = 0 ) { radixChar = c; };
+    void setRadixCharacter( char c = 0 ) { radixChar = c; };
     bool isLocaleRadixChar() const { return radixChar == 0; };
 
     char angleMode; // 'r': radian; 'd': degree
@@ -47,47 +47,21 @@ class Settings
     int  resultPrecision; // see HMath documentation
 
     bool autoCalc;
-    bool autoComplete;
-    bool minimizeToTray;
-    bool saveHistory;
-    bool saveVariables;
-    bool showBook;
-    bool showConstants;
-    bool showFullScreen;
-    bool showFunctions;
-    bool showHistory;
-    bool showKeypad;
-    bool showMenuBar;
-    bool showStatusBar;
-    bool showVariables;
-    bool stayAlwaysOnTop;
-    bool hiliteSyntax;
-
-    bool bookDockFloating;
-    int  bookDockTop;
-    int  bookDockLeft;
-    int  bookDockWidth;
-    int  bookDockHeight;
-    bool constantsDockFloating;
-    int  constantsDockTop;
-    int  constantsDockLeft;
-    int  constantsDockWidth;
-    int  constantsDockHeight;
-    bool functionsDockFloating;
-    int  functionsDockHeight;
-    int  functionsDockLeft;
-    int  functionsDockTop;
-    int  functionsDockWidth;
-    bool historyDockFloating;
-    int  historyDockHeight;
-    int  historyDockLeft;
-    int  historyDockTop;
-    int  historyDockWidth;
-    bool variablesDockFloating;
-    int  variablesDockTop;
-    int  variablesDockHeight;
-    int  variablesDockLeft;
-    int  variablesDockWidth;
+    bool autoCompletion;
+    bool systemTrayIconVisible;
+    bool historySave;
+    bool variableSave;
+    bool mathBookDockVisible;
+    bool constantsDockVisible;
+    bool windowOnfullScreen;
+    bool functionsDockVisible;
+    bool historyDockVisible;
+    bool keypadVisible;
+    bool menuBarVisible;
+    bool statusBarVisible;
+    bool variablesDockVisible;
+    bool windowAlwaysOnTop;
+    bool syntaxHighlighting;
 
     QStringList history;
     QStringList historyResults;
@@ -97,6 +71,7 @@ class Settings
     QPoint      windowPosition;
     QSize       windowSize;
     QByteArray  windowState;
+
     QStringList variables;
 
     //static QString escape; //reftbl
