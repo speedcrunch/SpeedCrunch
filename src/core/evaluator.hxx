@@ -17,10 +17,8 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-
-#ifndef EVALUATOR_HXX
-#define EVALUATOR_HXX
-
+#ifndef CORE_EVALUATOR_HXX
+#define CORE_EVALUATOR_HXX
 
 // #define _BISON
 
@@ -33,7 +31,6 @@
 #ifdef _BISON
 # include "bison/bisonparser.hxx"
 #endif
-
 
 class Token
 {
@@ -65,7 +62,6 @@ class Token
     int m_pos;
 };
 
-
 class Tokens : public QVector<Token>
 {
   public:
@@ -77,7 +73,6 @@ class Tokens : public QVector<Token>
     bool m_valid;
 };
 
-
 class Variable
 {
   public:
@@ -85,16 +80,14 @@ class Variable
     HNumber value;
 };
 
-
 class Functions;
-
 
 class Evaluator : public QObject
 {
   Q_OBJECT
 
   public:
-    Evaluator( Functions *, char radixChar = 'C', QObject * parent = 0 );
+    Evaluator( Functions *, QObject * parent = 0 );
     ~Evaluator();
 
     bool    has( const QString & id );
@@ -118,9 +111,6 @@ class Evaluator : public QObject
 
     QVector<Variable> variables() const;
 
-  public slots:
-    void setRadixChar( char );
-
   protected:
     void compile( const Tokens & ) const;
 
@@ -132,5 +122,5 @@ class Evaluator : public QObject
     Evaluator & operator=( const Evaluator & );
 };
 
-
 #endif
+

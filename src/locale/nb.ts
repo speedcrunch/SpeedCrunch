@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1">
+<!DOCTYPE TS><TS version="1.1" language="nb_NO">
+<defaultcodec></defaultcodec>
 <context>
     <name>AboutBox</name>
     <message>
@@ -13,12 +14,10 @@
         <translation>SpeedCrunch versjon %1</translation>
     </message>
     <message>
-        <location filename="" line="3080296"/>
         <source>Original author</source>
         <translation type="obsolete">Opprinnelig forfatter</translation>
     </message>
     <message>
-        <location filename="" line="3080296"/>
         <source>Current maintainer</source>
         <translation type="obsolete">Nåværende vedlikeholder</translation>
     </message>
@@ -143,7 +142,6 @@
         <translation>Rumensk</translation>
     </message>
     <message>
-        <location filename="" line="3080296"/>
         <source>Developers</source>
         <translation type="obsolete">Utviklere</translation>
     </message>
@@ -563,12 +561,12 @@
     <message>
         <location filename="../gui/editor.cpp" line="764"/>
         <source>Current result: &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation>Resultat</translation>
+        <translation>Resultat: &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../gui/editor.cpp" line="812"/>
         <source>Selection result: &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation>Resultat av utvalg</translation>
+        <translation>Resultat av utvalg: &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
 </context>
 <context>

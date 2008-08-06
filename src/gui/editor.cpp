@@ -19,12 +19,12 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-
-#include "editor.hxx"
+#include "gui/editor.hxx"
 
 #include "core/constants.hxx"
 #include "core/evaluator.hxx"
 #include "core/functions.hxx"
+#include "core/settings.hxx"
 
 #include <QApplication>
 #include <QDesktopWidget>
@@ -39,7 +39,6 @@
 #include <QTimer>
 #include <QTreeWidget>
 #include <QWheelEvent>
-
 
 class EditorHighlighter : public QSyntaxHighlighter
 {
@@ -99,9 +98,9 @@ class EditorHighlighter : public QSyntaxHighlighter
     Editor * editor;
 };
 
-
 struct Editor::Private
 {
+  Settings *           settings;
   bool                 ansAvailable;
   bool                 autoCalcEnabled;
   QTimer *             autoCalcTimer;
@@ -110,18 +109,15 @@ struct Editor::Private
   EditorCompletion *   completion;
   QTimer *             completionTimer;
   ConstantCompletion * constantCompletion;
-  int                  precision;
   Constants *          constants;
   Evaluator *          eval;
   Functions *          functions;
-  char                 format;
   QStringList          history;
   QStringList          historyResults;
   EditorHighlighter *  highlighter;
   HighlightScheme      scheme;
   int                  index;
   QTimer *             matchingTimer;
-  char                 radixChar;
   bool                 syntaxHighlightEnabled;
 
   QMap<Editor::ColorType, QColor> highlightColors;
@@ -129,7 +125,6 @@ struct Editor::Private
   QList<QColor> generateColors( const QColor & bg, const QColor & fg,
                                 int noColors );
 };
-
 
 QList<QColor> Editor::Private::generateColors( const QColor & bg,
                                                const QColor & fg,
@@ -163,20 +158,13 @@ QList<QColor> Editor::Private::generateColors( const QColor & bg,
   return cols;
 }
 
-
-
-Editor::Editor( Evaluator * e, Functions * f, Constants * c, char format,
-                int precision, char radixChar, QWidget * parent )
+Editor::Editor( Evaluator * e, Functions * f, Constants * c, QWidget * parent )
   : QTextEdit( parent ), d( new Editor::Private )
 {
-  d->radixChar = radixChar;
-
-  d->format = format;
-  d->precision = precision;
-
   d->eval = e;
   d->functions = f;
   d->constants = c;
+  d->settings = Settings::instance();
   d->index = 0;
   d->autoCompleteEnabled = true;
   d->completion = new EditorCompletion( this );
@@ -215,47 +203,32 @@ Editor::Editor( Evaluator * e, Functions * f, Constants * c, char format,
   adjustSize();
 }
 
-
 Editor::~Editor()
 {
+  d->settings->release();
   delete d;
 }
-
 
 QString Editor::text() const
 {
   return toPlainText();
 }
 
-
-char Editor::radixChar() const
-{
-  return d->radixChar;
-}
-
-
 void Editor::setText( const QString & str )
 {
   setPlainText( str );
 }
-
 
 void Editor::insert( const QString & str )
 {
   insertPlainText( str );
 }
 
-
-void Editor::setRadixChar( char c )
+void Editor::handleRadixCharacterChange()
 {
-  if ( radixChar() != c )
-  {
-    d->radixChar = c;
-    if ( syntaxHighlight() )
-      d->highlighter->rehighlight();
-  }
+  if ( syntaxHighlight() )
+    d->highlighter->rehighlight();
 }
-
 
 void Editor::doBackspace()
 {
@@ -264,30 +237,25 @@ void Editor::doBackspace()
   setTextCursor( cursor );
 }
 
-
 Constants * Editor::constants() const
 {
   return d->constants;
 }
-
 
 Evaluator * Editor::evaluator() const
 {
   return d->eval;
 }
 
-
 Functions * Editor::functions() const
 {
   return d->functions;
 }
 
-
 int Editor::cursorPosition() const
 {
   return textCursor().position();
 }
-
 
 void Editor::setCursorPosition( int pos )
 {
@@ -295,7 +263,6 @@ void Editor::setCursorPosition( int pos )
   cursor.setPosition( pos );
   setTextCursor( cursor );
 }
-
 
 QSize Editor::sizeHint() const
 {
@@ -311,18 +278,15 @@ QSize Editor::sizeHint() const
                                     this );
 }
 
-
 QStringList Editor::history() const
 {
   return d->history;
 }
 
-
 QStringList Editor::historyResults() const
 {
   return d->historyResults;
 }
-
 
 void Editor::setHistory( const QStringList & h )
 {
@@ -330,12 +294,10 @@ void Editor::setHistory( const QStringList & h )
   d->index = d->history.count();
 }
 
-
 void Editor::setHistoryResults( const QStringList & results )
 {
   d->historyResults = results;
 }
-
 
 void Editor::appendHistory( const QStringList & h, const QStringList & r )
 {
@@ -344,49 +306,31 @@ void Editor::appendHistory( const QStringList & h, const QStringList & r )
   d->index = d->history.count();
 }
 
-
 void Editor::clearHistory()
 {
   d->history.clear();
   d->historyResults.clear();
 }
 
-
 bool Editor::autoCompleteEnabled() const
 {
   return d->autoCompleteEnabled;
 }
-
 
 void Editor::setAutoCompletionEnabled( bool enable )
 {
   d->autoCompleteEnabled = enable;
 }
 
-
 bool Editor::autoCalcEnabled() const
 {
   return d->autoCalcEnabled;
 }
 
-
 void Editor::setAutoCalcEnabled( bool enable )
 {
   d->autoCalcEnabled = enable;
 }
-
-
-void Editor::setFormat( char format )
-{
-  d->format = format;
-}
-
-
-void Editor::setPrecision( int digits )
-{
-  d->precision = digits;
-}
-
 
 void Editor::appendHistory( const QString & expression, const QString & result )
 {
@@ -398,7 +342,6 @@ void Editor::appendHistory( const QString & expression, const QString & result )
   d->index = d->history.count() - 1;
 }
 
-
 void Editor::checkAutoComplete()
 {
   if ( ! d->autoCompleteEnabled )
@@ -409,7 +352,6 @@ void Editor::checkAutoComplete()
   d->completionTimer->start( 500 );
 }
 
-
 void Editor::checkMatching()
 {
   if ( ! d->syntaxHighlightEnabled )
@@ -419,7 +361,6 @@ void Editor::checkMatching()
   d->matchingTimer->setSingleShot( true );
   d->matchingTimer->start( 200 );
 }
-
 
 void Editor::checkAutoCalc()
 {
@@ -434,7 +375,6 @@ void Editor::checkAutoCalc()
   emit autoCalcDisabled();
 }
 
-
 void Editor::startSelAutoCalcTimer()
 {
   if ( ! d->autoCalcEnabled )
@@ -444,7 +384,6 @@ void Editor::startSelAutoCalcTimer()
   d->autoCalcSelTimer->setSingleShot( true );
   d->autoCalcSelTimer->start( 1000 );
 }
-
 
 void Editor::doMatchingPar()
 {
@@ -457,7 +396,6 @@ void Editor::doMatchingPar()
   doMatchingLeft();
   doMatchingRight();
 }
-
 
 void Editor::doMatchingLeft()
 {
@@ -532,7 +470,6 @@ void Editor::doMatchingLeft()
     }
   }
 }
-
 
 void Editor::doMatchingRight()
 {
@@ -609,7 +546,6 @@ void Editor::doMatchingRight()
   }
 }
 
-
 void Editor::triggerAutoComplete()
 {
   if ( ! d->autoCompleteEnabled )
@@ -656,9 +592,9 @@ void Editor::triggerAutoComplete()
   QStringList vchoices;
   for ( int i = 0; i < d->eval->variables().count(); i++ )
     if ( d->eval->variables()[i].name.startsWith( id, Qt::CaseInsensitive ) )
-      vchoices.append( QString("%1: %2").
-          arg( d->eval->variables().at(i).name ).
-          arg( formatNumber( d->eval->variables().at(i).value ) ) );
+      vchoices.append( QString("%1: %2")
+          .arg( d->eval->variables().at(i).name )
+          .arg( formatNumber( d->eval->variables().at(i).value ) ) );
   vchoices.sort();
   choices += vchoices;
 
@@ -695,7 +631,6 @@ void Editor::triggerAutoComplete()
   d->completion->showCompletion( choices );
 }
 
-
 void Editor::autoComplete( const QString & item )
 {
   if ( ! d->autoCompleteEnabled || item.isEmpty() )
@@ -722,7 +657,6 @@ void Editor::autoComplete( const QString & item )
   insert( str[0] );
   blockSignals( false );
 }
-
 
 void Editor::autoCalc()
 {
@@ -771,7 +705,6 @@ void Editor::autoCalc()
   }
 }
 
-
 void Editor::autoCalcSelection()
 {
   if ( ! d->autoCalcEnabled )
@@ -819,12 +752,11 @@ void Editor::autoCalcSelection()
   }
 }
 
-
 void Editor::insertConstant( const QString & c )
 {
   QString s( c );
-  if ( radixChar() == '.' )
-    s.replace( '.', radixChar() );
+  if ( d->settings->radixCharacter() == '.' )
+    s.replace( '.', d->settings->radixCharacter() );
   if ( ! c.isNull() )
     insert( s );
   if ( d->constantCompletion )
@@ -834,7 +766,6 @@ void Editor::insertConstant( const QString & c )
     d->constantCompletion = 0;
   }
 }
-
 
 void Editor::cancelConstantCompletion()
 {
@@ -846,23 +777,21 @@ void Editor::cancelConstantCompletion()
   }
 }
 
-
 void Editor::evaluate()
 {
     triggerEnter();
 }
 
-
 QString Editor::formatNumber( const HNumber & value ) const
 {
-  char * str = HMath::format( value, d->format, d->precision );
+  char * str = HMath::format( value, d->settings->resultFormat,
+                              d->settings->resultPrecision );
   QString s = QString::fromLatin1( str );
-  if ( radixChar() != '.' )
-    s.replace( '.', radixChar() );
+  if ( d->settings->radixCharacter() != '.' )
+    s.replace( '.', d->settings->radixCharacter() );
   free( str );
   return s;
 }
-
 
 void Editor::historyBack()
 {
@@ -880,7 +809,6 @@ void Editor::historyBack()
   }
 }
 
-
 void Editor::historyForward()
 {
   if ( d->history.count() )
@@ -896,7 +824,6 @@ void Editor::historyForward()
   }
 }
 
-
 void Editor::triggerEnter()
 {
   d->completionTimer->stop();
@@ -905,7 +832,6 @@ void Editor::triggerEnter()
   d->autoCalcSelTimer->stop();
   emit returnPressed();
 }
-
 
 void Editor::keyPressEvent( QKeyEvent * e )
 {
@@ -957,7 +883,6 @@ void Editor::keyPressEvent( QKeyEvent * e )
   QTextEdit::keyPressEvent( e );
 }
 
-
 void Editor::wheelEvent( QWheelEvent * e )
 {
   if ( e->delta() > 0 )
@@ -968,13 +893,11 @@ void Editor::wheelEvent( QWheelEvent * e )
   e->accept();
 }
 
-
 void Editor::setSyntaxHighlightingEnabled( bool enable )
 {
   d->syntaxHighlightEnabled = enable;
   d->highlighter->rehighlight();
 }
-
 
 void Editor::setHighlightScheme( Editor::HighlightScheme hs )
 {
@@ -997,12 +920,10 @@ void Editor::setHighlightScheme( Editor::HighlightScheme hs )
   }
 }
 
-
 bool Editor::syntaxHighlight() const
 {
   return d->syntaxHighlightEnabled;
 }
-
 
 void Editor::setHighlightColor( ColorType type, QColor color )
 {
@@ -1011,18 +932,15 @@ void Editor::setHighlightColor( ColorType type, QColor color )
   doMatchingPar();
 }
 
-
 QColor Editor::highlightColor( ColorType type )
 {
   return d->highlightColors[ type ];
 }
 
-
 void Editor::setAnsAvailable( bool avail )
 {
   d->ansAvailable = avail;
 }
-
 
 // typically called by the main window, just after the user evaluates something
 // useful so we don't pop up the autocalc tooltip again
@@ -1033,7 +951,6 @@ void Editor::stopAutoCalc()
   emit autoCalcDisabled();
 }
 
-
 void Editor::stopAutoComplete()
 {
   d->completionTimer->stop();
@@ -1041,7 +958,6 @@ void Editor::stopAutoComplete()
   d->completion->doneCompletion();
   setFocus();
 }
-
 
 // uncomment to activate fade-away effect when the completion pop-up disappears
 //#define COMPLETION_FADE_EFFECT
@@ -1054,7 +970,6 @@ struct EditorCompletion::Private
 #endif
   QTreeWidget * popup;
 };
-
 
 EditorCompletion::EditorCompletion( Editor * editor ) : QObject( editor ),
   d( new EditorCompletion::Private )
@@ -1088,13 +1003,11 @@ EditorCompletion::EditorCompletion( Editor * editor ) : QObject( editor ),
 #endif
 }
 
-
 EditorCompletion::~EditorCompletion()
 {
   delete d->popup;
   delete d;
 }
-
 
 bool EditorCompletion::eventFilter( QObject * obj, QEvent * ev )
 {
@@ -1137,7 +1050,6 @@ bool EditorCompletion::eventFilter( QObject * obj, QEvent * ev )
   return false;
 }
 
-
 void EditorCompletion::doneCompletion()
 {
 #ifdef COMPLETION_FADE_EFFECT
@@ -1150,7 +1062,6 @@ void EditorCompletion::doneCompletion()
   QTreeWidgetItem * item = d->popup->currentItem();
   emit selectedCompletion( item ? item->text( 0 ) : QString() );
 }
-
 
 void EditorCompletion::showCompletion( const QStringList & choices )
 {
@@ -1202,7 +1113,6 @@ void EditorCompletion::showCompletion( const QStringList & choices )
   d->popup->show();
 }
 
-
 void EditorCompletion::selectItem( const QString & item ) // WORKAROUND 76
 {
   if ( item.isNull() )
@@ -1218,12 +1128,10 @@ void EditorCompletion::selectItem( const QString & item ) // WORKAROUND 76
   }
 }
 
-
 void EditorCompletion::fade( int v )
 {
   d->popup->setWindowOpacity( (qreal) (100 - v) / 100 );
 }
-
 
 struct ConstantCompletion::Private
 {
@@ -1235,7 +1143,6 @@ struct ConstantCompletion::Private
   QFrame *        popup;
   QTimeLine *     slider;
 };
-
 
 ConstantCompletion::ConstantCompletion( Editor * editor ) : QObject( editor ),
     d( new ConstantCompletion::Private )
@@ -1326,14 +1233,12 @@ ConstantCompletion::ConstantCompletion( Editor * editor ) : QObject( editor ),
   d->categoryList->resize( ww, hh );
 }
 
-
 ConstantCompletion::~ConstantCompletion()
 {
   delete d->popup;
   delete d;
   d->editor->setFocus();
 }
-
 
 void ConstantCompletion::showCategory()
 {
@@ -1342,7 +1247,6 @@ void ConstantCompletion::showCategory()
   d->slider->start();
   d->categoryList->setFocus();
 }
-
 
 void ConstantCompletion::showConstants()
 {
@@ -1377,7 +1281,6 @@ void ConstantCompletion::showConstants()
   d->constantList->setCurrentItem( d->constantList->itemAt( 0, 0 ) );
   d->lastCategory = chosenCategory;
 }
-
 
 bool ConstantCompletion::eventFilter( QObject * obj, QEvent * ev )
 {
@@ -1449,7 +1352,6 @@ bool ConstantCompletion::eventFilter( QObject * obj, QEvent * ev )
   return false;
 }
 
-
 void ConstantCompletion::doneCompletion()
 {
   d->editor->setFocus();
@@ -1465,7 +1367,6 @@ void ConstantCompletion::doneCompletion()
       }
   emit selectedCompletion( item ? c : QString() );
 }
-
 
 void ConstantCompletion::showCompletion()
 {
@@ -1494,9 +1395,9 @@ void ConstantCompletion::showCompletion()
   d->popup->show();
 }
 
-
 void ConstantCompletion::slide( int v )
 {
   d->categoryList->move( -v, 0 );
   d->constantList->move( d->popup->width() - v, 0 );
 }
+

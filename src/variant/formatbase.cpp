@@ -314,7 +314,7 @@ Variant FmtSettings::getValue(int idx) const
   switch (idx)
   {
     case 0:
-      return QString(Settings::settings->getRadixChar());
+      return QString(Settings::instance()->radixCharacter());
     default:
       return NotImplemented;
   }

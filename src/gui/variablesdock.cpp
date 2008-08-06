@@ -17,8 +17,7 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-
-#include "variablesdock.hxx"
+#include "gui/variablesdock.hxx"
 
 #include "core/evaluator.hxx"
 #include "core/functions.hxx"
@@ -32,10 +31,9 @@
 #include <QTreeWidget>
 #include <QVBoxLayout>
 
-
 struct VariablesDock::Private
 {
-  char          radixChar;
+  Settings *   settings;
   QLineEdit *   filter;
   QTimer *      filterTimer;
   QTreeWidget * list;
@@ -46,25 +44,21 @@ struct VariablesDock::Private
   QString formatValue( const HNumber & value );
 };
 
-
 QString VariablesDock::Private::formatValue( const HNumber & value )
 {
   char * str = HMath::format( value, 'g' );
   QString s;
   s = QString::fromLatin1( str );
-  if ( radixChar != '.' )
-    s = s.replace( '.', radixChar );
+  if ( settings->radixCharacter() != '.' )
+    s = s.replace( '.', settings->radixCharacter() );
   free( str );
   return s;
 }
 
-
-// public
-
-VariablesDock::VariablesDock( char radixChar, QWidget * parent )
+VariablesDock::VariablesDock( QWidget * parent )
   : QDockWidget( parent ), d( new VariablesDock::Private )
 {
-  d->radixChar = radixChar;
+  d->settings = Settings::instance();
 
   d->label = new QLabel( this );
 
@@ -117,38 +111,23 @@ VariablesDock::VariablesDock( char radixChar, QWidget * parent )
   retranslateText();
 }
 
-
-char VariablesDock::radixChar() const
-{
-  return d->radixChar;
-}
-
-
 void VariablesDock::updateList( const Evaluator * eval )
 {
   d->variables = eval->variables();
   filter();
 }
 
-
 VariablesDock::~VariablesDock()
 {
   d->filterTimer->stop();
+  d->settings->release();
   delete d;
 }
 
-
-// public slots
-
-void VariablesDock::setRadixChar( char c )
+void VariablesDock::handleRadixCharacterChange()
 {
-  if ( radixChar() != c )
-  {
-    d->radixChar = c;
-    filter();
-  }
+  filter();
 }
-
 
 void VariablesDock::retranslateText()
 {
@@ -158,9 +137,6 @@ void VariablesDock::retranslateText()
   d->list->setLayoutDirection( Qt::LeftToRight );
   filter();
 }
-
-
-// protected slots
 
 void VariablesDock::filter()
 {
@@ -228,22 +204,17 @@ void VariablesDock::filter()
   setUpdatesEnabled( true );
 }
 
-
 void VariablesDock::handleItem( QTreeWidgetItem * item )
 {
   d->list->clearSelection();
   emit variableSelected( item->text( 0 ) );
 }
 
-
 void VariablesDock::triggerFilter()
 {
   d->filterTimer->stop();
   d->filterTimer->start();
 }
-
-
-// protected
 
 void VariablesDock::changeEvent( QEvent * e )
 {
@@ -252,3 +223,4 @@ void VariablesDock::changeEvent( QEvent * e )
   else
     QDockWidget::changeEvent( e );
 }
+

@@ -17,27 +17,22 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-
-#ifndef RESULTDISPLAY_HXX
-#define RESULTDISPLAY_HXX
-
+#ifndef GUI_RESULTDISPLAY_HXX
+#define GUI_RESULTDISPLAY_HXX
 
 #include <QListWidget>
 #include <QResizeEvent>
 
-
 class HNumber;
 
 class QListWidgetItem;
-
 
 class ResultDisplay : public QListWidget
 {
   Q_OBJECT
 
   public:
-    ResultDisplay( char radixChar = 'C', char format = 'g', int precision = -1,
-                   QWidget * parent = 0, const char * name = 0 );
+    ResultDisplay( QWidget * parent = 0, const char * name = 0 );
     ~ResultDisplay();
 
     void    append( const QString & expr, const HNumber & value );
@@ -50,10 +45,7 @@ class ResultDisplay : public QListWidget
     void    setCustomTextColor( const QColor & );
 
     bool    customAppearance() const;
-    char    format() const;
-    char    radixChar() const;
     int     count() const;
-    int     precision() const;
     QColor  customBackgroundColor1() const;
     QColor  customBackgroundColor2() const;
     QColor  customErrorColor() const;
@@ -68,9 +60,9 @@ class ResultDisplay : public QListWidget
   public slots:
     void clear();
     void scrollEnd();
-    void setFormat( char );
-    void setPrecision( int );
-    void setRadixChar( char );
+    void handleResultFormatChange();
+    void handleResultPrecisionChange();
+    void handleRadixCharacterChange();
 
   private slots:
     void copyToClipboard( QListWidgetItem * );
@@ -84,5 +76,5 @@ class ResultDisplay : public QListWidget
     ResultDisplay & operator=( const ResultDisplay & );
 };
 
-
 #endif
+

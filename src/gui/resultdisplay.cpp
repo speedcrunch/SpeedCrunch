@@ -19,10 +19,10 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-
-#include "resultdisplay.hxx"
+#include "gui/resultdisplay.hxx"
 
 #include "core/functions.hxx"
+#include "core/settings.hxx"
 #include "math/hmath.hxx"
 
 #include <QApplication>
@@ -31,21 +31,17 @@
 #include <QScrollBar>
 #include <QTimer>
 
-
 struct ResultDisplay::Private
 {
   QStringList contents;
+  Settings *  settings;
   int         count;
   bool        customAppearance;
   QColor      customBackgroundColor1;
   QColor      customBackgroundColor2;
   QColor      customErrorColor;
   QColor      customTextColor;
-  char        format;
-  int         precision;
-  char        radixChar;
 };
-
 
 class BaseItem : public QListWidgetItem
 {
@@ -53,7 +49,6 @@ class BaseItem : public QListWidgetItem
     BaseItem( ResultDisplay * r ) : QListWidgetItem( r ) {}
     virtual void updateItem() {}
 };
-
 
 class ExprItem : public BaseItem
 {
@@ -91,7 +86,6 @@ class ExprItem : public BaseItem
     int             index;
     ResultDisplay * result;
 };
-
 
 class ResultDisplayItem : public BaseItem
 {
@@ -135,7 +129,6 @@ class ResultDisplayItem : public BaseItem
     ResultDisplay * result;
 };
 
-
 class ErrorItem: public BaseItem
 {
   public:
@@ -173,17 +166,10 @@ class ErrorItem: public BaseItem
     ResultDisplay * result;
 };
 
-
-// public
-
-ResultDisplay::ResultDisplay( char radixChar, char format, int precision,
-                              QWidget * parent, const char * name )
+ResultDisplay::ResultDisplay( QWidget * parent, const char * name )
   : QListWidget( parent ), d( new ResultDisplay::Private )
 {
-  d->radixChar = radixChar;
-
-  d->format    = format;
-  d->precision = precision;
+  d->settings = Settings::instance();
 
   d->customAppearance = false;
   d->count = 0;
@@ -220,12 +206,10 @@ ResultDisplay::ResultDisplay( char radixChar, char format, int precision,
   setLayoutDirection( Qt::LeftToRight );
 }
 
-
 QString ResultDisplay::asText() const
 {
   return d->contents.join( "\n" );
 }
-
 
 void ResultDisplay::append( const QString & expr, const HNumber & value )
 {
@@ -240,7 +224,6 @@ void ResultDisplay::append( const QString & expr, const HNumber & value )
   QTimer::singleShot( 0, this, SLOT( scrollEnd() ) );
 }
 
-
 void ResultDisplay::appendError( const QString & expr, const QString & msg )
 {
   ++d->count;
@@ -253,7 +236,6 @@ void ResultDisplay::appendError( const QString & expr, const QString & msg )
 
   QTimer::singleShot( 0, this, SLOT( scrollEnd() ) );
 }
-
 
 void ResultDisplay::appendHistory( const QStringList & history,
                             const QStringList & results )
@@ -271,73 +253,48 @@ void ResultDisplay::appendHistory( const QStringList & history,
   }
 }
 
-
 int ResultDisplay::count() const
 {
   return d->count;
 }
-
 
 bool ResultDisplay::customAppearance() const
 {
   return d->customAppearance;
 }
 
-
-char ResultDisplay::format() const
-{
-  return d->format;
-}
-
-
-char ResultDisplay::radixChar() const
-{
-  return d->radixChar;
-}
-
-
-int ResultDisplay::precision() const
-{
-  return d->precision;
-}
-
-
 QColor ResultDisplay::customBackgroundColor1() const
 {
   return d->customBackgroundColor1;
 }
-
 
 QColor ResultDisplay::customBackgroundColor2() const
 {
   return d->customBackgroundColor2;
 }
 
-
 QColor ResultDisplay::customErrorColor() const
 {
   return d->customErrorColor;
 }
-
 
 QColor ResultDisplay::customTextColor() const
 {
   return d->customTextColor;
 }
 
-
 QString ResultDisplay::formatNumber( const HNumber & value ) const
 {
   char * str = HMath::format( value,
-                              value.format() ? value.format() : d->format,
-                              d->precision );
+                              value.format() ?
+                                value.format() : d->settings->resultFormat,
+                              d->settings->resultPrecision );
   QString s = QString::fromLatin1( str );
   free( str );
-  if ( radixChar() != '.' )
-    s.replace( '.', radixChar() );
+  if ( d->settings->radixCharacter() != '.' )
+    s.replace( '.', d->settings->radixCharacter() );
   return s;
 }
-
 
 void ResultDisplay::setCustomAppearance( bool custom )
 {
@@ -353,7 +310,6 @@ void ResultDisplay::setCustomAppearance( bool custom )
   refresh();
 }
 
-
 void ResultDisplay::setCustomBackgroundColor( const QColor & bg1, const QColor & bg2 )
 {
   d->customBackgroundColor1 = bg1;
@@ -367,13 +323,11 @@ void ResultDisplay::setCustomBackgroundColor( const QColor & bg1, const QColor &
   refresh();
 }
 
-
 void ResultDisplay::setCustomErrorColor( const QColor & e )
 {
   d->customErrorColor = e;
   refresh();
 };
-
 
 void ResultDisplay::setCustomTextColor( const QColor & c )
 {
@@ -381,14 +335,11 @@ void ResultDisplay::setCustomTextColor( const QColor & c )
   refresh();
 }
 
-
 ResultDisplay::~ResultDisplay()
 {
+  d->settings->release();
   delete d;
 }
-
-
-// public slots
 
 void ResultDisplay::clear()
 {
@@ -397,46 +348,25 @@ void ResultDisplay::clear()
   QListWidget::clear();
 }
 
-
 void ResultDisplay::scrollEnd()
 {
-  //QScrollBar * hBar = horizontalScrollBar();
-  //hBar->setValue( hBar->maximum() );
   scrollToBottom();
 }
 
-
-void ResultDisplay::setFormat( char c )
+void ResultDisplay::handleResultFormatChange()
 {
-  if ( d->format != c )
-  {
-    d->format = c;
-    refresh();
-  }
+  refresh();
 }
 
-
-void ResultDisplay::setPrecision( int p )
+void ResultDisplay::handleResultPrecisionChange()
 {
-  if ( d->precision != p )
-  {
-    d->precision = p;
-    refresh();
-  }
+  refresh();
 }
 
-
-void ResultDisplay::setRadixChar( char c )
+void ResultDisplay::handleRadixCharacterChange()
 {
-  if ( radixChar() != c )
-  {
-    d->radixChar = c;
-    refresh();
-  }
+  refresh();
 }
-
-
-// private slots
 
 void ResultDisplay::copyToClipboard( QListWidgetItem * item )
 {

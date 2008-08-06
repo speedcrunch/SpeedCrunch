@@ -17,8 +17,9 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
+#include "gui/keypad.hxx"
 
-#include "keypad.hxx"
+#include "core/settings.hxx"
 
 #include <QApplication>
 #include <QGridLayout>
@@ -30,16 +31,11 @@
 #include <QStyle>
 #include <QStyleOptionButton>
 
-
 struct Keypad::Private
 {
-    // parent
-    Keypad * p;
+    Keypad *   p;
+    Settings * settings;
 
-    // attributes
-    char radixChar;
-
-    // widgets
     QPushButton * key0;
     QPushButton * key1;
     QPushButton * key2;
@@ -77,7 +73,6 @@ struct Keypad::Private
     QPushButton * keyX;
     QPushButton * keyXEq;
 
-    // methods
     void createButtons();
     void disableButtonFocus();
     void layoutButtons();
@@ -86,15 +81,11 @@ struct Keypad::Private
     void sizeButtons();
 };
 
-
-// public
-
-Keypad::Keypad( char radixChar, QWidget * parent )
+Keypad::Keypad( QWidget * parent )
   : QWidget( parent ), d( new Keypad::Private )
 {
   d->p = this;
-
-  d->radixChar = radixChar;
+  d->settings = Settings::instance();
 
   d->createButtons();
   d->sizeButtons();
@@ -105,38 +96,22 @@ Keypad::Keypad( char radixChar, QWidget * parent )
   setLayoutDirection( Qt::LeftToRight );
 }
 
-
 Keypad::~Keypad()
 {
+  d->settings->release();
   delete d;
 }
 
-
-char Keypad::radixChar() const
+void Keypad::handleRadixCharacterChange()
 {
-  return d->radixChar;
+  d->keyDot->setText( QString( QChar( d->settings->radixCharacter() ) ) );
 }
-
-
-// public slots
-
-void Keypad::setRadixChar( char c )
-{
-  if ( radixChar() != c )
-  {
-    d->radixChar = c;
-    d->keyDot->setText( QString( c ) );
-  }
-}
-
 
 void Keypad::retranslateText()
 {
   d->setButtonTooltips();;
+  handleRadixCharacterChange();
 }
-
-
-// protected slots
 
 void Keypad::key0Pressed()     { emit buttonPressed( Keypad::Key0         ); };
 void Keypad::key1Pressed()     { emit buttonPressed( Keypad::Key1         ); };
@@ -174,9 +149,6 @@ void Keypad::keySubPressed()   { emit buttonPressed( Keypad::KeyMinus     ); };
 void Keypad::keyTanPressed()   { emit buttonPressed( Keypad::KeyTan       ); };
 void Keypad::keyXPressed()     { emit buttonPressed( Keypad::KeyX         ); };
 void Keypad::keyXEqPressed()   { emit buttonPressed( Keypad::KeyXEquals   ); };
-
-
-// private
 
 void Keypad::Private::createButtons()
 {
@@ -216,7 +188,9 @@ void Keypad::Private::createButtons()
   keySub    = new QPushButton( QString::fromUtf8( "−" ), p );
   keyPi     = new QPushButton( QString::fromUtf8( "π" ), p );
   keySqrt   = new QPushButton( QString::fromUtf8( "√" ), p );
-  keyDot    = new QPushButton( QString( radixChar ),     p );
+
+  keyDot    = new QPushButton( QString( QChar( settings->radixCharacter() ) ),
+                               p );
 
   QFont f = key0->font();
   f.setBold( true );
@@ -238,7 +212,6 @@ void Keypad::Private::createButtons()
   keySub->setFont( f );
   keyDot->setFont( f );
 }
-
 
 void Keypad::Private::disableButtonFocus()
 {
@@ -279,7 +252,6 @@ void Keypad::Private::disableButtonFocus()
   keyXEq->setFocusPolicy  ( Qt::NoFocus );
   keyX->setFocusPolicy    ( Qt::NoFocus );
 }
-
 
 void Keypad::Private::layoutButtons()
 {
@@ -333,7 +305,6 @@ void Keypad::Private::layoutButtons()
   layout->addWidget( keyXEq,   3, 6 );
 }
 
-
 void Keypad::Private::setButtonTooltips()
 {
   keyAcos->setToolTip( Keypad::tr( "Inverse cosine"      ) );
@@ -351,7 +322,6 @@ void Keypad::Private::setButtonTooltips()
   keyXEq->setToolTip ( Keypad::tr( "Assign variable x"   ) );
   keyX->setToolTip   ( Keypad::tr( "The variable x"      ) );
 }
-
 
 void Keypad::Private::setUpButtonPressedSignal()
 {
@@ -392,7 +362,6 @@ void Keypad::Private::setUpButtonPressedSignal()
   connect( keyPi,    SIGNAL( clicked() ), p, SLOT( keyPiPressed()   ) );
   connect( keySqrt,  SIGNAL( clicked() ), p, SLOT( keySqrtPressed() ) );
 }
-
 
 void Keypad::Private::sizeButtons()
 {
@@ -459,3 +428,4 @@ void Keypad::Private::sizeButtons()
   keyXEq->setMaximumSize   ( size ); keyXEq->setMinimumSize   ( size );
   keyX->setMaximumSize     ( size ); keyX->setMinimumSize     ( size );
 }
+

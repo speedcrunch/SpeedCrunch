@@ -18,15 +18,12 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-
-#ifndef EDITOR_HXX
-#define EDITOR_HXX
-
+#ifndef GUI_EDITOR_HXX
+#define GUI_EDITOR_HXX
 
 #include "math/hmath.hxx"
 
 #include <QTextEdit>
-
 
 class Constants;
 class Evaluator;
@@ -37,7 +34,6 @@ class QKeyEvent;
 class QWheelEvent;
 class QWidget;
 
-
 class Editor : public QTextEdit
 {
   Q_OBJECT
@@ -46,8 +42,7 @@ class Editor : public QTextEdit
     enum HighlightScheme { AutoScheme };
     enum ColorType { Variable = 0, Number, Function, MatchedPar };
 
-    explicit Editor( Evaluator *, Functions *, Constants *, char format = 'g',
-                     int precision = -1, char radixChar = 'C',
+    explicit Editor( Evaluator *, Functions *, Constants *,
                      QWidget * parent = 0 );
     ~Editor();
 
@@ -89,11 +84,9 @@ class Editor : public QTextEdit
     void appendHistory( const QStringList & h, const QStringList & r );
     void cancelConstantCompletion();
     void evaluate();
+    void handleRadixCharacterChange();
     void insertConstant( const QString & );
     void insert( const QString & );
-    void setPrecision( int );
-    void setFormat( char );
-    void setRadixChar( char );
 
   protected slots:
     void autoCalc();
@@ -124,7 +117,6 @@ class Editor : public QTextEdit
     Editor & operator=( const Editor & );
 };
 
-
 class EditorCompletion : public QObject
 {
   Q_OBJECT
@@ -151,7 +143,6 @@ class EditorCompletion : public QObject
     EditorCompletion( const EditorCompletion & );
     EditorCompletion & operator=( const EditorCompletion & );
 };
-
 
 class ConstantCompletion : public QObject
 {
@@ -182,5 +173,5 @@ class ConstantCompletion : public QObject
     ConstantCompletion & operator=( const ConstantCompletion & );
 };
 
-
 #endif
+

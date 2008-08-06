@@ -18,14 +18,11 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-
-#ifndef SETTINGS_HXX
-#define SETTINGS_HXX
-
+#ifndef CORE_SETTINGS_HXX
+#define CORE_SETTINGS_HXX
 
 #include <QColor>
-#include <QFont>
-#include <QRect>
+#include <QPoint>
 #include <QSize>
 #include <QString>
 #include <QStringList>
@@ -33,68 +30,55 @@
 class Settings
 {
   public:
-    // do not expose internals to the interface.
-    // Most clients just want to know the radix char and do not
-    // care a lot whether it is retrieved from the OS or not.
-    char getRadixChar() const;
-    // extensions for classes maintaining the radix char field.
-    // The value 0 means: use locale settings
-    void setRadixCharacter( char c = 0 ) { radixChar = c; };
-    bool isLocaleRadixChar() const { return radixChar == 0; };
+    static Settings * instance();
+    static void release();
 
-    char angleMode; // 'r': radian; 'd': degree
+    void load();
+    void save();
+
+    char radixCharacter() const; // 0: auto
+    void setRadixCharacter( char c = 0 );
+    bool isRadixCharacterAuto() const;
+
+    char angleUnit; // 'r': radian; 'd': degree
+
     char resultFormat;    // see HMath documentation
     int  resultPrecision; // see HMath documentation
 
     bool autoCalc;
     bool autoCompletion;
-    bool systemTrayIconVisible;
     bool historySave;
+    bool syntaxHighlighting;
+    bool systemTrayIconVisible;
     bool variableSave;
-    bool mathBookDockVisible;
+    bool windowAlwaysOnTop;
+
     bool constantsDockVisible;
-    bool windowOnfullScreen;
     bool functionsDockVisible;
     bool historyDockVisible;
     bool keypadVisible;
+    bool mathBookDockVisible;
     bool menuBarVisible;
     bool statusBarVisible;
     bool variablesDockVisible;
-    bool windowAlwaysOnTop;
-    bool syntaxHighlighting;
+    bool windowOnfullScreen;
+
+    QString language;
 
     QStringList history;
     QStringList historyResults;
-
-    QString language;
+    QStringList variables;
 
     QPoint      windowPosition;
     QSize       windowSize;
     QByteArray  windowState;
 
-    QStringList variables;
-
-    //static QString escape; //reftbl
-
-    Settings();
-    void load();
-    void save();
-
-/*  FIXME
-    formats need frequent access to the current settings, which should offer
-    their data publicly. IMO, a singleton serves this idea better than
-    a hidden instance in MainWindow.
-    Classes like editor, evaluator, format can update their knowledge
-    about the settings (radix char) at the beginning of an operation,
-    and, technically, do not need a real-time update by the Qt messaging system.
-    Of course, this does not hold for GUI elements. (wl)
-    This is a workaround. */
-    static Settings* settings; // maintained by the MainWindow (awkward)
-
   private:
-    char radixChar; // 0: locale (default);
+    Settings();
+    ~Settings();
     Settings( const Settings & );
     Settings & operator=( const Settings & );
 };
 
 #endif
+

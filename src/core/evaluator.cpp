@@ -18,9 +18,10 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
+#include "core/evaluator.hxx"
 
-#include "evaluator.hxx"
-#include "functions.hxx"
+#include "core/functions.hxx"
+#include "core/settings.hxx"
 #ifdef _BISON
 # include "bison/bisonparser.cpp"
 #endif
@@ -32,7 +33,6 @@
 #include <QVector>
 #include <QStack>
 
-
 // #define EVALUATOR_DEBUG
 
 #ifdef EVALUATOR_DEBUG
@@ -41,7 +41,7 @@
 
 QTextStream& operator<<( QTextStream& s, HNumber num )
 {
-  char* str = HMath::formatFixed( num );
+  char * str = HMath::formatFixed( num );
   s << str;
   delete[] str;
   return s;
@@ -51,17 +51,16 @@ QTextStream& operator<<( QTextStream& s, HNumber num )
 
 class Opcode
 {
-public:
+  public:
+    enum { Nop = 0, Load, Ref, Function, Add, Sub, Neg, Mul, Div, Pow, Fact,
+           Modulo, IntDiv };
 
-  enum { Nop = 0, Load, Ref, Function, Add, Sub, Neg, Mul, Div, Pow, Fact,
-         Modulo, IntDiv };
+    unsigned type;
+    unsigned index;
 
-  unsigned type;
-  unsigned index;
-
-  Opcode(): type(Nop), index(0) {};
-  Opcode( unsigned t ): type(t), index(0) {};
-  Opcode( unsigned t, unsigned i ): type(t), index(i) {};
+    Opcode(): type(Nop), index(0) {};
+    Opcode( unsigned t ): type(t), index(0) {};
+    Opcode( unsigned t, unsigned i ): type(t), index(i) {};
 };
 
 
@@ -69,8 +68,8 @@ struct Evaluator::Private
 {
   Evaluator * p;
   Functions * functions;
+  Settings *  settings;
 
-  char    radixChar;
   bool    dirty;
   bool    valid;
   QString expression;
@@ -83,20 +82,19 @@ struct Evaluator::Private
   QMap<QString,Variable> variables;
 };
 
-
 class TokenStack : public QVector<Token>
 {
-public:
-  TokenStack();
-  bool isEmpty() const;
-  unsigned itemCount() const;
-  void push( const Token& token );
-  Token pop();
-  const Token& top();
-  const Token& top( unsigned index );
-private:
-  void ensureSpace();
-  int topIndex;
+  public:
+    TokenStack();
+    bool isEmpty() const;
+    unsigned itemCount() const;
+    void push( const Token& token );
+    Token pop();
+    const Token& top();
+    const Token& top( unsigned index );
+  private:
+    void ensureSpace();
+    int topIndex;
 };
 
 // for null token
@@ -232,7 +230,6 @@ QString Token::description() const
   return desc;
 }
 
-
 TokenStack::TokenStack(): QVector<Token>()
 {
   topIndex = 0;
@@ -278,23 +275,18 @@ void TokenStack::ensureSpace()
     resize( size() + 10 );
 }
 
-
 // helper function: return true for valid identifier character
 static bool isIdentifier( QChar ch )
 {
   return (ch.unicode() == '_') || (ch.unicode() == '$') || (ch.isLetter());
 }
 
-
-// Constructor
-
-Evaluator::Evaluator( Functions * f, char radixChar, QObject * parent )
+Evaluator::Evaluator( Functions * f, QObject * parent )
   : QObject( parent ), d( new Evaluator::Private )
 {
   d->p = this;
   d->functions = f;
-
-  d->radixChar = radixChar;
+  d->settings = Settings::instance();
 
   clear();
 
@@ -340,9 +332,9 @@ Evaluator::Evaluator( Functions * f, char radixChar, QObject * parent )
 #endif
 }
 
-// Destructor
 Evaluator::~Evaluator()
 {
+  d->settings->release();
   delete d;
 }
 
@@ -360,7 +352,6 @@ void Evaluator::setExpression( const QString& expr )
   d->error      = QString();
 }
 
-// Returns the expression
 QString Evaluator::expression() const
 {
   return d->expression;
@@ -418,7 +409,7 @@ Tokens Evaluator::scan( const QString& expr ) const
   QChar wrongDecimalPoint;
   //decimalPoint = Settings::self()->dot();
   // sanity check for wrong decimal separator usage
-  if ( d->radixChar == ',' )
+  if ( d->settings->radixCharacter() == ',' )
     wrongDecimalPoint = '.';
   else
     wrongDecimalPoint = ',';
@@ -471,7 +462,7 @@ Tokens Evaluator::scan( const QString& expr ) const
        }
 
        // decimal dot ?
-       else if ( ch == d->radixChar )
+       else if ( ch == d->settings->radixCharacter() )
        {
          tokenText.append( ex.at(i++) );
          state = InDecimal;
@@ -556,7 +547,7 @@ Tokens Evaluator::scan( const QString& expr ) const
        if( ch.isDigit() ) tokenText.append( ex.at(i++) );
 
        // convert decimal separator to '.'
-       else if( ch == d->radixChar )
+       else if( ch == d->settings->radixCharacter() )
        {
          tokenText.append( '.' );
          i++;
@@ -685,7 +676,6 @@ Tokens Evaluator::scan( const QString& expr ) const
 
   return tokens;
 }
-
 
 void Evaluator::compile( const Tokens& tokens ) const
 {
@@ -1560,19 +1550,6 @@ QString Evaluator::autoFix( const QString& expr )
   return result;
 }
 
-
-char Evaluator::radixChar() const
-{
-  return d->radixChar;
-}
-
-
-void Evaluator::setRadixChar( char c )
-{
-  d->radixChar = c;
-}
-
-
 // Debugging aid
 QString Evaluator::dump() const
 {
@@ -1612,20 +1589,21 @@ QString Evaluator::dump() const
     QString ctext;
     switch( d->codes[i].type )
     {
-			case Opcode::Load    : ctext = QString( "Load #%1"      ).arg( d->codes[i].index ); break;
-			case Opcode::Ref     : ctext = QString( "Ref #%1"       ).arg( d->codes[i].index ); break;
+      case Opcode::Load    : ctext = QString( "Load #%1"      ).arg( d->codes[i].index ); break;
+      case Opcode::Ref     : ctext = QString( "Ref #%1"       ).arg( d->codes[i].index ); break;
       case Opcode::Function: ctext = QString( "Function (%1)" ).arg( d->codes[i].index ); break;
-			case Opcode::Add     : ctext = "Add"    ; break;
-			case Opcode::Sub     : ctext = "Sub"    ; break;
-			case Opcode::Mul     : ctext = "Mul"    ; break;
-			case Opcode::Div     : ctext = "Div"    ; break;
-			case Opcode::Neg     : ctext = "Neg"    ; break;
-			case Opcode::Pow     : ctext = "Pow"    ; break;
-			case Opcode::Fact    : ctext = "Fact"   ; break;
-			default              : ctext = "Unknown"; break;
+      case Opcode::Add     : ctext = "Add"    ; break;
+      case Opcode::Sub     : ctext = "Sub"    ; break;
+      case Opcode::Mul     : ctext = "Mul"    ; break;
+      case Opcode::Div     : ctext = "Div"    ; break;
+      case Opcode::Neg     : ctext = "Neg"    ; break;
+      case Opcode::Pow     : ctext = "Pow"    ; break;
+      case Opcode::Fact    : ctext = "Fact"   ; break;
+      default              : ctext = "Unknown"; break;
     }
     result.append( "   " ).append( ctext ).append("\n");
   }
 
   return result;
 }
+

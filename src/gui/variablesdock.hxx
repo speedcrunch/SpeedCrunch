@@ -17,34 +17,29 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-
-#ifndef VARIABLESDOCK_HXX
-#define VARIABLESDOCK_HXX
-
+#ifndef GUI_VARIABLESDOCK_HXX
+#define GUI_VARIABLESDOCK_HXX
 
 #include <QDockWidget>
-
 
 class Evaluator;
 
 class QTreeWidgetItem;
-
 
 class VariablesDock : public QDockWidget
 {
   Q_OBJECT
 
   public:
-    VariablesDock( char radixChar, QWidget * parent = 0 );
+    VariablesDock( QWidget * parent = 0 );
     ~VariablesDock();
-    char radixChar() const;
     void updateList( const Evaluator * );
 
   signals:
     void variableSelected( const QString & );
 
   public slots:
-    void setRadixChar( char );
+    void handleRadixCharacterChange();
     void retranslateText();
 
   protected slots:
@@ -62,5 +57,5 @@ class VariablesDock : public QDockWidget
     VariablesDock & operator=( const VariablesDock & );
 };
 
-
 #endif
+

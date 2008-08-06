@@ -17,16 +17,12 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-
-#ifndef BOOKDOCK_HXX
-#define BOOKDOCK_HXX
-
+#ifndef GUI_BOOKDOCK_HXX
+#define GUI_BOOKDOCK_HXX
 
 #include <QDockWidget>
 
-
 class QUrl;
-
 
 class BookDock : public QDockWidget
 {
@@ -34,20 +30,21 @@ class BookDock : public QDockWidget
 
   public:
     explicit BookDock( const QString & directory, const QString & file,
-                       const QString & language = "C", QWidget * parent = 0 );
+                       QWidget * parent = 0 );
     ~BookDock();
 
   public slots:
     void home();
-    void setLanguage( const QString & languageCode );
     void setTitle( const QString & );
 
   signals:
     void expressionSelected( const QString & );
 
   protected slots:
-    void anchorClicked ( const QUrl & );
     virtual void changeEvent( QEvent * e );
+
+  private slots:
+    void handleAnchorClick( const QUrl & );
 
   private:
     struct Private;
@@ -56,5 +53,5 @@ class BookDock : public QDockWidget
     BookDock & operator=( const BookDock & );
 };
 
-
 #endif
+

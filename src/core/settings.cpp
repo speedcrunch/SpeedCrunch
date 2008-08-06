@@ -18,8 +18,7 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-
-#include "settings.hxx"
+#include "core/settings.hxx"
 
 #include "3rdparty/util/binreloc.h"
 #include "math/floatconfig.h"
@@ -29,24 +28,37 @@
 #include <QSettings>
 #include <QLocale>
 
-
-QSettings * createQSettings( const QString & key );
-
-Settings* Settings::settings = 0;
-
-// public
+static Settings * sSettings = 0;
+static int sCounter = 0;
+static char sRadixCharacter = 0;
+static QSettings * createQSettings( const QString & key );
 
 Settings::Settings()
 {
-  //escape = "\\"; //reftbl
 }
 
-char Settings::getRadixChar() const
+Settings::~Settings()
 {
-  if ( radixChar == 0 )
-    return QLocale().decimalPoint().toAscii();
+}
+
+Settings * Settings::instance()
+{
+  if ( ! sSettings )
+    sSettings = new Settings;
+  ++sCounter;
+  return sSettings;
+}
+
+void Settings::release()
+{
+  if ( sCounter == 1 )
+  {
+    sSettings = 0;
+    sCounter = 0;
+    delete sSettings;
+  }
   else
-    return radixChar;
+    --sCounter;
 }
 
 void Settings::load()
@@ -62,27 +74,28 @@ void Settings::load()
   key = KEY + "/General/";
 
   // angle mode special case
-  QString angleModeStr;
-  angleModeStr = settings->value( key + "AngleMode", "r" ).toString();
-  if ( angleModeStr != "r" && angleModeStr != "d" )
-    angleMode = 'r';
+  QString angleUnitStr;
+  angleUnitStr = settings->value( key + "AngleMode", "r" ).toString();
+  if ( angleUnitStr != "r" && angleUnitStr != "d" )
+    angleUnit = 'r';
   else
-    angleMode = angleModeStr[0].toAscii();
+    angleUnit = angleUnitStr[0].toAscii();
 
   // radix character special case
   QString radixCharStr;
   radixCharStr = settings->value( key + "RadixCharacter", 0 ).toString();
-  if ( radixCharStr != "," && radixCharStr != "." )
-    radixChar = 0;
-  else
-    radixChar = radixCharStr[0].toAscii();
+  //if ( radixCharStr != "," && radixCharStr != "." )
+  //  sRadixCharacter = 0;
+  //else
+  //  sRadixCharacter = radixCharStr[0].toAscii();
+  setRadixCharacter( radixCharStr[0].toAscii() );
 
   historySave           = settings->value( key + "HistorySave",           true  ).toBool();
   variableSave          = settings->value( key + "VariableSave",          true  ).toBool();
   autoCompletion        = settings->value( key + "AutoCompletion",        true  ).toBool();
   autoCalc              = settings->value( key + "AutoCalc",              true  ).toBool();
   systemTrayIconVisible = settings->value( key + "SystemTrayIconVisible", false ).toBool();
-  syntaxHighlighting    = settings->value( key + "SyntaxHilighting",      true  ).toBool();
+  syntaxHighlighting    = settings->value( key + "SyntaxHighlighting",    true  ).toBool();
   language              = settings->value( key + "Language",              "C"   ).toString();
 
   key = KEY + "/Format/";
@@ -181,7 +194,6 @@ void Settings::load()
   delete settings;
 }
 
-
 void Settings::save()
 {
   const QString KEY = "SpeedCrunch";
@@ -200,14 +212,14 @@ void Settings::save()
   settings->setValue( key + "AutoCompletion",        autoCompletion        );
   settings->setValue( key + "AutoCalc",              autoCalc              );
   settings->setValue( key + "SystemTrayIconVisible", systemTrayIconVisible );
-  settings->setValue( key + "SyntaxHilighting",      syntaxHighlighting    );
+  settings->setValue( key + "SyntaxHighlighting",    syntaxHighlighting    );
   settings->setValue( key + "Language",              language              );
 
-  settings->setValue( key + "AngleMode", QString( QChar( angleMode ) ) );
+  settings->setValue( key + "AngleMode", QString( QChar( angleUnit ) ) );
 
   char c = 'C';
-  if ( radixChar != 0 )
-      c = radixChar;
+  if ( sRadixCharacter != 0 )
+    c = sRadixCharacter;
   settings->setValue( key + "RadixCharacter", QString( QChar( c ) ) );
 
   key = KEY + "/Format/";
@@ -308,6 +320,26 @@ void Settings::save()
   delete settings;
 }
 
+char Settings::radixCharacter() const
+{
+  if ( sRadixCharacter == 0 )
+    return QLocale().decimalPoint().toAscii();
+  else
+    return sRadixCharacter;
+}
+
+void Settings::setRadixCharacter( char c )
+{
+  if ( c != ',' && c != '.' )
+    sRadixCharacter = 0;
+  else
+    sRadixCharacter = c;
+};
+
+bool Settings::isRadixCharacterAuto() const
+{
+  return sRadixCharacter == 0;
+};
 
 QSettings * createQSettings( const QString & KEY )
 {
@@ -361,3 +393,4 @@ QSettings * createQSettings( const QString & KEY )
 
   return settings;
 }
+

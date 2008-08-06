@@ -17,13 +17,10 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-
-#ifndef KEYPAD_HXX
-#define KEYPAD_HXX
-
+#ifndef GUI_KEYPAD_HXX
+#define GUI_KEYPAD_HXX
 
 #include <QWidget>
-
 
 class Keypad : public QWidget
 {
@@ -37,16 +34,14 @@ class Keypad : public QWidget
                   KeyX, KeyXEquals, KeyExp, KeyLn, KeySin, KeyAsin, KeyCos,
                   KeyAcos, KeyTan, KeyAtan };
 
-    explicit Keypad( char radixChar = 'C', QWidget * parent  = 0 );
+    explicit Keypad( QWidget * parent  = 0 );
     ~Keypad();
-    char radixChar() const;
 
   signals:
     void buttonPressed( Keypad::Button );
 
   public slots:
-    void setRadixChar( char );
-    void retranslateText();
+    void handleRadixCharacterChange();
 
   protected slots:
     void key0Pressed();
@@ -85,6 +80,7 @@ class Keypad : public QWidget
     void keyTanPressed();
     void keyXPressed();
     void keyXEqPressed();
+    void retranslateText();
 
   private:
     struct Private;
@@ -93,5 +89,5 @@ class Keypad : public QWidget
     Keypad & operator=( const Keypad & );
 };
 
-
 #endif
+

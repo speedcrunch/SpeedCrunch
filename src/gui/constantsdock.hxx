@@ -17,33 +17,28 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-
-#ifndef CONSTANTSDOCK_HXX
-#define CONSTANTSDOCK_HXX
-
+#ifndef GUI_CONSTANTSDOCK_HXX
+#define GUI_CONSTANTSDOCK_HXX
 
 #include <QDockWidget>
-
 
 class Constants;
 
 class QTreeWidgetItem;
-
 
 class ConstantsDock : public QDockWidget
 {
   Q_OBJECT
 
   public:
-    ConstantsDock( Constants *, char radixChar, QWidget * parent = 0 );
+    ConstantsDock( Constants *, QWidget * parent = 0 );
     ~ConstantsDock();
-    char radixChar() const;
 
   signals:
     void constantSelected( const QString & c );
 
   public slots:
-    void setRadixChar( char );
+    void handleRadixCharacterChange();
     void retranslateText();
 
   protected slots:
@@ -63,5 +58,5 @@ class ConstantsDock : public QDockWidget
     ConstantsDock & operator=( const ConstantsDock & );
 };
 
-
 #endif
+

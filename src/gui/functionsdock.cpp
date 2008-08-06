@@ -17,8 +17,7 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-
-#include "functionsdock.hxx"
+#include "gui/functionsdock.hxx"
 
 #include "core/functions.hxx"
 
@@ -31,7 +30,6 @@
 #include <QTreeWidget>
 #include <QVBoxLayout>
 
-
 struct FunctionsDock::Private
 {
   const Functions * functions;
@@ -43,9 +41,6 @@ struct FunctionsDock::Private
   QLabel *          label;
   QLabel *          noMatchLabel;
 };
-
-
-// public
 
 FunctionsDock::FunctionsDock( const Functions * f, QWidget * parent )
   : QDockWidget( parent ), d( new FunctionsDock::Private )
@@ -97,11 +92,10 @@ FunctionsDock::FunctionsDock( const Functions * f, QWidget * parent )
 
   setMinimumWidth( 200 );
   setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
-  setWindowIcon( QIcon() ); // no icon
+  setWindowIcon( QIcon() );
 
   retranslateText();
 }
-
 
 FunctionsDock::~FunctionsDock()
 {
@@ -109,14 +103,11 @@ FunctionsDock::~FunctionsDock()
   delete d;
 }
 
-
 const Functions * FunctionsDock::functions() const
 {
   return d->functions;
 }
 
-
-// public slots
 void FunctionsDock::retranslateText()
 {
   setWindowTitle( tr( "Functions" ) );
@@ -138,9 +129,6 @@ void FunctionsDock::retranslateText()
 
   filter();
 }
-
-
-// protected slots
 
 void FunctionsDock::filter()
 {
@@ -206,22 +194,17 @@ void FunctionsDock::filter()
   setUpdatesEnabled( true );
 }
 
-
 void FunctionsDock::handleItem( QTreeWidgetItem * item )
 {
   d->list->clearSelection();
   emit functionSelected( item->text( 0 ) );
 }
 
-
 void FunctionsDock::triggerFilter()
 {
   d->filterTimer->stop();
   d->filterTimer->start();
 }
-
-
-// protected
 
 void FunctionsDock::changeEvent( QEvent * e )
 {
@@ -230,3 +213,4 @@ void FunctionsDock::changeEvent( QEvent * e )
   else
     QDockWidget::changeEvent( e );
 }
+

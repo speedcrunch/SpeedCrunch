@@ -17,10 +17,8 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-
-#ifndef FUNCTIONS_HXX
-#define FUNCTIONS_HXX
-
+#ifndef CORE_FUNCTIONS_HXX
+#define CORE_FUNCTIONS_HXX
 
 #include "math/hmath.hxx"
 
@@ -28,13 +26,10 @@
 #include <QStringList>
 #include <QVector>
 
-
 class Function;
 class Functions;
 
-
 typedef HNumber (*FunctionPtr)( Function *, const QVector<HNumber> & );
-
 
 class Function
 {
@@ -60,22 +55,19 @@ class Function
     Function & operator=( const Function & );
 };
 
-
 class Functions : public QObject
 {
   Q_OBJECT
 
   public:
-    Functions( char angleMode = 'r', QObject * parent = 0 );
+    Functions( QObject * parent = 0 );
     ~Functions();
 
     void        add( Function * );
     Function *  function( const QString & ) const;
     QStringList functionNames() const;
-    char        angleMode();
 
   public slots:
-    void setAngleMode( char ); // 'r': radian (default) / 'd': degree
     void retranslateText();
 
   private:
@@ -85,5 +77,5 @@ class Functions : public QObject
     Functions & operator=( const Functions & );
 };
 
-
 #endif
+

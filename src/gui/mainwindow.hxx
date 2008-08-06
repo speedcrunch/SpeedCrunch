@@ -18,10 +18,8 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-
-#ifndef MAINWINDOW_HXX
-#define MAINWINDOW_HXX
-
+#ifndef GUI_MAINWINDOW_HXX
+#define GUI_MAINWINDOW_HXX
 
 #include "keypad.hxx"
 
@@ -29,10 +27,7 @@
 #include <QMainWindow>
 #include <QSystemTrayIcon>
 
-
 class Keypad;
-class Settings;
-
 
 class MainWindow : public QMainWindow
 {
@@ -43,11 +38,11 @@ class MainWindow : public QMainWindow
     ~MainWindow();
 
   signals:
-    void angleUnitChanged( char );
+    void angleUnitChanged();
     void languageChanged();
-    void radixCharacterChanged( char );
-    void resultFormatChanged( char );
-    void resultPrecisionChanged( int );
+    void radixCharacterChanged();
+    void resultFormatChanged();
+    void resultPrecisionChanged();
 
   private slots:
     void activate();
@@ -135,5 +130,5 @@ class MainWindow : public QMainWindow
     MainWindow & operator=( const MainWindow & );
 };
 
-
 #endif
+

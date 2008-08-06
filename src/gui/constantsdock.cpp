@@ -18,9 +18,10 @@
 // Boston, MA 02110-1301, USA.
 
 
-#include "constantsdock.hxx"
+#include "gui/constantsdock.hxx"
 
 #include "core/constants.hxx"
+#include "core/settings.hxx"
 
 #include <QComboBox>
 #include <QEvent>
@@ -33,11 +34,10 @@
 #include <QTreeWidget>
 #include <QVBoxLayout>
 
-
 struct ConstantsDock::Private
 {
   Constants *   constants;
-  char          radixChar;
+  Settings *    settings;
   QComboBox *   category;
   QLineEdit *   filter;
   QTimer *      filterTimer;
@@ -47,15 +47,11 @@ struct ConstantsDock::Private
   QLabel *      noMatchLabel;
 };
 
-
-// public
-
-ConstantsDock::ConstantsDock( Constants * c, char radixChar, QWidget * parent )
+ConstantsDock::ConstantsDock( Constants * c, QWidget * parent )
   : QDockWidget( parent ), d( new ConstantsDock::Private )
 {
-  d->radixChar = radixChar;
-
   d->constants = c;
+  d->settings = Settings::instance();
 
   d->categoryLabel = new QLabel( this );
 
@@ -129,31 +125,17 @@ ConstantsDock::ConstantsDock( Constants * c, char radixChar, QWidget * parent )
   retranslateText();
 }
 
-
 ConstantsDock::~ConstantsDock()
 {
   d->filterTimer->stop();
+  d->settings->release();
   delete d;
 }
 
-
-char ConstantsDock::radixChar() const
+void ConstantsDock::handleRadixCharacterChange()
 {
-  return d->radixChar;
+  updateList();
 }
-
-
-// public slots
-
-void ConstantsDock::setRadixChar( char c )
-{
-  if ( radixChar() != c )
-  {
-    d->radixChar = c;
-    updateList();
-  }
-}
-
 
 void ConstantsDock::retranslateText()
 {
@@ -162,9 +144,6 @@ void ConstantsDock::retranslateText()
   d->label->setText( tr( "Search" ) );
   updateList();
 }
-
-
-// protected slots
 
 void ConstantsDock::filter()
 {
@@ -181,8 +160,8 @@ void ConstantsDock::filter()
   {
     QStringList str;
     str << c->constantList().at( k ).name;
-    QString radCh = (radixChar() != '.' ?
-        QString( c->constantList().at( k ).value ).replace( '.', radixChar() )
+    QString radCh = (d->settings->radixCharacter() != '.' ?
+        QString( c->constantList().at( k ).value ).replace( '.', d->settings->radixCharacter() )
       : c->constantList().at( k ).value );
     if ( layoutDirection() == Qt::RightToLeft )
     {
@@ -221,8 +200,8 @@ void ConstantsDock::filter()
       tip += QString( QChar( 0x200E ) );
       if ( ! c->constantList().at( k ).unit.isEmpty() )
         tip.append( " " ).append( c->constantList().at( k ).unit );
-      if ( radixChar() != '.' )
-        tip.replace( '.', radixChar());
+      if ( d->settings->radixCharacter() != '.' )
+        tip.replace( '.', d->settings->radixCharacter());
       tip += QString( QChar( 0x200E ) );
       item->setToolTip( 0, tip );
       item->setToolTip( 1, tip );
@@ -273,7 +252,6 @@ void ConstantsDock::filter()
   setUpdatesEnabled( true );
 }
 
-
 void ConstantsDock::handleItem( QTreeWidgetItem * item )
 {
   Constants * c = d->constants;
@@ -282,13 +260,11 @@ void ConstantsDock::handleItem( QTreeWidgetItem * item )
       emit constantSelected( c->constantList().at( k ).value );
 }
 
-
 void ConstantsDock::triggerFilter()
 {
   d->filterTimer->stop();
   d->filterTimer->start();
 }
-
 
 void ConstantsDock::updateList()
 {
@@ -300,9 +276,6 @@ void ConstantsDock::updateList()
   filter();
 }
 
-
-// protected
-
 void ConstantsDock::changeEvent( QEvent * e )
 {
   if ( e->type() == QEvent::LayoutDirectionChange )
@@ -310,3 +283,4 @@ void ConstantsDock::changeEvent( QEvent * e )
   else
     QDockWidget::changeEvent( e );
 }
+

@@ -17,18 +17,14 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-
-#ifndef FUNCTIONSDOCK_HXX
-#define FUNCTIONSDOCK_HXX
-
+#ifndef GUI_FUNCTIONSDOCK_HXX
+#define GUI_FUNCTIONSDOCK_HXX
 
 #include <QDockWidget>
-
 
 class Functions;
 
 class QTreeWidgetItem;
-
 
 class FunctionsDock : public QDockWidget
 {
@@ -61,5 +57,5 @@ class FunctionsDock : public QDockWidget
     FunctionsDock & operator=( const FunctionsDock & );
 };
 
-
 #endif
+
