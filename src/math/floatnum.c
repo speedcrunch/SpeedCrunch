@@ -38,7 +38,7 @@
 
 #include "floatnum.h"
 #include "floatlong.h"
-#include <base/errors.h>
+#include <core/errors.h>
 #include <stdio.h>
 #include <string.h>
 

@@ -21,7 +21,7 @@
 
 #include "deletevardlg.hxx"
 
-#include "base/evaluator.hxx"
+#include "core/evaluator.hxx"
 #include "math/hmath.hxx"
 
 #include <QDialog>

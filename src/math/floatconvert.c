@@ -34,7 +34,7 @@
 #include "floatconfig.h"
 #include "floatconst.h"
 #include "floatipower.h"
-#include <base/errors.h>
+#include <core/errors.h>
 #include <stdlib.h>
 
 typedef struct{

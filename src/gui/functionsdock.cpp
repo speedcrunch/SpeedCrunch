@@ -20,7 +20,7 @@
 
 #include "functionsdock.hxx"
 
-#include "base/functions.hxx"
+#include "core/functions.hxx"
 
 #include <QEvent>
 #include <QHBoxLayout>

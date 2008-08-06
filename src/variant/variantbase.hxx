@@ -32,7 +32,7 @@
 #ifndef _VARIANTBASE_H
 #define _VARIANTBASE_H
 
-#include "base/errors.h"
+#include "core/errors.h"
 #include <QString>
 #include <QtXml/QDomNode>
 #include <QtXml/QDomDocument>

@@ -28,7 +28,7 @@
 #include "floatio.h"
 #include "floatnum.h"
 
-#include "base/errors.h"
+#include "core/errors.h"
 
 #include <ctype.h>
 #include <sstream>

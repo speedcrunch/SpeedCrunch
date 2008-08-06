@@ -38,10 +38,10 @@
 #include "variablesdock.hxx"
 
 #include "3rdparty/util/binreloc.h"
-#include "base/constants.hxx"
-#include "base/evaluator.hxx"
-#include "base/functions.hxx"
-#include "base/settings.hxx"
+#include "core/constants.hxx"
+#include "core/evaluator.hxx"
+#include "core/functions.hxx"
+#include "core/settings.hxx"
 #include "math/hmath.hxx"
 
 #include <QAction>

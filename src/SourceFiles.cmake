@@ -5,10 +5,10 @@ set(speedcrunch_HEADERS
 #variant/variant.hxx
 #variant/real.hxx
 #3rdparty/util/binreloc.h
-base/constants.hxx
-base/evaluator.hxx
-base/functions.hxx
-#base/settings.hxx
+core/constants.hxx
+core/evaluator.hxx
+core/functions.hxx
+#core/settings.hxx
 gui/aboutbox.hxx
 gui/autohidelabel.hxx
 gui/bookdock.hxx
@@ -54,10 +54,10 @@ variant/initvariant.cpp
 variant/formatbase.cpp
 variant/formatreal.cpp
 3rdparty/util/binreloc.c
-base/constants.cpp
-base/evaluator.cpp
-base/functions.cpp
-base/settings.cpp
+core/constants.cpp
+core/evaluator.cpp
+core/functions.cpp
+core/settings.cpp
 gui/aboutbox.cpp
 gui/autohidelabel.cpp
 gui/bookdock.cpp
@@ -121,12 +121,12 @@ test/testhmath.cpp
 
 # regression test for Evaluator
 #set(testevaluator_SOURCES
-#base/evaluator.hxx
+#core/evaluator.hxx
 #)
 #set(testevaluator_SOURCES
-#base/evaluator.cpp
-#base/functions.cpp
-#base/variant.cpp
+#core/evaluator.cpp
+#core/functions.cpp
+#core/variant.cpp
 #bison/exprparser.c
 #math/floatcommon.c
 #math/floatconst.c

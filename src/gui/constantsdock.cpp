@@ -20,7 +20,7 @@
 
 #include "constantsdock.hxx"
 
-#include "base/constants.hxx"
+#include "core/constants.hxx"
 
 #include <QComboBox>
 #include <QEvent>

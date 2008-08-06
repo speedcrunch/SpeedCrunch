@@ -29,7 +29,7 @@
 
 *************************************************************************/
 
-#include <base/errors.h>
+#include <core/errors.h>
 
 #ifndef _FLOATIO_H
 # define _FLOATIO_H

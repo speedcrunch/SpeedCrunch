@@ -32,7 +32,7 @@
 #ifndef _VARIANT_H
 #define _VARIANT_H
 
-#include "base/errors.h"
+#include "core/errors.h"
 #include "variant/variantbase.hxx"
 #include "variant/real.hxx"
 #include "variant/vstring.hxx"

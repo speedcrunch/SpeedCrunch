@@ -36,7 +36,7 @@
 
 /* a few tests depend on 32 bit integer size, fix this in future!! */
 
-#include "base/errors.h"
+#include "core/errors.h"
 #include "math/floatconfig.h"
 #include "math/floatconst.h"
 #include "math/floatcommon.h"

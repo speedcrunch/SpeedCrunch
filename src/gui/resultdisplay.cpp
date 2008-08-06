@@ -22,7 +22,7 @@
 
 #include "resultdisplay.hxx"
 
-#include "base/functions.hxx"
+#include "core/functions.hxx"
 #include "math/hmath.hxx"
 
 #include <QApplication>

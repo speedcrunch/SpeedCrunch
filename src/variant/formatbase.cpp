@@ -30,7 +30,7 @@
 *************************************************************************/
 
 #include "variant/formatbase.hxx"
-#include "base/settings.hxx"
+#include "core/settings.hxx"
 #include <QMultiMap>
 #include <QStringList>
 

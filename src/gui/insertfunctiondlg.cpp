@@ -22,7 +22,7 @@
 
 #include "insertfunctiondlg.hxx"
 
-#include "base/functions.hxx"
+#include "core/functions.hxx"
 
 #include <QDialog>
 #include <QHBoxLayout>

@@ -102,7 +102,7 @@ ADD_TEST(testhmath testhmath)
 ADD_EXECUTABLE(testfloatnum ${testfloatnum_SOURCES})
 ADD_TEST(testfloatnum testfloatnum)
 
-INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR} 3rdparty/util base gui main math)
+INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR} 3rdparty/util core gui main math)
 
 
 ################################# INSTALL ######################################

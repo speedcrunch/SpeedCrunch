@@ -22,7 +22,7 @@
 
 #include "insertvardlg.hxx"
 
-#include "base/evaluator.hxx"
+#include "core/evaluator.hxx"
 
 #include <QDialog>
 #include <QHBoxLayout>
