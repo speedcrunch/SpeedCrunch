@@ -18,16 +18,13 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
+#ifndef MATH_HMATH_HXX
+#define MATH_HMATH_HXX
 
-#ifndef HMATH_HXX
-#define HMATH_HXX
-
-
-#include "floatconfig.h"
-#include "floatio.h"
+#include "math/floatconfig.h"
+#include "math/floatio.h"
 
 #include <iostream>
-
 
 class HMath;
 class HNumberPrivate;
@@ -96,10 +93,8 @@ class HNumber
     HNumberPrivate * d;
 };
 
-
 HNumber operator-( const HNumber & );
 HNumber operator-( const HNumber &, const HNumber & );
-
 
 class HMath
 {
@@ -158,25 +153,18 @@ class HMath
     // PROBABILITY
     static HNumber nCr( const HNumber & n, const HNumber & k );
     static HNumber nPr( const HNumber & n, const HNumber & r );
-    static HNumber factorial( const HNumber & x,
-                              const HNumber & base = HNumber(1) );
+    static HNumber factorial( const HNumber & x, const HNumber & base = HNumber(1) );
     static HNumber gamma( const HNumber & x);
     static HNumber lnGamma( const HNumber & x);
 
-    static HNumber binomialPmf( const HNumber & k, const HNumber & n,
-                                const HNumber & p );
-    static HNumber binomialCdf( const HNumber & k, const HNumber & n,
-                                const HNumber & p );
+    static HNumber binomialPmf( const HNumber & k, const HNumber & n, const HNumber & p );
+    static HNumber binomialCdf( const HNumber & k, const HNumber & n, const HNumber & p );
     static HNumber binomialMean( const HNumber & n, const HNumber & p );
     static HNumber binomialVariance( const HNumber & n, const HNumber & p );
-    static HNumber hypergeometricPmf( const HNumber & k, const HNumber & N,
-                                      const HNumber & M, const HNumber & n );
-    static HNumber hypergeometricCdf( const HNumber & k, const HNumber & N,
-                                      const HNumber & M, const HNumber & n );
-    static HNumber hypergeometricMean( const HNumber & N, const HNumber & M,
-                                       const HNumber & n );
-    static HNumber hypergeometricVariance( const HNumber & N, const HNumber & M,
-                                           const HNumber & n );
+    static HNumber hypergeometricPmf( const HNumber & k, const HNumber & N, const HNumber & M, const HNumber & n );
+    static HNumber hypergeometricCdf( const HNumber & k, const HNumber & N, const HNumber & M, const HNumber & n );
+    static HNumber hypergeometricMean( const HNumber & N, const HNumber & M, const HNumber & n );
+    static HNumber hypergeometricVariance( const HNumber & N, const HNumber & M, const HNumber & n );
     static HNumber poissonPmf( const HNumber & k, const HNumber & l );
     static HNumber poissonCdf( const HNumber & k, const HNumber & l );
     static HNumber poissonMean( const HNumber & l );
@@ -184,13 +172,12 @@ class HMath
     static HNumber erf( const HNumber & x );
     static HNumber erfc( const HNumber & x );
     // LOGIC
-    static HNumber mask ( const HNumber & val, const HNumber & bits);
-    static HNumber sgnext ( const HNumber & val, const HNumber & bits);
+    static HNumber mask( const HNumber & val, const HNumber & bits );
+    static HNumber sgnext( const HNumber & val, const HNumber & bits );
     static HNumber ashr( const HNumber & val, const HNumber & bits );
 };
 
-
 std::ostream & operator<<( std::ostream &, const HNumber & );
 
-
 #endif
+

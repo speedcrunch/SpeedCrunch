@@ -17,28 +17,23 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-
 #include "math/hmath.hxx"
 
 #include <cstdlib>
 #include <iostream>
 #include <string.h>
 
-
 using namespace std;
-
 
 #define CHECK(x,y)            check_value(__FILE__,__LINE__,#x,x,y)
 #define CHECK_FORMAT(f,p,x,y) check_format(__FILE__,__LINE__,#x,x,f,p,y)
 #define CHECK_PRECISE(x,y)    check_precise(__FILE__,__LINE__,#x,x,y)
-
 
 static int hmath_total_tests  = 0;
 static int hmath_failed_tests = 0;
 
 static const HNumber PI  = HMath::pi();
 static const HNumber PHI = HMath::phi();
-
 
 static void check_value( const char * file, int line, const char * msg,
                          const HNumber & n, const char * expected )
@@ -55,7 +50,6 @@ static void check_value( const char * file, int line, const char * msg,
   }
   free( result );
 }
-
 
 static void check_format( const char * file, int line, const char * msg,
                           const HNumber & n, char format, int prec,
@@ -76,7 +70,6 @@ static void check_format( const char * file, int line, const char * msg,
   free( result );
 }
 
-
 static void check_precise( const char * file, int line, const char * msg,
                            const HNumber & n, const char * expected )
 {
@@ -94,7 +87,6 @@ static void check_precise( const char * file, int line, const char * msg,
   }
   free( result );
 }
-
 
 void test_create()
 {
@@ -202,7 +194,6 @@ void test_format()
   CHECK_FORMAT( 'g', 3, HNumber( "2.47e4"      ), "24700.000"  );
 }
 
-
 void test_op()
 {
   // addition
@@ -258,7 +249,6 @@ void test_op()
   CHECK( HNumber( 6     ) * HNumber( 7     ), "42"   );
   CHECK( HNumber( "1.5" ) * HNumber( "1.5" ), "2.25" );
 }
-
 
 void test_functions()
 {
@@ -1163,20 +1153,21 @@ void test_functions()
                  "1.54308063481524377847790562075706168260152911236586" );
 }
 
-
 int main( int argc, char * * argv )
 {
   hmath_total_tests  = 0;
   hmath_failed_tests = 0;
-
+cout << "*************" << endl;
   test_create();
-  test_format();
-  test_op();
-  test_functions();
+cout << "*************" << endl;
+  //test_format();
+  //test_op();
+  //test_functions();
 
-  std::cerr << hmath_total_tests  << " total, "
-            << hmath_failed_tests << " failed"
-            << endl;
+  cerr << hmath_total_tests  << " total, "
+       << hmath_failed_tests << " failed"
+       << endl;
 
   return hmath_failed_tests;
 }
+

@@ -18,15 +18,14 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
+#include "math/hmath.hxx"
 
-#include "hmath.hxx"
-
-#include "floatcommon.h"
-#include "floatconst.h"
-#include "floatconvert.h"
-#include "floathmath.h"
-#include "floatio.h"
-#include "floatnum.h"
+#include "math/floatcommon.h"
+#include "math/floatconst.h"
+#include "math/floatconvert.h"
+#include "math/floathmath.h"
+#include "math/floatio.h"
+#include "math/floatnum.h"
 
 #include "core/errors.h"
 
@@ -36,7 +35,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-
 #define HMATH_WORKING_PREC (DECPRECISION + 3)
 #define HMATH_EVAL_PREC (HMATH_WORKING_PREC + 2)
 
@@ -45,7 +43,6 @@
 #define HMATH_BIN_MAX_SHOWN ((33219*HMATH_MAX_SHOWN)/10000 + 1)
 #define HMATH_OCT_MAX_SHOWN ((11073*HMATH_MAX_SHOWN)/10000 + 1)
 #define HMATH_HEX_MAX_SHOWN ((8305*HMATH_MAX_SHOWN)/10000 + 1)
-
 
 /*------------------------   Helper routines  -------------------------*/
 
@@ -93,8 +90,7 @@ static void h_init()
   }
 }
 
-static void
-checkpoleorzero( floatnum result, floatnum x )
+static void checkpoleorzero( floatnum result, floatnum x )
 {
   int expx, expr;
 
@@ -168,8 +164,7 @@ void roundSetError(HNumberPrivate* dest)
     float_round(dfnum, dfnum, HMATH_WORKING_PREC, TONEAREST);
 }
 
-void call2Args(HNumberPrivate* dest, HNumberPrivate* n1,
-               HNumberPrivate* n2, Float2Args func)
+void call2Args(HNumberPrivate* dest, HNumberPrivate* n1, HNumberPrivate* n2, Float2Args func)
 {
   dest->error = checkNaNParam(*n1, n2);
   if (dest->error == Success)
@@ -180,8 +175,7 @@ void call2Args(HNumberPrivate* dest, HNumberPrivate* n1,
   }
 }
 
-void call2ArgsND(HNumberPrivate* dest, HNumberPrivate* n1,
-               HNumberPrivate* n2, Float2ArgsND func)
+void call2ArgsND(HNumberPrivate* dest, HNumberPrivate* n1, HNumberPrivate* n2, Float2ArgsND func)
 {
   dest->error = checkNaNParam(*n1, n2);
   if (dest->error == Success)
@@ -609,7 +603,6 @@ HNumber HNumber::operator~() const
   return result;
 }
 
-
 /**
  * Changes the sign.
  */
@@ -697,7 +690,6 @@ _doFormat(
   return str;
 }
 
-
 /**
  * Formats the given number as string, using specified decimal digits.
  * Note that the returned string must be freed.
@@ -726,7 +718,6 @@ char * HMath::formatFixed( const HNumber & hn, int prec )
                        HMATH_MAX_SHOWN, flags);
   return result;
 }
-
 
 /**
  * Formats the given number as string, in scientific format.
@@ -764,7 +755,6 @@ char * HMath::formatEngineering( const HNumber & hn, int prec )
   return _doFormat(&hn.d->fnum, 10, 10, IO_MODE_ENG, prec,
                    flags);
 }
-
 
 /**
  * Formats the given number as string, using specified decimal digits.
@@ -814,20 +804,17 @@ char* formathexfp( floatnum x, char base,
   tmpscale = scale;
   if (float_isinteger(x))
     tmpscale = 0;
-  result = _doFormat(x, base, expbase, IO_MODE_FIXPOINT,
-                     tmpscale, IO_FLAG_SUPPRESS_PLUS
-                             + IO_FLAG_SUPPRESS_DOT + IO_FLAG_SHOW_BASE
-                             + IO_FLAG_SUPPRESS_EXPZERO);
+  result = _doFormat(x, base, expbase, IO_MODE_FIXPOINT, tmpscale,
+                      IO_FLAG_SUPPRESS_PLUS + IO_FLAG_SUPPRESS_DOT
+                      + IO_FLAG_SHOW_BASE + IO_FLAG_SUPPRESS_EXPZERO);
 #endif
   if (result != NULL)
     return result;
 
-  return _doFormat(x, base, expbase, IO_MODE_SCIENTIFIC,
-                    scale,
+  return _doFormat(x, base, expbase, IO_MODE_SCIENTIFIC, scale,
                     IO_FLAG_SUPPRESS_PLUS + IO_FLAG_SUPPRESS_DOT
                     + IO_FLAG_SHOW_BASE + IO_FLAG_SHOW_EXPBASE);
 }
-
 
 /**
  * Formats the given number as string, using hexadecimal digits.
@@ -838,7 +825,6 @@ char * HMath::formatHexadec( const HNumber & hn )
   return formathexfp (&hn.d->fnum, 16, 10, HMATH_HEX_MAX_SHOWN);
 }
 
-
 /**
  * Formats the given number as string, using octal digits.
  * Note that the returned string must be freed.
@@ -848,7 +834,6 @@ char * HMath::formatOctal( const HNumber & hn )
   return formathexfp (&hn.d->fnum, 8, 10, HMATH_OCT_MAX_SHOWN);
 }
 
-
 /**
  * Formats the given number as string, using binary digits.
  * Note that the returned string must be freed.
@@ -857,7 +842,6 @@ char * HMath::formatBinary( const HNumber & hn )
 {
   return formathexfp (&hn.d->fnum, 2, 10, HMATH_BIN_MAX_SHOWN);
 }
-
 
 /**
  * Formats the given number as string, using specified decimal digits.
@@ -884,7 +868,6 @@ char* HMath::format( const HNumber& hn, char format, int prec )
   return formatGeneral( hn, prec );
 }
 
-
 /**
  * Converts radians to degrees.
  */
@@ -893,7 +876,6 @@ HNumber HMath::rad2deg( const HNumber & angle )
   return angle * (HNumber(180) / HMath::pi());
 }
 
-
 /**
  * Converts degrees to radians.
  */
@@ -901,7 +883,6 @@ HNumber HMath::deg2rad( const HNumber & angle )
 {
   return angle * (HMath::pi() / HNumber(180));
 }
-
 
 /**
  * Returns the constant pi.
@@ -914,7 +895,6 @@ HNumber HMath::pi()
   return value;
 }
 
-
 /**
  * Returns the constant phi (golden number).
  */
@@ -925,7 +905,6 @@ HNumber HMath::phi()
                    "84754088075386891752");
 }
 
-
 /**
  * Returns -1, 0, 1 if n1 is less than, equal to, or more than n2.
  */
@@ -935,7 +914,6 @@ int HMath::compare( const HNumber & n1, const HNumber & n2 )
   float_geterror(); // clears error, if one operand was a NaN
   return result;
 }
-
 
 /**
  * Returns the maximum of two numbers.
@@ -951,7 +929,6 @@ HNumber HMath::max( const HNumber & n1, const HNumber & n2 )
   }
 }
 
-
 /**
  * Returns the minimum of two numbers.
  */
@@ -966,7 +943,6 @@ HNumber HMath::min( const HNumber & n1, const HNumber & n2 )
   }
 }
 
-
 /**
  * Returns the absolute value of n.
  */
@@ -976,7 +952,6 @@ HNumber HMath::abs( const HNumber & n )
   call1ArgND(result.d, n.d, float_abs);
   return result;
 }
-
 
 /**
  * Rounds n to the specified decimal digits.
@@ -1004,7 +979,6 @@ HNumber HMath::round( const HNumber & n, int prec )
   return result;
 }
 
-
 /**
  * Truncates n to the specified decimal digits.
  */
@@ -1031,7 +1005,6 @@ HNumber HMath::trunc( const HNumber & n, int prec )
   return result;
 }
 
-
 /**
  * Returns the integer part of n.
  */
@@ -1042,7 +1015,6 @@ HNumber HMath::integer( const HNumber & n )
   return result;
 }
 
-
 /**
  * Returns the fraction part of n.
  */
@@ -1052,7 +1024,6 @@ HNumber HMath::frac( const HNumber & n )
   call1ArgND(result.d, n.d, float_frac);
   return result;
 }
-
 
 /**
  * Returns the floor of n.
@@ -1066,7 +1037,6 @@ HNumber HMath::floor( const HNumber & n )
   return r;
 }
 
-
 /**
  * Returns the ceiling of n.
  */
@@ -1078,7 +1048,6 @@ HNumber HMath::ceil( const HNumber & n )
   float_roundtoint(&r.d->fnum, TOPLUSINFINITY);
   return r;
 }
-
 
 /**
  * Returns the greatest common divisor of n1 and n2.
@@ -1116,7 +1085,6 @@ HNumber HMath::gcd( const HNumber & n1, const HNumber & n2 )
   }
 }
 
-
 /**
  * Returns the square root of n. If n is negative, returns NaN.
  */
@@ -1126,7 +1094,6 @@ HNumber HMath::sqrt( const HNumber & n )
   call1Arg(result.d, n.d, float_sqrt);
   return result;
 }
-
 
 /**
  * Returns the cube root of n.
@@ -1196,7 +1163,6 @@ HNumber HMath::cbrt( const HNumber & n )
   return r;
 }
 
-
 /**
  * Raises n1 to an integer n.
  */
@@ -1210,7 +1176,6 @@ HNumber HMath::raise( const HNumber & n1, int n )
   return r;
 }
 
-
 /**
  * Raises n1 to n2.
  */
@@ -1221,7 +1186,6 @@ HNumber HMath::raise( const HNumber & n1, const HNumber & n2  )
   return result;
 }
 
-
 /**
  * Returns e raised to x.
  */
@@ -1231,7 +1195,6 @@ HNumber HMath::exp( const HNumber & x )
   call1Arg(result.d, x.d, float_exp);
   return result;
 };
-
 
 /**
  * Returns the natural logarithm of x.
@@ -1245,7 +1208,6 @@ HNumber HMath::ln( const HNumber & x )
 
 }
 
-
 /**
  * Returns the base-10 logarithm of x.
  * If x is non positive, returns NaN.
@@ -1256,7 +1218,6 @@ HNumber HMath::log( const HNumber & x )
   call1Arg(result.d, x.d, float_log);
   return result;
 }
-
 
 /**
  * Returns the base-2 logarithm of x.
@@ -1279,7 +1240,6 @@ HNumber HMath::sin( const HNumber & x )
   return result;
 }
 
-
 /**
  * Returns the cosine of x. Note that x must be in radians.
  */
@@ -1289,7 +1249,6 @@ HNumber HMath::cos( const HNumber & x )
   call1ArgPoleCheck(result.d, x.d, float_cos);
   return result;
 }
-
 
 /**
  * Returns the tangent of x. Note that x must be in radians.
@@ -1301,7 +1260,6 @@ HNumber HMath::tan( const HNumber & x )
   return result;
 }
 
-
 /**
  * Returns the cotangent of x. Note that x must be in radians.
  */
@@ -1309,7 +1267,6 @@ HNumber HMath::cot( const HNumber & x )
 {
   return cos(x) / sin(x);
 }
-
 
 /**
  * Returns the secant of x. Note that x must be in radians.
@@ -1319,7 +1276,6 @@ HNumber HMath::sec( const HNumber & x )
   return HNumber(1) / cos(x);
 }
 
-
 /**
  * Returns the cosecant of x. Note that x must be in radians.
  */
@@ -1327,7 +1283,6 @@ HNumber HMath::csc( const HNumber & x )
 {
   return HNumber(1) / sin(x);
 }
-
 
 /**
  * Returns the arc tangent of x.
@@ -1339,7 +1294,6 @@ HNumber HMath::atan( const HNumber & x )
   return result;
 };
 
-
 /**
  * Returns the arc sine of x.
  */
@@ -1349,7 +1303,6 @@ HNumber HMath::asin( const HNumber & x )
   call1Arg(result.d, x.d, float_arcsin);
   return result;
 };
-
 
 /**
  * Returns the arc cosine of x.
@@ -1361,7 +1314,6 @@ HNumber HMath::acos( const HNumber & x )
   return result;
 };
 
-
 /**
  * Returns the hyperbolic sine of x.
  */
@@ -1371,7 +1323,6 @@ HNumber HMath::sinh( const HNumber & x )
   call1Arg(result.d, x.d, float_sinh);
   return result;
 }
-
 
 /**
  * Returns the hyperbolic cosine of x.
@@ -1383,7 +1334,6 @@ HNumber HMath::cosh( const HNumber & x )
   return result;
 }
 
-
 /**
  * Returns the hyperbolic tangent of x.
  */
@@ -1393,7 +1343,6 @@ HNumber HMath::tanh( const HNumber & x )
   call1Arg(result.d, x.d, float_tanh);
   return result;
 }
-
 
 /**
  * Returns the area hyperbolic sine of x.
@@ -1405,7 +1354,6 @@ HNumber HMath::arsinh( const HNumber & x )
   return result;
 }
 
-
 /**
  * Returns the area hyperbolic cosine of x.
  */
@@ -1415,7 +1363,6 @@ HNumber HMath::arcosh( const HNumber & x )
   call1Arg(result.d, x.d, float_arcosh);
   return result;
 }
-
 
 /**
  * Returns the area hyperbolic tangent of x.
@@ -1427,7 +1374,6 @@ HNumber HMath::artanh( const HNumber & x )
   return result;
 }
 
-
 /**
  * Returns the Gamma function.
  */
@@ -1437,7 +1383,6 @@ HNumber HMath::gamma( const HNumber & x )
   call1Arg(result.d, x.d, float_gamma);
   return result;
 }
-
 
 /**
  * Returns ln(abs(Gamma(x))).
@@ -1449,7 +1394,6 @@ HNumber HMath::lnGamma( const HNumber & x )
   return result;
 }
 
-
 /**
  * Returns the sign of x.
  */
@@ -1460,7 +1404,6 @@ HNumber HMath::sign( const HNumber & x )
 
   return float_getsign(&x.d->fnum);
 }
-
 
 /**
  * Returns the binomial coefficient of n and r.
@@ -1518,7 +1461,6 @@ HNumber HMath::nCr( const HNumber & n, const HNumber & r )
     return 0;
 }
 
-
 /**
  * Returns the permutation of n elements chosen r elements.
  */
@@ -1526,7 +1468,6 @@ HNumber HMath::nPr( const HNumber & n, const HNumber & r )
 {
   return factorial(n, (n-r+1));
 }
-
 
 /**
  * Returns the falling Pochhammer symbol x*(x-1)*..*base.
@@ -1557,7 +1498,6 @@ HNumber HMath::factorial( const HNumber & x, const HNumber & base )
   return r;
 }
 
-
 /**
  * Calculates the binomial discrete distribution probability mass function:
  * \f[X{\sim}B(n,p)\f]
@@ -1580,7 +1520,6 @@ HNumber HMath::binomialPmf( const HNumber & k, const HNumber & n, const HNumber 
   return HMath::nCr( n, k ) * HMath::raise( p, k ) *
            HMath::raise( HNumber(1)-p, n-k );
 }
-
 
 /**
  * Calculates the binomial cumulative distribution function:
@@ -1617,7 +1556,6 @@ HNumber HMath::binomialCdf( const HNumber & k, const HNumber & n, const HNumber 
   return result;
 }
 
-
 /**
  * Calculates the expected value of a binomially distributed random variable:
  * \f[X{\sim}B(n,p)\f]
@@ -1638,7 +1576,6 @@ HNumber HMath::binomialMean( const HNumber & n, const HNumber & p )
   return n * p;
 }
 
-
 /**
  * Calculates the variance of a binomially distributed random variable:
  * \f[X{\sim}B(n,p)\f]
@@ -1658,7 +1595,6 @@ HNumber HMath::binomialVariance( const HNumber & n, const HNumber & p )
 
   return n * p * ( HNumber(1) - p );
 }
-
 
 /**
  * Calculates the hypergeometric discrete distribution probability mass
@@ -1685,7 +1621,6 @@ HNumber HMath::hypergeometricPmf( const HNumber & k, const HNumber & N,
 
   return HMath::nCr( M, k ) * HMath::nCr( N-M, n-k ) / HMath::nCr( N, n );
 }
-
 
 /**
  * Calculates the hypergeometric cumulative distribution function:
@@ -1716,7 +1651,6 @@ HNumber HMath::hypergeometricCdf( const HNumber & k, const HNumber & N,
   return result;
 }
 
-
 /**
  * Calculates the expected value of a hypergeometrically distributed random
  * variable:
@@ -1739,7 +1673,6 @@ HNumber HMath::hypergeometricMean( const HNumber & N, const HNumber & M, const H
 
   return n * M / N;
 }
-
 
 /**
  *
@@ -1764,7 +1697,6 @@ HNumber HMath::hypergeometricVariance( const HNumber & N, const HNumber & M, con
   return (n * (M/N) * (HNumber(1) - M/N) * (N-n)) / (N - HNumber(1));
 }
 
-
 /**
  *
  * Calculates the poissonian discrete distribution probability mass function:
@@ -1785,7 +1717,6 @@ HNumber HMath::poissonPmf( const HNumber & k, const HNumber & l )
 
   return exp( -l ) * raise( l, k ) / factorial( k );
 }
-
 
 /**
  * Calculates the poissonian cumulative distribution function:
@@ -1811,7 +1742,6 @@ HNumber HMath::poissonCdf( const HNumber & k, const HNumber & l )
   return result;
 }
 
-
 /**
  * Calculates the expected value of a Poisson distributed random variable:
  * \f[X{\sim}P(\lambda)\f]
@@ -1829,7 +1759,6 @@ HNumber HMath::poissonMean( const HNumber & l )
 
   return l;
 }
-
 
 /**
  * Calculates the variance of a Poisson distributed random variable:
@@ -1849,7 +1778,6 @@ HNumber HMath::poissonVariance( const HNumber & l )
   return l;
 }
 
-
 /**
  * Returns the erf function (related to normal distribution).
  */
@@ -1859,7 +1787,6 @@ HNumber HMath::erf( const HNumber & x )
   call1Arg(result.d, x.d, float_erf);
   return result;
 }
-
 
 /**
  * Returns the complementary erf function (related to normal distribution).
@@ -1871,7 +1798,6 @@ HNumber HMath::erfc( const HNumber & x )
   return result;
 }
 
-
 /**
  * Restricts a logic value to a given bit size.
  */
@@ -1881,7 +1807,6 @@ HNumber HMath::mask ( const HNumber & val, const HNumber & bits )
     return HNumber::nan();
   return val & ~(HNumber(-1) << HNumber(bits));
 }
-
 
 /**
  * sign-extends an unsigned value
@@ -1894,7 +1819,6 @@ HNumber HMath::sgnext( const HNumber & val, const HNumber & bits )
   ofs = HNumber(LOGICRANGE) - bits;
   return (val << ofs) >> ofs;
 }
-
 
 /**
  * For bits >= 0 does an arithmetic shift right, for bits < 0 a shift left.
@@ -1909,7 +1833,6 @@ HNumber HMath::ashr( const HNumber & val, const HNumber & bits )
   return val << -bits;
 }
 
-
 std::ostream& operator<<( std::ostream& s, const HNumber& n )
 {
   char* str = HMath::formatFixed( n );
@@ -1917,3 +1840,4 @@ std::ostream& operator<<( std::ostream& s, const HNumber& n )
   delete[] str;
   return s;
 }
+
