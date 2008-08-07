@@ -1849,9 +1849,12 @@ void MainWindow::setStatusBarVisible( bool b )
 
 void MainWindow::showAutoCalcTip( const QString & msg )
 {
-  QPoint p = d->widgets.editor->mapToParent( QPoint(0, 0) );
-  d->widgets.autoCalcTip->move( p );
   d->widgets.autoCalcTip->showText( msg );
+  d->widgets.autoCalcTip->adjustSize();
+  int h = d->widgets.autoCalcTip->height();
+  QPoint p = d->widgets.editor->mapToGlobal( QPoint(0, -h) );
+  p = mapFromGlobal(p);
+  d->widgets.autoCalcTip->move( p );
 }
 
 void MainWindow::setFullScreenEnabled( bool b )
