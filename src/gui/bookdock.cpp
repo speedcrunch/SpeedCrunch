@@ -134,7 +134,6 @@ BookDock::BookDock( const QString & directory, const QString & file,
 
 BookDock::~BookDock()
 {
-  d->settings->release();
   delete d;
 }
 

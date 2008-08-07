@@ -31,7 +31,6 @@ class Settings
 {
   public:
     static Settings * instance();
-    static void release();
 
     void load();
     void save();
@@ -73,9 +72,10 @@ class Settings
     QSize       windowSize;
     QByteArray  windowState;
 
+    ~Settings();
+
   private:
     Settings();
-    ~Settings();
     Settings( const Settings & );
     Settings & operator=( const Settings & );
 };

@@ -205,7 +205,6 @@ Editor::Editor( Evaluator * e, Functions * f, Constants * c, QWidget * parent )
 
 Editor::~Editor()
 {
-  d->settings->release();
   delete d;
 }
 

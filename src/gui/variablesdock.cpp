@@ -120,7 +120,6 @@ void VariablesDock::updateList( const Evaluator * eval )
 VariablesDock::~VariablesDock()
 {
   d->filterTimer->stop();
-  d->settings->release();
   delete d;
 }
 

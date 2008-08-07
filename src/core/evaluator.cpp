@@ -334,7 +334,6 @@ Evaluator::Evaluator( Functions * f, QObject * parent )
 
 Evaluator::~Evaluator()
 {
-  d->settings->release();
   delete d;
 }
 

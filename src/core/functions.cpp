@@ -453,7 +453,6 @@ HNumber Functions::Private::sin( Function * f, const QVector<HNumber> & args )
 
   if ( settings->angleUnit == 'd' )
     angle = HMath::deg2rad( angle );
-  settings->release();
 
   return HMath::sin( angle );
 }
@@ -468,7 +467,6 @@ HNumber Functions::Private::cos( Function * f, const QVector<HNumber> & args )
 
   if ( settings->angleUnit == 'd' )
     angle = HMath::deg2rad( angle );
-  settings->release();
 
   return HMath::cos( angle );
 }
@@ -483,7 +481,6 @@ HNumber Functions::Private::tan( Function * f, const QVector<HNumber> & args )
 
   if ( settings->angleUnit == 'd' )
     angle = HMath::deg2rad( angle );
-  settings->release();
 
   HNumber result = HMath::tan( angle );
   if ( result.isNan() )
@@ -506,7 +503,6 @@ HNumber Functions::Private::cot( Function * f, const QVector<HNumber> & args )
 
   if ( settings->angleUnit == 'd' )
     angle = HMath::deg2rad( angle );
-  settings->release();
 
   HNumber result = HMath::cot( angle );
   if ( result.isNan() )
@@ -529,7 +525,6 @@ HNumber Functions::Private::sec( Function * f, const QVector<HNumber> & args )
 
   if ( settings->angleUnit == 'd' )
     angle = HMath::deg2rad( angle );
-  settings->release();
 
   HNumber result = HMath::sec( angle );
   if ( result.isNan() )
@@ -552,7 +547,6 @@ HNumber Functions::Private::csc( Function * f, const QVector<HNumber> & args )
 
   if ( settings->angleUnit == 'd' )
     angle = HMath::deg2rad( angle );
-  settings->release();
 
   HNumber result = HMath::csc( angle );
   if ( result.isNan() )
@@ -585,7 +579,6 @@ HNumber Functions::Private::asin( Function * f, const QVector<HNumber> & args )
 
   if ( settings->angleUnit == 'd' )
     result = HMath::rad2deg( result );
-  settings->release();
 
   return result;
 }
@@ -610,7 +603,6 @@ HNumber Functions::Private::acos( Function * f, const QVector<HNumber> & args )
 
   if ( settings->angleUnit == 'd' )
     result = HMath::rad2deg( result );
-  settings->release();
 
   return result;
 }
@@ -627,7 +619,6 @@ HNumber Functions::Private::atan( Function * f, const QVector<HNumber> & args )
 
   if ( settings->angleUnit == 'd' )
     result = HMath::rad2deg( result );
-  settings->release();
 
   return result;
 }

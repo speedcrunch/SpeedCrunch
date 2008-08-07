@@ -98,7 +98,6 @@ Keypad::Keypad( QWidget * parent )
 
 Keypad::~Keypad()
 {
-  d->settings->release();
   delete d;
 }
 

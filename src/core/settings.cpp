@@ -29,9 +29,15 @@
 #include <QLocale>
 
 static Settings * sSettings = 0;
-static int sCounter = 0;
 static char sRadixCharacter = 0;
 static QSettings * createQSettings( const QString & key );
+
+static void cleanup_settings()
+{
+  delete sSettings;
+  sSettings = 0;
+}
+
 
 Settings::Settings()
 {
@@ -44,21 +50,12 @@ Settings::~Settings()
 Settings * Settings::instance()
 {
   if ( ! sSettings )
-    sSettings = new Settings;
-  ++sCounter;
-  return sSettings;
-}
-
-void Settings::release()
-{
-  if ( sCounter == 1 )
   {
-    sSettings = 0;
-    sCounter = 0;
-    delete sSettings;
+    sSettings = new Settings;
+    qAddPostRoutine(cleanup_settings);
   }
-  else
-    --sCounter;
+
+  return sSettings;
 }
 
 void Settings::load()

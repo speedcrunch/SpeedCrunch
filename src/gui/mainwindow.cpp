@@ -298,8 +298,6 @@ MainWindow::Private::~Private()
   if ( docks.variables  ) deleteVariablesDock();
   if ( docks.functions  ) deleteFunctionsDock();
   if ( docks.history    ) deleteHistoryDock();
-
-  settings->release();
 }
 
 QTranslator * MainWindow::Private::createTranslator( const QString & langCode )

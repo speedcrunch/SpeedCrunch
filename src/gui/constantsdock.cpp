@@ -128,7 +128,6 @@ ConstantsDock::ConstantsDock( Constants * c, QWidget * parent )
 ConstantsDock::~ConstantsDock()
 {
   d->filterTimer->stop();
-  d->settings->release();
   delete d;
 }
 
