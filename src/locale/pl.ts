@@ -1710,7 +1710,7 @@ Kliknij na ikonie, żeby go przywrócić</translation>
     <message>
         <location filename="../gui/mainwindow.cpp" line="549"/>
         <source>&amp;Keypad</source>
-        <translation>&amp;Klawiatura numeryczna</translation>
+        <translation>&amp;Klawiatura</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="550"/>
@@ -1830,12 +1830,12 @@ Kliknij na ikonie, żeby go przywrócić</translation>
     <message>
         <location filename="../gui/mainwindow.cpp" line="574"/>
         <source>&amp;Engineering</source>
-        <translation>Inżynierska</translation>
+        <translation>Inżynierski</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="575"/>
         <source>&amp;Fixed Decimal</source>
-        <translation>&amp;Ustalona dziesiętna</translation>
+        <translation>&amp;Ustalony dziesiętny</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="576"/>
@@ -1845,17 +1845,17 @@ Kliknij na ikonie, żeby go przywrócić</translation>
     <message>
         <location filename="../gui/mainwindow.cpp" line="577"/>
         <source>&amp;Hexadecimal</source>
-        <translation>&amp;Szesnastkowa</translation>
+        <translation>&amp;Szesnastkowy</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="578"/>
         <source>&amp;Octal</source>
-        <translation>Ósemk&amp;owa</translation>
+        <translation>Ósemk&amp;owy</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="579"/>
         <source>&amp;Scientific</source>
-        <translation>Naukowa</translation>
+        <translation>Naukowy</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="580"/>
@@ -1955,7 +1955,7 @@ Kliknij na ikonie, żeby go przywrócić</translation>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1732"/>
         <source>SpeedCrunch Sessions (*.sch);;All Files (*)</source>
-        <translation>Sesje SpeedCrunch (*sch);;Wszystkie pliki (*)</translation>
+        <translation>Sesje SpeedCrunch (*.sch);;Wszystkie pliki (*)</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1450"/>
