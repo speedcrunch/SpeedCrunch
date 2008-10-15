@@ -48,6 +48,8 @@ class HNumber
     bool isNegative() const;
     bool isInteger() const;
 
+//TODO formats should be separated from numbers
+
     // 'g': decimal general (default)
     // 'f': decimal fixed
     // 'e': decimal scientific
@@ -129,11 +131,18 @@ class HMath
     static HNumber cbrt( const HNumber & n );
     static HNumber raise( const HNumber & n1, int n );
     static HNumber raise( const HNumber & n1, const HNumber & n2 );
+    static HNumber sign( const HNumber & x );
+    // EXPONENTIAL FUNCTION AND RELATED
     static HNumber exp( const HNumber & x );
     static HNumber ln( const HNumber & x );
     static HNumber log( const HNumber & x );
     static HNumber lg( const HNumber & x );
-    static HNumber sign( const HNumber & x );
+    static HNumber sinh( const HNumber & x );
+    static HNumber cosh( const HNumber & x );
+    static HNumber tanh( const HNumber & x );
+    static HNumber arsinh( const HNumber & x );
+    static HNumber arcosh( const HNumber & x );
+    static HNumber artanh( const HNumber & x );
     // TRIGONOMETRY
     static HNumber sin( const HNumber & x );
     static HNumber cos( const HNumber & x );
@@ -144,19 +153,15 @@ class HMath
     static HNumber asin( const HNumber & x );
     static HNumber acos( const HNumber & x );
     static HNumber atan( const HNumber & x );
-    static HNumber sinh( const HNumber & x );
-    static HNumber cosh( const HNumber & x );
-    static HNumber tanh( const HNumber & x );
-    static HNumber arsinh( const HNumber & x );
-    static HNumber arcosh( const HNumber & x );
-    static HNumber artanh( const HNumber & x );
-    // PROBABILITY
-    static HNumber nCr( const HNumber & n, const HNumber & k );
-    static HNumber nPr( const HNumber & n, const HNumber & r );
+    // HIGHER MATH FUNCTIONS
     static HNumber factorial( const HNumber & x, const HNumber & base = HNumber(1) );
     static HNumber gamma( const HNumber & x);
     static HNumber lnGamma( const HNumber & x);
-
+    static HNumber erf( const HNumber & x );
+    static HNumber erfc( const HNumber & x );
+    // PROBABILITY
+    static HNumber nCr( const HNumber & n, const HNumber & k );
+    static HNumber nPr( const HNumber & n, const HNumber & r );
     static HNumber binomialPmf( const HNumber & k, const HNumber & n, const HNumber & p );
     static HNumber binomialCdf( const HNumber & k, const HNumber & n, const HNumber & p );
     static HNumber binomialMean( const HNumber & n, const HNumber & p );
@@ -169,8 +174,6 @@ class HMath
     static HNumber poissonCdf( const HNumber & k, const HNumber & l );
     static HNumber poissonMean( const HNumber & l );
     static HNumber poissonVariance( const HNumber & l );
-    static HNumber erf( const HNumber & x );
-    static HNumber erfc( const HNumber & x );
     // LOGIC
     static HNumber mask( const HNumber & val, const HNumber & bits );
     static HNumber sgnext( const HNumber & val, const HNumber & bits );
