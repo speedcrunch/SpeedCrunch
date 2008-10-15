@@ -35,9 +35,11 @@
 #include <stdlib.h>
 #include <string.h>
 
+//TODO make this configurable
 #define HMATH_WORKING_PREC (DECPRECISION + 3)
 #define HMATH_EVAL_PREC (HMATH_WORKING_PREC + 2)
 
+//TODO should go into a separate format file
 // default scale for fall back in formatting
 #define HMATH_MAX_SHOWN 20
 #define HMATH_BIN_MAX_SHOWN ((33219*HMATH_MAX_SHOWN)/10000 + 1)
@@ -86,6 +88,7 @@ static void h_init()
   {
     h_initialized = true;
 //     floatmath_init();
+    //TODO related to formats, get rid of it.
     float_stdconvert();
   }
 }
@@ -121,8 +124,10 @@ class HNumberPrivate
 public:
   HNumberPrivate();
   ~HNumberPrivate();
+  //TODO make this a variant
   floatstruct fnum;
   Error error;
+  //TODO do not keep formats with numbers
   char format;
 };
 
@@ -1647,6 +1652,7 @@ HNumber HMath::hypergeometricCdf( const HNumber & k, const HNumber & N,
 
   HNumber result( 0 );
   for ( HNumber i( 0 ); i <= k; i += 1 )
+    //TODO too expensive evaluation, simplify
     result += HMath::nCr( M, i ) * HMath::nCr( N-M, n-i ) / HMath::nCr( N, n );
   return result;
 }
@@ -1737,6 +1743,7 @@ HNumber HMath::poissonCdf( const HNumber & k, const HNumber & l )
 
   HNumber result( 0 );
   for ( HNumber i( 0 ); i <= k; i += 1 )
+    //TODO too expensive evaluation, simplify
     result += exp( -l ) * raise( l, i ) / factorial( i );
 
   return result;
