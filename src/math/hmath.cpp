@@ -29,7 +29,6 @@
 
 #include "core/errors.h"
 
-#include <ctype.h>
 #include <sstream>
 #include <stdio.h>
 #include <stdlib.h>

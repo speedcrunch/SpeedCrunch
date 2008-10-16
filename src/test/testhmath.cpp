@@ -18,6 +18,7 @@
 // Boston, MA 02110-1301, USA.
 
 #include "math/hmath.hxx"
+#include "math/floatconst.h"
 
 #include <cstdlib>
 #include <iostream>
@@ -32,8 +33,8 @@ using namespace std;
 static int hmath_total_tests  = 0;
 static int hmath_failed_tests = 0;
 
-static const HNumber PI  = HMath::pi();
-static const HNumber PHI = HMath::phi();
+static HNumber PI;
+static HNumber PHI;
 
 static void check_value( const char * file, int line, const char * msg,
                          const HNumber & n, const char * expected )
@@ -1157,12 +1158,18 @@ int main( int argc, char * * argv )
 {
   hmath_total_tests  = 0;
   hmath_failed_tests = 0;
+
+  // initialize floatnum
+  floatmath_init();
+  PI  = HMath::pi();
+  PHI = HMath::phi();
+
 cout << "*************" << endl;
   test_create();
+  test_format();
+  test_op();
+  test_functions();
 cout << "*************" << endl;
-  //test_format();
-  //test_op();
-  //test_functions();
 
   cerr << hmath_total_tests  << " total, "
        << hmath_failed_tests << " failed"

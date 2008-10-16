@@ -48,7 +48,7 @@ ENDIF(MINGW)
 
 # enable warnings
 IF(CMAKE_COMPILER_IS_GNUCXX )
-  ADD_DEFINITIONS( -g -Wall )
+  ADD_DEFINITIONS( -Wall )
 ENDIF(CMAKE_COMPILER_IS_GNUCXX )
 
 # setup for Qt4
