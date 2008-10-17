@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1">
+<!DOCTYPE TS><TS version="1.1" language="de_DE">
+<defaultcodec></defaultcodec>
 <context>
     <name>AboutBox</name>
     <message>
@@ -215,17 +216,17 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="231"/>
         <source>Former maintainer and core developer</source>
-        <translation type="unfinished"></translation>
+        <translation>Vormaliger Betreuer und Kernentwickler</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="232"/>
         <source>Mac OS X developer and packager</source>
-        <translation type="unfinished"></translation>
+        <translation>Mac OS X Entwickler und Paketbetreuer</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="233"/>
         <source>Original math book developer</source>
-        <translation type="unfinished"></translation>
+        <translation>Ursprünglicher Mathebuchentwickler</translation>
     </message>
 </context>
 <context>
