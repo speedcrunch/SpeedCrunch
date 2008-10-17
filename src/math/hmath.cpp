@@ -1547,7 +1547,11 @@ HNumber HMath::binomialCdf( const HNumber & k, const HNumber & n, const HNumber 
     return HNumber::nan();
 
   HNumber one = HNumber(1);
+  if (n == k)
+    return one;
   HNumber pcompl = one - p;
+  if (pcompl == 0)
+    return pcompl;
   HNumber summand = HMath::raise( pcompl, n );
   HNumber result( summand );
   for ( HNumber i( 0 ); i < k; )

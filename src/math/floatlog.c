@@ -144,7 +144,7 @@ _lnguess(
   _addcoef(dest, _lincombtbl[idx].c5-_lincombtbl[idx].c10, &cLn10, digits);
 }
 
-/* reduces x using a special factor whose primes factors
+/* reduces x using a special factor whose prime factors
    are 2, 3, 5 and 7 only. x is multiplied by this
    factor, yielding a value near a power of ten.
    Then x is divided by this power of ten.
@@ -152,7 +152,7 @@ _lnguess(
    lnguess. Valid for -0.4 <= x < 1. Relative error < 5e-100 for
    100 digit result.
    This algorithm reduces x to a value < 0.01, which
-   is appropriate small for submitting to a series evaluation */
+   is appropriately small for submitting to a series evaluation */
 void
 _lnreduce(
   floatnum x,

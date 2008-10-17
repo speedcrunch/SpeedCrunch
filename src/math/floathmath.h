@@ -36,7 +36,7 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif 
+#endif
 
 /* evaluates ln(1+x) for x > -1. This function is especially useful
    for small x, where its computation is more precise than that of
@@ -102,7 +102,7 @@ char float_artanhxplus1(floatnum x, int digits);
 
 /* evaluates arcosh (1+x), for x >= 0. This function is
    especially useful, if you want to compute values near the
-   singularity of cosh at x == 1.
+   singularity of arcosh at x == 1.
    In case of an error, x is set to NaN and 0 is returned.
    Errors: NaNOperand
            InvalidPrecision (digits > MATHPRECISION)
@@ -161,7 +161,7 @@ char float_tanh(floatnum x, int digits);
            InvalidPrecision (digits > MATHPRECISION) */
 char float_tanhminus1(floatnum x, int digits);
 
-/* evaluates 10^x. No optimization is employed for integer
+/* evaluates 10^x. No optimization is applied for integer
    exponents.
    In case of an error, x is set to NaN and 0 is returned.
    Errors: Underflow
