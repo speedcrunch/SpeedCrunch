@@ -1514,7 +1514,8 @@ HNumber HMath::factorial( const HNumber & x, const HNumber & base )
  * \return the probability of exactly \p k successes, otherwise \p NaN if the
  * function is not defined for the specified parameters.
  */
-HNumber HMath::binomialPmf( const HNumber & k, const HNumber & n, const HNumber & p )
+HNumber HMath::binomialPmf( const HNumber & k, const HNumber & n, const HNumber
+& p )
 {
   if ( k.isNan() || ! k.isInteger() || k < 0 || k > n
          || n.isNan() || ! n.isInteger() || n < 0
@@ -1537,7 +1538,8 @@ HNumber HMath::binomialPmf( const HNumber & k, const HNumber & n, const HNumber 
  * \return the probability of up to \p k successes, otherwise \p NaN if the
  * function is not defined for the specified parameters.
  */
-HNumber HMath::binomialCdf( const HNumber & k, const HNumber & n, const HNumber & p )
+HNumber HMath::binomialCdf( const HNumber & k, const HNumber & n, const HNumber
+& p )
 {
   // FIXME use the regularized incomplete Beta function to avoid
   // the potentially very expensive loop
@@ -1552,6 +1554,8 @@ HNumber HMath::binomialCdf( const HNumber & k, const HNumber & n, const HNumber 
   HNumber pcompl = one - p;
   if (pcompl == 0)
     return pcompl;
+  if (k + k > n)
+    return one - HMath::binomialCdf(n - k - 1, n, pcompl);
   HNumber summand = HMath::raise( pcompl, n );
   HNumber result( summand );
   for ( HNumber i( 0 ); i < k; )
