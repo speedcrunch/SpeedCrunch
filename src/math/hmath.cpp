@@ -1502,6 +1502,12 @@ HNumber HMath::factorial( const HNumber & x, const HNumber & base )
   return r;
 }
 
+static bool checkpn(const HNumber& p, const HNumber& n)
+{
+  return n.isInteger() && ! n.isNegative()
+      && ! p.isNan() && ! p.isNegative() && p <= 1;
+}
+
 /**
  * Calculates the binomial discrete distribution probability mass function:
  * \f[X{\sim}B(n,p)\f]
@@ -1517,17 +1523,18 @@ HNumber HMath::factorial( const HNumber & x, const HNumber & base )
 HNumber HMath::binomialPmf( const HNumber & k, const HNumber & n, const
 HNumber & p )
 {
-  if ( k.isNan() || ! k.isInteger() || k < 0
-         || n.isNan() || ! n.isInteger() || n < 0
-           || p.isNan() || p < 0 || p > 1 )
+  if ( ! k.isInteger() || ! checkpn(p, n) )
     return HNumber::nan();
 
-  // avoid powers of 0
+  HNumber result = nCr( n, k );
+  if ( result.isZero() )
+    return result;
+
+  // special case: powers of zero, 0^0 == 1 in this context
   if ( p.isInteger() )
     return (int) (p.isZero()? k.isZero() : n == k);
 
-  return HMath::nCr( n, k ) * HMath::raise( p, k ) *
-           HMath::raise( HNumber(1)-p, n-k );
+  return result * raise( p, k ) * raise( HNumber(1)-p, n-k );
 }
 
 /**
@@ -1547,20 +1554,28 @@ HNumber & p )
 {
   // FIXME use the regularized incomplete Beta function to avoid
   // the potentially very expensive loop
-  if ( k.isNan() || ! k.isInteger() || k < 0
-         || n.isNan() || ! n.isInteger() || n < 0
-           || p.isNan() || p < 0 || p > 1 )
+  if ( ! k.isInteger() || n.isNan() )
     return HNumber::nan();
 
   HNumber one(1);
-  if ( k >= n )
-    return one;
   HNumber pcompl = one - p;
-  if ( pcompl.isZero() )
-    return pcompl;
+
+  // use reflexion formula to limit summation
   if ( k + k > n )
-    return one - HMath::binomialCdf(n - k - one, n, pcompl);
-  HNumber summand = HMath::raise( pcompl, n );
+    return one - binomialCdf(n - k - one, n, pcompl);
+
+  // initiates summation, checks arguments as well
+  HNumber summand = binomialPmf(0, n, p);
+  if ( summand.isNan() )
+    return summand;
+
+  // some early out results
+  if ( k.isNegative() )
+    return 0;
+  if ( p.isInteger() )
+    return pcompl;
+
+  // loop adding binomialPdf
   HNumber result( summand );
   for ( HNumber i( 0 ); i < k; )
   {
@@ -1585,8 +1600,7 @@ HNumber & p )
  */
 HNumber HMath::binomialMean( const HNumber & n, const HNumber & p )
 {
-  if ( n.isNan() || ! n.isInteger() || n < 0
-         || p.isNan() || p < 0 || p > 1 )
+  if ( ! checkpn(p, n) )
     return HNumber::nan();
 
   return n * p;
@@ -1605,11 +1619,14 @@ HNumber HMath::binomialMean( const HNumber & n, const HNumber & p )
  */
 HNumber HMath::binomialVariance( const HNumber & n, const HNumber & p )
 {
-  if ( n.isNan() || ! n.isInteger() || n < 0
-         || p.isNan() || p < 0 || p > 1 )
-    return HNumber::nan();
+  return binomialMean(n, p) * ( HNumber(1) - p );
+}
 
-  return n * p * ( HNumber(1) - p );
+static bool checkNMn(const HNumber& N, const HNumber& M, const HNumber& n )
+{
+  return N.isInteger() && ! N.isNegative()
+      && M.isInteger() && ! M.isNegative()
+      && n.isInteger() && ! n.isNegative() && HMath::max( M, n ) <= N;
 }
 
 /**
@@ -1629,10 +1646,7 @@ HNumber HMath::binomialVariance( const HNumber & n, const HNumber & p )
 HNumber HMath::hypergeometricPmf( const HNumber & k, const HNumber & N,
                                   const HNumber & M, const HNumber & n )
 {
-  if ( k.isNan() || ! k.isInteger() || k < max( 0, M+n-N ) || k > n
-         || N.isNan() || ! N.isInteger() || N < 0
-           || M.isNan() || ! M.isInteger() || M < 0 || M > N
-             || n.isNan() || ! n.isInteger() || n < 0 || n > N )
+  if ( ! k.isInteger() || ! checkNMn(N, M, n) )
     return HNumber::nan();
 
   return HMath::nCr( M, k ) * HMath::nCr( N-M, n-k ) / HMath::nCr( N, n );
@@ -1655,23 +1669,34 @@ HNumber HMath::hypergeometricPmf( const HNumber & k, const HNumber & N,
 HNumber HMath::hypergeometricCdf( const HNumber & k, const HNumber & N,
                                   const HNumber & M, const HNumber & n )
 {
-  if ( k.isNan() || ! k.isInteger() || k < max( 0, M+n-N ) || k > min( M, n )
-         || N.isNan() || ! N.isInteger() || N < 0
-           || M.isNan() || ! M.isInteger() || M < 0 || M > N
-             || n.isNan() || ! n.isInteger() || n < 0 || n > N )
+  // lowest index of non-zero summand in loop
+  HNumber c = M + n - N;
+  HNumber i = max( c, 0 );
+
+  // first summand in loop, do the parameter checking here
+  HNumber summand = HMath::hypergeometricPmf(i, N, M, n);
+  if ( ! k.isInteger() || summand.isNan() )
     return HNumber::nan();
 
-  HNumber failures = N - M;
-  HNumber result = HMath::nCr( failures, n );
-  HNumber summand( 1 );
-  for ( HNumber i( 0 ); i < k; ){
-    //TODO too expensive evaluation, simplify
-    summand *= M - i;
-    i += 1;
-    summand /= i;
-    result += summand * HMath::nCr( failures, n-i );
+  // some early out results
+  HNumber one( 1 );
+  if ( k >= M || k >= n )
+    return one;
+  if ( i > k )
+    return 0;
+
+  // use reflexion formula to limit summations
+  if ( k + k > n )
+    return one - hypergeometricCdf(n - k - 1, N, N - M, n);
+
+  HNumber result = summand;
+  for ( ; i < k; ){
+    summand *= (M - i) * (n - i);
+    i += one;
+    summand /= i * (i - c);
+    result += summand;
   }
-  return result / HMath::nCr( N, n );
+  return result;
 }
 
 /**
@@ -1689,11 +1714,8 @@ HNumber HMath::hypergeometricCdf( const HNumber & k, const HNumber & N,
  */
 HNumber HMath::hypergeometricMean( const HNumber & N, const HNumber & M, const HNumber & n )
 {
-  if ( N.isNan() || ! N.isInteger() || N < 0
-         || M.isNan() || ! M.isInteger() || M < 0 || M > N
-           || n.isNan() || ! n.isInteger() || n < 0 || n > N )
+  if ( ! checkNMn(N, M, n) )
     return HNumber::nan();
-
   return n * M / N;
 }
 
@@ -1712,12 +1734,8 @@ HNumber HMath::hypergeometricMean( const HNumber & N, const HNumber & M, const H
  */
 HNumber HMath::hypergeometricVariance( const HNumber & N, const HNumber & M, const HNumber & n )
 {
-  if ( N.isNan() || ! N.isInteger() || N < 0
-         || M.isNan() || ! M.isInteger() || M < 0 || M > N
-           || n.isNan() || ! n.isInteger() || n < 0 || n > N )
-    return HNumber::nan();
-
-  return (n * (M/N) * (HNumber(1) - M/N) * (N-n)) / (N - HNumber(1));
+  return (hypergeometricMean(N, M, n) * (HNumber(1) - M/N) * (N-n))
+         / (N - HNumber(1));
 }
 
 /**
