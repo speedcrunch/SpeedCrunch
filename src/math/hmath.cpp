@@ -1752,8 +1752,8 @@ HNumber HMath::hypergeometricVariance( const HNumber & N, const HNumber & M, con
  */
 HNumber HMath::poissonPmf( const HNumber & k, const HNumber & l )
 {
-  if ( k.isNan() || ! k.isInteger() || k < 0
-         || l.isNan() || l < 0 )
+  if ( ! k.isInteger() || k.isNegative()
+         || l.isNan() || l.isNegative() )
     return HNumber::nan();
 
   return exp( -l ) * raise( l, k ) / factorial( k );
@@ -1772,15 +1772,21 @@ HNumber HMath::poissonPmf( const HNumber & k, const HNumber & l )
  */
 HNumber HMath::poissonCdf( const HNumber & k, const HNumber & l )
 {
-  if ( k.isNan() || ! k.isInteger() || k < 0
-         || l.isNan() || l < 0 )
+  if ( ! k.isInteger()
+         || l.isNan() || l.isNegative() )
     return HNumber::nan();
 
-  HNumber result( 0 );
-  for ( HNumber i( 0 ); i <= k; i += 1 )
-    //TODO too expensive evaluation, simplify
-    result += exp( -l ) * raise( l, i ) / factorial( i );
+  if ( k.isNegative() || l.isZero() )
+    return 0;
 
+  HNumber one( 1 );
+  HNumber summand = one;
+  HNumber result = one;
+  for ( HNumber i = one; i <= k; i += one ){
+    summand *= l / i;
+    result += summand;
+  }
+  result = exp( -l ) * result;
   return result;
 }
 
@@ -1796,7 +1802,7 @@ HNumber HMath::poissonCdf( const HNumber & k, const HNumber & l )
  */
 HNumber HMath::poissonMean( const HNumber & l )
 {
-  if ( l.isNan() || l < 0 )
+  if ( l.isNan() || l.isNegative() )
     return HNumber::nan();
 
   return l;
@@ -1814,10 +1820,7 @@ HNumber HMath::poissonMean( const HNumber & l )
  */
 HNumber HMath::poissonVariance( const HNumber & l )
 {
-  if ( l.isNan() || l < 0 )
-    return HNumber::nan();
-
-  return l;
+  return poissonMean(l);
 }
 
 /**
