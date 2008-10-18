@@ -1752,9 +1752,14 @@ HNumber HMath::hypergeometricVariance( const HNumber & N, const HNumber & M, con
  */
 HNumber HMath::poissonPmf( const HNumber & k, const HNumber & l )
 {
-  if ( ! k.isInteger() || k.isNegative()
+  if ( ! k.isInteger()
          || l.isNan() || l.isNegative() )
     return HNumber::nan();
+
+  if ( k.isNegative() )
+    return 0;
+  if ( l.isZero() )
+    return int ( k.isZero() );
 
   return exp( -l ) * raise( l, k ) / factorial( k );
 }
@@ -1776,10 +1781,13 @@ HNumber HMath::poissonCdf( const HNumber & k, const HNumber & l )
          || l.isNan() || l.isNegative() )
     return HNumber::nan();
 
-  if ( k.isNegative() || l.isZero() )
+  if ( k.isNegative() )
     return 0;
 
   HNumber one( 1 );
+  if ( l.isZero() )
+    return one;
+
   HNumber summand = one;
   HNumber result = one;
   for ( HNumber i = one; i <= k; i += one ){
