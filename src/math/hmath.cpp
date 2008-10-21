@@ -1557,23 +1557,27 @@ HNumber & p )
   if ( ! k.isInteger() || n.isNan() )
     return HNumber::nan();
 
-  HNumber one(1);
-  HNumber pcompl = one - p;
-
-  // use reflexion formula to limit summation
-  if ( k + k > n )
-    return one - binomialCdf(n - k - one, n, pcompl);
-
   // initiates summation, checks arguments as well
   HNumber summand = binomialPmf(0, n, p);
   if ( summand.isNan() )
     return summand;
 
+  HNumber one(1);
+
   // some early out results
   if ( k.isNegative() )
     return 0;
+  if ( k >= n )
+    return one;
+
+  HNumber pcompl = one - p;
+
   if ( p.isInteger() )
     return pcompl;
+
+  // use reflexion formula to limit summation
+  if ( k + k > n && k + one >= p * (n + one) )
+    return one - binomialCdf(n - k - one, n, pcompl);
 
   // loop adding binomialPdf
   HNumber result( summand );
@@ -1686,8 +1690,10 @@ HNumber HMath::hypergeometricCdf( const HNumber & k, const HNumber & N,
     return 0;
 
   // use reflexion formula to limit summations
-  if ( k + k > n )
-    return one - hypergeometricCdf(n - k - 1, N, N - M, n);
+  // sorry, numerically unstable where the result is near 0
+  // disable for now
+//   if ( k + k > n )
+//     return one - hypergeometricCdf(n - k - 1, N, N - M, n);
 
   HNumber result = summand;
   for ( ; i < k; ){
