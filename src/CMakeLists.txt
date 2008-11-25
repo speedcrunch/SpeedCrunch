@@ -142,10 +142,12 @@ INSTALL(DIRECTORY   ${CMAKE_CURRENT_SOURCE_DIR}/locale/
 # books
 INSTALL(DIRECTORY   books/
         DESTINATION ${BOOKSDIR}
-        PATTERN     "i18n" EXCLUDE
         PATTERN     "books/images/*.mml" EXCLUDE
         PATTERN     "books/images/*.sh" EXCLUDE
         PATTERN     "books/images/*.svgz" EXCLUDE
+        PATTERN     "books/locale" EXCLUDE
+        PATTERN     "books/templates" EXCLUDE
+        PATTERN     "books/ut3" EXCLUDE
         PATTERN     "books/*.sh" EXCLUDE
 )
 
