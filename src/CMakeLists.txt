@@ -138,8 +138,6 @@ INSTALL(DIRECTORY   locale/
         DESTINATION ${LOCALEDIR}
         PATTERN     "locale/*.qm"
         PATTERN     "locale/*.ts" EXCLUDE
-        PATTERN     "locale/.svn" EXCLUDE
-        PATTERN     ".svn" EXCLUDE
 )
 
 # books
@@ -149,8 +147,7 @@ INSTALL(DIRECTORY   books/
         PATTERN     "books/images/*.mml" EXCLUDE
         PATTERN     "books/images/*.sh" EXCLUDE
         PATTERN     "books/images/*.svgz" EXCLUDE
-        PATTERN     "books/images/*.sh" EXCLUDE
-        PATTERN     ".svn" EXCLUDE
+        PATTERN     "books/*.sh" EXCLUDE
 )
 
 IF(NOT WIN32)
