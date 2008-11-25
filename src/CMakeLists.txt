@@ -133,8 +133,7 @@ INSTALL(TARGETS     ${PROGNAME}
 )
 
 # translations (.qm files)
-INSTALL(CODE "EXECUTE_PROCESS(COMMAND lrelease ${CMAKE_CURRENT_SOURCE_DIR}/speedcrunch.pro)")
-INSTALL(DIRECTORY   locale/
+INSTALL(DIRECTORY   ${CMAKE_CURRENT_SOURCE_DIR}/locale/
         DESTINATION ${LOCALEDIR}
         PATTERN     "locale/*.qm"
         PATTERN     "locale/*.ts" EXCLUDE
@@ -169,3 +168,4 @@ CONFIGURE_FILE( "${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in"
                 IMMEDIATE @ONLY)
 
 ADD_CUSTOM_TARGET(uninstall "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
+
