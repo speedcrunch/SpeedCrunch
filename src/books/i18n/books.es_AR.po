@@ -1,3 +1,5 @@
+# translation of books.pot to Argentinian Spanish
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: books.pot\n"
@@ -64,3 +66,4 @@ msgstr ""
 #: quadratic_equation.html.template, math_index.html.template
 msgid "Quadratic Equation"
 msgstr ""
+

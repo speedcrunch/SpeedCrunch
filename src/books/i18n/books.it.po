@@ -68,5 +68,3 @@ msgstr "Vari"
 msgid "Quadratic Equation"
 msgstr "Equazione Quadratica"
 
-#~ msgid "SpeedCrunch Manual"
-#~ msgstr "Manuale di SpeedCrunch"

@@ -68,5 +68,3 @@ msgstr "שונות"
 msgid "Quadratic Equation"
 msgstr "משוואה ריבועית"
 
-#~ msgid "SpeedCrunch Manual"
-#~ msgstr "המדריך למשתמש של SpeedCrunch"

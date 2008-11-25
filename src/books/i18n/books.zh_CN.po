@@ -1,9 +1,9 @@
-# translation of books.po to simplified Chinese
-# 
+# translation of books.po to Simplified Chinese
 # Liang QI <cavendish.qi@gmail.com>, 2008.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: books\n"
+"Project-Id-Version: books.pot\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-04-14 14:38+0000\n"
 "PO-Revision-Date: 2008-04-11 13:46+0200\n"
@@ -68,3 +68,4 @@ msgstr "杂项"
 #: quadratic_equation.html.template, math_index.html.template
 msgid "Quadratic Equation"
 msgstr "一元二次方程"
+

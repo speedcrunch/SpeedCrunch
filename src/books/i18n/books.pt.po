@@ -69,14 +69,3 @@ msgstr "Miscelâneo"
 msgid "Quadratic Equation"
 msgstr "Equação Quadrática"
 
-#~ msgid "SpeedCrunch Manual"
-#~ msgstr "Manual do SpeedCrunch"
-
-#~ msgid "Chapters"
-#~ msgstr "Capítulos"
-
-#~ msgid "SpeedCrunch Functions"
-#~ msgstr "Funções do SpeedCrunch"
-
-#~ msgid "Mathematics"
-#~ msgstr "Matemática"

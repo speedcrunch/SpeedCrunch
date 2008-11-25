@@ -69,11 +69,3 @@ msgstr "Muuta"
 msgid "Quadratic Equation"
 msgstr "Toisen Asteen Yhtälö"
 
-#~ msgid "Chapters"
-#~ msgstr "Kappaleet"
-
-#~ msgid "SpeedCrunch Functions"
-#~ msgstr "SpeedCrunch Functiot"
-
-#~ msgid "Mathematics"
-#~ msgstr "Matematiikkaa"

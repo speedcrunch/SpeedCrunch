@@ -66,3 +66,4 @@ msgstr ""
 #: quadratic_equation.html.template, math_index.html.template
 msgid "Quadratic Equation"
 msgstr ""
+

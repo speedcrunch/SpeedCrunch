@@ -1,3 +1,6 @@
+# translation of books.pot to Catalan
+# Francesc <franfar@gmail.com>, 2008.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: books.pot\n"

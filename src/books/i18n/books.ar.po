@@ -1,3 +1,17 @@
+# translation of books.pot to Arabic
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: books.pot\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-11-25 23:55+0100\n"
+"PO-Revision-Date: 2008-11-25 23:55+0100\n"
+"Last-Translator: \n"
+"Language-Team: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
 #: circle.html.template, math_index.html.template
 msgid "Circle"
 msgstr ""
@@ -7,7 +21,7 @@ msgstr ""
 #: sector.html.template, cylinder.html.template,
 #: quadratic_equation.html.template
 msgid "align=\"left\""
-msgstr ""
+msgstr "align=\"right\""
 
 #: cone.html.template, math_index.html.template
 msgid "Cone"
@@ -52,3 +66,4 @@ msgstr ""
 #: quadratic_equation.html.template, math_index.html.template
 msgid "Quadratic Equation"
 msgstr ""
+
