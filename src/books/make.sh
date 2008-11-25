@@ -7,9 +7,10 @@
 # Helder Correia <helder.pereira.correia@gmail.com>                            #
 #                                                                              #
 # It generates all the book pages (including translations).                    #
-# It uses the Universal Template Translation Tools                             #
-# (http://code.google.com/p/ut3/), as well as the msgmerge tool from the GNU   #
-# Gettext project (http://www.gnu.org/software/gettext/). The bash shell       #
+#                                                                              #
+# It uses the Universal Template Translation Tools - bundled -                 #
+# (http://code.google.com/p/ut3/). The msgmerge tool from GNU Gettext          #
+# (http://www.gnu.org/software/gettext/), the bash shell                       #
 # (http://www.gnu.org/software/bash/bash.html) and Python (http://python.org/) #
 # are required to run this script.                                             #
 #------------------------------------------------------------------------------#
