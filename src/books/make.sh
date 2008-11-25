@@ -27,7 +27,7 @@ MSM="msgmerge -U --quiet"
 # extract marked strings and create POT                                        #
 #------------------------------------------------------------------------------#
 
-$T2P -o i18n/books.pot templates/*.template
+$T2P -o locale/books.pot templates/*.template
 
 #------------------------------------------------------------------------------#
 # merge and generate pages                                                     #
@@ -37,14 +37,14 @@ LANGS="ar ca cs de en es es_AR eu fi fr he id it nb nl pl pt pt_BR ro ru sv tr z
 
 for lang in $LANGS
 do
-	touch i18n/books.$lang.po
+	touch locale/books.$lang.po
 	mkdir -p $lang
-	$MSM i18n/books.$lang.po i18n/books.pot
+	$MSM locale/books.$lang.po locale/books.pot
         for temp in templates/*
         do
             woSuffix=${temp%.template}
             final=${woSuffix#templates/}
-            $P2H -t $temp -i i18n/books.$lang.po -o $lang/$final
+            $P2H -t $temp -i locale/books.$lang.po -o $lang/$final
         done
 done
 
