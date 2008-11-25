@@ -2,7 +2,7 @@
   <head>
     <title><i18n>Right Triangle</i18n></title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="stylesheet" type="text/css" href="../books.css" />
+    <link rel="stylesheet" type="text/css" href="../css/books.css" />
   </head>
   <body <i18n>align="left"</i18n>>
     <h1><i18n>Right Triangle</i18n></h1>
