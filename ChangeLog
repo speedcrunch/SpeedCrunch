@@ -1,5 +1,17 @@
 SpeedCrunch 0.11
 ---------------------
+Bug fixes:
+  Dock windows are now restored to the same placement and size (#179)
+  Icon is now displayed again in the about box (#193)
+  Quadratic equation in math book is now accurate (#197)
+  Imported sessions now keep max precision (#198)
+
+Improvements:
+  Settings to automatically clear variables and history on exit (#191)
+  Dock windows are now raised when opened in tabbed mode (#200)
+  Dock windows are now allowed in all docking areas (#202)
+  Language is now chosen through a combo box (#207)
+
 Internationalization:
   New Arabic translation
 
