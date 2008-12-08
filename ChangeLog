@@ -11,6 +11,8 @@ Improvements:
   Dock windows are now raised when opened in tabbed mode (#200)
   Dock windows are now allowed in all docking areas (#202)
   Language is now chosen through a combo box (#207)
+  Removed appearance of modal message box after insertion of invalid expression.
+    An autohide label is shown instead now.
 
 Internationalization:
   New Arabic translation
