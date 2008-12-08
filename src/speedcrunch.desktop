@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=SpeedCrunch
 GenericName=High precision calculator
+GenericName[nl]=Rekenmachine met hoge nauwkeurigheid
 GenericName[pt]=Calculadora de alta precisão
 GenericName[tr]=Yüksek duyarlıklı hesap makinesi
 Exec=speedcrunch
