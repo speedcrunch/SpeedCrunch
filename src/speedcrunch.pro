@@ -1,8 +1,5 @@
 TEMPLATE = app
 
-# Version that will be added for example into the .exe resources. Numeric only.
-VERSION = 0.12
-
 TARGET = speedcrunch
 DEPENDPATH += . \
               #bison \
@@ -133,3 +130,4 @@ TRANSLATIONS += locale/ar.ts \
                 locale/tr.ts \
                 locale/zh_CN.ts
 
+win32:RC_FILE = resources/speedcrunch.rc

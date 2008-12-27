@@ -40,10 +40,10 @@ SET(speedcrunch_RESOURCES resources/speedcrunch.qrc)
 IF( MINGW )
   # resource compilation for mingw
   ADD_CUSTOM_COMMAND( OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/speedcrunchico.o
-                      COMMAND windres.exe -I${CMAKE_CURRENT_SOURCE_DIR} -i${CMAKE_CURRENT_SOURCE_DIR}/resources/speedcrunchico.rc -o ${CMAKE_CURRENT_BINARY_DIR}/speedcrunchico.o )
+                      COMMAND windres.exe -I${CMAKE_CURRENT_SOURCE_DIR} -i${CMAKE_CURRENT_SOURCE_DIR}/resources/speedcrunch.rc -o ${CMAKE_CURRENT_BINARY_DIR}/speedcrunchico.o )
   SET(speedcrunch_SOURCES ${speedcrunch_SOURCES} ${CMAKE_CURRENT_BINARY_DIR}/speedcrunchico.o)
 ELSE(MINGW)
-  SET(speedcrunch_SOURCES ${speedcrunch_SOURCES} resources/speedcrunchico.rc)
+  SET(speedcrunch_SOURCES ${speedcrunch_SOURCES} resources/speedcrunch.rc)
 ENDIF(MINGW)
 
 # enable warnings
