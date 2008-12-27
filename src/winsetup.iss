@@ -1,9 +1,9 @@
 #define APPTITLE "SpeedCrunch"
 #define SPEEDCRUNCHEXE "release\" + APPTITLE + ".exe"
 #define NUMERICVERSION GetFileVersion(SPEEDCRUNCHEXE)
-#define VERSION "trunk"
+#define VERSION "trunk" ; GetFileVersionString(SPEEDCRUNCHEXE)
 #define URL "http://speedcrunch.org"
-#define COPYRIGHT "2005-2009 " + URL
+#define COPYRIGHT "2004-2009 " + URL
 
 [Setup]
 AllowNoIcons=yes
@@ -26,7 +26,7 @@ SolidCompression=yes
 VersionInfoCompany={#URL}
 VersionInfoCopyright=Copyright (C) {#COPYRIGHT}
 VersionInfoDescription=Fast, high precision and powerful desktop calculator
-VersionInfoTextVersion={#APPTITLE} {#VERSION}
+VersionInfoTextVersion={#VERSION}
 VersionInfoVersion={#NUMERICVERSION}
 WizardImageFile=compiler:WizModernImage-IS.bmp
 WizardSmallImageFile=compiler:WizModernSmallImage-IS.bmp
@@ -58,6 +58,8 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 
 [Files]
 Source: {#SPEEDCRUNCHEXE}; DestDir: "{app}"; Flags: ignoreversion
+Source: locale\*.qm; DestDir: "{app}\locale"; Flags: ignoreversion
+Source: books\*; Excludes: "*.sh,ut3\*,templates\*,locale\*,*.mml,*.svgz"; DestDir: "{app}\books"; Flags: ignoreversion recursesubdirs
 
 [Icons]
 Name: "{group}\{#APPTITLE}"; Filename: "{app}\{#APPTITLE}.exe"
