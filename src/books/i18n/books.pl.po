@@ -1,0 +1,74 @@
+# translation of books.po to polski
+# Header entry was created by KBabel!
+#
+# Witold Wysota <wysota@wysota.eu.org>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: books\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-03-28 15:49+0000\n"
+"PO-Revision-Date: 2008-03-13 11:28+0100\n"
+"Last-Translator: Witold Wysota <wysota@wysota.eu.org>\n"
+"Language-Team: polski <pl@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+
+#: circle.html.template, math_index.html.template
+msgid "Circle"
+msgstr "Koło"
+
+#: cube.html.template, circle.html.template, right_triangle.html.template,
+#: math_index.html.template, cone.html.template, sphere.html.template,
+#: sector.html.template, cylinder.html.template,
+#: quadratic_equation.html.template
+msgid "align=\"left\""
+msgstr "align=\"left\""
+
+#: cone.html.template, math_index.html.template
+msgid "Cone"
+msgstr "Stożek"
+
+#: cube.html.template, math_index.html.template
+msgid "Cube"
+msgstr "Sześcian"
+
+#: cylinder.html.template, math_index.html.template
+msgid "Cylinder"
+msgstr "Walec"
+
+#: math_index.html.template
+msgid "SpeedCrunch Book"
+msgstr "Książka SpeedCrunch"
+
+#: math_index.html.template
+msgid "3D Objects"
+msgstr "Bryły trójwymiarowe"
+
+#: sphere.html.template, math_index.html.template
+msgid "Sphere"
+msgstr "Kula"
+
+#: math_index.html.template
+msgid "2D Objects"
+msgstr "Figury płaskie"
+
+#: math_index.html.template, right_triangle.html.template
+msgid "Right Triangle"
+msgstr "Trójkąt prostokątny"
+
+#: math_index.html.template, sector.html.template
+msgid "Sector"
+msgstr "Wycinek koła"
+
+#: math_index.html.template
+msgid "Misc"
+msgstr "Różne"
+
+#: quadratic_equation.html.template, math_index.html.template
+msgid "Quadratic Equation"
+msgstr "Równanie kwadratowe"
+
+#~ msgid "SpeedCrunch Manual"
+#~ msgstr "Podręcznik SpeedCrunch"

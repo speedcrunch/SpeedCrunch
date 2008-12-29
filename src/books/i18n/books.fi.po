@@ -1,0 +1,79 @@
+# translation of books.pot to Finnish
+# Petri Damstén <petri.damsten@iki.fi>, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: books.pot\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-03-28 15:49+0000\n"
+"PO-Revision-Date: 2007-12-13 16:37+0200\n"
+"Last-Translator: Petri Damstén <petri.damsten@iki.fi>\n"
+"Language-Team: Finnish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+
+#: circle.html.template, math_index.html.template
+msgid "Circle"
+msgstr "Ympyrä"
+
+#: cube.html.template, circle.html.template, right_triangle.html.template,
+#: math_index.html.template, cone.html.template, sphere.html.template,
+#: sector.html.template, cylinder.html.template,
+#: quadratic_equation.html.template
+msgid "align=\"left\""
+msgstr "align=\"left\""
+
+#: cone.html.template, math_index.html.template
+msgid "Cone"
+msgstr "Ympyräkartio"
+
+#: cube.html.template, math_index.html.template
+msgid "Cube"
+msgstr "Kuutio"
+
+#: cylinder.html.template, math_index.html.template
+msgid "Cylinder"
+msgstr "Ympyrälieriö"
+
+#: math_index.html.template
+msgid "SpeedCrunch Book"
+msgstr "SpeedCrunch Opas"
+
+#: math_index.html.template
+msgid "3D Objects"
+msgstr "3D Kappaleet"
+
+#: sphere.html.template, math_index.html.template
+msgid "Sphere"
+msgstr "Pallo"
+
+#: math_index.html.template
+msgid "2D Objects"
+msgstr "2D Kappaleet"
+
+#: math_index.html.template, right_triangle.html.template
+msgid "Right Triangle"
+msgstr "Suorakulmainen Kolmio"
+
+#: math_index.html.template, sector.html.template
+msgid "Sector"
+msgstr "Ympyränsektori"
+
+#: math_index.html.template
+msgid "Misc"
+msgstr "Muuta"
+
+#: quadratic_equation.html.template, math_index.html.template
+msgid "Quadratic Equation"
+msgstr "Toisen Asteen Yhtälö"
+
+#~ msgid "Chapters"
+#~ msgstr "Kappaleet"
+
+#~ msgid "SpeedCrunch Functions"
+#~ msgstr "SpeedCrunch Functiot"
+
+#~ msgid "Mathematics"
+#~ msgstr "Matematiikkaa"
