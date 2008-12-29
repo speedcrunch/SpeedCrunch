@@ -29,7 +29,8 @@
 
 *************************************************************************/
 
-#ifndef _FLOATCOMMON_H
+#ifndef FLOATCOMMON_H
+# define FLOATCOMMON_H
 #include "floatnum.h"
 
 #ifdef __cplusplus
@@ -104,8 +105,12 @@ char float_isodd(floatnum x);
            FLOAT_OVERFLOW (if EXP_MAX is really small) */
 char float_roundtoint(floatnum x, roundmode mode);
 
+float float_asfloat(cfloatnum x);
+
+float approxlog(cfloatnum x);
+
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* _FLOATCOMMON_H */
+#endif /* FLOATCOMMON_H */

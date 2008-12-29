@@ -139,26 +139,9 @@ _validmode(
 }
 
 static int _lg2(
-  floatnum x)
-  /* The evaluation of _lg2(x) is based
-     on an approximation suggested by Abramowitz, Stegun,
-     Handbook of mathematical functions.
-     The returned base 2 logarithm is valid to
-     4 (decimal) digits after the decimal point. */
+  cfloatnum x)
 {
-  int i;
-  float t;
-  char gtsqrt10;
-
-  i = leadingdigits(x, 5);
-  gtsqrt10 = i > 31622;
-  if (gtsqrt10)
-    t = ((float)(i - 100000))/(i + 100000);
-  else
-    t = ((float)(i - 10000))/(i + 10000);
-  i = ((0.36415*t*t + 0.86304) * t
-      + (float_getexponent(x)+(gtsqrt10?1:0)))*3.32192809488736235;
-  return i >= 0? i : i - 1;
+  return approxlog(x) * 3.32192809488736235;
 }
 
 static int

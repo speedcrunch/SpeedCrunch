@@ -302,7 +302,7 @@ char
 float_isinteger(
   cfloatnum x)
 {
-  return !float_isnan(x) 
+  return !float_isnan(x)
          && float_getlength(x) <= float_getexponent(x) + 1;
 }
 
@@ -394,4 +394,40 @@ float_roundtoint(
     break;
   }
   return 1;
+}
+
+float float_asfloat(cfloatnum x){
+  int expx = float_getexponent(x);
+  unsigned exp = expx >= 0? exp: -exp;
+  float pwr = 10;
+  float fexp = exp & 1 == 0? 1 : 10;
+  float sgnf = leadingdigits(x, 6)/100000.0;
+  while (exp >>= 1){
+    pwr *= pwr;
+    if ((exp & 1) != 0) fexp *= pwr;
+  }
+  if (expx < 0)
+    return sgnf/fexp;
+  return sgnf*fexp;
+}
+
+float approxlog(cfloatnum x){
+  /* The evaluation of approxlog(x) is based
+  on an approximation suggested by Abramowitz, Stegun,
+  Handbook of mathematical functions.
+  The returned base 10 logarithm is valid to
+  4 (decimal) digits after the decimal point. */
+  int expx = float_getexponent(x);
+  int ti = leadingdigits(x, 5);
+  int one = 10000;
+  float t;
+  if (ti < 0)
+    ti = -ti;
+  if (ti > 31622){
+    ++expx;
+    one = 100000;
+  }
+  else
+    t = (float)(ti - one)/(ti + one);
+  return (0.36415 * t * t + 0.86304) * t + expx;
 }
