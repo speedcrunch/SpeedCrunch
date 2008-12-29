@@ -1,6 +1,6 @@
 /* floatexp.h: exponential function and friends, based on floatnum. */
 /*
-    Copyright (C) 2007 Wolf Lammen.
+    Copyright (C) 2007, 2008 Wolf Lammen.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -29,8 +29,8 @@
 
 *************************************************************************/
 
-#ifndef _FLOATEXP_H
-# define _FLOATEXP_H
+#ifndef FLOATEXP_H
+# define FLOATEXP_H
 
 #include "floatnum.h"
 
@@ -55,4 +55,4 @@ char _power10(floatnum exponent, int digits);
 }
 #endif
 
-#endif /* _FLOATEXP_H */
+#endif /* FLOATEXP_H */

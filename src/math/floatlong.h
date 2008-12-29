@@ -1,6 +1,6 @@
 /* floatlong.h: portable double size integer arithmetic */
 /*
-    Copyright (C) 2007 Wolf Lammen.
+    Copyright (C) 2007, 2008 Wolf Lammen.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -30,8 +30,8 @@
 *************************************************************************/
 
 
-#ifndef _FLOATLONG_H
-# define _FLOATLONG_H
+#ifndef FLOATLONG_H
+# define FLOATLONG_H
 
 #include "floatconfig.h"
 
@@ -73,4 +73,4 @@ unsigned _longintmul(t_longint* l, unsigned factor);
 }
 #endif
 
-#endif /* _FLOATLONG_H */
+#endif /* FLOATLONG_H */

@@ -29,8 +29,8 @@
 
 *************************************************************************/
 
-#ifndef _FLOATGAMMA_H
-# define _FLOATGAMMA_H
+#ifndef FLOATGAMMA_H
+# define FLOATGAMMA_H
 
 #include "floatnum.h"
 
@@ -48,4 +48,4 @@ char _pochhammer(floatnum x, cfloatnum n, int digits);
 }
 #endif
 
-#endif /* _FLOATGAMMA_H */
+#endif /* FLOATGAMMA_H */

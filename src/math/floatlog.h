@@ -1,6 +1,6 @@
 /* floatlog.h: logarithms and friends, based on floatnum. */
 /*
-    Copyright (C) 2007 Wolf Lammen.
+    Copyright (C) 2007, 2008 Wolf Lammen.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -29,14 +29,14 @@
 
 *************************************************************************/
 
-#ifndef _FLOATLOG_H
-#define _FLOATLOG_H
+#ifndef FLOATLOG_H
+# define FLOATLOG_H
 
 #include "floatnum.h"
 
 #ifdef __cplusplus
 extern "C" {
-#endif 
+#endif
 
 void _lnxplus1near0(floatnum x, int digits);
 void _lnreduce(floatnum x, floatnum lnguess, int digits);
@@ -53,4 +53,4 @@ void _arcoshxplus1(floatnum x, int digits);
 }
 #endif
 
-#endif /* _FLOATLOG_H */
+#endif /* FLOATLOG_H */

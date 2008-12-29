@@ -29,8 +29,8 @@
 
 *************************************************************************/
 
-#ifndef _FLOATPOWER_H
-# define _FLOATPOWER_H
+#ifndef FLOATPOWER_H
+# define FLOATPOWER_H
 
 #include "floatnum.h"
 
@@ -44,4 +44,4 @@ char _raise(floatnum x, cfloatnum exponent, int digits);
 }
 #endif
 
-#endif /* _FLOATPOWER_H */
+#endif /* FLOATPOWER_H */

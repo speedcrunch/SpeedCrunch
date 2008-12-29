@@ -29,8 +29,8 @@
 
 *************************************************************************/
 
-#ifndef _FLOATHMATH_H
-#define _FLOATHMATH_H
+#ifndef FLOATHMATH_H
+# define FLOATHMATH_H
 
 #include "floatnum.h"
 
@@ -379,4 +379,4 @@ char float_shr(floatnum dest, cfloatnum x, cfloatnum y);
 }
 #endif
 
-#endif /* _FLOATLOG_H */
+#endif /* FLOATLOG_H */

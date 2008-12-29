@@ -29,8 +29,8 @@
 
 *************************************************************************/
 
-#ifndef _FLOATCONVERT_H
-# define _FLOATCONVERT_H
+#ifndef FLOATCONVERT_H
+# define FLOATCONVERT_H
 
 #include "floatnum.h"
 #include "floatio.h"
@@ -76,4 +76,4 @@ Error float_in(floatnum x, p_itokens tokens);
 }
 #endif
 
-#endif /* _FLOATCONVERT_H */
+#endif /* FLOATCONVERT_H */

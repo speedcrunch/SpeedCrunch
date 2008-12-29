@@ -1,6 +1,6 @@
 /* floatconst.h: constants for higher math functions */
 /*
-    Copyright (C) 2007 Wolf Lammen.
+    Copyright (C) 2007, 2008 Wolf Lammen.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -29,8 +29,8 @@
 
 *************************************************************************/
 
-#ifndef _FLOATCONST_H
-#define _FLOATCONST_H
+#ifndef FLOATCONST_H
+#define FLOATCONST_H
 
 #include "floatnum.h"
 
@@ -80,4 +80,4 @@ void floatmath_exit();
 }
 #endif
 
-#endif /* _FLOATCONST_H */
+#endif /* FLOATCONST_H */

@@ -29,8 +29,8 @@
 
 *************************************************************************/
 
-#ifndef _FLOATLOGIC_H
-# define _FLOATLOGIC_H
+#ifndef FLOATLOGIC_H
+# define FLOATLOGIC_H
 
 #include "floatnum.h"
 #include "floatconvert.h"
@@ -53,4 +53,4 @@ void _shl(t_longint* x, unsigned shift);
 }
 #endif
 
-#endif /* _FLOATLOGIC_H */
+#endif /* FLOATLOGIC_H */

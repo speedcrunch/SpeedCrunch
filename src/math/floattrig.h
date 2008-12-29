@@ -1,6 +1,6 @@
 /* floattrig.h: trigonometry functions, based on floatnum. */
 /*
-    Copyright (C) 2007 Wolf Lammen.
+    Copyright (C) 2007, 2008 Wolf Lammen.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -29,8 +29,8 @@
 
 *************************************************************************/
 
-#ifndef _FLOATTRIG_H
-# define _FLOATTRIG_H
+#ifndef FLOATTRIG_H
+# define FLOATTRIG_H
 
 #include "floatnum.h"
 
@@ -59,4 +59,4 @@ void _sinpix(floatnum x, int digits);
 }
 #endif
 
-#endif /* _FLOATTRIG_H */
+#endif /* FLOATTRIG_H */

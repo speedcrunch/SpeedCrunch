@@ -1,6 +1,6 @@
 /* floatseries.h: header file for basic series, based on floatnum. */
 /*
-    Copyright (C) 2007 Wolf Lammen.
+    Copyright (C) 2007, 2008 Wolf Lammen.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -28,8 +28,8 @@
               Germany
 *************************************************************************/
 
-#ifndef _FLOATSERIES_H
-#define _FLOATSERIES_H
+#ifndef FLOATSERIES_H
+# define FLOATSERIES_H
 
 #include "floatnum.h"
 
@@ -53,4 +53,4 @@ char erfcsum(floatnum xsqr, int digits);
 }
 #endif
 
-#endif /* _FLOATSERIES_H */
+#endif /* FLOATSERIES_H */

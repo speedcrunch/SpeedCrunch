@@ -1,6 +1,6 @@
 /* floaterf.h: normal distribution integrals erf and the like */
 /*
-    Copyright (C) 2007 Wolf Lammen.
+    Copyright (C) 2007, 2008 Wolf Lammen.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -29,8 +29,8 @@
 
 *************************************************************************/
 
-#ifndef _FLOATERF_H
-#define _FLOATERF_H
+#ifndef FLOATERF_H
+#define FLOATERF_H
 
 #include "math/floatseries.h"
 
@@ -48,4 +48,4 @@ char _erfc(floatnum x, int digits);
 }
 #endif
 
-#endif /*_FLOATERF_H*/
+#endif /* FLOATERF_H */

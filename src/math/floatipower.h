@@ -1,6 +1,6 @@
 /* floatpower.h: power operation, based on floatnum. */
 /*
-    Copyright (C) 2007 Wolf Lammen.
+    Copyright (C) 2007, 2008 Wolf Lammen.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -29,8 +29,8 @@
 
 *************************************************************************/
 
-#ifndef _FLOATIPOWER_H
-# define _FLOATIPOWER_H
+#ifndef FLOATIPOWER_H
+# define FLOATIPOWER_H
 
 #include "floatnum.h"
 
@@ -46,4 +46,4 @@ char _raisei(floatnum x, int exponent, int digits);
 }
 #endif
 
-#endif /* _FLOATIPOWER_H */
+#endif /* FLOATIPOWER_H */

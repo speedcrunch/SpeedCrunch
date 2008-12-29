@@ -31,8 +31,8 @@
 
 #include <core/errors.h>
 
-#ifndef _FLOATIO_H
-# define _FLOATIO_H
+#ifndef FLOATIO_H
+# define FLOATIO_H
 
 #define NO_DIGIT 0x7F
 
@@ -186,4 +186,4 @@ signed char setdefaultbase(signed char base);
 }
 #endif
 
-#endif /* _FLOATIO_H */
+#endif /* FLOATIO_H */

@@ -28,8 +28,8 @@
               Germany
 
 *************************************************************************/
-#ifndef _FLOATNUM_H_
-#define _FLOATNUM_H_
+#ifndef FLOATNUM_H
+# define FLOATNUM_H
 
 #include "number.h"
 #include "floatconfig.h"
@@ -449,4 +449,4 @@ char _setzero(floatnum x);
 }
 #endif
 
-#endif /* _FLOATNUM_H_ */
+#endif /* FLOATNUM_H */
