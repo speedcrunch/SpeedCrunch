@@ -47,7 +47,7 @@
 
 /*------------------------   Helper routines  -------------------------*/
 
-void static checkfullcancellation( cfloatnum op1, cfloatnum op2,
+static void checkfullcancellation( cfloatnum op1, cfloatnum op2,
                                    floatnum r )
 {
   int expr;
@@ -1130,20 +1130,11 @@ HNumber HMath::cbrt( const HNumber & n )
   float_setexponent(&a, expn % 3);
   expn /= 3;
 
-  if (float_cmp(&a, &c2) < 0)
-  {
-    float_sub(&q, &a, &c1, 3);
-    digits = -float_getexponent(&q);
-    float_div(&q, &q, &c3, 3);
-    float_add(&q, &q, &c1, digits+2);
-  }
-  else
-  {
-    digits = 0;
-    float_copy(&q, &a, 2);
-    float_sqrt(&q, 2);
-  }
-  while (!float_iszero(rnum) && digits < HMATH_EVAL_PREC/2 + 1)
+  digits = 0;
+  float_copy(&q, &a, 2);
+  float_sqrt(&q, 2);
+
+  while (digits < HMATH_EVAL_PREC/2 + 3)
   {
     digits = 4 * digits + 2;
     if (digits > HMATH_EVAL_PREC+2)
@@ -1155,7 +1146,8 @@ HNumber HMath::cbrt( const HNumber & n )
     float_add(&q, &q, rnum, digits);
     float_div(&q, &q, &c3, digits);
     float_sub(rnum, rnum, &q, 3);
-    digits = float_getexponent(&q) - float_getexponent(rnum);
+    if (!float_iszero(rnum))
+      digits = float_getexponent(&q) - float_getexponent(rnum);
   }
   float_move(rnum, &q);
   float_free(&q);
@@ -1783,6 +1775,8 @@ HNumber HMath::poissonPmf( const HNumber & k, const HNumber & l )
  */
 HNumber HMath::poissonCdf( const HNumber & k, const HNumber & l )
 {
+  // FIXME: use the incomplete gamma function to avoid a potentially
+  // expensive loop
   if ( ! k.isInteger()
          || l.isNan() || l.isNegative() )
     return HNumber::nan();
