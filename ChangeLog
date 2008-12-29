@@ -5,6 +5,7 @@ Bug fixes:
   Icon is now displayed again in the about box (#193)
   Quadratic equation in math book is now accurate (#197)
   Imported sessions now keep max precision (#198)
+  fixed CBRT bug
 
 Improvements:
   Settings to automatically clear variables and history on exit (#191)
