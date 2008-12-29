@@ -2325,7 +2325,7 @@ void MainWindow::evaluateEditorExpression()
   HNumber result = d->evaluator->evalUpdateAns();
   if ( ! d->evaluator->error().isEmpty() )
   {
-    QMessageBox::warning( this, tr( "Error" ), d->evaluator->error() );
+    showAutoCalcTip( d->evaluator->error() );
   }
   else
   {
@@ -2338,18 +2338,12 @@ void MainWindow::evaluateEditorExpression()
       d->docks.variables->updateList( d->evaluator );
     if ( d->settings->historyDockVisible )
       d->docks.history->append( str );
+
+    d->widgets.editor->selectAll();
+    d->widgets.editor->stopAutoCalc();
+    d->widgets.editor->stopAutoComplete();
+    d->conditions.autoAns = true;
   }
-
-  d->widgets.editor->setText( str );
-  d->widgets.editor->selectAll();
-  d->widgets.editor->stopAutoCalc();
-  d->widgets.editor->stopAutoComplete();
-  d->conditions.autoAns = true;
-
-  QTimer::singleShot( 0, d->widgets.editor, SLOT( setFocus() ) );
-
-  if ( ! isActiveWindow() )
-    activateWindow();
 }
 
 void MainWindow::showSystemTrayMessage()

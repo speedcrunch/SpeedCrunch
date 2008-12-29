@@ -40,10 +40,10 @@ SET(speedcrunch_RESOURCES resources/speedcrunch.qrc)
 IF( MINGW )
   # resource compilation for mingw
   ADD_CUSTOM_COMMAND( OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/speedcrunchico.o
-                      COMMAND windres.exe -I${CMAKE_CURRENT_SOURCE_DIR} -i${CMAKE_CURRENT_SOURCE_DIR}/resources/speedcrunchico.rc -o ${CMAKE_CURRENT_BINARY_DIR}/speedcrunchico.o )
+                      COMMAND windres.exe -I${CMAKE_CURRENT_SOURCE_DIR} -i${CMAKE_CURRENT_SOURCE_DIR}/resources/speedcrunch.rc -o ${CMAKE_CURRENT_BINARY_DIR}/speedcrunchico.o )
   SET(speedcrunch_SOURCES ${speedcrunch_SOURCES} ${CMAKE_CURRENT_BINARY_DIR}/speedcrunchico.o)
 ELSE(MINGW)
-  SET(speedcrunch_SOURCES ${speedcrunch_SOURCES} resources/speedcrunchico.rc)
+  SET(speedcrunch_SOURCES ${speedcrunch_SOURCES} resources/speedcrunch.rc)
 ENDIF(MINGW)
 
 # enable warnings
@@ -133,24 +133,22 @@ INSTALL(TARGETS     ${PROGNAME}
 )
 
 # translations (.qm files)
-INSTALL(CODE "EXECUTE_PROCESS(COMMAND lrelease ${CMAKE_CURRENT_SOURCE_DIR}/speedcrunch.pro)")
-INSTALL(DIRECTORY   locale/
+INSTALL(DIRECTORY   ${CMAKE_CURRENT_SOURCE_DIR}/locale/
         DESTINATION ${LOCALEDIR}
         PATTERN     "locale/*.qm"
         PATTERN     "locale/*.ts" EXCLUDE
-        PATTERN     "locale/.svn" EXCLUDE
-        PATTERN     ".svn" EXCLUDE
 )
 
 # books
 INSTALL(DIRECTORY   books/
         DESTINATION ${BOOKSDIR}
-        PATTERN     "i18n" EXCLUDE
         PATTERN     "books/images/*.mml" EXCLUDE
         PATTERN     "books/images/*.sh" EXCLUDE
         PATTERN     "books/images/*.svgz" EXCLUDE
-        PATTERN     "books/images/*.sh" EXCLUDE
-        PATTERN     ".svn" EXCLUDE
+        PATTERN     "books/locale" EXCLUDE
+        PATTERN     "books/templates" EXCLUDE
+        PATTERN     "books/ut3" EXCLUDE
+        PATTERN     "books/*.sh" EXCLUDE
 )
 
 IF(NOT WIN32)
@@ -172,3 +170,4 @@ CONFIGURE_FILE( "${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in"
                 IMMEDIATE @ONLY)
 
 ADD_CUSTOM_TARGET(uninstall "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
+
