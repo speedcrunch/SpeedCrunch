@@ -693,12 +693,14 @@ void Editor::autoCalc()
 
   if ( d->eval->error().isEmpty() )
   {
-    QString ss = tr( "Current result: <b>%1</b>" ).arg( formatNumber( num ) );
+    QString ss = QString( tr( "Current result: <b>%1</b>" )
+                            .arg( formatNumber( num ) ) );
     emit autoCalcEnabled( ss );
   }
   else
   {
-    emit autoCalcEnabled( d->eval->error() );
+    // invalid expression
+    emit autoCalcDisabled();
   }
 }
 
@@ -738,12 +740,14 @@ void Editor::autoCalcSelection()
 
   if ( d->eval->error().isEmpty() )
   {
-    QString ss = tr( "Selection result: <b>%1</b>" ).arg( formatNumber( num ) );
+    QString ss = QString( tr( "Selection result: <b>%1</b>" )
+                            .arg( formatNumber( num ) ) );
     emit autoCalcEnabled( ss );
   }
   else
   {
-    emit autoCalcEnabled( d->eval->error() );
+    // invalid expression
+    emit autoCalcDisabled();
   }
 }
 
