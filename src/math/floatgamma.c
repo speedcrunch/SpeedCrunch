@@ -36,7 +36,75 @@
 #include "floatlog.h"
 #include "floatexp.h"
 #include "floattrig.h"
-#include "floatseries.h"
+
+/* asymptotic series of the Binet function
+   for x >= 77 and a 100 digit computation, the
+   relative error is < 9e-100.
+   the series converges, if x and digits comply to
+     100 >= digits >= 2
+     x >= sqrt((digits*ln 10 + 0.5*ln 2)/1.0033).
+   As a special case, for digits == 1, convergence is guaranteed,
+   if x >= 1.8. */
+
+char
+binetasymptotic(floatnum x,
+                int digits)
+{
+  floatstruct recsqr;
+  floatstruct sum;
+  floatstruct smd;
+  floatstruct pwr;
+  int i, workprec;
+
+  if (float_getexponent(x) >= digits)
+  {
+    /* if x is very big, ln(gamma(x)) is
+    dominated by x*ln x and the Binet function
+    does not contribute anything substantial to
+    the final result */
+    float_setzero(x);
+    return 1;
+  }
+  float_create(&recsqr);
+  float_create(&sum);
+  float_create(&smd);
+  float_create(&pwr);
+
+  float_copy(&pwr, &c1, EXACT);
+  float_setzero(&sum);
+  float_div(&smd, &c1, &c12, digits+1);
+  workprec = digits - 2*float_getexponent(x)+3;
+  i = 1;
+  if (workprec > 0)
+  {
+    float_mul(&recsqr, x, x, workprec);
+    float_reciprocal(&recsqr, workprec);
+    while (float_getexponent(&smd) > -digits-1
+           && ++i <= MAXBERNOULLIIDX)
+    {
+      workprec = digits + float_getexponent(&smd) + 3;
+      float_add(&sum, &sum, &smd, digits+1);
+      float_mul(&pwr, &recsqr, &pwr, workprec);
+      float_muli(&smd, &cBernoulliDen[i-1], 2*i*(2*i-1), workprec);
+      float_div(&smd, &pwr, &smd, workprec);
+      float_mul(&smd, &smd, &cBernoulliNum[i-1], workprec);
+    }
+  }
+  else
+    /* sum reduces to the first summand*/
+    float_move(&sum, &smd);
+  if (i > MAXBERNOULLIIDX)
+      /* x was not big enough for the asymptotic
+    series to converge sufficiently */
+    float_setnan(x);
+  else
+    float_div(x, &sum, x, digits);
+  float_free(&pwr);
+  float_free(&smd);
+  float_free(&sum);
+  float_free(&recsqr);
+  return i <= MAXBERNOULLIIDX;
+}
 
 /* returns the number of summands needed in the asymptotic
    series to guarantee <digits> precision. Each extra summand
@@ -243,8 +311,8 @@ _gammagtminus20(
   float_copy(&factor, x, digits+1);
   _pochhammer_su(&factor, ofs, digits);
   float_addi(x, x, ofs, digits+2);
-  result = _lngammabigx(x, digits) 
-           && _exp(x, digits) 
+  result = _lngammabigx(x, digits)
+           && _exp(x, digits)
            && float_div(x, x, &factor, digits+1);
   float_free(&factor);
   if (!result)
