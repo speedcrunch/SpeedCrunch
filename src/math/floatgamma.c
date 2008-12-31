@@ -208,7 +208,7 @@ _lngammabigx(
   if (float_mul(&tmp1, &tmp1, &tmp2, digits+2))
   {
     /* no overflow */
-    lngammaasymptotic(x, digits);
+    binetasymptotic(x, digits);
     float_add(x, &tmp1, x, digits+3);
     float_add(x, x, &cLnSqrt2PiMinusHalf, digits+3);
     result = 1;

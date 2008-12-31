@@ -34,6 +34,170 @@
 #include "floatcommon.h"
 #include "floatexp.h"
 
+/*
+  The Taylor expansion of sqrt(pi)*erf(x)/2 around x = 0.
+  converges only for small |x| < 1 sufficiently.
+  erf(x) = SUM[i>=0] (x^(2*i+1)/(i! * (2*i+1)))
+
+  relative error for 100-digit evaluation: < 3e-100
+*/
+
+char
+erfseries(floatnum x,
+          int digits)
+{
+  floatstruct xsqr, smd, pwr;
+  int i, workprec, expx;
+
+  expx = float_getexponent(x);
+  workprec = digits + 2*expx + 2;
+  if (workprec <= 0 || float_iszero(x))
+    /* for tiny arguments approx. == x */
+    return 1;
+  float_create(&xsqr);
+  float_create(&smd);
+  float_create(&pwr);
+  float_mul(&xsqr, x, x, workprec + 1);
+  workprec = digits + float_getexponent(&xsqr) + 1;
+  float_copy(&pwr, x, workprec + 1);
+  i = 1;
+  while (workprec > 0)
+  {
+    float_mul(&pwr, &pwr, &xsqr, workprec + 1);
+    float_divi(&pwr, &pwr, -i, workprec + 1);
+    float_divi(&smd, &pwr, 2 * i++ + 1, workprec);
+    float_add(x, x, &smd, digits + 3);
+    workprec = digits + float_getexponent(&smd) + expx + 2;
+  }
+  float_free(&pwr);
+  float_free(&smd);
+  float_free(&xsqr);
+  return 1;
+}
+
+/* the asymptotic expansion of erfc, the bigger x is, the better.
+   returns sum( (2*i+1)! /i! / x^(2*i)
+   Relative error for x >= 16 and 100-digit evaluation is less than
+   9e-100 */
+
+char
+erfcasymptotic(floatnum x,
+               int digits)
+{
+  floatstruct smd, fct;
+  int i, workprec, newprec;
+
+  float_create(&smd);
+  float_create(&fct);
+  workprec = digits - 2 * float_getexponent(x) + 1;
+  if (workprec <= 0)
+  {
+    float_copy(x, &c1, EXACT);
+    return 1;
+  }
+  float_mul(&fct, x, x, digits + 1);
+  float_div(&fct, &c1Div2, &fct, digits);
+  float_neg(&fct);
+  float_copy(&smd, &c1, EXACT);
+  float_setzero(x);
+  newprec = digits;
+  workprec = newprec;
+  i = 1;
+  while (newprec > 0 && newprec <= workprec)
+  {
+    workprec = newprec;
+    float_add(x, x, &smd, digits + 4);
+    float_muli(&smd, &smd, i, workprec + 1);
+    float_mul(&smd, &smd, &fct, workprec + 2);
+    newprec = digits + float_getexponent(&smd) + 1;
+    i += 2;
+  }
+  float_free(&fct);
+  float_free(&smd);
+  return newprec <= workprec;
+}
+
+/* this algorithm is based on a paper from Crandall, who in turn attributes
+   to Chiarella and Reichel.
+   Found this in a paper from Borwein, Bailey and Girgensohn, and added
+   minor improvements such as the adaptive working precision.
+   There is a restriction with this algorithm not mentioned in the paper:
+   x must not be too large, because the correcting term 2/(1-exp(2*pi*x/alpha))
+   becomes dominant and renders the result incorrect for large x. Fortunately,
+   the valid range seems to overlap with the range of the asymptotic formula.
+
+   Picks a fixed alpha suitable for the desired precision and evaluates the sum
+   f(t, alpha) = Sum[k>0](exp(-k*k*alpha*alpha)/(k*k*alpha*alpha + t)
+   f(t, alpha) is used in the evaluation of erfc(sqrt(t))
+
+   alpha is dependent on the desired precision; For a precision of p
+   places, alpha should be < pi/sqrt(p*ln 10). Unfortunately, the
+   smaller alpha is, the worse is the convergence rate, so alpha is
+   usually approximately its upper limit.
+
+   relative error for 100-digit evaluation < 5e-100 */
+
+char
+erfcsum(floatnum x, /* should be the square of the parameter to erfc */
+        int digits)
+{
+  int i, workprec;
+  floatstruct sum, smd;
+  floatnum Ei;
+
+  if (digits > erfcdigits)
+  {
+    /* cannot re-use last evaluation's intermediate results */
+    for (i = MAXERFCIDX; --i >= 0;)
+      /* clear all exp(-k*k*alpha*alpha) to indicate their absence */
+      float_free(&erfccoeff[i]);
+    /* current precision */
+    erfcdigits = digits;
+    /* create new alpha appropriate for the desired precision
+    This alpha need not be high precision, any alpha near the
+    one evaluated here would do */
+    float_muli(&erfcalpha, &cLn10, digits + 4, 3);
+    float_sqrt(&erfcalpha, 3);
+    float_div(&erfcalpha, &cPi, &erfcalpha, 3);
+    float_mul(&erfcalphasqr, &erfcalpha, &erfcalpha, EXACT);
+    /* the exp(-k*k*alpha*alpha) are later evaluated iteratively.
+    Initiate the iteration here */
+    float_copy(&erfct2, &erfcalphasqr, EXACT);
+    float_neg(&erfct2);
+    _exp(&erfct2, digits + 3); /* exp(-alpha*alpha) */
+    float_copy(erfccoeff, &erfct2, EXACT); /* start value */
+    float_mul(&erfct3, &erfct2, &erfct2, digits + 3); /* exp(-2*alpha*alpha) */
+  }
+  float_create(&sum);
+  float_create(&smd);
+  float_setzero(&sum);
+  for (i = 0; ++i < MAXERFCIDX;)
+  {
+    Ei = &erfccoeff[i-1];
+    if (float_isnan(Ei))
+    {
+      /* if exp(-i*i*alpha*alpha) is not available, evaluate it from
+      the coefficient of the last summand */
+      float_mul(&erfct2, &erfct2, &erfct3, workprec + 3);
+      float_mul(Ei, &erfct2, &erfccoeff[i-2], workprec + 3);
+    }
+    /* Ei finally decays rapidly. save some time by adjusting the
+    working precision */
+    workprec = digits + float_getexponent(Ei) + 1;
+    if (workprec <= 0)
+      break;
+    /* evaluate the summand exp(-i*i*alpha*alpha)/(i*i*alpha*alpha+x) */
+    float_muli(&smd, &erfcalphasqr, i*i, workprec);
+    float_add(&smd, x, &smd, workprec + 2);
+    float_div(&smd, Ei, &smd, workprec + 1);
+    /* add summand to the series */
+    float_add(&sum, &sum, &smd, digits + 3);
+  }
+  float_move(x, &sum);
+  float_free(&smd);
+  return 1;
+}
+
 /* checks the quality of the asymptotic series for erfc.
    If the ratio of two subsequent summands from the series
    (the convergence rate) should not fall below `ratio'
