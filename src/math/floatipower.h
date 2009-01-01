@@ -38,7 +38,7 @@
 extern "C" {
 #endif
 
-char __raiseposi(floatnum x, unsigned exponent, int digits);
+char _raiseposi_(floatnum x, unsigned exponent, int digits);
 char _raiseposi(floatnum x, int* expx, unsigned exponent, int digits);
 char _raisei(floatnum x, int exponent, int digits);
 

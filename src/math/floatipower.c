@@ -84,7 +84,7 @@ _raiseposi(
 }
 
 char
-__raiseposi(
+_raiseposi_(
   floatnum x,
   unsigned exponent,
   int digits)
