@@ -1,6 +1,6 @@
 /* floatcommon.c: convenience functions, based on floatnum. */
 /*
-    Copyright (C) 2007, 2008 Wolf Lammen.
+    Copyright (C) 2007 - 2009 Wolf Lammen.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -279,7 +279,7 @@ float_relcmp(
   float_setexponent(x, 0);
   float_setexponent(y, expy - expx);
   float_sub(&tmp, x, y, 2);
-  if (result * float_getsign(x) > 0)
+  if ((result * float_getsign(x)) > 0)
     float_div(&tmp, &tmp, x, 2);
   else
     float_div(&tmp, &tmp, y, 2);
@@ -397,23 +397,35 @@ float_roundtoint(
   return 1;
 }
 
+static float _ipwr(float x, int exp){
+  int e = exp < 0? -exp : exp;
+  double pwr = x;
+  if ((e & 1) == 0)
+    x = 1;
+  while (e >>= 1){
+    pwr *= pwr;
+    if ((exp & 1) != 0)
+      x *= pwr;
+  }
+  return exp < 0? 1/x : x;
+}
+
 /* returns x as a float. Only the first 6 digits
    contribute to the result. The exponent has to
    be in the valid range of a float */
 
 float float_asfloat(cfloatnum x){
-  int expx = float_getexponent(x);
-  unsigned exp = expx >= 0? exp: -exp;
-  float pwr = 10;
-  float fexp = (exp & 1) == 0? 1 : 10;
-  float sgnf = leadingdigits(x, 6)/100000.0;
-  while (exp >>= 1){
-    pwr *= pwr;
-    if ((exp & 1) != 0) fexp *= pwr;
-  }
-  if (expx < 0)
-    return sgnf/fexp;
-  return sgnf*fexp;
+  return leadingdigits(x, 6)/100000.0 * _ipwr(10, float_getexponent(x));
+}
+
+void float_setfloat(floatnum dest, float x){
+  int exp = aprxlog10(x);
+  // use two assignments to avoid overflow
+  x *= _ipwr(10, -exp);
+  x *= 100000000;
+
+  float_setinteger(dest, (int)x);
+  float_addexp(dest, exp - 8);
 }
 
 /* Somehow math.h cannot always be included with the full set of
@@ -422,6 +434,18 @@ float float_asfloat(cfloatnum x){
    iterative algorithms, or to estimate round off errors, or to find
    the approximative size of a summand. They need not be
    accurate to more than, say, 0.1% */
+
+float aprxsqrt(float x){
+  int exp, i;
+  x = 2 * frexp(x, &exp) - 1;
+  float result = (0.5 - 0.125 * x) * x + 1;
+  x += 1;
+  for (i = 0; ++i <= 2;)
+    result = 0.5 * (result + x / result);
+  if ((exp & 1) == 0)
+    result *= M_SQRT2;
+  return result * _ipwr(2, (exp - 1) >> 1);
+}
 
 float aprxln(float x){
   /* The evaluation of approxlog(x) is based
@@ -452,4 +476,3 @@ float aprxlog2fn(cfloatnum x){
  return float_getexponent(x)
         + aprxlog2(leadingdigits(x, 5)) - 4;
 }
-

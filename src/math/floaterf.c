@@ -1,6 +1,6 @@
 /* floaterf.c: normal distribution integrals erf and the like */
 /*
-    Copyright (C) 2007, 2008 Wolf Lammen.
+    Copyright (C) 2007 - 2009 Wolf Lammen.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -33,6 +33,7 @@
 #include "floatconst.h"
 #include "floatcommon.h"
 #include "floatexp.h"
+#include "math.h"
 
 /*
   The Taylor expansion of sqrt(pi)*erf(x)/2 around x = 0.
@@ -156,9 +157,9 @@ erfcsum(floatnum x, /* should be the square of the parameter to erfc */
     /* create new alpha appropriate for the desired precision
     This alpha need not be high precision, any alpha near the
     one evaluated here would do */
-    float_muli(&erfcalpha, &cLn10, digits + 4, 3);
-    float_sqrt(&erfcalpha, 3);
-    float_div(&erfcalpha, &cPi, &erfcalpha, 3);
+    float_setfloat(&erfcalpha, M_PI / aprxsqrt((digits + 4) * M_LN10));
+    float_round(&erfcalpha, &erfcalpha, 3, TONEAREST);
+
     float_mul(&erfcalphasqr, &erfcalpha, &erfcalpha, EXACT);
     /* the exp(-k*k*alpha*alpha) are later evaluated iteratively.
     Initiate the iteration here */

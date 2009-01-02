@@ -1,6 +1,6 @@
 /* floatcommon.h: header file for convenience functions, based on floatnum. */
 /*
-    Copyright (C) 2007, 2008 Wolf Lammen.
+    Copyright (C) 2007 - 2009 Wolf Lammen.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -107,7 +107,13 @@ char float_roundtoint(floatnum x, roundmode mode);
 
 float float_asfloat(cfloatnum x);
 
-float approxlog(cfloatnum x);
+void float_setfloat(floatnum dest, float x);
+
+float aprxsqrt(float x);
+float aprxln(float x);
+float aprxlog10(float x);
+float aprxlog2(float x);
+float aprxlog2fn(cfloatnum x);
 
 #ifdef __cplusplus
 }
