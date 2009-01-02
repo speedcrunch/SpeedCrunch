@@ -402,12 +402,12 @@ pack2floatnum(
     float_setinteger(&tmp, base);
     if (n->exp >= 0)
     {
-      __raiseposi(&tmp, n->exp, DECPRECISION + 2);
+      _raiseposi_(&tmp, n->exp, DECPRECISION + 2);
       float_mul(x, x, &tmp, DECPRECISION + 2);
     }
     else
     {
-      __raiseposi(&tmp, -n->exp, DECPRECISION + 2);
+      _raiseposi_(&tmp, -n->exp, DECPRECISION + 2);
       float_div(x, x, &tmp, DECPRECISION + 2);
     }
   }

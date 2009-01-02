@@ -397,6 +397,10 @@ float_roundtoint(
   return 1;
 }
 
+/* returns x as a float. Only the first 6 digits
+   contribute to the result. The exponent has to
+   be in the valid range of a float */
+
 float float_asfloat(cfloatnum x){
   int expx = float_getexponent(x);
   unsigned exp = expx >= 0? exp: -exp;
