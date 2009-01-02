@@ -34,6 +34,7 @@
 #include "floatconst.h"
 #include "floatlong.h"
 #include <string.h>
+#include "math.h"
 
 #define MSB (1 << (sizeof(unsigned)*8 - 1))
 #define LOGMSB ((301*(sizeof(unsigned)*8-1))/1000)
@@ -400,7 +401,7 @@ float float_asfloat(cfloatnum x){
   int expx = float_getexponent(x);
   unsigned exp = expx >= 0? exp: -exp;
   float pwr = 10;
-  float fexp = exp & 1 == 0? 1 : 10;
+  float fexp = (exp & 1) == 0? 1 : 10;
   float sgnf = leadingdigits(x, 6)/100000.0;
   while (exp >>= 1){
     pwr *= pwr;
@@ -411,23 +412,40 @@ float float_asfloat(cfloatnum x){
   return sgnf*fexp;
 }
 
-float approxlog(cfloatnum x){
+/* Somehow math.h cannot always be included with the full set of
+   ISO C99 math functions enabled. So use the approximations below.
+   These functions are used to get first guess start values for
+   iterative algorithms, or to estimate round off errors, or to find
+   the approximative size of a summand. They need not be
+   accurate to more than, say, 0.1% */
+
+float aprxln(float x){
   /* The evaluation of approxlog(x) is based
   on an approximation suggested by Abramowitz, Stegun,
   Handbook of mathematical functions.
-  The returned base 10 logarithm is valid to
-  4 (decimal) digits after the decimal point. */
-  int expx = float_getexponent(x);
-  int ti = leadingdigits(x, 5);
-  int one = 10000;
-  float t;
-  if (ti < 0)
-    ti = -ti;
-  if (ti > 31622){
-    ++expx;
-    one = 100000;
-  }
-  else
-    t = (float)(ti - one)/(ti + one);
-  return (0.36415 * t * t + 0.86304) * t + expx;
+  The returned logarithm is valid to
+  5 (decimal) digits after the decimal point. */
+  int exp;
+
+  x = 2 * frexpf(fabs(x), &exp) - 1;
+  return ((((0.03215845 * x
+         - 0.13606275) * x
+         + 0.28947478) * x
+         - 0.49190896) * x
+         + 0.99949556) * x
+         + (exp - 1) * M_LN2;
 }
+
+float aprxlog2(float x){
+  return aprxln(x) * M_LOG2E;
+}
+
+float aprxlog10(float x){
+  return aprxln(x) * M_LOG10E;
+}
+
+float aprxlog2fn(cfloatnum x){
+ return float_getexponent(x)
+        + aprxlog2(leadingdigits(x, 5)) - 4;
+}
+

@@ -81,6 +81,7 @@ math/floaterf.c
 math/floatexp.c
 math/floatgamma.c
 math/floathmath.c
+math/floatincgamma.c
 math/floatio.c
 math/floatipower.c
 math/floatlog.c

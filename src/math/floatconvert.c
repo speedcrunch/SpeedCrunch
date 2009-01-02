@@ -138,12 +138,6 @@ _validmode(
   return mode >= IO_MODE_SCIENTIFIC && mode <= IO_MODE_COMPLEMENT;
 }
 
-static int _lg2(
-  cfloatnum x)
-{
-  return approxlog(x) * 3.32192809488736235;
-}
-
 static int
 lgbase(
   signed char base)
@@ -513,9 +507,9 @@ _extractexp(
   logbase = lgbase(base);
   decprec = DECPRECISION + 3;
   if (float_getexponent(x) < 0)
-    exp = _lg2(x)-3;
+    exp = aprxlog2fn(x)-3;
   else
-    exp = _lg2(x);
+    exp = aprxlog2fn(x);
   exp /= logbase;
   if (exp != 0)
   {
