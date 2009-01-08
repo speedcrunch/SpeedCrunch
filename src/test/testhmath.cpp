@@ -1164,12 +1164,10 @@ int main( int argc, char * * argv )
   PI  = HMath::pi();
   PHI = HMath::phi();
 
-cout << "*************" << endl;
   test_create();
   test_format();
   test_op();
   test_functions();
-cout << "*************" << endl;
 
   cerr << hmath_total_tests  << " total, "
        << hmath_failed_tests << " failed"
