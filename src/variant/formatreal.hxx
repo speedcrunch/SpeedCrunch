@@ -50,8 +50,7 @@ class RealFormat: public FormatIntf
     bool setValue(int idx, const Variant& val);
     Variant getValue(int idx) const;
   public:
-    typedef enum
-    {
+    enum {
       fShowZeroScale = 1,
       fShowPlus = 2,
       fShowScalePlus = 4,
@@ -62,7 +61,7 @@ class RealFormat: public FormatIntf
       fShowTrailingZero = 0x80,
       fShowTrailingDot = 0x100,
       fShortScale = 0x200,
-      fLowerCaseDigit = 0x400,
+      fLowerCaseDigit = 0x400
     };
   public:
     RealFormat();
