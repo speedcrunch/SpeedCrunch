@@ -296,7 +296,7 @@ AboutBox::AboutBox( QWidget * parent ) : QDialog( parent )
   msg += QString( i18nFmt ).arg( tr( "Polish"               ) ).arg( "Witold Wysota" );
   msg += QString( i18nFmt ).arg( tr( "Portuguese"           ) ).arg( "Helder Correia" );
   msg += QString( i18nFmt ).arg( tr( "Romanian"             ) ).arg( "Iulia Taulescu" );
-  msg += QString( i18nFmt ).arg( tr( "Russian"              ) ).arg( "Irek Khasyanov" );
+  msg += QString( i18nFmt ).arg( tr( "Russian"              ) ).arg( "Alexander Bushuev (aka winuntu)<br>Irek Khasyanov" );
   msg += QString( i18nFmt ).arg( tr( "Simplified Chinese"   ) ).arg( "Liang Qi" );
   msg += QString( i18nFmt ).arg( tr( "Spanish"              ) ).arg( "Francesc Farf&aacute;n" );
   msg += QString( i18nFmt ).arg( tr( "Swedish"              ) ).arg( "Johan Thelin" );
