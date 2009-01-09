@@ -46,13 +46,13 @@ gui/mainwindow.hxx
 )
 
 set(speedcrunch_SOURCES
-variant/variantbase.cpp
-variant/variant.cpp
-variant/real.cpp
-variant/vstring.cpp
-variant/initvariant.cpp
-variant/formatbase.cpp
-variant/formatreal.cpp
+#variant/variantbase.cpp
+#variant/variant.cpp
+#variant/real.cpp
+#variant/vstring.cpp
+#variant/initvariant.cpp
+#variant/formatbase.cpp
+#variant/formatreal.cpp
 3rdparty/util/binreloc.c
 core/constants.cpp
 core/evaluator.cpp

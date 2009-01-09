@@ -1894,3 +1894,8 @@ std::ostream& operator<<( std::ostream& s, const HNumber& n )
   return s;
 }
 
+struct MathInit{
+  MathInit(){ floatmath_init(); }
+};
+
+MathInit mathinit;
