@@ -307,9 +307,10 @@ AboutBox::AboutBox( QWidget * parent ) : QDialog( parent )
   const char * copyFmt = "<b>%1 %2 %3</b><br><i>%4</i><br><br>";
   msg += QString( copyFmt ).arg( tr("Copyright (C)") ).arg( "2004-2007" ).arg( "Ariya Hidayat"      ).arg( "ariya@kde.org"                     );
   msg += QString( copyFmt ).arg( tr("Copyright (C)") ).arg( "2005-2006" ).arg( "Johan Thelin"       ).arg( "e8johan@gmail.com"                 );
-  msg += QString( copyFmt ).arg( tr("Copyright (C)") ).arg( "2007-2008" ).arg( "Helder Correia"     ).arg( "helder.pereira.correia@gmail.com"  );
-  msg += QString( copyFmt ).arg( tr("Copyright (C)") ).arg( "2007-2008" ).arg( "Wolf Lammen"        ).arg( "ookami1@gmx.de"                    );
-  msg += QString( copyFmt ).arg( tr("Copyright (C)") ).arg( "2008"      ).arg( "Alessandro Portale" ).arg( "alessandro.portale@googlemail.com" );
+  msg += QString( copyFmt ).arg( tr("Copyright (C)") ).arg( "2007-2009" ).arg( "Helder Correia"     ).arg( "helder.pereira.correia@gmail.com"  );
+  msg += QString( copyFmt ).arg( tr("Copyright (C)") ).arg( "2007-2009" ).arg( "Wolf Lammen"        ).arg( "ookami1@gmx.de"                    );
+  msg += QString( copyFmt ).arg( tr("Copyright (C)") ).arg( "2007"      ).arg( "Petri Damstén"      ).arg( "damu@iki.fi"                       );
+  msg += QString( copyFmt ).arg( tr("Copyright (C)") ).arg( "2008-2009" ).arg( "Alessandro Portale" ).arg( "alessandro.portale@googlemail.com" );
   msg += "</p>";
 
   msg += "<p>";
