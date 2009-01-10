@@ -34,4 +34,14 @@
 
 #include "floatnum.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void testincgamma(floatnum x, cfloatnum a, int digits);
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif /* FLOATINCGAMMA_H */

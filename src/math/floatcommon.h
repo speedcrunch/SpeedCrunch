@@ -113,7 +113,8 @@ float aprxsqrt(float x);
 float aprxln(float x);
 float aprxlog10(float x);
 float aprxlog2(float x);
-float aprxlog2fn(cfloatnum x);
+float aprxlngamma(float x);
+float aprxlog10fn(cfloatnum x);
 
 #ifdef __cplusplus
 }

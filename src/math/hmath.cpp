@@ -27,6 +27,10 @@
 #include "math/floatio.h"
 #include "math/floatnum.h"
 
+#ifdef INCGAMMA
+# include "math/floatincgamma.h"
+#endif
+
 #include "core/errors.h"
 
 #include <sstream>
@@ -1462,7 +1466,15 @@ HNumber HMath::nCr( const HNumber & n, const HNumber & r )
  */
 HNumber HMath::nPr( const HNumber & n, const HNumber & r )
 {
+#ifdef INCGAMMA
+  HNumber result(r);
+  floatnum fn = &n.d->fnum;
+  floatnum fr = &result.d->fnum;
+  testincgamma(fr, fn, HMATH_EVAL_PREC);
+  return result;
+#else
   return factorial(n, (n-r+1));
+#endif
 }
 
 /**

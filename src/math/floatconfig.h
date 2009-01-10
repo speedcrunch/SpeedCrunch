@@ -1,6 +1,6 @@
 /* floatdefines.h: basic settings in floatnum. */
 /*
-    Copyright (C) 2007, 2008 Wolf Lammen.
+    Copyright (C) 2007 - 2009 Wolf Lammen.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -35,6 +35,11 @@
 
 #ifndef _FLOATCONFIG_H
 #define _FLOATCONFIG_H
+
+//#define INCGAMMA
+#ifdef INCGAMMA
+  #define FLOATDEBUG
+#endif
 
 /* FLOATDEBUG introduces some extensions to floatnum, so you can
    easily follow operations of floatnum in a debugger like ddd.
