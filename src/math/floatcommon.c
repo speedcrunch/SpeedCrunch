@@ -472,7 +472,11 @@ float aprxlog10(float x){
   return aprxln(x) * M_LOG10E;
 }
 
-float aprxlog2fn(cfloatnum x){
+float aprxlog10fn(cfloatnum x){
  return float_getexponent(x)
-        + aprxlog2(leadingdigits(x, 5)) - 4;
+        + aprxlog10(leadingdigits(x, 5)) - 4;
+}
+
+float aprxlngamma(float x){
+  return (x-0.5) * aprxln(x) - x + 0.9189385332f;
 }

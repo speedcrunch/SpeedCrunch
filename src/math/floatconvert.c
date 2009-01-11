@@ -506,10 +506,9 @@ _extractexp(
 
   logbase = lgbase(base);
   decprec = DECPRECISION + 3;
+  exp = aprxlog10fn(x) * 3.321928095f;
   if (float_getexponent(x) < 0)
-    exp = aprxlog2fn(x)-3;
-  else
-    exp = aprxlog2fn(x);
+    exp -= 3;
   exp /= logbase;
   if (exp != 0)
   {
