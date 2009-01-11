@@ -36,11 +36,6 @@
 #ifndef _FLOATCONFIG_H
 #define _FLOATCONFIG_H
 
-//#define INCGAMMA
-#ifdef INCGAMMA
-  #define FLOATDEBUG
-#endif
-
 /* FLOATDEBUG introduces some extensions to floatnum, so you can
    easily follow operations of floatnum in a debugger like ddd.
    Uncomment this, if you develop code based on floatnum, and if you want
