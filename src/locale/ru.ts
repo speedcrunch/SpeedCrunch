@@ -104,7 +104,7 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="328"/>
         <source>Visit &lt;b&gt;http://www.speedcrunch.org&lt;/b&gt; for more information!</source>
-        <translation>Смотрите более подробно на сайте &lt;b&gt;http://www.speedcrunch.org&lt;/b&gt;</translation>
+        <translation>За дополнительной информацией обращайтесь на сайт &lt;b&gt;http://www.speedcrunch.org&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="282"/>
@@ -317,7 +317,7 @@
     <message>
         <location filename="../base/constants.cpp" line="55"/>
         <source>Magnetic Flux Quantum</source>
-        <translation>Квант магнитного потока</translation>
+        <translation>Плотность магнитного потока</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="56"/>
@@ -327,7 +327,7 @@
     <message>
         <location filename="../base/constants.cpp" line="57"/>
         <source>Resistance Quantum</source>
-        <translation>Сопротивление фотона</translation>
+        <translation>Плотность сопротивления</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="58"/>
@@ -387,7 +387,7 @@
     <message>
         <location filename="../base/constants.cpp" line="80"/>
         <source>Physico-chemical</source>
-        <translation>Физико-химический</translation>
+        <translation>Физико-химический раздел</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="72"/>
@@ -617,7 +617,7 @@
     <message>
         <location filename="../base/functions.cpp" line="1459"/>
         <source>Cube Root</source>
-        <translation>Квадратный корень</translation>
+        <translation>Кубический корень</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1460"/>
@@ -702,17 +702,17 @@
     <message>
         <location filename="../base/functions.cpp" line="1480"/>
         <source>Area Hyperbolic Cosine</source>
-        <translation>Обратная гиперболическая косинуса</translation>
+        <translation>Гиперболический ареакосинус</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1481"/>
         <source>Area Hyperbolic Sine</source>
-        <translation>Обратная гиперболическая синуса</translation>
+        <translation>Гиперболический ареасинус</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1482"/>
         <source>Area Hyperbolic Tangent</source>
-        <translation>Обратная гиперболическая тангенса</translation>
+        <translation>Гиперболический ареатангенс</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1483"/>
@@ -722,12 +722,12 @@
     <message>
         <location filename="../base/functions.cpp" line="1484"/>
         <source>Exponential</source>
-        <translation>Экспонента</translation>
+        <translation>Показательная функция</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1485"/>
         <source>Base-2 Logarithm</source>
-        <translation>Натуральный логарифм</translation>
+        <translation>Логарифм по основанию 2</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1486"/>
@@ -757,7 +757,7 @@
     <message>
         <location filename="../base/functions.cpp" line="1493"/>
         <source>Combination (Binomial Coefficient)</source>
-        <translation>Биномиальный коофицент</translation>
+        <translation>Биномиальный коэффициент</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1494"/>
@@ -767,22 +767,22 @@
     <message>
         <location filename="../base/functions.cpp" line="1497"/>
         <source>Binomial Cumulative Distribution Function</source>
-        <translation>Биноминальное функция распределения</translation>
+        <translation>Биномиальная функция распределения</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1498"/>
         <source>Binomial Distribution Mean</source>
-        <translation>Серединное биномиальное распределение</translation>
+        <translation>Среднее (медиана) биномиального распределения</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1499"/>
         <source>Binomial Probability Mass Function</source>
-        <translation>Вероятность биномиального распределения функции массы</translation>
+        <translation>Наиболее вероятное значение биномиального распределения</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1500"/>
         <source>Binomial Distribution Variance</source>
-        <translation>Биномиальное распределение дисперсии</translation>
+        <translation>Дисперсия биномиального распределения</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1503"/>
@@ -792,17 +792,17 @@
     <message>
         <location filename="../base/functions.cpp" line="1504"/>
         <source>Hypergeometric Distribution Mean</source>
-        <translation>Гипергеометрическая функция распределения среднего</translation>
+        <translation>Среднее (медиана) гипергеометрического распределения</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1505"/>
         <source>Hypergeometric Probability Mass Function</source>
-        <translation>Гипергеометрическая вероятность функции массы</translation>
+        <translation>Наиболее вероятное значение гипергеометрического распределения</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1506"/>
         <source>Hypergeometric Distribution Variance</source>
-        <translation>Гипергеометрическое распределение дисперсии</translation>
+        <translation>Дисперсия гипергеометрического распределения</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1507"/>
@@ -812,17 +812,17 @@
     <message>
         <location filename="../base/functions.cpp" line="1508"/>
         <source>Poissonian Distribution Mean</source>
-        <translation>Среднее распределение Пуассона</translation>
+        <translation>Среднее (медиана) распределения Пуассона</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1509"/>
         <source>Poissonian Probability Mass Function</source>
-        <translation>Распределение Пуассона функции массы</translation>
+        <translation>Наиболее вероятное значение распределения Пуассона</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1510"/>
         <source>Poissonian Distribution Variance</source>
-        <translation>Распределение диспрерсии Пуассона</translation>
+        <translation>Дисперсия распределения Пуассона</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1513"/>
@@ -892,42 +892,42 @@
     <message>
         <location filename="../base/functions.cpp" line="344"/>
         <source>function requires 1 or 2 arguments</source>
-        <translation>функции требуется 1 или 2 аргумента</translation>
+        <translation>Функции требуется 1 или 2 аргумента</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1200"/>
         <source>function undefined for specified arguments</source>
-        <translation>функция не определена для конкретных аргументов</translation>
+        <translation>Функция не определена для конкретных аргументов</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="316"/>
         <source>function requires at least 2 arguments</source>
-        <translation>функции требуется как минимум 2 аргумента</translation>
+        <translation>Функции требуется как минимум 2 аргумента</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="324"/>
         <source>function requires integer arguments</source>
-        <translation>функции требуется целочисленный аргумент</translation>
+        <translation>Функции требуется целочисленный аргумент</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="764"/>
         <source>function undefined for specified argument</source>
-        <translation>функция не определена для конкретных аргументов</translation>
+        <translation>Функция не определена для конкретных аргументов</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="726"/>
         <source>underflow</source>
-        <translation>исчезновение значащих разрядов</translation>
+        <translation>Исчезновение значащих разрядов</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="861"/>
         <source>function requires at least 1 argument</source>
-        <translation>функции требуется как минимум 1 аргумент</translation>
+        <translation>Функции требуется как минимум 1 аргумент</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1464"/>
         <source>Extension of Factorials [= (x-1)!]</source>
-        <translation>расширение факториала [=(x-1)!]</translation>
+        <translation>Расширение факториала [=(x-1)!]</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1468"/>
@@ -937,17 +937,17 @@
     <message>
         <location filename="../base/functions.cpp" line="1501"/>
         <source>Error Function</source>
-        <translation>функция ошибок</translation>
+        <translation>Функция ошибок</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1502"/>
         <source>Complementary Error Function</source>
-        <translation>дополнительная функция ошибок</translation>
+        <translation>Дополнительная функция ошибок</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1519"/>
         <source>Degrees of Arc</source>
-        <translation>градусы дуги</translation>
+        <translation>Градусы дуги</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1526"/>
@@ -992,12 +992,12 @@
     <message>
         <location filename="../base/functions.cpp" line="1534"/>
         <source>Integer Quotient</source>
-        <translation>целое частное</translation>
+        <translation>Целое частное</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1535"/>
         <source>Modulo</source>
-        <translation>по модулю</translation>
+        <translation>По модулю</translation>
     </message>
 </context>
 <context>
