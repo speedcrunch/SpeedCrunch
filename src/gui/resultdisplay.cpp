@@ -219,7 +219,9 @@ void ResultDisplay::append( const QString & expr, const HNumber & value )
   new ResultDisplayItem( this, d->count, value );
 
   d->contents.append( expr );
-  d->contents.append( HMath::formatScientific( value, DECPRECISION ) );
+  char* str = HMath::formatScientific( value, DECPRECISION );
+  d->contents.append( str );
+  free(str);
 
   QTimer::singleShot( 0, this, SLOT( scrollEnd() ) );
 }
