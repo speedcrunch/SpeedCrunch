@@ -34,7 +34,6 @@
 #include "number.h"
 #include "floatconfig.h"
 #include "floatio.h"
-#include <core/errors.h>
 
 #define NULLTERMINATED (-20)
 #define UNORDERED (-2)

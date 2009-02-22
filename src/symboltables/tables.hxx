@@ -22,8 +22,6 @@
 
 #include "symboltables/symbols.hxx"
 #include <QMap>
-#include <QString>
-#include <QList>
 #include <QStringList>
 
 class Table: private QMap<QString, PSymbol>

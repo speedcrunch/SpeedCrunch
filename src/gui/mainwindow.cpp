@@ -36,43 +36,27 @@
 #include "gui/historydock.hxx"
 #include "gui/insertfunctiondlg.hxx"
 #include "gui/insertvardlg.hxx"
-#include "gui/keypad.hxx"
 #include "gui/resultdisplay.hxx"
 #include "gui/tipwidget.hxx"
 #include "gui/variablesdock.hxx"
-#include "math/hmath.hxx"
 
 #include <QAction>
-#include <QActionGroup>
 #include <QApplication>
 #include <QClipboard>
-#include <QCloseEvent>
 #include <QDesktopServices>
 #include <QDesktopWidget>
-#include <QFile>
 #include <QFileDialog>
-#include <QHBoxLayout>
 #include <QInputDialog>
-#include <QLabel>
-#include <QLocale>
-#include <QMainWindow>
 #include <QMenu>
 #include <QMenuBar>
 #include <QMessageBox>
-#include <QPixmap>
-#include <QPushButton>
-#include <QRadioButton>
 #include <QScrollBar>
-#include <QShortcut>
 #include <QStatusBar>
-#include <QSystemTrayIcon>
 #include <QTextStream>
 #include <QTimer>
-#include <QToolTip>
 #include <QTranslator>
 #include <QUrl>
 #include <QVBoxLayout>
-#include <QWidget>
 
 struct Actions
 {

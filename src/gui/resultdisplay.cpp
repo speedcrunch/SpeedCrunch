@@ -23,11 +23,9 @@
 
 #include "core/functions.hxx"
 #include "core/settings.hxx"
-#include "math/hmath.hxx"
 
 #include <QApplication>
 #include <QClipboard>
-#include <QResizeEvent>
 #include <QScrollBar>
 #include <QTimer>
 

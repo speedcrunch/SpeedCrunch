@@ -32,7 +32,6 @@
 #ifndef FLOATLOGIC_H
 # define FLOATLOGIC_H
 
-#include "floatnum.h"
 #include "floatconvert.h"
 
 #ifdef __cplusplus

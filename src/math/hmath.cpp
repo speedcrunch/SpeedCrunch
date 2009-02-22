@@ -24,15 +24,11 @@
 #include "math/floatconst.h"
 #include "math/floatconvert.h"
 #include "math/floathmath.h"
-#include "math/floatio.h"
-#include "math/floatnum.h"
-
-#include "core/errors.h"
 
 #include <sstream>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 
 //TODO make this configurable
 #define HMATH_WORKING_PREC (DECPRECISION + 3)

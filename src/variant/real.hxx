@@ -32,7 +32,6 @@
 #ifndef _REAL_H
 #define _REAL_H
 
-#include "math/floatnum.h"
 #include "math/floathmath.h"
 
 #include "variant/variantbase.hxx"

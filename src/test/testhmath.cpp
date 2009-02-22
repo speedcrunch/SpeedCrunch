@@ -21,8 +21,7 @@
 #include "math/floatconst.h"
 
 #include <cstdlib>
-#include <iostream>
-#include <string.h>
+#include <cstring>
 
 using namespace std;
 

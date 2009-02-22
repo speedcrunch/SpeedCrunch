@@ -33,7 +33,6 @@
 # define FLOATCONVERT_H
 
 #include "floatnum.h"
-#include "floatio.h"
 #include "floatlong.h"
 
 #ifdef __cplusplus

@@ -24,11 +24,9 @@
 
 #include "core/functions.hxx"
 
-#include <QDialog>
 #include <QHBoxLayout>
 #include <QHeaderView>
 #include <QPushButton>
-#include <QStringList>
 #include <QTimer>
 #include <QTreeWidget>
 #include <QVBoxLayout>

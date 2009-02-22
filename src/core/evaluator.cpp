@@ -28,9 +28,6 @@
 
 #include <QApplication>
 #include <QMap>
-#include <QString>
-#include <QStringList>
-#include <QVector>
 #include <QStack>
 
 // #define EVALUATOR_DEBUG

@@ -18,7 +18,6 @@
  */
 
 #include "symboltables/tables.hxx"
-#include "math/hmath.hxx"
 
 struct CSyntaxSymbol
 {

@@ -29,15 +29,17 @@
 
 *************************************************************************/
 
+#include "variant/real.hxx"
+#include "variant/variant.hxx"
+
 #include "math/floatconvert.h"
 #include "math/floatconst.h"
 #include "math/floatipower.h"
-#include "variant/variant.hxx"
-#include "variant/real.hxx"
+
 #include <QtXml/QDomText>
 #include <QByteArray>
 
-#include <math.h>
+#include <cmath>
 
 const char* VariantIntf::nLongReal = "LongReal";
 VariantType LongReal::vtLongReal;

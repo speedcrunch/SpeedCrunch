@@ -38,7 +38,6 @@
 
 #include "floatnum.h"
 #include "floatlong.h"
-#include <core/errors.h>
 #include <stdio.h>
 #include <string.h>
 

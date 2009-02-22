@@ -22,9 +22,7 @@
 #include "deletevardlg.hxx"
 
 #include "core/evaluator.hxx"
-#include "math/hmath.hxx"
 
-#include <QDialog>
 #include <QHBoxLayout>
 #include <QHeaderView>
 #include <QPushButton>

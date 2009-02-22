@@ -20,7 +20,6 @@
 
 #include "autohidelabel.hxx"
 
-#include <QLabel>
 #include <QTimer>
 #include <QToolTip>
 

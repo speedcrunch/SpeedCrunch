@@ -29,8 +29,6 @@
 
 *************************************************************************/
 
-#include "variant/variant.hxx"
-#include "variant/real.hxx"
 #include "variant/vstring.hxx"
 #include "variant/formatbase.hxx"
 

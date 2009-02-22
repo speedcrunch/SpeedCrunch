@@ -31,10 +31,8 @@
 
 #include "floatconvert.h"
 #include "floatcommon.h"
-#include "floatconfig.h"
 #include "floatconst.h"
 #include "floatipower.h"
-#include <core/errors.h>
 #include <stdlib.h>
 
 typedef struct{

@@ -32,9 +32,7 @@
 #ifndef _VSTRING_H
 #define _VSTRING_H
 
-#include "variant/variantbase.hxx"
 #include "variant/variant.hxx"
-#include <QString>
 
 class VString: public VariantData
 {

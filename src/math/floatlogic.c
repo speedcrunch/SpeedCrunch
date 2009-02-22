@@ -30,9 +30,7 @@
 *************************************************************************/
 
 #include "floatlogic.h"
-#include "floatconfig.h"
 #include "floatconst.h"
-#include "floatlong.h"
 
 #define MAXIDX ((LOGICRANGE-1) / BITS_IN_UNSIGNED)
 #define SIGNBIT (LOGICRANGE - 1 - MAXIDX * BITS_IN_UNSIGNED)

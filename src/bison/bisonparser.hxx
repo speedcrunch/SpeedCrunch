@@ -31,16 +31,12 @@
 #ifndef _BISONPARSER_H
 #define _BISONPARSER_H
 
-#include "math/hmath.hxx"
 #include "bison.h"
 #include "symboltables/tables.hxx"
 
-#include <QString>
-#include <QStringList>
 #include <QChar>
 #include <QQueue>
 #include <QStack>
-#include <QList>
 
 class SglExprLex
 {

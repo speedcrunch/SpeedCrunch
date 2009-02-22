@@ -36,17 +36,12 @@
 
 /* a few tests depend on 32 bit integer size, fix this in future!! */
 
-#include "core/errors.h"
-#include "math/floatconfig.h"
 #include "math/floatconst.h"
 #include "math/floatcommon.h"
-#include "math/floatseries.h"
 #include "math/floatlog.h"
 #include "math/floatexp.h"
 #include "math/floattrig.h"
 #include "math/floathmath.h"
-#include "math/floatlong.h"
-#include "math/floatconvert.h"
 #include "math/floatipower.h"
 #include "math/floatpower.h"
 #include "math/floatgamma.h"

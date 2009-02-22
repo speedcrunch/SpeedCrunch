@@ -33,7 +33,6 @@
 #include "floatseries.h"
 #include "floatconst.h"
 #include "floatcommon.h"
-#include "floatconfig.h"
 
 /* evaluates arctan x for |x| <= 1
    relative error for a 100 digit result is 6e-100 */

@@ -24,7 +24,6 @@
 
 #include "core/evaluator.hxx"
 
-#include <QDialog>
 #include <QHBoxLayout>
 #include <QHeaderView>
 #include <QLocale>

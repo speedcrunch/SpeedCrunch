@@ -29,12 +29,11 @@
 
 *************************************************************************/
 
-#include "floatconfig.h"
 #include "floatcommon.h"
 #include "floatconst.h"
 #include "floatlong.h"
 #include <string.h>
-#include "math.h"
+#include <math.h>
 
 #define MSB (1 << (sizeof(unsigned)*8 - 1))
 #define LOGMSB ((301*(sizeof(unsigned)*8-1))/1000)

@@ -21,16 +21,12 @@
 #include "core/functions.hxx"
 
 #include "core/settings.hxx"
-#include "math/hmath.hxx"
 
 #include <QApplication>
 #include <QHash>
-#include <QObject>
-#include <QStringList>
-#include <QVector>
 
-#include <float.h>
-#include <math.h>
+#include <cfloat>
+#include <cmath>
 
 struct Function::Private
 {

@@ -31,7 +31,6 @@
 
 #include "floatio.h"
 #include "floatlong.h"
-#include <core/errors.h>
 #include <string.h>
 
 typedef enum { NmbNormal, NmbSpecial, NmbBufferOverflow } NmbType;

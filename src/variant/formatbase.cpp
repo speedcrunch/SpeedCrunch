@@ -32,7 +32,6 @@
 #include "variant/formatbase.hxx"
 #include "core/settings.hxx"
 #include <QMultiMap>
-#include <QStringList>
 
 const char* fmtDefault = "default";
 

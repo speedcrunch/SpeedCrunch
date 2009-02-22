@@ -29,7 +29,6 @@
 
 *************************************************************************/
 
-#include "floatconfig.h"
 #include "floatgamma.h"
 #include "floatconst.h"
 #include "floatcommon.h"

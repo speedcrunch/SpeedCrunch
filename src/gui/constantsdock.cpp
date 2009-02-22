@@ -29,7 +29,6 @@
 #include <QHeaderView>
 #include <QLabel>
 #include <QLineEdit>
-#include <QList>
 #include <QTimer>
 #include <QTreeWidget>
 #include <QVBoxLayout>

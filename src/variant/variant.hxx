@@ -32,10 +32,8 @@
 #ifndef _VARIANT_H
 #define _VARIANT_H
 
-#include "core/errors.h"
-#include "variant/variantbase.hxx"
 #include "variant/real.hxx"
-#include "variant/vstring.hxx"
+//#include "variant/vstring.hxx"
 
 class VariantBase: public VariantIntf
 // takes care of builtin data types
