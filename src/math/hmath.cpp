@@ -859,23 +859,20 @@ char * HMath::formatBinary( const HNumber & hn )
  */
 char* HMath::format( const HNumber& hn, char format, int prec )
 {
-  if( format=='g' )
-    return formatGeneral( hn, prec );
-  else if( format=='f' )
-    return formatFixed( hn, prec );
-  else if( format=='e' )
-    return formatScientific( hn, prec );
-  else if( format=='n' )
-    return formatEngineering( hn, prec );
-  else if( format=='h' )
-    return formatHexadec( hn );
-  else if( format=='o' )
-    return formatOctal( hn );
-  else if( format=='b' )
-    return formatBinary( hn );
+  char* rs = 0;
 
-  // fallback to 'g'
-  return formatGeneral( hn, prec );
+  switch (format)
+  {
+  case 'f': rs = formatFixed( hn, prec ); break;
+  case 'e': rs = formatScientific( hn, prec ); break;
+  case 'n': rs = formatEngineering( hn, prec ); break;
+  case 'h': rs = formatHexadec( hn ); break;
+  case 'o': rs = formatOctal( hn ); break;
+  case 'b': rs = formatBinary( hn ); break;
+  case 'g': default: rs = formatGeneral( hn, prec );
+  }
+
+  return rs;
 }
 
 /**
