@@ -43,7 +43,7 @@ QTextStream& operator<<( QTextStream& s, HNumber num )
 {
   char * str = HMath::formatFixed( num );
   s << str;
-  delete[] str;
+  free(str);
   return s;
 }
 

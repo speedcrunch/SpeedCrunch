@@ -1890,7 +1890,7 @@ std::ostream& operator<<( std::ostream& s, const HNumber& n )
 {
   char* str = HMath::formatFixed( n );
   s << str;
-  delete[] str;
+  free(str);
   return s;
 }
 
