@@ -34,6 +34,12 @@ class HNumber
   friend class HMath;
   friend HNumber operator-( const HNumber & );
   friend HNumber operator-( const HNumber &, const HNumber& );
+  friend bool operator>( const HNumber& l, const HNumber& r );
+  friend bool operator<( const HNumber& l, const HNumber& r );
+  friend bool operator>=( const HNumber& l, const HNumber& r );
+  friend bool operator<=( const HNumber& l, const HNumber& r );
+  friend bool operator==( const HNumber& l, const HNumber& r );
+  friend bool operator!=( const HNumber& l, const HNumber& r );
 
   public:
     HNumber();
@@ -81,22 +87,15 @@ class HNumber
     HNumber operator~() const;
     HNumber operator>>( const HNumber& ) const;
     HNumber operator<<( const HNumber& ) const;
-    bool operator>( const HNumber& n ) const;
-    bool operator<( const HNumber& n ) const;
-    bool operator>=( const HNumber& n ) const;
-    bool operator<=( const HNumber& n ) const;
-    bool operator==( const HNumber& n ) const;
-    bool operator!=( const HNumber& n ) const;
 
     static HNumber idiv( const HNumber& n1, const HNumber& n2 );
     static HNumber nan(Error error = Success);
 
   private:
     HNumberPrivate * d;
-};
 
-HNumber operator-( const HNumber & );
-HNumber operator-( const HNumber &, const HNumber & );
+    int compare( const HNumber & other ) const;
+};
 
 class HMath
 {
@@ -116,7 +115,6 @@ class HMath
     // GENERAL MATH
     static HNumber rad2deg( const HNumber & angle );
     static HNumber deg2rad( const HNumber & angle );
-    static int compare( const HNumber & n1, const HNumber & n2 );
     static HNumber max( const HNumber & n1, const HNumber & n2 );
     static HNumber min( const HNumber & n1, const HNumber & n2 );
     static HNumber abs( const HNumber & n );

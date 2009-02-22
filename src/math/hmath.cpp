@@ -489,51 +489,61 @@ HNumber HNumber::idiv( const HNumber & dividend, const HNumber& divisor)
 }
 
 /**
- * Returns true if this number is greater than n.
+ * Returns -1, 0, 1 if *this is less than, equal to, or more than other.
  */
-bool HNumber::operator>( const HNumber & n ) const
+int HNumber::compare( const HNumber & other ) const
 {
-  return HMath::compare( *this, n ) > 0;
+  int result = float_relcmp(&d->fnum, &other.d->fnum, HMATH_EVAL_PREC-1);
+  float_geterror(); // clears error, if one operand was a NaN
+  return result;
 }
 
 /**
- * Returns true if this number is less than n.
+ * Returns true if l is greater than r.
  */
-bool HNumber::operator<( const HNumber & n ) const
+bool operator>( const HNumber& l, const HNumber& r )
 {
-  return HMath::compare( *this, n ) < 0;
+  return l.compare( r ) > 0;
 }
 
 /**
- * Returns true if this number is greater than or equal to n.
+ * Returns true if l is less than r.
  */
-bool HNumber::operator>=( const HNumber & n ) const
+bool operator<( const HNumber& l, const HNumber& r )
 {
-  return HMath::compare( *this, n ) >= 0;
+  return l.compare( r ) < 0;
 }
 
 /**
- * Returns true if this number is less than or equal to n.
+ * Returns true if l is greater than or equal to r.
  */
-bool HNumber::operator<=( const HNumber & n ) const
+bool operator>=( const HNumber& l, const HNumber& r )
 {
-  return HMath::compare( *this, n ) <= 0;
+  return l.compare( r ) >= 0;
 }
 
 /**
- * Returns true if this number is equal to n.
+ * Returns true if l is less than or equal to r.
  */
-bool HNumber::operator==( const HNumber & n ) const
+bool operator<=( const HNumber& l, const HNumber& r )
 {
-  return HMath::compare( *this, n ) == 0;
+  return l.compare( r ) <= 0;
 }
 
 /**
- * Returns true if this number is not equal to n.
+ * Returns true if l is equal to r.
  */
-bool HNumber::operator!=( const HNumber & n ) const
+bool operator==( const HNumber& l, const HNumber& r )
 {
-  return HMath::compare( *this, n ) != 0;
+  return l.compare( r ) == 0;
+}
+
+/**
+ * Returns true if l is not equal to r.
+ */
+bool operator!=( const HNumber& l, const HNumber& r )
+{
+  return l.compare( r ) != 0;
 }
 
 /**
@@ -907,16 +917,6 @@ HNumber HMath::phi()
   return HNumber("1.61803398874989484820458683436563811772030917980576"
                    "28621354486227052604628189024497072072041893911374"
                    "84754088075386891752");
-}
-
-/**
- * Returns -1, 0, 1 if n1 is less than, equal to, or more than n2.
- */
-int HMath::compare( const HNumber & n1, const HNumber & n2 )
-{
-  int result = float_relcmp(&n1.d->fnum, &n2.d->fnum, HMATH_EVAL_PREC-1);
-  float_geterror(); // clears error, if one operand was a NaN
-  return result;
 }
 
 /**
