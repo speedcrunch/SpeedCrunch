@@ -46,14 +46,12 @@
 static void checkfullcancellation( cfloatnum op1, cfloatnum op2,
                                    floatnum r )
 {
-  int expr;
-
   if (float_getlength(op1) != 0
       && float_getlength(op2) != 0
       && float_getlength(r) != 0)
   {
     /* NaN or zero not involved in computation */
-    expr = float_getexponent(r);
+    int expr = float_getexponent(r);
     if (float_getexponent(op1) - expr >= HMATH_WORKING_PREC - 1
         || float_getexponent(op2) - expr >= HMATH_WORKING_PREC - 1)
       float_setzero(r);
@@ -90,12 +88,10 @@ static void h_init()
 
 static void checkpoleorzero( floatnum result, floatnum x )
 {
-  int expx, expr;
-
   if (float_getlength(result) == 0 || float_getlength(x) == 0)
     return;
-  expx = float_getexponent(x)-HMATH_WORKING_PREC+1;
-  expr = float_getexponent(result);
+  int expx = float_getexponent(x)-HMATH_WORKING_PREC+1;
+  int expr = float_getexponent(result);
   if (expr <= expx)
     float_setzero(result);
   else if (expr >= -expx)
@@ -225,21 +221,19 @@ void call1ArgND(HNumberPrivate* dest, HNumberPrivate* n, Float1ArgND func)
 
 static char modwrap(floatnum result, cfloatnum p1, cfloatnum p2, int digits)
 {
-  char ok;
   floatstruct tmp;
   float_create(&tmp);
-  ok = float_divmod(&tmp, result, p1, p2, INTQUOT);
+  char ok = float_divmod(&tmp, result, p1, p2, INTQUOT);
   float_free(&tmp);
   return ok;
 }
 
 char idivwrap(floatnum result, cfloatnum p1, cfloatnum p2)
 {
-  char ok;
   floatstruct tmp;
   int save = float_setprecision(DECPRECISION);
   float_create(&tmp);
-  ok = float_divmod(result, &tmp, p1, p2, INTQUOT);
+  char ok = float_divmod(result, &tmp, p1, p2, INTQUOT);
   float_free(&tmp);
   float_setprecision(save);
   return ok;
@@ -661,15 +655,11 @@ _doFormat(
   int prec,
   unsigned flags)
 {
-  floatstruct tmp;
   t_otokens tokens;
-  int sz;
-  char* str;
   char intbuf[BINPRECISION+1];
   char fracbuf[BINPRECISION+1];
-
-  str = NULL;
-  float_create(&tmp);
+  int sz = 0;
+  char* str = NULL;
   switch (base)
   {
   case 2:
@@ -689,6 +679,9 @@ _doFormat(
   tokens.intpart.buf = intbuf;
   tokens.fracpart.sz = sz;
   tokens.fracpart.buf = fracbuf;
+
+  floatstruct tmp;
+  float_create(&tmp);
   float_copy(&tmp, x, DECPRECISION + 2);
   if (float_out(&tokens, &tmp, prec, base, outmode) == Success)
   {
@@ -706,14 +699,10 @@ _doFormat(
  */
 char * HMath::formatFixed( const HNumber & hn, int prec )
 {
-  unsigned flags;
-  int scale;
-  char* result;
-
-  scale = float_getlength(&hn.d->fnum) - float_getexponent(&hn.d->fnum) - 1;
+  int scale = float_getlength(&hn.d->fnum) - float_getexponent(&hn.d->fnum) - 1;
   if (scale < 0)
     scale = 0;
-  flags = IO_FLAG_SUPPRESS_PLUS + IO_FLAG_SUPPRESS_DOT + IO_FLAG_SUPPRESS_EXPZERO;
+  unsigned flags = IO_FLAG_SUPPRESS_PLUS + IO_FLAG_SUPPRESS_DOT + IO_FLAG_SUPPRESS_EXPZERO;
   if( prec < 0 )
   {
     flags |= IO_FLAG_SUPPRESS_TRL_ZERO;
@@ -721,7 +710,7 @@ char * HMath::formatFixed( const HNumber & hn, int prec )
     if( scale < HMATH_MAX_SHOWN )
       prec = scale;
   }
-  result = _doFormat(&hn.d->fnum, 10, 10, IO_MODE_FIXPOINT, prec,
+  char* result = _doFormat(&hn.d->fnum, 10, 10, IO_MODE_FIXPOINT, prec,
                      flags);
   if (!result)
     result = _doFormat(&hn.d->fnum, 10, 10, IO_MODE_SCIENTIFIC,
@@ -735,9 +724,7 @@ char * HMath::formatFixed( const HNumber & hn, int prec )
  */
 char * HMath::formatScientific( const HNumber & hn, int prec )
 {
-  unsigned flags;
-
-  flags = IO_FLAG_SUPPRESS_PLUS + IO_FLAG_SUPPRESS_DOT
+  unsigned flags = IO_FLAG_SUPPRESS_PLUS + IO_FLAG_SUPPRESS_DOT
       + IO_FLAG_SUPPRESS_EXPPLUS;
   if( prec < 0 )
   {
@@ -754,9 +741,7 @@ char * HMath::formatScientific( const HNumber & hn, int prec )
  */
 char * HMath::formatEngineering( const HNumber & hn, int prec )
 {
-  unsigned flags;
-
-  flags = IO_FLAG_SUPPRESS_PLUS + IO_FLAG_SUPPRESS_EXPPLUS;
+  unsigned flags = IO_FLAG_SUPPRESS_PLUS + IO_FLAG_SUPPRESS_EXPPLUS;
   if( prec <= 1 )
   {
     flags |= IO_FLAG_SUPPRESS_TRL_ZERO + IO_FLAG_SUPPRESS_DOT;
@@ -791,9 +776,6 @@ char * HMath::formatGeneral( const HNumber & hn, int prec )
 char* formathexfp( floatnum x, char base,
                    char expbase, int scale )
 {
-  char* result;
-  int tmpscale;
-
 #if 0
 
   // SpeedCrunch 0.8 behaviour
@@ -811,19 +793,19 @@ char* formathexfp( floatnum x, char base,
   float_free(&tmp);
 
 #else
-  tmpscale = scale;
+  int tmpscale = scale;
   if (float_isinteger(x))
     tmpscale = 0;
-  result = _doFormat(x, base, expbase, IO_MODE_FIXPOINT, tmpscale,
+  char* result = _doFormat(x, base, expbase, IO_MODE_FIXPOINT, tmpscale,
                       IO_FLAG_SUPPRESS_PLUS + IO_FLAG_SUPPRESS_DOT
                       + IO_FLAG_SHOW_BASE + IO_FLAG_SUPPRESS_EXPZERO);
 #endif
-  if (result != NULL)
-    return result;
-
-  return _doFormat(x, base, expbase, IO_MODE_SCIENTIFIC, scale,
+  if (!result)
+    result = _doFormat(x, base, expbase, IO_MODE_SCIENTIFIC, scale,
                     IO_FLAG_SUPPRESS_PLUS + IO_FLAG_SUPPRESS_DOT
                     + IO_FLAG_SHOW_BASE + IO_FLAG_SHOW_EXPBASE);
+
+  return result;
 }
 
 /**
@@ -957,11 +939,9 @@ HNumber HMath::round( const HNumber & n, int prec )
 {
   if (n.isNan())
     return HNumber::nan(checkNaNParam(*n.d));
-  int exp;
-  floatnum rnum;
   HNumber result(n);
-  rnum = &result.d->fnum;
-  exp = float_getexponent(rnum);
+  floatnum rnum = &result.d->fnum;
+  int exp = float_getexponent(rnum);
   /* avoid exponent overflow later */
   if (prec > HMATH_WORKING_PREC && exp > 0)
     prec = HMATH_WORKING_PREC;
@@ -983,11 +963,9 @@ HNumber HMath::trunc( const HNumber & n, int prec )
 {
   if (n.isNan())
     return HNumber::nan(checkNaNParam(*n.d));
-  int exp;
-  floatnum rnum;
   HNumber result(n);
-  rnum = &result.d->fnum;
-  exp = float_getexponent(rnum);
+  floatnum rnum = &result.d->fnum;
+  int exp = float_getexponent(rnum);
   /* avoid exponent overflow later on */
   if (prec > HMATH_WORKING_PREC && exp > 0)
     prec = HMATH_WORKING_PREC;
@@ -1097,33 +1075,29 @@ HNumber HMath::sqrt( const HNumber & n )
  */
 HNumber HMath::cbrt( const HNumber & n )
 {
-  int expn, digits;
-  floatstruct a, q;
-  floatnum rnum;
-  signed char sign;
-
   if (n.isNan())
     return HNumber::nan(checkNaNParam(*n.d));
   if( n.isZero() )
     return n;
   HNumber r;
-  rnum = &r.d->fnum;
+  floatnum rnum = &r.d->fnum;
 
   // iterations to approximate result
   // X[i+1] = (2/3)X[i] + n / (3 * X[i]^2))
   // initial guess = sqrt( n )
   // r = X[i], q = X[i+1], a = n
 
+  floatstruct a, q;
   float_create(&a);
   float_create(&q);
   float_copy(&a, &n.d->fnum, HMATH_EVAL_PREC);
-  sign = float_getsign(&a);
+  signed char sign = float_getsign(&a);
   float_abs(&a);
-  expn = float_getexponent(&a);
+  int expn = float_getexponent(&a);
   float_setexponent(&a, expn % 3);
   expn /= 3;
 
-  digits = 0;
+  int digits = 0;
   float_copy(&q, &a, 2);
   float_sqrt(&q, 2);
 
@@ -1402,9 +1376,6 @@ HNumber HMath::sign( const HNumber & x )
  */
 HNumber HMath::nCr( const HNumber & n, const HNumber & r )
 {
-  floatstruct fn, fr;
-  floatnum rnum;
-
   Error error = checkNaNParam(*n.d, r.d);
   if (error != Success)
     return HNumber::nan(error);
@@ -1424,7 +1395,8 @@ HNumber HMath::nCr( const HNumber & n, const HNumber & r )
           && n <= 1000 && r1 <= 50 )
       return factorial(n, r2+1) / factorial(r1, 1);
     HNumber result(n);
-    rnum = &result.d->fnum;
+    floatnum rnum = &result.d->fnum;
+    floatstruct fn, fr;
     float_create(&fn);
     float_create(&fr);
     float_copy(&fr, &r1.d->fnum, HMATH_EVAL_PREC);
