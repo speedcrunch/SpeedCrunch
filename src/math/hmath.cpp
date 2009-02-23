@@ -647,9 +647,10 @@ HNumber HNumber::operator>>( const HNumber & num ) const
   return result;
 }
 
-static char*
-_doFormat(
-  floatnum x,
+namespace /* unnamed */ {
+
+char* _doFormat(
+  cfloatnum x,
   signed char base,
   signed char expbase,
   char outmode,
@@ -698,9 +699,9 @@ _doFormat(
  * Formats the given number as string, using specified decimal digits.
  * Note that the returned string must be freed.
  */
-char * HMath::formatFixed( const HNumber & hn, int prec )
+char* formatFixed( cfloatnum x, int prec )
 {
-  int scale = float_getlength(&hn.d->fnum) - float_getexponent(&hn.d->fnum) - 1;
+  int scale = float_getlength(x) - float_getexponent(x) - 1;
   if (scale < 0)
     scale = 0;
   unsigned flags = IO_FLAG_SUPPRESS_PLUS + IO_FLAG_SUPPRESS_DOT + IO_FLAG_SUPPRESS_EXPZERO;
@@ -711,19 +712,16 @@ char * HMath::formatFixed( const HNumber & hn, int prec )
     if( scale < HMATH_MAX_SHOWN )
       prec = scale;
   }
-  char* result = _doFormat(&hn.d->fnum, 10, 10, IO_MODE_FIXPOINT, prec,
-                     flags);
-  if (!result)
-    result = _doFormat(&hn.d->fnum, 10, 10, IO_MODE_SCIENTIFIC,
-                       HMATH_MAX_SHOWN, flags);
-  return result;
+  char* result = _doFormat(x, 10, 10, IO_MODE_FIXPOINT, prec, flags);
+  return result ? result
+      : _doFormat(x, 10, 10, IO_MODE_SCIENTIFIC, HMATH_MAX_SHOWN, flags);
 }
 
 /**
  * Formats the given number as string, in scientific format.
  * Note that the returned string must be freed.
  */
-char * HMath::formatScientific( const HNumber & hn, int prec )
+char* formatScientific( cfloatnum x, int prec )
 {
   unsigned flags = IO_FLAG_SUPPRESS_PLUS + IO_FLAG_SUPPRESS_DOT
       + IO_FLAG_SUPPRESS_EXPPLUS;
@@ -732,15 +730,14 @@ char * HMath::formatScientific( const HNumber & hn, int prec )
     flags |= IO_FLAG_SUPPRESS_TRL_ZERO;
     prec = HMATH_MAX_SHOWN;
   }
-  return _doFormat(&hn.d->fnum, 10, 10, IO_MODE_SCIENTIFIC, prec,
-                   flags);
+  return _doFormat(x, 10, 10, IO_MODE_SCIENTIFIC, prec, flags);
 }
 
 /**
  * Formats the given number as string, in engineering notation.
  * Note that the returned string must be freed.
  */
-char * HMath::formatEngineering( const HNumber & hn, int prec )
+char* formatEngineering( cfloatnum x, int prec )
 {
   unsigned flags = IO_FLAG_SUPPRESS_PLUS + IO_FLAG_SUPPRESS_EXPPLUS;
   if( prec <= 1 )
@@ -748,66 +745,47 @@ char * HMath::formatEngineering( const HNumber & hn, int prec )
     flags |= IO_FLAG_SUPPRESS_TRL_ZERO + IO_FLAG_SUPPRESS_DOT;
     prec = HMATH_MAX_SHOWN;
   }
-  return _doFormat(&hn.d->fnum, 10, 10, IO_MODE_ENG, prec,
-                   flags);
+  return _doFormat(x, 10, 10, IO_MODE_ENG, prec, flags);
 }
 
 /**
  * Formats the given number as string, using specified decimal digits.
  * Note that the returned string must be freed.
  */
-char * HMath::formatGeneral( const HNumber & hn, int prec )
+char* formatGeneral( cfloatnum x, int prec )
 {
   // find the exponent and the factor
-  int expd = float_getexponent(&hn.d->fnum);
+  int expd = float_getexponent(x);
 
   char* str;
   if( expd > 5 )
-    str = formatScientific( hn, prec );
+    str = formatScientific( x, prec );
   else if( expd < -4 )
-    str = formatScientific( hn, prec );
+    str = formatScientific( x, prec );
   else if ( (expd < 0) && (prec>0) && (expd < -prec) )
-    str = formatScientific( hn, prec );
+    str = formatScientific( x, prec );
   else
-    str = formatFixed( hn, prec );
+    str = formatFixed( x, prec );
 
   return str;
 }
 
-char* formathexfp( floatnum x, char base,
+char* formathexfp( cfloatnum x, char base,
                    char expbase, int scale )
 {
-#if 0
-
-  // SpeedCrunch 0.8 behaviour
-
-  floatstruct tmp;
-  int exp;
-
-  float_create(&tmp);
-  exp = float_getexponent(x);
-  float_copy(&tmp, x, exp <= 0? 1 : exp + 1);
-  float_int(&tmp);
-  result = _doFormat(&tmp, base, expbase, IO_MODE_FIXPOINT,
-                     0, IO_FLAG_SUPPRESS_PLUS
-                     + IO_FLAG_SUPPRESS_DOT + IO_FLAG_SHOW_BASE);
-  float_free(&tmp);
-
-#else
   int tmpscale = scale;
   if (float_isinteger(x))
     tmpscale = 0;
   char* result = _doFormat(x, base, expbase, IO_MODE_FIXPOINT, tmpscale,
                       IO_FLAG_SUPPRESS_PLUS + IO_FLAG_SUPPRESS_DOT
                       + IO_FLAG_SHOW_BASE + IO_FLAG_SUPPRESS_EXPZERO);
-#endif
-  if (!result)
-    result = _doFormat(x, base, expbase, IO_MODE_SCIENTIFIC, scale,
+  return result ? result
+      : _doFormat(x, base, expbase, IO_MODE_SCIENTIFIC, scale,
                     IO_FLAG_SUPPRESS_PLUS + IO_FLAG_SUPPRESS_DOT
                     + IO_FLAG_SHOW_BASE + IO_FLAG_SHOW_EXPBASE);
-
-  return result;
 }
+
+} /* unnamed namespace */
 
 /**
  * Formats the given number as string, using specified decimal digits.
@@ -819,13 +797,13 @@ char* HMath::format( const HNumber& hn, char format, int prec )
 
   switch (format)
   {
-  case 'f': rs = formatFixed( hn, prec ); break;
-  case 'e': rs = formatScientific( hn, prec ); break;
-  case 'n': rs = formatEngineering( hn, prec ); break;
-  case 'h': rs = formathexfp (&hn.d->fnum, 16, 10, HMATH_HEX_MAX_SHOWN); break;
-  case 'o': rs = formathexfp (&hn.d->fnum, 8, 10, HMATH_OCT_MAX_SHOWN); break;
-  case 'b': rs = formathexfp (&hn.d->fnum, 2, 10, HMATH_BIN_MAX_SHOWN); break;
-  case 'g': default: rs = formatGeneral( hn, prec );
+  case 'f': rs = formatFixed(&hn.d->fnum, prec ); break;
+  case 'e': rs = formatScientific(&hn.d->fnum, prec ); break;
+  case 'n': rs = formatEngineering(&hn.d->fnum, prec ); break;
+  case 'h': rs = formathexfp(&hn.d->fnum, 16, 10, HMATH_HEX_MAX_SHOWN); break;
+  case 'o': rs = formathexfp(&hn.d->fnum, 8, 10, HMATH_OCT_MAX_SHOWN); break;
+  case 'b': rs = formathexfp(&hn.d->fnum, 2, 10, HMATH_BIN_MAX_SHOWN); break;
+  case 'g': default: rs = formatGeneral(&hn.d->fnum, prec );
   }
 
   return rs;
