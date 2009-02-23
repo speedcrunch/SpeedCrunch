@@ -1380,13 +1380,9 @@ HNumber HMath::nCr( const HNumber & n, const HNumber & r )
   if (error != Success)
     return HNumber::nan(error);
 
-  HNumber r1;
   // use symmetry nCr(n, r) == nCr(n, n-r) to find r1 such
   // 2*r1 <= n and nCr(n, r) == nCr(n, r1)
-  if ( r + r > n )
-    r1 = n - r;
-  else
-    r1 = r;
+  HNumber r1 = ( r + r > n ) ? n - r : r;
   HNumber r2 = n - r1;
 
   if ( r1 >= 0 )
