@@ -912,42 +912,22 @@ HNumber Functions::Private::geomean( Function *, const QVector<HNumber> & args )
 
 HNumber Functions::Private::dec( Function *, const QVector<HNumber> & args )
 {
-  if ( args.count() != 1 )
-    return HNumber("NaN");
-
-  HNumber result = args[0];
-  result.setFormat( 'g' );
-  return result;
+  return (args.count() != 1) ? HNumber("NaN") : HNumber(args[0]).setFormat('g');
 }
 
 HNumber Functions::Private::hex( Function *, const QVector<HNumber> & args )
 {
-  if ( args.count() != 1 )
-    return HNumber("NaN");
-
-  HNumber result = args[0];
-  result.setFormat( 'h' );
-  return result;
+  return (args.count() != 1) ? HNumber("NaN") : HNumber(args[0]).setFormat('h');
 }
 
 HNumber Functions::Private::oct( Function *, const QVector<HNumber> & args )
 {
-  if( args.count() != 1 )
-    return HNumber("NaN");
-
-  HNumber result = args[0];
-  result.setFormat( 'o' );
-  return result;
+  return (args.count() != 1) ? HNumber("NaN") : HNumber(args[0]).setFormat('o');
 }
 
 HNumber Functions::Private::bin( Function *, const QVector<HNumber> & args )
 {
-  if ( args.count() != 1 )
-    return HNumber("NaN");
-
-  HNumber result = args[0];
-  result.setFormat( 'b' );
-  return result;
+  return (args.count() != 1) ? HNumber("NaN") : HNumber(args[0]).setFormat('b');
 }
 
 HNumber Functions::Private::binompmf( Function * f,

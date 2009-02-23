@@ -64,7 +64,7 @@ class HNumber
     // 'o': octal
     // 'b': binary
     char format() const;
-    void setFormat( char c = 0 );
+    HNumber& setFormat( char c = 0 );
 
     int toInt() const;
     Error error() const;

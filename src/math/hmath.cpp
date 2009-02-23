@@ -347,9 +347,10 @@ char HNumber::format() const
 /**
  * Sets the preferred format (base/precision), default is 0
  */
-void HNumber::setFormat(char c)
+HNumber& HNumber::setFormat(char c)
 {
    d->format = float_isnan(&d->fnum)?0:c;
+   return *this;
 }
 
 /**
