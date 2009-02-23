@@ -1136,11 +1136,8 @@ HNumber Functions::Private::and_( Function *, const QVector<HNumber> & args )
   if ( args.count() <= 0 )
     return HNumber("NaN");
 
-  HNumber result = args[0];
-  for( int c = 1; c < args.count(); c++ )
-    result = result & args[c];
-
-  return result;
+  return std::accumulate(args.begin(), args.end(), HNumber(-1),
+          std::mem_fun_ref(&HNumber::operator&));
 }
 
 HNumber Functions::Private::or_( Function *, const QVector<HNumber> & args )
@@ -1148,11 +1145,8 @@ HNumber Functions::Private::or_( Function *, const QVector<HNumber> & args )
   if ( args.count() <= 0 )
     return HNumber("NaN");
 
-  HNumber result = args[0];
-  for ( int c = 1; c < args.count(); c++ )
-    result = result | args[c];
-
-  return result;
+  return std::accumulate(args.begin(), args.end(), HNumber(0),
+          std::mem_fun_ref(&HNumber::operator|));
 }
 
 HNumber Functions::Private::xor_( Function *, const QVector<HNumber> & args )
@@ -1160,11 +1154,8 @@ HNumber Functions::Private::xor_( Function *, const QVector<HNumber> & args )
   if ( args.count() <= 0 )
     return HNumber("NaN");
 
-  HNumber result = args[0];
-  for ( int c = 1; c < args.count(); c++ )
-    result = result ^ args[c];
-
-  return result;
+  return std::accumulate(args.begin(), args.end(), HNumber(0),
+          std::mem_fun_ref(&HNumber::operator^));
 }
 
 HNumber Functions::Private::ashl( Function *, const QVector<HNumber> & args )
