@@ -27,6 +27,7 @@
 
 #include <cfloat>
 #include <cmath>
+#include <numeric>
 
 struct Function::Private
 {
@@ -307,12 +308,8 @@ HNumber Functions::Private::gcd( Function * f, const QVector<HNumber> & args )
       return HNumber::nan();
     }
 
-  HNumber result = HMath::gcd( args[0], args[1] );
-  for ( int i = 2; i < nArgs; i++ )
-  {
-    result = HMath::gcd( result, args[i] );
-  }
-  return result;
+  return std::accumulate(args.begin() + 1, args.end(), args[0],
+          HMath::gcd);
 }
 
 
@@ -822,13 +819,7 @@ HNumber Functions::Private::max( Function * f, const QVector<HNumber> & args )
     return HNumber::nan();
   }
 
-  int totalParams = args.count();
-  HNumber result = args[0];
-  if ( totalParams > 1 )
-    for ( int i = 1; i < totalParams; i++ )
-      result = HMath::max( result, args[i] );
-
-  return result;
+  return * std::max_element(args.begin(), args.end());
 }
 
 HNumber Functions::Private::min( Function * f, const QVector<HNumber> & args )
@@ -840,13 +831,7 @@ HNumber Functions::Private::min( Function * f, const QVector<HNumber> & args )
     return HNumber::nan();
   }
 
-  int totalParams = args.count();
-  HNumber result = args[0];
-  if ( totalParams > 1 )
-    for ( int i = 1; i < totalParams; i++ )
-      result = HMath::min( result, args[i] );
-
-  return result;
+  return * std::min_element(args.begin(), args.end());
 }
 
 HNumber Functions::Private::sum( Function *, const QVector<HNumber> & args )
@@ -854,11 +839,7 @@ HNumber Functions::Private::sum( Function *, const QVector<HNumber> & args )
   if ( args.count() <= 0 )
     return HNumber(0);
 
-  HNumber result = args[0];
-  for ( int c = 1; c < args.count(); c++ )
-    result = result + args[c];
-
-  return result;
+  return std::accumulate(args.begin(), args.end(), HNumber(0));
 }
 
 HNumber Functions::Private::product( Function *, const QVector<HNumber> & args )
@@ -866,11 +847,8 @@ HNumber Functions::Private::product( Function *, const QVector<HNumber> & args )
   if ( args.count() <= 0 )
     return HNumber(0);
 
-  HNumber result = args[0];
-  for ( int c = 1; c < args.count(); c++ )
-    result = result * args[c];
-
-  return result;
+  return std::accumulate(args.begin(), args.end(), HNumber(1),
+          std::multiplies<HNumber>());
 }
 
 HNumber Functions::Private::average( Function *, const QVector<HNumber> & args )
@@ -878,12 +856,8 @@ HNumber Functions::Private::average( Function *, const QVector<HNumber> & args )
   if ( args.count() <= 0 )
     return HNumber("NaN");
 
-  HNumber result = args[0];
-  for ( int c = 1; c < args.count(); c++ )
-    result = result + args[c];
-  result = result / HNumber(args.count());
-
-  return result;
+  return std::accumulate(args.begin(), args.end(), HNumber(0))
+      / HNumber(args.count());
 }
 
 HNumber Functions::Private::geomean( Function *, const QVector<HNumber> & args )
@@ -891,10 +865,8 @@ HNumber Functions::Private::geomean( Function *, const QVector<HNumber> & args )
   if ( args.count() <= 0 )
     return HNumber("NaN");
 
-  HNumber result = args[0];
-
-  for ( int c = 1; c < args.count(); c++ )
-    result = result * args[c];
+  HNumber result = std::accumulate(args.begin(), args.end(), HNumber(1),
+          std::multiplies<HNumber>());
 
   if ( result <= HNumber(0))
     return HNumber("NaN");
@@ -905,9 +877,7 @@ HNumber Functions::Private::geomean( Function *, const QVector<HNumber> & args )
   if ( args.count() == 2 )
     return HMath::sqrt( result );
 
-  result = HMath::exp( HMath::ln(result) / HNumber(args.count()) );
-
-  return result;
+  return HMath::exp( HMath::ln(result) / HNumber(args.count()) );
 }
 
 HNumber Functions::Private::dec( Function *, const QVector<HNumber> & args )
