@@ -1781,8 +1781,7 @@ HNumber HMath::sgnext( const HNumber & val, const HNumber & bits )
 {
   if ( val.isNan() || bits == 0 || bits >= LOGICRANGE || ! bits.isInteger() )
     return HNumber::nan();
-  HNumber ofs;
-  ofs = HNumber(LOGICRANGE) - bits;
+  HNumber ofs = HNumber(LOGICRANGE) - bits;
   return (val << ofs) >> ofs;
 }
 
