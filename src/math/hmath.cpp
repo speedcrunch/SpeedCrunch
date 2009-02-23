@@ -354,17 +354,6 @@ HNumber& HNumber::setFormat(char c)
 }
 
 /**
- * Returns a NaN (Not a Number) with error set to
- * passed parameter.
- */
-HNumber HNumber::nan(Error error)
-{
-  HNumber result;
-  result.d->error = error;
-  return result;
-}
-
-/**
  * Returns the number as an int.
  * It is meant to convert small (integer) numbers only and no
  * checking is done whatsoever.
@@ -464,18 +453,6 @@ HNumber HNumber::operator%( const HNumber & num ) const
 {
   HNumber result;
   call2Args(result.d, d, num.d, modwrap);
-  return result;
-}
-
-/**
- * Performs an integer divide
- */
-HNumber HNumber::idiv( const HNumber & dividend, const HNumber& divisor)
-{
-  HNumber result;
-  call2ArgsND(result.d, dividend.d, divisor.d, idivwrap);
-  if (result.error() == TooExpensive)
-    result.d->error = Overflow;
   return result;
 }
 
@@ -847,6 +824,17 @@ HNumber HMath::phi()
 }
 
 /**
+ * Returns a NaN (Not a Number) with error set to
+ * passed parameter.
+ */
+HNumber HMath::nan(Error error)
+{
+  HNumber result;
+  result.d->error = error;
+  return result;
+}
+
+/**
  * Returns the maximum of two numbers.
  */
 HNumber HMath::max( const HNumber & n1, const HNumber & n2 )
@@ -856,7 +844,7 @@ HNumber HMath::max( const HNumber & n1, const HNumber & n2 )
     case 0:
     case 1:  return n1;
     case -1: return n2;
-    default: return HNumber::nan(checkNaNParam(*n1.d, n2.d));
+    default: return HMath::nan(checkNaNParam(*n1.d, n2.d));
   }
 }
 
@@ -870,7 +858,7 @@ HNumber HMath::min( const HNumber & n1, const HNumber & n2 )
     case 0:
     case 1:  return n2;
     case -1: return n1;
-    default: return HNumber::nan(checkNaNParam(*n1.d, n2.d));
+    default: return HMath::nan(checkNaNParam(*n1.d, n2.d));
   }
 }
 
@@ -890,7 +878,7 @@ HNumber HMath::abs( const HNumber & n )
 HNumber HMath::round( const HNumber & n, int prec )
 {
   if (n.isNan())
-    return HNumber::nan(checkNaNParam(*n.d));
+    return HMath::nan(checkNaNParam(*n.d));
   HNumber result(n);
   floatnum rnum = &result.d->fnum;
   int exp = float_getexponent(rnum);
@@ -914,7 +902,7 @@ HNumber HMath::round( const HNumber & n, int prec )
 HNumber HMath::trunc( const HNumber & n, int prec )
 {
   if (n.isNan())
-    return HNumber::nan(checkNaNParam(*n.d));
+    return HMath::nan(checkNaNParam(*n.d));
   HNumber result(n);
   floatnum rnum = &result.d->fnum;
   int exp = float_getexponent(rnum);
@@ -958,7 +946,7 @@ HNumber HMath::frac( const HNumber & n )
 HNumber HMath::floor( const HNumber & n )
 {
   if (n.isNan())
-    return HNumber::nan(checkNaNParam(*n.d));
+    return HMath::nan(checkNaNParam(*n.d));
   HNumber r(n);
   float_roundtoint(&r.d->fnum, TOMINUSINFINITY);
   return r;
@@ -970,7 +958,7 @@ HNumber HMath::floor( const HNumber & n )
 HNumber HMath::ceil( const HNumber & n )
 {
   if (n.isNan())
-    return HNumber::nan(checkNaNParam(*n.d));
+    return HMath::nan(checkNaNParam(*n.d));
   HNumber r(n);
   float_roundtoint(&r.d->fnum, TOPLUSINFINITY);
   return r;
@@ -985,8 +973,8 @@ HNumber HMath::gcd( const HNumber & n1, const HNumber & n2 )
   {
     Error error = checkNaNParam(*n1.d, n2.d);
     if (error != Success)
-      return HNumber::nan(error);
-    return HNumber::nan(TypeMismatch);
+      return HMath::nan(error);
+    return HMath::nan(TypeMismatch);
   }
 
   HNumber a = abs( n1 );
@@ -1013,6 +1001,18 @@ HNumber HMath::gcd( const HNumber & n1, const HNumber & n2 )
 }
 
 /**
+ * Performs an integer divide
+ */
+HNumber HMath::idiv( const HNumber & dividend, const HNumber& divisor)
+{
+  HNumber result;
+  call2ArgsND(result.d, dividend.d, divisor.d, idivwrap);
+  if (result.error() == TooExpensive)
+    result.d->error = Overflow;
+  return result;
+}
+
+/**
  * Returns the square root of n. If n is negative, returns NaN.
  */
 HNumber HMath::sqrt( const HNumber & n )
@@ -1028,7 +1028,7 @@ HNumber HMath::sqrt( const HNumber & n )
 HNumber HMath::cbrt( const HNumber & n )
 {
   if (n.isNan())
-    return HNumber::nan(checkNaNParam(*n.d));
+    return HMath::nan(checkNaNParam(*n.d));
   if( n.isZero() )
     return n;
   HNumber r;
@@ -1084,7 +1084,7 @@ HNumber HMath::cbrt( const HNumber & n )
 HNumber HMath::raise( const HNumber & n1, int n )
 {
   if (n1.isNan())
-    return HNumber::nan(checkNaNParam(*n1.d));
+    return HMath::nan(checkNaNParam(*n1.d));
   HNumber r;
   float_raisei(&r.d->fnum, &n1.d->fnum, n, HMATH_EVAL_PREC);
   roundSetError(r.d);
@@ -1315,7 +1315,7 @@ HNumber HMath::lnGamma( const HNumber & x )
 HNumber HMath::sign( const HNumber & x )
 {
   if (x.isNan())
-    return HNumber::nan(checkNaNParam(*x.d));
+    return HMath::nan(checkNaNParam(*x.d));
 
   return float_getsign(&x.d->fnum);
 }
@@ -1330,7 +1330,7 @@ HNumber HMath::nCr( const HNumber & n, const HNumber & r )
 {
   Error error = checkNaNParam(*n.d, r.d);
   if (error != Success)
-    return HNumber::nan(error);
+    return HMath::nan(error);
 
   // use symmetry nCr(n, r) == nCr(n, n-r) to find r1 such
   // 2*r1 <= n and nCr(n, r) == nCr(n, r1)
@@ -1429,7 +1429,7 @@ HNumber HMath::binomialPmf( const HNumber & k, const HNumber & n, const
 HNumber & p )
 {
   if ( ! k.isInteger() || ! checkpn(p, n) )
-    return HNumber::nan();
+    return HMath::nan();
 
   HNumber result = nCr( n, k );
   if ( result.isZero() )
@@ -1460,7 +1460,7 @@ HNumber & p )
   // FIXME use the regularized incomplete Beta function to avoid
   // the potentially very expensive loop
   if ( ! k.isInteger() || n.isNan() )
-    return HNumber::nan();
+    return HMath::nan();
 
   // initiates summation, checks arguments as well
   HNumber summand = binomialPmf(0, n, p);
@@ -1510,7 +1510,7 @@ HNumber & p )
 HNumber HMath::binomialMean( const HNumber & n, const HNumber & p )
 {
   if ( ! checkpn(p, n) )
-    return HNumber::nan();
+    return HMath::nan();
 
   return n * p;
 }
@@ -1556,7 +1556,7 @@ HNumber HMath::hypergeometricPmf( const HNumber & k, const HNumber & N,
                                   const HNumber & M, const HNumber & n )
 {
   if ( ! k.isInteger() || ! checkNMn(N, M, n) )
-    return HNumber::nan();
+    return HMath::nan();
 
   return HMath::nCr( M, k ) * HMath::nCr( N-M, n-k ) / HMath::nCr( N, n );
 }
@@ -1585,7 +1585,7 @@ HNumber HMath::hypergeometricCdf( const HNumber & k, const HNumber & N,
   // first summand in loop, do the parameter checking here
   HNumber summand = HMath::hypergeometricPmf(i, N, M, n);
   if ( ! k.isInteger() || summand.isNan() )
-    return HNumber::nan();
+    return HMath::nan();
 
   // some early out results
   HNumber one( 1 );
@@ -1626,7 +1626,7 @@ HNumber HMath::hypergeometricCdf( const HNumber & k, const HNumber & N,
 HNumber HMath::hypergeometricMean( const HNumber & N, const HNumber & M, const HNumber & n )
 {
   if ( ! checkNMn(N, M, n) )
-    return HNumber::nan();
+    return HMath::nan();
   return n * M / N;
 }
 
@@ -1665,7 +1665,7 @@ HNumber HMath::poissonPmf( const HNumber & k, const HNumber & l )
 {
   if ( ! k.isInteger()
          || l.isNan() || l.isNegative() )
-    return HNumber::nan();
+    return HMath::nan();
 
   if ( k.isNegative() )
     return 0;
@@ -1692,7 +1692,7 @@ HNumber HMath::poissonCdf( const HNumber & k, const HNumber & l )
   // expensive loop
   if ( ! k.isInteger()
          || l.isNan() || l.isNegative() )
-    return HNumber::nan();
+    return HMath::nan();
 
   if ( k.isNegative() )
     return 0;
@@ -1724,7 +1724,7 @@ HNumber HMath::poissonCdf( const HNumber & k, const HNumber & l )
 HNumber HMath::poissonMean( const HNumber & l )
 {
   if ( l.isNan() || l.isNegative() )
-    return HNumber::nan();
+    return HMath::nan();
 
   return l;
 }
@@ -1770,7 +1770,7 @@ HNumber HMath::erfc( const HNumber & x )
 HNumber HMath::mask ( const HNumber & val, const HNumber & bits )
 {
   if ( val.isNan() || bits == 0 || bits >= LOGICRANGE || ! bits.isInteger() )
-    return HNumber::nan();
+    return HMath::nan();
   return val & ~(HNumber(-1) << HNumber(bits));
 }
 
@@ -1780,7 +1780,7 @@ HNumber HMath::mask ( const HNumber & val, const HNumber & bits )
 HNumber HMath::sgnext( const HNumber & val, const HNumber & bits )
 {
   if ( val.isNan() || bits == 0 || bits >= LOGICRANGE || ! bits.isInteger() )
-    return HNumber::nan();
+    return HMath::nan();
   HNumber ofs = HNumber(LOGICRANGE) - bits;
   return (val << ofs) >> ofs;
 }
@@ -1792,7 +1792,7 @@ HNumber HMath::ashr( const HNumber & val, const HNumber & bits )
 {
   if ( val.isNan() || bits <= -LOGICRANGE || bits >= LOGICRANGE
        || ! bits.isInteger() )
-    return HNumber::nan();
+    return HMath::nan();
   if (bits >= 0)
     return val >> bits;
   return val << -bits;

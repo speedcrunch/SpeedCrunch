@@ -1526,7 +1526,7 @@ void MainWindow::showSessionLoadDialog()
       return;
     }
     HNumber num( val.toAscii().data() );
-    if (  num != HNumber::nan() )
+    if (  num != HMath::nan() )
       d->evaluator->set( var, num );
   }
 

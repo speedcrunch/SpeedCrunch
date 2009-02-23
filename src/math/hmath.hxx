@@ -88,9 +88,6 @@ class HNumber
     HNumber operator>>( const HNumber& ) const;
     HNumber operator<<( const HNumber& ) const;
 
-    static HNumber idiv( const HNumber& n1, const HNumber& n2 );
-    static HNumber nan(Error error = Success);
-
   private:
     HNumberPrivate * d;
 
@@ -105,6 +102,7 @@ class HMath
     // CONSTANTS
     static HNumber phi();
     static HNumber pi();
+    static HNumber nan(Error error = Success);
     // GENERAL MATH
     static HNumber rad2deg( const HNumber & angle );
     static HNumber deg2rad( const HNumber & angle );
@@ -116,6 +114,7 @@ class HMath
     static HNumber floor( const HNumber & n );
     static HNumber ceil( const HNumber & n );
     static HNumber gcd( const HNumber & n1, const HNumber & n2 );
+    static HNumber idiv( const HNumber& n1, const HNumber& n2 );
     static HNumber round( const HNumber & n, int prec = 0 );
     static HNumber trunc( const HNumber & n, int prec = 0 );
     static HNumber sqrt( const HNumber & n );

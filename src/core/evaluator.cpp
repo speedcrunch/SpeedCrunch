@@ -1403,7 +1403,7 @@ HNumber Evaluator::eval()
        || d->assignId == QString("ans") )
   {
     d->error = d->assignId + ": " + tr( "variable cannot be overwritten" );
-    return HNumber::nan();
+    return HMath::nan();
   }
 
   // variable can't have the same name as function
@@ -1411,7 +1411,7 @@ HNumber Evaluator::eval()
   {
     d->error = d->assignId + ": "
                  + tr( "identifier matches an existing function name" );
-    return HNumber::nan();
+    return HMath::nan();
   }
 
   // handle variable assignment, e.g. "x=2*4"
