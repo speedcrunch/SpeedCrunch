@@ -1850,7 +1850,7 @@ HNumber HMath::ashr( const HNumber & val, const HNumber & bits )
 
 std::ostream& operator<<( std::ostream& s, const HNumber& n )
 {
-  char* str = HMath::formatFixed( n );
+  char* str = HMath::format( n, 'f' );
   s << str;
   free(str);
   return s;

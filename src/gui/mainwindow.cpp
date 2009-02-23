@@ -1241,7 +1241,7 @@ void MainWindow::Private::saveSettings()
     for ( int i = 0; i < vars.count(); i++ )
     {
       QString name = vars[i].name;
-      char * value = HMath::formatScientific( vars[i].value, DECPRECISION );
+      char * value = HMath::format( vars[i].value, 'e', DECPRECISION );
       settings->variables.append( QString( "%1=%2" ).arg( name )
                                                     .arg( QString( value ) ) );
       free( value );
@@ -1600,7 +1600,7 @@ void MainWindow::showSessionImportDialog()
     else
     {
       d->widgets.display->append( str, result );
-      char * num = HMath::formatScientific( result, DECPRECISION );
+      char * num = HMath::format( result, 'e', DECPRECISION );
       d->widgets.editor->appendHistory( str, num );
       free( num );
       d->widgets.editor->setAnsAvailable( true );
@@ -2314,7 +2314,7 @@ void MainWindow::evaluateEditorExpression()
   else
   {
     d->widgets.display->append( str, result );
-    char * num = HMath::formatScientific( result, DECPRECISION );
+    char * num = HMath::format( result, 'e', DECPRECISION );
     d->widgets.editor->appendHistory( str, num );
     free( num );
     d->widgets.editor->setAnsAvailable( true );

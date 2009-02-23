@@ -102,6 +102,7 @@ class HMath
   public:
     // FORMAT
     static char * format( const HNumber & n, char format = 'g', int prec = -1 );
+  private:
     static char * formatFixed( const HNumber & n, int prec = -1 );
     static char * formatScientific( const HNumber & n, int prec = -1 );
     static char * formatEngineering( const HNumber & n, int prec = -1 );
@@ -109,6 +110,7 @@ class HMath
     static char * formatHexadec( const HNumber & n );
     static char * formatOctal( const HNumber & n );
     static char * formatBinary( const HNumber & n );
+  public:
     // CONSTANTS
     static HNumber phi();
     static HNumber pi();

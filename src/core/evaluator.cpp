@@ -38,7 +38,7 @@
 
 QTextStream& operator<<( QTextStream& s, HNumber num )
 {
-  char * str = HMath::formatFixed( num );
+  char * str = HMath::format( num, 'f' );
   s << str;
   free(str);
   return s;
@@ -1565,7 +1565,7 @@ QString Evaluator::dump() const
   {
     QString vtext;
     HNumber val = d->constants[c];
-    char* ss = HMath::formatFixed( val );
+    char* ss = HMath::format( val, 'f' );
     result += QString("    #%1 = %2\n").arg(c).arg( ss );
     free( ss );
   }

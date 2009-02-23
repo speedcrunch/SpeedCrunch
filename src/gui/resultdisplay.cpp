@@ -217,7 +217,7 @@ void ResultDisplay::append( const QString & expr, const HNumber & value )
   new ResultDisplayItem( this, d->count, value );
 
   d->contents.append( expr );
-  char* str = HMath::formatScientific( value, DECPRECISION );
+  char* str = HMath::format( value, 'e', DECPRECISION );
   d->contents.append( str );
   free(str);
 

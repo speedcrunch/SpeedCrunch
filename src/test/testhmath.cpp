@@ -39,7 +39,7 @@ static void check_value( const char * file, int line, const char * msg,
                          const HNumber & n, const char * expected )
 {
   hmath_total_tests++;
-  char * result = HMath::formatFixed( n );
+  char * result = HMath::format( n, 'f' );
   if ( strcmp( result, expected ) )
   {
     hmath_failed_tests++;
@@ -75,7 +75,7 @@ static void check_precise( const char * file, int line, const char * msg,
 {
   hmath_total_tests++;
 
-  char * result = HMath::formatFixed( n, 50 );
+  char * result = HMath::format( n, 'f', 50 );
   if ( strcmp( result, expected ) )
   {
     hmath_failed_tests++;
