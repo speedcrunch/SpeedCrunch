@@ -810,33 +810,6 @@ char* formathexfp( floatnum x, char base,
 }
 
 /**
- * Formats the given number as string, using hexadecimal digits.
- * Note that the returned string must be freed.
- */
-char * HMath::formatHexadec( const HNumber & hn )
-{
-  return formathexfp (&hn.d->fnum, 16, 10, HMATH_HEX_MAX_SHOWN);
-}
-
-/**
- * Formats the given number as string, using octal digits.
- * Note that the returned string must be freed.
- */
-char * HMath::formatOctal( const HNumber & hn )
-{
-  return formathexfp (&hn.d->fnum, 8, 10, HMATH_OCT_MAX_SHOWN);
-}
-
-/**
- * Formats the given number as string, using binary digits.
- * Note that the returned string must be freed.
- */
-char * HMath::formatBinary( const HNumber & hn )
-{
-  return formathexfp (&hn.d->fnum, 2, 10, HMATH_BIN_MAX_SHOWN);
-}
-
-/**
  * Formats the given number as string, using specified decimal digits.
  * Note that the returned string must be freed.
  */
@@ -849,9 +822,9 @@ char* HMath::format( const HNumber& hn, char format, int prec )
   case 'f': rs = formatFixed( hn, prec ); break;
   case 'e': rs = formatScientific( hn, prec ); break;
   case 'n': rs = formatEngineering( hn, prec ); break;
-  case 'h': rs = formatHexadec( hn ); break;
-  case 'o': rs = formatOctal( hn ); break;
-  case 'b': rs = formatBinary( hn ); break;
+  case 'h': rs = formathexfp (&hn.d->fnum, 16, 10, HMATH_HEX_MAX_SHOWN); break;
+  case 'o': rs = formathexfp (&hn.d->fnum, 8, 10, HMATH_OCT_MAX_SHOWN); break;
+  case 'b': rs = formathexfp (&hn.d->fnum, 2, 10, HMATH_BIN_MAX_SHOWN); break;
   case 'g': default: rs = formatGeneral( hn, prec );
   }
 
