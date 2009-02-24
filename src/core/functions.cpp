@@ -25,6 +25,7 @@
 #include <QApplication>
 #include <QHash>
 
+#include <algorithm>
 #include <cfloat>
 #include <cmath>
 #include <numeric>
