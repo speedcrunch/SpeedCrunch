@@ -46,7 +46,7 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="218"/>
         <source>SpeedCrunch version %1</source>
-        <translation>SpeedCrunch - Version %1</translation>
+        <translation>SpeedCrunch – Version %1</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="355"/>
@@ -86,7 +86,7 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="276"/>
         <source>...and many others...</source>
-        <translation>... und viele andere...</translation>
+        <translation>... und viele andere ...</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="280"/>
@@ -201,7 +201,7 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="232"/>
         <source>Original math book Developer</source>
-        <translation type="obsolete">Ursprünglicher Entwickler des Mathematik Buchs</translation>
+        <translation type="obsolete">Ursprünglicher Entwickler des Mathematik-Buchs</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="299"/>
@@ -410,7 +410,7 @@
     <message>
         <location filename="../base/constants.cpp" line="73"/>
         <source>Boltzmann Constant</source>
-        <translation>Boltzmannkonstante</translation>
+        <translation>Boltzmann-Konstante</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="74"/>
@@ -435,7 +435,7 @@
     <message>
         <location filename="../base/constants.cpp" line="78"/>
         <source>Molar Planck Constant</source>
-        <translation>Molare Planckkonstante</translation>
+        <translation>Molare Planck-Konstante</translation>
     </message>
     <message>
         <location filename="../base/constants.cpp" line="79"/>
@@ -965,7 +965,7 @@
     <message>
         <location filename="../base/functions.cpp" line="1526"/>
         <source>Mask to a bit size</source>
-        <translation>auf eine Bitlänge maskieren</translation>
+        <translation>Auf eine Bitlänge maskieren</translation>
     </message>
     <message>
         <location filename="../base/functions.cpp" line="1527"/>
@@ -1208,7 +1208,7 @@
     <message>
         <location filename="../gui/mainwindow.cpp" line="2059"/>
         <source>Can&apos;t write to file %1</source>
-        <translation>Kann nicht nach %1 schreiben</translation>
+        <translation>Kann nicht in Datei %1 schreiben</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2357"/>
@@ -1223,7 +1223,7 @@
     <message>
         <location filename="../gui/mainwindow.cpp" line="2379"/>
         <source>To insert a variable using keyboard, use Ctrl+I shorcut. From the dialog, you can choose the variable you want to insert.</source>
-        <translation>Um eine variable mittels der Tastatur einzufügen, kann man die Tastenkombination Strg+I verwenden. Im sich nun öffnenden Dialog lässt sich jede der vorhandenen Variablen auswählen und einfügen.</translation>
+        <translation>Um eine Variable mittels der Tastatur einzufügen, kann man die Tastenkombination Strg+I verwenden. Im sich nun öffnenden Dialog lässt sich jede der vorhandenen Variablen auswählen und einfügen.</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2382"/>
@@ -1233,7 +1233,7 @@
     <message>
         <location filename="../gui/mainwindow.cpp" line="2387"/>
         <source>Use &lt;i&gt;;&lt;/i&gt; (semicolon) to separate the parameters in functions.</source>
-        <translation>Verwenden Sie &lt;i&gt;;&lt;/i&gt; (Semikolon) um Parameter in Funktionen abzugrenzen.</translation>
+        <translation>Verwenden Sie &lt;i&gt;;&lt;/i&gt; (Semikolon), um Parameter in Funktionen abzugrenzen.</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2393"/>
@@ -1256,7 +1256,7 @@ Falls nein, werden aktuelle Variablen und Anzeigen gelöscht.</translation>
         <location filename="../gui/mainwindow.cpp" line="2732"/>
         <source>SpeedCrunch is minimized.
 Left click the icon to restore it or right click for options.</source>
-        <translation>Das SpeedCrunch Fenster ist minimiert.
+        <translation>Das SpeedCrunch-Fenster ist minimiert.
 Klicken Sie das Symbol mit links zur Wiederherstellung, oder rechts für weitere Optionen.</translation>
     </message>
     <message>
@@ -1302,12 +1302,12 @@ Klicken Sie das Symbol mit links zur Wiederherstellung, oder rechts für weitere
     <message>
         <location filename="../gui/mainwindow.cpp" line="2443"/>
         <source>Hexadecimal</source>
-        <translation>Hexagesimal&gt;</translation>
+        <translation>Hexadezimal&gt;</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2453"/>
         <source>Octal</source>
-        <translation>Octal</translation>
+        <translation>Oktal</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2463"/>
@@ -1334,7 +1334,7 @@ Falls nein, werden aktuelle Variablen und Anzeigen gelöscht.</translation>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1025"/>
         <source>Math Book</source>
-        <translation>Mathe Buch</translation>
+        <translation>Mathe-Buch</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="898"/>
@@ -1424,7 +1424,7 @@ Falls nein, werden aktuelle Variablen und Anzeigen gelöscht.</translation>
     <message>
         <location filename="../gui/mainwindow.cpp" line="626"/>
         <source>SpeedCrunch &amp;Web Site...</source>
-        <translation>SpeedCrunch &amp;Webseite...</translation>
+        <translation>SpeedCrunch &amp;Webseite ...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="627"/>
@@ -1434,17 +1434,17 @@ Falls nein, werden aktuelle Variablen und Anzeigen gelöscht.</translation>
     <message>
         <location filename="../gui/mainwindow.cpp" line="628"/>
         <source>Insert &amp;Function...</source>
-        <translation>&amp;Funktion einfügen...</translation>
+        <translation>&amp;Funktion einfügen ...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="629"/>
         <source>Insert &amp;Variable...</source>
-        <translation>&amp;Variable einfügen...</translation>
+        <translation>&amp;Variable einfügen ...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="630"/>
         <source>&amp;Partial Results</source>
-        <translation>laufende &amp;Berechnung</translation>
+        <translation>Laufende &amp;Berechnung</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="631"/>
@@ -1504,12 +1504,12 @@ Falls nein, werden aktuelle Variablen und Anzeigen gelöscht.</translation>
     <message>
         <location filename="../gui/mainwindow.cpp" line="642"/>
         <source>&amp;Import...</source>
-        <translation>&amp;Importieren...</translation>
+        <translation>&amp;Importieren ...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="643"/>
         <source>&amp;Load...</source>
-        <translation>&amp;Laden...</translation>
+        <translation>&amp;Laden ...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="644"/>
@@ -1519,7 +1519,7 @@ Falls nein, werden aktuelle Variablen und Anzeigen gelöscht.</translation>
     <message>
         <location filename="../gui/mainwindow.cpp" line="645"/>
         <source>&amp;Save...</source>
-        <translation>Spei&amp;chern...</translation>
+        <translation>Spei&amp;chern ...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="646"/>
@@ -1529,7 +1529,7 @@ Falls nein, werden aktuelle Variablen und Anzeigen gelöscht.</translation>
     <message>
         <location filename="../gui/mainwindow.cpp" line="647"/>
         <source>Math &amp;Book</source>
-        <translation>&amp;Mathe Buch</translation>
+        <translation>&amp;Mathe-Buch</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="648"/>
