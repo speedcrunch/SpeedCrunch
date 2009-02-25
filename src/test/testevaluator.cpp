@@ -330,6 +330,19 @@ void test_function_stat()
   CHECK_EVAL( "SUM(1;2;3;4;5;6)",    "21"   );
   CHECK_EVAL( "SUM(1;-2;3;-4;5;-6)", "-3"   );
 
+  CHECK_EVAL( "PRODUCT()",               "0"    );
+  CHECK_EVAL( "PRODUCT(0)",              "0"    );
+  CHECK_EVAL( "PRODUCT(1)",              "1"    );
+  CHECK_EVAL( "PRODUCT(-1)",             "-1"   );
+  CHECK_EVAL( "PRODUCT(100)",            "100"  );
+  CHECK_EVAL( "PRODUCT(100;0)",          "0"    );
+  CHECK_EVAL( "PRODUCT(100;1)",          "100"  );
+  CHECK_EVAL( "PRODUCT(-100;1)",         "-100" );
+  CHECK_EVAL( "PRODUCT(-100;-1)",        "100"  );
+  CHECK_EVAL( "PRODUCT(1;1;1)",          "1"    );
+  CHECK_EVAL( "PRODUCT(1;2;3;4;5;6)",    "720"  );
+  CHECK_EVAL( "PRODUCT(1;-2;3;-4;5;-6)", "-720" );
+
   CHECK_EVAL( "AVERAGE()",          "NaN" );
   CHECK_EVAL( "AVERAGE(0)",         "0"   );
   CHECK_EVAL( "AVERAGE(0;0)",       "0"   );
@@ -361,6 +374,96 @@ void test_function_stat()
   CHECK_EVAL( "GEOMEAN(1;1;1)",     "1"   );
   CHECK_EVAL( "GEOMEAN(1;1;1;1)",   "1"   );
   CHECK_EVAL( "GEOMEAN(1;1;1;-1)",  "NaN" );
+}
+
+void test_function_logic()
+{
+  CHECK_EVAL( "and()", "NaN" );
+  CHECK_EVAL( "or()",  "NaN" );
+  CHECK_EVAL( "xor()", "NaN" );
+
+  CHECK_EVAL( "and(0)", "0" );
+  CHECK_EVAL( "and(1)", "1" );
+
+  CHECK_EVAL( "or(0)", "0" );
+  CHECK_EVAL( "or(1)", "1" );
+
+  CHECK_EVAL( "xor(0)", "0" );
+  CHECK_EVAL( "xor(1)", "1" );
+
+  CHECK_EVAL( "and(0;0)", "0" );
+  CHECK_EVAL( "and(0;1)", "0" );
+  CHECK_EVAL( "and(1;0)", "0" );
+  CHECK_EVAL( "and(1;1)", "1" );
+
+  CHECK_EVAL( "or(0;0)", "0" );
+  CHECK_EVAL( "or(0;1)", "1" );
+  CHECK_EVAL( "or(1;0)", "1" );
+  CHECK_EVAL( "or(1;1)", "1" );
+
+  CHECK_EVAL( "xor(0;0)", "0" );
+  CHECK_EVAL( "xor(0;1)", "1" );
+  CHECK_EVAL( "xor(1;0)", "1" );
+  CHECK_EVAL( "xor(1;1)", "0" );
+}
+
+void test_function_discrete()
+{
+  CHECK_EVAL( "gcd(12;18)", "6" );
+
+  CHECK_EVAL( "ncr(-3;-1)", "0"   );
+  CHECK_EVAL( "ncr(-3;0)",  "1"   );
+  CHECK_EVAL( "ncr(-3;1)",  "-3"  );
+  CHECK_EVAL( "ncr(-3;2)",  "6"   );
+  CHECK_EVAL( "ncr(-3;3)",  "-10" );
+  CHECK_EVAL( "ncr(-3;4)",  "15"  );
+  CHECK_EVAL( "ncr(-3;5)",  "-21" );
+
+  CHECK_EVAL( "ncr(-2;-1)", "0"  );
+  CHECK_EVAL( "ncr(-2;0)",  "1"  );
+  CHECK_EVAL( "ncr(-2;1)",  "-2" );
+  CHECK_EVAL( "ncr(-2;2)",  "3"  );
+  CHECK_EVAL( "ncr(-2;3)",  "-4" );
+  CHECK_EVAL( "ncr(-2;4)",  "5"  );
+  CHECK_EVAL( "ncr(-2;5)",  "-6" );
+
+  CHECK_EVAL( "ncr(-1;-1)", "0"  );
+  CHECK_EVAL( "ncr(-1;0)",  "1"  );
+  CHECK_EVAL( "ncr(-1;1)",  "-1" );
+  CHECK_EVAL( "ncr(-1;2)",  "1"  );
+  CHECK_EVAL( "ncr(-1;3)",  "-1" );
+  CHECK_EVAL( "ncr(-1;4)",  "1"  );
+  CHECK_EVAL( "ncr(-1;5)",  "-1" );
+
+  CHECK_EVAL( "ncr(0;-1)", "0" );
+  CHECK_EVAL( "ncr(0;0)",  "1" );
+  CHECK_EVAL( "ncr(0;1)",  "0" );
+
+  CHECK_EVAL( "ncr(1;-1)", "0" );
+  CHECK_EVAL( "ncr(1;0)",  "1" );
+  CHECK_EVAL( "ncr(1;1)",  "1" );
+  CHECK_EVAL( "ncr(1;2)",  "0" );
+
+  CHECK_EVAL( "ncr(2;-1)", "0" );
+  CHECK_EVAL( "ncr(2;0)",  "1" );
+  CHECK_EVAL( "ncr(2;1)",  "2" );
+  CHECK_EVAL( "ncr(2;2)",  "1" );
+  CHECK_EVAL( "ncr(2;3)",  "0" );
+
+  CHECK_EVAL( "ncr(3;-1)", "0" );
+  CHECK_EVAL( "ncr(3;0)",  "1" );
+  CHECK_EVAL( "ncr(3;1)",  "3" );
+  CHECK_EVAL( "ncr(3;2)",  "3" );
+  CHECK_EVAL( "ncr(3;3)",  "1" );
+  CHECK_EVAL( "ncr(3;4)",  "0" );
+
+  CHECK_EVAL( "ncr(4;-1)", "0" );
+  CHECK_EVAL( "ncr(4;0)",  "1" );
+  CHECK_EVAL( "ncr(4;1)",  "4" );
+  CHECK_EVAL( "ncr(4;2)",  "6" );
+  CHECK_EVAL( "ncr(4;3)",  "4" );
+  CHECK_EVAL( "ncr(4;4)",  "1" );
+  CHECK_EVAL( "ncr(4;5)",  "0" );
 }
 
 void test_auto_fix_parentheses()
@@ -429,6 +532,8 @@ int main( int argc, char * * argv )
   test_function_basic();
   test_function_trig();
   test_function_stat();
+  test_function_logic();
+  test_function_discrete();
 
   test_auto_fix_parentheses();
   test_auto_fix_ans();

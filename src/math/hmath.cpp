@@ -1332,6 +1332,8 @@ HNumber HMath::nCr( const HNumber & n, const HNumber & r )
   if (error != Success)
     return HMath::nan(error);
 
+  if ( r.isInteger() && r < 0 ) return HNumber(0);
+
   // use symmetry nCr(n, r) == nCr(n, n-r) to find r1 such
   // 2*r1 <= n and nCr(n, r) == nCr(n, r1)
   HNumber r1 = ( r + r > n ) ? n - r : r;
