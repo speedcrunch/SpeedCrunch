@@ -95,7 +95,6 @@ math/hmath.cpp
 math/number.c
 )
 
-
 # regression test for HMath
 set(testhmath_SOURCES
 math/floatcommon.c
@@ -120,38 +119,37 @@ math/number.c
 test/testhmath.cpp
 )
 
-
 # regression test for Evaluator
-#set(testevaluator_SOURCES
-#core/evaluator.hxx
-#)
-#set(testevaluator_SOURCES
-#core/evaluator.cpp
-#core/functions.cpp
-#core/variant.cpp
-#bison/exprparser.c
-#math/floatcommon.c
-#math/floatconst.c
-#math/floatconvert.c
-#math/floaterf.c
-#math/floatexp.c
-#math/floathmath.c
-#math/floatgamma.c
-#math/floatio.c
-#math/floatipower.c
-#math/floatlog.c
-#math/floatlogic.c
-#math/floatlong.c
-#math/floatnum.c
-#math/floatpower.c
-#math/floatseries.c
-#math/floattrig.c
-#math/numdata.cpp
-#math/hmath.cpp
-#math/number.c
-#test/testevaluator.cpp
-#)
+set(testevaluator_HEADERS
+core/evaluator.hxx
+core/functions.hxx
+)
 
+set(testevaluator_SOURCES
+core/evaluator.cpp
+core/functions.cpp
+core/settings.cpp
+math/floatcommon.c
+math/floatconst.c
+math/floatconvert.c
+math/floaterf.c
+math/floatexp.c
+math/floathmath.c
+math/floatgamma.c
+#math/floatincgamma.c
+math/floatio.c
+math/floatipower.c
+math/floatlog.c
+math/floatlogic.c
+math/floatlong.c
+math/floatnum.c
+math/floatpower.c
+math/floatseries.c
+math/floattrig.c
+math/hmath.cpp
+math/number.c
+test/testevaluator.cpp
+)
 
 # regression test for floatnum
 set(testfloatnum_SOURCES
@@ -174,3 +172,4 @@ math/floattrig.c
 math/number.c
 test/testfloatnum.c
 )
+

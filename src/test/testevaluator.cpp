@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2004-2006 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2007-2009 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -17,29 +17,25 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-
-#include "base/evaluator.hxx"
+#include "core/evaluator.hxx"
+#include "core/functions.hxx"
+#include "core/settings.hxx"
 #include "math/hmath.hxx"
 
-#include <QApplication>
-#include <QtCore>
+#include <QtCore/QCoreApplication>
 
 #include <cstring>
 
-
 using namespace std;
 
-
-static Evaluator * eval = 0;
+static Evaluator *eval = 0;
 static int eval_total_tests  = 0;
 static int eval_failed_tests = 0;
-
 
 #define CHECK_AUTOFIX(s,p)      checkAutoFix(__FILE__,__LINE__,#s,s,p)
 #define CHECK_DIV_BY_ZERO(s)    checkDivisionByZero(__FILE__,__LINE__,#s,s)
 #define CHECK_EVAL(x,y)         checkEval(__FILE__,__LINE__,#x,x,y)
 #define CHECK_EVAL_PRECISE(x,y) checkEvalPrecise(__FILE__,__LINE__,#x,x,y)
-
 
 static void checkAutoFix( const char * file, int line, const char * msg,
                           const QString & expr, const QString & fixed )
@@ -47,8 +43,7 @@ static void checkAutoFix( const char * file, int line, const char * msg,
   eval_total_tests++;
 
   QString r = eval->autoFix( expr );
-  if ( r != fixed )
-  {
+  if ( r != fixed ) {
     eval_failed_tests++;
     cerr << file << "[" << line << "]: " << msg << endl
          << "    Result: \"" << qPrintable(   r   ) << "\"" << endl
@@ -56,7 +51,6 @@ static void checkAutoFix( const char * file, int line, const char * msg,
          << endl;
   }
 }
-
 
 static void checkDivisionByZero( const char * file, int line,
                                  const char * msg, const QString & expr )
@@ -66,8 +60,7 @@ static void checkDivisionByZero( const char * file, int line,
   eval->setExpression( expr );
   HNumber rn = eval->evalUpdateAns();
 
-  if ( eval->error().isEmpty() )
-  {
+  if ( eval->error().isEmpty() ) {
     eval_failed_tests++;
     cerr << file << "[" << line << "]: " << msg
          << "  Error: " << "division by zero not caught"
@@ -75,28 +68,22 @@ static void checkDivisionByZero( const char * file, int line,
   }
 }
 
-
 static void checkEval( const char * file, int line, const char * msg,
                        const QString & expr, const char * expected )
 {
   eval_total_tests++;
 
-  //Settings::self()->angleMode = Settings::Radian; //refan
   eval->setExpression( expr );
   HNumber rn = eval->evalUpdateAns();
 
-  if ( ! eval->error().isEmpty() )
-  {
+  if ( ! eval->error().isEmpty() ) {
     eval_failed_tests++;
     cerr << file << "[" << line << "]: " << msg
          << "  Error: " << qPrintable( eval->error() )
          << endl;
-  }
-  else
-  {
-    char * result = HMath::formatFixed( rn );
-    if ( strcmp( result, expected ) )
-    {
+  } else {
+    char * result = HMath::format( rn, 'f' );
+    if ( strcmp( result, expected ) ) {
       eval_failed_tests++;
       cerr << file << "[" << line << "]: " << msg
            << "  Result: " << result
@@ -108,7 +95,6 @@ static void checkEval( const char * file, int line, const char * msg,
   }
 }
 
-
 static void checkEvalPrecise( const char * file, int line, const char * msg,
                               const QString & expr, const char * expected )
 {
@@ -119,9 +105,8 @@ static void checkEvalPrecise( const char * file, int line, const char * msg,
 
   // we compare up to 50 decimals, not exact number because it's often difficult
   // to represent the result as an irrational number, e.g. PI
-  char * result = HMath::formatFixed( rn, 50 );
-  if ( strcmp( result, expected ) )
-  {
+  char * result = HMath::format( rn, 'f', 50 );
+  if ( strcmp( result, expected ) ) {
     eval_failed_tests++;
     cerr << file << "[" << line <<"]: " << msg
          << "  Result: " << result << ", "
@@ -131,12 +116,10 @@ static void checkEvalPrecise( const char * file, int line, const char * msg,
   free( result );
 }
 
-
 void test_constants()
 {
   CHECK_EVAL( "1", "1" );
 }
-
 
 void test_unary()
 {
@@ -209,7 +192,6 @@ void test_unary()
   CHECK_EVAL( "-3!", "-6" );
 }
 
-
 void test_binary()
 {
   CHECK_EVAL( "0+0", "0" );
@@ -217,7 +199,6 @@ void test_binary()
   CHECK_EVAL( "0+1", "1" );
   CHECK_EVAL( "1+1", "2" );
 }
-
 
 void test_divide_by_zero()
 {
@@ -236,7 +217,6 @@ void test_divide_by_zero()
   CHECK_DIV_BY_ZERO( "-1/binompmf(1;10;0)" );
   CHECK_DIV_BY_ZERO( "-345.3 /  binompmf (   1 ; 10 ;  0 )  " );
 }
-
 
 void test_function_basic()
 {
@@ -266,7 +246,6 @@ void test_function_basic()
   CHECK_EVAL_PRECISE( "exp((1)/2) + exp((1)/2)",
                       "3.29744254140025629369730157562832714330755220142030" );
 }
-
 
 void test_function_trig()
 {
@@ -315,7 +294,6 @@ void test_function_trig()
   CHECK_EVAL( "radians(270)/pi", "1.5" );
   CHECK_EVAL( "radians(360)/pi", "2"   );
 }
-
 
 void test_function_stat()
 {
@@ -386,7 +364,6 @@ void test_function_stat()
   CHECK_EVAL( "GEOMEAN(1;1;1;-1)",  "NaN" );
 }
 
-
 void test_auto_fix_parentheses()
 {
   CHECK_AUTOFIX( "sin(1)", "sin(1)" );
@@ -402,7 +379,6 @@ void test_auto_fix_parentheses()
   CHECK_AUTOFIX( "x + sin ( pi", "x + sin ( pi)" );
 }
 
-
 void test_auto_fix_ans()
 {
   CHECK_AUTOFIX( "sin", "sin(ans)" );
@@ -413,7 +389,6 @@ void test_auto_fix_ans()
   CHECK_AUTOFIX( "log", "log(ans)" );
 }
 
-
 void test_auto_fix_trailing_equal()
 {
   CHECK_AUTOFIX ( "1+2=",      "1+2"      );
@@ -421,7 +396,6 @@ void test_auto_fix_trailing_equal()
   CHECK_AUTOFIX ( "1/3====",   "1/3"      );
   CHECK_AUTOFIX ( "sin(x+y)=", "sin(x+y)" );
 }
-
 
 void test_auto_fix_untouch()
 {
@@ -435,13 +409,18 @@ void test_auto_fix_untouch()
   CHECK_AUTOFIX( "1/sin pi",   "1/sin pi"   );
 }
 
-
 int main( int argc, char * * argv )
 {
-  QApplication app( argc, argv );
+  QCoreApplication app( argc, argv );
 
-  HMath::setAngleMode( 'r' );
-  eval = new Evaluator( '.' );
+  Settings *settings = Settings::instance();
+  settings->angleUnit = 'r';
+  settings->setRadixCharacter( '.' );
+
+  Functions functions;
+  Evaluator evaluator( &functions );
+  eval = &evaluator;
+
   test_constants();
   test_unary();
   test_binary();
@@ -461,7 +440,6 @@ int main( int argc, char * * argv )
        << eval_failed_tests << " failed"
        << endl;
 
-  delete eval;
-
-  return app.exec();
+  return 0;
 }
+

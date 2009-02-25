@@ -95,9 +95,10 @@ ENABLE_TESTING()
 ADD_EXECUTABLE(testhmath ${testhmath_SOURCES})
 ADD_TEST(testhmath testhmath)
 
-#add_executable(testevaluator ${testevaluator_SOURCES})
-#target_link_libraries(testevaluator ${QT_LIBRARIES})
-#add_test(testevaluator ${EXECUTABLE_OUTPUT_PATH}/testevaluator)
+QT4_WRAP_CPP(testevaluator_HEADERS_MOC ${testevaluator_HEADERS})
+ADD_EXECUTABLE(testevaluator ${testevaluator_SOURCES} ${testevaluator_HEADERS_MOC})
+TARGET_LINK_LIBRARIES(testevaluator ${QT_LIBRARIES})
+ADD_TEST(testevaluator testevaluator)
 
 ADD_EXECUTABLE(testfloatnum ${testfloatnum_SOURCES})
 ADD_TEST(testfloatnum testfloatnum)
