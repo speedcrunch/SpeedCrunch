@@ -410,6 +410,8 @@ void test_function_logic()
 void test_function_discrete()
 {
   CHECK_EVAL( "gcd(12;18)", "6" );
+  CHECK_EVAL( "gcd(36;56;210)", "2" );
+  CHECK_EVAL( "gcd(28;120;126)", "2" );
 
   CHECK_EVAL( "ncr(-3;-1)", "0"   );
   CHECK_EVAL( "ncr(-3;0)",  "1"   );
