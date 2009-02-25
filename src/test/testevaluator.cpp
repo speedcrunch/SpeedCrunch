@@ -20,7 +20,6 @@
 #include "core/evaluator.hxx"
 #include "core/functions.hxx"
 #include "core/settings.hxx"
-#include "math/hmath.hxx"
 
 #include <QtCore/QCoreApplication>
 
