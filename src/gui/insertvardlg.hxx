@@ -47,7 +47,7 @@ class InsertVariableDlg : public QDialog
 
   private:
     struct Private;
-    std::auto_ptr<Private> d;
+    const std::auto_ptr<Private> d;
     InsertVariableDlg();
     InsertVariableDlg( const InsertVariableDlg & );
     InsertVariableDlg & operator=( const InsertVariableDlg & );

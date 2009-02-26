@@ -53,7 +53,7 @@ class FunctionsDock : public QDockWidget
 
   private:
     struct Private;
-    std::auto_ptr<Private> d;
+    const std::auto_ptr<Private> d;
     FunctionsDock();
     FunctionsDock( const FunctionsDock & );
     FunctionsDock & operator=( const FunctionsDock & );

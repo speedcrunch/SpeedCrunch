@@ -28,21 +28,20 @@
 #define DO_MAKE_STRING(a) # a
 
 
-class MarqueeTextPrivate
+struct MarqueeText::Private
 {
-  public:
-    QTextEdit *     editor;
-    QTextDocument * doc;
-    QPixmap *       buffer;
-    unsigned        pos;
-    unsigned        scrollStep;
-    unsigned        scrollTick;
-    unsigned        sideMargin;
+  QTextEdit *     editor;
+  QTextDocument * doc;
+  QPixmap *       buffer;
+  unsigned        pos;
+  unsigned        scrollStep;
+  unsigned        scrollTick;
+  unsigned        sideMargin;
 };
 
 
 MarqueeText::MarqueeText( QWidget * parent, const char * name ):
-  QFrame( parent ), d( new MarqueeTextPrivate )
+  QFrame( parent ), d( new MarqueeText::Private )
 {
   d->scrollStep = 1;
   d->scrollTick = 40;

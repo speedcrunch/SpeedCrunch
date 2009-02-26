@@ -55,7 +55,7 @@ class HistoryDock : public QDockWidget
 
   private:
     struct Private;
-    std::auto_ptr<Private> d;
+    const std::auto_ptr<Private> d;
     void recolor();
     HistoryDock(const HistoryDock&);
     HistoryDock& operator=(const HistoryDock&);

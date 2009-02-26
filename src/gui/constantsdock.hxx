@@ -54,7 +54,7 @@ class ConstantsDock : public QDockWidget
 
   private:
     struct Private;
-    std::auto_ptr<Private> d;
+    const std::auto_ptr<Private> d;
     ConstantsDock();
     ConstantsDock( const ConstantsDock & );
     ConstantsDock & operator=( const ConstantsDock & );

@@ -50,7 +50,7 @@ class BookDock : public QDockWidget
 
   private:
     struct Private;
-    std::auto_ptr<Private> d;
+    const std::auto_ptr<Private> d;
     BookDock( const BookDock & );
     BookDock & operator=( const BookDock & );
 };

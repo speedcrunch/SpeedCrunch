@@ -45,7 +45,7 @@ class InsertFunctionDlg : public QDialog
 
   private:
     struct Private;
-    std::auto_ptr<Private> d;
+    const std::auto_ptr<Private> d;
     InsertFunctionDlg();
     InsertFunctionDlg( const InsertFunctionDlg & );
     InsertFunctionDlg & operator=( const InsertFunctionDlg & );

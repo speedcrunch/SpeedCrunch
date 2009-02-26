@@ -86,7 +86,7 @@ class Keypad : public QWidget
 
   private:
     struct Private;
-    std::auto_ptr<Private> d;
+    const std::auto_ptr<Private> d;
     Keypad( const Keypad & );
     Keypad & operator=( const Keypad & );
 };

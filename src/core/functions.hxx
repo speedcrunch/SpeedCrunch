@@ -50,7 +50,7 @@ class Function
 
   private:
     struct Private;
-    std::auto_ptr<Private> d;
+    const std::auto_ptr<Private> d;
     Function();
     Function( const Function & );
     Function & operator=( const Function & );
@@ -73,7 +73,7 @@ class Functions : public QObject
 
   private:
     struct Private;
-    std::auto_ptr<Private> d;
+    const std::auto_ptr<Private> d;
     Functions( const Functions & );
     Functions & operator=( const Functions & );
 };

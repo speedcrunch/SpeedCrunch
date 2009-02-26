@@ -118,7 +118,7 @@ class Evaluator : public QObject
 
   private:
     struct Private;
-    std::auto_ptr<Private> d;
+    const std::auto_ptr<Private> d;
     Evaluator();
     Evaluator( const Evaluator & );
     Evaluator & operator=( const Evaluator & );

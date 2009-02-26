@@ -45,7 +45,7 @@ class DeleteVariableDlg : public QDialog
 
   private:
     struct Private;
-    std::auto_ptr<Private> d;
+    const std::auto_ptr<Private> d;
     DeleteVariableDlg();
     DeleteVariableDlg( const DeleteVariableDlg & );
     DeleteVariableDlg & operator=( const DeleteVariableDlg & );

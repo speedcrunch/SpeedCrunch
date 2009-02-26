@@ -125,7 +125,7 @@ class MainWindow : public QMainWindow
 
   private:
     struct Private;
-    std::auto_ptr<Private> d;
+    const std::auto_ptr<Private> d;
     MainWindow( const MainWindow & );
     MainWindow & operator=( const MainWindow & );
 };

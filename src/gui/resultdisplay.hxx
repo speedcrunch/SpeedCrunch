@@ -73,7 +73,7 @@ class ResultDisplay : public QListWidget
 
   private:
     struct Private;
-    std::auto_ptr<Private> d;
+    const std::auto_ptr<Private> d;
     ResultDisplay( const ResultDisplay & );
     ResultDisplay & operator=( const ResultDisplay & );
 };

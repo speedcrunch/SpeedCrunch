@@ -70,7 +70,7 @@ class Constants : public QObject
 
   private:
     struct Private;
-    std::auto_ptr<Private> d;
+    const std::auto_ptr<Private> d;
     Constants( const Constants & );
     Constants & operator=( const Constants & );
 };

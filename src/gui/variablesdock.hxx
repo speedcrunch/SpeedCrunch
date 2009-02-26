@@ -54,7 +54,7 @@ class VariablesDock : public QDockWidget
 
   private:
     struct Private;
-    std::auto_ptr<Private> d;
+    const std::auto_ptr<Private> d;
     VariablesDock( const VariablesDock & );
     VariablesDock & operator=( const VariablesDock & );
 };
