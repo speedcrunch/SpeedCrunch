@@ -1220,13 +1220,9 @@ Function * Functions::function( const QString & name ) const
 
 QStringList Functions::functionNames() const
 {
-  QStringList result;
-  QHashIterator<QString, Function *> it( d->functions );
-  while ( it.hasNext() )
-  {
-    it.next();
-    result.append( it.key().toLower() );
-  }
+  QStringList result = d->functions.keys();
+  std::transform( result.begin(), result.end(), result.begin(),
+          std::mem_fun_ref(&QString::toLower) );
 
   return result;
 }
