@@ -306,14 +306,14 @@ HNumber Functions::Private::round( Function * f, const QVector<HNumber> & args )
 
   HNumber num = args.at(0);
 
-  if( nArgs == 2)
+  if ( nArgs == 2 )
   {
     int prec = 0;
 
     HNumber argprec = args.at(1);
     if (argprec != 0)
     {
-      if( !argprec.isInteger() )
+      if ( !argprec.isInteger() )
       {
         f->setError( f->name(), Functions::tr(
                         "function undefined for specified arguments" ) );
@@ -337,7 +337,7 @@ HNumber Functions::Private::sqrt( Function * f, const QVector<HNumber> & args )
     return HMath::nan();
 
   HNumber num = args.at(0);
-  if( num < HNumber(0) )
+  if ( num < HNumber(0) )
   {
     f->setError( f->name(), Functions::tr(
                     "function undefined for specified argument" ) );
@@ -1230,8 +1230,8 @@ QStringList Functions::functionNames() const
 Functions::~Functions()
 {
   QList<Function *> values = d->functions.values();
-  for ( int i = 0; i < values.size(); i++ )
-    delete values.at(i);
+  while ( ! values.isEmpty() )
+      delete values.takeFirst();
 
   delete d;
 }
