@@ -244,37 +244,33 @@ char idivwrap(floatnum result, cfloatnum p1, cfloatnum p2)
 /**
  * Creates a new number.
  */
-HNumber::HNumber()
+HNumber::HNumber() : d( new HNumberPrivate )
 {
-  d = new HNumberPrivate;
 }
 
 /**
  * Copies from another number.
  */
-HNumber::HNumber( const HNumber& hn )
+HNumber::HNumber( const HNumber& hn ) : d( new HNumberPrivate )
 {
-  d = new HNumberPrivate;
   operator=( hn );
 }
 
 /**
  * Creates a new number from an integer value.
  */
-HNumber::HNumber( int i )
+HNumber::HNumber( int i ) : d( new HNumberPrivate )
 {
-  d = new HNumberPrivate;
   float_setinteger(&d->fnum, i);
 }
 
 /**
  * Creates a new number from a string.
  */
-HNumber::HNumber( const char* str )
+HNumber::HNumber( const char* str ) : d( new HNumberPrivate )
 {
   t_itokens tokens;
 
-  d = new HNumberPrivate;
   if ((d->error = parse(&tokens, &str)) == Success && *str == 0)
     d->error = float_in(&d->fnum, &tokens);
   float_geterror();
