@@ -227,8 +227,8 @@ HNumber Functions::Private::trunc( Function * f, const QVector<HNumber> & args )
 
   HNumber num = args.at(0);
 
-  if ( nArgs == 2){
-
+  if ( nArgs == 2)
+  {
     int prec = 0;
 
     HNumber argprec = args.at(1);
@@ -289,8 +289,7 @@ HNumber Functions::Private::gcd( Function * f, const QVector<HNumber> & args )
       return HMath::nan();
     }
 
-  return std::accumulate(args.begin() + 1, args.end(), args.at(0),
-          HMath::gcd);
+  return std::accumulate(args.begin() + 1, args.end(), args.at(0), HMath::gcd);
 }
 
 
@@ -307,8 +306,8 @@ HNumber Functions::Private::round( Function * f, const QVector<HNumber> & args )
 
   HNumber num = args.at(0);
 
-  if( nArgs == 2){
-
+  if( nArgs == 2)
+  {
     int prec = 0;
 
     HNumber argprec = args.at(1);
@@ -320,7 +319,7 @@ HNumber Functions::Private::round( Function * f, const QVector<HNumber> & args )
                         "function undefined for specified arguments" ) );
         return HMath::nan();
       }
-      if ((prec = argprec.toInt()) != 0)
+      if ( (prec = argprec.toInt()) != 0 )
         return HMath::round( num, prec );
       // the 2. parameter exceeds the integer limits
       if (argprec < 0)
@@ -1089,17 +1088,15 @@ HNumber Functions::Private::xor_( Function *, const QVector<HNumber> & args )
 
 HNumber Functions::Private::ashl( Function *, const QVector<HNumber> & args )
 {
-  HNumber bits = args.at(1);
   HNumber val = args.at(0);
-
+  HNumber bits = args.at(1);
   return HMath::ashr( val, -bits );
 }
 
 HNumber Functions::Private::ashr( Function *, const QVector<HNumber> & args )
 {
-  HNumber bits = args.at(1);
   HNumber val = args.at(0);
-
+  HNumber bits = args.at(1);
   return HMath::ashr(val, bits);
 }
 
@@ -1107,7 +1104,6 @@ HNumber Functions::Private::idiv( Function *, const QVector<HNumber> & args )
 {
   HNumber dividend = args.at(0);
   HNumber divisor = args.at(1);
-
   return HMath::idiv(dividend, divisor);
 }
 
@@ -1115,7 +1111,6 @@ HNumber Functions::Private::mod( Function *, const QVector<HNumber> & args )
 {
   HNumber dividend = args.at(0);
   HNumber divisor = args.at(1);
-
   return dividend % divisor;
 }
 
