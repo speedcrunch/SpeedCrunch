@@ -100,7 +100,6 @@ FunctionsDock::FunctionsDock( const Functions * f, QWidget * parent )
 FunctionsDock::~FunctionsDock()
 {
   d->filterTimer->stop();
-  delete d;
 }
 
 const Functions * FunctionsDock::functions() const

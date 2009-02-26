@@ -24,6 +24,8 @@
 
 #include <QDockWidget>
 
+#include <memory>
+
 
 class QListWidgetItem;
 
@@ -53,8 +55,10 @@ class HistoryDock : public QDockWidget
 
   private:
     struct Private;
-    Private * const d;
+    std::auto_ptr<Private> d;
     void recolor();
+    HistoryDock(const HistoryDock&);
+    HistoryDock& operator=(const HistoryDock&);
 };
 
 

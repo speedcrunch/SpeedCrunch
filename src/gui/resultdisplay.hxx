@@ -23,6 +23,8 @@
 #include <QListWidget>
 #include <QResizeEvent>
 
+#include <memory>
+
 class HNumber;
 
 class QListWidgetItem;
@@ -71,7 +73,7 @@ class ResultDisplay : public QListWidget
 
   private:
     struct Private;
-    Private * const d;
+    std::auto_ptr<Private> d;
     ResultDisplay( const ResultDisplay & );
     ResultDisplay & operator=( const ResultDisplay & );
 };

@@ -113,7 +113,6 @@ Constants::Constants( QObject * parent )
 
 Constants::~Constants()
 {
-  delete d;
 }
 
 

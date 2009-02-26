@@ -98,7 +98,6 @@ Keypad::Keypad( QWidget * parent )
 
 Keypad::~Keypad()
 {
-  delete d;
 }
 
 void Keypad::handleRadixCharacterChange()

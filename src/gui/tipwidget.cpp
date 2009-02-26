@@ -79,7 +79,6 @@ TipWidget::TipWidget( QWidget * parent ) :
 
 TipWidget::~TipWidget()
 {
-  delete d;
 }
 
 

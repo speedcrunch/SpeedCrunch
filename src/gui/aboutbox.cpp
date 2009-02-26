@@ -42,9 +42,8 @@ class MarqueeTextPrivate
 
 
 MarqueeText::MarqueeText( QWidget * parent, const char * name ):
-  QFrame( parent )
+  QFrame( parent ), d( new MarqueeTextPrivate )
 {
-  d = new MarqueeTextPrivate;
   d->scrollStep = 1;
   d->scrollTick = 40;
   d->sideMargin = 20;
@@ -69,7 +68,6 @@ MarqueeText::MarqueeText( QWidget * parent, const char * name ):
 MarqueeText::~MarqueeText()
 {
   delete d->buffer;
-  delete d;
 }
 
 

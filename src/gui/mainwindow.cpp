@@ -1268,7 +1268,6 @@ MainWindow::MainWindow()
 
 MainWindow::~MainWindow()
 {
-  delete d;
 }
 
 bool MainWindow::event( QEvent * e )

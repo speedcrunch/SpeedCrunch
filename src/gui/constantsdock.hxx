@@ -22,6 +22,8 @@
 
 #include <QDockWidget>
 
+#include <memory>
+
 class Constants;
 
 class QTreeWidgetItem;
@@ -52,7 +54,7 @@ class ConstantsDock : public QDockWidget
 
   private:
     struct Private;
-    Private * const d;
+    std::auto_ptr<Private> d;
     ConstantsDock();
     ConstantsDock( const ConstantsDock & );
     ConstantsDock & operator=( const ConstantsDock & );

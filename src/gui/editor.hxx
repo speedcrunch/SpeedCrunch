@@ -25,6 +25,8 @@
 
 #include <QTextEdit>
 
+#include <memory>
+
 class Constants;
 class Evaluator;
 class Functions;
@@ -111,7 +113,7 @@ class Editor : public QTextEdit
 
   private:
     struct Private;
-    Private * const d;
+    std::auto_ptr<Private> d;
     Editor();
     Editor( const Editor & );
     Editor & operator=( const Editor & );
@@ -139,7 +141,7 @@ class EditorCompletion : public QObject
 
   private:
     struct Private;
-    Private * d;
+    std::auto_ptr<Private> d;
     EditorCompletion( const EditorCompletion & );
     EditorCompletion & operator=( const EditorCompletion & );
 };
@@ -168,7 +170,7 @@ class ConstantCompletion : public QObject
 
   private:
     struct Private;
-    Private * const d;
+    std::auto_ptr<Private> d;
     ConstantCompletion( const ConstantCompletion & );
     ConstantCompletion & operator=( const ConstantCompletion & );
 };

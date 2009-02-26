@@ -22,6 +22,8 @@
 
 #include <QDockWidget>
 
+#include <memory>
+
 class Evaluator;
 
 class QTreeWidgetItem;
@@ -52,7 +54,7 @@ class VariablesDock : public QDockWidget
 
   private:
     struct Private;
-    Private * const d;
+    std::auto_ptr<Private> d;
     VariablesDock( const VariablesDock & );
     VariablesDock & operator=( const VariablesDock & );
 };

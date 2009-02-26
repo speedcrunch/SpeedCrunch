@@ -28,6 +28,8 @@
 #include <QString>
 #include <QVector>
 
+#include <memory>
+
 #ifdef _BISON
 # include "bison/bisonparser.hxx"
 #endif
@@ -116,7 +118,7 @@ class Evaluator : public QObject
 
   private:
     struct Private;
-    Private * const d;
+    std::auto_ptr<Private> d;
     Evaluator();
     Evaluator( const Evaluator & );
     Evaluator & operator=( const Evaluator & );

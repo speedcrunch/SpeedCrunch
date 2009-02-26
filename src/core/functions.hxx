@@ -26,6 +26,8 @@
 #include <QStringList>
 #include <QVector>
 
+#include <memory>
+
 class Function;
 class Functions;
 
@@ -37,7 +39,6 @@ class Function
     Function( const QString & name, int argc, FunctionPtr ptr,
               Functions * parent );
     Function( const QString & name, FunctionPtr ptr, Functions * parent );
-    ~Function();
 
     QString     description() const;
     void        setDescription( const QString & );
@@ -49,7 +50,7 @@ class Function
 
   private:
     struct Private;
-    Private * const d;
+    std::auto_ptr<Private> d;
     Function();
     Function( const Function & );
     Function & operator=( const Function & );
@@ -72,7 +73,7 @@ class Functions : public QObject
 
   private:
     struct Private;
-    Private * const d;
+    std::auto_ptr<Private> d;
     Functions( const Functions & );
     Functions & operator=( const Functions & );
 };

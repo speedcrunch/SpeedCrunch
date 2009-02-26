@@ -22,6 +22,8 @@
 
 #include <QWidget>
 
+#include <memory>
+
 class Keypad : public QWidget
 {
   Q_OBJECT
@@ -84,7 +86,7 @@ class Keypad : public QWidget
 
   private:
     struct Private;
-    Keypad::Private * const d;
+    std::auto_ptr<Private> d;
     Keypad( const Keypad & );
     Keypad & operator=( const Keypad & );
 };

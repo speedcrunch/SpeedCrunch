@@ -331,7 +331,6 @@ Evaluator::Evaluator( Functions * f, QObject * parent )
 
 Evaluator::~Evaluator()
 {
-  delete d;
 }
 
 // Sets a new expression

@@ -24,6 +24,8 @@
 
 #include <QFrame>
 
+#include <memory>
+
 
 class TipWidget: public QFrame
 {
@@ -46,7 +48,7 @@ class TipWidget: public QFrame
 
   private:
     struct Private;
-    Private * const d;
+    std::auto_ptr<Private> d;
     TipWidget( const TipWidget & );
     TipWidget & operator=( const TipWidget & );
 };

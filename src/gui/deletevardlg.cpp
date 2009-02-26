@@ -105,7 +105,6 @@ DeleteVariableDlg::DeleteVariableDlg( Evaluator * eval, QWidget * parent )
 
 DeleteVariableDlg::~DeleteVariableDlg()
 {
-  delete d;
 }
 
 

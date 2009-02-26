@@ -22,6 +22,8 @@
 
 #include <QDockWidget>
 
+#include <memory>
+
 class QUrl;
 
 class BookDock : public QDockWidget
@@ -48,7 +50,7 @@ class BookDock : public QDockWidget
 
   private:
     struct Private;
-    Private * const d;
+    std::auto_ptr<Private> d;
     BookDock( const BookDock & );
     BookDock & operator=( const BookDock & );
 };

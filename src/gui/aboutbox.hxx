@@ -25,6 +25,8 @@
 #include <QFrame>
 #include <QSizePolicy>
 
+#include <memory>
+
 
 class QPaintEvent;
 class QResizeEvent;
@@ -52,7 +54,7 @@ class MarqueeText: public QFrame
     void layout();
 
   private:
-    MarqueeTextPrivate *d;
+    std::auto_ptr<MarqueeTextPrivate> d;
     MarqueeText( const MarqueeText& );
     MarqueeText& operator=( const MarqueeText& );
 };

@@ -492,10 +492,9 @@ QString RealFormat::format(const Variant& val)
 {
   if (usesBase())
   {
-    RealFormat* formatter = new RealFormat;
-    formatter->cloneFrom(this);
-    QString result = formatter->format(val);
-    delete formatter;
+    RealFormat formatter;
+    formatter.cloneFrom(this);
+    QString result = formatter.format(val);
     return result;
   }
   return doFormat(val);

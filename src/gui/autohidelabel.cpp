@@ -52,7 +52,6 @@ AutoHideLabel::AutoHideLabel( QWidget * parent ): QLabel( parent ),
 
 AutoHideLabel::~AutoHideLabel()
 {
-  delete d;
 }
 
 

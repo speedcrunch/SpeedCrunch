@@ -22,6 +22,8 @@
 
 #include <QDockWidget>
 
+#include <memory>
+
 class Functions;
 
 class QTreeWidgetItem;
@@ -51,7 +53,7 @@ class FunctionsDock : public QDockWidget
 
   private:
     struct Private;
-    Private * const d;
+    std::auto_ptr<Private> d;
     FunctionsDock();
     FunctionsDock( const FunctionsDock & );
     FunctionsDock & operator=( const FunctionsDock & );

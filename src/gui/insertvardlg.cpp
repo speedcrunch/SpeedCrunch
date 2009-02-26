@@ -156,7 +156,6 @@ QString InsertVariableDlg::variableName() const
 
 InsertVariableDlg::~InsertVariableDlg()
 {
-  delete d;
 }
 
 

@@ -118,11 +118,6 @@ void Function::setError( const QString & context, const QString & error )
   d->error = context + ": " + error;
 }
 
-Function::~Function()
-{
-  delete d;
-}
-
 struct Functions::Private
 {
   Functions * p;
@@ -1232,8 +1227,6 @@ Functions::~Functions()
   QList<Function *> values = d->functions.values();
   while ( ! values.isEmpty() )
       delete values.takeFirst();
-
-  delete d;
 }
 
 void Functions::retranslateText()

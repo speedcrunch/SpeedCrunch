@@ -25,6 +25,7 @@
 
 #include <QDialog>
 
+#include <memory>
 
 class Evaluator;
 
@@ -46,7 +47,7 @@ class InsertVariableDlg : public QDialog
 
   private:
     struct Private;
-    Private * const d;
+    std::auto_ptr<Private> d;
     InsertVariableDlg();
     InsertVariableDlg( const InsertVariableDlg & );
     InsertVariableDlg & operator=( const InsertVariableDlg & );

@@ -24,6 +24,8 @@
 
 #include <QLabel>
 
+#include <memory>
+
 
 class AutoHideLabel: public QLabel
 {
@@ -42,7 +44,7 @@ class AutoHideLabel: public QLabel
 
   private:
     struct Private;
-    Private * const d;
+    std::auto_ptr<Private> d;
     AutoHideLabel( const AutoHideLabel & );
     AutoHideLabel& operator=( const AutoHideLabel & );
 };

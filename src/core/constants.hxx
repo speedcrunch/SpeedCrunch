@@ -27,6 +27,8 @@
 #include <QString>
 #include <QStringList>
 
+#include <memory>
+
 
 class Constant
 {
@@ -68,7 +70,7 @@ class Constants : public QObject
 
   private:
     struct Private;
-    Private * const d;
+    std::auto_ptr<Private> d;
     Constants( const Constants & );
     Constants & operator=( const Constants & );
 };

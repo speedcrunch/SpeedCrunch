@@ -49,7 +49,6 @@ HistoryDock::HistoryDock( QWidget * parent )
 
 HistoryDock::~HistoryDock()
 {
-  delete d;
 }
 
 

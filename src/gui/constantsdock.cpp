@@ -127,7 +127,6 @@ ConstantsDock::ConstantsDock( Constants * c, QWidget * parent )
 ConstantsDock::~ConstantsDock()
 {
   d->filterTimer->stop();
-  delete d;
 }
 
 void ConstantsDock::handleRadixCharacterChange()

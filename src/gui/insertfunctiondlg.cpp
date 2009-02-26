@@ -108,7 +108,6 @@ QString InsertFunctionDlg::functionName() const
 
 InsertFunctionDlg::~InsertFunctionDlg()
 {
-  delete d;
 }
 
 

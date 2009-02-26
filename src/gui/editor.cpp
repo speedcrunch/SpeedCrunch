@@ -205,7 +205,6 @@ Editor::Editor( Evaluator * e, Functions * f, Constants * c, QWidget * parent )
 
 Editor::~Editor()
 {
-  delete d;
 }
 
 QString Editor::text() const
@@ -1001,7 +1000,6 @@ EditorCompletion::EditorCompletion( Editor * editor ) : QObject( editor ),
 EditorCompletion::~EditorCompletion()
 {
   delete d->popup;
-  delete d;
 }
 
 bool EditorCompletion::eventFilter( QObject * obj, QEvent * ev )
@@ -1231,7 +1229,6 @@ ConstantCompletion::ConstantCompletion( Editor * editor ) : QObject( editor ),
 ConstantCompletion::~ConstantCompletion()
 {
   delete d->popup;
-  delete d;
   d->editor->setFocus();
 }
 

@@ -337,7 +337,6 @@ void ResultDisplay::setCustomTextColor( const QColor & c )
 
 ResultDisplay::~ResultDisplay()
 {
-  delete d;
 }
 
 void ResultDisplay::clear()
