@@ -2,7 +2,7 @@
 // Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
 // Copyright (C) 2005-2006 Johan Thelin <e8johan@gmail.com>
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2007-2009 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -1240,8 +1240,8 @@ void MainWindow::Private::saveSettings()
     QVector<Variable> vars = evaluator->variables();
     for ( int i = 0; i < vars.count(); i++ )
     {
-      QString name = vars[i].name;
-      char * value = HMath::format( vars[i].value, 'e', DECPRECISION );
+      QString name = vars.at(i).name;
+      char * value = HMath::format( vars.at(i).value, 'e', DECPRECISION );
       settings->variables.append( QString( "%1=%2" ).arg( name )
                                                     .arg( QString( value ) ) );
       free( value );
@@ -1745,7 +1745,7 @@ void MainWindow::saveSession()
   // variables
   for ( int i = 0; i < noVars; i++ )
   {
-    Variable var = d->evaluator->variables()[i];
+    Variable var = d->evaluator->variables().at(i);
     if ( var.name != "pi" && var.name != "phi" )
     {
       char * value = HMath::format( var.value );
@@ -2265,10 +2265,10 @@ void MainWindow::Private::restoreVariables()
 {
   for ( int k = 0; k < settings->variables.count(); k++ )
   {
-    evaluator->setExpression( settings->variables[k] );
+    evaluator->setExpression( settings->variables.at(k) );
     evaluator->eval();
-    QStringList list = settings->variables[k].split( "=" );
-    evaluator->set( list[0], HNumber( list[1].toAscii().data() ) );
+    QStringList list = settings->variables.at(k).split( "=" );
+    evaluator->set( list.at(0), HNumber( list.at(1).toAscii().data() ) );
   }
 
   if ( docks.variables )
@@ -2352,11 +2352,11 @@ void MainWindow::handleEditorTextChange()
     Tokens tokens = d->evaluator->scan( expr );
     if ( tokens.count() == 1 )
     {
-      if (    tokens[0].asOperator() == Token::Plus
-           || tokens[0].asOperator() == Token::Minus
-           || tokens[0].asOperator() == Token::Asterisk
-           || tokens[0].asOperator() == Token::Slash
-           || tokens[0].asOperator() == Token::Caret )
+      if (    tokens.at(0).asOperator() == Token::Plus
+           || tokens.at(0).asOperator() == Token::Minus
+           || tokens.at(0).asOperator() == Token::Asterisk
+           || tokens.at(0).asOperator() == Token::Slash
+           || tokens.at(0).asOperator() == Token::Caret )
       {
         d->conditions.autoAns = false;
         expr.prepend( "ans" );
@@ -2490,7 +2490,7 @@ void MainWindow::showLanguageChooserDialog()
   QList<QString> values = map.values();
   for ( int i = 0; i < values.size(); ++i )
   {
-      if ( values[i] == d->settings->language )
+      if ( values.at(i) == d->settings->language )
       {
           current = i + 1;
           break;
@@ -2513,7 +2513,7 @@ void MainWindow::showLanguageChooserDialog()
     if ( langName == defaultKey )
         value = "C";
     else
-        value = map[langName];
+        value = map.value(langName);
 
     if ( d->settings->language != value )
     {

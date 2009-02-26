@@ -1,7 +1,7 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2005 Ariya Hidayat <ariya@kde.org>
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2008-2009 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -118,12 +118,12 @@ void DeleteVariableDlg::updateList()
   for ( int k = 0; k < variables.count(); k++ )
   {
       QStringList str;
-      str << variables[k].name;
-      str << formatValue( variables[k].value );
+      str << variables.at(k).name;
+      str << formatValue( variables.at(k).value );
 
-      if( str[0].toUpper() == "ANS" ) continue;
-      if( str[0].toUpper() == "PI"  ) continue;
-      if( str[0].toUpper() == "PHI" ) continue;
+      if( str.at(0).toUpper() == "ANS" ) continue;
+      if( str.at(0).toUpper() == "PI"  ) continue;
+      if( str.at(0).toUpper() == "PHI" ) continue;
 
       QTreeWidgetItem * item = 0;
       item = new QTreeWidgetItem( d->list, str );
@@ -140,7 +140,7 @@ void DeleteVariableDlg::deleteVar()
 {
   if ( d->list->selectedItems().count() > 0 )
   {
-    QTreeWidgetItem * item = d->list->selectedItems()[0];
+    QTreeWidgetItem * item = d->list->selectedItems().at(0);
     d->eval->remove( item->text( 0 ) );
     delete item;
   }

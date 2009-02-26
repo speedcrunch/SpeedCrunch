@@ -1,7 +1,7 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2004-2006 Ariya Hidayat <ariya@kde.org>
 // Copyright (C) 2005-2006 Johan Thelin <e8johan@gmail.com>
-// Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2007-2009 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -177,7 +177,7 @@ void MarqueeText::layout()
   double ypos = 0;
   for ( int k = 0; k < layouts.count(); k++ )
   {
-    QTextLayout * textLayout = layouts[k];
+    QTextLayout * textLayout = layouts.at(k);
     if ( ! textLayout )
       continue;
     for ( int i = 0; i < textLayout->lineCount(); ++i )

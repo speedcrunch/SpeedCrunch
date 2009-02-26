@@ -2,7 +2,7 @@
 // Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
 // Copyright (C) 2006 Johan Thelin <e8johan@gmail.com>
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2008-2009 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -133,8 +133,8 @@ void InsertVariableDlg::updateList()
   for ( int k = 0; k < variables.count(); k++ )
   {
       QStringList str;
-      str << variables[k].name;
-      str << d->formatValue( variables[k].value );
+      str << variables.at(k).name;
+      str << d->formatValue( variables.at(k).value );
 
       QTreeWidgetItem * item = 0;
       item = new QTreeWidgetItem( d->list, str );

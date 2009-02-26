@@ -1,7 +1,7 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
 // Copyright (C) 2005-2006 Johan Thelin <e8johan@gmail.com>
-// Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2007-2009 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -105,7 +105,7 @@ static Token::Op matchOperator( const QString& text )
 
   if( text.length() == 1 )
   {
-    QChar p = text[0];
+    QChar p = text.at(0);
     switch( p.unicode() )
     {
         case '+': result = Token::Plus       ; break;
@@ -246,7 +246,7 @@ unsigned TokenStack::itemCount() const
 void TokenStack::push( const Token& token )
 {
   ensureSpace();
-  (*this)[ topIndex++ ] = token;
+  (*this)[topIndex++] = token;
 }
 
 Token TokenStack::pop()
@@ -412,7 +412,7 @@ Tokens Evaluator::scan( const QString& expr ) const
 
   int size = expr.size();
   for ( int i = 0; i < size; i++ )
-    if ( expr[i] == wrongDecimalPoint )
+    if ( expr.at(i) == wrongDecimalPoint )
       return tokens;
 
   // parsing state
@@ -699,7 +699,7 @@ void Evaluator::compile( const Tokens& tokens ) const
   for( int i = 0; i <= tokens.count(); i++ )
   {
     // helper token: InvalidOp is end-of-expression
-    Token token =  ( i < tokens.count() ) ? tokens[i] : Token( Token::stxOperator );
+    Token token =  ( i < tokens.count() ) ? tokens.at(i) : Token( Token::stxOperator );
     Token::Type tokenType = token.type();
     if (tokenType >= Token::stxOperator)
       tokenType = Token::stxOperator;
@@ -1170,10 +1170,10 @@ HNumber Evaluator::evalNoAssign()
     // variable assignment?
     d->assignId = QString();
     if( tokens.count() > 2 )
-    if( tokens[0].isIdentifier() )
-    if( tokens[1].asOperator() == Token::Equal )
+    if( tokens.at(0).isIdentifier() )
+    if( tokens.at(1).asOperator() == Token::Equal )
     {
-      d->assignId = tokens[0].text();
+      d->assignId = tokens.at(0).text();
       tokens.erase( tokens.begin() );
       tokens.erase( tokens.begin() );
     }
@@ -1183,7 +1183,7 @@ HNumber Evaluator::evalNoAssign()
 
   for( int pc = 0; pc < d->codes.count(); pc++ )
   {
-    Opcode& opcode = d->codes[pc];
+    const Opcode& opcode = d->codes.at(pc);
     index = opcode.index;
     switch( opcode.type )
     {
@@ -1193,7 +1193,7 @@ HNumber Evaluator::evalNoAssign()
 
       // load a constant, push to stack
       case Opcode::Load:
-        val1 = d->constants[index];
+        val1 = d->constants.at(index);
         stack.push( val1 );
         break;
 
@@ -1323,7 +1323,7 @@ HNumber Evaluator::evalNoAssign()
 
       // reference
       case Opcode::Ref:
-        fname = d->identifiers[index];
+        fname = d->identifiers.at(index);
         if( has( fname ) )
         {
           // variable
@@ -1436,8 +1436,8 @@ void Evaluator::set( const QString& id, HNumber value )
 {
   if( !id.isEmpty() )
   {
-    d->variables[ id ].name = id;
-    d->variables[ id ].value = value;
+    d->variables[id].name  = id;
+    d->variables[id].value = value;
   }
 }
 
@@ -1447,7 +1447,7 @@ HNumber Evaluator::get( const QString& id )
 
   if( !d->variables.contains( id ) )
     set( id, HNumber( 0 ) );
-  return d->variables[ id ].value;
+  return d->variables.value(id).value;
 }
 
 bool Evaluator::has( const QString& id )
@@ -1500,8 +1500,8 @@ QString Evaluator::autoFix( const QString& expr )
 
   // strip off all funny characters
   for( int c = 0; c < expr.length(); c++ )
-    if( expr[c] >= QChar(32) )
-      result.append( expr[c] );
+    if( expr.at(c) >= QChar(32) )
+      result.append( expr.at(c) );
 
   // no extra whitespaces at the beginning and at the end
   result = result.trimmed();
@@ -1515,14 +1515,14 @@ QString Evaluator::autoFix( const QString& expr )
   if(tokens.count())
   {
     for( int i=0; i<tokens.count(); i++ )
-      if( tokens[i].asOperator() == Token::LeftPar ) par++;
-      else if( tokens[i].asOperator() == Token::RightPar ) par--;
+      if( tokens.at(i).asOperator() == Token::LeftPar ) par++;
+      else if( tokens.at(i).asOperator() == Token::RightPar ) par--;
 
     if(par < 0)
       par = 0;
 
     // if the scanner stops in the middle, do not bother to apply fix
-    const Token& lastToken = tokens[tokens.count()-1];
+    const Token& lastToken = tokens.at(tokens.count()-1);
     if(lastToken.pos()+lastToken.text().length() >= result.length())
       while(par--)
         result.append( ')' );
@@ -1535,9 +1535,9 @@ QString Evaluator::autoFix( const QString& expr )
     Tokens tokens = Evaluator::scan( result );
     if( tokens.count() == 1 )
     {
-      if( tokens[0].isIdentifier() )
+      if( tokens.at(0).isIdentifier() )
       {
-        Function* f = d->functions->function( tokens[0].text() );
+        Function* f = d->functions->function( tokens.at(0).text() );
         if( f ) result.append( "(ans)" );
       }
     }
@@ -1564,7 +1564,7 @@ QString Evaluator::dump() const
   for( c = 0; c < d->constants.count(); c++ )
   {
     QString vtext;
-    HNumber val = d->constants[c];
+    HNumber val = d->constants.at(c);
     char* ss = HMath::format( val, 'f' );
     result += QString("    #%1 = %2\n").arg(c).arg( ss );
     free( ss );
@@ -1575,7 +1575,7 @@ QString Evaluator::dump() const
   for( c = 0; c < d->identifiers.count(); c++ )
   {
     QString vtext;
-    result += QString("    #%1 = %2\n").arg(c).arg( d->identifiers[c] );
+    result += QString("    #%1 = %2\n").arg(c).arg( d->identifiers.at(c) );
   }
 
   result.append("\n");
@@ -1583,11 +1583,11 @@ QString Evaluator::dump() const
   for( int i = 0; i < d->codes.count(); i++ )
   {
     QString ctext;
-    switch( d->codes[i].type )
+    switch( d->codes.at(i).type )
     {
-      case Opcode::Load    : ctext = QString( "Load #%1"      ).arg( d->codes[i].index ); break;
-      case Opcode::Ref     : ctext = QString( "Ref #%1"       ).arg( d->codes[i].index ); break;
-      case Opcode::Function: ctext = QString( "Function (%1)" ).arg( d->codes[i].index ); break;
+      case Opcode::Load    : ctext = QString( "Load #%1"      ).arg( d->codes.at(i).index ); break;
+      case Opcode::Ref     : ctext = QString( "Ref #%1"       ).arg( d->codes.at(i).index ); break;
+      case Opcode::Function: ctext = QString( "Function (%1)" ).arg( d->codes.at(i).index ); break;
       case Opcode::Add     : ctext = "Add"    ; break;
       case Opcode::Sub     : ctext = "Sub"    ; break;
       case Opcode::Mul     : ctext = "Mul"    ; break;

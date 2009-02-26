@@ -2,7 +2,7 @@
 // Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
 // Copyright (C) 2005-2006 Johan Thelin <e8johan@gmail.com>
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2008-2009 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -242,14 +242,14 @@ void ResultDisplay::appendHistory( const QStringList & history,
 {
   for ( int i = 0 ; i < history.count(); i++ )
   {
-    QByteArray a = results[i].toLatin1();
+    QByteArray a = results.at(i).toLatin1();
     const char * resultStr = a.constData();
 
     HNumber result( resultStr );
-    if ( results[i] == "NaN" || ! result.isNan() )
-      append( history[i], result );
+    if ( results.at(i) == "NaN" || ! result.isNan() )
+      append( history.at(i), result );
     else
-      appendError( history[i], resultStr );
+      appendError( history.at(i), resultStr );
   }
 }
 

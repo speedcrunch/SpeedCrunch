@@ -1,7 +1,7 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2004-2006 Ariya Hidayat <ariya@kde.org>
 // Copyright (C) 2007 Wolf Lammen
-// Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2007-2009 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -204,13 +204,13 @@ struct Functions::Private
 
 HNumber Functions::Private::abs( Function *, const QVector<HNumber> & args )
 {
-  return args.count() != 1 ? HMath::nan() : HMath::abs( args[0] );
+  return args.count() != 1 ? HMath::nan() : HMath::abs( args.at(0) );
 }
 
 
 HNumber Functions::Private::integer( Function *, const QVector<HNumber> & args )
 {
-  return args.count() != 1 ? HMath::nan() : HMath::integer( args[0] );
+  return args.count() != 1 ? HMath::nan() : HMath::integer( args.at(0) );
 }
 
 
@@ -225,13 +225,13 @@ HNumber Functions::Private::trunc( Function * f, const QVector<HNumber> & args )
     return HMath::nan();
   }
 
-  HNumber num = args[0];
+  HNumber num = args.at(0);
 
   if ( nArgs == 2){
 
     int prec = 0;
 
-    HNumber argprec = args[1];
+    HNumber argprec = args.at(1);
     if ( argprec != 0 )
     {
       if ( ! argprec.isInteger() )
@@ -254,19 +254,19 @@ HNumber Functions::Private::trunc( Function * f, const QVector<HNumber> & args )
 
 HNumber Functions::Private::frac( Function *, const QVector<HNumber> & args )
 {
-  return args.count() != 1 ? HMath::nan() : HMath::frac( args[0] );
+  return args.count() != 1 ? HMath::nan() : HMath::frac( args.at(0) );
 }
 
 
 HNumber Functions::Private::floor( Function *, const QVector<HNumber> & args )
 {
-  return args.count() != 1 ? HMath::nan() : HMath::floor( args[0] );
+  return args.count() != 1 ? HMath::nan() : HMath::floor( args.at(0) );
 }
 
 
 HNumber Functions::Private::ceil( Function *, const QVector<HNumber> & args )
 {
-  return args.count() != 1 ? HMath::nan() : HMath::ceil( args[0] );
+  return args.count() != 1 ? HMath::nan() : HMath::ceil( args.at(0) );
 }
 
 
@@ -282,14 +282,14 @@ HNumber Functions::Private::gcd( Function * f, const QVector<HNumber> & args )
   }
 
   for ( int i = 0; i < args.count(); i++ )
-    if ( ! args[i].isInteger() )
+    if ( ! args.at(i).isInteger() )
     {
       f->setError( f->name(), Functions::tr(
                      "function requires integer arguments" ) );
       return HMath::nan();
     }
 
-  return std::accumulate(args.begin() + 1, args.end(), args[0],
+  return std::accumulate(args.begin() + 1, args.end(), args.at(0),
           HMath::gcd);
 }
 
@@ -305,13 +305,13 @@ HNumber Functions::Private::round( Function * f, const QVector<HNumber> & args )
     return HMath::nan();
   }
 
-  HNumber num = args[0];
+  HNumber num = args.at(0);
 
   if( nArgs == 2){
 
     int prec = 0;
 
-    HNumber argprec = args[1];
+    HNumber argprec = args.at(1);
     if (argprec != 0)
     {
       if( !argprec.isInteger() )
@@ -337,7 +337,7 @@ HNumber Functions::Private::sqrt( Function * f, const QVector<HNumber> & args )
   if ( args.count() != 1 )
     return HMath::nan();
 
-  HNumber num = args[0];
+  HNumber num = args.at(0);
   if( num < HNumber(0) )
   {
     f->setError( f->name(), Functions::tr(
@@ -351,13 +351,13 @@ HNumber Functions::Private::sqrt( Function * f, const QVector<HNumber> & args )
 
 HNumber Functions::Private::cbrt( Function *, const QVector<HNumber> & args )
 {
-  return args.count() != 1 ? HMath::nan() : HMath::cbrt( args[0] );
+  return args.count() != 1 ? HMath::nan() : HMath::cbrt( args.at(0) );
 }
 
 
 HNumber Functions::Private::exp( Function *, const QVector<HNumber> & args )
 {
-  return args.count() != 1 ? HMath::nan() : HMath::exp( args[0] );
+  return args.count() != 1 ? HMath::nan() : HMath::exp( args.at(0) );
 }
 
 
@@ -366,7 +366,7 @@ HNumber Functions::Private::ln( Function * f, const QVector<HNumber> & args )
   if ( args.count() != 1 )
     return HMath::nan();
 
-  HNumber x = args[0];
+  HNumber x = args.at(0);
   HNumber result = HMath::ln( x );
 
   if ( result.isNan() )
@@ -382,7 +382,7 @@ HNumber Functions::Private::log( Function * f, const QVector<HNumber> & args )
   if ( args.count() != 1 )
     return HMath::nan();
 
-  HNumber x = args[0];
+  HNumber x = args.at(0);
   HNumber result = HMath::log( x );
 
   if ( result.isNan() )
@@ -398,7 +398,7 @@ HNumber Functions::Private::lg( Function * f, const QVector<HNumber> & args )
   if ( args.count() != 1 )
     return HMath::nan();
 
-  HNumber x = args[0];
+  HNumber x = args.at(0);
   HNumber result = HMath::lg( x );
 
   if ( result.isNan() )
@@ -415,7 +415,7 @@ HNumber Functions::Private::sin( Function * f, const QVector<HNumber> & args )
     return HMath::nan();
 
   Settings * settings = Settings::instance();
-  HNumber angle = args[0];
+  HNumber angle = args.at(0);
 
   if ( settings->angleUnit == 'd' )
     angle = HMath::deg2rad( angle );
@@ -429,7 +429,7 @@ HNumber Functions::Private::cos( Function * f, const QVector<HNumber> & args )
     return HMath::nan();
 
   Settings * settings = Settings::instance();
-  HNumber angle = args[0];
+  HNumber angle = args.at(0);
 
   if ( settings->angleUnit == 'd' )
     angle = HMath::deg2rad( angle );
@@ -443,7 +443,7 @@ HNumber Functions::Private::tan( Function * f, const QVector<HNumber> & args )
     return HMath::nan();
 
   Settings * settings = Settings::instance();
-  HNumber angle = args[0];
+  HNumber angle = args.at(0);
 
   if ( settings->angleUnit == 'd' )
     angle = HMath::deg2rad( angle );
@@ -465,7 +465,7 @@ HNumber Functions::Private::cot( Function * f, const QVector<HNumber> & args )
     return HMath::nan();
 
   Settings * settings = Settings::instance();
-  HNumber angle = args[0];
+  HNumber angle = args.at(0);
 
   if ( settings->angleUnit == 'd' )
     angle = HMath::deg2rad( angle );
@@ -487,7 +487,7 @@ HNumber Functions::Private::sec( Function * f, const QVector<HNumber> & args )
     return HMath::nan();
 
   Settings * settings = Settings::instance();
-  HNumber angle = args[0];
+  HNumber angle = args.at(0);
 
   if ( settings->angleUnit == 'd' )
     angle = HMath::deg2rad( angle );
@@ -509,7 +509,7 @@ HNumber Functions::Private::csc( Function * f, const QVector<HNumber> & args )
     return HMath::nan();
 
   Settings * settings = Settings::instance();
-  HNumber angle = args[0];
+  HNumber angle = args.at(0);
 
   if ( settings->angleUnit == 'd' )
     angle = HMath::deg2rad( angle );
@@ -530,7 +530,7 @@ HNumber Functions::Private::asin( Function * f, const QVector<HNumber> & args )
   if ( args.count() != 1 )
     return HMath::nan();
 
-  HNumber x = args[0];
+  HNumber x = args.at(0);
   HNumber result = HMath::asin( x );
 
   if ( result.isNan() )
@@ -553,7 +553,7 @@ HNumber Functions::Private::acos( Function * f, const QVector<HNumber> & args )
   if ( args.count() != 1 )
     return HMath::nan();
 
-  HNumber x = args[0];
+  HNumber x = args.at(0);
   HNumber result = HMath::acos( x );
 
   if ( result.isNan() )
@@ -576,7 +576,7 @@ HNumber Functions::Private::atan( Function * f, const QVector<HNumber> & args )
   if ( args.count() != 1 )
     return HMath::nan();
 
-  HNumber num = args[0];
+  HNumber num = args.at(0);
   HNumber result = HMath::atan( num );
 
   Settings * settings = Settings::instance();
@@ -589,22 +589,22 @@ HNumber Functions::Private::atan( Function * f, const QVector<HNumber> & args )
 
 HNumber Functions::Private::sinh( Function *, const QVector<HNumber> & args )
 {
-  return args.count() != 1 ? HMath::nan() : HMath::sinh( args[0] );
+  return args.count() != 1 ? HMath::nan() : HMath::sinh( args.at(0) );
 }
 
 HNumber Functions::Private::cosh( Function *, const QVector<HNumber> & args )
 {
-  return args.count() != 1 ? HMath::nan() : HMath::cosh( args[0] );
+  return args.count() != 1 ? HMath::nan() : HMath::cosh( args.at(0) );
 }
 
 HNumber Functions::Private::tanh( Function *, const QVector<HNumber> & args )
 {
-  return args.count() != 1 ? HMath::nan() : HMath::tanh( args[0] );
+  return args.count() != 1 ? HMath::nan() : HMath::tanh( args.at(0) );
 }
 
 HNumber Functions::Private::arsinh( Function *, const QVector<HNumber> & args )
 {
-  return args.count() != 1 ? HMath::nan() : HMath::arsinh( args[0] );
+  return args.count() != 1 ? HMath::nan() : HMath::arsinh( args.at(0) );
 }
 
 HNumber Functions::Private::arcosh( Function * f, const QVector<HNumber> & args )
@@ -612,7 +612,7 @@ HNumber Functions::Private::arcosh( Function * f, const QVector<HNumber> & args 
   if ( args.count() != 1 )
     return HMath::nan();
 
-  HNumber x = args[0];
+  HNumber x = args.at(0);
   HNumber result = HMath::arcosh( x );
 
   if ( result.isNan() )
@@ -630,7 +630,7 @@ HNumber Functions::Private::artanh( Function * f, const QVector<HNumber> & args 
   if ( args.count() != 1 )
     return HMath::nan();
 
-  HNumber x = args[0];
+  HNumber x = args.at(0);
   HNumber result = HMath::artanh( x );
 
   if ( result.isNan() )
@@ -645,7 +645,7 @@ HNumber Functions::Private::artanh( Function * f, const QVector<HNumber> & args 
 
 HNumber Functions::Private::erf( Function *, const QVector<HNumber> & args )
 {
-  return args.count() != 1 ? HMath::nan() : HMath::erf( args[0] );
+  return args.count() != 1 ? HMath::nan() : HMath::erf( args.at(0) );
 }
 
 HNumber Functions::Private::erfc( Function * f, const QVector<HNumber> & args )
@@ -653,7 +653,7 @@ HNumber Functions::Private::erfc( Function * f, const QVector<HNumber> & args )
   if ( args.count() != 1 )
     return HMath::nan();
 
-  HNumber x = args[0];
+  HNumber x = args.at(0);
   HNumber result = HMath::erfc( x );
 
   if ( result.isNan() && ! x.isNan() )
@@ -670,7 +670,7 @@ HNumber Functions::Private::Gamma( Function * f, const QVector<HNumber> & args )
   if ( args.count() != 1 )
     return HMath::nan();
 
-  HNumber x = args[0];
+  HNumber x = args.at(0);
   HNumber result = HMath::gamma( x );
 
   if ( result.isNan() )
@@ -689,7 +689,7 @@ HNumber Functions::Private::lnGamma( Function * f,
   if ( args.count() != 1 )
     return HMath::nan();
 
-  HNumber x = args[0];
+  HNumber x = args.at(0);
   HNumber result = HMath::lnGamma( x );
 
   if ( result.isNan() )
@@ -704,7 +704,7 @@ HNumber Functions::Private::lnGamma( Function * f,
 
 HNumber Functions::Private::sign( Function *, const QVector<HNumber> & args )
 {
-  return args.count() != 1 ? HMath::nan() : HMath::sign( args[0] );
+  return args.count() != 1 ? HMath::nan() : HMath::sign( args.at(0) );
 }
 
 HNumber Functions::Private::nCr( Function * f, const QVector<HNumber> & args )
@@ -712,8 +712,8 @@ HNumber Functions::Private::nCr( Function * f, const QVector<HNumber> & args )
   if ( args.count() != 2 )
     return HMath::nan();
 
-  // n = args[0]; r = args[1]
-  HNumber result = HMath::nCr( args[0], args[1] );
+  // n = args.at(0); r = args.at(1)
+  HNumber result = HMath::nCr( args.at(0), args.at(1) );
 
   // FIX ME: overflow causes a NaN, too, so the message is sometimes
   // misleading
@@ -729,8 +729,8 @@ HNumber Functions::Private::nPr( Function * f, const QVector<HNumber> & args )
   if ( args.count() != 2 )
     return HMath::nan();
 
-  // n = args[0]; r = args[1]
-  HNumber result = HMath::nPr( args[0], args[1] );
+  // n = args.at(0); r = args.at(1)
+  HNumber result = HMath::nPr( args.at(0), args.at(1) );
 
   // FIX ME: overflow causes a NaN, too, so the message is sometimes
   // misleading
@@ -743,12 +743,12 @@ HNumber Functions::Private::nPr( Function * f, const QVector<HNumber> & args )
 
 HNumber Functions::Private::degrees( Function *, const QVector<HNumber> & args )
 {
-  return args.count() != 1 ? HMath::nan() : HMath::rad2deg( args[0] );
+  return args.count() != 1 ? HMath::nan() : HMath::rad2deg( args.at(0) );
 }
 
 HNumber Functions::Private::radians( Function *, const QVector<HNumber> & args )
 {
-  return args.count() != 1 ? HMath::nan() : HMath::deg2rad( args[0] );
+  return args.count() != 1 ? HMath::nan() : HMath::deg2rad( args.at(0) );
 }
 
 HNumber Functions::Private::max( Function * f, const QVector<HNumber> & args )
@@ -817,22 +817,22 @@ HNumber Functions::Private::geomean( Function *, const QVector<HNumber> & args )
 
 HNumber Functions::Private::dec( Function *, const QVector<HNumber> & args )
 {
-  return (args.count() != 1) ? HNumber("NaN") : HNumber(args[0]).setFormat('g');
+  return (args.count() != 1) ? HNumber("NaN") : HNumber(args.at(0)).setFormat('g');
 }
 
 HNumber Functions::Private::hex( Function *, const QVector<HNumber> & args )
 {
-  return (args.count() != 1) ? HNumber("NaN") : HNumber(args[0]).setFormat('h');
+  return (args.count() != 1) ? HNumber("NaN") : HNumber(args.at(0)).setFormat('h');
 }
 
 HNumber Functions::Private::oct( Function *, const QVector<HNumber> & args )
 {
-  return (args.count() != 1) ? HNumber("NaN") : HNumber(args[0]).setFormat('o');
+  return (args.count() != 1) ? HNumber("NaN") : HNumber(args.at(0)).setFormat('o');
 }
 
 HNumber Functions::Private::bin( Function *, const QVector<HNumber> & args )
 {
-  return (args.count() != 1) ? HNumber("NaN") : HNumber(args[0]).setFormat('b');
+  return (args.count() != 1) ? HNumber("NaN") : HNumber(args.at(0)).setFormat('b');
 }
 
 HNumber Functions::Private::binompmf( Function * f,
@@ -841,9 +841,9 @@ HNumber Functions::Private::binompmf( Function * f,
   if ( args.count() != 3 )
     return HMath::nan();
 
-  HNumber k = args[0];
-  HNumber n = args[1];
-  HNumber p = args[2];
+  HNumber k = args.at(0);
+  HNumber n = args.at(1);
+  HNumber p = args.at(2);
   HNumber result = HMath::binomialPmf( k, n, p );
 
   if ( result.isNan() )
@@ -859,9 +859,9 @@ HNumber Functions::Private::binomcdf( Function * f,
   if ( args.count() != 3 )
     return HMath::nan();
 
-  HNumber k = args[0];
-  HNumber n = args[1];
-  HNumber p = args[2];
+  HNumber k = args.at(0);
+  HNumber n = args.at(1);
+  HNumber p = args.at(2);
   HNumber result = HMath::binomialCdf( k, n, p );
 
   if ( result.isNan() )
@@ -877,8 +877,8 @@ HNumber Functions::Private::binommean( Function * f,
   if ( args.count() != 2 )
     return HMath::nan();
 
-  HNumber n = args[0];
-  HNumber p = args[1];
+  HNumber n = args.at(0);
+  HNumber p = args.at(1);
   HNumber result = HMath::binomialMean( n, p );
 
   if ( result.isNan() )
@@ -894,8 +894,8 @@ HNumber Functions::Private::binomvar( Function * f,
   if ( args.count() != 2 )
     return HMath::nan();
 
-  HNumber n = args[0];
-  HNumber p = args[1];
+  HNumber n = args.at(0);
+  HNumber p = args.at(1);
   HNumber result = HMath::binomialVariance( n, p );
 
   if ( result.isNan() )
@@ -911,10 +911,10 @@ HNumber Functions::Private::hyperpmf( Function * f,
   if ( args.count() != 4 )
     return HMath::nan();
 
-  HNumber k = args[0];
-  HNumber N = args[1];
-  HNumber M = args[2];
-  HNumber n = args[3];
+  HNumber k = args.at(0);
+  HNumber N = args.at(1);
+  HNumber M = args.at(2);
+  HNumber n = args.at(3);
   HNumber result = HMath::hypergeometricPmf( k, N, M, n );
 
   if ( result.isNan() )
@@ -930,10 +930,10 @@ HNumber Functions::Private::hypercdf( Function * f,
   if ( args.count() != 4 )
     return HMath::nan();
 
-  HNumber k = args[0];
-  HNumber N = args[1];
-  HNumber M = args[2];
-  HNumber n = args[3];
+  HNumber k = args.at(0);
+  HNumber N = args.at(1);
+  HNumber M = args.at(2);
+  HNumber n = args.at(3);
   HNumber result = HMath::hypergeometricCdf( k, N, M, n );
 
   if ( result.isNan() )
@@ -949,9 +949,9 @@ HNumber Functions::Private::hypermean( Function * f,
   if ( args.count() != 3 )
     return HMath::nan();
 
-  HNumber N = args[0];
-  HNumber M = args[1];
-  HNumber n = args[2];
+  HNumber N = args.at(0);
+  HNumber M = args.at(1);
+  HNumber n = args.at(2);
   HNumber result = HMath::hypergeometricMean( N, M, n );
 
   if ( result.isNan() )
@@ -967,9 +967,9 @@ HNumber Functions::Private::hypervar( Function * f,
   if ( args.count() != 3 )
     return HMath::nan();
 
-  HNumber N = args[0];
-  HNumber M = args[1];
-  HNumber n = args[2];
+  HNumber N = args.at(0);
+  HNumber M = args.at(1);
+  HNumber n = args.at(2);
   HNumber result = HMath::hypergeometricVariance( N, M, n );
 
   if ( result.isNan() )
@@ -985,8 +985,8 @@ HNumber Functions::Private::poipmf( Function * f,
   if ( args.count() != 2 )
     return HMath::nan();
 
-  HNumber k = args[0];
-  HNumber l = args[1];
+  HNumber k = args.at(0);
+  HNumber l = args.at(1);
   HNumber result = HMath::poissonPmf( k, l );
 
   if ( result.isNan() )
@@ -1002,8 +1002,8 @@ HNumber Functions::Private::poicdf( Function * f,
   if ( args.count() != 2 )
     return HMath::nan();
 
-  HNumber k = args[0];
-  HNumber l = args[1];
+  HNumber k = args.at(0);
+  HNumber l = args.at(1);
   HNumber result = HMath::poissonCdf( k, l );
 
   if ( result.isNan() )
@@ -1019,7 +1019,7 @@ HNumber Functions::Private::poimean( Function * f,
   if ( args.count() != 1 )
     return HMath::nan();
 
-  HNumber l = args[0];
+  HNumber l = args.at(0);
   HNumber result = HMath::poissonMean( l );
 
   if ( result.isNan() )
@@ -1035,7 +1035,7 @@ HNumber Functions::Private::poivar( Function * f,
   if ( args.count() != 1 )
     return HMath::nan();
 
-  HNumber l = args[0];
+  HNumber l = args.at(0);
   HNumber result = HMath::poissonVariance( l );
 
   if ( result.isNan() )
@@ -1047,22 +1047,22 @@ HNumber Functions::Private::poivar( Function * f,
 
 HNumber Functions::Private::mask( Function *, const QVector<HNumber> & args )
 {
-  HNumber val = args[0];
-  HNumber bits = args[1];
+  HNumber val = args.at(0);
+  HNumber bits = args.at(1);
   return HMath::mask( val, bits );
 }
 
 HNumber Functions::Private::unmask( Function *,
                                     const QVector<HNumber> & args )
 {
-  HNumber val = args[0];
-  HNumber bits = args[1];
+  HNumber val = args.at(0);
+  HNumber bits = args.at(1);
   return HMath::sgnext( val, bits );
 }
 
 HNumber Functions::Private::not_( Function *, const QVector<HNumber> & args )
 {
-  HNumber val = args[0];
+  HNumber val = args.at(0);
   return ~val;
 }
 
@@ -1089,32 +1089,32 @@ HNumber Functions::Private::xor_( Function *, const QVector<HNumber> & args )
 
 HNumber Functions::Private::ashl( Function *, const QVector<HNumber> & args )
 {
-  HNumber bits = args[1];
-  HNumber val = args[0];
+  HNumber bits = args.at(1);
+  HNumber val = args.at(0);
 
   return HMath::ashr( val, -bits );
 }
 
 HNumber Functions::Private::ashr( Function *, const QVector<HNumber> & args )
 {
-  HNumber bits = args[1];
-  HNumber val = args[0];
+  HNumber bits = args.at(1);
+  HNumber val = args.at(0);
 
   return HMath::ashr(val, bits);
 }
 
 HNumber Functions::Private::idiv( Function *, const QVector<HNumber> & args )
 {
-  HNumber dividend = args[0];
-  HNumber divisor = args[1];
+  HNumber dividend = args.at(0);
+  HNumber divisor = args.at(1);
 
   return HMath::idiv(dividend, divisor);
 }
 
 HNumber Functions::Private::mod( Function *, const QVector<HNumber> & args )
 {
-  HNumber dividend = args[0];
-  HNumber divisor = args[1];
+  HNumber dividend = args.at(0);
+  HNumber divisor = args.at(1);
 
   return dividend % divisor;
 }
@@ -1240,7 +1240,7 @@ Functions::~Functions()
 {
   QList<Function *> values = d->functions.values();
   for ( int i = 0; i < values.size(); i++ )
-    delete values[i];
+    delete values.at(i);
 
   delete d;
 }

@@ -2,7 +2,7 @@
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
 // Copyright (C) 2004,2005 Ariya Hidayat <ariya@kde.org>
 // Copyright (C) 2005-2006 Johan Thelin <e8johan@gmail.com>
-// Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2007-2009 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -56,7 +56,7 @@ class EditorHighlighter : public QSyntaxHighlighter
       Tokens tokens = editor->evaluator()->scan( text );
       for ( int i = 0; i < tokens.count(); i++ )
       {
-        Token & token = tokens[i];
+        const Token & token = tokens.at(i);
         QString text = token.text().toLower();
         QColor color;
         QStringList fnames;
@@ -80,7 +80,7 @@ class EditorHighlighter : public QSyntaxHighlighter
             fnames = editor->functions()->functionNames();
             for ( int i = 0; i < fnames.count(); i++ )
             {
-              if ( fnames[i].toLower() == text )
+              if ( fnames.at(i).toLower() == text )
                 color = editor->highlightColor( Editor::Function );
             }
             break;
@@ -406,7 +406,7 @@ void Editor::doMatchingLeft()
   Tokens tokens = d->eval->scan( subtext );
   if ( ! tokens.valid()   ) return;
   if ( tokens.count() < 1 ) return;
-  Token lastToken = tokens[tokens.count()-1];
+  Token lastToken = tokens.at(tokens.count()-1);
 
   // right par ?
   //if( lastToken.isOperator() ) // refty
@@ -423,7 +423,7 @@ void Editor::doMatchingLeft()
 /*    for( k = tokens.count()-2; k >= 0; k-- ) //refty
     {
       if( par < 1 ) break;
-      Token matchToken = tokens[k];
+      Token matchToken = tokens.at(k);
       if( matchToken.isOperator() )
       {
         if( matchToken.asOperator() == Token::RightPar )
@@ -436,7 +436,7 @@ void Editor::doMatchingLeft()
 
     for ( k = tokens.count() - 2; k >= 0 && par > 0; k-- )
     {
-      Token matchToken = tokens[k];
+      Token matchToken = tokens.at(k);
       switch ( matchToken.type() )
       {
         case Token::stxOpenPar : --par; break;
@@ -480,7 +480,7 @@ void Editor::doMatchingRight()
   Tokens tokens = d->eval->scan( subtext );
   if ( ! tokens.valid()   ) return;
   if ( tokens.count() < 1 ) return;
-  Token firstToken = tokens[0];
+  Token firstToken = tokens.at(0);
 
   // left par ?
   //if( firstToken.isOperator() ) //refty
@@ -497,7 +497,7 @@ void Editor::doMatchingRight()
 //     for( k = 1; k < tokens.count(); k++ ) //refty
 //     {
 //       if( par < 1 ) break;
-//       Token matchToken = tokens[k];
+//       Token matchToken = tokens.at(k);
 //       if( matchToken.isOperator() )
 //       {
 //         if( matchToken.asOperator() == Token::LeftPar )
@@ -510,7 +510,7 @@ void Editor::doMatchingRight()
 
     for ( k = 1; k < tokens.count() && par > 0; k++ ) //refty
     {
-      Token matchToken = tokens[k];
+      Token matchToken = tokens.at(k);
       switch ( matchToken.type() )
       {
         case Token::stxOpenPar : ++par; break;
@@ -557,7 +557,7 @@ void Editor::triggerAutoComplete()
   if ( ! tokens.valid()   ) return;
   if ( tokens.count() < 1 ) return;
 
-  Token lastToken = tokens[ tokens.count()-1 ];
+  Token lastToken = tokens.at( tokens.count()-1 );
 
   // last token must be an identifier
   if ( ! lastToken.isIdentifier() )
@@ -575,9 +575,9 @@ void Editor::triggerAutoComplete()
   QStringList choices;
   for ( int i = 0; i < fnames.count(); i++ )
   {
-    if ( fnames[i].startsWith( id, Qt::CaseInsensitive ) )
+    if ( fnames.at(i).startsWith( id, Qt::CaseInsensitive ) )
     {
-      QString str = fnames[i];
+      QString str = fnames.at(i);
       //::Function * f = Functions::self()->function( str );
       ::Function * f = d->functions->function( str );
       if ( f )
@@ -590,7 +590,7 @@ void Editor::triggerAutoComplete()
   // find matches in variables names
   QStringList vchoices;
   for ( int i = 0; i < d->eval->variables().count(); i++ )
-    if ( d->eval->variables()[i].name.startsWith( id, Qt::CaseInsensitive ) )
+    if ( d->eval->variables().at(i).name.startsWith( id, Qt::CaseInsensitive ) )
       vchoices.append( QString("%1: %2")
           .arg( d->eval->variables().at(i).name )
           .arg( formatNumber( d->eval->variables().at(i).value ) ) );
@@ -603,13 +603,13 @@ void Editor::triggerAutoComplete()
 
   // single perfect match, no need to give choices
   if ( choices.count() == 1 )
-    if ( choices[0].toLower() == id.toLower() )
+    if ( choices.at(0).toLower() == id.toLower() )
       return;
 
   // one match, complete it for the user
   if ( choices.count() == 1 )
   {
-    QString str = choices[0].split( ':' )[0];
+    QString str = choices.at(0).split(':').at(0);
     str = str.remove( 0, id.length() );
     int curPos = textCursor().position();
     if ( textCursor().selectionStart() == textCursor().selectionEnd() )
@@ -641,7 +641,7 @@ void Editor::autoComplete( const QString & item )
   if ( ! tokens.valid() || tokens.count() < 1 )
     return;
 
-  Token lastToken = tokens[tokens.count()-1];
+  Token lastToken = tokens.at( tokens.count()-1 );
   if ( ! lastToken.isIdentifier() )
     return;
 
@@ -653,7 +653,7 @@ void Editor::autoComplete( const QString & item )
   cursor.setPosition( lastToken.pos() + lastToken.text().length(),
                       QTextCursor::KeepAnchor );
   setTextCursor( cursor );
-  insert( str[0] );
+  insert( str.at(0) );
   blockSignals( false );
 }
 
@@ -683,9 +683,9 @@ void Editor::autoCalc()
   // the reason is that we want only to evaluate (on the fly) the expression,
   // not to update (put the result in) the variable
   //if( tokens.count() > 2 ) // reftk
-  //if( tokens[0].isIdentifier() )
-  //if( tokens[1].asOperator() == Token::Equal )
-  //  str.remove( 0, tokens[1].pos()+1 );
+  //if( tokens.at(0).isIdentifier() )
+  //if( tokens.at(1).asOperator() == Token::Equal )
+  //  str.remove( 0, tokens.at(1).pos()+1 );
 
   // same reason as above, do not update "ans"
   d->eval->setExpression( str );
@@ -728,9 +728,9 @@ void Editor::autoCalcSelection()
   // the reason is that we want only to evaluate (on the fly) the expression,
   // not to update (put the result in) the variable
   //if( tokens.count() > 2 ) // reftk
-  //if( tokens[0].isIdentifier() )
-  //if( tokens[1].asOperator() == Token::Equal )
-  //  str.remove( 0, tokens[1].pos()+1 );
+  //if( tokens.at(0).isIdentifier() )
+  //if( tokens.at(1).asOperator() == Token::Equal )
+  //  str.remove( 0, tokens.at(1).pos()+1 );
 
   // same reason as above, do not update "ans"
   d->eval->setExpression( str );
@@ -795,7 +795,7 @@ void Editor::historyBack()
     d->index--;
     if ( d->index < 0 )
       d->index = 0;
-    setText( d->history[d->index] );
+    setText( d->history.at(d->index) );
     QTextCursor cursor = textCursor();
     cursor.movePosition( QTextCursor::EndOfBlock );
     setTextCursor( cursor );
@@ -811,7 +811,7 @@ void Editor::historyForward()
     d->index++;
     if( d->index >= (int) d->history.count() )
       d->index = d->history.count() - 1;
-    setText( d->history[d->index] );
+    setText( d->history.at(d->index) );
     QTextCursor cursor = textCursor();
     cursor.movePosition( QTextCursor::EndOfBlock );
     setTextCursor( cursor );
@@ -905,7 +905,7 @@ void Editor::setHighlightScheme( Editor::HighlightScheme hs )
     QColor fg( palette().color( QPalette::Text ) );
     QList<QColor> list = d->generateColors( bg, fg, NO_COLORS );
     for ( int i = 0; i < NO_COLORS; i++ )
-      d->highlightColors[static_cast<Editor::ColorType>( i )] = list[i];
+      d->highlightColors[ static_cast<Editor::ColorType>(i) ] = list.at(i);
 
     // generate special case matched parenthesis
     int h = ((bg.hue() + fg.hue()) / 2 ) % 359;
@@ -929,7 +929,7 @@ void Editor::setHighlightColor( ColorType type, QColor color )
 
 QColor Editor::highlightColor( ColorType type )
 {
-  return d->highlightColors[ type ];
+  return d->highlightColors.value(type);
 }
 
 void Editor::setAnsAvailable( bool avail )
@@ -1073,7 +1073,7 @@ void EditorCompletion::showCompletion( const QStringList & choices )
   for ( int i = 0; i < choices.count(); i++ )
   {
     QTreeWidgetItem * item = new QTreeWidgetItem( d->popup,
-                                                  choices[i].split( ':' ) );
+                                                  choices.at(i).split(':') );
     if ( item && d->editor->layoutDirection() == Qt::RightToLeft )
       item->setTextAlignment( 0, Qt::AlignRight );
   }
@@ -1119,7 +1119,7 @@ void EditorCompletion::selectItem( const QString & item ) // WORKAROUND 76
     QList<QTreeWidgetItem *> targets = d->popup->findItems( item,
                                                             Qt::MatchExactly );
     if ( targets.count() > 0 )
-      d->popup->setCurrentItem( targets[0] );
+      d->popup->setCurrentItem( targets.at(0) );
   }
 }
 
@@ -1261,11 +1261,11 @@ void ConstantCompletion::showConstants()
   for ( int k = 0; k < d->constants.count(); k++ )
   {
     QStringList str;
-    str << d->constants[k].name;
-    str << d->constants[k].name.toUpper();
+    str << d->constants.at(k).name;
+    str << d->constants.at(k).name.toUpper();
 
     bool include = (chosenCategory == tr( "All" )) ?
-      true : d->constants[k].categories.contains( chosenCategory );
+      true : d->constants.at(k).categories.contains( chosenCategory );
 
     if ( ! include )
       continue;
@@ -1355,9 +1355,9 @@ void ConstantCompletion::doneCompletion()
   QString c;
   if ( item )
     for ( int k = 0; k < d->constants.count(); k++ )
-      if ( d->constants[k].name == item->text( 0 ) )
+      if ( d->constants.at(k).name == item->text( 0 ) )
       {
-        c = d->constants[k].value;
+        c = d->constants.at(k).value;
         break;
       }
   emit selectedCompletion( item ? c : QString() );

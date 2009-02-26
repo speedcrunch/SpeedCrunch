@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2008-2009 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -119,7 +119,7 @@ void FunctionsDock::retranslateText()
   QStringList functionNames = d->functions->functionNames();
   for ( int i = 0; i < functionNames.count(); i++ )
   {
-    Function * f = d->functions->function( functionNames[i] );
+    Function * f = d->functions->function( functionNames.at(i) );
     if ( f )
     {
       d->functionNames << f->name();
@@ -140,8 +140,8 @@ void FunctionsDock::filter()
   for ( int k = 0; k < d->functionNames.count(); k++ )
   {
       QStringList str;
-      str << d->functionNames[k];
-      str << d->functionDesc[k];
+      str << d->functionNames.at(k);
+      str << d->functionDesc.at(k);
       str << QString( "" );
 
       QTreeWidgetItem * item = 0;
@@ -152,8 +152,8 @@ void FunctionsDock::filter()
       }
       else
       {
-        if (    str[0].contains( term, Qt::CaseInsensitive )
-             || str[1].contains( term, Qt::CaseInsensitive ) )
+        if (    str.at(0).contains( term, Qt::CaseInsensitive )
+             || str.at(1).contains( term, Qt::CaseInsensitive ) )
           item = new QTreeWidgetItem( d->list, str );
       }
 

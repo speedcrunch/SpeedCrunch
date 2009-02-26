@@ -2,7 +2,7 @@
 // Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
 // Copyright (C) 2006 Johan Thelin <e8johan@gmail.com>
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2008-2009 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -120,7 +120,7 @@ void InsertFunctionDlg::initUI()
 
   for ( int i = 0; i < functionNames.count(); i++ )
   {
-    Function * f = d->functions->function( functionNames[i] );
+    Function * f = d->functions->function( functionNames.at(i) );
     if ( f )
     {
       QStringList str;

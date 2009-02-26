@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2007-2009 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -94,10 +94,10 @@ void Constants::Private::createConstants()
 
   for ( int k = 0; k < constantList.count(); k++ )
   {
-    QStringList cats = constantList[k].categories;
+    QStringList cats = constantList.at(k).categories;
     for ( int i = 0; i < cats.count(); i++ )
-      if ( ! categoryList.contains( cats[i] ) )
-        categoryList += cats[i];
+      if ( ! categoryList.contains( cats.at(i) ) )
+        categoryList += cats.at(i);
   }
   categoryList.sort();
 }

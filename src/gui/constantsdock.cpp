@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2007-2009 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -185,7 +185,7 @@ void ConstantsDock::filter()
       item = new QTreeWidgetItem( d->list, str );
     else
     {
-      if ( str[0].contains( term, Qt::CaseInsensitive ) )
+      if ( str.at(0).contains( term, Qt::CaseInsensitive ) )
         item = new QTreeWidgetItem( d->list, str );
     }
     if ( item )
