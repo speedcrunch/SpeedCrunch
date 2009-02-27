@@ -771,27 +771,27 @@ HNumber Functions::Private::min( Function * f, const QVector<HNumber> & args )
 
 HNumber Functions::Private::sum( Function *, const QVector<HNumber> & args )
 {
-  return args.count() <= 0 ? HNumber(0)
+  return args.count() < 1 ? HNumber(0)
       : std::accumulate(args.begin(), args.end(), HNumber(0));
 }
 
 HNumber Functions::Private::product( Function *, const QVector<HNumber> & args )
 {
-  return args.count() <= 0 ? HNumber(1)
+  return args.count() < 1 ? HNumber(1)
       : std::accumulate(args.begin(), args.end(), HNumber(1),
           std::multiplies<HNumber>());
 }
 
 HNumber Functions::Private::average( Function *, const QVector<HNumber> & args )
 {
-  return args.count() <= 0 ? HNumber("NaN")
+  return args.count() < 1 ? HNumber("NaN")
       : std::accumulate(args.begin(), args.end(), HNumber(0))
       / HNumber(args.count());
 }
 
 HNumber Functions::Private::geomean( Function *, const QVector<HNumber> & args )
 {
-  if ( args.count() <= 0 )
+  if ( args.count() < 1 )
     return HNumber("NaN");
 
   HNumber result = std::accumulate(args.begin(), args.end(), HNumber(1),
@@ -1062,21 +1062,21 @@ HNumber Functions::Private::not_( Function *, const QVector<HNumber> & args )
 
 HNumber Functions::Private::and_( Function *, const QVector<HNumber> & args )
 {
-  return args.count() <= 0 ? HNumber("NaN")
+  return args.count() < 1 ? HNumber("NaN")
       : std::accumulate(args.begin(), args.end(), HNumber(-1),
           std::mem_fun_ref(&HNumber::operator&));
 }
 
 HNumber Functions::Private::or_( Function *, const QVector<HNumber> & args )
 {
-  return args.count() <= 0 ? HNumber("NaN")
+  return args.count() < 1 ? HNumber("NaN")
       : std::accumulate(args.begin(), args.end(), HNumber(0),
           std::mem_fun_ref(&HNumber::operator|));
 }
 
 HNumber Functions::Private::xor_( Function *, const QVector<HNumber> & args )
 {
-  return args.count() <= 0 ? HNumber("NaN")
+  return args.count() < 1 ? HNumber("NaN")
       : std::accumulate(args.begin(), args.end(), HNumber(0),
           std::mem_fun_ref(&HNumber::operator^));
 }
