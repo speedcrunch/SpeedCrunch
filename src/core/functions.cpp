@@ -777,7 +777,7 @@ HNumber Functions::Private::sum( Function *, const QVector<HNumber> & args )
 
 HNumber Functions::Private::product( Function *, const QVector<HNumber> & args )
 {
-  return args.count() <= 0 ? HNumber(0)
+  return args.count() <= 0 ? HNumber(1)
       : std::accumulate(args.begin(), args.end(), HNumber(1),
           std::multiplies<HNumber>());
 }

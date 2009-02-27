@@ -330,7 +330,7 @@ void test_function_stat()
   CHECK_EVAL( "SUM(1;2;3;4;5;6)",    "21"   );
   CHECK_EVAL( "SUM(1;-2;3;-4;5;-6)", "-3"   );
 
-  CHECK_EVAL( "PRODUCT()",               "0"    );
+  CHECK_EVAL( "PRODUCT()",               "1"    );
   CHECK_EVAL( "PRODUCT(0)",              "0"    );
   CHECK_EVAL( "PRODUCT(1)",              "1"    );
   CHECK_EVAL( "PRODUCT(-1)",             "-1"   );
