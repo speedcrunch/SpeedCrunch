@@ -26,6 +26,7 @@
 #include "core/evaluator.hxx"
 #include "core/functions.hxx"
 #include "core/settings.hxx"
+#include "math/floatconfig.h"
 #include "gui/aboutbox.hxx"
 #include "gui/autohidelabel.hxx"
 #include "gui/bookdock.hxx"
@@ -43,6 +44,7 @@
 #include <QAction>
 #include <QApplication>
 #include <QClipboard>
+#include <QCloseEvent>
 #include <QDesktopServices>
 #include <QDesktopWidget>
 #include <QFileDialog>

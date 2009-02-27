@@ -24,6 +24,7 @@
 #include <QtCore/QCoreApplication>
 
 #include <cstring>
+#include <iostream>
 
 using namespace std;
 

@@ -21,14 +21,9 @@
 #ifndef CONSTANTS_HXX
 #define CONSTANTS_HXX
 
-
-#include <QList>
-#include <QObject>
-#include <QString>
 #include <QStringList>
 
 #include <memory>
-
 
 class Constant
 {

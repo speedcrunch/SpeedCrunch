@@ -21,10 +21,8 @@
 #ifndef CORE_SETTINGS_HXX
 #define CORE_SETTINGS_HXX
 
-#include <QColor>
 #include <QPoint>
 #include <QSize>
-#include <QString>
 #include <QStringList>
 
 class Settings

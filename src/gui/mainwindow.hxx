@@ -23,11 +23,10 @@
 
 #include "keypad.hxx"
 
-#include <QCloseEvent>
 #include <QMainWindow>
 #include <QSystemTrayIcon>
 
-class Keypad;
+class QCloseEvent;
 
 class MainWindow : public QMainWindow
 {

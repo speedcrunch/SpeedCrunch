@@ -20,14 +20,12 @@
 #ifndef CORE_FUNCTIONS_HXX
 #define CORE_FUNCTIONS_HXX
 
-#include "math/hmath.hxx"
-
-#include <QObject>
 #include <QStringList>
 #include <QVector>
 
 #include <memory>
 
+class HNumber;
 class Function;
 class Functions;
 

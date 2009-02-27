@@ -21,8 +21,6 @@
 #ifndef GUI_EDITOR_HXX
 #define GUI_EDITOR_HXX
 
-#include "math/hmath.hxx"
-
 #include <QTextEdit>
 
 #include <memory>
@@ -30,6 +28,7 @@
 class Constants;
 class Evaluator;
 class Functions;
+class HNumber;
 
 class QEvent;
 class QKeyEvent;

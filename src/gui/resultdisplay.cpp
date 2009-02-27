@@ -23,6 +23,8 @@
 
 #include "core/functions.hxx"
 #include "core/settings.hxx"
+#include "math/hmath.hxx"
+#include "math/floatconfig.h"
 
 #include <QApplication>
 #include <QClipboard>

@@ -23,13 +23,13 @@
 
 #include <QDialog>
 #include <QFrame>
-#include <QSizePolicy>
 
 #include <memory>
 
 
 class QPaintEvent;
 class QResizeEvent;
+class QSizePolicy;
 
 class MarqueeText: public QFrame
 {

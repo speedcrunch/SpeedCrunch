@@ -21,10 +21,9 @@
 #ifndef MATH_HMATH_HXX
 #define MATH_HMATH_HXX
 
-#include "math/floatconfig.h"
-#include "math/floatio.h"
+#include "core/errors.h"
 
-#include <iostream>
+#include <ostream>
 
 class HMath;
 class HNumberPrivate;

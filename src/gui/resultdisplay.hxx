@@ -21,7 +21,6 @@
 #define GUI_RESULTDISPLAY_HXX
 
 #include <QListWidget>
-#include <QResizeEvent>
 
 #include <memory>
 
