@@ -19,14 +19,11 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#include "gui/mainwindow.hxx"
-
 #include "3rdparty/util/binreloc.h"
 #include "core/constants.hxx"
 #include "core/evaluator.hxx"
 #include "core/functions.hxx"
 #include "core/settings.hxx"
-#include "math/floatconfig.h"
 #include "gui/aboutbox.hxx"
 #include "gui/autohidelabel.hxx"
 #include "gui/bookdock.hxx"
@@ -37,28 +34,36 @@
 #include "gui/historydock.hxx"
 #include "gui/insertfunctiondlg.hxx"
 #include "gui/insertvardlg.hxx"
+#include "gui/mainwindow.hxx"
 #include "gui/resultdisplay.hxx"
 #include "gui/tipwidget.hxx"
 #include "gui/variablesdock.hxx"
+#include "math/floatconfig.h"
 
-#include <QAction>
-#include <QApplication>
-#include <QClipboard>
-#include <QCloseEvent>
-#include <QDesktopServices>
-#include <QDesktopWidget>
-#include <QFileDialog>
-#include <QInputDialog>
-#include <QMenu>
-#include <QMenuBar>
-#include <QMessageBox>
-#include <QScrollBar>
-#include <QStatusBar>
+#include <QtCore/QTimer>
+#include <QtCore/QTranslator>
+#include <QtCore/QUrl>
 #include <QTextStream>
-#include <QTimer>
-#include <QTranslator>
-#include <QUrl>
-#include <QVBoxLayout>
+#include <QtGui/QAction>
+#include <QtGui/QApplication>
+#include <QtGui/QClipboard>
+#include <QtGui/QCloseEvent>
+#include <QtGui/QDesktopServices>
+#include <QtGui/QDesktopWidget>
+#include <QtGui/QFileDialog>
+#include <QtGui/QInputDialog>
+#include <QtGui/QMenu>
+#include <QtGui/QMenuBar>
+#include <QtGui/QMessageBox>
+#include <QtGui/QScrollBar>
+#include <QtGui/QStatusBar>
+#include <QtGui/QVBoxLayout>
+#include <QtGui/QX11Info>
+
+#ifdef Q_WS_X11
+#include <X11/Xatom.h>
+#include <X11/Xlib.h>
+#endif // Q_WS_X11
 
 struct Actions
 {
@@ -192,7 +197,7 @@ struct Conditions
   bool autoAns;
 };
 
-struct Status
+struct Status1
 {
   QLabel * angleUnit;
   QLabel * resultFormat;
@@ -213,7 +218,7 @@ struct MainWindow::Private
   Widgets         widgets;
   Docks           docks;
   Conditions      conditions;
-  Status          status;
+  Status1          status;
 
   Private();
   ~Private();
@@ -2153,8 +2158,28 @@ void MainWindow::setResultFormatScientific()
 
 void MainWindow::activate()
 {
-  activateWindow();
+  show();
   raise();
+  activateWindow();
+
+#ifdef Q_WS_X11
+  static Atom NET_ACTIVE_WINDOW = XInternAtom( QX11Info::display(), "_NET_ACTIVE_WINDOW", False );
+
+  XClientMessageEvent xev;
+  xev.type = ClientMessage;
+  xev.window = winId();
+  xev.message_type = NET_ACTIVE_WINDOW;
+  xev.format = 32;
+  xev.data.l[0] = 2;
+  xev.data.l[1] = CurrentTime;
+  xev.data.l[2] = 0;
+  xev.data.l[3] = 0;
+  xev.data.l[4] = 0;
+
+  XSendEvent( QX11Info::display(), QX11Info::appRootWindow(), False,
+              (SubstructureNotifyMask | SubstructureRedirectMask), (XEvent *)&xev );
+#endif // Q_WS_X11
+
   d->widgets.editor->setFocus();
 }
 

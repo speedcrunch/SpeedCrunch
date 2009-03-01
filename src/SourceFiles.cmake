@@ -10,6 +10,7 @@ core/evaluator.hxx
 core/functions.hxx
 #core/settings.hxx
 gui/aboutbox.hxx
+gui/application.hxx
 gui/autohidelabel.hxx
 gui/bookdock.hxx
 gui/constantsdock.hxx
@@ -59,6 +60,7 @@ core/evaluator.cpp
 core/functions.cpp
 core/settings.cpp
 gui/aboutbox.cpp
+gui/application.cpp
 gui/autohidelabel.cpp
 gui/bookdock.cpp
 gui/constantsdock.cpp

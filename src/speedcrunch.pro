@@ -16,6 +16,7 @@ DEPENDPATH += . \
 
 INCLUDEPATH += . math core 3rdparty/util gui
 #INCLUDEPATH += .
+QT += network
 
 # Input
 HEADERS += core/constants.hxx \
@@ -23,6 +24,7 @@ HEADERS += core/constants.hxx \
            core/functions.hxx \
            #core/settings.hxx \
            gui/aboutbox.hxx \
+           gui/application.hxx \
            gui/autohidelabel.hxx \
            gui/bookdock.hxx \
            gui/constantsdock.hxx \
@@ -72,6 +74,7 @@ SOURCES += 3rdparty/util/binreloc.c \
            core/functions.cpp \
            core/settings.cpp \
            gui/aboutbox.cpp \
+           gui/application.cpp \
            gui/autohidelabel.cpp \
            gui/bookdock.cpp \
            gui/constantsdock.cpp \
