@@ -1092,7 +1092,7 @@
     <message>
         <location filename="../gui/insertvardlg.cpp" line="69"/>
         <source>Insert Variable</source>
-        <translation>Variabel einfügen</translation>
+        <translation>Variable einfügen</translation>
     </message>
 </context>
 <context>
@@ -1569,7 +1569,7 @@ Falls nein, werden aktuelle Variablen und Anzeigen gelöscht.</translation>
     <message>
         <location filename="../gui/mainwindow.cpp" line="655"/>
         <source>&amp;Variables</source>
-        <translation>Varia&amp;ble</translation>
+        <translation>Varia&amp;blen</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="656"/>
