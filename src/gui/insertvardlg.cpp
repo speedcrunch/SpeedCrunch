@@ -22,8 +22,9 @@
 
 #include "insertvardlg.hxx"
 
+#include "gui/variabletable.hxx"
+
 #include "core/evaluator.hxx"
-#include "core/settings.hxx"
 
 #include <QHBoxLayout>
 #include <QHeaderView>
@@ -37,26 +38,13 @@
 
 struct InsertVariableDlg::Private
 {
-  Settings *    settings;
-  Evaluator *   eval;
-  QTreeWidget * list;
+  VariableTable * list;
 
   QPushButton * insertButton;
   QPushButton * cancelButton;
 
   QString formatValue( const HNumber & value );
 };
-
-
-QString InsertVariableDlg::Private::formatValue( const HNumber & value )
-{
-  char * str = HMath::format( value, 'g' );
-  QString s = QString::fromLatin1( str );
-  if ( settings->radixCharacter() != '.' )
-    s.replace( '.', settings->radixCharacter() );
-  free( str );
-  return s;
-}
 
 
 // public
@@ -67,23 +55,10 @@ InsertVariableDlg::InsertVariableDlg( Evaluator * eval, QWidget * parent )
   setWindowTitle( tr( "Insert Variable" ) );
   setModal( true );
 
-  d->settings = Settings::instance();
-  d->eval = eval;
-
   QVBoxLayout* layout = new QVBoxLayout;
   setLayout( layout );
 
-  d->list = new QTreeWidget( this );
-  d->list->setColumnCount( 2 );
-  d->list->setAlternatingRowColors( true );
-  d->list->setRootIsDecorated( false );
-  d->list->setEditTriggers( QTreeWidget::NoEditTriggers );
-  d->list->setSelectionBehavior( QTreeWidget::SelectRows );
-
-  QStringList titles;
-  titles << tr( "Name"  );
-  titles << tr( "Value" );
-  d->list->setHeaderLabels( titles );
+  d->list = new VariableTable( eval, this );
 
   d->insertButton = new QPushButton( this );
   d->insertButton->setText( tr("&Insert") );
@@ -121,24 +96,7 @@ InsertVariableDlg::InsertVariableDlg( Evaluator * eval, QWidget * parent )
 
 void InsertVariableDlg::updateList()
 {
-  d->list->setUpdatesEnabled( false );
-
-  d->list->clear();
-  QVector<Variable> variables = d->eval->variables();
-  for ( int k = 0; k < variables.count(); k++ )
-  {
-      QStringList str;
-      str << variables.at(k).name;
-      str << d->formatValue( variables.at(k).value );
-
-      QTreeWidgetItem * item = 0;
-      item = new QTreeWidgetItem( d->list, str );
-      item->setTextAlignment( 0, Qt::AlignLeft | Qt::AlignVCenter );
-      item->setTextAlignment( 1, Qt::AlignLeft | Qt::AlignVCenter );
-  }
-  d->list->sortItems( 0, Qt::AscendingOrder );
-
-  d->list->setUpdatesEnabled( true );
+  d->list->fillTable();
 }
 
 

@@ -1,7 +1,5 @@
 // This file is part of the SpeedCrunch project
-// Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2009 Andreas Scherer <andreas_coder@freenet.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -18,35 +16,35 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
+#ifndef GUI_VARIABLESTABLE_HXX
+#define GUI_VARIABLESTABLE_HXX
 
-#ifndef INSERTVARDLG_HXX
-#define INSERTVARDLG_HXX
-
-
-#include <QDialog>
+#include <QTreeWidget>
 
 #include <memory>
 
-class Evaluator;
+class QLabel;
+class QString;
 
-class InsertVariableDlg : public QDialog
+class Evaluator;
+class HNumber;
+
+class VariableTable : public QTreeWidget
 {
   Q_OBJECT
 
-  public:
-    InsertVariableDlg( Evaluator * eval, QWidget * parent = 0 );
-    ~InsertVariableDlg();
+  std::auto_ptr<QLabel> m_noMatchLabel;
+  Evaluator * m_evaluator;
 
-    void    updateList();
-    QString variableName() const;
+public:
+  VariableTable( Evaluator * evaluator, bool hideHeaders = false, QWidget * parent = 0 );
+  ~VariableTable();
 
-  private:
-    struct Private;
-    const std::auto_ptr<Private> d;
-    InsertVariableDlg();
-    InsertVariableDlg( const InsertVariableDlg & );
-    InsertVariableDlg & operator=( const InsertVariableDlg & );
+  void fillTable( QString = "" );
+
+private:
+  QString formatValue( const HNumber & value );
 };
 
-
 #endif
+

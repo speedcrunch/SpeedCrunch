@@ -24,6 +24,7 @@ gui/insertvardlg.hxx
 gui/keypad.hxx
 gui/tipwidget.hxx
 gui/variablesdock.hxx
+gui/variabletable.hxx
 gui/mainwindow.hxx
 #math/floatcommon.h
 #math/floatconfig.h
@@ -74,6 +75,7 @@ gui/insertvardlg.cpp
 gui/keypad.cpp
 gui/tipwidget.cpp
 gui/variablesdock.cpp
+gui/variabletable.cpp
 gui/mainwindow.cpp
 main/main.cpp
 math/floatcommon.c
