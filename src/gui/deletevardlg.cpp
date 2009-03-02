@@ -21,6 +21,8 @@
 
 #include "deletevardlg.hxx"
 
+#include "gui/variabletable.hxx"
+
 #include "core/evaluator.hxx"
 
 #include <QHBoxLayout>
@@ -34,20 +36,12 @@
 
 struct DeleteVariableDlg::Private
 {
+  VariableTable * list;
+
   Evaluator *   eval;
-  QTreeWidget * list;
   QPushButton * deleteButton;
   QPushButton * closeButton;
 };
-
-
-static QString formatValue( const HNumber & value )
-{
-  char* str = HMath::format( value, 'g' );
-  QString s = QString::fromLatin1( str );
-  free( str );
-  return s;
-}
 
 
 DeleteVariableDlg::DeleteVariableDlg( Evaluator * eval, QWidget * parent )
@@ -61,17 +55,7 @@ DeleteVariableDlg::DeleteVariableDlg( Evaluator * eval, QWidget * parent )
   QVBoxLayout * layout = new QVBoxLayout;
   setLayout( layout );
 
-  d->list = new QTreeWidget( this );
-  d->list->setColumnCount( 2 );
-  d->list->setAlternatingRowColors( true );
-  d->list->setRootIsDecorated( false );
-  d->list->setEditTriggers( QTreeWidget::NoEditTriggers );
-  d->list->setSelectionBehavior( QTreeWidget::SelectRows );
-
-  QStringList titles;
-  titles << tr( "Name"  );
-  titles << tr( "Value" );
-  d->list->setHeaderLabels( titles );
+  d->list = new VariableTable( eval, false, this );
 
   d->deleteButton = new QPushButton( this );
   d->deleteButton->setText( tr( "&Delete" ) );
@@ -110,28 +94,7 @@ DeleteVariableDlg::~DeleteVariableDlg()
 
 void DeleteVariableDlg::updateList()
 {
-  d->list->setUpdatesEnabled( false );
-
-  d->list->clear();
-  QVector<Variable> variables = d->eval->variables();
-  for ( int k = 0; k < variables.count(); k++ )
-  {
-      QStringList str;
-      str << variables.at(k).name;
-      str << formatValue( variables.at(k).value );
-
-      if( str.at(0).toUpper() == "ANS" ) continue;
-      if( str.at(0).toUpper() == "PI"  ) continue;
-      if( str.at(0).toUpper() == "PHI" ) continue;
-
-      QTreeWidgetItem * item = 0;
-      item = new QTreeWidgetItem( d->list, str );
-      item->setTextAlignment( 0, Qt::AlignLeft | Qt::AlignVCenter );
-      item->setTextAlignment( 1, Qt::AlignLeft | Qt::AlignVCenter );
-  }
-  d->list->sortItems( 0, Qt::AscendingOrder );
-
-  d->list->setUpdatesEnabled( true );
+  d->list->fillTable( "", false );
 }
 
 

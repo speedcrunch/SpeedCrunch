@@ -41,8 +41,6 @@ struct InsertVariableDlg::Private
 
   QPushButton * insertButton;
   QPushButton * cancelButton;
-
-  QString formatValue( const HNumber & value );
 };
 
 
@@ -109,4 +107,3 @@ QString InsertVariableDlg::variableName() const
 InsertVariableDlg::~InsertVariableDlg()
 {
 }
-

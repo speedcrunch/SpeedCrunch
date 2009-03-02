@@ -40,7 +40,7 @@ public:
   VariableTable( Evaluator * evaluator, bool hideHeaders, QWidget * parent = 0 );
   ~VariableTable();
 
-  void fillTable( QString = "" );
+  void fillTable( QString = "", bool = true );
 
 private:
   QString formatValue( const HNumber & value );

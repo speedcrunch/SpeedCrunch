@@ -37,17 +37,18 @@ VariableTable::VariableTable( Evaluator * eval, bool hideHeaders, QWidget * pare
   setAutoScroll( true );
   setHorizontalScrollBarPolicy( Qt::ScrollBarAsNeeded );
   setHorizontalScrollMode( QAbstractItemView::ScrollPerPixel );
+
   setColumnCount( 2 );
+  setAlternatingRowColors( true );
   setRootIsDecorated( false );
+  setEditTriggers( QTreeWidget::NoEditTriggers );
+  setSelectionBehavior( QTreeWidget::SelectRows );
 
   QStringList titles;
   titles << tr( "Name"  );
   titles << tr( "Value" );
   setHeaderLabels( titles );
   if ( hideHeaders ) header()->hide();
-
-  setEditTriggers( QTreeWidget::NoEditTriggers );
-  setSelectionBehavior( QTreeWidget::SelectRows );
 }
 
 VariableTable::~VariableTable()
@@ -64,7 +65,7 @@ QString VariableTable::formatValue( const HNumber & value )
   return s;
 }
 
-void VariableTable::fillTable( QString term )
+void VariableTable::fillTable( QString term, bool insertAll )
 {
   setUpdatesEnabled( false );
 
@@ -73,25 +74,21 @@ void VariableTable::fillTable( QString term )
   QVector<Variable> variables = m_evaluator->variables();
   for ( int k = 0; k < variables.count(); k++ )
   {
+      if ( ! insertAll &&
+              ( variables.at(k).name.toUpper() == "ANS"
+              || variables.at(k).name.toUpper() == "PHI"
+              || variables.at(k).name.toUpper() == "PI" ) )
+        continue;
+
       QStringList str;
       str << variables.at(k).name
           << formatValue( variables.at(k).value );
 
-      if ( str.at(0) == "PI" || str.at(0) == "PHI" )
-        continue;
-
-      QTreeWidgetItem * item = 0;
-      if ( term.isEmpty() )
-        item = new QTreeWidgetItem( this, str );
-      else
+      if ( term.isEmpty()
+              || str.at(0).contains( term, Qt::CaseInsensitive )
+              || str.at(1).contains( term, Qt::CaseInsensitive ) )
       {
-        if (    str.at(0).contains( term, Qt::CaseInsensitive )
-             || str.at(1).contains( term, Qt::CaseInsensitive ) )
-          item = new QTreeWidgetItem( this, str );
-      }
-
-      if ( item )
-      {
+        QTreeWidgetItem * item = new QTreeWidgetItem( this, str );
         item->setTextAlignment( 0, Qt::AlignLeft | Qt::AlignVCenter );
         item->setTextAlignment( 1, Qt::AlignLeft | Qt::AlignVCenter );
       }
