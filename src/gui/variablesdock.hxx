@@ -33,9 +33,9 @@ class VariablesDock : public QDockWidget
   Q_OBJECT
 
   public:
-    VariablesDock( QWidget * parent = 0 );
+    VariablesDock( Evaluator *, QWidget * parent = 0 );
     ~VariablesDock();
-    void updateList( const Evaluator * );
+    void updateList();
 
   signals:
     void variableSelected( const QString & );

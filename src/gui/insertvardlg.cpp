@@ -23,6 +23,7 @@
 #include "insertvardlg.hxx"
 
 #include "core/evaluator.hxx"
+#include "core/settings.hxx"
 
 #include <QHBoxLayout>
 #include <QHeaderView>
@@ -36,11 +37,12 @@
 
 struct InsertVariableDlg::Private
 {
-  char          radixChar;
-  QPushButton * cancelButton;
+  Settings *    settings;
   Evaluator *   eval;
-  QPushButton * insertButton;
   QTreeWidget * list;
+
+  QPushButton * insertButton;
+  QPushButton * cancelButton;
 
   QString formatValue( const HNumber & value );
 };
@@ -49,11 +51,9 @@ struct InsertVariableDlg::Private
 QString InsertVariableDlg::Private::formatValue( const HNumber & value )
 {
   char * str = HMath::format( value, 'g' );
-  QString s;
-  if ( radixChar == '.' )
-    s = QString::fromLatin1( str );
-  else
-    s = QString::fromLatin1( str ).replace( '.', ',' );
+  QString s = QString::fromLatin1( str );
+  if ( settings->radixCharacter() != '.' )
+    s.replace( '.', settings->radixCharacter() );
   free( str );
   return s;
 }
@@ -61,19 +61,14 @@ QString InsertVariableDlg::Private::formatValue( const HNumber & value )
 
 // public
 
-InsertVariableDlg::InsertVariableDlg( Evaluator * eval, char radixChar,
-                                      QWidget * parent )
+InsertVariableDlg::InsertVariableDlg( Evaluator * eval, QWidget * parent )
   : QDialog( parent ), d( new InsertVariableDlg::Private )
 {
   setWindowTitle( tr( "Insert Variable" ) );
   setModal( true );
 
+  d->settings = Settings::instance();
   d->eval = eval;
-
-  if ( radixChar == 'C' )
-    d->radixChar = QLocale().decimalPoint().toAscii();
-  else
-    d->radixChar = radixChar;
 
   QVBoxLayout* layout = new QVBoxLayout;
   setLayout( layout );
@@ -158,16 +153,3 @@ InsertVariableDlg::~InsertVariableDlg()
 {
 }
 
-
-// public slots
-
-void InsertVariableDlg::setRadixChar( char c )
-{
-  if ( c == 'C' )
-    c = QLocale().decimalPoint().toAscii();
-  if ( d->radixChar != c )
-  {
-    d->radixChar = c;
-    updateList();
-  }
-}

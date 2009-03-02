@@ -985,7 +985,7 @@ void MainWindow::Private::createHistoryDock()
 
 void MainWindow::Private::createVariablesDock()
 {
-  docks.variables = new VariablesDock( p );
+  docks.variables = new VariablesDock( evaluator, p );
   docks.variables->setObjectName( "VariablesDock" );
   docks.variables->installEventFilter( p );
   docks.variables->setAllowedAreas( Qt::AllDockWidgetAreas );
@@ -998,7 +998,7 @@ void MainWindow::Private::createVariablesDock()
   connect( p, SIGNAL( languageChanged() ),
            docks.variables, SLOT( retranslateText() ) );
 
-  docks.variables->updateList( evaluator );
+  docks.variables->updateList();
 
   if ( docks.functions )
     p->tabifyDockWidget( docks.functions, docks.variables );
@@ -1349,7 +1349,7 @@ void MainWindow::deleteAllVariables()
   d->evaluator->clearVariables();
 
   if ( d->settings->variablesDockVisible )
-    d->docks.variables->updateList( d->evaluator );
+    d->docks.variables->updateList();
 }
 
 void MainWindow::showVariableDeletionDialog()
@@ -1358,7 +1358,7 @@ void MainWindow::showVariableDeletionDialog()
   dlg.exec();
 
   if ( d->settings->variablesDockVisible )
-    d->docks.variables->updateList( d->evaluator );
+    d->docks.variables->updateList();
 }
 
 void MainWindow::setResultPrecision2Digits()
@@ -1423,7 +1423,7 @@ void MainWindow::showFunctionInsertionDialog()
 
 void MainWindow::showVariableInsertionDialog()
 {
-  InsertVariableDlg dlg( d->evaluator, d->settings->radixCharacter() );
+  InsertVariableDlg dlg( d->evaluator );
 
   if ( dlg.exec() == InsertVariableDlg::Accepted )
   {
@@ -1611,7 +1611,7 @@ void MainWindow::showSessionImportDialog()
       free( num );
       d->widgets.editor->setAnsAvailable( true );
       if ( d->settings->variablesDockVisible )
-        d->docks.variables->updateList( d->evaluator );
+        d->docks.variables->updateList();
       if ( d->settings->historyDockVisible )
         d->docks.history->append( str );
 
@@ -2298,7 +2298,7 @@ void MainWindow::Private::restoreVariables()
   }
 
   if ( docks.variables )
-    docks.variables->updateList( evaluator );
+    docks.variables->updateList();
 
   // free memory
   settings->variables.clear();
@@ -2345,7 +2345,7 @@ void MainWindow::evaluateEditorExpression()
     free( num );
     d->widgets.editor->setAnsAvailable( true );
     if ( d->settings->variablesDockVisible )
-      d->docks.variables->updateList( d->evaluator );
+      d->docks.variables->updateList();
     if ( d->settings->historyDockVisible )
       d->docks.history->append( str );
 

@@ -33,13 +33,14 @@
 
 struct VariablesDock::Private
 {
-  Settings *   settings;
+  Settings *    settings;
+  Evaluator *   eval;
+  QTreeWidget * list;
+
   QLineEdit *   filter;
   QTimer *      filterTimer;
-  QTreeWidget * list;
   QLabel *      label;
   QLabel *      noMatchLabel;
-  QVector<Variable> variables;
 
   QString formatValue( const HNumber & value );
 };
@@ -47,18 +48,18 @@ struct VariablesDock::Private
 QString VariablesDock::Private::formatValue( const HNumber & value )
 {
   char * str = HMath::format( value, 'g' );
-  QString s;
-  s = QString::fromLatin1( str );
+  QString s = QString::fromLatin1( str );
   if ( settings->radixCharacter() != '.' )
-    s = s.replace( '.', settings->radixCharacter() );
+    s.replace( '.', settings->radixCharacter() );
   free( str );
   return s;
 }
 
-VariablesDock::VariablesDock( QWidget * parent )
+VariablesDock::VariablesDock( Evaluator * eval, QWidget * parent )
   : QDockWidget( parent ), d( new VariablesDock::Private )
 {
   d->settings = Settings::instance();
+  d->eval = eval;
 
   d->label = new QLabel( this );
 
@@ -111,9 +112,8 @@ VariablesDock::VariablesDock( QWidget * parent )
   retranslateText();
 }
 
-void VariablesDock::updateList( const Evaluator * eval )
+void VariablesDock::updateList()
 {
-  d->variables = eval->variables();
   filter();
 }
 
@@ -144,11 +144,12 @@ void VariablesDock::filter()
   setUpdatesEnabled( false );
 
   d->list->clear();
-  for ( int k = 0; k < d->variables.count(); k++ )
+  QVector<Variable> variables = d->eval->variables();
+  for ( int k = 0; k < variables.count(); k++ )
   {
       QStringList str;
-      str << d->variables.at(k).name;
-      str << d->formatValue( d->variables.at(k).value );
+      str << variables.at(k).name;
+      str << d->formatValue( variables.at(k).value );
       str << QString( "" );
 
       if ( str.at(0) == "PI" || str.at(0) == "PHI" )
