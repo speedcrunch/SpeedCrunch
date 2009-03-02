@@ -1657,34 +1657,34 @@ Falls nein, werden aktuelle Variablen und Anzeigen gelöscht.</translation>
     </message>
 </context>
 <context>
-    <name>VariableTable</name>
-    <message>
-        <location filename="../gui/variabletable.cpp" line="163"/>
-        <source>Name</source>
-        <translation>Name</translation>
-    </message>
-    <message>
-        <location filename="../gui/variabletable.cpp" line="164"/>
-        <source>Value</source>
-        <translation>Wert</translation>
-    </message>
-    <message>
-        <location filename="../gui/variabletable.cpp" line="168"/>
-        <source>No match found</source>
-        <translation>Keine Übereinstimmung</translation>
-    </message>
-    <message>
-        <location filename="../gui/variabletable.cpp" line="167"/>
-        <source>Search</source>
-        <translation>Suchen</translation>
-    </message>
-</context>
-<context>
     <name>VariablesDock</name>
     <message>
         <location filename="../gui/variablesdock.cpp" line="63"/>
         <source>Variables</source>
         <translation>Variablen</translation>
+    </message>
+</context>
+<context>
+    <name>VariablesWidget</name>
+    <message>
+        <location filename="../gui/variableswidget.cpp" line="163"/>
+        <source>Name</source>
+        <translation>Name</translation>
+    </message>
+    <message>
+        <location filename="../gui/variableswidget.cpp" line="164"/>
+        <source>Value</source>
+        <translation>Wert</translation>
+    </message>
+    <message>
+        <location filename="../gui/variableswidget.cpp" line="167"/>
+        <source>Search</source>
+        <translation>Suchen</translation>
+    </message>
+    <message>
+        <location filename="../gui/variableswidget.cpp" line="168"/>
+        <source>No match found</source>
+        <translation>Keine Übereinstimmung</translation>
     </message>
 </context>
 </TS>

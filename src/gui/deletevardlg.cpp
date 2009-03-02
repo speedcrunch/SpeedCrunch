@@ -21,7 +21,7 @@
 
 #include "deletevardlg.hxx"
 
-#include "gui/variabletable.hxx"
+#include "gui/variableswidget.hxx"
 
 #include "core/evaluator.hxx"
 
@@ -32,7 +32,7 @@
 
 struct DeleteVariableDlg::Private
 {
-  VariableTable * list;
+  VariablesWidget * list;
 
   Evaluator *   eval;
   QPushButton * deleteButton;
@@ -51,7 +51,7 @@ DeleteVariableDlg::DeleteVariableDlg( Evaluator * eval, QWidget * parent )
   QVBoxLayout * layout = new QVBoxLayout;
   setLayout( layout );
 
-  d->list = new VariableTable( eval, false, this );
+  d->list = new VariablesWidget( eval, false, this );
 
   d->deleteButton = new QPushButton( this );
   d->deleteButton->setText( tr( "&Delete" ) );

@@ -1656,34 +1656,34 @@ Ezkerrez klikatu ikonoa leheneratzeko edo eskuinaz klikatu aukerak ikusteko.</tr
     </message>
 </context>
 <context>
-    <name>VariableTable</name>
-    <message>
-        <location filename="../gui/variabletable.cpp" line="163"/>
-        <source>Name</source>
-        <translation>Izena</translation>
-    </message>
-    <message>
-        <location filename="../gui/variabletable.cpp" line="164"/>
-        <source>Value</source>
-        <translation>Balioa</translation>
-    </message>
-    <message>
-        <location filename="../gui/variabletable.cpp" line="168"/>
-        <source>No match found</source>
-        <translation>Ez da bat datorrenik aurkitu</translation>
-    </message>
-    <message>
-        <location filename="../gui/variabletable.cpp" line="167"/>
-        <source>Search</source>
-        <translation>Bilatu</translation>
-    </message>
-</context>
-<context>
     <name>VariablesDock</name>
     <message>
         <location filename="../gui/variablesdock.cpp" line="63"/>
         <source>Variables</source>
         <translation>Aldagaiak</translation>
+    </message>
+</context>
+<context>
+    <name>VariablesWidget</name>
+    <message>
+        <location filename="../gui/variableswidget.cpp" line="163"/>
+        <source>Name</source>
+        <translation>Izena</translation>
+    </message>
+    <message>
+        <location filename="../gui/variableswidget.cpp" line="164"/>
+        <source>Value</source>
+        <translation>Balioa</translation>
+    </message>
+    <message>
+        <location filename="../gui/variableswidget.cpp" line="167"/>
+        <source>Search</source>
+        <translation>Bilatu</translation>
+    </message>
+    <message>
+        <location filename="../gui/variableswidget.cpp" line="168"/>
+        <source>No match found</source>
+        <translation>Ez da bat datorrenik aurkitu</translation>
     </message>
 </context>
 </TS>

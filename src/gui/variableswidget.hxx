@@ -16,8 +16,8 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#ifndef GUI_VARIABLESTABLE_HXX
-#define GUI_VARIABLESTABLE_HXX
+#ifndef GUI_VARIABLESWIDGET_HXX
+#define GUI_VARIABLESWIDGET_HXX
 
 #include <QWidget>
 
@@ -34,7 +34,7 @@ class QList;
 class Evaluator;
 class HNumber;
 
-class VariableTable : public QWidget
+class VariablesWidget : public QWidget
 {
   Q_OBJECT
 
@@ -47,8 +47,8 @@ class VariableTable : public QWidget
   Evaluator * m_evaluator;
 
 public:
-  VariableTable( Evaluator * evaluator, bool hideHeaders, QWidget * parent = 0 );
-  ~VariableTable();
+  VariablesWidget( Evaluator * evaluator, bool hideHeaders, QWidget * parent = 0 );
+  ~VariablesWidget();
 
   void fillTable( bool = true );
   QTreeWidgetItem* currentItem() const;

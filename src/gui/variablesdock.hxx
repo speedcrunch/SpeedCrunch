@@ -23,7 +23,7 @@
 #include <QDockWidget>
 
 class Evaluator;
-class VariableTable;
+class VariablesWidget;
 
 class QTreeWidgetItem;
 
@@ -31,7 +31,7 @@ class VariablesDock : public QDockWidget
 {
   Q_OBJECT
 
-    VariableTable * m_variableTable;
+    VariablesWidget * m_variableWidget;
 
   public:
     VariablesDock( Evaluator *, QWidget * parent = 0 );

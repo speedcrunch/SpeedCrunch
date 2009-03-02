@@ -18,7 +18,7 @@
 // Boston, MA 02110-1301, USA.
 
 #include "gui/variablesdock.hxx"
-#include "gui/variabletable.hxx"
+#include "gui/variableswidget.hxx"
 
 #include <QEvent>
 #include <QIcon>
@@ -30,12 +30,12 @@
 
 VariablesDock::VariablesDock( Evaluator * eval, QWidget * parent )
   : QDockWidget( parent ),
-    m_variableTable( new VariableTable( eval, true, this ) )
+    m_variableWidget( new VariablesWidget( eval, true, this ) )
 {
-  connect( m_variableTable, SIGNAL( itemActivated( QTreeWidgetItem *, int ) ),
+  connect( m_variableWidget, SIGNAL( itemActivated( QTreeWidgetItem *, int ) ),
            this, SLOT( handleItem( QTreeWidgetItem * ) ) );
 
-  setWidget( m_variableTable );
+  setWidget( m_variableWidget );
 
   setMinimumWidth( 200 );
   setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
@@ -46,7 +46,7 @@ VariablesDock::VariablesDock( Evaluator * eval, QWidget * parent )
 
 void VariablesDock::updateList()
 {
-  m_variableTable->filter();
+  m_variableWidget->filter();
 }
 
 VariablesDock::~VariablesDock()
@@ -55,14 +55,14 @@ VariablesDock::~VariablesDock()
 
 void VariablesDock::handleRadixCharacterChange()
 {
-  m_variableTable->filter();
+  m_variableWidget->filter();
 }
 
 void VariablesDock::retranslateText()
 {
   setWindowTitle( tr( "Variables" ) );
-  m_variableTable->setLayoutDirection( Qt::LeftToRight );
-  m_variableTable->retranslateText();
+  m_variableWidget->setLayoutDirection( Qt::LeftToRight );
+  m_variableWidget->retranslateText();
 }
 
 void VariablesDock::handleItem( QTreeWidgetItem * item )

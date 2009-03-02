@@ -22,7 +22,7 @@
 
 #include "insertvardlg.hxx"
 
-#include "gui/variabletable.hxx"
+#include "gui/variableswidget.hxx"
 
 #include <QPushButton>
 #include <QTreeWidget>
@@ -31,7 +31,7 @@
 
 struct InsertVariableDlg::Private
 {
-  VariableTable * list;
+  VariablesWidget * list;
 
   QPushButton * insertButton;
   QPushButton * cancelButton;
@@ -49,7 +49,7 @@ InsertVariableDlg::InsertVariableDlg( Evaluator * eval, QWidget * parent )
   QVBoxLayout* layout = new QVBoxLayout;
   setLayout( layout );
 
-  d->list = new VariableTable( eval, false, this );
+  d->list = new VariablesWidget( eval, false, this );
 
   d->insertButton = new QPushButton( this );
   d->insertButton->setText( tr("&Insert") );

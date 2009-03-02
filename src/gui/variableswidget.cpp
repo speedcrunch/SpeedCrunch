@@ -16,7 +16,7 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#include "gui/variabletable.hxx"
+#include "gui/variableswidget.hxx"
 
 #include "core/settings.hxx"
 #include "core/evaluator.hxx"
@@ -28,7 +28,7 @@
 #include <QTimer>
 #include <QTreeWidget>
 
-VariableTable::VariableTable( Evaluator * eval, bool hideHeaders, QWidget * parent )
+VariablesWidget::VariablesWidget( Evaluator * eval, bool hideHeaders, QWidget * parent )
   : QWidget( parent ),
     m_variables( new QTreeWidget( this ) ),
     m_searchLabel( new QLabel( this ) ),
@@ -80,12 +80,12 @@ VariableTable::VariableTable( Evaluator * eval, bool hideHeaders, QWidget * pare
   if ( hideHeaders ) m_variables->header()->hide();
 }
 
-VariableTable::~VariableTable()
+VariablesWidget::~VariablesWidget()
 {
   m_filterTimer->stop();
 }
 
-QString VariableTable::formatValue( const HNumber & value )
+QString VariablesWidget::formatValue( const HNumber & value )
 {
   char * str = HMath::format( value, 'g' );
   QString s = QString::fromLatin1( str );
@@ -95,7 +95,7 @@ QString VariableTable::formatValue( const HNumber & value )
   return s;
 }
 
-void VariableTable::fillTable( bool insertAll )
+void VariablesWidget::fillTable( bool insertAll )
 {
   setUpdatesEnabled( false );
 
@@ -157,7 +157,7 @@ void VariableTable::fillTable( bool insertAll )
   setUpdatesEnabled( true );
 }
 
-void VariableTable::retranslateText()
+void VariablesWidget::retranslateText()
 {
   QStringList titles;
   titles << tr( "Name"  );
@@ -170,41 +170,41 @@ void VariableTable::retranslateText()
   filter();
 }
 
-QList< QTreeWidgetItem * > VariableTable::selectedItems() const
+QList< QTreeWidgetItem * > VariablesWidget::selectedItems() const
 {
   return m_variables->selectedItems();
 }
 
-QTreeWidgetItem * VariableTable::currentItem() const
+QTreeWidgetItem * VariablesWidget::currentItem() const
 {
   return m_variables->currentItem();
 }
 
 // public slot
-void VariableTable::filter()
+void VariablesWidget::filter()
 {
   fillTable();
 }
 
 // protected slots
 //
-void VariableTable::catchItemActivated( QTreeWidgetItem * item, int column )
+void VariablesWidget::catchItemActivated( QTreeWidgetItem * item, int column )
 {
   emit itemActivated( item, column );
 }
 
-void VariableTable::catchItemDoubleClicked( QTreeWidgetItem * item, int column )
+void VariablesWidget::catchItemDoubleClicked( QTreeWidgetItem * item, int column )
 {
   emit itemDoubleClicked( item, column );
 }
 
-void VariableTable::clearSelection( QTreeWidgetItem * item )
+void VariablesWidget::clearSelection( QTreeWidgetItem * item )
 {
   m_variables->clearSelection();
   emit itemActivated( item, 0 );
 }
 
-void VariableTable::triggerFilter()
+void VariablesWidget::triggerFilter()
 {
   m_filterTimer->stop();
   m_filterTimer->start();

@@ -38,7 +38,7 @@ HEADERS += core/constants.hxx \
            gui/keypad.hxx \
            gui/tipwidget.hxx \
            gui/variablesdock.hxx \
-           gui/variabletable.hxx \
+           gui/variableswidget.hxx \
            gui/mainwindow.hxx
            #math/floatcommon.h \
            #math/floatconfig.h \
@@ -89,7 +89,7 @@ SOURCES += 3rdparty/util/binreloc.c \
            gui/keypad.cpp \
            gui/tipwidget.cpp \
            gui/variablesdock.cpp \
-           gui/variabletable.cpp \
+           gui/variableswidget.cpp \
            gui/mainwindow.cpp \
            main/main.cpp \
            math/floatcommon.c \

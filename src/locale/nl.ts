@@ -1657,34 +1657,34 @@ Zo niet, dan worden de huidige variabelen en schermweergave gewist.</translation
     </message>
 </context>
 <context>
-    <name>VariableTable</name>
-    <message>
-        <location filename="../gui/variabletable.cpp" line="163"/>
-        <source>Name</source>
-        <translation>Naam</translation>
-    </message>
-    <message>
-        <location filename="../gui/variabletable.cpp" line="164"/>
-        <source>Value</source>
-        <translation>Waarde</translation>
-    </message>
-    <message>
-        <location filename="../gui/variabletable.cpp" line="168"/>
-        <source>No match found</source>
-        <translation>Geen resultaten gevonden</translation>
-    </message>
-    <message>
-        <location filename="../gui/variabletable.cpp" line="167"/>
-        <source>Search</source>
-        <translation>Zoeken</translation>
-    </message>
-</context>
-<context>
     <name>VariablesDock</name>
     <message>
         <location filename="../gui/variablesdock.cpp" line="63"/>
         <source>Variables</source>
         <translation>Variabelen</translation>
+    </message>
+</context>
+<context>
+    <name>VariablesWidget</name>
+    <message>
+        <location filename="../gui/variableswidget.cpp" line="163"/>
+        <source>Name</source>
+        <translation>Naam</translation>
+    </message>
+    <message>
+        <location filename="../gui/variableswidget.cpp" line="164"/>
+        <source>Value</source>
+        <translation>Waarde</translation>
+    </message>
+    <message>
+        <location filename="../gui/variableswidget.cpp" line="167"/>
+        <source>Search</source>
+        <translation>Zoeken</translation>
+    </message>
+    <message>
+        <location filename="../gui/variableswidget.cpp" line="168"/>
+        <source>No match found</source>
+        <translation>Geen resultaten gevonden</translation>
     </message>
 </context>
 </TS>

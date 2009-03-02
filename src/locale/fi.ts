@@ -1657,34 +1657,34 @@ Jos ei, nykyiset muuttujat ja näyttö tyhjennetään.</translation>
     </message>
 </context>
 <context>
-    <name>VariableTable</name>
-    <message>
-        <location filename="../gui/variabletable.cpp" line="163"/>
-        <source>Name</source>
-        <translation>Nimi</translation>
-    </message>
-    <message>
-        <location filename="../gui/variabletable.cpp" line="164"/>
-        <source>Value</source>
-        <translation>Arvo</translation>
-    </message>
-    <message>
-        <location filename="../gui/variabletable.cpp" line="168"/>
-        <source>No match found</source>
-        <translation>Ei tuloksia</translation>
-    </message>
-    <message>
-        <location filename="../gui/variabletable.cpp" line="167"/>
-        <source>Search</source>
-        <translation>Etsi</translation>
-    </message>
-</context>
-<context>
     <name>VariablesDock</name>
     <message>
         <location filename="../gui/variablesdock.cpp" line="63"/>
         <source>Variables</source>
         <translation>Muuttujat</translation>
+    </message>
+</context>
+<context>
+    <name>VariablesWidget</name>
+    <message>
+        <location filename="../gui/variableswidget.cpp" line="163"/>
+        <source>Name</source>
+        <translation>Nimi</translation>
+    </message>
+    <message>
+        <location filename="../gui/variableswidget.cpp" line="164"/>
+        <source>Value</source>
+        <translation>Arvo</translation>
+    </message>
+    <message>
+        <location filename="../gui/variableswidget.cpp" line="167"/>
+        <source>Search</source>
+        <translation>Etsi</translation>
+    </message>
+    <message>
+        <location filename="../gui/variableswidget.cpp" line="168"/>
+        <source>No match found</source>
+        <translation>Ei tuloksia</translation>
     </message>
 </context>
 </TS>

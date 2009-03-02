@@ -1655,34 +1655,34 @@ If no, current variables and display will be cleared.</source>
     </message>
 </context>
 <context>
-    <name>VariableTable</name>
-    <message>
-        <location filename="../gui/variabletable.cpp" line="163"/>
-        <source>Name</source>
-        <translation>Název</translation>
-    </message>
-    <message>
-        <location filename="../gui/variabletable.cpp" line="164"/>
-        <source>Value</source>
-        <translation>Hodnota</translation>
-    </message>
-    <message>
-        <location filename="../gui/variabletable.cpp" line="168"/>
-        <source>No match found</source>
-        <translation>Nenalezena žádná shoda</translation>
-    </message>
-    <message>
-        <location filename="../gui/variabletable.cpp" line="167"/>
-        <source>Search</source>
-        <translation>Hledání</translation>
-    </message>
-</context>
-<context>
     <name>VariablesDock</name>
     <message>
         <location filename="../gui/variablesdock.cpp" line="63"/>
         <source>Variables</source>
         <translation>Proměnné</translation>
+    </message>
+</context>
+<context>
+    <name>VariablesWidget</name>
+    <message>
+        <location filename="../gui/variableswidget.cpp" line="163"/>
+        <source>Name</source>
+        <translation>Název</translation>
+    </message>
+    <message>
+        <location filename="../gui/variableswidget.cpp" line="164"/>
+        <source>Value</source>
+        <translation>Hodnota</translation>
+    </message>
+    <message>
+        <location filename="../gui/variableswidget.cpp" line="167"/>
+        <source>Search</source>
+        <translation>Hledání</translation>
+    </message>
+    <message>
+        <location filename="../gui/variableswidget.cpp" line="168"/>
+        <source>No match found</source>
+        <translation>Nenalezena žádná shoda</translation>
     </message>
 </context>
 </TS>
