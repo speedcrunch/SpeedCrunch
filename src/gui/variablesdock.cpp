@@ -39,7 +39,7 @@ struct VariablesDock::Private
 VariablesDock::VariablesDock( Evaluator * eval, QWidget * parent )
   : QDockWidget( parent ), d( new VariablesDock::Private )
 {
-  d->list = new VariableTable( eval, this );
+  d->list = new VariableTable( eval, true, this );
   connect( d->list, SIGNAL( itemActivated( QTreeWidgetItem *, int ) ),
            this, SLOT( handleItem( QTreeWidgetItem * ) ) );
 

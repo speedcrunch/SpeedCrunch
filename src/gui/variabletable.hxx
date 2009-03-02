@@ -37,7 +37,7 @@ class VariableTable : public QTreeWidget
   Evaluator * m_evaluator;
 
 public:
-  VariableTable( Evaluator * evaluator, bool hideHeaders = false, QWidget * parent = 0 );
+  VariableTable( Evaluator * evaluator, bool hideHeaders, QWidget * parent = 0 );
   ~VariableTable();
 
   void fillTable( QString = "" );
