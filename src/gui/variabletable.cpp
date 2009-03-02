@@ -18,7 +18,6 @@
 
 #include "gui/variabletable.hxx"
 
-#include "math/hmath.hxx"
 #include "core/settings.hxx"
 #include "core/evaluator.hxx"
 
