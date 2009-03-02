@@ -27,7 +27,7 @@
 
 VariableTable::VariableTable( Evaluator * eval, bool hideHeaders, QWidget * parent )
   : QTreeWidget( parent ),
-    m_noMatchLabel( new QLabel( tr( "No match found" ), this ) ),
+    m_noMatchLabel( new QLabel( this ) ),
     m_evaluator( eval )
 {
   m_noMatchLabel->setAlignment( Qt::AlignCenter );
@@ -44,10 +44,8 @@ VariableTable::VariableTable( Evaluator * eval, bool hideHeaders, QWidget * pare
   setEditTriggers( QTreeWidget::NoEditTriggers );
   setSelectionBehavior( QTreeWidget::SelectRows );
 
-  QStringList titles;
-  titles << tr( "Name"  );
-  titles << tr( "Value" );
-  setHeaderLabels( titles );
+  retranslateText();
+
   if ( hideHeaders ) header()->hide();
 }
 
@@ -123,3 +121,12 @@ void VariableTable::fillTable( QString term, bool insertAll )
   setUpdatesEnabled( true );
 };
 
+void VariableTable::retranslateText()
+{
+  QStringList titles;
+  titles << tr( "Name"  );
+  titles << tr( "Value" );
+  setHeaderLabels( titles );
+
+  m_noMatchLabel->setText( tr( "No match found" ) );
+}

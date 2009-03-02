@@ -558,25 +558,25 @@
     <message>
         <location filename="../gui/deletevardlg.cpp" line="72"/>
         <source>Name</source>
-        <translation>שם</translation>
+        <translation type="obsolete">שם</translation>
     </message>
     <message>
         <location filename="../gui/deletevardlg.cpp" line="73"/>
         <source>Value</source>
-        <translation>ערך</translation>
+        <translation type="obsolete">ערך</translation>
     </message>
     <message>
-        <location filename="../gui/deletevardlg.cpp" line="77"/>
+        <location filename="../gui/deletevardlg.cpp" line="56"/>
         <source>&amp;Delete</source>
         <translation>&amp;מחיקה</translation>
     </message>
     <message>
-        <location filename="../gui/deletevardlg.cpp" line="81"/>
+        <location filename="../gui/deletevardlg.cpp" line="60"/>
         <source>Close</source>
         <translation>סגירה</translation>
     </message>
     <message>
-        <location filename="../gui/deletevardlg.cpp" line="56"/>
+        <location filename="../gui/deletevardlg.cpp" line="45"/>
         <source>Delete Variable</source>
         <translation>מחיקת משתנה</translation>
     </message>
@@ -1084,25 +1084,25 @@
     <message>
         <location filename="../gui/insertvardlg.cpp" line="89"/>
         <source>Name</source>
-        <translation>שם</translation>
+        <translation type="obsolete">שם</translation>
     </message>
     <message>
         <location filename="../gui/insertvardlg.cpp" line="90"/>
         <source>Value</source>
-        <translation>ערך</translation>
+        <translation type="obsolete">ערך</translation>
     </message>
     <message>
-        <location filename="../gui/insertvardlg.cpp" line="94"/>
+        <location filename="../gui/insertvardlg.cpp" line="54"/>
         <source>&amp;Insert</source>
         <translation>&amp;הוספה</translation>
     </message>
     <message>
-        <location filename="../gui/insertvardlg.cpp" line="68"/>
+        <location filename="../gui/insertvardlg.cpp" line="45"/>
         <source>Insert Variable</source>
         <translation>הכנסת משתנה</translation>
     </message>
     <message>
-        <location filename="../gui/insertvardlg.cpp" line="98"/>
+        <location filename="../gui/insertvardlg.cpp" line="58"/>
         <source>Cancel</source>
         <translation>ביטול</translation>
     </message>
@@ -1183,362 +1183,362 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1296"/>
+        <location filename="../gui/mainwindow.cpp" line="1301"/>
         <source>About Qt</source>
         <translation>אודות Qt</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1717"/>
+        <location filename="../gui/mainwindow.cpp" line="1722"/>
         <source>SpeedCrunch Sessions (*.sch);;All Files (*)</source>
         <translation>חישובי SpeedCrunch (*.sch);;כל הקבצים (*)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1435"/>
+        <location filename="../gui/mainwindow.cpp" line="1440"/>
         <source>Load Session</source>
         <translation>טעינת חישוב</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1772"/>
+        <location filename="../gui/mainwindow.cpp" line="1777"/>
         <source>Error</source>
         <translation>שגיאה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1549"/>
+        <location filename="../gui/mainwindow.cpp" line="1554"/>
         <source>Can&apos;t read from file %1</source>
         <translation>לא ניתן לקרוא מהקובץ %1</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1558"/>
+        <location filename="../gui/mainwindow.cpp" line="1563"/>
         <source>Question</source>
         <translation>שאלה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1718"/>
+        <location filename="../gui/mainwindow.cpp" line="1723"/>
         <source>Save Session</source>
         <translation>שמירת חישובים אחרונים</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1773"/>
+        <location filename="../gui/mainwindow.cpp" line="1778"/>
         <source>Can&apos;t write to file %1</source>
         <translation>לא ניתן לכתוב לקובץ %1</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2053"/>
+        <location filename="../gui/mainwindow.cpp" line="2058"/>
         <source>Warning</source>
         <translation>אזהרה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2069"/>
+        <location filename="../gui/mainwindow.cpp" line="2074"/>
         <source>To insert a function using keyboard, use Ctrl+F shorcut. From the dialog, you can choose the function you want to insert.</source>
         <translation>אפשר להוסיף פונקציה בעזרת המקלדת, באמצעות הקיצור Ctrl+F.ניתן לבחור את הפונקציה הרצויה מתוך החלון שייפתח.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2074"/>
+        <location filename="../gui/mainwindow.cpp" line="2079"/>
         <source>To insert a variable using keyboard, use Ctrl+I shorcut. From the dialog, you can choose the variable you want to insert.</source>
         <translation>אפשר להוסיף משתנה בעזרת המקלדת, באמצעות הקיצור Ctrl+I. ניתן לבחור את המשתנה הרצוי מתוך החלון שייפתח.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2077"/>
+        <location filename="../gui/mainwindow.cpp" line="2082"/>
         <source>Use variable &lt;i&gt;pi&lt;/i&gt; to use pi constant.</source>
         <translation>כדי להשתמש בקבוע פיי, השתמשו ב-&lt;i&gt;pi&lt;/i&gt;.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2082"/>
+        <location filename="../gui/mainwindow.cpp" line="2087"/>
         <source>Use &lt;i&gt;;&lt;/i&gt; (semicolon) to separate the parameters in functions.</source>
         <translation>ניתן להשתמש ב-&lt;i&gt;:&lt;/i&gt; (נקודותיים) כדי להפריד בין פרמטרים של פונקציות.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2088"/>
+        <location filename="../gui/mainwindow.cpp" line="2093"/>
         <source>Tip of the day</source>
         <translation>טיפ היום</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1433"/>
+        <location filename="../gui/mainwindow.cpp" line="1438"/>
         <source>File %1 is not a valid session</source>
         <translation>הקובץ %1 אינו מכיל חישוב</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1470"/>
+        <location filename="../gui/mainwindow.cpp" line="1475"/>
         <source>Merge session being loaded with current session?
 If no, current variables and display will be cleared.</source>
         <translation>להוסיף את החישוב שנטען לחישוב הנוכחי?
 אם לא, המשתנים הנוכחיים והתצוגה יימחקו.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2337"/>
+        <location filename="../gui/mainwindow.cpp" line="2362"/>
         <source>SpeedCrunch is minimized.
 Left click the icon to restore it or right click for options.</source>
         <translation>SpeedCrunch ממוזערת.
 לחץ על האיקון לחיצה שמאלית כדי לשחזר אותה או לחיצה ימנית לאפשרויות.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1337"/>
+        <location filename="../gui/mainwindow.cpp" line="1342"/>
         <source>Degree</source>
         <translation>מעלה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1763"/>
+        <location filename="../gui/mainwindow.cpp" line="1768"/>
         <source>All Files (*)</source>
         <translation>כל הקבצים (*)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1710"/>
+        <location filename="../gui/mainwindow.cpp" line="1715"/>
         <source>Radian</source>
         <translation>רדיאן</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2048"/>
+        <location filename="../gui/mainwindow.cpp" line="2053"/>
         <source>The menu bar is now hidden. To make it visible again, press Ctrl+Alt+M.</source>
         <translation>פס התפריט הוסתר. כדי להחזיר אותו, לחץ Ctrl+Alt+M.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2097"/>
+        <location filename="../gui/mainwindow.cpp" line="2102"/>
         <source>Binary</source>
         <translation>בינארי</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2106"/>
+        <location filename="../gui/mainwindow.cpp" line="2111"/>
         <source>Engineering decimal</source>
         <translation>נקודה עשרונית הנדסית</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2115"/>
+        <location filename="../gui/mainwindow.cpp" line="2120"/>
         <source>Fixed decimal</source>
         <translation>נקודה עשרונית קבועה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2124"/>
+        <location filename="../gui/mainwindow.cpp" line="2129"/>
         <source>General decimal</source>
         <translation>נקודה עשרונית כללית</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2133"/>
+        <location filename="../gui/mainwindow.cpp" line="2138"/>
         <source>Hexadecimal</source>
         <translation>הקסדצימלי</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2142"/>
+        <location filename="../gui/mainwindow.cpp" line="2147"/>
         <source>Octal</source>
         <translation>אוקטלי</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2151"/>
+        <location filename="../gui/mainwindow.cpp" line="2156"/>
         <source>Scientific decimal</source>
         <translation>נקודה עשרונית מדעית</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1540"/>
+        <location filename="../gui/mainwindow.cpp" line="1545"/>
         <source>Import Session</source>
         <translation>יבוא חישוב</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1556"/>
+        <location filename="../gui/mainwindow.cpp" line="1561"/>
         <source>Merge session being imported with current session?
 If no, current variables and display will be cleared.</source>
         <translation>להוסיף את החישוב שמיובא לחישוב הנוכחי?אם לא, המשתנים הנוכחיים והתצוגה יימחקו.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1764"/>
+        <location filename="../gui/mainwindow.cpp" line="1769"/>
         <source>Export Session</source>
         <translation>יצוא חישוב</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="752"/>
+        <location filename="../gui/mainwindow.cpp" line="757"/>
         <source>&amp;Session</source>
         <translation>&amp;קובץ</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="520"/>
+        <location filename="../gui/mainwindow.cpp" line="525"/>
         <source>Clear E&amp;xpression</source>
         <translation>&amp;ניקוי חישוב</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="521"/>
+        <location filename="../gui/mainwindow.cpp" line="526"/>
         <source>Clear &amp;History</source>
         <translation>ניקוי &amp;היסטוריה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="541"/>
+        <location filename="../gui/mainwindow.cpp" line="546"/>
         <source>&amp;Degree</source>
         <translation>&amp;מעלה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="524"/>
+        <location filename="../gui/mainwindow.cpp" line="529"/>
         <source>Delete All V&amp;ariables</source>
         <translation>&amp;מחיקת כל המשתנים</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="525"/>
+        <location filename="../gui/mainwindow.cpp" line="530"/>
         <source>D&amp;elete Variable...</source>
         <translation>מ&amp;חיקת משתנה...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="553"/>
+        <location filename="../gui/mainwindow.cpp" line="558"/>
         <source>&amp;15 Decimal Digits</source>
         <translation>&amp;15 ספרות עשרוניות</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="554"/>
+        <location filename="../gui/mainwindow.cpp" line="559"/>
         <source>&amp;2 Decimal Digits</source>
         <translation>&amp;2 ספרות עשרוניות</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="555"/>
+        <location filename="../gui/mainwindow.cpp" line="560"/>
         <source>&amp;3 Decimal Digits</source>
         <translation>&amp;3 ספרות עשרוניות</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="556"/>
+        <location filename="../gui/mainwindow.cpp" line="561"/>
         <source>&amp;50 Decimal Digits</source>
         <translation>&amp;50 ספרות עשרוניות</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="557"/>
+        <location filename="../gui/mainwindow.cpp" line="562"/>
         <source>&amp;8 Decimal Digits</source>
         <translation>&amp;8 ספרות עשרוניות</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="558"/>
+        <location filename="../gui/mainwindow.cpp" line="563"/>
         <source>&amp;Automatic Precision</source>
         <translation>&amp;דיוק אוטומטי</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="523"/>
+        <location filename="../gui/mainwindow.cpp" line="528"/>
         <source>&amp;Copy</source>
         <translation>ה&amp;עתקה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="522"/>
+        <location filename="../gui/mainwindow.cpp" line="527"/>
         <source>Copy Last &amp;Result</source>
         <translation>העתקת &amp;תוצאה אחרונה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="528"/>
+        <location filename="../gui/mainwindow.cpp" line="533"/>
         <source>&amp;Paste</source>
         <translation>ה&amp;דבקה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="569"/>
+        <location filename="../gui/mainwindow.cpp" line="574"/>
         <source>&amp;About</source>
         <translation>&amp;אודות</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="568"/>
+        <location filename="../gui/mainwindow.cpp" line="573"/>
         <source>About &amp;Qt</source>
         <translation>אודות &amp;Qt</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="571"/>
+        <location filename="../gui/mainwindow.cpp" line="576"/>
         <source>SpeedCrunch &amp;Web Site...</source>
         <translation>אתר &amp;SpeedCrunch...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="570"/>
+        <location filename="../gui/mainwindow.cpp" line="575"/>
         <source>&amp;Tip of the Day</source>
         <translation>ה&amp;טיפ היומי</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="526"/>
+        <location filename="../gui/mainwindow.cpp" line="531"/>
         <source>Insert &amp;Function...</source>
         <translation>הכנסת &amp;פונקציה...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="527"/>
+        <location filename="../gui/mainwindow.cpp" line="532"/>
         <source>Insert &amp;Variable...</source>
         <translation>הכנסת &amp;משתנה...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="546"/>
+        <location filename="../gui/mainwindow.cpp" line="551"/>
         <source>&amp;Partial Results</source>
         <translation>תוצאות &amp;חלקיות</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="544"/>
+        <location filename="../gui/mainwindow.cpp" line="549"/>
         <source>Automatic &amp;Completion</source>
         <translation>השלמה &amp;אוטומטית</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="543"/>
+        <location filename="../gui/mainwindow.cpp" line="548"/>
         <source>Always On &amp;Top</source>
         <translation>תמיד &amp;עליון</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="545"/>
+        <location filename="../gui/mainwindow.cpp" line="550"/>
         <source>&amp;Minimize To System Tray</source>
         <translation>&amp;מזעור לאזור ההודעות</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="549"/>
+        <location filename="../gui/mainwindow.cpp" line="554"/>
         <source>Syntax &amp;Highlighting</source>
         <translation>&amp;הדגשת דקדוק</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="551"/>
+        <location filename="../gui/mainwindow.cpp" line="556"/>
         <source>&amp;System Default</source>
         <translation>&amp;ברירת מחדל</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="552"/>
+        <location filename="../gui/mainwindow.cpp" line="557"/>
         <source>&amp;Dot</source>
         <translation>&amp;נקודה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="550"/>
+        <location filename="../gui/mainwindow.cpp" line="555"/>
         <source>&amp;Comma</source>
         <translation>&amp;פסיק</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="542"/>
+        <location filename="../gui/mainwindow.cpp" line="547"/>
         <source>&amp;Radian</source>
         <translation>&amp;רדיאן</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="573"/>
+        <location filename="../gui/mainwindow.cpp" line="578"/>
         <source>Scroll Display Down</source>
         <translation>גלילת התצוגה מטה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="574"/>
+        <location filename="../gui/mainwindow.cpp" line="579"/>
         <source>Scroll Display Up</source>
         <translation>גלילת התצוגה מעלה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="529"/>
+        <location filename="../gui/mainwindow.cpp" line="534"/>
         <source>&amp;Select Expression</source>
         <translation>&amp;בחירת ביטוי</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="515"/>
+        <location filename="../gui/mainwindow.cpp" line="520"/>
         <source>&amp;Import...</source>
         <translation>י&amp;בוא...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="516"/>
+        <location filename="../gui/mainwindow.cpp" line="521"/>
         <source>&amp;Load...</source>
         <translation>&amp;טעינה...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="517"/>
+        <location filename="../gui/mainwindow.cpp" line="522"/>
         <source>&amp;Quit</source>
         <translation>&amp;יציאה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="518"/>
+        <location filename="../gui/mainwindow.cpp" line="523"/>
         <source>&amp;Save...</source>
         <translation>&amp;שמירת חישובים אחרונים...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="514"/>
+        <location filename="../gui/mainwindow.cpp" line="519"/>
         <source>&amp;Export...</source>
         <translation>י&amp;צוא...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="536"/>
+        <location filename="../gui/mainwindow.cpp" line="541"/>
         <source>Math &amp;Book</source>
         <translation>&amp;ספר מתימטיקה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="531"/>
+        <location filename="../gui/mainwindow.cpp" line="536"/>
         <source>&amp;Constants</source>
         <translation>&amp;קבועים</translation>
     </message>
@@ -1548,17 +1548,17 @@ If no, current variables and display will be cleared.</source>
         <translation type="obsolete">מצב מסך מ&amp;לא</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="533"/>
+        <location filename="../gui/mainwindow.cpp" line="538"/>
         <source>&amp;Functions</source>
         <translation>&amp;פונקציות</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="534"/>
+        <location filename="../gui/mainwindow.cpp" line="539"/>
         <source>&amp;History</source>
         <translation>&amp;היסטוריה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="535"/>
+        <location filename="../gui/mainwindow.cpp" line="540"/>
         <source>&amp;Keypad</source>
         <translation>&amp;מקשי ספרות</translation>
     </message>
@@ -1568,47 +1568,47 @@ If no, current variables and display will be cleared.</source>
         <translation type="obsolete">הסתר פס &amp;תפריט</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="538"/>
+        <location filename="../gui/mainwindow.cpp" line="543"/>
         <source>&amp;Status Bar</source>
         <translation>פס המ&amp;צב</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="539"/>
+        <location filename="../gui/mainwindow.cpp" line="544"/>
         <source>&amp;Variables</source>
         <translation>מ&amp;שתנים</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="559"/>
+        <location filename="../gui/mainwindow.cpp" line="564"/>
         <source>&amp;Binary</source>
         <translation>&amp;בינארי</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="560"/>
+        <location filename="../gui/mainwindow.cpp" line="565"/>
         <source>&amp;Engineering</source>
         <translation>&amp;הנדסי</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="561"/>
+        <location filename="../gui/mainwindow.cpp" line="566"/>
         <source>&amp;Fixed Decimal</source>
         <translation>&amp;נקודה עשרונית קבועה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="562"/>
+        <location filename="../gui/mainwindow.cpp" line="567"/>
         <source>&amp;General</source>
         <translation>&amp;כללי</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="563"/>
+        <location filename="../gui/mainwindow.cpp" line="568"/>
         <source>&amp;Hexadecimal</source>
         <translation>ה&amp;קסדצימלי</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="564"/>
+        <location filename="../gui/mainwindow.cpp" line="569"/>
         <source>&amp;Octal</source>
         <translation>&amp;אוקטלי</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="565"/>
+        <location filename="../gui/mainwindow.cpp" line="570"/>
         <source>&amp;Scientific</source>
         <translation>&amp;מדעי</translation>
     </message>
@@ -1618,42 +1618,42 @@ If no, current variables and display will be cleared.</source>
         <translation type="obsolete">&amp;ברירת מחדל</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="753"/>
+        <location filename="../gui/mainwindow.cpp" line="758"/>
         <source>&amp;Edit</source>
         <translation>&amp;עריכה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="754"/>
+        <location filename="../gui/mainwindow.cpp" line="759"/>
         <source>&amp;View</source>
         <translation>&amp;תצוגה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="755"/>
+        <location filename="../gui/mainwindow.cpp" line="760"/>
         <source>Se&amp;ttings</source>
         <translation>&amp;הגדרות</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="756"/>
+        <location filename="../gui/mainwindow.cpp" line="761"/>
         <source>Result &amp;Format</source>
         <translation>&amp;תסדיר תוצאה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="757"/>
+        <location filename="../gui/mainwindow.cpp" line="762"/>
         <source>&amp;Decimal</source>
         <translation>&amp;דצימלי</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="758"/>
+        <location filename="../gui/mainwindow.cpp" line="763"/>
         <source>&amp;Angle Unit</source>
         <translation>יחידות &amp;זוית</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="759"/>
+        <location filename="../gui/mainwindow.cpp" line="764"/>
         <source>&amp;Behavior</source>
         <translation>&amp;התנהגות</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="760"/>
+        <location filename="../gui/mainwindow.cpp" line="765"/>
         <source>Radix &amp;Character</source>
         <translation>&amp;תו בסיס</translation>
     </message>
@@ -1663,87 +1663,105 @@ If no, current variables and display will be cleared.</source>
         <translation type="obsolete">&amp;שפה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="761"/>
+        <location filename="../gui/mainwindow.cpp" line="766"/>
         <source>&amp;Help</source>
         <translation>ע&amp;זרה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="507"/>
+        <location filename="../gui/mainwindow.cpp" line="512"/>
         <source>Angle unit</source>
         <translation>יחידות זוית</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="508"/>
+        <location filename="../gui/mainwindow.cpp" line="513"/>
         <source>Result format</source>
         <translation>תסדיר תוצאה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="870"/>
+        <location filename="../gui/mainwindow.cpp" line="875"/>
         <source>Math Book</source>
         <translation>ספר מתימטיקה</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1591"/>
+        <location filename="../gui/mainwindow.cpp" line="1596"/>
         <source>Ignore error?</source>
         <translation>להתעלם מהשגיאה?</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="532"/>
+        <location filename="../gui/mainwindow.cpp" line="537"/>
         <source>F&amp;ull Screen Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="537"/>
+        <location filename="../gui/mainwindow.cpp" line="542"/>
         <source>&amp;Menu Bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="547"/>
+        <location filename="../gui/mainwindow.cpp" line="552"/>
         <source>Save &amp;History on Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="548"/>
+        <location filename="../gui/mainwindow.cpp" line="553"/>
         <source>Save &amp;Variables on Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="566"/>
+        <location filename="../gui/mainwindow.cpp" line="571"/>
         <source>&amp;Language...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2501"/>
+        <location filename="../gui/mainwindow.cpp" line="2526"/>
         <source>System Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2507"/>
+        <location filename="../gui/mainwindow.cpp" line="2532"/>
         <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2508"/>
+        <location filename="../gui/mainwindow.cpp" line="2533"/>
         <source>Select the language:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
+    <name>VariableTable</name>
+    <message>
+        <location filename="../gui/variabletable.cpp" line="127"/>
+        <source>Name</source>
+        <translation type="unfinished">שם</translation>
+    </message>
+    <message>
+        <location filename="../gui/variabletable.cpp" line="128"/>
+        <source>Value</source>
+        <translation type="unfinished">ערך</translation>
+    </message>
+    <message>
+        <location filename="../gui/variabletable.cpp" line="131"/>
+        <source>No match found</source>
+        <translation type="unfinished">לא נמצאה אף התאמה</translation>
+    </message>
+</context>
+<context>
     <name>VariablesDock</name>
     <message>
-        <location filename="../gui/variablesdock.cpp" line="132"/>
+        <location filename="../gui/variablesdock.cpp" line="95"/>
         <source>Variables</source>
         <translation>משתנים</translation>
     </message>
     <message>
-        <location filename="../gui/variablesdock.cpp" line="133"/>
+        <location filename="../gui/variablesdock.cpp" line="96"/>
         <source>Search</source>
         <translation>חיפוש</translation>
     </message>
     <message>
         <location filename="../gui/variablesdock.cpp" line="134"/>
         <source>No match found</source>
-        <translation>לא נמצאה אף התאמה</translation>
+        <translation type="obsolete">לא נמצאה אף התאמה</translation>
     </message>
 </context>
 </TS>

@@ -95,6 +95,7 @@ void VariablesDock::retranslateText()
   setWindowTitle( tr( "Variables" ) );
   d->label->setText( tr( "Search" ) );
   d->list->setLayoutDirection( Qt::LeftToRight );
+  d->list->retranslateText();
   filter();
 }
 

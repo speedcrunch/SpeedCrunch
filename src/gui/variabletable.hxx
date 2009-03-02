@@ -41,6 +41,7 @@ public:
   ~VariableTable();
 
   void fillTable( QString = "", bool = true );
+  void retranslateText();
 
 private:
   QString formatValue( const HNumber & value );
