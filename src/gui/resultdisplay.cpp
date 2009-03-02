@@ -34,12 +34,10 @@
 struct ResultDisplay::Private
 {
   QStringList contents;
-  Settings *  settings;
   int         count;
   bool        customAppearance;
-  QColor      customBackgroundColor1;
-  QColor      customBackgroundColor2;
-  QColor      customErrorColor;
+  QColor      customBackgroundColor;
+  QColor      customBackgroundAlternateColor;
   QColor      customTextColor;
 };
 
@@ -50,34 +48,30 @@ class BaseItem : public QListWidgetItem
     virtual void updateItem() {}
 };
 
-class ExprItem : public BaseItem
+class ExpressionItem : public BaseItem
 {
   public:
-    ExprItem( ResultDisplay * r, int i, const QString & e )
-      : BaseItem( r )
+    ExpressionItem( ResultDisplay * r, int i, const QString & e )
+      : BaseItem( r ), expr( e ), index( i ), result( r )
     {
-      expr = e;
-      result = r;
-      index = i;
       setTextAlignment( Qt::AlignLeft );
-      setText( e );
-      //printf( "%s\n", qPrintable(e) );
+      QFont f = font();
+      f.setItalic( true );
+      f.setPointSize( f.pointSize() + 1 );
+      setFont( f );
+      setText( expr );
       updateItem();
     }
 
     void updateItem()
     {
-      if ( result->customAppearance() )
-      {
+      if ( result->customAppearance() ) {
         setForeground( result->customTextColor() );
-        setBackground( (index & 1) ? result->customBackgroundColor1()
-                                   : result->customBackgroundColor2() );
-      }
-      else
-      {
+        setBackground( result->customBackgroundColor());
+      } else {
         const QPalette & pal = result->palette();
         setForeground( pal.text() );
-        setBackground( (index & 1) ? pal.base() : pal.alternateBase() );
+        setBackground( pal.base() );
       }
     }
 
@@ -87,15 +81,12 @@ class ExprItem : public BaseItem
     ResultDisplay * result;
 };
 
-class ResultDisplayItem : public BaseItem
+class ResultItem : public BaseItem
 {
   public:
-    ResultDisplayItem( ResultDisplay * r, int i, const HNumber & v )
-      : BaseItem( r )
+    ResultItem( ResultDisplay * r, int i, const HNumber & v )
+      : BaseItem( r ), index( i ), result( r ), value( v )
     {
-      value = v;
-      result = r;
-      index = i;
       setTextAlignment( Qt::AlignLeft );
       QFont f = font();
       f.setBold( true );
@@ -106,104 +97,49 @@ class ResultDisplayItem : public BaseItem
 
     void updateItem()
     {
-      setText( QString( "   " ) + result->formatNumber( value ) );
-
-      if ( result->customAppearance() )
-      {
+      setText( QString( "    =  " ) + ResultDisplay::formatNumber( value ) );
+      if ( result->customAppearance() ) {
         setForeground( result->customTextColor() );
-        setBackground( (index & 1) ? result->customBackgroundColor1() :
-        result->customBackgroundColor2() );
-      }
-      else
-      {
+        setBackground( result->customBackgroundColor() );
+      } else {
         const QPalette & pal = result->palette();
         setForeground( pal.text() );
-        setBackground( (index & 1) ? pal.base() : pal.alternateBase() );
+        setBackground( pal.alternateBase() );
       }
-
     }
 
   private:
     int             index;
+    ResultDisplay * result;
     HNumber         value;
-    ResultDisplay * result;
-};
-
-class ErrorItem: public BaseItem
-{
-  public:
-    ErrorItem( ResultDisplay * r, int i, const QString& m )
-      : BaseItem( r )
-    {
-      msg = m;
-      result = r;
-      index = i;
-      setTextAlignment( Qt::AlignRight );
-      setText( m );
-      //printf( "%s\n", qPrintable(msg) );
-      updateItem();
-    }
-
-    void updateItem()
-    {
-      if ( result->customAppearance() )
-      {
-        setForeground( result->customErrorColor() );
-        setBackground( (index & 1) ? result->customBackgroundColor1()
-                                   : result->customBackgroundColor2() );
-      }
-      else
-      {
-        const QPalette & pal = result->palette();
-        setForeground( Qt::red );
-        setBackground( (index & 1) ? pal.base() : pal.alternateBase() );
-      }
-    }
-
-  private:
-    int             index;
-    QString         msg;
-    ResultDisplay * result;
 };
 
 ResultDisplay::ResultDisplay( QWidget * parent, const char * name )
   : QListWidget( parent ), d( new ResultDisplay::Private )
 {
-  d->settings = Settings::instance();
-
   d->customAppearance = false;
   d->count = 0;
 
   d->customTextColor        = QColor( 255, 255, 255 );
-  d->customBackgroundColor1 = QColor(   0,   0,   0 );
-  d->customBackgroundColor2 = QColor(  21,  21,  21 );
-  d->customErrorColor       = QColor( 255,   0,   0 );
+  d->customBackgroundColor = QColor(   0,   0,   0 );
+  d->customBackgroundAlternateColor = QColor(  21,  21,  21 );
 
-  setObjectName( name );
   setBackgroundRole( QPalette::Base );
-
-  setSelectionMode( NoSelection );
+  setCursor( QCursor(Qt::PointingHandCursor) );
+  setFocusPolicy( Qt::NoFocus );
+  setHorizontalScrollMode( QAbstractItemView::ScrollPerPixel );
+  setLayoutDirection( Qt::LeftToRight );
   setMinimumWidth( 150 );
+  setObjectName( name );
+  setResizeMode( QListView::Adjust );
+  setSelectionMode( NoSelection );
+  setSpacing( 5 );
+  setVerticalScrollMode( QAbstractItemView::ScrollPerPixel );
 
   connect( this, SIGNAL( itemClicked( QListWidgetItem * ) ),
-           this, SLOT( copyToClipboard( QListWidgetItem * ) ) );
+           SLOT( copyToClipboard( QListWidgetItem * ) ) );
   connect( this, SIGNAL( itemDoubleClicked( QListWidgetItem * ) ),
-           this, SLOT( selectItem( QListWidgetItem * ) ) );
-
-  setFocusPolicy( Qt::NoFocus );
-
-  setHorizontalScrollMode( QAbstractItemView::ScrollPerPixel );
-  setVerticalScrollMode  ( QAbstractItemView::ScrollPerPixel );
-
-  setResizeMode( QListView::Adjust );
-
-  // ensure scrollbars background get system background color
-  QString colorName = QApplication::palette().background().color().name();
-  verticalScrollBar()->setStyleSheet  ( QString("QVerticalScrollBar   { background: %1; }").arg( colorName ) );
-  horizontalScrollBar()->setStyleSheet( QString("QHorizontalScrollBar { background: %1; }").arg( colorName ) );
-
-  setCursor( QCursor( Qt::PointingHandCursor ) );
-  setLayoutDirection( Qt::LeftToRight );
+           SLOT( selectItem( QListWidgetItem * ) ) );
 }
 
 QString ResultDisplay::asText() const
@@ -215,8 +151,8 @@ void ResultDisplay::append( const QString & expr, const HNumber & value )
 {
   ++d->count;
 
-  new ExprItem( this, d->count, expr );
-  new ResultDisplayItem( this, d->count, value );
+  new ExpressionItem( this, d->count, expr );
+  new ResultItem( this, d->count, value );
 
   d->contents.append( expr );
   char* str = HMath::format( value, 'e', DECPRECISION );
@@ -226,21 +162,7 @@ void ResultDisplay::append( const QString & expr, const HNumber & value )
   QTimer::singleShot( 0, this, SLOT( scrollEnd() ) );
 }
 
-void ResultDisplay::appendError( const QString & expr, const QString & msg )
-{
-  ++d->count;
-
-  new ExprItem(  this, d->count, expr );
-  new ErrorItem( this, d->count, msg );
-
-  d->contents.append( expr );
-  d->contents.append( msg );
-
-  QTimer::singleShot( 0, this, SLOT( scrollEnd() ) );
-}
-
-void ResultDisplay::appendHistory( const QStringList & history,
-                            const QStringList & results )
+void ResultDisplay::appendHistory( const QStringList & history, const QStringList & results )
 {
   for ( int i = 0 ; i < history.count(); i++ )
   {
@@ -250,8 +172,6 @@ void ResultDisplay::appendHistory( const QStringList & history,
     HNumber result( resultStr );
     if ( results.at(i) == "NaN" || ! result.isNan() )
       append( history.at(i), result );
-    else
-      appendError( history.at(i), resultStr );
   }
 }
 
@@ -265,19 +185,14 @@ bool ResultDisplay::customAppearance() const
   return d->customAppearance;
 }
 
-QColor ResultDisplay::customBackgroundColor1() const
+QColor ResultDisplay::customBackgroundColor() const
 {
-  return d->customBackgroundColor1;
+  return d->customBackgroundColor;
 }
 
-QColor ResultDisplay::customBackgroundColor2() const
+QColor ResultDisplay::customBackgroundAlternateColor() const
 {
-  return d->customBackgroundColor2;
-}
-
-QColor ResultDisplay::customErrorColor() const
-{
-  return d->customErrorColor;
+  return d->customBackgroundAlternateColor;
 }
 
 QColor ResultDisplay::customTextColor() const
@@ -285,16 +200,15 @@ QColor ResultDisplay::customTextColor() const
   return d->customTextColor;
 }
 
-QString ResultDisplay::formatNumber( const HNumber & value ) const
+QString ResultDisplay::formatNumber( const HNumber & value )
 {
-  char * str = HMath::format( value,
-                              value.format() ?
-                                value.format() : d->settings->resultFormat,
-                              d->settings->resultPrecision );
+  Settings * settings = Settings::instance();
+  char format = value.format() ? value.format() : settings->resultFormat;
+  char * str = HMath::format( value, format, settings->resultPrecision );
   QString s = QString::fromLatin1( str );
   free( str );
-  if ( d->settings->radixCharacter() != '.' )
-    s.replace( '.', d->settings->radixCharacter() );
+  if ( settings->radixCharacter() != '.' )
+    s.replace( '.', settings->radixCharacter() );
   return s;
 }
 
@@ -303,7 +217,7 @@ void ResultDisplay::setCustomAppearance( bool custom )
   d->customAppearance = custom;
   QColor bgcolor = QApplication::palette().base().color();
   if ( custom )
-    bgcolor = customBackgroundColor1();
+    bgcolor = customBackgroundColor();
 
   QPalette pal = palette();
   pal.setColor( QPalette::Background, bgcolor );
@@ -312,24 +226,18 @@ void ResultDisplay::setCustomAppearance( bool custom )
   refresh();
 }
 
-void ResultDisplay::setCustomBackgroundColor( const QColor & bg1, const QColor & bg2 )
+void ResultDisplay::setCustomBackgroundColor( const QColor & base, const QColor & alternate )
 {
-  d->customBackgroundColor1 = bg1;
-  d->customBackgroundColor2 = bg2;
+  d->customBackgroundColor = base;
+  d->customBackgroundAlternateColor = alternate;
   if( d->customAppearance )
   {
     QPalette pal = palette();
-    pal.setColor( QPalette::Base, bg1 );
+    pal.setColor( QPalette::Base, base );
     setPalette( pal );
   }
   refresh();
 }
-
-void ResultDisplay::setCustomErrorColor( const QColor & e )
-{
-  d->customErrorColor = e;
-  refresh();
-};
 
 void ResultDisplay::setCustomTextColor( const QColor & c )
 {
@@ -374,7 +282,7 @@ void ResultDisplay::copyToClipboard( QListWidgetItem * item )
     return;
 
   QClipboard * cb = QApplication::clipboard();
-  QString text = item->text().trimmed();
+  QString text = item->text().remove("=").trimmed();
   cb->setText( text, QClipboard::Clipboard );
   emit textCopied( text );
 }
@@ -396,3 +304,4 @@ void ResultDisplay::refresh()
   for ( int c = 0; c < d->count * 2; c++ )
     dynamic_cast<BaseItem *>( item(c) )->updateItem();
 }
+

@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2008-2009 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -21,58 +21,53 @@
 #define GUI_RESULTDISPLAY_HXX
 
 #include <QListWidget>
-
 #include <memory>
 
 class HNumber;
-
 class QListWidgetItem;
 
 class ResultDisplay : public QListWidget
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
+public:
     ResultDisplay( QWidget * parent = 0, const char * name = 0 );
     ~ResultDisplay();
 
     void    append( const QString & expr, const HNumber & value );
-    void    appendError( const QString & expr, const QString & msg );
-    void    appendHistory( const QStringList & history,
-                           const QStringList & results );
+    void    appendHistory( const QStringList & history, const QStringList & results );
+    QString asText() const;
+    int     count() const;
+    bool    customAppearance() const;
+    QColor  customBackgroundColor() const;
+    QColor  customBackgroundAlternateColor() const;
+    QColor  customTextColor() const;
     void    setCustomAppearance( bool );
-    void    setCustomBackgroundColor( const QColor & bg1, const QColor & bg2 );
-    void    setCustomErrorColor( const QColor & );
+    void    setCustomBackgroundColor( const QColor & base, const QColor & alternate );
     void    setCustomTextColor( const QColor & );
 
-    bool    customAppearance() const;
-    int     count() const;
-    QColor  customBackgroundColor1() const;
-    QColor  customBackgroundColor2() const;
-    QColor  customErrorColor() const;
-    QColor  customTextColor() const;
-    QString asText() const;
-    QString formatNumber( const HNumber & ) const;
+    static QString formatNumber( const HNumber & );
 
-  signals:
+signals:
     void textCopied( const QString & );
     void textSelected( const QString & );
 
-  public slots:
+public slots:
     void clear();
     void scrollEnd();
     void handleResultFormatChange();
     void handleResultPrecisionChange();
     void handleRadixCharacterChange();
 
-  private slots:
+private slots:
     void copyToClipboard( QListWidgetItem * );
     void selectItem( QListWidgetItem * );
     void refresh();
 
-  private:
+private:
     struct Private;
     const std::auto_ptr<Private> d;
+
     ResultDisplay( const ResultDisplay & );
     ResultDisplay & operator=( const ResultDisplay & );
 };
