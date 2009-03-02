@@ -94,7 +94,7 @@ void VariableTable::fillTable( QString term, bool insertAll )
   resizeColumnToContents( 0 );
   resizeColumnToContents( 1 );
 
-  if ( topLevelItemCount() > 0 )
+  if ( topLevelItemCount() > 0 || ! insertAll )
   {
     m_noMatchLabel->hide();
     sortItems( 0, Qt::AscendingOrder );
