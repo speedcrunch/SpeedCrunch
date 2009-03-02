@@ -21,8 +21,6 @@
 
 #include <QTreeWidget>
 
-#include <memory>
-
 class QLabel;
 class QString;
 
@@ -33,7 +31,7 @@ class VariableTable : public QTreeWidget
 {
   Q_OBJECT
 
-  std::auto_ptr<QLabel> m_noMatchLabel;
+  QLabel* m_noMatchLabel;
   Evaluator * m_evaluator;
 
 public:
