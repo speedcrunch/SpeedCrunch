@@ -24,14 +24,7 @@
 
 #include "gui/variabletable.hxx"
 
-#include "core/evaluator.hxx"
-
-#include <QHBoxLayout>
-#include <QHeaderView>
-#include <QLocale>
 #include <QPushButton>
-#include <QStringList>
-#include <QTimer>
 #include <QVBoxLayout>
 
 

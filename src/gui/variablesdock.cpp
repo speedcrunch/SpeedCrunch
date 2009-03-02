@@ -21,7 +21,6 @@
 #include "gui/variabletable.hxx"
 
 #include <QEvent>
-#include <QHeaderView>
 #include <QLabel>
 #include <QLineEdit>
 #include <QTimer>

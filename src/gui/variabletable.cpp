@@ -18,9 +18,9 @@
 
 #include "gui/variabletable.hxx"
 
+#include "math/hmath.hxx"
 #include "core/settings.hxx"
 #include "core/evaluator.hxx"
-#include "gui/mainwindow.hxx"
 
 #include <QLabel>
 #include <QHeaderView>
