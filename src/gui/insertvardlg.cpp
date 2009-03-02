@@ -32,7 +32,6 @@
 #include <QPushButton>
 #include <QStringList>
 #include <QTimer>
-#include <QTreeWidget>
 #include <QVBoxLayout>
 
 
