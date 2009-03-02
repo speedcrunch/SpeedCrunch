@@ -22,34 +22,67 @@
 #include "core/evaluator.hxx"
 
 #include <QLabel>
+#include <QHBoxLayout>
 #include <QHeaderView>
+#include <QLineEdit>
+#include <QTimer>
+#include <QTreeWidget>
 
 VariableTable::VariableTable( Evaluator * eval, bool hideHeaders, QWidget * parent )
-  : QTreeWidget( parent ),
-    m_noMatchLabel( new QLabel( this ) ),
+  : QWidget( parent ),
+    m_variables( new QTreeWidget( this ) ),
+    m_searchLabel( new QLabel( this ) ),
+    m_searchFilter( new QLineEdit( this ) ),
+    m_filterTimer( new QTimer( this ) ),
+    m_noMatchLabel( new QLabel( m_variables ) ),
     m_evaluator( eval )
 {
+  connect( m_variables, SIGNAL( itemActivated( QTreeWidgetItem *, int ) ),
+          SLOT( catchItemActivated( QTreeWidgetItem *, int ) ) );
+  connect( m_variables, SIGNAL( itemDoubleClicked( QTreeWidgetItem *, int ) ),
+          SLOT( catchItemDoubleClicked( QTreeWidgetItem *, int ) ) );
+
+  connect( m_searchFilter, SIGNAL( textChanged( const QString& ) ),
+          SLOT( triggerFilter() ) );
+
+  m_filterTimer->setInterval( 500 );
+  m_filterTimer->setSingleShot( true );
+  connect( m_filterTimer, SIGNAL( timeout() ), SLOT( filter() ) );
+
+  m_variables->setAutoScroll( true );
+  m_variables->setHorizontalScrollBarPolicy( Qt::ScrollBarAsNeeded );
+  m_variables->setHorizontalScrollMode( QAbstractItemView::ScrollPerPixel );
+  m_variables->setColumnCount( 2 );
+  m_variables->setAlternatingRowColors( true );
+  m_variables->setRootIsDecorated( false );
+  m_variables->setEditTriggers( QTreeWidget::NoEditTriggers );
+  m_variables->setSelectionBehavior( QTreeWidget::SelectRows );
+
   m_noMatchLabel->setAlignment( Qt::AlignCenter );
   m_noMatchLabel->adjustSize();
   m_noMatchLabel->hide();
 
-  setAutoScroll( true );
-  setHorizontalScrollBarPolicy( Qt::ScrollBarAsNeeded );
-  setHorizontalScrollMode( QAbstractItemView::ScrollPerPixel );
+  QWidget * searchBox = new QWidget( this );
+  QHBoxLayout * searchLayout = new QHBoxLayout;
+  searchLayout->addWidget( m_searchLabel );
+  searchLayout->addWidget( m_searchFilter );
+  searchLayout->setMargin( 0 );
+  searchBox->setLayout( searchLayout );
 
-  setColumnCount( 2 );
-  setAlternatingRowColors( true );
-  setRootIsDecorated( false );
-  setEditTriggers( QTreeWidget::NoEditTriggers );
-  setSelectionBehavior( QTreeWidget::SelectRows );
+  QVBoxLayout* layout = new QVBoxLayout;
+  layout->setMargin( 3 );
+  layout->addWidget( searchBox );
+  layout->addWidget( m_variables );
+  setLayout( layout );
 
   retranslateText();
 
-  if ( hideHeaders ) header()->hide();
+  if ( hideHeaders ) m_variables->header()->hide();
 }
 
 VariableTable::~VariableTable()
 {
+  m_filterTimer->stop();
 }
 
 QString VariableTable::formatValue( const HNumber & value )
@@ -62,17 +95,21 @@ QString VariableTable::formatValue( const HNumber & value )
   return s;
 }
 
-void VariableTable::fillTable( QString term, bool insertAll )
+void VariableTable::fillTable( bool insertAll )
 {
   setUpdatesEnabled( false );
 
-  clear();
+  m_filterTimer->stop();
+
+  QString term = m_searchFilter->text();
+
+  m_variables->clear();
 
   QVector<Variable> variables = m_evaluator->variables();
   for ( int k = 0; k < variables.count(); k++ )
   {
       if ( ! insertAll &&
-              ( variables.at(k).name.toUpper() == "ANS"
+               ( variables.at(k).name.toUpper() == "ANS"
               || variables.at(k).name.toUpper() == "PHI"
               || variables.at(k).name.toUpper() == "PI" ) )
         continue;
@@ -85,25 +122,25 @@ void VariableTable::fillTable( QString term, bool insertAll )
               || str.at(0).contains( term, Qt::CaseInsensitive )
               || str.at(1).contains( term, Qt::CaseInsensitive ) )
       {
-        QTreeWidgetItem * item = new QTreeWidgetItem( this, str );
+        QTreeWidgetItem * item = new QTreeWidgetItem( m_variables, str );
         item->setTextAlignment( 0, Qt::AlignLeft | Qt::AlignVCenter );
         item->setTextAlignment( 1, Qt::AlignLeft | Qt::AlignVCenter );
       }
   }
 
-  resizeColumnToContents( 0 );
-  resizeColumnToContents( 1 );
+  m_variables->resizeColumnToContents( 0 );
+  m_variables->resizeColumnToContents( 1 );
 
-  if ( topLevelItemCount() > 0 || ! insertAll )
+  if ( m_variables->topLevelItemCount() > 0 || ! insertAll )
   {
     m_noMatchLabel->hide();
-    sortItems( 0, Qt::AscendingOrder );
+    m_variables->sortItems( 0, Qt::AscendingOrder );
 
     int group = 3;
-    if ( topLevelItemCount() >= 2 * group )
-      for ( int i = 0; i < topLevelItemCount(); i++ )
+    if ( m_variables->topLevelItemCount() >= 2 * group )
+      for ( int i = 0; i < m_variables->topLevelItemCount(); i++ )
       {
-        QTreeWidgetItem * item = topLevelItem(i);
+        QTreeWidgetItem * item = m_variables->topLevelItem(i);
         QBrush c = (((int)(i / group)) & 1) ? palette().base()
                                             : palette().alternateBase();
         item->setBackground( 0, c );
@@ -112,20 +149,64 @@ void VariableTable::fillTable( QString term, bool insertAll )
   }
   else
   {
-    m_noMatchLabel->setGeometry( geometry() );
+    m_noMatchLabel->setGeometry( m_variables->geometry() );
     m_noMatchLabel->show();
     m_noMatchLabel->raise();
   }
 
   setUpdatesEnabled( true );
-};
+}
 
 void VariableTable::retranslateText()
 {
   QStringList titles;
   titles << tr( "Name"  );
   titles << tr( "Value" );
-  setHeaderLabels( titles );
+  m_variables->setHeaderLabels( titles );
 
+  m_searchLabel->setText( tr( "Search" ) );
   m_noMatchLabel->setText( tr( "No match found" ) );
+
+  filter();
 }
+
+QList< QTreeWidgetItem * > VariableTable::selectedItems() const
+{
+  return m_variables->selectedItems();
+}
+
+QTreeWidgetItem * VariableTable::currentItem() const
+{
+  return m_variables->currentItem();
+}
+
+// public slot
+void VariableTable::filter()
+{
+  fillTable();
+}
+
+// protected slots
+//
+void VariableTable::catchItemActivated( QTreeWidgetItem * item, int column )
+{
+  emit itemActivated( item, column );
+}
+
+void VariableTable::catchItemDoubleClicked( QTreeWidgetItem * item, int column )
+{
+  emit itemDoubleClicked( item, column );
+}
+
+void VariableTable::clearSelection( QTreeWidgetItem * item )
+{
+  m_variables->clearSelection();
+  emit itemActivated( item, 0 );
+}
+
+void VariableTable::triggerFilter()
+{
+  m_filterTimer->stop();
+  m_filterTimer->start();
+}
+

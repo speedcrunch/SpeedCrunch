@@ -19,27 +19,55 @@
 #ifndef GUI_VARIABLESTABLE_HXX
 #define GUI_VARIABLESTABLE_HXX
 
-#include <QTreeWidget>
+#include <QWidget>
 
 class QLabel;
+class QLineEdit;
 class QString;
+class QTimer;
+class QTreeWidget;
+class QTreeWidgetItem;
+
+template<class T>
+class QList;
 
 class Evaluator;
 class HNumber;
 
-class VariableTable : public QTreeWidget
+class VariableTable : public QWidget
 {
   Q_OBJECT
 
-  QLabel* m_noMatchLabel;
+  QTreeWidget * m_variables;
+  QLabel      * m_searchLabel;
+  QLineEdit   * m_searchFilter;
+  QTimer      * m_filterTimer;
+  QLabel      * m_noMatchLabel;
+
   Evaluator * m_evaluator;
 
 public:
   VariableTable( Evaluator * evaluator, bool hideHeaders, QWidget * parent = 0 );
   ~VariableTable();
 
-  void fillTable( QString = "", bool = true );
+  void fillTable( bool = true );
+  QTreeWidgetItem* currentItem() const;
+  QList< QTreeWidgetItem* > selectedItems() const;
+
   void retranslateText();
+
+signals:
+  void itemActivated( QTreeWidgetItem *, int );
+  void itemDoubleClicked( QTreeWidgetItem *, int );
+
+public slots:
+  void filter();
+
+protected slots:
+  void catchItemActivated( QTreeWidgetItem *, int );
+  void catchItemDoubleClicked( QTreeWidgetItem *, int );
+  void clearSelection( QTreeWidgetItem * );
+  void triggerFilter();
 
 private:
   QString formatValue( const HNumber & value );

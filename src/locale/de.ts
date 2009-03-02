@@ -523,17 +523,17 @@
 <context>
     <name>DeleteVariableDlg</name>
     <message>
-        <location filename="../gui/deletevardlg.cpp" line="56"/>
+        <location filename="../gui/deletevardlg.cpp" line="57"/>
         <source>&amp;Delete</source>
         <translation>Lösch&amp;e</translation>
     </message>
     <message>
-        <location filename="../gui/deletevardlg.cpp" line="60"/>
+        <location filename="../gui/deletevardlg.cpp" line="61"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>
     <message>
-        <location filename="../gui/deletevardlg.cpp" line="45"/>
+        <location filename="../gui/deletevardlg.cpp" line="46"/>
         <source>Delete Variable</source>
         <translation>Lösche Variable</translation>
     </message>
@@ -1039,17 +1039,17 @@
 <context>
     <name>InsertVariableDlg</name>
     <message>
-        <location filename="../gui/insertvardlg.cpp" line="54"/>
+        <location filename="../gui/insertvardlg.cpp" line="55"/>
         <source>&amp;Insert</source>
         <translation>&amp;Einfügen</translation>
     </message>
     <message>
-        <location filename="../gui/insertvardlg.cpp" line="58"/>
+        <location filename="../gui/insertvardlg.cpp" line="59"/>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <location filename="../gui/insertvardlg.cpp" line="45"/>
+        <location filename="../gui/insertvardlg.cpp" line="46"/>
         <source>Insert Variable</source>
         <translation>Variable einfügen</translation>
     </message>
@@ -1659,32 +1659,32 @@ Falls nein, werden aktuelle Variablen und Anzeigen gelöscht.</translation>
 <context>
     <name>VariableTable</name>
     <message>
-        <location filename="../gui/variabletable.cpp" line="127"/>
+        <location filename="../gui/variabletable.cpp" line="163"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="../gui/variabletable.cpp" line="128"/>
+        <location filename="../gui/variabletable.cpp" line="164"/>
         <source>Value</source>
         <translation>Wert</translation>
     </message>
     <message>
-        <location filename="../gui/variabletable.cpp" line="131"/>
+        <location filename="../gui/variabletable.cpp" line="168"/>
         <source>No match found</source>
         <translation>Keine Übereinstimmung</translation>
+    </message>
+    <message>
+        <location filename="../gui/variabletable.cpp" line="167"/>
+        <source>Search</source>
+        <translation>Suchen</translation>
     </message>
 </context>
 <context>
     <name>VariablesDock</name>
     <message>
-        <location filename="../gui/variablesdock.cpp" line="95"/>
+        <location filename="../gui/variablesdock.cpp" line="63"/>
         <source>Variables</source>
         <translation>Variablen</translation>
-    </message>
-    <message>
-        <location filename="../gui/variablesdock.cpp" line="96"/>
-        <source>Search</source>
-        <translation>Suchen</translation>
     </message>
 </context>
 </TS>

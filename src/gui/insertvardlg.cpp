@@ -25,6 +25,7 @@
 #include "gui/variabletable.hxx"
 
 #include <QPushButton>
+#include <QTreeWidget>
 #include <QVBoxLayout>
 
 

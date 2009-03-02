@@ -523,17 +523,17 @@
 <context>
     <name>DeleteVariableDlg</name>
     <message>
-        <location filename="../gui/deletevardlg.cpp" line="45"/>
+        <location filename="../gui/deletevardlg.cpp" line="46"/>
         <source>Delete Variable</source>
         <translation>删除变量</translation>
     </message>
     <message>
-        <location filename="../gui/deletevardlg.cpp" line="56"/>
+        <location filename="../gui/deletevardlg.cpp" line="57"/>
         <source>&amp;Delete</source>
         <translation>删除(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../gui/deletevardlg.cpp" line="60"/>
+        <location filename="../gui/deletevardlg.cpp" line="61"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
@@ -1039,17 +1039,17 @@
 <context>
     <name>InsertVariableDlg</name>
     <message>
-        <location filename="../gui/insertvardlg.cpp" line="45"/>
+        <location filename="../gui/insertvardlg.cpp" line="46"/>
         <source>Insert Variable</source>
         <translation>插入变量</translation>
     </message>
     <message>
-        <location filename="../gui/insertvardlg.cpp" line="54"/>
+        <location filename="../gui/insertvardlg.cpp" line="55"/>
         <source>&amp;Insert</source>
         <translation>插入(&amp;I)</translation>
     </message>
     <message>
-        <location filename="../gui/insertvardlg.cpp" line="58"/>
+        <location filename="../gui/insertvardlg.cpp" line="59"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -1658,32 +1658,32 @@ Left click the icon to restore it or right click for options.</source>
 <context>
     <name>VariableTable</name>
     <message>
-        <location filename="../gui/variabletable.cpp" line="127"/>
+        <location filename="../gui/variabletable.cpp" line="163"/>
         <source>Name</source>
         <translation>名称</translation>
     </message>
     <message>
-        <location filename="../gui/variabletable.cpp" line="128"/>
+        <location filename="../gui/variabletable.cpp" line="164"/>
         <source>Value</source>
         <translation>值</translation>
     </message>
     <message>
-        <location filename="../gui/variabletable.cpp" line="131"/>
+        <location filename="../gui/variabletable.cpp" line="168"/>
         <source>No match found</source>
         <translation>没有找到匹配的</translation>
+    </message>
+    <message>
+        <location filename="../gui/variabletable.cpp" line="167"/>
+        <source>Search</source>
+        <translation>搜索</translation>
     </message>
 </context>
 <context>
     <name>VariablesDock</name>
     <message>
-        <location filename="../gui/variablesdock.cpp" line="95"/>
+        <location filename="../gui/variablesdock.cpp" line="63"/>
         <source>Variables</source>
         <translation>变量</translation>
-    </message>
-    <message>
-        <location filename="../gui/variablesdock.cpp" line="96"/>
-        <source>Search</source>
-        <translation>搜索</translation>
     </message>
 </context>
 </TS>

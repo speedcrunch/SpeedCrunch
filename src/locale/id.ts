@@ -524,17 +524,17 @@
 <context>
     <name>DeleteVariableDlg</name>
     <message>
-        <location filename="../gui/deletevardlg.cpp" line="56"/>
+        <location filename="../gui/deletevardlg.cpp" line="57"/>
         <source>&amp;Delete</source>
         <translation>&amp;Hapus</translation>
     </message>
     <message>
-        <location filename="../gui/deletevardlg.cpp" line="60"/>
+        <location filename="../gui/deletevardlg.cpp" line="61"/>
         <source>Close</source>
         <translation>Tutup</translation>
     </message>
     <message>
-        <location filename="../gui/deletevardlg.cpp" line="45"/>
+        <location filename="../gui/deletevardlg.cpp" line="46"/>
         <source>Delete Variable</source>
         <translation>Hapus Variabel</translation>
     </message>
@@ -1040,17 +1040,17 @@
 <context>
     <name>InsertVariableDlg</name>
     <message>
-        <location filename="../gui/insertvardlg.cpp" line="54"/>
+        <location filename="../gui/insertvardlg.cpp" line="55"/>
         <source>&amp;Insert</source>
         <translation>&amp;Sisipkan</translation>
     </message>
     <message>
-        <location filename="../gui/insertvardlg.cpp" line="58"/>
+        <location filename="../gui/insertvardlg.cpp" line="59"/>
         <source>Cancel</source>
         <translation>Batal</translation>
     </message>
     <message>
-        <location filename="../gui/insertvardlg.cpp" line="45"/>
+        <location filename="../gui/insertvardlg.cpp" line="46"/>
         <source>Insert Variable</source>
         <translation>Sisipkan Variabel</translation>
     </message>
@@ -1657,32 +1657,32 @@ If no, current variables and display will be cleared.</source>
 <context>
     <name>VariableTable</name>
     <message>
-        <location filename="../gui/variabletable.cpp" line="127"/>
+        <location filename="../gui/variabletable.cpp" line="163"/>
         <source>Name</source>
         <translation>Nama</translation>
     </message>
     <message>
-        <location filename="../gui/variabletable.cpp" line="128"/>
+        <location filename="../gui/variabletable.cpp" line="164"/>
         <source>Value</source>
         <translation>Nilai</translation>
     </message>
     <message>
-        <location filename="../gui/variabletable.cpp" line="131"/>
+        <location filename="../gui/variabletable.cpp" line="168"/>
         <source>No match found</source>
         <translation>Tidak ada yang cocok</translation>
+    </message>
+    <message>
+        <location filename="../gui/variabletable.cpp" line="167"/>
+        <source>Search</source>
+        <translation>Cari</translation>
     </message>
 </context>
 <context>
     <name>VariablesDock</name>
     <message>
-        <location filename="../gui/variablesdock.cpp" line="95"/>
+        <location filename="../gui/variablesdock.cpp" line="63"/>
         <source>Variables</source>
         <translation>Variabel</translation>
-    </message>
-    <message>
-        <location filename="../gui/variablesdock.cpp" line="96"/>
-        <source>Search</source>
-        <translation>Cari</translation>
     </message>
 </context>
 </TS>

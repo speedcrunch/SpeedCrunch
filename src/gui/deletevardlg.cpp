@@ -26,6 +26,7 @@
 #include "core/evaluator.hxx"
 
 #include <QPushButton>
+#include <QTreeWidget>
 #include <QVBoxLayout>
 
 
@@ -89,7 +90,7 @@ DeleteVariableDlg::~DeleteVariableDlg()
 
 void DeleteVariableDlg::updateList()
 {
-  d->list->fillTable( "", false );
+  d->list->fillTable( false );
 }
 
 
