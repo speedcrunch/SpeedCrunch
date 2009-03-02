@@ -18,21 +18,6 @@
         <translation>最初概念来自于</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Original author</source>
-        <translation type="obsolete">最初作者</translation>
-    </message>
-    <message>
-        <location filename="" line="7471221"/>
-        <source>Current maintainer</source>
-        <translation type="obsolete">当前维护者</translation>
-    </message>
-    <message>
-        <location filename="" line="7471221"/>
-        <source>Developers</source>
-        <translation type="obsolete">开发人员</translation>
-    </message>
-    <message>
         <location filename="../gui/aboutbox.cpp" line="234"/>
         <source>Special thanks to</source>
         <translation>特别感谢</translation>
@@ -185,12 +170,12 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="225"/>
         <source>Maintainer and core developer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">当前维护者</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="226"/>
         <source>Original author and core developer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">最初作者</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="227"/>
@@ -224,39 +209,21 @@
     </message>
 </context>
 <context>
-    <name>BookDock</name>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="189"/>
-        <source>Back</source>
-        <translation type="obsolete">后退</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="190"/>
-        <source>Forward</source>
-        <translation type="obsolete">前进</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="191"/>
-        <source>Index</source>
-        <translation type="obsolete">索引</translation>
-    </message>
-</context>
-<context>
     <name>BookDock::Private</name>
     <message>
         <location filename="../gui/bookdock.cpp" line="180"/>
         <source>Back</source>
-        <translation type="unfinished">后退</translation>
+        <translation>后退</translation>
     </message>
     <message>
         <location filename="../gui/bookdock.cpp" line="181"/>
         <source>Forward</source>
-        <translation type="unfinished">前进</translation>
+        <translation>前进</translation>
     </message>
     <message>
         <location filename="../gui/bookdock.cpp" line="182"/>
         <source>Index</source>
-        <translation type="unfinished">索引</translation>
+        <translation>索引</translation>
     </message>
 </context>
 <context>
@@ -559,16 +526,6 @@
         <location filename="../gui/deletevardlg.cpp" line="45"/>
         <source>Delete Variable</source>
         <translation>删除变量</translation>
-    </message>
-    <message>
-        <location filename="../gui/deletevardlg.cpp" line="72"/>
-        <source>Name</source>
-        <translation type="obsolete">名称</translation>
-    </message>
-    <message>
-        <location filename="../gui/deletevardlg.cpp" line="73"/>
-        <source>Value</source>
-        <translation type="obsolete">值</translation>
     </message>
     <message>
         <location filename="../gui/deletevardlg.cpp" line="56"/>
@@ -1087,16 +1044,6 @@
         <translation>插入变量</translation>
     </message>
     <message>
-        <location filename="../gui/insertvardlg.cpp" line="89"/>
-        <source>Name</source>
-        <translation type="obsolete">名称</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="90"/>
-        <source>Value</source>
-        <translation type="obsolete">值</translation>
-    </message>
-    <message>
         <location filename="../gui/insertvardlg.cpp" line="54"/>
         <source>&amp;Insert</source>
         <translation>插入(&amp;I)</translation>
@@ -1438,11 +1385,6 @@
         <translation>常量(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="649"/>
-        <source>Full &amp;Screen Mode</source>
-        <translation type="obsolete">全屏模式(&amp;S)</translation>
-    </message>
-    <message>
         <location filename="../gui/mainwindow.cpp" line="538"/>
         <source>&amp;Functions</source>
         <translation>函数(&amp;F)</translation>
@@ -1456,11 +1398,6 @@
         <location filename="../gui/mainwindow.cpp" line="540"/>
         <source>&amp;Keypad</source>
         <translation>键盘(&amp;K)</translation>
-    </message>
-    <message>
-        <location filename="../gui/mainwindow.cpp" line="653"/>
-        <source>Hide &amp;Menu Bar</source>
-        <translation type="obsolete">隐藏菜单栏(&amp;M)</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="543"/>
@@ -1508,11 +1445,6 @@
         <translation>科学(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="663"/>
-        <source>System &amp;Default</source>
-        <translation type="obsolete">系统默认(&amp;D)</translation>
-    </message>
-    <message>
         <location filename="../gui/mainwindow.cpp" line="757"/>
         <source>&amp;Session</source>
         <translation>会话(&amp;S)</translation>
@@ -1556,11 +1488,6 @@
         <location filename="../gui/mainwindow.cpp" line="765"/>
         <source>Radix &amp;Character</source>
         <translation>基数字符(&amp;C)</translation>
-    </message>
-    <message>
-        <location filename="../gui/mainwindow.cpp" line="907"/>
-        <source>&amp;Language</source>
-        <translation type="obsolete">语言(&amp;L)</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="766"/>
@@ -1690,12 +1617,12 @@ Left click the icon to restore it or right click for options.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="537"/>
         <source>F&amp;ull Screen Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>全屏模式(&amp;S)</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="542"/>
         <source>&amp;Menu Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>隐藏菜单栏(&amp;M)</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="552"/>
@@ -1710,17 +1637,17 @@ Left click the icon to restore it or right click for options.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="571"/>
         <source>&amp;Language...</source>
-        <translation type="unfinished"></translation>
+        <translation>语言(&amp;L)</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2526"/>
         <source>System Default</source>
-        <translation type="unfinished"></translation>
+        <translation>系统默认(&amp;D)</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2532"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>语言</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2533"/>
@@ -1733,17 +1660,17 @@ Left click the icon to restore it or right click for options.</source>
     <message>
         <location filename="../gui/variabletable.cpp" line="127"/>
         <source>Name</source>
-        <translation type="unfinished">名称</translation>
+        <translation>名称</translation>
     </message>
     <message>
         <location filename="../gui/variabletable.cpp" line="128"/>
         <source>Value</source>
-        <translation type="unfinished">值</translation>
+        <translation>值</translation>
     </message>
     <message>
         <location filename="../gui/variabletable.cpp" line="131"/>
         <source>No match found</source>
-        <translation type="unfinished">没有找到匹配的</translation>
+        <translation>没有找到匹配的</translation>
     </message>
 </context>
 <context>
@@ -1757,11 +1684,6 @@ Left click the icon to restore it or right click for options.</source>
         <location filename="../gui/variablesdock.cpp" line="96"/>
         <source>Search</source>
         <translation>搜索</translation>
-    </message>
-    <message>
-        <location filename="../gui/variablesdock.cpp" line="134"/>
-        <source>No match found</source>
-        <translation type="obsolete">没有找到匹配的</translation>
     </message>
 </context>
 </TS>

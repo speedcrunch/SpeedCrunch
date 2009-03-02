@@ -63,16 +63,6 @@
         <translation>Spaniolă</translation>
     </message>
     <message>
-        <location filename="" line="3080296"/>
-        <source>Original author</source>
-        <translation type="obsolete">Autor </translation>
-    </message>
-    <message>
-        <location filename="" line="3080296"/>
-        <source>Current maintainer</source>
-        <translation type="obsolete">Mentenanţă</translation>
-    </message>
-    <message>
         <location filename="../gui/aboutbox.cpp" line="232"/>
         <source>Based on original idea from</source>
         <translation>În baza unei idei originale</translation>
@@ -143,11 +133,6 @@
         <translation>Română</translation>
     </message>
     <message>
-        <location filename="" line="3080296"/>
-        <source>Developers</source>
-        <translation type="obsolete">Dezvoltatori</translation>
-    </message>
-    <message>
         <location filename="../gui/aboutbox.cpp" line="290"/>
         <source>Indonesian</source>
         <translation>Indoneziană</translation>
@@ -190,12 +175,12 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="225"/>
         <source>Maintainer and core developer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Mentenanţă</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="226"/>
         <source>Original author and core developer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Autor </translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="227"/>
@@ -224,39 +209,21 @@
     </message>
 </context>
 <context>
-    <name>BookDock</name>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="189"/>
-        <source>Back</source>
-        <translation type="obsolete">Înapoi</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="190"/>
-        <source>Forward</source>
-        <translation type="obsolete">Înainte</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="191"/>
-        <source>Index</source>
-        <translation type="obsolete">Index</translation>
-    </message>
-</context>
-<context>
     <name>BookDock::Private</name>
     <message>
         <location filename="../gui/bookdock.cpp" line="180"/>
         <source>Back</source>
-        <translation type="unfinished">Înapoi</translation>
+        <translation>Înapoi</translation>
     </message>
     <message>
         <location filename="../gui/bookdock.cpp" line="181"/>
         <source>Forward</source>
-        <translation type="unfinished">Înainte</translation>
+        <translation>Înainte</translation>
     </message>
     <message>
         <location filename="../gui/bookdock.cpp" line="182"/>
         <source>Index</source>
-        <translation type="unfinished">Index</translation>
+        <translation>Index</translation>
     </message>
 </context>
 <context>
@@ -555,16 +522,6 @@
 </context>
 <context>
     <name>DeleteVariableDlg</name>
-    <message>
-        <location filename="../gui/deletevardlg.cpp" line="72"/>
-        <source>Name</source>
-        <translation type="obsolete">Nume</translation>
-    </message>
-    <message>
-        <location filename="../gui/deletevardlg.cpp" line="73"/>
-        <source>Value</source>
-        <translation type="obsolete">Valoare</translation>
-    </message>
     <message>
         <location filename="../gui/deletevardlg.cpp" line="56"/>
         <source>&amp;Delete</source>
@@ -1082,16 +1039,6 @@
 <context>
     <name>InsertVariableDlg</name>
     <message>
-        <location filename="../gui/insertvardlg.cpp" line="89"/>
-        <source>Name</source>
-        <translation type="obsolete">Nume</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="90"/>
-        <source>Value</source>
-        <translation type="obsolete">Valoare</translation>
-    </message>
-    <message>
         <location filename="../gui/insertvardlg.cpp" line="54"/>
         <source>&amp;Insert</source>
         <translation>&amp;Inserare</translation>
@@ -1549,11 +1496,6 @@ Daca nu, variabilele curente şi ecranul vor fi curaţate.</translation>
         <translation>&amp;Constante</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="649"/>
-        <source>Full &amp;Screen Mode</source>
-        <translation type="obsolete">Afisează pe tot &amp;ecranul</translation>
-    </message>
-    <message>
         <location filename="../gui/mainwindow.cpp" line="538"/>
         <source>&amp;Functions</source>
         <translation>&amp;Funcţii</translation>
@@ -1567,11 +1509,6 @@ Daca nu, variabilele curente şi ecranul vor fi curaţate.</translation>
         <location filename="../gui/mainwindow.cpp" line="540"/>
         <source>&amp;Keypad</source>
         <translation>&amp;Keypad</translation>
-    </message>
-    <message>
-        <location filename="../gui/mainwindow.cpp" line="653"/>
-        <source>Hide &amp;Menu Bar</source>
-        <translation type="obsolete">Ascunde &amp;meniul aplicaţiei</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="543"/>
@@ -1619,11 +1556,6 @@ Daca nu, variabilele curente şi ecranul vor fi curaţate.</translation>
         <translation>&amp;Ştiinţific</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="663"/>
-        <source>System &amp;Default</source>
-        <translation type="obsolete">&amp;Valoarea implicită a sistemului</translation>
-    </message>
-    <message>
         <location filename="../gui/mainwindow.cpp" line="758"/>
         <source>&amp;Edit</source>
         <translation>&amp;Editare</translation>
@@ -1664,11 +1596,6 @@ Daca nu, variabilele curente şi ecranul vor fi curaţate.</translation>
         <translation>Reprezentare punct &amp;zecimal</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="907"/>
-        <source>&amp;Language</source>
-        <translation type="obsolete">&amp;Limbaj</translation>
-    </message>
-    <message>
         <location filename="../gui/mainwindow.cpp" line="766"/>
         <source>&amp;Help</source>
         <translation>&amp;Ajutor</translation>
@@ -1691,12 +1618,12 @@ Daca nu, variabilele curente şi ecranul vor fi curaţate.</translation>
     <message>
         <location filename="../gui/mainwindow.cpp" line="537"/>
         <source>F&amp;ull Screen Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Afiseazăpe tot &amp;ecranul</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="542"/>
         <source>&amp;Menu Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Ascunde &amp;meniul aplicaţiei</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="552"/>
@@ -1711,17 +1638,17 @@ Daca nu, variabilele curente şi ecranul vor fi curaţate.</translation>
     <message>
         <location filename="../gui/mainwindow.cpp" line="571"/>
         <source>&amp;Language...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Limbaj...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2526"/>
         <source>System Default</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Valoarea implicităa sistemului</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2532"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Limbaj</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2533"/>
@@ -1734,17 +1661,17 @@ Daca nu, variabilele curente şi ecranul vor fi curaţate.</translation>
     <message>
         <location filename="../gui/variabletable.cpp" line="127"/>
         <source>Name</source>
-        <translation type="unfinished">Nume</translation>
+        <translation>Nume</translation>
     </message>
     <message>
         <location filename="../gui/variabletable.cpp" line="128"/>
         <source>Value</source>
-        <translation type="unfinished">Valoare</translation>
+        <translation>Valoare</translation>
     </message>
     <message>
         <location filename="../gui/variabletable.cpp" line="131"/>
         <source>No match found</source>
-        <translation type="unfinished">Nici un rezultat</translation>
+        <translation>Nici un rezultat</translation>
     </message>
 </context>
 <context>
@@ -1758,11 +1685,6 @@ Daca nu, variabilele curente şi ecranul vor fi curaţate.</translation>
         <location filename="../gui/variablesdock.cpp" line="96"/>
         <source>Search</source>
         <translation>Caută</translation>
-    </message>
-    <message>
-        <location filename="../gui/variablesdock.cpp" line="134"/>
-        <source>No match found</source>
-        <translation type="obsolete">Nici un rezultat</translation>
     </message>
 </context>
 </TS>

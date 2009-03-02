@@ -3,54 +3,9 @@
 <context>
     <name>AboutBox</name>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Copyright (C) 2004 Ariya Hidayat (ariya@kde.org)</source>
-        <translation type="obsolete">Copyright (C) 2004 Ariya Hidayat (ariya@kde.org)</translation>
-    </message>
-    <message>
-        <location filename="" line="7471221"/>
-        <source>SpeedCrunch version</source>
-        <translation type="obsolete">SpeedCrunch-Version</translation>
-    </message>
-    <message>
-        <location filename="" line="7471221"/>
-        <source>Author/Maintainer</source>
-        <translation type="obsolete">Autor/Opiekun</translation>
-    </message>
-    <message>
-        <location filename="" line="7471221"/>
-        <source>Based on idea from</source>
-        <translation type="obsolete">Na podstawie pomysłu</translation>
-    </message>
-    <message>
         <location filename="../gui/aboutbox.cpp" line="234"/>
         <source>Special thanks to</source>
         <translation>Specjalne podziękowania dla</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="237"/>
-        <source>Artworks are courtesy of</source>
-        <translation type="obsolete">Grafika dzięki uprzejmości</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="237"/>
-        <source>Thanks to:</source>
-        <translation type="obsolete">Podziękowania dla:</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="237"/>
-        <source>and many others.</source>
-        <translation type="obsolete">i wielu innych.</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="237"/>
-        <source>Visit http://speedcrunch.berlios.de for more information!</source>
-        <translation type="obsolete">Aby dowiedzieć się więcej, odwiedź http://speedcrunch.berlios.de!</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="237"/>
-        <source>OK</source>
-        <translation type="obsolete">OK</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="286"/>
@@ -94,29 +49,9 @@
         <translation>SpeedCrunch - wersja %1</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="218"/>
-        <source>Copyright (C) 2004,2005 Ariya Hidayat (ariya@kde.org)</source>
-        <translation type="obsolete">Copyright (C) 2004,2005 Ariya Hidayat (ariya@kde.org)</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="218"/>
-        <source>http://speedcrunch.berlios.de</source>
-        <translation type="obsolete">http://speedcrunch.berlios.de</translation>
-    </message>
-    <message>
         <location filename="../gui/aboutbox.cpp" line="290"/>
         <source>Indonesian</source>
         <translation>Indonezyjski</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="293"/>
-        <source>Translators:</source>
-        <translation type="obsolete">Tłumacze:</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="293"/>
-        <source>Copyright (C) 2004-2005 Ariya Hidayat (ariya@kde.org)</source>
-        <translation type="obsolete">Copyright (C) 2004,2005 Ariya Hidayat (ariya@kde.org) {2004-2005 ?}</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="284"/>
@@ -144,34 +79,9 @@
         <translation>Hiszpański</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="301"/>
-        <source>http://www.speedcrunch.org</source>
-        <translation type="obsolete">http://www.speedcrunch.org</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="301"/>
-        <source>Original author</source>
-        <translation type="obsolete">Pierwotny autor</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="301"/>
-        <source>Current maintainer</source>
-        <translation type="obsolete">Obecny opiekun</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="301"/>
-        <source>Previous maintainers</source>
-        <translation type="obsolete">Poprzedni opiekunowie</translation>
-    </message>
-    <message>
         <location filename="../gui/aboutbox.cpp" line="232"/>
         <source>Based on original idea from</source>
         <translation>Na podstawie pomysłu</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="235"/>
-        <source>Artworks</source>
-        <translation type="obsolete">Grafika</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="244"/>
@@ -318,217 +228,6 @@
     </message>
 </context>
 <context>
-    <name>ConfigDlg</name>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>Configure SpeedCrunch</source>
-        <translation type="obsolete">Skonfiguruj SpeedCrunch</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>OK</source>
-        <translation type="obsolete">OK</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>Cancel</source>
-        <translation type="obsolete">Anuluj</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>General</source>
-        <translation type="obsolete">Ogólne</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>Appearance</source>
-        <translation type="obsolete">Wygląd</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>Syntax Highlight</source>
-        <translation type="obsolete">Podświetlanie składni</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>&amp;General</source>
-        <translation type="obsolete">O&amp;gólne</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>&amp;Appearance</source>
-        <translation type="obsolete">Wyglą&amp;d</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>&amp;Syntax Highlight</source>
-        <translation type="obsolete">Podświetlanie &amp;składni</translation>
-    </message>
-</context>
-<context>
-    <name>ConfigDlgPrivate</name>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>%1pt</source>
-        <translation type="obsolete">%1pt</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>Save history on exit</source>
-        <translation type="obsolete">Przy wyjściu zapisz historię</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>Save variables on exit</source>
-        <translation type="obsolete">Przy wyjściu zapisz zmienne</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>Automatic completion</source>
-        <translation type="obsolete">Automatyczne dopełnianie</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>Standard</source>
-        <translation type="obsolete">Standardowe</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>Custom</source>
-        <translation type="obsolete">Własne</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>Font:</source>
-        <translation type="obsolete">Czcionka:</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>Choose...</source>
-        <translation type="obsolete">Wybierz...</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>Text Color:</source>
-        <translation type="obsolete">Kolor tekstu:</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>Background Color 1:</source>
-        <translation type="obsolete">Pierwszy kolor tła:</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>Background Color 2:</source>
-        <translation type="obsolete">Drugi kolor tła:</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>Automatically calculate as you type</source>
-        <translation type="obsolete">Przeliczaj podczas pisania</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>Enable syntax highlight</source>
-        <translation type="obsolete">Włącz podświetlanie składni</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>Highlight Colors</source>
-        <translation type="obsolete">Kolory podświetlania</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>Number:</source>
-        <translation type="obsolete">Liczba:</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>Function:</source>
-        <translation type="obsolete">Funkcja:</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>Variable:</source>
-        <translation type="obsolete">Zmienna:</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>Matched Parenthesis:</source>
-        <translation type="obsolete">Pasujący nawias:</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>Save &amp;history on exit</source>
-        <translation type="obsolete">Przy wyjściu zapisz &amp;historię</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>Save &amp;variables on exit</source>
-        <translation type="obsolete">Przy wyjściu zapisz &amp;zmienne</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>Automatic &amp;completion</source>
-        <translation type="obsolete">Auto&amp;uzupełnianie</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>Automatically calculate as you &amp;type</source>
-        <translation type="obsolete">Au&amp;tomatyczne liczenie podczas pisania</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>Minimi&amp;ze to system tray</source>
-        <translation type="obsolete">Minimali&amp;zacja do tacki systemowej</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>Decimal point:</source>
-        <translation type="obsolete">Punkt dziesiętny:</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>Auto detect</source>
-        <translation type="obsolete">Autowykrywanie</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>Use dot (.)</source>
-        <translation type="obsolete">Użyj kropki</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>Use comma (,)</source>
-        <translation type="obsolete">Użyj przecinka</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>S&amp;tandard</source>
-        <translation type="obsolete">S&amp;tandard</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>&amp;Custom</source>
-        <translation type="obsolete">&amp;Własne</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>C&amp;hoose...</source>
-        <translation type="obsolete">W&amp;ybierz...</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>Error Color:</source>
-        <translation type="obsolete">Kolor błędu:</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="183"/>
-        <source>&amp;Enable syntax highlight</source>
-        <translation type="obsolete">&amp;Włącz podświetlanie składni</translation>
-    </message>
-</context>
-<context>
     <name>ConstantCompletion</name>
     <message>
         <location filename="../gui/editor.cpp" line="1264"/>
@@ -539,179 +238,24 @@
 <context>
     <name>Constants</name>
     <message>
-        <location filename="../gui/editor.cpp" line="1271"/>
-        <source>characteristic impedance of vacuum</source>
-        <translation type="obsolete">impedancja właściwa próżni</translation>
-    </message>
-    <message>
         <location filename="../core/constants.cpp" line="47"/>
         <source>General Physics</source>
-        <translation type="unfinished">Fizyka ogólna</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="1271"/>
-        <source>electric constant</source>
-        <translation type="obsolete">stała elektryczna</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="1271"/>
-        <source>magnetic constant</source>
-        <translation type="obsolete">stała magnetyczna</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="1271"/>
-        <source>gravitation constant</source>
-        <translation type="obsolete">stała grawitacji</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="1271"/>
-        <source>Planck&apos;s constant</source>
-        <translation type="obsolete">stała Plancka</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="1271"/>
-        <source>Dirac&apos;s constant</source>
-        <translation type="obsolete">stała Diraca</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="1271"/>
-        <source>speed of light in vacuum</source>
-        <translation type="obsolete">prędkość światła w próżni</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="1271"/>
-        <source>Bohr-Procopiu magneton</source>
-        <translation type="obsolete">magneton Bohra-Procopiu</translation>
+        <translation>Fizyka ogólna</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="58"/>
         <source>Electromagnetic</source>
-        <translation type="unfinished">Elektromagnetyzm</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="1271"/>
-        <source>conductance quantum</source>
-        <translation type="obsolete">kwant przewodnictwa</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="1271"/>
-        <source>Coulomb&apos;s constant</source>
-        <translation type="obsolete">stała Coulomba</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="1271"/>
-        <source>elementary charge  </source>
-        <translation type="obsolete">ładunek elementarny  </translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="1271"/>
-        <source>Josephson constant</source>
-        <translation type="obsolete">stała Josephsona</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="1271"/>
-        <source>von Klitzing constant</source>
-        <translation type="obsolete">stała con Klitzinga</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="1271"/>
-        <source>Bohr radius</source>
-        <translation type="obsolete">promień Bohra</translation>
+        <translation>Elektromagnetyzm</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="68"/>
         <source>Atomic &amp; Nuclear</source>
-        <translation type="unfinished">Fizyka jądrowa</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="1271"/>
-        <source>Rydberg constant</source>
-        <translation type="obsolete">stała Rydberga</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="1271"/>
-        <source>atomic mass unit</source>
-        <translation type="obsolete">jednostka masy atomowej</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="1271"/>
-        <source>Avogadro&apos;s number</source>
-        <translation type="obsolete">liczba Avogadra</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="1271"/>
-        <source>Boltzmann constant</source>
-        <translation type="obsolete">stała Boltzmanna</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="1271"/>
-        <source>Faraday constant</source>
-        <translation type="obsolete">stała Faradaya</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="1271"/>
-        <source>Loschmidt constant</source>
-        <translation type="obsolete">stała Loschmidta</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="1271"/>
-        <source>gas constant</source>
-        <translation type="obsolete">stała gazowa</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="1271"/>
-        <source>Stefan-Boltzmann constant</source>
-        <translation type="obsolete">stała Stefana-Boltzmanna</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="1271"/>
-        <source>astronomical unit</source>
-        <translation type="obsolete">jednostka astronomiczna</translation>
+        <translation>Fizyka jądrowa</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="93"/>
         <source>Astronomy</source>
-        <translation type="unfinished">Astronomia</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="1271"/>
-        <source>light year</source>
-        <translation type="obsolete">rok świetlny</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="1271"/>
-        <source>parsec</source>
-        <translation type="obsolete">parsek</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="1271"/>
-        <source>Gregorian year</source>
-        <translation type="obsolete">rok gregoriański</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="1271"/>
-        <source>Earth mass</source>
-        <translation type="obsolete">masa Ziemi</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="1271"/>
-        <source>Sun mass</source>
-        <translation type="obsolete">masa Słońca</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="1271"/>
-        <source>mean Earth radius</source>
-        <translation type="obsolete">średni promień Ziemi</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="1271"/>
-        <source>Sun radius</source>
-        <translation type="obsolete">promień Słońca</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="1271"/>
-        <source>Sun luminosity</source>
-        <translation type="obsolete">jasność Słońca</translation>
+        <translation>Astronomia</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="41"/>
@@ -978,347 +522,7 @@
     </message>
 </context>
 <context>
-    <name>Crunch</name>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>&amp;Degrees</source>
-        <translation type="obsolete">&amp;Stopnie</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>&amp;Radians</source>
-        <translation type="obsolete">&amp;Radiany</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>Evaluate</source>
-        <translation type="obsolete">Policz</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>SpeedCrunch</source>
-        <translation type="obsolete">SpeedCrunch</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>&amp;Save...</source>
-        <translation type="obsolete">&amp;Zapisz...</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>&amp;Quit</source>
-        <translation type="obsolete">&amp;Zakończ</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>&amp;Copy</source>
-        <translation type="obsolete">Kopiuj</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>&amp;Paste</source>
-        <translation type="obsolete">Wklej</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>Copy &amp;Result</source>
-        <translation type="obsolete">Kopiuj &amp;wynik</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>Insert &amp;Function...</source>
-        <translation type="obsolete">Wstaw &amp;funkcję...</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>Insert &amp;Variable...</source>
-        <translation type="obsolete">Wstaw &amp;zmienną...</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>Clear &amp;Input</source>
-        <translation type="obsolete">Wyczyść wpis</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>Clear &amp;Display</source>
-        <translation type="obsolete">Wyczyść &amp;wyświetlacz</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>Clear &amp;History</source>
-        <translation type="obsolete">Wyczyść &amp;historię</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>Clear V&amp;ariables</source>
-        <translation type="obsolete">Wyczyść zmie&amp;nne</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>&amp;General</source>
-        <translation type="obsolete">O&amp;gólne</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>&amp;Fixed Decimal</source>
-        <translation type="obsolete">&amp;Stałoprzecinkowe</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>&amp;Exponential</source>
-        <translation type="obsolete">&amp;Wykładnicze</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>&amp;Automatic Precision</source>
-        <translation type="obsolete">Domyślna dokładność</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>&amp;2 Decimal Digits</source>
-        <translation type="obsolete">&amp;2 cyfry dziesiętne</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>&amp;3 Decimal Digits</source>
-        <translation type="obsolete">&amp;3 cyfry dziesiętne</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>&amp;8 Decimal Digits</source>
-        <translation type="obsolete">&amp;8 cyfr dziesiętnych</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>&amp;15 Decimal Digits</source>
-        <translation type="obsolete">&amp;15 cyfr dziesiętnych</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>&amp;50 Decimal Digits</source>
-        <translation type="obsolete">&amp;50 cyfr dziesiętnych</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>&amp;Show Clear Button</source>
-        <translation type="obsolete">Pokaż przycisk czyszczenia</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>Show &amp;Evaluate Button</source>
-        <translation type="obsolete">Pokaż przycisk liczenia</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>&amp;Configure...</source>
-        <translation type="obsolete">Skonfiguruj...</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>&amp;About</source>
-        <translation type="obsolete">&amp;O programie</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>About &amp;Qt</source>
-        <translation type="obsolete">O &amp;Qt</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>&amp;Session</source>
-        <translation type="obsolete">&amp;Sesja</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>&amp;Edit</source>
-        <translation type="obsolete">&amp;Edycja</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>&amp;View</source>
-        <translation type="obsolete">&amp;Widok</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>Se&amp;ttings</source>
-        <translation type="obsolete">Us&amp;tawienia</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>&amp;Help</source>
-        <translation type="obsolete">&amp;Pomoc</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>Text Files (*.txt);; All Files (*.*)</source>
-        <translation type="obsolete">Pliki tekstowe (*.txt);; Wszystkie pliki (*.*)</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>Save Session</source>
-        <translation type="obsolete">Zapisz sesję</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>Error</source>
-        <translation type="obsolete">Błąd</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>Can&apos;t write to file %1</source>
-        <translation type="obsolete">Nie można zapisać do pliku %1</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>About SpeedCrunch</source>
-        <translation type="obsolete">O SpeedCrunch</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>About Qt</source>
-        <translation type="obsolete">O Qt</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>Clear input line</source>
-        <translation type="obsolete">Wyczyść pole wejściowe</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>Error: %1</source>
-        <translation type="obsolete">Błąd: %1</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>D&amp;elete Variable...</source>
-        <translation type="obsolete">Usuń zmi&amp;enną...</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>Show &amp;Key Pad</source>
-        <translation type="obsolete">Pokaż &amp;klawiaturę</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>Hex</source>
-        <translation type="obsolete">Hex</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>Dec</source>
-        <translation type="obsolete">Dec</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>Oct</source>
-        <translation type="obsolete">Oct</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>Bin</source>
-        <translation type="obsolete">Bin</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>&amp;Hexadecimal</source>
-        <translation type="obsolete">&amp;Szesnastkowy</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>&amp;Octal</source>
-        <translation type="obsolete">Ósemk&amp;owy</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>&amp;Binary</source>
-        <translation type="obsolete">&amp;Dwójkowy</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>Show Expression &amp;History</source>
-        <translation type="obsolete">Pokazuj &amp;historię wyrażeń</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>Show &amp;Functions List</source>
-        <translation type="obsolete">Pokazuj listę &amp;funkcji</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>Show &amp;Variables List</source>
-        <translation type="obsolete">Pokazuj listę &amp;zmiennych</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>SpeedCrunch &amp;Web Site...</source>
-        <translation type="obsolete">Strona interneto&amp;wa SpeedCrunch...</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>SpeedCrunch is minimized. 
- Click on the icon to reactivate it</source>
-        <translation type="obsolete">SpeedCrunch is minimized.
-Kliknij na ikonie, żeby go przywrócić</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>&amp;Select Input</source>
-        <translation type="obsolete">Wybierz wejście</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>&amp;Engineering</source>
-        <translation type="obsolete">inżynierska</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>&amp;Scientific</source>
-        <translation type="obsolete">naukowa</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>Show C&amp;onstants List</source>
-        <translation type="obsolete">Pokazuj listę stały&amp;ch</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>&amp;Tip of the Day</source>
-        <translation type="obsolete">Wskazówka dnia</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>You can customize the syntax highlight colors. Use menu &lt;i&gt;Settings, Configure&lt;/i&gt;, and then from the configuration dialog, choose tab &lt;i&gt;Syntax Highlight&lt;i&gt;.</source>
-        <translation type="obsolete">Możesz dostosować kolory podświetlania składni. Skorzystaj z menu &lt;i&gt;Ustawienia, Konfiguracja&lt;/i&gt; a potem z okna konfiguracji wybierz zakładkę &lt;i&gt;Podświetlanie składni&lt;/i&gt;.</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>To insert a function using keyboard, use Ctrl+F shorcut. From the dialog, you can choose the function you want to insert.</source>
-        <translation type="obsolete">Żeby wstawić funkcję przy pomocy klawiatury, użyj skrótu Ctrl+F. Z okna dialogowego możesz wybrać funkcję, którą chcesz wstawić.</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>To insert a variable using keyboard, use Ctrl+I shorcut. From the dialog, you can choose the variable you want to insert.</source>
-        <translation type="obsolete">Żeby wstawić zmienną przy pomocy klawiatury, użyj skrótu Ctrl+I. Z okna dialogowego możesz wybrać zmienną, którą chcesz wstawić.</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="273"/>
-        <source>Use variable &lt;i&gt;pi&lt;/i&gt; to use pi constant.</source>
-        <translation type="obsolete">Jeśli chcesz wartość stałej pi, użyj zmiennej &lt;i&gt;pi&lt;/i&gt;.</translation>
-    </message>
-</context>
-<context>
     <name>DeleteVariableDlg</name>
-    <message>
-        <location filename="../gui/deletevardlg.cpp" line="72"/>
-        <source>Name</source>
-        <translation type="obsolete">Nazwa</translation>
-    </message>
-    <message>
-        <location filename="../gui/deletevardlg.cpp" line="73"/>
-        <source>Value</source>
-        <translation type="obsolete">Wartość</translation>
-    </message>
     <message>
         <location filename="../gui/deletevardlg.cpp" line="56"/>
         <source>&amp;Delete</source>
@@ -1338,11 +542,6 @@ Kliknij na ikonie, żeby go przywrócić</translation>
 <context>
     <name>Editor</name>
     <message>
-        <location filename="../gui/deletevardlg.cpp" line="58"/>
-        <source>Result:</source>
-        <translation type="obsolete">Wynik:</translation>
-    </message>
-    <message>
         <location filename="../gui/editor.cpp" line="695"/>
         <source>Current result: &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>Obecny wynik: &lt;b&gt;%1&lt;/b&gt;</translation>
@@ -1354,342 +553,31 @@ Kliknij na ikonie, żeby go przywrócić</translation>
     </message>
 </context>
 <context>
-    <name>Error</name>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Can not overwrite PI</source>
-        <translation type="obsolete">Nie można nadpisać PI</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Divide by zero</source>
-        <translation type="obsolete">Dzielenie przez zero</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Unknown function or identifier: %1</source>
-        <translation type="obsolete">Nieznana funkcja lub symbol: %1</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Invalid expression</source>
-        <translation type="obsolete">Nieprawidłowe wyrażenie</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Function ln expects positive argument</source>
-        <translation type="obsolete">Argumentem logarytmu naturalny jest liczba dodatnia</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Function log expects positive argument</source>
-        <translation type="obsolete">Argumentem logarytmu jest liczba dodatnia</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Invalid input to function tan</source>
-        <translation type="obsolete">Nieprawidłowy argument funkcji tangens</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Cannot execute function %1</source>
-        <translation type="obsolete">Nie można wykonać funkcji %1</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Function %1 accepts %2 argument</source>
-        <translation type="obsolete">Funkcja %1 oczekuje argumentu %2</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Stack underflow</source>
-        <translation type="obsolete">Przepróżnienie stosu</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Function sqrt expects positive argument</source>
-        <translation type="obsolete">Argumentem pierwiastka kwadratowego jest liczba dodatnia</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>&apos;%1&apos; is a function</source>
-        <translation type="obsolete">&apos;%1&apos; jest funkcją</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Undefined variable &apos;%1&apos;</source>
-        <translation type="obsolete">Niezdefiniowana zmienna &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
     <name>Evaluator</name>
     <message>
         <location filename="../core/evaluator.cpp" line="1386"/>
         <source>invalid expression</source>
-        <translation type="unfinished">nieprawidłowe wyrażenie</translation>
+        <translation>nieprawidłowe wyrażenie</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="1316"/>
         <source>division by zero</source>
-        <translation type="unfinished">dzielenie przez zero</translation>
+        <translation>dzielenie przez zero</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="1355"/>
         <source>unknown function or variable</source>
-        <translation type="unfinished">nieznana funkcja albo zmienna</translation>
+        <translation>nieznana funkcja albo zmienna</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="1404"/>
         <source>variable cannot be overwritten</source>
-        <translation type="unfinished">nie można nadpisać zawartości zmiennej</translation>
+        <translation>nie można nadpisać zawartości zmiennej</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="1412"/>
         <source>identifier matches an existing function name</source>
-        <translation type="unfinished">identyfikator pasuje do nazwy istniejącej funkcji</translation>
-    </message>
-</context>
-<context>
-    <name>FunctionRepository</name>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Absolute</source>
-        <translation type="obsolete">Wartość bezwzględna</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Integer</source>
-        <translation type="obsolete">Liczba całkowita</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Fraction</source>
-        <translation type="obsolete">Ułamek</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Round</source>
-        <translation type="obsolete">Zaokrąglenie</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Square Root</source>
-        <translation type="obsolete">Pierwiastek kwadratowy</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Exponent</source>
-        <translation type="obsolete">Potęga</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Natural Logarithm</source>
-        <translation type="obsolete">Logarytm naturalny</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Base-10 Logarithm</source>
-        <translation type="obsolete">Logarytm dziesiętny</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Sine</source>
-        <translation type="obsolete">Sinus</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Cosine</source>
-        <translation type="obsolete">Kosinus</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Tangent</source>
-        <translation type="obsolete">Tangens</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Arc Sine</source>
-        <translation type="obsolete">Arkus sinus</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Arc Cosine</source>
-        <translation type="obsolete">Arkus kosinus</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Arc Tangent</source>
-        <translation type="obsolete">Arkus tangens</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Hyperbolic Sine</source>
-        <translation type="obsolete">Sinus hiperboliczny</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Hyperbolic Cosine</source>
-        <translation type="obsolete">Kosinus hiperboliczny</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Hyperbolic Tangent</source>
-        <translation type="obsolete">Tangens hiperboliczny</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Base-2 Logarithm</source>
-        <translation type="obsolete">Logarytm binarny</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Signum</source>
-        <translation type="obsolete">Signum</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Radians</source>
-        <translation type="obsolete">Radiany</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Minimum</source>
-        <translation type="obsolete">Minimum</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Maximum</source>
-        <translation type="obsolete">Maksimum</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Sum</source>
-        <translation type="obsolete">Suma</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Product</source>
-        <translation type="obsolete">Iloczyn</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Average (Arithmetic Mean)</source>
-        <translation type="obsolete">Średnia arytmetyczna</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Geometric Mean</source>
-        <translation type="obsolete">Średnia geometryczna</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Absolute Value</source>
-        <translation type="obsolete">Wartość absolutna</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Binary Representation</source>
-        <translation type="obsolete">Reprezentacja dwójkowa</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Cube Root</source>
-        <translation type="obsolete">Pierwiastek sześcienny</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Decimal Representation</source>
-        <translation type="obsolete">Reprezentacja dziesiętna</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Fractional Part</source>
-        <translation type="obsolete">Część ułamkowa</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Hexadecimal Representation</source>
-        <translation type="obsolete">Reprezentacja szesnastkowa</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Integer Part</source>
-        <translation type="obsolete">Część całkowita</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Octal Representation</source>
-        <translation type="obsolete">Reprezentacja ósemkowa</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Rounding</source>
-        <translation type="obsolete">Zaokrąglenie</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Truncation</source>
-        <translation type="obsolete">Obcięcie</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Greatest Common Divisor</source>
-        <translation type="obsolete">Największy wspólny dzielnik</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Combination (Binomial Coefficient)</source>
-        <translation type="obsolete">Kombinacja (Binomial Coefficient)</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Permutation (Arrangement)</source>
-        <translation type="obsolete">Permutacja</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Binomial Probability Mass Function</source>
-        <translation type="obsolete">Funkcja gęstości rozkładu dwumianowego</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Binomial Cumulative Distribution Function</source>
-        <translation type="obsolete">Dystrybuanta rozkładu dwumianowego</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Binomial Distribution Mean</source>
-        <translation type="obsolete">Średnia rozkładu dwumianowego</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Binomial Distribution Variance</source>
-        <translation type="obsolete">Wariancja rozkładu dwumianowego</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Poissonian Probability Mass Function</source>
-        <translation type="obsolete">Funkcja gęstości rozkładu Poissona</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Poissonian Cumulative Distribution Function</source>
-        <translation type="obsolete">Dystrybuanta rozkładu Poissona</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Poissonian Distribution Mean</source>
-        <translation type="obsolete">Średnia rozkładu Poissona</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Poissonian Distribution Variance</source>
-        <translation type="obsolete">Wariancja rozkładu Poissona</translation>
-    </message>
-    <message>
-        <location filename="../gui/editor.cpp" line="744"/>
-        <source>Cotangent</source>
-        <translation type="obsolete">Kontangens</translation>
+        <translation>identyfikator pasuje do nazwy istniejącej funkcji</translation>
     </message>
 </context>
 <context>
@@ -1697,82 +585,82 @@ Kliknij na ikonie, żeby go przywrócić</translation>
     <message>
         <location filename="../core/functions.cpp" line="92"/>
         <source>cannot execute function %1</source>
-        <translation type="unfinished">nie można wykonać funkcji %1</translation>
+        <translation>nie można wykonać funkcji %1</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="100"/>
         <source>function accepts 1 argument</source>
-        <translation type="unfinished">funkcja przyjmuje jeden parametr</translation>
+        <translation>funkcja przyjmuje jeden parametr</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="103"/>
         <source>function accepts %1 arguments</source>
-        <translation type="unfinished">funkcja przyjmuje %1 parametry(ów)</translation>
+        <translation>funkcja przyjmuje %1 parametry(ów)</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="299"/>
         <source>function requires 1 or 2 arguments</source>
-        <translation type="unfinished">funkcja wymaga jednego lub dwóch parametrów</translation>
+        <translation>funkcja wymaga jednego lub dwóch parametrów</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1038"/>
         <source>function undefined for specified arguments</source>
-        <translation type="unfinished">funkcja niezdefiniowana dla określonych parametrów</translation>
+        <translation>funkcja niezdefiniowana dla określonych parametrów</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="276"/>
         <source>function requires at least 2 arguments</source>
-        <translation type="unfinished">funkcja wymaga przynajmniej dwóch parametrów</translation>
+        <translation>funkcja wymaga przynajmniej dwóch parametrów</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="284"/>
         <source>function requires integer arguments</source>
-        <translation type="unfinished">funkcja wymaga parametrów całkowitych</translation>
+        <translation>funkcja wymaga parametrów całkowitych</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="693"/>
         <source>function undefined for specified argument</source>
-        <translation type="unfinished">funkcja niezdefiniowana dla określonego parametru</translation>
+        <translation>funkcja niezdefiniowana dla określonego parametru</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="657"/>
         <source>underflow</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="766"/>
         <source>function requires at least 1 argument</source>
-        <translation type="unfinished">funkcja wymaga przynajmniej jednego parametru</translation>
+        <translation>funkcja wymaga przynajmniej jednego parametru</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1236"/>
         <source>Absolute Value</source>
-        <translation type="unfinished">Wartość absolutna</translation>
+        <translation>Wartość absolutna</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1237"/>
         <source>Average (Arithmetic Mean)</source>
-        <translation type="unfinished">Średnia arytmetyczna</translation>
+        <translation>Średnia arytmetyczna</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1238"/>
         <source>Binary Representation</source>
-        <translation type="unfinished">Reprezentacja dwójkowa</translation>
+        <translation>Reprezentacja dwójkowa</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1239"/>
         <source>Cube Root</source>
-        <translation type="unfinished">Pierwiastek sześcienny</translation>
+        <translation>Pierwiastek sześcienny</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1240"/>
         <source>Ceiling</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1241"/>
         <source>Decimal Representation</source>
-        <translation type="unfinished">Reprezentacja dziesiętna</translation>
+        <translation>Reprezentacja dziesiętna</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1242"/>
@@ -1782,7 +670,7 @@ Kliknij na ikonie, żeby go przywrócić</translation>
     <message>
         <location filename="../core/functions.cpp" line="1243"/>
         <source>Fractional Part</source>
-        <translation type="unfinished">Część ułamkowa</translation>
+        <translation>Część ułamkowa</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1244"/>
@@ -1792,17 +680,17 @@ Kliknij na ikonie, żeby go przywrócić</translation>
     <message>
         <location filename="../core/functions.cpp" line="1245"/>
         <source>Geometric Mean</source>
-        <translation type="unfinished">Średnia geometryczna</translation>
+        <translation>Średnia geometryczna</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1246"/>
         <source>Hexadecimal Representation</source>
-        <translation type="unfinished">Reprezentacja szesnastkowa</translation>
+        <translation>Reprezentacja szesnastkowa</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1247"/>
         <source>Integer Part</source>
-        <translation type="unfinished">Część całkowita</translation>
+        <translation>Część całkowita</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1248"/>
@@ -1812,42 +700,42 @@ Kliknij na ikonie, żeby go przywrócić</translation>
     <message>
         <location filename="../core/functions.cpp" line="1249"/>
         <source>Maximum</source>
-        <translation type="unfinished">Maksimum</translation>
+        <translation>Maksimum</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1250"/>
         <source>Minimum</source>
-        <translation type="unfinished">Minimum</translation>
+        <translation>Minimum</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1251"/>
         <source>Octal Representation</source>
-        <translation type="unfinished">Reprezentacja ósemkowa</translation>
+        <translation>Reprezentacja ósemkowa</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1252"/>
         <source>Product</source>
-        <translation type="unfinished">Iloczyn</translation>
+        <translation>Iloczyn</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1253"/>
         <source>Rounding</source>
-        <translation type="unfinished">Zaokrąglenie</translation>
+        <translation>Zaokrąglenie</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1254"/>
         <source>Signum</source>
-        <translation type="unfinished">Signum</translation>
+        <translation>Signum</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1255"/>
         <source>Square Root</source>
-        <translation type="unfinished">Pierwiastek kwadratowy</translation>
+        <translation>Pierwiastek kwadratowy</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1256"/>
         <source>Sum</source>
-        <translation type="unfinished">Suma</translation>
+        <translation>Suma</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1257"/>
@@ -1872,7 +760,7 @@ Kliknij na ikonie, żeby go przywrócić</translation>
     <message>
         <location filename="../core/functions.cpp" line="1263"/>
         <source>Hyperbolic Cosine</source>
-        <translation type="unfinished">Kosinus hiperboliczny</translation>
+        <translation>Kosinus hiperboliczny</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1264"/>
@@ -1882,62 +770,62 @@ Kliknij na ikonie, żeby go przywrócić</translation>
     <message>
         <location filename="../core/functions.cpp" line="1265"/>
         <source>Base-2 Logarithm</source>
-        <translation type="unfinished">Logarytm binarny</translation>
+        <translation>Logarytm binarny</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1266"/>
         <source>Natural Logarithm</source>
-        <translation type="unfinished">Logarytm naturalny</translation>
+        <translation>Logarytm naturalny</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1267"/>
         <source>Base-10 Logarithm</source>
-        <translation type="unfinished">Logarytm dziesiętny</translation>
+        <translation>Logarytm dziesiętny</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1268"/>
         <source>Hyperbolic Sine</source>
-        <translation type="unfinished">Sinus hiperboliczny</translation>
+        <translation>Sinus hiperboliczny</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1269"/>
         <source>Hyperbolic Tangent</source>
-        <translation type="unfinished">Tangens hiperboliczny</translation>
+        <translation>Tangens hiperboliczny</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1272"/>
         <source>Greatest Common Divisor</source>
-        <translation type="unfinished">Największy wspólny dzielnik</translation>
+        <translation>Największy wspólny dzielnik</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1273"/>
         <source>Combination (Binomial Coefficient)</source>
-        <translation type="unfinished">Kombinacja (Binomial Coefficient)</translation>
+        <translation>Kombinacja (Binomial Coefficient)</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1274"/>
         <source>Permutation (Arrangement)</source>
-        <translation type="unfinished">Permutacja</translation>
+        <translation>Permutacja</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1277"/>
         <source>Binomial Cumulative Distribution Function</source>
-        <translation type="unfinished">Dystrybuanta rozkładu dwumianowego</translation>
+        <translation>Dystrybuanta rozkładu dwumianowego</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1278"/>
         <source>Binomial Distribution Mean</source>
-        <translation type="unfinished">Średnia rozkładu dwumianowego</translation>
+        <translation>Średnia rozkładu dwumianowego</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1279"/>
         <source>Binomial Probability Mass Function</source>
-        <translation type="unfinished">Funkcja gęstości rozkładu dwumianowego</translation>
+        <translation>Funkcja gęstości rozkładu dwumianowego</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1280"/>
         <source>Binomial Distribution Variance</source>
-        <translation type="unfinished">Wariancja rozkładu dwumianowego</translation>
+        <translation>Wariancja rozkładu dwumianowego</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1281"/>
@@ -1972,47 +860,47 @@ Kliknij na ikonie, żeby go przywrócić</translation>
     <message>
         <location filename="../core/functions.cpp" line="1287"/>
         <source>Poissonian Cumulative Distribution Function</source>
-        <translation type="unfinished">Dystrybuanta rozkładu Poissona</translation>
+        <translation>Dystrybuanta rozkładu Poissona</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1288"/>
         <source>Poissonian Distribution Mean</source>
-        <translation type="unfinished">Średnia rozkładu Poissona</translation>
+        <translation>Średnia rozkładu Poissona</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1289"/>
         <source>Poissonian Probability Mass Function</source>
-        <translation type="unfinished">Funkcja gęstości rozkładu Poissona</translation>
+        <translation>Funkcja gęstości rozkładu Poissona</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1290"/>
         <source>Poissonian Distribution Variance</source>
-        <translation type="unfinished">Wariancja rozkładu Poissona</translation>
+        <translation>Wariancja rozkładu Poissona</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1293"/>
         <source>Arc Cosine</source>
-        <translation type="unfinished">Arkus kosinus</translation>
+        <translation>Arkus kosinus</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1294"/>
         <source>Arc Sine</source>
-        <translation type="unfinished">Arkus sinus</translation>
+        <translation>Arkus sinus</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1295"/>
         <source>Arc Tangent</source>
-        <translation type="unfinished">Arkus tangens</translation>
+        <translation>Arkus tangens</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1296"/>
         <source>Cosine</source>
-        <translation type="unfinished">Kosinus</translation>
+        <translation>Kosinus</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1297"/>
         <source>Cotangent</source>
-        <translation type="unfinished">Kontangens</translation>
+        <translation>Kontangens</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1298"/>
@@ -2027,7 +915,7 @@ Kliknij na ikonie, żeby go przywrócić</translation>
     <message>
         <location filename="../core/functions.cpp" line="1300"/>
         <source>Radians</source>
-        <translation type="unfinished">Radiany</translation>
+        <translation>Radiany</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1301"/>
@@ -2037,12 +925,12 @@ Kliknij na ikonie, żeby go przywrócić</translation>
     <message>
         <location filename="../core/functions.cpp" line="1302"/>
         <source>Sine</source>
-        <translation type="unfinished">Sinus</translation>
+        <translation>Sinus</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1303"/>
         <source>Tangent</source>
-        <translation type="unfinished">Tangens</translation>
+        <translation>Tangens</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1306"/>
@@ -2152,16 +1040,6 @@ Kliknij na ikonie, żeby go przywrócić</translation>
 <context>
     <name>InsertVariableDlg</name>
     <message>
-        <location filename="../gui/insertvardlg.cpp" line="89"/>
-        <source>Name</source>
-        <translation type="obsolete">Nazwa</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="90"/>
-        <source>Value</source>
-        <translation type="obsolete">Wartość</translation>
-    </message>
-    <message>
         <location filename="../gui/insertvardlg.cpp" line="54"/>
         <source>&amp;Insert</source>
         <translation>&amp;Wstaw</translation>
@@ -2175,224 +1053,6 @@ Kliknij na ikonie, żeby go przywrócić</translation>
         <location filename="../gui/insertvardlg.cpp" line="45"/>
         <source>Insert Variable</source>
         <translation>Wstaw zmienną</translation>
-    </message>
-</context>
-<context>
-    <name>KeyPad</name>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>0</source>
-        <translation type="obsolete">0</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>1</source>
-        <translation type="obsolete">1</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>2</source>
-        <translation type="obsolete">2</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>3</source>
-        <translation type="obsolete">3</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>4</source>
-        <translation type="obsolete">4</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>5</source>
-        <translation type="obsolete">5</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>6</source>
-        <translation type="obsolete">6</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>7</source>
-        <translation type="obsolete">7</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>8</source>
-        <translation type="obsolete">8</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>9</source>
-        <translation type="obsolete">9</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>.</source>
-        <translation type="obsolete">.</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>=</source>
-        <translation type="obsolete">=</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>/</source>
-        <translation type="obsolete">/</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>ans</source>
-        <translation type="obsolete">ans</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>log</source>
-        <translation type="obsolete">log</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>exp</source>
-        <translation type="obsolete">exp</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>*</source>
-        <translation type="obsolete">*</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>-</source>
-        <translation type="obsolete">-</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>pi</source>
-        <translation type="obsolete">pi</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>sin</source>
-        <translation type="obsolete">sin</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>cos</source>
-        <translation type="obsolete">cos</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>tan</source>
-        <translation type="obsolete">tan</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>+</source>
-        <translation type="obsolete">+</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>(</source>
-        <translation type="obsolete">(</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>)</source>
-        <translation type="obsolete">)</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>The result from the last expression</source>
-        <translation type="obsolete">Wynik ostatniego wyrażenia</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>Logarithm</source>
-        <translation type="obsolete">Logarytm</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>The variable X</source>
-        <translation type="obsolete">Zmienna X</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>The number pi</source>
-        <translation type="obsolete">Liczba pi</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>Sine</source>
-        <translation type="obsolete">Sinus</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>Cosine</source>
-        <translation type="obsolete">Kosinus</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>Tangens</source>
-        <translation type="obsolete">Tangens</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>Square root</source>
-        <translation type="obsolete">Pierwiastek kwadratowy</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>Backspace</source>
-        <translation type="obsolete">Cofnij</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>x</source>
-        <translation type="obsolete">x</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>x=</source>
-        <translation type="obsolete">x=</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>asin</source>
-        <translation type="obsolete">arkus sinus</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>acos</source>
-        <translation type="obsolete">arkus kosinus</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>atan</source>
-        <translation type="obsolete">arkus tangens</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>Evaluate the expression</source>
-        <translation type="obsolete">Obliczenie wyrażenia</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>Inverse sine</source>
-        <translation type="obsolete">Odwrotny sinus</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>Inverse cosine</source>
-        <translation type="obsolete">Odwrotny kosinus</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="69"/>
-        <source>Inverse tangens</source>
-        <translation type="obsolete">Odwrotny tangens</translation>
     </message>
 </context>
 <context>
@@ -2466,19 +1126,6 @@ Kliknij na ikonie, żeby go przywrócić</translation>
         <location filename="../gui/keypad.cpp" line="321"/>
         <source>The variable x</source>
         <translation>Zmienna x</translation>
-    </message>
-</context>
-<context>
-    <name>ListDialog</name>
-    <message>
-        <location filename="../gui/keypad.cpp" line="322"/>
-        <source>OK</source>
-        <translation type="obsolete">OK</translation>
-    </message>
-    <message>
-        <location filename="../gui/keypad.cpp" line="322"/>
-        <source>Cancel</source>
-        <translation type="obsolete">Anuluj</translation>
     </message>
 </context>
 <context>
@@ -3011,29 +1658,21 @@ Kliknij lewym przyciskiem na ikonie przywróci go, a prawym pokaże listę opcji
     </message>
 </context>
 <context>
-    <name>TipWidget</name>
-    <message>
-        <location filename="../gui/mainwindow.cpp" line="2529"/>
-        <source>&lt;b&gt;Tip of the day&lt;/b&gt;&lt;br&gt;%1</source>
-        <translation type="obsolete">&lt;b&gt;Porada dnia&lt;/b&gt;&lt;br&gt;%1</translation>
-    </message>
-</context>
-<context>
     <name>VariableTable</name>
     <message>
         <location filename="../gui/variabletable.cpp" line="127"/>
         <source>Name</source>
-        <translation type="unfinished">Nazwa</translation>
+        <translation>Nazwa</translation>
     </message>
     <message>
         <location filename="../gui/variabletable.cpp" line="128"/>
         <source>Value</source>
-        <translation type="unfinished">Wartość</translation>
+        <translation>Wartość</translation>
     </message>
     <message>
         <location filename="../gui/variabletable.cpp" line="131"/>
         <source>No match found</source>
-        <translation type="unfinished">Brak dopasowań</translation>
+        <translation>Brak dopasowań</translation>
     </message>
 </context>
 <context>
@@ -3047,92 +1686,6 @@ Kliknij lewym przyciskiem na ikonie przywróci go, a prawym pokaże listę opcji
         <location filename="../gui/variablesdock.cpp" line="96"/>
         <source>Search</source>
         <translation>Wyszukiwanie</translation>
-    </message>
-    <message>
-        <location filename="../gui/variablesdock.cpp" line="134"/>
-        <source>No match found</source>
-        <translation type="obsolete">Brak dopasowań</translation>
-    </message>
-</context>
-<context>
-    <name>evaluator</name>
-    <message>
-        <location filename="../gui/variablesdock.cpp" line="135"/>
-        <source>invalid expression</source>
-        <translation type="obsolete">nieprawidłowe wyrażenie</translation>
-    </message>
-    <message>
-        <location filename="../gui/variablesdock.cpp" line="135"/>
-        <source>variable cannot be overwritten</source>
-        <translation type="obsolete">nie można nadpisać zawartości zmiennej</translation>
-    </message>
-    <message>
-        <location filename="../gui/variablesdock.cpp" line="135"/>
-        <source>identifier matches an existing function name</source>
-        <translation type="obsolete">identyfikator pasuje do nazwy istniejącej funkcji</translation>
-    </message>
-    <message>
-        <location filename="../gui/variablesdock.cpp" line="135"/>
-        <source>division by zero</source>
-        <translation type="obsolete">dzielenie przez zero</translation>
-    </message>
-    <message>
-        <location filename="../gui/variablesdock.cpp" line="135"/>
-        <source>unknown function or variable</source>
-        <translation type="obsolete">nieznana funkcja albo zmienna</translation>
-    </message>
-</context>
-<context>
-    <name>functions</name>
-    <message>
-        <location filename="../gui/variablesdock.cpp" line="135"/>
-        <source>function requires 1 or 2 arguments</source>
-        <translation type="obsolete">funkcja wymaga jednego lub dwóch parametrów</translation>
-    </message>
-    <message>
-        <location filename="../gui/variablesdock.cpp" line="135"/>
-        <source>function undefined for specified arguments</source>
-        <translation type="obsolete">funkcja niezdefiniowana dla określonych parametrów</translation>
-    </message>
-    <message>
-        <location filename="../gui/variablesdock.cpp" line="135"/>
-        <source>function requires at least 2 arguments</source>
-        <translation type="obsolete">funkcja wymaga przynajmniej dwóch parametrów</translation>
-    </message>
-    <message>
-        <location filename="../gui/variablesdock.cpp" line="135"/>
-        <source>function requires integer arguments</source>
-        <translation type="obsolete">funkcja wymaga parametrów całkowitych</translation>
-    </message>
-    <message>
-        <location filename="../gui/variablesdock.cpp" line="135"/>
-        <source>function requires integer P2</source>
-        <translation type="obsolete">funkcja wymaga liczby całkowitej P2</translation>
-    </message>
-    <message>
-        <location filename="../gui/variablesdock.cpp" line="135"/>
-        <source>function undefined for specified argument</source>
-        <translation type="obsolete">funkcja niezdefiniowana dla określonego parametru</translation>
-    </message>
-    <message>
-        <location filename="../gui/variablesdock.cpp" line="135"/>
-        <source>function requires at least 1 argument</source>
-        <translation type="obsolete">funkcja wymaga przynajmniej jednego parametru</translation>
-    </message>
-    <message>
-        <location filename="../gui/variablesdock.cpp" line="135"/>
-        <source>cannot execute function %1</source>
-        <translation type="obsolete">nie można wykonać funkcji %1</translation>
-    </message>
-    <message>
-        <location filename="../gui/variablesdock.cpp" line="135"/>
-        <source>function accepts 1 argument</source>
-        <translation type="obsolete">funkcja przyjmuje jeden parametr</translation>
-    </message>
-    <message>
-        <location filename="../gui/variablesdock.cpp" line="135"/>
-        <source>function accepts %1 arguments</source>
-        <translation type="obsolete">funkcja przyjmuje %1 parametry(ów)</translation>
     </message>
 </context>
 </TS>

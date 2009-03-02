@@ -13,16 +13,6 @@
         <translation>SpeedCrunch sürüm %1</translation>
     </message>
     <message>
-        <location filename="" line="3080296"/>
-        <source>Original author</source>
-        <translation type="obsolete">İlk Yazar</translation>
-    </message>
-    <message>
-        <location filename="" line="3080296"/>
-        <source>Current maintainer</source>
-        <translation type="obsolete">Projeyi Yürüten</translation>
-    </message>
-    <message>
         <location filename="../gui/aboutbox.cpp" line="232"/>
         <source>Based on original idea from</source>
         <translation>Orijinal fikri veren</translation>
@@ -143,11 +133,6 @@
         <translation>Daha fazla bilgi için &lt;b&gt;http://www.speedcrunch.org&lt;/b&gt; adresini ziyaret edin!</translation>
     </message>
     <message>
-        <location filename="" line="3080296"/>
-        <source>Developers</source>
-        <translation type="obsolete">Geliştiriciler</translation>
-    </message>
-    <message>
         <location filename="../gui/aboutbox.cpp" line="290"/>
         <source>Indonesian</source>
         <translation>Endonezyaca</translation>
@@ -180,12 +165,12 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="225"/>
         <source>Maintainer and core developer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Projeyi Yürüten</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="226"/>
         <source>Original author and core developer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">İlk Yazar</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="227"/>
@@ -254,7 +239,7 @@
     <message>
         <location filename="../core/constants.cpp" line="41"/>
         <source>Characteristic Impedance of Vacuum</source>
-        <translation type="unfinished">&apos;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="47"/>
@@ -541,16 +526,6 @@
         <location filename="../gui/deletevardlg.cpp" line="45"/>
         <source>Delete Variable</source>
         <translation>Değişken Sil</translation>
-    </message>
-    <message>
-        <location filename="../gui/deletevardlg.cpp" line="72"/>
-        <source>Name</source>
-        <translation type="obsolete">İsim</translation>
-    </message>
-    <message>
-        <location filename="../gui/deletevardlg.cpp" line="73"/>
-        <source>Value</source>
-        <translation type="obsolete">Değer</translation>
     </message>
     <message>
         <location filename="../gui/deletevardlg.cpp" line="56"/>
@@ -1067,16 +1042,6 @@
         <location filename="../gui/insertvardlg.cpp" line="45"/>
         <source>Insert Variable</source>
         <translation>Değişken Ekle</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="89"/>
-        <source>Name</source>
-        <translation type="obsolete">İsim</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="90"/>
-        <source>Value</source>
-        <translation type="obsolete">Değer</translation>
     </message>
     <message>
         <location filename="../gui/insertvardlg.cpp" line="54"/>
@@ -1693,17 +1658,17 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/variabletable.cpp" line="127"/>
         <source>Name</source>
-        <translation type="unfinished">İsim</translation>
+        <translation>İsim</translation>
     </message>
     <message>
         <location filename="../gui/variabletable.cpp" line="128"/>
         <source>Value</source>
-        <translation type="unfinished">Değer</translation>
+        <translation>Değer</translation>
     </message>
     <message>
         <location filename="../gui/variabletable.cpp" line="131"/>
         <source>No match found</source>
-        <translation type="unfinished">Eşleşen bulunamadı</translation>
+        <translation>Eşleşen bulunamadı</translation>
     </message>
 </context>
 <context>
@@ -1717,11 +1682,6 @@ If no, current variables and display will be cleared.</source>
         <location filename="../gui/variablesdock.cpp" line="96"/>
         <source>Search</source>
         <translation>Ara</translation>
-    </message>
-    <message>
-        <location filename="../gui/variablesdock.cpp" line="134"/>
-        <source>No match found</source>
-        <translation type="obsolete">Eşleşen bulunamadı</translation>
     </message>
 </context>
 </TS>

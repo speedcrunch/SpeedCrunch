@@ -63,16 +63,6 @@
         <translation>Espagnol</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="228"/>
-        <source>Original author</source>
-        <translation type="obsolete">Auteur initial</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="229"/>
-        <source>Current maintainer</source>
-        <translation type="obsolete">Mainteneur actuel</translation>
-    </message>
-    <message>
         <location filename="../gui/aboutbox.cpp" line="232"/>
         <source>Based on original idea from</source>
         <translation>Basé sur une idée originale de</translation>
@@ -143,11 +133,6 @@
         <translation>Roumain</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="230"/>
-        <source>Developers</source>
-        <translation type="obsolete">Développeurs</translation>
-    </message>
-    <message>
         <location filename="../gui/aboutbox.cpp" line="290"/>
         <source>Indonesian</source>
         <translation>Indonésien</translation>
@@ -190,12 +175,12 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="225"/>
         <source>Maintainer and core developer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Mainteneur actuel</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="226"/>
         <source>Original author and core developer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Auteur initial</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="227"/>
@@ -224,39 +209,21 @@
     </message>
 </context>
 <context>
-    <name>BookDock</name>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="188"/>
-        <source>Back</source>
-        <translation type="obsolete">Précédente</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="189"/>
-        <source>Forward</source>
-        <translation type="obsolete">Suivant</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="190"/>
-        <source>Index</source>
-        <translation type="obsolete">Index</translation>
-    </message>
-</context>
-<context>
     <name>BookDock::Private</name>
     <message>
         <location filename="../gui/bookdock.cpp" line="180"/>
         <source>Back</source>
-        <translation type="unfinished">Précédente</translation>
+        <translation>Précédente</translation>
     </message>
     <message>
         <location filename="../gui/bookdock.cpp" line="181"/>
         <source>Forward</source>
-        <translation type="unfinished">Suivant</translation>
+        <translation>Suivant</translation>
     </message>
     <message>
         <location filename="../gui/bookdock.cpp" line="182"/>
         <source>Index</source>
-        <translation type="unfinished">Index</translation>
+        <translation>Index</translation>
     </message>
 </context>
 <context>
@@ -555,16 +522,6 @@
 </context>
 <context>
     <name>DeleteVariableDlg</name>
-    <message>
-        <location filename="../gui/deletevardlg.cpp" line="72"/>
-        <source>Name</source>
-        <translation type="obsolete">Nom</translation>
-    </message>
-    <message>
-        <location filename="../gui/deletevardlg.cpp" line="73"/>
-        <source>Value</source>
-        <translation type="obsolete">Valeur</translation>
-    </message>
     <message>
         <location filename="../gui/deletevardlg.cpp" line="56"/>
         <source>&amp;Delete</source>
@@ -1082,16 +1039,6 @@
 <context>
     <name>InsertVariableDlg</name>
     <message>
-        <location filename="../gui/insertvardlg.cpp" line="89"/>
-        <source>Name</source>
-        <translation type="obsolete">Nom</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="90"/>
-        <source>Value</source>
-        <translation type="obsolete">Valeur</translation>
-    </message>
-    <message>
         <location filename="../gui/insertvardlg.cpp" line="54"/>
         <source>&amp;Insert</source>
         <translation>&amp;Insérer</translation>
@@ -1548,11 +1495,6 @@ If no, current variables and display will be cleared.</source>
         <translation>&amp;Constantes</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="646"/>
-        <source>Full &amp;Screen Mode</source>
-        <translation type="obsolete">Mode &amp;plein écran</translation>
-    </message>
-    <message>
         <location filename="../gui/mainwindow.cpp" line="538"/>
         <source>&amp;Functions</source>
         <translation>&amp;Fonctions</translation>
@@ -1566,11 +1508,6 @@ If no, current variables and display will be cleared.</source>
         <location filename="../gui/mainwindow.cpp" line="540"/>
         <source>&amp;Keypad</source>
         <translation>&amp;Clavier</translation>
-    </message>
-    <message>
-        <location filename="../gui/mainwindow.cpp" line="650"/>
-        <source>Hide &amp;Menu Bar</source>
-        <translation type="obsolete">&amp;Masquer la barre de menus</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="543"/>
@@ -1618,11 +1555,6 @@ If no, current variables and display will be cleared.</source>
         <translation>&amp;Scientifique</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="660"/>
-        <source>System &amp;Default</source>
-        <translation type="obsolete">Langue par &amp;défaut</translation>
-    </message>
-    <message>
         <location filename="../gui/mainwindow.cpp" line="758"/>
         <source>&amp;Edit</source>
         <translation>&amp;Édition</translation>
@@ -1663,11 +1595,6 @@ If no, current variables and display will be cleared.</source>
         <translation>&amp;Séparateur décimal</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="900"/>
-        <source>&amp;Language</source>
-        <translation type="obsolete">&amp;Langue</translation>
-    </message>
-    <message>
         <location filename="../gui/mainwindow.cpp" line="766"/>
         <source>&amp;Help</source>
         <translation>&amp;Aide</translation>
@@ -1690,12 +1617,12 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="537"/>
         <source>F&amp;ull Screen Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Mode &amp;plein écran</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="542"/>
         <source>&amp;Menu Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Masquer la barre de menus</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="552"/>
@@ -1710,17 +1637,17 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="571"/>
         <source>&amp;Language...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Langue...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2526"/>
         <source>System Default</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Séparateur par défaut</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2532"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Langue</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2533"/>
@@ -1733,17 +1660,17 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/variabletable.cpp" line="127"/>
         <source>Name</source>
-        <translation type="unfinished">Nom</translation>
+        <translation>Nom</translation>
     </message>
     <message>
         <location filename="../gui/variabletable.cpp" line="128"/>
         <source>Value</source>
-        <translation type="unfinished">Valeur</translation>
+        <translation>Valeur</translation>
     </message>
     <message>
         <location filename="../gui/variabletable.cpp" line="131"/>
         <source>No match found</source>
-        <translation type="unfinished">Aucun élément trouvé</translation>
+        <translation>Aucun élément trouvé</translation>
     </message>
 </context>
 <context>
@@ -1757,11 +1684,6 @@ If no, current variables and display will be cleared.</source>
         <location filename="../gui/variablesdock.cpp" line="96"/>
         <source>Search</source>
         <translation>Recherche</translation>
-    </message>
-    <message>
-        <location filename="../gui/variablesdock.cpp" line="134"/>
-        <source>No match found</source>
-        <translation type="obsolete">Aucun élément trouvé</translation>
     </message>
 </context>
 </TS>

@@ -13,16 +13,6 @@
         <translation>SpeedCrunch versio %1</translation>
     </message>
     <message>
-        <location filename="" line="3080296"/>
-        <source>Original author</source>
-        <translation type="obsolete">Alkuperäinen tekijä</translation>
-    </message>
-    <message>
-        <location filename="" line="3080296"/>
-        <source>Current maintainer</source>
-        <translation type="obsolete">Nykyinen ylläpitäjä</translation>
-    </message>
-    <message>
         <location filename="../gui/aboutbox.cpp" line="232"/>
         <source>Based on original idea from</source>
         <translation>Alkuperäinen idea</translation>
@@ -143,11 +133,6 @@
         <translation>Romania</translation>
     </message>
     <message>
-        <location filename="" line="3080296"/>
-        <source>Developers</source>
-        <translation type="obsolete">Kehittäjät</translation>
-    </message>
-    <message>
         <location filename="../gui/aboutbox.cpp" line="290"/>
         <source>Indonesian</source>
         <translation>Indonesia</translation>
@@ -180,12 +165,12 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="225"/>
         <source>Maintainer and core developer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nykyinen ylläpitäjä</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="226"/>
         <source>Original author and core developer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Alkuperäinen tekijä</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="227"/>
@@ -224,39 +209,21 @@
     </message>
 </context>
 <context>
-    <name>BookDock</name>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="189"/>
-        <source>Back</source>
-        <translation type="obsolete">Edellinen</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="190"/>
-        <source>Forward</source>
-        <translation type="obsolete">Seuraava</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="191"/>
-        <source>Index</source>
-        <translation type="obsolete">Hakemisto</translation>
-    </message>
-</context>
-<context>
     <name>BookDock::Private</name>
     <message>
         <location filename="../gui/bookdock.cpp" line="180"/>
         <source>Back</source>
-        <translation type="unfinished">Edellinen</translation>
+        <translation>Edellinen</translation>
     </message>
     <message>
         <location filename="../gui/bookdock.cpp" line="181"/>
         <source>Forward</source>
-        <translation type="unfinished">Seuraava</translation>
+        <translation>Seuraava</translation>
     </message>
     <message>
         <location filename="../gui/bookdock.cpp" line="182"/>
         <source>Index</source>
-        <translation type="unfinished">Hakemisto</translation>
+        <translation>Hakemisto</translation>
     </message>
 </context>
 <context>
@@ -559,16 +526,6 @@
         <location filename="../gui/deletevardlg.cpp" line="45"/>
         <source>Delete Variable</source>
         <translation>Poista Muuttuja</translation>
-    </message>
-    <message>
-        <location filename="../gui/deletevardlg.cpp" line="72"/>
-        <source>Name</source>
-        <translation type="obsolete">Nimi</translation>
-    </message>
-    <message>
-        <location filename="../gui/deletevardlg.cpp" line="73"/>
-        <source>Value</source>
-        <translation type="obsolete">Arvo</translation>
     </message>
     <message>
         <location filename="../gui/deletevardlg.cpp" line="56"/>
@@ -1087,16 +1044,6 @@
         <translation>Lisää Muuttuja</translation>
     </message>
     <message>
-        <location filename="../gui/insertvardlg.cpp" line="89"/>
-        <source>Name</source>
-        <translation type="obsolete">Nimi</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="90"/>
-        <source>Value</source>
-        <translation type="obsolete">Arvo</translation>
-    </message>
-    <message>
         <location filename="../gui/insertvardlg.cpp" line="54"/>
         <source>&amp;Insert</source>
         <translation>&amp;Lisää</translation>
@@ -1549,11 +1496,6 @@ Jos ei, nykyiset muuttujat ja näyttö tyhjennetään.</translation>
         <translation>&amp;Vakiot</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="649"/>
-        <source>Full &amp;Screen Mode</source>
-        <translation type="obsolete">Koko&amp;ruututila</translation>
-    </message>
-    <message>
         <location filename="../gui/mainwindow.cpp" line="538"/>
         <source>&amp;Functions</source>
         <translation>&amp;Funktiot</translation>
@@ -1567,11 +1509,6 @@ Jos ei, nykyiset muuttujat ja näyttö tyhjennetään.</translation>
         <location filename="../gui/mainwindow.cpp" line="540"/>
         <source>&amp;Keypad</source>
         <translation>&amp;Näppäimistö</translation>
-    </message>
-    <message>
-        <location filename="../gui/mainwindow.cpp" line="653"/>
-        <source>Hide &amp;Menu Bar</source>
-        <translation type="obsolete">&amp;Piilota Valikkopalkki</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="543"/>
@@ -1619,11 +1556,6 @@ Jos ei, nykyiset muuttujat ja näyttö tyhjennetään.</translation>
         <translation>&amp;Tieteellinen</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="663"/>
-        <source>System &amp;Default</source>
-        <translation type="obsolete">&amp;Järjestelmän Oletus</translation>
-    </message>
-    <message>
         <location filename="../gui/mainwindow.cpp" line="758"/>
         <source>&amp;Edit</source>
         <translation>&amp;Muokkaa</translation>
@@ -1664,11 +1596,6 @@ Jos ei, nykyiset muuttujat ja näyttö tyhjennetään.</translation>
         <translation>&amp;Juurimerkki</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="907"/>
-        <source>&amp;Language</source>
-        <translation type="obsolete">&amp;Kieli</translation>
-    </message>
-    <message>
         <location filename="../gui/mainwindow.cpp" line="766"/>
         <source>&amp;Help</source>
         <translation>A&amp;pua</translation>
@@ -1691,12 +1618,12 @@ Jos ei, nykyiset muuttujat ja näyttö tyhjennetään.</translation>
     <message>
         <location filename="../gui/mainwindow.cpp" line="537"/>
         <source>F&amp;ull Screen Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Koko&amp;ruututila</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="542"/>
         <source>&amp;Menu Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Piilota Valikkopalkki</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="552"/>
@@ -1711,17 +1638,17 @@ Jos ei, nykyiset muuttujat ja näyttö tyhjennetään.</translation>
     <message>
         <location filename="../gui/mainwindow.cpp" line="571"/>
         <source>&amp;Language...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Kieli...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2526"/>
         <source>System Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Järjestelmän Oletus</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2532"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Kieli</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2533"/>
@@ -1734,17 +1661,17 @@ Jos ei, nykyiset muuttujat ja näyttö tyhjennetään.</translation>
     <message>
         <location filename="../gui/variabletable.cpp" line="127"/>
         <source>Name</source>
-        <translation type="unfinished">Nimi</translation>
+        <translation>Nimi</translation>
     </message>
     <message>
         <location filename="../gui/variabletable.cpp" line="128"/>
         <source>Value</source>
-        <translation type="unfinished">Arvo</translation>
+        <translation>Arvo</translation>
     </message>
     <message>
         <location filename="../gui/variabletable.cpp" line="131"/>
         <source>No match found</source>
-        <translation type="unfinished">Ei tuloksia</translation>
+        <translation>Ei tuloksia</translation>
     </message>
 </context>
 <context>
@@ -1758,11 +1685,6 @@ Jos ei, nykyiset muuttujat ja näyttö tyhjennetään.</translation>
         <location filename="../gui/variablesdock.cpp" line="96"/>
         <source>Search</source>
         <translation>Etsi</translation>
-    </message>
-    <message>
-        <location filename="../gui/variablesdock.cpp" line="134"/>
-        <source>No match found</source>
-        <translation type="obsolete">Ei tuloksia</translation>
     </message>
 </context>
 </TS>

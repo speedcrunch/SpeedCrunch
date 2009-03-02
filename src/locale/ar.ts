@@ -45,11 +45,6 @@
         <translation>هذا البرنامج موزع بأمل أن يكون مفيدا ولكن بدون أي ضمانات وحتى بدون ضمان التأجير او ملائمته لأي هدف معين. لمزيد من التفاصيل انظر ترخيص الGNU</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="218"/>
-        <source>Speed Crunch version %1</source>
-        <translation type="obsolete">إصدارة سبيد كرنش: %1</translation>
-    </message>
-    <message>
         <location filename="../gui/aboutbox.cpp" line="354"/>
         <source>About SpeedCrunch</source>
         <translation>عن سببيد كرنش</translation>
@@ -68,16 +63,6 @@
         <location filename="../gui/aboutbox.cpp" line="298"/>
         <source>Spanish</source>
         <translation>الإسبانية</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="228"/>
-        <source>Original author</source>
-        <translation type="obsolete">المؤلف الأصلي</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="229"/>
-        <source>Current maintainer</source>
-        <translation type="obsolete">المحافظ الحالي</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="232"/>
@@ -152,11 +137,6 @@
         <translation>الرومانية</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="230"/>
-        <source>Developers</source>
-        <translation type="obsolete">المطورون</translation>
-    </message>
-    <message>
         <location filename="../gui/aboutbox.cpp" line="290"/>
         <source>Indonesian</source>
         <translation>الأندونيسية</translation>
@@ -199,17 +179,17 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="215"/>
         <source>SpeedCrunch version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>إصدارة سبيد كرنش: %1</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="225"/>
         <source>Maintainer and core developer</source>
-        <translation type="unfinished"></translation>
+        <translation>المحافظ الحالي</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="226"/>
         <source>Original author and core developer</source>
-        <translation type="unfinished"></translation>
+        <translation>المؤلف الأصلي</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="227"/>
@@ -233,39 +213,21 @@
     </message>
 </context>
 <context>
-    <name>BookDock</name>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="188"/>
-        <source>Back</source>
-        <translation type="obsolete">رجوع</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="189"/>
-        <source>Forward</source>
-        <translation type="obsolete">تقدم</translation>
-    </message>
-    <message>
-        <location filename="../gui/bookdock.cpp" line="190"/>
-        <source>Index</source>
-        <translation type="obsolete">الفهرس</translation>
-    </message>
-</context>
-<context>
     <name>BookDock::Private</name>
     <message>
         <location filename="../gui/bookdock.cpp" line="180"/>
         <source>Back</source>
-        <translation type="unfinished">رجوع</translation>
+        <translation>رجوع</translation>
     </message>
     <message>
         <location filename="../gui/bookdock.cpp" line="181"/>
         <source>Forward</source>
-        <translation type="unfinished">تقدم</translation>
+        <translation>تقدم</translation>
     </message>
     <message>
         <location filename="../gui/bookdock.cpp" line="182"/>
         <source>Index</source>
-        <translation type="unfinished">الفهرس</translation>
+        <translation>الفهرس</translation>
     </message>
 </context>
 <context>
@@ -317,11 +279,6 @@
         <location filename="../core/constants.cpp" line="47"/>
         <source>Speed of Light in Vacuum</source>
         <translation>سرعة الضوء في الفراغ</translation>
-    </message>
-    <message>
-        <location filename="../base/constants.cpp" line="50"/>
-        <source>Bohr- Procopiu Magneton</source>
-        <translation type="obsolete">مغناطيسية بور - بروكوبيو</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="58"/>
@@ -536,7 +493,7 @@
     <message>
         <location filename="../core/constants.cpp" line="50"/>
         <source>Bohr-Procopiu Magneton</source>
-        <translation type="unfinished"></translation>
+        <translation>مغناطيسية بور - بروكوبيو</translation>
     </message>
 </context>
 <context>
@@ -569,16 +526,6 @@
 </context>
 <context>
     <name>DeleteVariableDlg</name>
-    <message>
-        <location filename="../gui/deletevardlg.cpp" line="72"/>
-        <source>Name</source>
-        <translation type="obsolete">الاسم</translation>
-    </message>
-    <message>
-        <location filename="../gui/deletevardlg.cpp" line="73"/>
-        <source>Value</source>
-        <translation type="obsolete">القيمة</translation>
-    </message>
     <message>
         <location filename="../gui/deletevardlg.cpp" line="56"/>
         <source>&amp;Delete</source>
@@ -1097,16 +1044,6 @@
 <context>
     <name>InsertVariableDlg</name>
     <message>
-        <location filename="../gui/insertvardlg.cpp" line="89"/>
-        <source>Name</source>
-        <translation type="obsolete">الاسم</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="90"/>
-        <source>Value</source>
-        <translation type="obsolete">القيمة</translation>
-    </message>
-    <message>
         <location filename="../gui/insertvardlg.cpp" line="54"/>
         <source>&amp;Insert</source>
         <translation>إدراج</translation>
@@ -1201,11 +1138,6 @@
         <location filename="../gui/mainwindow.cpp" line="1301"/>
         <source>About Qt</source>
         <translation> Qtعن  كيوت </translation>
-    </message>
-    <message>
-        <location filename="../gui/mainwindow.cpp" line="1980"/>
-        <source>Speed Crunch Sessions (*.sch);;All Files (*)</source>
-        <translation type="obsolete">(*)لجميع الملفات (*.sch);; جلسات سبيد كرنش </translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1440"/>
@@ -1561,11 +1493,6 @@ If no, current variables and display will be cleared.</source>
         <translation>المحتويات</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="646"/>
-        <source>Full &amp;Screen Mode</source>
-        <translation type="obsolete">عرض كل الشاشة</translation>
-    </message>
-    <message>
         <location filename="../gui/mainwindow.cpp" line="538"/>
         <source>&amp;Functions</source>
         <translation>الاقتران</translation>
@@ -1579,11 +1506,6 @@ If no, current variables and display will be cleared.</source>
         <location filename="../gui/mainwindow.cpp" line="540"/>
         <source>&amp;Keypad</source>
         <translation>لوحة المفاتيح الرقمية</translation>
-    </message>
-    <message>
-        <location filename="../gui/mainwindow.cpp" line="650"/>
-        <source>Hide &amp;Menu Bar</source>
-        <translation type="obsolete">إخفاء شريط القائمة</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="543"/>
@@ -1631,11 +1553,6 @@ If no, current variables and display will be cleared.</source>
         <translation>علمي</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="660"/>
-        <source>System &amp;Default</source>
-        <translation type="obsolete">النظام الاعتيادي</translation>
-    </message>
-    <message>
         <location filename="../gui/mainwindow.cpp" line="758"/>
         <source>&amp;Edit</source>
         <translation>تعديل</translation>
@@ -1676,11 +1593,6 @@ If no, current variables and display will be cleared.</source>
         <translation>أساس العلامة</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="900"/>
-        <source>&amp;Language</source>
-        <translation type="obsolete">اللغة</translation>
-    </message>
-    <message>
         <location filename="../gui/mainwindow.cpp" line="766"/>
         <source>&amp;Help</source>
         <translation>مساعدة</translation>
@@ -1703,12 +1615,12 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="537"/>
         <source>F&amp;ull Screen Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>عرض كل الشاشة</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="542"/>
         <source>&amp;Menu Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>إخفاء شريط القائمة</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="552"/>
@@ -1723,22 +1635,22 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="571"/>
         <source>&amp;Language...</source>
-        <translation type="unfinished"></translation>
+        <translation>اللغة</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1722"/>
         <source>SpeedCrunch Sessions (*.sch);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>(*)لجميع الملفات (*.sch);; جلسات سبيد كرنش </translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2526"/>
         <source>System Default</source>
-        <translation type="unfinished"></translation>
+        <translation>النظام الاعتيادي</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2532"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>اللغة</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2533"/>
@@ -1751,17 +1663,17 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/variabletable.cpp" line="127"/>
         <source>Name</source>
-        <translation type="unfinished">الاسم</translation>
+        <translation>الاسم</translation>
     </message>
     <message>
         <location filename="../gui/variabletable.cpp" line="128"/>
         <source>Value</source>
-        <translation type="unfinished">القيمة</translation>
+        <translation>القيمة</translation>
     </message>
     <message>
         <location filename="../gui/variabletable.cpp" line="131"/>
         <source>No match found</source>
-        <translation type="unfinished"></translation>
+        <translation>لا يوجد مماثل</translation>
     </message>
 </context>
 <context>
@@ -1775,11 +1687,6 @@ If no, current variables and display will be cleared.</source>
         <location filename="../gui/variablesdock.cpp" line="96"/>
         <source>Search</source>
         <translation>بحث</translation>
-    </message>
-    <message>
-        <location filename="../gui/variablesdock.cpp" line="134"/>
-        <source>No match found</source>
-        <translation type="obsolete">لا يوجد مماثل</translation>
     </message>
 </context>
 </TS>
