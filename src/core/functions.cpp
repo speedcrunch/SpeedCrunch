@@ -19,22 +19,26 @@
 // Boston, MA 02110-1301, USA.
 
 #include "core/functions.hxx"
-
 #include "core/settings.hxx"
 #include "math/hmath.hxx"
 
-#include <QApplication>
-#include <QHash>
+#include <QtCore/QCoreApplication>
+#include <QtCore/QHash>
 
 #include <algorithm>
 #include <cfloat>
 #include <cmath>
 #include <numeric>
 
+static Functions * s_functionsInstance = 0;
+
+static void s_deleteFunctions()
+{
+    delete s_functionsInstance;
+}
+
 struct Function::Private
 {
-  Functions * functions;
-
   int         argc;
   QString     desc;
   QString     error;
@@ -44,20 +48,17 @@ struct Function::Private
   Private() : argc( 0 ), desc(), error(), name(), ptr( 0 ) {}
 };
 
-Function::Function( const QString & name, int argc, FunctionPtr ptr,
-                    Functions * parent )
+Function::Function( const QString & name, int argc, FunctionPtr ptr )
   : d( new Function::Private )
 {
-  d->functions = parent;
   d->name      = name;
   d->argc      = argc;
   d->ptr       = ptr;
 }
 
-Function::Function( const QString & name, FunctionPtr ptr, Functions * parent )
+Function::Function( const QString & name, FunctionPtr ptr )
   : d( new Function::Private )
 {
-  d->functions = parent;
   d->name      = name;
   d->argc      = -1;
   d->ptr       = ptr;
@@ -107,12 +108,6 @@ HNumber Function::exec( const QVector<HNumber> & args )
 
   return (*d->ptr)( this, args );
 }
-
-Functions * Function::functions() const
-{
-  return d->functions;
-}
-
 
 void Function::setError( const QString & context, const QString & error )
 {
@@ -1113,90 +1108,100 @@ HNumber Functions::Private::mod( Function *, const QVector<HNumber> & args )
 void Functions::Private::createBuiltInFunctions()
 {
   // ANALYSIS
-  p->add( new Function( "abs",     1, abs,     p ) );
-  p->add( new Function( "average",    average, p ) );
-  p->add( new Function( "bin",        bin,     p ) );
-  p->add( new Function( "cbrt",    1, cbrt,    p ) );
-  p->add( new Function( "ceil",    1, ceil,    p ) );
-  p->add( new Function( "dec",        dec,     p ) );
-  p->add( new Function( "floor",   1, floor,   p ) );
-  p->add( new Function( "frac",    1, frac,    p ) );
-  p->add( new Function( "gamma",      Gamma,   p ) );
-  p->add( new Function( "geomean",    geomean, p ) );
-  p->add( new Function( "hex",        hex,     p ) );
-  p->add( new Function( "int",     1, integer, p ) );
-  p->add( new Function( "lngamma",    lnGamma, p ) );
-  p->add( new Function( "max",        max,     p ) );
-  p->add( new Function( "min",        min,     p ) );
-  p->add( new Function( "oct",        oct,     p ) );
-  p->add( new Function( "product",    product, p ) );
-  p->add( new Function( "round",      round,   p ) );
-  p->add( new Function( "sign",    1, sign,    p ) );
-  p->add( new Function( "sqrt",    1, sqrt,    p ) );
-  p->add( new Function( "sum",        sum,     p ) );
-  p->add( new Function( "trunc",      trunc,   p ) );
+  p->add( new Function( "abs",     1, abs      ) );
+  p->add( new Function( "average",    average  ) );
+  p->add( new Function( "bin",        bin      ) );
+  p->add( new Function( "cbrt",    1, cbrt     ) );
+  p->add( new Function( "ceil",    1, ceil     ) );
+  p->add( new Function( "dec",        dec      ) );
+  p->add( new Function( "floor",   1, floor    ) );
+  p->add( new Function( "frac",    1, frac     ) );
+  p->add( new Function( "gamma",      Gamma    ) );
+  p->add( new Function( "geomean",    geomean  ) );
+  p->add( new Function( "hex",        hex      ) );
+  p->add( new Function( "int",     1, integer  ) );
+  p->add( new Function( "lngamma",    lnGamma  ) );
+  p->add( new Function( "max",        max      ) );
+  p->add( new Function( "min",        min      ) );
+  p->add( new Function( "oct",        oct      ) );
+  p->add( new Function( "product",    product  ) );
+  p->add( new Function( "round",      round    ) );
+  p->add( new Function( "sign",    1, sign     ) );
+  p->add( new Function( "sqrt",    1, sqrt     ) );
+  p->add( new Function( "sum",        sum      ) );
+  p->add( new Function( "trunc",      trunc    ) );
 
   // LOGARITHM
-  p->add( new Function( "arcosh", 1, arcosh, p ) );
-  p->add( new Function( "arsinh", 1, arsinh, p ) );
-  p->add( new Function( "artanh", 1, artanh, p ) );
-  p->add( new Function( "cosh",   1, cosh,   p ) );
-  p->add( new Function( "exp",    1, exp,    p ) );
-  p->add( new Function( "lg",     1, lg,     p ) );
-  p->add( new Function( "ln",     1, ln,     p ) );
-  p->add( new Function( "log",    1, log,    p ) );
-  p->add( new Function( "sinh",   1, sinh,   p ) );
-  p->add( new Function( "tanh",   1, tanh,   p ) );
+  p->add( new Function( "arcosh", 1, arcosh ) );
+  p->add( new Function( "arsinh", 1, arsinh ) );
+  p->add( new Function( "artanh", 1, artanh ) );
+  p->add( new Function( "cosh",   1, cosh   ) );
+  p->add( new Function( "exp",    1, exp    ) );
+  p->add( new Function( "lg",     1, lg     ) );
+  p->add( new Function( "ln",     1, ln     ) );
+  p->add( new Function( "log",    1, log    ) );
+  p->add( new Function( "sinh",   1, sinh   ) );
+  p->add( new Function( "tanh",   1, tanh   ) );
 
   // DISCRETE
-  p->add( new Function( "gcd",    gcd, p ) );
-  p->add( new Function( "ncr", 2, nCr, p ) );
-  p->add( new Function( "npr", 2, nPr, p ) );
+  p->add( new Function( "gcd",    gcd ) );
+  p->add( new Function( "ncr", 2, nCr ) );
+  p->add( new Function( "npr", 2, nPr ) );
 
   // PROBABILITY
-  p->add( new Function( "binomcdf",  3, binomcdf,  p ) );
-  p->add( new Function( "binommean", 2, binommean, p ) );
-  p->add( new Function( "binompmf",  3, binompmf,  p ) );
-  p->add( new Function( "binomvar",  2, binomvar,  p ) );
-  p->add( new Function( "erf",       1, erf,       p ) );
-  p->add( new Function( "erfc",      1, erfc,      p ) );
-  p->add( new Function( "hypercdf",  4, hypercdf,  p ) );
-  p->add( new Function( "hypermean", 3, hypermean, p ) );
-  p->add( new Function( "hyperpmf",  4, hyperpmf,  p ) );
-  p->add( new Function( "hypervar",  3, hypervar,  p ) );
-  p->add( new Function( "poicdf",    2, poicdf,    p ) );
-  p->add( new Function( "poimean",   1, poimean,   p ) );
-  p->add( new Function( "poipmf",    2, poipmf,    p ) );
-  p->add( new Function( "poivar",    1, poivar,    p ) );
+  p->add( new Function( "binomcdf",  3, binomcdf  ) );
+  p->add( new Function( "binommean", 2, binommean ) );
+  p->add( new Function( "binompmf",  3, binompmf  ) );
+  p->add( new Function( "binomvar",  2, binomvar  ) );
+  p->add( new Function( "erf",       1, erf       ) );
+  p->add( new Function( "erfc",      1, erfc      ) );
+  p->add( new Function( "hypercdf",  4, hypercdf  ) );
+  p->add( new Function( "hypermean", 3, hypermean ) );
+  p->add( new Function( "hyperpmf",  4, hyperpmf  ) );
+  p->add( new Function( "hypervar",  3, hypervar  ) );
+  p->add( new Function( "poicdf",    2, poicdf    ) );
+  p->add( new Function( "poimean",   1, poimean   ) );
+  p->add( new Function( "poipmf",    2, poipmf    ) );
+  p->add( new Function( "poivar",    1, poivar    ) );
 
   // TRIGONOMETRY
-  p->add( new Function( "acos",    1, acos,    p ) );
-  p->add( new Function( "asin",    1, asin,    p ) );
-  p->add( new Function( "atan",    1, atan,    p ) );
-  p->add( new Function( "cos",     1, cos,     p ) );
-  p->add( new Function( "cot",     1, cot,     p ) );
-  p->add( new Function( "csc",     1, csc,     p ) );
-  p->add( new Function( "degrees", 1, degrees, p ) );
-  p->add( new Function( "radians", 1, radians, p ) );
-  p->add( new Function( "sec",     1, sec,     p ) );
-  p->add( new Function( "sin",     1, sin,     p ) );
-  p->add( new Function( "tan",     1, tan,     p ) );
+  p->add( new Function( "acos",    1, acos    ) );
+  p->add( new Function( "asin",    1, asin    ) );
+  p->add( new Function( "atan",    1, atan    ) );
+  p->add( new Function( "cos",     1, cos     ) );
+  p->add( new Function( "cot",     1, cot     ) );
+  p->add( new Function( "csc",     1, csc     ) );
+  p->add( new Function( "degrees", 1, degrees ) );
+  p->add( new Function( "radians", 1, radians ) );
+  p->add( new Function( "sec",     1, sec     ) );
+  p->add( new Function( "sin",     1, sin     ) );
+  p->add( new Function( "tan",     1, tan     ) );
 
   // LOGIC
-  p->add( new Function( "mask",   2, mask,   p ) );
-  p->add( new Function( "unmask", 2, unmask, p ) );
-  p->add( new Function( "not",    1, not_,   p ) );
-  p->add( new Function( "and",       and_,   p ) );
-  p->add( new Function( "or",        or_,    p ) );
-  p->add( new Function( "xor",       xor_,   p ) );
-  p->add( new Function( "shl",    2, ashl,   p ) );
-  p->add( new Function( "shr",    2, ashr,   p ) );
-  p->add( new Function( "idiv",   2, idiv,   p ) );
-  p->add( new Function( "mod",    2, mod,    p ) );
+  p->add( new Function( "mask",   2, mask   ) );
+  p->add( new Function( "unmask", 2, unmask ) );
+  p->add( new Function( "not",    1, not_   ) );
+  p->add( new Function( "and",       and_   ) );
+  p->add( new Function( "or",        or_    ) );
+  p->add( new Function( "xor",       xor_   ) );
+  p->add( new Function( "shl",    2, ashl   ) );
+  p->add( new Function( "shr",    2, ashr   ) );
+  p->add( new Function( "idiv",   2, idiv   ) );
+  p->add( new Function( "mod",    2, mod    ) );
 }
 
-Functions::Functions( QObject * parent )
-  : QObject( parent ), d( new Functions::Private )
+Functions * Functions::instance()
+{
+  if ( ! s_functionsInstance ) {
+    s_functionsInstance = new Functions;
+    qAddPostRoutine( s_deleteFunctions );
+  }
+
+  return s_functionsInstance;
+}
+
+Functions::Functions()
+  : d( new Functions::Private )
 {
   d->p = this;
   d->createBuiltInFunctions();

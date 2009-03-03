@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2008-2009 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -89,7 +89,7 @@ class Evaluator : public QObject
   Q_OBJECT
 
   public:
-    Evaluator( Functions *, QObject * parent = 0 );
+    static Evaluator * instance();
     ~Evaluator();
 
     bool    has( const QString & id );
@@ -117,11 +117,12 @@ class Evaluator : public QObject
     void compile( const Tokens & ) const;
 
   private:
-    struct Private;
-    const std::auto_ptr<Private> d;
     Evaluator();
     Evaluator( const Evaluator & );
     Evaluator & operator=( const Evaluator & );
+
+    struct Private;
+    const std::auto_ptr<Private> d;
 };
 
 #endif

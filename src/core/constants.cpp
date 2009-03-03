@@ -17,11 +17,16 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
+#include "core/constants.hxx"
 
-#include "constants.hxx"
+#include <QtCore/QCoreApplication>
 
-#include <QApplication>
+static Constants * s_constantsInstance = 0;
 
+static void s_deleteConstants()
+{
+    delete s_constantsInstance;
+}
 
 struct Constants::Private
 {
@@ -30,7 +35,6 @@ struct Constants::Private
 
   void createConstants();
 };
-
 
 void Constants::Private::createConstants()
 {
@@ -102,35 +106,39 @@ void Constants::Private::createConstants()
   categoryList.sort();
 }
 
+Constants * Constants::instance()
+{
+  if ( ! s_constantsInstance ) {
+    s_constantsInstance = new Constants;
+    qAddPostRoutine( s_deleteConstants );
+  }
 
-Constants::Constants( QObject * parent )
-  : QObject( parent ), d( new Constants::Private )
+  return s_constantsInstance;
+}
+
+Constants::Constants()
+  : d( new Constants::Private )
 {
   setObjectName( "Constants" );
   d->createConstants();
 }
 
-
 Constants::~Constants()
 {
 }
-
 
 QList<Constant> Constants::constantList() const
 {
   return d->constantList;
 }
 
-
 QStringList Constants::categoryList() const
 {
   return d->categoryList;
 }
 
-
-// public slots
-
 void Constants::retranslateText()
 {
   d->createConstants();
 }
+

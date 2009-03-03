@@ -1,7 +1,7 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
 // Copyright (C) 2005-2006 Johan Thelin <e8johan@gmail.com>
-// Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2007-2009 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -21,13 +21,13 @@
 #ifndef CORE_SETTINGS_HXX
 #define CORE_SETTINGS_HXX
 
-#include <QPoint>
-#include <QSize>
-#include <QStringList>
+#include <QtCore/QPoint>
+#include <QtCore/QSize>
+#include <QtCore/QStringList>
 
 class Settings
 {
-  public:
+public:
     static Settings * instance();
 
     void load();
@@ -70,9 +70,7 @@ class Settings
     QSize       windowSize;
     QByteArray  windowState;
 
-    ~Settings();
-
-  private:
+private:
     Settings();
     Settings( const Settings & );
     Settings & operator=( const Settings & );

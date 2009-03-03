@@ -18,7 +18,6 @@
 // Boston, MA 02110-1301, USA.
 
 #include "core/evaluator.hxx"
-#include "core/functions.hxx"
 #include "core/settings.hxx"
 
 #include <QtCore/QCoreApplication>
@@ -28,7 +27,7 @@
 
 using namespace std;
 
-static Evaluator *eval = 0;
+static Evaluator * eval = 0;
 static int eval_total_tests  = 0;
 static int eval_failed_tests = 0;
 
@@ -518,13 +517,11 @@ int main( int argc, char * * argv )
 {
   QCoreApplication app( argc, argv );
 
-  Settings *settings = Settings::instance();
+  Settings * settings = Settings::instance();
   settings->angleUnit = 'r';
   settings->setRadixCharacter( '.' );
 
-  Functions functions;
-  Evaluator evaluator( &functions );
-  eval = &evaluator;
+  eval = Evaluator::instance();
 
   test_constants();
   test_unary();

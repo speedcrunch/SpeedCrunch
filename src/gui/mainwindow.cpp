@@ -785,9 +785,9 @@ void MainWindow::Private::createStatusBar()
 void MainWindow::Private::createFixedWidgets()
 {
   // necessary objects
-  constants = new Constants( p );
-  functions = new Functions( p );
-  evaluator = new Evaluator( functions, p );
+  constants = Constants::instance();
+  evaluator = Evaluator::instance();
+  functions = Functions::instance();
 
   // outer widget and layout
   widgets.root = new QWidget( p );
@@ -1267,7 +1267,6 @@ MainWindow::MainWindow()
   : QMainWindow(), d( new MainWindow::Private )
 {
   d->p = this;
-  d->settings->load();
   d->createUi();
   d->applySettings();
   QTimer::singleShot( 0, this, SLOT( activate() ) );
@@ -1275,6 +1274,10 @@ MainWindow::MainWindow()
 
 MainWindow::~MainWindow()
 {
+  delete d->constants;
+  delete d->evaluator;
+  delete d->functions;
+  delete d->settings;
 }
 
 bool MainWindow::event( QEvent * e )

@@ -1,7 +1,7 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2004, 2005, 2007, 2008 Ariya Hidayat <ariya@kde.org>
 // Copyright (C) 2005-2006 Johan Thelin <e8johan@gmail.com>
-// Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2007-2009 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -18,44 +18,38 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#include "core/settings.hxx"
-
 #include "3rdparty/util/binreloc.h"
+#include "core/settings.hxx"
 #include "math/floatconfig.h"
 
-#include <QApplication>
-#include <QDir>
-#include <QSettings>
-#include <QLocale>
+#include <QtCore/QDir>
+#include <QtCore/QLocale>
+#include <QtCore/QSettings>
+#include <QtGui/QApplication>
 
-static Settings * sSettings = 0;
-static char sRadixCharacter = 0;
-static QSettings * createQSettings( const QString & key );
+static Settings * s_settingsInstance = 0;
+static char s_radixCharacter = 0;
 
-static void cleanup_settings()
+static void s_deleteSettings()
 {
-  delete sSettings;
-  sSettings = 0;
+    delete s_settingsInstance;
 }
 
+static QSettings * createQSettings( const QString & key );
 
 Settings::Settings()
 {
 }
 
-Settings::~Settings()
-{
-}
-
 Settings * Settings::instance()
 {
-  if ( ! sSettings )
-  {
-    sSettings = new Settings;
-    qAddPostRoutine(cleanup_settings);
+  if ( ! s_settingsInstance ) {
+    s_settingsInstance = new Settings;
+    s_settingsInstance->load();
+    qAddPostRoutine( s_deleteSettings );
   }
 
-  return sSettings;
+  return s_settingsInstance;
 }
 
 void Settings::load()
@@ -81,10 +75,6 @@ void Settings::load()
   // radix character special case
   QString radixCharStr;
   radixCharStr = settings->value( key + "RadixCharacter", 0 ).toString();
-  //if ( radixCharStr != "," && radixCharStr != "." )
-  //  sRadixCharacter = 0;
-  //else
-  //  sRadixCharacter = radixCharStr[0].toAscii();
   setRadixCharacter( radixCharStr[0].toAscii() );
 
   historySave           = settings->value( key + "HistorySave",           true  ).toBool();
@@ -215,8 +205,8 @@ void Settings::save()
   settings->setValue( key + "AngleMode", QString( QChar( angleUnit ) ) );
 
   char c = 'C';
-  if ( sRadixCharacter != 0 )
-    c = sRadixCharacter;
+  if ( s_radixCharacter != 0 )
+    c = s_radixCharacter;
   settings->setValue( key + "RadixCharacter", QString( QChar( c ) ) );
 
   key = KEY + "/Format/";
@@ -319,23 +309,23 @@ void Settings::save()
 
 char Settings::radixCharacter() const
 {
-  if ( sRadixCharacter == 0 )
+  if ( s_radixCharacter == 0 )
     return QLocale().decimalPoint().toAscii();
   else
-    return sRadixCharacter;
+    return s_radixCharacter;
+}
+
+bool Settings::isRadixCharacterAuto() const
+{
+    return s_radixCharacter == 0;
 }
 
 void Settings::setRadixCharacter( char c )
 {
   if ( c != ',' && c != '.' )
-    sRadixCharacter = 0;
+    s_radixCharacter = 0;
   else
-    sRadixCharacter = c;
-};
-
-bool Settings::isRadixCharacterAuto() const
-{
-  return sRadixCharacter == 0;
+    s_radixCharacter = c;
 };
 
 QSettings * createQSettings( const QString & KEY )

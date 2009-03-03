@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2008-2009 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -20,23 +20,22 @@
 #ifndef CORE_FUNCTIONS_HXX
 #define CORE_FUNCTIONS_HXX
 
-#include <QStringList>
-#include <QVector>
+#include <QtCore/QStringList>
+#include <QtCore/QVector>
 
 #include <memory>
 
-class HNumber;
 class Function;
 class Functions;
+class HNumber;
 
 typedef HNumber (*FunctionPtr)( Function *, const QVector<HNumber> & );
 
 class Function
 {
-  public:
-    Function( const QString & name, int argc, FunctionPtr ptr,
-              Functions * parent );
-    Function( const QString & name, FunctionPtr ptr, Functions * parent );
+public:
+    Function( const QString & name, int argc, FunctionPtr ptr );
+    Function( const QString & name, FunctionPtr ptr );
 
     QString     description() const;
     void        setDescription( const QString & );
@@ -46,7 +45,7 @@ class Function
     Functions * functions() const;
     void        setError( const QString & context, const QString & error );
 
-  private:
+private:
     struct Private;
     const std::auto_ptr<Private> d;
     Function();
@@ -58,22 +57,24 @@ class Functions : public QObject
 {
   Q_OBJECT
 
-  public:
-    Functions( QObject * parent = 0 );
+public:
+    static Functions * instance();
     ~Functions();
 
     void        add( Function * );
     Function *  function( const QString & ) const;
     QStringList functionNames() const;
 
-  public slots:
+public slots:
     void retranslateText();
 
-  private:
-    struct Private;
-    const std::auto_ptr<Private> d;
+private:
+    Functions();
     Functions( const Functions & );
     Functions & operator=( const Functions & );
+
+    struct Private;
+    const std::auto_ptr<Private> d;
 };
 
 #endif
