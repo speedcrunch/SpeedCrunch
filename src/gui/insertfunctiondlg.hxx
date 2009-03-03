@@ -1,7 +1,6 @@
 // This file is part of the SpeedCrunch project
-// Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2004,2007 Ariya Hidayat <ariya@kde.org>
+// Copyright (C) 2008-2009 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -18,38 +17,33 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-
-#ifndef INSERTFUNCTIONDLG_HXX
-#define INSERTFUNCTIONDLG_HXX
-
+#ifndef GUI_INSERTFUNCTIONDLG_HXX
+#define GUI_INSERTFUNCTIONDLG_HXX
 
 #include <QDialog>
 
 #include <memory>
 
-
-class Functions;
-
-
 class InsertFunctionDlg : public QDialog
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    InsertFunctionDlg( Functions *, QWidget * parent = 0 );
-    QString functionName() const;
+public:
+    InsertFunctionDlg( QWidget * parent = 0 );
     ~InsertFunctionDlg();
 
-  private slots:
+    QString functionName() const;
+
+private slots:
     void initUI();
 
-  private:
-    struct Private;
-    const std::auto_ptr<Private> d;
-    InsertFunctionDlg();
+private:
     InsertFunctionDlg( const InsertFunctionDlg & );
     InsertFunctionDlg & operator=( const InsertFunctionDlg & );
+
+    struct Private;
+    const std::auto_ptr<Private> d;
 };
 
-
 #endif
+

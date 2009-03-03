@@ -19,35 +19,26 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-
-#include "insertfunctiondlg.hxx"
-
 #include "core/functions.hxx"
+#include "gui/insertfunctiondlg.hxx"
 
-#include <QHBoxLayout>
-#include <QHeaderView>
-#include <QPushButton>
-#include <QTimer>
-#include <QTreeWidget>
-#include <QVBoxLayout>
-
+#include <QtCore/QTimer>
+#include <QtGui/QHBoxLayout>
+#include <QtGui/QHeaderView>
+#include <QtGui/QPushButton>
+#include <QtGui/QTreeWidget>
+#include <QtGui/QVBoxLayout>
 
 struct InsertFunctionDlg::Private
 {
-  Functions *   functions;
   QPushButton * cancelButton;
   QPushButton * insertButton;
   QTreeWidget * list;
 };
 
-
-// public
-
-InsertFunctionDlg::InsertFunctionDlg( Functions * f, QWidget * parent )
+InsertFunctionDlg::InsertFunctionDlg( QWidget * parent )
   : QDialog( parent ), d( new InsertFunctionDlg::Private )
 {
-  d->functions = f;
-
   setWindowTitle( tr( "Insert Function" ) );
   setModal( true );
 
@@ -96,7 +87,6 @@ InsertFunctionDlg::InsertFunctionDlg( Functions * f, QWidget * parent )
   QTimer::singleShot( 0, this, SLOT(initUI()) );
 }
 
-
 QString InsertFunctionDlg::functionName() const
 {
   QTreeWidgetItem * item = d->list->currentItem();
@@ -105,21 +95,18 @@ QString InsertFunctionDlg::functionName() const
     : QString();
 }
 
-
 InsertFunctionDlg::~InsertFunctionDlg()
 {
 }
 
-
-// private slots
-
 void InsertFunctionDlg::initUI()
 {
-  QStringList functionNames = d->functions->functionNames();
+  Functions * functions = Functions::instance();
+  QStringList functionNames = functions->functionNames();
 
   for ( int i = 0; i < functionNames.count(); i++ )
   {
-    Function * f = d->functions->function( functionNames.at(i) );
+    Function * f = functions->function( functionNames.at(i) );
     if ( f )
     {
       QStringList str;
@@ -137,3 +124,4 @@ void InsertFunctionDlg::initUI()
 
   adjustSize();
 }
+

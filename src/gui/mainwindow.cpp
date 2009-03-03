@@ -1410,7 +1410,7 @@ void MainWindow::hideAutoCalcTip()
 
 void MainWindow::showFunctionInsertionDialog()
 {
-  InsertFunctionDlg dlg( d->functions );
+  InsertFunctionDlg dlg;
 
   if ( dlg.exec() == InsertFunctionDlg::Accepted )
   {
