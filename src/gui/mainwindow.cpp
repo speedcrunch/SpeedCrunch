@@ -2187,7 +2187,7 @@ void MainWindow::insertTextIntoEditor( const QString & s )
 void MainWindow::insertFunctionIntoEditor( const QString & f )
 {
   if ( ! f.isEmpty() )
-    d->widgets.editor->insert( f + '(' );
+    insertTextIntoEditor( f + "(" );
 }
 
 void MainWindow::handleKeypadButtonPress( Keypad::Button b )
