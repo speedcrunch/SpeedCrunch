@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2008-2009 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -33,6 +33,7 @@ HistoryDock::HistoryDock( QWidget * parent )
   : QDockWidget( parent ), d( new HistoryDock::Private )
 {
   d->list = new QListWidget( this );
+  d->list->setAlternatingRowColors( true );
 
   connect( d->list, SIGNAL( itemActivated( QListWidgetItem * ) ),
            this, SLOT( handleItem( QListWidgetItem * ) ) );
@@ -61,7 +62,6 @@ void HistoryDock::clear()
 void HistoryDock::append( const QString & h )
 {
   d->list->addItem( h );
-  recolor();
   d->list->clearSelection();
   d->list->scrollToBottom();
 }
@@ -71,7 +71,6 @@ void HistoryDock::appendHistory( const QStringList & h )
 {
   d->list->insertItems( 0, h );
   d->list->setCurrentRow( h.count() - 1 );
-  recolor();
   d->list->scrollToItem( d->list->item( h.count() ),
                          QListWidget::PositionAtTop );
   d->list->clearSelection();
@@ -98,17 +97,3 @@ void HistoryDock::handleItem( QListWidgetItem * item )
   emit expressionSelected( item->text() );
 }
 
-
-void HistoryDock::recolor()
-{
-  int group = 3;
-  d->list->setUpdatesEnabled( false );
-  for ( int i = 0; i < d->list->count(); i++ )
-  {
-    QListWidgetItem* item = d->list->item(i);
-    QBrush c = (((int) (i / group)) & 1) ? palette().base()
-                                         : palette().alternateBase();
-    item->setBackground( c );
-  }
-  d->list->setUpdatesEnabled( true );
-}
