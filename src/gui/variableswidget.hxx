@@ -31,7 +31,6 @@ class QTreeWidgetItem;
 template<class T>
 class QList;
 
-class Evaluator;
 class HNumber;
 
 class VariablesWidget : public QWidget
@@ -44,12 +43,10 @@ class VariablesWidget : public QWidget
   QTimer      * m_filterTimer;
   QLabel      * m_noMatchLabel;
 
-  Evaluator * m_evaluator;
   bool m_insertAllItems;
 
 public:
   VariablesWidget(
-         Evaluator * evaluator, //!< Stores the variables; better as Singleton?
          bool hideHeaders, //!< Show columns headers?
          bool insertAllItems, //!< Include internal 'variables' in selection?
          QWidget * parent = 0 );

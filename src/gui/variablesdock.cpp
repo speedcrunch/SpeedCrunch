@@ -28,9 +28,9 @@
 #include <QTreeWidget>
 #include <QVBoxLayout>
 
-VariablesDock::VariablesDock( Evaluator * eval, QWidget * parent )
+VariablesDock::VariablesDock( QWidget * parent )
   : QDockWidget( parent ),
-    m_variableWidget( new VariablesWidget( eval, /* hideHeaders */ true,
+    m_variableWidget( new VariablesWidget( /* hideHeaders */ true,
                /* insertAllItems */ true, this ) )
 {
   connect( m_variableWidget, SIGNAL( itemActivated( QTreeWidgetItem *, int ) ),

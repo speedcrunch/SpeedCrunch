@@ -22,7 +22,6 @@
 
 #include <QDockWidget>
 
-class Evaluator;
 class VariablesWidget;
 
 class QTreeWidgetItem;
@@ -34,7 +33,7 @@ class VariablesDock : public QDockWidget
     VariablesWidget * m_variableWidget;
 
   public:
-    VariablesDock( Evaluator *, QWidget * parent = 0 );
+    VariablesDock( QWidget * parent = 0 );
     ~VariablesDock();
 
     void updateList();

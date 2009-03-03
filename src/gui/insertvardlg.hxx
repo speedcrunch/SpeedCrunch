@@ -27,14 +27,13 @@
 
 #include <memory>
 
-class Evaluator;
 
 class InsertVariableDlg : public QDialog
 {
   Q_OBJECT
 
   public:
-    InsertVariableDlg( Evaluator * eval, QWidget * parent = 0 );
+    InsertVariableDlg( QWidget * parent = 0 );
     ~InsertVariableDlg();
 
     void    updateList();
@@ -43,7 +42,6 @@ class InsertVariableDlg : public QDialog
   private:
     struct Private;
     const std::auto_ptr<Private> d;
-    InsertVariableDlg();
     InsertVariableDlg( const InsertVariableDlg & );
     InsertVariableDlg & operator=( const InsertVariableDlg & );
 };

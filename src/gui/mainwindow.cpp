@@ -985,7 +985,7 @@ void MainWindow::Private::createHistoryDock()
 
 void MainWindow::Private::createVariablesDock()
 {
-  docks.variables = new VariablesDock( evaluator, p );
+  docks.variables = new VariablesDock( p );
   docks.variables->setObjectName( "VariablesDock" );
   docks.variables->installEventFilter( p );
   docks.variables->setAllowedAreas( Qt::AllDockWidgetAreas );
@@ -1353,7 +1353,7 @@ void MainWindow::deleteAllVariables()
 
 void MainWindow::showVariableDeletionDialog()
 {
-  DeleteVariableDlg dlg( d->evaluator );
+  DeleteVariableDlg dlg;
   dlg.exec();
 
   if ( d->settings->variablesDockVisible )
@@ -1422,7 +1422,7 @@ void MainWindow::showFunctionInsertionDialog()
 
 void MainWindow::showVariableInsertionDialog()
 {
-  InsertVariableDlg dlg( d->evaluator );
+  InsertVariableDlg dlg;
 
   if ( dlg.exec() == InsertVariableDlg::Accepted )
   {

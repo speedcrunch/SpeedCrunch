@@ -40,7 +40,7 @@ struct InsertVariableDlg::Private
 
 // public
 
-InsertVariableDlg::InsertVariableDlg( Evaluator * eval, QWidget * parent )
+InsertVariableDlg::InsertVariableDlg( QWidget * parent )
   : QDialog( parent ), d( new InsertVariableDlg::Private )
 {
   setWindowTitle( tr( "Insert Variable" ) );
@@ -49,7 +49,7 @@ InsertVariableDlg::InsertVariableDlg( Evaluator * eval, QWidget * parent )
   QVBoxLayout* layout = new QVBoxLayout;
   setLayout( layout );
 
-  d->list = new VariablesWidget( eval, /* hideHeaders */ false,
+  d->list = new VariablesWidget( /* hideHeaders */ false,
          /* insertAllItems */ true, this );
 
   d->insertButton = new QPushButton( this );

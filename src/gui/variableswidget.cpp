@@ -28,7 +28,7 @@
 #include <QTimer>
 #include <QTreeWidget>
 
-VariablesWidget::VariablesWidget( Evaluator * eval, bool hideHeaders,
+VariablesWidget::VariablesWidget( bool hideHeaders,
        bool insertAllItems, QWidget * parent )
   : QWidget( parent ),
     m_variables( new QTreeWidget( this ) ),
@@ -36,7 +36,6 @@ VariablesWidget::VariablesWidget( Evaluator * eval, bool hideHeaders,
     m_searchFilter( new QLineEdit( this ) ),
     m_filterTimer( new QTimer( this ) ),
     m_noMatchLabel( new QLabel( m_variables ) ),
-    m_evaluator( eval ),
     m_insertAllItems( insertAllItems )
 {
   connect( m_variables, SIGNAL( itemActivated( QTreeWidgetItem *, int ) ),
@@ -107,7 +106,7 @@ void VariablesWidget::fillTable()
 
   m_variables->clear();
 
-  QVector<Variable> variables = m_evaluator->variables();
+  QVector<Variable> variables = Evaluator::instance()->variables();
   for ( int k = 0; k < variables.count(); k++ )
   {
       if ( ! m_insertAllItems &&

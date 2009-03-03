@@ -34,24 +34,21 @@ struct DeleteVariableDlg::Private
 {
   VariablesWidget * list;
 
-  Evaluator *   eval;
   QPushButton * deleteButton;
   QPushButton * closeButton;
 };
 
 
-DeleteVariableDlg::DeleteVariableDlg( Evaluator * eval, QWidget * parent )
+DeleteVariableDlg::DeleteVariableDlg( QWidget * parent )
   : QDialog( parent ), d( new DeleteVariableDlg::Private )
 {
   setWindowTitle( tr( "Delete Variable" ) );
   setModal( true );
 
-  d->eval = eval;
-
   QVBoxLayout * layout = new QVBoxLayout;
   setLayout( layout );
 
-  d->list = new VariablesWidget( eval, /* hideHeaders */ false,
+  d->list = new VariablesWidget( /* hideHeaders */ false,
          /* insertAllItems */ false, this );
 
   d->deleteButton = new QPushButton( this );
@@ -100,7 +97,7 @@ void DeleteVariableDlg::deleteVar()
   if ( d->list->selectedItems().count() > 0 )
   {
     QTreeWidgetItem * item = d->list->selectedItems().at(0);
-    d->eval->remove( item->text( 0 ) );
+    Evaluator::instance()->remove( item->text( 0 ) );
     delete item;
   }
 }
