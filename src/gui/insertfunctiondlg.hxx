@@ -34,15 +34,11 @@ public:
 
     QString functionName() const;
 
-private slots:
-    void initUI();
-
 private:
-    InsertFunctionDlg( const InsertFunctionDlg & );
-    InsertFunctionDlg & operator=( const InsertFunctionDlg & );
-
     struct Private;
     const std::auto_ptr<Private> d;
+    InsertFunctionDlg( const InsertFunctionDlg & );
+    InsertFunctionDlg & operator=( const InsertFunctionDlg & );
 };
 
 #endif

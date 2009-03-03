@@ -36,7 +36,6 @@ class InsertVariableDlg : public QDialog
     InsertVariableDlg( QWidget * parent = 0 );
     ~InsertVariableDlg();
 
-    void    updateList();
     QString variableName() const;
 
   private:

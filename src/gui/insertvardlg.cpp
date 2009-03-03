@@ -80,15 +80,9 @@ InsertVariableDlg::InsertVariableDlg( QWidget * parent )
            this, SLOT(accept()) );
 
   d->list->setLayoutDirection( Qt::LeftToRight );
-
-  updateList();
-  adjustSize();
-}
-
-
-void InsertVariableDlg::updateList()
-{
   d->list->fillTable();
+
+  adjustSize();
 }
 
 

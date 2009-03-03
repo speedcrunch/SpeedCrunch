@@ -45,13 +45,13 @@ VariablesDock::VariablesDock( QWidget * parent )
   retranslateText();
 }
 
+VariablesDock::~VariablesDock()
+{
+}
+
 void VariablesDock::updateList()
 {
   m_variableWidget->filter();
-}
-
-VariablesDock::~VariablesDock()
-{
 }
 
 void VariablesDock::handleRadixCharacterChange()

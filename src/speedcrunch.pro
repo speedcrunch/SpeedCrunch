@@ -34,6 +34,7 @@ HEADERS += 3rdparty/flickcharm/flickcharm.h \
            gui/resultdisplay.hxx \
            gui/editor.hxx \
            gui/functionsdock.hxx \
+           gui/functionswidget.hxx \
            gui/historydock.hxx \
            gui/insertfunctiondlg.hxx \
            gui/insertvardlg.hxx \
@@ -86,6 +87,7 @@ SOURCES += 3rdparty/flickcharm/flickcharm.h \
            gui/resultdisplay.cpp \
            gui/editor.cpp \
            gui/functionsdock.cpp \
+           gui/functionswidget.cpp \
            gui/historydock.cpp \
            gui/insertfunctiondlg.cpp \
            gui/insertvardlg.cpp \

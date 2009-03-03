@@ -927,7 +927,7 @@ void MainWindow::Private::createConstantsDock()
 
 void MainWindow::Private::createFunctionsDock()
 {
-  docks.functions = new FunctionsDock( functions, p );
+  docks.functions = new FunctionsDock( p );
   docks.functions->setObjectName( "FunctionsDock" );
   docks.functions->installEventFilter( p );
   docks.functions->setAllowedAreas( Qt::AllDockWidgetAreas );
@@ -1414,9 +1414,7 @@ void MainWindow::showFunctionInsertionDialog()
 
   if ( dlg.exec() == InsertFunctionDlg::Accepted )
   {
-    QString funcName = dlg.functionName();
-    if ( ! funcName.isEmpty() )
-      d->widgets.editor->insert( funcName );
+    insertFunctionIntoEditor( dlg.functionName() );
   }
 }
 
@@ -2188,10 +2186,8 @@ void MainWindow::insertTextIntoEditor( const QString & s )
 
 void MainWindow::insertFunctionIntoEditor( const QString & f )
 {
-  if ( f.isEmpty() )
-    return;
-
-  insertTextIntoEditor( f + "(" );
+  if ( ! f.isEmpty() )
+    d->widgets.editor->insert( f + '(' );
 }
 
 void MainWindow::handleKeypadButtonPress( Keypad::Button b )

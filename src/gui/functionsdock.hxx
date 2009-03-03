@@ -25,6 +25,7 @@
 #include <memory>
 
 class Functions;
+class FunctionsWidget;
 
 class QTreeWidgetItem;
 
@@ -32,29 +33,26 @@ class FunctionsDock : public QDockWidget
 {
   Q_OBJECT
 
+    FunctionsWidget * m_functionWidget;
+
   public:
-    explicit FunctionsDock( const Functions *, QWidget * parent );
+    FunctionsDock( QWidget * parent );
     ~FunctionsDock();
     const Functions * functions() const;
+
+    void updateList();
 
   signals:
     void functionSelected( const QString & );
 
   public slots:
-    void retranslateText();
-
-  protected slots:
-    void filter();
     void handleItem( QTreeWidgetItem * );
-    void triggerFilter();
+    void retranslateText();
 
   protected:
     virtual void changeEvent( QEvent * );
 
   private:
-    struct Private;
-    const std::auto_ptr<Private> d;
-    FunctionsDock();
     FunctionsDock( const FunctionsDock & );
     FunctionsDock & operator=( const FunctionsDock & );
 };

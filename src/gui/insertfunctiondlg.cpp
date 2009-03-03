@@ -19,21 +19,22 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#include "core/functions.hxx"
-#include "gui/insertfunctiondlg.hxx"
 
-#include <QtCore/QTimer>
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QHeaderView>
+#include "insertfunctiondlg.hxx"
+
+#include "gui/functionswidget.hxx"
+
 #include <QtGui/QPushButton>
 #include <QtGui/QTreeWidget>
 #include <QtGui/QVBoxLayout>
 
+
 struct InsertFunctionDlg::Private
 {
+  FunctionsWidget * list;
+
   QPushButton * cancelButton;
   QPushButton * insertButton;
-  QTreeWidget * list;
 };
 
 InsertFunctionDlg::InsertFunctionDlg( QWidget * parent )
@@ -45,17 +46,7 @@ InsertFunctionDlg::InsertFunctionDlg( QWidget * parent )
   QVBoxLayout * layout = new QVBoxLayout;
   setLayout( layout );
 
-  d->list = new QTreeWidget( this );
-  d->list->setColumnCount( 2 );
-  d->list->setAlternatingRowColors( true );
-  d->list->setRootIsDecorated( false );
-  d->list->setEditTriggers( QTreeWidget::NoEditTriggers );
-  d->list->setSelectionBehavior( QTreeWidget::SelectRows );
-
-  QStringList titles;
-  titles << tr( "Name" );
-  titles << tr( "Description" );
-  d->list->setHeaderLabels( titles );
+  d->list = new FunctionsWidget( /* hideHeaders */ false, this );
 
   d->insertButton = new QPushButton( this );
   d->insertButton->setText( tr( "&Insert" ) );
@@ -84,7 +75,10 @@ InsertFunctionDlg::InsertFunctionDlg( QWidget * parent )
   connect( d->list, SIGNAL( itemDoubleClicked( QTreeWidgetItem *, int ) ),
            this, SLOT( accept() ) );
 
-  QTimer::singleShot( 0, this, SLOT(initUI()) );
+  d->list->setLayoutDirection( Qt::LeftToRight );
+  d->list->fillTable();
+
+  adjustSize();
 }
 
 QString InsertFunctionDlg::functionName() const
@@ -98,30 +92,3 @@ QString InsertFunctionDlg::functionName() const
 InsertFunctionDlg::~InsertFunctionDlg()
 {
 }
-
-void InsertFunctionDlg::initUI()
-{
-  Functions * functions = Functions::instance();
-  QStringList functionNames = functions->functionNames();
-
-  for ( int i = 0; i < functionNames.count(); i++ )
-  {
-    Function * f = functions->function( functionNames.at(i) );
-    if ( f )
-    {
-      QStringList str;
-      str << f->name();
-      str << f->description();
-      QTreeWidgetItem * item = new QTreeWidgetItem( d->list, str );
-      if ( item && layoutDirection() == Qt::RightToLeft )
-        item->setTextAlignment( 0, Qt::AlignRight );
-    }
-  }
-
-  d->list->sortItems( 0, Qt::AscendingOrder );
-  d->list->setFocus();
-  d->list->setCurrentItem( d->list->itemAt( 0, 0 ) );
-
-  adjustSize();
-}
-

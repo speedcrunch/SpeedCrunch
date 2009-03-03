@@ -237,257 +237,257 @@
 <context>
     <name>Constants</name>
     <message>
-        <location filename="../core/constants.cpp" line="41"/>
+        <location filename="../core/constants.cpp" line="45"/>
         <source>Characteristic Impedance of Vacuum</source>
         <translation>Impedància Característica del Buit</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="47"/>
+        <location filename="../core/constants.cpp" line="51"/>
         <source>General Physics</source>
         <translation>Física General</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="42"/>
+        <location filename="../core/constants.cpp" line="46"/>
         <source>Electric Constant</source>
         <translation>Constant Elèctrica</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="43"/>
+        <location filename="../core/constants.cpp" line="47"/>
         <source>Magnetic Constant</source>
         <translation>Constant Magnètica</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="44"/>
+        <location filename="../core/constants.cpp" line="48"/>
         <source>Gravitation Constant</source>
         <translation>Constant Gravitacional</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="45"/>
+        <location filename="../core/constants.cpp" line="49"/>
         <source>Planck&apos;s Constant</source>
         <translation>Constant de Planck</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="46"/>
+        <location filename="../core/constants.cpp" line="50"/>
         <source>Dirac&apos;s Constant</source>
         <translation>Constant de Dirac</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="47"/>
+        <location filename="../core/constants.cpp" line="51"/>
         <source>Speed of Light in Vacuum</source>
         <translation>Velocitat de la Llum en el Buit</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="50"/>
+        <location filename="../core/constants.cpp" line="54"/>
         <source>Bohr-Procopiu Magneton</source>
         <translation>Magnetó de Bohr-Procopiu</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="58"/>
+        <location filename="../core/constants.cpp" line="62"/>
         <source>Electromagnetic</source>
         <translation>Electromagnetisme</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="51"/>
+        <location filename="../core/constants.cpp" line="55"/>
         <source>Conductance Quantum</source>
         <translation>Conductància Quàntica</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="52"/>
+        <location filename="../core/constants.cpp" line="56"/>
         <source>Coulomb&apos;s Constant</source>
         <translation>Constant de Coulomb</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="53"/>
+        <location filename="../core/constants.cpp" line="57"/>
         <source>Elementary Charge</source>
         <translation>Càrrega Elemental</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="54"/>
+        <location filename="../core/constants.cpp" line="58"/>
         <source>Josephson Constant</source>
         <translation>Constant de Josephson</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="55"/>
+        <location filename="../core/constants.cpp" line="59"/>
         <source>Magnetic Flux Quantum</source>
         <translation>Flux Quàntic Magnètic</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="56"/>
+        <location filename="../core/constants.cpp" line="60"/>
         <source>Nuclear Magneton</source>
         <translation>Magnetó Nuclear</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="57"/>
+        <location filename="../core/constants.cpp" line="61"/>
         <source>Resistance Quantum</source>
         <translation>Resistència Quàntica</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="58"/>
+        <location filename="../core/constants.cpp" line="62"/>
         <source>von Klitzing Constant</source>
         <translation>Constant de von Klitzing</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="61"/>
+        <location filename="../core/constants.cpp" line="65"/>
         <source>Bohr Radius</source>
         <translation>Radi de Bohr</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="68"/>
+        <location filename="../core/constants.cpp" line="72"/>
         <source>Atomic &amp; Nuclear</source>
         <translation>Atòmic i Nuclear</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="62"/>
+        <location filename="../core/constants.cpp" line="66"/>
         <source>Fermi Coupling Constant</source>
         <translation>Constant d&apos;Acoblament de Fermi</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="63"/>
+        <location filename="../core/constants.cpp" line="67"/>
         <source>Fine-structure Constant</source>
         <translation>Constant d&apos;Estructura Fina</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="64"/>
+        <location filename="../core/constants.cpp" line="68"/>
         <source>Hartree Energy</source>
         <translation>Energia Hartree</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="65"/>
+        <location filename="../core/constants.cpp" line="69"/>
         <source>Quantum of Circulation</source>
         <translation>Quàntum de Circulació</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="66"/>
+        <location filename="../core/constants.cpp" line="70"/>
         <source>Rydberg Constant</source>
         <translation>Constant de Rydberg</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="67"/>
+        <location filename="../core/constants.cpp" line="71"/>
         <source>Thomson Cross Section</source>
         <translation>Secció Eficaç de Thomson</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="68"/>
+        <location filename="../core/constants.cpp" line="72"/>
         <source>Weak Mixing Angle</source>
         <translation>Angle de Weinberg</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="71"/>
+        <location filename="../core/constants.cpp" line="75"/>
         <source>Atomic Mass Unit</source>
         <translation>Unitat de Massa Atòmica</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="80"/>
+        <location filename="../core/constants.cpp" line="84"/>
         <source>Physico-chemical</source>
         <translation>Físic-químic</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="72"/>
+        <location filename="../core/constants.cpp" line="76"/>
         <source>Avogadro&apos;s Number</source>
         <translation>Nombre d&apos;Avogadro</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="73"/>
+        <location filename="../core/constants.cpp" line="77"/>
         <source>Boltzmann Constant</source>
         <translation>Constant de Boltzmann</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="74"/>
+        <location filename="../core/constants.cpp" line="78"/>
         <source>Faraday Constant</source>
         <translation>Constant de Faraday</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="75"/>
+        <location filename="../core/constants.cpp" line="79"/>
         <source>First Radiation Constant</source>
         <translation>Primera Constant de Radiació</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="76"/>
+        <location filename="../core/constants.cpp" line="80"/>
         <source>Loschmidt Constant</source>
         <translation>Constant de Loschmidt</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="77"/>
+        <location filename="../core/constants.cpp" line="81"/>
         <source>Gas Constant</source>
         <translation>Constant Universal dels Gasos Ideals</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="78"/>
+        <location filename="../core/constants.cpp" line="82"/>
         <source>Molar Planck Constant</source>
         <translation>Constant Molar de Planck</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="79"/>
+        <location filename="../core/constants.cpp" line="83"/>
         <source>Second Radiation Constant</source>
         <translation>Segona Constant de Radiació</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="80"/>
+        <location filename="../core/constants.cpp" line="84"/>
         <source>Stefan-Boltzmann Constant</source>
         <translation>Constant de Stefan-Boltzmann</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="83"/>
+        <location filename="../core/constants.cpp" line="87"/>
         <source>Astronomical Unit</source>
         <translation>Unitat Astronòmica</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="93"/>
+        <location filename="../core/constants.cpp" line="97"/>
         <source>Astronomy</source>
         <translation>Astronomia</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="84"/>
+        <location filename="../core/constants.cpp" line="88"/>
         <source>Light Year</source>
         <translation>Any Llum</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="85"/>
+        <location filename="../core/constants.cpp" line="89"/>
         <source>Parsec</source>
         <translation>Parsec</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="86"/>
+        <location filename="../core/constants.cpp" line="90"/>
         <source>Sidereal Year</source>
         <translation>Any Sideral</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="88"/>
+        <location filename="../core/constants.cpp" line="92"/>
         <source>days</source>
         <translation>dies</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="87"/>
+        <location filename="../core/constants.cpp" line="91"/>
         <source>Tropical Year</source>
         <translation>Any Tropical</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="88"/>
+        <location filename="../core/constants.cpp" line="92"/>
         <source>Gregorian Year</source>
         <translation>Any Gregorià</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="89"/>
+        <location filename="../core/constants.cpp" line="93"/>
         <source>Earth Mass</source>
         <translation>Massa Terrestre</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="90"/>
+        <location filename="../core/constants.cpp" line="94"/>
         <source>Sun Mass</source>
         <translation>Massa Solar</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="91"/>
+        <location filename="../core/constants.cpp" line="95"/>
         <source>Mean Earth Radius</source>
         <translation>Radi Terrestre</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="92"/>
+        <location filename="../core/constants.cpp" line="96"/>
         <source>Sun Radius</source>
         <translation>Radi Solar</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="93"/>
+        <location filename="../core/constants.cpp" line="97"/>
         <source>Sun Luminosity</source>
         <translation>Lluminositat Solar</translation>
     </message>
@@ -495,27 +495,27 @@
 <context>
     <name>ConstantsDock</name>
     <message>
-        <location filename="../gui/constantsdock.cpp" line="139"/>
+        <location filename="../gui/constantsdock.cpp" line="140"/>
         <source>Constants</source>
         <translation>Constants</translation>
     </message>
     <message>
-        <location filename="../gui/constantsdock.cpp" line="140"/>
+        <location filename="../gui/constantsdock.cpp" line="141"/>
         <source>Category</source>
         <translation>Categoria</translation>
     </message>
     <message>
-        <location filename="../gui/constantsdock.cpp" line="141"/>
+        <location filename="../gui/constantsdock.cpp" line="142"/>
         <source>Search</source>
         <translation>Recerca</translation>
     </message>
     <message>
-        <location filename="../gui/constantsdock.cpp" line="115"/>
+        <location filename="../gui/constantsdock.cpp" line="116"/>
         <source>No match found</source>
         <translation>No s&apos;han trobat coincidències</translation>
     </message>
     <message>
-        <location filename="../gui/constantsdock.cpp" line="271"/>
+        <location filename="../gui/constantsdock.cpp" line="256"/>
         <source>All</source>
         <translation>Tot</translation>
     </message>
@@ -523,17 +523,17 @@
 <context>
     <name>DeleteVariableDlg</name>
     <message>
-        <location filename="../gui/deletevardlg.cpp" line="57"/>
+        <location filename="../gui/deletevardlg.cpp" line="55"/>
         <source>&amp;Delete</source>
         <translation>&amp;Esborrar</translation>
     </message>
     <message>
-        <location filename="../gui/deletevardlg.cpp" line="61"/>
+        <location filename="../gui/deletevardlg.cpp" line="59"/>
         <source>Close</source>
         <translation>Tancar</translation>
     </message>
     <message>
-        <location filename="../gui/deletevardlg.cpp" line="46"/>
+        <location filename="../gui/deletevardlg.cpp" line="45"/>
         <source>Delete Variable</source>
         <translation>Esborrar Variable</translation>
     </message>
@@ -554,27 +554,27 @@
 <context>
     <name>Evaluator</name>
     <message>
-        <location filename="../core/evaluator.cpp" line="1386"/>
+        <location filename="../core/evaluator.cpp" line="1393"/>
         <source>invalid expression</source>
         <translation>expressió invàlida</translation>
     </message>
     <message>
-        <location filename="../core/evaluator.cpp" line="1316"/>
+        <location filename="../core/evaluator.cpp" line="1323"/>
         <source>division by zero</source>
         <translation>divisió per cero</translation>
     </message>
     <message>
-        <location filename="../core/evaluator.cpp" line="1355"/>
+        <location filename="../core/evaluator.cpp" line="1362"/>
         <source>unknown function or variable</source>
         <translation>funció o variable desconeguda</translation>
     </message>
     <message>
-        <location filename="../core/evaluator.cpp" line="1404"/>
+        <location filename="../core/evaluator.cpp" line="1411"/>
         <source>variable cannot be overwritten</source>
         <translation>variable no es pot sobreescriure</translation>
     </message>
     <message>
-        <location filename="../core/evaluator.cpp" line="1412"/>
+        <location filename="../core/evaluator.cpp" line="1419"/>
         <source>identifier matches an existing function name</source>
         <translation>identificador és igual al nom d&apos;una funció existent</translation>
     </message>
@@ -582,402 +582,402 @@
 <context>
     <name>Functions</name>
     <message>
-        <location filename="../core/functions.cpp" line="1236"/>
+        <location filename="../core/functions.cpp" line="1241"/>
         <source>Absolute Value</source>
         <translation>Valor Absolut</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1237"/>
+        <location filename="../core/functions.cpp" line="1242"/>
         <source>Average (Arithmetic Mean)</source>
         <translation>Promig (Mitja Aritmètica)</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1238"/>
+        <location filename="../core/functions.cpp" line="1243"/>
         <source>Binary Representation</source>
         <translation>Representació Binària</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1239"/>
+        <location filename="../core/functions.cpp" line="1244"/>
         <source>Cube Root</source>
         <translation>Arrel Cúbica</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1240"/>
+        <location filename="../core/functions.cpp" line="1245"/>
         <source>Ceiling</source>
         <translation>Sostre</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1241"/>
+        <location filename="../core/functions.cpp" line="1246"/>
         <source>Decimal Representation</source>
         <translation>Representació Decimal</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1242"/>
+        <location filename="../core/functions.cpp" line="1247"/>
         <source>Floor</source>
         <translation>Pis</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1243"/>
+        <location filename="../core/functions.cpp" line="1248"/>
         <source>Fractional Part</source>
         <translation>Part Fraccional</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1245"/>
+        <location filename="../core/functions.cpp" line="1250"/>
         <source>Geometric Mean</source>
         <translation>Mitja Geomètrica</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1246"/>
+        <location filename="../core/functions.cpp" line="1251"/>
         <source>Hexadecimal Representation</source>
         <translation>Representació Hexadecimal</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1247"/>
+        <location filename="../core/functions.cpp" line="1252"/>
         <source>Integer Part</source>
         <translation>Part Sencera</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1249"/>
+        <location filename="../core/functions.cpp" line="1254"/>
         <source>Maximum</source>
         <translation>Màxim</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1250"/>
+        <location filename="../core/functions.cpp" line="1255"/>
         <source>Minimum</source>
         <translation>Mínim</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1251"/>
+        <location filename="../core/functions.cpp" line="1256"/>
         <source>Octal Representation</source>
         <translation>Representació Octal</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1252"/>
+        <location filename="../core/functions.cpp" line="1257"/>
         <source>Product</source>
         <translation>Producte</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1253"/>
+        <location filename="../core/functions.cpp" line="1258"/>
         <source>Rounding</source>
         <translation>Arrodoniment</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1254"/>
+        <location filename="../core/functions.cpp" line="1259"/>
         <source>Signum</source>
         <translation>Signum</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1255"/>
+        <location filename="../core/functions.cpp" line="1260"/>
         <source>Square Root</source>
         <translation>Arrel Quadrada</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1256"/>
+        <location filename="../core/functions.cpp" line="1261"/>
         <source>Sum</source>
         <translation>Suma</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1257"/>
+        <location filename="../core/functions.cpp" line="1262"/>
         <source>Truncation</source>
         <translation>Truncar</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1263"/>
+        <location filename="../core/functions.cpp" line="1268"/>
         <source>Hyperbolic Cosine</source>
         <translation>Cosinus Hiperbòlic</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1264"/>
+        <location filename="../core/functions.cpp" line="1269"/>
         <source>Exponential</source>
         <translation>Exponencial</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1265"/>
+        <location filename="../core/functions.cpp" line="1270"/>
         <source>Base-2 Logarithm</source>
         <translation>Logaritme Binari</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1266"/>
+        <location filename="../core/functions.cpp" line="1271"/>
         <source>Natural Logarithm</source>
         <translation>Logaritme Natural</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1267"/>
+        <location filename="../core/functions.cpp" line="1272"/>
         <source>Base-10 Logarithm</source>
         <translation>Logaritme Base 10</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1268"/>
+        <location filename="../core/functions.cpp" line="1273"/>
         <source>Hyperbolic Sine</source>
         <translation>Sinus Hiperbòlic</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1269"/>
+        <location filename="../core/functions.cpp" line="1274"/>
         <source>Hyperbolic Tangent</source>
         <translation>Tangent Hiperbòlica</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1272"/>
+        <location filename="../core/functions.cpp" line="1277"/>
         <source>Greatest Common Divisor</source>
         <translation>Màxim Comú Divisor</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1273"/>
+        <location filename="../core/functions.cpp" line="1278"/>
         <source>Combination (Binomial Coefficient)</source>
         <translation>Combinació (Coeficient Binomial)</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1274"/>
+        <location filename="../core/functions.cpp" line="1279"/>
         <source>Permutation (Arrangement)</source>
         <translation>Permutació (Reendreçament)</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1277"/>
+        <location filename="../core/functions.cpp" line="1282"/>
         <source>Binomial Cumulative Distribution Function</source>
         <translation>Funció de Distribució Acumulativa Binomial</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1278"/>
+        <location filename="../core/functions.cpp" line="1283"/>
         <source>Binomial Distribution Mean</source>
         <translation>Mitja de Distribució Binomial</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1279"/>
+        <location filename="../core/functions.cpp" line="1284"/>
         <source>Binomial Probability Mass Function</source>
         <translation>Funció de Probabilitat de Massa Binomial</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1280"/>
+        <location filename="../core/functions.cpp" line="1285"/>
         <source>Binomial Distribution Variance</source>
         <translation>Variació de Distribució Binomial</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1283"/>
+        <location filename="../core/functions.cpp" line="1288"/>
         <source>Hypergeometric Cumulative Distribution Function</source>
         <translation>Funció de Distribució Acumulativa Hipergeomètrica</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1284"/>
+        <location filename="../core/functions.cpp" line="1289"/>
         <source>Hypergeometric Distribution Mean</source>
         <translation>Mitja de Distribució Hipergeomètrica</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1285"/>
+        <location filename="../core/functions.cpp" line="1290"/>
         <source>Hypergeometric Probability Mass Function</source>
         <translation>Funció de Massa de Probabilitat Hipergeomètrica</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1286"/>
+        <location filename="../core/functions.cpp" line="1291"/>
         <source>Hypergeometric Distribution Variance</source>
         <translation>Variació de Distribució Hipergeomètrica</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1287"/>
+        <location filename="../core/functions.cpp" line="1292"/>
         <source>Poissonian Cumulative Distribution Function</source>
         <translation>Funció de Distribució Acumulativa de Poisson</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1288"/>
+        <location filename="../core/functions.cpp" line="1293"/>
         <source>Poissonian Distribution Mean</source>
         <translation>Mitja de Distribució de Poisson</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1289"/>
+        <location filename="../core/functions.cpp" line="1294"/>
         <source>Poissonian Probability Mass Function</source>
         <translation>Funció de Massa de Probabilitat de Poisson</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1290"/>
+        <location filename="../core/functions.cpp" line="1295"/>
         <source>Poissonian Distribution Variance</source>
         <translation>Variació de Distribució de Poisson</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1293"/>
+        <location filename="../core/functions.cpp" line="1298"/>
         <source>Arc Cosine</source>
         <translation>Arc Cosinus</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1294"/>
+        <location filename="../core/functions.cpp" line="1299"/>
         <source>Arc Sine</source>
         <translation>Arc Sinus</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1295"/>
+        <location filename="../core/functions.cpp" line="1300"/>
         <source>Arc Tangent</source>
         <translation>Arc Tangent</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1296"/>
+        <location filename="../core/functions.cpp" line="1301"/>
         <source>Cosine</source>
         <translation>Cosinus</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1297"/>
+        <location filename="../core/functions.cpp" line="1302"/>
         <source>Cotangent</source>
         <translation>Cotangent</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1298"/>
+        <location filename="../core/functions.cpp" line="1303"/>
         <source>Cosecant</source>
         <translation>Cosecant</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1300"/>
+        <location filename="../core/functions.cpp" line="1305"/>
         <source>Radians</source>
         <translation>Radians</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1301"/>
+        <location filename="../core/functions.cpp" line="1306"/>
         <source>Secant</source>
         <translation>Secant</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1302"/>
+        <location filename="../core/functions.cpp" line="1307"/>
         <source>Sine</source>
         <translation>Sinus</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1303"/>
+        <location filename="../core/functions.cpp" line="1308"/>
         <source>Tangent</source>
         <translation>Tangent</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="92"/>
+        <location filename="../core/functions.cpp" line="93"/>
         <source>cannot execute function %1</source>
         <translation>no és posible executar funció %1</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="100"/>
+        <location filename="../core/functions.cpp" line="101"/>
         <source>function accepts 1 argument</source>
         <translation>la funció accepta un argument</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="103"/>
+        <location filename="../core/functions.cpp" line="104"/>
         <source>function accepts %1 arguments</source>
         <translation>la funció accepta %1 arguments</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="299"/>
+        <location filename="../core/functions.cpp" line="294"/>
         <source>function requires 1 or 2 arguments</source>
         <translation>la funció requereix 1 o 2 arguments</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1038"/>
+        <location filename="../core/functions.cpp" line="1033"/>
         <source>function undefined for specified arguments</source>
         <translation>la funció no està definida pels arguments especificats</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="276"/>
+        <location filename="../core/functions.cpp" line="271"/>
         <source>function requires at least 2 arguments</source>
         <translation>la funció requereix com a mínim 2 arguments</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="284"/>
+        <location filename="../core/functions.cpp" line="279"/>
         <source>function requires integer arguments</source>
         <translation>la funció requereix arguments sencers</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="693"/>
+        <location filename="../core/functions.cpp" line="688"/>
         <source>function undefined for specified argument</source>
         <translation>la funció no està definida per l&apos;argument especificat</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="657"/>
+        <location filename="../core/functions.cpp" line="652"/>
         <source>underflow</source>
         <translation>quantitat massa petita</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="766"/>
+        <location filename="../core/functions.cpp" line="761"/>
         <source>function requires at least 1 argument</source>
         <translation>la funció requereix com a mínim un argument</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1244"/>
+        <location filename="../core/functions.cpp" line="1249"/>
         <source>Extension of Factorials [= (x-1)!]</source>
         <translation>Extensió de Factorials [= (x-1)!]</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1248"/>
+        <location filename="../core/functions.cpp" line="1253"/>
         <source>ln(abs(Gamma))</source>
         <translation>ln(abs(Gamma))</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1260"/>
+        <location filename="../core/functions.cpp" line="1265"/>
         <source>Area Hyperbolic Cosine</source>
         <translation>Àrea de Cosinus Hiperbòlic</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1261"/>
+        <location filename="../core/functions.cpp" line="1266"/>
         <source>Area Hyperbolic Sine</source>
         <translation>Àrea de Sinus Hiperbòlic</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1262"/>
+        <location filename="../core/functions.cpp" line="1267"/>
         <source>Area Hyperbolic Tangent</source>
         <translation>Àrea de Tangent Hiperbòlica</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1281"/>
+        <location filename="../core/functions.cpp" line="1286"/>
         <source>Error Function</source>
         <translation>Funció errònia</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1282"/>
+        <location filename="../core/functions.cpp" line="1287"/>
         <source>Complementary Error Function</source>
         <translation>Funció Complementària Errònia</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1299"/>
+        <location filename="../core/functions.cpp" line="1304"/>
         <source>Degrees of Arc</source>
         <translation>Graus de l&apos;Arc</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1306"/>
+        <location filename="../core/functions.cpp" line="1311"/>
         <source>Mask to a bit size</source>
         <translation>Màscara a grandària de bit</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1307"/>
+        <location filename="../core/functions.cpp" line="1312"/>
         <source>Sign-extent a value</source>
         <translation>Extendre el signe d&apos;un valor</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1308"/>
+        <location filename="../core/functions.cpp" line="1313"/>
         <source>Logical NOT</source>
         <translation>NOT Lògic</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1309"/>
+        <location filename="../core/functions.cpp" line="1314"/>
         <source>Logical AND</source>
         <translation>AND Lògic</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1310"/>
+        <location filename="../core/functions.cpp" line="1315"/>
         <source>Logical OR</source>
         <translation>OR Lògic</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1311"/>
+        <location filename="../core/functions.cpp" line="1316"/>
         <source>Logical XOR</source>
         <translation>XOR Lògic</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1312"/>
+        <location filename="../core/functions.cpp" line="1317"/>
         <source>Arithmetic Shift Left</source>
         <translation>Cambi Aritmètic a l&apos;Esquerra</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1313"/>
+        <location filename="../core/functions.cpp" line="1318"/>
         <source>Arithmetic Shift Right</source>
         <translation>Cambi Aritmètic a la Dreta</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1314"/>
+        <location filename="../core/functions.cpp" line="1319"/>
         <source>Integer Quotient</source>
         <translation>Quocient d&apos;un Sencer</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1315"/>
+        <location filename="../core/functions.cpp" line="1320"/>
         <source>Modulo</source>
         <translation>Mòdul</translation>
     </message>
@@ -985,17 +985,30 @@
 <context>
     <name>FunctionsDock</name>
     <message>
-        <location filename="../gui/functionsdock.cpp" line="112"/>
+        <location filename="../gui/functionsdock.cpp" line="59"/>
         <source>Functions</source>
         <translation>Funcions</translation>
     </message>
+</context>
+<context>
+    <name>FunctionsWidget</name>
     <message>
-        <location filename="../gui/functionsdock.cpp" line="113"/>
+        <location filename="../gui/functionswidget.cpp" line="151"/>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+    <message>
+        <location filename="../gui/functionswidget.cpp" line="152"/>
+        <source>Description</source>
+        <translation>Descripció</translation>
+    </message>
+    <message>
+        <location filename="../gui/functionswidget.cpp" line="155"/>
         <source>Search</source>
         <translation>Recerca</translation>
     </message>
     <message>
-        <location filename="../gui/functionsdock.cpp" line="114"/>
+        <location filename="../gui/functionswidget.cpp" line="156"/>
         <source>No match found</source>
         <translation>No s&apos;han tobat coincidències</translation>
     </message>
@@ -1003,7 +1016,7 @@
 <context>
     <name>HistoryDock</name>
     <message>
-        <location filename="../gui/historydock.cpp" line="90"/>
+        <location filename="../gui/historydock.cpp" line="89"/>
         <source>History</source>
         <translation>Historial</translation>
     </message>
@@ -1011,27 +1024,17 @@
 <context>
     <name>InsertFunctionDlg</name>
     <message>
-        <location filename="../gui/insertfunctiondlg.cpp" line="65"/>
-        <source>Name</source>
-        <translation>Nom</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertfunctiondlg.cpp" line="66"/>
-        <source>Description</source>
-        <translation>Descripció</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertfunctiondlg.cpp" line="70"/>
+        <location filename="../gui/insertfunctiondlg.cpp" line="52"/>
         <source>&amp;Insert</source>
         <translation>&amp;Inserir</translation>
     </message>
     <message>
-        <location filename="../gui/insertfunctiondlg.cpp" line="74"/>
+        <location filename="../gui/insertfunctiondlg.cpp" line="56"/>
         <source>Cancel</source>
         <translation>Cancel·lar</translation>
     </message>
     <message>
-        <location filename="../gui/insertfunctiondlg.cpp" line="51"/>
+        <location filename="../gui/insertfunctiondlg.cpp" line="43"/>
         <source>Insert Function</source>
         <translation>Inserir Funció</translation>
     </message>
@@ -1039,12 +1042,12 @@
 <context>
     <name>InsertVariableDlg</name>
     <message>
-        <location filename="../gui/insertvardlg.cpp" line="55"/>
+        <location filename="../gui/insertvardlg.cpp" line="56"/>
         <source>&amp;Insert</source>
         <translation>&amp;Inserir</translation>
     </message>
     <message>
-        <location filename="../gui/insertvardlg.cpp" line="59"/>
+        <location filename="../gui/insertvardlg.cpp" line="60"/>
         <source>Cancel</source>
         <translation>Cancel·lar</translation>
     </message>
@@ -1130,163 +1133,163 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1301"/>
+        <location filename="../gui/mainwindow.cpp" line="1300"/>
         <source>About Qt</source>
         <translation>Quant a Qt</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1722"/>
+        <location filename="../gui/mainwindow.cpp" line="1719"/>
         <source>SpeedCrunch Sessions (*.sch);;All Files (*)</source>
         <translation>Sessions de SpeedCrunch (*.sch);;Tots els fitxers (*)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1440"/>
+        <location filename="../gui/mainwindow.cpp" line="1437"/>
         <source>Load Session</source>
         <translation>Carregar Sessió</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1777"/>
+        <location filename="../gui/mainwindow.cpp" line="1774"/>
         <source>Error</source>
         <translation>Errada</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1554"/>
+        <location filename="../gui/mainwindow.cpp" line="1551"/>
         <source>Can&apos;t read from file %1</source>
         <translation>No pot llegirse des de l&apos;arxiu %1</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1563"/>
+        <location filename="../gui/mainwindow.cpp" line="1560"/>
         <source>Question</source>
         <translation>Pregunta</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1723"/>
+        <location filename="../gui/mainwindow.cpp" line="1720"/>
         <source>Save Session</source>
         <translation>Salvar Sessió</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1778"/>
+        <location filename="../gui/mainwindow.cpp" line="1775"/>
         <source>Can&apos;t write to file %1</source>
         <translation>No es pot escriure en l&apos;arxiu %1</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2058"/>
+        <location filename="../gui/mainwindow.cpp" line="2055"/>
         <source>Warning</source>
         <translation>Advertiment</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2074"/>
+        <location filename="../gui/mainwindow.cpp" line="2071"/>
         <source>To insert a function using keyboard, use Ctrl+F shorcut. From the dialog, you can choose the function you want to insert.</source>
         <translation>Per inserir una funció fent servir el teclat, prémer Ctrl+F. Des de la finestra, pot escollir la funció que vulgui inserir.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2079"/>
+        <location filename="../gui/mainwindow.cpp" line="2076"/>
         <source>To insert a variable using keyboard, use Ctrl+I shorcut. From the dialog, you can choose the variable you want to insert.</source>
         <translation>Per inserir una variable fent servir el teclat, prémer Ctrl+I. Des de la finestra, pot escollir la variable que vulgui inserir.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2082"/>
+        <location filename="../gui/mainwindow.cpp" line="2079"/>
         <source>Use variable &lt;i&gt;pi&lt;/i&gt; to use pi constant.</source>
         <translation>Façi servir la variable &lt;i&gt;pi&lt;/i&gt; per usar la constant pi.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2087"/>
+        <location filename="../gui/mainwindow.cpp" line="2084"/>
         <source>Use &lt;i&gt;;&lt;/i&gt; (semicolon) to separate the parameters in functions.</source>
         <translation>Façi servir &lt;i&gt;;&lt;/i&gt; (punt i coma) per a separar els paràmetres en les funcions.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2093"/>
+        <location filename="../gui/mainwindow.cpp" line="2090"/>
         <source>Tip of the day</source>
         <translation>Consell del dia</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1438"/>
+        <location filename="../gui/mainwindow.cpp" line="1435"/>
         <source>File %1 is not a valid session</source>
         <translation>Arxiu %1 no és una sessió vàlida</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1475"/>
+        <location filename="../gui/mainwindow.cpp" line="1472"/>
         <source>Merge session being loaded with current session?
 If no, current variables and display will be cleared.</source>
         <translation>Combinar sessió que s&apos;està carregant amb la sessió actual?
 Si no és així, les variables actuals i la pantalla seran esborrades.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2362"/>
+        <location filename="../gui/mainwindow.cpp" line="2361"/>
         <source>SpeedCrunch is minimized.
 Left click the icon to restore it or right click for options.</source>
         <translation>SpeedCrunch está minimitzat.
 Fer clic en la icona amb el botó esquerre per restablir-ho o amb el botó dret per mostrar opcions.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1342"/>
+        <location filename="../gui/mainwindow.cpp" line="1341"/>
         <source>Degree</source>
         <translation>Grau</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1768"/>
+        <location filename="../gui/mainwindow.cpp" line="1765"/>
         <source>All Files (*)</source>
         <translation>Tots els Arxius (*)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1715"/>
+        <location filename="../gui/mainwindow.cpp" line="1712"/>
         <source>Radian</source>
         <translation>Radian</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2053"/>
+        <location filename="../gui/mainwindow.cpp" line="2050"/>
         <source>The menu bar is now hidden. To make it visible again, press Ctrl+Alt+M.</source>
         <translation>La barra de menú ara està amagada. Para fer-la visible novament, prémer Ctrl+Alt+M.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2102"/>
+        <location filename="../gui/mainwindow.cpp" line="2099"/>
         <source>Binary</source>
         <translation>Binari</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2111"/>
+        <location filename="../gui/mainwindow.cpp" line="2108"/>
         <source>Engineering decimal</source>
         <translation>Decimal enginyeria</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2120"/>
+        <location filename="../gui/mainwindow.cpp" line="2117"/>
         <source>Fixed decimal</source>
         <translation>Decimal fixa</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2129"/>
+        <location filename="../gui/mainwindow.cpp" line="2126"/>
         <source>General decimal</source>
         <translation>Decimal genèrica</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2138"/>
+        <location filename="../gui/mainwindow.cpp" line="2135"/>
         <source>Hexadecimal</source>
         <translation>Hexadecimal</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2147"/>
+        <location filename="../gui/mainwindow.cpp" line="2144"/>
         <source>Octal</source>
         <translation>Octal</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2156"/>
+        <location filename="../gui/mainwindow.cpp" line="2153"/>
         <source>Scientific decimal</source>
         <translation>Decimal científica</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1545"/>
+        <location filename="../gui/mainwindow.cpp" line="1542"/>
         <source>Import Session</source>
         <translation>Importar Sessió</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1561"/>
+        <location filename="../gui/mainwindow.cpp" line="1558"/>
         <source>Merge session being imported with current session?
 If no, current variables and display will be cleared.</source>
         <translation>Combinar sessió que s&apos;està carregant amb la sessió actual?
 Si no és així, les variables actuals i la pantalla seran esborrades.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1769"/>
+        <location filename="../gui/mainwindow.cpp" line="1766"/>
         <source>Export Session</source>
         <translation>Exportar Sessió</translation>
     </message>
@@ -1611,7 +1614,7 @@ Si no és així, les variables actuals i la pantalla seran esborrades.</translat
         <translation>Format del resultat</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1596"/>
+        <location filename="../gui/mainwindow.cpp" line="1593"/>
         <source>Ignore error?</source>
         <translation>Ignorar errada?</translation>
     </message>
@@ -1641,17 +1644,17 @@ Si no és així, les variables actuals i la pantalla seran esborrades.</translat
         <translation>&amp;Idioma...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2526"/>
+        <location filename="../gui/mainwindow.cpp" line="2525"/>
         <source>System Default</source>
         <translation>Defecte (Sistema)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2532"/>
+        <location filename="../gui/mainwindow.cpp" line="2531"/>
         <source>Language</source>
         <translation>Idioma</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2533"/>
+        <location filename="../gui/mainwindow.cpp" line="2532"/>
         <source>Select the language:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1659,7 +1662,7 @@ Si no és així, les variables actuals i la pantalla seran esborrades.</translat
 <context>
     <name>VariablesDock</name>
     <message>
-        <location filename="../gui/variablesdock.cpp" line="63"/>
+        <location filename="../gui/variablesdock.cpp" line="64"/>
         <source>Variables</source>
         <translation>Variables</translation>
     </message>
@@ -1667,22 +1670,22 @@ Si no és així, les variables actuals i la pantalla seran esborrades.</translat
 <context>
     <name>VariablesWidget</name>
     <message>
-        <location filename="../gui/variableswidget.cpp" line="163"/>
+        <location filename="../gui/variableswidget.cpp" line="155"/>
         <source>Name</source>
         <translation>Nom</translation>
     </message>
     <message>
-        <location filename="../gui/variableswidget.cpp" line="164"/>
+        <location filename="../gui/variableswidget.cpp" line="156"/>
         <source>Value</source>
         <translation>Valor</translation>
     </message>
     <message>
-        <location filename="../gui/variableswidget.cpp" line="167"/>
+        <location filename="../gui/variableswidget.cpp" line="159"/>
         <source>Search</source>
         <translation>Recerca</translation>
     </message>
     <message>
-        <location filename="../gui/variableswidget.cpp" line="168"/>
+        <location filename="../gui/variableswidget.cpp" line="160"/>
         <source>No match found</source>
         <translation>No s&apos;han trobat coincidències</translation>
     </message>

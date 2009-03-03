@@ -19,6 +19,7 @@ gui/deletevardlg.hxx
 gui/resultdisplay.hxx
 gui/editor.hxx
 gui/functionsdock.hxx
+gui/functionswidget.hxx
 gui/historydock.hxx
 gui/insertfunctiondlg.hxx
 gui/insertvardlg.hxx
@@ -71,6 +72,7 @@ gui/deletevardlg.cpp
 gui/resultdisplay.cpp
 gui/editor.cpp
 gui/functionsdock.cpp
+gui/functionswidget.cpp
 gui/historydock.cpp
 gui/insertfunctiondlg.cpp
 gui/insertvardlg.cpp

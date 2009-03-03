@@ -237,257 +237,257 @@
 <context>
     <name>Constants</name>
     <message>
-        <location filename="../core/constants.cpp" line="41"/>
+        <location filename="../core/constants.cpp" line="45"/>
         <source>Characteristic Impedance of Vacuum</source>
         <translation>Karakteristisk impedans i vakuum</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="47"/>
+        <location filename="../core/constants.cpp" line="51"/>
         <source>General Physics</source>
         <translation>Generell Fysikk</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="42"/>
+        <location filename="../core/constants.cpp" line="46"/>
         <source>Electric Constant</source>
         <translation>Elektrisk konstant</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="43"/>
+        <location filename="../core/constants.cpp" line="47"/>
         <source>Magnetic Constant</source>
         <translation>Magnetisk konstant</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="44"/>
+        <location filename="../core/constants.cpp" line="48"/>
         <source>Gravitation Constant</source>
         <translation>Tyngdekrafts konstant</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="45"/>
+        <location filename="../core/constants.cpp" line="49"/>
         <source>Planck&apos;s Constant</source>
         <translation>Plancks konstant</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="46"/>
+        <location filename="../core/constants.cpp" line="50"/>
         <source>Dirac&apos;s Constant</source>
         <translation>Diracs konstant</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="47"/>
+        <location filename="../core/constants.cpp" line="51"/>
         <source>Speed of Light in Vacuum</source>
         <translation>Lysets hastighet i vakuum</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="50"/>
+        <location filename="../core/constants.cpp" line="54"/>
         <source>Bohr-Procopiu Magneton</source>
         <translation>Bohr-Procopiu magneton</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="58"/>
+        <location filename="../core/constants.cpp" line="62"/>
         <source>Electromagnetic</source>
         <translation>Elektromagnetisme</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="51"/>
+        <location filename="../core/constants.cpp" line="55"/>
         <source>Conductance Quantum</source>
         <translation>Elektrisk ledningskvant</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="52"/>
+        <location filename="../core/constants.cpp" line="56"/>
         <source>Coulomb&apos;s Constant</source>
         <translation>Coulombs konstant</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="53"/>
+        <location filename="../core/constants.cpp" line="57"/>
         <source>Elementary Charge</source>
         <translation>Elementærladning</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="54"/>
+        <location filename="../core/constants.cpp" line="58"/>
         <source>Josephson Constant</source>
         <translation>Josephson konstant</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="55"/>
+        <location filename="../core/constants.cpp" line="59"/>
         <source>Magnetic Flux Quantum</source>
         <translation>Magnetisk flukskvant</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="56"/>
+        <location filename="../core/constants.cpp" line="60"/>
         <source>Nuclear Magneton</source>
         <translation>Nukleært magneton</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="57"/>
+        <location filename="../core/constants.cpp" line="61"/>
         <source>Resistance Quantum</source>
         <translation>Resistanskvant</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="58"/>
+        <location filename="../core/constants.cpp" line="62"/>
         <source>von Klitzing Constant</source>
         <translation>von Klitzings konstant</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="61"/>
+        <location filename="../core/constants.cpp" line="65"/>
         <source>Bohr Radius</source>
         <translation>Bohrradius</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="68"/>
+        <location filename="../core/constants.cpp" line="72"/>
         <source>Atomic &amp; Nuclear</source>
         <translation>Atomisk &amp; Kjærne</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="62"/>
+        <location filename="../core/constants.cpp" line="66"/>
         <source>Fermi Coupling Constant</source>
         <translation>Fermis koplingskonstant</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="63"/>
+        <location filename="../core/constants.cpp" line="67"/>
         <source>Fine-structure Constant</source>
         <translation>Finstrukturkonstanten</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="64"/>
+        <location filename="../core/constants.cpp" line="68"/>
         <source>Hartree Energy</source>
         <translation>Hartrees energi</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="65"/>
+        <location filename="../core/constants.cpp" line="69"/>
         <source>Quantum of Circulation</source>
         <translation>Sirkulasjonskvant</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="66"/>
+        <location filename="../core/constants.cpp" line="70"/>
         <source>Rydberg Constant</source>
         <translation>Rydbergs konstant</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="67"/>
+        <location filename="../core/constants.cpp" line="71"/>
         <source>Thomson Cross Section</source>
         <translation>Thomsons spredningstverrsnitt</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="68"/>
+        <location filename="../core/constants.cpp" line="72"/>
         <source>Weak Mixing Angle</source>
         <translation>Svak blandingsvinkel</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="71"/>
+        <location filename="../core/constants.cpp" line="75"/>
         <source>Atomic Mass Unit</source>
         <translation>Atommasseenhet</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="80"/>
+        <location filename="../core/constants.cpp" line="84"/>
         <source>Physico-chemical</source>
         <translation>Fysikk-kjemi</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="72"/>
+        <location filename="../core/constants.cpp" line="76"/>
         <source>Avogadro&apos;s Number</source>
         <translation>Avogadros tall</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="73"/>
+        <location filename="../core/constants.cpp" line="77"/>
         <source>Boltzmann Constant</source>
         <translation>Boltzmann konstant</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="74"/>
+        <location filename="../core/constants.cpp" line="78"/>
         <source>Faraday Constant</source>
         <translation>Faradays konstant</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="75"/>
+        <location filename="../core/constants.cpp" line="79"/>
         <source>First Radiation Constant</source>
         <translation>Først strålingskonstant</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="76"/>
+        <location filename="../core/constants.cpp" line="80"/>
         <source>Loschmidt Constant</source>
         <translation>Loschmidts konstant</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="77"/>
+        <location filename="../core/constants.cpp" line="81"/>
         <source>Gas Constant</source>
         <translation>Gasskonstant</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="78"/>
+        <location filename="../core/constants.cpp" line="82"/>
         <source>Molar Planck Constant</source>
         <translation>Molar Plancks konstant</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="79"/>
+        <location filename="../core/constants.cpp" line="83"/>
         <source>Second Radiation Constant</source>
         <translation>Andre strålingskonstant</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="80"/>
+        <location filename="../core/constants.cpp" line="84"/>
         <source>Stefan-Boltzmann Constant</source>
         <translation>Stefan-Boltzmann konstant</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="83"/>
+        <location filename="../core/constants.cpp" line="87"/>
         <source>Astronomical Unit</source>
         <translation>Astronomisk målenhet</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="93"/>
+        <location filename="../core/constants.cpp" line="97"/>
         <source>Astronomy</source>
         <translation>Astronomi</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="84"/>
+        <location filename="../core/constants.cpp" line="88"/>
         <source>Light Year</source>
         <translation>Lysår</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="85"/>
+        <location filename="../core/constants.cpp" line="89"/>
         <source>Parsec</source>
         <translation>Parsec</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="86"/>
+        <location filename="../core/constants.cpp" line="90"/>
         <source>Sidereal Year</source>
         <translation>Siderisk år</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="88"/>
+        <location filename="../core/constants.cpp" line="92"/>
         <source>days</source>
         <translation>dager</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="87"/>
+        <location filename="../core/constants.cpp" line="91"/>
         <source>Tropical Year</source>
         <translation>Tropisk år</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="88"/>
+        <location filename="../core/constants.cpp" line="92"/>
         <source>Gregorian Year</source>
         <translation>Gregoriansk år</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="89"/>
+        <location filename="../core/constants.cpp" line="93"/>
         <source>Earth Mass</source>
         <translation>Jordens masse</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="90"/>
+        <location filename="../core/constants.cpp" line="94"/>
         <source>Sun Mass</source>
         <translation>Sols masse</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="91"/>
+        <location filename="../core/constants.cpp" line="95"/>
         <source>Mean Earth Radius</source>
         <translation>Gjennomsnittsolradius</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="92"/>
+        <location filename="../core/constants.cpp" line="96"/>
         <source>Sun Radius</source>
         <translation>Sols radius</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="93"/>
+        <location filename="../core/constants.cpp" line="97"/>
         <source>Sun Luminosity</source>
         <translation>Sollysstyrke</translation>
     </message>
@@ -495,27 +495,27 @@
 <context>
     <name>ConstantsDock</name>
     <message>
-        <location filename="../gui/constantsdock.cpp" line="139"/>
+        <location filename="../gui/constantsdock.cpp" line="140"/>
         <source>Constants</source>
         <translation>Konstanter</translation>
     </message>
     <message>
-        <location filename="../gui/constantsdock.cpp" line="140"/>
+        <location filename="../gui/constantsdock.cpp" line="141"/>
         <source>Category</source>
         <translation>Kategori</translation>
     </message>
     <message>
-        <location filename="../gui/constantsdock.cpp" line="141"/>
+        <location filename="../gui/constantsdock.cpp" line="142"/>
         <source>Search</source>
         <translation>Søk</translation>
     </message>
     <message>
-        <location filename="../gui/constantsdock.cpp" line="115"/>
+        <location filename="../gui/constantsdock.cpp" line="116"/>
         <source>No match found</source>
         <translation>Ingen treff funnet</translation>
     </message>
     <message>
-        <location filename="../gui/constantsdock.cpp" line="271"/>
+        <location filename="../gui/constantsdock.cpp" line="256"/>
         <source>All</source>
         <translation>Alle</translation>
     </message>
@@ -523,17 +523,17 @@
 <context>
     <name>DeleteVariableDlg</name>
     <message>
-        <location filename="../gui/deletevardlg.cpp" line="46"/>
+        <location filename="../gui/deletevardlg.cpp" line="45"/>
         <source>Delete Variable</source>
         <translation>Slett variabel</translation>
     </message>
     <message>
-        <location filename="../gui/deletevardlg.cpp" line="57"/>
+        <location filename="../gui/deletevardlg.cpp" line="55"/>
         <source>&amp;Delete</source>
         <translation>&amp;Slett</translation>
     </message>
     <message>
-        <location filename="../gui/deletevardlg.cpp" line="61"/>
+        <location filename="../gui/deletevardlg.cpp" line="59"/>
         <source>Close</source>
         <translation>Lukk</translation>
     </message>
@@ -554,27 +554,27 @@
 <context>
     <name>Evaluator</name>
     <message>
-        <location filename="../core/evaluator.cpp" line="1386"/>
+        <location filename="../core/evaluator.cpp" line="1393"/>
         <source>invalid expression</source>
         <translation>Ugyldig uttrykk</translation>
     </message>
     <message>
-        <location filename="../core/evaluator.cpp" line="1316"/>
+        <location filename="../core/evaluator.cpp" line="1323"/>
         <source>division by zero</source>
         <translation>Deling på null</translation>
     </message>
     <message>
-        <location filename="../core/evaluator.cpp" line="1355"/>
+        <location filename="../core/evaluator.cpp" line="1362"/>
         <source>unknown function or variable</source>
         <translation>Ukjent funskjon eller variabel</translation>
     </message>
     <message>
-        <location filename="../core/evaluator.cpp" line="1404"/>
+        <location filename="../core/evaluator.cpp" line="1411"/>
         <source>variable cannot be overwritten</source>
         <translation>Variabel kan ikke endres</translation>
     </message>
     <message>
-        <location filename="../core/evaluator.cpp" line="1412"/>
+        <location filename="../core/evaluator.cpp" line="1419"/>
         <source>identifier matches an existing function name</source>
         <translation>Identifikator navn kolliderer med et eksisternede funksjons navn</translation>
     </message>
@@ -582,402 +582,402 @@
 <context>
     <name>Functions</name>
     <message>
-        <location filename="../core/functions.cpp" line="1236"/>
+        <location filename="../core/functions.cpp" line="1241"/>
         <source>Absolute Value</source>
         <translation>Absolutt verdi</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1237"/>
+        <location filename="../core/functions.cpp" line="1242"/>
         <source>Average (Arithmetic Mean)</source>
         <translation>Gjennomsnitt (Aritmetisk)</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1238"/>
+        <location filename="../core/functions.cpp" line="1243"/>
         <source>Binary Representation</source>
         <translation>Binær representasjon</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1239"/>
+        <location filename="../core/functions.cpp" line="1244"/>
         <source>Cube Root</source>
         <translation>Kubisk root</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1240"/>
+        <location filename="../core/functions.cpp" line="1245"/>
         <source>Ceiling</source>
         <translation>Takfunksjon</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1241"/>
+        <location filename="../core/functions.cpp" line="1246"/>
         <source>Decimal Representation</source>
         <translation>Desimal representasjon</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1242"/>
+        <location filename="../core/functions.cpp" line="1247"/>
         <source>Floor</source>
         <translation>Gulvfunksjon</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1243"/>
+        <location filename="../core/functions.cpp" line="1248"/>
         <source>Fractional Part</source>
         <translation>Desimalfraksjon</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1245"/>
+        <location filename="../core/functions.cpp" line="1250"/>
         <source>Geometric Mean</source>
         <translation>Geometrisk gjennomsnitt</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1246"/>
+        <location filename="../core/functions.cpp" line="1251"/>
         <source>Hexadecimal Representation</source>
         <translation>Hexadesimal representasjon</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1247"/>
+        <location filename="../core/functions.cpp" line="1252"/>
         <source>Integer Part</source>
         <translation>Heltallsfraksjon</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1249"/>
+        <location filename="../core/functions.cpp" line="1254"/>
         <source>Maximum</source>
         <translation>Maksimum</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1250"/>
+        <location filename="../core/functions.cpp" line="1255"/>
         <source>Minimum</source>
         <translation>Minimum</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1251"/>
+        <location filename="../core/functions.cpp" line="1256"/>
         <source>Octal Representation</source>
         <translation>Oktal representasjon</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1252"/>
+        <location filename="../core/functions.cpp" line="1257"/>
         <source>Product</source>
         <translation>Produkt</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1253"/>
+        <location filename="../core/functions.cpp" line="1258"/>
         <source>Rounding</source>
         <translation>Avrunding</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1254"/>
+        <location filename="../core/functions.cpp" line="1259"/>
         <source>Signum</source>
         <translation>Signum</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1255"/>
+        <location filename="../core/functions.cpp" line="1260"/>
         <source>Square Root</source>
         <translation>Kvadratrot</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1256"/>
+        <location filename="../core/functions.cpp" line="1261"/>
         <source>Sum</source>
         <translation>Total</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1257"/>
+        <location filename="../core/functions.cpp" line="1262"/>
         <source>Truncation</source>
         <translation>Trunkering</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1263"/>
+        <location filename="../core/functions.cpp" line="1268"/>
         <source>Hyperbolic Cosine</source>
         <translation>Hyperbolsk kosinus</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1264"/>
+        <location filename="../core/functions.cpp" line="1269"/>
         <source>Exponential</source>
         <translation>Exponentiell</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1265"/>
+        <location filename="../core/functions.cpp" line="1270"/>
         <source>Base-2 Logarithm</source>
         <translation>2 base logaritme</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1266"/>
+        <location filename="../core/functions.cpp" line="1271"/>
         <source>Natural Logarithm</source>
         <translation>Naturlig logaritme</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1267"/>
+        <location filename="../core/functions.cpp" line="1272"/>
         <source>Base-10 Logarithm</source>
         <translation>10-base logaritme</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1268"/>
+        <location filename="../core/functions.cpp" line="1273"/>
         <source>Hyperbolic Sine</source>
         <translation>Hyperbolsk sinus</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1269"/>
+        <location filename="../core/functions.cpp" line="1274"/>
         <source>Hyperbolic Tangent</source>
         <translation>Hyperbolisk tangent</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1272"/>
+        <location filename="../core/functions.cpp" line="1277"/>
         <source>Greatest Common Divisor</source>
         <translation>Minste felles multiplum</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1273"/>
+        <location filename="../core/functions.cpp" line="1278"/>
         <source>Combination (Binomial Coefficient)</source>
         <translation>Kombinasjon (Binomial kofisient)</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1274"/>
+        <location filename="../core/functions.cpp" line="1279"/>
         <source>Permutation (Arrangement)</source>
         <translation>Arrangering</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1277"/>
+        <location filename="../core/functions.cpp" line="1282"/>
         <source>Binomial Cumulative Distribution Function</source>
         <translation>Binomial oppsamlet distribusjonsfunksjon</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1278"/>
+        <location filename="../core/functions.cpp" line="1283"/>
         <source>Binomial Distribution Mean</source>
         <translation>Binomial distribusjoinssnitt</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1279"/>
+        <location filename="../core/functions.cpp" line="1284"/>
         <source>Binomial Probability Mass Function</source>
         <translation>Binomial sannsynlighetsmengdefunksjon</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1280"/>
+        <location filename="../core/functions.cpp" line="1285"/>
         <source>Binomial Distribution Variance</source>
         <translation>Binomial distriubusjons varianse</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1283"/>
+        <location filename="../core/functions.cpp" line="1288"/>
         <source>Hypergeometric Cumulative Distribution Function</source>
         <translation>Hypergeometrisk oppsamlingsdistribusjonssnitt</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1284"/>
+        <location filename="../core/functions.cpp" line="1289"/>
         <source>Hypergeometric Distribution Mean</source>
         <translation>Hypergeometrisk distribusjonssnitt</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1285"/>
+        <location filename="../core/functions.cpp" line="1290"/>
         <source>Hypergeometric Probability Mass Function</source>
         <translation>Hypergeometrisk sannsynlighetsmengdefunksjon</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1286"/>
+        <location filename="../core/functions.cpp" line="1291"/>
         <source>Hypergeometric Distribution Variance</source>
         <translation>Hyperbolsk distribusjons tangens</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1287"/>
+        <location filename="../core/functions.cpp" line="1292"/>
         <source>Poissonian Cumulative Distribution Function</source>
         <translation>Poissonian kumjulative distribusjonsfunksjon</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1288"/>
+        <location filename="../core/functions.cpp" line="1293"/>
         <source>Poissonian Distribution Mean</source>
         <translation>Poissonian distribusjonssnitt</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1289"/>
+        <location filename="../core/functions.cpp" line="1294"/>
         <source>Poissonian Probability Mass Function</source>
         <translation>Poissonian sannsynlighetsmengdefunksjon</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1290"/>
+        <location filename="../core/functions.cpp" line="1295"/>
         <source>Poissonian Distribution Variance</source>
         <translation>Poissonian distribusjonsvarians</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1293"/>
+        <location filename="../core/functions.cpp" line="1298"/>
         <source>Arc Cosine</source>
         <translation>Arc kosinus</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1294"/>
+        <location filename="../core/functions.cpp" line="1299"/>
         <source>Arc Sine</source>
         <translation>Arc sinus</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1295"/>
+        <location filename="../core/functions.cpp" line="1300"/>
         <source>Arc Tangent</source>
         <translation>Sirkel tangens</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1296"/>
+        <location filename="../core/functions.cpp" line="1301"/>
         <source>Cosine</source>
         <translation>Kosinus</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1297"/>
+        <location filename="../core/functions.cpp" line="1302"/>
         <source>Cotangent</source>
         <translation>Kotangens</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1298"/>
+        <location filename="../core/functions.cpp" line="1303"/>
         <source>Cosecant</source>
         <translation>Kosekant</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1300"/>
+        <location filename="../core/functions.cpp" line="1305"/>
         <source>Radians</source>
         <translation>Radianer</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1301"/>
+        <location filename="../core/functions.cpp" line="1306"/>
         <source>Secant</source>
         <translation>Sekant</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1302"/>
+        <location filename="../core/functions.cpp" line="1307"/>
         <source>Sine</source>
         <translation>Sinus</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1303"/>
+        <location filename="../core/functions.cpp" line="1308"/>
         <source>Tangent</source>
         <translation>Tangens</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="92"/>
+        <location filename="../core/functions.cpp" line="93"/>
         <source>cannot execute function %1</source>
         <translation>kan ikke utføre funksjon %1</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="100"/>
+        <location filename="../core/functions.cpp" line="101"/>
         <source>function accepts 1 argument</source>
         <translation>funksjon godtar bare ett argument</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="103"/>
+        <location filename="../core/functions.cpp" line="104"/>
         <source>function accepts %1 arguments</source>
         <translation>funksjonen godtar %1 argumenter</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="299"/>
+        <location filename="../core/functions.cpp" line="294"/>
         <source>function requires 1 or 2 arguments</source>
         <translation>funksjon krever ett eller to argumenter</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1038"/>
+        <location filename="../core/functions.cpp" line="1033"/>
         <source>function undefined for specified arguments</source>
         <translation>ingen funksjon med spesifisert argumentliste eksisterer</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="276"/>
+        <location filename="../core/functions.cpp" line="271"/>
         <source>function requires at least 2 arguments</source>
         <translation>funksjonen krever minst to argumenter</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="284"/>
+        <location filename="../core/functions.cpp" line="279"/>
         <source>function requires integer arguments</source>
         <translation>funksjonen krever heltallsargumenter</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="693"/>
+        <location filename="../core/functions.cpp" line="688"/>
         <source>function undefined for specified argument</source>
         <translation>ingen funksjon med spesifisert argument eksisterer</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="657"/>
+        <location filename="../core/functions.cpp" line="652"/>
         <source>underflow</source>
         <translation>underflyt</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="766"/>
+        <location filename="../core/functions.cpp" line="761"/>
         <source>function requires at least 1 argument</source>
         <translation>funksjonen krever minst ett argument</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1244"/>
+        <location filename="../core/functions.cpp" line="1249"/>
         <source>Extension of Factorials [= (x-1)!]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1248"/>
+        <location filename="../core/functions.cpp" line="1253"/>
         <source>ln(abs(Gamma))</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1260"/>
+        <location filename="../core/functions.cpp" line="1265"/>
         <source>Area Hyperbolic Cosine</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1261"/>
+        <location filename="../core/functions.cpp" line="1266"/>
         <source>Area Hyperbolic Sine</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1262"/>
+        <location filename="../core/functions.cpp" line="1267"/>
         <source>Area Hyperbolic Tangent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1281"/>
+        <location filename="../core/functions.cpp" line="1286"/>
         <source>Error Function</source>
         <translation>Feilfunksjon</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1282"/>
+        <location filename="../core/functions.cpp" line="1287"/>
         <source>Complementary Error Function</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1299"/>
+        <location filename="../core/functions.cpp" line="1304"/>
         <source>Degrees of Arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1306"/>
+        <location filename="../core/functions.cpp" line="1311"/>
         <source>Mask to a bit size</source>
         <translation>Maskere til en bit størrelse</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1307"/>
+        <location filename="../core/functions.cpp" line="1312"/>
         <source>Sign-extent a value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1308"/>
+        <location filename="../core/functions.cpp" line="1313"/>
         <source>Logical NOT</source>
         <translation>Logisk IKKE</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1309"/>
+        <location filename="../core/functions.cpp" line="1314"/>
         <source>Logical AND</source>
         <translation>Logisk OG</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1310"/>
+        <location filename="../core/functions.cpp" line="1315"/>
         <source>Logical OR</source>
         <translation>Logisk ELLER</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1311"/>
+        <location filename="../core/functions.cpp" line="1316"/>
         <source>Logical XOR</source>
         <translation>Logisk EKSKLUSIV ELLER</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1312"/>
+        <location filename="../core/functions.cpp" line="1317"/>
         <source>Arithmetic Shift Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1313"/>
+        <location filename="../core/functions.cpp" line="1318"/>
         <source>Arithmetic Shift Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1314"/>
+        <location filename="../core/functions.cpp" line="1319"/>
         <source>Integer Quotient</source>
         <translation>Integer kvotient</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1315"/>
+        <location filename="../core/functions.cpp" line="1320"/>
         <source>Modulo</source>
         <translation>Modulo</translation>
     </message>
@@ -985,17 +985,30 @@
 <context>
     <name>FunctionsDock</name>
     <message>
-        <location filename="../gui/functionsdock.cpp" line="112"/>
+        <location filename="../gui/functionsdock.cpp" line="59"/>
         <source>Functions</source>
         <translation>Funksjoner</translation>
     </message>
+</context>
+<context>
+    <name>FunctionsWidget</name>
     <message>
-        <location filename="../gui/functionsdock.cpp" line="113"/>
+        <location filename="../gui/functionswidget.cpp" line="151"/>
+        <source>Name</source>
+        <translation>Navn</translation>
+    </message>
+    <message>
+        <location filename="../gui/functionswidget.cpp" line="152"/>
+        <source>Description</source>
+        <translation>Beskrivelse</translation>
+    </message>
+    <message>
+        <location filename="../gui/functionswidget.cpp" line="155"/>
         <source>Search</source>
         <translation>Søk</translation>
     </message>
     <message>
-        <location filename="../gui/functionsdock.cpp" line="114"/>
+        <location filename="../gui/functionswidget.cpp" line="156"/>
         <source>No match found</source>
         <translation>Ingen treff funnet</translation>
     </message>
@@ -1003,7 +1016,7 @@
 <context>
     <name>HistoryDock</name>
     <message>
-        <location filename="../gui/historydock.cpp" line="90"/>
+        <location filename="../gui/historydock.cpp" line="89"/>
         <source>History</source>
         <translation>Historie</translation>
     </message>
@@ -1011,27 +1024,17 @@
 <context>
     <name>InsertFunctionDlg</name>
     <message>
-        <location filename="../gui/insertfunctiondlg.cpp" line="51"/>
+        <location filename="../gui/insertfunctiondlg.cpp" line="43"/>
         <source>Insert Function</source>
         <translation>Sett inn funksjon</translation>
     </message>
     <message>
-        <location filename="../gui/insertfunctiondlg.cpp" line="65"/>
-        <source>Name</source>
-        <translation>Navn</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertfunctiondlg.cpp" line="66"/>
-        <source>Description</source>
-        <translation>Beskrivelse</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertfunctiondlg.cpp" line="70"/>
+        <location filename="../gui/insertfunctiondlg.cpp" line="52"/>
         <source>&amp;Insert</source>
         <translation>&amp;Sett inn</translation>
     </message>
     <message>
-        <location filename="../gui/insertfunctiondlg.cpp" line="74"/>
+        <location filename="../gui/insertfunctiondlg.cpp" line="56"/>
         <source>Cancel</source>
         <translation>Avbryt</translation>
     </message>
@@ -1044,12 +1047,12 @@
         <translation>Sett inn variabel</translation>
     </message>
     <message>
-        <location filename="../gui/insertvardlg.cpp" line="55"/>
+        <location filename="../gui/insertvardlg.cpp" line="56"/>
         <source>&amp;Insert</source>
         <translation>&amp;Sett inn</translation>
     </message>
     <message>
-        <location filename="../gui/insertvardlg.cpp" line="59"/>
+        <location filename="../gui/insertvardlg.cpp" line="60"/>
         <source>Cancel</source>
         <translation>Avbryt</translation>
     </message>
@@ -1130,163 +1133,163 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1301"/>
+        <location filename="../gui/mainwindow.cpp" line="1300"/>
         <source>About Qt</source>
         <translation>Om Qt</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1722"/>
+        <location filename="../gui/mainwindow.cpp" line="1719"/>
         <source>SpeedCrunch Sessions (*.sch);;All Files (*)</source>
         <translation>SpeedCrunch økt (*.sch);;Alle filer (*)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1440"/>
+        <location filename="../gui/mainwindow.cpp" line="1437"/>
         <source>Load Session</source>
         <translation>Åpne økt</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1777"/>
+        <location filename="../gui/mainwindow.cpp" line="1774"/>
         <source>Error</source>
         <translation>Feil</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1554"/>
+        <location filename="../gui/mainwindow.cpp" line="1551"/>
         <source>Can&apos;t read from file %1</source>
         <translation>Kan ikke lese fra fil %1</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1563"/>
+        <location filename="../gui/mainwindow.cpp" line="1560"/>
         <source>Question</source>
         <translation>Spørsmål</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1723"/>
+        <location filename="../gui/mainwindow.cpp" line="1720"/>
         <source>Save Session</source>
         <translation>Lagre økt</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1778"/>
+        <location filename="../gui/mainwindow.cpp" line="1775"/>
         <source>Can&apos;t write to file %1</source>
         <translation>Kan ikke lagre filen %1</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2058"/>
+        <location filename="../gui/mainwindow.cpp" line="2055"/>
         <source>Warning</source>
         <translation>Advarsel</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2074"/>
+        <location filename="../gui/mainwindow.cpp" line="2071"/>
         <source>To insert a function using keyboard, use Ctrl+F shorcut. From the dialog, you can choose the function you want to insert.</source>
         <translation>For å sette inn en funksjon vha. tastaturet, bruk Ctrl+F tastekombinasjonen. Fra dialogen kan du velge hvilken funksjon du vil sette inn.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2079"/>
+        <location filename="../gui/mainwindow.cpp" line="2076"/>
         <source>To insert a variable using keyboard, use Ctrl+I shorcut. From the dialog, you can choose the variable you want to insert.</source>
         <translation>For å sette inn en variabel vha. tastaturet, bruk Ctrl+I tastekombinasjonen. Fra dialogen kan du velge hvilken variabel du vil sette inn.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2082"/>
+        <location filename="../gui/mainwindow.cpp" line="2079"/>
         <source>Use variable &lt;i&gt;pi&lt;/i&gt; to use pi constant.</source>
         <translation>Bruk variabelen PI for å bruke pi konstanten.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2087"/>
+        <location filename="../gui/mainwindow.cpp" line="2084"/>
         <source>Use &lt;i&gt;;&lt;/i&gt; (semicolon) to separate the parameters in functions.</source>
         <translation>Bruk &lt;i&gt;;&lt;/i&gt; (semikolon) for å skille funksjonsparameter fra hverandre.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2093"/>
+        <location filename="../gui/mainwindow.cpp" line="2090"/>
         <source>Tip of the day</source>
         <translation>Dagens hint</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1438"/>
+        <location filename="../gui/mainwindow.cpp" line="1435"/>
         <source>File %1 is not a valid session</source>
         <translation>%1 er ikke en gyldig øktfil</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1475"/>
+        <location filename="../gui/mainwindow.cpp" line="1472"/>
         <source>Merge session being loaded with current session?
 If no, current variables and display will be cleared.</source>
         <translation>Flett åpnet økt med pågående økt
 Hvis ikke vil inneværende variabler og skjerm bil tømt.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2362"/>
+        <location filename="../gui/mainwindow.cpp" line="2361"/>
         <source>SpeedCrunch is minimized.
 Left click the icon to restore it or right click for options.</source>
         <translation>SpeedCrunch er minimert
 Venstreklikk på ikonet for å gjenopprette eller høyreklikk for innstillinger.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1342"/>
+        <location filename="../gui/mainwindow.cpp" line="1341"/>
         <source>Degree</source>
         <translation>Grader</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1768"/>
+        <location filename="../gui/mainwindow.cpp" line="1765"/>
         <source>All Files (*)</source>
         <translation>Alle filer (*)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1715"/>
+        <location filename="../gui/mainwindow.cpp" line="1712"/>
         <source>Radian</source>
         <translation>Radian</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2053"/>
+        <location filename="../gui/mainwindow.cpp" line="2050"/>
         <source>The menu bar is now hidden. To make it visible again, press Ctrl+Alt+M.</source>
         <translation>Meny linjen er skjult. For å gjøre den synlig igjen trykk Ctrl+Alt+M.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2102"/>
+        <location filename="../gui/mainwindow.cpp" line="2099"/>
         <source>Binary</source>
         <translation>Binær</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2111"/>
+        <location filename="../gui/mainwindow.cpp" line="2108"/>
         <source>Engineering decimal</source>
         <translation>Teknisk desimal</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2120"/>
+        <location filename="../gui/mainwindow.cpp" line="2117"/>
         <source>Fixed decimal</source>
         <translation>Fast desimal</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2129"/>
+        <location filename="../gui/mainwindow.cpp" line="2126"/>
         <source>General decimal</source>
         <translation>Generell desimal</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2138"/>
+        <location filename="../gui/mainwindow.cpp" line="2135"/>
         <source>Hexadecimal</source>
         <translation>Heksadesimal</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2147"/>
+        <location filename="../gui/mainwindow.cpp" line="2144"/>
         <source>Octal</source>
         <translation>Oktal</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2156"/>
+        <location filename="../gui/mainwindow.cpp" line="2153"/>
         <source>Scientific decimal</source>
         <translation>Vitenskapelig desimal</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1545"/>
+        <location filename="../gui/mainwindow.cpp" line="1542"/>
         <source>Import Session</source>
         <translation>Importer økt</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1561"/>
+        <location filename="../gui/mainwindow.cpp" line="1558"/>
         <source>Merge session being imported with current session?
 If no, current variables and display will be cleared.</source>
         <translation>Flett importert økt inn i pågående økt?
 Hvis ikke, vil inneværende variabler og skjerm bli tømt.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1769"/>
+        <location filename="../gui/mainwindow.cpp" line="1766"/>
         <source>Export Session</source>
         <translation>Eksporter økt</translation>
     </message>
@@ -1611,7 +1614,7 @@ Hvis ikke, vil inneværende variabler og skjerm bli tømt.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1596"/>
+        <location filename="../gui/mainwindow.cpp" line="1593"/>
         <source>Ignore error?</source>
         <translation>Overse feil?</translation>
     </message>
@@ -1641,17 +1644,17 @@ Hvis ikke, vil inneværende variabler og skjerm bli tømt.</translation>
         <translation>&amp;Språk...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2526"/>
+        <location filename="../gui/mainwindow.cpp" line="2525"/>
         <source>System Default</source>
         <translation>Systemets standard&amp;verdi</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2532"/>
+        <location filename="../gui/mainwindow.cpp" line="2531"/>
         <source>Language</source>
         <translation>Språk</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2533"/>
+        <location filename="../gui/mainwindow.cpp" line="2532"/>
         <source>Select the language:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1659,7 +1662,7 @@ Hvis ikke, vil inneværende variabler og skjerm bli tømt.</translation>
 <context>
     <name>VariablesDock</name>
     <message>
-        <location filename="../gui/variablesdock.cpp" line="63"/>
+        <location filename="../gui/variablesdock.cpp" line="64"/>
         <source>Variables</source>
         <translation>Variabler</translation>
     </message>
@@ -1667,22 +1670,22 @@ Hvis ikke, vil inneværende variabler og skjerm bli tømt.</translation>
 <context>
     <name>VariablesWidget</name>
     <message>
-        <location filename="../gui/variableswidget.cpp" line="163"/>
+        <location filename="../gui/variableswidget.cpp" line="155"/>
         <source>Name</source>
         <translation>Navn</translation>
     </message>
     <message>
-        <location filename="../gui/variableswidget.cpp" line="164"/>
+        <location filename="../gui/variableswidget.cpp" line="156"/>
         <source>Value</source>
         <translation>Verdi</translation>
     </message>
     <message>
-        <location filename="../gui/variableswidget.cpp" line="167"/>
+        <location filename="../gui/variableswidget.cpp" line="159"/>
         <source>Search</source>
         <translation>Søk</translation>
     </message>
     <message>
-        <location filename="../gui/variableswidget.cpp" line="168"/>
+        <location filename="../gui/variableswidget.cpp" line="160"/>
         <source>No match found</source>
         <translation>Ingen treff funnet</translation>
     </message>
