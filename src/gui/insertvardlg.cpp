@@ -22,73 +22,35 @@
 
 #include "insertvardlg.hxx"
 
-#include "core/evaluator.hxx"
+#include "gui/variableswidget.hxx"
 
-#include <QHBoxLayout>
-#include <QHeaderView>
-#include <QLocale>
 #include <QPushButton>
-#include <QStringList>
-#include <QTimer>
 #include <QTreeWidget>
 #include <QVBoxLayout>
 
 
 struct InsertVariableDlg::Private
 {
-  char          radixChar;
-  QPushButton * cancelButton;
-  Evaluator *   eval;
+  VariablesWidget * list;
+
   QPushButton * insertButton;
-  QTreeWidget * list;
-
-  QString formatValue( const HNumber & value );
+  QPushButton * cancelButton;
 };
-
-
-QString InsertVariableDlg::Private::formatValue( const HNumber & value )
-{
-  char * str = HMath::format( value, 'g' );
-  QString s;
-  if ( radixChar == '.' )
-    s = QString::fromLatin1( str );
-  else
-    s = QString::fromLatin1( str ).replace( '.', ',' );
-  free( str );
-  return s;
-}
 
 
 // public
 
-InsertVariableDlg::InsertVariableDlg( Evaluator * eval, char radixChar,
-                                      QWidget * parent )
+InsertVariableDlg::InsertVariableDlg( QWidget * parent )
   : QDialog( parent ), d( new InsertVariableDlg::Private )
 {
   setWindowTitle( tr( "Insert Variable" ) );
   setModal( true );
 
-  d->eval = eval;
-
-  if ( radixChar == 'C' )
-    d->radixChar = QLocale().decimalPoint().toAscii();
-  else
-    d->radixChar = radixChar;
-
   QVBoxLayout* layout = new QVBoxLayout;
   setLayout( layout );
 
-  d->list = new QTreeWidget( this );
-  d->list->setColumnCount( 2 );
-  d->list->setAlternatingRowColors( true );
-  d->list->setRootIsDecorated( false );
-  d->list->setEditTriggers( QTreeWidget::NoEditTriggers );
-  d->list->setSelectionBehavior( QTreeWidget::SelectRows );
-
-  QStringList titles;
-  titles << tr( "Name"  );
-  titles << tr( "Value" );
-  d->list->setHeaderLabels( titles );
+  d->list = new VariablesWidget( /* hideHeaders */ false,
+         /* insertAllItems */ true, this );
 
   d->insertButton = new QPushButton( this );
   d->insertButton->setText( tr("&Insert") );
@@ -126,24 +88,7 @@ InsertVariableDlg::InsertVariableDlg( Evaluator * eval, char radixChar,
 
 void InsertVariableDlg::updateList()
 {
-  d->list->setUpdatesEnabled( false );
-
-  d->list->clear();
-  QVector<Variable> variables = d->eval->variables();
-  for ( int k = 0; k < variables.count(); k++ )
-  {
-      QStringList str;
-      str << variables.at(k).name;
-      str << d->formatValue( variables.at(k).value );
-
-      QTreeWidgetItem * item = 0;
-      item = new QTreeWidgetItem( d->list, str );
-      item->setTextAlignment( 0, Qt::AlignLeft | Qt::AlignVCenter );
-      item->setTextAlignment( 1, Qt::AlignLeft | Qt::AlignVCenter );
-  }
-  d->list->sortItems( 0, Qt::AscendingOrder );
-
-  d->list->setUpdatesEnabled( true );
+  d->list->fillTable();
 }
 
 
@@ -156,18 +101,4 @@ QString InsertVariableDlg::variableName() const
 
 InsertVariableDlg::~InsertVariableDlg()
 {
-}
-
-
-// public slots
-
-void InsertVariableDlg::setRadixChar( char c )
-{
-  if ( c == 'C' )
-    c = QLocale().decimalPoint().toAscii();
-  if ( d->radixChar != c )
-  {
-    d->radixChar = c;
-    updateList();
-  }
 }

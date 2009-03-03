@@ -19,22 +19,20 @@
 // Boston, MA 02110-1301, USA.
 
 #include "core/evaluator.hxx"
-
 #include "core/functions.hxx"
 #include "core/settings.hxx"
 #ifdef _BISON
 # include "bison/bisonparser.cpp"
 #endif
 
-#include <QApplication>
-#include <QMap>
-#include <QStack>
+#include <QtCore/QCoreApplication>
+#include <QtCore/QMap>
+#include <QtCore/QStack>
 
 // #define EVALUATOR_DEBUG
-
 #ifdef EVALUATOR_DEBUG
-#include <QFile>
-#include <QTextStream>
+#include <QtCore/QFile>
+#include <QtCore/QTextStream>
 
 QTextStream& operator<<( QTextStream& s, HNumber num )
 {
@@ -45,6 +43,13 @@ QTextStream& operator<<( QTextStream& s, HNumber num )
 }
 
 #endif
+
+static Evaluator * s_evaluatorInstance = 0;
+
+static void s_deleteEvaluator()
+{
+    delete s_evaluatorInstance;
+}
 
 class Opcode
 {
@@ -63,10 +68,6 @@ class Opcode
 
 struct Evaluator::Private
 {
-  Evaluator * p;
-  Functions * functions;
-  Settings *  settings;
-
   bool    dirty;
   bool    valid;
   QString expression;
@@ -278,13 +279,19 @@ static bool isIdentifier( QChar ch )
   return (ch.unicode() == '_') || (ch.unicode() == '$') || (ch.isLetter());
 }
 
-Evaluator::Evaluator( Functions * f, QObject * parent )
-  : QObject( parent ), d( new Evaluator::Private )
+Evaluator * Evaluator::instance()
 {
-  d->p = this;
-  d->functions = f;
-  d->settings = Settings::instance();
+  if ( ! s_evaluatorInstance ) {
+    s_evaluatorInstance = new Evaluator;
+    qAddPostRoutine( s_deleteEvaluator );
+  }
 
+  return s_evaluatorInstance;
+}
+
+Evaluator::Evaluator()
+  : d( new Evaluator::Private )
+{
   clear();
 
 #ifdef _BISON
@@ -404,7 +411,7 @@ Tokens Evaluator::scan( const QString& expr ) const
   QChar wrongDecimalPoint;
   //decimalPoint = Settings::self()->dot();
   // sanity check for wrong decimal separator usage
-  if ( d->settings->radixCharacter() == ',' )
+  if ( Settings::instance()->radixCharacter() == ',' )
     wrongDecimalPoint = '.';
   else
     wrongDecimalPoint = ',';
@@ -457,7 +464,7 @@ Tokens Evaluator::scan( const QString& expr ) const
        }
 
        // decimal dot ?
-       else if ( ch == d->settings->radixCharacter() )
+       else if ( ch == Settings::instance()->radixCharacter() )
        {
          tokenText.append( ex.at(i++) );
          state = InDecimal;
@@ -542,7 +549,7 @@ Tokens Evaluator::scan( const QString& expr ) const
        if( ch.isDigit() ) tokenText.append( ex.at(i++) );
 
        // convert decimal separator to '.'
-       else if( ch == d->settings->radixCharacter() )
+       else if( ch == Settings::instance()->radixCharacter() )
        {
          tokenText.append( '.' );
          i++;
@@ -871,7 +878,7 @@ void Evaluator::compile( const Tokens& tokens ) const
           Token id = syntaxStack.top( 1 );
           if( !arg.isOperator() )
           if( id.isIdentifier() )
-          if( d->functions->function( id.text() ) )
+          if( Functions::instance()->function( id.text() ) )
           {
             ruleFound = true;
             d->codes.append( Opcode( Opcode::Function, 1 ) );
@@ -895,7 +902,7 @@ void Evaluator::compile( const Tokens& tokens ) const
             if( !x.isOperator() )
             if( op.isOperator() )
             if( id.isIdentifier() )
-            if( d->functions->function( id.text() ) )
+            if( Functions::instance()->function( id.text() ) )
             if( ( op.asOperator() == Token::Plus ) ||
                ( op.asOperator() == Token::Minus ) )
             {
@@ -1331,7 +1338,7 @@ HNumber Evaluator::evalNoAssign()
         else
         {
           // function
-          function = d->functions->function( fname );
+          function = Functions::instance()->function( fname );
           if( function )
             refs.push( fname );
           else
@@ -1349,7 +1356,7 @@ HNumber Evaluator::evalNoAssign()
           break;
 
         fname = refs.pop();
-        function = d->functions->function( fname );
+        function = Functions::instance()->function( fname );
         if( !function )
         {
           d->error = fname + ": " + tr( "unknown function or variable" );
@@ -1406,7 +1413,7 @@ HNumber Evaluator::eval()
   }
 
   // variable can't have the same name as function
-  if ( d->functions->function( d->assignId ) )
+  if ( Functions::instance()->function( d->assignId ) )
   {
     d->error = d->assignId + ": "
                  + tr( "identifier matches an existing function name" );
@@ -1536,7 +1543,7 @@ QString Evaluator::autoFix( const QString& expr )
     {
       if( tokens.at(0).isIdentifier() )
       {
-        Function* f = d->functions->function( tokens.at(0).text() );
+        Function* f = Functions::instance()->function( tokens.at(0).text() );
         if( f ) result.append( "(ans)" );
       }
     }

@@ -68,6 +68,7 @@ FunctionsDock::FunctionsDock( const Functions * f, QWidget * parent )
   d->list->header()->hide();
   d->list->setEditTriggers( QTreeWidget::NoEditTriggers );
   d->list->setSelectionBehavior( QTreeWidget::SelectRows );
+  d->list->setAlternatingRowColors( true );
 
   connect( d->list, SIGNAL( itemActivated( QTreeWidgetItem *, int ) ),
            this, SLOT( handleItem( QTreeWidgetItem * ) ) );
@@ -167,24 +168,10 @@ void FunctionsDock::filter()
   d->list->resizeColumnToContents( 1 );
   d->list->resizeColumnToContents( 2 );
 
-  if ( d->list->topLevelItemCount() > 0 )
-  {
+  if ( d->list->topLevelItemCount() > 0 ) {
     d->noMatchLabel->hide();
     d->list->sortItems( 0, Qt::AscendingOrder );
-
-    int group = 3;
-    if ( d->list->topLevelItemCount() >= 2 * group )
-      for ( int i = 0; i < d->list->topLevelItemCount(); i++ )
-      {
-        QTreeWidgetItem * item = d->list->topLevelItem( i );
-        QBrush c = ((int)(i / group)) & 1 ? palette().base() : palette().alternateBase();
-        item->setBackground( 0, c );
-        item->setBackground( 1, c );
-        item->setBackground( 2, c );
-      }
-  }
-  else
-  {
+  } else {
     d->noMatchLabel->setGeometry( d->list->geometry() );
     d->noMatchLabel->show();
     d->noMatchLabel->raise();

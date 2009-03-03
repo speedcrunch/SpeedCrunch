@@ -27,15 +27,12 @@
 #include <memory>
 
 
-class Evaluator;
-
-
 class DeleteVariableDlg : public QDialog
 {
   Q_OBJECT
 
   public:
-    explicit DeleteVariableDlg( Evaluator * eval, QWidget * parent = 0 );
+    explicit DeleteVariableDlg( QWidget * parent = 0 );
     ~DeleteVariableDlg();
 
     void updateList();
@@ -46,7 +43,6 @@ class DeleteVariableDlg : public QDialog
   private:
     struct Private;
     const std::auto_ptr<Private> d;
-    DeleteVariableDlg();
     DeleteVariableDlg( const DeleteVariableDlg & );
     DeleteVariableDlg & operator=( const DeleteVariableDlg & );
 };

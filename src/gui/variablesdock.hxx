@@ -22,9 +22,7 @@
 
 #include <QDockWidget>
 
-#include <memory>
-
-class Evaluator;
+class VariablesWidget;
 
 class QTreeWidgetItem;
 
@@ -32,29 +30,26 @@ class VariablesDock : public QDockWidget
 {
   Q_OBJECT
 
+    VariablesWidget * m_variableWidget;
+
   public:
     VariablesDock( QWidget * parent = 0 );
     ~VariablesDock();
-    void updateList( const Evaluator * );
+
+    void updateList();
 
   signals:
     void variableSelected( const QString & );
 
   public slots:
+    void handleItem( QTreeWidgetItem * );
     void handleRadixCharacterChange();
     void retranslateText();
-
-  protected slots:
-    void filter();
-    void handleItem( QTreeWidgetItem * );
-    void triggerFilter();
 
   protected:
     virtual void changeEvent( QEvent * );
 
   private:
-    struct Private;
-    const std::auto_ptr<Private> d;
     VariablesDock( const VariablesDock & );
     VariablesDock & operator=( const VariablesDock & );
 };

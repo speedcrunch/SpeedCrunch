@@ -27,28 +27,21 @@
 
 #include <memory>
 
-class Evaluator;
-
 
 class InsertVariableDlg : public QDialog
 {
   Q_OBJECT
 
   public:
-    InsertVariableDlg( Evaluator * eval, char radixChar, QWidget * parent = 0 );
+    InsertVariableDlg( QWidget * parent = 0 );
     ~InsertVariableDlg();
 
     void    updateList();
-    char    radixChar() const;
     QString variableName() const;
-
-  public slots:
-    void setRadixChar( char );
 
   private:
     struct Private;
     const std::auto_ptr<Private> d;
-    InsertVariableDlg();
     InsertVariableDlg( const InsertVariableDlg & );
     InsertVariableDlg & operator=( const InsertVariableDlg & );
 };

@@ -785,9 +785,9 @@ void MainWindow::Private::createStatusBar()
 void MainWindow::Private::createFixedWidgets()
 {
   // necessary objects
-  constants = new Constants( p );
-  functions = new Functions( p );
-  evaluator = new Evaluator( functions, p );
+  constants = Constants::instance();
+  evaluator = Evaluator::instance();
+  functions = Functions::instance();
 
   // outer widget and layout
   widgets.root = new QWidget( p );
@@ -998,7 +998,7 @@ void MainWindow::Private::createVariablesDock()
   connect( p, SIGNAL( languageChanged() ),
            docks.variables, SLOT( retranslateText() ) );
 
-  docks.variables->updateList( evaluator );
+  docks.variables->updateList();
 
   if ( docks.functions )
     p->tabifyDockWidget( docks.functions, docks.variables );
@@ -1267,7 +1267,6 @@ MainWindow::MainWindow()
   : QMainWindow(), d( new MainWindow::Private )
 {
   d->p = this;
-  d->settings->load();
   d->createUi();
   d->applySettings();
   QTimer::singleShot( 0, this, SLOT( activate() ) );
@@ -1349,16 +1348,16 @@ void MainWindow::deleteAllVariables()
   d->evaluator->clearVariables();
 
   if ( d->settings->variablesDockVisible )
-    d->docks.variables->updateList( d->evaluator );
+    d->docks.variables->updateList();
 }
 
 void MainWindow::showVariableDeletionDialog()
 {
-  DeleteVariableDlg dlg( d->evaluator );
+  DeleteVariableDlg dlg;
   dlg.exec();
 
   if ( d->settings->variablesDockVisible )
-    d->docks.variables->updateList( d->evaluator );
+    d->docks.variables->updateList();
 }
 
 void MainWindow::setResultPrecision2Digits()
@@ -1423,7 +1422,7 @@ void MainWindow::showFunctionInsertionDialog()
 
 void MainWindow::showVariableInsertionDialog()
 {
-  InsertVariableDlg dlg( d->evaluator, d->settings->radixCharacter() );
+  InsertVariableDlg dlg;
 
   if ( dlg.exec() == InsertVariableDlg::Accepted )
   {
@@ -1611,7 +1610,7 @@ void MainWindow::showSessionImportDialog()
       free( num );
       d->widgets.editor->setAnsAvailable( true );
       if ( d->settings->variablesDockVisible )
-        d->docks.variables->updateList( d->evaluator );
+        d->docks.variables->updateList();
       if ( d->settings->historyDockVisible )
         d->docks.history->append( str );
 
@@ -2161,25 +2160,6 @@ void MainWindow::activate()
   show();
   raise();
   activateWindow();
-
-#ifdef Q_WS_X11
-  static Atom NET_ACTIVE_WINDOW = XInternAtom( QX11Info::display(), "_NET_ACTIVE_WINDOW", False );
-
-  XClientMessageEvent xev;
-  xev.type = ClientMessage;
-  xev.window = winId();
-  xev.message_type = NET_ACTIVE_WINDOW;
-  xev.format = 32;
-  xev.data.l[0] = 2;
-  xev.data.l[1] = CurrentTime;
-  xev.data.l[2] = 0;
-  xev.data.l[3] = 0;
-  xev.data.l[4] = 0;
-
-  XSendEvent( QX11Info::display(), QX11Info::appRootWindow(), False,
-              (SubstructureNotifyMask | SubstructureRedirectMask), (XEvent *)&xev );
-#endif // Q_WS_X11
-
   d->widgets.editor->setFocus();
 }
 
@@ -2287,6 +2267,29 @@ void MainWindow::minimizeToSystemTray()
   }
 }
 
+void MainWindow::raiseWindow()
+{
+  activate();
+
+#ifdef Q_WS_X11
+  static Atom NET_ACTIVE_WINDOW = XInternAtom( QX11Info::display(), "_NET_ACTIVE_WINDOW", False );
+
+  XClientMessageEvent xev;
+  xev.type = ClientMessage;
+  xev.window = winId();
+  xev.message_type = NET_ACTIVE_WINDOW;
+  xev.format = 32;
+  xev.data.l[0] = 2;
+  xev.data.l[1] = CurrentTime;
+  xev.data.l[2] = 0;
+  xev.data.l[3] = 0;
+  xev.data.l[4] = 0;
+
+  XSendEvent( QX11Info::display(), QX11Info::appRootWindow(), False,
+              (SubstructureNotifyMask | SubstructureRedirectMask), (XEvent *)&xev );
+#endif // Q_WS_X11
+}
+
 void MainWindow::Private::restoreVariables()
 {
   for ( int k = 0; k < settings->variables.count(); k++ )
@@ -2298,7 +2301,7 @@ void MainWindow::Private::restoreVariables()
   }
 
   if ( docks.variables )
-    docks.variables->updateList( evaluator );
+    docks.variables->updateList();
 
   // free memory
   settings->variables.clear();
@@ -2345,7 +2348,7 @@ void MainWindow::evaluateEditorExpression()
     free( num );
     d->widgets.editor->setAnsAvailable( true );
     if ( d->settings->variablesDockVisible )
-      d->docks.variables->updateList( d->evaluator );
+      d->docks.variables->updateList();
     if ( d->settings->historyDockVisible )
       d->docks.history->append( str );
 

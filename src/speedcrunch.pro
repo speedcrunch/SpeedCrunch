@@ -40,6 +40,7 @@ HEADERS += 3rdparty/flickcharm/flickcharm.h \
            gui/keypad.hxx \
            gui/tipwidget.hxx \
            gui/variablesdock.hxx \
+           gui/variableswidget.hxx \
            gui/mainwindow.hxx
            #math/floatcommon.h \
            #math/floatconfig.h \
@@ -91,6 +92,7 @@ SOURCES += 3rdparty/flickcharm/flickcharm.h \
            gui/keypad.cpp \
            gui/tipwidget.cpp \
            gui/variablesdock.cpp \
+           gui/variableswidget.cpp \
            gui/mainwindow.cpp \
            main/main.cpp \
            math/floatcommon.c \

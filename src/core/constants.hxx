@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2008-2009 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -17,17 +17,16 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
+#ifndef CORE_CONSTANTS_HXX
+#define CORE_CONSTANTS_HXX
 
-#ifndef CONSTANTS_HXX
-#define CONSTANTS_HXX
-
-#include <QStringList>
+#include <QtCore/QStringList>
 
 #include <memory>
 
 class Constant
 {
-  public:
+public:
     QString name;
     QString value;
     QString unit;
@@ -48,27 +47,28 @@ class Constant
     {  categories << cat1; categories << cat2; }
 };
 
-
 class Constants : public QObject
 {
   Q_OBJECT
 
-  public:
-    Constants( QObject * parent = 0 );
+public:
+    static Constants * instance();
     ~Constants();
 
     QList<Constant> constantList() const;
     QStringList     categoryList() const;
 
-  public slots:
+public slots:
     void retranslateText();
 
-  private:
-    struct Private;
-    const std::auto_ptr<Private> d;
+private:
+    Constants();
     Constants( const Constants & );
     Constants & operator=( const Constants & );
+
+    struct Private;
+    const std::auto_ptr<Private> d;
 };
 
-
 #endif
+

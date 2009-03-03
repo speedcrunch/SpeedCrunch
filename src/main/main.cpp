@@ -40,7 +40,7 @@ int main( int argc, char * argv[] )
     win.show();
 
     app.connect( &app, SIGNAL(lastWindowClosed()), &app, SLOT(quit()) );
-    app.connect( &app, SIGNAL(raiseRequested()), &win, SLOT(activate()) );
+    app.connect( &app, SIGNAL(raiseRequested()), &win, SLOT(raiseWindow()) );
 
     return app.exec();
 }
