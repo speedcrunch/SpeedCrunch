@@ -1,5 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2009 Andreas Scherer <andreas_coder@freenet.de>
+// Copyright (C) 2009 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -19,54 +20,44 @@
 #ifndef GUI_FUNCTIONSWIDGET_HXX
 #define GUI_FUNCTIONSWIDGET_HXX
 
-#include <QWidget>
+#include <QtGui/QWidget>
 
-class QLabel;
-class QLineEdit;
-class QString;
-class QTimer;
-class QTreeWidget;
+#include <memory>
+
 class QTreeWidgetItem;
-
-template<class T>
-class QList;
-
-class HNumber;
 
 class FunctionsWidget : public QWidget
 {
-  Q_OBJECT
-
-  QTreeWidget * m_functions;
-  QLabel      * m_searchLabel;
-  QLineEdit   * m_searchFilter;
-  QTimer      * m_filterTimer;
-  QLabel      * m_noMatchLabel;
-
-  bool m_insertAllItems;
+    Q_OBJECT
 
 public:
-  FunctionsWidget( bool hideHeaders, QWidget * parent = 0 );
-  ~FunctionsWidget();
+    FunctionsWidget( bool hideHeaders, QWidget * parent = 0 );
+    ~FunctionsWidget();
 
-  void fillTable();
-  QTreeWidgetItem* currentItem() const;
-  QList< QTreeWidgetItem* > selectedItems() const;
-
-  void retranslateText();
+    QTreeWidgetItem * currentItem() const;
+    void fillTable();
+    void retranslateText();
+    QList<QTreeWidgetItem *> selectedItems() const;
 
 signals:
-  void itemActivated( QTreeWidgetItem *, int );
-  void itemDoubleClicked( QTreeWidgetItem *, int );
+    void itemActivated( QTreeWidgetItem *, int );
+    void itemDoubleClicked( QTreeWidgetItem *, int );
 
 public slots:
-  void filter();
+    void filter();
 
 protected slots:
-  void catchItemActivated( QTreeWidgetItem *, int );
-  void catchItemDoubleClicked( QTreeWidgetItem *, int );
-  void clearSelection( QTreeWidgetItem * );
-  void triggerFilter();
+    void catchItemActivated( QTreeWidgetItem *, int );
+    void catchItemDoubleClicked( QTreeWidgetItem *, int );
+    void clearSelection( QTreeWidgetItem * );
+    void triggerFilter();
+
+private:
+    struct Private;
+    const std::auto_ptr<Private> d;
+
+    FunctionsWidget( const FunctionsWidget & );
+    FunctionsWidget & operator=( const FunctionsWidget & );
 };
 
 #endif
