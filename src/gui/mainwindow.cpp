@@ -1274,10 +1274,6 @@ MainWindow::MainWindow()
 
 MainWindow::~MainWindow()
 {
-  delete d->constants;
-  delete d->evaluator;
-  delete d->functions;
-  delete d->settings;
 }
 
 bool MainWindow::event( QEvent * e )
