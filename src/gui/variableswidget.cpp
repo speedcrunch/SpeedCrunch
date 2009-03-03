@@ -155,6 +155,8 @@ void VariablesWidget::fillTable()
     m_noMatchLabel->raise();
   }
 
+  m_searchFilter->setFocus();
+
   setUpdatesEnabled( true );
 }
 
