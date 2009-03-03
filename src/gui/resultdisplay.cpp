@@ -19,6 +19,7 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
+#include "3rdparty/flickcharm/flickcharm.h"
 #include "gui/resultdisplay.hxx"
 
 #include "core/functions.hxx"
@@ -39,6 +40,7 @@ struct ResultDisplay::Private
   QColor      customBackgroundColor;
   QColor      customBackgroundAlternateColor;
   QColor      customTextColor;
+  FlickCharm  flickCharm;
 };
 
 class BaseItem : public QListWidgetItem
@@ -119,10 +121,10 @@ ResultDisplay::ResultDisplay( QWidget * parent, const char * name )
 {
   d->customAppearance = false;
   d->count = 0;
-
-  d->customTextColor        = QColor( 255, 255, 255 );
-  d->customBackgroundColor = QColor(   0,   0,   0 );
-  d->customBackgroundAlternateColor = QColor(  21,  21,  21 );
+  d->customTextColor = QColor( 255, 255, 255 );
+  d->customBackgroundColor = QColor( 0, 0, 0 );
+  d->customBackgroundAlternateColor = QColor( 21,  21,  21 );
+  d->flickCharm.activateOn( this );
 
   setBackgroundRole( QPalette::Base );
   setCursor( QCursor(Qt::PointingHandCursor) );

@@ -12,6 +12,7 @@ DEPENDPATH += . \
               #symboltables \
               #test \
               #variant \
+              3rdparty/flickcharm \
               3rdparty/util
 
 INCLUDEPATH += . math core 3rdparty/util gui
@@ -19,7 +20,8 @@ INCLUDEPATH += . math core 3rdparty/util gui
 QT += network
 
 # Input
-HEADERS += core/constants.hxx \
+HEADERS += 3rdparty/flickcharm/flickcharm.h \
+           core/constants.hxx \
            core/evaluator.hxx \
            core/functions.hxx \
            #core/settings.hxx \
@@ -61,7 +63,8 @@ HEADERS += core/constants.hxx \
 
 #YACCSOURCES += bison/exprparser.y
 
-SOURCES += 3rdparty/util/binreloc.c \
+SOURCES += 3rdparty/flickcharm/flickcharm.h \
+           3rdparty/util/binreloc.c \
            #variant/variantbase.cpp \
            #variant/variant.cpp \
            #variant/real.cpp \
