@@ -45,12 +45,17 @@ class VariablesWidget : public QWidget
   QLabel      * m_noMatchLabel;
 
   Evaluator * m_evaluator;
+  bool m_insertAllItems;
 
 public:
-  VariablesWidget( Evaluator * evaluator, bool hideHeaders, QWidget * parent = 0 );
+  VariablesWidget(
+         Evaluator * evaluator, //!< Stores the variables; better as Singleton?
+         bool hideHeaders, //!< Show columns headers?
+         bool insertAllItems, //!< Include internal 'variables' in selection?
+         QWidget * parent = 0 );
   ~VariablesWidget();
 
-  void fillTable( bool = true );
+  void fillTable();
   QTreeWidgetItem* currentItem() const;
   QList< QTreeWidgetItem* > selectedItems() const;
 

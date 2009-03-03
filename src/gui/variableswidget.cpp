@@ -28,14 +28,16 @@
 #include <QTimer>
 #include <QTreeWidget>
 
-VariablesWidget::VariablesWidget( Evaluator * eval, bool hideHeaders, QWidget * parent )
+VariablesWidget::VariablesWidget( Evaluator * eval, bool hideHeaders,
+       bool insertAllItems, QWidget * parent )
   : QWidget( parent ),
     m_variables( new QTreeWidget( this ) ),
     m_searchLabel( new QLabel( this ) ),
     m_searchFilter( new QLineEdit( this ) ),
     m_filterTimer( new QTimer( this ) ),
     m_noMatchLabel( new QLabel( m_variables ) ),
-    m_evaluator( eval )
+    m_evaluator( eval ),
+    m_insertAllItems( insertAllItems )
 {
   connect( m_variables, SIGNAL( itemActivated( QTreeWidgetItem *, int ) ),
           SLOT( catchItemActivated( QTreeWidgetItem *, int ) ) );
@@ -95,7 +97,7 @@ QString VariablesWidget::formatValue( const HNumber & value )
   return s;
 }
 
-void VariablesWidget::fillTable( bool insertAll )
+void VariablesWidget::fillTable()
 {
   setUpdatesEnabled( false );
 
@@ -108,7 +110,7 @@ void VariablesWidget::fillTable( bool insertAll )
   QVector<Variable> variables = m_evaluator->variables();
   for ( int k = 0; k < variables.count(); k++ )
   {
-      if ( ! insertAll &&
+      if ( ! m_insertAllItems &&
                ( variables.at(k).name.toUpper() == "ANS"
               || variables.at(k).name.toUpper() == "PHI"
               || variables.at(k).name.toUpper() == "PI" ) )
@@ -131,7 +133,7 @@ void VariablesWidget::fillTable( bool insertAll )
   m_variables->resizeColumnToContents( 0 );
   m_variables->resizeColumnToContents( 1 );
 
-  if ( m_variables->topLevelItemCount() > 0 || ! insertAll )
+  if ( m_variables->topLevelItemCount() > 0 || ! m_insertAllItems )
   {
     m_noMatchLabel->hide();
     m_variables->sortItems( 0, Qt::AscendingOrder );
