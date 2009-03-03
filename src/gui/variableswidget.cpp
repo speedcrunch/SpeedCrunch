@@ -136,17 +136,6 @@ void VariablesWidget::fillTable()
   {
     m_noMatchLabel->hide();
     m_variables->sortItems( 0, Qt::AscendingOrder );
-
-    int group = 3;
-    if ( m_variables->topLevelItemCount() >= 2 * group )
-      for ( int i = 0; i < m_variables->topLevelItemCount(); i++ )
-      {
-        QTreeWidgetItem * item = m_variables->topLevelItem(i);
-        QBrush c = (((int)(i / group)) & 1) ? palette().base()
-                                            : palette().alternateBase();
-        item->setBackground( 0, c );
-        item->setBackground( 1, c );
-      }
   }
   else
   {
