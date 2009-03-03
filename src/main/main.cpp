@@ -21,7 +21,6 @@
 #include "gui/mainwindow.hxx"
 
 #include <QtCore/QCoreApplication>
-#include <QtGui/QApplication>
 
 int main( int argc, char * argv[] )
 {
