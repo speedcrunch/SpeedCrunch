@@ -2161,25 +2161,6 @@ void MainWindow::activate()
   show();
   raise();
   activateWindow();
-
-#ifdef Q_WS_X11
-  static Atom NET_ACTIVE_WINDOW = XInternAtom( QX11Info::display(), "_NET_ACTIVE_WINDOW", False );
-
-  XClientMessageEvent xev;
-  xev.type = ClientMessage;
-  xev.window = winId();
-  xev.message_type = NET_ACTIVE_WINDOW;
-  xev.format = 32;
-  xev.data.l[0] = 2;
-  xev.data.l[1] = CurrentTime;
-  xev.data.l[2] = 0;
-  xev.data.l[3] = 0;
-  xev.data.l[4] = 0;
-
-  XSendEvent( QX11Info::display(), QX11Info::appRootWindow(), False,
-              (SubstructureNotifyMask | SubstructureRedirectMask), (XEvent *)&xev );
-#endif // Q_WS_X11
-
   d->widgets.editor->setFocus();
 }
 
@@ -2285,6 +2266,29 @@ void MainWindow::minimizeToSystemTray()
       QTimer::singleShot( 500, this, SLOT( showSystemTrayMessage() ) );
     d->conditions.trayNotify = false;
   }
+}
+
+void MainWindow::raiseWindow()
+{
+  activate();
+
+#ifdef Q_WS_X11
+  static Atom NET_ACTIVE_WINDOW = XInternAtom( QX11Info::display(), "_NET_ACTIVE_WINDOW", False );
+
+  XClientMessageEvent xev;
+  xev.type = ClientMessage;
+  xev.window = winId();
+  xev.message_type = NET_ACTIVE_WINDOW;
+  xev.format = 32;
+  xev.data.l[0] = 2;
+  xev.data.l[1] = CurrentTime;
+  xev.data.l[2] = 0;
+  xev.data.l[3] = 0;
+  xev.data.l[4] = 0;
+
+  XSendEvent( QX11Info::display(), QX11Info::appRootWindow(), False,
+              (SubstructureNotifyMask | SubstructureRedirectMask), (XEvent *)&xev );
+#endif // Q_WS_X11
 }
 
 void MainWindow::Private::restoreVariables()
