@@ -44,7 +44,7 @@ struct FunctionsWidget::Private
     QLineEdit * searchFilter;
 };
 
-FunctionsWidget::FunctionsWidget( bool hideHeaders, QWidget * parent )
+FunctionsWidget::FunctionsWidget( QWidget * parent )
     : QWidget( parent ), d( new FunctionsWidget::Private )
 {
     d->filterTimer = new QTimer( this );
@@ -85,9 +85,6 @@ FunctionsWidget::FunctionsWidget( bool hideHeaders, QWidget * parent )
     setLayout( layout );
 
     retranslateText();
-
-    if ( hideHeaders )
-        d->functions->header()->hide();
 
     connect( d->filterTimer, SIGNAL(timeout()), SLOT(filter()) );
     connect( d->functions, SIGNAL(itemActivated(QTreeWidgetItem *, int)),

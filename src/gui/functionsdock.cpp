@@ -31,7 +31,7 @@
 
 FunctionsDock::FunctionsDock( QWidget * parent )
   : QDockWidget( parent ),
-    m_functionWidget( new FunctionsWidget( /* hideHeaders */ true, this ) )
+    m_functionWidget( new FunctionsWidget(this) )
 {
   connect( m_functionWidget, SIGNAL( itemActivated( QTreeWidgetItem *, int ) ),
           this, SLOT( handleItem( QTreeWidgetItem * ) ) );

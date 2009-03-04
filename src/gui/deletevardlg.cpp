@@ -48,8 +48,7 @@ DeleteVariableDlg::DeleteVariableDlg( QWidget * parent )
   QVBoxLayout * layout = new QVBoxLayout;
   setLayout( layout );
 
-  d->list = new VariablesWidget( /* hideHeaders */ false,
-         /* insertAllItems */ false, this );
+  d->list = new VariablesWidget( false, this );
 
   d->deleteButton = new QPushButton( this );
   d->deleteButton->setText( tr( "&Delete" ) );

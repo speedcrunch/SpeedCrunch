@@ -32,12 +32,11 @@ class FunctionsWidget : public QWidget
     Q_OBJECT
 
 public:
-    FunctionsWidget( bool hideHeaders, QWidget * parent = 0 );
+    FunctionsWidget( QWidget * parent = 0 );
     ~FunctionsWidget();
 
     QTreeWidgetItem * currentItem() const;
     void fillTable();
-    void retranslateText();
     QList<QTreeWidgetItem *> selectedItems() const;
 
 signals:
@@ -46,6 +45,7 @@ signals:
 
 public slots:
     void filter();
+    void retranslateText();
 
 protected slots:
     void catchItemActivated( QTreeWidgetItem *, int );

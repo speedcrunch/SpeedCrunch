@@ -46,7 +46,7 @@ InsertFunctionDlg::InsertFunctionDlg( QWidget * parent )
   QVBoxLayout * layout = new QVBoxLayout;
   setLayout( layout );
 
-  d->list = new FunctionsWidget( /* hideHeaders */ false, this );
+  d->list = new FunctionsWidget( this );
 
   d->insertButton = new QPushButton( this );
   d->insertButton->setText( tr( "&Insert" ) );

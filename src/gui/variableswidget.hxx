@@ -32,12 +32,11 @@ class VariablesWidget : public QWidget
     Q_OBJECT
 
 public:
-    VariablesWidget( bool hideHeaders, bool insertAllItems, QWidget * parent = 0 );
+    VariablesWidget( bool insertAllItems, QWidget * parent = 0 );
     ~VariablesWidget();
 
     QTreeWidgetItem * currentItem() const;
     void fillTable();
-    void retranslateText();
     QList<QTreeWidgetItem *> selectedItems() const;
 
 signals:
@@ -46,6 +45,7 @@ signals:
 
 public slots:
     void filter();
+    void retranslateText();
 
 protected slots:
     void catchItemActivated( QTreeWidgetItem *, int );

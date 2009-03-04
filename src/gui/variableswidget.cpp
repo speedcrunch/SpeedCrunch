@@ -57,7 +57,7 @@ QString VariablesWidget::Private::formatValue( const HNumber & value )
     return s;
 }
 
-VariablesWidget::VariablesWidget( bool hideHeaders, bool insertAllItems, QWidget * parent )
+VariablesWidget::VariablesWidget( bool insertAllItems, QWidget * parent )
     : QWidget( parent ), d( new VariablesWidget::Private )
 {
     d->filterTimer = new QTimer( this );
@@ -99,9 +99,6 @@ VariablesWidget::VariablesWidget( bool hideHeaders, bool insertAllItems, QWidget
     setLayout( layout );
 
     retranslateText();
-
-    if ( hideHeaders )
-        d->variables->header()->hide();
 
     connect( d->filterTimer, SIGNAL(timeout()), SLOT(filter()) );
     connect( d->searchFilter, SIGNAL(textChanged(const QString &)),
