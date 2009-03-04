@@ -37,7 +37,7 @@ struct VariablesWidget::Private
 {
     QTimer * filterTimer;
     FlickCharm flickCharm;
-    bool insertAllItems;
+    ItemPolicy itemPolicy;
     QLabel * noMatchLabel;
     QLabel * searchLabel;
     QLineEdit * searchFilter;
@@ -56,11 +56,11 @@ QString VariablesWidget::Private::formatValue( const HNumber & value )
     return s;
 }
 
-VariablesWidget::VariablesWidget( bool insertAllItems, QWidget * parent )
+VariablesWidget::VariablesWidget( ItemPolicy itemPolicy, QWidget * parent )
     : QWidget( parent ), d( new VariablesWidget::Private )
 {
     d->filterTimer = new QTimer( this );
-    d->insertAllItems = insertAllItems;
+    d->itemPolicy = itemPolicy;
     d->variables = new QTreeWidget( this );
     d->noMatchLabel = new QLabel( d->variables );
     d->flickCharm.activateOn( d->variables );
@@ -124,7 +124,7 @@ void VariablesWidget::fillTable()
 
     for ( int k = 0; k < variables.count(); k++ )
     {
-        if ( ! d->insertAllItems
+        if ( d->itemPolicy != ShowAll
              && (variables.at(k).name.toUpper() == "ANS"
                  || variables.at(k).name.toUpper() == "PHI"
                  || variables.at(k).name.toUpper() == "PI") )
@@ -147,7 +147,7 @@ void VariablesWidget::fillTable()
     d->variables->resizeColumnToContents( 0 );
     d->variables->resizeColumnToContents( 1 );
 
-    if ( d->variables->topLevelItemCount() > 0 || ! d->insertAllItems ) {
+    if ( d->variables->topLevelItemCount() > 0 || d->itemPolicy != ShowAll ) {
         d->noMatchLabel->hide();
         d->variables->sortItems( 0, Qt::AscendingOrder );
     } else {

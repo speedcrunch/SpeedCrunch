@@ -30,7 +30,7 @@
 
 VariablesDock::VariablesDock( QWidget * parent )
   : QDockWidget( parent ),
-    m_variableWidget( new VariablesWidget(true, this) )
+    m_variableWidget( new VariablesWidget(VariablesWidget::ShowAll, this) )
 {
   connect( m_variableWidget, SIGNAL( itemActivated( QTreeWidgetItem *, int ) ),
            this, SLOT( handleItem( QTreeWidgetItem * ) ) );

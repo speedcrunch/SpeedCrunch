@@ -32,7 +32,9 @@ class VariablesWidget : public QWidget
     Q_OBJECT
 
 public:
-    VariablesWidget( bool insertAllItems, QWidget * parent = 0 );
+    enum ItemPolicy { ShowAll, ShowUserDefinedOnly };
+
+    VariablesWidget( ItemPolicy itemPolicy = ShowAll, QWidget * parent = 0 );
     ~VariablesWidget();
 
     QTreeWidgetItem * currentItem() const;
