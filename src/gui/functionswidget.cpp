@@ -27,7 +27,6 @@
 #include <QtCore/QStringList>
 #include <QtCore/QTimer>
 #include <QtGui/QHBoxLayout>
-#include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
 #include <QtGui/QLineEdit>
 #include <QtGui/QTreeWidget>
