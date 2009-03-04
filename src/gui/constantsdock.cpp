@@ -46,10 +46,10 @@ struct ConstantsDock::Private
   QLabel *      noMatchLabel;
 };
 
-ConstantsDock::ConstantsDock( Constants * c, QWidget * parent )
+ConstantsDock::ConstantsDock( QWidget * parent )
   : QDockWidget( parent ), d( new ConstantsDock::Private )
 {
-  d->constants = c;
+  d->constants = Constants::instance();
   d->settings = Settings::instance();
 
   d->categoryLabel = new QLabel( this );

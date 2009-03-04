@@ -53,7 +53,7 @@ class EditorHighlighter : public QSyntaxHighlighter
         return;
       }
 
-      Tokens tokens = editor->evaluator()->scan( text );
+      Tokens tokens = Evaluator::instance()->scan( text );
       for ( int i = 0; i < tokens.count(); i++ )
       {
         const Token & token = tokens.at(i);
@@ -77,7 +77,7 @@ class EditorHighlighter : public QSyntaxHighlighter
 
           case Token::stxIdentifier:
             color = editor->highlightColor( Editor::Variable );
-            fnames = editor->functions()->functionNames();
+            fnames = Functions::instance()->functionNames();
             for ( int i = 0; i < fnames.count(); i++ )
             {
               if ( fnames.at(i).toLower() == text )
@@ -158,12 +158,12 @@ QList<QColor> Editor::Private::generateColors( const QColor & bg,
   return cols;
 }
 
-Editor::Editor( Evaluator * e, Functions * f, Constants * c, QWidget * parent )
+Editor::Editor( QWidget * parent )
   : QTextEdit( parent ), d( new Editor::Private )
 {
-  d->eval = e;
-  d->functions = f;
-  d->constants = c;
+  d->eval = Evaluator::instance();
+  d->functions = Functions::instance();
+  d->constants = Constants::instance();
   d->settings = Settings::instance();
   d->index = 0;
   d->autoCompleteEnabled = true;
@@ -233,21 +233,6 @@ void Editor::doBackspace()
   QTextCursor cursor = textCursor();
   cursor.deletePreviousChar();
   setTextCursor( cursor );
-}
-
-Constants * Editor::constants() const
-{
-  return d->constants;
-}
-
-Evaluator * Editor::evaluator() const
-{
-  return d->eval;
-}
-
-Functions * Editor::functions() const
-{
-  return d->functions;
 }
 
 int Editor::cursorPosition() const
@@ -1183,7 +1168,7 @@ ConstantCompletion::ConstantCompletion( Editor * editor ) : QObject( editor ),
   connect( d->slider, SIGNAL( frameChanged( int ) ),
            this, SLOT( slide( int ) ) );
 
-  Constants * ct = d->editor->constants();
+  Constants * ct = Constants::instance();
   d->constants = ct->constantList();
 
   // populate categories

@@ -807,7 +807,7 @@ void MainWindow::Private::createFixedWidgets()
   // editor
   QHBoxLayout * editorLayout = new QHBoxLayout();
   editorLayout->setMargin( 5 );
-  widgets.editor = new Editor( evaluator, functions, constants, widgets.root );
+  widgets.editor = new Editor( widgets.root );
   widgets.editor->setFocus();
   QString editorStyle( "QTextEdit { font: bold %1pt }" );
   int editorPointSize = widgets.editor->font().pointSize();
@@ -897,7 +897,7 @@ void MainWindow::Private::createBookDock()
 
 void MainWindow::Private::createConstantsDock()
 {
-  docks.constants = new ConstantsDock( constants, p );
+  docks.constants = new ConstantsDock( p );
   docks.constants->setObjectName( "ConstantsDock" );
   docks.constants->installEventFilter( p );
   docks.constants->setAllowedAreas( Qt::AllDockWidgetAreas );

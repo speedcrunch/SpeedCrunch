@@ -25,9 +25,6 @@
 
 #include <memory>
 
-class Constants;
-class Evaluator;
-class Functions;
 class HNumber;
 
 class QEvent;
@@ -43,8 +40,7 @@ class Editor : public QTextEdit
     enum HighlightScheme { AutoScheme };
     enum ColorType { Variable = 0, Number, Function, MatchedPar };
 
-    explicit Editor( Evaluator *, Functions *, Constants *,
-                     QWidget * parent = 0 );
+    explicit Editor( QWidget * parent = 0 );
     ~Editor();
 
     bool        autoCalcEnabled() const;
@@ -52,9 +48,6 @@ class Editor : public QTextEdit
     void        clearHistory();
     int         cursorPosition() const;
     void        doBackspace();
-    Evaluator * evaluator() const;
-    Functions * functions() const;
-    Constants * constants() const;
     QStringList history() const;
     QStringList historyResults() const;
     QColor      highlightColor( ColorType type );
