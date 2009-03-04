@@ -17,17 +17,21 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
+#include "gui/functionswidget.hxx"
+
 #include "3rdparty/flickcharm/flickcharm.h"
 #include "core/functions.hxx"
 #include "core/settings.hxx"
-#include "gui/functionswidget.hxx"
 
+#include <QtCore/QString>
+#include <QtCore/QStringList>
 #include <QtCore/QTimer>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
 #include <QtGui/QLineEdit>
 #include <QtGui/QTreeWidget>
+#include <QtGui/QVBoxLayout>
 
 struct FunctionsWidget::Private
 {
