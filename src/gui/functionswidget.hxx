@@ -20,6 +20,7 @@
 #ifndef GUI_FUNCTIONSWIDGET_HXX
 #define GUI_FUNCTIONSWIDGET_HXX
 
+#include <QtGui/List>
 #include <QtGui/QWidget>
 
 #include <memory>
