@@ -20,7 +20,7 @@
 
 #include "historydock.hxx"
 
-#include <QListWidget>
+#include <QtGui/QListWidget>
 
 
 struct HistoryDock::Private

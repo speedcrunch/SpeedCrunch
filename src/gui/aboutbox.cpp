@@ -21,7 +21,7 @@
 
 #include "aboutbox.hxx"
 
-#include <QtGui>
+#include <QtGui/QtGui>
 
 
 #define MAKE_STRING(a) DO_MAKE_STRING(a)

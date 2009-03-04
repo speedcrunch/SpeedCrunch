@@ -25,9 +25,9 @@
 
 #include "core/evaluator.hxx"
 
-#include <QPushButton>
-#include <QTreeWidget>
-#include <QVBoxLayout>
+#include <QtGui/QPushButton>
+#include <QtGui/QTreeWidget>
+#include <QtGui/QVBoxLayout>
 
 
 struct DeleteVariableDlg::Private

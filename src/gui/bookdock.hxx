@@ -20,7 +20,7 @@
 #ifndef GUI_BOOKDOCK_HXX
 #define GUI_BOOKDOCK_HXX
 
-#include <QDockWidget>
+#include <QtGui/QDockWidget>
 
 #include <memory>
 

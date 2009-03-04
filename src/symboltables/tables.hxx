@@ -21,8 +21,9 @@
 #define _TABLES_H
 
 #include "symboltables/symbols.hxx"
-#include <QMap>
-#include <QStringList>
+
+#include <QtCore/QMap>
+#include <QtCore/QStringList>
 
 class Table: private QMap<QString, PSymbol>
 {

@@ -27,10 +27,10 @@
 #include "math/hmath.hxx"
 #include "math/floatconfig.h"
 
-#include <QApplication>
-#include <QClipboard>
-#include <QScrollBar>
-#include <QTimer>
+#include <QtCore/QTimer>
+#include <QtGui/QApplication>
+#include <QtGui/QClipboard>
+#include <QtGui/QScrollBar>
 
 struct ResultDisplay::Private
 {

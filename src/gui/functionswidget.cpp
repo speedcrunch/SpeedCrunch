@@ -24,7 +24,6 @@
 #include "core/settings.hxx"
 
 #include <QtCore/QString>
-#include <QtCore/QStringList>
 #include <QtCore/QTimer>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QLabel>

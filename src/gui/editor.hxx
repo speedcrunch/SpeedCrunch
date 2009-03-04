@@ -21,7 +21,7 @@
 #ifndef GUI_EDITOR_HXX
 #define GUI_EDITOR_HXX
 
-#include <QTextEdit>
+#include <QtGui/QTextEdit>
 
 #include <memory>
 

@@ -20,7 +20,7 @@
 #ifndef GUI_CONSTANTSDOCK_HXX
 #define GUI_CONSTANTSDOCK_HXX
 
-#include <QDockWidget>
+#include <QtGui/QDockWidget>
 
 #include <memory>
 

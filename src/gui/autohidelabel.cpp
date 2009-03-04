@@ -20,8 +20,8 @@
 
 #include "autohidelabel.hxx"
 
-#include <QTimer>
-#include <QToolTip>
+#include <QtCore/QTimer>
+#include <QtGui/QToolTip>
 
 
 #define TIMER_INTERVAL 25

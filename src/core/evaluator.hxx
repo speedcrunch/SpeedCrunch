@@ -24,9 +24,9 @@
 
 #include "math/hmath.hxx"
 
-#include <QObject>
-#include <QString>
-#include <QVector>
+#include <QtCore/QObject>
+#include <QtCore/QString>
+#include <QtCore/QVector>
 
 #include <memory>
 

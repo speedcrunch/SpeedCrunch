@@ -26,19 +26,19 @@
 #include "core/functions.hxx"
 #include "core/settings.hxx"
 
-#include <QApplication>
-#include <QDesktopWidget>
-#include <QEvent>
-#include <QFrame>
-#include <QHeaderView>
-#include <QKeyEvent>
-#include <QLineEdit>
-#include <QStyle>
-#include <QSyntaxHighlighter>
-#include <QTimeLine>
-#include <QTimer>
-#include <QTreeWidget>
-#include <QWheelEvent>
+#include <QtCore/QEvent>
+#include <QtCore/QTimeLine>
+#include <QtCore/QTimer>
+#include <QtGui/QApplication>
+#include <QtGui/QDesktopWidget>
+#include <QtGui/QFrame>
+#include <QtGui/QHeaderView>
+#include <QtGui/QKeyEvent>
+#include <QtGui/QLineEdit>
+#include <QtGui/QStyle>
+#include <QtGui/QSyntaxHighlighter>
+#include <QtGui/QTreeWidget>
+#include <QtGui/QWheelEvent>
 
 class EditorHighlighter : public QSyntaxHighlighter
 {

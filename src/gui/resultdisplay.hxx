@@ -20,7 +20,8 @@
 #ifndef GUI_RESULTDISPLAY_HXX
 #define GUI_RESULTDISPLAY_HXX
 
-#include <QListWidget>
+#include <QtGui/QListWidget>
+
 #include <memory>
 
 class HNumber;

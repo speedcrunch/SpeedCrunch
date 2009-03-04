@@ -34,9 +34,9 @@
 #include "bison.h"
 #include "symboltables/tables.hxx"
 
-#include <QChar>
-#include <QQueue>
-#include <QStack>
+#include <QtCore/QChar>
+#include <QtCore/QQueue>
+#include <QtCore/QStack>
 
 class SglExprLex
 {

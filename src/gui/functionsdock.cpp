@@ -22,12 +22,12 @@
 
 #include "core/functions.hxx"
 
-#include <QEvent>
-#include <QLabel>
-#include <QLineEdit>
-#include <QTimer>
-#include <QTreeWidget>
-#include <QVBoxLayout>
+#include <QtCore/QEvent>
+#include <QtCore/QTimer>
+#include <QtGui/QLabel>
+#include <QtGui/QLineEdit>
+#include <QtGui/QTreeWidget>
+#include <QtGui/QVBoxLayout>
 
 FunctionsDock::FunctionsDock( QWidget * parent )
   : QDockWidget( parent ),

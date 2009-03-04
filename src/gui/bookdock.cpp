@@ -21,15 +21,15 @@
 
 #include <core/settings.hxx>
 
-#include <QComboBox>
-#include <QDir>
-#include <QEvent>
-#include <QFile>
-#include <QLibraryInfo>
-#include <QLocale>
-#include <QPushButton>
-#include <QTextBrowser>
-#include <QVBoxLayout>
+#include <QtCore/QDir>
+#include <QtCore/QEvent>
+#include <QtCore/QFile>
+#include <QtCore/QLibraryInfo>
+#include <QtCore/QLocale>
+#include <QtGui/QComboBox>
+#include <QtGui/QPushButton>
+#include <QtGui/QTextBrowser>
+#include <QtGui/QVBoxLayout>
 
 struct BookDock::Private
 {

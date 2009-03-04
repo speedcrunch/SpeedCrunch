@@ -20,7 +20,7 @@
 #ifndef GUI_KEYPAD_HXX
 #define GUI_KEYPAD_HXX
 
-#include <QWidget>
+#include <QtGui/QWidget>
 
 #include <memory>
 

@@ -22,7 +22,7 @@
 #define TIPWIDGET_HXX
 
 
-#include <QFrame>
+#include <QtGui/QFrame>
 
 #include <memory>
 

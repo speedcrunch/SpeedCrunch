@@ -23,7 +23,7 @@
 #define INSERTVARDLG_HXX
 
 
-#include <QDialog>
+#include <QtGui/QDialog>
 
 #include <memory>
 

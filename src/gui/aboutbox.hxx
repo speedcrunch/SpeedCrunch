@@ -21,8 +21,8 @@
 #define ABOUTBOX_HXX
 
 
-#include <QDialog>
-#include <QFrame>
+#include <QtGui/QDialog>
+#include <QtGui/QFrame>
 
 #include <memory>
 

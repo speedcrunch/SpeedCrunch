@@ -22,7 +22,7 @@
 #define AUTOHIDELABEL_HXX
 
 
-#include <QLabel>
+#include <QtGui/QLabel>
 
 #include <memory>
 

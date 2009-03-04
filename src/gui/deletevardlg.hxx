@@ -22,7 +22,7 @@
 #define DELETEVARDLG_HXX
 
 
-#include <QDialog>
+#include <QtGui/QDialog>
 
 #include <memory>
 

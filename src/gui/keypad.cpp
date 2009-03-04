@@ -21,15 +21,15 @@
 
 #include "core/settings.hxx"
 
-#include <QApplication>
-#include <QGridLayout>
-#include <QLocale>
+#include <QtCore/QLocale>
+#include <QtGui/QApplication>
+#include <QtGui/QGridLayout>
 #if QT_VERSION >= 0x040400 && defined(Q_WS_MAC) && !defined(QT_NO_STYLE_MAC)
-#include <QMacStyle>
+#include <QtGui/QMacStyle>
 #endif
-#include <QPushButton>
-#include <QStyle>
-#include <QStyleOptionButton>
+#include <QtGui/QPushButton>
+#include <QtGui/QStyle>
+#include <QtGui/QStyleOptionButton>
 
 struct Keypad::Private
 {

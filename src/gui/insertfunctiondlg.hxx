@@ -20,7 +20,7 @@
 #ifndef GUI_INSERTFUNCTIONDLG_HXX
 #define GUI_INSERTFUNCTIONDLG_HXX
 
-#include <QDialog>
+#include <QtGui/QDialog>
 
 #include <memory>
 

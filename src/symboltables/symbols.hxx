@@ -34,9 +34,10 @@
 #include "math/hmath.hxx"
 #include "base/functions.hxx" // FIXME this should not be necessary
 #include "base/variant.hxx"
-#include <QString>
-#include <QList>
-#include <QLinkedList>
+
+#include <QtCore/QString>
+#include <QtCore/QList>
+#include <QtCore/QLinkedList>
 
 typedef enum
 {

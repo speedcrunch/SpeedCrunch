@@ -20,7 +20,7 @@
 #ifndef GUI_VARIABLESDOCK_HXX
 #define GUI_VARIABLESDOCK_HXX
 
-#include <QDockWidget>
+#include <QtGui/QDockWidget>
 
 class VariablesWidget;
 

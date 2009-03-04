@@ -22,7 +22,7 @@
 #define HISTORYDOCK_HXX
 
 
-#include <QDockWidget>
+#include <QtGui/QDockWidget>
 
 #include <memory>
 

@@ -23,15 +23,15 @@
 #include "core/constants.hxx"
 #include "core/settings.hxx"
 
-#include <QComboBox>
-#include <QEvent>
-#include <QHBoxLayout>
-#include <QHeaderView>
-#include <QLabel>
-#include <QLineEdit>
-#include <QTimer>
-#include <QTreeWidget>
-#include <QVBoxLayout>
+#include <QtCore/QEvent>
+#include <QtCore/QTimer>
+#include <QtGui/QComboBox>
+#include <QtGui/QHBoxLayout>
+#include <QtGui/QHeaderView>
+#include <QtGui/QLabel>
+#include <QtGui/QLineEdit>
+#include <QtGui/QTreeWidget>
+#include <QtGui/QVBoxLayout>
 
 struct ConstantsDock::Private
 {
