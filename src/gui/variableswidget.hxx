@@ -38,7 +38,6 @@ public:
     ~VariablesWidget();
 
     QTreeWidgetItem * currentItem() const;
-    void fillTable();
     QList<QTreeWidgetItem *> selectedItems() const;
 
 signals:
@@ -46,7 +45,7 @@ signals:
     void itemDoubleClicked( QTreeWidgetItem *, int );
 
 public slots:
-    void filter();
+    void fillTable();
     void retranslateText();
 
 protected slots:

@@ -51,7 +51,7 @@ FunctionsDock::~FunctionsDock()
 
 void FunctionsDock::updateList()
 {
-  m_functionWidget->filter();
+  m_functionWidget->fillTable();
 }
 
 void FunctionsDock::retranslateText()

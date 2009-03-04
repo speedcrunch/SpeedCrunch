@@ -50,12 +50,12 @@ VariablesDock::~VariablesDock()
 
 void VariablesDock::updateList()
 {
-  m_variableWidget->filter();
+  m_variableWidget->fillTable();
 }
 
 void VariablesDock::handleRadixCharacterChange()
 {
-  m_variableWidget->filter();
+  m_variableWidget->fillTable();
 }
 
 void VariablesDock::retranslateText()

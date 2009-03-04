@@ -84,7 +84,7 @@ FunctionsWidget::FunctionsWidget( QWidget * parent )
 
     retranslateText();
 
-    connect( d->filterTimer, SIGNAL(timeout()), SLOT(filter()) );
+    connect( d->filterTimer, SIGNAL(timeout()), SLOT(fillTable()) );
     connect( d->functions, SIGNAL(itemActivated(QTreeWidgetItem *, int)),
              SLOT(catchItemActivated(QTreeWidgetItem *, int)) );
     connect( d->functions, SIGNAL(itemDoubleClicked(QTreeWidgetItem *, int)),
@@ -151,7 +151,7 @@ void FunctionsWidget::retranslateText()
     d->searchLabel->setText( tr("Search") );
     d->noMatchLabel->setText( tr("No match found") );
 
-    filter();
+    fillTable();
 }
 
 QList<QTreeWidgetItem *> FunctionsWidget::selectedItems() const
@@ -162,11 +162,6 @@ QList<QTreeWidgetItem *> FunctionsWidget::selectedItems() const
 QTreeWidgetItem * FunctionsWidget::currentItem() const
 {
     return d->functions->currentItem();
-}
-
-void FunctionsWidget::filter()
-{
-    fillTable();
 }
 
 void FunctionsWidget::catchItemActivated( QTreeWidgetItem * item, int column )

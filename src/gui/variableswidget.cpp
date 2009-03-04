@@ -96,7 +96,7 @@ VariablesWidget::VariablesWidget( ItemPolicy itemPolicy, QWidget * parent )
 
     retranslateText();
 
-    connect( d->filterTimer, SIGNAL(timeout()), SLOT(filter()) );
+    connect( d->filterTimer, SIGNAL(timeout()), SLOT(fillTable()) );
     connect( d->searchFilter, SIGNAL(textChanged(const QString &)),
              SLOT(triggerFilter()) );
     connect( d->variables, SIGNAL(itemActivated(QTreeWidgetItem *, int)),
@@ -167,7 +167,7 @@ void VariablesWidget::retranslateText()
     d->searchLabel->setText( tr("Search") );
     d->noMatchLabel->setText( tr("No match found") );
 
-    filter();
+    fillTable();
 }
 
 QList<QTreeWidgetItem *> VariablesWidget::selectedItems() const
@@ -178,11 +178,6 @@ QList<QTreeWidgetItem *> VariablesWidget::selectedItems() const
 QTreeWidgetItem * VariablesWidget::currentItem() const
 {
     return d->variables->currentItem();
-}
-
-void VariablesWidget::filter()
-{
-    fillTable();
 }
 
 void VariablesWidget::catchItemActivated( QTreeWidgetItem * item, int column )
