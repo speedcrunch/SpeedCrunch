@@ -399,7 +399,7 @@ HNumber Functions::Private::lg( Function * f, const QVector<HNumber> & args )
 }
 
 
-HNumber Functions::Private::sin( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::sin( Function * /*f*/, const QVector<HNumber> & args )
 {
   if ( args.count() != 1 )
     return HMath::nan();
@@ -413,7 +413,7 @@ HNumber Functions::Private::sin( Function * f, const QVector<HNumber> & args )
   return HMath::sin( angle );
 }
 
-HNumber Functions::Private::cos( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::cos( Function * /*f*/, const QVector<HNumber> & args )
 {
   if ( args.count() != 1 )
     return HMath::nan();
@@ -561,7 +561,7 @@ HNumber Functions::Private::acos( Function * f, const QVector<HNumber> & args )
   return result;
 }
 
-HNumber Functions::Private::atan( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::atan( Function * /*f*/, const QVector<HNumber> & args )
 {
   if ( args.count() != 1 )
     return HMath::nan();
