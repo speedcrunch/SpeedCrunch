@@ -49,8 +49,8 @@
 
 <sect1 id="installation-windows">
 <title>Installation for &Microsoft; &Windows;</title>
-<para>									
-To install &app; on &Microsoft; &Windows;, download the installer from the <ulink="http://speedcrunch.org/download.htm">&app; website</ulink>.  Once the installer is downloaded, launch the application to install &app;.  By default &app; is found in the Start Menu, under All Programs, &app; and is stored in C:\Program Files\Speedcrunch.			
+<para>
+To install &app; on &Microsoft; &Windows;, download the installer from the <ulink="http://speedcrunch.org/download.html">&app; website</ulink>.  Once the installer is downloaded, launch the application to install &app;.  By default &app; is found in the Start Menu, under All Programs, &app; and is stored in C:\Program Files\Speedcrunch.
 </para>
 </sect1>
 
@@ -129,10 +129,10 @@ required:</para>
 
 <itemizedlist>
 <listitem>
-<para>CMake version 2.4 or newer</para>
+<para>CMake version 2.4.4 or newer (http://www.cmake.org/)</para>
 </listitem>
 <listitem>
-<para>Trolltech's &Qt; library version 4.4 or newer</para>
+<para>Nokia's &Qt; framework version 4.4 or newer (http://www.qtsoftware.com/)</para>
 </listitem>
 <listitem>
 <para>C++ compiler</para>
