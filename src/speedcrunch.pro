@@ -1,6 +1,7 @@
 TEMPLATE = app
 
 TARGET = speedcrunch
+
 DEPENDPATH += . \
               #bison \
               core \
@@ -12,12 +13,27 @@ DEPENDPATH += . \
               #symboltables \
               #test \
               #variant \
-              3rdparty/flickcharm \
-              3rdparty/util
+              3rdparty/flickcharm
+!macx {
+    !win32 {
+        DEPENDPATH += 3rdparty/binreloc
+    }
+}
 
-INCLUDEPATH += . math core 3rdparty/util gui
-#INCLUDEPATH += .
+INCLUDEPATH += . math core 3rdparty/flickcharm gui
+!macx {
+    !win32 {
+        INCLUDEPATH += 3rdparty/binreloc
+    }
+}
+
 QT += network
+
+!macx {
+    !win32 {
+        DEFINES += ENABLE_BINRELOC
+    }
+}
 
 # Input
 HEADERS += 3rdparty/flickcharm/flickcharm.h \
@@ -65,8 +81,7 @@ HEADERS += 3rdparty/flickcharm/flickcharm.h \
 
 #YACCSOURCES += bison/exprparser.y
 
-SOURCES += 3rdparty/flickcharm/flickcharm.h \
-           3rdparty/util/binreloc.c \
+SOURCES += 3rdparty/flickcharm/flickcharm.cpp \
            #variant/variantbase.cpp \
            #variant/variant.cpp \
            #variant/real.cpp \
@@ -115,6 +130,12 @@ SOURCES += 3rdparty/flickcharm/flickcharm.h \
            math/floattrig.c \
            math/hmath.cpp \
            math/number.c
+
+!macx {
+    !win32 {
+        SOURCES += 3rdparty/binreloc/binreloc.c
+    }
+}
 
 RESOURCES += resources/speedcrunch.qrc
 TRANSLATIONS += locale/ar.ts \

@@ -19,7 +19,7 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#include "3rdparty/util/binreloc.h"
+#include "3rdparty/binreloc/binreloc.h"
 #include "core/constants.hxx"
 #include "core/evaluator.hxx"
 #include "core/functions.hxx"

@@ -5,7 +5,7 @@ set(speedcrunch_HEADERS
 #variant/variant.hxx
 #variant/real.hxx
 3rdparty/flickcharm/flickcharm.h
-#3rdparty/util/binreloc.h
+#3rdparty/binreloc/binreloc.h
 core/constants.hxx
 core/evaluator.hxx
 core/functions.hxx
@@ -57,8 +57,8 @@ set(speedcrunch_SOURCES
 #variant/initvariant.cpp
 #variant/formatbase.cpp
 #variant/formatreal.cpp
+3rdparty/binreloc/binreloc.c
 3rdparty/flickcharm/flickcharm.cpp
-3rdparty/util/binreloc.c
 core/constants.cpp
 core/evaluator.cpp
 core/functions.cpp
