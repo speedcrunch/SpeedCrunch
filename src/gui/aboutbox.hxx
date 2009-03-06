@@ -1,5 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2004-2006 Ariya Hidayat <ariya@kde.org>
+// Copyright (C) 2009 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -16,59 +17,24 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-
 #ifndef ABOUTBOX_HXX
 #define ABOUTBOX_HXX
 
-
 #include <QtGui/QDialog>
-#include <QtGui/QFrame>
 
 #include <memory>
 
-
-class QPaintEvent;
-class QResizeEvent;
-class QSizePolicy;
-
-class MarqueeText: public QFrame
-{
-  Q_OBJECT
-
-  public:
-    MarqueeText( QWidget* parent = 0, const char* name = 0 );
-    ~MarqueeText();
-
-    void setText( const QString& text );
-    virtual QSizePolicy sizePolicy() const;
-
-  protected:
-    void paintEvent( QPaintEvent* );
-    void resizeEvent( QResizeEvent* );
-
-  private slots:
-    void scroll();
-    void layout();
-
-  private:
-    struct Private;
-    const std::auto_ptr<Private> d;
-    MarqueeText( const MarqueeText& );
-    MarqueeText& operator=( const MarqueeText& );
-};
-
-
 class AboutBox : public QDialog
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    AboutBox( QWidget* parent = 0 );
+public:
+    AboutBox( QWidget * parent = 0 );
 
-  private:
-    AboutBox( const AboutBox& );
-    AboutBox& operator=( const AboutBox& );
+private:
+    AboutBox( const AboutBox & );
+    AboutBox & operator=( const AboutBox & );
 };
 
-
 #endif
+
