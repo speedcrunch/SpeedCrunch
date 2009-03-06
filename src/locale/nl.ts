@@ -165,12 +165,12 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="58"/>
         <source>Maintainer and core developer</source>
-        <translation type="unfinished">Huidige beheerder</translation>
+        <translation>Huidige beheerder en kern ontwikkeler</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="107"/>
         <source>Arabic</source>
-        <translation type="unfinished"></translation>
+        <translation>Arabisch</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="59"/>
@@ -180,27 +180,27 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="60"/>
         <source>Former maintainer</source>
-        <translation type="unfinished"></translation>
+        <translation>Voormalige verzorger</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="61"/>
         <source>Math engine and expression parser</source>
-        <translation type="unfinished"></translation>
+        <translation>Mathematiek machine en formule parser</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="62"/>
         <source>General purpose developer</source>
-        <translation type="unfinished"></translation>
+        <translation>Universeele ontwikkeler</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="63"/>
         <source>Packager and OS X stylist</source>
-        <translation type="unfinished"></translation>
+        <translation>Verpakker en OS X vormer</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="64"/>
         <source>Original math book author</source>
-        <translation type="unfinished"></translation>
+        <translation>Originele auteur van het wiskunde boek</translation>
     </message>
 </context>
 <context>
@@ -1626,12 +1626,12 @@ Zo niet, dan worden de huidige variabelen en schermweergave gewist.</translation
     <message>
         <location filename="../gui/mainwindow.cpp" line="552"/>
         <source>Save &amp;History on Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Verloop opslaan bij verlaten</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="553"/>
         <source>Save &amp;Variables on Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Variabelen opslaan bij verlaten</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="571"/>
@@ -1651,7 +1651,7 @@ Zo niet, dan worden de huidige variabelen en schermweergave gewist.</translation
     <message>
         <location filename="../gui/mainwindow.cpp" line="2532"/>
         <source>Select the language:</source>
-        <translation type="unfinished"></translation>
+        <translation>Taal selecteren</translation>
     </message>
 </context>
 <context>

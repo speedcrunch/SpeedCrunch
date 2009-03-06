@@ -150,12 +150,12 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="111"/>
         <source>Basque</source>
-        <translation type="unfinished"></translation>
+        <translation>Basco</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="58"/>
         <source>Maintainer and core developer</source>
-        <translation type="unfinished">Sviluppatore attuale</translation>
+        <translation type="unfinished">Sviluppatore principale</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="143"/>
@@ -165,12 +165,12 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="115"/>
         <source>Catalan</source>
-        <translation type="unfinished"></translation>
+        <translation>Catalano</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="107"/>
         <source>Arabic</source>
-        <translation type="unfinished"></translation>
+        <translation>Arabo</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="59"/>
@@ -190,17 +190,17 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="62"/>
         <source>General purpose developer</source>
-        <translation type="unfinished"></translation>
+        <translation>Sviluppatore universale</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="63"/>
         <source>Packager and OS X stylist</source>
-        <translation type="unfinished"></translation>
+        <translation>Imballatore e stilista OS X</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="64"/>
         <source>Original math book author</source>
-        <translation type="unfinished"></translation>
+        <translation>Autore originale del libro matematica</translation>
     </message>
 </context>
 <context>
@@ -1650,7 +1650,7 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2532"/>
         <source>Select the language:</source>
-        <translation type="unfinished"></translation>
+        <translation>Selezionare la lingua</translation>
     </message>
 </context>
 <context>
