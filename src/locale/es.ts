@@ -3,208 +3,203 @@
 <context>
     <name>AboutBox</name>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="234"/>
+        <location filename="../gui/aboutbox.cpp" line="66"/>
         <source>Special thanks to</source>
         <translation>Agradecimientos especiales a</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="286"/>
+        <location filename="../gui/aboutbox.cpp" line="121"/>
         <source>French</source>
         <translation>Francés</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="288"/>
+        <location filename="../gui/aboutbox.cpp" line="125"/>
         <source>German</source>
         <translation>Alemán</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="294"/>
+        <location filename="../gui/aboutbox.cpp" line="137"/>
         <source>Portuguese</source>
         <translation>Portugués</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="296"/>
+        <location filename="../gui/aboutbox.cpp" line="141"/>
         <source>Russian</source>
         <translation>Ruso</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="291"/>
+        <location filename="../gui/aboutbox.cpp" line="131"/>
         <source>Italian</source>
         <translation>Italiano</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="317"/>
+        <location filename="../gui/aboutbox.cpp" line="175"/>
         <source>This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version</source>
         <translation>Este programa es software libre; puede ser redistribuido y/o modificado bajo los términos de la GNU General Public License como fue publicada por la Free Software Foundation; ya sea la versión 2 de la Licencia, o (a su elección), cualquier versión posterior</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="323"/>
+        <location filename="../gui/aboutbox.cpp" line="181"/>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.</source>
         <translation>Este programa se distribuye con la idea de que será útil, pero SIN NINGUNA GARANTÍA; ni siquiera la garantía implícita de SER COMERCIAL o SER ADECUADO PARA ALGÚN PROPÓSITO PARTICULAR. Vea la GNU General Public LIcense para más detalles.</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="215"/>
-        <source>SpeedCrunch version %1</source>
-        <translation>SpeedCrunch versión %1</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="292"/>
+        <location filename="../gui/aboutbox.cpp" line="133"/>
         <source>Norwegian</source>
         <translation>Noruego</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="298"/>
+        <location filename="../gui/aboutbox.cpp" line="145"/>
         <source>Spanish</source>
         <translation>Español</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="354"/>
+        <location filename="../gui/aboutbox.cpp" line="216"/>
         <source>About SpeedCrunch</source>
         <translation>Acerca de SpeedCrunch</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="232"/>
+        <location filename="../gui/aboutbox.cpp" line="65"/>
         <source>Based on original idea from</source>
         <translation>Basado en una idea original de</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="244"/>
+        <location filename="../gui/aboutbox.cpp" line="74"/>
         <source>Thanks to</source>
         <translation>Gracias a</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="273"/>
-        <source>...and many others...</source>
-        <translation>...y muchos otros...</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="277"/>
+        <location filename="../gui/aboutbox.cpp" line="105"/>
         <source>Translations</source>
         <translation>Traducciones</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="282"/>
+        <location filename="../gui/aboutbox.cpp" line="113"/>
         <source>Brazilian Portuguese</source>
         <translation>Portugués Brasileño</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="310"/>
+        <location filename="../gui/aboutbox.cpp" line="167"/>
         <source>Copyright (C)</source>
         <translation>Copyright (C)</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="327"/>
+        <location filename="../gui/aboutbox.cpp" line="185"/>
         <source>Visit &lt;b&gt;http://www.speedcrunch.org&lt;/b&gt; for more information!</source>
         <translation>¡Para más información visite &lt;b&gt;http://www.speedcrunch.org&lt;/b&gt;!</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="280"/>
+        <location filename="../gui/aboutbox.cpp" line="109"/>
         <source>Argentinian Spanish</source>
         <translation>Español Argentino</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="285"/>
+        <location filename="../gui/aboutbox.cpp" line="119"/>
         <source>Dutch</source>
         <translation>Neerlandés</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="289"/>
+        <location filename="../gui/aboutbox.cpp" line="127"/>
         <source>Hebrew</source>
         <translation>Hebreo</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="299"/>
+        <location filename="../gui/aboutbox.cpp" line="147"/>
         <source>Swedish</source>
         <translation>Sueco</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="287"/>
+        <location filename="../gui/aboutbox.cpp" line="123"/>
         <source>Finnish</source>
         <translation>Finés</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="284"/>
+        <location filename="../gui/aboutbox.cpp" line="117"/>
         <source>Czech</source>
         <translation>Checo</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="295"/>
+        <location filename="../gui/aboutbox.cpp" line="139"/>
         <source>Romanian</source>
         <translation>Rumano</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="290"/>
+        <location filename="../gui/aboutbox.cpp" line="129"/>
         <source>Indonesian</source>
         <translation>Indonesio</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="332"/>
+        <location filename="../gui/aboutbox.cpp" line="195"/>
         <source>Close</source>
         <translation>Cerrar</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="240"/>
+        <location filename="../gui/aboutbox.cpp" line="71"/>
         <source>Graphics</source>
         <translation>Gráficos</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="293"/>
+        <location filename="../gui/aboutbox.cpp" line="135"/>
         <source>Polish</source>
         <translation>Polaco</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="300"/>
+        <location filename="../gui/aboutbox.cpp" line="149"/>
         <source>Turkish</source>
         <translation>Turco</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="281"/>
+        <location filename="../gui/aboutbox.cpp" line="111"/>
         <source>Basque</source>
         <translation>Vasco</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="225"/>
+        <location filename="../gui/aboutbox.cpp" line="58"/>
         <source>Maintainer and core developer</source>
         <translation type="unfinished">Responsable actual</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="226"/>
-        <source>Original author and core developer</source>
-        <translation type="unfinished">Autor original</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="227"/>
-        <source>Math engine and parser developer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="297"/>
+        <location filename="../gui/aboutbox.cpp" line="143"/>
         <source>Simplified Chinese</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="283"/>
+        <location filename="../gui/aboutbox.cpp" line="115"/>
         <source>Catalan</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="228"/>
-        <source>Former maintainer and core developer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="229"/>
-        <source>Mac OS X developer and packager</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="230"/>
-        <source>Original math book developer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="279"/>
+        <location filename="../gui/aboutbox.cpp" line="107"/>
         <source>Arabic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="59"/>
+        <source>Original author</source>
+        <translation>Autor original</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="60"/>
+        <source>Former maintainer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="61"/>
+        <source>Math engine and expression parser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="62"/>
+        <source>General purpose developer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="63"/>
+        <source>Packager and OS X stylist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="64"/>
+        <source>Original math book author</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -229,7 +224,7 @@
 <context>
     <name>ConstantCompletion</name>
     <message>
-        <location filename="../gui/editor.cpp" line="1264"/>
+        <location filename="../gui/editor.cpp" line="1249"/>
         <source>All</source>
         <translation>Todo</translation>
     </message>
@@ -523,12 +518,12 @@
 <context>
     <name>DeleteVariableDlg</name>
     <message>
-        <location filename="../gui/deletevardlg.cpp" line="55"/>
+        <location filename="../gui/deletevardlg.cpp" line="54"/>
         <source>&amp;Delete</source>
         <translation>&amp;Borrar</translation>
     </message>
     <message>
-        <location filename="../gui/deletevardlg.cpp" line="59"/>
+        <location filename="../gui/deletevardlg.cpp" line="58"/>
         <source>Close</source>
         <translation>Cerrar</translation>
     </message>
@@ -541,12 +536,12 @@
 <context>
     <name>Editor</name>
     <message>
-        <location filename="../gui/editor.cpp" line="695"/>
+        <location filename="../gui/editor.cpp" line="680"/>
         <source>Current result: &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>Resultado actual: &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../gui/editor.cpp" line="740"/>
+        <location filename="../gui/editor.cpp" line="725"/>
         <source>Selection result: &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>Resultado de la selección: &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
@@ -993,22 +988,22 @@
 <context>
     <name>FunctionsWidget</name>
     <message>
-        <location filename="../gui/functionswidget.cpp" line="151"/>
+        <location filename="../gui/functionswidget.cpp" line="147"/>
         <source>Name</source>
         <translation>Nombre</translation>
     </message>
     <message>
-        <location filename="../gui/functionswidget.cpp" line="152"/>
+        <location filename="../gui/functionswidget.cpp" line="148"/>
         <source>Description</source>
         <translation>Descripción</translation>
     </message>
     <message>
-        <location filename="../gui/functionswidget.cpp" line="155"/>
+        <location filename="../gui/functionswidget.cpp" line="151"/>
         <source>Search</source>
         <translation>Búsqueda</translation>
     </message>
     <message>
-        <location filename="../gui/functionswidget.cpp" line="156"/>
+        <location filename="../gui/functionswidget.cpp" line="152"/>
         <source>No match found</source>
         <translation>No se encontraron coincidencias</translation>
     </message>
@@ -1042,12 +1037,12 @@
 <context>
     <name>InsertVariableDlg</name>
     <message>
-        <location filename="../gui/insertvardlg.cpp" line="56"/>
+        <location filename="../gui/insertvardlg.cpp" line="55"/>
         <source>&amp;Insert</source>
         <translation>&amp;Insertar</translation>
     </message>
     <message>
-        <location filename="../gui/insertvardlg.cpp" line="60"/>
+        <location filename="../gui/insertvardlg.cpp" line="59"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
@@ -1662,7 +1657,7 @@ Si no es así, las variables actuales y la pantalla serán borradas.</translatio
 <context>
     <name>VariablesDock</name>
     <message>
-        <location filename="../gui/variablesdock.cpp" line="64"/>
+        <location filename="../gui/variablesdock.cpp" line="63"/>
         <source>Variables</source>
         <translation>Variables</translation>
     </message>
@@ -1670,22 +1665,22 @@ Si no es así, las variables actuales y la pantalla serán borradas.</translatio
 <context>
     <name>VariablesWidget</name>
     <message>
-        <location filename="../gui/variableswidget.cpp" line="155"/>
+        <location filename="../gui/variableswidget.cpp" line="163"/>
         <source>Name</source>
         <translation>Nombre</translation>
     </message>
     <message>
-        <location filename="../gui/variableswidget.cpp" line="156"/>
+        <location filename="../gui/variableswidget.cpp" line="164"/>
         <source>Value</source>
         <translation>Valor</translation>
     </message>
     <message>
-        <location filename="../gui/variableswidget.cpp" line="159"/>
+        <location filename="../gui/variableswidget.cpp" line="167"/>
         <source>Search</source>
         <translation>Búsqueda</translation>
     </message>
     <message>
-        <location filename="../gui/variableswidget.cpp" line="160"/>
+        <location filename="../gui/variableswidget.cpp" line="168"/>
         <source>No match found</source>
         <translation>No se encontraron coincidencias</translation>
     </message>

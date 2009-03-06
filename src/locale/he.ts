@@ -3,208 +3,203 @@
 <context>
     <name>AboutBox</name>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="215"/>
-        <source>SpeedCrunch version %1</source>
-        <translation>SpeedCrunch גירסה %1</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="234"/>
+        <location filename="../gui/aboutbox.cpp" line="66"/>
         <source>Special thanks to</source>
         <translation>תודה מיוחדת ל</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="286"/>
+        <location filename="../gui/aboutbox.cpp" line="121"/>
         <source>French</source>
         <translation>צרפתית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="288"/>
+        <location filename="../gui/aboutbox.cpp" line="125"/>
         <source>German</source>
         <translation>גרמנית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="294"/>
+        <location filename="../gui/aboutbox.cpp" line="137"/>
         <source>Portuguese</source>
         <translation>פורטוגזית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="296"/>
+        <location filename="../gui/aboutbox.cpp" line="141"/>
         <source>Russian</source>
         <translation>רוסית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="291"/>
+        <location filename="../gui/aboutbox.cpp" line="131"/>
         <source>Italian</source>
         <translation>איטלקית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="317"/>
+        <location filename="../gui/aboutbox.cpp" line="175"/>
         <source>This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version</source>
         <translation>תכנית זו היא תוכנה חופשית; מותר להפיץ אותה ו/או לשנות אותה תחת תנאי הרישיון הציבורי הכללי של GNUהמפורסם על-ידי קרן התוכנה החופשית; גירסה 2 של הרישיון, או (לבחירתך) כל גירסה מאוחרת יותר</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="323"/>
+        <location filename="../gui/aboutbox.cpp" line="181"/>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.</source>
         <translation>תכנית זו מופצת בתקווה שתהיה מועילה, אך ללא אחריות כלשהי; ואפילו ללא האחריות המשתמעת בדבר מסחריותה או התאמתה למטרה מסוימת.  לפרטים נוספים, ראה את הרישיון הציבורי הכללי של GNU.</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="354"/>
+        <location filename="../gui/aboutbox.cpp" line="216"/>
         <source>About SpeedCrunch</source>
         <translation>אודות SpeedCrunch</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="292"/>
+        <location filename="../gui/aboutbox.cpp" line="133"/>
         <source>Norwegian</source>
         <translation>נורבגית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="298"/>
+        <location filename="../gui/aboutbox.cpp" line="145"/>
         <source>Spanish</source>
         <translation>ספרדית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="232"/>
+        <location filename="../gui/aboutbox.cpp" line="65"/>
         <source>Based on original idea from</source>
         <translation>מבוסס על רעיון מקורי של</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="244"/>
+        <location filename="../gui/aboutbox.cpp" line="74"/>
         <source>Thanks to</source>
         <translation>תודה ל</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="273"/>
-        <source>...and many others...</source>
-        <translation>...ורבים אחרים...</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="277"/>
+        <location filename="../gui/aboutbox.cpp" line="105"/>
         <source>Translations</source>
         <translation>תרגומים</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="282"/>
+        <location filename="../gui/aboutbox.cpp" line="113"/>
         <source>Brazilian Portuguese</source>
         <translation>פורטוגזית ברזילאית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="310"/>
+        <location filename="../gui/aboutbox.cpp" line="167"/>
         <source>Copyright (C)</source>
         <translation>כל הזכויות שמורות (C)</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="327"/>
+        <location filename="../gui/aboutbox.cpp" line="185"/>
         <source>Visit &lt;b&gt;http://www.speedcrunch.org&lt;/b&gt; for more information!</source>
         <translation>בקרו ב-&lt;b&gt;http://www.speedcrunch.org&lt;/b&gt; למידע נוסף!</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="280"/>
+        <location filename="../gui/aboutbox.cpp" line="109"/>
         <source>Argentinian Spanish</source>
         <translation>ספרדית ארגנטינאית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="285"/>
+        <location filename="../gui/aboutbox.cpp" line="119"/>
         <source>Dutch</source>
         <translation>הולנדית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="289"/>
+        <location filename="../gui/aboutbox.cpp" line="127"/>
         <source>Hebrew</source>
         <translation>עברית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="299"/>
+        <location filename="../gui/aboutbox.cpp" line="147"/>
         <source>Swedish</source>
         <translation>שבדית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="287"/>
+        <location filename="../gui/aboutbox.cpp" line="123"/>
         <source>Finnish</source>
         <translation>פינית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="284"/>
+        <location filename="../gui/aboutbox.cpp" line="117"/>
         <source>Czech</source>
         <translation>צ&apos;כית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="295"/>
+        <location filename="../gui/aboutbox.cpp" line="139"/>
         <source>Romanian</source>
         <translation>רומנית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="290"/>
+        <location filename="../gui/aboutbox.cpp" line="129"/>
         <source>Indonesian</source>
         <translation>אינדונזית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="293"/>
+        <location filename="../gui/aboutbox.cpp" line="135"/>
         <source>Polish</source>
         <translation>פולנית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="300"/>
+        <location filename="../gui/aboutbox.cpp" line="149"/>
         <source>Turkish</source>
         <translation>תורכית</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="332"/>
+        <location filename="../gui/aboutbox.cpp" line="195"/>
         <source>Close</source>
         <translation>סגירה</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="240"/>
+        <location filename="../gui/aboutbox.cpp" line="71"/>
         <source>Graphics</source>
         <translation>גרפיקה</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="281"/>
+        <location filename="../gui/aboutbox.cpp" line="111"/>
         <source>Basque</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="225"/>
+        <location filename="../gui/aboutbox.cpp" line="58"/>
         <source>Maintainer and core developer</source>
         <translation type="unfinished">מתחזק נוכחי</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="226"/>
-        <source>Original author and core developer</source>
-        <translation type="unfinished">יוצר מקורי</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="227"/>
-        <source>Math engine and parser developer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="297"/>
+        <location filename="../gui/aboutbox.cpp" line="143"/>
         <source>Simplified Chinese</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="283"/>
+        <location filename="../gui/aboutbox.cpp" line="115"/>
         <source>Catalan</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="228"/>
-        <source>Former maintainer and core developer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="229"/>
-        <source>Mac OS X developer and packager</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="230"/>
-        <source>Original math book developer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="279"/>
+        <location filename="../gui/aboutbox.cpp" line="107"/>
         <source>Arabic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="59"/>
+        <source>Original author</source>
+        <translation>יוצר מקורי</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="60"/>
+        <source>Former maintainer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="61"/>
+        <source>Math engine and expression parser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="62"/>
+        <source>General purpose developer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="63"/>
+        <source>Packager and OS X stylist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="64"/>
+        <source>Original math book author</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -229,7 +224,7 @@
 <context>
     <name>ConstantCompletion</name>
     <message>
-        <location filename="../gui/editor.cpp" line="1264"/>
+        <location filename="../gui/editor.cpp" line="1249"/>
         <source>All</source>
         <translation>הכל</translation>
     </message>
@@ -523,12 +518,12 @@
 <context>
     <name>DeleteVariableDlg</name>
     <message>
-        <location filename="../gui/deletevardlg.cpp" line="55"/>
+        <location filename="../gui/deletevardlg.cpp" line="54"/>
         <source>&amp;Delete</source>
         <translation>&amp;מחיקה</translation>
     </message>
     <message>
-        <location filename="../gui/deletevardlg.cpp" line="59"/>
+        <location filename="../gui/deletevardlg.cpp" line="58"/>
         <source>Close</source>
         <translation>סגירה</translation>
     </message>
@@ -541,12 +536,12 @@
 <context>
     <name>Editor</name>
     <message>
-        <location filename="../gui/editor.cpp" line="695"/>
+        <location filename="../gui/editor.cpp" line="680"/>
         <source>Current result: &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>תוצאה נוכחית: &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../gui/editor.cpp" line="740"/>
+        <location filename="../gui/editor.cpp" line="725"/>
         <source>Selection result: &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>תוצאת הבחירה: &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
@@ -993,22 +988,22 @@
 <context>
     <name>FunctionsWidget</name>
     <message>
-        <location filename="../gui/functionswidget.cpp" line="151"/>
+        <location filename="../gui/functionswidget.cpp" line="147"/>
         <source>Name</source>
         <translation>שם</translation>
     </message>
     <message>
-        <location filename="../gui/functionswidget.cpp" line="152"/>
+        <location filename="../gui/functionswidget.cpp" line="148"/>
         <source>Description</source>
         <translation>תיאור</translation>
     </message>
     <message>
-        <location filename="../gui/functionswidget.cpp" line="155"/>
+        <location filename="../gui/functionswidget.cpp" line="151"/>
         <source>Search</source>
         <translation>חיפוש</translation>
     </message>
     <message>
-        <location filename="../gui/functionswidget.cpp" line="156"/>
+        <location filename="../gui/functionswidget.cpp" line="152"/>
         <source>No match found</source>
         <translation>לא נמצאה אף התאמה</translation>
     </message>
@@ -1042,7 +1037,7 @@
 <context>
     <name>InsertVariableDlg</name>
     <message>
-        <location filename="../gui/insertvardlg.cpp" line="56"/>
+        <location filename="../gui/insertvardlg.cpp" line="55"/>
         <source>&amp;Insert</source>
         <translation>&amp;הוספה</translation>
     </message>
@@ -1052,7 +1047,7 @@
         <translation>הכנסת משתנה</translation>
     </message>
     <message>
-        <location filename="../gui/insertvardlg.cpp" line="60"/>
+        <location filename="../gui/insertvardlg.cpp" line="59"/>
         <source>Cancel</source>
         <translation>ביטול</translation>
     </message>
@@ -1661,7 +1656,7 @@ If no, current variables and display will be cleared.</source>
 <context>
     <name>VariablesDock</name>
     <message>
-        <location filename="../gui/variablesdock.cpp" line="64"/>
+        <location filename="../gui/variablesdock.cpp" line="63"/>
         <source>Variables</source>
         <translation>משתנים</translation>
     </message>
@@ -1669,22 +1664,22 @@ If no, current variables and display will be cleared.</source>
 <context>
     <name>VariablesWidget</name>
     <message>
-        <location filename="../gui/variableswidget.cpp" line="155"/>
+        <location filename="../gui/variableswidget.cpp" line="163"/>
         <source>Name</source>
         <translation>שם</translation>
     </message>
     <message>
-        <location filename="../gui/variableswidget.cpp" line="156"/>
+        <location filename="../gui/variableswidget.cpp" line="164"/>
         <source>Value</source>
         <translation>ערך</translation>
     </message>
     <message>
-        <location filename="../gui/variableswidget.cpp" line="159"/>
+        <location filename="../gui/variableswidget.cpp" line="167"/>
         <source>Search</source>
         <translation>חיפוש</translation>
     </message>
     <message>
-        <location filename="../gui/variableswidget.cpp" line="160"/>
+        <location filename="../gui/variableswidget.cpp" line="168"/>
         <source>No match found</source>
         <translation>לא נמצאה אף התאמה</translation>
     </message>
