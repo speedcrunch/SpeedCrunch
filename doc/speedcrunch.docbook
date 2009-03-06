@@ -49,14 +49,13 @@
 
 <sect1 id="installation-windows">
 <title>Installation for &Microsoft; &Windows;</title>
-<para>
-To install &app; on &Microsoft; &Windows;, download the installer from the <ulink="http://speedcrunch.org/download.html">&app; website</ulink>.  Once the installer is downloaded, launch the application to install &app;.  By default &app; is found in the Start Menu, under All Programs, &app; and is stored in C:\Program Files\Speedcrunch.
+<para>To install &app; on &Microsoft; &Windows;, download the installer from the <ulink url="http://speedcrunch.org/download.html">&app; website</ulink>.  Once the installer is downloaded, launch the application to install &app;.  By default &app; is found in the Start Menu, under All Programs, &app; and is stored in C:\Program Files\Speedcrunch.
 </para>
 </sect1>
 
 <sect1 id="installation-macos">
 <title>Installation for &Mac; OS X</title>
-<para>To install &app; on &Mac; OS X (10.3 (Panther), 10.4 (Tiger), and 10.5 (Leopard)), download the installer from the <ulink="speedcrunch.org/download.htm">&app; Website</ulink>.  Once the file is downloaded, click on the binary file, and then follow the step-by-step instructions.</para>
+<para>To install &app; on &Mac; OS X (10.3 (Panther), 10.4 (Tiger), and 10.5 (Leopard)), download the installer from the <ulink url="speedcrunch.org/download.htm">&app; Website</ulink>.  Once the file is downloaded, click on the binary file, and then follow the step-by-step instructions.</para>
 </sect1>
 
 <sect1 id="installation-linux">
@@ -64,6 +63,7 @@ To install &app; on &Microsoft; &Windows;, download the installer from the <ulin
 <para>To install &app; on &Linux; please follow the directions specific to the distribution you use.  If your distribution is not listed, then either find the appliacation in the package manager which your distribution uses or use the instructions to compile your own version.</para>
 <sect2 id="installation-suse">
 <title>Installation for OpenSUSE</title>
+<para>Trivial, isn't it?</para>
 </sect2>
 
 <sect2 id="installation-kubuntu">
@@ -160,17 +160,17 @@ make
 
 </chapter>
 
-<chapter id="getting-started">
+<!--chapter id="getting-started">
 <title>Getting Started</title>
 </chapter>
 
-<chapter id="algebraic notation">
-<title>Algebraic Notation</title>
+<chapter id="algebraic-notation">
+<title>Algebraic Notation</title-->
 
 <chapter id="using-functions">
 <title>Using Functions</title>
 <sect1 id="alphabetical-listing">
-<para>Here is an alphabetical listing of functions</para>
+<title>Alphabetical listing of functions</title>
 <variablelist>
 <varlistentry>
 <term>abs (x)</term>
@@ -178,8 +178,8 @@ make
 </varlistentry>
 <varlistentry>
 <term>acos (x)</term>
-<listitem><para>Returns the arc cos (x), the inverse function to cos y</para></listitem>
-<listitem><para>The return value is dependent on the degree setting; if “degrees” is enabled, the return value is from the range 0 &lt;= result &lt;= 180, else from 0 &lt;= result &lt;= π.</para></listitem>
+<listitem><para>Returns the arc cos (x), the inverse function to cos y</para>
+<para>The return value is dependent on the degree setting; if &quot;degrees&quot; is enabled, the return value is from the range 0 &lt;= result &lt;= 180, else from 0 &lt;= result &lt;= &pi;.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>and (x1; x2; ...)</term>
@@ -193,7 +193,6 @@ All parameters have to be integers from the range -2^255 to +2^256-1 (signed or 
 <varlistentry>
 <term>arsinh(x)</term>
 <listitem><para>Computes the area hyperbolic sine of x, the inverse function to sinh y.  arsinh (x) is the only solution to sinh(y)=x.</para></listitem>
-</term>
 </varlistentry>
 <varlistentry>
 <term>artanh (x)</term>
@@ -205,8 +204,8 @@ All parameters have to be integers from the range -2^255 to +2^256-1 (signed or 
 </varlistentry>
 <varlistentry>
 <term>atan (x)</term>
-<listitem><para>Returns the arc tan (x), the inverse function to tan y.  The return value is dependent on the degree setting; if &quot;degrees&quot; is enaled, the return value is from the range -90 &lt; result &lt; 90, else from -pie/2 &lt; result &lt; pie/2.</para></listitem>
-<listitem><para> The arc tan(x) is the principal solution to the equation tan (y) = x.  Other solutions are (radians): arc tran (x) + n*pie for all integers n; or (degrees): arc tan (x) + n*180 for all integers n.</para></listitem>
+<listitem><para>Returns the arc tan (x), the inverse function to tan y.  The return value is dependent on the degree setting; if &quot;degrees&quot; is enaled, the return value is from the range -90 &lt; result &lt; 90, else from -pie/2 &lt; result &lt; pie/2.</para>
+<para> The arc tan(x) is the principal solution to the equation tan (y) = x.  Other solutions are (radians): arc tran (x) + n*pie for all integers n; or (degrees): arc tan (x) + n*180 for all integers n.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>average (x1; x2; ...)</term>
@@ -255,6 +254,7 @@ All parameters have to be integers from the range -2^255 to +2^256-1 (signed or 
 <varlistentry>
 <term>csc (x)</term>
 <listitem><para>Evaulates the cosecant of x.  The result is dependent on the degree setting.  If &quot;degrees&quot; is active, the paramter x is assumed to be an arc from a 360 degree circle, otherwise a full circle is represented by 2*pie.  Although the cosecant is mathematically defined for all x, for x beyond approximately 1e77, the periodicity of the cosecant is not reconginized any more, so &app; issues an error.</para></listitem>
+</varlistentry>
 <varlistentry>
 <term>dec (x)</term>
 <listitem><para>Displays x in decimal format, without globally changing the output format.  This function is useful when you changed the output format to a binary format.</para></listitem>
@@ -317,8 +317,8 @@ All parameters have to be integers from the range -2^255 to +2^256-1 (signed or 
 </varlistentry>
 <varlistentry>
 <term>idiv (dividend; divisor)</term>
-<listitem><para>Evaluates the integer part of divdend/divisor.  The result is always exact.  Since &app; can hold integers up to 78 digits, this function overflows even if the ordinary division operator would yeild an approximate (but huge) quotient.</para></listitem>
-<listitem><para>It is possible to apply the idiv function to non-integers as well, but be aware that rounding errors might be lead to off-by-one erros.  If idiv detects, that a result depends on the validity of the guard digits, it returns a NaN as a warning.</para></listitem>
+<listitem><para>Evaluates the integer part of divdend/divisor.  The result is always exact.  Since &app; can hold integers up to 78 digits, this function overflows even if the ordinary division operator would yeild an approximate (but huge) quotient.</para>
+<para>It is possible to apply the idiv function to non-integers as well, but be aware that rounding errors might be lead to off-by-one erros.  If idiv detects, that a result depends on the validity of the guard digits, it returns a NaN as a warning.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>int (x)</term>
@@ -344,6 +344,7 @@ All parameters have to be integers from the range -2^255 to +2^256-1 (signed or 
 <term>max (x1; x2; ...)</term>
 <listitem><para>Takes one or more parameter(s), which returns the maximum value of the submitted parametrs.  Example max(17; log 1000; exp(3)).</para></listitem>
 </varlistentry>
+<varlistentry>
 <term>min(x1; x2; ...)</term>
 <listitem><para>Takes one or more paramater(s) and returns the maximum value of the submitted parameters.  Example:  min(-0.4; log 0.1; exp(-3)).</para></listitem>
 </varlistentry>
@@ -353,18 +354,17 @@ All parameters have to be integers from the range -2^255 to +2^256-1 (signed or 
 </varlistentry>
 <varlistentry>
 <term>nCr (x1; x2)</term>
-<listitem><para>For integer paramaters this function is equal to the number of combinations (order is of no importance) of x2 elements from an x1-sized of elements or to the binominal coefficient x1 over x2.</para></listitem>
-<listitem><para>For arbitrary real valued x1, x2 the result is 1/(x1+1)*B(x2+1,x1-x2+1)), where B(a,b) is the complete Beta function.</para></listitem>
-</term>
+<listitem><para>For integer paramaters this function is equal to the number of combinations (order is of no importance) of x2 elements from an x1-sized of elements or to the binominal coefficient x1 over x2.</para>
+<para>For arbitrary real valued x1, x2 the result is 1/(x1+1)*B(x2+1,x1-x2+1)), where B(a,b) is the complete Beta function.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>not (n)</term>
-<listitem><para>Evaluates the bitwise (one-) complement of n.  The result is a signed 256-bit integer.  n has to be an integer from the range -2^255 to +2^256-1 (signed or unsigned 256 bit integers).</listitem>
+<listitem><para>Evaluates the bitwise (one-) complement of n.  The result is a signed 256-bit integer.  n has to be an integer from the range -2^255 to +2^256-1 (signed or unsigned 256 bit integers).</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>nPr (x1; x2)</term>
-<listitem><para>For integer paramaters this function is equal to the number of permutations (order is of importance) of x2 elements from an x1-sized of elements.</para></listitem>
-<listitem><para>For real-valued paramaters this function is equal to gamma(x1+1)/gamma(x2).</para></listitem>
+<listitem><para>For integer paramaters this function is equal to the number of permutations (order is of importance) of x2 elements from an x1-sized of elements.</para>
+<para>For real-valued paramaters this function is equal to gamma(x1+1)/gamma(x2).</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>oct (n)</term>
@@ -376,8 +376,8 @@ All parameters have to be integers from the range -2^255 to +2^256-1 (signed or 
 </varlistentry>
 <varlistentry>
 <term>poicdf (events; avgevents)</term>
-<listitem><para>'events' is a non-negative integer, 'avgevents' a positive real number.</para></listitem>
-<listitem><para>If you have on the average 'avgevents' independent events in an interval, this function returns the probability, that you will see up to 'events' events when you test an interval.</para></listitem>
+<listitem><para>'events' is a non-negative integer, 'avgevents' a positive real number.</para>
+<para>If you have on the average 'avgevents' independent events in an interval, this function returns the probability, that you will see up to 'events' events when you test an interval.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>poimean (avgevents)</term>
@@ -401,18 +401,18 @@ All parameters have to be integers from the range -2^255 to +2^256-1 (signed or 
 </varlistentry>
 <varlistentry>
 <term>sec (x)</term>
-<listitem><para>Evaluates the secant of x.  The result is dependent on the degree setting.  If &quot;degrees&quot; is active, the parameter x is assumed to be from a 360 degree circle.</para></listitem>
-<listitem><para>Although the secant is mathematically defined for all x, for x beyond approximately 1e77, the periodicity of the secant is not recognized any more, so &app; issues an error.</para></listitem>
+<listitem><para>Evaluates the secant of x.  The result is dependent on the degree setting.  If &quot;degrees&quot; is active, the parameter x is assumed to be from a 360 degree circle.</para>
+<para>Although the secant is mathematically defined for all x, for x beyond approximately 1e77, the periodicity of the secant is not recognized any more, so &app; issues an error.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>shl (n, bits)</term>
-<listitem><para>Shifts the bit pattern of n 'bits' to the left, if 'bits' &gt;=0, otherwise shifts n arithmetically by -'bits' to the right.  255 &lt;= bits &lt;= 255, and n has to be an integer from the range -2^255 to +2^256-1 (signed or unsigned 256 bit integers).  The result is from -2^255 to +255-1 (signed integer).</para></listitem>
-<listitem><para>On a shift left, zero bits are fed in to the right, and shifted out bits are dropped on the left.  On a shift right, bit 255 (the leftmost bit) is copied and shifted in from the left, and shifted out bits on the right are dropped.</para></listitem>
+<listitem><para>Shifts the bit pattern of n 'bits' to the left, if 'bits' &gt;=0, otherwise shifts n arithmetically by -'bits' to the right.  255 &lt;= bits &lt;= 255, and n has to be an integer from the range -2^255 to +2^256-1 (signed or unsigned 256 bit integers).  The result is from -2^255 to +255-1 (signed integer).</para>
+<para>On a shift left, zero bits are fed in to the right, and shifted out bits are dropped on the left.  On a shift right, bit 255 (the leftmost bit) is copied and shifted in from the left, and shifted out bits on the right are dropped.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>shr (n, bits)</term>
-<listitem><para><para>Shifts the bit pattern of n 'bits' to the right, if 'bits' &gt;=0, otherwise shifts n arthmetically by -'bits' to the left.</para>
-<para>On a shift left, zero bits are fed in to the right, and shifted out bits are dropped on the left.  On a shift right, bit 255 (the leftmost bit) is copied and shifted in from the left, and shifted out bits on the right are dropped.</para></para></listitem>
+<listitem><para>Shifts the bit pattern of n 'bits' to the right, if 'bits' &gt;=0, otherwise shifts n arthmetically by -'bits' to the left.</para>
+<para>On a shift left, zero bits are fed in to the right, and shifted out bits are dropped on the left.  On a shift right, bit 255 (the leftmost bit) is copied and shifted in from the left, and shifted out bits on the right are dropped.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>sign (x)</term>
@@ -420,8 +420,8 @@ All parameters have to be integers from the range -2^255 to +2^256-1 (signed or 
 </varlistentry>
 <varlistentry>
 <term>sin (x)</term>
-<listitem><para><para>Evaluates the sine of x, which is dependent on the degree setting.  If &quot;degress&quot; is active, the parameter x is assumed to be an arc from a 360 degree circle.  The inverse function is asin(y).</para>
-<para>Although the sine is mathematically defined for all x, for x beyond approximately 1e77, the periodicity of the sine is not recognized any more, so &app; issues an error.</para></para></listitem>
+<listitem><para>Evaluates the sine of x, which is dependent on the degree setting.  If &quot;degress&quot; is active, the parameter x is assumed to be an arc from a 360 degree circle.  The inverse function is asin(y).</para>
+<para>Although the sine is mathematically defined for all x, for x beyond approximately 1e77, the periodicity of the sine is not recognized any more, so &app; issues an error.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>sinh (x)</term>
@@ -433,8 +433,8 @@ All parameters have to be integers from the range -2^255 to +2^256-1 (signed or 
 </varlistentry>
 <varlistentry>
 <term>tan (x)</term>
-<listitem><para>Evaultes the tangent of x.  The result is dependent on the degree setting.  If &quot;degress&quot; is active, the paramater x is assumed to be an arc from a 360 degree circle.  The inverse function is atan(y).</para></listitem>
-<listitem><para>Although the tangent is mathematically defined for all x, for x beyond approximately 1e77, the periodicity of the tangent is not recognized any more, so &app; issues an error.</para></listitem>
+<listitem><para>Evaultes the tangent of x.  The result is dependent on the degree setting.  If &quot;degress&quot; is active, the paramater x is assumed to be an arc from a 360 degree circle.  The inverse function is atan(y).</para>
+<para>Although the tangent is mathematically defined for all x, for x beyond approximately 1e77, the periodicity of the tangent is not recognized any more, so &app; issues an error.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>tanh (x)</term>
@@ -446,8 +446,8 @@ All parameters have to be integers from the range -2^255 to +2^256-1 (signed or 
 </varlistentry>
 <varlistentry>
 <term>unmask (n; bits)</term>
-<listitem><para>Takes the lower 'bits bits of n and sign-extends them to full 256 bit, meaning bit number 'bits'-1 is copied to all upper bits.  n has to be an integer from the range -2^255 to +2^256-1 (signed or unsigned 256 bit integers), and 'bits' is an integer with 1 &lt;= bits &lt;= 255.  This function can revert the effect of a mask function in many cases.</para></listitem>
-<listitem><para>If you are given a negative integer in two's complement notation, it is not possible to enter it directly as a constant, because binary, hex or octal encoded constants are always recognized as unsigned in &app;.</para></listitem>
+<listitem><para>Takes the lower 'bits bits of n and sign-extends them to full 256 bit, meaning bit number 'bits'-1 is copied to all upper bits.  n has to be an integer from the range -2^255 to +2^256-1 (signed or unsigned 256 bit integers), and 'bits' is an integer with 1 &lt;= bits &lt;= 255.  This function can revert the effect of a mask function in many cases.</para>
+<para>If you are given a negative integer in two's complement notation, it is not possible to enter it directly as a constant, because binary, hex or octal encoded constants are always recognized as unsigned in &app;.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>xor (x1; x2; ...)</term>
