@@ -55,7 +55,7 @@ public:
     static Constants * instance();
     ~Constants();
 
-    QStringList categories() const;
+    const QStringList & categories() const;
     const QList<Constant> & list() const;
 
 public slots:

@@ -66,7 +66,7 @@ const QList<Constant> & Constants::list() const
     return d->list;
 }
 
-QStringList Constants::categories() const
+const QStringList & Constants::categories() const
 {
     return d->categories;
 }
