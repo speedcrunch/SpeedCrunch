@@ -47,50 +47,18 @@ in testevaluator.cpp.
 
 
 --------------------------------------------------------------------------------
-REPOSITORY
---------------------------------------------------------------------------------
-
-/trunk is the main development tree. This is considered unstable. Features
-development should happen here.
-
-/branches is for the development of stable versions. A branch, like
-/branches/0.8, is created before making the very first release (it may be alpha,
-beta, or even .0 release) of version 0.8. This can be prepared by the following
-steps:
-  mkdir branches/0.8
-  svn copy trunk branches/0.8
-
-/tags is for tagging a release version. Think of it as a snapshot of a branch.
-Nothing should be committed to this directory, thus bug fixes should be applied
-the appropriate branch. Furthermore, each release must have exactly one tag.
-For example, there are release like version 0.8-alpha, 0.8-beta, 0.8, 0.8.1
-then the /tag directory may look like this:
-  /tags/0.8-alpha
-  /tags/0.8-beta
-  /tags/0.8
-  /tags/0.8.1
-Tagging the repository can be done like the following steps:
-  svn copy branches/0.8 tags/0.8-beta
-
-/www stores files for the web site. Ariya Hidayat will synchronize his server
-content (http://www.speedcrunch.org) with this directory every now
-and then.
-
-
---------------------------------------------------------------------------------
 WEBSITE
 --------------------------------------------------------------------------------
-Files for the web site are stored in the Subversion repository under directory
-/www.
+Files for the web site are stored at
+http://gitorious.org/projects/speedcrunch-org
 
 When making changes to HTML files, please make sure that the HTML code is still
 valid. Use http://validator.w3.org/ to verify it.
 
-For convenience, the ChangeLog is linked directly to the file in the repository,
-e.g. http://speedcrunch.googlecode.com/svn/tags/0.8/ChangeLog
+For convenience, the ChangeLog is linked directly to the file in the repository
+http://gitorious.org/projects/speedcrunch/repos/mainline/blobs/master/ChangeLog
 
-The web site pages must be updated just prior to make a release. See in details
-under the topic 'Preparing a release' below.
+The web site pages must be updated just prior to make a release.
 
 The web site can also be updated without a release. This is the case e.g. when
 putting a new interesting screenshot or adding a question (and answer) in FAQ
@@ -103,34 +71,23 @@ RELEASES
 This is a checklist of things that must be done to prepare a release:
 
 * Make sure that ChangeLog is up to date
-
-* For the first release of a version (e.g. version 0.8-beta, not version 0.8,
-  0.8.1, 0.8.2), create a branch (e.g /branch/0.8).
-
-* Tag the repository with a good name, e.g /tags/0.8-beta and change version
-  number in CMakeLists.txt.
-
 * Create the source code package, e.g. speedcrunch-0.8-beta.tar.gz. Place it
   in the download location.
-
 * Notify packagers to make them aware of the new release.
-
 * Update the website. Most important is the link to new source code package.
-
-  For a stable release (e.g. 0.8 or 0.8.1):
-    update main content in download.htm
-    add or change features description in features.htm
-    create new screenshots for screenshots.htm
-    update link to ChangeLog in the sidebar of download.htm
-
-  For a non-stable release (e.g. 0.8-alpha, 0.8-beta, 0-8-RC)
-    update sidebar in download.htm
+* Update main content in download.html
+* Add or change features description in features.html
+* Create new screenshots for screenshots.html
+* Update link to ChangeLog in the sidebar of download.html
 
 
 --------------------------------------------------------------------------------
 PORTABLE EDITION
 --------------------------------------------------------------------------------
 
-Build the "portable version" using the following command:
+Build the "portable version" by configuring the project as below (use only one
+of the approaches):
 
-  cmake -DCMAKE_CXX_FLAGS:STRING="-DSPEEDCRUNCH_PORTABLE" <path to source directory>\src
+  cmake -DCMAKE_CXX_FLAGS:STRING="-DSPEEDCRUNCH_PORTABLE"
+  qmake "DEFINES+=SPEEDCRUNCH_PORTABLE"
+
