@@ -31,23 +31,27 @@ class HNumber;
 
 typedef HNumber (*FunctionPtr)( Function *, const QVector<HNumber> & );
 
-class Function
+class Function : public QObject
 {
-public:
-    Function( const QString & name, int argc, FunctionPtr ptr );
-    Function( const QString & name, FunctionPtr ptr );
+    Q_OBJECT
 
-    QString     description() const;
-    void        setDescription( const QString & );
-    QString     error() const;
-    HNumber     exec( const QVector<HNumber> & args );
-    QString     name() const;
+public:
+    Function( const QString & name, int argc, FunctionPtr ptr, QObject * parent = 0 );
+    Function( const QString & name, FunctionPtr ptr, QObject * parent = 0  );
+    ~Function();
+
+    QString description() const;
+    QString error() const;
+    HNumber exec( const QVector<HNumber> & args );
     Functions * functions() const;
-    void        setError( const QString & context, const QString & error );
+    QString name() const;
+    void setError( const QString & context, const QString & error );
+    void setTitle( const QString & );
 
 private:
     struct Private;
     const std::auto_ptr<Private> d;
+
     Function();
     Function( const Function & );
     Function & operator=( const Function & );
@@ -61,20 +65,20 @@ public:
     static Functions * instance();
     ~Functions();
 
-    void        add( Function * );
-    Function *  function( const QString & ) const;
-    QStringList functionNames() const;
+    void add( Function * );
+    Function * function( const QString & ) const;
+    QStringList names() const;
 
 public slots:
     void retranslateText();
 
 private:
+    struct Private;
+    const std::auto_ptr<Private> d;
+
     Functions();
     Functions( const Functions & );
     Functions & operator=( const Functions & );
-
-    struct Private;
-    const std::auto_ptr<Private> d;
 };
 
 #endif

@@ -104,7 +104,7 @@ void FunctionsWidget::fillTable()
     d->filterTimer->stop();
     d->functions->clear();
     QString term = d->searchFilter->text();
-    QStringList functionNames = Functions::instance()->functionNames();
+    QStringList functionNames = Functions::instance()->names();
 
     for ( int k = 0; k < functionNames.count(); k++ )
     {

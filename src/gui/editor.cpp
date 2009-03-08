@@ -77,7 +77,7 @@ class EditorHighlighter : public QSyntaxHighlighter
 
           case Token::stxIdentifier:
             color = editor->highlightColor( Editor::Variable );
-            fnames = Functions::instance()->functionNames();
+            fnames = Functions::instance()->names();
             for ( int i = 0; i < fnames.count(); i++ )
             {
               if ( fnames.at(i).toLower() == text )
@@ -555,7 +555,7 @@ void Editor::triggerAutoComplete()
     return;
 
   // find matches in function names
-  QStringList fnames = d->functions->functionNames();
+  QStringList fnames = d->functions->names();
   QStringList choices;
   for ( int i = 0; i < fnames.count(); i++ )
   {
