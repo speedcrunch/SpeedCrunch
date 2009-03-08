@@ -584,363 +584,370 @@
     <message>
         <location filename="../core/functions.cpp" line="102"/>
         <source>function accepts 1 argument</source>
-        <translation>funcţia acceptă 1 argument</translation>
+        <translation type="obsolete">funcţia acceptă 1 argument</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="104"/>
         <source>function accepts %1 arguments</source>
-        <translation>funcţia acceptă %1 argumente</translation>
+        <translation type="obsolete">funcţia acceptă %1 argumente</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../core/functions.cpp" line="101"/>
+        <source>function accepts %1 argument(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>
     <name>Functions</name>
     <message>
-        <location filename="../core/functions.cpp" line="1145"/>
+        <location filename="../core/functions.cpp" line="1142"/>
         <source>Absolute Value</source>
         <translation>Valoare Asbolută</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1146"/>
+        <location filename="../core/functions.cpp" line="1143"/>
         <source>Average (Arithmetic Mean)</source>
         <translation>Medie Aritmetică</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1147"/>
+        <location filename="../core/functions.cpp" line="1144"/>
         <source>Binary Representation</source>
         <translation>Reprezentare Binară</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1148"/>
+        <location filename="../core/functions.cpp" line="1145"/>
         <source>Cube Root</source>
         <translation>Rădăcină Cubică</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1150"/>
+        <location filename="../core/functions.cpp" line="1147"/>
         <source>Decimal Representation</source>
         <translation>Reprezentare Zecimală</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1152"/>
+        <location filename="../core/functions.cpp" line="1149"/>
         <source>Fractional Part</source>
         <translation>Parte Fracţionară</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1154"/>
+        <location filename="../core/functions.cpp" line="1151"/>
         <source>Geometric Mean</source>
         <translation>Medie Geometrică</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1155"/>
+        <location filename="../core/functions.cpp" line="1152"/>
         <source>Hexadecimal Representation</source>
         <translation>Reprezentare Hexazecimala</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1156"/>
+        <location filename="../core/functions.cpp" line="1153"/>
         <source>Integer Part</source>
         <translation>Partea Întreagă</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1158"/>
+        <location filename="../core/functions.cpp" line="1155"/>
         <source>Maximum</source>
         <translation>Maximul</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1159"/>
+        <location filename="../core/functions.cpp" line="1156"/>
         <source>Minimum</source>
         <translation>Minimul</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1160"/>
+        <location filename="../core/functions.cpp" line="1157"/>
         <source>Octal Representation</source>
         <translation>Reprezentare Octală</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1161"/>
+        <location filename="../core/functions.cpp" line="1158"/>
         <source>Product</source>
         <translation>Produs</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1162"/>
+        <location filename="../core/functions.cpp" line="1159"/>
         <source>Rounding</source>
         <translation>Rotunjire</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1163"/>
+        <location filename="../core/functions.cpp" line="1160"/>
         <source>Signum</source>
         <translation>Signum</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1164"/>
+        <location filename="../core/functions.cpp" line="1161"/>
         <source>Square Root</source>
         <translation>Rădăcina Pătrată</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1165"/>
+        <location filename="../core/functions.cpp" line="1162"/>
         <source>Sum</source>
         <translation>Sumă</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1166"/>
+        <location filename="../core/functions.cpp" line="1163"/>
         <source>Truncation</source>
         <translation>Trunchiere</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1172"/>
+        <location filename="../core/functions.cpp" line="1169"/>
         <source>Hyperbolic Cosine</source>
         <translation>Cosinus Hiperbolic</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1173"/>
+        <location filename="../core/functions.cpp" line="1170"/>
         <source>Exponential</source>
         <translation>Exponenţial</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1174"/>
+        <location filename="../core/functions.cpp" line="1171"/>
         <source>Base-2 Logarithm</source>
         <translation>Logaritm în Baza 2</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1175"/>
+        <location filename="../core/functions.cpp" line="1172"/>
         <source>Natural Logarithm</source>
         <translation>Logaritm Natural</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1176"/>
+        <location filename="../core/functions.cpp" line="1173"/>
         <source>Base-10 Logarithm</source>
         <translation>Logaritm în Baza 10</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1177"/>
+        <location filename="../core/functions.cpp" line="1174"/>
         <source>Hyperbolic Sine</source>
         <translation>Sinus Hiperbolic</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1178"/>
+        <location filename="../core/functions.cpp" line="1175"/>
         <source>Hyperbolic Tangent</source>
         <translation>Tangenta Hiperbolică</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1181"/>
+        <location filename="../core/functions.cpp" line="1178"/>
         <source>Greatest Common Divisor</source>
         <translation>Cel Mai Mare Divisor Comun</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1182"/>
+        <location filename="../core/functions.cpp" line="1179"/>
         <source>Combination (Binomial Coefficient)</source>
         <translation>Combinari (Coeficient Binomial)</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1183"/>
+        <location filename="../core/functions.cpp" line="1180"/>
         <source>Permutation (Arrangement)</source>
         <translation>Permutări (Aranjamente)</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1186"/>
+        <location filename="../core/functions.cpp" line="1183"/>
         <source>Binomial Cumulative Distribution Function</source>
         <translation>Funcţia Distribuţiei Binomiale Cumulative</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1187"/>
+        <location filename="../core/functions.cpp" line="1184"/>
         <source>Binomial Distribution Mean</source>
         <translation>Media Distribuţiei Binomiale</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1188"/>
+        <location filename="../core/functions.cpp" line="1185"/>
         <source>Binomial Probability Mass Function</source>
         <translation>Funcţia Masă de Probabilitate Binomială</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1189"/>
+        <location filename="../core/functions.cpp" line="1186"/>
         <source>Binomial Distribution Variance</source>
         <translation>Varianţa Distribuţiei Binomiale</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1192"/>
+        <location filename="../core/functions.cpp" line="1189"/>
         <source>Hypergeometric Cumulative Distribution Function</source>
         <translation>Funcţia Distribuţiei Hipergeometrice Cumulative</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1193"/>
+        <location filename="../core/functions.cpp" line="1190"/>
         <source>Hypergeometric Distribution Mean</source>
         <translation>Media Distribuţieri Hipergeometrice</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1194"/>
+        <location filename="../core/functions.cpp" line="1191"/>
         <source>Hypergeometric Probability Mass Function</source>
         <translation>Funcţia Masă de Probabilitate Hipergeometrică </translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1195"/>
+        <location filename="../core/functions.cpp" line="1192"/>
         <source>Hypergeometric Distribution Variance</source>
         <translation>Varianţa Distribuţiei Hipergeometrice</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1196"/>
+        <location filename="../core/functions.cpp" line="1193"/>
         <source>Poissonian Cumulative Distribution Function</source>
         <translation>Funcţia Distribuţiei Poissoniane Cumulative</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1197"/>
+        <location filename="../core/functions.cpp" line="1194"/>
         <source>Poissonian Distribution Mean</source>
         <translation>Media Distribuţiei Poissoniane</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1198"/>
+        <location filename="../core/functions.cpp" line="1195"/>
         <source>Poissonian Probability Mass Function</source>
         <translation>Funcţia Masă de Probabilitate Poissoniană</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1199"/>
+        <location filename="../core/functions.cpp" line="1196"/>
         <source>Poissonian Distribution Variance</source>
         <translation>Varianţa Distribuţiei Poissoniane</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1202"/>
+        <location filename="../core/functions.cpp" line="1199"/>
         <source>Arc Cosine</source>
         <translation>Arc Cosinus</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1203"/>
+        <location filename="../core/functions.cpp" line="1200"/>
         <source>Arc Sine</source>
         <translation>Arc Sinus</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1204"/>
+        <location filename="../core/functions.cpp" line="1201"/>
         <source>Arc Tangent</source>
         <translation>Arc Tangenta</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1205"/>
+        <location filename="../core/functions.cpp" line="1202"/>
         <source>Cosine</source>
         <translation>Cosinus</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1206"/>
+        <location filename="../core/functions.cpp" line="1203"/>
         <source>Cotangent</source>
         <translation>Co-tangent</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1207"/>
+        <location filename="../core/functions.cpp" line="1204"/>
         <source>Cosecant</source>
         <translation>Cosecanta</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1209"/>
+        <location filename="../core/functions.cpp" line="1206"/>
         <source>Radians</source>
         <translation>Radiani</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1210"/>
+        <location filename="../core/functions.cpp" line="1207"/>
         <source>Secant</source>
         <translation>Secanta</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1211"/>
+        <location filename="../core/functions.cpp" line="1208"/>
         <source>Sine</source>
         <translation>Sinus</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1212"/>
+        <location filename="../core/functions.cpp" line="1209"/>
         <source>Tangent</source>
         <translation>Tangenta</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1149"/>
+        <location filename="../core/functions.cpp" line="1146"/>
         <source>Ceiling</source>
         <translation>Rotunjire prin adaos</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1151"/>
+        <location filename="../core/functions.cpp" line="1148"/>
         <source>Floor</source>
         <translation>Rontunjire prin lipsa</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1153"/>
+        <location filename="../core/functions.cpp" line="1150"/>
         <source>Extension of Factorials [= (x-1)!]</source>
         <translation>Factorial extins </translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1157"/>
+        <location filename="../core/functions.cpp" line="1154"/>
         <source>ln(abs(Gamma))</source>
         <translation>ln(abs(Gamma))</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1169"/>
+        <location filename="../core/functions.cpp" line="1166"/>
         <source>Area Hyperbolic Cosine</source>
         <translation>Arc Cosinus Hiperbolic</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1170"/>
+        <location filename="../core/functions.cpp" line="1167"/>
         <source>Area Hyperbolic Sine</source>
         <translation>Arc Sinus Hiperbolic</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1171"/>
+        <location filename="../core/functions.cpp" line="1168"/>
         <source>Area Hyperbolic Tangent</source>
         <translation>Arc Tangenta Hiperbolica</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1190"/>
+        <location filename="../core/functions.cpp" line="1187"/>
         <source>Error Function</source>
         <translation>Funcţie de eroare</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1191"/>
+        <location filename="../core/functions.cpp" line="1188"/>
         <source>Complementary Error Function</source>
         <translation>Funcţie de eroare complementară</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1208"/>
+        <location filename="../core/functions.cpp" line="1205"/>
         <source>Degrees of Arc</source>
         <translation>Degrees of Arc</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1215"/>
+        <location filename="../core/functions.cpp" line="1212"/>
         <source>Mask to a bit size</source>
         <translation>Mască de biţi</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1216"/>
+        <location filename="../core/functions.cpp" line="1213"/>
         <source>Sign-extent a value</source>
         <translation>Elimină masca</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1217"/>
+        <location filename="../core/functions.cpp" line="1214"/>
         <source>Logical NOT</source>
         <translation>NOT logic</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1218"/>
+        <location filename="../core/functions.cpp" line="1215"/>
         <source>Logical AND</source>
         <translation>SI logic</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1219"/>
+        <location filename="../core/functions.cpp" line="1216"/>
         <source>Logical OR</source>
         <translation>OR logic</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1220"/>
+        <location filename="../core/functions.cpp" line="1217"/>
         <source>Logical XOR</source>
         <translation>XOR logic</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1221"/>
+        <location filename="../core/functions.cpp" line="1218"/>
         <source>Arithmetic Shift Left</source>
         <translation>Deplasare aritmetică la stânga</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1222"/>
+        <location filename="../core/functions.cpp" line="1219"/>
         <source>Arithmetic Shift Right</source>
         <translation>Deplasare aritmetică la dreapta</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1223"/>
+        <location filename="../core/functions.cpp" line="1220"/>
         <source>Integer Quotient</source>
         <translation>Cat intreg</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1224"/>
+        <location filename="../core/functions.cpp" line="1221"/>
         <source>Modulo</source>
         <translation>Rest</translation>
     </message>
@@ -948,37 +955,37 @@
 <context>
     <name>Functions::Private</name>
     <message>
-        <location filename="../core/functions.cpp" line="274"/>
+        <location filename="../core/functions.cpp" line="271"/>
         <source>function requires 1 or 2 arguments</source>
         <translation>funcţia necesita 1 sau 2 argumente</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="942"/>
+        <location filename="../core/functions.cpp" line="939"/>
         <source>function undefined for specified arguments</source>
         <translation>funcţia e nedefinită pentru argumente speciale</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="256"/>
+        <location filename="../core/functions.cpp" line="253"/>
         <source>function requires at least 2 arguments</source>
         <translation>funcţia necesită cel puţin 2 argumente</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="262"/>
+        <location filename="../core/functions.cpp" line="259"/>
         <source>function requires integer arguments</source>
         <translation>funcţia necesită argumente de tip intreg</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="629"/>
+        <location filename="../core/functions.cpp" line="626"/>
         <source>function undefined for specified argument</source>
         <translation>funcţia e nedefinită pentru argumentul specificat</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="599"/>
+        <location filename="../core/functions.cpp" line="596"/>
         <source>underflow</source>
         <translation>În afara limitelor</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="696"/>
+        <location filename="../core/functions.cpp" line="693"/>
         <source>function requires at least 1 argument</source>
         <translation>funcţia necesită cel puţin 1 argument</translation>
     </message>

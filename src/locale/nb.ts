@@ -584,363 +584,371 @@
     <message>
         <location filename="../core/functions.cpp" line="102"/>
         <source>function accepts 1 argument</source>
-        <translation>funksjon godtar bare ett argument</translation>
+        <translation type="obsolete">funksjon godtar bare ett argument</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="104"/>
         <source>function accepts %1 arguments</source>
-        <translation>funksjonen godtar %1 argumenter</translation>
+        <translation type="obsolete">funksjonen godtar %1 argumenter</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../core/functions.cpp" line="101"/>
+        <source>function accepts %1 argument(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>
     <name>Functions</name>
     <message>
-        <location filename="../core/functions.cpp" line="1145"/>
+        <location filename="../core/functions.cpp" line="1142"/>
         <source>Absolute Value</source>
         <translation>Absolutt verdi</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1146"/>
+        <location filename="../core/functions.cpp" line="1143"/>
         <source>Average (Arithmetic Mean)</source>
         <translation>Gjennomsnitt (Aritmetisk)</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1147"/>
+        <location filename="../core/functions.cpp" line="1144"/>
         <source>Binary Representation</source>
         <translation>Binær representasjon</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1148"/>
+        <location filename="../core/functions.cpp" line="1145"/>
         <source>Cube Root</source>
         <translation>Kubisk root</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1149"/>
+        <location filename="../core/functions.cpp" line="1146"/>
         <source>Ceiling</source>
         <translation>Takfunksjon</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1150"/>
+        <location filename="../core/functions.cpp" line="1147"/>
         <source>Decimal Representation</source>
         <translation>Desimal representasjon</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1151"/>
+        <location filename="../core/functions.cpp" line="1148"/>
         <source>Floor</source>
         <translation>Gulvfunksjon</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1152"/>
+        <location filename="../core/functions.cpp" line="1149"/>
         <source>Fractional Part</source>
         <translation>Desimalfraksjon</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1154"/>
+        <location filename="../core/functions.cpp" line="1151"/>
         <source>Geometric Mean</source>
         <translation>Geometrisk gjennomsnitt</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1155"/>
+        <location filename="../core/functions.cpp" line="1152"/>
         <source>Hexadecimal Representation</source>
         <translation>Hexadesimal representasjon</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1156"/>
+        <location filename="../core/functions.cpp" line="1153"/>
         <source>Integer Part</source>
         <translation>Heltallsfraksjon</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1158"/>
+        <location filename="../core/functions.cpp" line="1155"/>
         <source>Maximum</source>
         <translation>Maksimum</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1159"/>
+        <location filename="../core/functions.cpp" line="1156"/>
         <source>Minimum</source>
         <translation>Minimum</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1160"/>
+        <location filename="../core/functions.cpp" line="1157"/>
         <source>Octal Representation</source>
         <translation>Oktal representasjon</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1161"/>
+        <location filename="../core/functions.cpp" line="1158"/>
         <source>Product</source>
         <translation>Produkt</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1162"/>
+        <location filename="../core/functions.cpp" line="1159"/>
         <source>Rounding</source>
         <translation>Avrunding</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1163"/>
+        <location filename="../core/functions.cpp" line="1160"/>
         <source>Signum</source>
         <translation>Signum</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1164"/>
+        <location filename="../core/functions.cpp" line="1161"/>
         <source>Square Root</source>
         <translation>Kvadratrot</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1165"/>
+        <location filename="../core/functions.cpp" line="1162"/>
         <source>Sum</source>
         <translation>Total</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1166"/>
+        <location filename="../core/functions.cpp" line="1163"/>
         <source>Truncation</source>
         <translation>Trunkering</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1172"/>
+        <location filename="../core/functions.cpp" line="1169"/>
         <source>Hyperbolic Cosine</source>
         <translation>Hyperbolsk kosinus</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1173"/>
+        <location filename="../core/functions.cpp" line="1170"/>
         <source>Exponential</source>
         <translation>Exponentiell</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1174"/>
+        <location filename="../core/functions.cpp" line="1171"/>
         <source>Base-2 Logarithm</source>
         <translation>2 base logaritme</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1175"/>
+        <location filename="../core/functions.cpp" line="1172"/>
         <source>Natural Logarithm</source>
         <translation>Naturlig logaritme</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1176"/>
+        <location filename="../core/functions.cpp" line="1173"/>
         <source>Base-10 Logarithm</source>
         <translation>10-base logaritme</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1177"/>
+        <location filename="../core/functions.cpp" line="1174"/>
         <source>Hyperbolic Sine</source>
         <translation>Hyperbolsk sinus</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1178"/>
+        <location filename="../core/functions.cpp" line="1175"/>
         <source>Hyperbolic Tangent</source>
         <translation>Hyperbolisk tangent</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1181"/>
+        <location filename="../core/functions.cpp" line="1178"/>
         <source>Greatest Common Divisor</source>
         <translation>Minste felles multiplum</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1182"/>
+        <location filename="../core/functions.cpp" line="1179"/>
         <source>Combination (Binomial Coefficient)</source>
         <translation>Kombinasjon (Binomial kofisient)</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1183"/>
+        <location filename="../core/functions.cpp" line="1180"/>
         <source>Permutation (Arrangement)</source>
         <translation>Arrangering</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1186"/>
+        <location filename="../core/functions.cpp" line="1183"/>
         <source>Binomial Cumulative Distribution Function</source>
         <translation>Binomial oppsamlet distribusjonsfunksjon</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1187"/>
+        <location filename="../core/functions.cpp" line="1184"/>
         <source>Binomial Distribution Mean</source>
         <translation>Binomial distribusjoinssnitt</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1188"/>
+        <location filename="../core/functions.cpp" line="1185"/>
         <source>Binomial Probability Mass Function</source>
         <translation>Binomial sannsynlighetsmengdefunksjon</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1189"/>
+        <location filename="../core/functions.cpp" line="1186"/>
         <source>Binomial Distribution Variance</source>
         <translation>Binomial distriubusjons varianse</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1192"/>
+        <location filename="../core/functions.cpp" line="1189"/>
         <source>Hypergeometric Cumulative Distribution Function</source>
         <translation>Hypergeometrisk oppsamlingsdistribusjonssnitt</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1193"/>
+        <location filename="../core/functions.cpp" line="1190"/>
         <source>Hypergeometric Distribution Mean</source>
         <translation>Hypergeometrisk distribusjonssnitt</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1194"/>
+        <location filename="../core/functions.cpp" line="1191"/>
         <source>Hypergeometric Probability Mass Function</source>
         <translation>Hypergeometrisk sannsynlighetsmengdefunksjon</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1195"/>
+        <location filename="../core/functions.cpp" line="1192"/>
         <source>Hypergeometric Distribution Variance</source>
         <translation>Hyperbolsk distribusjons tangens</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1196"/>
+        <location filename="../core/functions.cpp" line="1193"/>
         <source>Poissonian Cumulative Distribution Function</source>
         <translation>Poissonian kumjulative distribusjonsfunksjon</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1197"/>
+        <location filename="../core/functions.cpp" line="1194"/>
         <source>Poissonian Distribution Mean</source>
         <translation>Poissonian distribusjonssnitt</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1198"/>
+        <location filename="../core/functions.cpp" line="1195"/>
         <source>Poissonian Probability Mass Function</source>
         <translation>Poissonian sannsynlighetsmengdefunksjon</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1199"/>
+        <location filename="../core/functions.cpp" line="1196"/>
         <source>Poissonian Distribution Variance</source>
         <translation>Poissonian distribusjonsvarians</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1202"/>
+        <location filename="../core/functions.cpp" line="1199"/>
         <source>Arc Cosine</source>
         <translation>Arc kosinus</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1203"/>
+        <location filename="../core/functions.cpp" line="1200"/>
         <source>Arc Sine</source>
         <translation>Arc sinus</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1204"/>
+        <location filename="../core/functions.cpp" line="1201"/>
         <source>Arc Tangent</source>
         <translation>Sirkel tangens</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1205"/>
+        <location filename="../core/functions.cpp" line="1202"/>
         <source>Cosine</source>
         <translation>Kosinus</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1206"/>
+        <location filename="../core/functions.cpp" line="1203"/>
         <source>Cotangent</source>
         <translation>Kotangens</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1207"/>
+        <location filename="../core/functions.cpp" line="1204"/>
         <source>Cosecant</source>
         <translation>Kosekant</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1209"/>
+        <location filename="../core/functions.cpp" line="1206"/>
         <source>Radians</source>
         <translation>Radianer</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1210"/>
+        <location filename="../core/functions.cpp" line="1207"/>
         <source>Secant</source>
         <translation>Sekant</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1211"/>
+        <location filename="../core/functions.cpp" line="1208"/>
         <source>Sine</source>
         <translation>Sinus</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1212"/>
+        <location filename="../core/functions.cpp" line="1209"/>
         <source>Tangent</source>
         <translation>Tangens</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1153"/>
+        <location filename="../core/functions.cpp" line="1150"/>
         <source>Extension of Factorials [= (x-1)!]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1157"/>
+        <location filename="../core/functions.cpp" line="1154"/>
         <source>ln(abs(Gamma))</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1169"/>
+        <location filename="../core/functions.cpp" line="1166"/>
         <source>Area Hyperbolic Cosine</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1170"/>
+        <location filename="../core/functions.cpp" line="1167"/>
         <source>Area Hyperbolic Sine</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1171"/>
+        <location filename="../core/functions.cpp" line="1168"/>
         <source>Area Hyperbolic Tangent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1190"/>
+        <location filename="../core/functions.cpp" line="1187"/>
         <source>Error Function</source>
         <translation>Feilfunksjon</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1191"/>
+        <location filename="../core/functions.cpp" line="1188"/>
         <source>Complementary Error Function</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1208"/>
+        <location filename="../core/functions.cpp" line="1205"/>
         <source>Degrees of Arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1215"/>
+        <location filename="../core/functions.cpp" line="1212"/>
         <source>Mask to a bit size</source>
         <translation>Maskere til en bit størrelse</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1216"/>
+        <location filename="../core/functions.cpp" line="1213"/>
         <source>Sign-extent a value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1217"/>
+        <location filename="../core/functions.cpp" line="1214"/>
         <source>Logical NOT</source>
         <translation>Logisk IKKE</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1218"/>
+        <location filename="../core/functions.cpp" line="1215"/>
         <source>Logical AND</source>
         <translation>Logisk OG</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1219"/>
+        <location filename="../core/functions.cpp" line="1216"/>
         <source>Logical OR</source>
         <translation>Logisk ELLER</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1220"/>
+        <location filename="../core/functions.cpp" line="1217"/>
         <source>Logical XOR</source>
         <translation>Logisk EKSKLUSIV ELLER</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1221"/>
+        <location filename="../core/functions.cpp" line="1218"/>
         <source>Arithmetic Shift Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1222"/>
+        <location filename="../core/functions.cpp" line="1219"/>
         <source>Arithmetic Shift Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1223"/>
+        <location filename="../core/functions.cpp" line="1220"/>
         <source>Integer Quotient</source>
         <translation>Integer kvotient</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1224"/>
+        <location filename="../core/functions.cpp" line="1221"/>
         <source>Modulo</source>
         <translation>Modulo</translation>
     </message>
@@ -948,37 +956,37 @@
 <context>
     <name>Functions::Private</name>
     <message>
-        <location filename="../core/functions.cpp" line="274"/>
+        <location filename="../core/functions.cpp" line="271"/>
         <source>function requires 1 or 2 arguments</source>
         <translation>funksjon krever ett eller to argumenter</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="942"/>
+        <location filename="../core/functions.cpp" line="939"/>
         <source>function undefined for specified arguments</source>
         <translation>ingen funksjon med spesifisert argumentliste eksisterer</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="256"/>
+        <location filename="../core/functions.cpp" line="253"/>
         <source>function requires at least 2 arguments</source>
         <translation>funksjonen krever minst to argumenter</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="262"/>
+        <location filename="../core/functions.cpp" line="259"/>
         <source>function requires integer arguments</source>
         <translation>funksjonen krever heltallsargumenter</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="629"/>
+        <location filename="../core/functions.cpp" line="626"/>
         <source>function undefined for specified argument</source>
         <translation>ingen funksjon med spesifisert argument eksisterer</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="599"/>
+        <location filename="../core/functions.cpp" line="596"/>
         <source>underflow</source>
         <translation>underflyt</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="696"/>
+        <location filename="../core/functions.cpp" line="693"/>
         <source>function requires at least 1 argument</source>
         <translation>funksjonen krever minst ett argument</translation>
     </message>

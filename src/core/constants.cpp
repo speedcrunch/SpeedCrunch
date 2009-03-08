@@ -30,8 +30,8 @@ static void s_deleteConstants()
 
 struct Constants::Private
 {
-    QList<Constant> list;
     QStringList categories;
+    QList<Constant> list;
 
     void createConstants();
 };

@@ -477,10 +477,7 @@ void MainWindow::retranslateText()
   d->constants->retranslateText(); // same as above
 
   if ( d->docks.book )
-  {
-    //d->docks.book->setLanguage( d->settings->language );
-    d->docks.book->setWindowTitle( MainWindow::tr( "Math Book" ) );
-  }
+    d->docks.book->setWindowTitle( MainWindow::tr("Math Book") );
 
   // layout direction
   setWidgetsDirection();
@@ -2487,11 +2484,11 @@ void MainWindow::showLanguageChooserDialog()
 {
   QMap<QString, QString> map;
 
+  map.insert( QString          ( "American English" ),                 QString( "en_US" ) );
   map.insert( QString          ( "Bahasa Indonesia" ),                 QString( "id"    ) );
   map.insert( QString::fromUtf8( "Català" ),                           QString( "ca"    ) );
   map.insert( QString::fromUtf8( "Česky" ),                            QString( "cs"    ) );
   map.insert( QString          ( "Deutsch" ),                          QString( "de"    ) );
-  map.insert( QString          ( "English" ),                          QString( "en"    ) );
   map.insert( QString::fromUtf8( "Español Argentino" ),                QString( "es_AR" ) );
   map.insert( QString::fromUtf8( "Español" ),                          QString( "es"    ) );
   map.insert( QString          ( "Euskara" ),                          QString( "eu"    ) );

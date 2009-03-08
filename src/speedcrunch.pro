@@ -153,6 +153,7 @@ TRANSLATIONS += locale/ar.ts \
                 locale/ca.ts \
                 locale/cs.ts \
                 locale/de.ts \
+                locale/en_US.ts \
                 locale/es.ts \
                 locale/es_AR.ts \
                 locale/eu.ts \

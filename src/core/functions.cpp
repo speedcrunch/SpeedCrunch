@@ -98,10 +98,7 @@ HNumber Function::exec( const QVector<HNumber> & args )
     }
 
     if ( d->argc >= 0 && args.count() != d->argc ) {
-        if ( d->argc == 1 )
-            setError( d->name, tr("function accepts 1 argument") );
-        else
-            setError( d->name, tr("function accepts %1 arguments").arg(d->argc) );
+        setError( d->name, tr("function accepts %1 argument(s)", "", d->argc).arg(d->argc) );
         return HNumber( 0 );
     }
 
