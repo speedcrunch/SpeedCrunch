@@ -7,6 +7,8 @@
     }
 }
 
+DEFINES += SPEEDCRUNCH_VERSION=trunk
+
 TEMPLATE = app
 
 TARGET = speedcrunch
