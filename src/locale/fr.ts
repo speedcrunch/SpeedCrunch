@@ -232,257 +232,257 @@
 <context>
     <name>Constants</name>
     <message>
-        <location filename="../core/constants.cpp" line="45"/>
+        <location filename="../core/constants.cpp" line="83"/>
         <source>Characteristic Impedance of Vacuum</source>
         <translation>Impédence Caractéristique du Vide</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="51"/>
+        <location filename="../core/constants.cpp" line="82"/>
         <source>General Physics</source>
         <translation>Physique Générale</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="46"/>
+        <location filename="../core/constants.cpp" line="84"/>
         <source>Electric Constant</source>
         <translation>Constante Éléctrique</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="47"/>
+        <location filename="../core/constants.cpp" line="85"/>
         <source>Magnetic Constant</source>
         <translation>Constante Magnétique</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="48"/>
+        <location filename="../core/constants.cpp" line="86"/>
         <source>Gravitation Constant</source>
         <translation>Constante Gravitationnelle</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="49"/>
+        <location filename="../core/constants.cpp" line="87"/>
         <source>Planck&apos;s Constant</source>
         <translation>Constante de Planck</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="50"/>
+        <location filename="../core/constants.cpp" line="88"/>
         <source>Dirac&apos;s Constant</source>
         <translation>Constante de Dirac</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="51"/>
+        <location filename="../core/constants.cpp" line="89"/>
         <source>Speed of Light in Vacuum</source>
         <translation>Vitesse de la Lumière dans le Vide</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="54"/>
+        <location filename="../core/constants.cpp" line="93"/>
         <source>Bohr-Procopiu Magneton</source>
         <translation>Magneton de Bohr-Procopiu</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="62"/>
+        <location filename="../core/constants.cpp" line="92"/>
         <source>Electromagnetic</source>
         <translation>Eléctromagnétique</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="55"/>
+        <location filename="../core/constants.cpp" line="94"/>
         <source>Conductance Quantum</source>
         <translation>Quantum de Conductibilité </translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="56"/>
+        <location filename="../core/constants.cpp" line="95"/>
         <source>Coulomb&apos;s Constant</source>
         <translation>Constante de Coulomb</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="57"/>
+        <location filename="../core/constants.cpp" line="96"/>
         <source>Elementary Charge</source>
         <translation>Charge Élémentaire</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="58"/>
+        <location filename="../core/constants.cpp" line="97"/>
         <source>Josephson Constant</source>
         <translation>Constante de Josephson</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="59"/>
+        <location filename="../core/constants.cpp" line="98"/>
         <source>Magnetic Flux Quantum</source>
         <translation>Quantum de Flux Magnétique</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="60"/>
+        <location filename="../core/constants.cpp" line="99"/>
         <source>Nuclear Magneton</source>
         <translation>Magneton Nucléaire</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="61"/>
+        <location filename="../core/constants.cpp" line="100"/>
         <source>Resistance Quantum</source>
         <translation>Quantum de Résistance </translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="62"/>
+        <location filename="../core/constants.cpp" line="101"/>
         <source>von Klitzing Constant</source>
         <translation>Constante de von Klitzing</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="65"/>
+        <location filename="../core/constants.cpp" line="105"/>
         <source>Bohr Radius</source>
         <translation>Rayon de Bohr</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="72"/>
+        <location filename="../core/constants.cpp" line="104"/>
         <source>Atomic &amp; Nuclear</source>
         <translation>Atomique &amp; Nucléaire</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="66"/>
+        <location filename="../core/constants.cpp" line="106"/>
         <source>Fermi Coupling Constant</source>
         <translation>Constante de Fermi Coupling</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="67"/>
+        <location filename="../core/constants.cpp" line="107"/>
         <source>Fine-structure Constant</source>
         <translation>Constante de Structure Fine</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="68"/>
+        <location filename="../core/constants.cpp" line="108"/>
         <source>Hartree Energy</source>
         <translation>Énergie de Hartree</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="69"/>
+        <location filename="../core/constants.cpp" line="109"/>
         <source>Quantum of Circulation</source>
         <translation>Quantum de Circulation</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="70"/>
+        <location filename="../core/constants.cpp" line="110"/>
         <source>Rydberg Constant</source>
         <translation>Constante de Rydberg</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="71"/>
+        <location filename="../core/constants.cpp" line="111"/>
         <source>Thomson Cross Section</source>
         <translation>Section Croisée de Thomson</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="72"/>
+        <location filename="../core/constants.cpp" line="112"/>
         <source>Weak Mixing Angle</source>
         <translation>Angle de Weinberg</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="75"/>
+        <location filename="../core/constants.cpp" line="116"/>
         <source>Atomic Mass Unit</source>
         <translation>Unité de Masse Atomique</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="84"/>
+        <location filename="../core/constants.cpp" line="115"/>
         <source>Physico-chemical</source>
         <translation>Physico-chimique</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="76"/>
+        <location filename="../core/constants.cpp" line="117"/>
         <source>Avogadro&apos;s Number</source>
         <translation>Nombre d&apos;Avogadro</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="77"/>
+        <location filename="../core/constants.cpp" line="118"/>
         <source>Boltzmann Constant</source>
         <translation>Constante de Boltzmann</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="78"/>
+        <location filename="../core/constants.cpp" line="119"/>
         <source>Faraday Constant</source>
         <translation>Constante de Faraday</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="79"/>
+        <location filename="../core/constants.cpp" line="120"/>
         <source>First Radiation Constant</source>
         <translation>Constante de Première Radiation</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="80"/>
+        <location filename="../core/constants.cpp" line="121"/>
         <source>Loschmidt Constant</source>
         <translation>Constante de Loschmidt</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="81"/>
+        <location filename="../core/constants.cpp" line="122"/>
         <source>Gas Constant</source>
         <translation>Constante Universelle des Gaz Parfaits</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="82"/>
+        <location filename="../core/constants.cpp" line="123"/>
         <source>Molar Planck Constant</source>
         <translation>Constante Molaire de Planck</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="83"/>
+        <location filename="../core/constants.cpp" line="124"/>
         <source>Second Radiation Constant</source>
         <translation>Constante de Seconde Radiation</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="84"/>
+        <location filename="../core/constants.cpp" line="125"/>
         <source>Stefan-Boltzmann Constant</source>
         <translation>Constante de Stefan-Boltzmann</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="87"/>
+        <location filename="../core/constants.cpp" line="130"/>
         <source>Astronomical Unit</source>
         <translation>Unité Astronomique</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="97"/>
+        <location filename="../core/constants.cpp" line="128"/>
         <source>Astronomy</source>
         <translation>Astronomie</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="88"/>
+        <location filename="../core/constants.cpp" line="131"/>
         <source>Light Year</source>
         <translation>Année Lumière</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="89"/>
+        <location filename="../core/constants.cpp" line="132"/>
         <source>Parsec</source>
         <translation>Parsec</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="90"/>
+        <location filename="../core/constants.cpp" line="133"/>
         <source>Sidereal Year</source>
         <translation>Année Sidérale</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="92"/>
+        <location filename="../core/constants.cpp" line="129"/>
         <source>days</source>
         <translation>jours</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="91"/>
+        <location filename="../core/constants.cpp" line="134"/>
         <source>Tropical Year</source>
         <translation>Année Tropicale</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="92"/>
+        <location filename="../core/constants.cpp" line="135"/>
         <source>Gregorian Year</source>
         <translation>Année Grégorienne</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="93"/>
+        <location filename="../core/constants.cpp" line="136"/>
         <source>Earth Mass</source>
         <translation>Masse de la Terre</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="94"/>
+        <location filename="../core/constants.cpp" line="137"/>
         <source>Sun Mass</source>
         <translation>Masse du Soleil</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="95"/>
+        <location filename="../core/constants.cpp" line="138"/>
         <source>Mean Earth Radius</source>
         <translation>Rayon Moyen de la Terre </translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="96"/>
+        <location filename="../core/constants.cpp" line="139"/>
         <source>Sun Radius</source>
         <translation>Rayon du soleil</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="97"/>
+        <location filename="../core/constants.cpp" line="140"/>
         <source>Sun Luminosity</source>
         <translation>Luminosité du Soleil</translation>
     </message>
@@ -575,289 +575,14 @@
     </message>
 </context>
 <context>
-    <name>Functions</name>
+    <name>Function</name>
     <message>
-        <location filename="../core/functions.cpp" line="1241"/>
-        <source>Absolute Value</source>
-        <translation>Valeur Absolue</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1242"/>
-        <source>Average (Arithmetic Mean)</source>
-        <translation>Moyenne (Arithmétique)</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1243"/>
-        <source>Binary Representation</source>
-        <translation>Représentation Binaire</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1244"/>
-        <source>Cube Root</source>
-        <translation>Racine Cubique</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1245"/>
-        <source>Ceiling</source>
-        <translation>Plafond</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1246"/>
-        <source>Decimal Representation</source>
-        <translation>Représentation Décimale</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1247"/>
-        <source>Floor</source>
-        <translation>Plancher</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1248"/>
-        <source>Fractional Part</source>
-        <translation>Partie Fractionnée</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1250"/>
-        <source>Geometric Mean</source>
-        <translation>Géométrique</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1251"/>
-        <source>Hexadecimal Representation</source>
-        <translation>Représentation Hexadécimale</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1252"/>
-        <source>Integer Part</source>
-        <translation>Partie Entière</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1254"/>
-        <source>Maximum</source>
-        <translation>Maximum</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1255"/>
-        <source>Minimum</source>
-        <translation>Minimum</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1256"/>
-        <source>Octal Representation</source>
-        <translation>Représentation Octale</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1257"/>
-        <source>Product</source>
-        <translation>Produit</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1258"/>
-        <source>Rounding</source>
-        <translation>Arrondi</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1259"/>
-        <source>Signum</source>
-        <translation>Signum</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1260"/>
-        <source>Square Root</source>
-        <translation>Racine Carrée</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1261"/>
-        <source>Sum</source>
-        <translation>Somme</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1262"/>
-        <source>Truncation</source>
-        <translation>Troncation</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1265"/>
-        <source>Area Hyperbolic Cosine</source>
-        <translation>Area-cosinus hyperbolique</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1266"/>
-        <source>Area Hyperbolic Sine</source>
-        <translation>Area-sinus hyperbolique</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1267"/>
-        <source>Area Hyperbolic Tangent</source>
-        <translation>Area-tangente hyperbolique</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1268"/>
-        <source>Hyperbolic Cosine</source>
-        <translation>Cosinus Hyperbolique</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1269"/>
-        <source>Exponential</source>
-        <translation>Exponentiel</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1270"/>
-        <source>Base-2 Logarithm</source>
-        <translation>Logarithme de Base 2</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1271"/>
-        <source>Natural Logarithm</source>
-        <translation>Logarithme Népérien</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1272"/>
-        <source>Base-10 Logarithm</source>
-        <translation>Logarithme de Base 10</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1273"/>
-        <source>Hyperbolic Sine</source>
-        <translation>Sinus Hyperbolique</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1274"/>
-        <source>Hyperbolic Tangent</source>
-        <translation>Tangente Hyperbolique</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1277"/>
-        <source>Greatest Common Divisor</source>
-        <translation>Plus Grand Diviseur Commun</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1278"/>
-        <source>Combination (Binomial Coefficient)</source>
-        <translation>Combinaison (Coefficient Binomial)</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1279"/>
-        <source>Permutation (Arrangement)</source>
-        <translation>Permutation (Arrangement)</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1282"/>
-        <source>Binomial Cumulative Distribution Function</source>
-        <translation>Fonction de Distribution Cumulative Binomiale</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1283"/>
-        <source>Binomial Distribution Mean</source>
-        <translation>Moyenne de Distribution Binomiale</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1284"/>
-        <source>Binomial Probability Mass Function</source>
-        <translation>Fonction Binomiale de Probabilité de Masse</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1285"/>
-        <source>Binomial Distribution Variance</source>
-        <translation>Variance de Distribution Binomiale</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1288"/>
-        <source>Hypergeometric Cumulative Distribution Function</source>
-        <translation>Fonction de Distribution Cumulative Hypergéométrique</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1289"/>
-        <source>Hypergeometric Distribution Mean</source>
-        <translation>Moyenne de Distribution Hypergéométrique</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1290"/>
-        <source>Hypergeometric Probability Mass Function</source>
-        <translation>Fonction Hypergéométrique de Probabilité de Masse</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1291"/>
-        <source>Hypergeometric Distribution Variance</source>
-        <translation>Variance de Distribution Hypergéométrique</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1292"/>
-        <source>Poissonian Cumulative Distribution Function</source>
-        <translation>Fonction de Distribution Cumulative Poissonienne</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1293"/>
-        <source>Poissonian Distribution Mean</source>
-        <translation>Moyenne de Distribution Poissonienne</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1294"/>
-        <source>Poissonian Probability Mass Function</source>
-        <translation>Fonction Poissonienne de Probabilité de Masse</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1295"/>
-        <source>Poissonian Distribution Variance</source>
-        <translation>Variance de Distribution Poissonienne</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1298"/>
-        <source>Arc Cosine</source>
-        <translation>Arc Cosinus</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1299"/>
-        <source>Arc Sine</source>
-        <translation>Arc Sinus</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1300"/>
-        <source>Arc Tangent</source>
-        <translation>Arc Tangente</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1301"/>
-        <source>Cosine</source>
-        <translation>Cosinus</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1302"/>
-        <source>Cotangent</source>
-        <translation>Cotangente</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1303"/>
-        <source>Cosecant</source>
-        <translation>Cosécante</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1305"/>
-        <source>Radians</source>
-        <translation>Radians</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1306"/>
-        <source>Secant</source>
-        <translation>Sécante</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1307"/>
-        <source>Sine</source>
-        <translation>Sinus</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1308"/>
-        <source>Tangent</source>
-        <translation>Tangente</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="93"/>
+        <location filename="../core/functions.cpp" line="96"/>
         <source>cannot execute function %1</source>
         <translation>ne peut pas exécuter la fonction %1</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="101"/>
+        <location filename="../core/functions.cpp" line="102"/>
         <source>function accepts 1 argument</source>
         <translation>La fonction accepte 1 argument</translation>
     </message>
@@ -866,115 +591,396 @@
         <source>function accepts %1 arguments</source>
         <translation>La fonction accepte %1 arguments</translation>
     </message>
+</context>
+<context>
+    <name>Functions</name>
     <message>
-        <location filename="../core/functions.cpp" line="294"/>
-        <source>function requires 1 or 2 arguments</source>
-        <translation>la fonction doit avoir 1 ou 2 arguments</translation>
+        <location filename="../core/functions.cpp" line="1145"/>
+        <source>Absolute Value</source>
+        <translation>Valeur Absolue</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1033"/>
-        <source>function undefined for specified arguments</source>
-        <translation>fonction indéfinie pour les arguments spécifiés</translation>
+        <location filename="../core/functions.cpp" line="1146"/>
+        <source>Average (Arithmetic Mean)</source>
+        <translation>Moyenne (Arithmétique)</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="271"/>
-        <source>function requires at least 2 arguments</source>
-        <translation>la fonction doit avoir au moins 2 arguments</translation>
+        <location filename="../core/functions.cpp" line="1147"/>
+        <source>Binary Representation</source>
+        <translation>Représentation Binaire</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="279"/>
-        <source>function requires integer arguments</source>
-        <translation>la fonction doit avoir des arguments entiers</translation>
+        <location filename="../core/functions.cpp" line="1148"/>
+        <source>Cube Root</source>
+        <translation>Racine Cubique</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="688"/>
-        <source>function undefined for specified argument</source>
-        <translation>fonction indéfinie pour l&apos;argument spécifié</translation>
+        <location filename="../core/functions.cpp" line="1149"/>
+        <source>Ceiling</source>
+        <translation>Plafond</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="652"/>
-        <source>underflow</source>
-        <translation>insuffisance</translation>
+        <location filename="../core/functions.cpp" line="1150"/>
+        <source>Decimal Representation</source>
+        <translation>Représentation Décimale</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="761"/>
-        <source>function requires at least 1 argument</source>
-        <translation>la fonction doit avoir au moins 1 argument</translation>
+        <location filename="../core/functions.cpp" line="1151"/>
+        <source>Floor</source>
+        <translation>Plancher</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1249"/>
+        <location filename="../core/functions.cpp" line="1152"/>
+        <source>Fractional Part</source>
+        <translation>Partie Fractionnée</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1154"/>
+        <source>Geometric Mean</source>
+        <translation>Géométrique</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1155"/>
+        <source>Hexadecimal Representation</source>
+        <translation>Représentation Hexadécimale</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1156"/>
+        <source>Integer Part</source>
+        <translation>Partie Entière</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1158"/>
+        <source>Maximum</source>
+        <translation>Maximum</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1159"/>
+        <source>Minimum</source>
+        <translation>Minimum</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1160"/>
+        <source>Octal Representation</source>
+        <translation>Représentation Octale</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1161"/>
+        <source>Product</source>
+        <translation>Produit</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1162"/>
+        <source>Rounding</source>
+        <translation>Arrondi</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1163"/>
+        <source>Signum</source>
+        <translation>Signum</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1164"/>
+        <source>Square Root</source>
+        <translation>Racine Carrée</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1165"/>
+        <source>Sum</source>
+        <translation>Somme</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1166"/>
+        <source>Truncation</source>
+        <translation>Troncation</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1169"/>
+        <source>Area Hyperbolic Cosine</source>
+        <translation>Area-cosinus hyperbolique</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1170"/>
+        <source>Area Hyperbolic Sine</source>
+        <translation>Area-sinus hyperbolique</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1171"/>
+        <source>Area Hyperbolic Tangent</source>
+        <translation>Area-tangente hyperbolique</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1172"/>
+        <source>Hyperbolic Cosine</source>
+        <translation>Cosinus Hyperbolique</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1173"/>
+        <source>Exponential</source>
+        <translation>Exponentiel</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1174"/>
+        <source>Base-2 Logarithm</source>
+        <translation>Logarithme de Base 2</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1175"/>
+        <source>Natural Logarithm</source>
+        <translation>Logarithme Népérien</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1176"/>
+        <source>Base-10 Logarithm</source>
+        <translation>Logarithme de Base 10</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1177"/>
+        <source>Hyperbolic Sine</source>
+        <translation>Sinus Hyperbolique</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1178"/>
+        <source>Hyperbolic Tangent</source>
+        <translation>Tangente Hyperbolique</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1181"/>
+        <source>Greatest Common Divisor</source>
+        <translation>Plus Grand Diviseur Commun</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1182"/>
+        <source>Combination (Binomial Coefficient)</source>
+        <translation>Combinaison (Coefficient Binomial)</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1183"/>
+        <source>Permutation (Arrangement)</source>
+        <translation>Permutation (Arrangement)</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1186"/>
+        <source>Binomial Cumulative Distribution Function</source>
+        <translation>Fonction de Distribution Cumulative Binomiale</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1187"/>
+        <source>Binomial Distribution Mean</source>
+        <translation>Moyenne de Distribution Binomiale</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1188"/>
+        <source>Binomial Probability Mass Function</source>
+        <translation>Fonction Binomiale de Probabilité de Masse</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1189"/>
+        <source>Binomial Distribution Variance</source>
+        <translation>Variance de Distribution Binomiale</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1192"/>
+        <source>Hypergeometric Cumulative Distribution Function</source>
+        <translation>Fonction de Distribution Cumulative Hypergéométrique</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1193"/>
+        <source>Hypergeometric Distribution Mean</source>
+        <translation>Moyenne de Distribution Hypergéométrique</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1194"/>
+        <source>Hypergeometric Probability Mass Function</source>
+        <translation>Fonction Hypergéométrique de Probabilité de Masse</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1195"/>
+        <source>Hypergeometric Distribution Variance</source>
+        <translation>Variance de Distribution Hypergéométrique</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1196"/>
+        <source>Poissonian Cumulative Distribution Function</source>
+        <translation>Fonction de Distribution Cumulative Poissonienne</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1197"/>
+        <source>Poissonian Distribution Mean</source>
+        <translation>Moyenne de Distribution Poissonienne</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1198"/>
+        <source>Poissonian Probability Mass Function</source>
+        <translation>Fonction Poissonienne de Probabilité de Masse</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1199"/>
+        <source>Poissonian Distribution Variance</source>
+        <translation>Variance de Distribution Poissonienne</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1202"/>
+        <source>Arc Cosine</source>
+        <translation>Arc Cosinus</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1203"/>
+        <source>Arc Sine</source>
+        <translation>Arc Sinus</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1204"/>
+        <source>Arc Tangent</source>
+        <translation>Arc Tangente</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1205"/>
+        <source>Cosine</source>
+        <translation>Cosinus</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1206"/>
+        <source>Cotangent</source>
+        <translation>Cotangente</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1207"/>
+        <source>Cosecant</source>
+        <translation>Cosécante</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1209"/>
+        <source>Radians</source>
+        <translation>Radians</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1210"/>
+        <source>Secant</source>
+        <translation>Sécante</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1211"/>
+        <source>Sine</source>
+        <translation>Sinus</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1212"/>
+        <source>Tangent</source>
+        <translation>Tangente</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1153"/>
         <source>Extension of Factorials [= (x-1)!]</source>
         <translation>Extension de Factorielle [= (x-1)!]</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1253"/>
+        <location filename="../core/functions.cpp" line="1157"/>
         <source>ln(abs(Gamma))</source>
         <translation>ln(abs(Gamma))</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1286"/>
+        <location filename="../core/functions.cpp" line="1190"/>
         <source>Error Function</source>
         <translation>Fonction Erreur</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1287"/>
+        <location filename="../core/functions.cpp" line="1191"/>
         <source>Complementary Error Function</source>
         <translation>Fonction Erreur complémentaire</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1304"/>
+        <location filename="../core/functions.cpp" line="1208"/>
         <source>Degrees of Arc</source>
         <translation>Degrés de l&apos;arc</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1311"/>
+        <location filename="../core/functions.cpp" line="1215"/>
         <source>Mask to a bit size</source>
         <translation>Masquer sur une longueur de bits</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1312"/>
+        <location filename="../core/functions.cpp" line="1216"/>
         <source>Sign-extent a value</source>
         <translation>Signe une valeur en fonction d&apos;une longueur de bits</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1313"/>
+        <location filename="../core/functions.cpp" line="1217"/>
         <source>Logical NOT</source>
         <translation>NON Logique</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1314"/>
+        <location filename="../core/functions.cpp" line="1218"/>
         <source>Logical AND</source>
         <translation>ET Logique</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1315"/>
+        <location filename="../core/functions.cpp" line="1219"/>
         <source>Logical OR</source>
         <translation>OU Logique</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1316"/>
+        <location filename="../core/functions.cpp" line="1220"/>
         <source>Logical XOR</source>
         <translation>OU Exclusif Logique</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1317"/>
+        <location filename="../core/functions.cpp" line="1221"/>
         <source>Arithmetic Shift Left</source>
         <translation>Décalage arithmétique vers la gauche</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1318"/>
+        <location filename="../core/functions.cpp" line="1222"/>
         <source>Arithmetic Shift Right</source>
         <translation>Décalage arithmétique vers la droite</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1319"/>
+        <location filename="../core/functions.cpp" line="1223"/>
         <source>Integer Quotient</source>
         <translation>Quotient entier</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1320"/>
+        <location filename="../core/functions.cpp" line="1224"/>
         <source>Modulo</source>
         <translation>Reste (modulo)</translation>
+    </message>
+</context>
+<context>
+    <name>Functions::Private</name>
+    <message>
+        <location filename="../core/functions.cpp" line="274"/>
+        <source>function requires 1 or 2 arguments</source>
+        <translation>la fonction doit avoir 1 ou 2 arguments</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="942"/>
+        <source>function undefined for specified arguments</source>
+        <translation>fonction indéfinie pour les arguments spécifiés</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="256"/>
+        <source>function requires at least 2 arguments</source>
+        <translation>la fonction doit avoir au moins 2 arguments</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="262"/>
+        <source>function requires integer arguments</source>
+        <translation>la fonction doit avoir des arguments entiers</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="629"/>
+        <source>function undefined for specified argument</source>
+        <translation>fonction indéfinie pour l&apos;argument spécifié</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="599"/>
+        <source>underflow</source>
+        <translation>insuffisance</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="696"/>
+        <source>function requires at least 1 argument</source>
+        <translation>la fonction doit avoir au moins 1 argument</translation>
     </message>
 </context>
 <context>

@@ -232,257 +232,257 @@
 <context>
     <name>Constants</name>
     <message>
-        <location filename="../core/constants.cpp" line="45"/>
+        <location filename="../core/constants.cpp" line="83"/>
         <source>Characteristic Impedance of Vacuum</source>
         <translation>真空的特性阻抗</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="51"/>
+        <location filename="../core/constants.cpp" line="82"/>
         <source>General Physics</source>
         <translation>通用物理</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="46"/>
+        <location filename="../core/constants.cpp" line="84"/>
         <source>Electric Constant</source>
         <translation>电常数</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="47"/>
+        <location filename="../core/constants.cpp" line="85"/>
         <source>Magnetic Constant</source>
         <translation>磁常数</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="48"/>
+        <location filename="../core/constants.cpp" line="86"/>
         <source>Gravitation Constant</source>
         <translation>万有引力常数</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="49"/>
+        <location filename="../core/constants.cpp" line="87"/>
         <source>Planck&apos;s Constant</source>
         <translation>普朗克常数</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="50"/>
+        <location filename="../core/constants.cpp" line="88"/>
         <source>Dirac&apos;s Constant</source>
         <translation>狄拉克常数</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="51"/>
+        <location filename="../core/constants.cpp" line="89"/>
         <source>Speed of Light in Vacuum</source>
         <translation>真空中的光速</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="54"/>
+        <location filename="../core/constants.cpp" line="93"/>
         <source>Bohr-Procopiu Magneton</source>
         <translation>玻尔磁子</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="62"/>
+        <location filename="../core/constants.cpp" line="92"/>
         <source>Electromagnetic</source>
         <translation>电磁</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="55"/>
+        <location filename="../core/constants.cpp" line="94"/>
         <source>Conductance Quantum</source>
         <translation>电导量子</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="56"/>
+        <location filename="../core/constants.cpp" line="95"/>
         <source>Coulomb&apos;s Constant</source>
         <translation>库仑常数</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="57"/>
+        <location filename="../core/constants.cpp" line="96"/>
         <source>Elementary Charge</source>
         <translation>基本电荷</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="58"/>
+        <location filename="../core/constants.cpp" line="97"/>
         <source>Josephson Constant</source>
         <translation>约瑟夫逊常数</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="59"/>
+        <location filename="../core/constants.cpp" line="98"/>
         <source>Magnetic Flux Quantum</source>
         <translation>磁通量子</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="60"/>
+        <location filename="../core/constants.cpp" line="99"/>
         <source>Nuclear Magneton</source>
         <translation>核磁子</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="61"/>
+        <location filename="../core/constants.cpp" line="100"/>
         <source>Resistance Quantum</source>
         <translation>电阻量子</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="62"/>
+        <location filename="../core/constants.cpp" line="101"/>
         <source>von Klitzing Constant</source>
         <translation>克里青常数</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="65"/>
+        <location filename="../core/constants.cpp" line="105"/>
         <source>Bohr Radius</source>
         <translation>玻尔半径</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="72"/>
+        <location filename="../core/constants.cpp" line="104"/>
         <source>Atomic &amp; Nuclear</source>
         <translation>原子与原子核</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="66"/>
+        <location filename="../core/constants.cpp" line="106"/>
         <source>Fermi Coupling Constant</source>
         <translation>费米耦合常数</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="67"/>
+        <location filename="../core/constants.cpp" line="107"/>
         <source>Fine-structure Constant</source>
         <translation>精细结构常数</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="68"/>
+        <location filename="../core/constants.cpp" line="108"/>
         <source>Hartree Energy</source>
         <translation>哈特利能量</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="69"/>
+        <location filename="../core/constants.cpp" line="109"/>
         <source>Quantum of Circulation</source>
         <translation>环流量子</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="70"/>
+        <location filename="../core/constants.cpp" line="110"/>
         <source>Rydberg Constant</source>
         <translation>里德伯常数</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="71"/>
+        <location filename="../core/constants.cpp" line="111"/>
         <source>Thomson Cross Section</source>
         <translation>汤姆逊散射截面</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="72"/>
+        <location filename="../core/constants.cpp" line="112"/>
         <source>Weak Mixing Angle</source>
         <translation>弱混合角</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="75"/>
+        <location filename="../core/constants.cpp" line="116"/>
         <source>Atomic Mass Unit</source>
         <translation>原子质量单位</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="84"/>
+        <location filename="../core/constants.cpp" line="115"/>
         <source>Physico-chemical</source>
         <translation>物理化学</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="76"/>
+        <location filename="../core/constants.cpp" line="117"/>
         <source>Avogadro&apos;s Number</source>
         <translation>阿伏加德罗常数</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="77"/>
+        <location filename="../core/constants.cpp" line="118"/>
         <source>Boltzmann Constant</source>
         <translation>玻尔兹曼常数</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="78"/>
+        <location filename="../core/constants.cpp" line="119"/>
         <source>Faraday Constant</source>
         <translation>法拉第常数</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="79"/>
+        <location filename="../core/constants.cpp" line="120"/>
         <source>First Radiation Constant</source>
         <translation>第一辐射常数</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="80"/>
+        <location filename="../core/constants.cpp" line="121"/>
         <source>Loschmidt Constant</source>
         <translation>劳施密特常数</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="81"/>
+        <location filename="../core/constants.cpp" line="122"/>
         <source>Gas Constant</source>
         <translation>气体常数</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="82"/>
+        <location filename="../core/constants.cpp" line="123"/>
         <source>Molar Planck Constant</source>
         <translation>摩尔普朗克常数</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="83"/>
+        <location filename="../core/constants.cpp" line="124"/>
         <source>Second Radiation Constant</source>
         <translation>第二辐射常数</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="84"/>
+        <location filename="../core/constants.cpp" line="125"/>
         <source>Stefan-Boltzmann Constant</source>
         <translation>斯特凡-玻尔兹曼常数</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="87"/>
+        <location filename="../core/constants.cpp" line="130"/>
         <source>Astronomical Unit</source>
         <translation>天文单位</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="97"/>
+        <location filename="../core/constants.cpp" line="128"/>
         <source>Astronomy</source>
         <translation>天文</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="88"/>
+        <location filename="../core/constants.cpp" line="131"/>
         <source>Light Year</source>
         <translation>光年</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="89"/>
+        <location filename="../core/constants.cpp" line="132"/>
         <source>Parsec</source>
         <translation>天体距离单位</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="90"/>
+        <location filename="../core/constants.cpp" line="133"/>
         <source>Sidereal Year</source>
         <translation>恒星年</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="92"/>
+        <location filename="../core/constants.cpp" line="129"/>
         <source>days</source>
         <translation>天</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="91"/>
+        <location filename="../core/constants.cpp" line="134"/>
         <source>Tropical Year</source>
         <translation>回归年</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="92"/>
+        <location filename="../core/constants.cpp" line="135"/>
         <source>Gregorian Year</source>
         <translation>公历年</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="93"/>
+        <location filename="../core/constants.cpp" line="136"/>
         <source>Earth Mass</source>
         <translation>地球质量</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="94"/>
+        <location filename="../core/constants.cpp" line="137"/>
         <source>Sun Mass</source>
         <translation>太阳质量</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="95"/>
+        <location filename="../core/constants.cpp" line="138"/>
         <source>Mean Earth Radius</source>
         <translation>平均地球半径</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="96"/>
+        <location filename="../core/constants.cpp" line="139"/>
         <source>Sun Radius</source>
         <translation>太阳半径</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="97"/>
+        <location filename="../core/constants.cpp" line="140"/>
         <source>Sun Luminosity</source>
         <translation>太阳光度</translation>
     </message>
@@ -575,14 +575,14 @@
     </message>
 </context>
 <context>
-    <name>Functions</name>
+    <name>Function</name>
     <message>
-        <location filename="../core/functions.cpp" line="93"/>
+        <location filename="../core/functions.cpp" line="96"/>
         <source>cannot execute function %1</source>
         <translation>无法执行函数 %1</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="101"/>
+        <location filename="../core/functions.cpp" line="102"/>
         <source>function accepts 1 argument</source>
         <translation>函数接受 1 个参数</translation>
     </message>
@@ -591,390 +591,396 @@
         <source>function accepts %1 arguments</source>
         <translation>函数接受 %1 个参数</translation>
     </message>
+</context>
+<context>
+    <name>Functions</name>
     <message>
-        <location filename="../core/functions.cpp" line="294"/>
-        <source>function requires 1 or 2 arguments</source>
-        <translation>函数需要 1 个或者 2 个参数</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1033"/>
-        <source>function undefined for specified arguments</source>
-        <translation>函数对于特定参数没有定义</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="271"/>
-        <source>function requires at least 2 arguments</source>
-        <translation>函数需要最少 2 个参数</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="279"/>
-        <source>function requires integer arguments</source>
-        <translation>函数需要整型参数</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="688"/>
-        <source>function undefined for specified argument</source>
-        <translation>函数对于特定参数没有定义</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="652"/>
-        <source>underflow</source>
-        <translation>下溢出</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="761"/>
-        <source>function requires at least 1 argument</source>
-        <translation>函数需要最少 1 个参数</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1241"/>
+        <location filename="../core/functions.cpp" line="1145"/>
         <source>Absolute Value</source>
         <translation>绝对值</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1242"/>
+        <location filename="../core/functions.cpp" line="1146"/>
         <source>Average (Arithmetic Mean)</source>
         <translation>平均值(算术意义)</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1243"/>
+        <location filename="../core/functions.cpp" line="1147"/>
         <source>Binary Representation</source>
         <translation>二进制表示</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1244"/>
+        <location filename="../core/functions.cpp" line="1148"/>
         <source>Cube Root</source>
         <translation>立方根</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1245"/>
+        <location filename="../core/functions.cpp" line="1149"/>
         <source>Ceiling</source>
         <translation>求大于的最近整数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1246"/>
+        <location filename="../core/functions.cpp" line="1150"/>
         <source>Decimal Representation</source>
         <translation>十进制表示</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1247"/>
+        <location filename="../core/functions.cpp" line="1151"/>
         <source>Floor</source>
         <translation>求小于的最近整数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1248"/>
+        <location filename="../core/functions.cpp" line="1152"/>
         <source>Fractional Part</source>
         <translation>小数部分</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1249"/>
+        <location filename="../core/functions.cpp" line="1153"/>
         <source>Extension of Factorials [= (x-1)!]</source>
         <translation>阶乘的扩展  [= (x-1)!]</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1250"/>
+        <location filename="../core/functions.cpp" line="1154"/>
         <source>Geometric Mean</source>
         <translation>几何意义</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1251"/>
+        <location filename="../core/functions.cpp" line="1155"/>
         <source>Hexadecimal Representation</source>
         <translation>十六进制表示</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1252"/>
+        <location filename="../core/functions.cpp" line="1156"/>
         <source>Integer Part</source>
         <translation>整数部分</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1253"/>
+        <location filename="../core/functions.cpp" line="1157"/>
         <source>ln(abs(Gamma))</source>
         <translation>ln(abs(Gamma))</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1254"/>
+        <location filename="../core/functions.cpp" line="1158"/>
         <source>Maximum</source>
         <translation>最大值</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1255"/>
+        <location filename="../core/functions.cpp" line="1159"/>
         <source>Minimum</source>
         <translation>最小值</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1256"/>
+        <location filename="../core/functions.cpp" line="1160"/>
         <source>Octal Representation</source>
         <translation>八进制表示</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1257"/>
+        <location filename="../core/functions.cpp" line="1161"/>
         <source>Product</source>
         <translation type="unfinished">Product</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1258"/>
+        <location filename="../core/functions.cpp" line="1162"/>
         <source>Rounding</source>
         <translation>求最近整数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1259"/>
+        <location filename="../core/functions.cpp" line="1163"/>
         <source>Signum</source>
         <translation>符号</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1260"/>
+        <location filename="../core/functions.cpp" line="1164"/>
         <source>Square Root</source>
         <translation>平方根</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1261"/>
+        <location filename="../core/functions.cpp" line="1165"/>
         <source>Sum</source>
         <translation>求和</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1262"/>
+        <location filename="../core/functions.cpp" line="1166"/>
         <source>Truncation</source>
         <translation>去尾</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1265"/>
+        <location filename="../core/functions.cpp" line="1169"/>
         <source>Area Hyperbolic Cosine</source>
         <translation>反双曲余弦</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1266"/>
+        <location filename="../core/functions.cpp" line="1170"/>
         <source>Area Hyperbolic Sine</source>
         <translation>反双曲正弦</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1267"/>
+        <location filename="../core/functions.cpp" line="1171"/>
         <source>Area Hyperbolic Tangent</source>
         <translation>反双曲正切</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1268"/>
+        <location filename="../core/functions.cpp" line="1172"/>
         <source>Hyperbolic Cosine</source>
         <translation>双曲余弦</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1269"/>
+        <location filename="../core/functions.cpp" line="1173"/>
         <source>Exponential</source>
         <translation>指数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1270"/>
+        <location filename="../core/functions.cpp" line="1174"/>
         <source>Base-2 Logarithm</source>
         <translation>以 2 为底的对数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1271"/>
+        <location filename="../core/functions.cpp" line="1175"/>
         <source>Natural Logarithm</source>
         <translation>自然对数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1272"/>
+        <location filename="../core/functions.cpp" line="1176"/>
         <source>Base-10 Logarithm</source>
         <translation>以 10 为底的对数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1273"/>
+        <location filename="../core/functions.cpp" line="1177"/>
         <source>Hyperbolic Sine</source>
         <translation>双曲正弦</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1274"/>
+        <location filename="../core/functions.cpp" line="1178"/>
         <source>Hyperbolic Tangent</source>
         <translation>双曲正切</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1277"/>
+        <location filename="../core/functions.cpp" line="1181"/>
         <source>Greatest Common Divisor</source>
         <translation>最大公约数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1278"/>
+        <location filename="../core/functions.cpp" line="1182"/>
         <source>Combination (Binomial Coefficient)</source>
         <translation>组合(二项系数)</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1279"/>
+        <location filename="../core/functions.cpp" line="1183"/>
         <source>Permutation (Arrangement)</source>
         <translation>排列(安排)</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1282"/>
+        <location filename="../core/functions.cpp" line="1186"/>
         <source>Binomial Cumulative Distribution Function</source>
         <translation>二项累积分布函数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1283"/>
+        <location filename="../core/functions.cpp" line="1187"/>
         <source>Binomial Distribution Mean</source>
         <translation>二项分布平均值</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1284"/>
+        <location filename="../core/functions.cpp" line="1188"/>
         <source>Binomial Probability Mass Function</source>
         <translation>二项概率质量函数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1285"/>
+        <location filename="../core/functions.cpp" line="1189"/>
         <source>Binomial Distribution Variance</source>
         <translation>二项分布方差</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1286"/>
+        <location filename="../core/functions.cpp" line="1190"/>
         <source>Error Function</source>
         <translation>误差函数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1287"/>
+        <location filename="../core/functions.cpp" line="1191"/>
         <source>Complementary Error Function</source>
         <translation>互补误差函数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1288"/>
+        <location filename="../core/functions.cpp" line="1192"/>
         <source>Hypergeometric Cumulative Distribution Function</source>
         <translation>超几何累积分布函数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1289"/>
+        <location filename="../core/functions.cpp" line="1193"/>
         <source>Hypergeometric Distribution Mean</source>
         <translation>超几何分布平均值</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1290"/>
+        <location filename="../core/functions.cpp" line="1194"/>
         <source>Hypergeometric Probability Mass Function</source>
         <translation>超几何概率质量函数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1291"/>
+        <location filename="../core/functions.cpp" line="1195"/>
         <source>Hypergeometric Distribution Variance</source>
         <translation>超几何分布方差</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1292"/>
+        <location filename="../core/functions.cpp" line="1196"/>
         <source>Poissonian Cumulative Distribution Function</source>
         <translation>泊松累积分布函数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1293"/>
+        <location filename="../core/functions.cpp" line="1197"/>
         <source>Poissonian Distribution Mean</source>
         <translation>泊松分布平均值</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1294"/>
+        <location filename="../core/functions.cpp" line="1198"/>
         <source>Poissonian Probability Mass Function</source>
         <translation>泊松概率质量函数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1295"/>
+        <location filename="../core/functions.cpp" line="1199"/>
         <source>Poissonian Distribution Variance</source>
         <translation>泊松分布方差</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1298"/>
+        <location filename="../core/functions.cpp" line="1202"/>
         <source>Arc Cosine</source>
         <translation>反余弦</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1299"/>
+        <location filename="../core/functions.cpp" line="1203"/>
         <source>Arc Sine</source>
         <translation>反正弦</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1300"/>
+        <location filename="../core/functions.cpp" line="1204"/>
         <source>Arc Tangent</source>
         <translation>反正切</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1301"/>
+        <location filename="../core/functions.cpp" line="1205"/>
         <source>Cosine</source>
         <translation>余弦</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1302"/>
+        <location filename="../core/functions.cpp" line="1206"/>
         <source>Cotangent</source>
         <translation>余切</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1303"/>
+        <location filename="../core/functions.cpp" line="1207"/>
         <source>Cosecant</source>
         <translation>余割</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1304"/>
+        <location filename="../core/functions.cpp" line="1208"/>
         <source>Degrees of Arc</source>
         <translation>弧的度数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1305"/>
+        <location filename="../core/functions.cpp" line="1209"/>
         <source>Radians</source>
         <translation>弧度</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1306"/>
+        <location filename="../core/functions.cpp" line="1210"/>
         <source>Secant</source>
         <translation>正割</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1307"/>
+        <location filename="../core/functions.cpp" line="1211"/>
         <source>Sine</source>
         <translation>正弦</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1308"/>
+        <location filename="../core/functions.cpp" line="1212"/>
         <source>Tangent</source>
         <translation>正切</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1311"/>
+        <location filename="../core/functions.cpp" line="1215"/>
         <source>Mask to a bit size</source>
         <translation>反码</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1312"/>
+        <location filename="../core/functions.cpp" line="1216"/>
         <source>Sign-extent a value</source>
         <translation>反码逆运算</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1313"/>
+        <location filename="../core/functions.cpp" line="1217"/>
         <source>Logical NOT</source>
         <translation>逻辑非</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1314"/>
+        <location filename="../core/functions.cpp" line="1218"/>
         <source>Logical AND</source>
         <translation>逻辑与</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1315"/>
+        <location filename="../core/functions.cpp" line="1219"/>
         <source>Logical OR</source>
         <translation>逻辑或</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1316"/>
+        <location filename="../core/functions.cpp" line="1220"/>
         <source>Logical XOR</source>
         <translation>逻辑异或</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1317"/>
+        <location filename="../core/functions.cpp" line="1221"/>
         <source>Arithmetic Shift Left</source>
         <translation>算术左移</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1318"/>
+        <location filename="../core/functions.cpp" line="1222"/>
         <source>Arithmetic Shift Right</source>
         <translation>算术右移</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1319"/>
+        <location filename="../core/functions.cpp" line="1223"/>
         <source>Integer Quotient</source>
         <translation>整数商</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1320"/>
+        <location filename="../core/functions.cpp" line="1224"/>
         <source>Modulo</source>
         <translation>模数</translation>
+    </message>
+</context>
+<context>
+    <name>Functions::Private</name>
+    <message>
+        <location filename="../core/functions.cpp" line="274"/>
+        <source>function requires 1 or 2 arguments</source>
+        <translation>函数需要 1 个或者 2 个参数</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="942"/>
+        <source>function undefined for specified arguments</source>
+        <translation>函数对于特定参数没有定义</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="256"/>
+        <source>function requires at least 2 arguments</source>
+        <translation>函数需要最少 2 个参数</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="262"/>
+        <source>function requires integer arguments</source>
+        <translation>函数需要整型参数</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="629"/>
+        <source>function undefined for specified argument</source>
+        <translation>函数对于特定参数没有定义</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="599"/>
+        <source>underflow</source>
+        <translation>下溢出</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="696"/>
+        <source>function requires at least 1 argument</source>
+        <translation>函数需要最少 1 个参数</translation>
     </message>
 </context>
 <context>

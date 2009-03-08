@@ -236,257 +236,257 @@
 <context>
     <name>Constants</name>
     <message>
-        <location filename="../core/constants.cpp" line="45"/>
+        <location filename="../core/constants.cpp" line="83"/>
         <source>Characteristic Impedance of Vacuum</source>
         <translation>مميزات الفراغات المعيقة</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="51"/>
+        <location filename="../core/constants.cpp" line="82"/>
         <source>General Physics</source>
         <translation>الفيزياء العامة</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="46"/>
+        <location filename="../core/constants.cpp" line="84"/>
         <source>Electric Constant</source>
         <translation>الثابت الكهربائي</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="47"/>
+        <location filename="../core/constants.cpp" line="85"/>
         <source>Magnetic Constant</source>
         <translation>الثابت المغناطيسي</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="48"/>
+        <location filename="../core/constants.cpp" line="86"/>
         <source>Gravitation Constant</source>
         <translation>ثابت الجاذبية الأرضية</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="49"/>
+        <location filename="../core/constants.cpp" line="87"/>
         <source>Planck&apos;s Constant</source>
         <translation>ثابت بلانك</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="50"/>
+        <location filename="../core/constants.cpp" line="88"/>
         <source>Dirac&apos;s Constant</source>
         <translation>ثابت درك</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="51"/>
+        <location filename="../core/constants.cpp" line="89"/>
         <source>Speed of Light in Vacuum</source>
         <translation>سرعة الضوء في الفراغ</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="62"/>
+        <location filename="../core/constants.cpp" line="92"/>
         <source>Electromagnetic</source>
         <translation>الكهرومغناطيسية</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="55"/>
+        <location filename="../core/constants.cpp" line="94"/>
         <source>Conductance Quantum</source>
         <translation>الدلالة الكمية </translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="56"/>
+        <location filename="../core/constants.cpp" line="95"/>
         <source>Coulomb&apos;s Constant</source>
         <translation>ثابت كولوم</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="57"/>
+        <location filename="../core/constants.cpp" line="96"/>
         <source>Elementary Charge</source>
         <translation>الشحن العنصري</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="58"/>
+        <location filename="../core/constants.cpp" line="97"/>
         <source>Josephson Constant</source>
         <translation>ثابت جوزفين</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="59"/>
+        <location filename="../core/constants.cpp" line="98"/>
         <source>Magnetic Flux Quantum</source>
         <translation>كمية التدفق المغناطيسي</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="60"/>
+        <location filename="../core/constants.cpp" line="99"/>
         <source>Nuclear Magneton</source>
         <translation>المغناطيسية النووية</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="61"/>
+        <location filename="../core/constants.cpp" line="100"/>
         <source>Resistance Quantum</source>
         <translation>كمية المقاومة</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="62"/>
+        <location filename="../core/constants.cpp" line="101"/>
         <source>von Klitzing Constant</source>
         <translation>ثابت فون </translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="65"/>
+        <location filename="../core/constants.cpp" line="105"/>
         <source>Bohr Radius</source>
         <translation>نصف قطر- بور</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="72"/>
+        <location filename="../core/constants.cpp" line="104"/>
         <source>Atomic &amp; Nuclear</source>
         <translation>الطاقة النووية الذرية</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="66"/>
+        <location filename="../core/constants.cpp" line="106"/>
         <source>Fermi Coupling Constant</source>
         <translation>ثابت فيرمي المزدوج </translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="67"/>
+        <location filename="../core/constants.cpp" line="107"/>
         <source>Fine-structure Constant</source>
         <translation>ثابت البنية الجيدة</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="68"/>
+        <location filename="../core/constants.cpp" line="108"/>
         <source>Hartree Energy</source>
         <translation>طاقة هتري</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="69"/>
+        <location filename="../core/constants.cpp" line="109"/>
         <source>Quantum of Circulation</source>
         <translation>كمية الدوران</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="70"/>
+        <location filename="../core/constants.cpp" line="110"/>
         <source>Rydberg Constant</source>
         <translation>ثابت رايدبيرغ</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="71"/>
+        <location filename="../core/constants.cpp" line="111"/>
         <source>Thomson Cross Section</source>
         <translation>المقطع العرضي ل ثومبسون</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="72"/>
+        <location filename="../core/constants.cpp" line="112"/>
         <source>Weak Mixing Angle</source>
         <translation>دمج الزاوية الضعيف</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="75"/>
+        <location filename="../core/constants.cpp" line="116"/>
         <source>Atomic Mass Unit</source>
         <translation>وحدة الكتلة الذرية</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="84"/>
+        <location filename="../core/constants.cpp" line="115"/>
         <source>Physico-chemical</source>
         <translation>الكمياء الفيزيائية</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="76"/>
+        <location filename="../core/constants.cpp" line="117"/>
         <source>Avogadro&apos;s Number</source>
         <translation>عدد أفوغادرو</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="77"/>
+        <location filename="../core/constants.cpp" line="118"/>
         <source>Boltzmann Constant</source>
         <translation>ثابت بولتزمان</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="78"/>
+        <location filename="../core/constants.cpp" line="119"/>
         <source>Faraday Constant</source>
         <translation>ثابت فراداي</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="79"/>
+        <location filename="../core/constants.cpp" line="120"/>
         <source>First Radiation Constant</source>
         <translation>ثابت الإشعاع الأولي</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="80"/>
+        <location filename="../core/constants.cpp" line="121"/>
         <source>Loschmidt Constant</source>
         <translation>ثابت لوسكمد</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="81"/>
+        <location filename="../core/constants.cpp" line="122"/>
         <source>Gas Constant</source>
         <translation>ثابت الغاز </translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="82"/>
+        <location filename="../core/constants.cpp" line="123"/>
         <source>Molar Planck Constant</source>
         <translation>الثابت المولاري لبلانك</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="83"/>
+        <location filename="../core/constants.cpp" line="124"/>
         <source>Second Radiation Constant</source>
         <translation>ثابت الإشعاع الثاني</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="84"/>
+        <location filename="../core/constants.cpp" line="125"/>
         <source>Stefan-Boltzmann Constant</source>
         <translation>ثابت ستيفن بولتزمان</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="87"/>
+        <location filename="../core/constants.cpp" line="130"/>
         <source>Astronomical Unit</source>
         <translation>وحدة فضائية</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="97"/>
+        <location filename="../core/constants.cpp" line="128"/>
         <source>Astronomy</source>
         <translation>علم الفلك</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="88"/>
+        <location filename="../core/constants.cpp" line="131"/>
         <source>Light Year</source>
         <translation>سنة ضوئية</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="89"/>
+        <location filename="../core/constants.cpp" line="132"/>
         <source>Parsec</source>
         <translation>البارسك</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="90"/>
+        <location filename="../core/constants.cpp" line="133"/>
         <source>Sidereal Year</source>
         <translation>سنة فلكية</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="92"/>
+        <location filename="../core/constants.cpp" line="129"/>
         <source>days</source>
         <translation>أيام</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="91"/>
+        <location filename="../core/constants.cpp" line="134"/>
         <source>Tropical Year</source>
         <translation>سنة مدارية</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="92"/>
+        <location filename="../core/constants.cpp" line="135"/>
         <source>Gregorian Year</source>
         <translation>سنة جريجورية</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="93"/>
+        <location filename="../core/constants.cpp" line="136"/>
         <source>Earth Mass</source>
         <translation>كتلة الأرض</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="94"/>
+        <location filename="../core/constants.cpp" line="137"/>
         <source>Sun Mass</source>
         <translation>كتلة الشمس</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="95"/>
+        <location filename="../core/constants.cpp" line="138"/>
         <source>Mean Earth Radius</source>
         <translation>متوسط نصف قطر الأرض </translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="96"/>
+        <location filename="../core/constants.cpp" line="139"/>
         <source>Sun Radius</source>
         <translation>نصف قطر الشمس</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="97"/>
+        <location filename="../core/constants.cpp" line="140"/>
         <source>Sun Luminosity</source>
         <translation>الإشعاع الشمسي</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="54"/>
+        <location filename="../core/constants.cpp" line="93"/>
         <source>Bohr-Procopiu Magneton</source>
         <translation>مغناطيسية بور - بروكوبيو</translation>
     </message>
@@ -579,407 +579,413 @@
     </message>
 </context>
 <context>
+    <name>Function</name>
+    <message>
+        <location filename="../core/functions.cpp" line="96"/>
+        <source>cannot execute function %1</source>
+        <translation type="unfinished">لايمكن تنفيذ الاقتران %1</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="102"/>
+        <source>function accepts 1 argument</source>
+        <translation type="unfinished">يقبل الاقتران مدخل واحد</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="104"/>
+        <source>function accepts %1 arguments</source>
+        <translation type="unfinished"> يقبل الاقتران 1% مدخل/مدخلات</translation>
+    </message>
+</context>
+<context>
     <name>Functions</name>
     <message>
-        <location filename="../core/functions.cpp" line="1241"/>
+        <location filename="../core/functions.cpp" line="1145"/>
         <source>Absolute Value</source>
         <translation>القيمة المطلقة</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1242"/>
+        <location filename="../core/functions.cpp" line="1146"/>
         <source>Average (Arithmetic Mean)</source>
         <translation>المعدل (المتوسط الحسابي)
 </translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1243"/>
+        <location filename="../core/functions.cpp" line="1147"/>
         <source>Binary Representation</source>
         <translation>التمثيل الثنائي</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1244"/>
+        <location filename="../core/functions.cpp" line="1148"/>
         <source>Cube Root</source>
         <translation>الجذر التكعيبي</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1245"/>
+        <location filename="../core/functions.cpp" line="1149"/>
         <source>Ceiling</source>
         <translation>الحدالأقصى</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1246"/>
+        <location filename="../core/functions.cpp" line="1150"/>
         <source>Decimal Representation</source>
         <translation>التمثيل العشري</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1247"/>
+        <location filename="../core/functions.cpp" line="1151"/>
         <source>Floor</source>
         <translation>الحد الأدنى</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1248"/>
+        <location filename="../core/functions.cpp" line="1152"/>
         <source>Fractional Part</source>
         <translation>الجزء الكسري</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1250"/>
+        <location filename="../core/functions.cpp" line="1154"/>
         <source>Geometric Mean</source>
         <translation>المتوسط الهندسي</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1251"/>
+        <location filename="../core/functions.cpp" line="1155"/>
         <source>Hexadecimal Representation</source>
         <translation>التمثيل السداسي عشري</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1252"/>
+        <location filename="../core/functions.cpp" line="1156"/>
         <source>Integer Part</source>
         <translation>الجزء الصحيح</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1254"/>
+        <location filename="../core/functions.cpp" line="1158"/>
         <source>Maximum</source>
         <translation>الحد الأقصى</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1255"/>
+        <location filename="../core/functions.cpp" line="1159"/>
         <source>Minimum</source>
         <translation>الحد الأدنى</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1256"/>
+        <location filename="../core/functions.cpp" line="1160"/>
         <source>Octal Representation</source>
         <translation>التمثيل الثماني</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1257"/>
+        <location filename="../core/functions.cpp" line="1161"/>
         <source>Product</source>
         <translation>حاصل الضرب</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1258"/>
+        <location filename="../core/functions.cpp" line="1162"/>
         <source>Rounding</source>
         <translation>التقريب</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1259"/>
+        <location filename="../core/functions.cpp" line="1163"/>
         <source>Signum</source>
         <translation>رقم ذو اشارة</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1260"/>
+        <location filename="../core/functions.cpp" line="1164"/>
         <source>Square Root</source>
         <translation>الجذر التربيعي</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1261"/>
+        <location filename="../core/functions.cpp" line="1165"/>
         <source>Sum</source>
         <translation>المجموع</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1262"/>
+        <location filename="../core/functions.cpp" line="1166"/>
         <source>Truncation</source>
         <translation>تقليم</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1265"/>
+        <location filename="../core/functions.cpp" line="1169"/>
         <source>Area Hyperbolic Cosine</source>
         <translation>جيب تمام مساحة القطع الزائد</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1266"/>
+        <location filename="../core/functions.cpp" line="1170"/>
         <source>Area Hyperbolic Sine</source>
         <translation> جيب مساحة القطع الزائد </translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1267"/>
+        <location filename="../core/functions.cpp" line="1171"/>
         <source>Area Hyperbolic Tangent</source>
         <translation> ظل مساحة القطع الزائد </translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1268"/>
+        <location filename="../core/functions.cpp" line="1172"/>
         <source>Hyperbolic Cosine</source>
         <translation>جيب تمام القطع الزائد</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1269"/>
+        <location filename="../core/functions.cpp" line="1173"/>
         <source>Exponential</source>
         <translation>الأس</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1270"/>
+        <location filename="../core/functions.cpp" line="1174"/>
         <source>Base-2 Logarithm</source>
         <translation>اللوغارتم للأساس 2</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1271"/>
+        <location filename="../core/functions.cpp" line="1175"/>
         <source>Natural Logarithm</source>
         <translation>اللوغارتم الطبيعي</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1272"/>
+        <location filename="../core/functions.cpp" line="1176"/>
         <source>Base-10 Logarithm</source>
         <translation>اللوغاريتم للأساس 10</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1273"/>
+        <location filename="../core/functions.cpp" line="1177"/>
         <source>Hyperbolic Sine</source>
         <translation> جيب القطع الزائد </translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1274"/>
+        <location filename="../core/functions.cpp" line="1178"/>
         <source>Hyperbolic Tangent</source>
         <translation> ظل القطع الزائد </translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1277"/>
+        <location filename="../core/functions.cpp" line="1181"/>
         <source>Greatest Common Divisor</source>
         <translation>القاسم المشترك الأكبر</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1278"/>
+        <location filename="../core/functions.cpp" line="1182"/>
         <source>Combination (Binomial Coefficient)</source>
         <translation>جمع كثيرات الحدود</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1279"/>
+        <location filename="../core/functions.cpp" line="1183"/>
         <source>Permutation (Arrangement)</source>
         <translation>التباديل</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1282"/>
+        <location filename="../core/functions.cpp" line="1186"/>
         <source>Binomial Cumulative Distribution Function</source>
         <translation>التوزيع التراكمي لكثيرات الحدود</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1283"/>
+        <location filename="../core/functions.cpp" line="1187"/>
         <source>Binomial Distribution Mean</source>
         <translation>التوزيع المتوسط لكثيرات الحدود</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1284"/>
+        <location filename="../core/functions.cpp" line="1188"/>
         <source>Binomial Probability Mass Function</source>
         <translation>الإحتمال الكتلي لإقترانات كثيرات الحدود</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1285"/>
+        <location filename="../core/functions.cpp" line="1189"/>
         <source>Binomial Distribution Variance</source>
         <translation>التوزيع المتباين لكثيرات الحدود</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1288"/>
+        <location filename="../core/functions.cpp" line="1192"/>
         <source>Hypergeometric Cumulative Distribution Function</source>
         <translation>التوزيع التراكمي للإقتران الهندسي</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1289"/>
+        <location filename="../core/functions.cpp" line="1193"/>
         <source>Hypergeometric Distribution Mean</source>
         <translation>التوزيع الهندسي المتوسط</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1290"/>
+        <location filename="../core/functions.cpp" line="1194"/>
         <source>Hypergeometric Probability Mass Function</source>
         <translation>الاحتمال الكتلي للاقتران الهندسي</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1291"/>
+        <location filename="../core/functions.cpp" line="1195"/>
         <source>Hypergeometric Distribution Variance</source>
         <translation>التوزيع المتباين للإقتران الهندسي</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1292"/>
+        <location filename="../core/functions.cpp" line="1196"/>
         <source>Poissonian Cumulative Distribution Function</source>
         <translation>التوزيع التراكمي النقطي للإقتران</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1293"/>
+        <location filename="../core/functions.cpp" line="1197"/>
         <source>Poissonian Distribution Mean</source>
         <translation>التوزيع المتوسط النقطي</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1294"/>
+        <location filename="../core/functions.cpp" line="1198"/>
         <source>Poissonian Probability Mass Function</source>
         <translation> الإحتمال النقطي الكتلي للإقتران </translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1295"/>
+        <location filename="../core/functions.cpp" line="1199"/>
         <source>Poissonian Distribution Variance</source>
         <translation>فرق بويسون التوزيعي</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1298"/>
+        <location filename="../core/functions.cpp" line="1202"/>
         <source>Arc Cosine</source>
         <translation>جيب تمام القوس </translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1299"/>
+        <location filename="../core/functions.cpp" line="1203"/>
         <source>Arc Sine</source>
         <translation> جيب القوس </translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1300"/>
+        <location filename="../core/functions.cpp" line="1204"/>
         <source>Arc Tangent</source>
         <translation> ظل القوس</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1301"/>
+        <location filename="../core/functions.cpp" line="1205"/>
         <source>Cosine</source>
         <translation>جيب التمام</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1302"/>
+        <location filename="../core/functions.cpp" line="1206"/>
         <source>Cotangent</source>
         <translation>ظل التمام</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1303"/>
+        <location filename="../core/functions.cpp" line="1207"/>
         <source>Cosecant</source>
         <translation>قاطع التمام</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1305"/>
+        <location filename="../core/functions.cpp" line="1209"/>
         <source>Radians</source>
         <translation>نصف القطر</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1306"/>
+        <location filename="../core/functions.cpp" line="1210"/>
         <source>Secant</source>
         <translation>القاطع</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1307"/>
+        <location filename="../core/functions.cpp" line="1211"/>
         <source>Sine</source>
         <translation>جيب</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1308"/>
+        <location filename="../core/functions.cpp" line="1212"/>
         <source>Tangent</source>
         <translation>ظل</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="93"/>
-        <source>cannot execute function %1</source>
-        <translation>لايمكن تنفيذ الاقتران %1</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="101"/>
-        <source>function accepts 1 argument</source>
-        <translation>يقبل الاقتران مدخل واحد</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="104"/>
-        <source>function accepts %1 arguments</source>
-        <translation> يقبل الاقتران 1% مدخل/مدخلات</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="294"/>
-        <source>function requires 1 or 2 arguments</source>
-        <translation>الاقتران بحاجة الى مدخل أو مدخلين</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1033"/>
-        <source>function undefined for specified arguments</source>
-        <translation>الاقتران غير معرف للمدخلات المحددة</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="271"/>
-        <source>function requires at least 2 arguments</source>
-        <translation>الاقتران بحاجة على الأقل إلى مدخلين</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="279"/>
-        <source>function requires integer arguments</source>
-        <translation>الاقتران بحاجة إلى مدخلات أعداد صحيحة</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="688"/>
-        <source>function undefined for specified argument</source>
-        <translation> الاقتران غيرمعرف للمدخل المحدد </translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="652"/>
-        <source>underflow</source>
-        <translation>غير متدفق</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="761"/>
-        <source>function requires at least 1 argument</source>
-        <translation> الاقتران بحاجة الى مدخل واحد على الاقل </translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1249"/>
+        <location filename="../core/functions.cpp" line="1153"/>
         <source>Extension of Factorials [= (x-1)!]</source>
         <translation> امتداد المضروب[= (x-1)!] </translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1253"/>
+        <location filename="../core/functions.cpp" line="1157"/>
         <source>ln(abs(Gamma))</source>
         <translation>لو (أكبر عدد صحيح(الثابت))</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1286"/>
+        <location filename="../core/functions.cpp" line="1190"/>
         <source>Error Function</source>
         <translation>خطأ في الاقتران</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1287"/>
+        <location filename="../core/functions.cpp" line="1191"/>
         <source>Complementary Error Function</source>
         <translation>خطأ مكمل للاقتران</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1304"/>
+        <location filename="../core/functions.cpp" line="1208"/>
         <source>Degrees of Arc</source>
         <translation>درجات القوس</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1311"/>
+        <location filename="../core/functions.cpp" line="1215"/>
         <source>Mask to a bit size</source>
         <translation>تحويل لأصغر جزء</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1312"/>
+        <location filename="../core/functions.cpp" line="1216"/>
         <source>Sign-extent a value</source>
         <translation>امتداد الإشارة للقيمة</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1313"/>
+        <location filename="../core/functions.cpp" line="1217"/>
         <source>Logical NOT</source>
         <translation>NOT المنطقية </translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1314"/>
+        <location filename="../core/functions.cpp" line="1218"/>
         <source>Logical AND</source>
         <translation>العلاقة المنطقية &quot;و&quot; - &quot;AND&quot;</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1315"/>
+        <location filename="../core/functions.cpp" line="1219"/>
         <source>Logical OR</source>
         <translation>العلاقة المنطقية &quot;أو &quot; - &quot;OR&quot;</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1316"/>
+        <location filename="../core/functions.cpp" line="1220"/>
         <source>Logical XOR</source>
         <translation>XOR المنطقية</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1317"/>
+        <location filename="../core/functions.cpp" line="1221"/>
         <source>Arithmetic Shift Left</source>
         <translation>الحساب بالانتقال لليسار</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1318"/>
+        <location filename="../core/functions.cpp" line="1222"/>
         <source>Arithmetic Shift Right</source>
         <translation> الحساب بالانتقال لليمين </translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1319"/>
+        <location filename="../core/functions.cpp" line="1223"/>
         <source>Integer Quotient</source>
         <translation>القسمة الصحيحة</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1320"/>
+        <location filename="../core/functions.cpp" line="1224"/>
         <source>Modulo</source>
         <translation>باقي القسمة</translation>
+    </message>
+</context>
+<context>
+    <name>Functions::Private</name>
+    <message>
+        <location filename="../core/functions.cpp" line="274"/>
+        <source>function requires 1 or 2 arguments</source>
+        <translation>الاقتران بحاجة الى مدخل أو مدخلين</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="942"/>
+        <source>function undefined for specified arguments</source>
+        <translation>الاقتران غير معرف للمدخلات المحددة</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="256"/>
+        <source>function requires at least 2 arguments</source>
+        <translation>الاقتران بحاجة على الأقل إلى مدخلين</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="262"/>
+        <source>function requires integer arguments</source>
+        <translation>الاقتران بحاجة إلى مدخلات أعداد صحيحة</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="629"/>
+        <source>function undefined for specified argument</source>
+        <translation> الاقتران غيرمعرف للمدخل المحدد </translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="599"/>
+        <source>underflow</source>
+        <translation>غير متدفق</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="696"/>
+        <source>function requires at least 1 argument</source>
+        <translation> الاقتران بحاجة الى مدخل واحد على الاقل </translation>
     </message>
 </context>
 <context>
