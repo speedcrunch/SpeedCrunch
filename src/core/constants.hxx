@@ -38,13 +38,13 @@ public:
 
     Constant( const QString & n, const QString & v, const QString & u,
               const QString & cat )
-        : name( n ), value( v ), unit( u )
-    { categories << cat; }
+        : categories( QStringList() << cat ),
+        name( n ), value( v ), unit( u ) {}
 
     Constant( const QString & n, const QString & v, const QString & u,
               const QString & cat1, const QString & cat2 )
-        : name( n ), value( v ), unit( u )
-    {  categories << cat1; categories << cat2; }
+        : categories( QStringList() << cat1 << cat2 ),
+        name( n ), value( v ), unit( u ) {}
 };
 
 class Constants : public QObject
