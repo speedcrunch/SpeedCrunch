@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="de_DE">
+<defaultcodec></defaultcodec>
 <context>
     <name>AboutBox</name>
     <message>
@@ -35,12 +36,12 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="175"/>
         <source>This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version</source>
-        <translation>Dieses Programm ist freie Software. Sie können es unter den Bedingungen der GNU General Public License Version 2 (GPL), wie von der Free Software Foundation herausgegeben, weitergeben</translation>
+        <translation>Dieses Programm ist freie Software. Sie können es weitergeben oder ändern, solange Sie dabei den Bedingungen der GNU General Public License Version 2 (GPL) oder einer späteren Version, wie von der Free Software Foundation herausgegeben, folgen.</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="181"/>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.</source>
-        <translation>Dieses Programm ist frei erhältlich in der Hoffnung es könnte von Nutzen sein. Die Veröffentlichung dieses Programms erfolgt OHNE JEDE GEWAEHRLEISTUNG. Details finden Sie in der GNU General Public License (GPL).</translation>
+        <translation>Dieses Programm wird in der Hoffnung verbreitet, dass es von Nutzen ist, jedoch OHNE JEDE GEWÄHRLEISTUNG und ohne Zusicherung seiner TAUGLICHKEIT, weder im allgemeinen noch für besondere Zwecke. Details finden Sie in der GNU General Public License (GPL).</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="216"/>
@@ -374,7 +375,7 @@
     <message>
         <location filename="../core/constants.cpp" line="115"/>
         <source>Physico-chemical</source>
-        <translation>Physikalischen Chemie</translation>
+        <translation>Physikalische Chemie</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="117"/>
@@ -464,22 +465,22 @@
     <message>
         <location filename="../core/constants.cpp" line="136"/>
         <source>Earth Mass</source>
-        <translation>Masse der Erde</translation>
+        <translation>Erdmasse</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="137"/>
         <source>Sun Mass</source>
-        <translation>Masse der Sonne</translation>
+        <translation>Sonnenmasse</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="138"/>
         <source>Mean Earth Radius</source>
-        <translation>Mittlerer Radius der Erde</translation>
+        <translation>Mittlerer Erdradius</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="139"/>
         <source>Sun Radius</source>
-        <translation>Radius der Sonne</translation>
+        <translation>Sonnenradius</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="140"/>
@@ -697,7 +698,7 @@
     <message>
         <location filename="../core/functions.cpp" line="1169"/>
         <source>Area Hyperbolic Cosine</source>
-        <translation>Areakosinus Hyperbolicus</translation>
+        <translation>Areacosinus Hyperbolicus</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1170"/>
@@ -1181,12 +1182,12 @@
     <message>
         <location filename="../gui/mainwindow.cpp" line="2071"/>
         <source>To insert a function using keyboard, use Ctrl+F shorcut. From the dialog, you can choose the function you want to insert.</source>
-        <translation>Um eine Funktion mittels der Tastatur einzufügen, kann man die Tastenkombination Strg+F verwenden. Im sich nun öffnenden Dialog lässt sich jede der vorhandenen Funktionen auswählen und einfügen.</translation>
+        <translation>Um eine Funktion mittels der Tastatur einzufügen, verwenden Sie die Tastenkombination Strg+F. Im sich nun öffnenden Dialog lässt sich jede der vorhandenen Funktionen auswählen und einfügen.</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2076"/>
         <source>To insert a variable using keyboard, use Ctrl+I shorcut. From the dialog, you can choose the variable you want to insert.</source>
-        <translation>Um eine Variable mittels der Tastatur einzufügen, kann man die Tastenkombination Strg+I verwenden. Im sich nun öffnenden Dialog lässt sich jede der vorhandenen Variablen auswählen und einfügen.</translation>
+        <translation>Um eine Variable mittels der Tastatur einzufügen, benutzen Sie die Tastenkombination Strg+I. Im sich nun öffnenden Dialog lässt sich jede der vorhandenen Variablen auswählen und einfügen.</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2079"/>
@@ -1422,7 +1423,7 @@ Falls nein, werden aktuelle Variablen und Anzeigen gelöscht.</translation>
     <message>
         <location filename="../gui/mainwindow.cpp" line="550"/>
         <source>&amp;Minimize To System Tray</source>
-        <translation>Zu Kontrollleisten-Symbol minimieren</translation>
+        <translation>&amp;Zu Kontrollleisten-Symbol minimieren</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="554"/>
