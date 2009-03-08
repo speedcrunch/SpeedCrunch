@@ -1,3 +1,12 @@
+!contains( QT_MAJOR_VERSION, 4 ) {
+    error( unsupported Qt major version $$QT_MAJOR_VERSION found but 4 required )
+}
+!contains( QT_MINOR_VERSION, 4 ) {
+    !contains( QT_MINOR_VERSION, 5 ) {
+        error( unsupported Qt minor version $$QT_MINOR_VERSION found but 4 or 5 required )
+    }
+}
+
 TEMPLATE = app
 
 TARGET = speedcrunch
@@ -162,3 +171,4 @@ TRANSLATIONS += locale/ar.ts \
                 locale/zh_CN.ts
 
 win32:RC_FILE = resources/speedcrunch.rc
+
