@@ -1115,9 +1115,9 @@ struct ConstantCompletion::Private
 {
   QTreeWidget *   categoryList;
   QList<Constant> constants;
-  QTreeWidget *   constantList;
   Editor *        editor;
   QString         lastCategory;
+  QTreeWidget *   list;
   QFrame *        popup;
   QTimeLine *     slider;
 };
@@ -1147,20 +1147,20 @@ ConstantCompletion::ConstantCompletion( Editor * editor ) : QObject( editor ),
   connect( d->categoryList, SIGNAL( itemClicked( QTreeWidgetItem *, int ) ),
            this, SLOT( showConstants() ) );
 
-  d->constantList = new QTreeWidget( d->popup );
-  d->constantList->setFrameShape( QFrame::NoFrame );
-  d->constantList->setColumnCount( 2 );
-  d->constantList->setColumnHidden( 1, true );
-  d->constantList->setRootIsDecorated( false );
-  d->constantList->header()->hide();
-  d->constantList->setEditTriggers( QTreeWidget::NoEditTriggers );
-  d->constantList->setSelectionBehavior( QTreeWidget::SelectRows );
-  d->constantList->setMouseTracking( true );
-  d->constantList->installEventFilter( this );
-  d->constantList->setVerticalScrollBarPolicy( Qt::ScrollBarAsNeeded );
+  d->list = new QTreeWidget( d->popup );
+  d->list->setFrameShape( QFrame::NoFrame );
+  d->list->setColumnCount( 2 );
+  d->list->setColumnHidden( 1, true );
+  d->list->setRootIsDecorated( false );
+  d->list->header()->hide();
+  d->list->setEditTriggers( QTreeWidget::NoEditTriggers );
+  d->list->setSelectionBehavior( QTreeWidget::SelectRows );
+  d->list->setMouseTracking( true );
+  d->list->installEventFilter( this );
+  d->list->setVerticalScrollBarPolicy( Qt::ScrollBarAsNeeded );
 
   // FIXME: why does it crash when clicking a constant description?
-  connect( d->constantList, SIGNAL( itemClicked( QTreeWidgetItem *, int ) ),
+  connect( d->list, SIGNAL( itemClicked( QTreeWidgetItem *, int ) ),
            this, SLOT( doneCompletion() ) );
 
   d->slider = new QTimeLine( 250, d->popup );
@@ -1169,45 +1169,45 @@ ConstantCompletion::ConstantCompletion( Editor * editor ) : QObject( editor ),
            this, SLOT( slide( int ) ) );
 
   Constants * ct = Constants::instance();
-  d->constants = ct->constantList();
+  d->constants = ct->list();
 
   // populate categories
   QStringList str;
   str << tr( "All" );
   QTreeWidgetItem * all = new QTreeWidgetItem( d->categoryList, str );
-  for ( int k = 0; k < ct->categoryList().count(); k++ )
+  for ( int k = 0; k < ct->categories().count(); k++ )
   {
     str.clear();
-    str << ct->categoryList().at( k );
+    str << ct->categories().at( k );
     new QTreeWidgetItem( d->categoryList, str );
   }
   d->categoryList->setCurrentItem( all );
 
   // populate constants
   d->lastCategory = tr( "All" );
-  for ( int k = 0; k < ct->constantList().count(); k++ )
+  for ( int k = 0; k < ct->list().count(); k++ )
   {
     QStringList str;
-    str << ct->constantList().at( k ).name;
-    str << ct->constantList().at( k ).name.toUpper();
-    new QTreeWidgetItem( d->constantList, str );
+    str << ct->list().at( k ).name;
+    str << ct->list().at( k ).name.toUpper();
+    new QTreeWidgetItem( d->list, str );
   }
-  d->constantList->sortItems( 0, Qt::AscendingOrder );
+  d->list->sortItems( 0, Qt::AscendingOrder );
 
   // find size, the biggest between both
-  d->constantList->resizeColumnToContents( 0 );
+  d->list->resizeColumnToContents( 0 );
   d->categoryList->resizeColumnToContents( 0 );
-  int ww = qMax( d->constantList->width(), d->categoryList->width() );
-  int h1 = d->constantList->sizeHintForRow( 0 ) * qMin(7, d->constants.count())
+  int ww = qMax( d->list->width(), d->categoryList->width() );
+  int h1 = d->list->sizeHintForRow( 0 ) * qMin(7, d->constants.count())
              + 3;
   int h2 = d->categoryList->sizeHintForRow( 0 )
-             * qMin(7, ct->categoryList().count()) + 3;
+             * qMin(7, ct->categories().count()) + 3;
   int hh = qMax( h1, h2 );
   ww += 200; // extra space (FIXME scrollbar size?)
 
   // adjust dimensions
   d->popup->resize( ww, hh );
-  d->constantList->resize( ww, hh );
+  d->list->resize( ww, hh );
   d->categoryList->resize( ww, hh );
 }
 
@@ -1230,7 +1230,7 @@ void ConstantCompletion::showConstants()
   d->slider->setFrameRange( 0, d->popup->width() );
   d->slider->stop();
   d->slider->start();
-  d->constantList->setFocus();
+  d->list->setFocus();
 
   QString chosenCategory;
   if ( d->categoryList->currentItem() )
@@ -1239,7 +1239,7 @@ void ConstantCompletion::showConstants()
   if ( d->lastCategory == chosenCategory )
     return;
 
-  d->constantList->clear();
+  d->list->clear();
   for ( int k = 0; k < d->constants.count(); k++ )
   {
     QStringList str;
@@ -1252,10 +1252,10 @@ void ConstantCompletion::showConstants()
     if ( ! include )
       continue;
 
-    new QTreeWidgetItem( d->constantList, str );
+    new QTreeWidgetItem( d->list, str );
   }
-  d->constantList->sortItems( 0, Qt::AscendingOrder );
-  d->constantList->setCurrentItem( d->constantList->itemAt( 0, 0 ) );
+  d->list->sortItems( 0, Qt::AscendingOrder );
+  d->list->setCurrentItem( d->list->itemAt( 0, 0 ) );
   d->lastCategory = chosenCategory;
 }
 
@@ -1267,7 +1267,7 @@ bool ConstantCompletion::eventFilter( QObject * obj, QEvent * ev )
     return true;
   }
 
-  if ( obj == d->constantList )
+  if ( obj == d->list )
   {
     if ( ev->type() == QEvent::KeyPress )
     {
@@ -1333,7 +1333,7 @@ void ConstantCompletion::doneCompletion()
 {
   d->editor->setFocus();
   QTreeWidgetItem * item = 0;
-  item = d->constantList->currentItem();
+  item = d->list->currentItem();
   QString c;
   if ( item )
     for ( int k = 0; k < d->constants.count(); k++ )
@@ -1375,6 +1375,6 @@ void ConstantCompletion::showCompletion()
 void ConstantCompletion::slide( int v )
 {
   d->categoryList->move( -v, 0 );
-  d->constantList->move( d->popup->width() - v, 0 );
+  d->list->move( d->popup->width() - v, 0 );
 }
 

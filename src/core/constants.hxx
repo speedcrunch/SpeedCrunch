@@ -27,47 +27,47 @@
 class Constant
 {
 public:
+    QStringList categories;
     QString name;
     QString value;
     QString unit;
-    QStringList categories;
 
     Constant( const QString & n, const QString & v, const QString & u,
               const QStringList & cat )
-      : name( n ), value( v ), unit( u ), categories( cat ) {}
+        : categories( cat ), name( n ), value( v ), unit( u ) {}
 
     Constant( const QString & n, const QString & v, const QString & u,
               const QString & cat )
-      : name( n ), value( v ), unit( u )
+        : name( n ), value( v ), unit( u )
     { categories << cat; }
 
     Constant( const QString & n, const QString & v, const QString & u,
               const QString & cat1, const QString & cat2 )
-      : name( n ), value( v ), unit( u )
+        : name( n ), value( v ), unit( u )
     {  categories << cat1; categories << cat2; }
 };
 
 class Constants : public QObject
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
     static Constants * instance();
     ~Constants();
 
-    QList<Constant> constantList() const;
-    QStringList     categoryList() const;
+    QStringList categories() const;
+    const QList<Constant> & list() const;
 
 public slots:
     void retranslateText();
 
 private:
+    struct Private;
+    const std::auto_ptr<Private> d;
+
     Constants();
     Constants( const Constants & );
     Constants & operator=( const Constants & );
-
-    struct Private;
-    const std::auto_ptr<Private> d;
 };
 
 #endif
