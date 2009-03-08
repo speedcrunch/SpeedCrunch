@@ -58,9 +58,9 @@
 #include <QtGui/QScrollBar>
 #include <QtGui/QStatusBar>
 #include <QtGui/QVBoxLayout>
+#ifdef Q_WS_X11
 #include <QtGui/QX11Info>
 
-#ifdef Q_WS_X11
 #include <X11/Xatom.h>
 #include <X11/Xlib.h>
 #endif // Q_WS_X11
