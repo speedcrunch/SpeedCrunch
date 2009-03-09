@@ -581,21 +581,12 @@
         <source>cannot execute function %1</source>
         <translation>ezin da %1 funtzioa exekutatu</translation>
     </message>
-    <message>
-        <location filename="../core/functions.cpp" line="102"/>
-        <source>function accepts 1 argument</source>
-        <translation type="obsolete">funtzioak argumentu 1 onartzen du</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="104"/>
-        <source>function accepts %1 arguments</source>
-        <translation type="obsolete">funtzioak %1 argumentu onartzen ditu</translation>
-    </message>
     <message numerus="yes">
         <location filename="../core/functions.cpp" line="101"/>
         <source>function accepts %1 argument(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>funtzioak argumentu %1 onartzen du</numerusform>
+            <numerusform>funtzioak %1 argumentu onartzen ditu</numerusform>
         </translation>
     </message>
 </context>
@@ -1141,527 +1132,527 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="875"/>
+        <location filename="../gui/mainwindow.cpp" line="860"/>
         <source>Math Book</source>
         <translation>Matematika Liburua</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1712"/>
+        <location filename="../gui/mainwindow.cpp" line="1682"/>
         <source>Radian</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1341"/>
+        <location filename="../gui/mainwindow.cpp" line="1342"/>
         <source>Degree</source>
         <translation>Gradu</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2099"/>
+        <location filename="../gui/mainwindow.cpp" line="2046"/>
         <source>Binary</source>
         <translation>Bitarra</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2144"/>
+        <location filename="../gui/mainwindow.cpp" line="2091"/>
         <source>Octal</source>
         <translation>Zortzitarra</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2135"/>
+        <location filename="../gui/mainwindow.cpp" line="2082"/>
         <source>Hexadecimal</source>
         <translation>Hamaseitarra</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2117"/>
+        <location filename="../gui/mainwindow.cpp" line="2064"/>
         <source>Fixed decimal</source>
         <translation>Hamartar finkoa</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2108"/>
+        <location filename="../gui/mainwindow.cpp" line="2055"/>
         <source>Engineering decimal</source>
         <translation>Ingeniaritzako hamartarra</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2153"/>
+        <location filename="../gui/mainwindow.cpp" line="2100"/>
         <source>Scientific decimal</source>
         <translation>Hamartar zientifikoa</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2126"/>
+        <location filename="../gui/mainwindow.cpp" line="2073"/>
         <source>General decimal</source>
         <translation>Hamarar orokorra</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="512"/>
+        <location filename="../gui/mainwindow.cpp" line="499"/>
         <source>Angle unit</source>
         <translation>Angelu unitatea</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="513"/>
+        <location filename="../gui/mainwindow.cpp" line="500"/>
         <source>Result format</source>
         <translation>Emaitzaren formatua</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="525"/>
+        <location filename="../gui/mainwindow.cpp" line="512"/>
         <source>Clear E&amp;xpression</source>
         <translation>&amp;Adierazpena Ezabatu</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="526"/>
+        <location filename="../gui/mainwindow.cpp" line="513"/>
         <source>Clear &amp;History</source>
         <translation>&amp;Historia Garbitu</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="546"/>
+        <location filename="../gui/mainwindow.cpp" line="533"/>
         <source>&amp;Degree</source>
         <translation>&amp;Gradu</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="529"/>
+        <location filename="../gui/mainwindow.cpp" line="516"/>
         <source>Delete All V&amp;ariables</source>
         <translation>&amp;Aldagai Guztiak Ezabatu</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="530"/>
+        <location filename="../gui/mainwindow.cpp" line="517"/>
         <source>D&amp;elete Variable...</source>
         <translation>Aldagaia &amp;Ezabatu...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="558"/>
+        <location filename="../gui/mainwindow.cpp" line="545"/>
         <source>&amp;15 Decimal Digits</source>
         <translation>&amp;15 digitu hamartar</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="559"/>
+        <location filename="../gui/mainwindow.cpp" line="546"/>
         <source>&amp;2 Decimal Digits</source>
         <translation>&amp;2 digitu hamartar</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="560"/>
+        <location filename="../gui/mainwindow.cpp" line="547"/>
         <source>&amp;3 Decimal Digits</source>
         <translation>&amp;3 digitu hamartar</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="561"/>
+        <location filename="../gui/mainwindow.cpp" line="548"/>
         <source>&amp;50 Decimal Digits</source>
         <translation>&amp;50 digitu hamartar</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="562"/>
+        <location filename="../gui/mainwindow.cpp" line="549"/>
         <source>&amp;8 Decimal Digits</source>
         <translation>&amp;8 digitu hamartar</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="563"/>
+        <location filename="../gui/mainwindow.cpp" line="550"/>
         <source>&amp;Automatic Precision</source>
         <translation>&amp;Zehaztasun automatikoa</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="528"/>
+        <location filename="../gui/mainwindow.cpp" line="515"/>
         <source>&amp;Copy</source>
         <translation>&amp;Kopiatu</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="527"/>
+        <location filename="../gui/mainwindow.cpp" line="514"/>
         <source>Copy Last &amp;Result</source>
         <translation>Kopiatu Azken &amp;Emaitza</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="533"/>
+        <location filename="../gui/mainwindow.cpp" line="520"/>
         <source>&amp;Paste</source>
         <translation>&amp;Itsatsi</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="574"/>
+        <location filename="../gui/mainwindow.cpp" line="561"/>
         <source>&amp;About</source>
         <translation>&amp;Honi buruz</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="573"/>
+        <location filename="../gui/mainwindow.cpp" line="560"/>
         <source>About &amp;Qt</source>
         <translation>&amp;QT-ri buruz</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="576"/>
+        <location filename="../gui/mainwindow.cpp" line="563"/>
         <source>SpeedCrunch &amp;Web Site...</source>
         <translation>SpeedCrunch &amp;Web Gunea...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="575"/>
+        <location filename="../gui/mainwindow.cpp" line="562"/>
         <source>&amp;Tip of the Day</source>
         <translation>Eguneko &amp;Iradokizuna</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="531"/>
+        <location filename="../gui/mainwindow.cpp" line="518"/>
         <source>Insert &amp;Function...</source>
         <translation>&amp;Funtzioa Sartu...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="532"/>
+        <location filename="../gui/mainwindow.cpp" line="519"/>
         <source>Insert &amp;Variable...</source>
         <translation>&amp;Aldagaia Sartu...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="551"/>
+        <location filename="../gui/mainwindow.cpp" line="538"/>
         <source>&amp;Partial Results</source>
         <translation>&amp;Tarteko Emaitzak</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="549"/>
+        <location filename="../gui/mainwindow.cpp" line="536"/>
         <source>Automatic &amp;Completion</source>
         <translation>Automatikoki &amp;Osatu</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="548"/>
+        <location filename="../gui/mainwindow.cpp" line="535"/>
         <source>Always On &amp;Top</source>
         <translation>Beti &amp;Gainean</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="550"/>
+        <location filename="../gui/mainwindow.cpp" line="537"/>
         <source>&amp;Minimize To System Tray</source>
         <translation>&amp;Minimizatu Sistemaren Erretilura</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="554"/>
+        <location filename="../gui/mainwindow.cpp" line="541"/>
         <source>Syntax &amp;Highlighting</source>
         <translation>Sintaxia &amp;Nabarmendu</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="556"/>
+        <location filename="../gui/mainwindow.cpp" line="543"/>
         <source>&amp;System Default</source>
         <translation>&amp;Sistema Lehenetsia</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="557"/>
+        <location filename="../gui/mainwindow.cpp" line="544"/>
         <source>&amp;Dot</source>
         <translation>&amp;Puntua</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="555"/>
+        <location filename="../gui/mainwindow.cpp" line="542"/>
         <source>&amp;Comma</source>
         <translation>&amp;Koma</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="547"/>
+        <location filename="../gui/mainwindow.cpp" line="534"/>
         <source>&amp;Radian</source>
         <translation>&amp;Radiana</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="578"/>
+        <location filename="../gui/mainwindow.cpp" line="565"/>
         <source>Scroll Display Down</source>
         <translation>Labaindu Ikuspegia Beherantz</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="579"/>
+        <location filename="../gui/mainwindow.cpp" line="566"/>
         <source>Scroll Display Up</source>
         <translation>Labaindu Ikuspegia Gorantz</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="534"/>
+        <location filename="../gui/mainwindow.cpp" line="521"/>
         <source>&amp;Select Expression</source>
         <translation>&amp;Adierazpena Aukeratu</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="520"/>
+        <location filename="../gui/mainwindow.cpp" line="507"/>
         <source>&amp;Import...</source>
         <translation>&amp;Inportatu...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="521"/>
+        <location filename="../gui/mainwindow.cpp" line="508"/>
         <source>&amp;Load...</source>
         <translation>&amp;Zamatu...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="522"/>
+        <location filename="../gui/mainwindow.cpp" line="509"/>
         <source>&amp;Quit</source>
         <translation>&amp;Irten</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="523"/>
+        <location filename="../gui/mainwindow.cpp" line="510"/>
         <source>&amp;Save...</source>
         <translation>&amp;Gorde...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="519"/>
+        <location filename="../gui/mainwindow.cpp" line="506"/>
         <source>&amp;Export...</source>
         <translation>&amp;Esportatu...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="541"/>
+        <location filename="../gui/mainwindow.cpp" line="528"/>
         <source>Math &amp;Book</source>
         <translation>Matematika &amp;Liburua</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="536"/>
+        <location filename="../gui/mainwindow.cpp" line="523"/>
         <source>&amp;Constants</source>
         <translation>&amp;Konstanteak</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="538"/>
+        <location filename="../gui/mainwindow.cpp" line="525"/>
         <source>&amp;Functions</source>
         <translation>&amp;Funtzioak</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="539"/>
+        <location filename="../gui/mainwindow.cpp" line="526"/>
         <source>&amp;History</source>
         <translation>&amp;Historia</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="540"/>
+        <location filename="../gui/mainwindow.cpp" line="527"/>
         <source>&amp;Keypad</source>
         <translation>&amp;Zenbakizko teklatua</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="543"/>
+        <location filename="../gui/mainwindow.cpp" line="530"/>
         <source>&amp;Status Bar</source>
         <translation>&amp;Egoera Barra</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="544"/>
+        <location filename="../gui/mainwindow.cpp" line="531"/>
         <source>&amp;Variables</source>
         <translation>&amp;Aldagaiak</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="564"/>
+        <location filename="../gui/mainwindow.cpp" line="551"/>
         <source>&amp;Binary</source>
         <translation>&amp;Bitarra</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="565"/>
+        <location filename="../gui/mainwindow.cpp" line="552"/>
         <source>&amp;Engineering</source>
         <translation>&amp;Ingeniaritza</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="566"/>
+        <location filename="../gui/mainwindow.cpp" line="553"/>
         <source>&amp;Fixed Decimal</source>
         <translation>Hamartar &amp;Finkoa</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="567"/>
+        <location filename="../gui/mainwindow.cpp" line="554"/>
         <source>&amp;General</source>
         <translation>&amp;Orokorra</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="568"/>
+        <location filename="../gui/mainwindow.cpp" line="555"/>
         <source>&amp;Hexadecimal</source>
         <translation>&amp;Hamaseitarra</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="569"/>
+        <location filename="../gui/mainwindow.cpp" line="556"/>
         <source>&amp;Octal</source>
         <translation>&amp;Zortzitarra</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="570"/>
+        <location filename="../gui/mainwindow.cpp" line="557"/>
         <source>&amp;Scientific</source>
         <translation>&amp;Zientifikoa</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="757"/>
+        <location filename="../gui/mainwindow.cpp" line="744"/>
         <source>&amp;Session</source>
         <translation>&amp;Saioa</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="758"/>
+        <location filename="../gui/mainwindow.cpp" line="745"/>
         <source>&amp;Edit</source>
         <translation>&amp;Editatu</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="759"/>
+        <location filename="../gui/mainwindow.cpp" line="746"/>
         <source>&amp;View</source>
         <translation>&amp;Erakutsi</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="760"/>
+        <location filename="../gui/mainwindow.cpp" line="747"/>
         <source>Se&amp;ttings</source>
         <translation>&amp;Ezarpenak</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="761"/>
+        <location filename="../gui/mainwindow.cpp" line="748"/>
         <source>Result &amp;Format</source>
         <translation>Emaitza &amp;Formatua</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="762"/>
+        <location filename="../gui/mainwindow.cpp" line="749"/>
         <source>&amp;Decimal</source>
         <translation>&amp;Hamartarra</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="763"/>
+        <location filename="../gui/mainwindow.cpp" line="750"/>
         <source>&amp;Angle Unit</source>
         <translation>&amp;Angelu unitatea</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="764"/>
+        <location filename="../gui/mainwindow.cpp" line="751"/>
         <source>&amp;Behavior</source>
         <translation>&amp;Portaera</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="765"/>
+        <location filename="../gui/mainwindow.cpp" line="752"/>
         <source>Radix &amp;Character</source>
         <translation>Hamartar Banatzeko &amp;Karakterea</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="766"/>
+        <location filename="../gui/mainwindow.cpp" line="753"/>
         <source>&amp;Help</source>
         <translation>&amp;Laguntza</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1300"/>
+        <location filename="../gui/mainwindow.cpp" line="1301"/>
         <source>About Qt</source>
         <translation>Qt-ri buruz</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1435"/>
+        <location filename="../gui/mainwindow.cpp" line="1432"/>
         <source>File %1 is not a valid session</source>
         <translation>%1 fitxategia ez da saio balioduna</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1719"/>
+        <location filename="../gui/mainwindow.cpp" line="1689"/>
         <source>SpeedCrunch Sessions (*.sch);;All Files (*)</source>
         <translation>SpeedCrunch Saioak (*.sch);;Fitxategi Guztiak (*)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1437"/>
+        <location filename="../gui/mainwindow.cpp" line="1434"/>
         <source>Load Session</source>
         <translation>Saioa Zamatu</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1774"/>
+        <location filename="../gui/mainwindow.cpp" line="1739"/>
         <source>Error</source>
         <translation>Akatsa</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1551"/>
+        <location filename="../gui/mainwindow.cpp" line="1534"/>
         <source>Can&apos;t read from file %1</source>
         <translation>Ezin %1 fitxategitik irakurri</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1472"/>
+        <location filename="../gui/mainwindow.cpp" line="1465"/>
         <source>Merge session being loaded with current session?
 If no, current variables and display will be cleared.</source>
         <translation>Zamatzen ari den saioa uneko saioarekin bateratu?
 Ezezkotan, uneko aldagaiak eta bistaratzea garbitu egingo dira.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1560"/>
+        <location filename="../gui/mainwindow.cpp" line="1543"/>
         <source>Question</source>
         <translation>Galdera</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1765"/>
+        <location filename="../gui/mainwindow.cpp" line="1731"/>
         <source>All Files (*)</source>
         <translation>Fitxategi Guztiak (*)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1542"/>
+        <location filename="../gui/mainwindow.cpp" line="1527"/>
         <source>Import Session</source>
         <translation>Saioa Inportatu</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1558"/>
+        <location filename="../gui/mainwindow.cpp" line="1541"/>
         <source>Merge session being imported with current session?
 If no, current variables and display will be cleared.</source>
         <translation>Inportatzen ari den saioa uneko saioarekin bateratu?Ezezkotan, uneko aldagaiak eta bistaratzea garbitu egingo dira.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1593"/>
+        <location filename="../gui/mainwindow.cpp" line="1570"/>
         <source>Ignore error?</source>
         <translation>Akatsak ezikusi?</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1720"/>
+        <location filename="../gui/mainwindow.cpp" line="1690"/>
         <source>Save Session</source>
         <translation>Saioa Gorde</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1775"/>
+        <location filename="../gui/mainwindow.cpp" line="1739"/>
         <source>Can&apos;t write to file %1</source>
         <translation>Ezin %1 fitxategira idatzi</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1766"/>
+        <location filename="../gui/mainwindow.cpp" line="1732"/>
         <source>Export Session</source>
         <translation>Saioa Esportatu</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2050"/>
+        <location filename="../gui/mainwindow.cpp" line="2003"/>
         <source>The menu bar is now hidden. To make it visible again, press Ctrl+Alt+M.</source>
         <translation>Menu barra ezkutatuta dago. Berriz erakusteko, sakatu Ctrl+Alt+M.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2055"/>
+        <location filename="../gui/mainwindow.cpp" line="2006"/>
         <source>Warning</source>
         <translation>Oharra</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2071"/>
+        <location filename="../gui/mainwindow.cpp" line="2019"/>
         <source>To insert a function using keyboard, use Ctrl+F shorcut. From the dialog, you can choose the function you want to insert.</source>
         <translation>Teklatua erailiz funtzio bat sartzeko, erabili Ktrl+F lasterbidea. Elkarrizketatik, sartu nahi duzun funtzioa aukeratu dezakezu.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2076"/>
+        <location filename="../gui/mainwindow.cpp" line="2024"/>
         <source>To insert a variable using keyboard, use Ctrl+I shorcut. From the dialog, you can choose the variable you want to insert.</source>
         <translation>Teklatua erailiz aldagai bat sartzeko, erabili Ktrl+I lasterbidea. Elkarrizketatik, sartu nahi duzun aldagaia aukeratu dezakezu.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2079"/>
+        <location filename="../gui/mainwindow.cpp" line="2027"/>
         <source>Use variable &lt;i&gt;pi&lt;/i&gt; to use pi constant.</source>
         <translation>Erabili &lt;i&gt;pi&lt;/i&gt; aldagaia pi konstantea erabiltzeko.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2084"/>
+        <location filename="../gui/mainwindow.cpp" line="2031"/>
         <source>Use &lt;i&gt;;&lt;/i&gt; (semicolon) to separate the parameters in functions.</source>
         <translation>Erabili &lt;i&gt;;&lt;/i&gt; (puntu eta koma) funtzioetako parametroak banatzeko.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2090"/>
+        <location filename="../gui/mainwindow.cpp" line="2037"/>
         <source>Tip of the day</source>
         <translation>Eguneko iradokizuna</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2361"/>
+        <location filename="../gui/mainwindow.cpp" line="2300"/>
         <source>SpeedCrunch is minimized.
 Left click the icon to restore it or right click for options.</source>
         <translation>SpeedCrunch minimizatuta dago.
 Ezkerrez klikatu ikonoa leheneratzeko edo eskuinaz klikatu aukerak ikusteko.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="537"/>
+        <location filename="../gui/mainwindow.cpp" line="524"/>
         <source>F&amp;ull Screen Mode</source>
         <translation>&amp;Pantaila Bete Modua</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="542"/>
+        <location filename="../gui/mainwindow.cpp" line="529"/>
         <source>&amp;Menu Bar</source>
         <translation>&amp;Ezkutatu &amp;Menu Barra</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="552"/>
+        <location filename="../gui/mainwindow.cpp" line="539"/>
         <source>Save &amp;History on Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="553"/>
+        <location filename="../gui/mainwindow.cpp" line="540"/>
         <source>Save &amp;Variables on Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="571"/>
+        <location filename="../gui/mainwindow.cpp" line="558"/>
         <source>&amp;Language...</source>
         <translation>&amp;Hizkuntza...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2525"/>
+        <location filename="../gui/mainwindow.cpp" line="2452"/>
         <source>System Default</source>
         <translation>Sistema Lehenetsia</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2531"/>
+        <location filename="../gui/mainwindow.cpp" line="2458"/>
         <source>Language</source>
         <translation>Hizkuntza</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2532"/>
+        <location filename="../gui/mainwindow.cpp" line="2458"/>
         <source>Select the language:</source>
         <translation type="unfinished"></translation>
     </message>
