@@ -586,7 +586,7 @@
         <source>function accepts %1 argument(s)</source>
         <translation>
             <numerusform>function accepts %1 argument</numerusform>
-            <numerusform>function accepts %2 arguments</numerusform>
+            <numerusform>function accepts %1 arguments</numerusform>
         </translation>
     </message>
 </context>

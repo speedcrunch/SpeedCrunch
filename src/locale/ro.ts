@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1">
+<!DOCTYPE TS><TS version="1.1" language="ro">
 <context>
     <name>AboutBox</name>
     <message>
@@ -587,6 +587,7 @@
         <translation>
             <numerusform>funcţia acceptă %1 argument</numerusform>
             <numerusform>funcţia acceptă %1 argumente</numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
 </context>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1">
+<!DOCTYPE TS><TS version="1.1" language="tr">
 <context>
     <name>AboutBox</name>
     <message>
@@ -585,6 +585,7 @@
         <location filename="../core/functions.cpp" line="101"/>
         <source>function accepts %1 argument(s)</source>
         <translation>
+            <numerusform>fonksiyon %1 argüman kabul ediyor</numerusform>
             <numerusform>fonksiyon %1 argüman kabul ediyor</numerusform>
         </translation>
     </message>
