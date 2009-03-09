@@ -21,32 +21,30 @@
 #ifndef GUI_MAINWINDOW_HXX
 #define GUI_MAINWINDOW_HXX
 
-#include "keypad.hxx"
+#include "gui/keypad.hxx"
 
-#include <QMainWindow>
-#include <QSystemTrayIcon>
-
-class QCloseEvent;
+#include <QtGui/QMainWindow>
+#include <QtGui/QSystemTrayIcon>
 
 class MainWindow : public QMainWindow
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
+public:
     MainWindow();
     ~MainWindow();
 
-  signals:
+signals:
     void angleUnitChanged();
     void languageChanged();
     void radixCharacterChanged();
     void resultFormatChanged();
     void resultPrecisionChanged();
 
-  public slots:
+public slots:
     void raiseWindow();
 
-  private slots:
+private slots:
     void activate();
     void clearEditor();
     void clearHistory();
@@ -120,14 +118,15 @@ class MainWindow : public QMainWindow
     void showVariableDeletionDialog();
     void showVariableInsertionDialog();
 
-  protected:
+protected:
     virtual void closeEvent( QCloseEvent * );
     virtual bool event( QEvent * );
     virtual bool eventFilter( QObject *, QEvent * );
 
-  private:
+private:
     struct Private;
     const std::auto_ptr<Private> d;
+
     MainWindow( const MainWindow & );
     MainWindow & operator=( const MainWindow & );
 };
