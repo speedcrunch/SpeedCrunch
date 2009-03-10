@@ -1754,7 +1754,7 @@ void MainWindow::setWidgetsDirection()
     bool rtlSystem = (lang == QLocale::Hebrew || lang == QLocale::Arabic);
 
     QString code = d->settings->language;
-    bool rtlCustom = (code == "he" || code == "ar");
+    bool rtlCustom = (code.contains("he") || code.contains("ar"));
 
     if ( (d->settings->language == "C" && rtlSystem) || rtlCustom )
         qApp->setLayoutDirection( Qt::RightToLeft );
