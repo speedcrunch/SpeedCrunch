@@ -1329,20 +1329,24 @@ bool ConstantCompletion::eventFilter( QObject * obj, QEvent * ev )
   return false;
 }
 
+class constant_name_is
+{
+    QString m_name;
+public:
+    explicit constant_name_is(const QString& name) : m_name(name) {}
+    bool operator()(const Constant& c) const {
+        return c.name == m_name;
+    }
+};
+
 void ConstantCompletion::doneCompletion()
 {
   d->editor->setFocus();
-  QTreeWidgetItem * item = 0;
-  item = d->list->currentItem();
-  QString c;
-  if ( item )
-    for ( int k = 0; k < d->constants.count(); k++ )
-      if ( d->constants.at(k).name == item->text( 0 ) )
-      {
-        c = d->constants.at(k).value;
-        break;
-      }
-  emit selectedCompletion( item ? c : QString() );
+  const QTreeWidgetItem * item = d->list->currentItem();
+  emit selectedCompletion( item ?
+          std::find_if(d->constants.begin(), d->constants.end(),
+              constant_name_is(item->text( 0 )))->value
+          : QString() );
 }
 
 void ConstantCompletion::showCompletion()
