@@ -2441,19 +2441,10 @@ void MainWindow::showLanguageChooserDialog()
     map.insert( QString::fromUtf8("Русский"),                        "ru_RU" );
     map.insert( QString::fromUtf8("简化字"),                         "zh_CN" );
 
-    int current = 0;
-    QList<QString> values = map.values();
-    for ( int i = 0; i < values.size(); ++i ) {
-        if ( values.at(i) == d->settings->language ) {
-            current = i + 1;
-            break;
-        }
-    }
+    int current = map.values().indexOf( d->settings->language ) + 1;
 
     QString defaultKey = tr( "System Default" );
-    QStringList keys;
-    keys << defaultKey;
-    keys << map.keys();
+    QStringList keys( QStringList() << defaultKey << map.keys() );
 
     bool ok;
     QString langName = QInputDialog::getItem( this, tr("Language"), tr("Select the language:"),
