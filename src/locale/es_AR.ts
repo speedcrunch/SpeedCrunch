@@ -1640,17 +1640,17 @@ If no, current variables and display will be cleared.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2452"/>
+        <location filename="../gui/mainwindow.cpp" line="2453"/>
         <source>System Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2458"/>
+        <location filename="../gui/mainwindow.cpp" line="2459"/>
         <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2458"/>
+        <location filename="../gui/mainwindow.cpp" line="2459"/>
         <source>Select the language:</source>
         <translation type="unfinished"></translation>
     </message>

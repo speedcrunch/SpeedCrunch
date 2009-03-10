@@ -1,181 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1" language="ro">
+<!DOCTYPE TS><TS version="1.1" language="ar_JO">
 <context>
     <name>AboutBox</name>
     <message>
         <location filename="../gui/aboutbox.cpp" line="66"/>
         <source>Special thanks to</source>
-        <translation>Mulţumiri speciale</translation>
+        <translation>3 أرقام عشرية</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="121"/>
         <source>French</source>
-        <translation>Franceză</translation>
+        <translation>الفرنسية</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="125"/>
         <source>German</source>
-        <translation>Germană</translation>
+        <translation>الألمانية</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="137"/>
         <source>Portuguese</source>
-        <translation>Portugheză</translation>
+        <translation>البرتغالية</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="141"/>
         <source>Russian</source>
-        <translation>Rusă</translation>
+        <translation>الروسية</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="131"/>
         <source>Italian</source>
-        <translation>Italiană</translation>
+        <translation>الإيطالية</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="175"/>
         <source>This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version</source>
-        <translation>Acest program este liber; îl puteţi redistribui şi/sau modifica în conformitate cu termenii Licenţei Publice Generale GNU aşa cum este ea publicată de Free Software Foundation; fie versiunea 2 a Licenţei, fie (la latitudinea dumneavoastră) orice versiune ulterioară</translation>
+        <translation>
+       هذا البرنامج مفتوح المصدر إذ بالإمكان إعادة توزيعه أو/والتعديل عليه ضمن ترخيص الGNU العام كما أصدرته مؤسسة البرمجيات الحرة وكما هو في الإصدار الثاني للترخيص أو بحسب اختيارك لأي من الإصدارات السابقة  له
+</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="181"/>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.</source>
-        <translation>Acest program este distribuit cu speranţa că vă va fi util, dar FĂRĂ NICI O GARANŢIE, chiar fără garanţia implicită de vandabilitate sau conformitate unui anumit scop.  Citiţi Licenţa Publică Generală GNU pentru detalii.</translation>
+        <translation>هذا البرنامج موزع بأمل أن يكون مفيدا ولكن بدون أي ضمانات وحتى بدون ضمان التأجير او ملائمته لأي هدف معين. لمزيد من التفاصيل انظر ترخيص الGNU</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="216"/>
         <source>About SpeedCrunch</source>
-        <translation>Despre SpeedCrunch</translation>
+        <translation>عن سببيد كرنش</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="133"/>
         <source>Norwegian</source>
-        <translation>Norvegiană</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="145"/>
-        <source>Spanish</source>
-        <translation>Spaniolă</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="65"/>
-        <source>Based on original idea from</source>
-        <translation>În baza unei idei originale</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="74"/>
-        <source>Thanks to</source>
-        <translation>Mulţumiri următorilor</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="105"/>
-        <source>Translations</source>
-        <translation>Traduceri</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="113"/>
-        <source>Brazilian Portuguese</source>
-        <translation>Portugheză Braziliană</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="167"/>
-        <source>Copyright (C)</source>
-        <translation>Copyright (C)</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="185"/>
-        <source>Visit &lt;b&gt;http://www.speedcrunch.org&lt;/b&gt; for more information!</source>
-        <translation>Vizitează &lt;b&gt;http://www.speedcrunch.org&lt;/b&gt; pentru mai multe informaţii!</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="109"/>
-        <source>Argentinian Spanish</source>
-        <translation>Spaniolă Argentiniană</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="119"/>
-        <source>Dutch</source>
-        <translation>Olandeză</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="127"/>
-        <source>Hebrew</source>
-        <translation>Ebraică</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="147"/>
-        <source>Swedish</source>
-        <translation>Suedeză</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="123"/>
-        <source>Finnish</source>
-        <translation>Finlandeză</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="117"/>
-        <source>Czech</source>
-        <translation>Cehă</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="139"/>
-        <source>Romanian</source>
-        <translation>Română</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="129"/>
-        <source>Indonesian</source>
-        <translation>Indoneziană</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="195"/>
-        <source>Close</source>
-        <translation>Închide</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="71"/>
-        <source>Graphics</source>
-        <translation>Grafică  </translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="135"/>
-        <source>Polish</source>
-        <translation>Poloneză</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="149"/>
-        <source>Turkish</source>
-        <translation>Turcă</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="111"/>
-        <source>Basque</source>
-        <translation>Bască</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="143"/>
-        <source>Simplified Chinese</source>
-        <translation>Chineză simplificată</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="115"/>
-        <source>Catalan</source>
-        <translation>Catalană</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="58"/>
-        <source>Maintainer and core developer</source>
-        <translation type="unfinished">Mentenanţă</translation>
+        <translation>النرويجية</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="107"/>
         <source>Arabic</source>
-        <translation type="unfinished"></translation>
+        <translation>العربية</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="145"/>
+        <source>Spanish</source>
+        <translation>الإسبانية</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="65"/>
+        <source>Based on original idea from</source>
+        <translation>معتمد على الفكرة الأصلية من</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="74"/>
+        <source>Thanks to</source>
+        <translation>شكر ل</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="105"/>
+        <source>Translations</source>
+        <translation>الترجمة</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="113"/>
+        <source>Brazilian Portuguese</source>
+        <translation>البرتغالية البرازيلية</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="167"/>
+        <source>Copyright (C)</source>
+        <translation>حقوق الطبع محفوظة
+(C)</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="185"/>
+        <source>Visit &lt;b&gt;http://www.speedcrunch.org&lt;/b&gt; for more information!</source>
+        <translation>زيارة&lt;b&gt;http://www.speedcrunch.org&lt;/b&gt; للمزيد من المعلومات !</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="109"/>
+        <source>Argentinian Spanish</source>
+        <translation>
+الإسبانية الأرجنتينية</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="119"/>
+        <source>Dutch</source>
+        <translation>الهولندية</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="127"/>
+        <source>Hebrew</source>
+        <translation>العبرية</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="147"/>
+        <source>Swedish</source>
+        <translation>السويدية</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="123"/>
+        <source>Finnish</source>
+        <translation>الفنلندية</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="117"/>
+        <source>Czech</source>
+        <translation>التشيكية</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="139"/>
+        <source>Romanian</source>
+        <translation>الرومانية</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="129"/>
+        <source>Indonesian</source>
+        <translation>الأندونيسية</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="135"/>
+        <source>Polish</source>
+        <translation>البولندية</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="149"/>
+        <source>Turkish</source>
+        <translation>التركية</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="195"/>
+        <source>Close</source>
+        <translation>إغلاق</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="71"/>
+        <source>Graphics</source>
+        <translation>رسومات</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="111"/>
+        <source>Basque</source>
+        <translation>إقليم الباسك</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="143"/>
+        <source>Simplified Chinese</source>
+        <translation>الصينيةالمبسطة</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="115"/>
+        <source>Catalan</source>
+        <translation>إقليم كاتالونيا الإسباني</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="58"/>
+        <source>Maintainer and core developer</source>
+        <translation>المحافظ الحالي</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="59"/>
         <source>Original author</source>
-        <translation>Autor</translation>
+        <translation>المؤلف الأصلي</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="60"/>
@@ -208,17 +212,17 @@
     <message>
         <location filename="../gui/bookdock.cpp" line="180"/>
         <source>Back</source>
-        <translation>Înapoi</translation>
+        <translation>رجوع</translation>
     </message>
     <message>
         <location filename="../gui/bookdock.cpp" line="181"/>
         <source>Forward</source>
-        <translation>Înainte</translation>
+        <translation>تقدم</translation>
     </message>
     <message>
         <location filename="../gui/bookdock.cpp" line="182"/>
         <source>Index</source>
-        <translation>Index</translation>
+        <translation>الفهرس</translation>
     </message>
 </context>
 <context>
@@ -226,7 +230,7 @@
     <message>
         <location filename="../gui/editor.cpp" line="1249"/>
         <source>All</source>
-        <translation>Toate</translation>
+        <translation>الكل</translation>
     </message>
 </context>
 <context>
@@ -234,257 +238,257 @@
     <message>
         <location filename="../core/constants.cpp" line="83"/>
         <source>Characteristic Impedance of Vacuum</source>
-        <translation>Impendanţa Caracteristică a Vidului</translation>
+        <translation>مميزات الفراغات المعيقة</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="82"/>
         <source>General Physics</source>
-        <translation>Fizică Generală</translation>
+        <translation>الفيزياء العامة</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="84"/>
         <source>Electric Constant</source>
-        <translation>Permitivitatea Vidului</translation>
+        <translation>الثابت الكهربائي</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="85"/>
         <source>Magnetic Constant</source>
-        <translation>Permebilitatea Vidului</translation>
+        <translation>الثابت المغناطيسي</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="86"/>
         <source>Gravitation Constant</source>
-        <translation>Constanta Gravitaţională</translation>
+        <translation>ثابت الجاذبية الأرضية</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="87"/>
         <source>Planck&apos;s Constant</source>
-        <translation>Constanta lui Planck</translation>
+        <translation>ثابت بلانك</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="88"/>
         <source>Dirac&apos;s Constant</source>
-        <translation>Constanta lui Dirac</translation>
+        <translation>ثابت درك</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="89"/>
         <source>Speed of Light in Vacuum</source>
-        <translation>Viteza Luminii în Vid</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="93"/>
-        <source>Bohr-Procopiu Magneton</source>
-        <translation>Magnetonul Bohr-Procopiu</translation>
+        <translation>سرعة الضوء في الفراغ</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="92"/>
         <source>Electromagnetic</source>
-        <translation>Electromagnetism</translation>
+        <translation>الكهرومغناطيسية</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="94"/>
         <source>Conductance Quantum</source>
-        <translation>Cuant de Conductanţă</translation>
+        <translation>الدلالة الكمية </translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="95"/>
         <source>Coulomb&apos;s Constant</source>
-        <translation>Constanta lui Coulomb</translation>
+        <translation>ثابت كولوم</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="96"/>
         <source>Elementary Charge</source>
-        <translation>Sarcina Elementară</translation>
+        <translation>الشحن العنصري</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="97"/>
         <source>Josephson Constant</source>
-        <translation>Constanta lui Josephson</translation>
+        <translation>ثابت جوزفين</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="98"/>
         <source>Magnetic Flux Quantum</source>
-        <translation>Cuant de Flux Magnetic</translation>
+        <translation>كمية التدفق المغناطيسي</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="99"/>
         <source>Nuclear Magneton</source>
-        <translation>Magnetonul Nuclear</translation>
+        <translation>المغناطيسية النووية</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="100"/>
         <source>Resistance Quantum</source>
-        <translation>Cuant de Rezistentă</translation>
+        <translation>كمية المقاومة</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="101"/>
         <source>von Klitzing Constant</source>
-        <translation>Constanta lui von Klitzing</translation>
+        <translation>ثابت فون </translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="105"/>
         <source>Bohr Radius</source>
-        <translation>Raza lui Bohr</translation>
+        <translation>نصف قطر- بور</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="104"/>
         <source>Atomic &amp; Nuclear</source>
-        <translation>Atomică &amp; Nucleară</translation>
+        <translation>الطاقة النووية الذرية</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="106"/>
         <source>Fermi Coupling Constant</source>
-        <translation>Constanta de Cuplare lui Fermi</translation>
+        <translation>ثابت فيرمي المزدوج </translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="107"/>
         <source>Fine-structure Constant</source>
-        <translation>Constanta de Structură Fină</translation>
+        <translation>ثابت البنية الجيدة</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="108"/>
         <source>Hartree Energy</source>
-        <translation>Energia Hartree</translation>
+        <translation>طاقة هتري</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="109"/>
         <source>Quantum of Circulation</source>
-        <translation>Cuant de Circulaţie</translation>
+        <translation>كمية الدوران</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="110"/>
         <source>Rydberg Constant</source>
-        <translation>Constanta lui Rydberg</translation>
+        <translation>ثابت رايدبيرغ</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="111"/>
         <source>Thomson Cross Section</source>
-        <translation>Secţiunea Eficace lui Thomson</translation>
+        <translation>المقطع العرضي ل ثومبسون</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="112"/>
         <source>Weak Mixing Angle</source>
-        <translation>Unghiul lui Weinberg</translation>
+        <translation>دمج الزاوية الضعيف</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="116"/>
         <source>Atomic Mass Unit</source>
-        <translation>Unitatea Atomică de Masă</translation>
+        <translation>وحدة الكتلة الذرية</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="115"/>
         <source>Physico-chemical</source>
-        <translation>Fizico-chimie</translation>
+        <translation>الكمياء الفيزيائية</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="117"/>
         <source>Avogadro&apos;s Number</source>
-        <translation>Numarul lui Avogadro</translation>
+        <translation>عدد أفوغادرو</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="118"/>
         <source>Boltzmann Constant</source>
-        <translation>Constanta lui Boltzmann</translation>
+        <translation>ثابت بولتزمان</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="119"/>
         <source>Faraday Constant</source>
-        <translation>Constanta lui Faraday</translation>
+        <translation>ثابت فراداي</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="120"/>
         <source>First Radiation Constant</source>
-        <translation>Prima Constantă Radiativă</translation>
+        <translation>ثابت الإشعاع الأولي</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="121"/>
         <source>Loschmidt Constant</source>
-        <translation>Constanta lui Loschmidt</translation>
+        <translation>ثابت لوسكمد</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="122"/>
         <source>Gas Constant</source>
-        <translation>Constanta Gazelor Ideale</translation>
+        <translation>ثابت الغاز </translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="123"/>
         <source>Molar Planck Constant</source>
-        <translation>Constanta Molară lui Planck</translation>
+        <translation>الثابت المولاري لبلانك</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="124"/>
         <source>Second Radiation Constant</source>
-        <translation>A Doua Constantă Radiativă</translation>
+        <translation>ثابت الإشعاع الثاني</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="125"/>
         <source>Stefan-Boltzmann Constant</source>
-        <translation>Constanta Stefan-Boltzmann</translation>
+        <translation>ثابت ستيفن بولتزمان</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="130"/>
         <source>Astronomical Unit</source>
-        <translation>Unitatea Astronomică</translation>
+        <translation>وحدة فضائية</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="128"/>
         <source>Astronomy</source>
-        <translation>Astronomie</translation>
+        <translation>علم الفلك</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="131"/>
         <source>Light Year</source>
-        <translation>An-lumină</translation>
+        <translation>سنة ضوئية</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="132"/>
         <source>Parsec</source>
-        <translation>Parsec</translation>
+        <translation>البارسك</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="133"/>
         <source>Sidereal Year</source>
-        <translation>An Sideral</translation>
+        <translation>سنة فلكية</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="129"/>
         <source>days</source>
-        <translation>zile</translation>
+        <translation>أيام</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="134"/>
         <source>Tropical Year</source>
-        <translation>An Tropic</translation>
+        <translation>سنة مدارية</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="135"/>
         <source>Gregorian Year</source>
-        <translation>An Gregorian</translation>
+        <translation>سنة جريجورية</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="136"/>
         <source>Earth Mass</source>
-        <translation>Masa Terrei</translation>
+        <translation>كتلة الأرض</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="137"/>
         <source>Sun Mass</source>
-        <translation>Masa Soarelui</translation>
+        <translation>كتلة الشمس</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="138"/>
         <source>Mean Earth Radius</source>
-        <translation>Raza Media a Pămîntului</translation>
+        <translation>متوسط نصف قطر الأرض </translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="139"/>
         <source>Sun Radius</source>
-        <translation>Raza Soarelui</translation>
+        <translation>نصف قطر الشمس</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="140"/>
         <source>Sun Luminosity</source>
-        <translation>Luminozitatea Solară</translation>
+        <translation>الإشعاع الشمسي</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="93"/>
+        <source>Bohr-Procopiu Magneton</source>
+        <translation>مغناطيسية بور - بروكوبيو</translation>
     </message>
 </context>
 <context>
@@ -492,27 +496,27 @@
     <message>
         <location filename="../gui/constantsdock.cpp" line="140"/>
         <source>Constants</source>
-        <translation>Constante</translation>
+        <translation>ثوابت</translation>
     </message>
     <message>
         <location filename="../gui/constantsdock.cpp" line="141"/>
         <source>Category</source>
-        <translation>Catogoria</translation>
+        <translation>فئة</translation>
     </message>
     <message>
         <location filename="../gui/constantsdock.cpp" line="142"/>
         <source>Search</source>
-        <translation>Caută</translation>
+        <translation>بحث</translation>
     </message>
     <message>
         <location filename="../gui/constantsdock.cpp" line="116"/>
         <source>No match found</source>
-        <translation>Nici un rezultat</translation>
+        <translation>لايوجد مماثل</translation>
     </message>
     <message>
         <location filename="../gui/constantsdock.cpp" line="256"/>
         <source>All</source>
-        <translation>Toate</translation>
+        <translation>الكل</translation>
     </message>
 </context>
 <context>
@@ -520,17 +524,17 @@
     <message>
         <location filename="../gui/deletevardlg.cpp" line="54"/>
         <source>&amp;Delete</source>
-        <translation>&amp;Şterge</translation>
+        <translation>حذف</translation>
     </message>
     <message>
         <location filename="../gui/deletevardlg.cpp" line="58"/>
         <source>Close</source>
-        <translation>Închide</translation>
+        <translation>إغلاق</translation>
     </message>
     <message>
         <location filename="../gui/deletevardlg.cpp" line="45"/>
         <source>Delete Variable</source>
-        <translation>Şterge variabila</translation>
+        <translation>حذف المتغير</translation>
     </message>
 </context>
 <context>
@@ -538,12 +542,12 @@
     <message>
         <location filename="../gui/editor.cpp" line="680"/>
         <source>Current result: &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation>Rezultatul curent: &lt;b&gt;%1&lt;/b&gt;</translation>
+        <translation>النتيجة الحالية : &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../gui/editor.cpp" line="725"/>
         <source>Selection result: &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation>Rezultatul selecţiei: &lt;b&gt;%1&lt;/b&gt;</translation>
+        <translation>النتيجة المختارة : &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -551,27 +555,27 @@
     <message>
         <location filename="../core/evaluator.cpp" line="1393"/>
         <source>invalid expression</source>
-        <translation>expresie invalidă</translation>
+        <translation>تعبير غير موجود</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="1323"/>
         <source>division by zero</source>
-        <translation>împartire la zero</translation>
+        <translation>مقسوم على الصفر</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="1362"/>
         <source>unknown function or variable</source>
-        <translation>funcţie/variabilă necunoscută</translation>
+        <translation>اقتران أو متغير غير معروف</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="1411"/>
         <source>variable cannot be overwritten</source>
-        <translation>variabila nu poate fi suprascrisă</translation>
+        <translation>لايمكن تعديل قيمة المتغير</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="1419"/>
         <source>identifier matches an existing function name</source>
-        <translation>exista deja o funcţie cu acelasi nume</translation>
+        <translation>المعرف يقابل اسم اقتران موجود </translation>
     </message>
 </context>
 <context>
@@ -579,14 +583,17 @@
     <message>
         <location filename="../core/functions.cpp" line="96"/>
         <source>cannot execute function %1</source>
-        <translation>nu pot executa funcţia %1</translation>
+        <translation type="unfinished">لايمكن تنفيذ الاقتران %1</translation>
     </message>
     <message numerus="yes">
         <location filename="../core/functions.cpp" line="101"/>
         <source>function accepts %1 argument(s)</source>
-        <translation>
-            <numerusform>funcţia acceptă %1 argument</numerusform>
-            <numerusform>funcţia acceptă %1 argumente</numerusform>
+        <translation type="unfinished">
+            <numerusform>يقبل الاقتران مدخل واحد</numerusform>
+            <numerusform>يقبل الاقتران 1% مدخل/مدخلات</numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
@@ -596,352 +603,353 @@
     <message>
         <location filename="../core/functions.cpp" line="1142"/>
         <source>Absolute Value</source>
-        <translation>Valoare Asbolută</translation>
+        <translation>القيمة المطلقة</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1143"/>
         <source>Average (Arithmetic Mean)</source>
-        <translation>Medie Aritmetică</translation>
+        <translation>المعدل (المتوسط الحسابي)
+</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1144"/>
         <source>Binary Representation</source>
-        <translation>Reprezentare Binară</translation>
+        <translation>التمثيل الثنائي</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1145"/>
         <source>Cube Root</source>
-        <translation>Rădăcină Cubică</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1147"/>
-        <source>Decimal Representation</source>
-        <translation>Reprezentare Zecimală</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1149"/>
-        <source>Fractional Part</source>
-        <translation>Parte Fracţionară</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1151"/>
-        <source>Geometric Mean</source>
-        <translation>Medie Geometrică</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1152"/>
-        <source>Hexadecimal Representation</source>
-        <translation>Reprezentare Hexazecimala</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1153"/>
-        <source>Integer Part</source>
-        <translation>Partea Întreagă</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1155"/>
-        <source>Maximum</source>
-        <translation>Maximul</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1156"/>
-        <source>Minimum</source>
-        <translation>Minimul</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1157"/>
-        <source>Octal Representation</source>
-        <translation>Reprezentare Octală</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1158"/>
-        <source>Product</source>
-        <translation>Produs</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1159"/>
-        <source>Rounding</source>
-        <translation>Rotunjire</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1160"/>
-        <source>Signum</source>
-        <translation>Signum</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1161"/>
-        <source>Square Root</source>
-        <translation>Rădăcina Pătrată</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1162"/>
-        <source>Sum</source>
-        <translation>Sumă</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1163"/>
-        <source>Truncation</source>
-        <translation>Trunchiere</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1169"/>
-        <source>Hyperbolic Cosine</source>
-        <translation>Cosinus Hiperbolic</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1170"/>
-        <source>Exponential</source>
-        <translation>Exponenţial</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1171"/>
-        <source>Base-2 Logarithm</source>
-        <translation>Logaritm în Baza 2</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1172"/>
-        <source>Natural Logarithm</source>
-        <translation>Logaritm Natural</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1173"/>
-        <source>Base-10 Logarithm</source>
-        <translation>Logaritm în Baza 10</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1174"/>
-        <source>Hyperbolic Sine</source>
-        <translation>Sinus Hiperbolic</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1175"/>
-        <source>Hyperbolic Tangent</source>
-        <translation>Tangenta Hiperbolică</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1178"/>
-        <source>Greatest Common Divisor</source>
-        <translation>Cel Mai Mare Divisor Comun</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1179"/>
-        <source>Combination (Binomial Coefficient)</source>
-        <translation>Combinari (Coeficient Binomial)</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1180"/>
-        <source>Permutation (Arrangement)</source>
-        <translation>Permutări (Aranjamente)</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1183"/>
-        <source>Binomial Cumulative Distribution Function</source>
-        <translation>Funcţia Distribuţiei Binomiale Cumulative</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1184"/>
-        <source>Binomial Distribution Mean</source>
-        <translation>Media Distribuţiei Binomiale</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1185"/>
-        <source>Binomial Probability Mass Function</source>
-        <translation>Funcţia Masă de Probabilitate Binomială</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1186"/>
-        <source>Binomial Distribution Variance</source>
-        <translation>Varianţa Distribuţiei Binomiale</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1189"/>
-        <source>Hypergeometric Cumulative Distribution Function</source>
-        <translation>Funcţia Distribuţiei Hipergeometrice Cumulative</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1190"/>
-        <source>Hypergeometric Distribution Mean</source>
-        <translation>Media Distribuţieri Hipergeometrice</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1191"/>
-        <source>Hypergeometric Probability Mass Function</source>
-        <translation>Funcţia Masă de Probabilitate Hipergeometrică </translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1192"/>
-        <source>Hypergeometric Distribution Variance</source>
-        <translation>Varianţa Distribuţiei Hipergeometrice</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1193"/>
-        <source>Poissonian Cumulative Distribution Function</source>
-        <translation>Funcţia Distribuţiei Poissoniane Cumulative</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1194"/>
-        <source>Poissonian Distribution Mean</source>
-        <translation>Media Distribuţiei Poissoniane</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1195"/>
-        <source>Poissonian Probability Mass Function</source>
-        <translation>Funcţia Masă de Probabilitate Poissoniană</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1196"/>
-        <source>Poissonian Distribution Variance</source>
-        <translation>Varianţa Distribuţiei Poissoniane</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1199"/>
-        <source>Arc Cosine</source>
-        <translation>Arc Cosinus</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1200"/>
-        <source>Arc Sine</source>
-        <translation>Arc Sinus</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1201"/>
-        <source>Arc Tangent</source>
-        <translation>Arc Tangenta</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1202"/>
-        <source>Cosine</source>
-        <translation>Cosinus</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1203"/>
-        <source>Cotangent</source>
-        <translation>Co-tangent</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1204"/>
-        <source>Cosecant</source>
-        <translation>Cosecanta</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1206"/>
-        <source>Radians</source>
-        <translation>Radiani</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1207"/>
-        <source>Secant</source>
-        <translation>Secanta</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1208"/>
-        <source>Sine</source>
-        <translation>Sinus</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1209"/>
-        <source>Tangent</source>
-        <translation>Tangenta</translation>
+        <translation>الجذر التكعيبي</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1146"/>
         <source>Ceiling</source>
-        <translation>Rotunjire prin adaos</translation>
+        <translation>الحدالأقصى</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1147"/>
+        <source>Decimal Representation</source>
+        <translation>التمثيل العشري</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1148"/>
         <source>Floor</source>
-        <translation>Rontunjire prin lipsa</translation>
+        <translation>الحد الأدنى</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1150"/>
-        <source>Extension of Factorials [= (x-1)!]</source>
-        <translation>Factorial extins </translation>
+        <location filename="../core/functions.cpp" line="1149"/>
+        <source>Fractional Part</source>
+        <translation>الجزء الكسري</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1154"/>
-        <source>ln(abs(Gamma))</source>
-        <translation>ln(abs(Gamma))</translation>
+        <location filename="../core/functions.cpp" line="1151"/>
+        <source>Geometric Mean</source>
+        <translation>المتوسط الهندسي</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1152"/>
+        <source>Hexadecimal Representation</source>
+        <translation>التمثيل السداسي عشري</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1153"/>
+        <source>Integer Part</source>
+        <translation>الجزء الصحيح</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1155"/>
+        <source>Maximum</source>
+        <translation>الحد الأقصى</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1156"/>
+        <source>Minimum</source>
+        <translation>الحد الأدنى</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1157"/>
+        <source>Octal Representation</source>
+        <translation>التمثيل الثماني</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1158"/>
+        <source>Product</source>
+        <translation>حاصل الضرب</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1159"/>
+        <source>Rounding</source>
+        <translation>التقريب</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1160"/>
+        <source>Signum</source>
+        <translation>رقم ذو اشارة</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1161"/>
+        <source>Square Root</source>
+        <translation>الجذر التربيعي</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1162"/>
+        <source>Sum</source>
+        <translation>المجموع</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1163"/>
+        <source>Truncation</source>
+        <translation>تقليم</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1166"/>
         <source>Area Hyperbolic Cosine</source>
-        <translation>Arc Cosinus Hiperbolic</translation>
+        <translation>جيب تمام مساحة القطع الزائد</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1167"/>
         <source>Area Hyperbolic Sine</source>
-        <translation>Arc Sinus Hiperbolic</translation>
+        <translation> جيب مساحة القطع الزائد </translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1168"/>
         <source>Area Hyperbolic Tangent</source>
-        <translation>Arc Tangenta Hiperbolica</translation>
+        <translation> ظل مساحة القطع الزائد </translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1169"/>
+        <source>Hyperbolic Cosine</source>
+        <translation>جيب تمام القطع الزائد</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1170"/>
+        <source>Exponential</source>
+        <translation>الأس</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1171"/>
+        <source>Base-2 Logarithm</source>
+        <translation>اللوغارتم للأساس 2</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1172"/>
+        <source>Natural Logarithm</source>
+        <translation>اللوغارتم الطبيعي</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1173"/>
+        <source>Base-10 Logarithm</source>
+        <translation>اللوغاريتم للأساس 10</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1174"/>
+        <source>Hyperbolic Sine</source>
+        <translation> جيب القطع الزائد </translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1175"/>
+        <source>Hyperbolic Tangent</source>
+        <translation> ظل القطع الزائد </translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1178"/>
+        <source>Greatest Common Divisor</source>
+        <translation>القاسم المشترك الأكبر</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1179"/>
+        <source>Combination (Binomial Coefficient)</source>
+        <translation>جمع كثيرات الحدود</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1180"/>
+        <source>Permutation (Arrangement)</source>
+        <translation>التباديل</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1183"/>
+        <source>Binomial Cumulative Distribution Function</source>
+        <translation>التوزيع التراكمي لكثيرات الحدود</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1184"/>
+        <source>Binomial Distribution Mean</source>
+        <translation>التوزيع المتوسط لكثيرات الحدود</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1185"/>
+        <source>Binomial Probability Mass Function</source>
+        <translation>الإحتمال الكتلي لإقترانات كثيرات الحدود</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1186"/>
+        <source>Binomial Distribution Variance</source>
+        <translation>التوزيع المتباين لكثيرات الحدود</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1189"/>
+        <source>Hypergeometric Cumulative Distribution Function</source>
+        <translation>التوزيع التراكمي للإقتران الهندسي</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1190"/>
+        <source>Hypergeometric Distribution Mean</source>
+        <translation>التوزيع الهندسي المتوسط</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1191"/>
+        <source>Hypergeometric Probability Mass Function</source>
+        <translation>الاحتمال الكتلي للاقتران الهندسي</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1192"/>
+        <source>Hypergeometric Distribution Variance</source>
+        <translation>التوزيع المتباين للإقتران الهندسي</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1193"/>
+        <source>Poissonian Cumulative Distribution Function</source>
+        <translation>التوزيع التراكمي النقطي للإقتران</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1194"/>
+        <source>Poissonian Distribution Mean</source>
+        <translation>التوزيع المتوسط النقطي</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1195"/>
+        <source>Poissonian Probability Mass Function</source>
+        <translation> الإحتمال النقطي الكتلي للإقتران </translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1196"/>
+        <source>Poissonian Distribution Variance</source>
+        <translation>فرق بويسون التوزيعي</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1199"/>
+        <source>Arc Cosine</source>
+        <translation>جيب تمام القوس </translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1200"/>
+        <source>Arc Sine</source>
+        <translation> جيب القوس </translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1201"/>
+        <source>Arc Tangent</source>
+        <translation> ظل القوس</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1202"/>
+        <source>Cosine</source>
+        <translation>جيب التمام</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1203"/>
+        <source>Cotangent</source>
+        <translation>ظل التمام</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1204"/>
+        <source>Cosecant</source>
+        <translation>قاطع التمام</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1206"/>
+        <source>Radians</source>
+        <translation>نصف القطر</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1207"/>
+        <source>Secant</source>
+        <translation>القاطع</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1208"/>
+        <source>Sine</source>
+        <translation>جيب</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1209"/>
+        <source>Tangent</source>
+        <translation>ظل</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1150"/>
+        <source>Extension of Factorials [= (x-1)!]</source>
+        <translation> امتداد المضروب[= (x-1)!] </translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1154"/>
+        <source>ln(abs(Gamma))</source>
+        <translation>لو (أكبر عدد صحيح(الثابت))</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1187"/>
         <source>Error Function</source>
-        <translation>Funcţie de eroare</translation>
+        <translation>خطأ في الاقتران</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1188"/>
         <source>Complementary Error Function</source>
-        <translation>Funcţie de eroare complementară</translation>
+        <translation>خطأ مكمل للاقتران</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1205"/>
         <source>Degrees of Arc</source>
-        <translation>Degrees of Arc</translation>
+        <translation>درجات القوس</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1212"/>
         <source>Mask to a bit size</source>
-        <translation>Mască de biţi</translation>
+        <translation>تحويل لأصغر جزء</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1213"/>
         <source>Sign-extent a value</source>
-        <translation>Elimină masca</translation>
+        <translation>امتداد الإشارة للقيمة</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1214"/>
         <source>Logical NOT</source>
-        <translation>NOT logic</translation>
+        <translation>NOT المنطقية </translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1215"/>
         <source>Logical AND</source>
-        <translation>SI logic</translation>
+        <translation>العلاقة المنطقية &quot;و&quot; - &quot;AND&quot;</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1216"/>
         <source>Logical OR</source>
-        <translation>OR logic</translation>
+        <translation>العلاقة المنطقية &quot;أو &quot; - &quot;OR&quot;</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1217"/>
         <source>Logical XOR</source>
-        <translation>XOR logic</translation>
+        <translation>XOR المنطقية</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1218"/>
         <source>Arithmetic Shift Left</source>
-        <translation>Deplasare aritmetică la stânga</translation>
+        <translation>الحساب بالانتقال لليسار</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1219"/>
         <source>Arithmetic Shift Right</source>
-        <translation>Deplasare aritmetică la dreapta</translation>
+        <translation> الحساب بالانتقال لليمين </translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1220"/>
         <source>Integer Quotient</source>
-        <translation>Cat intreg</translation>
+        <translation>القسمة الصحيحة</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1221"/>
         <source>Modulo</source>
-        <translation>Rest</translation>
+        <translation>باقي القسمة</translation>
     </message>
 </context>
 <context>
@@ -949,37 +957,37 @@
     <message>
         <location filename="../core/functions.cpp" line="271"/>
         <source>function requires 1 or 2 arguments</source>
-        <translation>funcţia necesita 1 sau 2 argumente</translation>
+        <translation>الاقتران بحاجة الى مدخل أو مدخلين</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="939"/>
         <source>function undefined for specified arguments</source>
-        <translation>funcţia e nedefinită pentru argumente speciale</translation>
+        <translation>الاقتران غير معرف للمدخلات المحددة</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="253"/>
         <source>function requires at least 2 arguments</source>
-        <translation>funcţia necesită cel puţin 2 argumente</translation>
+        <translation>الاقتران بحاجة على الأقل إلى مدخلين</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="259"/>
         <source>function requires integer arguments</source>
-        <translation>funcţia necesită argumente de tip intreg</translation>
+        <translation>الاقتران بحاجة إلى مدخلات أعداد صحيحة</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="626"/>
         <source>function undefined for specified argument</source>
-        <translation>funcţia e nedefinită pentru argumentul specificat</translation>
+        <translation> الاقتران غيرمعرف للمدخل المحدد </translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="596"/>
         <source>underflow</source>
-        <translation>În afara limitelor</translation>
+        <translation>غير متدفق</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="693"/>
         <source>function requires at least 1 argument</source>
-        <translation>funcţia necesită cel puţin 1 argument</translation>
+        <translation> الاقتران بحاجة الى مدخل واحد على الاقل </translation>
     </message>
 </context>
 <context>
@@ -987,7 +995,7 @@
     <message>
         <location filename="../gui/functionsdock.cpp" line="59"/>
         <source>Functions</source>
-        <translation>Funcţii</translation>
+        <translation>الاقترانات</translation>
     </message>
 </context>
 <context>
@@ -995,22 +1003,22 @@
     <message>
         <location filename="../gui/functionswidget.cpp" line="147"/>
         <source>Name</source>
-        <translation>Nume</translation>
+        <translation>الاسم</translation>
     </message>
     <message>
         <location filename="../gui/functionswidget.cpp" line="148"/>
         <source>Description</source>
-        <translation>Descriere</translation>
+        <translation>الوصف</translation>
     </message>
     <message>
         <location filename="../gui/functionswidget.cpp" line="151"/>
         <source>Search</source>
-        <translation>Caută</translation>
+        <translation>بحث</translation>
     </message>
     <message>
         <location filename="../gui/functionswidget.cpp" line="152"/>
         <source>No match found</source>
-        <translation>Nici un rezultat</translation>
+        <translation>لم نعثر على مطابق</translation>
     </message>
 </context>
 <context>
@@ -1018,7 +1026,7 @@
     <message>
         <location filename="../gui/historydock.cpp" line="89"/>
         <source>History</source>
-        <translation>Istoric</translation>
+        <translation>السجل</translation>
     </message>
 </context>
 <context>
@@ -1026,17 +1034,17 @@
     <message>
         <location filename="../gui/insertfunctiondlg.cpp" line="52"/>
         <source>&amp;Insert</source>
-        <translation>&amp;Inserare</translation>
+        <translation>إدراج</translation>
     </message>
     <message>
         <location filename="../gui/insertfunctiondlg.cpp" line="56"/>
         <source>Cancel</source>
-        <translation>Anulare</translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <location filename="../gui/insertfunctiondlg.cpp" line="43"/>
         <source>Insert Function</source>
-        <translation>Inserare Funcţie</translation>
+        <translation>إدراج الإقتران</translation>
     </message>
 </context>
 <context>
@@ -1044,17 +1052,17 @@
     <message>
         <location filename="../gui/insertvardlg.cpp" line="55"/>
         <source>&amp;Insert</source>
-        <translation>&amp;Inserare</translation>
+        <translation>إدراج</translation>
     </message>
     <message>
         <location filename="../gui/insertvardlg.cpp" line="59"/>
         <source>Cancel</source>
-        <translation>Anulare</translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <location filename="../gui/insertvardlg.cpp" line="46"/>
         <source>Insert Variable</source>
-        <translation>Inserarează variabila</translation>
+        <translation>إدراج المتغير</translation>
     </message>
 </context>
 <context>
@@ -1062,72 +1070,72 @@
     <message>
         <location filename="../gui/keypad.cpp" line="308"/>
         <source>Inverse cosine</source>
-        <translation>Invers cosinus</translation>
+        <translation> معكوس جيب التمام</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="309"/>
         <source>The last result</source>
-        <translation>Ultimul rezultat</translation>
+        <translation>آخر نتيجة</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="310"/>
         <source>Inverse sine</source>
-        <translation>Invers sinus</translation>
+        <translation>معكوس الجيب</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="311"/>
         <source>Inverse tangent</source>
-        <translation>Invers tangenta</translation>
+        <translation>معكوس الظل</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="312"/>
         <source>Clear expression</source>
-        <translation>Curăţă expresia</translation>
+        <translation>مسح العبارة</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="313"/>
         <source>Cosine</source>
-        <translation>Cosinus</translation>
+        <translation>جيب التمام</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="314"/>
         <source>Scientific notation</source>
-        <translation>Notaţia ştiinţifică</translation>
+        <translation>ملاحظات علمية</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="315"/>
         <source>Exponential</source>
-        <translation>Exponenţial</translation>
+        <translation>الأس</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="316"/>
         <source>Natural logarithm</source>
-        <translation>Logaritm Natural</translation>
+        <translation>اللوغاريتم الطبيعي</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="317"/>
         <source>Sine</source>
-        <translation>Sinus</translation>
+        <translation>جيب</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="318"/>
         <source>Square root</source>
-        <translation>Rădăcina Pătrată</translation>
+        <translation>الجذر التربيعي</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="319"/>
         <source>Tangent</source>
-        <translation>Tangenta</translation>
+        <translation>الظل</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="320"/>
         <source>Assign variable x</source>
-        <translation>Atribuie variabila x</translation>
+        <translation> x تعيين المتغير  </translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="321"/>
         <source>The variable x</source>
-        <translation>Variabila X</translation>
+        <translation>x المتغير</translation>
     </message>
 </context>
 <context>
@@ -1135,498 +1143,490 @@
     <message>
         <location filename="../gui/mainwindow.cpp" line="1301"/>
         <source>About Qt</source>
-        <translation>Despre Qt</translation>
-    </message>
-    <message>
-        <location filename="../gui/mainwindow.cpp" line="1689"/>
-        <source>SpeedCrunch Sessions (*.sch);;All Files (*)</source>
-        <translation>Sesiune SpeedCrunch (*.sch);; Toate fişierele (*)</translation>
+        <translation> Qtعن  كيوت </translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1434"/>
         <source>Load Session</source>
-        <translation>Incarcă Sesiune</translation>
+        <translation>تحميل الجلسة</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1739"/>
         <source>Error</source>
-        <translation>Eroare</translation>
+        <translation>خطأ</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1534"/>
         <source>Can&apos;t read from file %1</source>
-        <translation>Nu se poate citi fişierul %1</translation>
+        <translation>لا يمكن القراءة من الملف %1</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1543"/>
         <source>Question</source>
-        <translation>Întrebare</translation>
+        <translation>سؤال</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1690"/>
         <source>Save Session</source>
-        <translation>Salvează Sesiunea</translation>
+        <translation>حفظ الجلسة</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1739"/>
         <source>Can&apos;t write to file %1</source>
-        <translation>Nu se poate scrie în fişierul %1</translation>
+        <translation>لا يمكن الكتابة على الملف %1</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2006"/>
         <source>Warning</source>
-        <translation>Avertisment</translation>
+        <translation>تحذير</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2019"/>
         <source>To insert a function using keyboard, use Ctrl+F shorcut. From the dialog, you can choose the function you want to insert.</source>
-        <translation>Pentru a insera o funcţie utilizând tastatura, foloseşte scurtătura Ctrl+F. Din dialog poţi alege ce funcţie doreşti să inserezi.</translation>
+        <translation>ومن صندوق الحوار يمكن اختيار الاقتران الذي تريد إدراجه Ctrl+F لإدراج اقتران استخدم لوحة المفاتيح ,استخدم </translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2024"/>
         <source>To insert a variable using keyboard, use Ctrl+I shorcut. From the dialog, you can choose the variable you want to insert.</source>
-        <translation>Pentru a insera o variabilă utilizînd tastatura, foloseşte scurtătura Ctrl+I. Din dialog poţi alege ce variabilă doreşti să inserezi.</translation>
+        <translation> ومن صندوق الحوار يمكن اختيار المتغير الذي تريد إدراجه Ctrl+F لإدراج متغير استخدم لوحة المفاتيح ,استخدم </translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2027"/>
         <source>Use variable &lt;i&gt;pi&lt;/i&gt; to use pi constant.</source>
-        <translation>Foloseşte variabila &lt;i&gt;pi&lt;/i&gt; pentru constanta pi.</translation>
+        <translation>    عوضا عن الباي&lt;i&gt;pi&lt;/i&gt; استخدم المتغير.</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2031"/>
         <source>Use &lt;i&gt;;&lt;/i&gt; (semicolon) to separate the parameters in functions.</source>
-        <translation>Foloseşte &lt;i&gt;;&lt;/i&gt; (punct şi virgulă) pentru a separa parametrii în funcţii.</translation>
+        <translation>استخدم &lt;i&gt;;&lt;/i&gt;  لفصل العوامل في الاقتران(الفاصلة المنقوطة )</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2037"/>
         <source>Tip of the day</source>
-        <translation>Sugestia zilei</translation>
+        <translation>نصيحة النهار </translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1432"/>
         <source>File %1 is not a valid session</source>
-        <translation>Fişierul %1 nu este o sesiune validă</translation>
+        <translation>الملف %1 ليس متوفرا في الجلسة</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1465"/>
         <source>Merge session being loaded with current session?
 If no, current variables and display will be cleared.</source>
-        <translation>Vrei sa faci merge la sesiunea care se încarcă cu cea curentă?
-Daca nu, variabilele curente şi ecranul vor fi curaţate.</translation>
+        <translation>هل تدمج الجلسة المحملة مع الجلسة الجارية؟ وإلا فستمسح المتغيرات وشاشة العرض.</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2300"/>
         <source>SpeedCrunch is minimized.
 Left click the icon to restore it or right click for options.</source>
-        <translation>Fereastra SpeedCrunch este minimizată.￼
-Apasă iconiţa din stânga pentru a o aduce la dimensiunile iniţiale sau click dreapta pentru alte opţiuni.</translation>
+        <translation> سوف يصغر البرنامج ,انقر على اليسار ليعاد الى وضعه وعلى اليمين للخيارات</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1342"/>
         <source>Degree</source>
-        <translation>Grad</translation>
+        <translation>درجة</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1731"/>
         <source>All Files (*)</source>
-        <translation>Toate fişierele (*)</translation>
+        <translation>جميع الملفات (*)</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1682"/>
         <source>Radian</source>
-        <translation>Radian</translation>
+        <translation>راديان</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2003"/>
         <source>The menu bar is now hidden. To make it visible again, press Ctrl+Alt+M.</source>
-        <translation>Meniul aplicaţiei este acum ascuns. Pentru a-l face vizibil din nou, apasă Ctrl+Alt+M.</translation>
+        <translation>شريط القائمة الآن مخفي ,لإظهاره من جديد اضغط  Ctrl+Alt+M </translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2046"/>
         <source>Binary</source>
-        <translation>Binar</translation>
+        <translation>عدد ثنائي القيمة</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2055"/>
         <source>Engineering decimal</source>
-        <translation>Punct zecimal ingineresc</translation>
+        <translation>الهندسة العشرية</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2064"/>
         <source>Fixed decimal</source>
-        <translation>Punct zecimal fix</translation>
+        <translation>أقرب عدد صحيح عشري</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2073"/>
         <source>General decimal</source>
-        <translation>Punct zecimal general</translation>
+        <translation>العدد العشري العام</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2082"/>
         <source>Hexadecimal</source>
-        <translation>Hexazecimal</translation>
+        <translation>السادس عشري</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2091"/>
         <source>Octal</source>
-        <translation>Octal</translation>
+        <translation>الثماني</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2100"/>
         <source>Scientific decimal</source>
-        <translation>Punct zecimal sciinţific</translation>
+        <translation>العدد العشري العلمي</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1527"/>
         <source>Import Session</source>
-        <translation>Importă Sesiune</translation>
+        <translation>استيراد الجلسة</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1541"/>
         <source>Merge session being imported with current session?
 If no, current variables and display will be cleared.</source>
-        <translation>Vrei sa faci merge la sesiunea care este importată cu cea curentă?
-Daca nu, variabilele curente şi ecranul vor fi curaţate.</translation>
+        <translation> الدمج للجلسة بدأ بالتحميل مع الجلسة الحالية ؟ ,إذا لا ,المتغيرات الحالية والمعروض سوف يمسح.</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1732"/>
         <source>Export Session</source>
-        <translation>Exportă Sesiune</translation>
+        <translation>الجلسة المصدرة</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="860"/>
         <source>Math Book</source>
-        <translation>Carte de matematică</translation>
+        <translation>كتاب الرياضيات </translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="744"/>
         <source>&amp;Session</source>
-        <translation>&amp;Sesiune</translation>
+        <translation>الجلسة</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="512"/>
         <source>Clear E&amp;xpression</source>
-        <translation>Curătă e&amp;xpresia</translation>
+        <translation> مسح الجلسة</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="513"/>
         <source>Clear &amp;History</source>
-        <translation>Goleşte &amp;Istoricul</translation>
+        <translation>مسح السجل</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="533"/>
         <source>&amp;Degree</source>
-        <translation>&amp;Grad</translation>
+        <translation>درجة</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="516"/>
         <source>Delete All V&amp;ariables</source>
-        <translation>Şterge toate v&amp;ariabilele</translation>
+        <translation>مسح جميع المتغيرات </translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="517"/>
         <source>D&amp;elete Variable...</source>
-        <translation>Şt&amp;erge variabila...</translation>
+        <translation> مسح المتغير</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="545"/>
         <source>&amp;15 Decimal Digits</source>
-        <translation>&amp;15 Cifre zecimale</translation>
+        <translation>رقم عشري15</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="546"/>
         <source>&amp;2 Decimal Digits</source>
-        <translation>&amp;2 Cifre zecimale</translation>
+        <translation>رقمين عشريين</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="547"/>
         <source>&amp;3 Decimal Digits</source>
-        <translation>&amp;3 Cifre zecimale</translation>
+        <translation>3 أرقام عشرية</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="548"/>
         <source>&amp;50 Decimal Digits</source>
-        <translation>&amp;50 Cifre zecimale</translation>
+        <translation>رقم عشري 50</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="549"/>
         <source>&amp;8 Decimal Digits</source>
-        <translation>&amp;8 Cifre zecimale</translation>
+        <translation>أرقام عشرية 8</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="550"/>
         <source>&amp;Automatic Precision</source>
-        <translation>Precizie &amp;Automatică</translation>
+        <translation>دقة أوتوماتيكية </translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="515"/>
         <source>&amp;Copy</source>
-        <translation>&amp;Copiază</translation>
+        <translation>نسخ</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="514"/>
         <source>Copy Last &amp;Result</source>
-        <translation>Copiază ultimul &amp;rezultat</translation>
+        <translation> آخر نتيجة نسخ</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="520"/>
         <source>&amp;Paste</source>
-        <translation>In&amp;serează</translation>
+        <translation>لصق</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="561"/>
         <source>&amp;About</source>
-        <translation>&amp;Despre</translation>
+        <translation>عن</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="560"/>
         <source>About &amp;Qt</source>
-        <translation>Despre &amp;Qt</translation>
+        <translation>عن ال Qt</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="563"/>
         <source>SpeedCrunch &amp;Web Site...</source>
-        <translation>SpeedCrunch &amp;site...</translation>
+        <translation>الموقع...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="562"/>
         <source>&amp;Tip of the Day</source>
-        <translation>&amp;Sugestia zilei</translation>
+        <translation>نصيحة النهار</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="518"/>
         <source>Insert &amp;Function...</source>
-        <translation>Inserează &amp;funcţia...</translation>
+        <translation>إدراج الاقتران...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="519"/>
         <source>Insert &amp;Variable...</source>
-        <translation>Inserează &amp;variabila...</translation>
+        <translation>إدراج المتغير...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="538"/>
         <source>&amp;Partial Results</source>
-        <translation>&amp;Rezultate Parţiale</translation>
+        <translation>النتيجة الجزئية</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="536"/>
         <source>Automatic &amp;Completion</source>
-        <translation>&amp;Completare Automată</translation>
+        <translation>الإكمال الأتوماتيكي</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="535"/>
         <source>Always On &amp;Top</source>
-        <translation>Întotdeauna în &amp;partea cea mai de sus</translation>
+        <translation>أظهره دائما</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="537"/>
         <source>&amp;Minimize To System Tray</source>
-        <translation>Minimizează în system &amp;tray</translation>
+        <translation>تصغير الى النظام</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="541"/>
         <source>Syntax &amp;Highlighting</source>
-        <translation>Sintaxă şi &amp;Subliniere</translation>
+        <translation>تركيز الاهتمام على قواعد الصياغة</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="543"/>
         <source>&amp;System Default</source>
-        <translation>&amp;Valoarea implicită a sistemului</translation>
+        <translation>النظام الاعتيادي</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="544"/>
         <source>&amp;Dot</source>
-        <translation>&amp;Punct</translation>
+        <translation>نقطة</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="542"/>
         <source>&amp;Comma</source>
-        <translation>&amp;Virgulă</translation>
+        <translation>فاصلة</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="534"/>
         <source>&amp;Radian</source>
-        <translation>&amp;Radian</translation>
+        <translation>راديان</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="565"/>
         <source>Scroll Display Down</source>
-        <translation>Scroll în jos</translation>
+        <translation>تحريك محتويات الشاشة للأسفل</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="566"/>
         <source>Scroll Display Up</source>
-        <translation>Scroll în sus</translation>
+        <translation> تحريك محتويات الشاشة للأعلى </translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="521"/>
         <source>&amp;Select Expression</source>
-        <translation>&amp;Selectează expresia</translation>
+        <translation>التعبير المختار</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="507"/>
         <source>&amp;Import...</source>
-        <translation>&amp;Importă...</translation>
+        <translation>استيراد...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="508"/>
         <source>&amp;Load...</source>
-        <translation>&amp;Încarcă...</translation>
+        <translation>تحميل...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="509"/>
         <source>&amp;Quit</source>
-        <translation>&amp;Ieşire</translation>
+        <translation>إنهاء</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="510"/>
         <source>&amp;Save...</source>
-        <translation>&amp;Salvează...</translation>
+        <translation>حفظ...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="506"/>
         <source>&amp;Export...</source>
-        <translation>&amp;Exportă...</translation>
+        <translation>تصدير ...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="528"/>
         <source>Math &amp;Book</source>
-        <translation>&amp;Carte de Matematică</translation>
+        <translation>كتاب الرياضيات</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="523"/>
         <source>&amp;Constants</source>
-        <translation>&amp;Constante</translation>
+        <translation>المحتويات</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="525"/>
         <source>&amp;Functions</source>
-        <translation>&amp;Funcţii</translation>
+        <translation>الاقتران</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="526"/>
         <source>&amp;History</source>
-        <translation>&amp;Istoric</translation>
+        <translation>السجل</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="527"/>
         <source>&amp;Keypad</source>
-        <translation>&amp;Keypad</translation>
+        <translation>لوحة المفاتيح الرقمية</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="530"/>
         <source>&amp;Status Bar</source>
-        <translation>&amp;Bara de status</translation>
+        <translation>شريط الحالة</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="531"/>
         <source>&amp;Variables</source>
-        <translation>&amp;Variabile</translation>
+        <translation>المتغيرات</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="551"/>
         <source>&amp;Binary</source>
-        <translation>&amp;Binar</translation>
+        <translation>عدد ثنائي القيمة</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="552"/>
         <source>&amp;Engineering</source>
-        <translation>&amp;Ingineresc</translation>
+        <translation>الهندسي</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="553"/>
         <source>&amp;Fixed Decimal</source>
-        <translation>Punct Zecimal &amp;Fix</translation>
+        <translation> عدد عشري ثابت</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="554"/>
         <source>&amp;General</source>
-        <translation>&amp;General</translation>
+        <translation>عام</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="555"/>
         <source>&amp;Hexadecimal</source>
-        <translation>&amp;Hexadecimal</translation>
+        <translation>السادس عشري</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="556"/>
         <source>&amp;Octal</source>
-        <translation>&amp;Octal</translation>
+        <translation>ثماني</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="557"/>
         <source>&amp;Scientific</source>
-        <translation>&amp;Ştiinţific</translation>
+        <translation>علمي</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="745"/>
         <source>&amp;Edit</source>
-        <translation>&amp;Editare</translation>
+        <translation>تعديل</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="746"/>
         <source>&amp;View</source>
-        <translation>&amp;Vizualizare</translation>
+        <translation>عرض</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="747"/>
         <source>Se&amp;ttings</source>
-        <translation>&amp;Preferinţe</translation>
+        <translation>ضبط الخيارات</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="748"/>
         <source>Result &amp;Format</source>
-        <translation>&amp;Formatul rezultatului</translation>
+        <translation>صيغة النتيجة</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="749"/>
         <source>&amp;Decimal</source>
-        <translation>&amp;Zecimal</translation>
+        <translation>العشري</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="750"/>
         <source>&amp;Angle Unit</source>
-        <translation>&amp;Unitatea de masură a unghiului</translation>
+        <translation>وحدة الزاوية</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="751"/>
         <source>&amp;Behavior</source>
-        <translation>&amp;Setări</translation>
+        <translation>السلوك</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="752"/>
         <source>Radix &amp;Character</source>
-        <translation>Reprezentare punct &amp;zecimal</translation>
+        <translation>أساس العلامة</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="753"/>
         <source>&amp;Help</source>
-        <translation>&amp;Ajutor</translation>
+        <translation>مساعدة</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="499"/>
         <source>Angle unit</source>
-        <translation>Unitatea de masură a unui unghi</translation>
+        <translation>وحدة الزاوية</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="500"/>
         <source>Result format</source>
-        <translation>Formatul rezultatului</translation>
+        <translation>صيغة النتيجة</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1570"/>
         <source>Ignore error?</source>
-        <translation>Vrei să  ignori eroarea?</translation>
+        <translation>تجاهل الأخطاء؟</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="524"/>
         <source>F&amp;ull Screen Mode</source>
-        <translation>Afiseazăpe tot &amp;ecranul</translation>
+        <translation>عرض كل الشاشة</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="529"/>
         <source>&amp;Menu Bar</source>
-        <translation>Ascunde &amp;meniul aplicaţiei</translation>
+        <translation>إخفاء شريط القائمة</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="539"/>
@@ -1641,20 +1641,25 @@ Daca nu, variabilele curente şi ecranul vor fi curaţate.</translation>
     <message>
         <location filename="../gui/mainwindow.cpp" line="558"/>
         <source>&amp;Language...</source>
-        <translation>&amp;Limbaj...</translation>
+        <translation>اللغة</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2452"/>
+        <location filename="../gui/mainwindow.cpp" line="1689"/>
+        <source>SpeedCrunch Sessions (*.sch);;All Files (*)</source>
+        <translation>(*)لجميع الملفات (*.sch);; جلسات سبيد كرنش </translation>
+    </message>
+    <message>
+        <location filename="../gui/mainwindow.cpp" line="2453"/>
         <source>System Default</source>
-        <translation>&amp;Valoarea implicităa sistemului</translation>
+        <translation>النظام الاعتيادي</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2458"/>
+        <location filename="../gui/mainwindow.cpp" line="2459"/>
         <source>Language</source>
-        <translation>Limbaj</translation>
+        <translation>اللغة</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2458"/>
+        <location filename="../gui/mainwindow.cpp" line="2459"/>
         <source>Select the language:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1664,7 +1669,7 @@ Daca nu, variabilele curente şi ecranul vor fi curaţate.</translation>
     <message>
         <location filename="../gui/variablesdock.cpp" line="63"/>
         <source>Variables</source>
-        <translation>Variabile</translation>
+        <translation>المتغيرات</translation>
     </message>
 </context>
 <context>
@@ -1672,22 +1677,22 @@ Daca nu, variabilele curente şi ecranul vor fi curaţate.</translation>
     <message>
         <location filename="../gui/variableswidget.cpp" line="163"/>
         <source>Name</source>
-        <translation>Nume</translation>
+        <translation>الاسم</translation>
     </message>
     <message>
         <location filename="../gui/variableswidget.cpp" line="164"/>
         <source>Value</source>
-        <translation>Valoare</translation>
+        <translation>القيمة</translation>
     </message>
     <message>
         <location filename="../gui/variableswidget.cpp" line="167"/>
         <source>Search</source>
-        <translation>Caută</translation>
+        <translation>بحث</translation>
     </message>
     <message>
         <location filename="../gui/variableswidget.cpp" line="168"/>
         <source>No match found</source>
-        <translation>Nici un rezultat</translation>
+        <translation>لا يوجد مماثل</translation>
     </message>
 </context>
 </TS>

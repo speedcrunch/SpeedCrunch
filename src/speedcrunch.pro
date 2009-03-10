@@ -149,28 +149,29 @@ SOURCES += 3rdparty/flickcharm/flickcharm.cpp \
 }
 
 RESOURCES += resources/speedcrunch.qrc
-TRANSLATIONS += locale/ar.ts \
-                locale/ca.ts \
-                locale/cs.ts \
-                locale/de.ts \
+TRANSLATIONS += locale/ar_JO.ts \
+                locale/ca_ES.ts \
+                locale/cs_CZ.ts \
+                locale/de_DE.ts \
+                locale/en_GB.ts \
                 locale/en_US.ts \
-                locale/es.ts \
                 locale/es_AR.ts \
-                locale/eu.ts \
-                locale/fi.ts \
-                locale/fr.ts \
-                locale/he.ts \
-                locale/id.ts \
-                locale/it.ts \
-                locale/nb.ts \
-                locale/nl.ts \
-                locale/pl.ts \
-                locale/pt.ts \
+                locale/es_ES.ts \
+                locale/eu_ES.ts \
+                locale/fi_FI.ts \
+                locale/fr_FR.ts \
+                locale/he_IL.ts \
+                locale/id_ID.ts \
+                locale/it_IT.ts \
+                locale/nb_NO.ts \
+                locale/nl_NL.ts \
+                locale/pl_PL.ts \
                 locale/pt_BR.ts \
-                locale/ro.ts \
-                locale/ru.ts \
-                locale/sv.ts \
-                locale/tr.ts \
+                locale/pt_PT.ts \
+                locale/ro_RO.ts \
+                locale/ru_RU.ts \
+                locale/sv_SE.ts \
+                locale/tr_TR.ts \
                 locale/zh_CN.ts
 
 win32:RC_FILE = resources/speedcrunch.rc
