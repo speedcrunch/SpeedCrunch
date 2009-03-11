@@ -40,6 +40,8 @@
 #include <QtGui/QTreeWidget>
 #include <QtGui/QWheelEvent>
 
+#include <algorithm>
+
 class EditorHighlighter : public QSyntaxHighlighter
 {
   public:
