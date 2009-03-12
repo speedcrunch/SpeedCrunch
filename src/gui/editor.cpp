@@ -40,8 +40,6 @@
 #include <QtGui/QTreeWidget>
 #include <QtGui/QWheelEvent>
 
-#include <algorithm>
-
 class EditorHighlighter : public QSyntaxHighlighter
 {
   public:
@@ -1330,16 +1328,6 @@ bool ConstantCompletion::eventFilter( QObject * obj, QEvent * ev )
 
   return false;
 }
-
-class constant_name_is
-{
-    QString m_name;
-public:
-    explicit constant_name_is(const QString& name) : m_name(name) {}
-    bool operator()(const Constant& c) const {
-        return c.name == m_name;
-    }
-};
 
 void ConstantCompletion::doneCompletion()
 {

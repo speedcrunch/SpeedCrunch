@@ -21,6 +21,8 @@
 
 #include <QtCore/QCoreApplication>
 
+#include <algorithm>
+
 static Constants * s_constantsInstance = 0;
 
 static void s_deleteConstants()
@@ -48,6 +50,14 @@ Constants * Constants::instance()
     }
 
     return s_constantsInstance;
+}
+
+constant_name_is::constant_name_is(const QString& name)
+    : m_name(name)
+{}
+
+bool constant_name_is::operator()(const Constant& c) const {
+    return c.name == m_name;
 }
 
 Constants::Constants()

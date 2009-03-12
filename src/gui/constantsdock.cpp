@@ -236,10 +236,9 @@ void ConstantsDock::filter()
 
 void ConstantsDock::handleItem( QTreeWidgetItem * item )
 {
-  Constants * c = d->constants;
-  for ( int k = 0; k < c->list().count(); k++ )
-    if ( c->list().at( k ).name == item->text( 0 ) )
-      emit constantSelected( c->list().at( k ).value );
+    const QList<Constant>& c = d->constants->list();
+    emit constantSelected(std::find_if(c.begin(), c.end(),
+                constant_name_is(item->text(0)))->value);
 }
 
 void ConstantsDock::triggerFilter()

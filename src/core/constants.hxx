@@ -47,6 +47,14 @@ public:
         name( n ), value( v ), unit( u ) {}
 };
 
+class constant_name_is
+{
+    QString m_name;
+public:
+    explicit constant_name_is(const QString&);
+    bool operator()(const Constant&) const;
+};
+
 class Constants : public QObject
 {
     Q_OBJECT
