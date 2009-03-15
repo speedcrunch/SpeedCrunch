@@ -75,6 +75,7 @@ AboutBox::AboutBox( QWidget * parent )
     msg += "Alejandro Villarreal<br>"
            "Alexey Kouznetsov<br>"
            "Anders Lund<br>"
+           "Aur&eacute;lien G&acirc;teau<br>"
            "Bart Martens<br>"
            "Bernhard Schiffner<br>"
            "Damir Perisa<br>"
