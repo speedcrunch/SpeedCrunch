@@ -65,6 +65,10 @@
 #include <X11/Xlib.h>
 #endif // Q_WS_X11
 
+#ifdef Q_OS_WIN32
+#include "Windows.h"
+#endif // Q_OS_WIN32
+
 struct Actions
 {
     // session
@@ -2210,9 +2214,14 @@ void MainWindow::raiseWindow()
 {
     activate();
 
+#ifdef Q_OS_WIN
+    SetWindowPos( winId(), HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE );
+    SetWindowPos( winId(), HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE );
+#endif // Q_OS_WIN
+
 #ifdef Q_WS_X11
-    static Atom NET_ACTIVE_WINDOW = XInternAtom( QX11Info::display(),
-                                                 "_NET_ACTIVE_WINDOW", False );
+    static Atom NET_ACTIVE_WINDOW = XInternAtom( QX11Info::display(), "_NET_ACTIVE_WINDOW",
+                                                 False );
 
     XClientMessageEvent xev;
     xev.type = ClientMessage;

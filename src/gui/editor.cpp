@@ -40,6 +40,8 @@
 #include <QtGui/QTreeWidget>
 #include <QtGui/QWheelEvent>
 
+#include <algorithm>
+
 class EditorHighlighter : public QSyntaxHighlighter
 {
   public:
@@ -1334,9 +1336,9 @@ void ConstantCompletion::doneCompletion()
   d->editor->setFocus();
   const QTreeWidgetItem * item = d->list->currentItem();
   emit selectedCompletion( item ?
-          std::find_if(d->constants.begin(), d->constants.end(),
-              constant_name_is(item->text( 0 )))->value
-          : QString() );
+                           std::find_if(d->constants.begin(), d->constants.end(),
+                                        constant_name_is(item->text( 0 )))->value
+                           : QString() );
 }
 
 void ConstantCompletion::showCompletion()
