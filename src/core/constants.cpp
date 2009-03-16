@@ -149,9 +149,9 @@ void Constants::retranslateText()
     d->list += Constant( tr("Sun Radius"),        "6.96265e8",          "m",  cat );
     d->list += Constant( tr("Sun Luminosity"),    "3.827e26",           "W",  cat );
 
-    for ( int k = 0; k < d->list.count(); k++ ) {
+    for ( int k = 0; k < d->list.count(); ++k ) {
         QStringList cats = d->list.at( k ).categories;
-        for ( int i = 0; i < cats.count(); i++ )
+        for ( int i = 0; i < cats.count(); ++i )
             if ( ! d->categories.contains( cats.at(i) ) )
                 d->categories += cats.at( i );
     }
