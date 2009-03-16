@@ -59,7 +59,7 @@ class EditorHighlighter : public QSyntaxHighlighter
       for ( int i = 0; i < tokens.count(); i++ )
       {
         const Token & token = tokens.at(i);
-        QString text = token.text().toLower();
+        const QString text = token.text().toLower();
         QColor color;
         QStringList fnames;
 
@@ -252,10 +252,10 @@ void Editor::setCursorPosition( int pos )
 QSize Editor::sizeHint() const
 {
   ensurePolished();
-  QFontMetrics fm = fontMetrics();
-  int h = qMax( fm.lineSpacing() + 2, 14 );
-  int w = fm.width( 'x' ) * 20;
-  int m = frameWidth() * 2;
+  const QFontMetrics fm = fontMetrics();
+  const int h = qMax( fm.lineSpacing() + 2, 14 );
+  const int w = fm.width( 'x' ) * 20;
+  const int m = frameWidth() * 2;
 
   return style()->sizeFromContents( QStyle::CT_LineEdit, 0,
                                     QSize( w + m, h + m ).
@@ -384,7 +384,7 @@ void Editor::doMatchingPar()
 void Editor::doMatchingLeft()
 {
   // tokenize the expression
-  int curPos = textCursor().position();
+  const int curPos = textCursor().position();
 
   // check for right par
   QString subtext = text().left( curPos );
@@ -402,7 +402,6 @@ void Editor::doMatchingLeft()
     // find the matching left par
     unsigned par = 1;
     int k = 0;
-    Token matchToken;
     int matchPos = -1;
 
 /*    for( k = tokens.count()-2; k >= 0; k-- ) //refty
@@ -495,7 +494,7 @@ void Editor::doMatchingRight()
 
     for ( k = 1; k < tokens.count() && par > 0; k++ ) //refty
     {
-      Token matchToken = tokens.at(k);
+      const Token matchToken = tokens.at(k);
       switch ( matchToken.type() )
       {
         case Token::stxOpenPar : ++par; break;
@@ -536,9 +535,9 @@ void Editor::triggerAutoComplete()
     return;
 
   // tokenize the expression (don't worry, this is very fast)
-  int curPos = textCursor().position();
+  const int curPos = textCursor().position();
   QString subtext = text().left( curPos );
-  Tokens tokens = d->eval->scan( subtext );
+  const Tokens tokens = d->eval->scan( subtext );
   if ( ! tokens.valid()   ) return;
   if ( tokens.count() < 1 ) return;
 
@@ -547,7 +546,7 @@ void Editor::triggerAutoComplete()
   // last token must be an identifier
   if ( ! lastToken.isIdentifier() )
     return;
-  QString id = lastToken.text();
+  const QString id = lastToken.text();
   if ( id.length() < 1 )
     return;
 
@@ -556,7 +555,7 @@ void Editor::triggerAutoComplete()
     return;
 
   // find matches in function names
-  QStringList fnames = d->functions->names();
+  const QStringList fnames = d->functions->names();
   QStringList choices;
   for ( int i = 0; i < fnames.count(); i++ )
   {
@@ -596,7 +595,7 @@ void Editor::triggerAutoComplete()
   {
     QString str = choices.at(0).split(':').at(0);
     str = str.remove( 0, id.length() );
-    int curPos = textCursor().position();
+    const int curPos = textCursor().position();
     if ( textCursor().selectionStart() == textCursor().selectionEnd() )
     {
       blockSignals( true );
@@ -620,17 +619,17 @@ void Editor::autoComplete( const QString & item )
   if ( ! d->autoCompleteEnabled || item.isEmpty() )
     return;
 
-  int curPos = textCursor().position();
-  QString subtext = text().left( curPos );
-  Tokens tokens = d->eval->scan( subtext );
+  const int curPos = textCursor().position();
+  const QString subtext = text().left( curPos );
+  const Tokens tokens = d->eval->scan( subtext );
   if ( ! tokens.valid() || tokens.count() < 1 )
     return;
 
-  Token lastToken = tokens.at( tokens.count()-1 );
+  const Token lastToken = tokens.at( tokens.count()-1 );
   if ( ! lastToken.isIdentifier() )
     return;
 
-  QStringList str = item.split( ':' );
+  const QStringList str = item.split( ':' );
 
   blockSignals( true );
   QTextCursor cursor = textCursor();
@@ -647,20 +646,20 @@ void Editor::autoCalc()
   if ( ! d->autoCalcEnabled )
     return;
 
-  QString str = d->eval->autoFix( text() );
+  const QString str = d->eval->autoFix( text() );
   if ( str.isEmpty() )
     return;
 
   // very short (just one token) and still no calculation, then skip
   if ( ! d->ansAvailable )
   {
-    Tokens tokens = d->eval->scan( text() );
+    const Tokens tokens = d->eval->scan( text() );
     if ( tokens.count() < 2 )
       return;
   }
 
   // too short even after autofix ? do not bother either...
-  Tokens tokens = d->eval->scan( str );
+  const Tokens tokens = d->eval->scan( str );
   if ( tokens.count() < 2 )
     return;
 
@@ -674,11 +673,11 @@ void Editor::autoCalc()
 
   // same reason as above, do not update "ans"
   d->eval->setExpression( str );
-  HNumber num = d->eval->evalNoAssign();
+  const HNumber num = d->eval->evalNoAssign();
 
   if ( d->eval->error().isEmpty() )
   {
-    QString ss = tr( "Current result: <b>%1</b>" ).arg( formatNumber( num ) );
+    const QString ss = tr( "Current result: <b>%1</b>" ).arg( formatNumber( num ) );
     emit autoCalcEnabled( ss );
   }
   else
@@ -692,20 +691,20 @@ void Editor::autoCalcSelection()
   if ( ! d->autoCalcEnabled )
     return;
 
-  QString str = d->eval->autoFix( textCursor().selectedText() );
+  const QString str = d->eval->autoFix( textCursor().selectedText() );
   if ( str.isEmpty() )
     return;
 
   // very short (just one token) and still no calculation, then skip
   if ( ! d->ansAvailable )
   {
-    Tokens tokens = d->eval->scan( text() );
+    const Tokens tokens = d->eval->scan( text() );
     if ( tokens.count() < 2 )
       return;
   }
 
   // too short even after autofix ? do not bother either...
-  Tokens tokens = d->eval->scan( str );
+  const Tokens tokens = d->eval->scan( str );
   if ( tokens.count() < 2 )
     return;
 
@@ -719,11 +718,11 @@ void Editor::autoCalcSelection()
 
   // same reason as above, do not update "ans"
   d->eval->setExpression( str );
-  HNumber num = d->eval->evalNoAssign();
+  const HNumber num = d->eval->evalNoAssign();
 
   if ( d->eval->error().isEmpty() )
   {
-    QString ss = tr( "Selection result: <b>%1</b>" ).arg( formatNumber( num ) );
+    const QString ss = tr( "Selection result: <b>%1</b>" ).arg( formatNumber( num ) );
     emit autoCalcEnabled( ss );
   }
   else
@@ -886,16 +885,16 @@ void Editor::setHighlightScheme( Editor::HighlightScheme hs )
   if ( hs == Editor::AutoScheme )
   {
     const int NO_COLORS = 3;
-    QColor bg( palette().color( QPalette::Base ) );
-    QColor fg( palette().color( QPalette::Text ) );
-    QList<QColor> list = d->generateColors( bg, fg, NO_COLORS );
+    const QColor bg( palette().color( QPalette::Base ) );
+    const QColor fg( palette().color( QPalette::Text ) );
+    const QList<QColor> list = d->generateColors( bg, fg, NO_COLORS );
     for ( int i = 0; i < NO_COLORS; i++ )
       d->highlightColors[ static_cast<Editor::ColorType>(i) ] = list.at(i);
 
     // generate special case matched parenthesis
-    int h = ((bg.hue() + fg.hue()) / 2 ) % 359;
-    int s = ((bg.saturation() + fg.saturation()) / 2 ) % 255;
-    int v = ((bg.value() + fg.value()) / 2 ) % 255;
+    const int h = ((bg.hue() + fg.hue()) / 2 ) % 359;
+    const int s = ((bg.saturation() + fg.saturation()) / 2 ) % 255;
+    const int v = ((bg.value() + fg.value()) / 2 ) % 255;
     d->highlightColors[Editor::MatchedPar] = QColor::fromHsv( h, s, v );
   }
 }
@@ -1069,16 +1068,15 @@ void EditorCompletion::showCompletion( const QStringList & choices )
 
   // size of the pop-up
   d->popup->adjustSize();
-  int h = d->popup->sizeHintForRow( 0 ) * qMin(7, choices.count()) + 3;
-  int w = d->popup->width();
+  const int h = d->popup->sizeHintForRow( 0 ) * qMin(7, choices.count()) + 3;
+  const int w = d->popup->width();
   d->popup->resize( w, h );
 
   // position, reference is editor's cursor position in global coord
   QFontMetrics fm( d->editor->font() );
-  int curPos = d->editor->textCursor().position();
-  int pixelsOffset = fm.width( d->editor->text(), curPos );
-  QPoint pos = d->editor->mapToGlobal( QPoint( pixelsOffset,
-                                               d->editor->height() ) );
+  const int curPos = d->editor->textCursor().position();
+  const int pixelsOffset = fm.width( d->editor->text(), curPos );
+  QPoint pos = d->editor->mapToGlobal( QPoint( pixelsOffset, d->editor->height() ) );
 
   // if popup is partially invisible, move to other position
   const QRect screen = QApplication::desktop()->availableGeometry( d->editor );
@@ -1169,7 +1167,7 @@ ConstantCompletion::ConstantCompletion( Editor * editor ) : QObject( editor ),
   connect( d->slider, SIGNAL( frameChanged( int ) ),
            this, SLOT( slide( int ) ) );
 
-  Constants * ct = Constants::instance();
+  const Constants * ct = Constants::instance();
   d->constants = ct->list();
 
   // populate categories
@@ -1199,11 +1197,11 @@ ConstantCompletion::ConstantCompletion( Editor * editor ) : QObject( editor ),
   d->list->resizeColumnToContents( 0 );
   d->categoryList->resizeColumnToContents( 0 );
   int ww = qMax( d->list->width(), d->categoryList->width() );
-  int h1 = d->list->sizeHintForRow( 0 ) * qMin(7, d->constants.count())
+  const int h1 = d->list->sizeHintForRow( 0 ) * qMin(7, d->constants.count())
              + 3;
-  int h2 = d->categoryList->sizeHintForRow( 0 )
+  const int h2 = d->categoryList->sizeHintForRow( 0 )
              * qMin(7, ct->categories().count()) + 3;
-  int hh = qMax( h1, h2 );
+  const int hh = qMax( h1, h2 );
   ww += 200; // extra space (FIXME scrollbar size?)
 
   // adjust dimensions
@@ -1247,7 +1245,7 @@ void ConstantCompletion::showConstants()
     str << d->constants.at(k).name;
     str << d->constants.at(k).name.toUpper();
 
-    bool include = (chosenCategory == tr( "All" )) ?
+    const bool include = (chosenCategory == tr( "All" )) ?
       true : (d->constants.at(k).category == chosenCategory);
 
     if ( ! include )
@@ -1344,13 +1342,13 @@ void ConstantCompletion::showCompletion()
 {
   // position, reference is editor's cursor position in global coord
   QFontMetrics fm( d->editor->font() );
-  int curPos = d->editor->textCursor().position();
-  int pixelsOffset = fm.width( d->editor->text(), curPos );
+  const int curPos = d->editor->textCursor().position();
+  const int pixelsOffset = fm.width( d->editor->text(), curPos );
   QPoint pos = d->editor->mapToGlobal( QPoint( pixelsOffset,
                                        d->editor->height() ) );
 
-  int h = d->popup->height();
-  int w = d->popup->width();
+  const int h = d->popup->height();
+  const int w = d->popup->width();
 
   // if popup is partially invisible, move to other position
   const QRect screen = QApplication::desktop()->availableGeometry( d->editor );
