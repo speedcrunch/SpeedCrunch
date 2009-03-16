@@ -24,26 +24,20 @@
 
 #include <memory>
 
-class Constant
+struct Constant
 {
-public:
     QString category;
     QString name;
-    QString value;
     QString unit;
-
-    Constant( const QString & n, const QString & v, const QString & u,
-              const QString & cat )
-        : category( cat ),
-        name( n ), value( v ), unit( u ) {}
+    QString value;
 };
 
 class constant_name_is
 {
     QString m_name;
 public:
-    explicit constant_name_is(const QString&);
-    bool operator()(const Constant&) const;
+    explicit constant_name_is( const QString & );
+    bool operator()( const Constant & ) const;
 };
 
 class Constants : public QObject
