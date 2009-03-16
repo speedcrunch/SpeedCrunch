@@ -33,17 +33,8 @@ public:
     QString unit;
 
     Constant( const QString & n, const QString & v, const QString & u,
-              const QStringList & cat )
-        : categories( cat ), name( n ), value( v ), unit( u ) {}
-
-    Constant( const QString & n, const QString & v, const QString & u,
               const QString & cat )
         : categories( QStringList() << cat ),
-        name( n ), value( v ), unit( u ) {}
-
-    Constant( const QString & n, const QString & v, const QString & u,
-              const QString & cat1, const QString & cat2 )
-        : categories( QStringList() << cat1 << cat2 ),
         name( n ), value( v ), unit( u ) {}
 };
 
