@@ -1249,7 +1249,7 @@ void ConstantCompletion::showConstants()
     str << d->constants.at(k).name.toUpper();
 
     bool include = (chosenCategory == tr( "All" )) ?
-      true : d->constants.at(k).categories.contains( chosenCategory );
+      true : (d->constants.at(k).category == chosenCategory);
 
     if ( ! include )
       continue;

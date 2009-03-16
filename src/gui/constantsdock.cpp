@@ -177,7 +177,7 @@ void ConstantsDock::filter()
     str << QString( "" );
 
     bool include = (chosenCategory == tr( "All" )) ?
-      true : c->list().at( k ).categories.contains( chosenCategory );
+      true : (c->list().at( k ).category == chosenCategory);
 
     if ( ! include )
       continue;

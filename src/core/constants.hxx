@@ -27,14 +27,14 @@
 class Constant
 {
 public:
-    QStringList categories;
+    QString category;
     QString name;
     QString value;
     QString unit;
 
     Constant( const QString & n, const QString & v, const QString & u,
               const QString & cat )
-        : categories( QStringList() << cat ),
+        : category( cat ),
         name( n ), value( v ), unit( u ) {}
 };
 
