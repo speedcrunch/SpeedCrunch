@@ -51,19 +51,19 @@ void Constants::Private::populate()
     list << c;
 
     c.value = QLatin1String("1.256637061e-6");
-    c.unit = QLatin1String("N/A^2");
+    c.unit = QString::fromUtf8("N/A²");
     list << c;
 
     c.value = QLatin1String("6.67428e-11");
-    c.unit = QLatin1String("m^3/(kg s^2)");
+    c.unit = QString::fromUtf8("m³/(kg·s²)");
     list << c;
 
     c.value = QLatin1String("6.62606896e-34");
-    c.unit = QLatin1String("J s");
+    c.unit = QString::fromUtf8("J·s");
     list << c;
 
     c.value = QLatin1String("1.054571628e-34");
-    c.unit = QLatin1String("J s");
+    c.unit = QString::fromUtf8("J·s");
     list << c;
 
     c.value = QLatin1String("299792458");
@@ -79,7 +79,7 @@ void Constants::Private::populate()
     list << c;
 
     c.value = QLatin1String("8.987742438e9");
-    c.unit = QLatin1String("N m^2/C^2");
+    c.unit = QString::fromUtf8("N·m²/C²");
     list << c;
 
     c.value = QLatin1String("1.60217653e-19");
@@ -111,7 +111,7 @@ void Constants::Private::populate()
     list << c;
 
     c.value = QLatin1String("1.16639e-5");
-    c.unit = QLatin1String("Ge/V^2");
+    c.unit = QString::fromUtf8("Ge/V²");
     list << c;
 
     c.value = QLatin1String("7.297352568e-3");
@@ -123,15 +123,15 @@ void Constants::Private::populate()
     list << c;
 
     c.value = QLatin1String("3.636947550e-4");
-    c.unit = QLatin1String("m^2/s");
+    c.unit = QString::fromUtf8("m²/s");
     list << c;
 
     c.value = QLatin1String("10973731.568525");
-    c.unit = QLatin1String("m^(-1)");
+    c.unit = QLatin1String("1/m");
     list << c;
 
     c.value = QLatin1String("0.665245873e-28");
-    c.unit = QLatin1String("m^2");
+    c.unit = QString::fromUtf8("m²");
     list << c;
 
     c.value = QLatin1String("0.22215");
@@ -143,7 +143,7 @@ void Constants::Private::populate()
     list << c;
 
     c.value = QLatin1String("6.0221415e23");
-    c.unit = QLatin1String("");
+    c.unit = QLatin1String("1/mol");
     list << c;
 
     c.value = QLatin1String("1.3806505e-23");
@@ -155,27 +155,27 @@ void Constants::Private::populate()
     list << c;
 
     c.value = QLatin1String("3.74177138e-16");
-    c.unit = QLatin1String("W m^2");
+    c.unit = QString::fromUtf8("W·m²");
     list << c;
 
     c.value = QLatin1String("2.6867773e25");
-    c.unit = QLatin1String("m^(-3)");
+    c.unit = QString::fromUtf8("1/m³");
     list << c;
 
     c.value = QLatin1String("8.314472");
-    c.unit = QLatin1String("J/(K mol)");
+    c.unit = QString::fromUtf8("J/(K·mol)");
     list << c;
 
     c.value = QLatin1String("3.990312716e-10");
-    c.unit = QLatin1String("J s/mol");
+    c.unit = QString::fromUtf8("J·s/mol");
     list << c;
 
     c.value = QLatin1String("1.4387752e-2");
-    c.unit = QLatin1String("m K");
+    c.unit = QString::fromUtf8("m·K");
     list << c;
 
     c.value = QLatin1String("5.670400e-8");
-    c.unit = QLatin1String("W/(m^2 K^4)");
+    c.unit = QString::fromUtf8("W/(m²·K⁴)");
     list << c;
 
     c.value = QLatin1String("149597870691");
@@ -197,6 +197,9 @@ void Constants::Private::populate()
     list << c;
 
     c.value = QLatin1String("365.2425");
+    list << c;
+
+    c.value = QLatin1String("365.25");
     list << c;
 
     c.value = QLatin1String("5.9736e24");
@@ -444,6 +447,11 @@ void Constants::retranslateText()
 
     i->category = cat;
     i->name = tr("Gregorian Year");
+    i->unit = days;
+    ++i;
+
+    i->category = cat;
+    i->name = tr("Julian Year");
     i->unit = days;
     ++i;
 
