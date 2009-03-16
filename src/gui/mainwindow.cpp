@@ -801,7 +801,7 @@ void MainWindow::Private::createFixedWidgets()
     widgets.editor = new Editor( widgets.root );
     widgets.editor->setFocus();
     QString editorStyle( "QTextEdit { font: bold %1pt }" );
-    int editorPointSize = widgets.editor->font().pointSize();
+    const int editorPointSize = widgets.editor->font().pointSize();
     widgets.editor->setStyleSheet( editorStyle.arg(editorPointSize + 3) );
     widgets.editor->setFixedHeight( widgets.editor->sizeHint().height() );
     editorLayout->addWidget( widgets.editor );
