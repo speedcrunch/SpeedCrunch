@@ -236,262 +236,262 @@
 <context>
     <name>Constants</name>
     <message>
-        <location filename="../core/constants.cpp" line="277"/>
+        <location filename="../core/constants.cpp" line="245"/>
         <source>Characteristic Impedance of Vacuum</source>
         <translation>مميزات الفراغات المعيقة</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="274"/>
+        <location filename="../core/constants.cpp" line="243"/>
         <source>General Physics</source>
         <translation>الفيزياء العامة</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="281"/>
+        <location filename="../core/constants.cpp" line="247"/>
         <source>Electric Constant</source>
         <translation>الثابت الكهربائي</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="285"/>
+        <location filename="../core/constants.cpp" line="249"/>
         <source>Magnetic Constant</source>
         <translation>الثابت المغناطيسي</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="289"/>
+        <location filename="../core/constants.cpp" line="248"/>
         <source>Gravitation Constant</source>
         <translation>ثابت الجاذبية الأرضية</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="293"/>
+        <location filename="../core/constants.cpp" line="250"/>
         <source>Planck&apos;s Constant</source>
         <translation>ثابت بلانك</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="297"/>
+        <location filename="../core/constants.cpp" line="246"/>
         <source>Dirac&apos;s Constant</source>
         <translation>ثابت درك</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="301"/>
+        <location filename="../core/constants.cpp" line="251"/>
         <source>Speed of Light in Vacuum</source>
         <translation>سرعة الضوء في الفراغ</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="305"/>
+        <location filename="../core/constants.cpp" line="254"/>
         <source>Electromagnetic</source>
         <translation>الكهرومغناطيسية</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="312"/>
+        <location filename="../core/constants.cpp" line="257"/>
         <source>Conductance Quantum</source>
         <translation>الدلالة الكمية </translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="316"/>
+        <location filename="../core/constants.cpp" line="258"/>
         <source>Coulomb&apos;s Constant</source>
         <translation>ثابت كولوم</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="320"/>
+        <location filename="../core/constants.cpp" line="259"/>
         <source>Elementary Charge</source>
         <translation>الشحن العنصري</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="324"/>
+        <location filename="../core/constants.cpp" line="260"/>
         <source>Josephson Constant</source>
         <translation>ثابت جوزفين</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="328"/>
+        <location filename="../core/constants.cpp" line="261"/>
         <source>Magnetic Flux Quantum</source>
         <translation>كمية التدفق المغناطيسي</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="332"/>
+        <location filename="../core/constants.cpp" line="262"/>
         <source>Nuclear Magneton</source>
         <translation>المغناطيسية النووية</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="336"/>
+        <location filename="../core/constants.cpp" line="263"/>
         <source>Resistance Quantum</source>
         <translation>كمية المقاومة</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="340"/>
+        <location filename="../core/constants.cpp" line="264"/>
         <source>von Klitzing Constant</source>
         <translation>ثابت فون </translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="347"/>
+        <location filename="../core/constants.cpp" line="269"/>
         <source>Bohr Radius</source>
         <translation>نصف قطر- بور</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="344"/>
+        <location filename="../core/constants.cpp" line="267"/>
         <source>Atomic &amp; Nuclear</source>
         <translation>الطاقة النووية الذرية</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="351"/>
+        <location filename="../core/constants.cpp" line="270"/>
         <source>Fermi Coupling Constant</source>
         <translation>ثابت فيرمي المزدوج </translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="355"/>
+        <location filename="../core/constants.cpp" line="271"/>
         <source>Fine-structure Constant</source>
         <translation>ثابت البنية الجيدة</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="359"/>
+        <location filename="../core/constants.cpp" line="272"/>
         <source>Hartree Energy</source>
         <translation>طاقة هتري</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="363"/>
+        <location filename="../core/constants.cpp" line="273"/>
         <source>Quantum of Circulation</source>
         <translation>كمية الدوران</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="367"/>
+        <location filename="../core/constants.cpp" line="274"/>
         <source>Rydberg Constant</source>
         <translation>ثابت رايدبيرغ</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="371"/>
+        <location filename="../core/constants.cpp" line="275"/>
         <source>Thomson Cross Section</source>
         <translation>المقطع العرضي ل ثومبسون</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="375"/>
+        <location filename="../core/constants.cpp" line="276"/>
         <source>Weak Mixing Angle</source>
         <translation>دمج الزاوية الضعيف</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="382"/>
+        <location filename="../core/constants.cpp" line="281"/>
         <source>Atomic Mass Unit</source>
         <translation>وحدة الكتلة الذرية</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="379"/>
+        <location filename="../core/constants.cpp" line="279"/>
         <source>Physico-chemical</source>
         <translation>الكمياء الفيزيائية</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="386"/>
+        <location filename="../core/constants.cpp" line="282"/>
         <source>Avogadro&apos;s Number</source>
         <translation>عدد أفوغادرو</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="390"/>
+        <location filename="../core/constants.cpp" line="283"/>
         <source>Boltzmann Constant</source>
         <translation>ثابت بولتزمان</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="394"/>
+        <location filename="../core/constants.cpp" line="284"/>
         <source>Faraday Constant</source>
         <translation>ثابت فراداي</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="398"/>
+        <location filename="../core/constants.cpp" line="285"/>
         <source>First Radiation Constant</source>
         <translation>ثابت الإشعاع الأولي</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="402"/>
+        <location filename="../core/constants.cpp" line="287"/>
         <source>Loschmidt Constant</source>
         <translation>ثابت لوسكمد</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="406"/>
+        <location filename="../core/constants.cpp" line="286"/>
         <source>Gas Constant</source>
         <translation>ثابت الغاز </translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="410"/>
+        <location filename="../core/constants.cpp" line="288"/>
         <source>Molar Planck Constant</source>
         <translation>الثابت المولاري لبلانك</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="414"/>
+        <location filename="../core/constants.cpp" line="289"/>
         <source>Second Radiation Constant</source>
         <translation>ثابت الإشعاع الثاني</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="418"/>
+        <location filename="../core/constants.cpp" line="290"/>
         <source>Stefan-Boltzmann Constant</source>
         <translation>ثابت ستيفن بولتزمان</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="425"/>
+        <location filename="../core/constants.cpp" line="295"/>
         <source>Astronomical Unit</source>
         <translation>وحدة فضائية</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="422"/>
+        <location filename="../core/constants.cpp" line="293"/>
         <source>Astronomy</source>
         <translation>علم الفلك</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="429"/>
+        <location filename="../core/constants.cpp" line="296"/>
         <source>Light Year</source>
         <translation>سنة ضوئية</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="433"/>
+        <location filename="../core/constants.cpp" line="297"/>
         <source>Parsec</source>
         <translation>البارسك</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="439"/>
+        <location filename="../core/constants.cpp" line="303"/>
         <source>Sidereal Year</source>
         <translation>سنة فلكية</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="436"/>
+        <location filename="../core/constants.cpp" line="299"/>
         <source>days</source>
         <translation>أيام</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="444"/>
+        <location filename="../core/constants.cpp" line="304"/>
         <source>Tropical Year</source>
         <translation>سنة مدارية</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="449"/>
+        <location filename="../core/constants.cpp" line="301"/>
         <source>Gregorian Year</source>
         <translation>سنة جريجورية</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="459"/>
+        <location filename="../core/constants.cpp" line="306"/>
         <source>Earth Mass</source>
         <translation>كتلة الأرض</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="463"/>
+        <location filename="../core/constants.cpp" line="308"/>
         <source>Sun Mass</source>
         <translation>كتلة الشمس</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="467"/>
+        <location filename="../core/constants.cpp" line="307"/>
         <source>Mean Earth Radius</source>
         <translation>متوسط نصف قطر الأرض </translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="471"/>
+        <location filename="../core/constants.cpp" line="309"/>
         <source>Sun Radius</source>
         <translation>نصف قطر الشمس</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="475"/>
+        <location filename="../core/constants.cpp" line="310"/>
         <source>Sun Luminosity</source>
         <translation>الإشعاع الشمسي</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="308"/>
+        <location filename="../core/constants.cpp" line="256"/>
         <source>Bohr-Procopiu Magneton</source>
         <translation>مغناطيسية بور - بروكوبيو</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="454"/>
+        <location filename="../core/constants.cpp" line="302"/>
         <source>Julian Year</source>
         <translation type="unfinished"></translation>
     </message>

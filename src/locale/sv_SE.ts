@@ -232,262 +232,262 @@
 <context>
     <name>Constants</name>
     <message>
-        <location filename="../core/constants.cpp" line="277"/>
+        <location filename="../core/constants.cpp" line="245"/>
         <source>Characteristic Impedance of Vacuum</source>
         <translation>Typisk Impedans i Vakuum</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="274"/>
+        <location filename="../core/constants.cpp" line="243"/>
         <source>General Physics</source>
         <translation>Allmän fysik</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="281"/>
+        <location filename="../core/constants.cpp" line="247"/>
         <source>Electric Constant</source>
         <translation>Permittiviteten i Vakuum</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="285"/>
+        <location filename="../core/constants.cpp" line="249"/>
         <source>Magnetic Constant</source>
         <translation>Magnetisk konstant</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="289"/>
+        <location filename="../core/constants.cpp" line="248"/>
         <source>Gravitation Constant</source>
         <translation>Gravitationskonstanten</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="293"/>
+        <location filename="../core/constants.cpp" line="250"/>
         <source>Planck&apos;s Constant</source>
         <translation>Plancks Konstant</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="297"/>
+        <location filename="../core/constants.cpp" line="246"/>
         <source>Dirac&apos;s Constant</source>
         <translation>Diracs Konstant</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="301"/>
+        <location filename="../core/constants.cpp" line="251"/>
         <source>Speed of Light in Vacuum</source>
         <translation>Ljushastigheten i Vakuum</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="308"/>
+        <location filename="../core/constants.cpp" line="256"/>
         <source>Bohr-Procopiu Magneton</source>
         <translation>Bohrmagneton</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="305"/>
+        <location filename="../core/constants.cpp" line="254"/>
         <source>Electromagnetic</source>
         <translation>Elektromagnetism</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="312"/>
+        <location filename="../core/constants.cpp" line="257"/>
         <source>Conductance Quantum</source>
         <translation>Konduktivitetskvantum</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="316"/>
+        <location filename="../core/constants.cpp" line="258"/>
         <source>Coulomb&apos;s Constant</source>
         <translation>Coulomb&apos;s Konstant</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="320"/>
+        <location filename="../core/constants.cpp" line="259"/>
         <source>Elementary Charge</source>
         <translation>Elementarladdningen</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="324"/>
+        <location filename="../core/constants.cpp" line="260"/>
         <source>Josephson Constant</source>
         <translation>Josephsons Constant</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="328"/>
+        <location filename="../core/constants.cpp" line="261"/>
         <source>Magnetic Flux Quantum</source>
         <translation>Magnetiskt flödeskvantum</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="332"/>
+        <location filename="../core/constants.cpp" line="262"/>
         <source>Nuclear Magneton</source>
         <translation>Nukleär Magneton</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="336"/>
+        <location filename="../core/constants.cpp" line="263"/>
         <source>Resistance Quantum</source>
         <translation>Resistivt kvantum</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="340"/>
+        <location filename="../core/constants.cpp" line="264"/>
         <source>von Klitzing Constant</source>
         <translation>von Klitzings Konstant</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="347"/>
+        <location filename="../core/constants.cpp" line="269"/>
         <source>Bohr Radius</source>
         <translation>Bohrradie</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="344"/>
+        <location filename="../core/constants.cpp" line="267"/>
         <source>Atomic &amp; Nuclear</source>
         <translation>Atom- &amp; kärnfysik</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="351"/>
+        <location filename="../core/constants.cpp" line="270"/>
         <source>Fermi Coupling Constant</source>
         <translation>Fermis bindningskonstant</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="355"/>
+        <location filename="../core/constants.cpp" line="271"/>
         <source>Fine-structure Constant</source>
         <translation>Fin-strukturkonstanten</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="359"/>
+        <location filename="../core/constants.cpp" line="272"/>
         <source>Hartree Energy</source>
         <translation>Hartree-energi</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="363"/>
+        <location filename="../core/constants.cpp" line="273"/>
         <source>Quantum of Circulation</source>
         <translation>Omloppskvanta</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="367"/>
+        <location filename="../core/constants.cpp" line="274"/>
         <source>Rydberg Constant</source>
         <translation>Rydbergs Konstant</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="371"/>
+        <location filename="../core/constants.cpp" line="275"/>
         <source>Thomson Cross Section</source>
         <translation>Thomsons tvärsnitt</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="375"/>
+        <location filename="../core/constants.cpp" line="276"/>
         <source>Weak Mixing Angle</source>
         <translation>Svag blandningsvinkel</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="382"/>
+        <location filename="../core/constants.cpp" line="281"/>
         <source>Atomic Mass Unit</source>
         <translation>Atomära Masskonstanten</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="379"/>
+        <location filename="../core/constants.cpp" line="279"/>
         <source>Physico-chemical</source>
         <translation>Fysisk kemi</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="386"/>
+        <location filename="../core/constants.cpp" line="282"/>
         <source>Avogadro&apos;s Number</source>
         <translation>Avogadros Tal</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="390"/>
+        <location filename="../core/constants.cpp" line="283"/>
         <source>Boltzmann Constant</source>
         <translation>Boltzmanns Konstant</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="394"/>
+        <location filename="../core/constants.cpp" line="284"/>
         <source>Faraday Constant</source>
         <translation>Faradays Konstant</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="398"/>
+        <location filename="../core/constants.cpp" line="285"/>
         <source>First Radiation Constant</source>
         <translation>Första Stråliningskonstanten</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="402"/>
+        <location filename="../core/constants.cpp" line="287"/>
         <source>Loschmidt Constant</source>
         <translation>Loschmidts Konstant</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="406"/>
+        <location filename="../core/constants.cpp" line="286"/>
         <source>Gas Constant</source>
         <translation>Gaskonstanten</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="410"/>
+        <location filename="../core/constants.cpp" line="288"/>
         <source>Molar Planck Constant</source>
         <translation>Plancks Konstant</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="414"/>
+        <location filename="../core/constants.cpp" line="289"/>
         <source>Second Radiation Constant</source>
         <translation>Andra Strålningskonstanten</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="418"/>
+        <location filename="../core/constants.cpp" line="290"/>
         <source>Stefan-Boltzmann Constant</source>
         <translation>Stefan-Boltzmanns Konstant</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="425"/>
+        <location filename="../core/constants.cpp" line="295"/>
         <source>Astronomical Unit</source>
         <translation>Astronomisk Enhet</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="422"/>
+        <location filename="../core/constants.cpp" line="293"/>
         <source>Astronomy</source>
         <translation>Astronomi</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="429"/>
+        <location filename="../core/constants.cpp" line="296"/>
         <source>Light Year</source>
         <translation>Ljusår</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="433"/>
+        <location filename="../core/constants.cpp" line="297"/>
         <source>Parsec</source>
         <translation>Parsec</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="439"/>
+        <location filename="../core/constants.cpp" line="303"/>
         <source>Sidereal Year</source>
         <translation>Sideriskt År</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="436"/>
+        <location filename="../core/constants.cpp" line="299"/>
         <source>days</source>
         <translation>dagar</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="444"/>
+        <location filename="../core/constants.cpp" line="304"/>
         <source>Tropical Year</source>
         <translation>Tropiskt År</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="449"/>
+        <location filename="../core/constants.cpp" line="301"/>
         <source>Gregorian Year</source>
         <translation>Gregorianskt År</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="459"/>
+        <location filename="../core/constants.cpp" line="306"/>
         <source>Earth Mass</source>
         <translation>Jordens Massa</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="463"/>
+        <location filename="../core/constants.cpp" line="308"/>
         <source>Sun Mass</source>
         <translation>Solens Massa</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="467"/>
+        <location filename="../core/constants.cpp" line="307"/>
         <source>Mean Earth Radius</source>
         <translation>Jordens Genomsnittliga Radie</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="471"/>
+        <location filename="../core/constants.cpp" line="309"/>
         <source>Sun Radius</source>
         <translation>Solens Radie</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="475"/>
+        <location filename="../core/constants.cpp" line="310"/>
         <source>Sun Luminosity</source>
         <translation>Solens Luminositet</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="454"/>
+        <location filename="../core/constants.cpp" line="302"/>
         <source>Julian Year</source>
         <translation type="unfinished"></translation>
     </message>

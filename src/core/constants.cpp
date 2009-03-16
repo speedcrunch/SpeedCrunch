@@ -38,189 +38,158 @@ struct Constants::Private
     void populate();
 };
 
+#define PUSH_CONSTANT(NAME,VALUE,UNIT) \
+    c.value = VALUE; \
+    c.unit = UNIT; \
+    list << c;
+
+#define PUSH_CONSTANT_DAYS(NAME,VALUE) \
+    c.value = VALUE; \
+    list << c;
+
+#define I18N_CONSTANT(NAME) \
+    i->name = NAME; \
+    i->category = cat; \
+    ++i;
+
+#define I18N_CONSTANT_DAYS(NAME) \
+    i->unit = days; \
+    I18N_CONSTANT(NAME)
+
 void Constants::Private::populate()
 {
     Constant c;
 
-    c.value = QLatin1String("376.730313461");
-    c.unit = QString::fromUtf8("Ω");
-    list << c;
+    PUSH_CONSTANT("Characteristic Impedance of Vacuum",
+            QLatin1String("376.730313461"), QString::fromUtf8("Ω"));
 
-    c.value = QLatin1String("8.854187817e-12");
-    c.unit = QLatin1String("F/m");
-    list << c;
+    PUSH_CONSTANT("Dirac's Constant",
+            QLatin1String("1.054571628e-34"), QString::fromUtf8("J·s"));
 
-    c.value = QLatin1String("1.256637061e-6");
-    c.unit = QString::fromUtf8("N/A²");
-    list << c;
+    PUSH_CONSTANT("Electric Constant",
+            QLatin1String("8.854187817e-12"), QLatin1String("F/m"));
 
-    c.value = QLatin1String("6.67428e-11");
-    c.unit = QString::fromUtf8("m³/(kg·s²)");
-    list << c;
+    PUSH_CONSTANT("Gravitation Constant",
+            QLatin1String("6.67428e-11"), QString::fromUtf8("m³/(kg·s²)"));
 
-    c.value = QLatin1String("6.62606896e-34");
-    c.unit = QString::fromUtf8("J·s");
-    list << c;
+    PUSH_CONSTANT("Magnetic Constant",
+            QLatin1String("1.256637061e-6"), QString::fromUtf8("N/A²"));
 
-    c.value = QLatin1String("1.054571628e-34");
-    c.unit = QString::fromUtf8("J·s");
-    list << c;
+    PUSH_CONSTANT("Planck's Constant",
+            QLatin1String("6.62606896e-34"), QString::fromUtf8("J·s"));
 
-    c.value = QLatin1String("299792458");
-    c.unit = QLatin1String("m/s");
-    list << c;
+    PUSH_CONSTANT("Speed of Light in Vacuum",
+            QLatin1String("299792458"), QLatin1String("m/s"));
 
-    c.value = QLatin1String("927.400949e-26");
-    c.unit = QLatin1String("J/T");
-    list << c;
+    PUSH_CONSTANT("Bohr-Procopiu Magneton",
+            QLatin1String("927.400949e-26"), QLatin1String("J/T"));
 
-    c.value = QLatin1String("7.748091733e-5");
-    c.unit = QLatin1String("S");
-    list << c;
+    PUSH_CONSTANT("Conductance Quantum",
+            QLatin1String("7.748091733e-5"), QLatin1String("S"));
 
-    c.value = QLatin1String("8.987742438e9");
-    c.unit = QString::fromUtf8("N·m²/C²");
-    list << c;
+    PUSH_CONSTANT("Coulomb's Constant",
+            QLatin1String("8.987742438e9"), QString::fromUtf8("N·m²/C²"));
 
-    c.value = QLatin1String("1.60217653e-19");
-    c.unit = QLatin1String("C");
-    list << c;
+    PUSH_CONSTANT("Elementary Charge",
+            QLatin1String("1.60217653e-19"), QLatin1String("C"));
 
-    c.value = QLatin1String("483597.879e9");
-    c.unit = QLatin1String("Hz/V");
-    list << c;
+    PUSH_CONSTANT("Josephson Constant",
+            QLatin1String("483597.879e9"), QLatin1String("Hz/V"));
 
-    c.value = QLatin1String("2.06783372e-15");
-    c.unit = QLatin1String("Wb");
-    list << c;
+    PUSH_CONSTANT("Magnetic Flux Quantum",
+            QLatin1String("2.06783372e-15"), QLatin1String("Wb"));
 
-    c.value = QLatin1String("5.05078343e-27");
-    c.unit = QLatin1String("J/T");
-    list << c;
+    PUSH_CONSTANT("Nuclear Magneton",
+            QLatin1String("5.05078343e-27"), QLatin1String("J/T"));
 
-    c.value = QLatin1String("12906.403725");
-    c.unit = QString::fromUtf8("Ω");
-    list << c;
+    PUSH_CONSTANT("Resistance Quantum",
+            QLatin1String("12906.403725"), QString::fromUtf8("Ω"));
 
-    c.value = QLatin1String("25812.807449");
-    c.unit = QString::fromUtf8("Ω");
-    list << c;
+    PUSH_CONSTANT("von Klitzing Constant",
+            QLatin1String("25812.807449"), QString::fromUtf8("Ω"));
 
-    c.value = QLatin1String("0.5291772108e-10");
-    c.unit = QLatin1String("m");
-    list << c;
+    PUSH_CONSTANT("Bohr Radius",
+            QLatin1String("0.5291772108e-10"), QLatin1String("m"));
 
-    c.value = QLatin1String("1.16639e-5");
-    c.unit = QString::fromUtf8("Ge/V²");
-    list << c;
+    PUSH_CONSTANT("Fermi Coupling Constant",
+            QLatin1String("1.16639e-5"), QString::fromUtf8("Ge/V²"));
 
-    c.value = QLatin1String("7.297352568e-3");
-    c.unit = QLatin1String("");
-    list << c;
+    PUSH_CONSTANT("Fine-structure Constant",
+            QLatin1String("7.297352568e-3"), QLatin1String(""));
 
-    c.value = QLatin1String("4.35974417e-18");
-    c.unit = QLatin1String("J");
-    list << c;
+    PUSH_CONSTANT("Hartree Energy",
+            QLatin1String("4.35974417e-18"), QLatin1String("J"));
 
-    c.value = QLatin1String("3.636947550e-4");
-    c.unit = QString::fromUtf8("m²/s");
-    list << c;
+    PUSH_CONSTANT("Quantum of Circulation",
+            QLatin1String("3.636947550e-4"), QString::fromUtf8("m²/s"));
 
-    c.value = QLatin1String("10973731.568525");
-    c.unit = QLatin1String("1/m");
-    list << c;
+    PUSH_CONSTANT("Rydberg Constant",
+            QLatin1String("10973731.568525"), QLatin1String("1/m"));
 
-    c.value = QLatin1String("0.665245873e-28");
-    c.unit = QString::fromUtf8("m²");
-    list << c;
+    PUSH_CONSTANT("Thomson Cross Section",
+            QLatin1String("0.665245873e-28"), QString::fromUtf8("m²"));
 
-    c.value = QLatin1String("0.22215");
-    c.unit = QLatin1String("");
-    list << c;
+    PUSH_CONSTANT("Weak Mixing Angle",
+            QLatin1String("0.22215"), QLatin1String(""));
 
-    c.value = QLatin1String("1.66053886e-27");
-    c.unit = QLatin1String("kg");
-    list << c;
+    PUSH_CONSTANT("Atomic Mass Unit",
+            QLatin1String("1.66053886e-27"), QLatin1String("kg"));
 
-    c.value = QLatin1String("6.0221415e23");
-    c.unit = QLatin1String("1/mol");
-    list << c;
+    PUSH_CONSTANT("Avogadro's Number",
+            QLatin1String("6.0221415e23"), QLatin1String("1/mol"));
 
-    c.value = QLatin1String("1.3806505e-23");
-    c.unit = QLatin1String("J/K");
-    list << c;
+    PUSH_CONSTANT("Boltzmann Constant",
+            QLatin1String("1.3806505e-23"), QLatin1String("J/K"));
 
-    c.value = QLatin1String("96485.3383");
-    c.unit = QLatin1String("C/mol");
-    list << c;
+    PUSH_CONSTANT("Faraday, CONSTANT",
+            QLatin1String("96485.3383"), QLatin1String("C/mol"));
 
-    c.value = QLatin1String("3.74177138e-16");
-    c.unit = QString::fromUtf8("W·m²");
-    list << c;
+    PUSH_CONSTANT("First Radiation Constant",
+            QLatin1String("3.74177138e-16"), QString::fromUtf8("W·m²"));
 
-    c.value = QLatin1String("2.6867773e25");
-    c.unit = QString::fromUtf8("1/m³");
-    list << c;
+    PUSH_CONSTANT("Gas Constant",
+            QLatin1String("8.314472"), QString::fromUtf8("J/(K·mol)"));
 
-    c.value = QLatin1String("8.314472");
-    c.unit = QString::fromUtf8("J/(K·mol)");
-    list << c;
+    PUSH_CONSTANT("Loschmidt Constant",
+            QLatin1String("2.6867773e25"), QString::fromUtf8("1/m³"));
 
-    c.value = QLatin1String("3.990312716e-10");
-    c.unit = QString::fromUtf8("J·s/mol");
-    list << c;
+    PUSH_CONSTANT("Molar Planck Constant",
+            QLatin1String("3.990312716e-10"), QString::fromUtf8("J·s/mol"));
 
-    c.value = QLatin1String("1.4387752e-2");
-    c.unit = QString::fromUtf8("m·K");
-    list << c;
+    PUSH_CONSTANT("Second Radiation Constant",
+            QLatin1String("1.4387752e-2"), QString::fromUtf8("m·K"));
 
-    c.value = QLatin1String("5.670400e-8");
-    c.unit = QString::fromUtf8("W/(m²·K⁴)");
-    list << c;
+    PUSH_CONSTANT("Stefan-Boltzmann Constant",
+            QLatin1String("5.670400e-8"), QString::fromUtf8("W/(m²·K⁴)"));
 
-    c.value = QLatin1String("149597870691");
-    c.unit = QLatin1String("m");
-    list << c;
+    PUSH_CONSTANT("Astronomical Unit",
+            QLatin1String("149597870691"), QLatin1String("m"));
 
-    c.value = QLatin1String("9.4607304725808e15");
-    c.unit = QLatin1String("m");
-    list << c;
+    PUSH_CONSTANT("Light Year",
+            QLatin1String("9.4607304725808e15"), QLatin1String("m"));
 
-    c.value = QLatin1String("3.08567802e16");
-    c.unit = QLatin1String("m");
-    list << c;
+    PUSH_CONSTANT("Parsec",
+            QLatin1String("3.08567802e16"), QLatin1String("m"));
 
-    c.value = QLatin1String("365.2564");
-    list << c;
+    PUSH_CONSTANT_DAYS("Gregorian Year", QLatin1String("365.2425"));
+    PUSH_CONSTANT_DAYS("Julian Year",    QLatin1String("365.25"));
+    PUSH_CONSTANT_DAYS("Sidereal Year",  QLatin1String("365.2564"));
+    PUSH_CONSTANT_DAYS("Tropical Year",  QLatin1String("365.2422"));
 
-    c.value = QLatin1String("365.2422");
-    list << c;
+    PUSH_CONSTANT("Earth Mass",
+            QLatin1String("5.9736e24"), QLatin1String("kg"));
 
-    c.value = QLatin1String("365.2425");
-    list << c;
+    PUSH_CONSTANT("Mean Earth Radius",
+            QLatin1String("6371000"), QLatin1String("m"));
 
-    c.value = QLatin1String("365.25");
-    list << c;
+    PUSH_CONSTANT("Sun Mass",
+            QLatin1String("1.9891e30"), QLatin1String("kg"));
 
-    c.value = QLatin1String("5.9736e24");
-    c.unit = QLatin1String("kg");
-    list << c;
+    PUSH_CONSTANT("Sun Radius",
+            QLatin1String("6.96265e8"), QLatin1String("m"));
 
-    c.value = QLatin1String("1.9891e30");
-    c.unit = QLatin1String("kg");
-    list << c;
-
-    c.value = QLatin1String("6371000");
-    c.unit = QLatin1String("m");
-    list << c;
-
-    c.value = QLatin1String("6.96265e8");
-    c.unit = QLatin1String("m");
-    list << c;
-
-    c.value = QLatin1String("3.827e26");
-    c.unit = QLatin1String("W");
-    list << c;
+    PUSH_CONSTANT("Sun Luminosity",
+            QLatin1String("3.827e26"), QLatin1String("W"));
 }
 
 Constants * Constants::instance()
@@ -273,206 +242,72 @@ void Constants::retranslateText()
     // http://en.wikipedia.org/wiki/Physical_constant#Table_of_universal_constants
     cat = tr("General Physics");
 
-    i->category = cat;
-    i->name = tr("Characteristic Impedance of Vacuum");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Electric Constant");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Magnetic Constant");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Gravitation Constant");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Planck's Constant");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Dirac's Constant");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Speed of Light in Vacuum");
-    ++i;
+    I18N_CONSTANT(tr("Characteristic Impedance of Vacuum"));
+    I18N_CONSTANT(tr("Dirac's Constant"));
+    I18N_CONSTANT(tr("Electric Constant"));
+    I18N_CONSTANT(tr("Gravitation Constant"));
+    I18N_CONSTANT(tr("Magnetic Constant"));
+    I18N_CONSTANT(tr("Planck's Constant"));
+    I18N_CONSTANT(tr("Speed of Light in Vacuum"));
 
     // http://en.wikipedia.org/wiki/Physical_constant#Table_of_electromagnetic_constants
     cat = tr("Electromagnetic");
 
-    i->category = cat;
-    i->name = tr("Bohr-Procopiu Magneton");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Conductance Quantum");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Coulomb's Constant");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Elementary Charge");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Josephson Constant");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Magnetic Flux Quantum");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Nuclear Magneton");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Resistance Quantum");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("von Klitzing Constant");
-    ++i;
+    I18N_CONSTANT(tr("Bohr-Procopiu Magneton"));
+    I18N_CONSTANT(tr("Conductance Quantum"));
+    I18N_CONSTANT(tr("Coulomb's Constant"));
+    I18N_CONSTANT(tr("Elementary Charge"));
+    I18N_CONSTANT(tr("Josephson Constant"));
+    I18N_CONSTANT(tr("Magnetic Flux Quantum"));
+    I18N_CONSTANT(tr("Nuclear Magneton"));
+    I18N_CONSTANT(tr("Resistance Quantum"));
+    I18N_CONSTANT(tr("von Klitzing Constant"));
 
     // http://en.wikipedia.org/wiki/Physical_constant#Table_of_atomic_and_nuclear_constants
     cat = tr("Atomic & Nuclear");
 
-    i->category = cat;
-    i->name = tr("Bohr Radius");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Fermi Coupling Constant");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Fine-structure Constant");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Hartree Energy");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Quantum of Circulation");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Rydberg Constant");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Thomson Cross Section");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Weak Mixing Angle");
-    ++i;
+    I18N_CONSTANT(tr("Bohr Radius"));
+    I18N_CONSTANT(tr("Fermi Coupling Constant"));
+    I18N_CONSTANT(tr("Fine-structure Constant"));
+    I18N_CONSTANT(tr("Hartree Energy"));
+    I18N_CONSTANT(tr("Quantum of Circulation"));
+    I18N_CONSTANT(tr("Rydberg Constant"));
+    I18N_CONSTANT(tr("Thomson Cross Section"));
+    I18N_CONSTANT(tr("Weak Mixing Angle"));
 
     // http://en.wikipedia.org/wiki/Physical_constant#Table_of_physico-chemical_constants
     cat = tr("Physico-chemical");
 
-    i->category = cat;
-    i->name = tr("Atomic Mass Unit");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Avogadro's Number");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Boltzmann Constant");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Faraday Constant");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("First Radiation Constant");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Loschmidt Constant");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Gas Constant");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Molar Planck Constant");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Second Radiation Constant");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Stefan-Boltzmann Constant");
-    ++i;
+    I18N_CONSTANT(tr("Atomic Mass Unit"));
+    I18N_CONSTANT(tr("Avogadro's Number"));
+    I18N_CONSTANT(tr("Boltzmann Constant"));
+    I18N_CONSTANT(tr("Faraday Constant"));
+    I18N_CONSTANT(tr("First Radiation Constant"));
+    I18N_CONSTANT(tr("Gas Constant"));
+    I18N_CONSTANT(tr("Loschmidt Constant"));
+    I18N_CONSTANT(tr("Molar Planck Constant"));
+    I18N_CONSTANT(tr("Second Radiation Constant"));
+    I18N_CONSTANT(tr("Stefan-Boltzmann Constant"));
 
     // http://www.astronomynotes.com/tables/tablesa.htm
     cat = tr("Astronomy");
 
-    i->category = cat;
-    i->name = tr("Astronomical Unit");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Light Year");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Parsec");
-    ++i;
+    I18N_CONSTANT(tr("Astronomical Unit"));
+    I18N_CONSTANT(tr("Light Year"));
+    I18N_CONSTANT(tr("Parsec"));
 
     const QString days = tr( "days" );
 
-    i->category = cat;
-    i->name = tr("Sidereal Year");
-    i->unit = days;
-    ++i;
+    I18N_CONSTANT_DAYS(tr("Gregorian Year"));
+    I18N_CONSTANT_DAYS(tr("Julian Year"));
+    I18N_CONSTANT_DAYS(tr("Sidereal Year"));
+    I18N_CONSTANT_DAYS(tr("Tropical Year"));
 
-    i->category = cat;
-    i->name = tr("Tropical Year");
-    i->unit = days;
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Gregorian Year");
-    i->unit = days;
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Julian Year");
-    i->unit = days;
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Earth Mass");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Sun Mass");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Mean Earth Radius");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Sun Radius");
-    ++i;
-
-    i->category = cat;
-    i->name = tr("Sun Luminosity");
+    I18N_CONSTANT(tr("Earth Mass"));
+    I18N_CONSTANT(tr("Mean Earth Radius"));
+    I18N_CONSTANT(tr("Sun Mass"));
+    I18N_CONSTANT(tr("Sun Radius"));
+    I18N_CONSTANT(tr("Sun Luminosity"));
 
     d->categories.clear();
     for ( int k = 0; k < d->list.count(); ++k )
