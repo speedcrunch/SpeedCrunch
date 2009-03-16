@@ -349,13 +349,12 @@ void Editor::checkMatching()
 
 void Editor::checkAutoCalc()
 {
-  // Calc-As-You-Type
   if ( ! d->autoCalcEnabled )
     return;
 
   d->autoCalcTimer->stop();
   d->autoCalcTimer->setSingleShot( true );
-  d->autoCalcTimer->start( 1000 );
+  d->autoCalcTimer->start( 1 );
 
   emit autoCalcDisabled();
 }
@@ -367,7 +366,7 @@ void Editor::startSelAutoCalcTimer()
 
   d->autoCalcSelTimer->stop();
   d->autoCalcSelTimer->setSingleShot( true );
-  d->autoCalcSelTimer->start( 1000 );
+  d->autoCalcSelTimer->start( 1 );
 }
 
 void Editor::doMatchingPar()
