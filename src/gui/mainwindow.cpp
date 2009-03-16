@@ -1803,7 +1803,7 @@ void MainWindow::showAutoCalcTip( const QString & msg )
 {
     d->widgets.autoCalcTip->showText( msg );
     d->widgets.autoCalcTip->adjustSize();
-    int h = d->widgets.autoCalcTip->height();
+    const int h = d->widgets.autoCalcTip->height();
     QPoint p = d->widgets.editor->mapToGlobal( QPoint(0, -h) );
     p = mapFromGlobal( p );
     d->widgets.autoCalcTip->move( p );
