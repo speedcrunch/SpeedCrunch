@@ -36,6 +36,7 @@ struct Constants::Private
     QList<Constant> list;
 
     void populate();
+    void retranslateText();
 };
 
 #define PUSH_CONSTANT(NAME,VALUE,UNIT) \
@@ -192,51 +193,9 @@ void Constants::Private::populate()
             QLatin1String("3.827e26"), QLatin1String("W"));
 }
 
-Constants * Constants::instance()
+void Constants::Private::retranslateText()
 {
-    if ( ! s_constantsInstance ) {
-        s_constantsInstance = new Constants;
-        qAddPostRoutine( s_deleteConstants );
-    }
-
-    return s_constantsInstance;
-}
-
-constant_name_is::constant_name_is( const QString & name )
-    : m_name(name)
-{
-}
-
-bool constant_name_is::operator()( const Constant & c ) const
-{
-    return c.name == m_name;
-}
-
-Constants::Constants()
-    : d( new Constants::Private )
-{
-    setObjectName( "Constants" );
-    d->populate();
-    retranslateText();
-}
-
-Constants::~Constants()
-{
-}
-
-const QList<Constant> & Constants::list() const
-{
-    return d->list;
-}
-
-const QStringList & Constants::categories() const
-{
-    return d->categories;
-}
-
-void Constants::retranslateText()
-{
-    QList<Constant>::iterator i = d->list.begin();
+    QList<Constant>::iterator i = list.begin();
     QString cat;
 
     // http://en.wikipedia.org/wiki/Physical_constant#Table_of_universal_constants
@@ -309,10 +268,56 @@ void Constants::retranslateText()
     I18N_CONSTANT(tr("Sun Radius"));
     I18N_CONSTANT(tr("Sun Luminosity"));
 
-    d->categories.clear();
-    for ( int k = 0; k < d->list.count(); ++k )
-        if ( ! d->categories.contains(d->list.at(k).category) )
-            d->categories += d->list.at( k ).category;
-    d->categories.sort();
+    categories.clear();
+    for ( int k = 0; k < list.count(); ++k )
+        if ( ! categories.contains(list.at(k).category) )
+            categories += list.at( k ).category;
+    categories.sort();
 }
 
+Constants * Constants::instance()
+{
+    if ( ! s_constantsInstance ) {
+        s_constantsInstance = new Constants;
+        qAddPostRoutine( s_deleteConstants );
+    }
+
+    return s_constantsInstance;
+}
+
+constant_name_is::constant_name_is( const QString & name )
+    : m_name(name)
+{
+}
+
+bool constant_name_is::operator()( const Constant & c ) const
+{
+    return c.name == m_name;
+}
+
+Constants::Constants()
+    : d( new Constants::Private )
+{
+    setObjectName( "Constants" );
+    d->populate();
+    d->retranslateText();
+}
+
+Constants::~Constants()
+{
+}
+
+const QList<Constant> & Constants::list() const
+{
+    return d->list;
+}
+
+const QStringList & Constants::categories() const
+{
+    return d->categories;
+}
+
+void Constants::retranslateText()
+{
+    d->retranslateText();
+}
