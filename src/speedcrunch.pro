@@ -9,6 +9,8 @@
 
 DEFINES += SPEEDCRUNCH_VERSION=trunk
 
+win32:DEFINES += _USE_MATH_DEFINES
+
 TEMPLATE = app
 
 TARGET = speedcrunch
