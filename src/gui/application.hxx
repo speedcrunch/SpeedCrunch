@@ -25,20 +25,11 @@
 
 class Application : public QApplication
 {
-  Q_OBJECT
-
 public:
     Application( int & argc, char * argv[] );
     ~Application();
 
-    bool isRunning();
-    bool sendRaiseRequest();
-
-signals:
-    void raiseRequested();
-
-private slots:
-    void receiveMessage();
+    bool isRunning() const;
 
 private:
     struct Private;
