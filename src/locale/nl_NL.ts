@@ -140,12 +140,12 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="196"/>
         <source>Close</source>
-        <translation>Afsluiten</translation>
+        <translation>Sluiten</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="71"/>
         <source>Graphics</source>
-        <translation>Grafisch werk</translation>
+        <translation>Grafische werk</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="112"/>
@@ -274,7 +274,7 @@
     <message>
         <location filename="../core/constants.cpp" line="256"/>
         <source>Bohr-Procopiu Magneton</source>
-        <translation>Bohr-Procopiu magneton (monopool)</translation>
+        <translation>Bohr-Procopiu magneton</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="254"/>
@@ -284,7 +284,7 @@
     <message>
         <location filename="../core/constants.cpp" line="257"/>
         <source>Conductance Quantum</source>
-        <translation>Geleidingsquantum</translation>
+        <translation>Geleidend quantum</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="258"/>
@@ -304,17 +304,17 @@
     <message>
         <location filename="../core/constants.cpp" line="261"/>
         <source>Magnetic Flux Quantum</source>
-        <translation>Quantum van magnetisch flux</translation>
+        <translation>Magnetisch Flux-quantum</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="262"/>
         <source>Nuclear Magneton</source>
-        <translation>Nucleaire magneton</translation>
+        <translation>Atomair magneton</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="263"/>
         <source>Resistance Quantum</source>
-        <translation>Quantum van weerstand</translation>
+        <translation>Tegenwerkend quantum </translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="264"/>
@@ -324,7 +324,7 @@
     <message>
         <location filename="../core/constants.cpp" line="269"/>
         <source>Bohr Radius</source>
-        <translation>Bohrstraal</translation>
+        <translation>Bohr-straal</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="267"/>
@@ -359,12 +359,12 @@
     <message>
         <location filename="../core/constants.cpp" line="275"/>
         <source>Thomson Cross Section</source>
-        <translation>Doorsnede van Thomson</translation>
+        <translation>Kruissectie van Thomson</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="276"/>
         <source>Weak Mixing Angle</source>
-        <translation>Weinberghoek</translation>
+        <translation>Zwakke hoek-combinatie</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="281"/>
@@ -374,7 +374,7 @@
     <message>
         <location filename="../core/constants.cpp" line="279"/>
         <source>Physico-chemical</source>
-        <translation>Natuur-scheikundig</translation>
+        <translation>Scheikundig</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="282"/>
@@ -394,7 +394,7 @@
     <message>
         <location filename="../core/constants.cpp" line="285"/>
         <source>First Radiation Constant</source>
-        <translation>Eerste stralingsconstante</translation>
+        <translation>Eerste radiatieconstante</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="287"/>
@@ -414,12 +414,12 @@
     <message>
         <location filename="../core/constants.cpp" line="289"/>
         <source>Second Radiation Constant</source>
-        <translation>Tweede stralingsconstante</translation>
+        <translation>Tweede radiatieconstante</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="290"/>
         <source>Stefan-Boltzmann Constant</source>
-        <translation>Constante van Stefan-Boltzmann</translation>
+        <translation>Stefan-Boltzmann Constante</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="295"/>
@@ -543,12 +543,12 @@
     <message>
         <location filename="../gui/editor.cpp" line="682"/>
         <source>Current result: &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation>Huidig antwoord: &lt;b&gt;%1&lt;/b&gt;</translation>
+        <translation>Huidige resultaat: &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../gui/editor.cpp" line="727"/>
         <source>Selection result: &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation>Selectieresultaat: &lt;b&gt;%1&lt;/b&gt;</translation>
+        <translation>Geselecteerde resultaat: &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -576,7 +576,7 @@
     <message>
         <location filename="../core/evaluator.cpp" line="1419"/>
         <source>identifier matches an existing function name</source>
-        <translation>opgegeven naam komt overeen met een bestaande functienaam</translation>
+        <translation>identifier komt overeen met een al bestaande functienaam</translation>
     </message>
 </context>
 <context>
@@ -584,7 +584,7 @@
     <message>
         <location filename="../core/functions.cpp" line="96"/>
         <source>cannot execute function %1</source>
-        <translation>functie %1 kan niet worden uitgevoerd</translation>
+        <translation>functie %1 kan niet uitgevoerd worden</translation>
     </message>
     <message numerus="yes">
         <location filename="../core/functions.cpp" line="101"/>
@@ -605,7 +605,7 @@
     <message>
         <location filename="../core/functions.cpp" line="1143"/>
         <source>Average (Arithmetic Mean)</source>
-        <translation>Gemiddelde (rekenkundig)</translation>
+        <translation>Gemiddelde (arimetisch gemiddelde)</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1144"/>
@@ -620,7 +620,7 @@
     <message>
         <location filename="../core/functions.cpp" line="1146"/>
         <source>Ceiling</source>
-        <translation>Entier+1 (Ceiling)</translation>
+        <translation>Afronding (naar boven)</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1147"/>
@@ -630,7 +630,7 @@
     <message>
         <location filename="../core/functions.cpp" line="1148"/>
         <source>Floor</source>
-        <translation>Entier (Floor)</translation>
+        <translation>Afronding (naar beneden)</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1149"/>
@@ -640,7 +640,7 @@
     <message>
         <location filename="../core/functions.cpp" line="1151"/>
         <source>Geometric Mean</source>
-        <translation>Meetkundig gemiddelde</translation>
+        <translation>Geomterisch gemiddelde</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1152"/>
@@ -695,7 +695,7 @@
     <message>
         <location filename="../core/functions.cpp" line="1163"/>
         <source>Truncation</source>
-        <translation>Afkappen</translation>
+        <translation>Afronding (afbreken)</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1166"/>
@@ -720,12 +720,12 @@
     <message>
         <location filename="../core/functions.cpp" line="1170"/>
         <source>Exponential</source>
-        <translation>e-macht</translation>
+        <translation>Exponentieel</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1171"/>
         <source>Base-2 Logarithm</source>
-        <translation>Logaritme met grondtal 2</translation>
+        <translation>Grondtal-2 logaritme</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1172"/>
@@ -735,7 +735,7 @@
     <message>
         <location filename="../core/functions.cpp" line="1173"/>
         <source>Base-10 Logarithm</source>
-        <translation>Logaritme met grondtal 10</translation>
+        <translation>Grondtal-10 logaritme</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1174"/>
@@ -750,12 +750,12 @@
     <message>
         <location filename="../core/functions.cpp" line="1178"/>
         <source>Greatest Common Divisor</source>
-        <translation>Grootste Gemene Deler</translation>
+        <translation>Grootste gemene deler</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1179"/>
         <source>Combination (Binomial Coefficient)</source>
-        <translation>Combinatie (binomiaalcoëfficient)</translation>
+        <translation>Combinatie (binomiaal coëfficient)</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1180"/>
@@ -765,62 +765,62 @@
     <message>
         <location filename="../core/functions.cpp" line="1183"/>
         <source>Binomial Cumulative Distribution Function</source>
-        <translation>Binomiale cumulatieve kansverdeling</translation>
+        <translation>Binomiale cumulatieve kansfunctie</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1184"/>
         <source>Binomial Distribution Mean</source>
-        <translation>Gemiddelde binomiale verdeling</translation>
+        <translation>Binomiale verdeling</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1185"/>
         <source>Binomial Probability Mass Function</source>
-        <translation>Kansfunctie binomiale verdeling</translation>
+        <translation>Binomiale kansfunctie</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1186"/>
         <source>Binomial Distribution Variance</source>
-        <translation>Variantie binomiale verdeling</translation>
+        <translation>Binomiale variantie</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1189"/>
         <source>Hypergeometric Cumulative Distribution Function</source>
-        <translation>Hypergeometrische cumulatieve kansverdeling</translation>
+        <translation>Hypergeometrische cumulatieve kansfunctie</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1190"/>
         <source>Hypergeometric Distribution Mean</source>
-        <translation>Gemiddelde hypergeometrische verdeling</translation>
+        <translation>Hypergeometrische verdeling</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1191"/>
         <source>Hypergeometric Probability Mass Function</source>
-        <translation>Kansfunctie hypergeometrische verdeling</translation>
+        <translation>Hypergeometische kansfunctie</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1192"/>
         <source>Hypergeometric Distribution Variance</source>
-        <translation>Variantie hypergeometrische verdeling</translation>
+        <translation>Hypergeometrische variantie</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1193"/>
         <source>Poissonian Cumulative Distribution Function</source>
-        <translation>Cumulatieve Poisson-kansverdeling</translation>
+        <translation>Cumulatieve Poisson-kansfunctie</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1194"/>
         <source>Poissonian Distribution Mean</source>
-        <translation>Gemiddelde Poisson-verdeling</translation>
+        <translation>Poisson-verdeling</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1195"/>
         <source>Poissonian Probability Mass Function</source>
-        <translation>Kansfunctie Poisson-verdeling</translation>
+        <translation>Poisson-kansfunctie</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1196"/>
         <source>Poissonian Distribution Variance</source>
-        <translation>Variantie Poisson-verdeling</translation>
+        <translation>Poisson-variantie</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1199"/>
@@ -855,7 +855,7 @@
     <message>
         <location filename="../core/functions.cpp" line="1206"/>
         <source>Radians</source>
-        <translation>Radialen</translation>
+        <translation>Radiaal</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1207"/>
@@ -895,17 +895,17 @@
     <message>
         <location filename="../core/functions.cpp" line="1205"/>
         <source>Degrees of Arc</source>
-        <translation>Booggraden</translation>
+        <translation>Graden van hoek</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1212"/>
         <source>Mask to a bit size</source>
-        <translation>Maskeren tot de grootte van een bit</translation>
+        <translation>Tot de grootte van een bit maskeren</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1213"/>
         <source>Sign-extent a value</source>
-        <translation>Een waarde een teken geven</translation>
+        <translation>Teken-uitbreiding van een waarde</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1214"/>
@@ -940,7 +940,7 @@
     <message>
         <location filename="../core/functions.cpp" line="1220"/>
         <source>Integer Quotient</source>
-        <translation>Gehele deel quotiënt</translation>
+        <translation>Gehele quotiënt</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1221"/>
@@ -953,37 +953,37 @@
     <message>
         <location filename="../core/functions.cpp" line="271"/>
         <source>function requires 1 or 2 arguments</source>
-        <translation>functie heeft 1 of 2 argumenten nodig</translation>
+        <translation>functie heeft 1 of 2 parameters nodig</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="939"/>
         <source>function undefined for specified arguments</source>
-        <translation>functie ongedefinieerd voor gegeven argumenten</translation>
+        <translation>functie ongedefinieerd voor gegeven parameters</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="253"/>
         <source>function requires at least 2 arguments</source>
-        <translation>functie vraagt om minstens 2 argumenten</translation>
+        <translation>functie heeft minstens 2 parameters nodig</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="259"/>
         <source>function requires integer arguments</source>
-        <translation>functie vraagt om gehele argumenten</translation>
+        <translation>functie heeft gehele getallen als parameter nodig</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="626"/>
         <source>function undefined for specified argument</source>
-        <translation>functie niet gedefinieerd voor gegeven argument</translation>
+        <translation>functie niet gedefineerd voor gegeven parameter</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="596"/>
         <source>underflow</source>
-        <translation>verschil met de waarde 0 is te klein</translation>
+        <translation>onder het bereik</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="693"/>
         <source>function requires at least 1 argument</source>
-        <translation>functie vraagt om minstens 1 argument</translation>
+        <translation>functie heeft minstens 1 parameter nodig</translation>
     </message>
 </context>
 <context>
@@ -1040,7 +1040,7 @@
     <message>
         <location filename="../gui/insertfunctiondlg.cpp" line="43"/>
         <source>Insert Function</source>
-        <translation>Functie invoegen</translation>
+        <translation>Functie toevoegen</translation>
     </message>
 </context>
 <context>
@@ -1053,7 +1053,7 @@
     <message>
         <location filename="../gui/insertvardlg.cpp" line="46"/>
         <source>Insert Variable</source>
-        <translation>Variabele invoegen</translation>
+        <translation>Variabele toevoegen</translation>
     </message>
     <message>
         <location filename="../gui/insertvardlg.cpp" line="59"/>
@@ -1071,7 +1071,7 @@
     <message>
         <location filename="../gui/keypad.cpp" line="309"/>
         <source>The last result</source>
-        <translation>Het laatste antwoord</translation>
+        <translation>Het laatste resultaat</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="310"/>
@@ -1096,17 +1096,17 @@
     <message>
         <location filename="../gui/keypad.cpp" line="314"/>
         <source>Scientific notation</source>
-        <translation>Wetenschappelijke notatie</translation>
+        <translation>Wetenschappelijke notering</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="315"/>
         <source>Exponential</source>
-        <translation>e-macht</translation>
+        <translation>Exponentieel</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="316"/>
         <source>Natural logarithm</source>
-        <translation>Natuurlijke logaritme</translation>
+        <translation>Natuurlijk logaritme</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="317"/>
@@ -1126,7 +1126,7 @@
     <message>
         <location filename="../gui/keypad.cpp" line="320"/>
         <source>Assign variable x</source>
-        <translation>Waarde toekennen aan variabele x</translation>
+        <translation>Variabele x toekennen</translation>
     </message>
     <message>
         <location filename="../gui/keypad.cpp" line="321"/>
@@ -1144,12 +1144,12 @@
     <message>
         <location filename="../gui/mainwindow.cpp" line="1693"/>
         <source>SpeedCrunch Sessions (*.sch);;All Files (*)</source>
-        <translation>Sessies SpeedCrunch (*.sch);;Alle Bestanden (*)</translation>
+        <translation>SpeedCrunch-sessies (*.sch);;Alle bestanden (*)</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1438"/>
         <source>Load Session</source>
-        <translation>Sessie inlezen</translation>
+        <translation>Sessie laden</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1743"/>
@@ -1159,7 +1159,7 @@
     <message>
         <location filename="../gui/mainwindow.cpp" line="1538"/>
         <source>Can&apos;t read from file %1</source>
-        <translation>Kan niet uit bestand %1 lezen</translation>
+        <translation>Kan niet van bestand %1 lezen</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1547"/>
@@ -1184,17 +1184,17 @@
     <message>
         <location filename="../gui/mainwindow.cpp" line="2023"/>
         <source>To insert a function using keyboard, use Ctrl+F shorcut. From the dialog, you can choose the function you want to insert.</source>
-        <translation>U kunt met het toetsenbord een functie invoegen met sneltoets Ctrl+F. In de dialoog kunt u kiezen welke functie u wilt invoegen.</translation>
+        <translation>Voeg een functie toe met het toetsenbord met sneltoets Ctrl+F. Vanuit het venster kunt u kiezen welke functie u wilt invoegen.</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2028"/>
         <source>To insert a variable using keyboard, use Ctrl+I shorcut. From the dialog, you can choose the variable you want to insert.</source>
-        <translation>U kunt met het toetsenbord een variabele invoegen met sneltoets Ctrl+I. In de dialoog kunt u kiezen welke variabele u wilt invoegen.</translation>
+        <translation>Voeg een variabele toe met het toetsenbord met sneltoets Ctrl+I. Vanuit het venster kunt u kiezen welke variabele u wilt invoegen.</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2031"/>
         <source>Use variable &lt;i&gt;pi&lt;/i&gt; to use pi constant.</source>
-        <translation>Gebruik &lt;i&gt;pi&lt;/i&gt; voor de constante pi.</translation>
+        <translation>Gebruik variabele &lt;i&gt;pi&lt;/i&gt; om constante pi te gebruiken.</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2035"/>
@@ -1215,35 +1215,33 @@
         <location filename="../gui/mainwindow.cpp" line="1469"/>
         <source>Merge session being loaded with current session?
 If no, current variables and display will be cleared.</source>
-        <translation>De in te lezen sessie samenvoegen met de huidige sessie? 
-Zo niet, dan worden de huidige variabelen en schermweergave gewist.</translation>
+        <translation>Moet de geladen sessie worden samengevoegd met de huidige sessie? Zoniet, worden de huidige variabelen en weergave gewist.</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2309"/>
         <source>SpeedCrunch is minimized.
 Left click the icon to restore it or right click for options.</source>
-        <translation>SpeedCrunch is geminimaliseerd.
-Linksklik op het pictogram om dit te herstellen, of rechtsklik voor opties.</translation>
+        <translation>SpeedCrunch is geminimaliseerd. Klik met links op het pictogram om het te herstellen of met rechts voor opties.</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1346"/>
         <source>Degree</source>
-        <translation>Graad</translation>
+        <translation>Graden</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1735"/>
         <source>All Files (*)</source>
-        <translation>Alle Bestanden (*)</translation>
+        <translation>Alle bestanden (*)</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1686"/>
         <source>Radian</source>
-        <translation>Radiaal</translation>
+        <translation>Radialen</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2007"/>
         <source>The menu bar is now hidden. To make it visible again, press Ctrl+Alt+M.</source>
-        <translation>De menubalk is nu verborgen. Toets Ctrl+Alt+M om die weer zichtbaar te maken.</translation>
+        <translation>De menubalk is nu verborgen. Om hem weer zichtbaar te maken, druk op Ctrl+Alt+M.</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2050"/>
@@ -1253,17 +1251,17 @@ Linksklik op het pictogram om dit te herstellen, of rechtsklik voor opties.</tra
     <message>
         <location filename="../gui/mainwindow.cpp" line="2059"/>
         <source>Engineering decimal</source>
-        <translation>Technisch decimaal</translation>
+        <translation>Technische decimaal</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2068"/>
         <source>Fixed decimal</source>
-        <translation>Vast decimaal</translation>
+        <translation>Gefixeerde decimaal</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2077"/>
         <source>General decimal</source>
-        <translation>Algemeen decimaal</translation>
+        <translation>Algemene decimaal</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2086"/>
@@ -1278,7 +1276,7 @@ Linksklik op het pictogram om dit te herstellen, of rechtsklik voor opties.</tra
     <message>
         <location filename="../gui/mainwindow.cpp" line="2104"/>
         <source>Scientific decimal</source>
-        <translation>Wetenschappelijk decimaal</translation>
+        <translation>Wetenschappelijke decimaal</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1531"/>
@@ -1289,8 +1287,7 @@ Linksklik op het pictogram om dit te herstellen, of rechtsklik voor opties.</tra
         <location filename="../gui/mainwindow.cpp" line="1545"/>
         <source>Merge session being imported with current session?
 If no, current variables and display will be cleared.</source>
-        <translation>De te importeren sessie samenvoegen met de huidige sessie? 
-Zo niet, dan worden de huidige variabelen en schermweergave gewist.</translation>
+        <translation>Moet de geïmporteerde sessie worden samengevoegd met de huidige sessie? Zoniet, worden de huidige variabelen en weergave gewist.</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1736"/>
@@ -1320,7 +1317,7 @@ Zo niet, dan worden de huidige variabelen en schermweergave gewist.</translation
     <message>
         <location filename="../gui/mainwindow.cpp" line="537"/>
         <source>&amp;Degree</source>
-        <translation>&amp;Graad</translation>
+        <translation>&amp;Graden</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="520"/>
@@ -1390,7 +1387,7 @@ Zo niet, dan worden de huidige variabelen en schermweergave gewist.</translation
     <message>
         <location filename="../gui/mainwindow.cpp" line="567"/>
         <source>SpeedCrunch &amp;Web Site...</source>
-        <translation>&amp;Webpagina van Speedcrunch...</translation>
+        <translation>SpeedCrunch &amp;website...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="566"/>
@@ -1410,7 +1407,7 @@ Zo niet, dan worden de huidige variabelen en schermweergave gewist.</translation
     <message>
         <location filename="../gui/mainwindow.cpp" line="542"/>
         <source>&amp;Partial Results</source>
-        <translation>&amp;Tussenresultaten</translation>
+        <translation>&amp;Gedeeltelijke resultaten</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="540"/>
@@ -1425,12 +1422,12 @@ Zo niet, dan worden de huidige variabelen en schermweergave gewist.</translation
     <message>
         <location filename="../gui/mainwindow.cpp" line="541"/>
         <source>&amp;Minimize To System Tray</source>
-        <translation>Naar systeemvak &amp;minimaliseren</translation>
+        <translation>Naar het systeemvak &amp;minimaliseren</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="545"/>
         <source>Syntax &amp;Highlighting</source>
-        <translation>Syntax &amp;accentueren</translation>
+        <translation>Accentuering</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="547"/>
@@ -1455,12 +1452,12 @@ Zo niet, dan worden de huidige variabelen en schermweergave gewist.</translation
     <message>
         <location filename="../gui/mainwindow.cpp" line="569"/>
         <source>Scroll Display Down</source>
-        <translation>Scherm naar beneden rollen</translation>
+        <translation>Weergave naar beneden schuiven</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="570"/>
         <source>Scroll Display Up</source>
-        <translation>Scherm naar boven rollen</translation>
+        <translation>Weergave naar boven schuiven</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="525"/>
@@ -1475,7 +1472,7 @@ Zo niet, dan worden de huidige variabelen en schermweergave gewist.</translation
     <message>
         <location filename="../gui/mainwindow.cpp" line="512"/>
         <source>&amp;Load...</source>
-        <translation>&amp;Inlezen...</translation>
+        <translation>&amp;Laden...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="513"/>
@@ -1515,7 +1512,7 @@ Zo niet, dan worden de huidige variabelen en schermweergave gewist.</translation
     <message>
         <location filename="../gui/mainwindow.cpp" line="531"/>
         <source>&amp;Keypad</source>
-        <translation>&amp;Cijfertoetsen</translation>
+        <translation>&amp;Toetsenpaneel</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="534"/>
@@ -1540,7 +1537,7 @@ Zo niet, dan worden de huidige variabelen en schermweergave gewist.</translation
     <message>
         <location filename="../gui/mainwindow.cpp" line="557"/>
         <source>&amp;Fixed Decimal</source>
-        <translation>&amp;Vast decimaal</translation>
+        <translation>&amp;Gefixeerde decimaal</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="558"/>
@@ -1580,7 +1577,7 @@ Zo niet, dan worden de huidige variabelen en schermweergave gewist.</translation
     <message>
         <location filename="../gui/mainwindow.cpp" line="752"/>
         <source>Result &amp;Format</source>
-        <translation>Antwoord&amp;opmaak</translation>
+        <translation>&amp;Opmaak resultaat</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="753"/>
@@ -1600,7 +1597,7 @@ Zo niet, dan worden de huidige variabelen en schermweergave gewist.</translation
     <message>
         <location filename="../gui/mainwindow.cpp" line="756"/>
         <source>Radix &amp;Character</source>
-        <translation>&amp;Karakter voor grondtal</translation>
+        <translation>Grondtal&amp;teken</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="757"/>
@@ -1615,7 +1612,7 @@ Zo niet, dan worden de huidige variabelen en schermweergave gewist.</translation
     <message>
         <location filename="../gui/mainwindow.cpp" line="504"/>
         <source>Result format</source>
-        <translation>Antwoordopmaak</translation>
+        <translation>Opmaak resultaat</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1574"/>
@@ -1625,7 +1622,7 @@ Zo niet, dan worden de huidige variabelen en schermweergave gewist.</translation
     <message>
         <location filename="../gui/mainwindow.cpp" line="528"/>
         <source>F&amp;ull Screen Mode</source>
-        <translation>Volledig&amp;scherm</translation>
+        <translation>Volledig &amp;scherm</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="533"/>
