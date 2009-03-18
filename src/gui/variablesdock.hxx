@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2008-2009 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -22,34 +22,37 @@
 
 #include <QtGui/QDockWidget>
 
+#include <memory>
+
 class VariablesWidget;
 
 class QTreeWidgetItem;
 
 class VariablesDock : public QDockWidget
 {
-  Q_OBJECT
+    Q_OBJECT
 
-    VariablesWidget * m_variableWidget;
-
-  public:
-    VariablesDock( QWidget * parent = 0 );
+public:
+    explicit VariablesDock( QWidget * parent = 0 );
     ~VariablesDock();
 
     void updateList();
 
-  signals:
+signals:
     void variableSelected( const QString & );
 
-  public slots:
+public slots:
     void handleItem( QTreeWidgetItem * );
     void handleRadixCharacterChange();
     void retranslateText();
 
-  protected:
+protected:
     virtual void changeEvent( QEvent * );
 
-  private:
+private:
+    struct Private;
+    const std::auto_ptr<Private> d;
+
     VariablesDock( const VariablesDock & );
     VariablesDock & operator=( const VariablesDock & );
 };

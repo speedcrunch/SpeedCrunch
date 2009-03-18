@@ -17,83 +17,72 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-
-#include "historydock.hxx"
+#include "gui/historydock.hxx"
 
 #include <QtGui/QListWidget>
 
-
 struct HistoryDock::Private
 {
-  QListWidget * list;
+    QListWidget * list;
 };
 
-
 HistoryDock::HistoryDock( QWidget * parent )
-  : QDockWidget( parent ), d( new HistoryDock::Private )
+    : QDockWidget( parent ), d( new HistoryDock::Private )
 {
-  d->list = new QListWidget( this );
-  d->list->setAlternatingRowColors( true );
+    d->list = new QListWidget( this );
+    d->list->setAlternatingRowColors( true );
 
-  connect( d->list, SIGNAL( itemActivated( QListWidgetItem * ) ),
-           this, SLOT( handleItem( QListWidgetItem * ) ) );
+    connect( d->list, SIGNAL(itemActivated(QListWidgetItem *)),
+             SLOT(handleItem(QListWidgetItem *)) );
 
-  setWidget( d->list );
+    setWidget( d->list );
 
-  setMinimumWidth( 200 );
-  setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
-  setWindowIcon( QIcon() );
+    setMinimumWidth( 200 );
+    setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
+    setWindowIcon( QIcon() );
 
-  retranslateText();
+    retranslateText();
 }
-
 
 HistoryDock::~HistoryDock()
 {
 }
 
-
 void HistoryDock::clear()
 {
-  d->list->clear();
+    d->list->clear();
 }
-
 
 void HistoryDock::append( const QString & h )
 {
-  d->list->addItem( h );
-  d->list->clearSelection();
-  d->list->scrollToBottom();
+    d->list->addItem( h );
+    d->list->clearSelection();
+    d->list->scrollToBottom();
 }
-
 
 void HistoryDock::appendHistory( const QStringList & h )
 {
-  d->list->insertItems( 0, h );
-  d->list->setCurrentRow( h.count() - 1 );
-  d->list->scrollToItem( d->list->item( h.count() ),
-                         QListWidget::PositionAtTop );
-  d->list->clearSelection();
+    d->list->insertItems( 0, h );
+    d->list->setCurrentRow( h.count() - 1 );
+    d->list->scrollToItem( d->list->item( h.count() ), QListWidget::PositionAtTop );
+    d->list->clearSelection();
 }
-
 
 void HistoryDock::setHistory( const QStringList & h )
 {
-  d->list->clear();
-  appendHistory( h );
+    d->list->clear();
+    appendHistory( h );
 }
-
 
 void HistoryDock::retranslateText()
 {
-  setWindowTitle( tr( "History" ) );
-  d->list->setLayoutDirection( Qt::LeftToRight );
+    setWindowTitle( tr("History") );
+    d->list->setLayoutDirection( Qt::LeftToRight );
 }
-
 
 void HistoryDock::handleItem( QListWidgetItem * item )
 {
-  d->list->clearSelection();
-  emit expressionSelected( item->text() );
+    d->list->clearSelection();
+    emit expressionSelected( item->text() );
 }
 
