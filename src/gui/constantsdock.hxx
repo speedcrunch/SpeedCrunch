@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2008-2009 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -28,31 +28,32 @@ class QTreeWidgetItem;
 
 class ConstantsDock : public QDockWidget
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
+public:
     ConstantsDock( QWidget * parent = 0 );
     ~ConstantsDock();
 
-  signals:
-    void constantSelected( const QString & c );
+signals:
+    void constantSelected( const QString & );
 
-  public slots:
+public slots:
     void handleRadixCharacterChange();
     void retranslateText();
 
-  protected slots:
+protected slots:
     void filter();
-    void handleItem( QTreeWidgetItem * item );
+    void handleItem( QTreeWidgetItem * );
     void triggerFilter();
     void updateList();
 
-  protected:
+protected:
     virtual void changeEvent( QEvent * );
 
-  private:
+private:
     struct Private;
     const std::auto_ptr<Private> d;
+
     ConstantsDock( const ConstantsDock & );
     ConstantsDock & operator=( const ConstantsDock & );
 };
