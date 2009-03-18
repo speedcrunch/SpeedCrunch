@@ -65,6 +65,7 @@ HEADERS += 3rdparty/flickcharm/flickcharm.h \
            gui/functionsdock.hxx \
            gui/functionswidget.hxx \
            gui/historydock.hxx \
+           gui/historywidget.hxx \
            gui/insertfunctiondlg.hxx \
            gui/insertvardlg.hxx \
            gui/keypad.hxx \
@@ -117,6 +118,7 @@ SOURCES += 3rdparty/flickcharm/flickcharm.cpp \
            gui/functionsdock.cpp \
            gui/functionswidget.cpp \
            gui/historydock.cpp \
+           gui/historywidget.cpp \
            gui/insertfunctiondlg.cpp \
            gui/insertvardlg.cpp \
            gui/keypad.cpp \

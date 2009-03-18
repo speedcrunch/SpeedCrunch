@@ -18,6 +18,7 @@
 // Boston, MA 02110-1301, USA.
 
 #include "gui/constantsdock.hxx"
+
 #include "core/constants.hxx"
 #include "core/settings.hxx"
 

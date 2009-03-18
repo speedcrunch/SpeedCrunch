@@ -32,6 +32,7 @@
 #include "gui/editor.hxx"
 #include "gui/functionsdock.hxx"
 #include "gui/historydock.hxx"
+#include "gui/historywidget.hxx"
 #include "gui/insertfunctiondlg.hxx"
 #include "gui/insertvardlg.hxx"
 #include "gui/mainwindow.hxx"
@@ -948,11 +949,13 @@ void MainWindow::Private::createHistoryDock()
     docks.history->setAllowedAreas( Qt::AllDockWidgetAreas );
     p->addDockWidget( Qt::RightDockWidgetArea, docks.history );
 
-    connect( docks.history, SIGNAL(expressionSelected(const QString &)),
+    HistoryWidget * history = qobject_cast<HistoryWidget *>( docks.history->widget() );
+    connect( history, SIGNAL(expressionSelected(const QString &)),
              p, SLOT(insertTextIntoEditor(const QString &)) );
     connect( p, SIGNAL(languageChanged()), docks.history, SLOT(retranslateText()) );
 
-    docks.history->setHistory( widgets.editor->history() );
+    HistoryWidget * historyWidget = qobject_cast<HistoryWidget *>( docks.history->widget() );
+    historyWidget->setHistory( widgets.editor->history() );
 
     if ( docks.functions )
         p->tabifyDockWidget( docks.functions, docks.history );
@@ -1309,8 +1312,10 @@ void MainWindow::clearHistory()
 {
     d->widgets.display->clear();
     d->widgets.editor->clearHistory();
-    if ( d->settings->historyDockVisible )
-        d->docks.history->clear();
+    if ( d->settings->historyDockVisible ) {
+        HistoryWidget * history = qobject_cast<HistoryWidget *>( d->docks.history->widget() );
+        history->clear();
+    }
     d->settings->history.clear();
     d->settings->historyResults.clear();
     QTimer::singleShot( 0, d->widgets.editor, SLOT(setFocus()) );
@@ -1501,8 +1506,10 @@ void MainWindow::showSessionLoadDialog()
     d->widgets.display->appendHistory( expLs, resLs );
     d->widgets.editor->appendHistory( expLs, resLs );
 
-    if ( d->settings->historyDockVisible )
-        d->docks.history->appendHistory( expLs );
+    if ( d->settings->historyDockVisible ) {
+        HistoryWidget * history = qobject_cast<HistoryWidget *>( d->docks.history->widget() );
+        history->appendHistory( expLs );
+    }
 
     // variables
     int noVars = stream.readLine().toInt( &ok );
@@ -1588,8 +1595,11 @@ void MainWindow::showSessionImportDialog()
             d->widgets.editor->setAnsAvailable( true );
             if ( d->settings->variablesDockVisible )
                 d->docks.variables->updateList();
-            if ( d->settings->historyDockVisible )
-                d->docks.history->append( str );
+            if ( d->settings->historyDockVisible ) {
+                HistoryWidget * history
+                    = qobject_cast<HistoryWidget *>( d->docks.history->widget() );
+                history->append( str );
+            }
 
             d->widgets.editor->setText( str );
             d->widgets.editor->selectAll();
@@ -2266,8 +2276,10 @@ void MainWindow::Private::restoreHistory()
     widgets.editor->setHistoryResults( settings->historyResults );
     widgets.display->appendHistory( settings->history, settings->historyResults );
 
-    if ( docks.history )
-        docks.history->setHistory( widgets.editor->history() );
+    if ( docks.history ) {
+        HistoryWidget * history = qobject_cast<HistoryWidget *>( docks.history->widget() );
+        history->setHistory( widgets.editor->history() );
+    }
 
     // free some useless memory
     settings->history.clear();
@@ -2293,8 +2305,10 @@ void MainWindow::evaluateEditorExpression()
         d->widgets.editor->setAnsAvailable( true );
         if ( d->settings->variablesDockVisible )
             d->docks.variables->updateList();
-        if ( d->settings->historyDockVisible )
-            d->docks.history->append( str );
+        if ( d->settings->historyDockVisible ) {
+            HistoryWidget * history = qobject_cast<HistoryWidget *>( d->docks.history->widget() );
+            history->append( str );
+        }
 
         d->widgets.editor->selectAll();
         d->widgets.editor->stopAutoCalc();

@@ -17,32 +17,41 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#ifndef GUI_HISTORYDOCK_HXX
-#define GUI_HISTORYDOCK_HXX
+#ifndef GUI_HISTORYWIDGET_HXX
+#define GUI_HISTORYWIDGET_HXX
 
-#include <QtGui/QDockWidget>
+#include <QtGui/QWidget>
 
 #include <memory>
 
 class QListWidgetItem;
 
-class HistoryDock : public QDockWidget
+class HistoryWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit HistoryDock( QWidget * parent = 0 );
-    ~HistoryDock();
+    explicit HistoryWidget( QWidget * parent = 0 );
+    ~HistoryWidget();
 
 public slots:
-    void retranslateText();
+    void append( const QString & );
+    void appendHistory( const QStringList & );
+    void clear();
+    void setHistory( const QStringList & );
+
+signals:
+    void expressionSelected( const QString & );
+
+protected slots:
+    void handleItem( QListWidgetItem * );
 
 private:
     struct Private;
     const std::auto_ptr<Private> d;
 
-    HistoryDock( const HistoryDock & );
-    HistoryDock & operator=( const HistoryDock & );
+    HistoryWidget( const HistoryWidget & );
+    HistoryWidget & operator=( const HistoryWidget & );
 };
 
 #endif

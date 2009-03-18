@@ -21,6 +21,7 @@ gui/editor.hxx
 gui/functionsdock.hxx
 gui/functionswidget.hxx
 gui/historydock.hxx
+gui/historywidget.hxx
 gui/insertfunctiondlg.hxx
 gui/insertvardlg.hxx
 gui/keypad.hxx
@@ -74,6 +75,7 @@ gui/editor.cpp
 gui/functionsdock.cpp
 gui/functionswidget.cpp
 gui/historydock.cpp
+gui/historywidget.cpp
 gui/insertfunctiondlg.cpp
 gui/insertvardlg.cpp
 gui/keypad.cpp

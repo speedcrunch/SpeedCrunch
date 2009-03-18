@@ -32,7 +32,7 @@ class FunctionsWidget : public QWidget
     Q_OBJECT
 
 public:
-    FunctionsWidget( QWidget * parent = 0 );
+    explicit FunctionsWidget( QWidget * parent = 0 );
     ~FunctionsWidget();
 
     QTreeWidgetItem * currentItem() const;

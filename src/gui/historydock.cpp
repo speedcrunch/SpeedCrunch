@@ -19,23 +19,20 @@
 
 #include "gui/historydock.hxx"
 
-#include <QtGui/QListWidget>
+#include "gui/historywidget.hxx"
+
+#include <QtGui/QIcon>
 
 struct HistoryDock::Private
 {
-    QListWidget * list;
+    HistoryWidget * widget;
 };
 
 HistoryDock::HistoryDock( QWidget * parent )
     : QDockWidget( parent ), d( new HistoryDock::Private )
 {
-    d->list = new QListWidget( this );
-    d->list->setAlternatingRowColors( true );
-
-    connect( d->list, SIGNAL(itemActivated(QListWidgetItem *)),
-             SLOT(handleItem(QListWidgetItem *)) );
-
-    setWidget( d->list );
+    d->widget = new HistoryWidget( this );
+    setWidget( d->widget );
 
     setMinimumWidth( 200 );
     setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
@@ -48,41 +45,9 @@ HistoryDock::~HistoryDock()
 {
 }
 
-void HistoryDock::clear()
-{
-    d->list->clear();
-}
-
-void HistoryDock::append( const QString & h )
-{
-    d->list->addItem( h );
-    d->list->clearSelection();
-    d->list->scrollToBottom();
-}
-
-void HistoryDock::appendHistory( const QStringList & h )
-{
-    d->list->insertItems( 0, h );
-    d->list->setCurrentRow( h.count() - 1 );
-    d->list->scrollToItem( d->list->item( h.count() ), QListWidget::PositionAtTop );
-    d->list->clearSelection();
-}
-
-void HistoryDock::setHistory( const QStringList & h )
-{
-    d->list->clear();
-    appendHistory( h );
-}
-
 void HistoryDock::retranslateText()
 {
     setWindowTitle( tr("History") );
-    d->list->setLayoutDirection( Qt::LeftToRight );
-}
-
-void HistoryDock::handleItem( QListWidgetItem * item )
-{
-    d->list->clearSelection();
-    emit expressionSelected( item->text() );
+    d->widget->setLayoutDirection( Qt::LeftToRight );
 }
 
