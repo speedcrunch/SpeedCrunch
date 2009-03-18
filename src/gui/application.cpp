@@ -18,8 +18,9 @@
 
 #include "gui/application.hxx"
 
-#include <cstring>
 #include <QtCore/QByteArray>
+
+#include <cstring>
 
 #if QT_VERSION >= 0x040400
 
@@ -32,35 +33,31 @@
 
 struct Application::Private
 {
-  Q_OBJECT
-
-    bool          isRunning;
-    QLocalServer  localServer;
+    QObject * p;
+    bool isRunning;
+    QLocalServer localServer;
     QSharedMemory sharedMemory;
-    Private();
+
+    Private( QObject * parent = 0 );
 
     bool sendRaiseRequest();
-
-signals:
-    void raiseRequested();
-
-private slots:
-    void receiveMessage();
 };
 
-Application::Private::Private()
+Application::Private::Private( QObject * parent )
+    : p( parent )
 {
     sharedMemory.setKey( GUI_APPLICATION_SHARED_MEMORY_KEY );
     isRunning = sharedMemory.attach() && sendRaiseRequest();
     if ( !isRunning && sharedMemory.create(1) ) {
-        connect( localServer, SIGNAL(newConnection()), SLOT(receiveMessage()) );
+        connect( &localServer, SIGNAL(newConnection()), p, SLOT(receiveMessage()) );
         localServer.listen( GUI_APPLICATION_SHARED_MEMORY_KEY );
     }
 }
 
-void Application::Private::receiveMessage()
+void Application::receiveMessage()
 {
-    QLocalSocket * localSocket = localServer.nextPendingConnection();
+    qDebug() << "receiveMessage()";
+    QLocalSocket * localSocket = d->localServer.nextPendingConnection();
 
     if ( ! localSocket->waitForReadyRead(GUI_APPLICATION_LOCAL_SOCKET_TIMEOUT) )
         return;
@@ -72,10 +69,12 @@ void Application::Private::receiveMessage()
         emit raiseRequested();
 
     localSocket->disconnectFromServer();
+    qDebug() << "raise requested";
 }
 
 bool Application::Private::sendRaiseRequest()
 {
+    qDebug() << "sendRaiseRequest()";
     QLocalSocket localSocket;
     localSocket.connectToServer( GUI_APPLICATION_SHARED_MEMORY_KEY, QIODevice::WriteOnly );
 
@@ -88,22 +87,22 @@ bool Application::Private::sendRaiseRequest()
         return false;
 
     localSocket.disconnectFromServer();
+    qDebug() << "sent raise request";
     return true;
 }
 
-
-#else /* QT_VERSION >= 0x040400 */
+#else // QT_VERSION >= 0x040400
 
 struct Application::Private
 {
     bool isRunning;
-    Private() : isRunning(false) {};
+    Private() : isRunning( false ) {};
 };
 
-#endif /* QT_VERSION >= 0x040400 */
+#endif // QT_VERSION >= 0x040400
 
 Application::Application( int & argc, char * argv[] )
-    : QApplication( argc, argv ), d( new Application::Private )
+    : QApplication( argc, argv ), d( new Application::Private(this) )
 {
 }
 
@@ -115,3 +114,4 @@ bool Application::isRunning() const
 {
     return d->isRunning;
 }
+

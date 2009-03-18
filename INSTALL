@@ -5,7 +5,7 @@ need to do is drag the SpeedCrunch application icon to your Applications
 folder. The application, and Qt itself, is in the bundle represented by the
 icon.
 
-You need Qt (http://www.qtsoftware.com/), minimum version 4.4.0, to compile
+You need Qt (http://www.qtsoftware.com/), minimum version 4.3.0, to compile
 SpeedCrunch. Most Linux distributions normally ship a recent version of Qt, so
 you will probably not need to worry about this. However, you need the
 development package as well (sometimes named as qt-devel or qt4-devel,

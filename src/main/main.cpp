@@ -26,8 +26,10 @@ int main( int argc, char * argv[] )
 {
     Application app( argc, argv );
 
+#if QT_VERSION >= 0x040400
     if ( app.isRunning() )
         return 0;
+#endif // QT_VERSION >= 0x040400
 
     QCoreApplication::setApplicationName( "speedcrunch" );
     QCoreApplication::setOrganizationDomain( "speedcrunch.org" );
@@ -37,7 +39,10 @@ int main( int argc, char * argv[] )
     win.show();
 
     app.connect( &app, SIGNAL(lastWindowClosed()), &app, SLOT(quit()) );
+#if QT_VERSION >= 0x040400
     app.connect( &app, SIGNAL(raiseRequested()), &win, SLOT(raiseWindow()) );
+#endif // QT_VERSION >= 0x040400
 
     return app.exec();
 }
+
