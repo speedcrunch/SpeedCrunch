@@ -91,12 +91,17 @@ bool Application::Private::sendRaiseRequest()
     return true;
 }
 
+bool Application::isRunning() const
+{
+    return d->isRunning;
+}
+
 #else // QT_VERSION >= 0x040400
 
 struct Application::Private
 {
     bool isRunning;
-    Private() : isRunning( false ) {};
+    Private( QObject * ) : isRunning( false ) {};
 };
 
 #endif // QT_VERSION >= 0x040400
@@ -109,9 +114,3 @@ Application::Application( int & argc, char * argv[] )
 Application::~Application()
 {
 }
-
-bool Application::isRunning() const
-{
-    return d->isRunning;
-}
-
