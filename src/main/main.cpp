@@ -26,10 +26,8 @@ int main( int argc, char * argv[] )
 {
     Application app( argc, argv );
 
-    if ( app.isRunning() ) {
-        app.sendRaiseRequest();
+    if ( app.isRunning() )
         return 0;
-    }
 
     QCoreApplication::setApplicationName( "speedcrunch" );
     QCoreApplication::setOrganizationDomain( "speedcrunch.org" );
@@ -43,4 +41,3 @@ int main( int argc, char * argv[] )
 
     return app.exec();
 }
-
