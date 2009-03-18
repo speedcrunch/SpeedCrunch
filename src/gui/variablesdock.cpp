@@ -28,20 +28,26 @@
 #include <QtGui/QTreeWidget>
 #include <QtGui/QVBoxLayout>
 
-VariablesDock::VariablesDock( QWidget * parent )
-  : QDockWidget( parent ),
-    m_variableWidget( new VariablesWidget(VariablesWidget::ShowAll, this) )
+struct VariablesDock::Private
 {
-  connect( m_variableWidget, SIGNAL( itemActivated( QTreeWidgetItem *, int ) ),
-           this, SLOT( handleItem( QTreeWidgetItem * ) ) );
+    VariablesWidget * variablesWidget;
+};
 
-  setWidget( m_variableWidget );
+VariablesDock::VariablesDock( QWidget * parent )
+    : QDockWidget( parent ), d( new VariablesDock::Private )
+{
+    d->variablesWidget = new VariablesWidget( VariablesWidget::ShowAll, this );
 
-  setMinimumWidth( 200 );
-  setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
-  setWindowIcon( QIcon() );
+    connect( d->variablesWidget, SIGNAL(itemActivated(QTreeWidgetItem *, int) ),
+             SLOT(handleItem(QTreeWidgetItem *)) );
 
-  retranslateText();
+    setWidget( d->variablesWidget );
+
+    setMinimumWidth( 200 );
+    setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
+    setWindowIcon( QIcon() );
+
+    retranslateText();
 }
 
 VariablesDock::~VariablesDock()
@@ -50,31 +56,31 @@ VariablesDock::~VariablesDock()
 
 void VariablesDock::updateList()
 {
-  m_variableWidget->fillTable();
+    d->variablesWidget->fillTable();
 }
 
 void VariablesDock::handleRadixCharacterChange()
 {
-  m_variableWidget->fillTable();
+    d->variablesWidget->fillTable();
 }
 
 void VariablesDock::retranslateText()
 {
-  setWindowTitle( tr( "Variables" ) );
-  m_variableWidget->setLayoutDirection( Qt::LeftToRight );
-  m_variableWidget->retranslateText();
+    setWindowTitle( tr("Variables") );
+    d->variablesWidget->setLayoutDirection( Qt::LeftToRight );
+    d->variablesWidget->retranslateText();
 }
 
 void VariablesDock::handleItem( QTreeWidgetItem * item )
 {
-  emit variableSelected( item->text( 0 ) );
+    emit variableSelected( item->text(0) );
 }
 
 void VariablesDock::changeEvent( QEvent * e )
 {
-  if ( e->type() == QEvent::LayoutDirectionChange )
-    retranslateText();
-  else
-    QDockWidget::changeEvent( e );
+    if ( e->type() == QEvent::LayoutDirectionChange )
+        retranslateText();
+    else
+        QDockWidget::changeEvent( e );
 }
 
