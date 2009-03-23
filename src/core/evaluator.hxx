@@ -31,53 +31,54 @@
 #include <memory>
 
 #ifdef _BISON
-# include "bison/bisonparser.hxx"
-#endif
+#include "bison/bisonparser.hxx"
+#endif // _BISON
 
 class Token
 {
-  public:
-    enum Op   { InvalidOp = 0, Plus, Minus, Asterisk, Slash, Caret, LeftPar,
-                RightPar, Semicolon, Percent, Exclamation, Equal, Modulo, Div };
-    enum Type { stxUnknown, stxNumber, stxIdentifier, stxOperator, stxOpenPar,
-                stxClosePar, stxSep, };
+public:
+    enum Op { InvalidOp = 0, Plus, Minus, Asterisk, Slash, Caret, LeftPar, RightPar, Semicolon,
+              Percent, Exclamation, Equal, Modulo, Div };
+    enum Type { stxUnknown, stxNumber, stxIdentifier, stxOperator, stxOpenPar, stxClosePar,
+                stxSep };
 
     static const Token null;
 
-    Token( Type type = stxUnknown, const QString & text = QString::null,
-           int pos = -1 );
+    Token( Type type = stxUnknown, const QString & text = QString::null, int pos = -1 );
     Token( const Token & );
-    Token & operator=( const Token & );
-    Type    type() const { return m_type; }
-    QString text() const { return m_text; }
-    int     pos() const { return m_pos; };
-    bool    isNumber() const { return m_type == stxNumber; }
-    bool    isOperator() const { return m_type >= stxOperator; }
-    bool    isIdentifier() const { return m_type == stxIdentifier; }
-    HNumber asNumber() const;
-    Op      asOperator() const;
-    QString description() const;
 
-  protected:
-    Type m_type;
-    QString m_text;
+    HNumber asNumber() const;
+    Op asOperator() const;
+    QString description() const;
+    bool isNumber() const { return m_type == stxNumber; }
+    bool isOperator() const { return m_type >= stxOperator; }
+    bool isIdentifier() const { return m_type == stxIdentifier; }
+    int pos() const { return m_pos; };
+    QString text() const { return m_text; }
+    Type type() const { return m_type; }
+
+    Token & operator=( const Token & );
+
+protected:
     int m_pos;
+    QString m_text;
+    Type m_type;
 };
 
 class Tokens : public QVector<Token>
 {
-  public:
-    Tokens() : QVector<Token>(), m_valid(true) {};
+public:
+    Tokens() : QVector<Token>(), m_valid( true ) {};
+
     bool valid() const { return m_valid; }
     void setValid( bool v ){ m_valid = v; }
 
-  protected:
+protected:
     bool m_valid;
 };
 
-class Variable
+struct Variable
 {
-  public:
     QString name;
     HNumber value;
 };
@@ -86,43 +87,42 @@ class Functions;
 
 class Evaluator : public QObject
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
+public:
     static Evaluator * instance();
     ~Evaluator();
 
-    bool    has( const QString & id );
-    bool    isValid() const;
+    QString autoFix( const QString & );
+    void clear();
+    void clearVariables();
+    QString dump() const;
+    QString error() const;
     HNumber eval();
     HNumber evalNoAssign();
     HNumber evalUpdateAns();
-    HNumber get( const QString & id );
-    char    radixChar() const;
-    QString autoFix( const QString & );
-    QString dump() const;
-    QString error() const;
     QString expression() const;
-    Tokens  scan( const QString & ) const;
-    Tokens  tokens() const;
-    void    clear();
-    void    clearVariables();
-    void    remove( const QString & id );
-    void    set( const QString & id, HNumber value );
-    void    setExpression( const QString& expr );
-
+    HNumber get( const QString & id );
+    bool has( const QString & id );
+    bool isValid() const;
+    char radixChar() const;
+    void remove( const QString & id );
+    Tokens scan( const QString & ) const;
+    void set( const QString & id, HNumber value );
+    void setExpression( const QString& expr );
+    Tokens tokens() const;
     QVector<Variable> variables() const;
 
-  protected:
+protected:
     void compile( const Tokens & ) const;
 
-  private:
+private:
+    struct Private;
+    const std::auto_ptr<Private> d;
+
     Evaluator();
     Evaluator( const Evaluator & );
     Evaluator & operator=( const Evaluator & );
-
-    struct Private;
-    const std::auto_ptr<Private> d;
 };
 
 #endif
