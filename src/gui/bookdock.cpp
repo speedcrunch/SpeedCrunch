@@ -17,9 +17,10 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#include <gui/bookdock.hxx>
+#include "gui/bookdock.hxx"
 
-#include <core/settings.hxx>
+#include "3rdparty/flickcharm/flickcharm.h"
+#include "core/settings.hxx"
 
 #include <QtCore/QDir>
 #include <QtCore/QEvent>
@@ -41,6 +42,7 @@ struct BookDock::Private
   QString        file;
   QString        language;
   QPushButton *  backButton;
+  FlickCharm     flickCharm;
   QPushButton *  forwardButton;
   QPushButton *  indexButton;
   QWidget *      buttonLayoutWidget;
@@ -81,6 +83,7 @@ BookDock::BookDock( const QString & directory, const QString & file,
   d->sheet = new QTextBrowser( this );
   d->sheet->setLineWrapMode( QTextEdit::NoWrap );
   d->sheet->setSearchPaths( QStringList() << d->path );
+  d->flickCharm.activateOn( d->sheet );
 
   connect( d->sheet, SIGNAL( anchorClicked( const QUrl & ) ),
            this, SLOT( handleAnchorClick( const QUrl & ) ) );
