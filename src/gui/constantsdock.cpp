@@ -19,6 +19,7 @@
 
 #include "gui/constantsdock.hxx"
 
+#include "3rdparty/flickcharm/flickcharm.h"
 #include "core/constants.hxx"
 #include "core/settings.hxx"
 
@@ -41,6 +42,7 @@ struct ConstantsDock::Private
     Constants * constants;
     QLineEdit * filter;
     QTimer * filterTimer;
+    FlickCharm flickCharm;
     QLabel * label;
     QTreeWidget * list;
     QLabel * noMatchLabel;
@@ -54,7 +56,6 @@ ConstantsDock::ConstantsDock( QWidget * parent )
     d->settings = Settings::instance();
 
     d->categoryLabel = new QLabel( this );
-
     d->category = new QComboBox( this );
     d->category->setEditable( false );
     d->category->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
@@ -94,6 +95,7 @@ ConstantsDock::ConstantsDock( QWidget * parent )
     d->list->setEditTriggers( QTreeWidget::NoEditTriggers );
     d->list->setSelectionBehavior( QTreeWidget::SelectRows );
     d->list->setAlternatingRowColors( true );
+    d->flickCharm.activateOn( d->list );
 
     connect( d->list, SIGNAL(itemActivated(QTreeWidgetItem *, int)),
              SLOT(handleItem(QTreeWidgetItem *)) );
