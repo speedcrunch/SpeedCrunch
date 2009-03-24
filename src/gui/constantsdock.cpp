@@ -87,6 +87,7 @@ ConstantsDock::ConstantsDock( QWidget * parent )
     d->list->setAutoScroll( true );
     d->list->setHorizontalScrollBarPolicy( Qt::ScrollBarAsNeeded );
     d->list->setHorizontalScrollMode( QAbstractItemView::ScrollPerPixel );
+    d->list->setVerticalScrollMode( QAbstractItemView::ScrollPerPixel );
     d->list->setColumnCount( 5 );
     d->list->setColumnHidden( 3, true );
     d->list->setRootIsDecorated( false );

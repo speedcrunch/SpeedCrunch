@@ -73,6 +73,7 @@ VariablesWidget::VariablesWidget( ItemPolicy itemPolicy, QWidget * parent )
     d->variables->setEditTriggers( QTreeWidget::NoEditTriggers );
     d->variables->setHorizontalScrollBarPolicy( Qt::ScrollBarAsNeeded );
     d->variables->setHorizontalScrollMode( QAbstractItemView::ScrollPerPixel );
+    d->variables->setVerticalScrollMode( QAbstractItemView::ScrollPerPixel );
     d->variables->setRootIsDecorated( false );
     d->variables->setSelectionBehavior( QTreeWidget::SelectRows );
     d->variables->setCursor( QCursor(Qt::PointingHandCursor) );

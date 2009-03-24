@@ -58,6 +58,7 @@ FunctionsWidget::FunctionsWidget( QWidget * parent )
     d->functions->setAutoScroll( true );
     d->functions->setHorizontalScrollBarPolicy( Qt::ScrollBarAsNeeded );
     d->functions->setHorizontalScrollMode( QAbstractItemView::ScrollPerPixel );
+    d->functions->setVerticalScrollMode( QAbstractItemView::ScrollPerPixel );
     d->functions->setColumnCount( 2 );
     d->functions->setAlternatingRowColors( true );
     d->functions->setRootIsDecorated( false );
