@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2007-2009 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2008-2009 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -17,33 +17,46 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#include "gui/constantsdock.hxx"
+#ifndef GUI_CONSTANTSWIDGET_HXX
+#define GUI_CONSTANTSWIDGET_HXX
 
-#include "gui/constantswidget.hxx"
+#include <memory>
 
-#include <QtCore/QEvent>
+#include <QtGui/QWidget>
 
-ConstantsDock::ConstantsDock( QWidget * parent )
-  : QDockWidget( parent ), m_widget( new ConstantsWidget(this) )
+class QTreeWidgetItem;
+
+class ConstantsWidget : public QWidget
 {
-    setWidget( m_widget );
-    retranslateText();
-}
+    Q_OBJECT
 
-ConstantsDock::~ConstantsDock()
-{
-}
+public:
+    ConstantsWidget( QWidget * parent = 0 );
+    ~ConstantsWidget();
 
-void ConstantsDock::retranslateText()
-{
-    setWindowTitle( tr("Constants") );
-}
+signals:
+    void constantSelected( const QString & );
 
-void ConstantsDock::changeEvent( QEvent * e )
-{
-    if ( e->type() == QEvent::LanguageChange )
-        retranslateText();
-    else
-        QDockWidget::changeEvent( e );
-}
+public slots:
+    void handleRadixCharacterChange();
+    void retranslateText();
+
+protected slots:
+    void filter();
+    void handleItem( QTreeWidgetItem * );
+    void triggerFilter();
+    void updateList();
+
+protected:
+    virtual void changeEvent( QEvent * );
+
+private:
+    struct Private;
+    const std::auto_ptr<Private> d;
+
+    ConstantsWidget( const ConstantsWidget & );
+    ConstantsWidget & operator=( const ConstantsWidget & );
+};
+
+#endif
 

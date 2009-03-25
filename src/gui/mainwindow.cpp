@@ -893,11 +893,10 @@ void MainWindow::Private::createConstantsDock()
     docks.constants->setAllowedAreas( Qt::AllDockWidgetAreas );
     p->addDockWidget( Qt::RightDockWidgetArea, docks.constants );
 
-    connect( docks.constants, SIGNAL(constantSelected(const QString &)),
+    connect( docks.constants->widget(), SIGNAL(constantSelected(const QString &)),
              p, SLOT(insertConstantIntoEditor(const QString &)) );
     connect( p, SIGNAL(radixCharacterChanged()),
-             docks.constants, SLOT(handleRadixCharacterChange()) );
-    connect( p, SIGNAL(languageChanged()), docks.constants, SLOT(retranslateText()) );
+             docks.constants->widget(), SLOT(handleRadixCharacterChange()) );
 
     if ( docks.functions )
         p->tabifyDockWidget( docks.functions, docks.constants );

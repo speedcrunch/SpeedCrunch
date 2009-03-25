@@ -24,7 +24,7 @@
 
 #include <memory>
 
-class QTreeWidgetItem;
+class ConstantsWidget;
 
 class ConstantsDock : public QDockWidget
 {
@@ -34,25 +34,14 @@ public:
     ConstantsDock( QWidget * parent = 0 );
     ~ConstantsDock();
 
-signals:
-    void constantSelected( const QString & );
-
 public slots:
-    void handleRadixCharacterChange();
     void retranslateText();
-
-protected slots:
-    void filter();
-    void handleItem( QTreeWidgetItem * );
-    void triggerFilter();
-    void updateList();
 
 protected:
     virtual void changeEvent( QEvent * );
 
 private:
-    struct Private;
-    const std::auto_ptr<Private> d;
+    ConstantsWidget * m_widget;
 
     ConstantsDock( const ConstantsDock & );
     ConstantsDock & operator=( const ConstantsDock & );

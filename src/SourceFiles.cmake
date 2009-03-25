@@ -15,6 +15,7 @@ gui/application.hxx
 gui/autohidelabel.hxx
 gui/bookdock.hxx
 gui/constantsdock.hxx
+gui/constantswidget.hxx
 gui/deletevardlg.hxx
 gui/resultdisplay.hxx
 gui/editor.hxx
@@ -69,6 +70,7 @@ gui/application.cpp
 gui/autohidelabel.cpp
 gui/bookdock.cpp
 gui/constantsdock.cpp
+gui/constantswidget.cpp
 gui/deletevardlg.cpp
 gui/resultdisplay.cpp
 gui/editor.cpp

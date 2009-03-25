@@ -61,6 +61,7 @@ HEADERS += 3rdparty/flickcharm/flickcharm.h \
            gui/autohidelabel.hxx \
            gui/bookdock.hxx \
            gui/constantsdock.hxx \
+           gui/constantswidget.hxx \
            gui/deletevardlg.hxx \
            gui/resultdisplay.hxx \
            gui/editor.hxx \
@@ -114,6 +115,7 @@ SOURCES += 3rdparty/flickcharm/flickcharm.cpp \
            gui/autohidelabel.cpp \
            gui/bookdock.cpp \
            gui/constantsdock.cpp \
+           gui/constantswidget.cpp \
            gui/deletevardlg.cpp \
            gui/resultdisplay.cpp \
            gui/editor.cpp \
