@@ -18,9 +18,9 @@
 // Boston, MA 02110-1301, USA.
 
 #include "gui/functionsdock.hxx"
-#include "gui/functionswidget.hxx"
 
 #include "core/functions.hxx"
+#include "gui/functionswidget.hxx"
 
 #include <QtCore/QEvent>
 #include <QtCore/QTimer>
@@ -30,47 +30,26 @@
 #include <QtGui/QVBoxLayout>
 
 FunctionsDock::FunctionsDock( QWidget * parent )
-  : QDockWidget( parent ),
-    m_functionWidget( new FunctionsWidget(this) )
+    : QDockWidget( parent ), m_widget( new FunctionsWidget(this) )
 {
-  connect( m_functionWidget, SIGNAL( itemActivated( QTreeWidgetItem *, int ) ),
-          this, SLOT( handleItem( QTreeWidgetItem * ) ) );
-
-  setWidget( m_functionWidget );
-
-  setMinimumWidth( 200 );
-  setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
-  setWindowIcon( QIcon() );
-
-  retranslateText();
+    setWidget( m_widget );
+    retranslateText();
 }
 
 FunctionsDock::~FunctionsDock()
 {
 }
 
-void FunctionsDock::updateList()
-{
-  m_functionWidget->fillTable();
-}
-
 void FunctionsDock::retranslateText()
 {
-  setWindowTitle( tr( "Functions" ) );
-  m_functionWidget->setLayoutDirection( Qt::LeftToRight );
-  m_functionWidget->retranslateText();
-}
-
-void FunctionsDock::handleItem( QTreeWidgetItem * item )
-{
-  emit functionSelected( item->text( 0 ) );
+    setWindowTitle( tr("Functions") );
 }
 
 void FunctionsDock::changeEvent( QEvent * e )
 {
-  if ( e->type() == QEvent::LayoutDirectionChange )
-    retranslateText();
-  else
-    QDockWidget::changeEvent( e );
+    if ( e->type() == QEvent::LanguageChange )
+        retranslateText();
+    else
+        QDockWidget::changeEvent( e );
 }
 

@@ -34,11 +34,9 @@ public:
     ConstantsDock( QWidget * parent = 0 );
     ~ConstantsDock();
 
-public slots:
-    void retranslateText();
-
 protected:
     virtual void changeEvent( QEvent * );
+    void retranslateText();
 
 private:
     ConstantsWidget * m_widget;

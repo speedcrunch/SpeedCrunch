@@ -25,6 +25,7 @@
 
 #include <memory>
 
+class QEvent;
 class QTreeWidgetItem;
 
 class FunctionsWidget : public QWidget
@@ -35,21 +36,18 @@ public:
     explicit FunctionsWidget( QWidget * parent = 0 );
     ~FunctionsWidget();
 
-    QTreeWidgetItem * currentItem() const;
+    const QTreeWidgetItem * currentItem() const;
     QList<QTreeWidgetItem *> selectedItems() const;
 
 signals:
-    void itemActivated( QTreeWidgetItem *, int );
-    void itemDoubleClicked( QTreeWidgetItem *, int );
-
-public slots:
-    void fillTable();
-    void retranslateText();
+    void functionSelected( const QString & );
 
 protected slots:
-    void catchItemActivated( QTreeWidgetItem *, int );
-    void catchItemDoubleClicked( QTreeWidgetItem *, int );
+    void handleItemActivated( QTreeWidgetItem *, int );
+    virtual void changeEvent( QEvent * );
     void clearSelection( QTreeWidgetItem * );
+    void fillTable();
+    void retranslateText();
     void triggerFilter();
 
 private:

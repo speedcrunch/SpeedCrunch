@@ -19,8 +19,7 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-
-#include "insertfunctiondlg.hxx"
+#include "gui/insertfunctiondlg.hxx"
 
 #include "gui/functionswidget.hxx"
 
@@ -28,67 +27,35 @@
 #include <QtGui/QTreeWidget>
 #include <QtGui/QVBoxLayout>
 
-
 struct InsertFunctionDlg::Private
 {
-  FunctionsWidget * list;
-
-  QPushButton * cancelButton;
-  QPushButton * insertButton;
+    FunctionsWidget * list;
 };
 
 InsertFunctionDlg::InsertFunctionDlg( QWidget * parent )
-  : QDialog( parent ), d( new InsertFunctionDlg::Private )
+    : QDialog( parent ), d( new InsertFunctionDlg::Private )
 {
-  setWindowTitle( tr( "Insert Function" ) );
-  setModal( true );
+    setWindowTitle( tr("Insert Function") );
+    setModal( true );
 
-  QVBoxLayout * layout = new QVBoxLayout;
-  setLayout( layout );
+    QVBoxLayout * layout = new QVBoxLayout;
+    setLayout( layout );
 
-  d->list = new FunctionsWidget( this );
+    d->list = new FunctionsWidget( this );
+    layout->addWidget( d->list );
 
-  d->insertButton = new QPushButton( this );
-  d->insertButton->setText( tr( "&Insert" ) );
-  d->insertButton->setDefault( true );
+    connect( d->list, SIGNAL(functionSelected(const QString &)), SLOT(accept()) );
 
-  d->cancelButton = new QPushButton( this );
-  d->cancelButton->setText( tr( "Cancel" ) );
-
-  QWidget * box = new QWidget( this );
-  QHBoxLayout * boxLayout = new QHBoxLayout;
-  boxLayout->setMargin( 0 );
-  box->setLayout( boxLayout );
-
-  boxLayout->addWidget( d->insertButton );
-  boxLayout->addItem( new QSpacerItem( 50, 0, QSizePolicy::MinimumExpanding,
-                                       QSizePolicy::Minimum ) );
-  boxLayout->addWidget( d->cancelButton );
-
-  layout->addWidget( d->list );
-  layout->addWidget( box );
-
-  connect( d->insertButton, SIGNAL(clicked()), this, SLOT(accept()) );
-  connect( d->cancelButton, SIGNAL(clicked()), this, SLOT(reject()) );
-  connect( d->list, SIGNAL( itemActivated( QTreeWidgetItem *, int ) ),
-           this, SLOT( accept() ) );
-  connect( d->list, SIGNAL( itemDoubleClicked( QTreeWidgetItem *, int ) ),
-           this, SLOT( accept() ) );
-
-  d->list->setLayoutDirection( Qt::LeftToRight );
-  d->list->fillTable();
-
-  adjustSize();
+    adjustSize();
 }
 
-QString InsertFunctionDlg::functionName() const
+QString InsertFunctionDlg::selectedFunctionName() const
 {
-  QTreeWidgetItem * item = d->list->currentItem();
-  return item ?
-      item->text( 0 ).toLower()
-    : QString();
+    const QTreeWidgetItem * item = d->list->currentItem();
+    return item ? item->text( 0 ).toLower() : QString();
 }
 
 InsertFunctionDlg::~InsertFunctionDlg()
 {
 }
+

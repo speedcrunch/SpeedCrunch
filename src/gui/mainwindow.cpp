@@ -921,9 +921,8 @@ void MainWindow::Private::createFunctionsDock()
     docks.functions->setAllowedAreas( Qt::AllDockWidgetAreas );
     p->addDockWidget( Qt::RightDockWidgetArea, docks.functions );
 
-    connect( docks.functions, SIGNAL(functionSelected(const QString &)),
+    connect( docks.functions->widget(), SIGNAL(functionSelected(const QString &)),
              p, SLOT(insertFunctionIntoEditor(const QString &)) );
-    connect( p, SIGNAL(languageChanged()), docks.functions, SLOT(retranslateText()) );
 
     if ( docks.history )
         p->tabifyDockWidget( docks.history, docks.functions );
@@ -1421,7 +1420,7 @@ void MainWindow::showFunctionInsertionDialog()
     InsertFunctionDlg dlg;
 
     if ( dlg.exec() == InsertFunctionDlg::Accepted )
-        insertFunctionIntoEditor( dlg.functionName() );
+        insertFunctionIntoEditor( dlg.selectedFunctionName() );
 }
 
 void MainWindow::showVariableInsertionDialog()

@@ -31,7 +31,7 @@ class ConstantsWidget : public QWidget
     Q_OBJECT
 
 public:
-    ConstantsWidget( QWidget * parent = 0 );
+    explicit ConstantsWidget( QWidget * parent = 0 );
     ~ConstantsWidget();
 
 signals:
@@ -39,11 +39,11 @@ signals:
 
 public slots:
     void handleRadixCharacterChange();
-    void retranslateText();
 
 protected slots:
     void filter();
     void handleItem( QTreeWidgetItem * );
+    void retranslateText();
     void triggerFilter();
     void updateList();
 

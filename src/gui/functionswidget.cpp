@@ -23,6 +23,7 @@
 #include "core/functions.hxx"
 #include "core/settings.hxx"
 
+#include <QtCore/QEvent>
 #include <QtCore/QString>
 #include <QtCore/QTimer>
 #include <QtGui/QHBoxLayout>
@@ -87,9 +88,7 @@ FunctionsWidget::FunctionsWidget( QWidget * parent )
 
     connect( d->filterTimer, SIGNAL(timeout()), SLOT(fillTable()) );
     connect( d->functions, SIGNAL(itemActivated(QTreeWidgetItem *, int)),
-             SLOT(catchItemActivated(QTreeWidgetItem *, int)) );
-    connect( d->functions, SIGNAL(itemDoubleClicked(QTreeWidgetItem *, int)),
-             SLOT(catchItemDoubleClicked(QTreeWidgetItem *, int)) );
+             SLOT(handleItemActivated(QTreeWidgetItem *, int)) );
     connect( d->searchFilter, SIGNAL(textChanged(const QString &)), SLOT(triggerFilter()) );
 }
 
@@ -121,8 +120,13 @@ void FunctionsWidget::fillTable()
              || str.at(1).contains(term, Qt::CaseInsensitive) )
         {
             QTreeWidgetItem * item = new QTreeWidgetItem( d->functions, str );
-            item->setTextAlignment( 0, Qt::AlignLeft | Qt::AlignVCenter );
-            item->setTextAlignment( 1, Qt::AlignLeft | Qt::AlignVCenter );
+            if ( layoutDirection() == Qt::LeftToRight ) {
+                item->setTextAlignment( 0, Qt::AlignLeft );
+                item->setTextAlignment( 1, Qt::AlignLeft );
+            } else {
+                item->setTextAlignment( 0, Qt::AlignRight );
+                item->setTextAlignment( 1, Qt::AlignLeft );
+            }
         }
     }
 
@@ -145,8 +149,9 @@ void FunctionsWidget::fillTable()
 void FunctionsWidget::retranslateText()
 {
     QStringList titles;
-    titles << tr( "Name" );
-    titles << tr( "Description" );
+    const QString name = tr( "Name" );
+    const QString desc = tr( "Description" );
+    titles << name << desc;
     d->functions->setHeaderLabels( titles );
 
     d->searchLabel->setText( tr("Search") );
@@ -160,30 +165,32 @@ QList<QTreeWidgetItem *> FunctionsWidget::selectedItems() const
     return d->functions->selectedItems();
 }
 
-QTreeWidgetItem * FunctionsWidget::currentItem() const
+const QTreeWidgetItem * FunctionsWidget::currentItem() const
 {
     return d->functions->currentItem();
 }
 
-void FunctionsWidget::catchItemActivated( QTreeWidgetItem * item, int column )
+void FunctionsWidget::handleItemActivated( QTreeWidgetItem * item, int column )
 {
-    emit itemActivated( item, column );
-}
-
-void FunctionsWidget::catchItemDoubleClicked( QTreeWidgetItem * item, int column )
-{
-    emit itemDoubleClicked( item, column );
+    emit functionSelected( item->text(0) );
 }
 
 void FunctionsWidget::clearSelection( QTreeWidgetItem * item )
 {
     d->functions->clearSelection();
-    emit itemActivated( item, 0 );
 }
 
 void FunctionsWidget::triggerFilter()
 {
     d->filterTimer->stop();
     d->filterTimer->start();
+}
+
+void FunctionsWidget::changeEvent( QEvent * e )
+{
+    if ( e->type() == QEvent::LanguageChange )
+        retranslateText();
+    else
+        QWidget::changeEvent( e );
 }
 

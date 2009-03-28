@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2008-2009 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -33,26 +33,18 @@ class FunctionsDock : public QDockWidget
 {
   Q_OBJECT
 
-    FunctionsWidget * m_functionWidget;
-
-  public:
-    FunctionsDock( QWidget * parent );
+public:
+    explicit FunctionsDock( QWidget * parent );
     ~FunctionsDock();
-    const Functions * functions() const;
 
+protected:
+    virtual void changeEvent( QEvent * );
     void updateList();
-
-  signals:
-    void functionSelected( const QString & );
-
-  public slots:
-    void handleItem( QTreeWidgetItem * );
     void retranslateText();
 
-  protected:
-    virtual void changeEvent( QEvent * );
+private:
+    FunctionsWidget * m_widget;
 
-  private:
     FunctionsDock( const FunctionsDock & );
     FunctionsDock & operator=( const FunctionsDock & );
 };

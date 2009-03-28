@@ -83,10 +83,8 @@ ConstantsWidget::ConstantsWidget( QWidget * parent )
     d->list->setHorizontalScrollBarPolicy( Qt::ScrollBarAsNeeded );
     d->list->setHorizontalScrollMode( QAbstractItemView::ScrollPerPixel );
     d->list->setVerticalScrollMode( QAbstractItemView::ScrollPerPixel );
-    d->list->setColumnCount( 5 );
-    d->list->setColumnHidden( 3, true );
+    d->list->setColumnCount( 3 );
     d->list->setRootIsDecorated( false );
-    d->list->header()->hide();
     d->list->setMouseTracking( true );
     d->list->setEditTriggers( QTreeWidget::NoEditTriggers );
     d->list->setSelectionBehavior( QTreeWidget::SelectRows );
@@ -129,6 +127,16 @@ void ConstantsWidget::handleRadixCharacterChange()
 
 void ConstantsWidget::retranslateText()
 {
+    QStringList titles;
+    const QString name = tr( "Name" );
+    const QString value = tr( "Value" );
+    const QString unit = tr( "Unit" );
+    if ( layoutDirection() == Qt::LeftToRight )
+        titles << name << value << unit;
+    else
+        titles << name << unit << value;
+    d->list->setHeaderLabels( titles );
+
     d->categoryLabel->setText( tr("Category") );
     d->label->setText( tr("Search") );
     updateList();
@@ -174,10 +182,9 @@ void ConstantsWidget::filter()
         QTreeWidgetItem * item = 0;
         if ( term.isEmpty() )
             item = new QTreeWidgetItem( d->list, str );
-        else {
+        else
             if ( str.at(0).contains(term, Qt::CaseInsensitive) )
                 item = new QTreeWidgetItem( d->list, str );
-        }
         if ( item ) {
             QString tip;
             tip += QString( QChar(0x200E) );

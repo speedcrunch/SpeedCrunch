@@ -29,10 +29,10 @@ class InsertFunctionDlg : public QDialog
     Q_OBJECT
 
 public:
-    InsertFunctionDlg( QWidget * parent = 0 );
+    explicit InsertFunctionDlg( QWidget * parent = 0 );
     ~InsertFunctionDlg();
 
-    QString functionName() const;
+    QString selectedFunctionName() const;
 
 private:
     struct Private;
