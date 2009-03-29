@@ -25,23 +25,20 @@
 
 class Application : public QApplication
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
     Application( int & argc, char * argv[] );
     ~Application();
 
-#if QT_VERSION >= 0x040400
-
-    bool isRunning() const;
+    bool isRunning();
+    bool sendRaiseRequest();
 
 signals:
     void raiseRequested();
 
-protected slots:
+private slots:
     void receiveMessage();
-
-#endif // QT_VERSION >= 0x040400
 
 private:
     struct Private;

@@ -18,45 +18,60 @@
 
 #include "gui/application.hxx"
 
+#if QT_VERSION >= 0x040400
+# define SINGLE_INSTANCE_CHECK 1
+#endif
+
 #include <QtCore/QByteArray>
 
+#if SINGLE_INSTANCE_CHECK /* not available in Qt 4.3 */
+# include <QtCore/QSharedMemory>
+# include <QtNetwork/QLocalServer>
+# include <QtNetwork/QLocalSocket>
+#endif
+
 #include <cstring>
-
-#if QT_VERSION >= 0x040400
-
-#include <QtCore/QSharedMemory>
-#include <QtNetwork/QLocalServer>
-#include <QtNetwork/QLocalSocket>
 
 #define GUI_APPLICATION_SHARED_MEMORY_KEY    "speedcrunch"
 #define GUI_APPLICATION_LOCAL_SOCKET_TIMEOUT 1000
 
 struct Application::Private
 {
-    QObject * p;
-    bool isRunning;
-    QLocalServer localServer;
+    bool          isRunning;
+#if SINGLE_INSTANCE_CHECK
+    QLocalServer  localServer;
     QSharedMemory sharedMemory;
-
-    Private( QObject * parent = 0 );
-
-    bool sendRaiseRequest();
+#endif
 };
 
-Application::Private::Private( QObject * parent )
-    : p( parent )
+Application::Application( int & argc, char * argv[] )
+    : QApplication( argc, argv ), d( new Application::Private )
 {
-    sharedMemory.setKey( GUI_APPLICATION_SHARED_MEMORY_KEY );
-    isRunning = sharedMemory.attach() && sendRaiseRequest();
-    if ( !isRunning && sharedMemory.create(1) ) {
-        connect( &localServer, SIGNAL(newConnection()), p, SLOT(receiveMessage()) );
-        localServer.listen( GUI_APPLICATION_SHARED_MEMORY_KEY );
+    d->isRunning = false;
+
+#if SINGLE_INSTANCE_CHECK
+    d->sharedMemory.setKey( GUI_APPLICATION_SHARED_MEMORY_KEY );
+
+    if ( d->sharedMemory.attach() ) {
+        d->isRunning = true;
+    } else {
+        if ( ! d->sharedMemory.create(1) )
+            return;
+
+        connect( &d->localServer, SIGNAL(newConnection()), SLOT(receiveMessage()) );
+        d->localServer.listen( GUI_APPLICATION_SHARED_MEMORY_KEY );
     }
+#endif
+}
+
+Application::~Application()
+{
 }
 
 void Application::receiveMessage()
 {
-    qDebug() << "receiveMessage()";
+#if SINGLE_INSTANCE_CHECK
+
     QLocalSocket * localSocket = d->localServer.nextPendingConnection();
 
     if ( ! localSocket->waitForReadyRead(GUI_APPLICATION_LOCAL_SOCKET_TIMEOUT) )
@@ -69,12 +84,20 @@ void Application::receiveMessage()
         emit raiseRequested();
 
     localSocket->disconnectFromServer();
-    qDebug() << "raise requested";
+#endif
 }
 
-bool Application::Private::sendRaiseRequest()
+bool Application::isRunning()
 {
-    qDebug() << "sendRaiseRequest()";
+    return d->isRunning;
+}
+
+bool Application::sendRaiseRequest()
+{
+    if ( ! d->isRunning )
+        return false;
+
+#if SINGLE_INSTANCE_CHECK
     QLocalSocket localSocket;
     localSocket.connectToServer( GUI_APPLICATION_SHARED_MEMORY_KEY, QIODevice::WriteOnly );
 
@@ -87,30 +110,7 @@ bool Application::Private::sendRaiseRequest()
         return false;
 
     localSocket.disconnectFromServer();
-    qDebug() << "sent raise request";
+#endif
     return true;
 }
 
-bool Application::isRunning() const
-{
-    return d->isRunning;
-}
-
-#else // QT_VERSION >= 0x040400
-
-struct Application::Private
-{
-    bool isRunning;
-    Private( QObject * ) : isRunning( false ) {};
-};
-
-#endif // QT_VERSION >= 0x040400
-
-Application::Application( int & argc, char * argv[] )
-    : QApplication( argc, argv ), d( new Application::Private(this) )
-{
-}
-
-Application::~Application()
-{
-}
