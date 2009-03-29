@@ -230,9 +230,6 @@
     </message>
 </context>
 <context>
-    <name>Constants</name>
-</context>
-<context>
     <name>Constants::Private</name>
     <message>
         <location filename="../core/constants.cpp" line="203"/>
