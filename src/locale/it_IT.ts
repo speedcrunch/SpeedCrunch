@@ -206,17 +206,17 @@
 <context>
     <name>BookDock::Private</name>
     <message>
-        <location filename="../gui/bookdock.cpp" line="180"/>
+        <location filename="../gui/bookdock.cpp" line="183"/>
         <source>Back</source>
         <translation>Indietro</translation>
     </message>
     <message>
-        <location filename="../gui/bookdock.cpp" line="181"/>
+        <location filename="../gui/bookdock.cpp" line="184"/>
         <source>Forward</source>
         <translation>Avanti</translation>
     </message>
     <message>
-        <location filename="../gui/bookdock.cpp" line="182"/>
+        <location filename="../gui/bookdock.cpp" line="185"/>
         <source>Index</source>
         <translation>Indice</translation>
     </message>
@@ -224,7 +224,7 @@
 <context>
     <name>ConstantCompletion</name>
     <message>
-        <location filename="../gui/editor.cpp" line="1251"/>
+        <location filename="../gui/editor.cpp" line="1248"/>
         <source>All</source>
         <translation>Tutto</translation>
     </message>
@@ -234,290 +234,586 @@
     <message>
         <location filename="../core/constants.cpp" line="245"/>
         <source>Characteristic Impedance of Vacuum</source>
-        <translation>Impedenza Caratteristica del Vuoto</translation>
+        <translation type="obsolete">Impedenza Caratteristica del Vuoto</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="243"/>
         <source>General Physics</source>
-        <translation>Fisica Generale</translation>
+        <translation type="obsolete">Fisica Generale</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="247"/>
         <source>Electric Constant</source>
-        <translation>Costante Elettrica</translation>
+        <translation type="obsolete">Costante Elettrica</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="249"/>
         <source>Magnetic Constant</source>
-        <translation>Costante Magnetica</translation>
+        <translation type="obsolete">Costante Magnetica</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="248"/>
         <source>Gravitation Constant</source>
-        <translation>Costante di Gravitazione</translation>
+        <translation type="obsolete">Costante di Gravitazione</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="250"/>
         <source>Planck&apos;s Constant</source>
-        <translation>Costante di Planck</translation>
+        <translation type="obsolete">Costante di Planck</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="246"/>
         <source>Dirac&apos;s Constant</source>
-        <translation>Costante di Dirac</translation>
+        <translation type="obsolete">Costante di Dirac</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="251"/>
         <source>Speed of Light in Vacuum</source>
-        <translation>Velocità della Luce nel Vuoto</translation>
+        <translation type="obsolete">Velocità della Luce nel Vuoto</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="256"/>
         <source>Bohr-Procopiu Magneton</source>
-        <translation>Magnetone di Bohr-Procopiu</translation>
+        <translation type="obsolete">Magnetone di Bohr-Procopiu</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="254"/>
         <source>Electromagnetic</source>
-        <translation>Elettromagnetico</translation>
+        <translation type="obsolete">Elettromagnetico</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="257"/>
         <source>Conductance Quantum</source>
-        <translation>Quanto di Conduttanza</translation>
+        <translation type="obsolete">Quanto di Conduttanza</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="258"/>
         <source>Coulomb&apos;s Constant</source>
-        <translation>Costante di Coulomb</translation>
+        <translation type="obsolete">Costante di Coulomb</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="259"/>
         <source>Elementary Charge</source>
-        <translation>Carica Elementare</translation>
+        <translation type="obsolete">Carica Elementare</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="260"/>
         <source>Josephson Constant</source>
-        <translation>Costante di Josephson</translation>
+        <translation type="obsolete">Costante di Josephson</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="261"/>
         <source>Magnetic Flux Quantum</source>
-        <translation>Quantizzazione del Flusso</translation>
+        <translation type="obsolete">Quantizzazione del Flusso</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="262"/>
         <source>Nuclear Magneton</source>
-        <translation>Magnetone Nucleare</translation>
+        <translation type="obsolete">Magnetone Nucleare</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="263"/>
         <source>Resistance Quantum</source>
-        <translation>Quanto di Resistenza</translation>
+        <translation type="obsolete">Quanto di Resistenza</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="264"/>
         <source>von Klitzing Constant</source>
-        <translation>Costante di von Klitzing</translation>
+        <translation type="obsolete">Costante di von Klitzing</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="269"/>
         <source>Bohr Radius</source>
-        <translation>Raggio di Bohr</translation>
+        <translation type="obsolete">Raggio di Bohr</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="267"/>
         <source>Atomic &amp; Nuclear</source>
-        <translation>Atomico &amp; Nucleare</translation>
+        <translation type="obsolete">Atomico &amp; Nucleare</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="270"/>
         <source>Fermi Coupling Constant</source>
-        <translation>Costante di Coppia di Fermi</translation>
+        <translation type="obsolete">Costante di Coppia di Fermi</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="271"/>
         <source>Fine-structure Constant</source>
-        <translation>Costante di Struttura Fine</translation>
+        <translation type="obsolete">Costante di Struttura Fine</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="272"/>
         <source>Hartree Energy</source>
-        <translation>Energia di Hartree</translation>
+        <translation type="obsolete">Energia di Hartree</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="273"/>
         <source>Quantum of Circulation</source>
-        <translation>Quanto di Circolazione</translation>
+        <translation type="obsolete">Quanto di Circolazione</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="274"/>
         <source>Rydberg Constant</source>
-        <translation>Costante di Rydberg</translation>
+        <translation type="obsolete">Costante di Rydberg</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="275"/>
         <source>Thomson Cross Section</source>
-        <translation>Sezione Trasversale di Thomson</translation>
+        <translation type="obsolete">Sezione Trasversale di Thomson</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="276"/>
         <source>Weak Mixing Angle</source>
-        <translation>Angolo Debole di Miscelazione</translation>
+        <translation type="obsolete">Angolo Debole di Miscelazione</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="281"/>
         <source>Atomic Mass Unit</source>
-        <translation>Unità di Massa Atomica</translation>
+        <translation type="obsolete">Unità di Massa Atomica</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="279"/>
         <source>Physico-chemical</source>
-        <translation>Fisico-chimica</translation>
+        <translation type="obsolete">Fisico-chimica</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="282"/>
         <source>Avogadro&apos;s Number</source>
-        <translation>Numero di Avogadro</translation>
+        <translation type="obsolete">Numero di Avogadro</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="283"/>
         <source>Boltzmann Constant</source>
-        <translation>Costante di Boltzmann</translation>
+        <translation type="obsolete">Costante di Boltzmann</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="284"/>
         <source>Faraday Constant</source>
-        <translation>Costante di Faraday</translation>
+        <translation type="obsolete">Costante di Faraday</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="285"/>
         <source>First Radiation Constant</source>
-        <translation>Prima Costante di Radiazione</translation>
+        <translation type="obsolete">Prima Costante di Radiazione</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="287"/>
         <source>Loschmidt Constant</source>
-        <translation>Costante di Loschmidt</translation>
+        <translation type="obsolete">Costante di Loschmidt</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="286"/>
         <source>Gas Constant</source>
-        <translation>Costante del Gas</translation>
+        <translation type="obsolete">Costante del Gas</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="288"/>
         <source>Molar Planck Constant</source>
-        <translation>Costante Molare di Planck</translation>
+        <translation type="obsolete">Costante Molare di Planck</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="289"/>
         <source>Second Radiation Constant</source>
-        <translation>Seconda Costante di Radiazione</translation>
+        <translation type="obsolete">Seconda Costante di Radiazione</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="290"/>
         <source>Stefan-Boltzmann Constant</source>
-        <translation>Costante di Stefan-Boltzmann</translation>
+        <translation type="obsolete">Costante di Stefan-Boltzmann</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="295"/>
         <source>Astronomical Unit</source>
-        <translation>Unità Astronomica</translation>
+        <translation type="obsolete">Unità Astronomica</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="293"/>
         <source>Astronomy</source>
-        <translation>Astronomia</translation>
+        <translation type="obsolete">Astronomia</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="296"/>
         <source>Light Year</source>
-        <translation>Anno Luce</translation>
+        <translation type="obsolete">Anno Luce</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="297"/>
         <source>Parsec</source>
-        <translation>Parsec</translation>
+        <translation type="obsolete">Parsec</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="303"/>
         <source>Sidereal Year</source>
-        <translation>Anno Siderale</translation>
+        <translation type="obsolete">Anno Siderale</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="299"/>
         <source>days</source>
-        <translation>giorni</translation>
+        <translation type="obsolete">giorni</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="304"/>
         <source>Tropical Year</source>
-        <translation>Anno Tropicale</translation>
+        <translation type="obsolete">Anno Tropicale</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="301"/>
         <source>Gregorian Year</source>
-        <translation>Anno Gregoriano</translation>
+        <translation type="obsolete">Anno Gregoriano</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="306"/>
         <source>Earth Mass</source>
-        <translation>Massa della Terra</translation>
+        <translation type="obsolete">Massa della Terra</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="308"/>
         <source>Sun Mass</source>
-        <translation>Massa del Sole</translation>
+        <translation type="obsolete">Massa del Sole</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="307"/>
         <source>Mean Earth Radius</source>
-        <translation>Raggio Medio Terrestre</translation>
+        <translation type="obsolete">Raggio Medio Terrestre</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="309"/>
         <source>Sun Radius</source>
-        <translation>Raggio Solare</translation>
+        <translation type="obsolete">Raggio Solare</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="310"/>
         <source>Sun Luminosity</source>
-        <translation>Luminosità Solare</translation>
+        <translation type="obsolete">Luminosità Solare</translation>
+    </message>
+</context>
+<context>
+    <name>Constants::Private</name>
+    <message>
+        <location filename="../core/constants.cpp" line="203"/>
+        <source>General Physics</source>
+        <translation type="unfinished">Fisica Generale</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="302"/>
+        <location filename="../core/constants.cpp" line="205"/>
+        <source>Characteristic Impedance of Vacuum</source>
+        <translation type="unfinished">Impedenza Caratteristica del Vuoto</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="206"/>
+        <source>Dirac&apos;s Constant</source>
+        <translation type="unfinished">Costante di Dirac</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="207"/>
+        <source>Electric Constant</source>
+        <translation type="unfinished">Costante Elettrica</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="208"/>
+        <source>Gravitation Constant</source>
+        <translation type="unfinished">Costante di Gravitazione</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="209"/>
+        <source>Magnetic Constant</source>
+        <translation type="unfinished">Costante Magnetica</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="210"/>
+        <source>Planck&apos;s Constant</source>
+        <translation type="unfinished">Costante di Planck</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="211"/>
+        <source>Speed of Light in Vacuum</source>
+        <translation type="unfinished">Velocità della Luce nel Vuoto</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="214"/>
+        <source>Electromagnetic</source>
+        <translation type="unfinished">Elettromagnetico</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="216"/>
+        <source>Bohr-Procopiu Magneton</source>
+        <translation type="unfinished">Magnetone di Bohr-Procopiu</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="217"/>
+        <source>Conductance Quantum</source>
+        <translation type="unfinished">Quanto di Conduttanza</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="218"/>
+        <source>Coulomb&apos;s Constant</source>
+        <translation type="unfinished">Costante di Coulomb</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="219"/>
+        <source>Elementary Charge</source>
+        <translation type="unfinished">Carica Elementare</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="220"/>
+        <source>Josephson Constant</source>
+        <translation type="unfinished">Costante di Josephson</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="221"/>
+        <source>Magnetic Flux Quantum</source>
+        <translation type="unfinished">Quantizzazione del Flusso</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="222"/>
+        <source>Nuclear Magneton</source>
+        <translation type="unfinished">Magnetone Nucleare</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="223"/>
+        <source>Resistance Quantum</source>
+        <translation type="unfinished">Quanto di Resistenza</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="224"/>
+        <source>von Klitzing Constant</source>
+        <translation type="unfinished">Costante di von Klitzing</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="227"/>
+        <source>Atomic &amp; Nuclear</source>
+        <translation type="unfinished">Atomico &amp; Nucleare</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="229"/>
+        <source>Bohr Radius</source>
+        <translation type="unfinished">Raggio di Bohr</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="230"/>
+        <source>Fermi Coupling Constant</source>
+        <translation type="unfinished">Costante di Coppia di Fermi</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="231"/>
+        <source>Fine-structure Constant</source>
+        <translation type="unfinished">Costante di Struttura Fine</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="232"/>
+        <source>Hartree Energy</source>
+        <translation type="unfinished">Energia di Hartree</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="233"/>
+        <source>Quantum of Circulation</source>
+        <translation type="unfinished">Quanto di Circolazione</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="234"/>
+        <source>Rydberg Constant</source>
+        <translation type="unfinished">Costante di Rydberg</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="235"/>
+        <source>Thomson Cross Section</source>
+        <translation type="unfinished">Sezione Trasversale di Thomson</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="236"/>
+        <source>Weak Mixing Angle</source>
+        <translation type="unfinished">Angolo Debole di Miscelazione</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="239"/>
+        <source>Physico-chemical</source>
+        <translation type="unfinished">Fisico-chimica</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="241"/>
+        <source>Atomic Mass Unit</source>
+        <translation type="unfinished">Unità di Massa Atomica</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="242"/>
+        <source>Avogadro&apos;s Number</source>
+        <translation type="unfinished">Numero di Avogadro</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="243"/>
+        <source>Boltzmann Constant</source>
+        <translation type="unfinished">Costante di Boltzmann</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="244"/>
+        <source>Faraday Constant</source>
+        <translation type="unfinished">Costante di Faraday</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="245"/>
+        <source>First Radiation Constant</source>
+        <translation type="unfinished">Prima Costante di Radiazione</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="246"/>
+        <source>Gas Constant</source>
+        <translation type="unfinished">Costante del Gas</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="247"/>
+        <source>Loschmidt Constant</source>
+        <translation type="unfinished">Costante di Loschmidt</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="248"/>
+        <source>Molar Planck Constant</source>
+        <translation type="unfinished">Costante Molare di Planck</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="249"/>
+        <source>Second Radiation Constant</source>
+        <translation type="unfinished">Seconda Costante di Radiazione</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="250"/>
+        <source>Stefan-Boltzmann Constant</source>
+        <translation type="unfinished">Costante di Stefan-Boltzmann</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="253"/>
+        <source>Astronomy</source>
+        <translation type="unfinished">Astronomia</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="255"/>
+        <source>Astronomical Unit</source>
+        <translation type="unfinished">Unità Astronomica</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="256"/>
+        <source>Light Year</source>
+        <translation type="unfinished">Anno Luce</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="257"/>
+        <source>Parsec</source>
+        <translation type="unfinished">Parsec</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="259"/>
+        <source>days</source>
+        <translation type="unfinished">giorni</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="261"/>
+        <source>Gregorian Year</source>
+        <translation type="unfinished">Anno Gregoriano</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="262"/>
         <source>Julian Year</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="263"/>
+        <source>Sidereal Year</source>
+        <translation type="unfinished">Anno Siderale</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="264"/>
+        <source>Tropical Year</source>
+        <translation type="unfinished">Anno Tropicale</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="266"/>
+        <source>Earth Mass</source>
+        <translation type="unfinished">Massa della Terra</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="267"/>
+        <source>Mean Earth Radius</source>
+        <translation type="unfinished">Raggio Medio Terrestre</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="268"/>
+        <source>Sun Mass</source>
+        <translation type="unfinished">Massa del Sole</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="269"/>
+        <source>Sun Radius</source>
+        <translation type="unfinished">Raggio Solare</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="270"/>
+        <source>Sun Luminosity</source>
+        <translation type="unfinished">Luminosità Solare</translation>
     </message>
 </context>
 <context>
     <name>ConstantsDock</name>
     <message>
-        <location filename="../gui/constantsdock.cpp" line="142"/>
+        <location filename="../gui/constantsdock.cpp" line="39"/>
         <source>Constants</source>
         <translation>Costanti</translation>
     </message>
     <message>
         <location filename="../gui/constantsdock.cpp" line="143"/>
         <source>Category</source>
-        <translation>Categoria</translation>
+        <translation type="obsolete">Categoria</translation>
     </message>
     <message>
         <location filename="../gui/constantsdock.cpp" line="144"/>
         <source>Search</source>
-        <translation>Cerca</translation>
+        <translation type="obsolete">Cerca</translation>
     </message>
     <message>
         <location filename="../gui/constantsdock.cpp" line="118"/>
         <source>No match found</source>
-        <translation>Nessuna corrispondenza trovata</translation>
+        <translation type="obsolete">Nessuna corrispondenza trovata</translation>
     </message>
     <message>
         <location filename="../gui/constantsdock.cpp" line="257"/>
         <source>All</source>
-        <translation>Tutto</translation>
+        <translation type="obsolete">Tutto</translation>
+    </message>
+</context>
+<context>
+    <name>ConstantsWidget</name>
+    <message>
+        <location filename="../gui/constantswidget.cpp" line="110"/>
+        <source>No match found</source>
+        <translation type="unfinished">Nessuna corrispondenza trovata</translation>
+    </message>
+    <message>
+        <location filename="../gui/constantswidget.cpp" line="131"/>
+        <source>Name</source>
+        <translation type="unfinished">Nome</translation>
+    </message>
+    <message>
+        <location filename="../gui/constantswidget.cpp" line="132"/>
+        <source>Value</source>
+        <translation type="unfinished">Valore</translation>
+    </message>
+    <message>
+        <location filename="../gui/constantswidget.cpp" line="133"/>
+        <source>Unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/constantswidget.cpp" line="140"/>
+        <source>Category</source>
+        <translation type="unfinished">Categoria</translation>
+    </message>
+    <message>
+        <location filename="../gui/constantswidget.cpp" line="141"/>
+        <source>Search</source>
+        <translation type="unfinished">Cerca</translation>
+    </message>
+    <message>
+        <location filename="../gui/constantswidget.cpp" line="245"/>
+        <source>All</source>
+        <translation type="unfinished">Tutto</translation>
     </message>
 </context>
 <context>
@@ -541,12 +837,12 @@
 <context>
     <name>Editor</name>
     <message>
-        <location filename="../gui/editor.cpp" line="682"/>
+        <location filename="../gui/editor.cpp" line="680"/>
         <source>Current result: &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>Risultato corrente: &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../gui/editor.cpp" line="727"/>
+        <location filename="../gui/editor.cpp" line="725"/>
         <source>Selection result: &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>Risultato della selezione: &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
@@ -554,27 +850,27 @@
 <context>
     <name>Evaluator</name>
     <message>
-        <location filename="../core/evaluator.cpp" line="1393"/>
+        <location filename="../core/evaluator.cpp" line="1239"/>
         <source>invalid expression</source>
         <translation>espressione non valida</translation>
     </message>
     <message>
-        <location filename="../core/evaluator.cpp" line="1323"/>
+        <location filename="../core/evaluator.cpp" line="1179"/>
         <source>division by zero</source>
         <translation>divisione per zero</translation>
     </message>
     <message>
-        <location filename="../core/evaluator.cpp" line="1362"/>
+        <location filename="../core/evaluator.cpp" line="1211"/>
         <source>unknown function or variable</source>
         <translation>variabile o funzione sconosciute</translation>
     </message>
     <message>
-        <location filename="../core/evaluator.cpp" line="1411"/>
+        <location filename="../core/evaluator.cpp" line="1256"/>
         <source>variable cannot be overwritten</source>
         <translation>la variabile non può essere sovrascritta</translation>
     </message>
     <message>
-        <location filename="../core/evaluator.cpp" line="1419"/>
+        <location filename="../core/evaluator.cpp" line="1262"/>
         <source>identifier matches an existing function name</source>
         <translation>l&apos;identificatore ha lo stesso nome di una funzione esistente</translation>
     </message>
@@ -989,7 +1285,7 @@
 <context>
     <name>FunctionsDock</name>
     <message>
-        <location filename="../gui/functionsdock.cpp" line="59"/>
+        <location filename="../gui/functionsdock.cpp" line="45"/>
         <source>Functions</source>
         <translation>Funzioni</translation>
     </message>
@@ -997,22 +1293,22 @@
 <context>
     <name>FunctionsWidget</name>
     <message>
-        <location filename="../gui/functionswidget.cpp" line="147"/>
+        <location filename="../gui/functionswidget.cpp" line="152"/>
         <source>Name</source>
         <translation>Nome</translation>
     </message>
     <message>
-        <location filename="../gui/functionswidget.cpp" line="148"/>
+        <location filename="../gui/functionswidget.cpp" line="153"/>
         <source>Description</source>
         <translation>Descrizione</translation>
     </message>
     <message>
-        <location filename="../gui/functionswidget.cpp" line="151"/>
+        <location filename="../gui/functionswidget.cpp" line="157"/>
         <source>Search</source>
         <translation>Cerca</translation>
     </message>
     <message>
-        <location filename="../gui/functionswidget.cpp" line="152"/>
+        <location filename="../gui/functionswidget.cpp" line="158"/>
         <source>No match found</source>
         <translation>Nessuna corrispondenza trovata</translation>
     </message>
@@ -1020,7 +1316,7 @@
 <context>
     <name>HistoryDock</name>
     <message>
-        <location filename="../gui/historydock.cpp" line="89"/>
+        <location filename="../gui/historydock.cpp" line="50"/>
         <source>History</source>
         <translation>Cronologia</translation>
     </message>
@@ -1030,15 +1326,15 @@
     <message>
         <location filename="../gui/insertfunctiondlg.cpp" line="52"/>
         <source>&amp;Insert</source>
-        <translation>&amp;Inserisci</translation>
+        <translation type="obsolete">&amp;Inserisci</translation>
     </message>
     <message>
         <location filename="../gui/insertfunctiondlg.cpp" line="56"/>
         <source>Cancel</source>
-        <translation>Annulla</translation>
+        <translation type="obsolete">Annulla</translation>
     </message>
     <message>
-        <location filename="../gui/insertfunctiondlg.cpp" line="43"/>
+        <location filename="../gui/insertfunctiondlg.cpp" line="38"/>
         <source>Insert Function</source>
         <translation>Inserisci una funzione</translation>
     </message>
@@ -1137,527 +1433,527 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1305"/>
+        <location filename="../gui/mainwindow.cpp" line="1306"/>
         <source>About Qt</source>
         <translation>Informazioni su Qt</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1693"/>
+        <location filename="../gui/mainwindow.cpp" line="1701"/>
         <source>SpeedCrunch Sessions (*.sch);;All Files (*)</source>
         <translation>Sessioni di SpeedCrunch (*.sch);;Tutti i file (*)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1438"/>
+        <location filename="../gui/mainwindow.cpp" line="1441"/>
         <source>Load Session</source>
         <translation>Carica Sessione</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1743"/>
+        <location filename="../gui/mainwindow.cpp" line="1751"/>
         <source>Error</source>
         <translation>Errore</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1538"/>
+        <location filename="../gui/mainwindow.cpp" line="1543"/>
         <source>Can&apos;t read from file %1</source>
         <translation>Impossibile leggere dal file %1</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1547"/>
+        <location filename="../gui/mainwindow.cpp" line="1552"/>
         <source>Question</source>
         <translation>Domanda</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1694"/>
+        <location filename="../gui/mainwindow.cpp" line="1702"/>
         <source>Save Session</source>
         <translation>Salva la Sessione</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1743"/>
+        <location filename="../gui/mainwindow.cpp" line="1751"/>
         <source>Can&apos;t write to file %1</source>
         <translation>Impossibile scrivere sul file %1</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2010"/>
+        <location filename="../gui/mainwindow.cpp" line="2018"/>
         <source>Warning</source>
         <translation>Attenzione</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2023"/>
+        <location filename="../gui/mainwindow.cpp" line="2031"/>
         <source>To insert a function using keyboard, use Ctrl+F shorcut. From the dialog, you can choose the function you want to insert.</source>
         <translation>Per inserire una funzione usando la tastiera usa la scorciatoia Ctrl+F. È possibile scegliere dal pannello la funzione da inserire.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2028"/>
+        <location filename="../gui/mainwindow.cpp" line="2036"/>
         <source>To insert a variable using keyboard, use Ctrl+I shorcut. From the dialog, you can choose the variable you want to insert.</source>
         <translation>Per inserire una variabile usando la tastiera usa la scorciatoia Ctrl+I. È possibile scegliere dal pannello la variabile da inserire.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2031"/>
+        <location filename="../gui/mainwindow.cpp" line="2039"/>
         <source>Use variable &lt;i&gt;pi&lt;/i&gt; to use pi constant.</source>
         <translation>Usa la variabile &lt;i&gt;pi&lt;/i&gt; per la costante pi.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2035"/>
+        <location filename="../gui/mainwindow.cpp" line="2043"/>
         <source>Use &lt;i&gt;;&lt;/i&gt; (semicolon) to separate the parameters in functions.</source>
         <translation>Usare &lt;i&gt;;&lt;/i&gt; (il punto e virgola) per separare i parametri nelle funzioni.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2041"/>
+        <location filename="../gui/mainwindow.cpp" line="2049"/>
         <source>Tip of the day</source>
         <translation>Suggerimento del giorno</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1436"/>
+        <location filename="../gui/mainwindow.cpp" line="1439"/>
         <source>File %1 is not a valid session</source>
         <translation>Il file %1 non contiene una sessione valida</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1469"/>
+        <location filename="../gui/mainwindow.cpp" line="1472"/>
         <source>Merge session being loaded with current session?
 If no, current variables and display will be cleared.</source>
         <translation>Si vuole mischiare la sessione da caricare con quella corrente?
 In caso di risposta negativa variabili e visualizzazione corrente saranno pulite.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2309"/>
+        <location filename="../gui/mainwindow.cpp" line="2321"/>
         <source>SpeedCrunch is minimized.
 Left click the icon to restore it or right click for options.</source>
         <translation>SpeedCrunch è stato minimizzato.
 Usare il tasto sinistro sull&apos;icona per ripristinarlo o il tasto destro per le opzioni.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1346"/>
+        <location filename="../gui/mainwindow.cpp" line="1349"/>
         <source>Degree</source>
         <translation>Gradi</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1735"/>
+        <location filename="../gui/mainwindow.cpp" line="1743"/>
         <source>All Files (*)</source>
         <translation>Tutti i file (*)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1686"/>
+        <location filename="../gui/mainwindow.cpp" line="1694"/>
         <source>Radian</source>
         <translation>Radianti</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2007"/>
+        <location filename="../gui/mainwindow.cpp" line="2015"/>
         <source>The menu bar is now hidden. To make it visible again, press Ctrl+Alt+M.</source>
         <translation>La barra di menu è stata nascosta. Per renderla nuovamente visibile premere Ctrl+Alt+M.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2050"/>
+        <location filename="../gui/mainwindow.cpp" line="2058"/>
         <source>Binary</source>
         <translation>Binario</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2059"/>
+        <location filename="../gui/mainwindow.cpp" line="2067"/>
         <source>Engineering decimal</source>
         <translation>Decimale ingegneristico</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2068"/>
+        <location filename="../gui/mainwindow.cpp" line="2076"/>
         <source>Fixed decimal</source>
         <translation>Decimale a precisione fissa</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2077"/>
+        <location filename="../gui/mainwindow.cpp" line="2085"/>
         <source>General decimal</source>
         <translation>Decimale generale</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2086"/>
+        <location filename="../gui/mainwindow.cpp" line="2094"/>
         <source>Hexadecimal</source>
         <translation>Esadecimale</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2095"/>
+        <location filename="../gui/mainwindow.cpp" line="2103"/>
         <source>Octal</source>
         <translation>Ottale</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2104"/>
+        <location filename="../gui/mainwindow.cpp" line="2112"/>
         <source>Scientific decimal</source>
         <translation>Decimale scientifico</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1531"/>
+        <location filename="../gui/mainwindow.cpp" line="1536"/>
         <source>Import Session</source>
         <translation>Importa Sessione</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1545"/>
+        <location filename="../gui/mainwindow.cpp" line="1550"/>
         <source>Merge session being imported with current session?
 If no, current variables and display will be cleared.</source>
         <translation>Si vuole mischiare la sessione da importare con quella corrente?In caso di risposta negativa variabili e visualizzazione corrente saranno pulite.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1736"/>
+        <location filename="../gui/mainwindow.cpp" line="1744"/>
         <source>Export Session</source>
         <translation>Esporta Sessione</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="864"/>
+        <location filename="../gui/mainwindow.cpp" line="865"/>
         <source>Math Book</source>
         <translation>Libro di Matematica</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="503"/>
+        <location filename="../gui/mainwindow.cpp" line="504"/>
         <source>Angle unit</source>
         <translation>Unità d&apos;Angolo</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="504"/>
+        <location filename="../gui/mainwindow.cpp" line="505"/>
         <source>Result format</source>
         <translation>Formato del risultato</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="516"/>
+        <location filename="../gui/mainwindow.cpp" line="517"/>
         <source>Clear E&amp;xpression</source>
         <translation>Cancella l&apos;E&amp;spressione</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="517"/>
+        <location filename="../gui/mainwindow.cpp" line="518"/>
         <source>Clear &amp;History</source>
         <translation>Cancella la &amp;Cronologia</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="537"/>
+        <location filename="../gui/mainwindow.cpp" line="538"/>
         <source>&amp;Degree</source>
         <translation>&amp;Gradi</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="520"/>
+        <location filename="../gui/mainwindow.cpp" line="521"/>
         <source>Delete All V&amp;ariables</source>
         <translation>Elimina tutte le V&amp;ariabili</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="521"/>
+        <location filename="../gui/mainwindow.cpp" line="522"/>
         <source>D&amp;elete Variable...</source>
         <translation>E&amp;limina la Variabile...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="549"/>
+        <location filename="../gui/mainwindow.cpp" line="550"/>
         <source>&amp;15 Decimal Digits</source>
         <translation>&amp;15 Cifre Decimali</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="550"/>
+        <location filename="../gui/mainwindow.cpp" line="551"/>
         <source>&amp;2 Decimal Digits</source>
         <translation>&amp;2 Cifre Decimali</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="551"/>
+        <location filename="../gui/mainwindow.cpp" line="552"/>
         <source>&amp;3 Decimal Digits</source>
         <translation>&amp;3 Cifre Decimali</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="552"/>
+        <location filename="../gui/mainwindow.cpp" line="553"/>
         <source>&amp;50 Decimal Digits</source>
         <translation>&amp;50 Cifre Decimali</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="553"/>
+        <location filename="../gui/mainwindow.cpp" line="554"/>
         <source>&amp;8 Decimal Digits</source>
         <translation>&amp;8 Cifre Decimali</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="554"/>
+        <location filename="../gui/mainwindow.cpp" line="555"/>
         <source>&amp;Automatic Precision</source>
         <translation>Precisione &amp;Automatica</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="519"/>
+        <location filename="../gui/mainwindow.cpp" line="520"/>
         <source>&amp;Copy</source>
         <translation>&amp;Copia</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="518"/>
+        <location filename="../gui/mainwindow.cpp" line="519"/>
         <source>Copy Last &amp;Result</source>
         <translation>Copia l&apos;Ultimo &amp;Risultato</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="524"/>
+        <location filename="../gui/mainwindow.cpp" line="525"/>
         <source>&amp;Paste</source>
         <translation>&amp;Incolla</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="565"/>
+        <location filename="../gui/mainwindow.cpp" line="566"/>
         <source>&amp;About</source>
         <translation>&amp;Informazioni su</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="564"/>
+        <location filename="../gui/mainwindow.cpp" line="565"/>
         <source>About &amp;Qt</source>
         <translation>Informazioni su &amp;Qt</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="567"/>
+        <location filename="../gui/mainwindow.cpp" line="568"/>
         <source>SpeedCrunch &amp;Web Site...</source>
         <translation>Sito &amp;Web di SpeedCrunch...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="566"/>
+        <location filename="../gui/mainwindow.cpp" line="567"/>
         <source>&amp;Tip of the Day</source>
         <translation>&amp;Suggerimento del Giorno</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="522"/>
+        <location filename="../gui/mainwindow.cpp" line="523"/>
         <source>Insert &amp;Function...</source>
         <translation>Inserisci &amp;Funzione...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="523"/>
+        <location filename="../gui/mainwindow.cpp" line="524"/>
         <source>Insert &amp;Variable...</source>
         <translation>Inserisci &amp;Variabile...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="542"/>
+        <location filename="../gui/mainwindow.cpp" line="543"/>
         <source>&amp;Partial Results</source>
         <translation>Risultato &amp;Parziale</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="540"/>
+        <location filename="../gui/mainwindow.cpp" line="541"/>
         <source>Automatic &amp;Completion</source>
         <translation>&amp;Completamento Automatico</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="539"/>
+        <location filename="../gui/mainwindow.cpp" line="540"/>
         <source>Always On &amp;Top</source>
         <translation>Sempre in Primo &amp;Piano</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="541"/>
+        <location filename="../gui/mainwindow.cpp" line="542"/>
         <source>&amp;Minimize To System Tray</source>
         <translation>&amp;Minimizza nella System Tray</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="545"/>
+        <location filename="../gui/mainwindow.cpp" line="546"/>
         <source>Syntax &amp;Highlighting</source>
         <translation>&amp;Evidenziatore Sintattico</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="547"/>
+        <location filename="../gui/mainwindow.cpp" line="548"/>
         <source>&amp;System Default</source>
         <translation>Predefinita di &amp;Sistema</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="548"/>
+        <location filename="../gui/mainwindow.cpp" line="549"/>
         <source>&amp;Dot</source>
         <translation>&amp;Punto</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="546"/>
+        <location filename="../gui/mainwindow.cpp" line="547"/>
         <source>&amp;Comma</source>
         <translation>&amp;Virgola</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="538"/>
+        <location filename="../gui/mainwindow.cpp" line="539"/>
         <source>&amp;Radian</source>
         <translation>&amp;Radianti</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="569"/>
+        <location filename="../gui/mainwindow.cpp" line="570"/>
         <source>Scroll Display Down</source>
         <translation>Scorri in Basso la visualizzazione</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="570"/>
+        <location filename="../gui/mainwindow.cpp" line="571"/>
         <source>Scroll Display Up</source>
         <translation>Scorri in Alto la visualizzazione</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="525"/>
+        <location filename="../gui/mainwindow.cpp" line="526"/>
         <source>&amp;Select Expression</source>
         <translation>&amp;Seleziona l&apos;Espressione</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="511"/>
+        <location filename="../gui/mainwindow.cpp" line="512"/>
         <source>&amp;Import...</source>
         <translation>&amp;Importa...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="512"/>
+        <location filename="../gui/mainwindow.cpp" line="513"/>
         <source>&amp;Load...</source>
         <translation>&amp;Carica...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="513"/>
+        <location filename="../gui/mainwindow.cpp" line="514"/>
         <source>&amp;Quit</source>
         <translation>&amp;Esci</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="514"/>
+        <location filename="../gui/mainwindow.cpp" line="515"/>
         <source>&amp;Save...</source>
         <translation>&amp;Salva...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="510"/>
+        <location filename="../gui/mainwindow.cpp" line="511"/>
         <source>&amp;Export...</source>
         <translation>&amp;Esporta...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="532"/>
+        <location filename="../gui/mainwindow.cpp" line="533"/>
         <source>Math &amp;Book</source>
         <translation>&amp;Libro di Matematica</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="527"/>
+        <location filename="../gui/mainwindow.cpp" line="528"/>
         <source>&amp;Constants</source>
         <translation>&amp;Costanti</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="529"/>
+        <location filename="../gui/mainwindow.cpp" line="530"/>
         <source>&amp;Functions</source>
         <translation>&amp;Funzioni</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="530"/>
+        <location filename="../gui/mainwindow.cpp" line="531"/>
         <source>&amp;History</source>
         <translation>&amp;Cronologia</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="531"/>
+        <location filename="../gui/mainwindow.cpp" line="532"/>
         <source>&amp;Keypad</source>
         <translation>&amp;Tastierino</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="534"/>
+        <location filename="../gui/mainwindow.cpp" line="535"/>
         <source>&amp;Status Bar</source>
         <translation>Barra di &amp;Stato</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="535"/>
+        <location filename="../gui/mainwindow.cpp" line="536"/>
         <source>&amp;Variables</source>
         <translation>&amp;Variabili</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="555"/>
+        <location filename="../gui/mainwindow.cpp" line="556"/>
         <source>&amp;Binary</source>
         <translation>&amp;Binario</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="556"/>
+        <location filename="../gui/mainwindow.cpp" line="557"/>
         <source>&amp;Engineering</source>
         <translation>&amp;Ingegneristica</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="557"/>
+        <location filename="../gui/mainwindow.cpp" line="558"/>
         <source>&amp;Fixed Decimal</source>
         <translation>&amp;Decimale a precisione Fissa</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="558"/>
+        <location filename="../gui/mainwindow.cpp" line="559"/>
         <source>&amp;General</source>
         <translation>&amp;Generale</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="559"/>
+        <location filename="../gui/mainwindow.cpp" line="560"/>
         <source>&amp;Hexadecimal</source>
         <translation>&amp;Esadecimale</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="560"/>
+        <location filename="../gui/mainwindow.cpp" line="561"/>
         <source>&amp;Octal</source>
         <translation>&amp;Ottale</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="561"/>
+        <location filename="../gui/mainwindow.cpp" line="562"/>
         <source>&amp;Scientific</source>
         <translation>&amp;Scientifica</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="748"/>
+        <location filename="../gui/mainwindow.cpp" line="749"/>
         <source>&amp;Session</source>
         <translation>&amp;Sessione</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="749"/>
+        <location filename="../gui/mainwindow.cpp" line="750"/>
         <source>&amp;Edit</source>
         <translation>&amp;Modifica</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="750"/>
+        <location filename="../gui/mainwindow.cpp" line="751"/>
         <source>&amp;View</source>
         <translation>&amp;Visualizza</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="751"/>
+        <location filename="../gui/mainwindow.cpp" line="752"/>
         <source>Se&amp;ttings</source>
         <translation>Im&amp;postazioni</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="752"/>
+        <location filename="../gui/mainwindow.cpp" line="753"/>
         <source>Result &amp;Format</source>
         <translation>&amp;Formato del Risultato</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="753"/>
+        <location filename="../gui/mainwindow.cpp" line="754"/>
         <source>&amp;Decimal</source>
         <translation>&amp;Decimale</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="754"/>
+        <location filename="../gui/mainwindow.cpp" line="755"/>
         <source>&amp;Angle Unit</source>
         <translation>Unità d&apos;&amp;Angolo</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="755"/>
+        <location filename="../gui/mainwindow.cpp" line="756"/>
         <source>&amp;Behavior</source>
         <translation>&amp;Comportamento</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="756"/>
+        <location filename="../gui/mainwindow.cpp" line="757"/>
         <source>Radix &amp;Character</source>
         <translation>&amp;Carattere di Radice</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="757"/>
+        <location filename="../gui/mainwindow.cpp" line="758"/>
         <source>&amp;Help</source>
         <translation>&amp;Aiuto</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1574"/>
+        <location filename="../gui/mainwindow.cpp" line="1579"/>
         <source>Ignore error?</source>
         <translation>Ignorare l&apos;errore?</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="528"/>
+        <location filename="../gui/mainwindow.cpp" line="529"/>
         <source>F&amp;ull Screen Mode</source>
         <translation>Modalità &amp;Schermo Intero</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="533"/>
+        <location filename="../gui/mainwindow.cpp" line="534"/>
         <source>&amp;Menu Bar</source>
         <translation>Nascondi la Barra di &amp;Menu</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="543"/>
+        <location filename="../gui/mainwindow.cpp" line="544"/>
         <source>Save &amp;History on Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="544"/>
+        <location filename="../gui/mainwindow.cpp" line="545"/>
         <source>Save &amp;Variables on Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="562"/>
+        <location filename="../gui/mainwindow.cpp" line="563"/>
         <source>&amp;Language...</source>
         <translation>&amp;Lingua...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2455"/>
+        <location filename="../gui/mainwindow.cpp" line="2467"/>
         <source>System Default</source>
         <translation>Predefinita di &amp;Sistema</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2459"/>
+        <location filename="../gui/mainwindow.cpp" line="2471"/>
         <source>Language</source>
         <translation>Lingua</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2459"/>
+        <location filename="../gui/mainwindow.cpp" line="2471"/>
         <source>Select the language:</source>
         <translation>Selezionare la lingua</translation>
     </message>
@@ -1665,7 +1961,7 @@ If no, current variables and display will be cleared.</source>
 <context>
     <name>VariablesDock</name>
     <message>
-        <location filename="../gui/variablesdock.cpp" line="63"/>
+        <location filename="../gui/variablesdock.cpp" line="69"/>
         <source>Variables</source>
         <translation>Variabili</translation>
     </message>
@@ -1673,22 +1969,22 @@ If no, current variables and display will be cleared.</source>
 <context>
     <name>VariablesWidget</name>
     <message>
-        <location filename="../gui/variableswidget.cpp" line="163"/>
+        <location filename="../gui/variableswidget.cpp" line="164"/>
         <source>Name</source>
         <translation>Nome</translation>
     </message>
     <message>
-        <location filename="../gui/variableswidget.cpp" line="164"/>
+        <location filename="../gui/variableswidget.cpp" line="165"/>
         <source>Value</source>
         <translation>Valore</translation>
     </message>
     <message>
-        <location filename="../gui/variableswidget.cpp" line="167"/>
+        <location filename="../gui/variableswidget.cpp" line="168"/>
         <source>Search</source>
         <translation>Cerca</translation>
     </message>
     <message>
-        <location filename="../gui/variableswidget.cpp" line="168"/>
+        <location filename="../gui/variableswidget.cpp" line="169"/>
         <source>No match found</source>
         <translation>Nessuna corrispondenza trovata</translation>
     </message>

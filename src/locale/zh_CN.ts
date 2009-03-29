@@ -206,17 +206,17 @@
 <context>
     <name>BookDock::Private</name>
     <message>
-        <location filename="../gui/bookdock.cpp" line="180"/>
+        <location filename="../gui/bookdock.cpp" line="183"/>
         <source>Back</source>
         <translation>后退</translation>
     </message>
     <message>
-        <location filename="../gui/bookdock.cpp" line="181"/>
+        <location filename="../gui/bookdock.cpp" line="184"/>
         <source>Forward</source>
         <translation>前进</translation>
     </message>
     <message>
-        <location filename="../gui/bookdock.cpp" line="182"/>
+        <location filename="../gui/bookdock.cpp" line="185"/>
         <source>Index</source>
         <translation>索引</translation>
     </message>
@@ -224,7 +224,7 @@
 <context>
     <name>ConstantCompletion</name>
     <message>
-        <location filename="../gui/editor.cpp" line="1251"/>
+        <location filename="../gui/editor.cpp" line="1248"/>
         <source>All</source>
         <translation>全部</translation>
     </message>
@@ -234,262 +234,520 @@
     <message>
         <location filename="../core/constants.cpp" line="245"/>
         <source>Characteristic Impedance of Vacuum</source>
-        <translation>真空的特性阻抗</translation>
+        <translation type="obsolete">真空的特性阻抗</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="243"/>
         <source>General Physics</source>
-        <translation>通用物理</translation>
+        <translation type="obsolete">通用物理</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="247"/>
         <source>Electric Constant</source>
-        <translation>电常数</translation>
+        <translation type="obsolete">电常数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="249"/>
         <source>Magnetic Constant</source>
-        <translation>磁常数</translation>
+        <translation type="obsolete">磁常数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="248"/>
         <source>Gravitation Constant</source>
-        <translation>万有引力常数</translation>
+        <translation type="obsolete">万有引力常数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="250"/>
         <source>Planck&apos;s Constant</source>
-        <translation>普朗克常数</translation>
+        <translation type="obsolete">普朗克常数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="246"/>
         <source>Dirac&apos;s Constant</source>
-        <translation>狄拉克常数</translation>
+        <translation type="obsolete">狄拉克常数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="251"/>
         <source>Speed of Light in Vacuum</source>
-        <translation>真空中的光速</translation>
+        <translation type="obsolete">真空中的光速</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="256"/>
         <source>Bohr-Procopiu Magneton</source>
-        <translation>玻尔磁子</translation>
+        <translation type="obsolete">玻尔磁子</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="254"/>
         <source>Electromagnetic</source>
-        <translation>电磁</translation>
+        <translation type="obsolete">电磁</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="257"/>
         <source>Conductance Quantum</source>
-        <translation>电导量子</translation>
+        <translation type="obsolete">电导量子</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="258"/>
         <source>Coulomb&apos;s Constant</source>
-        <translation>库仑常数</translation>
+        <translation type="obsolete">库仑常数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="259"/>
         <source>Elementary Charge</source>
-        <translation>基本电荷</translation>
+        <translation type="obsolete">基本电荷</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="260"/>
         <source>Josephson Constant</source>
-        <translation>约瑟夫逊常数</translation>
+        <translation type="obsolete">约瑟夫逊常数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="261"/>
         <source>Magnetic Flux Quantum</source>
-        <translation>磁通量子</translation>
+        <translation type="obsolete">磁通量子</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="262"/>
         <source>Nuclear Magneton</source>
-        <translation>核磁子</translation>
+        <translation type="obsolete">核磁子</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="263"/>
         <source>Resistance Quantum</source>
-        <translation>电阻量子</translation>
+        <translation type="obsolete">电阻量子</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="264"/>
         <source>von Klitzing Constant</source>
-        <translation>克里青常数</translation>
+        <translation type="obsolete">克里青常数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="269"/>
         <source>Bohr Radius</source>
-        <translation>玻尔半径</translation>
+        <translation type="obsolete">玻尔半径</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="267"/>
         <source>Atomic &amp; Nuclear</source>
-        <translation>原子与原子核</translation>
+        <translation type="obsolete">原子与原子核</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="270"/>
         <source>Fermi Coupling Constant</source>
-        <translation>费米耦合常数</translation>
+        <translation type="obsolete">费米耦合常数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="271"/>
         <source>Fine-structure Constant</source>
-        <translation>精细结构常数</translation>
+        <translation type="obsolete">精细结构常数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="272"/>
         <source>Hartree Energy</source>
-        <translation>哈特利能量</translation>
+        <translation type="obsolete">哈特利能量</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="273"/>
         <source>Quantum of Circulation</source>
-        <translation>环流量子</translation>
+        <translation type="obsolete">环流量子</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="274"/>
         <source>Rydberg Constant</source>
-        <translation>里德伯常数</translation>
+        <translation type="obsolete">里德伯常数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="275"/>
         <source>Thomson Cross Section</source>
-        <translation>汤姆逊散射截面</translation>
+        <translation type="obsolete">汤姆逊散射截面</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="276"/>
         <source>Weak Mixing Angle</source>
-        <translation>弱混合角</translation>
+        <translation type="obsolete">弱混合角</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="281"/>
         <source>Atomic Mass Unit</source>
-        <translation>原子质量单位</translation>
+        <translation type="obsolete">原子质量单位</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="279"/>
         <source>Physico-chemical</source>
-        <translation>物理化学</translation>
+        <translation type="obsolete">物理化学</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="282"/>
         <source>Avogadro&apos;s Number</source>
-        <translation>阿伏加德罗常数</translation>
+        <translation type="obsolete">阿伏加德罗常数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="283"/>
         <source>Boltzmann Constant</source>
-        <translation>玻尔兹曼常数</translation>
+        <translation type="obsolete">玻尔兹曼常数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="284"/>
         <source>Faraday Constant</source>
-        <translation>法拉第常数</translation>
+        <translation type="obsolete">法拉第常数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="285"/>
         <source>First Radiation Constant</source>
-        <translation>第一辐射常数</translation>
+        <translation type="obsolete">第一辐射常数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="287"/>
         <source>Loschmidt Constant</source>
-        <translation>劳施密特常数</translation>
+        <translation type="obsolete">劳施密特常数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="286"/>
         <source>Gas Constant</source>
-        <translation>气体常数</translation>
+        <translation type="obsolete">气体常数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="288"/>
         <source>Molar Planck Constant</source>
-        <translation>摩尔普朗克常数</translation>
+        <translation type="obsolete">摩尔普朗克常数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="289"/>
         <source>Second Radiation Constant</source>
-        <translation>第二辐射常数</translation>
+        <translation type="obsolete">第二辐射常数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="290"/>
         <source>Stefan-Boltzmann Constant</source>
-        <translation>斯特凡-玻尔兹曼常数</translation>
+        <translation type="obsolete">斯特凡-玻尔兹曼常数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="295"/>
         <source>Astronomical Unit</source>
-        <translation>天文单位</translation>
+        <translation type="obsolete">天文单位</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="293"/>
         <source>Astronomy</source>
-        <translation>天文</translation>
+        <translation type="obsolete">天文</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="296"/>
         <source>Light Year</source>
-        <translation>光年</translation>
+        <translation type="obsolete">光年</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="297"/>
         <source>Parsec</source>
-        <translation>天体距离单位</translation>
+        <translation type="obsolete">天体距离单位</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="303"/>
         <source>Sidereal Year</source>
-        <translation>恒星年</translation>
+        <translation type="obsolete">恒星年</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="299"/>
         <source>days</source>
-        <translation>天</translation>
+        <translation type="obsolete">天</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="304"/>
         <source>Tropical Year</source>
-        <translation>回归年</translation>
+        <translation type="obsolete">回归年</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="301"/>
         <source>Gregorian Year</source>
-        <translation>公历年</translation>
+        <translation type="obsolete">公历年</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="306"/>
         <source>Earth Mass</source>
-        <translation>地球质量</translation>
+        <translation type="obsolete">地球质量</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="308"/>
         <source>Sun Mass</source>
-        <translation>太阳质量</translation>
+        <translation type="obsolete">太阳质量</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="307"/>
         <source>Mean Earth Radius</source>
-        <translation>平均地球半径</translation>
+        <translation type="obsolete">平均地球半径</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="309"/>
         <source>Sun Radius</source>
-        <translation>太阳半径</translation>
+        <translation type="obsolete">太阳半径</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="310"/>
         <source>Sun Luminosity</source>
-        <translation>太阳光度</translation>
+        <translation type="obsolete">太阳光度</translation>
+    </message>
+</context>
+<context>
+    <name>Constants::Private</name>
+    <message>
+        <location filename="../core/constants.cpp" line="203"/>
+        <source>General Physics</source>
+        <translation type="unfinished">通用物理</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="302"/>
+        <location filename="../core/constants.cpp" line="205"/>
+        <source>Characteristic Impedance of Vacuum</source>
+        <translation type="unfinished">真空的特性阻抗</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="206"/>
+        <source>Dirac&apos;s Constant</source>
+        <translation type="unfinished">狄拉克常数</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="207"/>
+        <source>Electric Constant</source>
+        <translation type="unfinished">电常数</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="208"/>
+        <source>Gravitation Constant</source>
+        <translation type="unfinished">万有引力常数</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="209"/>
+        <source>Magnetic Constant</source>
+        <translation type="unfinished">磁常数</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="210"/>
+        <source>Planck&apos;s Constant</source>
+        <translation type="unfinished">普朗克常数</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="211"/>
+        <source>Speed of Light in Vacuum</source>
+        <translation type="unfinished">真空中的光速</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="214"/>
+        <source>Electromagnetic</source>
+        <translation type="unfinished">电磁</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="216"/>
+        <source>Bohr-Procopiu Magneton</source>
+        <translation type="unfinished">玻尔磁子</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="217"/>
+        <source>Conductance Quantum</source>
+        <translation type="unfinished">电导量子</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="218"/>
+        <source>Coulomb&apos;s Constant</source>
+        <translation type="unfinished">库仑常数</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="219"/>
+        <source>Elementary Charge</source>
+        <translation type="unfinished">基本电荷</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="220"/>
+        <source>Josephson Constant</source>
+        <translation type="unfinished">约瑟夫逊常数</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="221"/>
+        <source>Magnetic Flux Quantum</source>
+        <translation type="unfinished">磁通量子</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="222"/>
+        <source>Nuclear Magneton</source>
+        <translation type="unfinished">核磁子</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="223"/>
+        <source>Resistance Quantum</source>
+        <translation type="unfinished">电阻量子</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="224"/>
+        <source>von Klitzing Constant</source>
+        <translation type="unfinished">克里青常数</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="227"/>
+        <source>Atomic &amp; Nuclear</source>
+        <translation type="unfinished">原子与原子核</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="229"/>
+        <source>Bohr Radius</source>
+        <translation type="unfinished">玻尔半径</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="230"/>
+        <source>Fermi Coupling Constant</source>
+        <translation type="unfinished">费米耦合常数</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="231"/>
+        <source>Fine-structure Constant</source>
+        <translation type="unfinished">精细结构常数</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="232"/>
+        <source>Hartree Energy</source>
+        <translation type="unfinished">哈特利能量</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="233"/>
+        <source>Quantum of Circulation</source>
+        <translation type="unfinished">环流量子</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="234"/>
+        <source>Rydberg Constant</source>
+        <translation type="unfinished">里德伯常数</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="235"/>
+        <source>Thomson Cross Section</source>
+        <translation type="unfinished">汤姆逊散射截面</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="236"/>
+        <source>Weak Mixing Angle</source>
+        <translation type="unfinished">弱混合角</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="239"/>
+        <source>Physico-chemical</source>
+        <translation type="unfinished">物理化学</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="241"/>
+        <source>Atomic Mass Unit</source>
+        <translation type="unfinished">原子质量单位</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="242"/>
+        <source>Avogadro&apos;s Number</source>
+        <translation type="unfinished">阿伏加德罗常数</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="243"/>
+        <source>Boltzmann Constant</source>
+        <translation type="unfinished">玻尔兹曼常数</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="244"/>
+        <source>Faraday Constant</source>
+        <translation type="unfinished">法拉第常数</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="245"/>
+        <source>First Radiation Constant</source>
+        <translation type="unfinished">第一辐射常数</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="246"/>
+        <source>Gas Constant</source>
+        <translation type="unfinished">气体常数</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="247"/>
+        <source>Loschmidt Constant</source>
+        <translation type="unfinished">劳施密特常数</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="248"/>
+        <source>Molar Planck Constant</source>
+        <translation type="unfinished">摩尔普朗克常数</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="249"/>
+        <source>Second Radiation Constant</source>
+        <translation type="unfinished">第二辐射常数</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="250"/>
+        <source>Stefan-Boltzmann Constant</source>
+        <translation type="unfinished">斯特凡-玻尔兹曼常数</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="253"/>
+        <source>Astronomy</source>
+        <translation type="unfinished">天文</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="255"/>
+        <source>Astronomical Unit</source>
+        <translation type="unfinished">天文单位</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="256"/>
+        <source>Light Year</source>
+        <translation type="unfinished">光年</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="257"/>
+        <source>Parsec</source>
+        <translation type="unfinished">天体距离单位</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="259"/>
+        <source>days</source>
+        <translation type="unfinished">天</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="261"/>
+        <source>Gregorian Year</source>
+        <translation type="unfinished">公历年</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="262"/>
         <source>Julian Year</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="263"/>
+        <source>Sidereal Year</source>
+        <translation type="unfinished">恒星年</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="264"/>
+        <source>Tropical Year</source>
+        <translation type="unfinished">回归年</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="266"/>
+        <source>Earth Mass</source>
+        <translation type="unfinished">地球质量</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="267"/>
+        <source>Mean Earth Radius</source>
+        <translation type="unfinished">平均地球半径</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="268"/>
+        <source>Sun Mass</source>
+        <translation type="unfinished">太阳质量</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="269"/>
+        <source>Sun Radius</source>
+        <translation type="unfinished">太阳半径</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="270"/>
+        <source>Sun Luminosity</source>
+        <translation type="unfinished">太阳光度</translation>
     </message>
 </context>
 <context>
@@ -497,27 +755,65 @@
     <message>
         <location filename="../gui/constantsdock.cpp" line="118"/>
         <source>No match found</source>
-        <translation>没有找到匹配的</translation>
+        <translation type="obsolete">没有找到匹配的</translation>
     </message>
     <message>
-        <location filename="../gui/constantsdock.cpp" line="142"/>
+        <location filename="../gui/constantsdock.cpp" line="39"/>
         <source>Constants</source>
         <translation>常量</translation>
     </message>
     <message>
         <location filename="../gui/constantsdock.cpp" line="143"/>
         <source>Category</source>
-        <translation>分类</translation>
+        <translation type="obsolete">分类</translation>
     </message>
     <message>
         <location filename="../gui/constantsdock.cpp" line="144"/>
         <source>Search</source>
-        <translation>搜索</translation>
+        <translation type="obsolete">搜索</translation>
     </message>
     <message>
         <location filename="../gui/constantsdock.cpp" line="257"/>
         <source>All</source>
-        <translation>全部</translation>
+        <translation type="obsolete">全部</translation>
+    </message>
+</context>
+<context>
+    <name>ConstantsWidget</name>
+    <message>
+        <location filename="../gui/constantswidget.cpp" line="110"/>
+        <source>No match found</source>
+        <translation type="unfinished">没有找到匹配的</translation>
+    </message>
+    <message>
+        <location filename="../gui/constantswidget.cpp" line="131"/>
+        <source>Name</source>
+        <translation type="unfinished">名称</translation>
+    </message>
+    <message>
+        <location filename="../gui/constantswidget.cpp" line="132"/>
+        <source>Value</source>
+        <translation type="unfinished">值</translation>
+    </message>
+    <message>
+        <location filename="../gui/constantswidget.cpp" line="133"/>
+        <source>Unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/constantswidget.cpp" line="140"/>
+        <source>Category</source>
+        <translation type="unfinished">分类</translation>
+    </message>
+    <message>
+        <location filename="../gui/constantswidget.cpp" line="141"/>
+        <source>Search</source>
+        <translation type="unfinished">搜索</translation>
+    </message>
+    <message>
+        <location filename="../gui/constantswidget.cpp" line="245"/>
+        <source>All</source>
+        <translation type="unfinished">全部</translation>
     </message>
 </context>
 <context>
@@ -541,12 +837,12 @@
 <context>
     <name>Editor</name>
     <message>
-        <location filename="../gui/editor.cpp" line="682"/>
+        <location filename="../gui/editor.cpp" line="680"/>
         <source>Current result: &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>当前的结果：&lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../gui/editor.cpp" line="727"/>
+        <location filename="../gui/editor.cpp" line="725"/>
         <source>Selection result: &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>选择的结果：&lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
@@ -554,27 +850,27 @@
 <context>
     <name>Evaluator</name>
     <message>
-        <location filename="../core/evaluator.cpp" line="1393"/>
+        <location filename="../core/evaluator.cpp" line="1239"/>
         <source>invalid expression</source>
         <translation>无效的表达式</translation>
     </message>
     <message>
-        <location filename="../core/evaluator.cpp" line="1323"/>
+        <location filename="../core/evaluator.cpp" line="1179"/>
         <source>division by zero</source>
         <translation>被零除</translation>
     </message>
     <message>
-        <location filename="../core/evaluator.cpp" line="1362"/>
+        <location filename="../core/evaluator.cpp" line="1211"/>
         <source>unknown function or variable</source>
         <translation>未知的函数或者变量</translation>
     </message>
     <message>
-        <location filename="../core/evaluator.cpp" line="1411"/>
+        <location filename="../core/evaluator.cpp" line="1256"/>
         <source>variable cannot be overwritten</source>
         <translation>变量不能被覆盖</translation>
     </message>
     <message>
-        <location filename="../core/evaluator.cpp" line="1419"/>
+        <location filename="../core/evaluator.cpp" line="1262"/>
         <source>identifier matches an existing function name</source>
         <translation>这个标识符和一个已经存在的函数重名了</translation>
     </message>
@@ -988,7 +1284,7 @@
 <context>
     <name>FunctionsDock</name>
     <message>
-        <location filename="../gui/functionsdock.cpp" line="59"/>
+        <location filename="../gui/functionsdock.cpp" line="45"/>
         <source>Functions</source>
         <translation>函数</translation>
     </message>
@@ -996,22 +1292,22 @@
 <context>
     <name>FunctionsWidget</name>
     <message>
-        <location filename="../gui/functionswidget.cpp" line="147"/>
+        <location filename="../gui/functionswidget.cpp" line="152"/>
         <source>Name</source>
         <translation>名称</translation>
     </message>
     <message>
-        <location filename="../gui/functionswidget.cpp" line="148"/>
+        <location filename="../gui/functionswidget.cpp" line="153"/>
         <source>Description</source>
         <translation>描述</translation>
     </message>
     <message>
-        <location filename="../gui/functionswidget.cpp" line="151"/>
+        <location filename="../gui/functionswidget.cpp" line="157"/>
         <source>Search</source>
         <translation>搜索</translation>
     </message>
     <message>
-        <location filename="../gui/functionswidget.cpp" line="152"/>
+        <location filename="../gui/functionswidget.cpp" line="158"/>
         <source>No match found</source>
         <translation>没有找到匹配的</translation>
     </message>
@@ -1019,7 +1315,7 @@
 <context>
     <name>HistoryDock</name>
     <message>
-        <location filename="../gui/historydock.cpp" line="89"/>
+        <location filename="../gui/historydock.cpp" line="50"/>
         <source>History</source>
         <translation>历史</translation>
     </message>
@@ -1027,19 +1323,19 @@
 <context>
     <name>InsertFunctionDlg</name>
     <message>
-        <location filename="../gui/insertfunctiondlg.cpp" line="43"/>
+        <location filename="../gui/insertfunctiondlg.cpp" line="38"/>
         <source>Insert Function</source>
         <translation>插入函数</translation>
     </message>
     <message>
         <location filename="../gui/insertfunctiondlg.cpp" line="52"/>
         <source>&amp;Insert</source>
-        <translation>插入(&amp;I)</translation>
+        <translation type="obsolete">插入(&amp;I)</translation>
     </message>
     <message>
         <location filename="../gui/insertfunctiondlg.cpp" line="56"/>
         <source>Cancel</source>
-        <translation>取消</translation>
+        <translation type="obsolete">取消</translation>
     </message>
 </context>
 <context>
@@ -1136,527 +1432,527 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="864"/>
+        <location filename="../gui/mainwindow.cpp" line="865"/>
         <source>Math Book</source>
         <translation>数学书</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1686"/>
+        <location filename="../gui/mainwindow.cpp" line="1694"/>
         <source>Radian</source>
         <translation>弧度</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1346"/>
+        <location filename="../gui/mainwindow.cpp" line="1349"/>
         <source>Degree</source>
         <translation>度数</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2050"/>
+        <location filename="../gui/mainwindow.cpp" line="2058"/>
         <source>Binary</source>
         <translation>二进制</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2095"/>
+        <location filename="../gui/mainwindow.cpp" line="2103"/>
         <source>Octal</source>
         <translation>八进制</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2086"/>
+        <location filename="../gui/mainwindow.cpp" line="2094"/>
         <source>Hexadecimal</source>
         <translation>十六进制</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2068"/>
+        <location filename="../gui/mainwindow.cpp" line="2076"/>
         <source>Fixed decimal</source>
         <translation>固定十进制</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2059"/>
+        <location filename="../gui/mainwindow.cpp" line="2067"/>
         <source>Engineering decimal</source>
         <translation>工程十进制</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2104"/>
+        <location filename="../gui/mainwindow.cpp" line="2112"/>
         <source>Scientific decimal</source>
         <translation>科学十进制</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2077"/>
+        <location filename="../gui/mainwindow.cpp" line="2085"/>
         <source>General decimal</source>
         <translation>通用十进制</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="503"/>
+        <location filename="../gui/mainwindow.cpp" line="504"/>
         <source>Angle unit</source>
         <translation>角度单位</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="504"/>
+        <location filename="../gui/mainwindow.cpp" line="505"/>
         <source>Result format</source>
         <translation>结果格式</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="516"/>
+        <location filename="../gui/mainwindow.cpp" line="517"/>
         <source>Clear E&amp;xpression</source>
         <translation>清除表达式(&amp;X)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="517"/>
+        <location filename="../gui/mainwindow.cpp" line="518"/>
         <source>Clear &amp;History</source>
         <translation>清除历史(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="537"/>
+        <location filename="../gui/mainwindow.cpp" line="538"/>
         <source>&amp;Degree</source>
         <translation>度数(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="520"/>
+        <location filename="../gui/mainwindow.cpp" line="521"/>
         <source>Delete All V&amp;ariables</source>
         <translation>清除所有变量(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="521"/>
+        <location filename="../gui/mainwindow.cpp" line="522"/>
         <source>D&amp;elete Variable...</source>
         <translation>删除变量(&amp;E)...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="549"/>
+        <location filename="../gui/mainwindow.cpp" line="550"/>
         <source>&amp;15 Decimal Digits</source>
         <translation>&amp;15 位小数</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="550"/>
+        <location filename="../gui/mainwindow.cpp" line="551"/>
         <source>&amp;2 Decimal Digits</source>
         <translation>&amp;2 位小数</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="551"/>
+        <location filename="../gui/mainwindow.cpp" line="552"/>
         <source>&amp;3 Decimal Digits</source>
         <translation>&amp;3 位小数</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="552"/>
+        <location filename="../gui/mainwindow.cpp" line="553"/>
         <source>&amp;50 Decimal Digits</source>
         <translation>&amp;50 位小数</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="553"/>
+        <location filename="../gui/mainwindow.cpp" line="554"/>
         <source>&amp;8 Decimal Digits</source>
         <translation>&amp;8 位小数</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="554"/>
+        <location filename="../gui/mainwindow.cpp" line="555"/>
         <source>&amp;Automatic Precision</source>
         <translation>自动精度(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="519"/>
+        <location filename="../gui/mainwindow.cpp" line="520"/>
         <source>&amp;Copy</source>
         <translation>复制(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="518"/>
+        <location filename="../gui/mainwindow.cpp" line="519"/>
         <source>Copy Last &amp;Result</source>
         <translation>复制上次计算的结果(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="524"/>
+        <location filename="../gui/mainwindow.cpp" line="525"/>
         <source>&amp;Paste</source>
         <translation>粘贴(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="565"/>
+        <location filename="../gui/mainwindow.cpp" line="566"/>
         <source>&amp;About</source>
         <translation>关于(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="564"/>
+        <location filename="../gui/mainwindow.cpp" line="565"/>
         <source>About &amp;Qt</source>
         <translation>关于 Qt(&amp;Q)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="567"/>
+        <location filename="../gui/mainwindow.cpp" line="568"/>
         <source>SpeedCrunch &amp;Web Site...</source>
         <translation>SpeedCrunch 网址(&amp;W)...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="566"/>
+        <location filename="../gui/mainwindow.cpp" line="567"/>
         <source>&amp;Tip of the Day</source>
         <translation>每日提示(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="522"/>
+        <location filename="../gui/mainwindow.cpp" line="523"/>
         <source>Insert &amp;Function...</source>
         <translation>插入函数(&amp;F)...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="523"/>
+        <location filename="../gui/mainwindow.cpp" line="524"/>
         <source>Insert &amp;Variable...</source>
         <translation>插入变量(&amp;V)...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="542"/>
+        <location filename="../gui/mainwindow.cpp" line="543"/>
         <source>&amp;Partial Results</source>
         <translation>部分结果(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="540"/>
+        <location filename="../gui/mainwindow.cpp" line="541"/>
         <source>Automatic &amp;Completion</source>
         <translation>自动补全(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="539"/>
+        <location filename="../gui/mainwindow.cpp" line="540"/>
         <source>Always On &amp;Top</source>
         <translation>总是在最上(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="541"/>
+        <location filename="../gui/mainwindow.cpp" line="542"/>
         <source>&amp;Minimize To System Tray</source>
         <translation>最小化到系统托盘(&amp;M)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="545"/>
+        <location filename="../gui/mainwindow.cpp" line="546"/>
         <source>Syntax &amp;Highlighting</source>
         <translation>语法高亮(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="547"/>
+        <location filename="../gui/mainwindow.cpp" line="548"/>
         <source>&amp;System Default</source>
         <translation>系统默认(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="548"/>
+        <location filename="../gui/mainwindow.cpp" line="549"/>
         <source>&amp;Dot</source>
         <translation>点(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="546"/>
+        <location filename="../gui/mainwindow.cpp" line="547"/>
         <source>&amp;Comma</source>
         <translation>逗号(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="538"/>
+        <location filename="../gui/mainwindow.cpp" line="539"/>
         <source>&amp;Radian</source>
         <translation>弧度(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="569"/>
+        <location filename="../gui/mainwindow.cpp" line="570"/>
         <source>Scroll Display Down</source>
         <translation>向下滚动显示</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="570"/>
+        <location filename="../gui/mainwindow.cpp" line="571"/>
         <source>Scroll Display Up</source>
         <translation>向上滚动显示</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="525"/>
+        <location filename="../gui/mainwindow.cpp" line="526"/>
         <source>&amp;Select Expression</source>
         <translation>选择表达式(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="511"/>
+        <location filename="../gui/mainwindow.cpp" line="512"/>
         <source>&amp;Import...</source>
         <translation>导入(&amp;I)...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="512"/>
+        <location filename="../gui/mainwindow.cpp" line="513"/>
         <source>&amp;Load...</source>
         <translation>加载(&amp;L)...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="513"/>
+        <location filename="../gui/mainwindow.cpp" line="514"/>
         <source>&amp;Quit</source>
         <translation>退出(&amp;Q)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="514"/>
+        <location filename="../gui/mainwindow.cpp" line="515"/>
         <source>&amp;Save...</source>
         <translation>保存(&amp;S)...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="510"/>
+        <location filename="../gui/mainwindow.cpp" line="511"/>
         <source>&amp;Export...</source>
         <translation>导出(&amp;E)...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="532"/>
+        <location filename="../gui/mainwindow.cpp" line="533"/>
         <source>Math &amp;Book</source>
         <translation>数学书(&amp;B)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="527"/>
+        <location filename="../gui/mainwindow.cpp" line="528"/>
         <source>&amp;Constants</source>
         <translation>常量(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="529"/>
+        <location filename="../gui/mainwindow.cpp" line="530"/>
         <source>&amp;Functions</source>
         <translation>函数(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="530"/>
+        <location filename="../gui/mainwindow.cpp" line="531"/>
         <source>&amp;History</source>
         <translation>历史(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="531"/>
+        <location filename="../gui/mainwindow.cpp" line="532"/>
         <source>&amp;Keypad</source>
         <translation>键盘(&amp;K)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="534"/>
+        <location filename="../gui/mainwindow.cpp" line="535"/>
         <source>&amp;Status Bar</source>
         <translation>状态栏(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="535"/>
+        <location filename="../gui/mainwindow.cpp" line="536"/>
         <source>&amp;Variables</source>
         <translation>变量(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="555"/>
+        <location filename="../gui/mainwindow.cpp" line="556"/>
         <source>&amp;Binary</source>
         <translation>二进制(&amp;B)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="556"/>
+        <location filename="../gui/mainwindow.cpp" line="557"/>
         <source>&amp;Engineering</source>
         <translation>工程(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="557"/>
+        <location filename="../gui/mainwindow.cpp" line="558"/>
         <source>&amp;Fixed Decimal</source>
         <translation>固定(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="558"/>
+        <location filename="../gui/mainwindow.cpp" line="559"/>
         <source>&amp;General</source>
         <translation>通用(&amp;G)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="559"/>
+        <location filename="../gui/mainwindow.cpp" line="560"/>
         <source>&amp;Hexadecimal</source>
         <translation>十六进制(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="560"/>
+        <location filename="../gui/mainwindow.cpp" line="561"/>
         <source>&amp;Octal</source>
         <translation>八进制(&amp;O)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="561"/>
+        <location filename="../gui/mainwindow.cpp" line="562"/>
         <source>&amp;Scientific</source>
         <translation>科学(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="748"/>
+        <location filename="../gui/mainwindow.cpp" line="749"/>
         <source>&amp;Session</source>
         <translation>会话(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="749"/>
+        <location filename="../gui/mainwindow.cpp" line="750"/>
         <source>&amp;Edit</source>
         <translation>编辑(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="750"/>
+        <location filename="../gui/mainwindow.cpp" line="751"/>
         <source>&amp;View</source>
         <translation>查看(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="751"/>
+        <location filename="../gui/mainwindow.cpp" line="752"/>
         <source>Se&amp;ttings</source>
         <translation>设置(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="752"/>
+        <location filename="../gui/mainwindow.cpp" line="753"/>
         <source>Result &amp;Format</source>
         <translation>结果格式(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="753"/>
+        <location filename="../gui/mainwindow.cpp" line="754"/>
         <source>&amp;Decimal</source>
         <translation>十进制(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="754"/>
+        <location filename="../gui/mainwindow.cpp" line="755"/>
         <source>&amp;Angle Unit</source>
         <translation>角度单位(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="755"/>
+        <location filename="../gui/mainwindow.cpp" line="756"/>
         <source>&amp;Behavior</source>
         <translation>行为(&amp;B)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="756"/>
+        <location filename="../gui/mainwindow.cpp" line="757"/>
         <source>Radix &amp;Character</source>
         <translation>基数字符(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="757"/>
+        <location filename="../gui/mainwindow.cpp" line="758"/>
         <source>&amp;Help</source>
         <translation>帮助(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1305"/>
+        <location filename="../gui/mainwindow.cpp" line="1306"/>
         <source>About Qt</source>
         <translation>关于 Qt</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1436"/>
+        <location filename="../gui/mainwindow.cpp" line="1439"/>
         <source>File %1 is not a valid session</source>
         <translation>文件 %1 不是一个有效的会话</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1693"/>
+        <location filename="../gui/mainwindow.cpp" line="1701"/>
         <source>SpeedCrunch Sessions (*.sch);;All Files (*)</source>
         <translation>SpeedCrunch 会话文件 (*.sch);;全部文件 (*)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1438"/>
+        <location filename="../gui/mainwindow.cpp" line="1441"/>
         <source>Load Session</source>
         <translation>加载会话</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1743"/>
+        <location filename="../gui/mainwindow.cpp" line="1751"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1538"/>
+        <location filename="../gui/mainwindow.cpp" line="1543"/>
         <source>Can&apos;t read from file %1</source>
         <translation>不能读取文件 %1</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1469"/>
+        <location filename="../gui/mainwindow.cpp" line="1472"/>
         <source>Merge session being loaded with current session?
 If no, current variables and display will be cleared.</source>
         <translation>您要把载入的会话和当前会话进行合并么？
 如果不的话，当前的变量和显示将会被清空。</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1547"/>
+        <location filename="../gui/mainwindow.cpp" line="1552"/>
         <source>Question</source>
         <translation>问题</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1735"/>
+        <location filename="../gui/mainwindow.cpp" line="1743"/>
         <source>All Files (*)</source>
         <translation>所有文件 (*)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1531"/>
+        <location filename="../gui/mainwindow.cpp" line="1536"/>
         <source>Import Session</source>
         <translation>导入会话</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1545"/>
+        <location filename="../gui/mainwindow.cpp" line="1550"/>
         <source>Merge session being imported with current session?
 If no, current variables and display will be cleared.</source>
         <translation>您要把导入的会话和当前会话进行合并么？如果不的话，当前的变量和显示将会被清空。</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1574"/>
+        <location filename="../gui/mainwindow.cpp" line="1579"/>
         <source>Ignore error?</source>
         <translation>忽略错误？</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1694"/>
+        <location filename="../gui/mainwindow.cpp" line="1702"/>
         <source>Save Session</source>
         <translation>保存会话</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1743"/>
+        <location filename="../gui/mainwindow.cpp" line="1751"/>
         <source>Can&apos;t write to file %1</source>
         <translation>不能写入文件 %1</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1736"/>
+        <location filename="../gui/mainwindow.cpp" line="1744"/>
         <source>Export Session</source>
         <translation>导出会话</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2007"/>
+        <location filename="../gui/mainwindow.cpp" line="2015"/>
         <source>The menu bar is now hidden. To make it visible again, press Ctrl+Alt+M.</source>
         <translation>菜单栏现在被隐藏。如果您想让它再次显示，请按 Ctrl+Alt+M。</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2010"/>
+        <location filename="../gui/mainwindow.cpp" line="2018"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2023"/>
+        <location filename="../gui/mainwindow.cpp" line="2031"/>
         <source>To insert a function using keyboard, use Ctrl+F shorcut. From the dialog, you can choose the function you want to insert.</source>
         <translation>如果想要使用键盘插入函数，请使用 Ctrl+F 快捷键。从这个对话框中，您可以选择您要插入的函数。</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2028"/>
+        <location filename="../gui/mainwindow.cpp" line="2036"/>
         <source>To insert a variable using keyboard, use Ctrl+I shorcut. From the dialog, you can choose the variable you want to insert.</source>
         <translation>如果想要使用键盘插入变量，请使用 Ctrl+I 快捷键。从这个对话框中，您可以选择您要插入的变量。</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2031"/>
+        <location filename="../gui/mainwindow.cpp" line="2039"/>
         <source>Use variable &lt;i&gt;pi&lt;/i&gt; to use pi constant.</source>
         <translation>请使用变量&lt;i&gt;pi&lt;/i&gt;来使用 PI 常量。</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2035"/>
+        <location filename="../gui/mainwindow.cpp" line="2043"/>
         <source>Use &lt;i&gt;;&lt;/i&gt; (semicolon) to separate the parameters in functions.</source>
         <translation>请使用&lt;i&gt;;&lt;/i&gt;(半角分号)来分隔函数中的参数。</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2041"/>
+        <location filename="../gui/mainwindow.cpp" line="2049"/>
         <source>Tip of the day</source>
         <translation>每日提示</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2309"/>
+        <location filename="../gui/mainwindow.cpp" line="2321"/>
         <source>SpeedCrunch is minimized.
 Left click the icon to restore it or right click for options.</source>
         <translation>SpeedCrunch 最小化了。
 左键点击它可以恢复它，或者右键点击它选择选项。</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="528"/>
+        <location filename="../gui/mainwindow.cpp" line="529"/>
         <source>F&amp;ull Screen Mode</source>
         <translation>全屏模式(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="533"/>
+        <location filename="../gui/mainwindow.cpp" line="534"/>
         <source>&amp;Menu Bar</source>
         <translation>隐藏菜单栏(&amp;M)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="543"/>
+        <location filename="../gui/mainwindow.cpp" line="544"/>
         <source>Save &amp;History on Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="544"/>
+        <location filename="../gui/mainwindow.cpp" line="545"/>
         <source>Save &amp;Variables on Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="562"/>
+        <location filename="../gui/mainwindow.cpp" line="563"/>
         <source>&amp;Language...</source>
         <translation>语言(&amp;L)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2455"/>
+        <location filename="../gui/mainwindow.cpp" line="2467"/>
         <source>System Default</source>
         <translation>系统默认(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2459"/>
+        <location filename="../gui/mainwindow.cpp" line="2471"/>
         <source>Language</source>
         <translation>语言</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2459"/>
+        <location filename="../gui/mainwindow.cpp" line="2471"/>
         <source>Select the language:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1664,7 +1960,7 @@ Left click the icon to restore it or right click for options.</source>
 <context>
     <name>VariablesDock</name>
     <message>
-        <location filename="../gui/variablesdock.cpp" line="63"/>
+        <location filename="../gui/variablesdock.cpp" line="69"/>
         <source>Variables</source>
         <translation>变量</translation>
     </message>
@@ -1672,22 +1968,22 @@ Left click the icon to restore it or right click for options.</source>
 <context>
     <name>VariablesWidget</name>
     <message>
-        <location filename="../gui/variableswidget.cpp" line="163"/>
+        <location filename="../gui/variableswidget.cpp" line="164"/>
         <source>Name</source>
         <translation>名称</translation>
     </message>
     <message>
-        <location filename="../gui/variableswidget.cpp" line="164"/>
+        <location filename="../gui/variableswidget.cpp" line="165"/>
         <source>Value</source>
         <translation>值</translation>
     </message>
     <message>
-        <location filename="../gui/variableswidget.cpp" line="167"/>
+        <location filename="../gui/variableswidget.cpp" line="168"/>
         <source>Search</source>
         <translation>搜索</translation>
     </message>
     <message>
-        <location filename="../gui/variableswidget.cpp" line="168"/>
+        <location filename="../gui/variableswidget.cpp" line="169"/>
         <source>No match found</source>
         <translation>没有找到匹配的</translation>
     </message>

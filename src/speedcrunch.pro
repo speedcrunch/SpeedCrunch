@@ -4,7 +4,7 @@
 !contains( QT_MINOR_VERSION, 3 ) {
     !contains( QT_MINOR_VERSION, 4 ) {
         !contains( QT_MINOR_VERSION, 5 ) {
-            error( unsupported Qt minor version $$QT_MINOR_VERSION found but 3, 4 or 5 required )
+            error( 'unsupported Qt minor version $$QT_MINOR_VERSION found but 3, 4 or 5 required' )
         }
     }
 }
