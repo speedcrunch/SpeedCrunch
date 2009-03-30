@@ -200,74 +200,74 @@ void Constants::Private::retranslateText()
     QString cat;
 
     // http://en.wikipedia.org/wiki/Physical_constant#Table_of_universal_constants
-    cat = tr("General Physics");
+    cat = Constants::tr("General Physics");
 
-    I18N_CONSTANT(tr("Characteristic Impedance of Vacuum"));
-    I18N_CONSTANT(tr("Dirac's Constant"));
-    I18N_CONSTANT(tr("Electric Constant"));
-    I18N_CONSTANT(tr("Gravitation Constant"));
-    I18N_CONSTANT(tr("Magnetic Constant"));
-    I18N_CONSTANT(tr("Planck's Constant"));
-    I18N_CONSTANT(tr("Speed of Light in Vacuum"));
+    I18N_CONSTANT(Constants::tr("Characteristic Impedance of Vacuum"));
+    I18N_CONSTANT(Constants::tr("Dirac's Constant"));
+    I18N_CONSTANT(Constants::tr("Electric Constant"));
+    I18N_CONSTANT(Constants::tr("Gravitation Constant"));
+    I18N_CONSTANT(Constants::tr("Magnetic Constant"));
+    I18N_CONSTANT(Constants::tr("Planck's Constant"));
+    I18N_CONSTANT(Constants::tr("Speed of Light in Vacuum"));
 
     // http://en.wikipedia.org/wiki/Physical_constant#Table_of_electromagnetic_constants
-    cat = tr("Electromagnetic");
+    cat = Constants::tr("Electromagnetic");
 
-    I18N_CONSTANT(tr("Bohr-Procopiu Magneton"));
-    I18N_CONSTANT(tr("Conductance Quantum"));
-    I18N_CONSTANT(tr("Coulomb's Constant"));
-    I18N_CONSTANT(tr("Elementary Charge"));
-    I18N_CONSTANT(tr("Josephson Constant"));
-    I18N_CONSTANT(tr("Magnetic Flux Quantum"));
-    I18N_CONSTANT(tr("Nuclear Magneton"));
-    I18N_CONSTANT(tr("Resistance Quantum"));
-    I18N_CONSTANT(tr("von Klitzing Constant"));
+    I18N_CONSTANT(Constants::tr("Bohr-Procopiu Magneton"));
+    I18N_CONSTANT(Constants::tr("Conductance Quantum"));
+    I18N_CONSTANT(Constants::tr("Coulomb's Constant"));
+    I18N_CONSTANT(Constants::tr("Elementary Charge"));
+    I18N_CONSTANT(Constants::tr("Josephson Constant"));
+    I18N_CONSTANT(Constants::tr("Magnetic Flux Quantum"));
+    I18N_CONSTANT(Constants::tr("Nuclear Magneton"));
+    I18N_CONSTANT(Constants::tr("Resistance Quantum"));
+    I18N_CONSTANT(Constants::tr("von Klitzing Constant"));
 
     // http://en.wikipedia.org/wiki/Physical_constant#Table_of_atomic_and_nuclear_constants
-    cat = tr("Atomic & Nuclear");
+    cat = Constants::tr("Atomic & Nuclear");
 
-    I18N_CONSTANT(tr("Bohr Radius"));
-    I18N_CONSTANT(tr("Fermi Coupling Constant"));
-    I18N_CONSTANT(tr("Fine-structure Constant"));
-    I18N_CONSTANT(tr("Hartree Energy"));
-    I18N_CONSTANT(tr("Quantum of Circulation"));
-    I18N_CONSTANT(tr("Rydberg Constant"));
-    I18N_CONSTANT(tr("Thomson Cross Section"));
-    I18N_CONSTANT(tr("Weak Mixing Angle"));
+    I18N_CONSTANT(Constants::tr("Bohr Radius"));
+    I18N_CONSTANT(Constants::tr("Fermi Coupling Constant"));
+    I18N_CONSTANT(Constants::tr("Fine-structure Constant"));
+    I18N_CONSTANT(Constants::tr("Hartree Energy"));
+    I18N_CONSTANT(Constants::tr("Quantum of Circulation"));
+    I18N_CONSTANT(Constants::tr("Rydberg Constant"));
+    I18N_CONSTANT(Constants::tr("Thomson Cross Section"));
+    I18N_CONSTANT(Constants::tr("Weak Mixing Angle"));
 
     // http://en.wikipedia.org/wiki/Physical_constant#Table_of_physico-chemical_constants
-    cat = tr("Physico-chemical");
+    cat = Constants::tr("Physico-chemical");
 
-    I18N_CONSTANT(tr("Atomic Mass Unit"));
-    I18N_CONSTANT(tr("Avogadro's Number"));
-    I18N_CONSTANT(tr("Boltzmann Constant"));
-    I18N_CONSTANT(tr("Faraday Constant"));
-    I18N_CONSTANT(tr("First Radiation Constant"));
-    I18N_CONSTANT(tr("Gas Constant"));
-    I18N_CONSTANT(tr("Loschmidt Constant"));
-    I18N_CONSTANT(tr("Molar Planck Constant"));
-    I18N_CONSTANT(tr("Second Radiation Constant"));
-    I18N_CONSTANT(tr("Stefan-Boltzmann Constant"));
+    I18N_CONSTANT(Constants::tr("Atomic Mass Unit"));
+    I18N_CONSTANT(Constants::tr("Avogadro's Number"));
+    I18N_CONSTANT(Constants::tr("Boltzmann Constant"));
+    I18N_CONSTANT(Constants::tr("Faraday Constant"));
+    I18N_CONSTANT(Constants::tr("First Radiation Constant"));
+    I18N_CONSTANT(Constants::tr("Gas Constant"));
+    I18N_CONSTANT(Constants::tr("Loschmidt Constant"));
+    I18N_CONSTANT(Constants::tr("Molar Planck Constant"));
+    I18N_CONSTANT(Constants::tr("Second Radiation Constant"));
+    I18N_CONSTANT(Constants::tr("Stefan-Boltzmann Constant"));
 
     // http://www.astronomynotes.com/tables/tablesa.htm
-    cat = tr("Astronomy");
+    cat = Constants::tr("Astronomy");
 
-    I18N_CONSTANT(tr("Astronomical Unit"));
-    I18N_CONSTANT(tr("Light Year"));
-    I18N_CONSTANT(tr("Parsec"));
+    I18N_CONSTANT(Constants::tr("Astronomical Unit"));
+    I18N_CONSTANT(Constants::tr("Light Year"));
+    I18N_CONSTANT(Constants::tr("Parsec"));
 
-    const QString days = tr( "days" );
+    const QString days = Constants::tr( "days" );
 
-    I18N_CONSTANT_DAYS(tr("Gregorian Year"));
-    I18N_CONSTANT_DAYS(tr("Julian Year"));
-    I18N_CONSTANT_DAYS(tr("Sidereal Year"));
-    I18N_CONSTANT_DAYS(tr("Tropical Year"));
+    I18N_CONSTANT_DAYS(Constants::tr("Gregorian Year"));
+    I18N_CONSTANT_DAYS(Constants::tr("Julian Year"));
+    I18N_CONSTANT_DAYS(Constants::tr("Sidereal Year"));
+    I18N_CONSTANT_DAYS(Constants::tr("Tropical Year"));
 
-    I18N_CONSTANT(tr("Earth Mass"));
-    I18N_CONSTANT(tr("Mean Earth Radius"));
-    I18N_CONSTANT(tr("Sun Mass"));
-    I18N_CONSTANT(tr("Sun Radius"));
-    I18N_CONSTANT(tr("Sun Luminosity"));
+    I18N_CONSTANT(Constants::tr("Earth Mass"));
+    I18N_CONSTANT(Constants::tr("Mean Earth Radius"));
+    I18N_CONSTANT(Constants::tr("Sun Mass"));
+    I18N_CONSTANT(Constants::tr("Sun Radius"));
+    I18N_CONSTANT(Constants::tr("Sun Luminosity"));
 
     categories.clear();
     for ( int k = 0; k < list.count(); ++k )

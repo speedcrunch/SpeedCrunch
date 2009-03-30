@@ -204,21 +204,21 @@
     </message>
 </context>
 <context>
-    <name>BookDock::Private</name>
+    <name>BookDock</name>
     <message>
         <location filename="../gui/bookdock.cpp" line="183"/>
         <source>Back</source>
-        <translation>Назад</translation>
+        <translation type="unfinished">Назад</translation>
     </message>
     <message>
         <location filename="../gui/bookdock.cpp" line="184"/>
         <source>Forward</source>
-        <translation>Вперед</translation>
+        <translation type="unfinished">Вперед</translation>
     </message>
     <message>
         <location filename="../gui/bookdock.cpp" line="185"/>
         <source>Index</source>
-        <translation>Указатель</translation>
+        <translation type="unfinished">Указатель</translation>
     </message>
 </context>
 <context>
@@ -232,277 +232,14 @@
 <context>
     <name>Constants</name>
     <message>
-        <location filename="../core/constants.cpp" line="245"/>
-        <source>Characteristic Impedance of Vacuum</source>
-        <translation type="obsolete">Характеристический импеданс вакуума </translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="243"/>
-        <source>General Physics</source>
-        <translation type="obsolete">Основная Физика</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="247"/>
-        <source>Electric Constant</source>
-        <translation type="obsolete">Электрическая постоянная</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="249"/>
-        <source>Magnetic Constant</source>
-        <translation type="obsolete">Магнитная постоянная</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="248"/>
-        <source>Gravitation Constant</source>
-        <translation type="obsolete">Гравитационная постоянная</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="250"/>
-        <source>Planck&apos;s Constant</source>
-        <translation type="obsolete">Постоянная Планка</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="246"/>
-        <source>Dirac&apos;s Constant</source>
-        <translation type="obsolete">Постоянная Дирака</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="251"/>
-        <source>Speed of Light in Vacuum</source>
-        <translation type="obsolete">Скорость света в вакууме</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="256"/>
-        <source>Bohr-Procopiu Magneton</source>
-        <translation type="obsolete">Магнетон Бора</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="254"/>
-        <source>Electromagnetic</source>
-        <translation type="obsolete">Электромагнетизм</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="257"/>
-        <source>Conductance Quantum</source>
-        <translation type="obsolete">электропроводность</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="258"/>
-        <source>Coulomb&apos;s Constant</source>
-        <translation type="obsolete">Постоянная Кулона</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="259"/>
-        <source>Elementary Charge</source>
-        <translation type="obsolete">Элементарный электрический заряд</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="260"/>
-        <source>Josephson Constant</source>
-        <translation type="obsolete">Постоянная Джозефсона</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="261"/>
-        <source>Magnetic Flux Quantum</source>
-        <translation type="obsolete">Плотность магнитного потока</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="262"/>
-        <source>Nuclear Magneton</source>
-        <translation type="obsolete">Ядерный магнетон</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="263"/>
-        <source>Resistance Quantum</source>
-        <translation type="obsolete">Плотность сопротивления</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="264"/>
-        <source>von Klitzing Constant</source>
-        <translation type="obsolete">Постоянная фон Клитцинга</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="269"/>
-        <source>Bohr Radius</source>
-        <translation type="obsolete">Боровский радиус</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="267"/>
-        <source>Atomic &amp; Nuclear</source>
-        <translation type="obsolete">Атомная и Ядерная физика</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="270"/>
-        <source>Fermi Coupling Constant</source>
-        <translation type="obsolete">Постоянная Ферми</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="271"/>
-        <source>Fine-structure Constant</source>
-        <translation type="obsolete">Постоянная тонкой структуры</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="272"/>
-        <source>Hartree Energy</source>
-        <translation type="obsolete">Энергия Хартри</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="273"/>
-        <source>Quantum of Circulation</source>
-        <translation type="obsolete">Квант вращения</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="274"/>
-        <source>Rydberg Constant</source>
-        <translation type="obsolete">Постоянная Ридберга</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="275"/>
-        <source>Thomson Cross Section</source>
-        <translation type="obsolete">Эффективное поперечное сечение Томпсона</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="276"/>
-        <source>Weak Mixing Angle</source>
-        <translation type="obsolete">Угол Вейнберга</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="281"/>
-        <source>Atomic Mass Unit</source>
-        <translation type="obsolete">Единица массы атома</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="279"/>
-        <source>Physico-chemical</source>
-        <translation type="obsolete">Физико-химический раздел</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="282"/>
-        <source>Avogadro&apos;s Number</source>
-        <translation type="obsolete">Число Авагадро</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="283"/>
-        <source>Boltzmann Constant</source>
-        <translation type="obsolete">Постоянная Больцмана</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="284"/>
-        <source>Faraday Constant</source>
-        <translation type="obsolete">Постоянная Фарадея</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="285"/>
-        <source>First Radiation Constant</source>
-        <translation type="obsolete">Первая радиационная постоянная</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="287"/>
-        <source>Loschmidt Constant</source>
-        <translation type="obsolete">Постоянная Лошмита</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="286"/>
-        <source>Gas Constant</source>
-        <translation type="obsolete">Универсальная газовая постоянная</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="288"/>
-        <source>Molar Planck Constant</source>
-        <translation type="obsolete">Молярная постоянная Планка</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="289"/>
-        <source>Second Radiation Constant</source>
-        <translation type="obsolete">Вторая радиационная постоянная</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="290"/>
-        <source>Stefan-Boltzmann Constant</source>
-        <translation type="obsolete">Постоянная Стефана-Больцмана</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="295"/>
-        <source>Astronomical Unit</source>
-        <translation type="obsolete">Астрономическая единица</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="293"/>
-        <source>Astronomy</source>
-        <translation type="obsolete">Астрономия</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="296"/>
-        <source>Light Year</source>
-        <translation type="obsolete">Световой год</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="297"/>
-        <source>Parsec</source>
-        <translation type="obsolete">Парсек</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="303"/>
-        <source>Sidereal Year</source>
-        <translation type="obsolete">Сидерический год</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="299"/>
-        <source>days</source>
-        <translation type="obsolete">дней</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="304"/>
-        <source>Tropical Year</source>
-        <translation type="obsolete">Солнечный год</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="301"/>
-        <source>Gregorian Year</source>
-        <translation type="obsolete">Григорианский год</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="306"/>
-        <source>Earth Mass</source>
-        <translation type="obsolete">Масса Земли</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="308"/>
-        <source>Sun Mass</source>
-        <translation type="obsolete">Масса Солнца</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="307"/>
-        <source>Mean Earth Radius</source>
-        <translation type="obsolete">Средний радиус Земли</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="309"/>
-        <source>Sun Radius</source>
-        <translation type="obsolete">Радиус Солнца</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="310"/>
-        <source>Sun Luminosity</source>
-        <translation type="obsolete">Светимость Солнца</translation>
-    </message>
-</context>
-<context>
-    <name>Constants::Private</name>
-    <message>
-        <location filename="../core/constants.cpp" line="203"/>
-        <source>General Physics</source>
-        <translation type="unfinished">Основная Физика</translation>
-    </message>
-    <message>
         <location filename="../core/constants.cpp" line="205"/>
         <source>Characteristic Impedance of Vacuum</source>
         <translation type="unfinished">Характеристический импеданс вакуума </translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="206"/>
-        <source>Dirac&apos;s Constant</source>
-        <translation type="unfinished">Постоянная Дирака</translation>
+        <location filename="../core/constants.cpp" line="203"/>
+        <source>General Physics</source>
+        <translation type="unfinished">Основная Физика</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="207"/>
@@ -510,14 +247,14 @@
         <translation type="unfinished">Электрическая постоянная</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="208"/>
-        <source>Gravitation Constant</source>
-        <translation type="unfinished">Гравитационная постоянная</translation>
-    </message>
-    <message>
         <location filename="../core/constants.cpp" line="209"/>
         <source>Magnetic Constant</source>
         <translation type="unfinished">Магнитная постоянная</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="208"/>
+        <source>Gravitation Constant</source>
+        <translation type="unfinished">Гравитационная постоянная</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="210"/>
@@ -525,19 +262,24 @@
         <translation type="unfinished">Постоянная Планка</translation>
     </message>
     <message>
+        <location filename="../core/constants.cpp" line="206"/>
+        <source>Dirac&apos;s Constant</source>
+        <translation type="unfinished">Постоянная Дирака</translation>
+    </message>
+    <message>
         <location filename="../core/constants.cpp" line="211"/>
         <source>Speed of Light in Vacuum</source>
         <translation type="unfinished">Скорость света в вакууме</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="214"/>
-        <source>Electromagnetic</source>
-        <translation type="unfinished">Электромагнетизм</translation>
-    </message>
-    <message>
         <location filename="../core/constants.cpp" line="216"/>
         <source>Bohr-Procopiu Magneton</source>
         <translation type="unfinished">Магнетон Бора</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="214"/>
+        <source>Electromagnetic</source>
+        <translation type="unfinished">Электромагнетизм</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="217"/>
@@ -580,14 +322,14 @@
         <translation type="unfinished">Постоянная фон Клитцинга</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="227"/>
-        <source>Atomic &amp; Nuclear</source>
-        <translation type="unfinished">Атомная и Ядерная физика</translation>
-    </message>
-    <message>
         <location filename="../core/constants.cpp" line="229"/>
         <source>Bohr Radius</source>
         <translation type="unfinished">Боровский радиус</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="227"/>
+        <source>Atomic &amp; Nuclear</source>
+        <translation type="unfinished">Атомная и Ядерная физика</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="230"/>
@@ -625,14 +367,14 @@
         <translation type="unfinished">Угол Вейнберга</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="239"/>
-        <source>Physico-chemical</source>
-        <translation type="unfinished">Физико-химический раздел</translation>
-    </message>
-    <message>
         <location filename="../core/constants.cpp" line="241"/>
         <source>Atomic Mass Unit</source>
         <translation type="unfinished">Единица массы атома</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="239"/>
+        <source>Physico-chemical</source>
+        <translation type="unfinished">Физико-химический раздел</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="242"/>
@@ -655,14 +397,14 @@
         <translation type="unfinished">Первая радиационная постоянная</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="246"/>
-        <source>Gas Constant</source>
-        <translation type="unfinished">Универсальная газовая постоянная</translation>
-    </message>
-    <message>
         <location filename="../core/constants.cpp" line="247"/>
         <source>Loschmidt Constant</source>
         <translation type="unfinished">Постоянная Лошмита</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="246"/>
+        <source>Gas Constant</source>
+        <translation type="unfinished">Универсальная газовая постоянная</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="248"/>
@@ -680,14 +422,14 @@
         <translation type="unfinished">Постоянная Стефана-Больцмана</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="253"/>
-        <source>Astronomy</source>
-        <translation type="unfinished">Астрономия</translation>
-    </message>
-    <message>
         <location filename="../core/constants.cpp" line="255"/>
         <source>Astronomical Unit</source>
         <translation type="unfinished">Астрономическая единица</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="253"/>
+        <source>Astronomy</source>
+        <translation type="unfinished">Астрономия</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="256"/>
@@ -700,24 +442,14 @@
         <translation type="unfinished">Парсек</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="259"/>
-        <source>days</source>
-        <translation type="unfinished">дней</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="261"/>
-        <source>Gregorian Year</source>
-        <translation type="unfinished">Григорианский год</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="262"/>
-        <source>Julian Year</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../core/constants.cpp" line="263"/>
         <source>Sidereal Year</source>
         <translation type="unfinished">Сидерический год</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="259"/>
+        <source>days</source>
+        <translation type="unfinished">дней</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="264"/>
@@ -725,19 +457,24 @@
         <translation type="unfinished">Солнечный год</translation>
     </message>
     <message>
+        <location filename="../core/constants.cpp" line="261"/>
+        <source>Gregorian Year</source>
+        <translation type="unfinished">Григорианский год</translation>
+    </message>
+    <message>
         <location filename="../core/constants.cpp" line="266"/>
         <source>Earth Mass</source>
         <translation type="unfinished">Масса Земли</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="267"/>
-        <source>Mean Earth Radius</source>
-        <translation type="unfinished">Средний радиус Земли</translation>
-    </message>
-    <message>
         <location filename="../core/constants.cpp" line="268"/>
         <source>Sun Mass</source>
         <translation type="unfinished">Масса Солнца</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="267"/>
+        <source>Mean Earth Radius</source>
+        <translation type="unfinished">Средний радиус Земли</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="269"/>
@@ -749,6 +486,11 @@
         <source>Sun Luminosity</source>
         <translation type="unfinished">Светимость Солнца</translation>
     </message>
+    <message>
+        <location filename="../core/constants.cpp" line="262"/>
+        <source>Julian Year</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ConstantsDock</name>
@@ -757,61 +499,41 @@
         <source>Constants</source>
         <translation>Постоянные</translation>
     </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="143"/>
-        <source>Category</source>
-        <translation type="obsolete">Категория</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="144"/>
-        <source>Search</source>
-        <translation type="obsolete">Поиск</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="118"/>
-        <source>No match found</source>
-        <translation type="obsolete">Совпадения не найдены</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="257"/>
-        <source>All</source>
-        <translation type="obsolete">Все</translation>
-    </message>
 </context>
 <context>
     <name>ConstantsWidget</name>
     <message>
-        <location filename="../gui/constantswidget.cpp" line="110"/>
+        <location filename="../gui/constantswidget.cpp" line="131"/>
         <source>No match found</source>
         <translation type="unfinished">Совпадения не найдены</translation>
     </message>
     <message>
-        <location filename="../gui/constantswidget.cpp" line="131"/>
+        <location filename="../gui/constantswidget.cpp" line="134"/>
         <source>Name</source>
         <translation type="unfinished">Имя</translation>
     </message>
     <message>
-        <location filename="../gui/constantswidget.cpp" line="132"/>
+        <location filename="../gui/constantswidget.cpp" line="135"/>
         <source>Value</source>
         <translation type="unfinished">Значение</translation>
     </message>
     <message>
-        <location filename="../gui/constantswidget.cpp" line="133"/>
+        <location filename="../gui/constantswidget.cpp" line="136"/>
         <source>Unit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/constantswidget.cpp" line="140"/>
+        <location filename="../gui/constantswidget.cpp" line="129"/>
         <source>Category</source>
         <translation type="unfinished">Категория</translation>
     </message>
     <message>
-        <location filename="../gui/constantswidget.cpp" line="141"/>
+        <location filename="../gui/constantswidget.cpp" line="130"/>
         <source>Search</source>
         <translation type="unfinished">Поиск</translation>
     </message>
     <message>
-        <location filename="../gui/constantswidget.cpp" line="245"/>
+        <location filename="../gui/constantswidget.cpp" line="246"/>
         <source>All</source>
         <translation type="unfinished">Все</translation>
     </message>
@@ -876,411 +598,405 @@
     </message>
 </context>
 <context>
-    <name>Function</name>
+    <name>Functions</name>
+    <message>
+        <location filename="../core/functions.cpp" line="1145"/>
+        <source>Absolute Value</source>
+        <translation>Модуль</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1146"/>
+        <source>Average (Arithmetic Mean)</source>
+        <translation>Среднее значение</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1147"/>
+        <source>Binary Representation</source>
+        <translation>Двоичное представление</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1148"/>
+        <source>Cube Root</source>
+        <translation>Кубический корень</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1149"/>
+        <source>Ceiling</source>
+        <translation>Максимальный</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1150"/>
+        <source>Decimal Representation</source>
+        <translation>Десятичное представление</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1151"/>
+        <source>Floor</source>
+        <translation>Наибольшая целая часть</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1152"/>
+        <source>Fractional Part</source>
+        <translation>Дробная часть</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1154"/>
+        <source>Geometric Mean</source>
+        <translation>Геометрическое среднее</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1155"/>
+        <source>Hexadecimal Representation</source>
+        <translation>Шестнадцатеричное представление</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1156"/>
+        <source>Integer Part</source>
+        <translation>Целая часть</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1158"/>
+        <source>Maximum</source>
+        <translation>Максимум</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1159"/>
+        <source>Minimum</source>
+        <translation>Минимум</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1160"/>
+        <source>Octal Representation</source>
+        <translation>Восьмеричное представление</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1161"/>
+        <source>Product</source>
+        <translation>Произведение</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1162"/>
+        <source>Rounding</source>
+        <translation>Округление</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1163"/>
+        <source>Signum</source>
+        <translation>Знак</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1164"/>
+        <source>Square Root</source>
+        <translation>Квадратный корень</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1165"/>
+        <source>Sum</source>
+        <translation>Сумма</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1166"/>
+        <source>Truncation</source>
+        <translation>Усечение</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1169"/>
+        <source>Area Hyperbolic Cosine</source>
+        <translation>Гиперболический ареакосинус</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1170"/>
+        <source>Area Hyperbolic Sine</source>
+        <translation>Гиперболический ареасинус</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1171"/>
+        <source>Area Hyperbolic Tangent</source>
+        <translation>Гиперболический ареатангенс</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1172"/>
+        <source>Hyperbolic Cosine</source>
+        <translation>Гиперболический косинус</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1173"/>
+        <source>Exponential</source>
+        <translation>Показательная функция</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1174"/>
+        <source>Base-2 Logarithm</source>
+        <translation>Логарифм по основанию 2</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1175"/>
+        <source>Natural Logarithm</source>
+        <translation>Натуральный логарифм</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1176"/>
+        <source>Base-10 Logarithm</source>
+        <translation>Десятичный логарифм</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1177"/>
+        <source>Hyperbolic Sine</source>
+        <translation>Гиперболический синус</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1178"/>
+        <source>Hyperbolic Tangent</source>
+        <translation>Гиперболический тангенс</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1181"/>
+        <source>Greatest Common Divisor</source>
+        <translation>Наибольший общий делитель</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1182"/>
+        <source>Combination (Binomial Coefficient)</source>
+        <translation>Биномиальный коэффициент</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1183"/>
+        <source>Permutation (Arrangement)</source>
+        <translation>Перестановка</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1186"/>
+        <source>Binomial Cumulative Distribution Function</source>
+        <translation>Биномиальная функция распределения</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1187"/>
+        <source>Binomial Distribution Mean</source>
+        <translation>Среднее (медиана) биномиального распределения</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1188"/>
+        <source>Binomial Probability Mass Function</source>
+        <translation>Наиболее вероятное значение биномиального распределения</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1189"/>
+        <source>Binomial Distribution Variance</source>
+        <translation>Дисперсия биномиального распределения</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1192"/>
+        <source>Hypergeometric Cumulative Distribution Function</source>
+        <translation>Гипергеометрическая функция распределения</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1193"/>
+        <source>Hypergeometric Distribution Mean</source>
+        <translation>Среднее (медиана) гипергеометрического распределения</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1194"/>
+        <source>Hypergeometric Probability Mass Function</source>
+        <translation>Наиболее вероятное значение гипергеометрического распределения</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1195"/>
+        <source>Hypergeometric Distribution Variance</source>
+        <translation>Дисперсия гипергеометрического распределения</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1196"/>
+        <source>Poissonian Cumulative Distribution Function</source>
+        <translation>Функция распределения Пуассона</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1197"/>
+        <source>Poissonian Distribution Mean</source>
+        <translation>Среднее (медиана) распределения Пуассона</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1198"/>
+        <source>Poissonian Probability Mass Function</source>
+        <translation>Наиболее вероятное значение распределения Пуассона</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1199"/>
+        <source>Poissonian Distribution Variance</source>
+        <translation>Дисперсия распределения Пуассона</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1202"/>
+        <source>Arc Cosine</source>
+        <translation>Арккосинус</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1203"/>
+        <source>Arc Sine</source>
+        <translation>Арксинус</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1204"/>
+        <source>Arc Tangent</source>
+        <translation>Арктангенс</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1205"/>
+        <source>Cosine</source>
+        <translation>Косинус</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1206"/>
+        <source>Cotangent</source>
+        <translation>Котангенс</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1207"/>
+        <source>Cosecant</source>
+        <translation>Косеканс</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1209"/>
+        <source>Radians</source>
+        <translation>Радианы</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1210"/>
+        <source>Secant</source>
+        <translation>Секанс</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1211"/>
+        <source>Sine</source>
+        <translation>Синус</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1212"/>
+        <source>Tangent</source>
+        <translation>Тангенс</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1153"/>
+        <source>Extension of Factorials [= (x-1)!]</source>
+        <translation>Расширение факториала [=(x-1)!]</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1157"/>
+        <source>ln(abs(Gamma))</source>
+        <translation>ln(abs(Gamma))</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1190"/>
+        <source>Error Function</source>
+        <translation>Функция ошибок</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1191"/>
+        <source>Complementary Error Function</source>
+        <translation>Дополнительная функция ошибок</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1208"/>
+        <source>Degrees of Arc</source>
+        <translation>Градусы дуги</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1215"/>
+        <source>Mask to a bit size</source>
+        <translation>Маска размера бита</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1216"/>
+        <source>Sign-extent a value</source>
+        <translation>Дополнительный знаковый ряд</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1217"/>
+        <source>Logical NOT</source>
+        <translation>Логическое НЕ</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1218"/>
+        <source>Logical AND</source>
+        <translation>Логическое И</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1219"/>
+        <source>Logical OR</source>
+        <translation>Логическое ИЛИ</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1220"/>
+        <source>Logical XOR</source>
+        <translation>Логическое исключающее ИЛИ</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1221"/>
+        <source>Arithmetic Shift Left</source>
+        <translation>Арифметический сдвиг влево</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1222"/>
+        <source>Arithmetic Shift Right</source>
+        <translation>Арифметический сдвиг вправо</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1223"/>
+        <source>Integer Quotient</source>
+        <translation>Целое частное</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1224"/>
+        <source>Modulo</source>
+        <translation>По модулю</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="942"/>
+        <source>function undefined for specified arguments</source>
+        <translation type="unfinished">Функция не определена для конкретных аргументов</translation>
+    </message>
     <message>
         <location filename="../core/functions.cpp" line="96"/>
         <source>cannot execute function %1</source>
-        <translation>Не могу вычислить значение функции %1</translation>
+        <translation type="unfinished">Не могу вычислить значение функции %1</translation>
     </message>
     <message numerus="yes">
-        <location filename="../core/functions.cpp" line="101"/>
+        <location filename="../core/functions.cpp" line="102"/>
         <source>function accepts %1 argument(s)</source>
-        <translation>
+        <translation type="unfinished">
             <numerusform>Функция поддерживает только %1 аргумент</numerusform>
             <numerusform>Функция поддерживает %1 аргумент(ов)</numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
-</context>
-<context>
-    <name>Functions</name>
     <message>
-        <location filename="../core/functions.cpp" line="1142"/>
-        <source>Absolute Value</source>
-        <translation>Модуль</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1143"/>
-        <source>Average (Arithmetic Mean)</source>
-        <translation>Среднее значение</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1144"/>
-        <source>Binary Representation</source>
-        <translation>Двоичное представление</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1145"/>
-        <source>Cube Root</source>
-        <translation>Кубический корень</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1146"/>
-        <source>Ceiling</source>
-        <translation>Максимальный</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1147"/>
-        <source>Decimal Representation</source>
-        <translation>Десятичное представление</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1148"/>
-        <source>Floor</source>
-        <translation>Наибольшая целая часть</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1149"/>
-        <source>Fractional Part</source>
-        <translation>Дробная часть</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1151"/>
-        <source>Geometric Mean</source>
-        <translation>Геометрическое среднее</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1152"/>
-        <source>Hexadecimal Representation</source>
-        <translation>Шестнадцатеричное представление</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1153"/>
-        <source>Integer Part</source>
-        <translation>Целая часть</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1155"/>
-        <source>Maximum</source>
-        <translation>Максимум</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1156"/>
-        <source>Minimum</source>
-        <translation>Минимум</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1157"/>
-        <source>Octal Representation</source>
-        <translation>Восьмеричное представление</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1158"/>
-        <source>Product</source>
-        <translation>Произведение</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1159"/>
-        <source>Rounding</source>
-        <translation>Округление</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1160"/>
-        <source>Signum</source>
-        <translation>Знак</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1161"/>
-        <source>Square Root</source>
-        <translation>Квадратный корень</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1162"/>
-        <source>Sum</source>
-        <translation>Сумма</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1163"/>
-        <source>Truncation</source>
-        <translation>Усечение</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1166"/>
-        <source>Area Hyperbolic Cosine</source>
-        <translation>Гиперболический ареакосинус</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1167"/>
-        <source>Area Hyperbolic Sine</source>
-        <translation>Гиперболический ареасинус</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1168"/>
-        <source>Area Hyperbolic Tangent</source>
-        <translation>Гиперболический ареатангенс</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1169"/>
-        <source>Hyperbolic Cosine</source>
-        <translation>Гиперболический косинус</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1170"/>
-        <source>Exponential</source>
-        <translation>Показательная функция</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1171"/>
-        <source>Base-2 Logarithm</source>
-        <translation>Логарифм по основанию 2</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1172"/>
-        <source>Natural Logarithm</source>
-        <translation>Натуральный логарифм</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1173"/>
-        <source>Base-10 Logarithm</source>
-        <translation>Десятичный логарифм</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1174"/>
-        <source>Hyperbolic Sine</source>
-        <translation>Гиперболический синус</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1175"/>
-        <source>Hyperbolic Tangent</source>
-        <translation>Гиперболический тангенс</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1178"/>
-        <source>Greatest Common Divisor</source>
-        <translation>Наибольший общий делитель</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1179"/>
-        <source>Combination (Binomial Coefficient)</source>
-        <translation>Биномиальный коэффициент</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1180"/>
-        <source>Permutation (Arrangement)</source>
-        <translation>Перестановка</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1183"/>
-        <source>Binomial Cumulative Distribution Function</source>
-        <translation>Биномиальная функция распределения</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1184"/>
-        <source>Binomial Distribution Mean</source>
-        <translation>Среднее (медиана) биномиального распределения</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1185"/>
-        <source>Binomial Probability Mass Function</source>
-        <translation>Наиболее вероятное значение биномиального распределения</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1186"/>
-        <source>Binomial Distribution Variance</source>
-        <translation>Дисперсия биномиального распределения</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1189"/>
-        <source>Hypergeometric Cumulative Distribution Function</source>
-        <translation>Гипергеометрическая функция распределения</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1190"/>
-        <source>Hypergeometric Distribution Mean</source>
-        <translation>Среднее (медиана) гипергеометрического распределения</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1191"/>
-        <source>Hypergeometric Probability Mass Function</source>
-        <translation>Наиболее вероятное значение гипергеометрического распределения</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1192"/>
-        <source>Hypergeometric Distribution Variance</source>
-        <translation>Дисперсия гипергеометрического распределения</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1193"/>
-        <source>Poissonian Cumulative Distribution Function</source>
-        <translation>Функция распределения Пуассона</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1194"/>
-        <source>Poissonian Distribution Mean</source>
-        <translation>Среднее (медиана) распределения Пуассона</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1195"/>
-        <source>Poissonian Probability Mass Function</source>
-        <translation>Наиболее вероятное значение распределения Пуассона</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1196"/>
-        <source>Poissonian Distribution Variance</source>
-        <translation>Дисперсия распределения Пуассона</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1199"/>
-        <source>Arc Cosine</source>
-        <translation>Арккосинус</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1200"/>
-        <source>Arc Sine</source>
-        <translation>Арксинус</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1201"/>
-        <source>Arc Tangent</source>
-        <translation>Арктангенс</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1202"/>
-        <source>Cosine</source>
-        <translation>Косинус</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1203"/>
-        <source>Cotangent</source>
-        <translation>Котангенс</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1204"/>
-        <source>Cosecant</source>
-        <translation>Косеканс</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1206"/>
-        <source>Radians</source>
-        <translation>Радианы</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1207"/>
-        <source>Secant</source>
-        <translation>Секанс</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1208"/>
-        <source>Sine</source>
-        <translation>Синус</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1209"/>
-        <source>Tangent</source>
-        <translation>Тангенс</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1150"/>
-        <source>Extension of Factorials [= (x-1)!]</source>
-        <translation>Расширение факториала [=(x-1)!]</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1154"/>
-        <source>ln(abs(Gamma))</source>
-        <translation>ln(abs(Gamma))</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1187"/>
-        <source>Error Function</source>
-        <translation>Функция ошибок</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1188"/>
-        <source>Complementary Error Function</source>
-        <translation>Дополнительная функция ошибок</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1205"/>
-        <source>Degrees of Arc</source>
-        <translation>Градусы дуги</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1212"/>
-        <source>Mask to a bit size</source>
-        <translation>Маска размера бита</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1213"/>
-        <source>Sign-extent a value</source>
-        <translation>Дополнительный знаковый ряд</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1214"/>
-        <source>Logical NOT</source>
-        <translation>Логическое НЕ</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1215"/>
-        <source>Logical AND</source>
-        <translation>Логическое И</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1216"/>
-        <source>Logical OR</source>
-        <translation>Логическое ИЛИ</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1217"/>
-        <source>Logical XOR</source>
-        <translation>Логическое исключающее ИЛИ</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1218"/>
-        <source>Arithmetic Shift Left</source>
-        <translation>Арифметический сдвиг влево</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1219"/>
-        <source>Arithmetic Shift Right</source>
-        <translation>Арифметический сдвиг вправо</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1220"/>
-        <source>Integer Quotient</source>
-        <translation>Целое частное</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1221"/>
-        <source>Modulo</source>
-        <translation>По модулю</translation>
-    </message>
-</context>
-<context>
-    <name>Functions::Private</name>
-    <message>
-        <location filename="../core/functions.cpp" line="271"/>
+        <location filename="../core/functions.cpp" line="273"/>
         <source>function requires 1 or 2 arguments</source>
-        <translation>Функции требуется 1 или 2 аргумента</translation>
+        <translation type="unfinished">Функции требуется 1 или 2 аргумента</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="939"/>
-        <source>function undefined for specified arguments</source>
-        <translation>Функция не определена для конкретных аргументов</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="253"/>
+        <location filename="../core/functions.cpp" line="255"/>
         <source>function requires at least 2 arguments</source>
-        <translation>Функции требуется как минимум 2 аргумента</translation>
+        <translation type="unfinished">Функции требуется как минимум 2 аргумента</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="259"/>
+        <location filename="../core/functions.cpp" line="261"/>
         <source>function requires integer arguments</source>
-        <translation>Функции требуется целочисленный аргумент</translation>
+        <translation type="unfinished">Функции требуется целочисленный аргумент</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="626"/>
+        <location filename="../core/functions.cpp" line="629"/>
         <source>function undefined for specified argument</source>
-        <translation>Функция не определена для конкретных аргументов</translation>
+        <translation type="unfinished">Функция не определена для конкретных аргументов</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="596"/>
+        <location filename="../core/functions.cpp" line="599"/>
         <source>underflow</source>
-        <translation>Исчезновение значащих разрядов</translation>
+        <translation type="unfinished">Исчезновение значащих разрядов</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="693"/>
+        <location filename="../core/functions.cpp" line="696"/>
         <source>function requires at least 1 argument</source>
-        <translation>Функции требуется как минимум 1 аргумент</translation>
+        <translation type="unfinished">Функции требуется как минимум 1 аргумент</translation>
     </message>
 </context>
 <context>
@@ -1324,16 +1040,6 @@
 </context>
 <context>
     <name>InsertFunctionDlg</name>
-    <message>
-        <location filename="../gui/insertfunctiondlg.cpp" line="52"/>
-        <source>&amp;Insert</source>
-        <translation type="obsolete">&amp;Вставить</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertfunctiondlg.cpp" line="56"/>
-        <source>Cancel</source>
-        <translation type="obsolete">Отмена</translation>
-    </message>
     <message>
         <location filename="../gui/insertfunctiondlg.cpp" line="38"/>
         <source>Insert Function</source>

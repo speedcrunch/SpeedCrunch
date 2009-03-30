@@ -204,21 +204,21 @@
     </message>
 </context>
 <context>
-    <name>BookDock::Private</name>
+    <name>BookDock</name>
     <message>
         <location filename="../gui/bookdock.cpp" line="183"/>
         <source>Back</source>
-        <translation>Înapoi</translation>
+        <translation type="unfinished">Înapoi</translation>
     </message>
     <message>
         <location filename="../gui/bookdock.cpp" line="184"/>
         <source>Forward</source>
-        <translation>Înainte</translation>
+        <translation type="unfinished">Înainte</translation>
     </message>
     <message>
         <location filename="../gui/bookdock.cpp" line="185"/>
         <source>Index</source>
-        <translation>Index</translation>
+        <translation type="unfinished">Index</translation>
     </message>
 </context>
 <context>
@@ -232,277 +232,14 @@
 <context>
     <name>Constants</name>
     <message>
-        <location filename="../core/constants.cpp" line="245"/>
-        <source>Characteristic Impedance of Vacuum</source>
-        <translation type="obsolete">Impendanţa Caracteristică a Vidului</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="243"/>
-        <source>General Physics</source>
-        <translation type="obsolete">Fizică Generală</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="247"/>
-        <source>Electric Constant</source>
-        <translation type="obsolete">Permitivitatea Vidului</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="249"/>
-        <source>Magnetic Constant</source>
-        <translation type="obsolete">Permebilitatea Vidului</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="248"/>
-        <source>Gravitation Constant</source>
-        <translation type="obsolete">Constanta Gravitaţională</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="250"/>
-        <source>Planck&apos;s Constant</source>
-        <translation type="obsolete">Constanta lui Planck</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="246"/>
-        <source>Dirac&apos;s Constant</source>
-        <translation type="obsolete">Constanta lui Dirac</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="251"/>
-        <source>Speed of Light in Vacuum</source>
-        <translation type="obsolete">Viteza Luminii în Vid</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="256"/>
-        <source>Bohr-Procopiu Magneton</source>
-        <translation type="obsolete">Magnetonul Bohr-Procopiu</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="254"/>
-        <source>Electromagnetic</source>
-        <translation type="obsolete">Electromagnetism</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="257"/>
-        <source>Conductance Quantum</source>
-        <translation type="obsolete">Cuant de Conductanţă</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="258"/>
-        <source>Coulomb&apos;s Constant</source>
-        <translation type="obsolete">Constanta lui Coulomb</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="259"/>
-        <source>Elementary Charge</source>
-        <translation type="obsolete">Sarcina Elementară</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="260"/>
-        <source>Josephson Constant</source>
-        <translation type="obsolete">Constanta lui Josephson</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="261"/>
-        <source>Magnetic Flux Quantum</source>
-        <translation type="obsolete">Cuant de Flux Magnetic</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="262"/>
-        <source>Nuclear Magneton</source>
-        <translation type="obsolete">Magnetonul Nuclear</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="263"/>
-        <source>Resistance Quantum</source>
-        <translation type="obsolete">Cuant de Rezistentă</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="264"/>
-        <source>von Klitzing Constant</source>
-        <translation type="obsolete">Constanta lui von Klitzing</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="269"/>
-        <source>Bohr Radius</source>
-        <translation type="obsolete">Raza lui Bohr</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="267"/>
-        <source>Atomic &amp; Nuclear</source>
-        <translation type="obsolete">Atomică &amp; Nucleară</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="270"/>
-        <source>Fermi Coupling Constant</source>
-        <translation type="obsolete">Constanta de Cuplare lui Fermi</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="271"/>
-        <source>Fine-structure Constant</source>
-        <translation type="obsolete">Constanta de Structură Fină</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="272"/>
-        <source>Hartree Energy</source>
-        <translation type="obsolete">Energia Hartree</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="273"/>
-        <source>Quantum of Circulation</source>
-        <translation type="obsolete">Cuant de Circulaţie</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="274"/>
-        <source>Rydberg Constant</source>
-        <translation type="obsolete">Constanta lui Rydberg</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="275"/>
-        <source>Thomson Cross Section</source>
-        <translation type="obsolete">Secţiunea Eficace lui Thomson</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="276"/>
-        <source>Weak Mixing Angle</source>
-        <translation type="obsolete">Unghiul lui Weinberg</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="281"/>
-        <source>Atomic Mass Unit</source>
-        <translation type="obsolete">Unitatea Atomică de Masă</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="279"/>
-        <source>Physico-chemical</source>
-        <translation type="obsolete">Fizico-chimie</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="282"/>
-        <source>Avogadro&apos;s Number</source>
-        <translation type="obsolete">Numarul lui Avogadro</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="283"/>
-        <source>Boltzmann Constant</source>
-        <translation type="obsolete">Constanta lui Boltzmann</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="284"/>
-        <source>Faraday Constant</source>
-        <translation type="obsolete">Constanta lui Faraday</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="285"/>
-        <source>First Radiation Constant</source>
-        <translation type="obsolete">Prima Constantă Radiativă</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="287"/>
-        <source>Loschmidt Constant</source>
-        <translation type="obsolete">Constanta lui Loschmidt</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="286"/>
-        <source>Gas Constant</source>
-        <translation type="obsolete">Constanta Gazelor Ideale</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="288"/>
-        <source>Molar Planck Constant</source>
-        <translation type="obsolete">Constanta Molară lui Planck</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="289"/>
-        <source>Second Radiation Constant</source>
-        <translation type="obsolete">A Doua Constantă Radiativă</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="290"/>
-        <source>Stefan-Boltzmann Constant</source>
-        <translation type="obsolete">Constanta Stefan-Boltzmann</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="295"/>
-        <source>Astronomical Unit</source>
-        <translation type="obsolete">Unitatea Astronomică</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="293"/>
-        <source>Astronomy</source>
-        <translation type="obsolete">Astronomie</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="296"/>
-        <source>Light Year</source>
-        <translation type="obsolete">An-lumină</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="297"/>
-        <source>Parsec</source>
-        <translation type="obsolete">Parsec</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="303"/>
-        <source>Sidereal Year</source>
-        <translation type="obsolete">An Sideral</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="299"/>
-        <source>days</source>
-        <translation type="obsolete">zile</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="304"/>
-        <source>Tropical Year</source>
-        <translation type="obsolete">An Tropic</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="301"/>
-        <source>Gregorian Year</source>
-        <translation type="obsolete">An Gregorian</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="306"/>
-        <source>Earth Mass</source>
-        <translation type="obsolete">Masa Terrei</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="308"/>
-        <source>Sun Mass</source>
-        <translation type="obsolete">Masa Soarelui</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="307"/>
-        <source>Mean Earth Radius</source>
-        <translation type="obsolete">Raza Media a Pămîntului</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="309"/>
-        <source>Sun Radius</source>
-        <translation type="obsolete">Raza Soarelui</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="310"/>
-        <source>Sun Luminosity</source>
-        <translation type="obsolete">Luminozitatea Solară</translation>
-    </message>
-</context>
-<context>
-    <name>Constants::Private</name>
-    <message>
-        <location filename="../core/constants.cpp" line="203"/>
-        <source>General Physics</source>
-        <translation type="unfinished">Fizică Generală</translation>
-    </message>
-    <message>
         <location filename="../core/constants.cpp" line="205"/>
         <source>Characteristic Impedance of Vacuum</source>
         <translation type="unfinished">Impendanţa Caracteristică a Vidului</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="206"/>
-        <source>Dirac&apos;s Constant</source>
-        <translation type="unfinished">Constanta lui Dirac</translation>
+        <location filename="../core/constants.cpp" line="203"/>
+        <source>General Physics</source>
+        <translation type="unfinished">Fizică Generală</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="207"/>
@@ -510,14 +247,14 @@
         <translation type="unfinished">Permitivitatea Vidului</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="208"/>
-        <source>Gravitation Constant</source>
-        <translation type="unfinished">Constanta Gravitaţională</translation>
-    </message>
-    <message>
         <location filename="../core/constants.cpp" line="209"/>
         <source>Magnetic Constant</source>
         <translation type="unfinished">Permebilitatea Vidului</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="208"/>
+        <source>Gravitation Constant</source>
+        <translation type="unfinished">Constanta Gravitaţională</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="210"/>
@@ -525,19 +262,24 @@
         <translation type="unfinished">Constanta lui Planck</translation>
     </message>
     <message>
+        <location filename="../core/constants.cpp" line="206"/>
+        <source>Dirac&apos;s Constant</source>
+        <translation type="unfinished">Constanta lui Dirac</translation>
+    </message>
+    <message>
         <location filename="../core/constants.cpp" line="211"/>
         <source>Speed of Light in Vacuum</source>
         <translation type="unfinished">Viteza Luminii în Vid</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="214"/>
-        <source>Electromagnetic</source>
-        <translation type="unfinished">Electromagnetism</translation>
-    </message>
-    <message>
         <location filename="../core/constants.cpp" line="216"/>
         <source>Bohr-Procopiu Magneton</source>
         <translation type="unfinished">Magnetonul Bohr-Procopiu</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="214"/>
+        <source>Electromagnetic</source>
+        <translation type="unfinished">Electromagnetism</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="217"/>
@@ -580,14 +322,14 @@
         <translation type="unfinished">Constanta lui von Klitzing</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="227"/>
-        <source>Atomic &amp; Nuclear</source>
-        <translation type="unfinished">Atomică &amp; Nucleară</translation>
-    </message>
-    <message>
         <location filename="../core/constants.cpp" line="229"/>
         <source>Bohr Radius</source>
         <translation type="unfinished">Raza lui Bohr</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="227"/>
+        <source>Atomic &amp; Nuclear</source>
+        <translation type="unfinished">Atomică &amp; Nucleară</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="230"/>
@@ -625,14 +367,14 @@
         <translation type="unfinished">Unghiul lui Weinberg</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="239"/>
-        <source>Physico-chemical</source>
-        <translation type="unfinished">Fizico-chimie</translation>
-    </message>
-    <message>
         <location filename="../core/constants.cpp" line="241"/>
         <source>Atomic Mass Unit</source>
         <translation type="unfinished">Unitatea Atomică de Masă</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="239"/>
+        <source>Physico-chemical</source>
+        <translation type="unfinished">Fizico-chimie</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="242"/>
@@ -655,14 +397,14 @@
         <translation type="unfinished">Prima Constantă Radiativă</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="246"/>
-        <source>Gas Constant</source>
-        <translation type="unfinished">Constanta Gazelor Ideale</translation>
-    </message>
-    <message>
         <location filename="../core/constants.cpp" line="247"/>
         <source>Loschmidt Constant</source>
         <translation type="unfinished">Constanta lui Loschmidt</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="246"/>
+        <source>Gas Constant</source>
+        <translation type="unfinished">Constanta Gazelor Ideale</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="248"/>
@@ -680,14 +422,14 @@
         <translation type="unfinished">Constanta Stefan-Boltzmann</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="253"/>
-        <source>Astronomy</source>
-        <translation type="unfinished">Astronomie</translation>
-    </message>
-    <message>
         <location filename="../core/constants.cpp" line="255"/>
         <source>Astronomical Unit</source>
         <translation type="unfinished">Unitatea Astronomică</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="253"/>
+        <source>Astronomy</source>
+        <translation type="unfinished">Astronomie</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="256"/>
@@ -700,24 +442,14 @@
         <translation type="unfinished">Parsec</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="259"/>
-        <source>days</source>
-        <translation type="unfinished">zile</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="261"/>
-        <source>Gregorian Year</source>
-        <translation type="unfinished">An Gregorian</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="262"/>
-        <source>Julian Year</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../core/constants.cpp" line="263"/>
         <source>Sidereal Year</source>
         <translation type="unfinished">An Sideral</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="259"/>
+        <source>days</source>
+        <translation type="unfinished">zile</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="264"/>
@@ -725,19 +457,24 @@
         <translation type="unfinished">An Tropic</translation>
     </message>
     <message>
+        <location filename="../core/constants.cpp" line="261"/>
+        <source>Gregorian Year</source>
+        <translation type="unfinished">An Gregorian</translation>
+    </message>
+    <message>
         <location filename="../core/constants.cpp" line="266"/>
         <source>Earth Mass</source>
         <translation type="unfinished">Masa Terrei</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="267"/>
-        <source>Mean Earth Radius</source>
-        <translation type="unfinished">Raza Media a Pămîntului</translation>
-    </message>
-    <message>
         <location filename="../core/constants.cpp" line="268"/>
         <source>Sun Mass</source>
         <translation type="unfinished">Masa Soarelui</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="267"/>
+        <source>Mean Earth Radius</source>
+        <translation type="unfinished">Raza Media a Pămîntului</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="269"/>
@@ -749,6 +486,11 @@
         <source>Sun Luminosity</source>
         <translation type="unfinished">Luminozitatea Solară</translation>
     </message>
+    <message>
+        <location filename="../core/constants.cpp" line="262"/>
+        <source>Julian Year</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ConstantsDock</name>
@@ -757,61 +499,41 @@
         <source>Constants</source>
         <translation>Constante</translation>
     </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="143"/>
-        <source>Category</source>
-        <translation type="obsolete">Catogoria</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="144"/>
-        <source>Search</source>
-        <translation type="obsolete">Caută</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="118"/>
-        <source>No match found</source>
-        <translation type="obsolete">Nici un rezultat</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="257"/>
-        <source>All</source>
-        <translation type="obsolete">Toate</translation>
-    </message>
 </context>
 <context>
     <name>ConstantsWidget</name>
     <message>
-        <location filename="../gui/constantswidget.cpp" line="110"/>
+        <location filename="../gui/constantswidget.cpp" line="131"/>
         <source>No match found</source>
         <translation type="unfinished">Nici un rezultat</translation>
     </message>
     <message>
-        <location filename="../gui/constantswidget.cpp" line="131"/>
+        <location filename="../gui/constantswidget.cpp" line="134"/>
         <source>Name</source>
         <translation type="unfinished">Nume</translation>
     </message>
     <message>
-        <location filename="../gui/constantswidget.cpp" line="132"/>
+        <location filename="../gui/constantswidget.cpp" line="135"/>
         <source>Value</source>
         <translation type="unfinished">Valoare</translation>
     </message>
     <message>
-        <location filename="../gui/constantswidget.cpp" line="133"/>
+        <location filename="../gui/constantswidget.cpp" line="136"/>
         <source>Unit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/constantswidget.cpp" line="140"/>
+        <location filename="../gui/constantswidget.cpp" line="129"/>
         <source>Category</source>
         <translation type="unfinished">Catogoria</translation>
     </message>
     <message>
-        <location filename="../gui/constantswidget.cpp" line="141"/>
+        <location filename="../gui/constantswidget.cpp" line="130"/>
         <source>Search</source>
         <translation type="unfinished">Caută</translation>
     </message>
     <message>
-        <location filename="../gui/constantswidget.cpp" line="245"/>
+        <location filename="../gui/constantswidget.cpp" line="246"/>
         <source>All</source>
         <translation type="unfinished">Toate</translation>
     </message>
@@ -876,411 +598,405 @@
     </message>
 </context>
 <context>
-    <name>Function</name>
+    <name>Functions</name>
+    <message>
+        <location filename="../core/functions.cpp" line="1145"/>
+        <source>Absolute Value</source>
+        <translation>Valoare Asbolută</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1146"/>
+        <source>Average (Arithmetic Mean)</source>
+        <translation>Medie Aritmetică</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1147"/>
+        <source>Binary Representation</source>
+        <translation>Reprezentare Binară</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1148"/>
+        <source>Cube Root</source>
+        <translation>Rădăcină Cubică</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1150"/>
+        <source>Decimal Representation</source>
+        <translation>Reprezentare Zecimală</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1152"/>
+        <source>Fractional Part</source>
+        <translation>Parte Fracţionară</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1154"/>
+        <source>Geometric Mean</source>
+        <translation>Medie Geometrică</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1155"/>
+        <source>Hexadecimal Representation</source>
+        <translation>Reprezentare Hexazecimala</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1156"/>
+        <source>Integer Part</source>
+        <translation>Partea Întreagă</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1158"/>
+        <source>Maximum</source>
+        <translation>Maximul</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1159"/>
+        <source>Minimum</source>
+        <translation>Minimul</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1160"/>
+        <source>Octal Representation</source>
+        <translation>Reprezentare Octală</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1161"/>
+        <source>Product</source>
+        <translation>Produs</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1162"/>
+        <source>Rounding</source>
+        <translation>Rotunjire</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1163"/>
+        <source>Signum</source>
+        <translation>Signum</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1164"/>
+        <source>Square Root</source>
+        <translation>Rădăcina Pătrată</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1165"/>
+        <source>Sum</source>
+        <translation>Sumă</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1166"/>
+        <source>Truncation</source>
+        <translation>Trunchiere</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1172"/>
+        <source>Hyperbolic Cosine</source>
+        <translation>Cosinus Hiperbolic</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1173"/>
+        <source>Exponential</source>
+        <translation>Exponenţial</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1174"/>
+        <source>Base-2 Logarithm</source>
+        <translation>Logaritm în Baza 2</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1175"/>
+        <source>Natural Logarithm</source>
+        <translation>Logaritm Natural</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1176"/>
+        <source>Base-10 Logarithm</source>
+        <translation>Logaritm în Baza 10</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1177"/>
+        <source>Hyperbolic Sine</source>
+        <translation>Sinus Hiperbolic</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1178"/>
+        <source>Hyperbolic Tangent</source>
+        <translation>Tangenta Hiperbolică</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1181"/>
+        <source>Greatest Common Divisor</source>
+        <translation>Cel Mai Mare Divisor Comun</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1182"/>
+        <source>Combination (Binomial Coefficient)</source>
+        <translation>Combinari (Coeficient Binomial)</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1183"/>
+        <source>Permutation (Arrangement)</source>
+        <translation>Permutări (Aranjamente)</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1186"/>
+        <source>Binomial Cumulative Distribution Function</source>
+        <translation>Funcţia Distribuţiei Binomiale Cumulative</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1187"/>
+        <source>Binomial Distribution Mean</source>
+        <translation>Media Distribuţiei Binomiale</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1188"/>
+        <source>Binomial Probability Mass Function</source>
+        <translation>Funcţia Masă de Probabilitate Binomială</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1189"/>
+        <source>Binomial Distribution Variance</source>
+        <translation>Varianţa Distribuţiei Binomiale</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1192"/>
+        <source>Hypergeometric Cumulative Distribution Function</source>
+        <translation>Funcţia Distribuţiei Hipergeometrice Cumulative</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1193"/>
+        <source>Hypergeometric Distribution Mean</source>
+        <translation>Media Distribuţieri Hipergeometrice</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1194"/>
+        <source>Hypergeometric Probability Mass Function</source>
+        <translation>Funcţia Masă de Probabilitate Hipergeometrică </translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1195"/>
+        <source>Hypergeometric Distribution Variance</source>
+        <translation>Varianţa Distribuţiei Hipergeometrice</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1196"/>
+        <source>Poissonian Cumulative Distribution Function</source>
+        <translation>Funcţia Distribuţiei Poissoniane Cumulative</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1197"/>
+        <source>Poissonian Distribution Mean</source>
+        <translation>Media Distribuţiei Poissoniane</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1198"/>
+        <source>Poissonian Probability Mass Function</source>
+        <translation>Funcţia Masă de Probabilitate Poissoniană</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1199"/>
+        <source>Poissonian Distribution Variance</source>
+        <translation>Varianţa Distribuţiei Poissoniane</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1202"/>
+        <source>Arc Cosine</source>
+        <translation>Arc Cosinus</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1203"/>
+        <source>Arc Sine</source>
+        <translation>Arc Sinus</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1204"/>
+        <source>Arc Tangent</source>
+        <translation>Arc Tangenta</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1205"/>
+        <source>Cosine</source>
+        <translation>Cosinus</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1206"/>
+        <source>Cotangent</source>
+        <translation>Co-tangent</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1207"/>
+        <source>Cosecant</source>
+        <translation>Cosecanta</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1209"/>
+        <source>Radians</source>
+        <translation>Radiani</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1210"/>
+        <source>Secant</source>
+        <translation>Secanta</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1211"/>
+        <source>Sine</source>
+        <translation>Sinus</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1212"/>
+        <source>Tangent</source>
+        <translation>Tangenta</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1149"/>
+        <source>Ceiling</source>
+        <translation>Rotunjire prin adaos</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1151"/>
+        <source>Floor</source>
+        <translation>Rontunjire prin lipsa</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1153"/>
+        <source>Extension of Factorials [= (x-1)!]</source>
+        <translation>Factorial extins </translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1157"/>
+        <source>ln(abs(Gamma))</source>
+        <translation>ln(abs(Gamma))</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1169"/>
+        <source>Area Hyperbolic Cosine</source>
+        <translation>Arc Cosinus Hiperbolic</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1170"/>
+        <source>Area Hyperbolic Sine</source>
+        <translation>Arc Sinus Hiperbolic</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1171"/>
+        <source>Area Hyperbolic Tangent</source>
+        <translation>Arc Tangenta Hiperbolica</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1190"/>
+        <source>Error Function</source>
+        <translation>Funcţie de eroare</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1191"/>
+        <source>Complementary Error Function</source>
+        <translation>Funcţie de eroare complementară</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1208"/>
+        <source>Degrees of Arc</source>
+        <translation>Degrees of Arc</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1215"/>
+        <source>Mask to a bit size</source>
+        <translation>Mască de biţi</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1216"/>
+        <source>Sign-extent a value</source>
+        <translation>Elimină masca</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1217"/>
+        <source>Logical NOT</source>
+        <translation>NOT logic</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1218"/>
+        <source>Logical AND</source>
+        <translation>SI logic</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1219"/>
+        <source>Logical OR</source>
+        <translation>OR logic</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1220"/>
+        <source>Logical XOR</source>
+        <translation>XOR logic</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1221"/>
+        <source>Arithmetic Shift Left</source>
+        <translation>Deplasare aritmetică la stânga</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1222"/>
+        <source>Arithmetic Shift Right</source>
+        <translation>Deplasare aritmetică la dreapta</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1223"/>
+        <source>Integer Quotient</source>
+        <translation>Cat intreg</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1224"/>
+        <source>Modulo</source>
+        <translation>Rest</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="942"/>
+        <source>function undefined for specified arguments</source>
+        <translation type="unfinished">funcţia e nedefinită pentru argumente speciale</translation>
+    </message>
     <message>
         <location filename="../core/functions.cpp" line="96"/>
         <source>cannot execute function %1</source>
-        <translation>nu pot executa funcţia %1</translation>
+        <translation type="unfinished">nu pot executa funcţia %1</translation>
     </message>
     <message numerus="yes">
-        <location filename="../core/functions.cpp" line="101"/>
+        <location filename="../core/functions.cpp" line="102"/>
         <source>function accepts %1 argument(s)</source>
-        <translation>
+        <translation type="unfinished">
             <numerusform>funcţia acceptă %1 argument</numerusform>
             <numerusform>funcţia acceptă %1 argumente</numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
-</context>
-<context>
-    <name>Functions</name>
     <message>
-        <location filename="../core/functions.cpp" line="1142"/>
-        <source>Absolute Value</source>
-        <translation>Valoare Asbolută</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1143"/>
-        <source>Average (Arithmetic Mean)</source>
-        <translation>Medie Aritmetică</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1144"/>
-        <source>Binary Representation</source>
-        <translation>Reprezentare Binară</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1145"/>
-        <source>Cube Root</source>
-        <translation>Rădăcină Cubică</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1147"/>
-        <source>Decimal Representation</source>
-        <translation>Reprezentare Zecimală</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1149"/>
-        <source>Fractional Part</source>
-        <translation>Parte Fracţionară</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1151"/>
-        <source>Geometric Mean</source>
-        <translation>Medie Geometrică</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1152"/>
-        <source>Hexadecimal Representation</source>
-        <translation>Reprezentare Hexazecimala</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1153"/>
-        <source>Integer Part</source>
-        <translation>Partea Întreagă</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1155"/>
-        <source>Maximum</source>
-        <translation>Maximul</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1156"/>
-        <source>Minimum</source>
-        <translation>Minimul</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1157"/>
-        <source>Octal Representation</source>
-        <translation>Reprezentare Octală</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1158"/>
-        <source>Product</source>
-        <translation>Produs</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1159"/>
-        <source>Rounding</source>
-        <translation>Rotunjire</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1160"/>
-        <source>Signum</source>
-        <translation>Signum</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1161"/>
-        <source>Square Root</source>
-        <translation>Rădăcina Pătrată</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1162"/>
-        <source>Sum</source>
-        <translation>Sumă</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1163"/>
-        <source>Truncation</source>
-        <translation>Trunchiere</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1169"/>
-        <source>Hyperbolic Cosine</source>
-        <translation>Cosinus Hiperbolic</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1170"/>
-        <source>Exponential</source>
-        <translation>Exponenţial</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1171"/>
-        <source>Base-2 Logarithm</source>
-        <translation>Logaritm în Baza 2</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1172"/>
-        <source>Natural Logarithm</source>
-        <translation>Logaritm Natural</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1173"/>
-        <source>Base-10 Logarithm</source>
-        <translation>Logaritm în Baza 10</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1174"/>
-        <source>Hyperbolic Sine</source>
-        <translation>Sinus Hiperbolic</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1175"/>
-        <source>Hyperbolic Tangent</source>
-        <translation>Tangenta Hiperbolică</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1178"/>
-        <source>Greatest Common Divisor</source>
-        <translation>Cel Mai Mare Divisor Comun</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1179"/>
-        <source>Combination (Binomial Coefficient)</source>
-        <translation>Combinari (Coeficient Binomial)</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1180"/>
-        <source>Permutation (Arrangement)</source>
-        <translation>Permutări (Aranjamente)</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1183"/>
-        <source>Binomial Cumulative Distribution Function</source>
-        <translation>Funcţia Distribuţiei Binomiale Cumulative</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1184"/>
-        <source>Binomial Distribution Mean</source>
-        <translation>Media Distribuţiei Binomiale</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1185"/>
-        <source>Binomial Probability Mass Function</source>
-        <translation>Funcţia Masă de Probabilitate Binomială</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1186"/>
-        <source>Binomial Distribution Variance</source>
-        <translation>Varianţa Distribuţiei Binomiale</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1189"/>
-        <source>Hypergeometric Cumulative Distribution Function</source>
-        <translation>Funcţia Distribuţiei Hipergeometrice Cumulative</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1190"/>
-        <source>Hypergeometric Distribution Mean</source>
-        <translation>Media Distribuţieri Hipergeometrice</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1191"/>
-        <source>Hypergeometric Probability Mass Function</source>
-        <translation>Funcţia Masă de Probabilitate Hipergeometrică </translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1192"/>
-        <source>Hypergeometric Distribution Variance</source>
-        <translation>Varianţa Distribuţiei Hipergeometrice</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1193"/>
-        <source>Poissonian Cumulative Distribution Function</source>
-        <translation>Funcţia Distribuţiei Poissoniane Cumulative</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1194"/>
-        <source>Poissonian Distribution Mean</source>
-        <translation>Media Distribuţiei Poissoniane</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1195"/>
-        <source>Poissonian Probability Mass Function</source>
-        <translation>Funcţia Masă de Probabilitate Poissoniană</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1196"/>
-        <source>Poissonian Distribution Variance</source>
-        <translation>Varianţa Distribuţiei Poissoniane</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1199"/>
-        <source>Arc Cosine</source>
-        <translation>Arc Cosinus</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1200"/>
-        <source>Arc Sine</source>
-        <translation>Arc Sinus</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1201"/>
-        <source>Arc Tangent</source>
-        <translation>Arc Tangenta</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1202"/>
-        <source>Cosine</source>
-        <translation>Cosinus</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1203"/>
-        <source>Cotangent</source>
-        <translation>Co-tangent</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1204"/>
-        <source>Cosecant</source>
-        <translation>Cosecanta</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1206"/>
-        <source>Radians</source>
-        <translation>Radiani</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1207"/>
-        <source>Secant</source>
-        <translation>Secanta</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1208"/>
-        <source>Sine</source>
-        <translation>Sinus</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1209"/>
-        <source>Tangent</source>
-        <translation>Tangenta</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1146"/>
-        <source>Ceiling</source>
-        <translation>Rotunjire prin adaos</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1148"/>
-        <source>Floor</source>
-        <translation>Rontunjire prin lipsa</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1150"/>
-        <source>Extension of Factorials [= (x-1)!]</source>
-        <translation>Factorial extins </translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1154"/>
-        <source>ln(abs(Gamma))</source>
-        <translation>ln(abs(Gamma))</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1166"/>
-        <source>Area Hyperbolic Cosine</source>
-        <translation>Arc Cosinus Hiperbolic</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1167"/>
-        <source>Area Hyperbolic Sine</source>
-        <translation>Arc Sinus Hiperbolic</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1168"/>
-        <source>Area Hyperbolic Tangent</source>
-        <translation>Arc Tangenta Hiperbolica</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1187"/>
-        <source>Error Function</source>
-        <translation>Funcţie de eroare</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1188"/>
-        <source>Complementary Error Function</source>
-        <translation>Funcţie de eroare complementară</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1205"/>
-        <source>Degrees of Arc</source>
-        <translation>Degrees of Arc</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1212"/>
-        <source>Mask to a bit size</source>
-        <translation>Mască de biţi</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1213"/>
-        <source>Sign-extent a value</source>
-        <translation>Elimină masca</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1214"/>
-        <source>Logical NOT</source>
-        <translation>NOT logic</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1215"/>
-        <source>Logical AND</source>
-        <translation>SI logic</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1216"/>
-        <source>Logical OR</source>
-        <translation>OR logic</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1217"/>
-        <source>Logical XOR</source>
-        <translation>XOR logic</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1218"/>
-        <source>Arithmetic Shift Left</source>
-        <translation>Deplasare aritmetică la stânga</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1219"/>
-        <source>Arithmetic Shift Right</source>
-        <translation>Deplasare aritmetică la dreapta</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1220"/>
-        <source>Integer Quotient</source>
-        <translation>Cat intreg</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1221"/>
-        <source>Modulo</source>
-        <translation>Rest</translation>
-    </message>
-</context>
-<context>
-    <name>Functions::Private</name>
-    <message>
-        <location filename="../core/functions.cpp" line="271"/>
+        <location filename="../core/functions.cpp" line="273"/>
         <source>function requires 1 or 2 arguments</source>
-        <translation>funcţia necesita 1 sau 2 argumente</translation>
+        <translation type="unfinished">funcţia necesita 1 sau 2 argumente</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="939"/>
-        <source>function undefined for specified arguments</source>
-        <translation>funcţia e nedefinită pentru argumente speciale</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="253"/>
+        <location filename="../core/functions.cpp" line="255"/>
         <source>function requires at least 2 arguments</source>
-        <translation>funcţia necesită cel puţin 2 argumente</translation>
+        <translation type="unfinished">funcţia necesită cel puţin 2 argumente</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="259"/>
+        <location filename="../core/functions.cpp" line="261"/>
         <source>function requires integer arguments</source>
-        <translation>funcţia necesită argumente de tip intreg</translation>
+        <translation type="unfinished">funcţia necesită argumente de tip intreg</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="626"/>
+        <location filename="../core/functions.cpp" line="629"/>
         <source>function undefined for specified argument</source>
-        <translation>funcţia e nedefinită pentru argumentul specificat</translation>
+        <translation type="unfinished">funcţia e nedefinită pentru argumentul specificat</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="596"/>
+        <location filename="../core/functions.cpp" line="599"/>
         <source>underflow</source>
-        <translation>În afara limitelor</translation>
+        <translation type="unfinished">În afara limitelor</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="693"/>
+        <location filename="../core/functions.cpp" line="696"/>
         <source>function requires at least 1 argument</source>
-        <translation>funcţia necesită cel puţin 1 argument</translation>
+        <translation type="unfinished">funcţia necesită cel puţin 1 argument</translation>
     </message>
 </context>
 <context>
@@ -1324,16 +1040,6 @@
 </context>
 <context>
     <name>InsertFunctionDlg</name>
-    <message>
-        <location filename="../gui/insertfunctiondlg.cpp" line="52"/>
-        <source>&amp;Insert</source>
-        <translation type="obsolete">&amp;Inserare</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertfunctiondlg.cpp" line="56"/>
-        <source>Cancel</source>
-        <translation type="obsolete">Anulare</translation>
-    </message>
     <message>
         <location filename="../gui/insertfunctiondlg.cpp" line="38"/>
         <source>Insert Function</source>

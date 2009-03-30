@@ -205,21 +205,21 @@
     </message>
 </context>
 <context>
-    <name>BookDock::Private</name>
+    <name>BookDock</name>
     <message>
         <location filename="../gui/bookdock.cpp" line="183"/>
         <source>Back</source>
-        <translation>Wstecz</translation>
+        <translation type="unfinished">Wstecz</translation>
     </message>
     <message>
         <location filename="../gui/bookdock.cpp" line="184"/>
         <source>Forward</source>
-        <translation>Naprzód</translation>
+        <translation type="unfinished">Naprzód</translation>
     </message>
     <message>
         <location filename="../gui/bookdock.cpp" line="185"/>
         <source>Index</source>
-        <translation>Indeks</translation>
+        <translation type="unfinished">Indeks</translation>
     </message>
 </context>
 <context>
@@ -233,32 +233,24 @@
 <context>
     <name>Constants</name>
     <message>
-        <location filename="../core/constants.cpp" line="243"/>
-        <source>General Physics</source>
-        <translation type="obsolete">Fizyka ogólna</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="254"/>
-        <source>Electromagnetic</source>
-        <translation type="obsolete">Elektromagnetyzm</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="267"/>
-        <source>Atomic &amp; Nuclear</source>
-        <translation type="obsolete">Fizyka jądrowa</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="293"/>
-        <source>Astronomy</source>
-        <translation type="obsolete">Astronomia</translation>
-    </message>
-</context>
-<context>
-    <name>Constants::Private</name>
-    <message>
         <location filename="../core/constants.cpp" line="203"/>
         <source>General Physics</source>
         <translation type="unfinished">Fizyka ogólna</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="214"/>
+        <source>Electromagnetic</source>
+        <translation type="unfinished">Elektromagnetyzm</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="227"/>
+        <source>Atomic &amp; Nuclear</source>
+        <translation type="unfinished">Fizyka jądrowa</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="253"/>
+        <source>Astronomy</source>
+        <translation type="unfinished">Astronomia</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="205"/>
@@ -294,11 +286,6 @@
         <location filename="../core/constants.cpp" line="211"/>
         <source>Speed of Light in Vacuum</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="214"/>
-        <source>Electromagnetic</source>
-        <translation type="unfinished">Elektromagnetyzm</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="216"/>
@@ -344,11 +331,6 @@
         <location filename="../core/constants.cpp" line="224"/>
         <source>von Klitzing Constant</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="227"/>
-        <source>Atomic &amp; Nuclear</source>
-        <translation type="unfinished">Fizyka jądrowa</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="229"/>
@@ -446,11 +428,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="253"/>
-        <source>Astronomy</source>
-        <translation type="unfinished">Astronomia</translation>
-    </message>
-    <message>
         <location filename="../core/constants.cpp" line="255"/>
         <source>Astronomical Unit</source>
         <translation type="unfinished"></translation>
@@ -523,61 +500,41 @@
         <source>Constants</source>
         <translation>Stałe</translation>
     </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="143"/>
-        <source>Category</source>
-        <translation type="obsolete">Kategoria</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="144"/>
-        <source>Search</source>
-        <translation type="obsolete">Wyszukiwanie</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="118"/>
-        <source>No match found</source>
-        <translation type="obsolete">Brak dopasowań</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="257"/>
-        <source>All</source>
-        <translation type="obsolete">Wszystko</translation>
-    </message>
 </context>
 <context>
     <name>ConstantsWidget</name>
     <message>
-        <location filename="../gui/constantswidget.cpp" line="110"/>
+        <location filename="../gui/constantswidget.cpp" line="131"/>
         <source>No match found</source>
         <translation type="unfinished">Brak dopasowań</translation>
     </message>
     <message>
-        <location filename="../gui/constantswidget.cpp" line="131"/>
+        <location filename="../gui/constantswidget.cpp" line="134"/>
         <source>Name</source>
         <translation type="unfinished">Nazwa</translation>
     </message>
     <message>
-        <location filename="../gui/constantswidget.cpp" line="132"/>
+        <location filename="../gui/constantswidget.cpp" line="135"/>
         <source>Value</source>
         <translation type="unfinished">Wartość</translation>
     </message>
     <message>
-        <location filename="../gui/constantswidget.cpp" line="133"/>
+        <location filename="../gui/constantswidget.cpp" line="136"/>
         <source>Unit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/constantswidget.cpp" line="140"/>
+        <location filename="../gui/constantswidget.cpp" line="129"/>
         <source>Category</source>
         <translation type="unfinished">Kategoria</translation>
     </message>
     <message>
-        <location filename="../gui/constantswidget.cpp" line="141"/>
+        <location filename="../gui/constantswidget.cpp" line="130"/>
         <source>Search</source>
         <translation type="unfinished">Wyszukiwanie</translation>
     </message>
     <message>
-        <location filename="../gui/constantswidget.cpp" line="245"/>
+        <location filename="../gui/constantswidget.cpp" line="246"/>
         <source>All</source>
         <translation type="unfinished">Wszystko</translation>
     </message>
@@ -642,14 +599,369 @@
     </message>
 </context>
 <context>
-    <name>Function</name>
+    <name>Functions</name>
+    <message>
+        <location filename="../core/functions.cpp" line="1145"/>
+        <source>Absolute Value</source>
+        <translation>Wartość absolutna</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1146"/>
+        <source>Average (Arithmetic Mean)</source>
+        <translation>Średnia arytmetyczna</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1147"/>
+        <source>Binary Representation</source>
+        <translation>Reprezentacja dwójkowa</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1148"/>
+        <source>Cube Root</source>
+        <translation>Pierwiastek sześcienny</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1149"/>
+        <source>Ceiling</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1150"/>
+        <source>Decimal Representation</source>
+        <translation>Reprezentacja dziesiętna</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1151"/>
+        <source>Floor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1152"/>
+        <source>Fractional Part</source>
+        <translation>Część ułamkowa</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1153"/>
+        <source>Extension of Factorials [= (x-1)!]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1154"/>
+        <source>Geometric Mean</source>
+        <translation>Średnia geometryczna</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1155"/>
+        <source>Hexadecimal Representation</source>
+        <translation>Reprezentacja szesnastkowa</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1156"/>
+        <source>Integer Part</source>
+        <translation>Część całkowita</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1157"/>
+        <source>ln(abs(Gamma))</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1158"/>
+        <source>Maximum</source>
+        <translation>Maksimum</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1159"/>
+        <source>Minimum</source>
+        <translation>Minimum</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1160"/>
+        <source>Octal Representation</source>
+        <translation>Reprezentacja ósemkowa</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1161"/>
+        <source>Product</source>
+        <translation>Iloczyn</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1162"/>
+        <source>Rounding</source>
+        <translation>Zaokrąglenie</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1163"/>
+        <source>Signum</source>
+        <translation>Signum</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1164"/>
+        <source>Square Root</source>
+        <translation>Pierwiastek kwadratowy</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1165"/>
+        <source>Sum</source>
+        <translation>Suma</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1166"/>
+        <source>Truncation</source>
+        <translation type="unfinished">Obcięcie</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1169"/>
+        <source>Area Hyperbolic Cosine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1170"/>
+        <source>Area Hyperbolic Sine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1171"/>
+        <source>Area Hyperbolic Tangent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1172"/>
+        <source>Hyperbolic Cosine</source>
+        <translation>Kosinus hiperboliczny</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1173"/>
+        <source>Exponential</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1174"/>
+        <source>Base-2 Logarithm</source>
+        <translation>Logarytm binarny</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1175"/>
+        <source>Natural Logarithm</source>
+        <translation>Logarytm naturalny</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1176"/>
+        <source>Base-10 Logarithm</source>
+        <translation>Logarytm dziesiętny</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1177"/>
+        <source>Hyperbolic Sine</source>
+        <translation>Sinus hiperboliczny</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1178"/>
+        <source>Hyperbolic Tangent</source>
+        <translation>Tangens hiperboliczny</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1181"/>
+        <source>Greatest Common Divisor</source>
+        <translation>Największy wspólny dzielnik</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1182"/>
+        <source>Combination (Binomial Coefficient)</source>
+        <translation>Kombinacja (Binomial Coefficient)</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1183"/>
+        <source>Permutation (Arrangement)</source>
+        <translation>Permutacja</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1186"/>
+        <source>Binomial Cumulative Distribution Function</source>
+        <translation>Dystrybuanta rozkładu dwumianowego</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1187"/>
+        <source>Binomial Distribution Mean</source>
+        <translation>Średnia rozkładu dwumianowego</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1188"/>
+        <source>Binomial Probability Mass Function</source>
+        <translation>Funkcja gęstości rozkładu dwumianowego</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1189"/>
+        <source>Binomial Distribution Variance</source>
+        <translation>Wariancja rozkładu dwumianowego</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1190"/>
+        <source>Error Function</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1191"/>
+        <source>Complementary Error Function</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1192"/>
+        <source>Hypergeometric Cumulative Distribution Function</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1193"/>
+        <source>Hypergeometric Distribution Mean</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1194"/>
+        <source>Hypergeometric Probability Mass Function</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1195"/>
+        <source>Hypergeometric Distribution Variance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1196"/>
+        <source>Poissonian Cumulative Distribution Function</source>
+        <translation>Dystrybuanta rozkładu Poissona</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1197"/>
+        <source>Poissonian Distribution Mean</source>
+        <translation>Średnia rozkładu Poissona</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1198"/>
+        <source>Poissonian Probability Mass Function</source>
+        <translation>Funkcja gęstości rozkładu Poissona</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1199"/>
+        <source>Poissonian Distribution Variance</source>
+        <translation>Wariancja rozkładu Poissona</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1202"/>
+        <source>Arc Cosine</source>
+        <translation>Arkus kosinus</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1203"/>
+        <source>Arc Sine</source>
+        <translation>Arkus sinus</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1204"/>
+        <source>Arc Tangent</source>
+        <translation>Arkus tangens</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1205"/>
+        <source>Cosine</source>
+        <translation>Kosinus</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1206"/>
+        <source>Cotangent</source>
+        <translation>Kontangens</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1207"/>
+        <source>Cosecant</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1208"/>
+        <source>Degrees of Arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1209"/>
+        <source>Radians</source>
+        <translation>Radiany</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1210"/>
+        <source>Secant</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1211"/>
+        <source>Sine</source>
+        <translation>Sinus</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1212"/>
+        <source>Tangent</source>
+        <translation>Tangens</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1215"/>
+        <source>Mask to a bit size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1216"/>
+        <source>Sign-extent a value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1217"/>
+        <source>Logical NOT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1218"/>
+        <source>Logical AND</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1219"/>
+        <source>Logical OR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1220"/>
+        <source>Logical XOR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1221"/>
+        <source>Arithmetic Shift Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1222"/>
+        <source>Arithmetic Shift Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1223"/>
+        <source>Integer Quotient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="1224"/>
+        <source>Modulo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="942"/>
+        <source>function undefined for specified arguments</source>
+        <translation type="unfinished">funkcja niezdefiniowana dla określonych parametrów</translation>
+    </message>
     <message>
         <location filename="../core/functions.cpp" line="96"/>
         <source>cannot execute function %1</source>
-        <translation>nie można wykonać funkcji %1</translation>
+        <translation type="unfinished">nie można wykonać funkcji %1</translation>
     </message>
     <message numerus="yes">
-        <location filename="../core/functions.cpp" line="101"/>
+        <location filename="../core/functions.cpp" line="102"/>
         <source>function accepts %1 argument(s)</source>
         <translation type="unfinished">
             <numerusform>funkcja przyjmuje jeden parametr</numerusform>
@@ -657,396 +969,35 @@
             <numerusform></numerusform>
         </translation>
     </message>
-</context>
-<context>
-    <name>Functions</name>
     <message>
-        <location filename="../core/functions.cpp" line="1142"/>
-        <source>Absolute Value</source>
-        <translation>Wartość absolutna</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1143"/>
-        <source>Average (Arithmetic Mean)</source>
-        <translation>Średnia arytmetyczna</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1144"/>
-        <source>Binary Representation</source>
-        <translation>Reprezentacja dwójkowa</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1145"/>
-        <source>Cube Root</source>
-        <translation>Pierwiastek sześcienny</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1146"/>
-        <source>Ceiling</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1147"/>
-        <source>Decimal Representation</source>
-        <translation>Reprezentacja dziesiętna</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1148"/>
-        <source>Floor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1149"/>
-        <source>Fractional Part</source>
-        <translation>Część ułamkowa</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1150"/>
-        <source>Extension of Factorials [= (x-1)!]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1151"/>
-        <source>Geometric Mean</source>
-        <translation>Średnia geometryczna</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1152"/>
-        <source>Hexadecimal Representation</source>
-        <translation>Reprezentacja szesnastkowa</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1153"/>
-        <source>Integer Part</source>
-        <translation>Część całkowita</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1154"/>
-        <source>ln(abs(Gamma))</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1155"/>
-        <source>Maximum</source>
-        <translation>Maksimum</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1156"/>
-        <source>Minimum</source>
-        <translation>Minimum</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1157"/>
-        <source>Octal Representation</source>
-        <translation>Reprezentacja ósemkowa</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1158"/>
-        <source>Product</source>
-        <translation>Iloczyn</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1159"/>
-        <source>Rounding</source>
-        <translation>Zaokrąglenie</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1160"/>
-        <source>Signum</source>
-        <translation>Signum</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1161"/>
-        <source>Square Root</source>
-        <translation>Pierwiastek kwadratowy</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1162"/>
-        <source>Sum</source>
-        <translation>Suma</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1163"/>
-        <source>Truncation</source>
-        <translation type="unfinished">Obcięcie</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1166"/>
-        <source>Area Hyperbolic Cosine</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1167"/>
-        <source>Area Hyperbolic Sine</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1168"/>
-        <source>Area Hyperbolic Tangent</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1169"/>
-        <source>Hyperbolic Cosine</source>
-        <translation>Kosinus hiperboliczny</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1170"/>
-        <source>Exponential</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1171"/>
-        <source>Base-2 Logarithm</source>
-        <translation>Logarytm binarny</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1172"/>
-        <source>Natural Logarithm</source>
-        <translation>Logarytm naturalny</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1173"/>
-        <source>Base-10 Logarithm</source>
-        <translation>Logarytm dziesiętny</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1174"/>
-        <source>Hyperbolic Sine</source>
-        <translation>Sinus hiperboliczny</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1175"/>
-        <source>Hyperbolic Tangent</source>
-        <translation>Tangens hiperboliczny</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1178"/>
-        <source>Greatest Common Divisor</source>
-        <translation>Największy wspólny dzielnik</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1179"/>
-        <source>Combination (Binomial Coefficient)</source>
-        <translation>Kombinacja (Binomial Coefficient)</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1180"/>
-        <source>Permutation (Arrangement)</source>
-        <translation>Permutacja</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1183"/>
-        <source>Binomial Cumulative Distribution Function</source>
-        <translation>Dystrybuanta rozkładu dwumianowego</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1184"/>
-        <source>Binomial Distribution Mean</source>
-        <translation>Średnia rozkładu dwumianowego</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1185"/>
-        <source>Binomial Probability Mass Function</source>
-        <translation>Funkcja gęstości rozkładu dwumianowego</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1186"/>
-        <source>Binomial Distribution Variance</source>
-        <translation>Wariancja rozkładu dwumianowego</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1187"/>
-        <source>Error Function</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1188"/>
-        <source>Complementary Error Function</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1189"/>
-        <source>Hypergeometric Cumulative Distribution Function</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1190"/>
-        <source>Hypergeometric Distribution Mean</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1191"/>
-        <source>Hypergeometric Probability Mass Function</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1192"/>
-        <source>Hypergeometric Distribution Variance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1193"/>
-        <source>Poissonian Cumulative Distribution Function</source>
-        <translation>Dystrybuanta rozkładu Poissona</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1194"/>
-        <source>Poissonian Distribution Mean</source>
-        <translation>Średnia rozkładu Poissona</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1195"/>
-        <source>Poissonian Probability Mass Function</source>
-        <translation>Funkcja gęstości rozkładu Poissona</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1196"/>
-        <source>Poissonian Distribution Variance</source>
-        <translation>Wariancja rozkładu Poissona</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1199"/>
-        <source>Arc Cosine</source>
-        <translation>Arkus kosinus</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1200"/>
-        <source>Arc Sine</source>
-        <translation>Arkus sinus</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1201"/>
-        <source>Arc Tangent</source>
-        <translation>Arkus tangens</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1202"/>
-        <source>Cosine</source>
-        <translation>Kosinus</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1203"/>
-        <source>Cotangent</source>
-        <translation>Kontangens</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1204"/>
-        <source>Cosecant</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1205"/>
-        <source>Degrees of Arc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1206"/>
-        <source>Radians</source>
-        <translation>Radiany</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1207"/>
-        <source>Secant</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1208"/>
-        <source>Sine</source>
-        <translation>Sinus</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1209"/>
-        <source>Tangent</source>
-        <translation>Tangens</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1212"/>
-        <source>Mask to a bit size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1213"/>
-        <source>Sign-extent a value</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1214"/>
-        <source>Logical NOT</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1215"/>
-        <source>Logical AND</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1216"/>
-        <source>Logical OR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1217"/>
-        <source>Logical XOR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1218"/>
-        <source>Arithmetic Shift Left</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1219"/>
-        <source>Arithmetic Shift Right</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1220"/>
-        <source>Integer Quotient</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="1221"/>
-        <source>Modulo</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Functions::Private</name>
-    <message>
-        <location filename="../core/functions.cpp" line="271"/>
+        <location filename="../core/functions.cpp" line="273"/>
         <source>function requires 1 or 2 arguments</source>
-        <translation>funkcja wymaga jednego lub dwóch parametrów</translation>
+        <translation type="unfinished">funkcja wymaga jednego lub dwóch parametrów</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="939"/>
-        <source>function undefined for specified arguments</source>
-        <translation>funkcja niezdefiniowana dla określonych parametrów</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="253"/>
+        <location filename="../core/functions.cpp" line="255"/>
         <source>function requires at least 2 arguments</source>
-        <translation>funkcja wymaga przynajmniej dwóch parametrów</translation>
+        <translation type="unfinished">funkcja wymaga przynajmniej dwóch parametrów</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="259"/>
+        <location filename="../core/functions.cpp" line="261"/>
         <source>function requires integer arguments</source>
-        <translation>funkcja wymaga parametrów całkowitych</translation>
+        <translation type="unfinished">funkcja wymaga parametrów całkowitych</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="626"/>
+        <location filename="../core/functions.cpp" line="629"/>
         <source>function undefined for specified argument</source>
-        <translation>funkcja niezdefiniowana dla określonego parametru</translation>
+        <translation type="unfinished">funkcja niezdefiniowana dla określonego parametru</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="596"/>
+        <location filename="../core/functions.cpp" line="599"/>
         <source>underflow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="693"/>
+        <location filename="../core/functions.cpp" line="696"/>
         <source>function requires at least 1 argument</source>
-        <translation>funkcja wymaga przynajmniej jednego parametru</translation>
+        <translation type="unfinished">funkcja wymaga przynajmniej jednego parametru</translation>
     </message>
 </context>
 <context>
@@ -1090,16 +1041,6 @@
 </context>
 <context>
     <name>InsertFunctionDlg</name>
-    <message>
-        <location filename="../gui/insertfunctiondlg.cpp" line="52"/>
-        <source>&amp;Insert</source>
-        <translation type="obsolete">&amp;Wstaw</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertfunctiondlg.cpp" line="56"/>
-        <source>Cancel</source>
-        <translation type="obsolete">Anuluj</translation>
-    </message>
     <message>
         <location filename="../gui/insertfunctiondlg.cpp" line="38"/>
         <source>Insert Function</source>

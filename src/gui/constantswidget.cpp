@@ -107,7 +107,6 @@ ConstantsWidget::ConstantsWidget( QWidget * parent )
     connect( d->filterTimer, SIGNAL(timeout()), SLOT(filter()) );
 
     d->noMatchLabel = new QLabel( this );
-    d->noMatchLabel->setText( tr("No match found") );
     d->noMatchLabel->setAlignment( Qt::AlignCenter );
     d->noMatchLabel->adjustSize();
     d->noMatchLabel->hide();
@@ -127,6 +126,10 @@ void ConstantsWidget::handleRadixCharacterChange()
 
 void ConstantsWidget::retranslateText()
 {
+    d->categoryLabel->setText( tr("Category") );
+    d->label->setText( tr("Search") );
+    d->noMatchLabel->setText( tr("No match found") );
+
     QStringList titles;
     const QString name = tr( "Name" );
     const QString value = tr( "Value" );
@@ -137,8 +140,6 @@ void ConstantsWidget::retranslateText()
         titles << name << unit << value;
     d->list->setHeaderLabels( titles );
 
-    d->categoryLabel->setText( tr("Category") );
-    d->label->setText( tr("Search") );
     updateList();
 }
 
@@ -249,8 +250,10 @@ void ConstantsWidget::updateList()
 
 void ConstantsWidget::changeEvent( QEvent * e )
 {
-    if ( e->type() == QEvent::LanguageChange )
+    if ( e->type() == QEvent::LanguageChange ) {
+        Constants::instance()->retranslateText();
         retranslateText();
+    }
     else
         QWidget::changeEvent( e );
 }

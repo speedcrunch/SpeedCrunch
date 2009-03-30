@@ -204,21 +204,21 @@
     </message>
 </context>
 <context>
-    <name>BookDock::Private</name>
+    <name>BookDock</name>
     <message>
         <location filename="../gui/bookdock.cpp" line="183"/>
         <source>Back</source>
-        <translation>Vorige</translation>
+        <translation type="unfinished">Vorige</translation>
     </message>
     <message>
         <location filename="../gui/bookdock.cpp" line="184"/>
         <source>Forward</source>
-        <translation>Volgende</translation>
+        <translation type="unfinished">Volgende</translation>
     </message>
     <message>
         <location filename="../gui/bookdock.cpp" line="185"/>
         <source>Index</source>
-        <translation>Index</translation>
+        <translation type="unfinished">Index</translation>
     </message>
 </context>
 <context>
@@ -232,282 +232,14 @@
 <context>
     <name>Constants</name>
     <message>
-        <location filename="../core/constants.cpp" line="245"/>
-        <source>Characteristic Impedance of Vacuum</source>
-        <translation type="obsolete">Karakteristieke impedantie in vacuüm</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="243"/>
-        <source>General Physics</source>
-        <translation type="obsolete">Natuurkundig</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="247"/>
-        <source>Electric Constant</source>
-        <translation type="obsolete">Elektrische constante</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="249"/>
-        <source>Magnetic Constant</source>
-        <translation type="obsolete">Magnetische constante</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="248"/>
-        <source>Gravitation Constant</source>
-        <translation type="obsolete">Gravitatieconstante</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="250"/>
-        <source>Planck&apos;s Constant</source>
-        <translation type="obsolete">Constante van Planck</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="246"/>
-        <source>Dirac&apos;s Constant</source>
-        <translation type="obsolete">Constante van Dirac</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="251"/>
-        <source>Speed of Light in Vacuum</source>
-        <translation type="obsolete">Lichtsnelheid in vacuüm</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="256"/>
-        <source>Bohr-Procopiu Magneton</source>
-        <translation type="obsolete">Bohr-Procopiu magneton</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="254"/>
-        <source>Electromagnetic</source>
-        <translation type="obsolete">Elektromagnetisch</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="257"/>
-        <source>Conductance Quantum</source>
-        <translation type="obsolete">Geleidend quantum</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="258"/>
-        <source>Coulomb&apos;s Constant</source>
-        <translation type="obsolete">Constante van Coulomb</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="259"/>
-        <source>Elementary Charge</source>
-        <translation type="obsolete">Elementaire lading</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="260"/>
-        <source>Josephson Constant</source>
-        <translation type="obsolete">Constante van Josephson</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="261"/>
-        <source>Magnetic Flux Quantum</source>
-        <translation type="obsolete">Magnetisch Flux-quantum</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="262"/>
-        <source>Nuclear Magneton</source>
-        <translation type="obsolete">Atomair magneton</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="263"/>
-        <source>Resistance Quantum</source>
-        <translation type="obsolete">Tegenwerkend quantum </translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="264"/>
-        <source>von Klitzing Constant</source>
-        <translation type="obsolete">Constante van von Klitzing</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="269"/>
-        <source>Bohr Radius</source>
-        <translation type="obsolete">Bohr-straal</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="267"/>
-        <source>Atomic &amp; Nuclear</source>
-        <translation type="obsolete">Atomair &amp; Nucleair</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="270"/>
-        <source>Fermi Coupling Constant</source>
-        <translation type="obsolete">Koppelingsconstante van Fermi</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="271"/>
-        <source>Fine-structure Constant</source>
-        <translation type="obsolete">Fijnstructuurconstante</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="272"/>
-        <source>Hartree Energy</source>
-        <translation type="obsolete">Hartree-energie</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="273"/>
-        <source>Quantum of Circulation</source>
-        <translation type="obsolete">Quantum van circulatie</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="274"/>
-        <source>Rydberg Constant</source>
-        <translation type="obsolete">Constante van Rydberg</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="275"/>
-        <source>Thomson Cross Section</source>
-        <translation type="obsolete">Kruissectie van Thomson</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="276"/>
-        <source>Weak Mixing Angle</source>
-        <translation type="obsolete">Zwakke hoek-combinatie</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="281"/>
-        <source>Atomic Mass Unit</source>
-        <translation type="obsolete">Atomaire massa-eenheid</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="279"/>
-        <source>Physico-chemical</source>
-        <translation type="obsolete">Scheikundig</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="282"/>
-        <source>Avogadro&apos;s Number</source>
-        <translation type="obsolete">Getal van Avogadro</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="283"/>
-        <source>Boltzmann Constant</source>
-        <translation type="obsolete">Constante van Boltzmann</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="284"/>
-        <source>Faraday Constant</source>
-        <translation type="obsolete">Constante van Faraday</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="285"/>
-        <source>First Radiation Constant</source>
-        <translation type="obsolete">Eerste radiatieconstante</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="287"/>
-        <source>Loschmidt Constant</source>
-        <translation type="obsolete">Constante van Loschmidt</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="286"/>
-        <source>Gas Constant</source>
-        <translation type="obsolete">Gasconstante</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="288"/>
-        <source>Molar Planck Constant</source>
-        <translation type="obsolete">Molaire constante van Planck</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="289"/>
-        <source>Second Radiation Constant</source>
-        <translation type="obsolete">Tweede radiatieconstante</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="290"/>
-        <source>Stefan-Boltzmann Constant</source>
-        <translation type="obsolete">Stefan-Boltzmann Constante</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="295"/>
-        <source>Astronomical Unit</source>
-        <translation type="obsolete">Astronomische eenheid</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="293"/>
-        <source>Astronomy</source>
-        <translation type="obsolete">Sterrenkunde</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="296"/>
-        <source>Light Year</source>
-        <translation type="obsolete">Lichtjaar</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="297"/>
-        <source>Parsec</source>
-        <translation type="obsolete">Parsec</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="303"/>
-        <source>Sidereal Year</source>
-        <translation type="obsolete">Siderisch jaar</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="299"/>
-        <source>days</source>
-        <translation type="obsolete">dagen</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="304"/>
-        <source>Tropical Year</source>
-        <translation type="obsolete">Tropisch jaar</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="301"/>
-        <source>Gregorian Year</source>
-        <translation type="obsolete">Gregoriaans jaar</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="306"/>
-        <source>Earth Mass</source>
-        <translation type="obsolete">Massa van de aarde</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="308"/>
-        <source>Sun Mass</source>
-        <translation type="obsolete">Massa van de zon</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="307"/>
-        <source>Mean Earth Radius</source>
-        <translation type="obsolete">Gemiddelde straal van de aarde</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="309"/>
-        <source>Sun Radius</source>
-        <translation type="obsolete">Straal van de zon</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="310"/>
-        <source>Sun Luminosity</source>
-        <translation type="obsolete">Lichtkracht van de zon</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="302"/>
-        <source>Julian Year</source>
-        <translation type="obsolete">Juliaans jaar</translation>
-    </message>
-</context>
-<context>
-    <name>Constants::Private</name>
-    <message>
-        <location filename="../core/constants.cpp" line="203"/>
-        <source>General Physics</source>
-        <translation type="unfinished">Natuurkundig</translation>
-    </message>
-    <message>
         <location filename="../core/constants.cpp" line="205"/>
         <source>Characteristic Impedance of Vacuum</source>
         <translation type="unfinished">Karakteristieke impedantie in vacuüm</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="206"/>
-        <source>Dirac&apos;s Constant</source>
-        <translation type="unfinished">Constante van Dirac</translation>
+        <location filename="../core/constants.cpp" line="203"/>
+        <source>General Physics</source>
+        <translation type="unfinished">Natuurkundig</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="207"/>
@@ -515,14 +247,14 @@
         <translation type="unfinished">Elektrische constante</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="208"/>
-        <source>Gravitation Constant</source>
-        <translation type="unfinished">Gravitatieconstante</translation>
-    </message>
-    <message>
         <location filename="../core/constants.cpp" line="209"/>
         <source>Magnetic Constant</source>
         <translation type="unfinished">Magnetische constante</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="208"/>
+        <source>Gravitation Constant</source>
+        <translation type="unfinished">Gravitatieconstante</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="210"/>
@@ -530,19 +262,24 @@
         <translation type="unfinished">Constante van Planck</translation>
     </message>
     <message>
+        <location filename="../core/constants.cpp" line="206"/>
+        <source>Dirac&apos;s Constant</source>
+        <translation type="unfinished">Constante van Dirac</translation>
+    </message>
+    <message>
         <location filename="../core/constants.cpp" line="211"/>
         <source>Speed of Light in Vacuum</source>
         <translation type="unfinished">Lichtsnelheid in vacuüm</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="214"/>
-        <source>Electromagnetic</source>
-        <translation type="unfinished">Elektromagnetisch</translation>
-    </message>
-    <message>
         <location filename="../core/constants.cpp" line="216"/>
         <source>Bohr-Procopiu Magneton</source>
         <translation type="unfinished">Bohr-Procopiu magneton</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="214"/>
+        <source>Electromagnetic</source>
+        <translation type="unfinished">Elektromagnetisch</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="217"/>
@@ -585,14 +322,14 @@
         <translation type="unfinished">Constante van von Klitzing</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="227"/>
-        <source>Atomic &amp; Nuclear</source>
-        <translation type="unfinished">Atomair &amp; Nucleair</translation>
-    </message>
-    <message>
         <location filename="../core/constants.cpp" line="229"/>
         <source>Bohr Radius</source>
         <translation type="unfinished">Bohr-straal</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="227"/>
+        <source>Atomic &amp; Nuclear</source>
+        <translation type="unfinished">Atomair &amp; Nucleair</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="230"/>
@@ -630,14 +367,14 @@
         <translation type="unfinished">Zwakke hoek-combinatie</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="239"/>
-        <source>Physico-chemical</source>
-        <translation type="unfinished">Scheikundig</translation>
-    </message>
-    <message>
         <location filename="../core/constants.cpp" line="241"/>
         <source>Atomic Mass Unit</source>
         <translation type="unfinished">Atomaire massa-eenheid</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="239"/>
+        <source>Physico-chemical</source>
+        <translation type="unfinished">Scheikundig</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="242"/>
@@ -660,14 +397,14 @@
         <translation type="unfinished">Eerste radiatieconstante</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="246"/>
-        <source>Gas Constant</source>
-        <translation type="unfinished">Gasconstante</translation>
-    </message>
-    <message>
         <location filename="../core/constants.cpp" line="247"/>
         <source>Loschmidt Constant</source>
         <translation type="unfinished">Constante van Loschmidt</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="246"/>
+        <source>Gas Constant</source>
+        <translation type="unfinished">Gasconstante</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="248"/>
@@ -685,14 +422,14 @@
         <translation type="unfinished">Stefan-Boltzmann Constante</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="253"/>
-        <source>Astronomy</source>
-        <translation type="unfinished">Sterrenkunde</translation>
-    </message>
-    <message>
         <location filename="../core/constants.cpp" line="255"/>
         <source>Astronomical Unit</source>
         <translation type="unfinished">Astronomische eenheid</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="253"/>
+        <source>Astronomy</source>
+        <translation type="unfinished">Sterrenkunde</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="256"/>
@@ -705,24 +442,14 @@
         <translation type="unfinished">Parsec</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="259"/>
-        <source>days</source>
-        <translation type="unfinished">dagen</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="261"/>
-        <source>Gregorian Year</source>
-        <translation type="unfinished">Gregoriaans jaar</translation>
-    </message>
-    <message>
-        <location filename="../core/constants.cpp" line="262"/>
-        <source>Julian Year</source>
-        <translation type="unfinished">Juliaans jaar</translation>
-    </message>
-    <message>
         <location filename="../core/constants.cpp" line="263"/>
         <source>Sidereal Year</source>
         <translation type="unfinished">Siderisch jaar</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="259"/>
+        <source>days</source>
+        <translation type="unfinished">dagen</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="264"/>
@@ -730,19 +457,24 @@
         <translation type="unfinished">Tropisch jaar</translation>
     </message>
     <message>
+        <location filename="../core/constants.cpp" line="261"/>
+        <source>Gregorian Year</source>
+        <translation type="unfinished">Gregoriaans jaar</translation>
+    </message>
+    <message>
         <location filename="../core/constants.cpp" line="266"/>
         <source>Earth Mass</source>
         <translation type="unfinished">Massa van de aarde</translation>
     </message>
     <message>
-        <location filename="../core/constants.cpp" line="267"/>
-        <source>Mean Earth Radius</source>
-        <translation type="unfinished">Gemiddelde straal van de aarde</translation>
-    </message>
-    <message>
         <location filename="../core/constants.cpp" line="268"/>
         <source>Sun Mass</source>
         <translation type="unfinished">Massa van de zon</translation>
+    </message>
+    <message>
+        <location filename="../core/constants.cpp" line="267"/>
+        <source>Mean Earth Radius</source>
+        <translation type="unfinished">Gemiddelde straal van de aarde</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="269"/>
@@ -754,6 +486,11 @@
         <source>Sun Luminosity</source>
         <translation type="unfinished">Lichtkracht van de zon</translation>
     </message>
+    <message>
+        <location filename="../core/constants.cpp" line="262"/>
+        <source>Julian Year</source>
+        <translation type="unfinished">Juliaans jaar</translation>
+    </message>
 </context>
 <context>
     <name>ConstantsDock</name>
@@ -762,61 +499,41 @@
         <source>Constants</source>
         <translation>Constanten</translation>
     </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="143"/>
-        <source>Category</source>
-        <translation type="obsolete">Categorie</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="144"/>
-        <source>Search</source>
-        <translation type="obsolete">Zoeken</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="118"/>
-        <source>No match found</source>
-        <translation type="obsolete">Geen resultaten gevonden</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="257"/>
-        <source>All</source>
-        <translation type="obsolete">Alle</translation>
-    </message>
 </context>
 <context>
     <name>ConstantsWidget</name>
     <message>
-        <location filename="../gui/constantswidget.cpp" line="110"/>
+        <location filename="../gui/constantswidget.cpp" line="131"/>
         <source>No match found</source>
         <translation type="unfinished">Geen resultaten gevonden</translation>
     </message>
     <message>
-        <location filename="../gui/constantswidget.cpp" line="131"/>
+        <location filename="../gui/constantswidget.cpp" line="134"/>
         <source>Name</source>
         <translation type="unfinished">Naam</translation>
     </message>
     <message>
-        <location filename="../gui/constantswidget.cpp" line="132"/>
+        <location filename="../gui/constantswidget.cpp" line="135"/>
         <source>Value</source>
         <translation type="unfinished">Waarde</translation>
     </message>
     <message>
-        <location filename="../gui/constantswidget.cpp" line="133"/>
+        <location filename="../gui/constantswidget.cpp" line="136"/>
         <source>Unit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/constantswidget.cpp" line="140"/>
+        <location filename="../gui/constantswidget.cpp" line="129"/>
         <source>Category</source>
         <translation type="unfinished">Categorie</translation>
     </message>
     <message>
-        <location filename="../gui/constantswidget.cpp" line="141"/>
+        <location filename="../gui/constantswidget.cpp" line="130"/>
         <source>Search</source>
         <translation type="unfinished">Zoeken</translation>
     </message>
     <message>
-        <location filename="../gui/constantswidget.cpp" line="245"/>
+        <location filename="../gui/constantswidget.cpp" line="246"/>
         <source>All</source>
         <translation type="unfinished">Alle</translation>
     </message>
@@ -881,410 +598,404 @@
     </message>
 </context>
 <context>
-    <name>Function</name>
-    <message>
-        <location filename="../core/functions.cpp" line="96"/>
-        <source>cannot execute function %1</source>
-        <translation>functie %1 kan niet uitgevoerd worden</translation>
-    </message>
-    <message numerus="yes">
-        <location filename="../core/functions.cpp" line="101"/>
-        <source>function accepts %1 argument(s)</source>
-        <translation>
-            <numerusform>functie accepteert %1 argument</numerusform>
-            <numerusform>functie accepteert %1 argumenten</numerusform>
-        </translation>
-    </message>
-</context>
-<context>
     <name>Functions</name>
     <message>
-        <location filename="../core/functions.cpp" line="1142"/>
+        <location filename="../core/functions.cpp" line="1145"/>
         <source>Absolute Value</source>
         <translation>Absolute waarde</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1143"/>
+        <location filename="../core/functions.cpp" line="1146"/>
         <source>Average (Arithmetic Mean)</source>
         <translation>Gemiddelde (arimetisch gemiddelde)</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1144"/>
+        <location filename="../core/functions.cpp" line="1147"/>
         <source>Binary Representation</source>
         <translation>Binaire weergave</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1145"/>
+        <location filename="../core/functions.cpp" line="1148"/>
         <source>Cube Root</source>
         <translation>Derdemachtswortel</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1146"/>
+        <location filename="../core/functions.cpp" line="1149"/>
         <source>Ceiling</source>
         <translation>Afronding (naar boven)</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1147"/>
+        <location filename="../core/functions.cpp" line="1150"/>
         <source>Decimal Representation</source>
         <translation>Decimale weergave</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1148"/>
+        <location filename="../core/functions.cpp" line="1151"/>
         <source>Floor</source>
         <translation>Afronding (naar beneden)</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1149"/>
+        <location filename="../core/functions.cpp" line="1152"/>
         <source>Fractional Part</source>
         <translation>Breukdeel</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1151"/>
+        <location filename="../core/functions.cpp" line="1154"/>
         <source>Geometric Mean</source>
         <translation>Geomterisch gemiddelde</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1152"/>
+        <location filename="../core/functions.cpp" line="1155"/>
         <source>Hexadecimal Representation</source>
         <translation>Hexadecimale weergave</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1153"/>
+        <location filename="../core/functions.cpp" line="1156"/>
         <source>Integer Part</source>
         <translation>Gehele deel</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1155"/>
+        <location filename="../core/functions.cpp" line="1158"/>
         <source>Maximum</source>
         <translation>Maximum</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1156"/>
+        <location filename="../core/functions.cpp" line="1159"/>
         <source>Minimum</source>
         <translation>Minimum</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1157"/>
+        <location filename="../core/functions.cpp" line="1160"/>
         <source>Octal Representation</source>
         <translation>Octale weergave</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1158"/>
+        <location filename="../core/functions.cpp" line="1161"/>
         <source>Product</source>
         <translation>Product</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1159"/>
+        <location filename="../core/functions.cpp" line="1162"/>
         <source>Rounding</source>
         <translation>Afronding</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1160"/>
+        <location filename="../core/functions.cpp" line="1163"/>
         <source>Signum</source>
         <translation>Signum</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1161"/>
+        <location filename="../core/functions.cpp" line="1164"/>
         <source>Square Root</source>
         <translation>Vierkantswortel</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1162"/>
+        <location filename="../core/functions.cpp" line="1165"/>
         <source>Sum</source>
         <translation>Som</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1163"/>
+        <location filename="../core/functions.cpp" line="1166"/>
         <source>Truncation</source>
         <translation>Afronding (afbreken)</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1166"/>
+        <location filename="../core/functions.cpp" line="1169"/>
         <source>Area Hyperbolic Cosine</source>
         <translation>Inverse hyperbolische cosinus</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1167"/>
+        <location filename="../core/functions.cpp" line="1170"/>
         <source>Area Hyperbolic Sine</source>
         <translation>Inverse hyperbolische sinus</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1168"/>
+        <location filename="../core/functions.cpp" line="1171"/>
         <source>Area Hyperbolic Tangent</source>
         <translation>Inverse hyperbolische tangens</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1169"/>
+        <location filename="../core/functions.cpp" line="1172"/>
         <source>Hyperbolic Cosine</source>
         <translation>Hyperbolische cosinus</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1170"/>
+        <location filename="../core/functions.cpp" line="1173"/>
         <source>Exponential</source>
         <translation>Exponentieel</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1171"/>
+        <location filename="../core/functions.cpp" line="1174"/>
         <source>Base-2 Logarithm</source>
         <translation>Grondtal-2 logaritme</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1172"/>
+        <location filename="../core/functions.cpp" line="1175"/>
         <source>Natural Logarithm</source>
         <translation>Natuurlijke logaritme</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1173"/>
+        <location filename="../core/functions.cpp" line="1176"/>
         <source>Base-10 Logarithm</source>
         <translation>Grondtal-10 logaritme</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1174"/>
+        <location filename="../core/functions.cpp" line="1177"/>
         <source>Hyperbolic Sine</source>
         <translation>Hyperbolische sinus</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1175"/>
+        <location filename="../core/functions.cpp" line="1178"/>
         <source>Hyperbolic Tangent</source>
         <translation>Hyperbolische tangens</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1178"/>
+        <location filename="../core/functions.cpp" line="1181"/>
         <source>Greatest Common Divisor</source>
         <translation>Grootste gemene deler</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1179"/>
+        <location filename="../core/functions.cpp" line="1182"/>
         <source>Combination (Binomial Coefficient)</source>
         <translation>Combinatie (binomiaal coëfficient)</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1180"/>
+        <location filename="../core/functions.cpp" line="1183"/>
         <source>Permutation (Arrangement)</source>
         <translation>Permutatie (rangschikking)</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1183"/>
+        <location filename="../core/functions.cpp" line="1186"/>
         <source>Binomial Cumulative Distribution Function</source>
         <translation>Binomiale cumulatieve kansfunctie</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1184"/>
+        <location filename="../core/functions.cpp" line="1187"/>
         <source>Binomial Distribution Mean</source>
         <translation>Binomiale verdeling</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1185"/>
+        <location filename="../core/functions.cpp" line="1188"/>
         <source>Binomial Probability Mass Function</source>
         <translation>Binomiale kansfunctie</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1186"/>
+        <location filename="../core/functions.cpp" line="1189"/>
         <source>Binomial Distribution Variance</source>
         <translation>Binomiale variantie</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1189"/>
+        <location filename="../core/functions.cpp" line="1192"/>
         <source>Hypergeometric Cumulative Distribution Function</source>
         <translation>Hypergeometrische cumulatieve kansfunctie</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1190"/>
+        <location filename="../core/functions.cpp" line="1193"/>
         <source>Hypergeometric Distribution Mean</source>
         <translation>Hypergeometrische verdeling</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1191"/>
+        <location filename="../core/functions.cpp" line="1194"/>
         <source>Hypergeometric Probability Mass Function</source>
         <translation>Hypergeometische kansfunctie</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1192"/>
+        <location filename="../core/functions.cpp" line="1195"/>
         <source>Hypergeometric Distribution Variance</source>
         <translation>Hypergeometrische variantie</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1193"/>
+        <location filename="../core/functions.cpp" line="1196"/>
         <source>Poissonian Cumulative Distribution Function</source>
         <translation>Cumulatieve Poisson-kansfunctie</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1194"/>
+        <location filename="../core/functions.cpp" line="1197"/>
         <source>Poissonian Distribution Mean</source>
         <translation>Poisson-verdeling</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1195"/>
+        <location filename="../core/functions.cpp" line="1198"/>
         <source>Poissonian Probability Mass Function</source>
         <translation>Poisson-kansfunctie</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1196"/>
+        <location filename="../core/functions.cpp" line="1199"/>
         <source>Poissonian Distribution Variance</source>
         <translation>Poisson-variantie</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1199"/>
+        <location filename="../core/functions.cpp" line="1202"/>
         <source>Arc Cosine</source>
         <translation>Arccosinus</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1200"/>
+        <location filename="../core/functions.cpp" line="1203"/>
         <source>Arc Sine</source>
         <translation>Arcsinus</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1201"/>
+        <location filename="../core/functions.cpp" line="1204"/>
         <source>Arc Tangent</source>
         <translation>Arctangens</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1202"/>
+        <location filename="../core/functions.cpp" line="1205"/>
         <source>Cosine</source>
         <translation>Cosinus</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1203"/>
+        <location filename="../core/functions.cpp" line="1206"/>
         <source>Cotangent</source>
         <translation>Cotangens</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1204"/>
+        <location filename="../core/functions.cpp" line="1207"/>
         <source>Cosecant</source>
         <translation>Cosecans</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1206"/>
+        <location filename="../core/functions.cpp" line="1209"/>
         <source>Radians</source>
         <translation>Radiaal</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1207"/>
+        <location filename="../core/functions.cpp" line="1210"/>
         <source>Secant</source>
         <translation>Secans</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1208"/>
+        <location filename="../core/functions.cpp" line="1211"/>
         <source>Sine</source>
         <translation>Sinus</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1209"/>
+        <location filename="../core/functions.cpp" line="1212"/>
         <source>Tangent</source>
         <translation>Tangens</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1150"/>
+        <location filename="../core/functions.cpp" line="1153"/>
         <source>Extension of Factorials [= (x-1)!]</source>
         <translation>Uitbreiding van faculteiten [= (x-1)!]</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1154"/>
+        <location filename="../core/functions.cpp" line="1157"/>
         <source>ln(abs(Gamma))</source>
         <translation>ln(abs(gamma))</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1187"/>
+        <location filename="../core/functions.cpp" line="1190"/>
         <source>Error Function</source>
         <translation>Foutfunctie</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1188"/>
+        <location filename="../core/functions.cpp" line="1191"/>
         <source>Complementary Error Function</source>
         <translation>Complementaire foutfunctie</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1205"/>
+        <location filename="../core/functions.cpp" line="1208"/>
         <source>Degrees of Arc</source>
         <translation>Graden van hoek</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1212"/>
+        <location filename="../core/functions.cpp" line="1215"/>
         <source>Mask to a bit size</source>
         <translation>Tot de grootte van een bit maskeren</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1213"/>
+        <location filename="../core/functions.cpp" line="1216"/>
         <source>Sign-extent a value</source>
         <translation>Teken-uitbreiding van een waarde</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1214"/>
+        <location filename="../core/functions.cpp" line="1217"/>
         <source>Logical NOT</source>
         <translation>Logische NOT</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1215"/>
+        <location filename="../core/functions.cpp" line="1218"/>
         <source>Logical AND</source>
         <translation>Logische AND</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1216"/>
+        <location filename="../core/functions.cpp" line="1219"/>
         <source>Logical OR</source>
         <translation>Logische OR</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1217"/>
+        <location filename="../core/functions.cpp" line="1220"/>
         <source>Logical XOR</source>
         <translation>Logische XOR</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1218"/>
+        <location filename="../core/functions.cpp" line="1221"/>
         <source>Arithmetic Shift Left</source>
         <translation>Rekenkundige verschuiving naar links</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1219"/>
+        <location filename="../core/functions.cpp" line="1222"/>
         <source>Arithmetic Shift Right</source>
         <translation>Rekenkundige verschuiving naar rechts</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1220"/>
+        <location filename="../core/functions.cpp" line="1223"/>
         <source>Integer Quotient</source>
         <translation>Gehele quotiënt</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1221"/>
+        <location filename="../core/functions.cpp" line="1224"/>
         <source>Modulo</source>
         <translation>Modulo</translation>
     </message>
-</context>
-<context>
-    <name>Functions::Private</name>
     <message>
-        <location filename="../core/functions.cpp" line="271"/>
-        <source>function requires 1 or 2 arguments</source>
-        <translation>functie heeft 1 of 2 parameters nodig</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="939"/>
+        <location filename="../core/functions.cpp" line="942"/>
         <source>function undefined for specified arguments</source>
-        <translation>functie ongedefinieerd voor gegeven parameters</translation>
+        <translation type="unfinished">functie ongedefinieerd voor gegeven parameters</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="253"/>
+        <location filename="../core/functions.cpp" line="96"/>
+        <source>cannot execute function %1</source>
+        <translation type="unfinished">functie %1 kan niet uitgevoerd worden</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../core/functions.cpp" line="102"/>
+        <source>function accepts %1 argument(s)</source>
+        <translation type="unfinished">
+            <numerusform>functie accepteert %1 argument</numerusform>
+            <numerusform>functie accepteert %1 argumenten</numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="273"/>
+        <source>function requires 1 or 2 arguments</source>
+        <translation type="unfinished">functie heeft 1 of 2 parameters nodig</translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="255"/>
         <source>function requires at least 2 arguments</source>
-        <translation>functie heeft minstens 2 parameters nodig</translation>
+        <translation type="unfinished">functie heeft minstens 2 parameters nodig</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="259"/>
+        <location filename="../core/functions.cpp" line="261"/>
         <source>function requires integer arguments</source>
-        <translation>functie heeft gehele getallen als parameter nodig</translation>
+        <translation type="unfinished">functie heeft gehele getallen als parameter nodig</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="626"/>
+        <location filename="../core/functions.cpp" line="629"/>
         <source>function undefined for specified argument</source>
-        <translation>functie niet gedefineerd voor gegeven parameter</translation>
+        <translation type="unfinished">functie niet gedefineerd voor gegeven parameter</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="596"/>
+        <location filename="../core/functions.cpp" line="599"/>
         <source>underflow</source>
-        <translation>onder het bereik</translation>
+        <translation type="unfinished">onder het bereik</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="693"/>
+        <location filename="../core/functions.cpp" line="696"/>
         <source>function requires at least 1 argument</source>
-        <translation>functie heeft minstens 1 parameter nodig</translation>
+        <translation type="unfinished">functie heeft minstens 1 parameter nodig</translation>
     </message>
 </context>
 <context>
@@ -1328,16 +1039,6 @@
 </context>
 <context>
     <name>InsertFunctionDlg</name>
-    <message>
-        <location filename="../gui/insertfunctiondlg.cpp" line="52"/>
-        <source>&amp;Insert</source>
-        <translation type="obsolete">&amp;Invoegen</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertfunctiondlg.cpp" line="56"/>
-        <source>Cancel</source>
-        <translation type="obsolete">Annuleren</translation>
-    </message>
     <message>
         <location filename="../gui/insertfunctiondlg.cpp" line="38"/>
         <source>Insert Function</source>

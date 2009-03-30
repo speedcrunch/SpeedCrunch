@@ -180,9 +180,9 @@ void BookDock::home()
 void BookDock::Private::retranslateText()
 {
   // buttons
-  backButton   ->setText( tr( "Back"    ) );
-  forwardButton->setText( tr( "Forward" ) );
-  indexButton  ->setText( tr( "Index"   ) );
+  backButton->setText( BookDock::tr("Back") );
+  forwardButton->setText( BookDock::tr("Forward") );
+  indexButton->setText( BookDock::tr("Index") );
 
   // page
   language = settings->language;

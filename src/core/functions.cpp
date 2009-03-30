@@ -93,12 +93,13 @@ HNumber Function::exec( const QVector<HNumber> & args )
 {
     d->error = QString();
     if ( ! d->ptr ) {
-        setError( "error", tr("cannot execute function %1").arg(d->name) );
+        setError( "error", Functions::tr("cannot execute function %1").arg(d->name) );
         return HNumber( 0 );
     }
 
     if ( d->argc >= 0 && args.count() != d->argc ) {
-        setError( d->name, tr("function accepts %1 argument(s)", "", d->argc).arg(d->argc) );
+        setError( d->name,
+                  Functions::tr("function accepts %1 argument(s)", "", d->argc).arg(d->argc) );
         return HNumber( 0 );
     }
 
@@ -203,7 +204,7 @@ HNumber Functions::Private::trunc( Function * f, const QVector<HNumber> & args )
     int nArgs = args.count();
 
     if ( nArgs != 1 && nArgs != 2 ) {
-        f->setError( f->name(), tr("function requires 1 or 2 arguments") );
+        f->setError( f->name(), Functions::tr("function requires 1 or 2 arguments") );
         return HMath::nan();
     }
 
@@ -214,7 +215,8 @@ HNumber Functions::Private::trunc( Function * f, const QVector<HNumber> & args )
         HNumber argprec = args.at( 1 );
         if ( argprec != 0 ) {
             if ( ! argprec.isInteger() ) {
-                f->setError( f->name(), tr("function undefined for specified arguments") );
+                f->setError( f->name(),
+                             Functions::tr("function undefined for specified arguments") );
                 return HMath::nan();
             }
             if ( (prec = argprec.toInt()) != 0 )
@@ -250,13 +252,13 @@ HNumber Functions::Private::gcd( Function * f, const QVector<HNumber> & args )
     int nArgs = args.count();
 
     if ( nArgs < 2 ) {
-        f->setError( f->name(), tr("function requires at least 2 arguments") );
+        f->setError( f->name(), Functions::tr("function requires at least 2 arguments") );
         return HMath::nan();
     }
 
     for ( int i = 0; i < args.count(); i++ )
         if ( ! args.at(i).isInteger() ) {
-            f->setError( f->name(), tr("function requires integer arguments") );
+            f->setError( f->name(), Functions::tr("function requires integer arguments") );
             return HMath::nan();
         }
 
@@ -268,7 +270,7 @@ HNumber Functions::Private::round( Function * f, const QVector<HNumber> & args )
     int nArgs = args.count();
 
     if ( nArgs != 1 && nArgs != 2 ) {
-        f->setError( f->name(), tr("function requires 1 or 2 arguments") );
+        f->setError( f->name(), Functions::tr("function requires 1 or 2 arguments") );
         return HMath::nan();
     }
 
@@ -279,7 +281,8 @@ HNumber Functions::Private::round( Function * f, const QVector<HNumber> & args )
         HNumber argprec = args.at( 1 );
         if ( argprec != 0 ) {
             if ( ! argprec.isInteger() ) {
-                f->setError( f->name(), tr("function undefined for specified arguments") );
+                f->setError( f->name(),
+                             Functions::tr("function undefined for specified arguments") );
                 return HMath::nan();
             }
             if ( (prec = argprec.toInt()) != 0 )
@@ -302,7 +305,7 @@ HNumber Functions::Private::sqrt( Function * f, const QVector<HNumber> & args )
 
     HNumber num = args.at( 0 );
     if ( num < HNumber( 0 ) ) {
-        f->setError( f->name(), tr("function undefined for specified argument") );
+        f->setError( f->name(), Functions::tr("function undefined for specified argument") );
         return HMath::nan();
     }
 
@@ -328,7 +331,7 @@ HNumber Functions::Private::ln( Function * f, const QVector<HNumber> & args )
     HNumber result = HMath::ln( x );
 
     if ( result.isNan() )
-        f->setError( f->name(), tr("function undefined for specified argument") );
+        f->setError( f->name(), Functions::tr("function undefined for specified argument") );
 
     return result;
 }
@@ -342,7 +345,7 @@ HNumber Functions::Private::log( Function * f, const QVector<HNumber> & args )
     HNumber result = HMath::log( x );
 
     if ( result.isNan() )
-        f->setError( f->name(), tr("function undefined for specified argument") );
+        f->setError( f->name(), Functions::tr("function undefined for specified argument") );
 
     return result;
 }
@@ -356,7 +359,7 @@ HNumber Functions::Private::lg( Function * f, const QVector<HNumber> & args )
     HNumber result = HMath::lg( x );
 
     if ( result.isNan() )
-        f->setError( f->name(), tr("function undefined for specified argument") );
+        f->setError( f->name(), Functions::tr("function undefined for specified argument") );
 
     return result;
 }
@@ -402,7 +405,7 @@ HNumber Functions::Private::tan( Function * f, const QVector<HNumber> & args )
 
     HNumber result = HMath::tan( angle );
     if ( result.isNan() ) {
-        f->setError( f->name(), tr("function undefined for specified argument") );
+        f->setError( f->name(), Functions::tr("function undefined for specified argument") );
         return HMath::nan();
     }
 
@@ -422,7 +425,7 @@ HNumber Functions::Private::cot( Function * f, const QVector<HNumber> & args )
 
     HNumber result = HMath::cot( angle );
     if ( result.isNan() ) {
-        f->setError( f->name(), tr("function undefined for specified argument") );
+        f->setError( f->name(), Functions::tr("function undefined for specified argument") );
         return HMath::nan();
     }
 
@@ -442,7 +445,7 @@ HNumber Functions::Private::sec( Function * f, const QVector<HNumber> & args )
 
     HNumber result = HMath::sec( angle );
     if ( result.isNan() ) {
-        f->setError( f->name(), tr("function undefined for specified argument") );
+        f->setError( f->name(), Functions::tr("function undefined for specified argument") );
         return HMath::nan();
     }
 
@@ -462,7 +465,7 @@ HNumber Functions::Private::csc( Function * f, const QVector<HNumber> & args )
 
     HNumber result = HMath::csc( angle );
     if ( result.isNan() ) {
-        f->setError( f->name(), tr("function undefined for specified argument") );
+        f->setError( f->name(), Functions::tr("function undefined for specified argument") );
         return HMath::nan();
     }
 
@@ -478,7 +481,7 @@ HNumber Functions::Private::asin( Function * f, const QVector<HNumber> & args )
     HNumber result = HMath::asin( x );
 
     if ( result.isNan() ) {
-        f->setError( f->name(), tr("function undefined for specified argument") );
+        f->setError( f->name(), Functions::tr("function undefined for specified argument") );
         return HMath::nan();
     }
 
@@ -499,7 +502,7 @@ HNumber Functions::Private::acos( Function * f, const QVector<HNumber> & args )
     HNumber result = HMath::acos( x );
 
     if ( result.isNan() ) {
-        f->setError( f->name(), tr("function undefined for specified argument") );
+        f->setError( f->name(), Functions::tr("function undefined for specified argument") );
         return HMath::nan();
     }
 
@@ -556,7 +559,7 @@ HNumber Functions::Private::arcosh( Function * f, const QVector<HNumber> & args 
     HNumber result = HMath::arcosh( x );
 
     if ( result.isNan() ) {
-        f->setError( f->name(), tr("function undefined for specified argument") );
+        f->setError( f->name(), Functions::tr("function undefined for specified argument") );
         return HMath::nan();
     }
 
@@ -572,7 +575,7 @@ HNumber Functions::Private::artanh( Function * f, const QVector<HNumber> & args 
     HNumber result = HMath::artanh( x );
 
     if ( result.isNan() ) {
-        f->setError( f->name(), tr("function undefined for specified argument") );
+        f->setError( f->name(), Functions::tr("function undefined for specified argument") );
         return HMath::nan();
     }
 
@@ -593,7 +596,7 @@ HNumber Functions::Private::erfc( Function * f, const QVector<HNumber> & args )
     HNumber result = HMath::erfc( x );
 
     if ( result.isNan() && ! x.isNan() )
-        f->setError( f->name(), tr("underflow") );
+        f->setError( f->name(), Functions::tr("underflow") );
 
     return result;
 }
@@ -607,7 +610,7 @@ HNumber Functions::Private::Gamma( Function * f, const QVector<HNumber> & args )
     HNumber result = HMath::gamma( x );
 
     if ( result.isNan() ) {
-        f->setError( f->name(), tr("function undefined for specified argument") );
+        f->setError( f->name(), Functions::tr("function undefined for specified argument") );
         return HMath::nan();
     }
 
@@ -623,7 +626,7 @@ HNumber Functions::Private::lnGamma( Function * f, const QVector<HNumber> & args
     HNumber result = HMath::lnGamma( x );
 
     if ( result.isNan() ) {
-        f->setError( f->name(), tr("function undefined for specified argument") );
+        f->setError( f->name(), Functions::tr("function undefined for specified argument") );
         return HMath::nan();
     }
 
@@ -646,7 +649,7 @@ HNumber Functions::Private::nCr( Function * f, const QVector<HNumber> & args )
     // FIX ME: overflow causes a NaN, too, so the message is sometimes
     // misleading
     if ( result.isNan() )
-        f->setError( f->name(), tr("function undefined for specified arguments") );
+        f->setError( f->name(), Functions::tr("function undefined for specified arguments") );
 
     return result;
 }
@@ -662,7 +665,7 @@ HNumber Functions::Private::nPr( Function * f, const QVector<HNumber> & args )
     // FIX ME: overflow causes a NaN, too, so the message is sometimes
     // misleading
     if ( result.isNan() )
-        f->setError( f->name(), tr("function undefined for specified arguments") );
+        f->setError( f->name(), Functions::tr("function undefined for specified arguments") );
 
     return result;
 }
@@ -680,7 +683,7 @@ HNumber Functions::Private::radians( Function *, const QVector<HNumber> & args )
 HNumber Functions::Private::max( Function * f, const QVector<HNumber> & args )
 {
     if ( args.count() < 1 ) {
-        f->setError( f->name(), tr("function requires at least 1 argument") );
+        f->setError( f->name(), Functions::tr("function requires at least 1 argument") );
         return HMath::nan();
     }
 
@@ -690,7 +693,7 @@ HNumber Functions::Private::max( Function * f, const QVector<HNumber> & args )
 HNumber Functions::Private::min( Function * f, const QVector<HNumber> & args )
 {
     if ( args.count() < 1 ) {
-        f->setError( f->name(), tr("function requires at least 1 argument") );
+        f->setError( f->name(), Functions::tr("function requires at least 1 argument") );
         return HMath::nan();
     }
 
@@ -766,7 +769,7 @@ HNumber Functions::Private::binompmf( Function * f, const QVector<HNumber> & arg
     HNumber result = HMath::binomialPmf( k, n, p );
 
     if ( result.isNan() )
-        f->setError( f->name(), tr("function undefined for specified arguments") );
+        f->setError( f->name(), Functions::tr("function undefined for specified arguments") );
 
     return result;
 }
@@ -782,7 +785,7 @@ HNumber Functions::Private::binomcdf( Function * f, const QVector<HNumber> & arg
     HNumber result = HMath::binomialCdf( k, n, p );
 
     if ( result.isNan() )
-        f->setError( f->name(), tr("function undefined for specified arguments") );
+        f->setError( f->name(), Functions::tr("function undefined for specified arguments") );
 
     return result;
 }
@@ -797,7 +800,7 @@ HNumber Functions::Private::binommean( Function * f, const QVector<HNumber> & ar
     HNumber result = HMath::binomialMean( n, p );
 
     if ( result.isNan() )
-        f->setError( f->name(), tr("function undefined for specified arguments") );
+        f->setError( f->name(), Functions::tr("function undefined for specified arguments") );
 
     return result;
 }
@@ -812,7 +815,7 @@ HNumber Functions::Private::binomvar( Function * f, const QVector<HNumber> & arg
     HNumber result = HMath::binomialVariance( n, p );
 
     if ( result.isNan() )
-        f->setError( f->name(), tr("function undefined for specified arguments") );
+        f->setError( f->name(), Functions::tr("function undefined for specified arguments") );
 
     return result;
 }
@@ -829,7 +832,7 @@ HNumber Functions::Private::hyperpmf( Function * f, const QVector<HNumber> & arg
     HNumber result = HMath::hypergeometricPmf( k, N, M, n );
 
     if ( result.isNan() )
-        f->setError( f->name(), tr("function undefined for specified arguments") );
+        f->setError( f->name(), Functions::tr("function undefined for specified arguments") );
 
     return result;
 }
@@ -846,7 +849,7 @@ HNumber Functions::Private::hypercdf( Function * f, const QVector<HNumber> & arg
     HNumber result = HMath::hypergeometricCdf( k, N, M, n );
 
     if ( result.isNan() )
-        f->setError( f->name(), tr("function undefined for specified arguments") );
+        f->setError( f->name(), Functions::tr("function undefined for specified arguments") );
 
     return result;
 }
@@ -862,7 +865,7 @@ HNumber Functions::Private::hypermean( Function * f, const QVector<HNumber> & ar
     HNumber result = HMath::hypergeometricMean( N, M, n );
 
     if ( result.isNan() )
-        f->setError( f->name(), tr("function undefined for specified arguments") );
+        f->setError( f->name(), Functions::tr("function undefined for specified arguments") );
 
     return result;
 }
@@ -878,7 +881,7 @@ HNumber Functions::Private::hypervar( Function * f, const QVector<HNumber> & arg
     HNumber result = HMath::hypergeometricVariance( N, M, n );
 
     if ( result.isNan() )
-        f->setError( f->name(), tr("function undefined for specified arguments") );
+        f->setError( f->name(), Functions::tr("function undefined for specified arguments") );
 
     return result;
 }
@@ -893,7 +896,7 @@ HNumber Functions::Private::poipmf( Function * f, const QVector<HNumber> & args 
     HNumber result = HMath::poissonPmf( k, l );
 
     if ( result.isNan() )
-        f->setError( f->name(), tr("function undefined for specified arguments") );
+        f->setError( f->name(), Functions::tr("function undefined for specified arguments") );
 
     return result;
 }
@@ -908,7 +911,7 @@ HNumber Functions::Private::poicdf( Function * f, const QVector<HNumber> & args 
     HNumber result = HMath::poissonCdf( k, l );
 
     if ( result.isNan() )
-        f->setError( f->name(), tr("function undefined for specified arguments") );
+        f->setError( f->name(), Functions::tr("function undefined for specified arguments") );
 
     return result;
 }
@@ -922,7 +925,7 @@ HNumber Functions::Private::poimean( Function * f, const QVector<HNumber> & args
     HNumber result = HMath::poissonMean( l );
 
     if ( result.isNan() )
-        f->setError( f->name(), tr("function undefined for specified arguments") );
+        f->setError( f->name(), Functions::tr("function undefined for specified arguments") );
 
     return result;
 }
@@ -936,7 +939,7 @@ HNumber Functions::Private::poivar( Function * f, const QVector<HNumber> & args 
     HNumber result = HMath::poissonVariance( l );
 
     if ( result.isNan() )
-        f->setError( f->name(), tr("function undefined for specified arguments") );
+        f->setError( f->name(), Functions::tr("function undefined for specified arguments") );
 
     return result;
 }
@@ -1012,7 +1015,7 @@ HNumber Functions::Private::mod( Function *, const QVector<HNumber> & args )
 
 void Functions::Private::createBuiltInFunctions()
 {
-  // ANALYSIS
+    // ANALYSIS
     p->add( new Function("abs",     1, abs,     p) );
     p->add( new Function("average",    average, p) );
     p->add( new Function("bin",        bin,     p) );
