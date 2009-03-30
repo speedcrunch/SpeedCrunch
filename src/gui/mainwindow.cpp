@@ -2141,6 +2141,7 @@ void MainWindow::insertTextIntoEditor( const QString & s )
 
     if ( ! isActiveWindow () )
         activateWindow();
+    QTimer::singleShot( 0, d->widgets.editor, SLOT(setFocus()) );
 }
 
 void MainWindow::insertFunctionIntoEditor( const QString & f )
