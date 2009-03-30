@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2007 Petri Damstén <damu@iki.fi>
-// Copyright (C) 2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2008-2009 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -28,29 +28,29 @@ class QUrl;
 
 class BookDock : public QDockWidget
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    explicit BookDock( const QString & directory, const QString & file,
-                       QWidget * parent = 0 );
+public:
+    explicit BookDock( const QString & directory, const QString & file, QWidget * parent = 0 );
     ~BookDock();
 
-  public slots:
+public slots:
     void home();
     void setTitle( const QString & );
 
-  signals:
+signals:
     void expressionSelected( const QString & );
 
-  protected slots:
+protected slots:
     virtual void changeEvent( QEvent * e );
 
-  private slots:
+private slots:
     void handleAnchorClick( const QUrl & );
 
-  private:
+private:
     struct Private;
     const std::auto_ptr<Private> d;
+
     BookDock( const BookDock & );
     BookDock & operator=( const BookDock & );
 };
