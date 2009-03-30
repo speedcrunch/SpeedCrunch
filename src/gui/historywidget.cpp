@@ -37,6 +37,7 @@ HistoryWidget::HistoryWidget( QWidget * parent )
     d->list->setAlternatingRowColors( true );
     d->list->setHorizontalScrollMode( QAbstractItemView::ScrollPerPixel );
     d->list->setVerticalScrollMode( QAbstractItemView::ScrollPerPixel );
+    d->list->setCursor( QCursor(Qt::PointingHandCursor) );
     d->flickCharm.activateOn( d->list );
 
     QVBoxLayout * layout = new QVBoxLayout;

@@ -89,6 +89,7 @@ ConstantsWidget::ConstantsWidget( QWidget * parent )
     d->list->setEditTriggers( QTreeWidget::NoEditTriggers );
     d->list->setSelectionBehavior( QTreeWidget::SelectRows );
     d->list->setAlternatingRowColors( true );
+    d->list->setCursor( QCursor(Qt::PointingHandCursor) );
     d->flickCharm.activateOn( d->list );
 
     connect( d->list, SIGNAL(itemActivated(QTreeWidgetItem *, int)),
