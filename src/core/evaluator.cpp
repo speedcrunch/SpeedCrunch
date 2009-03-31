@@ -21,7 +21,6 @@
 #include "core/evaluator.hxx"
 
 #include "core/functions.hxx"
-#include "core/settings.hxx"
 #ifdef _BISON
 #include "bison/bisonparser.cpp"
 #endif // _BISON
@@ -383,21 +382,8 @@ Tokens Evaluator::tokens() const
 
 Tokens Evaluator::scan( const QString& expr ) const
 {
-    // to hold the result
+    // result
     Tokens tokens;
-
-    // auto-detect, always dot, or always comma
-    QChar wrongDecimalPoint;
-    // sanity check for wrong decimal separator usage
-    if ( Settings::instance()->radixCharacter() == ',' )
-        wrongDecimalPoint = '.';
-    else
-        wrongDecimalPoint = ',';
-
-    int size = expr.size();
-    for ( int i = 0; i < size; ++i )
-        if ( expr.at(i) == wrongDecimalPoint )
-            return tokens;
 
     // parsing state
     enum { Start, Finish, Bad, InNumber, InHexa, InOctal, InBinary, InDecimal, InExpIndicator,
@@ -415,10 +401,12 @@ Tokens Evaluator::scan( const QString& expr ) const
     ex.append( QChar() );
 
     // main loop
-    while( state != Bad && state != Finish && i < ex.length() ) {
+    while ( state != Bad && state != Finish && i < ex.length() )
+    {
         QChar ch = ex.at( i );
 
-        switch( state ) {
+        switch ( state )
+        {
             case Start:
                 tokenStart = i;
 
@@ -431,7 +419,7 @@ Tokens Evaluator::scan( const QString& expr ) const
                     tokenText.append( "0x" );
                     state = InHexa;
                     i++;
-                } else if ( ch == Settings::instance()->radixCharacter() ) { // decimal dot ?
+                } else if ( ch == ',' || ch == '.' ) { // radix char ?
                     tokenText.append( ex.at(i++) );
                     state = InDecimal;
                 } else if ( ch.isNull() ) // terminator character
@@ -496,7 +484,7 @@ Tokens Evaluator::scan( const QString& expr ) const
             case InNumber:
                 if ( ch.isDigit() ) // consume as long as it's a digit
                     tokenText.append( ex.at(i++) );
-                else if ( ch == Settings::instance()->radixCharacter() ) { // convert to '.'
+                else if ( ch == '.' || ch == ',' ) { // convert to '.'
                     tokenText.append( '.' );
                     ++i;
                     state = InDecimal;
