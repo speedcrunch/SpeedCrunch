@@ -635,6 +635,8 @@ void MainWindow::Private::createActionShortcuts()
     actions.settingsResultFormatGeneral    ->setShortcut( Qt::Key_F7 );
     actions.settingsResultFormatHexadecimal->setShortcut( Qt::Key_F8 );
     actions.settingsResultFormatOctal      ->setShortcut( Qt::Key_F6 );
+    actions.settingsRadixCharDot           ->setShortcut( Qt::CTRL + Qt::Key_Period );
+    actions.settingsRadixCharComma         ->setShortcut( Qt::CTRL + Qt::Key_Comma );
 
     actions.helpTipOfTheDay->setShortcut( Qt::CTRL + Qt::Key_T );
 
