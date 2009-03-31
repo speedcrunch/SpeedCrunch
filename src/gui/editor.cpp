@@ -733,13 +733,12 @@ void Editor::autoCalcSelection()
 
 void Editor::insertConstant( const QString & c )
 {
-  QString s( c );
-  if ( d->settings->radixCharacter() == '.' )
-    s.replace( '.', d->settings->radixCharacter() );
+  QString s = c;
+  if ( d->settings->radixCharacter() == ',' )
+    s.replace( '.', ',' );
   if ( ! c.isNull() )
     insert( s );
-  if ( d->constantCompletion )
-  {
+  if ( d->constantCompletion ) {
     disconnect( d->constantCompletion );
     d->constantCompletion->deleteLater();
     d->constantCompletion = 0;
@@ -748,8 +747,7 @@ void Editor::insertConstant( const QString & c )
 
 void Editor::cancelConstantCompletion()
 {
-  if ( d->constantCompletion )
-  {
+  if ( d->constantCompletion ) {
     disconnect( d->constantCompletion );
     d->constantCompletion->deleteLater();
     d->constantCompletion = 0;
