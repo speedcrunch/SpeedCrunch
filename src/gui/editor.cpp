@@ -224,12 +224,6 @@ void Editor::insert( const QString & str )
   insertPlainText( str );
 }
 
-void Editor::handleRadixCharacterChange()
-{
-  if ( syntaxHighlight() )
-    d->highlighter->rehighlight();
-}
-
 void Editor::doBackspace()
 {
   QTextCursor cursor = textCursor();

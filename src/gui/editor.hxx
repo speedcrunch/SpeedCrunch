@@ -78,7 +78,6 @@ class Editor : public QTextEdit
     void appendHistory( const QStringList & h, const QStringList & r );
     void cancelConstantCompletion();
     void evaluate();
-    void handleRadixCharacterChange();
     void insertConstant( const QString & );
     void insert( const QString & );
 

@@ -1111,9 +1111,6 @@ void MainWindow::Private::createFixedConnections()
     connect( widgets.editor, SIGNAL(returnPressed()), p, SLOT( evaluateEditorExpression()) );
     connect( widgets.editor, SIGNAL(textChanged()), p, SLOT( handleEditorTextChange()) );
 
-    connect( p, SIGNAL(radixCharacterChanged()), widgets.editor,
-             SLOT(handleRadixCharacterChange()) );
-
     connect( p, SIGNAL(radixCharacterChanged()), widgets.display,
              SLOT(handleRadixCharacterChange()) );
     connect( p, SIGNAL(resultFormatChanged()), widgets.display, SLOT(handleResultFormatChange()) );
