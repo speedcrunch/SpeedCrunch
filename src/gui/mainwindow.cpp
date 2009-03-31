@@ -162,6 +162,7 @@ struct Menus
     QMenu * edit;
     QMenu * resultFormat;
     QMenu * help;
+    QMenu * precision;
     QMenu * radixChar;
     QMenu * session;
     QMenu * settings;
@@ -552,7 +553,7 @@ void MainWindow::Private::setActionsText()
     actions.settingsResultFormat3Digits        ->setText( MainWindow::tr("&3 Decimal Digits") );
     actions.settingsResultFormat50Digits       ->setText( MainWindow::tr("&50 Decimal Digits") );
     actions.settingsResultFormat8Digits        ->setText( MainWindow::tr("&8 Decimal Digits") );
-    actions.settingsResultFormatAutoPrecision  ->setText( MainWindow::tr("&Automatic Precision") );
+    actions.settingsResultFormatAutoPrecision  ->setText( MainWindow::tr("&Automatic") );
     actions.settingsResultFormatBinary         ->setText( MainWindow::tr("&Binary") );
     actions.settingsResultFormatEngineering    ->setText( MainWindow::tr("&Engineering") );
     actions.settingsResultFormatFixed          ->setText( MainWindow::tr("&Fixed Decimal") );
@@ -582,6 +583,11 @@ void MainWindow::Private::createActionGroups()
     actionGroups.resultFormat->addAction( actions.settingsResultFormatOctal );
     actionGroups.resultFormat->addAction( actions.settingsResultFormatHexadecimal );
 
+    actionGroups.radixChar = new QActionGroup( p );
+    actionGroups.radixChar->addAction( actions.settingsRadixCharDefault );
+    actionGroups.radixChar->addAction( actions.settingsRadixCharDot );
+    actionGroups.radixChar->addAction( actions.settingsRadixCharComma );
+
     actionGroups.digits = new QActionGroup( p );
     actionGroups.digits->addAction( actions.settingsResultFormatAutoPrecision );
     actionGroups.digits->addAction( actions.settingsResultFormat2Digits );
@@ -593,11 +599,6 @@ void MainWindow::Private::createActionGroups()
     actionGroups.angle = new QActionGroup( p );
     actionGroups.angle->addAction( actions.settingsAngleUnitRadian );
     actionGroups.angle->addAction( actions.settingsAngleUnitDegree );
-
-    actionGroups.radixChar = new QActionGroup( p );
-    actionGroups.radixChar->addAction( actions.settingsRadixCharDefault );
-    actionGroups.radixChar->addAction( actions.settingsRadixCharDot );
-    actionGroups.radixChar->addAction( actions.settingsRadixCharComma );
 }
 
 void MainWindow::Private::createActionShortcuts()
@@ -690,8 +691,6 @@ void MainWindow::Private::createMenus()
     p->menuBar()->addMenu( menus.settings );
 
     menus.resultFormat = menus.settings->addMenu( "" );
-    menus.resultFormat->addAction( actions.settingsResultFormatBinary );
-    menus.resultFormat->addAction( actions.settingsResultFormatOctal );
 
     menus.decimal = menus.resultFormat->addMenu( "" );
     menus.decimal->addAction( actions.settingsResultFormatGeneral );
@@ -699,14 +698,27 @@ void MainWindow::Private::createMenus()
     menus.decimal->addAction( actions.settingsResultFormatEngineering );
     menus.decimal->addAction( actions.settingsResultFormatScientific );
     menus.decimal->addSeparator();
-    menus.decimal->addAction( actions.settingsResultFormatAutoPrecision );
-    menus.decimal->addAction( actions.settingsResultFormat2Digits );
-    menus.decimal->addAction( actions.settingsResultFormat3Digits );
-    menus.decimal->addAction( actions.settingsResultFormat8Digits );
-    menus.decimal->addAction( actions.settingsResultFormat15Digits );
-    menus.decimal->addAction( actions.settingsResultFormat50Digits );
+    menus.precision = menus.decimal->addMenu( "" );
+    menus.precision->addAction( actions.settingsResultFormatAutoPrecision );
+    menus.precision->addAction( actions.settingsResultFormat2Digits );
+    menus.precision->addAction( actions.settingsResultFormat3Digits );
+    menus.precision->addAction( actions.settingsResultFormat8Digits );
+    menus.precision->addAction( actions.settingsResultFormat15Digits );
+    menus.precision->addAction( actions.settingsResultFormat50Digits );
 
+    menus.resultFormat->addSeparator();
+
+    menus.resultFormat->addAction( actions.settingsResultFormatBinary );
+    menus.resultFormat->addAction( actions.settingsResultFormatOctal );
     menus.resultFormat->addAction( actions.settingsResultFormatHexadecimal );
+
+    menus.resultFormat->addSeparator();
+
+    menus.radixChar = menus.resultFormat->addMenu( "" );
+    menus.radixChar->addAction( actions.settingsRadixCharDefault );
+    menus.radixChar->addSeparator();
+    menus.radixChar->addAction( actions.settingsRadixCharDot );
+    menus.radixChar->addAction( actions.settingsRadixCharComma );
 
     menus.angleUnit = menus.settings->addMenu( "" );
     menus.angleUnit->addAction( actions.settingsAngleUnitRadian );
@@ -722,12 +734,6 @@ void MainWindow::Private::createMenus()
     menus.behavior->addSeparator();
     menus.behavior->addAction( actions.settingsBehaviorAlwaysOnTop );
     menus.behavior->addAction( actions.settingsBehaviorMinimizeToTray );
-
-    menus.radixChar = menus.settings->addMenu( "" );
-    menus.radixChar->addAction( actions.settingsRadixCharDefault );
-    menus.radixChar->addSeparator();
-    menus.radixChar->addAction( actions.settingsRadixCharDot );
-    menus.radixChar->addAction( actions.settingsRadixCharComma );
 
     menus.settings->addAction( actions.settingsLanguage );
 
@@ -751,10 +757,11 @@ void MainWindow::Private::setMenusText()
     menus.view        ->setTitle( MainWindow::tr("&View") );
     menus.settings    ->setTitle( MainWindow::tr("Se&ttings") );
     menus.resultFormat->setTitle( MainWindow::tr("Result &Format") );
+    menus.radixChar   ->setTitle( MainWindow::tr("Radix &Character") );
     menus.decimal     ->setTitle( MainWindow::tr("&Decimal") );
+    menus.precision   ->setTitle( MainWindow::tr("&Precision") );
     menus.angleUnit   ->setTitle( MainWindow::tr("&Angle Unit") );
     menus.behavior    ->setTitle( MainWindow::tr("&Behavior") );
-    menus.radixChar   ->setTitle( MainWindow::tr("Radix &Character") );
     menus.help        ->setTitle( MainWindow::tr("&Help") );
 }
 
@@ -1104,7 +1111,7 @@ void MainWindow::Private::createFixedConnections()
     connect( widgets.editor, SIGNAL(returnPressed()), p, SLOT( evaluateEditorExpression()) );
     connect( widgets.editor, SIGNAL(textChanged()), p, SLOT( handleEditorTextChange()) );
 
-    connect( p, SIGNAL( radixCharacterChanged()), widgets.editor,
+    connect( p, SIGNAL(radixCharacterChanged()), widgets.editor,
              SLOT(handleRadixCharacterChange()) );
 
     connect( p, SIGNAL(radixCharacterChanged()), widgets.display,
@@ -2125,7 +2132,7 @@ void MainWindow::insertConstantIntoEditor( const QString & c )
     if ( c.isEmpty() )
         return;
 
-    QString s( c );
+    QString s = c;
     s.replace( '.', d->settings->radixCharacter() );
     insertTextIntoEditor( s );
 }
