@@ -1,7 +1,7 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2004-2005 Ariya Hidayat <ariya@kde.org>
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2007-2009 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -34,46 +34,46 @@ class QWidget;
 
 class Editor : public QTextEdit
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
+public:
     enum HighlightScheme { AutoScheme };
     enum ColorType { Variable = 0, Number, Function, MatchedPar };
 
     explicit Editor( QWidget * parent = 0 );
     ~Editor();
 
-    bool        autoCalcEnabled() const;
-    bool        autoCompleteEnabled() const;
-    void        clearHistory();
-    int         cursorPosition() const;
-    void        doBackspace();
+    bool autoCalcEnabled() const;
+    bool autoCompleteEnabled() const;
+    void clearHistory();
+    int cursorPosition() const;
+    void doBackspace();
     QStringList history() const;
     QStringList historyResults() const;
-    QColor      highlightColor( ColorType type );
-    bool        syntaxHighlight() const;
-    char        radixChar() const;
-    void        setAnsAvailable( bool );
-    void        setAutoCalcEnabled( bool );
-    void        setAutoCompletionEnabled( bool );
-    void        setCursorPosition( int pos );
-    void        setHighlightColor( ColorType type, QColor color );
-    void        setSyntaxHighlightingEnabled( bool );
-    void        setHighlightScheme( Editor::HighlightScheme );
-    void        setText( const QString & );
-    void        setHistory( const QStringList & history );
-    void        setHistoryResults( const QStringList & results );
-    QSize       sizeHint() const;
-    void        stopAutoCalc();
-    void        stopAutoComplete();
-    QString     text() const;
+    QColor highlightColor( ColorType type );
+    bool syntaxHighlight() const;
+    char radixChar() const;
+    void setAnsAvailable( bool );
+    void setAutoCalcEnabled( bool );
+    void setAutoCompletionEnabled( bool );
+    void setCursorPosition( int pos );
+    void setHighlightColor( ColorType type, QColor color );
+    void setSyntaxHighlightingEnabled( bool );
+    void setHighlightScheme( Editor::HighlightScheme );
+    void setText( const QString & );
+    void setHistory( const QStringList & history );
+    void setHistoryResults( const QStringList & results );
+    QSize sizeHint() const;
+    void stopAutoCalc();
+    void stopAutoComplete();
+    QString text() const;
 
-  signals:
+signals:
     void autoCalcEnabled( const QString & );
     void autoCalcDisabled();
     void returnPressed();
 
-  public slots:
+public slots:
     void appendHistory( const QString & result, const QString & expression );
     void appendHistory( const QStringList & h, const QStringList & r );
     void cancelConstantCompletion();
@@ -81,7 +81,7 @@ class Editor : public QTextEdit
     void insertConstant( const QString & );
     void insert( const QString & );
 
-  protected slots:
+protected slots:
     void autoCalc();
     void autoCalcSelection();
     void autoComplete( const QString & item );
@@ -97,14 +97,15 @@ class Editor : public QTextEdit
     void triggerAutoComplete();
     void triggerEnter();
 
-  protected:
+protected:
     QString formatNumber( const HNumber & value ) const;
-    void    keyPressEvent( QKeyEvent * );
-    void    wheelEvent( QWheelEvent * );
+    void keyPressEvent( QKeyEvent * );
+    void wheelEvent( QWheelEvent * );
 
-  private:
+private:
     struct Private;
     const std::auto_ptr<Private> d;
+
     Editor();
     Editor( const Editor & );
     Editor & operator=( const Editor & );
@@ -112,56 +113,60 @@ class Editor : public QTextEdit
 
 class EditorCompletion : public QObject
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
+public:
     EditorCompletion( Editor * );
     ~EditorCompletion();
+
     bool eventFilter( QObject *, QEvent * );
-    void showCompletion( const QStringList & choices );
+    void showCompletion( const QStringList & );
 
-  signals:
-    void selectedCompletion( const QString & item );
+signals:
+    void selectedCompletion( const QString & );
 
-  public slots:
+public slots:
     void doneCompletion();
-    void selectItem( const QString & item ); // WORKAROUND 76
+    void selectItem( const QString & ); // WORKAROUND 76
 
-  private slots:
+protected slots:
     void fade( int );
 
-  private:
+private:
     struct Private;
     const std::auto_ptr<Private> d;
+
     EditorCompletion( const EditorCompletion & );
     EditorCompletion & operator=( const EditorCompletion & );
 };
 
 class ConstantCompletion : public QObject
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
+public:
     ConstantCompletion( Editor * );
     ~ConstantCompletion();
+
     bool eventFilter( QObject *, QEvent * );
     void showCompletion();
 
-  signals:
+signals:
     void selectedCompletion( const QString & item );
     void canceledCompletion();
 
-  public slots:
+public slots:
     void doneCompletion();
 
-  private slots:
+protected slots:
     void showCategory();
     void showConstants();
     void slide( int );
 
-  private:
+private:
     struct Private;
     const std::auto_ptr<Private> d;
+
     ConstantCompletion( const ConstantCompletion & );
     ConstantCompletion & operator=( const ConstantCompletion & );
 };
