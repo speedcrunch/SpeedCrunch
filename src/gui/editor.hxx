@@ -37,9 +37,6 @@ class Editor : public QTextEdit
     Q_OBJECT
 
 public:
-    enum HighlightScheme { AutoScheme };
-    enum ColorType { Variable = 0, Number, Function, MatchedPar };
-
     explicit Editor( QWidget * parent = 0 );
     ~Editor();
 
@@ -50,16 +47,13 @@ public:
     void doBackspace();
     QStringList history() const;
     QStringList historyResults() const;
-    QColor highlightColor( ColorType type );
     bool syntaxHighlight() const;
     char radixChar() const;
     void setAnsAvailable( bool );
     void setAutoCalcEnabled( bool );
     void setAutoCompletionEnabled( bool );
     void setCursorPosition( int pos );
-    void setHighlightColor( ColorType type, QColor color );
     void setSyntaxHighlightingEnabled( bool );
-    void setHighlightScheme( Editor::HighlightScheme );
     void setText( const QString & );
     void setHistory( const QStringList & history );
     void setHistoryResults( const QStringList & results );

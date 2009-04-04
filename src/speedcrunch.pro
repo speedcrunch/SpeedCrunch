@@ -72,6 +72,7 @@ HEADERS += 3rdparty/flickcharm/flickcharm.h \
            gui/insertfunctiondlg.hxx \
            gui/insertvardlg.hxx \
            gui/keypad.hxx \
+           #gui/syntaxhighlighter.hxx \
            gui/tipwidget.hxx \
            gui/variablesdock.hxx \
            gui/variableswidget.hxx \
@@ -126,6 +127,7 @@ SOURCES += 3rdparty/flickcharm/flickcharm.cpp \
            gui/insertfunctiondlg.cpp \
            gui/insertvardlg.cpp \
            gui/keypad.cpp \
+           gui/syntaxhighlighter.cpp \
            gui/tipwidget.cpp \
            gui/variablesdock.cpp \
            gui/variableswidget.cpp \

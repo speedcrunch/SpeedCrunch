@@ -25,6 +25,7 @@
 #include "core/evaluator.hxx"
 #include "core/functions.hxx"
 #include "core/settings.hxx"
+#include "gui/syntaxhighlighter.hxx"
 
 #include <QtCore/QEvent>
 #include <QtCore/QTimeLine>
@@ -36,127 +37,36 @@
 #include <QtGui/QKeyEvent>
 #include <QtGui/QLineEdit>
 #include <QtGui/QStyle>
-#include <QtGui/QSyntaxHighlighter>
 #include <QtGui/QTreeWidget>
 #include <QtGui/QWheelEvent>
 
 #include <algorithm>
 
-class EditorHighlighter : public QSyntaxHighlighter
-{
-    Editor * editor;
-
-public:
-    EditorHighlighter( Editor * e ): QSyntaxHighlighter( e ), editor( e ) {}
-
-    void highlightBlock( const QString & text )
-    {
-        if ( ! editor->syntaxHighlight() ) {
-            setFormat( 0, text.length(), editor->palette().text().color() );
-            return;
-        }
-
-        Tokens tokens = Evaluator::instance()->scan( text );
-        for ( int i = 0; i < tokens.count(); ++i )
-        {
-            const Token & token = tokens.at( i );
-            const QString text = token.text().toLower();
-            QColor color;
-            QStringList fnames;
-
-            switch ( token.type() )
-            {
-                case Token::stxOperator:
-                case Token::stxUnknown:
-                case Token::stxOpenPar:
-                case Token::stxClosePar:
-                    color = QApplication::palette().windowText().color();
-                    break;
-
-                case Token::stxNumber:
-                case Token::stxSep:
-                    color = editor->highlightColor( Editor::Number );
-                    break;
-
-                case Token::stxIdentifier:
-                    color = editor->highlightColor( Editor::Variable );
-                    fnames = Functions::instance()->names();
-                    for ( int i = 0; i < fnames.count(); ++i ) {
-                        if ( fnames.at(i).toLower() == text )
-                            color = editor->highlightColor( Editor::Function );
-                    }
-                    break;
-
-                default:
-                    break;
-            };
-
-            if ( token.pos() >= 0 )
-                setFormat( token.pos(), token.text().length(), color );
-        }
-    }
-};
-
 struct Editor::Private
 {
-  bool ansAvailable;
-  bool autoCalcEnabled;
-  QTimer * autoCalcSelTimer;
-  QTimer * autoCalcTimer;
-  bool autoCompleteEnabled;
-  EditorCompletion * completion;
-  QTimer * completionTimer;
-  ConstantCompletion * constantCompletion;
-  Constants * constants;
-  Evaluator * eval;
-  Functions * functions;
-  EditorHighlighter * highlighter;
-  QStringList history;
-  QStringList historyResults;
-  int index;
-  QTimer * matchingTimer;
-  Settings * settings;
-  HighlightScheme scheme;
-  bool syntaxHighlightEnabled;
-  QMap<Editor::ColorType, QColor> highlightColors;
-
-  QList<QColor> generateColors( const QColor & bg, const QColor & fg, int noColors );
+    bool ansAvailable;
+    bool autoCalcEnabled;
+    QTimer * autoCalcSelTimer;
+    QTimer * autoCalcTimer;
+    bool autoCompleteEnabled;
+    EditorCompletion * completion;
+    QTimer * completionTimer;
+    ConstantCompletion * constantCompletion;
+    Constants * constants;
+    Evaluator * eval;
+    SyntaxHighlighter * highlighter;
+    QStringList history;
+    QStringList historyResults;
+    int index;
+    QTimer * matchingTimer;
+    Settings * settings;
+    bool syntaxHighlightEnabled;
 };
-
-QList<QColor> Editor::Private::generateColors( const QColor & bg, const QColor & fg, int noColors )
-{
-    QList<QColor> cols;
-    const int HUE_BASE = (bg.hue() == -1) ? 90 : bg.hue();
-    int h, s, v;
-
-    for ( int i = 0; i < noColors; i++ ) {
-        // generate "normal" colors
-        h = int( HUE_BASE + (360.0 / noColors * i) ) % 360;
-        s = 240;
-        v = int( qMax(bg.value(), fg.value()) * 0.85 );
-
-        // adjust particular cases
-        const int M = 35;
-        if ( (h < bg.hue() + M && h > bg.hue() - M )
-             || (h < fg.hue() + M && h > fg.hue() - M ) )
-        {
-            h = ((bg.hue() + fg.hue()) / (i+1)) % 360;
-            s = ((bg.saturation() + fg.saturation() + 2*i) / 2) % 256;
-            v = ((bg.value() + fg.value() + 2*i) / 2) % 256;
-        }
-
-        // insert into result list
-        cols.append( QColor::fromHsv(h, s, v) );
-    }
-
-    return cols;
-}
 
 Editor::Editor( QWidget * parent )
     : QTextEdit( parent ), d( new Editor::Private )
 {
     d->eval = Evaluator::instance();
-    d->functions = Functions::instance();
     d->constants = Constants::instance();
     d->settings = Settings::instance();
     d->index = 0;
@@ -166,14 +76,11 @@ Editor::Editor( QWidget * parent )
     d->completionTimer = new QTimer( this );
     d->autoCalcEnabled = true;
     d->syntaxHighlightEnabled = true;
-    d->highlighter = new EditorHighlighter( this );
+    d->highlighter = new SyntaxHighlighter( this );
     d->autoCalcTimer = new QTimer( this );
     d->autoCalcSelTimer = new QTimer( this );
     d->matchingTimer = new QTimer( this );
     d->ansAvailable = false;
-    d->scheme = Editor::AutoScheme;
-
-    setHighlightScheme( Editor::AutoScheme );
 
     setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
     setLineWrapMode( QTextEdit::NoWrap );
@@ -400,13 +307,13 @@ void Editor::doMatchingLeft()
             hilite1.cursor = textCursor();
             hilite1.cursor.setPosition( matchPos );
             hilite1.cursor.setPosition( matchPos + 1, QTextCursor::KeepAnchor );
-            hilite1.format.setBackground( highlightColor(Editor::MatchedPar) );
+            hilite1.format.setBackground( d->highlighter->color(SyntaxHighlighter::MatchedPar) );
 
             ExtraSelection hilite2;
             hilite2.cursor = textCursor();
             hilite2.cursor.setPosition( lastToken.pos() );
             hilite2.cursor.setPosition( lastToken.pos() + 1, QTextCursor::KeepAnchor );
-            hilite2.format.setBackground( highlightColor(Editor::MatchedPar) );
+            hilite2.format.setBackground( d->highlighter->color(SyntaxHighlighter::MatchedPar) );
 
             QList<ExtraSelection> extras;
             extras << hilite1;
@@ -451,13 +358,13 @@ void Editor::doMatchingRight()
             hilite1.cursor = textCursor();
             hilite1.cursor.setPosition( curPos+matchPos );
             hilite1.cursor.setPosition( curPos+matchPos + 1, QTextCursor::KeepAnchor );
-            hilite1.format.setBackground( highlightColor(Editor::MatchedPar) );
+            hilite1.format.setBackground( d->highlighter->color(SyntaxHighlighter::MatchedPar) );
 
             ExtraSelection hilite2;
             hilite2.cursor = textCursor();
             hilite2.cursor.setPosition( curPos+firstToken.pos() );
             hilite2.cursor.setPosition( curPos+firstToken.pos() + 1, QTextCursor::KeepAnchor );
-            hilite2.format.setBackground( highlightColor(Editor::MatchedPar) );
+            hilite2.format.setBackground( d->highlighter->color(SyntaxHighlighter::MatchedPar) );
 
             QList<ExtraSelection> extras;
             extras << hilite1;
@@ -493,12 +400,12 @@ void Editor::triggerAutoComplete()
         return;
 
     // find matches in function names
-    const QStringList fnames = d->functions->names();
+    const QStringList fnames = Functions::instance()->names();
     QStringList choices;
     for ( int i = 0; i < fnames.count(); ++i ) {
         if ( fnames.at(i).startsWith(id, Qt::CaseInsensitive) ) {
             QString str = fnames.at( i );
-            ::Function * f = d->functions->function( str );
+            ::Function * f = Functions::instance()->function( str );
             if ( f )
                 str.append( ':' ).append( f->description() );
             choices.append( str );
@@ -790,41 +697,9 @@ void Editor::setSyntaxHighlightingEnabled( bool enable )
     d->highlighter->rehighlight();
 }
 
-void Editor::setHighlightScheme( Editor::HighlightScheme hs )
-{
-    d->scheme = hs;
-
-    if ( hs == Editor::AutoScheme ) {
-        const int NO_COLORS = 3;
-        const QColor bg = palette().color( QPalette::Base );
-        const QColor fg = palette().color( QPalette::Text );
-        const QList<QColor> list = d->generateColors( bg, fg, NO_COLORS );
-        for ( int i = 0; i < NO_COLORS; ++i )
-            d->highlightColors[static_cast<Editor::ColorType>(i)] = list.at( i );
-
-        // generate special case matched parenthesis
-        const int h = ((bg.hue() + fg.hue()) / 2) % 359;
-        const int s = ((bg.saturation() + fg.saturation()) / 2) % 255;
-        const int v = ((bg.value() + fg.value()) / 2) % 255;
-        d->highlightColors[Editor::MatchedPar] = QColor::fromHsv( h, s, v );
-    }
-}
-
 bool Editor::syntaxHighlight() const
 {
     return d->syntaxHighlightEnabled;
-}
-
-void Editor::setHighlightColor( ColorType type, QColor color )
-{
-    d->highlightColors[type] = color;
-    d->highlighter->rehighlight();
-    doMatchingPar();
-}
-
-QColor Editor::highlightColor( ColorType type )
-{
-    return d->highlightColors.value( type );
 }
 
 void Editor::setAnsAvailable( bool avail )
