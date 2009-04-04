@@ -78,6 +78,7 @@ AboutBox::AboutBox( QWidget * parent )
            "Aur&eacute;lien G&acirc;teau<br>"
            "Bart Martens<br>"
            "Bernhard Schiffner<br>"
+           "Christian Ehrlich<br>"
            "Damir Perisa<br>"
            "Derek O'Connor<br>"
            "Eugeniu Plamadeala<br>"
