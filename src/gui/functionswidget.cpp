@@ -188,8 +188,10 @@ void FunctionsWidget::triggerFilter()
 
 void FunctionsWidget::changeEvent( QEvent * e )
 {
-    if ( e->type() == QEvent::LanguageChange )
+    if ( e->type() == QEvent::LanguageChange ) {
+        Functions::instance()->retranslateText();
         retranslateText();
+    }
     else
         QWidget::changeEvent( e );
 }

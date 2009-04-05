@@ -45,11 +45,9 @@ struct BookDock::Private
     QString language;
     BookDock * p;
     QString path;
-    Settings * settings;
     QTextBrowser * sheet;
 
     void handleLayoutDirection();
-    void retranslateText();
 };
 
 void BookDock::Private::handleLayoutDirection()
@@ -70,8 +68,7 @@ BookDock::BookDock( const QString & directory, const QString & file, QWidget * p
     d->path = directory;
     d->file = file;
     d->index = file;
-    d->settings = Settings::instance();
-    d->language = d->settings->language;
+    d->language = Settings::instance()->language;
 
     QWidget * widget = new QWidget( this );
     QVBoxLayout * bookLayout = new QVBoxLayout;
@@ -122,7 +119,7 @@ BookDock::BookDock( const QString & directory, const QString & file, QWidget * p
     widget->setLayout( bookLayout );
     setWidget( widget );
 
-    d->retranslateText();
+    retranslateText();
 }
 
 BookDock::~BookDock()
@@ -161,47 +158,44 @@ void BookDock::home()
 {
     d->sheet->setSource( d->index );
     d->file = d->index;
-    d->retranslateText();
 }
 
-void BookDock::Private::retranslateText()
+void BookDock::retranslateText()
 {
+    setWindowTitle( tr("Math Book") );
+
     // buttons
-    backButton->setText( BookDock::tr("Back") );
-    forwardButton->setText( BookDock::tr("Forward") );
-    indexButton->setText( BookDock::tr("Index") );
+    d->backButton->setText( tr("Back") );
+    d->forwardButton->setText( tr("Forward") );
+    d->indexButton->setText( tr("Index") );
 
     // page
-    language = settings->language;
-    QString locale = (language == "C") ?  QLocale().name() : language;
+    d->language = Settings::instance()->language;
+    QString locale = (d->language == "C") ?  QLocale().name() : d->language;
 
     // fallback to English
     if ( locale == "C" )
         locale = "en";
 
-    language = locale;
-    QString fullPath = path + language + "/";
-    QString src = fullPath + file;
+    d->language = locale;
+    QString fullPath = d->path + d->language + "/";
+    QString src = fullPath + d->file;
 
     if ( ! QDir( fullPath ).isReadable() ) {
         QString localeShort = locale.left( 2 ).toLower();
-        src = path + localeShort + "/" + file;
-        if ( ! QDir(path+localeShort).isReadable() )
-            src = path + "en" + "/" + file;
-  }
-    sheet->setSource( QUrl::fromLocalFile(src) );
-    handleLayoutDirection();
-}
+        src = d->path + localeShort + "/" + d->file;
+        if ( ! QDir(d->path + localeShort).isReadable() )
+            src = d->path + "en" + "/" + d->file;
+    }
 
-void BookDock::setTitle( const QString & title )
-{
-    setWindowTitle( title );
+    d->sheet->setSource( QUrl::fromLocalFile(src) );
+    d->handleLayoutDirection();
 }
 
 void BookDock::changeEvent( QEvent * e )
 {
     if ( e->type() == QEvent::LanguageChange )
-        d->retranslateText();
+        retranslateText();
     else if ( e->type() == QEvent::LayoutDirectionChange )
         d->handleLayoutDirection();
     else

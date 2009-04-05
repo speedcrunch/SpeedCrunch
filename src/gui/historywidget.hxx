@@ -46,6 +46,9 @@ signals:
 protected slots:
     void handleItem( QListWidgetItem * );
 
+protected:
+    void changeEvent( QEvent * );
+
 private:
     struct Private;
     const std::auto_ptr<Private> d;

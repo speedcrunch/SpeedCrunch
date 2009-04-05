@@ -21,23 +21,13 @@
 
 #include "gui/historywidget.hxx"
 
+#include <QtCore/QEvent>
 #include <QtGui/QIcon>
 
-struct HistoryDock::Private
-{
-    HistoryWidget * widget;
-};
-
 HistoryDock::HistoryDock( QWidget * parent )
-    : QDockWidget( parent ), d( new HistoryDock::Private )
+    : QDockWidget( parent ), m_widget( new HistoryWidget )
 {
-    d->widget = new HistoryWidget( this );
-    setWidget( d->widget );
-
-    setMinimumWidth( 200 );
-    setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
-    setWindowIcon( QIcon() );
-
+    setWidget( m_widget );
     retranslateText();
 }
 
@@ -48,6 +38,13 @@ HistoryDock::~HistoryDock()
 void HistoryDock::retranslateText()
 {
     setWindowTitle( tr("History") );
-    d->widget->setLayoutDirection( Qt::LeftToRight );
+}
+
+void HistoryDock::changeEvent( QEvent * e )
+{
+    if ( e->type() == QEvent::LanguageChange )
+        retranslateText();
+    else
+        QDockWidget::changeEvent( e );
 }
 

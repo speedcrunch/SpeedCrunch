@@ -34,12 +34,12 @@ public:
     explicit BookDock( const QString & directory, const QString & file, QWidget * parent = 0 );
     ~BookDock();
 
-public slots:
-    void home();
-    void setTitle( const QString & );
-
 signals:
     void expressionSelected( const QString & );
+
+public slots:
+    void home();
+    void retranslateText();
 
 protected slots:
     virtual void changeEvent( QEvent * e );

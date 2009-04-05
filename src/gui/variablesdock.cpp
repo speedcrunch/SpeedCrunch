@@ -67,8 +67,6 @@ void VariablesDock::handleRadixCharacterChange()
 void VariablesDock::retranslateText()
 {
     setWindowTitle( tr("Variables") );
-    d->variablesWidget->setLayoutDirection( Qt::LeftToRight );
-    d->variablesWidget->retranslateText();
 }
 
 void VariablesDock::handleItem( QTreeWidgetItem * item )
@@ -78,7 +76,7 @@ void VariablesDock::handleItem( QTreeWidgetItem * item )
 
 void VariablesDock::changeEvent( QEvent * e )
 {
-    if ( e->type() == QEvent::LayoutDirectionChange )
+    if ( e->type() == QEvent::LanguageChange )
         retranslateText();
     else
         QDockWidget::changeEvent( e );

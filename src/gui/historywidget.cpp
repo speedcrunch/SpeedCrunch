@@ -21,6 +21,7 @@
 
 #include "3rdparty/flickcharm/flickcharm.h"
 
+#include <QtCore/QEvent>
 #include <QtGui/QListWidget>
 #include <QtGui/QVBoxLayout>
 
@@ -83,5 +84,13 @@ void HistoryWidget::handleItem( QListWidgetItem * item )
 {
     d->list->clearSelection();
     emit expressionSelected( item->text() );
+}
+
+void HistoryWidget::changeEvent( QEvent * e )
+{
+    if ( e->type() == QEvent::LanguageChange )
+        setLayoutDirection( Qt::LeftToRight );
+    else
+        QWidget::changeEvent( e );
 }
 

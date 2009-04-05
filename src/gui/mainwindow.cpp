@@ -471,13 +471,6 @@ void MainWindow::retranslateText()
     d->setActionsText();
     d->setStatusBarText();
 
-    d->functions->retranslateText(); // can't be signal/slot to ensure order
-    d->constants->retranslateText(); // same as above
-
-    if ( d->docks.book )
-        d->docks.book->setWindowTitle( MainWindow::tr("Math Book") );
-
-    // layout direction
     setWidgetsDirection();
 }
 
@@ -870,7 +863,6 @@ void MainWindow::Private::createBookDock()
 
     docks.book = new BookDock( booksDir, "math_index.html", p );
     docks.book->setObjectName( "BookDock" );
-    docks.book->setTitle( MainWindow::tr("Math Book") );
     docks.book->installEventFilter( p );
     docks.book->setAllowedAreas( Qt::AllDockWidgetAreas );
     p->addDockWidget( Qt::RightDockWidgetArea, docks.book );
@@ -958,7 +950,6 @@ void MainWindow::Private::createHistoryDock()
     HistoryWidget * history = qobject_cast<HistoryWidget *>( docks.history->widget() );
     connect( history, SIGNAL(expressionSelected(const QString &)),
              p, SLOT(insertTextIntoEditor(const QString &)) );
-    connect( p, SIGNAL(languageChanged()), docks.history, SLOT(retranslateText()) );
 
     HistoryWidget * historyWidget = qobject_cast<HistoryWidget *>( docks.history->widget() );
     historyWidget->setHistory( widgets.editor->history() );
@@ -990,7 +981,6 @@ void MainWindow::Private::createVariablesDock()
              p, SLOT(insertVariableIntoEditor(const QString &)) );
     connect( p, SIGNAL(radixCharacterChanged()),
             docks.variables, SLOT(handleRadixCharacterChange()));
-    connect( p, SIGNAL(languageChanged()), docks.variables, SLOT(retranslateText()) );
 
     docks.variables->updateList();
 

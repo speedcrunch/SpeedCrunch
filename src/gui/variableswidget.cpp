@@ -23,6 +23,7 @@
 #include "core/evaluator.hxx"
 #include "core/settings.hxx"
 
+#include <QtCore/QEvent>
 #include <QtCore/QTimer>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QLabel>
@@ -201,5 +202,15 @@ void VariablesWidget::triggerFilter()
 {
     d->filterTimer->stop();
     d->filterTimer->start();
+}
+
+void VariablesWidget::changeEvent( QEvent * e )
+{
+    if ( e->type() == QEvent::LanguageChange ) {
+        setLayoutDirection( Qt::LeftToRight );
+        retranslateText();
+    }
+    else
+        QWidget::changeEvent( e );
 }
 

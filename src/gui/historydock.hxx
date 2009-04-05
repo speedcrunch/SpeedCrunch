@@ -24,6 +24,7 @@
 
 #include <memory>
 
+class HistoryWidget;
 class QListWidgetItem;
 
 class HistoryDock : public QDockWidget
@@ -37,9 +38,11 @@ public:
 public slots:
     void retranslateText();
 
+protected:
+    void changeEvent( QEvent * );
+
 private:
-    struct Private;
-    const std::auto_ptr<Private> d;
+    HistoryWidget * m_widget;
 
     HistoryDock( const HistoryDock & );
     HistoryDock & operator=( const HistoryDock & );
