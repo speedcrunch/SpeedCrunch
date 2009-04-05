@@ -835,7 +835,6 @@ void MainWindow::Private::createKeypad()
              p, SLOT( handleKeypadButtonPress(Keypad::Button)) );
     connect( p, SIGNAL(radixCharacterChanged()),
              widgets.keypad, SLOT(handleRadixCharacterChange()) );
-    connect( p, SIGNAL(languageChanged()), widgets.keypad, SLOT(retranslateText()) );
 
     layouts.keypad = new QHBoxLayout();
     layouts.keypad->addStretch();

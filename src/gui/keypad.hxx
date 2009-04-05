@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2005-2006 Johan Thelin <e8johan@gmail.com>
-// Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2007-2009 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -26,9 +26,9 @@
 
 class Keypad : public QWidget
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
+public:
     enum Button { Key0, Key1, Key2, Key3, Key4, Key5, Key6, Key7, Key8, Key9,
                   KeyEquals, KeyPlus, KeyMinus, KeyTimes, KeyDivide,
                   KeyRadixChar, KeyClear, KeyEE, KeyLeftPar, KeyRightPar,
@@ -39,13 +39,14 @@ class Keypad : public QWidget
     explicit Keypad( QWidget * parent  = 0 );
     ~Keypad();
 
-  signals:
+signals:
     void buttonPressed( Keypad::Button );
 
-  public slots:
+public slots:
     void handleRadixCharacterChange();
+    void retranslateText();
 
-  protected slots:
+protected slots:
     void key0Pressed();
     void key1Pressed();
     void key2Pressed();
@@ -82,11 +83,14 @@ class Keypad : public QWidget
     void keyTanPressed();
     void keyXPressed();
     void keyXEqPressed();
-    void retranslateText();
 
-  private:
+protected:
+    virtual void changeEvent( QEvent * );
+
+private:
     struct Private;
     const std::auto_ptr<Private> d;
+
     Keypad( const Keypad & );
     Keypad & operator=( const Keypad & );
 };
