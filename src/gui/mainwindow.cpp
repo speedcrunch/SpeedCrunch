@@ -30,10 +30,10 @@
 #include "gui/constantsdock.hxx"
 #include "gui/deletevardlg.hxx"
 #include "gui/editor.hxx"
+#include "gui/functionsdialog.hxx"
 #include "gui/functionsdock.hxx"
 #include "gui/historydock.hxx"
 #include "gui/historywidget.hxx"
-#include "gui/insertfunctiondlg.hxx"
 #include "gui/insertvardlg.hxx"
 #include "gui/mainwindow.hxx"
 #include "gui/resultdisplay.hxx"
@@ -1412,9 +1412,9 @@ void MainWindow::hideAutoCalcTip()
 
 void MainWindow::showFunctionInsertionDialog()
 {
-    InsertFunctionDlg dlg;
+    FunctionsDialog dlg;
 
-    if ( dlg.exec() == InsertFunctionDlg::Accepted )
+    if ( dlg.exec() == QDialog::Accepted )
         insertFunctionIntoEditor( dlg.selectedFunctionName() );
 }
 

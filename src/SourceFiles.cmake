@@ -19,11 +19,11 @@ gui/constantswidget.hxx
 gui/deletevardlg.hxx
 gui/resultdisplay.hxx
 gui/editor.hxx
+gui/functionsdialog.hxx
 gui/functionsdock.hxx
 gui/functionswidget.hxx
 gui/historydock.hxx
 gui/historywidget.hxx
-gui/insertfunctiondlg.hxx
 gui/insertvardlg.hxx
 gui/keypad.hxx
 #gui/syntaxhighlighter.hxx
@@ -75,11 +75,11 @@ gui/constantswidget.cpp
 gui/deletevardlg.cpp
 gui/resultdisplay.cpp
 gui/editor.cpp
+gui/functionsdialog.cpp
 gui/functionsdock.cpp
 gui/functionswidget.cpp
 gui/historydock.cpp
 gui/historywidget.cpp
-gui/insertfunctiondlg.cpp
 gui/insertvardlg.cpp
 gui/keypad.cpp
 gui/syntaxhighlighter.cpp

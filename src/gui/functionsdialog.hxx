@@ -17,28 +17,30 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#ifndef GUI_INSERTFUNCTIONDLG_HXX
-#define GUI_INSERTFUNCTIONDLG_HXX
+#ifndef GUI_FUNCTIONSDIALOG_HXX
+#define GUI_FUNCTIONSDIALOG_HXX
 
 #include <QtGui/QDialog>
 
 #include <memory>
 
-class InsertFunctionDlg : public QDialog
+class FunctionsWidget;
+
+class FunctionsDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit InsertFunctionDlg( QWidget * parent = 0 );
-    ~InsertFunctionDlg();
+    FunctionsDialog();
+    ~FunctionsDialog();
 
     QString selectedFunctionName() const;
 
 private:
-    struct Private;
-    const std::auto_ptr<Private> d;
-    InsertFunctionDlg( const InsertFunctionDlg & );
-    InsertFunctionDlg & operator=( const InsertFunctionDlg & );
+    FunctionsWidget * m_widget;
+
+    FunctionsDialog( const FunctionsDialog & );
+    FunctionsDialog & operator=( const FunctionsDialog & );
 };
 
 #endif

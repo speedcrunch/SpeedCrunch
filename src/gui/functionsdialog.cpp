@@ -19,7 +19,7 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#include "gui/insertfunctiondlg.hxx"
+#include "gui/functionsdialog.hxx"
 
 #include "gui/functionswidget.hxx"
 
@@ -27,35 +27,27 @@
 #include <QtGui/QTreeWidget>
 #include <QtGui/QVBoxLayout>
 
-struct InsertFunctionDlg::Private
-{
-    FunctionsWidget * list;
-};
-
-InsertFunctionDlg::InsertFunctionDlg( QWidget * parent )
-    : QDialog( parent ), d( new InsertFunctionDlg::Private )
+FunctionsDialog::FunctionsDialog()
+    : QDialog(), m_widget( new FunctionsWidget(this) )
 {
     setWindowTitle( tr("Insert Function") );
-    setModal( true );
 
     QVBoxLayout * layout = new QVBoxLayout;
+    layout->addWidget( m_widget );
     setLayout( layout );
 
-    d->list = new FunctionsWidget( this );
-    layout->addWidget( d->list );
-
-    connect( d->list, SIGNAL(functionSelected(const QString &)), SLOT(accept()) );
+    connect( m_widget, SIGNAL(functionSelected(const QString &)), SLOT(accept()) );
 
     adjustSize();
 }
 
-QString InsertFunctionDlg::selectedFunctionName() const
+QString FunctionsDialog::selectedFunctionName() const
 {
-    const QTreeWidgetItem * item = d->list->currentItem();
+    const QTreeWidgetItem * item = m_widget->currentItem();
     return item ? item->text( 0 ).toLower() : QString();
 }
 
-InsertFunctionDlg::~InsertFunctionDlg()
+FunctionsDialog::~FunctionsDialog()
 {
 }
 
