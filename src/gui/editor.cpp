@@ -405,9 +405,9 @@ void Editor::triggerAutoComplete()
     for ( int i = 0; i < fnames.count(); ++i ) {
         if ( fnames.at(i).startsWith(id, Qt::CaseInsensitive) ) {
             QString str = fnames.at( i );
-            ::Function * f = Functions::instance()->function( str );
+            Function * f = Functions::instance()->function( str );
             if ( f )
-                str.append( ':' ).append( f->description() );
+                str.append( ':' ).append( f->name() );
             choices.append( str );
         }
     }

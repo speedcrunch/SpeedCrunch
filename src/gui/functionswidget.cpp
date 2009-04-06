@@ -113,7 +113,7 @@ void FunctionsWidget::fillTable()
             continue;
 
         QStringList str;
-        str << f->name() << f->description();
+        str << f->identifier() << f->name();
 
         if ( term.isEmpty()
              || str.at(0).contains(term, Qt::CaseInsensitive)
@@ -149,9 +149,9 @@ void FunctionsWidget::fillTable()
 void FunctionsWidget::retranslateText()
 {
     QStringList titles;
+    const QString identifier = tr( "Identifier" );
     const QString name = tr( "Name" );
-    const QString desc = tr( "Description" );
-    titles << name << desc;
+    titles << identifier << name;
     d->functions->setHeaderLabels( titles );
 
     d->searchLabel->setText( tr("Search") );

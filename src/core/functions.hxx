@@ -36,17 +36,16 @@ class Function : public QObject
     Q_OBJECT
 
 public:
-    Function( const QString & name, int argc, FunctionPtr ptr, QObject * parent = 0 );
-    Function( const QString & name, FunctionPtr ptr, QObject * parent = 0  );
+    Function( const QString & identifier, FunctionPtr ptr, int argc, QObject * parent = 0 );
+    Function( const QString & identifier, FunctionPtr ptr, QObject * parent = 0  );
     ~Function();
 
-    QString description() const;
     QString error() const;
     HNumber exec( const QVector<HNumber> & args );
-    Functions * functions() const;
+    QString identifier() const;
     QString name() const;
-    void setError( const QString & context, const QString & error );
-    void setTitle( const QString & );
+    void setError( const QString & );
+    void setName( const QString & );
 
 private:
     struct Private;
