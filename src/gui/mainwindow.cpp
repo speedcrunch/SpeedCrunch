@@ -2151,7 +2151,6 @@ void MainWindow::insertFunctionIntoEditor( const QString & f )
 
 void MainWindow::handleKeypadButtonPress( Keypad::Button b )
 {
-    d->widgets.editor->blockSignals( true ); // prevent completion
     switch ( b ) {
         case Keypad::Key0: d->widgets.editor->insert( "0" ); break;
         case Keypad::Key1: d->widgets.editor->insert( "1" ); break;
@@ -2201,7 +2200,6 @@ void MainWindow::handleKeypadButtonPress( Keypad::Button b )
   }
 
     QTimer::singleShot( 0, d->widgets.editor, SLOT(setFocus()) );
-    d->widgets.editor->blockSignals( false );
 
     if ( b == Keypad::KeyEquals )
         d->widgets.editor->evaluate();
