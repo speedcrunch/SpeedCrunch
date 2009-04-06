@@ -1293,6 +1293,7 @@ bool MainWindow::event( QEvent * e )
 void MainWindow::showAboutDialog()
 {
     AboutBox dlg;
+    dlg.resize( 400, 300 );
     dlg.exec();
 }
 
@@ -1357,6 +1358,7 @@ void MainWindow::deleteAllVariables()
 void MainWindow::showVariableDeletionDialog()
 {
     DeleteVariableDlg dlg;
+    dlg.resize( 400, 300 );
     dlg.exec();
 
     if ( d->settings->variablesDockVisible )
@@ -1413,6 +1415,7 @@ void MainWindow::hideAutoCalcTip()
 void MainWindow::showFunctionInsertionDialog()
 {
     FunctionsDialog dlg;
+    dlg.resize( 400, 300 );
 
     if ( dlg.exec() == QDialog::Accepted )
         insertFunctionIntoEditor( dlg.selectedFunctionName() );
@@ -1421,8 +1424,9 @@ void MainWindow::showFunctionInsertionDialog()
 void MainWindow::showVariableInsertionDialog()
 {
     InsertVariableDlg dlg;
+    dlg.resize( 400, 300 );
 
-    if ( dlg.exec() == InsertVariableDlg::Accepted ) {
+    if ( dlg.exec() == QDialog::Accepted ) {
         QString varName = dlg.variableName();
         if ( ! varName.isEmpty() )
             d->widgets.editor->insert( varName );

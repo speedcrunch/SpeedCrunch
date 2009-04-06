@@ -216,6 +216,5 @@ AboutBox::AboutBox( QWidget * parent )
     buttonLayout->addWidget( closeButton );
 
     setWindowTitle( tr("About SpeedCrunch") );
-    setMinimumSize( 512, 384 );
 }
 
