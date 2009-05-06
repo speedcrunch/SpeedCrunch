@@ -180,7 +180,9 @@ Token & Token::operator=( const Token & token )
 
 HNumber Token::asNumber() const
 {
-    return isNumber() ? HNumber( (const char *)m_text.toLatin1() ) : HNumber( 0 );
+    QString text = m_text;
+    text.replace( ",", "." ); // issue 151
+    return isNumber() ? HNumber( (const char *)text.toLatin1() ) : HNumber( 0 );
 }
 
 Token::Op Token::asOperator() const
@@ -418,8 +420,8 @@ Tokens Evaluator::scan( const QString& expr ) const
                 else if ( ch == '#' ) { // simple hexadec notation
                     tokenText.append( "0x" );
                     state = InHexa;
-                    i++;
-                } else if ( ch == ',' || ch == '.' ) { // radix char ?
+                    ++i;
+                } else if ( ch == '.' || ch == ',' ) { // radix char ?
                     tokenText.append( ex.at(i++) );
                     state = InDecimal;
                 } else if ( ch.isNull() ) // terminator character
@@ -1305,7 +1307,7 @@ QVector<Variable> Evaluator::variables() const
           ++it )
     {
         Variable var;
-        const char* ASCII;
+        const char * ASCII;
         var.name = it.value().name;
         ASCII = var.name.toLatin1();
         var.value = it.value().value;

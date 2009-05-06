@@ -71,7 +71,7 @@ public:
     Tokens() : QVector<Token>(), m_valid( true ) {};
 
     bool valid() const { return m_valid; }
-    void setValid( bool v ){ m_valid = v; }
+    void setValid( bool v ) { m_valid = v; }
 
 protected:
     bool m_valid;
@@ -105,7 +105,6 @@ public:
     HNumber get( const QString & id );
     bool has( const QString & id );
     bool isValid() const;
-    char radixChar() const;
     void remove( const QString & id );
     Tokens scan( const QString & ) const;
     void set( const QString & id, HNumber value );

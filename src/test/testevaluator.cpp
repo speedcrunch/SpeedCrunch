@@ -217,6 +217,14 @@ void test_divide_by_zero()
   CHECK_DIV_BY_ZERO( "-345.3 /  binompmf (   1 ; 10 ;  0 )  " );
 }
 
+void test_radix_char()
+{
+  CHECK_EVAL( "1+.5",  "1.5"  );
+  CHECK_EVAL( "1+,5",  "1.5"  );
+  CHECK_EVAL( ".5*,5", "0.25" );
+  CHECK_EVAL( "1.01+2,02", "3.03" );
+}
+
 void test_function_basic()
 {
   CHECK_EVAL( "ABS(0)",    "0" );
@@ -528,6 +536,7 @@ int main( int argc, char * * argv )
   test_binary();
 
   test_divide_by_zero();
+  test_radix_char();
 
   test_function_basic();
   test_function_trig();
