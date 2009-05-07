@@ -590,7 +590,8 @@ void Editor::evaluate()
 
 QString Editor::formatNumber( const HNumber & value ) const
 {
-    char * str = HMath::format( value, d->settings->resultFormat, d->settings->resultPrecision );
+    const char format = value.format() != 0 ? value.format() : d->settings->resultFormat;
+    char * str = HMath::format( value, format, d->settings->resultPrecision );
     QString s = QString::fromLatin1( str );
     if ( d->settings->radixCharacter() != '.' )
         s.replace( '.', d->settings->radixCharacter() );

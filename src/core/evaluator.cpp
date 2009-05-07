@@ -36,10 +36,10 @@
 
 QTextStream & operator<<( QTextStream & s, HNumber num )
 {
-  char * str = HMath::format( num, 'f' );
-  s << str;
-  free( str );
-  return s;
+    char * str = HMath::format( num, 'f' );
+    s << str;
+    free( str );
+    return s;
 }
 #endif // EVALUATOR_DEBUG
 

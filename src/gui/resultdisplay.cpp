@@ -205,7 +205,8 @@ QColor ResultDisplay::customTextColor() const
 QString ResultDisplay::formatNumber( const HNumber & value )
 {
   Settings * settings = Settings::instance();
-  char * str = HMath::format( value, settings->resultFormat, settings->resultPrecision );
+  const char format = value.format() != 0 ? value.format() : settings->resultFormat;
+  char * str = HMath::format( value, format, settings->resultPrecision );
   QString s = QString::fromLatin1( str );
   free( str );
   if ( settings->radixCharacter() != '.' )
