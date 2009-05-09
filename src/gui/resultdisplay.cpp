@@ -172,13 +172,11 @@ void ResultDisplay::appendHistory( const QStringList & history, const QStringLis
   for ( int i = 0 ; i < count; ++i )
   {
     QByteArray a = results.at(i).toLatin1();
-    const char * resultStr = a.constData();
+    HNumber result( a.constData() );
 
-    HNumber result( resultStr );
-    char c = a.at( 1 );
-    if      ( c == 'b' ) result.setFormat( 'b' );
-    else if ( c == 'o' ) result.setFormat( 'o' );
-    else if ( c == 'x' ) result.setFormat( 'h' );
+    if      ( a.indexOf('b') == 1 ) result.setFormat( 'b' );
+    else if ( a.indexOf('o') == 1 ) result.setFormat( 'o' );
+    else if ( a.indexOf('x') == 1 ) result.setFormat( 'h' );
 
     if ( results.at(i) == "NaN" || ! result.isNan() )
       append( history.at(i), result );
