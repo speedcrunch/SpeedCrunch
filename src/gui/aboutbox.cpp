@@ -119,7 +119,7 @@ AboutBox::AboutBox( QWidget * parent )
     msg += i18n.arg( tr("Czech") )
                .arg( "Blond'&aacute;k" );
     msg += i18n.arg( tr("Dutch") )
-               .arg( "Maarten Fonville<br>Jaap Woldringh" );
+               .arg( "Bram Schoenmakers<br>Jaap Woldringh<br>Maarten Fonville" );
     msg += i18n.arg( tr("French") )
                .arg( "Cyril Foucr&eacute;<br>Gr&eacute;gory Treiber<br>Laurent Cozic" );
     msg += i18n.arg( tr("Finnish") )
