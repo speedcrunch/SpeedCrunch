@@ -2295,7 +2295,8 @@ void MainWindow::evaluateEditorExpression()
         showAutoCalcTip( d->evaluator->error() );
     else {
         d->widgets.display->append( str, result );
-        char * num = HMath::format( result, 'e', DECPRECISION );
+        const char format = result.format() != 0 ? result.format() : 'e';
+        char * num = HMath::format( result, format, DECPRECISION );
         d->widgets.editor->appendHistory( str, num );
         free( num );
         d->widgets.editor->setAnsAvailable( true );

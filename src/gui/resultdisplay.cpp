@@ -156,8 +156,10 @@ void ResultDisplay::append( const QString & expr, const HNumber & value )
   new ExpressionItem( this, d->count, expr );
   new ResultItem( this, d->count, value );
 
+  // REFACTOR: this only serves to save a session, nonsense
   d->contents.append( expr );
-  char* str = HMath::format( value, 'e', DECPRECISION );
+  const char format = value.format() != 0 ? value.format() : 'e';
+  char* str = HMath::format( value, format, DECPRECISION );
   d->contents.append( str );
   free(str);
 
@@ -166,12 +168,18 @@ void ResultDisplay::append( const QString & expr, const HNumber & value )
 
 void ResultDisplay::appendHistory( const QStringList & history, const QStringList & results )
 {
-  for ( int i = 0 ; i < history.count(); i++ )
+  const int count = history.count();
+  for ( int i = 0 ; i < count; ++i )
   {
     QByteArray a = results.at(i).toLatin1();
     const char * resultStr = a.constData();
 
     HNumber result( resultStr );
+    char c = a.at( 1 );
+    if      ( c == 'b' ) result.setFormat( 'b' );
+    else if ( c == 'o' ) result.setFormat( 'o' );
+    else if ( c == 'x' ) result.setFormat( 'h' );
+
     if ( results.at(i) == "NaN" || ! result.isNan() )
       append( history.at(i), result );
   }
