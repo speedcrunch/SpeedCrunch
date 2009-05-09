@@ -31,7 +31,7 @@ class FunctionsDialog : public QDialog
     Q_OBJECT
 
 public:
-    FunctionsDialog();
+    FunctionsDialog( QWidget * parent = 0 );
     ~FunctionsDialog();
 
     QString selectedFunctionName() const;

@@ -27,8 +27,8 @@
 #include <QtGui/QTreeWidget>
 #include <QtGui/QVBoxLayout>
 
-FunctionsDialog::FunctionsDialog()
-    : QDialog(), m_widget( new FunctionsWidget(this) )
+FunctionsDialog::FunctionsDialog( QWidget * parent )
+    : QDialog( parent ), m_widget( new FunctionsWidget(this) )
 {
     setWindowTitle( tr("Insert Function") );
 

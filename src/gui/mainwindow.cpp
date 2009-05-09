@@ -1292,7 +1292,7 @@ bool MainWindow::event( QEvent * e )
 
 void MainWindow::showAboutDialog()
 {
-    AboutBox dlg;
+    AboutBox dlg( this );
     dlg.resize( 400, 300 );
     dlg.exec();
 }
@@ -1357,7 +1357,7 @@ void MainWindow::deleteAllVariables()
 
 void MainWindow::showVariableDeletionDialog()
 {
-    DeleteVariableDlg dlg;
+    DeleteVariableDlg dlg( this );
     dlg.resize( 400, 300 );
     dlg.exec();
 
@@ -1414,7 +1414,7 @@ void MainWindow::hideAutoCalcTip()
 
 void MainWindow::showFunctionInsertionDialog()
 {
-    FunctionsDialog dlg;
+    FunctionsDialog dlg( this );
     dlg.resize( 400, 300 );
 
     if ( dlg.exec() == QDialog::Accepted )
@@ -1423,7 +1423,7 @@ void MainWindow::showFunctionInsertionDialog()
 
 void MainWindow::showVariableInsertionDialog()
 {
-    InsertVariableDlg dlg;
+    InsertVariableDlg dlg( this );
     dlg.resize( 400, 300 );
 
     if ( dlg.exec() == QDialog::Accepted ) {
