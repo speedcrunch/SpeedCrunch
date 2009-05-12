@@ -26,6 +26,7 @@
 
 #include <QtGui/QApplication>
 #include <QtGui/QPalette>
+#include <QtGui/QPlainTextEdit>
 #include <QtGui/QTextEdit>
 
 struct SyntaxHighlighter::Private
@@ -63,17 +64,18 @@ struct SyntaxHighlighter::Private
     }
 };
 
-SyntaxHighlighter::SyntaxHighlighter( QTextEdit * e )
+SyntaxHighlighter::SyntaxHighlighter( QPlainTextEdit * e )
     : QSyntaxHighlighter( e ), d( new SyntaxHighlighter::Private )
 {
+    setDocument( e->document() );
     setScheme();
 }
 
 void SyntaxHighlighter::highlightBlock( const QString & text )
 {
     if ( ! Settings::instance()->syntaxHighlighting ) {
-        QTextEdit * p = static_cast<QTextEdit *>( parent() );
-        setFormat( 0, text.length(), p->palette().text().color() );
+        QWidget * widget = static_cast<QWidget *>( parent() );
+        setFormat( 0, text.length(), widget->palette().text().color() );
         return;
     }
 
@@ -121,9 +123,9 @@ void SyntaxHighlighter::setScheme( SyntaxHighlighter::Scheme hs )
 
     if ( hs == AutoScheme ) {
         const int NO_COLORS = 3;
-        QTextEdit * p = static_cast<QTextEdit *>( parent() );
-        const QColor bg = p->palette().color( QPalette::Base );
-        const QColor fg = p->palette().color( QPalette::Text );
+        QWidget * widget = static_cast<QWidget *>( parent() );
+        const QColor bg = widget->palette().color( QPalette::Base );
+        const QColor fg = widget->palette().color( QPalette::Text );
         const QList<QColor> list = d->generateColors( bg, fg, NO_COLORS );
         for ( int i = 0; i < NO_COLORS; ++i )
             d->colors[ static_cast<SyntaxHighlighter::Role>(i) ] = list.at( i );

@@ -41,6 +41,7 @@
 #include "gui/variablesdock.hxx"
 #include "math/floatconfig.h"
 
+#include <QtCore/QLocale>
 #include <QtCore/QTextStream>
 #include <QtCore/QTimer>
 #include <QtCore/QTranslator>
@@ -795,6 +796,9 @@ void MainWindow::Private::createFixedWidgets()
     QHBoxLayout * displayLayout = new QHBoxLayout();
     displayLayout->setMargin( 5 );
     widgets.display = new ResultDisplay( widgets.root );
+    QString displayStyle( "QPlainTextEdit { font: bold %1pt }" );
+    const int displayPointSize = widgets.display->font().pointSize();
+    widgets.display->setStyleSheet( displayStyle.arg(displayPointSize + 2) );
     displayLayout->addWidget( widgets.display );
     layouts.root->addLayout( displayLayout );
 
@@ -803,7 +807,7 @@ void MainWindow::Private::createFixedWidgets()
     editorLayout->setMargin( 5 );
     widgets.editor = new Editor( widgets.root );
     widgets.editor->setFocus();
-    QString editorStyle( "QTextEdit { font: bold %1pt }" );
+    QString editorStyle( "QPlainTextEdit { font: bold %1pt }" );
     const int editorPointSize = widgets.editor->font().pointSize();
     widgets.editor->setStyleSheet( editorStyle.arg(editorPointSize + 3) );
     widgets.editor->setFixedHeight( widgets.editor->sizeHint().height() );
@@ -1719,6 +1723,9 @@ void MainWindow::saveSession()
 
     // expressions and results
     stream << d->widgets.display->asText() << "\n";
+    //stream << d->widgets.display->toPlainText().replace(
+    //    QLatin1String("    = "), QLatin1String("") ).replace(
+    //        QLatin1String("\n\n"), QLatin1String("\n") ) << "\n";
 
     // number of variables
     int noVars = d->evaluator->variables().count();

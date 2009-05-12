@@ -24,13 +24,15 @@
 
 #include <memory>
 
+class QPlainTextEdit;
+
 class SyntaxHighlighter : public QSyntaxHighlighter
 {
 public:
     enum Scheme { AutoScheme };
     enum Role { Variable = 0, Number, Function, MatchedPar };
 
-    SyntaxHighlighter( QTextEdit * );
+    SyntaxHighlighter( QPlainTextEdit * );
 
     QColor color( Role );
     virtual void highlightBlock( const QString & );

@@ -37,6 +37,7 @@
 #include <QtGui/QKeyEvent>
 #include <QtGui/QLineEdit>
 #include <QtGui/QStyle>
+#include <QtGui/QTextEdit>
 #include <QtGui/QTreeWidget>
 #include <QtGui/QWheelEvent>
 
@@ -64,7 +65,7 @@ struct Editor::Private
 };
 
 Editor::Editor( QWidget * parent )
-    : QTextEdit( parent ), d( new Editor::Private )
+    : QPlainTextEdit( parent ), d( new Editor::Private )
 {
     d->eval = Evaluator::instance();
     d->constants = Constants::instance();
@@ -83,13 +84,13 @@ Editor::Editor( QWidget * parent )
     d->ansAvailable = false;
 
     setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
-    setLineWrapMode( QTextEdit::NoWrap );
+    setLineWrapMode( QPlainTextEdit::NoWrap );
     setTabChangesFocus( true );
     setWordWrapMode( QTextOption::NoWrap );
     setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
     setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
-    setAcceptRichText( false );
-    setAutoFormatting( QTextEdit::AutoNone );
+    //setAcceptRichText( false );
+    //setAutoFormatting( QPlainTextEdit::AutoNone );
 
     connect( d->autoCalcTimer, SIGNAL(timeout()), SLOT(autoCalc()) );
     connect( d->autoCalcSelTimer, SIGNAL(timeout()), SLOT(autoCalcSelection()) );
@@ -264,7 +265,7 @@ void Editor::startSelAutoCalcTimer()
 void Editor::doMatchingPar()
 {
     // clear previous
-    setExtraSelections( QList<ExtraSelection>() );
+    //setExtraSelections( QList<ExtraSelection>() );
 
     if ( ! d->syntaxHighlightEnabled )
         return;
@@ -303,19 +304,19 @@ void Editor::doMatchingLeft()
         }
 
         if ( par == 0 ) {
-            ExtraSelection hilite1;
+            QTextEdit::ExtraSelection hilite1;
             hilite1.cursor = textCursor();
             hilite1.cursor.setPosition( matchPos );
             hilite1.cursor.setPosition( matchPos + 1, QTextCursor::KeepAnchor );
             hilite1.format.setBackground( d->highlighter->color(SyntaxHighlighter::MatchedPar) );
 
-            ExtraSelection hilite2;
+            QTextEdit::ExtraSelection hilite2;
             hilite2.cursor = textCursor();
             hilite2.cursor.setPosition( lastToken.pos() );
             hilite2.cursor.setPosition( lastToken.pos() + 1, QTextCursor::KeepAnchor );
             hilite2.format.setBackground( d->highlighter->color(SyntaxHighlighter::MatchedPar) );
 
-            QList<ExtraSelection> extras;
+            QList<QTextEdit::ExtraSelection> extras;
             extras << hilite1;
             extras << hilite2;
             setExtraSelections( extras );
@@ -354,19 +355,19 @@ void Editor::doMatchingRight()
         }
 
         if ( par == 0 ) {
-            ExtraSelection hilite1;
+            QTextEdit::ExtraSelection hilite1;
             hilite1.cursor = textCursor();
             hilite1.cursor.setPosition( curPos+matchPos );
             hilite1.cursor.setPosition( curPos+matchPos + 1, QTextCursor::KeepAnchor );
             hilite1.format.setBackground( d->highlighter->color(SyntaxHighlighter::MatchedPar) );
 
-            ExtraSelection hilite2;
+            QTextEdit::ExtraSelection hilite2;
             hilite2.cursor = textCursor();
             hilite2.cursor.setPosition( curPos+firstToken.pos() );
             hilite2.cursor.setPosition( curPos+firstToken.pos() + 1, QTextCursor::KeepAnchor );
             hilite2.format.setBackground( d->highlighter->color(SyntaxHighlighter::MatchedPar) );
 
-            QList<ExtraSelection> extras;
+            QList<QTextEdit::ExtraSelection> extras;
             extras << hilite1;
             extras << hilite2;
             setExtraSelections( extras );
@@ -680,7 +681,7 @@ void Editor::keyPressEvent( QKeyEvent * e )
         return;
     }
 
-    QTextEdit::keyPressEvent( e );
+    QPlainTextEdit::keyPressEvent( e );
 }
 
 void Editor::wheelEvent( QWheelEvent * e )

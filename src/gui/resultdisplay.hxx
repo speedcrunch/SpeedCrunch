@@ -1,6 +1,5 @@
 // This file is part of the SpeedCrunch project
-// Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2008-2009 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2009 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -20,14 +19,13 @@
 #ifndef GUI_RESULTDISPLAY_HXX
 #define GUI_RESULTDISPLAY_HXX
 
-#include <QtGui/QListWidget>
+#include <QtGui/QPlainTextEdit>
 
 #include <memory>
 
 class HNumber;
-class QListWidgetItem;
 
-class ResultDisplay : public QListWidget
+class ResultDisplay : public QPlainTextEdit
 {
     Q_OBJECT
 
@@ -61,8 +59,8 @@ public slots:
     void handleRadixCharacterChange();
 
 private slots:
-    void copyToClipboard( QListWidgetItem * );
-    void selectItem( QListWidgetItem * );
+    //void copyToClipboard( QListWidgetItem * );
+    //void selectItem( QListWidgetItem * );
     void refresh();
 
 private:
