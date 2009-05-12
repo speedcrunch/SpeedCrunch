@@ -1489,7 +1489,7 @@ void MainWindow::showSessionLoadDialog()
     // expressions and results
     QStringList expLs;
     QStringList resLs;
-    for ( int i = 0; i < noCalcs; i++ ) {
+    for ( int i = 0; i < noCalcs; ++i ) {
         QString exp = stream.readLine();
         QString res = stream.readLine();
         if ( exp.isNull() || res.isNull() ) {
@@ -1722,10 +1722,10 @@ void MainWindow::saveSession()
     stream << d->widgets.display->count() << "\n";
 
     // expressions and results
-    stream << d->widgets.display->asText() << "\n";
-    //stream << d->widgets.display->toPlainText().replace(
-    //    QLatin1String("    = "), QLatin1String("") ).replace(
-    //        QLatin1String("\n\n"), QLatin1String("\n") ) << "\n";
+    //stream << d->widgets.display->asText() << "\n";
+    stream << d->widgets.display->toPlainText().replace(
+        QLatin1String("= "), QLatin1String("") ).replace(
+            QLatin1String("\n\n"), QLatin1String("\n") );
 
     // number of variables
     int noVars = d->evaluator->variables().count();
@@ -1758,7 +1758,7 @@ void MainWindow::showSessionExportDialog()
         return;
     }
 
-    QTextStream stream( &file );
+    QTextStream stream( & file );
 
     // expressions and results
     stream << d->widgets.display->asText() << "\n";

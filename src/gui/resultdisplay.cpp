@@ -73,7 +73,7 @@ void ResultDisplay::append( const QString & expr, const HNumber & value )
     ++d->count;
 
     appendPlainText( expr );
-    appendPlainText( QLatin1String("    =  ") + formatNumber(value) );
+    appendPlainText( QLatin1String("= ") + formatNumber(value) );
     appendPlainText( QLatin1String("") );
     ensureCursorVisible();
 
@@ -90,14 +90,15 @@ void ResultDisplay::appendHistory( const QStringList & history, const QStringLis
     const int count = history.count();
     for ( int i = 0 ; i < count; ++i )
     {
-        QByteArray a = results.at(i).toLatin1();
-        HNumber result( a.constData() );
+        QString str = results.at( i );
+        str.replace( ',', '.' );
+        HNumber result( str.toLatin1().constData() );
 
-        if      ( a.indexOf('b') == 1 ) result.setFormat( 'b' );
-        else if ( a.indexOf('o') == 1 ) result.setFormat( 'o' );
-        else if ( a.indexOf('x') == 1 ) result.setFormat( 'h' );
+        if      ( str.indexOf('b') == 1 ) result.setFormat( 'b' );
+        else if ( str.indexOf('o') == 1 ) result.setFormat( 'o' );
+        else if ( str.indexOf('x') == 1 ) result.setFormat( 'h' );
 
-        if ( results.at(i) == "NaN" || ! result.isNan() )
+        if ( ! result.isNan() )
             append( history.at(i), result );
     }
 }
