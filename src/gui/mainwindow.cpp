@@ -1095,22 +1095,15 @@ void MainWindow::Private::createFixedConnections()
     connect( actions.helpTipOfTheDay, SIGNAL(triggered()), p, SLOT(showTipOfTheDay()) );
     connect( actions.helpWebsite, SIGNAL(triggered()), p, SLOT(openHomePageInSystemBrowser()) );
 
-    connect( widgets.display, SIGNAL(textSelected(const QString &)), widgets.editor,
-             SLOT(paste()) );
-    connect( widgets.display, SIGNAL(textSelected(const QString &)), widgets.editor,
-             SLOT(setFocus()) );
-
     connect( widgets.editor, SIGNAL(autoCalcDisabled()), p, SLOT(hideAutoCalcTip()) );
     connect( widgets.editor, SIGNAL(autoCalcEnabled(const QString &)), p,
              SLOT(showAutoCalcTip(const QString &)) );
     connect( widgets.editor, SIGNAL(returnPressed()), p, SLOT( evaluateEditorExpression()) );
     connect( widgets.editor, SIGNAL(textChanged()), p, SLOT( handleEditorTextChange()) );
 
-    connect( p, SIGNAL(radixCharacterChanged()), widgets.display,
-             SLOT(handleRadixCharacterChange()) );
-    connect( p, SIGNAL(resultFormatChanged()), widgets.display, SLOT(handleResultFormatChange()) );
-    connect( p, SIGNAL(resultPrecisionChanged()), widgets.display,
-             SLOT(handleResultPrecisionChange()) );
+    connect( p, SIGNAL(radixCharacterChanged()), widgets.display, SLOT(refresh()) );
+    connect( p, SIGNAL(resultFormatChanged()), widgets.display, SLOT(refresh()) );
+    connect( p, SIGNAL(resultPrecisionChanged()), widgets.display, SLOT(refresh()) );
 
     connect( p, SIGNAL(languageChanged()), p, SLOT(retranslateText()) );
 

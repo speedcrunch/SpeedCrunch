@@ -32,14 +32,15 @@
 
 struct ResultDisplay::Private
 {
-  QStringList contents;
-  int         count;
-  bool        customAppearance;
-  QColor      customBackgroundColor;
-  QColor      customBackgroundAlternateColor;
-  QColor      customTextColor;
+  int count;
+  bool customAppearance;
+  QColor customBackgroundColor;
+  QColor customBackgroundAlternateColor;
+  QColor customTextColor;
+  QStringList expressions;
   //FlickCharm  flickCharm;
   SyntaxHighlighter * highlighter;
+  QStringList results;
 };
 
 ResultDisplay::ResultDisplay( QWidget * parent, const char * name )
@@ -78,16 +79,16 @@ void ResultDisplay::append( const QString & expr, const HNumber & value )
     ensureCursorVisible();
 
     // REFACTOR: this only serves to save a session, nonsense
-    d->contents.append( expr );
+    d->expressions.append( expr );
     const char format = value.format() != 0 ? value.format() : 'e';
     char * str = HMath::format( value, format, DECPRECISION );
-    d->contents.append( str );
+    d->results.append( str );
     free( str );
 }
 
-void ResultDisplay::appendHistory( const QStringList & history, const QStringList & results )
+void ResultDisplay::appendHistory( const QStringList & expressions, const QStringList & results )
 {
-    const int count = history.count();
+    const int count = expressions.count();
     for ( int i = 0 ; i < count; ++i )
     {
         QString str = results.at( i );
@@ -99,7 +100,7 @@ void ResultDisplay::appendHistory( const QStringList & history, const QStringLis
         else if ( str.indexOf('x') == 1 ) result.setFormat( 'h' );
 
         if ( ! result.isNan() )
-            append( history.at(i), result );
+            append( expressions.at(i), result );
     }
 }
 
@@ -179,7 +180,8 @@ ResultDisplay::~ResultDisplay()
 void ResultDisplay::clear()
 {
     d->count = 0;
-    d->contents.clear();
+    d->expressions.clear();
+    d->results.clear();
     setPlainText( QLatin1String("") );
 }
 
@@ -187,22 +189,11 @@ void ResultDisplay::scrollEnd()
 {
 }
 
-void ResultDisplay::handleResultFormatChange()
-{
-    // refresh();
-}
-
-void ResultDisplay::handleResultPrecisionChange()
-{
-    // refresh();
-}
-
-void ResultDisplay::handleRadixCharacterChange()
-{
-    // refresh();
-}
-
 void ResultDisplay::refresh()
 {
+    const QStringList expressions = d->expressions;
+    const QStringList results = d->results;
+    clear();
+    appendHistory( expressions, results );
 }
 

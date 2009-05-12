@@ -33,17 +33,17 @@ public:
     ResultDisplay( QWidget * parent = 0, const char * name = 0 );
     ~ResultDisplay();
 
-    void    append( const QString & expr, const HNumber & value );
-    void    appendHistory( const QStringList & history, const QStringList & results );
+    void append( const QString & expr, const HNumber & value );
+    void appendHistory( const QStringList & expressions, const QStringList & results );
     QString asText() const;
-    int     count() const;
-    bool    customAppearance() const;
-    QColor  customBackgroundColor() const;
-    QColor  customBackgroundAlternateColor() const;
-    QColor  customTextColor() const;
-    void    setCustomAppearance( bool );
-    void    setCustomBackgroundColor( const QColor & base, const QColor & alternate );
-    void    setCustomTextColor( const QColor & );
+    int count() const;
+    bool customAppearance() const;
+    QColor customBackgroundColor() const;
+    QColor customBackgroundAlternateColor() const;
+    QColor customTextColor() const;
+    void setCustomAppearance( bool );
+    void setCustomBackgroundColor( const QColor & base, const QColor & alternate );
+    void setCustomTextColor( const QColor & );
 
     static QString formatNumber( const HNumber & );
 
@@ -53,15 +53,8 @@ signals:
 
 public slots:
     void clear();
-    void scrollEnd();
-    void handleResultFormatChange();
-    void handleResultPrecisionChange();
-    void handleRadixCharacterChange();
-
-private slots:
-    //void copyToClipboard( QListWidgetItem * );
-    //void selectItem( QListWidgetItem * );
     void refresh();
+    void scrollEnd();
 
 private:
     struct Private;
