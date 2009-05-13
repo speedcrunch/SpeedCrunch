@@ -19,13 +19,13 @@
 #ifndef GUI_RESULTDISPLAY_HXX
 #define GUI_RESULTDISPLAY_HXX
 
-#include <QtGui/QPlainTextEdit>
+#include "gui/textedit.hxx"
 
 #include <memory>
 
 class HNumber;
 
-class ResultDisplay : public QPlainTextEdit
+class ResultDisplay : public TextEdit
 {
     Q_OBJECT
 

@@ -21,7 +21,7 @@
 #ifndef GUI_EDITOR_HXX
 #define GUI_EDITOR_HXX
 
-#include <QtGui/QPlainTextEdit>
+#include "gui/textedit.hxx"
 
 #include <memory>
 
@@ -32,7 +32,7 @@ class QKeyEvent;
 class QWheelEvent;
 class QWidget;
 
-class Editor : public QPlainTextEdit
+class Editor : public TextEdit
 {
     Q_OBJECT
 

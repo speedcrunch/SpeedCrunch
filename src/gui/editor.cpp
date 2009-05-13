@@ -36,6 +36,7 @@
 #include <QtGui/QHeaderView>
 #include <QtGui/QKeyEvent>
 #include <QtGui/QLineEdit>
+#include <QtGui/QPlainTextEdit>
 #include <QtGui/QStyle>
 #include <QtGui/QTextEdit>
 #include <QtGui/QTreeWidget>
@@ -65,7 +66,7 @@ struct Editor::Private
 };
 
 Editor::Editor( QWidget * parent )
-    : QPlainTextEdit( parent ), d( new Editor::Private )
+    : TextEdit( parent ), d( new Editor::Private )
 {
     d->eval = Evaluator::instance();
     d->constants = Constants::instance();
@@ -84,13 +85,17 @@ Editor::Editor( QWidget * parent )
     d->ansAvailable = false;
 
     setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
-    setLineWrapMode( QPlainTextEdit::NoWrap );
     setTabChangesFocus( true );
     setWordWrapMode( QTextOption::NoWrap );
     setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
     setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
-    //setAcceptRichText( false );
-    //setAutoFormatting( QPlainTextEdit::AutoNone );
+
+#if QT_VERSION < 0x040400
+    setAcceptRichText( false );
+    setLineWrapMode( QTextEdit::NoWrap );
+//#else
+//    setLineWrapMode( QPlainTextEdit::NoWrap );
+#endif
 
     connect( d->autoCalcTimer, SIGNAL(timeout()), SLOT(autoCalc()) );
     connect( d->autoCalcSelTimer, SIGNAL(timeout()), SLOT(autoCalcSelection()) );
@@ -681,7 +686,7 @@ void Editor::keyPressEvent( QKeyEvent * e )
         return;
     }
 
-    QPlainTextEdit::keyPressEvent( e );
+    TextEdit::keyPressEvent( e );
 }
 
 void Editor::wheelEvent( QWheelEvent * e )

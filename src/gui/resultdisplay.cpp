@@ -22,6 +22,7 @@
 #include "core/functions.hxx"
 #include "core/settings.hxx"
 #include "gui/syntaxhighlighter.hxx"
+#include "gui/textedit.hxx"
 #include "math/hmath.hxx"
 #include "math/floatconfig.h"
 
@@ -44,7 +45,7 @@ struct ResultDisplay::Private
 };
 
 ResultDisplay::ResultDisplay( QWidget * parent, const char * name )
-    : QPlainTextEdit( parent ), d( new ResultDisplay::Private )
+    : TextEdit( parent ), d( new ResultDisplay::Private )
 {
     d->customAppearance = false;
     d->count = 0;
@@ -66,7 +67,10 @@ ResultDisplay::ResultDisplay( QWidget * parent, const char * name )
 
 QString ResultDisplay::asText() const
 {
-    return toPlainText();
+    // TODO **************************************
+    return "";
+    //return toPlainText();
+    // TODO **************************************
 }
 
 void ResultDisplay::append( const QString & expr, const HNumber & value )

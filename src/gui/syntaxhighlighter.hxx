@@ -24,7 +24,7 @@
 
 #include <memory>
 
-class QPlainTextEdit;
+class TextEdit;
 
 class SyntaxHighlighter : public QSyntaxHighlighter
 {
@@ -32,7 +32,7 @@ public:
     enum Scheme { AutoScheme };
     enum Role { Variable = 0, Number, Function, MatchedPar };
 
-    SyntaxHighlighter( QPlainTextEdit * );
+    SyntaxHighlighter( TextEdit * );
 
     QColor color( Role );
     virtual void highlightBlock( const QString & );

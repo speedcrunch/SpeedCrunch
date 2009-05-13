@@ -23,11 +23,10 @@
 #include "core/evaluator.hxx"
 #include "core/functions.hxx"
 #include "core/settings.hxx"
+#include "gui/textedit.hxx"
 
 #include <QtGui/QApplication>
 #include <QtGui/QPalette>
-#include <QtGui/QPlainTextEdit>
-#include <QtGui/QTextEdit>
 
 struct SyntaxHighlighter::Private
 {
@@ -64,7 +63,7 @@ struct SyntaxHighlighter::Private
     }
 };
 
-SyntaxHighlighter::SyntaxHighlighter( QPlainTextEdit * e )
+SyntaxHighlighter::SyntaxHighlighter( TextEdit * e )
     : QSyntaxHighlighter( e ), d( new SyntaxHighlighter::Private )
 {
     setDocument( e->document() );

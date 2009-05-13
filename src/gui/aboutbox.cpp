@@ -19,12 +19,12 @@
 // Boston, MA 02110-1301, USA.
 
 #include "gui/aboutbox.hxx"
+#include "gui/textedit.hxx"
 
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QLabel>
 #include <QtGui/QPushButton>
 #include <QtGui/QSpacerItem>
-#include <QtGui/QTextEdit>
 #include <QtGui/QVBoxLayout>
 
 #define MAKE_STRING(a) DO_MAKE_STRING(a)
@@ -188,9 +188,13 @@ AboutBox::AboutBox( QWidget * parent )
 
     msg += "</center>";
 
-    QTextEdit * textEdit = new QTextEdit( this );
+    TextEdit * textEdit = new TextEdit( this );
     textEdit->setReadOnly( true );
+#if QT_VERSION < 0x040400
     textEdit->setText( msg );
+#else
+    textEdit->setPlainText( msg );
+#endif
 
     QPushButton * closeButton = new QPushButton( this );
     closeButton->setObjectName( "CloseButton" );
