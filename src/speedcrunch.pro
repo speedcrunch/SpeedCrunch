@@ -73,7 +73,7 @@ HEADERS += 3rdparty/flickcharm/flickcharm.h \
            gui/insertvardlg.hxx \
            gui/keypad.hxx \
            #gui/syntaxhighlighter.hxx \
-           #gui/textedit.hxx \
+           gui/textedit.hxx \
            gui/tipwidget.hxx \
            gui/variablesdock.hxx \
            gui/variableswidget.hxx \

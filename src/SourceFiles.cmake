@@ -27,7 +27,7 @@ gui/historywidget.hxx
 gui/insertvardlg.hxx
 gui/keypad.hxx
 #gui/syntaxhighlighter.hxx
-#gui/textedit.hxx
+gui/textedit.hxx
 gui/tipwidget.hxx
 gui/variablesdock.hxx
 gui/variableswidget.hxx
