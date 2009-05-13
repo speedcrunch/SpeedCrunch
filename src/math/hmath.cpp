@@ -1114,7 +1114,7 @@ HNumber HMath::exp( const HNumber & x )
 HNumber HMath::ln( const HNumber & x )
 {
   HNumber result;
-  call1ArgPoleCheck(result.d, x.d, float_ln);
+  call1Arg(result.d, x.d, float_ln);
   return result;
 
 }
