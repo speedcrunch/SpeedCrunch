@@ -436,11 +436,11 @@ void float_setfloat(floatnum dest, float x){
 
 float aprxsqrt(float x){
   int exp, i;
-  x = 2 * frexp(x, &exp) - 1;
-  float result = (0.5 - 0.125 * x) * x + 1;
-  x += 1;
+  float x2 = 2 * frexp(x, &exp) - 1;
+  float result = (0.5 - 0.125 * x2) * x2 + 1;
+  x2 += 1;
   for (i = 0; ++i <= 2;)
-    result = 0.5 * (result + x / result);
+    result = 0.5 * (result + x2 / result);
   if ((exp & 1) == 0)
     result *= M_SQRT2;
   return result * _ipwr(2, (exp - 1) >> 1);
