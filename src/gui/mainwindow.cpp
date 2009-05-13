@@ -2289,11 +2289,11 @@ void MainWindow::evaluateEditorExpression()
         return;
 
     d->evaluator->setExpression( str );
-
     HNumber result = d->evaluator->evalUpdateAns();
+
     if ( ! d->evaluator->error().isEmpty() )
         showAutoCalcTip( d->evaluator->error() );
-    else {
+    else if ( ! result.isNan() ) {
         d->widgets.display->append( str, result );
         const char format = result.format() != 0 ? result.format() : 'e';
         char * num = HMath::format( result, format, DECPRECISION );

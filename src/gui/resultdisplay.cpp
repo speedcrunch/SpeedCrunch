@@ -75,6 +75,9 @@ QString ResultDisplay::asText() const
 
 void ResultDisplay::append( const QString & expr, const HNumber & value )
 {
+    if ( value.isNan() )
+        return;
+
     ++d->count;
 
     appendPlainText( expr );
