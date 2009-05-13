@@ -29,6 +29,8 @@ class TextEdit
     : public QPlainTextEdit
 #endif
 {
+    Q_OBJECT
+
 public:
     TextEdit( QWidget * parent = 0 );
 
