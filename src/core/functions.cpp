@@ -361,32 +361,44 @@ HNumber Functions::Private::lg( Function * f, const QVector<HNumber> & args )
     return result;
 }
 
-HNumber Functions::Private::sin( Function * /*f*/, const QVector<HNumber> & args )
+HNumber Functions::Private::sin( Function * f, const QVector<HNumber> & args )
 {
     if ( args.count() != 1 )
         return HMath::nan();
 
     Settings * settings = Settings::instance();
-    HNumber angle = args.at(0);
+    HNumber angle = args.at( 0 );
 
     if ( settings->angleUnit == 'd' )
         angle = HMath::deg2rad( angle );
 
-    return HMath::sin( angle );
+    HNumber result = HMath::sin( angle );
+    if ( result.isNan() ) {
+        f->setError( Functions::tr("argument out of range") );
+        return HMath::nan();
+    }
+
+    return result;
 }
 
-HNumber Functions::Private::cos( Function * /*f*/, const QVector<HNumber> & args )
+HNumber Functions::Private::cos( Function * f, const QVector<HNumber> & args )
 {
     if ( args.count() != 1 )
         return HMath::nan();
 
     Settings * settings = Settings::instance();
-    HNumber angle = args.at(0);
+    HNumber angle = args.at( 0 );
 
     if ( settings->angleUnit == 'd' )
         angle = HMath::deg2rad( angle );
 
-    return HMath::cos( angle );
+    HNumber result = HMath::cos( angle );
+    if ( result.isNan() ) {
+        f->setError( Functions::tr("argument out of range") );
+        return HMath::nan();
+    }
+
+    return result;
 }
 
 HNumber Functions::Private::tan( Function * f, const QVector<HNumber> & args )
@@ -516,7 +528,7 @@ HNumber Functions::Private::atan( Function * /*f*/, const QVector<HNumber> & arg
     if ( args.count() != 1 )
         return HMath::nan();
 
-    HNumber num = args.at(0);
+    HNumber num = args.at( 0 );
     HNumber result = HMath::atan( num );
 
     Settings * settings = Settings::instance();
@@ -711,8 +723,8 @@ HNumber Functions::Private::product( Function *, const QVector<HNumber> & args )
 
 HNumber Functions::Private::average( Function *, const QVector<HNumber> & args )
 {
-    return args.count() < 1 ?  HNumber( "NaN" )
-        : std::accumulate( args.begin(), args.end(), HNumber(0)) / HNumber(args.count() );
+    return args.count() < 1 ? HNumber( "NaN" )
+        : std::accumulate( args.begin(), args.end(), HNumber(0) ) / HNumber( args.count() );
 }
 
 HNumber Functions::Private::geomean( Function *, const QVector<HNumber> & args )
