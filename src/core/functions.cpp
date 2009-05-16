@@ -245,7 +245,7 @@ HNumber Functions::Private::integer( Function *, const QVector<HNumber> & args )
     return HMath::integer( args.at(0) );
 }
 
-HNumber Functions::Private::trunc( Function *, const QVector<HNumber> & args )
+HNumber Functions::Private::trunc( Function * f, const QVector<HNumber> & args )
 {
     int nArgs = args.count();
 
@@ -292,7 +292,7 @@ HNumber Functions::Private::ceil( Function *, const QVector<HNumber> & args )
     return HMath::ceil( args.at(0) );
 }
 
-HNumber Functions::Private::gcd( Function *, const QVector<HNumber> & args )
+HNumber Functions::Private::gcd( Function * f, const QVector<HNumber> & args )
 {
     int nArgs = args.count();
 
@@ -310,7 +310,7 @@ HNumber Functions::Private::gcd( Function *, const QVector<HNumber> & args )
     return std::accumulate( args.begin() + 1, args.end(), args.at(0), HMath::gcd );
 }
 
-HNumber Functions::Private::round( Function *, const QVector<HNumber> & args )
+HNumber Functions::Private::round( Function * f, const QVector<HNumber> & args )
 {
     int nArgs = args.count();
 
@@ -540,7 +540,7 @@ HNumber Functions::Private::radians( Function *, const QVector<HNumber> & args )
     return HMath::deg2rad( args.at(0) );
 }
 
-HNumber Functions::Private::max( Function *, const QVector<HNumber> & args )
+HNumber Functions::Private::max( Function * f, const QVector<HNumber> & args )
 {
     if ( args.count() < 1 ) {
         f->setError( Functions::tr("function requires at least 1 argument") );
@@ -550,7 +550,7 @@ HNumber Functions::Private::max( Function *, const QVector<HNumber> & args )
     return *std::max_element( args.begin(), args.end() );
 }
 
-HNumber Functions::Private::min( Function *, const QVector<HNumber> & args )
+HNumber Functions::Private::min( Function * f, const QVector<HNumber> & args )
 {
     if ( args.count() < 1 ) {
         f->setError( Functions::tr("function requires at least 1 argument") );
