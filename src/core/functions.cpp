@@ -47,7 +47,51 @@ struct Function::Private
     FunctionPtr ptr;
 
     Private() : argc( 0 ), error(), identifier(), name(), ptr( 0 ) {}
+    const HNumber& checkErrorResult( const HNumber & );
 };
+
+const HNumber& Function::Private::checkErrorResult( const HNumber & n )
+{
+    if (error.isEmpty())
+        switch ( n.error() )
+        {
+            case NoOperand:
+                error = Functions::tr("function does not take NaN as an argument");
+                break;
+            case EvalUnstable:
+                error = Functions::tr("computation exceeds the limitations of SpeedCrunch");
+                break;
+            case Underflow:
+                error = Functions::tr("underflow: tiny result is out of SpeedCrunch's number range");
+                break;
+            case Overflow:
+                error = Functions::tr("overflow: huge result is out of SpeedCrunch's number range");
+                break;
+            case ZeroDivide:
+                error = Functions::tr("function is infinite for submitted argument(s)");
+                break;
+            case OutOfDomain:
+                error = Functions::tr("function is not defined for submitted argument(s)");
+                break;
+            case OutOfLogicRange:
+                error = Functions::tr("logic overflow: result exceeds maximum of 256 bits");
+                break;
+            case OutOfIntegerRange:
+                error = Functions::tr("integer overflow: result exceeds maximum limit for integers");
+                break;
+            case TooExpensive:
+                error = Functions::tr("too time consuming computation was rejected");
+                break;
+            case BadLiteral:
+            case InvalidPrecision:
+            case InvalidParam:
+                error = Functions::tr("bug: internal error that should never occur");
+                break;
+            default:
+                error = "";
+        }
+    return n;
+}
 
 Function::Function( const QString & identifier, FunctionPtr ptr, int argc, QObject * parent )
     : QObject( parent ), d( new Function::Private )
