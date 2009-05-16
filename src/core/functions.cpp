@@ -245,7 +245,7 @@ HNumber Functions::Private::integer( Function *, const QVector<HNumber> & args )
     return HMath::integer( args.at(0) );
 }
 
-HNumber Functions::Private::trunc( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::trunc( Function *, const QVector<HNumber> & args )
 {
     int nArgs = args.count();
 
@@ -292,7 +292,7 @@ HNumber Functions::Private::ceil( Function *, const QVector<HNumber> & args )
     return HMath::ceil( args.at(0) );
 }
 
-HNumber Functions::Private::gcd( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::gcd( Function *, const QVector<HNumber> & args )
 {
     int nArgs = args.count();
 
@@ -310,7 +310,7 @@ HNumber Functions::Private::gcd( Function * f, const QVector<HNumber> & args )
     return std::accumulate( args.begin() + 1, args.end(), args.at(0), HMath::gcd );
 }
 
-HNumber Functions::Private::round( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::round( Function *, const QVector<HNumber> & args )
 {
     int nArgs = args.count();
 
@@ -342,7 +342,7 @@ HNumber Functions::Private::round( Function * f, const QVector<HNumber> & args )
     return HMath::round( num );
 }
 
-HNumber Functions::Private::sqrt( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::sqrt( Function *, const QVector<HNumber> & args )
 {
     return HMath::sqrt( args.at( 0 ) );
 }
@@ -357,22 +357,22 @@ HNumber Functions::Private::exp( Function *, const QVector<HNumber> & args )
     return HMath::exp( args.at(0) );
 }
 
-HNumber Functions::Private::ln( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::ln( Function *, const QVector<HNumber> & args )
 {
     return HMath::ln( args.at( 0 ) );
 }
 
-HNumber Functions::Private::log( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::log( Function *, const QVector<HNumber> & args )
 {
     return HMath::ln( args.at( 0 ) );
 }
 
-HNumber Functions::Private::lg( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::lg( Function *, const QVector<HNumber> & args )
 {
     return HMath::ln( args.at( 0 ) );
 }
 
-HNumber Functions::Private::sin( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::sin( Function *, const QVector<HNumber> & args )
 {
     HNumber angle = args.at( 0 );
 
@@ -382,7 +382,7 @@ HNumber Functions::Private::sin( Function * f, const QVector<HNumber> & args )
     return HMath::sin( angle );
 }
 
-HNumber Functions::Private::cos( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::cos( Function *, const QVector<HNumber> & args )
 {
     HNumber angle = args.at( 0 );
 
@@ -392,7 +392,7 @@ HNumber Functions::Private::cos( Function * f, const QVector<HNumber> & args )
 	return HMath::cos( angle );
 }
 
-HNumber Functions::Private::tan( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::tan( Function *, const QVector<HNumber> & args )
 {
     HNumber angle = args.at( 0 );
 
@@ -402,7 +402,7 @@ HNumber Functions::Private::tan( Function * f, const QVector<HNumber> & args )
     return HMath::tan( angle );
 }
 
-HNumber Functions::Private::cot( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::cot( Function *, const QVector<HNumber> & args )
 {
     HNumber angle = args.at( 0 );
 
@@ -412,7 +412,7 @@ HNumber Functions::Private::cot( Function * f, const QVector<HNumber> & args )
     return HMath::cot( angle );
 }
 
-HNumber Functions::Private::sec( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::sec( Function *, const QVector<HNumber> & args )
 {
     HNumber angle = args.at( 0 );
 
@@ -422,7 +422,7 @@ HNumber Functions::Private::sec( Function * f, const QVector<HNumber> & args )
     return HMath::sec( angle );
 }
 
-HNumber Functions::Private::csc( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::csc( Function *, const QVector<HNumber> & args )
 {
 
     HNumber angle = args.at( 0 );
@@ -433,7 +433,7 @@ HNumber Functions::Private::csc( Function * f, const QVector<HNumber> & args )
     return HMath::csc( angle );
 }
 
-HNumber Functions::Private::asin( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::asin( Function *, const QVector<HNumber> & args )
 {
     HNumber result = HMath::asin( args.at( 0 ) );
 
@@ -443,7 +443,7 @@ HNumber Functions::Private::asin( Function * f, const QVector<HNumber> & args )
     return result;
 }
 
-HNumber Functions::Private::acos( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::acos( Function *, const QVector<HNumber> & args )
 {
     HNumber result = HMath::acos( args.at( 0 ) );
 
@@ -453,7 +453,7 @@ HNumber Functions::Private::acos( Function * f, const QVector<HNumber> & args )
     return result;
 }
 
-HNumber Functions::Private::atan( Function * /*f*/, const QVector<HNumber> & args )
+HNumber Functions::Private::atan( Function *, const QVector<HNumber> & args )
 {
     HNumber result = HMath::atan( args.at( 0 ) );
 
@@ -483,12 +483,12 @@ HNumber Functions::Private::arsinh( Function *, const QVector<HNumber> & args )
     return HMath::arsinh( args.at(0) );
 }
 
-HNumber Functions::Private::arcosh( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::arcosh( Function *, const QVector<HNumber> & args )
 {
     return HMath::arcosh( args.at(0) );
 }
 
-HNumber Functions::Private::artanh( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::artanh( Function *, const QVector<HNumber> & args )
 {
     return HMath::artanh( args.at(0) );
 }
@@ -498,17 +498,17 @@ HNumber Functions::Private::erf( Function *, const QVector<HNumber> & args )
     return HMath::erf( args.at(0) );
 }
 
-HNumber Functions::Private::erfc( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::erfc( Function *, const QVector<HNumber> & args )
 {
     return HMath::erfc( args.at(0) );
 }
 
-HNumber Functions::Private::Gamma( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::Gamma( Function *, const QVector<HNumber> & args )
 {
     return HMath::gamma( args.at(0) );
 }
 
-HNumber Functions::Private::lnGamma( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::lnGamma( Function *, const QVector<HNumber> & args )
 {
     return HMath::lnGamma( args.at(0) );
 }
@@ -518,13 +518,13 @@ HNumber Functions::Private::sign( Function *, const QVector<HNumber> & args )
     return HMath::sign( args.at(0) );
 }
 
-HNumber Functions::Private::nCr( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::nCr( Function *, const QVector<HNumber> & args )
 {
     // arg 0: n; arg 1: r
     return HMath::nCr( args.at(0), args.at(1) );
 }
 
-HNumber Functions::Private::nPr( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::nPr( Function *, const QVector<HNumber> & args )
 {
     // arg 0: n; arg 1: r
     return HMath::nPr( args.at(0), args.at(1) );
@@ -540,7 +540,7 @@ HNumber Functions::Private::radians( Function *, const QVector<HNumber> & args )
     return HMath::deg2rad( args.at(0) );
 }
 
-HNumber Functions::Private::max( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::max( Function *, const QVector<HNumber> & args )
 {
     if ( args.count() < 1 ) {
         f->setError( Functions::tr("function requires at least 1 argument") );
@@ -550,7 +550,7 @@ HNumber Functions::Private::max( Function * f, const QVector<HNumber> & args )
     return *std::max_element( args.begin(), args.end() );
 }
 
-HNumber Functions::Private::min( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::min( Function *, const QVector<HNumber> & args )
 {
     if ( args.count() < 1 ) {
         f->setError( Functions::tr("function requires at least 1 argument") );
@@ -618,72 +618,72 @@ HNumber Functions::Private::bin( Function *, const QVector<HNumber> & args )
     return HNumber( args.at(0) ).setFormat( 'b' );
 }
 
-HNumber Functions::Private::binompmf( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::binompmf( Function *, const QVector<HNumber> & args )
 {
     // arg 0: k; arg 1: n; arg 2: p
     return HMath::binomialPmf( args.at( 0 ), args.at( 1 ), args.at( 2 ) );
 }
 
-HNumber Functions::Private::binomcdf( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::binomcdf( Function *, const QVector<HNumber> & args )
 {
     // arg 0: k; arg 1: n; arg 2: p
     return HMath::binomialCdf( args.at( 0 ), args.at( 1 ), args.at( 2 ) );
 }
 
-HNumber Functions::Private::binommean( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::binommean( Function *, const QVector<HNumber> & args )
 {
     // arg 0: n; arg 1: p
     return HMath::binomialMean( args.at( 0 ), args.at( 1 ) );
 }
 
-HNumber Functions::Private::binomvar( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::binomvar( Function *, const QVector<HNumber> & args )
 {
     // arg 0: n; arg 1: p
     return HMath::binomialVariance( args.at( 0 ), args.at( 1 ) );
 }
 
-HNumber Functions::Private::hyperpmf( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::hyperpmf( Function *, const QVector<HNumber> & args )
 {
     // arg 0: k; arg 1: N; arg 2: M; arg3: n
     return HMath::hypergeometricPmf( args.at( 0 ), args.at( 1 ), args.at( 2 ), args.at( 3 ) );
 }
 
-HNumber Functions::Private::hypercdf( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::hypercdf( Function *, const QVector<HNumber> & args )
 {
     // arg 0: k; arg 1: N; arg 2: M; arg3: n
     return HMath::hypergeometricCdf( args.at( 0 ), args.at( 1 ), args.at( 2 ), args.at( 3 ) );
 }
 
-HNumber Functions::Private::hypermean( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::hypermean( Function *, const QVector<HNumber> & args )
 {
     // arg 0: N; arg 1: M; arg 2: n
     return HMath::hypergeometricMean( args.at( 0 ), args.at( 1 ), args.at( 2 ) );
 }
 
-HNumber Functions::Private::hypervar( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::hypervar( Function *, const QVector<HNumber> & args )
 {
     // arg 0: N; arg 1: M; arg 2: n
     return HMath::hypergeometricVariance( args.at( 0 ), args.at( 1 ), args.at( 2 ) );
 }
 
-HNumber Functions::Private::poipmf( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::poipmf( Function *, const QVector<HNumber> & args )
 {
     // arg 0: k; arg 1: l
     return HMath::poissonPmf( args.at( 0 ), args.at( 1 ) );
 }
 
-HNumber Functions::Private::poicdf( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::poicdf( Function *, const QVector<HNumber> & args )
 {
     // arg 0: k; arg 1: l
     return HMath::poissonCdf( args.at( 0 ), args.at( 1 ) );
 }
 
-HNumber Functions::Private::poimean( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::poimean( Function *, const QVector<HNumber> & args )
 {
     return HMath::poissonMean( args.at( 0 ) );
 }
 
-HNumber Functions::Private::poivar( Function * f, const QVector<HNumber> & args )
+HNumber Functions::Private::poivar( Function *, const QVector<HNumber> & args )
 {
     return HMath::poissonVariance( args.at( 0 ) );
 }
