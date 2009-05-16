@@ -2,6 +2,7 @@
 // Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
 // Copyright (C) 2005-2006 Johan Thelin <e8johan@gmail.com>
 // Copyright (C) 2007-2009 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2009 Wolf Lammen <ookami1@gmx.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
