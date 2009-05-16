@@ -53,43 +53,45 @@ struct Function::Private
 const HNumber& Function::Private::checkErrorResult( const HNumber & n )
 {
     if (error.isEmpty())
+	{
         switch ( n.error() )
         {
             case NoOperand:
-                error = Functions::tr("function does not take NaN as an argument");
+                error = Functions::tr("function %1 does not take NaN as an argument");
                 break;
             case EvalUnstable:
-                error = Functions::tr("computation exceeds the limitations of SpeedCrunch");
+                error = Functions::tr("computation in %1 exceeds the limitations of SpeedCrunch");
                 break;
             case Underflow:
-                error = Functions::tr("underflow: tiny result is out of SpeedCrunch's number range");
+                error = Functions::tr("underflow: tiny result of %1 is out of SpeedCrunch's number range");
                 break;
             case Overflow:
-                error = Functions::tr("overflow: huge result is out of SpeedCrunch's number range");
+                error = Functions::tr("overflow: huge result of %1 is out of SpeedCrunch's number range");
                 break;
             case ZeroDivide:
-                error = Functions::tr("function is infinite for submitted argument(s)");
+                error = Functions::tr("function %1 is infinite for submitted argument(s)");
                 break;
             case OutOfDomain:
-                error = Functions::tr("function is not defined for submitted argument(s)");
+                error = Functions::tr("function %1 is not defined for submitted argument(s)");
                 break;
             case OutOfLogicRange:
-                error = Functions::tr("logic overflow: result exceeds maximum of 256 bits");
+                error = Functions::tr("logic overflow: result of %1 exceeds maximum of 256 bits");
                 break;
             case OutOfIntegerRange:
-                error = Functions::tr("integer overflow: result exceeds maximum limit for integers");
+                error = Functions::tr("integer overflow: result of %1 exceeds maximum limit for integers");
                 break;
             case TooExpensive:
-                error = Functions::tr("too time consuming computation was rejected");
+                error = Functions::tr("too time consuming computation in %1 was rejected");
                 break;
             case BadLiteral:
             case InvalidPrecision:
             case InvalidParam:
-                error = Functions::tr("bug: internal error that should never occur");
+                error = Functions::tr("bug: internal error in %1 that should never occur");
                 break;
-            default:
-                error = "";
+            default:;
         }
+		error.arg(name);
+	}
     return n;
 }
 
@@ -146,7 +148,7 @@ HNumber Function::exec( const QVector<HNumber> & args )
         return HMath::nan();
     }
 
-    return checkErrorResult((*d->ptr)( this, args ));
+    return d->checkErrorResult((*d->ptr)( this, args ));
 }
 
 void Function::setError( const QString & error )
