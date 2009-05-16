@@ -1097,7 +1097,7 @@ HNumber Evaluator::evalNoAssign()
             case Opcode::Neg:
                 if ( stack.count() < 1 ) {
                     d->error = tr( "invalid expression" );
-                    return HNumber( 0 );
+                    return HMath::nan();
                 }
                 val1 = stack.pop();
                 val1 = -val1;
@@ -1109,7 +1109,7 @@ HNumber Evaluator::evalNoAssign()
             case Opcode::Add:
                 if ( stack.count() < 2 ) {
                     d->error = tr( "invalid expression" );
-                    return HNumber( 0 );
+                    return HMath::nan();
                 }
                 val1 = stack.pop();
                 val2 = stack.pop();
@@ -1120,7 +1120,7 @@ HNumber Evaluator::evalNoAssign()
             case Opcode::Sub:
                 if ( stack.count() < 2 ) {
                     d->error = tr( "invalid expression" );
-                    return HNumber( 0 );
+                    return HMath::nan();
                 }
                 val1 = stack.pop();
                 val2 = stack.pop();
@@ -1131,7 +1131,7 @@ HNumber Evaluator::evalNoAssign()
             case Opcode::Mul:
                 if ( stack.count() < 2 ) {
                     d->error = tr( "invalid expression" );
-                    return HNumber( 0 );
+                    return HMath::nan();
                 }
                 val1 = stack.pop();
                 val2 = stack.pop();
@@ -1142,13 +1142,13 @@ HNumber Evaluator::evalNoAssign()
             case Opcode::Div:
                 if ( stack.count() < 2 ) {
                     d->error = tr( "invalid expression" );
-                    return HNumber( 0 );
+                    return HMath::nan();
                 }
                 val1 = stack.pop();
                 val2 = stack.pop();
                 if( val1.isZero() ) {
                     d->error = tr( "division by zero" );
-                    return HNumber( 0 );
+                    return HMath::nan();
                 }
                 val2 /= val1;
                 stack.push( val2 );
@@ -1157,7 +1157,7 @@ HNumber Evaluator::evalNoAssign()
             case Opcode::Pow:
                 if ( stack.count() < 2 ) {
                     d->error = tr( "invalid expression" );
-                    return HNumber( 0 );
+                    return HMath::nan();
                 }
                 val1 = stack.pop();
                 val2 = stack.pop();
@@ -1168,7 +1168,7 @@ HNumber Evaluator::evalNoAssign()
             case Opcode::Fact:
                 if ( stack.count() < 1 ) {
                     d->error = tr( "invalid expression" );
-                    return HNumber( 0 );
+                    return HMath::nan();
                 }
                 val1 = stack.pop();
                 val1 = HMath::factorial( val1 );
@@ -1178,13 +1178,13 @@ HNumber Evaluator::evalNoAssign()
             case Opcode::Modulo:
                 if ( stack.count() < 2 ) {
                     d->error = tr( "invalid expression" );
-                    return HNumber( 0 );
+                    return HMath::nan();
                 }
                 val1 = stack.pop();
                 val2 = stack.pop();
                 if ( val1.isZero() ) {
                     d->error = tr( "division by zero" );
-                    return HNumber( 0 );
+                    return HMath::nan();
                 }
                 val2 = val2 % val1;
                 stack.push( val2 );
@@ -1193,13 +1193,13 @@ HNumber Evaluator::evalNoAssign()
             case Opcode::IntDiv:
                 if ( stack.count() < 2 ) {
                     d->error = tr( "invalid expression" );
-                    return HNumber( 0 );
+                    return HMath::nan();
                 }
                 val1 = stack.pop();
                 val2 = stack.pop();
                 if ( val1.isZero() ) {
                     d->error = tr( "division by zero" );
-                    return HNumber( 0 );
+                    return HMath::nan();
                 }
                 val2 /= val1;
                 stack.push( HMath::integer(val2) );
@@ -1216,7 +1216,7 @@ HNumber Evaluator::evalNoAssign()
                         refs.push( fname );
                     else {
                         d->error = fname + ": " + tr( "unknown function or variable" );
-                        return HNumber( 0 );
+                        return HMath::nan();
                     }
                 }
                 break;
@@ -1231,12 +1231,12 @@ HNumber Evaluator::evalNoAssign()
                 function = Functions::instance()->function( fname );
                 if ( !function ) {
                     d->error = fname + ": " + tr( "unknown function or variable" );
-                    return HNumber( 0 );
+                    return HMath::nan();
                 }
 
                 if ( stack.count() < index ) {
                     d->error = tr( "invalid expression" );
-                    return HNumber( 0 );
+                    return HMath::nan();
                 }
 
                 args.clear();
@@ -1246,7 +1246,7 @@ HNumber Evaluator::evalNoAssign()
                 stack.push( function->exec(args) );
                 if ( ! function->error().isEmpty() ) {
                     d->error = function->error();
-                    return HNumber( 0 );
+                    return HMath::nan();
                 }
 
                 break;
@@ -1259,7 +1259,7 @@ HNumber Evaluator::evalNoAssign()
     // more than one value in stack ? unsuccesfull execution...
     if ( stack.count() != 1 ) {
         d->error = tr( "invalid expression" );
-        return HNumber( 0 );
+        return HMath::nan();
     }
 
     HNumber result = stack.pop();
