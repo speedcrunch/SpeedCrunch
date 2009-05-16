@@ -393,23 +393,12 @@ HNumber Functions::Private::cos( Function * f, const QVector<HNumber> & args )
 
 HNumber Functions::Private::tan( Function * f, const QVector<HNumber> & args )
 {
-    Settings * settings = Settings::instance();
     HNumber angle = args.at( 0 );
 
-    if ( settings->angleUnit == 'd' )
+    if ( Settings::instance()->angleUnit == 'd' )
         angle = HMath::deg2rad( angle );
 
-    HNumber result = HMath::tan( angle );
-
-    if ( angle > HNumber("1e80") ) {
-        f->setError( Functions::tr("argument out of range") );
-        return HMath::nan();
-    } else if ( result.isNan() ) {
-        f->setError( Functions::tr("function undefined for specified argument") );
-        return HMath::nan();
-    }
-
-    return result;
+    return HMath::tan( angle );
 }
 
 HNumber Functions::Private::cot( Function * f, const QVector<HNumber> & args )
@@ -477,18 +466,9 @@ HNumber Functions::Private::csc( Function * f, const QVector<HNumber> & args )
 
 HNumber Functions::Private::asin( Function * f, const QVector<HNumber> & args )
 {
-    HNumber x = args.at( 0 );
-    HNumber result = HMath::asin( x );
+    HNumber result = HMath::asin( args.at( 0 ) );
 
-    if ( x > HNumber("1e80") ) {
-        f->setError( Functions::tr("argument out of range") );
-        return HMath::nan();
-    } else if ( result.isNan() ) {
-        f->setError( Functions::tr("function undefined for specified argument") );
-        return HMath::nan();
-    }
-
-    if ( Settings::instance()->angleUnit == 'd' )
+    if ( result.error() == Success && Settings::instance()->angleUnit == 'd' )
         result = HMath::rad2deg( result );
 
     return result;
@@ -496,18 +476,9 @@ HNumber Functions::Private::asin( Function * f, const QVector<HNumber> & args )
 
 HNumber Functions::Private::acos( Function * f, const QVector<HNumber> & args )
 {
-    HNumber x = args.at( 0 );
-    HNumber result = HMath::acos( x );
+    HNumber result = HMath::acos( args.at( 0 ) );
 
-    if ( x > HNumber("1e80") ) {
-        f->setError( Functions::tr("argument out of range") );
-        return HMath::nan();
-    } else if ( result.isNan() ) {
-        f->setError( Functions::tr("function undefined for specified argument") );
-        return HMath::nan();
-    }
-
-    if ( Settings::instance()->angleUnit == 'd' )
+    if ( result.error() == Success && Settings::instance()->angleUnit == 'd' )
         result = HMath::rad2deg( result );
 
     return result;
@@ -515,10 +486,9 @@ HNumber Functions::Private::acos( Function * f, const QVector<HNumber> & args )
 
 HNumber Functions::Private::atan( Function * /*f*/, const QVector<HNumber> & args )
 {
-    HNumber num = args.at( 0 );
-    HNumber result = HMath::atan( num );
+    HNumber result = HMath::atan( args.at( 0 ) );
 
-    if ( Settings::instance()->angleUnit == 'd' )
+    if ( result.error() == Success && Settings::instance()->angleUnit == 'd' )
         result = HMath::rad2deg( result );
 
     return result;
@@ -546,15 +516,7 @@ HNumber Functions::Private::arsinh( Function *, const QVector<HNumber> & args )
 
 HNumber Functions::Private::arcosh( Function * f, const QVector<HNumber> & args )
 {
-    HNumber x = args.at( 0 );
-    HNumber result = HMath::arcosh( x );
-
-    if ( result.isNan() ) {
-        f->setError( Functions::tr("function undefined for specified argument") );
-        return HMath::nan();
-    }
-
-    return result;
+    return HMath::arcosh( args.at(0) );
 }
 
 HNumber Functions::Private::artanh( Function * f, const QVector<HNumber> & args )
