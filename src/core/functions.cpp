@@ -142,11 +142,11 @@ HNumber Function::exec( const QVector<HNumber> & args )
     }
 
     if ( d->argc >= 0 && args.count() != d->argc ) {
-		setError( Functions::tr("function %1 accepts %2 argument(s)", "", d->argc).arg(name()).arg(d->argc) );
+        setError( Functions::tr("function %1 accepts %2 argument(s)", "", d->argc).arg(name()).arg(d->argc) );
         return HMath::nan();
     }
 
-    return (*d->ptr)( this, args );
+    return checkErrorResult((*d->ptr)( this, args ));
 }
 
 void Function::setError( const QString & error )
