@@ -91,7 +91,8 @@ const HNumber& Function::Private::checkErrorResult( const HNumber & n )
                 break;
             default:;
         }
-        error = error.arg(identifier);
+        if (!error.isEmpty())
+            error = error.arg(identifier);
     }
     return n;
 }
