@@ -33,6 +33,7 @@
 
 static Functions * s_functionsInstance = 0;
 
+// FIXME destructor seems not to be called
 static void s_deleteFunctions()
 {
     delete s_functionsInstance;
@@ -436,7 +437,7 @@ HNumber Functions::Private::asin( Function * f, const QVector<HNumber> & args )
 {
     HNumber result = HMath::asin( args.at( 0 ) );
 
-    if ( result.error() == Success && Settings::instance()->angleUnit == 'd' )
+    if ( Settings::instance()->angleUnit == 'd' )
         result = HMath::rad2deg( result );
 
     return result;
@@ -446,7 +447,7 @@ HNumber Functions::Private::acos( Function * f, const QVector<HNumber> & args )
 {
     HNumber result = HMath::acos( args.at( 0 ) );
 
-    if ( result.error() == Success && Settings::instance()->angleUnit == 'd' )
+    if ( Settings::instance()->angleUnit == 'd' )
         result = HMath::rad2deg( result );
 
     return result;
@@ -456,7 +457,7 @@ HNumber Functions::Private::atan( Function * /*f*/, const QVector<HNumber> & arg
 {
     HNumber result = HMath::atan( args.at( 0 ) );
 
-    if ( result.error() == Success && Settings::instance()->angleUnit == 'd' )
+    if ( Settings::instance()->angleUnit == 'd' )
         result = HMath::rad2deg( result );
 
     return result;
