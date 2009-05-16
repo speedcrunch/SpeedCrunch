@@ -521,15 +521,7 @@ HNumber Functions::Private::arcosh( Function * f, const QVector<HNumber> & args 
 
 HNumber Functions::Private::artanh( Function * f, const QVector<HNumber> & args )
 {
-    HNumber x = args.at( 0 );
-    HNumber result = HMath::artanh( x );
-
-    if ( result.isNan() ) {
-        f->setError( Functions::tr("function undefined for specified argument") );
-        return HMath::nan();
-    }
-
-    return result;
+    return HMath::artanh( args.at(0) );
 }
 
 HNumber Functions::Private::erf( Function *, const QVector<HNumber> & args )
@@ -539,39 +531,17 @@ HNumber Functions::Private::erf( Function *, const QVector<HNumber> & args )
 
 HNumber Functions::Private::erfc( Function * f, const QVector<HNumber> & args )
 {
-    HNumber x = args.at( 0 );
-    HNumber result = HMath::erfc( x );
-
-    if ( result.isNan() && ! x.isNan() )
-        f->setError( Functions::tr("underflow") );
-
-    return result;
+    return HMath::erfc( args.at(0) );
 }
 
 HNumber Functions::Private::Gamma( Function * f, const QVector<HNumber> & args )
 {
-    HNumber x = args.at( 0 );
-    HNumber result = HMath::gamma( x );
-
-    if ( result.isNan() ) {
-        f->setError( Functions::tr("function undefined for specified argument") );
-        return HMath::nan();
-    }
-
-    return result;
+    return HMath::gamma( x );
 }
 
 HNumber Functions::Private::lnGamma( Function * f, const QVector<HNumber> & args )
 {
-    HNumber x = args.at( 0 );
-    HNumber result = HMath::lnGamma( x );
-
-    if ( result.isNan() ) {
-        f->setError( Functions::tr("function undefined for specified argument") );
-        return HMath::nan();
-    }
-
-    return result;
+    return HMath::lngamma( x );
 }
 
 HNumber Functions::Private::sign( Function *, const QVector<HNumber> & args )
@@ -581,28 +551,12 @@ HNumber Functions::Private::sign( Function *, const QVector<HNumber> & args )
 
 HNumber Functions::Private::nCr( Function * f, const QVector<HNumber> & args )
 {
-    // n = args.at(0); r = args.at(1)
-    HNumber result = HMath::nCr( args.at(0), args.at(1) );
-
-    // FIX ME: overflow causes a NaN, too, so the message is sometimes
-    // misleading
-    if ( result.isNan() )
-        f->setError( Functions::tr("function undefined for specified arguments") );
-
-    return result;
+    return HMath::nCr( args.at(0), args.at(1) );
 }
 
 HNumber Functions::Private::nPr( Function * f, const QVector<HNumber> & args )
 {
-    // n = args.at(0); r = args.at(1)
-    HNumber result = HMath::nPr( args.at(0), args.at(1) );
-
-    // FIX ME: overflow causes a NaN, too, so the message is sometimes
-    // misleading
-    if ( result.isNan() )
-        f->setError( Functions::tr("function undefined for specified arguments") );
-
-    return result;
+    return HMath::nPr( args.at(0), args.at(1) );
 }
 
 HNumber Functions::Private::degrees( Function *, const QVector<HNumber> & args )
@@ -695,93 +649,37 @@ HNumber Functions::Private::bin( Function *, const QVector<HNumber> & args )
 
 HNumber Functions::Private::binompmf( Function * f, const QVector<HNumber> & args )
 {
-    HNumber k = args.at( 0 );
-    HNumber n = args.at( 1 );
-    HNumber p = args.at( 2 );
-    HNumber result = HMath::binomialPmf( k, n, p );
-
-    if ( result.isNan() )
-        f->setError( Functions::tr("function undefined for specified arguments") );
-
-    return result;
+    return HMath::binomialPmf( args.at( 0 ), args.at( 1 ), args.at( 2 ) );
 }
 
 HNumber Functions::Private::binomcdf( Function * f, const QVector<HNumber> & args )
 {
-    HNumber k = args.at( 0 );
-    HNumber n = args.at( 1 );
-    HNumber p = args.at( 2 );
-    HNumber result = HMath::binomialCdf( k, n, p );
-
-    if ( result.isNan() )
-        f->setError( Functions::tr("function undefined for specified arguments") );
-
-    return result;
+    return HMath::binomialCdf( args.at( 0 ), args.at( 1 ), args.at( 2 ) );
 }
 
 HNumber Functions::Private::binommean( Function * f, const QVector<HNumber> & args )
 {
-    HNumber n = args.at( 0 );
-    HNumber p = args.at( 1 );
-    HNumber result = HMath::binomialMean( n, p );
-
-    if ( result.isNan() )
-        f->setError( Functions::tr("function undefined for specified arguments") );
-
-    return result;
+    return HMath::binomialMean( args.at( 0 ), args.at( 1 ) );
 }
 
 HNumber Functions::Private::binomvar( Function * f, const QVector<HNumber> & args )
 {
-    HNumber n = args.at( 0 );
-    HNumber p = args.at( 1 );
-    HNumber result = HMath::binomialVariance( n, p );
-
-    if ( result.isNan() )
-        f->setError( Functions::tr("function undefined for specified arguments") );
-
-    return result;
+    return HMath::binomialVariance( args.at( 0 ), args.at( 1 ) );
 }
 
 HNumber Functions::Private::hyperpmf( Function * f, const QVector<HNumber> & args )
 {
-    HNumber k = args.at( 0 );
-    HNumber N = args.at( 1 );
-    HNumber M = args.at( 2 );
-    HNumber n = args.at( 3 );
-    HNumber result = HMath::hypergeometricPmf( k, N, M, n );
-
-    if ( result.isNan() )
-        f->setError( Functions::tr("function undefined for specified arguments") );
-
-    return result;
+    return HMath::hypergeometricPmf( args.at( 0 ), args.at( 1 ), args.at( 2 ), args.at( 3 ) );
 }
 
 HNumber Functions::Private::hypercdf( Function * f, const QVector<HNumber> & args )
 {
-    HNumber k = args.at( 0 );
-    HNumber N = args.at( 1 );
-    HNumber M = args.at( 2 );
-    HNumber n = args.at( 3 );
-    HNumber result = HMath::hypergeometricCdf( k, N, M, n );
-
-    if ( result.isNan() )
-        f->setError( Functions::tr("function undefined for specified arguments") );
-
-    return result;
+    return HMath::hypergeometricCdf( args.at( 0 ), args.at( 1 ), args.at( 2 ), args.at( 3 ) );
 }
 
 HNumber Functions::Private::hypermean( Function * f, const QVector<HNumber> & args )
 {
-    HNumber N = args.at( 0 );
-    HNumber M = args.at( 1 );
-    HNumber n = args.at( 2 );
-    HNumber result = HMath::hypergeometricMean( N, M, n );
-
-    if ( result.isNan() )
-        f->setError( Functions::tr("function undefined for specified arguments") );
-
-    return result;
+    return HMath::hypergeometricMean( args.at( 0 ), args.at( 1 ), args.at( 2 ) );
 }
 
 HNumber Functions::Private::hypervar( Function * f, const QVector<HNumber> & args )
