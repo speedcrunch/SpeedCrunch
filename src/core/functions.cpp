@@ -138,12 +138,12 @@ HNumber Function::exec( const QVector<HNumber> & args )
     d->error = QString();
     if ( ! d->ptr ) {
         setError( Functions::tr("cannot execute function") );
-        return HNumber( 0 );
+        return HMath::nan();
     }
 
     if ( d->argc >= 0 && args.count() != d->argc ) {
         setError( Functions::tr("function accepts %1 argument(s)", "", d->argc).arg(d->argc) );
-        return HNumber( 0 );
+        return HMath::nan();
     }
 
     return (*d->ptr)( this, args );
