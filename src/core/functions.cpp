@@ -403,65 +403,33 @@ HNumber Functions::Private::tan( Function * f, const QVector<HNumber> & args )
 
 HNumber Functions::Private::cot( Function * f, const QVector<HNumber> & args )
 {
-    Settings * settings = Settings::instance();
     HNumber angle = args.at( 0 );
 
-    if ( settings->angleUnit == 'd' )
+    if ( Settings::instance()->angleUnit == 'd' )
         angle = HMath::deg2rad( angle );
 
-    HNumber result = HMath::cot( angle );
-
-    if ( angle > HNumber("1e80") ) {
-        f->setError( Functions::tr("argument out of range") );
-        return HMath::nan();
-    } else if ( result.isNan() ) {
-        f->setError( Functions::tr("function undefined for specified argument") );
-        return HMath::nan();
-    }
-
-    return result;
+    return HMath::cot( angle );
 }
 
 HNumber Functions::Private::sec( Function * f, const QVector<HNumber> & args )
 {
-    Settings * settings = Settings::instance();
     HNumber angle = args.at( 0 );
 
-    if ( settings->angleUnit == 'd' )
+    if ( Settings::instance()->angleUnit == 'd' )
         angle = HMath::deg2rad( angle );
 
-    HNumber result = HMath::sec( angle );
-
-    if ( angle > HNumber("1e80") ) {
-        f->setError( Functions::tr("argument out of range") );
-        return HMath::nan();
-    } else if ( result.isNan() ) {
-        f->setError( Functions::tr("function undefined for specified argument") );
-        return HMath::nan();
-    }
-
-    return result;
+    return HMath::sec( angle );
 }
 
 HNumber Functions::Private::csc( Function * f, const QVector<HNumber> & args )
 {
-    Settings * settings = Settings::instance();
+
     HNumber angle = args.at( 0 );
 
-    if ( settings->angleUnit == 'd' )
+    if ( Settings::instance()->angleUnit == 'd' )
         angle = HMath::deg2rad( angle );
 
-    HNumber result = HMath::csc( angle );
-
-    if ( angle > HNumber("1e80") ) {
-        f->setError( Functions::tr("argument out of range") );
-        return HMath::nan();
-    } else if ( result.isNan() ) {
-        f->setError( Functions::tr("function undefined for specified argument") );
-        return HMath::nan();
-    }
-
-    return result;
+    return HMath::csc( angle );
 }
 
 HNumber Functions::Private::asin( Function * f, const QVector<HNumber> & args )
@@ -536,12 +504,12 @@ HNumber Functions::Private::erfc( Function * f, const QVector<HNumber> & args )
 
 HNumber Functions::Private::Gamma( Function * f, const QVector<HNumber> & args )
 {
-    return HMath::gamma( x );
+    return HMath::gamma( args.at(0) );
 }
 
 HNumber Functions::Private::lnGamma( Function * f, const QVector<HNumber> & args )
 {
-    return HMath::lngamma( x );
+    return HMath::lnGamma( args.at(0) );
 }
 
 HNumber Functions::Private::sign( Function *, const QVector<HNumber> & args )
@@ -551,11 +519,13 @@ HNumber Functions::Private::sign( Function *, const QVector<HNumber> & args )
 
 HNumber Functions::Private::nCr( Function * f, const QVector<HNumber> & args )
 {
+    // arg 0: n; arg 1: r
     return HMath::nCr( args.at(0), args.at(1) );
 }
 
 HNumber Functions::Private::nPr( Function * f, const QVector<HNumber> & args )
 {
+    // arg 0: n; arg 1: r
     return HMath::nPr( args.at(0), args.at(1) );
 }
 
@@ -649,116 +619,89 @@ HNumber Functions::Private::bin( Function *, const QVector<HNumber> & args )
 
 HNumber Functions::Private::binompmf( Function * f, const QVector<HNumber> & args )
 {
+    // arg 0: k; arg 1: n; arg 2: p
     return HMath::binomialPmf( args.at( 0 ), args.at( 1 ), args.at( 2 ) );
 }
 
 HNumber Functions::Private::binomcdf( Function * f, const QVector<HNumber> & args )
 {
+    // arg 0: k; arg 1: n; arg 2: p
     return HMath::binomialCdf( args.at( 0 ), args.at( 1 ), args.at( 2 ) );
 }
 
 HNumber Functions::Private::binommean( Function * f, const QVector<HNumber> & args )
 {
+    // arg 0: n; arg 1: p
     return HMath::binomialMean( args.at( 0 ), args.at( 1 ) );
 }
 
 HNumber Functions::Private::binomvar( Function * f, const QVector<HNumber> & args )
 {
+    // arg 0: n; arg 1: p
     return HMath::binomialVariance( args.at( 0 ), args.at( 1 ) );
 }
 
 HNumber Functions::Private::hyperpmf( Function * f, const QVector<HNumber> & args )
 {
+    // arg 0: k; arg 1: N; arg 2: M; arg3: n
     return HMath::hypergeometricPmf( args.at( 0 ), args.at( 1 ), args.at( 2 ), args.at( 3 ) );
 }
 
 HNumber Functions::Private::hypercdf( Function * f, const QVector<HNumber> & args )
 {
+    // arg 0: k; arg 1: N; arg 2: M; arg3: n
     return HMath::hypergeometricCdf( args.at( 0 ), args.at( 1 ), args.at( 2 ), args.at( 3 ) );
 }
 
 HNumber Functions::Private::hypermean( Function * f, const QVector<HNumber> & args )
 {
+    // arg 0: N; arg 1: M; arg 2: n
     return HMath::hypergeometricMean( args.at( 0 ), args.at( 1 ), args.at( 2 ) );
 }
 
 HNumber Functions::Private::hypervar( Function * f, const QVector<HNumber> & args )
 {
-    HNumber N = args.at( 0 );
-    HNumber M = args.at( 1 );
-    HNumber n = args.at( 2 );
-    HNumber result = HMath::hypergeometricVariance( N, M, n );
-
-    if ( result.isNan() )
-        f->setError( Functions::tr("function undefined for specified arguments") );
-
-    return result;
+    // arg 0: N; arg 1: M; arg 2: n
+    return HMath::hypergeometricVariance( args.at( 0 ), args.at( 1 ), args.at( 2 ) );
 }
 
 HNumber Functions::Private::poipmf( Function * f, const QVector<HNumber> & args )
 {
-    HNumber k = args.at( 0 );
-    HNumber l = args.at( 1 );
-    HNumber result = HMath::poissonPmf( k, l );
-
-    if ( result.isNan() )
-        f->setError( Functions::tr("function undefined for specified arguments") );
-
-    return result;
+    // arg 0: k; arg 1: l
+    return HMath::poissonPmf( args.at( 0 ), args.at( 1 ) );
 }
 
 HNumber Functions::Private::poicdf( Function * f, const QVector<HNumber> & args )
 {
-    HNumber k = args.at( 0 );
-    HNumber l = args.at( 1 );
-    HNumber result = HMath::poissonCdf( k, l );
-
-    if ( result.isNan() )
-        f->setError( Functions::tr("function undefined for specified arguments") );
-
-    return result;
+    // arg 0: k; arg 1: l
+    return HMath::poissonCdf( args.at( 0 ), args.at( 1 ) );
 }
 
 HNumber Functions::Private::poimean( Function * f, const QVector<HNumber> & args )
 {
-    HNumber l = args.at( 0 );
-    HNumber result = HMath::poissonMean( l );
-
-    if ( result.isNan() )
-        f->setError( Functions::tr("function undefined for specified arguments") );
-
-    return result;
+    return HMath::poissonMean( args.at( 0 ) );
 }
 
 HNumber Functions::Private::poivar( Function * f, const QVector<HNumber> & args )
 {
-    HNumber l = args.at( 0 );
-    HNumber result = HMath::poissonVariance( l );
-
-    if ( result.isNan() )
-        f->setError( Functions::tr("function undefined for specified arguments") );
-
-    return result;
+    return HMath::poissonVariance( args.at( 0 ) );
 }
 
 HNumber Functions::Private::mask( Function *, const QVector<HNumber> & args )
 {
-    HNumber val = args.at( 0 );
-    HNumber bits = args.at( 1 );
-    return HMath::mask( val, bits );
+    // arg 0: value; arg 1: bits
+    return HMath::mask( args.at( 0 ), args.at( 1 ) );
 }
 
 HNumber Functions::Private::unmask( Function *, const QVector<HNumber> & args )
 {
-    HNumber val = args.at( 0 );
-    HNumber bits = args.at( 1 );
-    return HMath::sgnext( val, bits );
+    // arg 0: value; arg 1: bits
+    return HMath::sgnext( args.at( 0 ), args.at( 1 ) );
 }
 
 HNumber Functions::Private::not_( Function *, const QVector<HNumber> & args )
 {
-    HNumber val = args.at( 0 );
-    return ~val;
+	return ~args.at( 0 );
 }
 
 HNumber Functions::Private::and_( Function *, const QVector<HNumber> & args )
@@ -784,30 +727,26 @@ HNumber Functions::Private::xor_( Function *, const QVector<HNumber> & args )
 
 HNumber Functions::Private::ashl( Function *, const QVector<HNumber> & args )
 {
-    HNumber val = args.at( 0 );
-    HNumber bits = args.at( 1 );
-    return HMath::ashr( val, -bits );
+    // arg 0: value; arg 1: bits
+    return HMath::ashr( args.at( 0 ), -args.at( 1 ) );
 }
 
 HNumber Functions::Private::ashr( Function *, const QVector<HNumber> & args )
 {
-    HNumber val = args.at( 0 );
-    HNumber bits = args.at( 1 );
-    return HMath::ashr( val, bits );
+    // arg 0: value; arg 1: bits
+    return HMath::ashr( args.at( 0 ), args.at( 1 ) );
 }
 
 HNumber Functions::Private::idiv( Function *, const QVector<HNumber> & args )
 {
-    HNumber dividend = args.at(0);
-    HNumber divisor = args.at(1);
-    return HMath::idiv(dividend, divisor);
+    // arg 0: dividend; arg 1: divisor
+    return HMath::idiv(args.at(0), args.at(1));
 }
 
 HNumber Functions::Private::mod( Function *, const QVector<HNumber> & args )
 {
-    HNumber dividend = args.at(0);
-    HNumber divisor = args.at(1);
-    return dividend % divisor;
+    // arg 0: dividend; arg 1: divisor
+    return args.at(0) % args.at(1);
 }
 
 void Functions::Private::createBuiltInFunctions()
