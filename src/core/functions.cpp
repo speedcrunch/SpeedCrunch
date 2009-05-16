@@ -142,7 +142,7 @@ HNumber Function::exec( const QVector<HNumber> & args )
     }
 
     if ( d->argc >= 0 && args.count() != d->argc ) {
-        setError( Functions::tr("function accepts %1 argument(s)", "", d->argc).arg(d->argc) );
+		setError( Functions::tr("function %1 accepts %2 argument(s)", "", d->argc).arg(name().arg(d->argc)) );
         return HMath::nan();
     }
 
