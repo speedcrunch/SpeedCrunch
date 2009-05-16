@@ -90,7 +90,7 @@ const HNumber& Function::Private::checkErrorResult( const HNumber & n )
                 break;
             default:;
         }
-		error.arg(name);
+		error.arg(identifier);
 	}
     return n;
 }
@@ -144,7 +144,7 @@ HNumber Function::exec( const QVector<HNumber> & args )
     }
 
     if ( d->argc >= 0 && args.count() != d->argc ) {
-        setError( Functions::tr("function %1 accepts %2 argument(s)", "", d->argc).arg(name()).arg(d->argc) );
+        setError( Functions::tr("function %1 accepts %2 argument(s)", "", d->argc).arg(identifier()).arg(d->argc) );
         return HMath::nan();
     }
 
