@@ -60,7 +60,7 @@ const HNumber& Function::Private::checkErrorResult( const HNumber & n )
                 error = Functions::tr("function %1 does not take NaN as an argument");
                 break;
             case EvalUnstable:
-                error = Functions::tr("computation in %1 exceeds the limitations of SpeedCrunch");
+                error = Functions::tr("computation in %1 is unstable and exceeds the limitations of SpeedCrunch");
                 break;
             case Underflow:
                 error = Functions::tr("underflow: tiny result of %1 is out of SpeedCrunch's number range");
@@ -90,8 +90,8 @@ const HNumber& Function::Private::checkErrorResult( const HNumber & n )
                 break;
             default:;
         }
-		error.arg(identifier);
-	}
+        error = error.arg(identifier);
+    }
     return n;
 }
 
@@ -343,13 +343,7 @@ HNumber Functions::Private::round( Function * f, const QVector<HNumber> & args )
 
 HNumber Functions::Private::sqrt( Function * f, const QVector<HNumber> & args )
 {
-    HNumber num = args.at( 0 );
-    if ( num < HNumber( 0 ) ) {
-        f->setError( Functions::tr("function undefined for specified argument") );
-        return HMath::nan();
-    }
-
-    return HMath::sqrt( num );
+    return HMath::sqrt( args.at( 0 ) );
 }
 
 HNumber Functions::Private::cbrt( Function *, const QVector<HNumber> & args )
@@ -364,69 +358,37 @@ HNumber Functions::Private::exp( Function *, const QVector<HNumber> & args )
 
 HNumber Functions::Private::ln( Function * f, const QVector<HNumber> & args )
 {
-    HNumber x = args.at( 0 );
-    HNumber result = HMath::ln( x );
-
-    if ( result.isNan() )
-        f->setError( Functions::tr("function undefined for specified argument") );
-
-    return result;
+    return HMath::ln( args.at( 0 ) );
 }
 
 HNumber Functions::Private::log( Function * f, const QVector<HNumber> & args )
 {
-    HNumber x = args.at( 0 );
-    HNumber result = HMath::log( x );
-
-    if ( result.isNan() )
-        f->setError( Functions::tr("function undefined for specified argument") );
-
-    return result;
+    return HMath::ln( args.at( 0 ) );
 }
 
 HNumber Functions::Private::lg( Function * f, const QVector<HNumber> & args )
 {
-    HNumber x = args.at( 0 );
-    HNumber result = HMath::lg( x );
-
-    if ( result.isNan() )
-        f->setError( Functions::tr("function undefined for specified argument") );
-
-    return result;
+    return HMath::ln( args.at( 0 ) );
 }
 
 HNumber Functions::Private::sin( Function * f, const QVector<HNumber> & args )
 {
-    Settings * settings = Settings::instance();
     HNumber angle = args.at( 0 );
 
-    if ( settings->angleUnit == 'd' )
+    if ( Settings::instance()->angleUnit == 'd' )
         angle = HMath::deg2rad( angle );
 
-    HNumber result = HMath::sin( angle );
-    if ( result.isNan() ) {
-        f->setError( Functions::tr("argument out of range") );
-        return HMath::nan();
-    }
-
-    return result;
+    return HMath::sin( angle );
 }
 
 HNumber Functions::Private::cos( Function * f, const QVector<HNumber> & args )
 {
-    Settings * settings = Settings::instance();
     HNumber angle = args.at( 0 );
 
-    if ( settings->angleUnit == 'd' )
+    if ( Settings::instance()->angleUnit == 'd' )
         angle = HMath::deg2rad( angle );
 
-    HNumber result = HMath::cos( angle );
-    if ( result.isNan() ) {
-        f->setError( Functions::tr("argument out of range") );
-        return HMath::nan();
-    }
-
-    return result;
+	return HMath::cos( angle );
 }
 
 HNumber Functions::Private::tan( Function * f, const QVector<HNumber> & args )
