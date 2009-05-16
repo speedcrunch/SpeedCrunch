@@ -1100,7 +1100,7 @@ HNumber Evaluator::evalNoAssign()
                     return HMath::nan();
                 }
                 val1 = stack.pop();
-                val1 = -val1;
+                val1 = d->checkOperatorResult(-val1);
                 stack.push( val1 );
                 break;
 
@@ -1113,7 +1113,7 @@ HNumber Evaluator::evalNoAssign()
                 }
                 val1 = stack.pop();
                 val2 = stack.pop();
-                val2 += val1;
+                val2 = d->checkOperatorResult(val2 + val1);
                 stack.push( val2 );
                 break;
 
@@ -1124,7 +1124,7 @@ HNumber Evaluator::evalNoAssign()
                 }
                 val1 = stack.pop();
                 val2 = stack.pop();
-                val2 -= val1;
+                val2 = d->checkOperatorResult(val2 - val1);
                 stack.push( val2 );
                 break;
 
@@ -1135,7 +1135,7 @@ HNumber Evaluator::evalNoAssign()
                 }
                 val1 = stack.pop();
                 val2 = stack.pop();
-                val2 *= val1;
+                val2 = d->checkOperatorResult(val2 * val1);
                 stack.push( val2 );
                 break;
 
@@ -1146,11 +1146,7 @@ HNumber Evaluator::evalNoAssign()
                 }
                 val1 = stack.pop();
                 val2 = stack.pop();
-                if( val1.isZero() ) {
-                    d->error = tr( "division by zero" );
-                    return HMath::nan();
-                }
-                val2 /= val1;
+                val2 = d->checkOperatorResult(val2 / val1);
                 stack.push( val2 );
                 break;
 
@@ -1161,7 +1157,7 @@ HNumber Evaluator::evalNoAssign()
                 }
                 val1 = stack.pop();
                 val2 = stack.pop();
-                val2 = HMath::raise( val2, val1 );
+                val2 = d->checkOperatorResult(HMath::raise( val2, val1 ));
                 stack.push( val2 );
                 break;
 
@@ -1171,7 +1167,7 @@ HNumber Evaluator::evalNoAssign()
                     return HMath::nan();
                 }
                 val1 = stack.pop();
-                val1 = HMath::factorial( val1 );
+                val1 = d->checkOperatorResult(HMath::factorial( val1 ));
                 stack.push( val1 );
                 break;
 
@@ -1182,11 +1178,7 @@ HNumber Evaluator::evalNoAssign()
                 }
                 val1 = stack.pop();
                 val2 = stack.pop();
-                if ( val1.isZero() ) {
-                    d->error = tr( "division by zero" );
-                    return HMath::nan();
-                }
-                val2 = val2 % val1;
+                val2 = d->checkOperatorResult(val2 % val1);
                 stack.push( val2 );
                 break;
 
@@ -1197,11 +1189,7 @@ HNumber Evaluator::evalNoAssign()
                 }
                 val1 = stack.pop();
                 val2 = stack.pop();
-                if ( val1.isZero() ) {
-                    d->error = tr( "division by zero" );
-                    return HMath::nan();
-                }
-                val2 /= val1;
+                val2 = d->checkOperatorResult(val2 / val1);
                 stack.push( HMath::integer(val2) );
                 break;
 
