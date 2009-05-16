@@ -74,7 +74,39 @@ struct Evaluator::Private
     QVector<HNumber> constants;
     QStringList identifiers;
     QMap<QString,Variable> variables;
+    const HNumber & checkOperatorResult(const HNumber &);
 };
+
+const HNumber& Evaluator::Private::checkOperatorResult( const HNumber & n )
+{
+    switch ( n.error() )
+    {
+        case NoOperand:
+            error = Evaluator::tr("cannot operate on a NaN");
+            break;
+        case Underflow:
+            error = Evaluator::tr("underflow - tiny result is out of SpeedCrunch's number range");
+            break;
+        case Overflow:
+            error = Evaluator::tr("overflow - huge result is out of SpeedCrunch's number range");
+            break;
+        case ZeroDivide:
+            error = Evaluator::tr("division by zero");
+            break;
+        case OutOfLogicRange:
+            error = Evaluator::tr("overflow - logic result exceeds maximum of 256 bits");
+            break;
+        case OutOfIntegerRange:
+            error = Evaluator::tr("overflow - integer result exceeds maximum limit for integers");
+            break;
+        case TooExpensive:
+            error = Evaluator::tr("too time consuming computation was rejected");
+            break;
+        default:;
+    }
+    return n;
+}
+
 
 class TokenStack : public QVector<Token>
 {
