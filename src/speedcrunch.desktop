@@ -5,6 +5,7 @@ GenericName[nl]=Rekenmachine met hoge nauwkeurigheid
 GenericName[pt]=Calculadora de alta precisão
 GenericName[tr]=Yüksek duyarlıklı hesap makinesi
 Exec=speedcrunch
-Icon=speedcrunch.png
+Icon=speedcrunch
 Type=Application
-Categories=Qt;KDE;Utility
+Categories=Qt;Utility;Calculator;
+
