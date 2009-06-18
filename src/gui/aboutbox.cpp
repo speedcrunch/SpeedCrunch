@@ -135,7 +135,7 @@ AboutBox::AboutBox( QWidget * parent )
     msg += i18n.arg( tr("Norwegian") )
                .arg( "Thomas Finneid" );
     msg += i18n.arg( tr("Polish") )
-               .arg( "Witold Wysota" );
+               .arg( "Micha&#322; Trzebiatowski<br>Witold Wysota" );
     msg += i18n.arg( tr("Portuguese") )
                .arg( "Helder Correia" );
     msg += i18n.arg( tr("Romanian") )
