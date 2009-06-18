@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="pt_PT">
+<defaultcodec></defaultcodec>
 <context>
     <name>AboutBox</name>
     <message>
@@ -223,7 +224,7 @@
     <message>
         <location filename="../gui/bookdock.cpp" line="165"/>
         <source>Math Book</source>
-        <translation type="unfinished">Livro de Matemática</translation>
+        <translation>Livro de Matemática</translation>
     </message>
 </context>
 <context>
@@ -1005,7 +1006,7 @@
     <message>
         <location filename="../core/functions.cpp" line="96"/>
         <source>cannot execute function</source>
-        <translation type="unfinished"></translation>
+        <translation>não é possível executar a função</translation>
     </message>
 </context>
 <context>
@@ -1013,7 +1014,7 @@
     <message>
         <location filename="../gui/functionsdialog.cpp" line="33"/>
         <source>Insert Function</source>
-        <translation type="unfinished">Inserir uma função</translation>
+        <translation>Inserir Função</translation>
     </message>
 </context>
 <context>
@@ -1049,7 +1050,7 @@
     <message>
         <location filename="../gui/functionswidget.cpp" line="152"/>
         <source>Identifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Identificador</translation>
     </message>
 </context>
 <context>
@@ -1689,12 +1690,12 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="549"/>
         <source>&amp;Automatic</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Automática</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="757"/>
         <source>&amp;Precision</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Precisão</translation>
     </message>
 </context>
 <context>
