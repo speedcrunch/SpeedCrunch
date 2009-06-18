@@ -229,7 +229,7 @@
 <context>
     <name>ConstantCompletion</name>
     <message>
-        <location filename="../gui/editor.cpp" line="1009"/>
+        <location filename="../gui/editor.cpp" line="1015"/>
         <source>All</source>
         <translation>全部</translation>
     </message>
@@ -564,12 +564,12 @@
 <context>
     <name>Editor</name>
     <message>
-        <location filename="../gui/editor.cpp" line="517"/>
+        <location filename="../gui/editor.cpp" line="523"/>
         <source>Current result: &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>当前的结果：&lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../gui/editor.cpp" line="557"/>
+        <location filename="../gui/editor.cpp" line="563"/>
         <source>Selection result: &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>选择的结果：&lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
@@ -577,434 +577,499 @@
 <context>
     <name>Evaluator</name>
     <message>
-        <location filename="../core/evaluator.cpp" line="1229"/>
+        <location filename="../core/evaluator.cpp" line="1250"/>
         <source>invalid expression</source>
         <translation>无效的表达式</translation>
     </message>
     <message>
-        <location filename="../core/evaluator.cpp" line="1169"/>
+        <location filename="../core/evaluator.cpp" line="95"/>
         <source>division by zero</source>
         <translation>被零除</translation>
     </message>
     <message>
-        <location filename="../core/evaluator.cpp" line="1201"/>
+        <location filename="../core/evaluator.cpp" line="1222"/>
         <source>unknown function or variable</source>
         <translation>未知的函数或者变量</translation>
     </message>
     <message>
-        <location filename="../core/evaluator.cpp" line="1246"/>
+        <location filename="../core/evaluator.cpp" line="1267"/>
         <source>variable cannot be overwritten</source>
         <translation>变量不能被覆盖</translation>
     </message>
     <message>
-        <location filename="../core/evaluator.cpp" line="1252"/>
+        <location filename="../core/evaluator.cpp" line="1273"/>
         <source>identifier matches an existing function name</source>
         <translation>这个标识符和一个已经存在的函数重名了</translation>
+    </message>
+    <message>
+        <location filename="../core/evaluator.cpp" line="86"/>
+        <source>cannot operate on a NaN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/evaluator.cpp" line="89"/>
+        <source>underflow - tiny result is out of SpeedCrunch&apos;s number range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/evaluator.cpp" line="92"/>
+        <source>overflow - huge result is out of SpeedCrunch&apos;s number range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/evaluator.cpp" line="98"/>
+        <source>overflow - logic result exceeds maximum of 256 bits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/evaluator.cpp" line="101"/>
+        <source>overflow - integer result exceeds maximum limit for integers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/evaluator.cpp" line="104"/>
+        <source>too time consuming computation was rejected</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Functions</name>
     <message>
-        <location filename="../core/functions.cpp" line="1142"/>
+        <location filename="../core/functions.cpp" line="883"/>
         <source>Absolute Value</source>
         <translation>绝对值</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1143"/>
+        <location filename="../core/functions.cpp" line="884"/>
         <source>Average (Arithmetic Mean)</source>
         <translation>平均值(算术意义)</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1144"/>
+        <location filename="../core/functions.cpp" line="885"/>
         <source>Binary Representation</source>
         <translation>二进制表示</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1145"/>
+        <location filename="../core/functions.cpp" line="886"/>
         <source>Cube Root</source>
         <translation>立方根</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1146"/>
+        <location filename="../core/functions.cpp" line="887"/>
         <source>Ceiling</source>
         <translation>求大于的最近整数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1147"/>
+        <location filename="../core/functions.cpp" line="888"/>
         <source>Decimal Representation</source>
         <translation>十进制表示</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1148"/>
+        <location filename="../core/functions.cpp" line="889"/>
         <source>Floor</source>
         <translation>求小于的最近整数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1149"/>
+        <location filename="../core/functions.cpp" line="890"/>
         <source>Fractional Part</source>
         <translation>小数部分</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1150"/>
+        <location filename="../core/functions.cpp" line="891"/>
         <source>Extension of Factorials [= (x-1)!]</source>
         <translation>阶乘的扩展  [= (x-1)!]</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1151"/>
+        <location filename="../core/functions.cpp" line="892"/>
         <source>Geometric Mean</source>
         <translation>几何意义</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1152"/>
+        <location filename="../core/functions.cpp" line="893"/>
         <source>Hexadecimal Representation</source>
         <translation>十六进制表示</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1153"/>
+        <location filename="../core/functions.cpp" line="894"/>
         <source>Integer Part</source>
         <translation>整数部分</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1154"/>
+        <location filename="../core/functions.cpp" line="895"/>
         <source>ln(abs(Gamma))</source>
         <translation>ln(abs(Gamma))</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1155"/>
+        <location filename="../core/functions.cpp" line="896"/>
         <source>Maximum</source>
         <translation>最大值</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1156"/>
+        <location filename="../core/functions.cpp" line="897"/>
         <source>Minimum</source>
         <translation>最小值</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1157"/>
+        <location filename="../core/functions.cpp" line="898"/>
         <source>Octal Representation</source>
         <translation>八进制表示</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1158"/>
+        <location filename="../core/functions.cpp" line="899"/>
         <source>Product</source>
         <translation type="unfinished">Product</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1159"/>
+        <location filename="../core/functions.cpp" line="900"/>
         <source>Rounding</source>
         <translation>求最近整数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1160"/>
+        <location filename="../core/functions.cpp" line="901"/>
         <source>Signum</source>
         <translation>符号</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1161"/>
+        <location filename="../core/functions.cpp" line="902"/>
         <source>Square Root</source>
         <translation>平方根</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1162"/>
+        <location filename="../core/functions.cpp" line="903"/>
         <source>Sum</source>
         <translation>求和</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1163"/>
+        <location filename="../core/functions.cpp" line="904"/>
         <source>Truncation</source>
         <translation>去尾</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1166"/>
+        <location filename="../core/functions.cpp" line="907"/>
         <source>Area Hyperbolic Cosine</source>
         <translation>反双曲余弦</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1167"/>
+        <location filename="../core/functions.cpp" line="908"/>
         <source>Area Hyperbolic Sine</source>
         <translation>反双曲正弦</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1168"/>
+        <location filename="../core/functions.cpp" line="909"/>
         <source>Area Hyperbolic Tangent</source>
         <translation>反双曲正切</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1169"/>
+        <location filename="../core/functions.cpp" line="910"/>
         <source>Hyperbolic Cosine</source>
         <translation>双曲余弦</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1170"/>
+        <location filename="../core/functions.cpp" line="911"/>
         <source>Exponential</source>
         <translation>指数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1171"/>
+        <location filename="../core/functions.cpp" line="912"/>
         <source>Base-2 Logarithm</source>
         <translation>以 2 为底的对数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1172"/>
+        <location filename="../core/functions.cpp" line="913"/>
         <source>Natural Logarithm</source>
         <translation>自然对数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1173"/>
+        <location filename="../core/functions.cpp" line="914"/>
         <source>Base-10 Logarithm</source>
         <translation>以 10 为底的对数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1174"/>
+        <location filename="../core/functions.cpp" line="915"/>
         <source>Hyperbolic Sine</source>
         <translation>双曲正弦</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1175"/>
+        <location filename="../core/functions.cpp" line="916"/>
         <source>Hyperbolic Tangent</source>
         <translation>双曲正切</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1178"/>
+        <location filename="../core/functions.cpp" line="919"/>
         <source>Greatest Common Divisor</source>
         <translation>最大公约数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1179"/>
+        <location filename="../core/functions.cpp" line="920"/>
         <source>Combination (Binomial Coefficient)</source>
         <translation>组合(二项系数)</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1180"/>
+        <location filename="../core/functions.cpp" line="921"/>
         <source>Permutation (Arrangement)</source>
         <translation>排列(安排)</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1183"/>
+        <location filename="../core/functions.cpp" line="924"/>
         <source>Binomial Cumulative Distribution Function</source>
         <translation>二项累积分布函数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1184"/>
+        <location filename="../core/functions.cpp" line="925"/>
         <source>Binomial Distribution Mean</source>
         <translation>二项分布平均值</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1185"/>
+        <location filename="../core/functions.cpp" line="926"/>
         <source>Binomial Probability Mass Function</source>
         <translation>二项概率质量函数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1186"/>
+        <location filename="../core/functions.cpp" line="927"/>
         <source>Binomial Distribution Variance</source>
         <translation>二项分布方差</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1187"/>
+        <location filename="../core/functions.cpp" line="928"/>
         <source>Error Function</source>
         <translation>误差函数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1188"/>
+        <location filename="../core/functions.cpp" line="929"/>
         <source>Complementary Error Function</source>
         <translation>互补误差函数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1189"/>
+        <location filename="../core/functions.cpp" line="930"/>
         <source>Hypergeometric Cumulative Distribution Function</source>
         <translation>超几何累积分布函数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1190"/>
+        <location filename="../core/functions.cpp" line="931"/>
         <source>Hypergeometric Distribution Mean</source>
         <translation>超几何分布平均值</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1191"/>
+        <location filename="../core/functions.cpp" line="932"/>
         <source>Hypergeometric Probability Mass Function</source>
         <translation>超几何概率质量函数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1192"/>
+        <location filename="../core/functions.cpp" line="933"/>
         <source>Hypergeometric Distribution Variance</source>
         <translation>超几何分布方差</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1193"/>
+        <location filename="../core/functions.cpp" line="934"/>
         <source>Poissonian Cumulative Distribution Function</source>
         <translation>泊松累积分布函数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1194"/>
+        <location filename="../core/functions.cpp" line="935"/>
         <source>Poissonian Distribution Mean</source>
         <translation>泊松分布平均值</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1195"/>
+        <location filename="../core/functions.cpp" line="936"/>
         <source>Poissonian Probability Mass Function</source>
         <translation>泊松概率质量函数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1196"/>
+        <location filename="../core/functions.cpp" line="937"/>
         <source>Poissonian Distribution Variance</source>
         <translation>泊松分布方差</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1199"/>
+        <location filename="../core/functions.cpp" line="940"/>
         <source>Arc Cosine</source>
         <translation>反余弦</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1200"/>
+        <location filename="../core/functions.cpp" line="941"/>
         <source>Arc Sine</source>
         <translation>反正弦</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1201"/>
+        <location filename="../core/functions.cpp" line="942"/>
         <source>Arc Tangent</source>
         <translation>反正切</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1202"/>
+        <location filename="../core/functions.cpp" line="943"/>
         <source>Cosine</source>
         <translation>余弦</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1203"/>
+        <location filename="../core/functions.cpp" line="944"/>
         <source>Cotangent</source>
         <translation>余切</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1204"/>
+        <location filename="../core/functions.cpp" line="945"/>
         <source>Cosecant</source>
         <translation>余割</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1205"/>
+        <location filename="../core/functions.cpp" line="946"/>
         <source>Degrees of Arc</source>
         <translation>弧的度数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1206"/>
+        <location filename="../core/functions.cpp" line="947"/>
         <source>Radians</source>
         <translation>弧度</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1207"/>
+        <location filename="../core/functions.cpp" line="948"/>
         <source>Secant</source>
         <translation>正割</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1208"/>
+        <location filename="../core/functions.cpp" line="949"/>
         <source>Sine</source>
         <translation>正弦</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1209"/>
+        <location filename="../core/functions.cpp" line="950"/>
         <source>Tangent</source>
         <translation>正切</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1212"/>
+        <location filename="../core/functions.cpp" line="953"/>
         <source>Mask to a bit size</source>
         <translation>反码</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1213"/>
+        <location filename="../core/functions.cpp" line="954"/>
         <source>Sign-extent a value</source>
         <translation>反码逆运算</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1214"/>
+        <location filename="../core/functions.cpp" line="955"/>
         <source>Logical NOT</source>
         <translation>逻辑非</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1215"/>
+        <location filename="../core/functions.cpp" line="956"/>
         <source>Logical AND</source>
         <translation>逻辑与</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1216"/>
+        <location filename="../core/functions.cpp" line="957"/>
         <source>Logical OR</source>
         <translation>逻辑或</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1217"/>
+        <location filename="../core/functions.cpp" line="958"/>
         <source>Logical XOR</source>
         <translation>逻辑异或</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1218"/>
+        <location filename="../core/functions.cpp" line="959"/>
         <source>Arithmetic Shift Left</source>
         <translation>算术左移</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1219"/>
+        <location filename="../core/functions.cpp" line="960"/>
         <source>Arithmetic Shift Right</source>
         <translation>算术右移</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1220"/>
+        <location filename="../core/functions.cpp" line="961"/>
         <source>Integer Quotient</source>
         <translation>整数商</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="1221"/>
+        <location filename="../core/functions.cpp" line="962"/>
         <source>Modulo</source>
         <translation>模数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="939"/>
+        <location filename="../core/functions.cpp" line="330"/>
         <source>function undefined for specified arguments</source>
         <translation type="unfinished">函数对于特定参数没有定义</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="96"/>
-        <source>cannot execute function %1</source>
-        <translation type="obsolete">无法执行函数 %1</translation>
-    </message>
-    <message numerus="yes">
-        <location filename="../core/functions.cpp" line="101"/>
-        <source>function accepts %1 argument(s)</source>
-        <translation type="unfinished">
-            <numerusform>函数接受 %1 个参数</numerusform>
-        </translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="271"/>
+        <location filename="../core/functions.cpp" line="319"/>
         <source>function requires 1 or 2 arguments</source>
         <translation type="unfinished">函数需要 1 个或者 2 个参数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="253"/>
+        <location filename="../core/functions.cpp" line="301"/>
         <source>function requires at least 2 arguments</source>
         <translation type="unfinished">函数需要最少 2 个参数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="259"/>
+        <location filename="../core/functions.cpp" line="307"/>
         <source>function requires integer arguments</source>
         <translation type="unfinished">函数需要整型参数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="626"/>
-        <source>function undefined for specified argument</source>
-        <translation type="unfinished">函数对于特定参数没有定义</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="596"/>
-        <source>underflow</source>
-        <translation type="unfinished">下溢出</translation>
-    </message>
-    <message>
-        <location filename="../core/functions.cpp" line="693"/>
+        <location filename="../core/functions.cpp" line="557"/>
         <source>function requires at least 1 argument</source>
         <translation type="unfinished">函数需要最少 1 个参数</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="96"/>
+        <location filename="../core/functions.cpp" line="144"/>
         <source>cannot execute function</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="61"/>
+        <source>function %1 does not take NaN as an argument</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="64"/>
+        <source>computation in %1 is unstable and exceeds the limitations of SpeedCrunch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="67"/>
+        <source>underflow: tiny result of %1 is out of SpeedCrunch&apos;s number range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="70"/>
+        <source>overflow: huge result of %1 is out of SpeedCrunch&apos;s number range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="73"/>
+        <source>function %1 is infinite for submitted argument(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="76"/>
+        <source>function %1 is not defined for submitted argument(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="79"/>
+        <source>logic overflow: result of %1 exceeds maximum of 256 bits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="82"/>
+        <source>integer overflow: result of %1 exceeds maximum limit for integers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="85"/>
+        <source>too time consuming computation in %1 was rejected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/functions.cpp" line="90"/>
+        <source>bug: internal error in %1 that should never occur</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../core/functions.cpp" line="149"/>
+        <source>function %1 accepts %2 argument(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -1031,11 +1096,6 @@
         <translation>名称</translation>
     </message>
     <message>
-        <location filename="../gui/functionswidget.cpp" line="153"/>
-        <source>Description</source>
-        <translation type="obsolete">描述</translation>
-    </message>
-    <message>
         <location filename="../gui/functionswidget.cpp" line="157"/>
         <source>Search</source>
         <translation>搜索</translation>
@@ -1057,14 +1117,6 @@
         <location filename="../gui/historydock.cpp" line="40"/>
         <source>History</source>
         <translation>历史</translation>
-    </message>
-</context>
-<context>
-    <name>InsertFunctionDlg</name>
-    <message>
-        <location filename="../gui/insertfunctiondlg.cpp" line="38"/>
-        <source>Insert Function</source>
-        <translation type="obsolete">插入函数</translation>
     </message>
 </context>
 <context>
@@ -1161,17 +1213,12 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="865"/>
-        <source>Math Book</source>
-        <translation type="obsolete">数学书</translation>
-    </message>
-    <message>
-        <location filename="../gui/mainwindow.cpp" line="1693"/>
+        <location filename="../gui/mainwindow.cpp" line="1690"/>
         <source>Radian</source>
         <translation>弧度</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1345"/>
+        <location filename="../gui/mainwindow.cpp" line="1342"/>
         <source>Degree</source>
         <translation>度数</translation>
     </message>
@@ -1211,337 +1258,332 @@
         <translation>通用十进制</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="498"/>
+        <location filename="../gui/mainwindow.cpp" line="499"/>
         <source>Angle unit</source>
         <translation>角度单位</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="499"/>
+        <location filename="../gui/mainwindow.cpp" line="500"/>
         <source>Result format</source>
         <translation>结果格式</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="511"/>
+        <location filename="../gui/mainwindow.cpp" line="512"/>
         <source>Clear E&amp;xpression</source>
         <translation>清除表达式(&amp;X)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="512"/>
+        <location filename="../gui/mainwindow.cpp" line="513"/>
         <source>Clear &amp;History</source>
         <translation>清除历史(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="532"/>
+        <location filename="../gui/mainwindow.cpp" line="533"/>
         <source>&amp;Degree</source>
         <translation>度数(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="515"/>
+        <location filename="../gui/mainwindow.cpp" line="516"/>
         <source>Delete All V&amp;ariables</source>
         <translation>清除所有变量(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="516"/>
+        <location filename="../gui/mainwindow.cpp" line="517"/>
         <source>D&amp;elete Variable...</source>
         <translation>删除变量(&amp;E)...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="544"/>
+        <location filename="../gui/mainwindow.cpp" line="545"/>
         <source>&amp;15 Decimal Digits</source>
         <translation>&amp;15 位小数</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="545"/>
+        <location filename="../gui/mainwindow.cpp" line="546"/>
         <source>&amp;2 Decimal Digits</source>
         <translation>&amp;2 位小数</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="546"/>
+        <location filename="../gui/mainwindow.cpp" line="547"/>
         <source>&amp;3 Decimal Digits</source>
         <translation>&amp;3 位小数</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="547"/>
+        <location filename="../gui/mainwindow.cpp" line="548"/>
         <source>&amp;50 Decimal Digits</source>
         <translation>&amp;50 位小数</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="548"/>
+        <location filename="../gui/mainwindow.cpp" line="549"/>
         <source>&amp;8 Decimal Digits</source>
         <translation>&amp;8 位小数</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="555"/>
-        <source>&amp;Automatic Precision</source>
-        <translation type="obsolete">自动精度(&amp;A)</translation>
-    </message>
-    <message>
-        <location filename="../gui/mainwindow.cpp" line="514"/>
+        <location filename="../gui/mainwindow.cpp" line="515"/>
         <source>&amp;Copy</source>
         <translation>复制(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="513"/>
+        <location filename="../gui/mainwindow.cpp" line="514"/>
         <source>Copy Last &amp;Result</source>
         <translation>复制上次计算的结果(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="519"/>
+        <location filename="../gui/mainwindow.cpp" line="520"/>
         <source>&amp;Paste</source>
         <translation>粘贴(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="560"/>
+        <location filename="../gui/mainwindow.cpp" line="561"/>
         <source>&amp;About</source>
         <translation>关于(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="559"/>
+        <location filename="../gui/mainwindow.cpp" line="560"/>
         <source>About &amp;Qt</source>
         <translation>关于 Qt(&amp;Q)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="562"/>
+        <location filename="../gui/mainwindow.cpp" line="563"/>
         <source>SpeedCrunch &amp;Web Site...</source>
         <translation>SpeedCrunch 网址(&amp;W)...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="561"/>
+        <location filename="../gui/mainwindow.cpp" line="562"/>
         <source>&amp;Tip of the Day</source>
         <translation>每日提示(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="517"/>
+        <location filename="../gui/mainwindow.cpp" line="518"/>
         <source>Insert &amp;Function...</source>
         <translation>插入函数(&amp;F)...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="518"/>
+        <location filename="../gui/mainwindow.cpp" line="519"/>
         <source>Insert &amp;Variable...</source>
         <translation>插入变量(&amp;V)...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="537"/>
+        <location filename="../gui/mainwindow.cpp" line="538"/>
         <source>&amp;Partial Results</source>
         <translation>部分结果(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="535"/>
+        <location filename="../gui/mainwindow.cpp" line="536"/>
         <source>Automatic &amp;Completion</source>
         <translation>自动补全(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="534"/>
+        <location filename="../gui/mainwindow.cpp" line="535"/>
         <source>Always On &amp;Top</source>
         <translation>总是在最上(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="536"/>
+        <location filename="../gui/mainwindow.cpp" line="537"/>
         <source>&amp;Minimize To System Tray</source>
         <translation>最小化到系统托盘(&amp;M)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="540"/>
+        <location filename="../gui/mainwindow.cpp" line="541"/>
         <source>Syntax &amp;Highlighting</source>
         <translation>语法高亮(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="542"/>
+        <location filename="../gui/mainwindow.cpp" line="543"/>
         <source>&amp;System Default</source>
         <translation>系统默认(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="543"/>
+        <location filename="../gui/mainwindow.cpp" line="544"/>
         <source>&amp;Dot</source>
         <translation>点(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="541"/>
+        <location filename="../gui/mainwindow.cpp" line="542"/>
         <source>&amp;Comma</source>
         <translation>逗号(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="533"/>
+        <location filename="../gui/mainwindow.cpp" line="534"/>
         <source>&amp;Radian</source>
         <translation>弧度(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="564"/>
+        <location filename="../gui/mainwindow.cpp" line="565"/>
         <source>Scroll Display Down</source>
         <translation>向下滚动显示</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="565"/>
+        <location filename="../gui/mainwindow.cpp" line="566"/>
         <source>Scroll Display Up</source>
         <translation>向上滚动显示</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="520"/>
+        <location filename="../gui/mainwindow.cpp" line="521"/>
         <source>&amp;Select Expression</source>
         <translation>选择表达式(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="506"/>
+        <location filename="../gui/mainwindow.cpp" line="507"/>
         <source>&amp;Import...</source>
         <translation>导入(&amp;I)...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="507"/>
+        <location filename="../gui/mainwindow.cpp" line="508"/>
         <source>&amp;Load...</source>
         <translation>加载(&amp;L)...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="508"/>
+        <location filename="../gui/mainwindow.cpp" line="509"/>
         <source>&amp;Quit</source>
         <translation>退出(&amp;Q)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="509"/>
+        <location filename="../gui/mainwindow.cpp" line="510"/>
         <source>&amp;Save...</source>
         <translation>保存(&amp;S)...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="505"/>
+        <location filename="../gui/mainwindow.cpp" line="506"/>
         <source>&amp;Export...</source>
         <translation>导出(&amp;E)...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="527"/>
+        <location filename="../gui/mainwindow.cpp" line="528"/>
         <source>Math &amp;Book</source>
         <translation>数学书(&amp;B)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="522"/>
+        <location filename="../gui/mainwindow.cpp" line="523"/>
         <source>&amp;Constants</source>
         <translation>常量(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="524"/>
+        <location filename="../gui/mainwindow.cpp" line="525"/>
         <source>&amp;Functions</source>
         <translation>函数(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="525"/>
+        <location filename="../gui/mainwindow.cpp" line="526"/>
         <source>&amp;History</source>
         <translation>历史(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="526"/>
+        <location filename="../gui/mainwindow.cpp" line="527"/>
         <source>&amp;Keypad</source>
         <translation>键盘(&amp;K)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="529"/>
+        <location filename="../gui/mainwindow.cpp" line="530"/>
         <source>&amp;Status Bar</source>
         <translation>状态栏(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="530"/>
+        <location filename="../gui/mainwindow.cpp" line="531"/>
         <source>&amp;Variables</source>
         <translation>变量(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="550"/>
+        <location filename="../gui/mainwindow.cpp" line="551"/>
         <source>&amp;Binary</source>
         <translation>二进制(&amp;B)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="551"/>
+        <location filename="../gui/mainwindow.cpp" line="552"/>
         <source>&amp;Engineering</source>
         <translation>工程(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="552"/>
+        <location filename="../gui/mainwindow.cpp" line="553"/>
         <source>&amp;Fixed Decimal</source>
         <translation>固定(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="553"/>
+        <location filename="../gui/mainwindow.cpp" line="554"/>
         <source>&amp;General</source>
         <translation>通用(&amp;G)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="554"/>
+        <location filename="../gui/mainwindow.cpp" line="555"/>
         <source>&amp;Hexadecimal</source>
         <translation>十六进制(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="555"/>
+        <location filename="../gui/mainwindow.cpp" line="556"/>
         <source>&amp;Octal</source>
         <translation>八进制(&amp;O)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="556"/>
+        <location filename="../gui/mainwindow.cpp" line="557"/>
         <source>&amp;Scientific</source>
         <translation>科学(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="750"/>
+        <location filename="../gui/mainwindow.cpp" line="751"/>
         <source>&amp;Session</source>
         <translation>会话(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="751"/>
+        <location filename="../gui/mainwindow.cpp" line="752"/>
         <source>&amp;Edit</source>
         <translation>编辑(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="752"/>
+        <location filename="../gui/mainwindow.cpp" line="753"/>
         <source>&amp;View</source>
         <translation>查看(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="753"/>
+        <location filename="../gui/mainwindow.cpp" line="754"/>
         <source>Se&amp;ttings</source>
         <translation>设置(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="754"/>
+        <location filename="../gui/mainwindow.cpp" line="755"/>
         <source>Result &amp;Format</source>
         <translation>结果格式(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="756"/>
+        <location filename="../gui/mainwindow.cpp" line="757"/>
         <source>&amp;Decimal</source>
         <translation>十进制(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="758"/>
+        <location filename="../gui/mainwindow.cpp" line="759"/>
         <source>&amp;Angle Unit</source>
         <translation>角度单位(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="759"/>
+        <location filename="../gui/mainwindow.cpp" line="760"/>
         <source>&amp;Behavior</source>
         <translation>行为(&amp;B)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="755"/>
+        <location filename="../gui/mainwindow.cpp" line="756"/>
         <source>Radix &amp;Character</source>
         <translation>基数字符(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="760"/>
+        <location filename="../gui/mainwindow.cpp" line="761"/>
         <source>&amp;Help</source>
         <translation>帮助(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1302"/>
+        <location filename="../gui/mainwindow.cpp" line="1299"/>
         <source>About Qt</source>
         <translation>关于 Qt</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1438"/>
+        <location filename="../gui/mainwindow.cpp" line="1435"/>
         <source>File %1 is not a valid session</source>
         <translation>文件 %1 不是一个有效的会话</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1700"/>
+        <location filename="../gui/mainwindow.cpp" line="1697"/>
         <source>SpeedCrunch Sessions (*.sch);;All Files (*)</source>
         <translation>SpeedCrunch 会话文件 (*.sch);;全部文件 (*)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1440"/>
+        <location filename="../gui/mainwindow.cpp" line="1437"/>
         <source>Load Session</source>
         <translation>加载会话</translation>
     </message>
@@ -1551,19 +1593,19 @@
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1542"/>
+        <location filename="../gui/mainwindow.cpp" line="1539"/>
         <source>Can&apos;t read from file %1</source>
         <translation>不能读取文件 %1</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1471"/>
+        <location filename="../gui/mainwindow.cpp" line="1468"/>
         <source>Merge session being loaded with current session?
 If no, current variables and display will be cleared.</source>
         <translation>您要把载入的会话和当前会话进行合并么？
 如果不的话，当前的变量和显示将会被清空。</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1551"/>
+        <location filename="../gui/mainwindow.cpp" line="1548"/>
         <source>Question</source>
         <translation>问题</translation>
     </message>
@@ -1573,23 +1615,23 @@ If no, current variables and display will be cleared.</source>
         <translation>所有文件 (*)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1535"/>
+        <location filename="../gui/mainwindow.cpp" line="1532"/>
         <source>Import Session</source>
         <translation>导入会话</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1549"/>
+        <location filename="../gui/mainwindow.cpp" line="1546"/>
         <source>Merge session being imported with current session?
 If no, current variables and display will be cleared.</source>
         <translation>您要把导入的会话和当前会话进行合并么？如果不的话，当前的变量和显示将会被清空。</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1578"/>
+        <location filename="../gui/mainwindow.cpp" line="1575"/>
         <source>Ignore error?</source>
         <translation>忽略错误？</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1701"/>
+        <location filename="../gui/mainwindow.cpp" line="1698"/>
         <source>Save Session</source>
         <translation>保存会话</translation>
     </message>
@@ -1646,27 +1688,27 @@ Left click the icon to restore it or right click for options.</source>
 左键点击它可以恢复它，或者右键点击它选择选项。</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="523"/>
+        <location filename="../gui/mainwindow.cpp" line="524"/>
         <source>F&amp;ull Screen Mode</source>
         <translation>全屏模式(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="528"/>
+        <location filename="../gui/mainwindow.cpp" line="529"/>
         <source>&amp;Menu Bar</source>
         <translation>隐藏菜单栏(&amp;M)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="538"/>
+        <location filename="../gui/mainwindow.cpp" line="539"/>
         <source>Save &amp;History on Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="539"/>
+        <location filename="../gui/mainwindow.cpp" line="540"/>
         <source>Save &amp;Variables on Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="557"/>
+        <location filename="../gui/mainwindow.cpp" line="558"/>
         <source>&amp;Language...</source>
         <translation>语言(&amp;L)</translation>
     </message>
@@ -1686,12 +1728,12 @@ Left click the icon to restore it or right click for options.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="549"/>
+        <location filename="../gui/mainwindow.cpp" line="550"/>
         <source>&amp;Automatic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="757"/>
+        <location filename="../gui/mainwindow.cpp" line="758"/>
         <source>&amp;Precision</source>
         <translation type="unfinished"></translation>
     </message>
