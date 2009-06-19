@@ -223,7 +223,7 @@
     <message>
         <location filename="../gui/bookdock.cpp" line="165"/>
         <source>Math Book</source>
-        <translation type="unfinished">Mathe-Buch</translation>
+        <translation>Mathe-Buch</translation>
     </message>
 </context>
 <context>
@@ -604,32 +604,32 @@
     <message>
         <location filename="../core/evaluator.cpp" line="86"/>
         <source>cannot operate on a NaN</source>
-        <translation type="unfinished"></translation>
+        <translation>Operation mit einer NaN nicht ausführbar</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="89"/>
         <source>underflow - tiny result is out of SpeedCrunch&apos;s number range</source>
-        <translation type="unfinished"></translation>
+        <translation>Underflow - Ergebnis zu klein für SpeedCrunchs Darstellungsbereich</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="92"/>
         <source>overflow - huge result is out of SpeedCrunch&apos;s number range</source>
-        <translation type="unfinished"></translation>
+        <translation>Overflow - Ergebnis zu groß für SpeedCrunchs Darstellungsbereich</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="98"/>
         <source>overflow - logic result exceeds maximum of 256 bits</source>
-        <translation type="unfinished"></translation>
+        <translation>Overflow - Ergebnis einer logischen Operation hat mehr als 256 Bit </translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="101"/>
         <source>overflow - integer result exceeds maximum limit for integers</source>
-        <translation type="unfinished"></translation>
+        <translation>Overflow - ganzzahliges Ergebnis ist zu groß für Speedcrunch</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="104"/>
         <source>too time consuming computation was rejected</source>
-        <translation type="unfinished"></translation>
+        <translation>zu zeitaufwändige Berechnung wird abgewiesen</translation>
     </message>
 </context>
 <context>
@@ -1012,57 +1012,57 @@
     <message>
         <location filename="../core/functions.cpp" line="144"/>
         <source>cannot execute function</source>
-        <translation type="unfinished"></translation>
+        <translation>kann die Funktion nicht ausführen</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="61"/>
         <source>function %1 does not take NaN as an argument</source>
-        <translation type="unfinished"></translation>
+        <translation>Funktion %1 nimmt NaN nicht als Parameter</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="64"/>
         <source>computation in %1 is unstable and exceeds the limitations of SpeedCrunch</source>
-        <translation type="unfinished"></translation>
+        <translation>Berechnung von %1 ist instabil und überschreitet interne Grenzen von SpeedCrunch</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="67"/>
         <source>underflow: tiny result of %1 is out of SpeedCrunch&apos;s number range</source>
-        <translation type="unfinished"></translation>
+        <translation>Underflow in %1: Ergebnis zu klein für SpeedCrunch</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="70"/>
         <source>overflow: huge result of %1 is out of SpeedCrunch&apos;s number range</source>
-        <translation type="unfinished"></translation>
+        <translation>Overflow in %1: Ergebnis zu groß für SpeedCrunch</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="73"/>
         <source>function %1 is infinite for submitted argument(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Funktion %1 ist unendlich für die angegebenen Parameter</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="76"/>
         <source>function %1 is not defined for submitted argument(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Funktion %1 ist nicht definiert für die angegebenen Parameter</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="79"/>
         <source>logic overflow: result of %1 exceeds maximum of 256 bits</source>
-        <translation type="unfinished"></translation>
+        <translation>Overflow in %1: Ergebnis hat mehr als 256 Bit</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="82"/>
         <source>integer overflow: result of %1 exceeds maximum limit for integers</source>
-        <translation type="unfinished"></translation>
+        <translation>Overflow in %1: ganzzahliges Ergebnis zu groß für SpeedCrunch</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="85"/>
         <source>too time consuming computation in %1 was rejected</source>
-        <translation type="unfinished"></translation>
+        <translation>zu zeitaufwändige Berechnung in %1 wurde abgewiesen</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="90"/>
         <source>bug: internal error in %1 that should never occur</source>
-        <translation type="unfinished"></translation>
+        <translation>Bug: interner Fehler in %1 der eigentlich nicht auftreten sollte</translation>
     </message>
     <message numerus="yes">
         <location filename="../core/functions.cpp" line="149"/>
@@ -1078,7 +1078,7 @@
     <message>
         <location filename="../gui/functionsdialog.cpp" line="33"/>
         <source>Insert Function</source>
-        <translation type="unfinished">Funktion einfügen</translation>
+        <translation>Funktion einfügen</translation>
     </message>
 </context>
 <context>
@@ -1109,7 +1109,7 @@
     <message>
         <location filename="../gui/functionswidget.cpp" line="152"/>
         <source>Identifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Bezeichner</translation>
     </message>
 </context>
 <context>
@@ -1732,12 +1732,12 @@ Falls nein, werden aktuelle Variablen und Anzeigen gelöscht.</translation>
     <message>
         <location filename="../gui/mainwindow.cpp" line="550"/>
         <source>&amp;Automatic</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Automatisch</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="758"/>
         <source>&amp;Precision</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Genauigkeit</translation>
     </message>
 </context>
 <context>
