@@ -300,7 +300,7 @@
     <message>
         <location filename="../core/constants.cpp" line="217"/>
         <source>Conductance Quantum</source>
-        <translation>Kwant przewodności</translation>
+        <translation>Kwant konduktancji</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="218"/>
@@ -330,7 +330,7 @@
     <message>
         <location filename="../core/constants.cpp" line="223"/>
         <source>Resistance Quantum</source>
-        <translation>Odwrotność kwantu przewodności</translation>
+        <translation>Kwant rezystancji</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="224"/>
