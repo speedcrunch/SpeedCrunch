@@ -18,42 +18,42 @@
         <translation>Německy</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="141"/>
+        <location filename="../gui/aboutbox.cpp" line="143"/>
         <source>Portuguese</source>
         <translation>Portugalsky</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="145"/>
+        <location filename="../gui/aboutbox.cpp" line="147"/>
         <source>Russian</source>
         <translation>Rusky</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="133"/>
+        <location filename="../gui/aboutbox.cpp" line="135"/>
         <source>Italian</source>
         <translation>Italsky</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="179"/>
+        <location filename="../gui/aboutbox.cpp" line="181"/>
         <source>This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version</source>
         <translation>Tento program je volný software; můžete jej šířit a/nebo modifikovat podle ustanovení Obecné veřejné licence GNU, vydávané Free Software Foundation; a to buď verze 2 této licence anebo (podle vašeho uvážení) kterékoli pozdější verze</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="185"/>
+        <location filename="../gui/aboutbox.cpp" line="187"/>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.</source>
         <translation>Tento program je rozšiřován v naději, že bude užitečný, avšak BEZ JAKÉKOLI ZÁRUKY; neposkytují se ani odvozené záruky PRODEJNOSTI anebo VHODNOSTI PRO URČITÝ ÚČEL. Další podrobnosti hledejte v Obecné veřejné licenci GNU (její české znění přikládáme, je dostupné též na http://www.gnu.cz, anglický originál na http://www.gnu.org/copyleft/gpl.html).</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="220"/>
+        <location filename="../gui/aboutbox.cpp" line="222"/>
         <source>About SpeedCrunch</source>
         <translation>O SpeedCrunch</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="137"/>
+        <location filename="../gui/aboutbox.cpp" line="139"/>
         <source>Norwegian</source>
         <translation>Norsky</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="149"/>
+        <location filename="../gui/aboutbox.cpp" line="151"/>
         <source>Spanish</source>
         <translation>Španělsky</translation>
     </message>
@@ -78,12 +78,12 @@
         <translation>Brazilská portugalština</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="171"/>
+        <location filename="../gui/aboutbox.cpp" line="173"/>
         <source>Copyright (C)</source>
         <translation>Copyright (C)</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="189"/>
+        <location filename="../gui/aboutbox.cpp" line="191"/>
         <source>Visit &lt;b&gt;http://www.speedcrunch.org&lt;/b&gt; for more information!</source>
         <translation>Pro více informací navštivte &lt;b&gt;b&gt;http://www.speedcrunch.org&lt;/b&gt;!</translation>
     </message>
@@ -103,7 +103,7 @@
         <translation>Hebrejština</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="151"/>
+        <location filename="../gui/aboutbox.cpp" line="153"/>
         <source>Swedish</source>
         <translation>Švédština</translation>
     </message>
@@ -118,17 +118,17 @@
         <translation>Čeština</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="143"/>
+        <location filename="../gui/aboutbox.cpp" line="145"/>
         <source>Romanian</source>
         <translation>Rumunština</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="131"/>
+        <location filename="../gui/aboutbox.cpp" line="133"/>
         <source>Indonesian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="199"/>
+        <location filename="../gui/aboutbox.cpp" line="201"/>
         <source>Close</source>
         <translation>zavřít</translation>
     </message>
@@ -138,12 +138,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="139"/>
+        <location filename="../gui/aboutbox.cpp" line="141"/>
         <source>Polish</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="153"/>
+        <location filename="../gui/aboutbox.cpp" line="155"/>
         <source>Turkish</source>
         <translation type="unfinished"></translation>
     </message>
@@ -158,7 +158,7 @@
         <translation type="unfinished">Nynější správce</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="147"/>
+        <location filename="../gui/aboutbox.cpp" line="149"/>
         <source>Simplified Chinese</source>
         <translation type="unfinished"></translation>
     </message>
@@ -203,8 +203,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="135"/>
+        <location filename="../gui/aboutbox.cpp" line="137"/>
         <source>Japanese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="131"/>
+        <source>Hungarian</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1719,17 +1724,17 @@ If no, current variables and display will be cleared.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2467"/>
+        <location filename="../gui/mainwindow.cpp" line="2468"/>
         <source>System Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2471"/>
+        <location filename="../gui/mainwindow.cpp" line="2472"/>
         <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2471"/>
+        <location filename="../gui/mainwindow.cpp" line="2472"/>
         <source>Select the language:</source>
         <translation type="unfinished"></translation>
     </message>

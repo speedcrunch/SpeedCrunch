@@ -18,42 +18,42 @@
         <translation>Germană</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="141"/>
+        <location filename="../gui/aboutbox.cpp" line="143"/>
         <source>Portuguese</source>
         <translation>Portugheză</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="145"/>
+        <location filename="../gui/aboutbox.cpp" line="147"/>
         <source>Russian</source>
         <translation>Rusă</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="133"/>
+        <location filename="../gui/aboutbox.cpp" line="135"/>
         <source>Italian</source>
         <translation>Italiană</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="179"/>
+        <location filename="../gui/aboutbox.cpp" line="181"/>
         <source>This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version</source>
         <translation>Acest program este liber; îl puteţi redistribui şi/sau modifica în conformitate cu termenii Licenţei Publice Generale GNU aşa cum este ea publicată de Free Software Foundation; fie versiunea 2 a Licenţei, fie (la latitudinea dumneavoastră) orice versiune ulterioară</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="185"/>
+        <location filename="../gui/aboutbox.cpp" line="187"/>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.</source>
         <translation>Acest program este distribuit cu speranţa că vă va fi util, dar FĂRĂ NICI O GARANŢIE, chiar fără garanţia implicită de vandabilitate sau conformitate unui anumit scop.  Citiţi Licenţa Publică Generală GNU pentru detalii.</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="220"/>
+        <location filename="../gui/aboutbox.cpp" line="222"/>
         <source>About SpeedCrunch</source>
         <translation>Despre SpeedCrunch</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="137"/>
+        <location filename="../gui/aboutbox.cpp" line="139"/>
         <source>Norwegian</source>
         <translation>Norvegiană</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="149"/>
+        <location filename="../gui/aboutbox.cpp" line="151"/>
         <source>Spanish</source>
         <translation>Spaniolă</translation>
     </message>
@@ -78,12 +78,12 @@
         <translation>Portugheză Braziliană</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="171"/>
+        <location filename="../gui/aboutbox.cpp" line="173"/>
         <source>Copyright (C)</source>
         <translation>Copyright (C)</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="189"/>
+        <location filename="../gui/aboutbox.cpp" line="191"/>
         <source>Visit &lt;b&gt;http://www.speedcrunch.org&lt;/b&gt; for more information!</source>
         <translation>Vizitează &lt;b&gt;http://www.speedcrunch.org&lt;/b&gt; pentru mai multe informaţii!</translation>
     </message>
@@ -103,7 +103,7 @@
         <translation>Ebraică</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="151"/>
+        <location filename="../gui/aboutbox.cpp" line="153"/>
         <source>Swedish</source>
         <translation>Suedeză</translation>
     </message>
@@ -118,17 +118,17 @@
         <translation>Cehă</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="143"/>
+        <location filename="../gui/aboutbox.cpp" line="145"/>
         <source>Romanian</source>
         <translation>Română</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="131"/>
+        <location filename="../gui/aboutbox.cpp" line="133"/>
         <source>Indonesian</source>
         <translation>Indoneziană</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="199"/>
+        <location filename="../gui/aboutbox.cpp" line="201"/>
         <source>Close</source>
         <translation>Închide</translation>
     </message>
@@ -138,12 +138,12 @@
         <translation>Grafică  </translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="139"/>
+        <location filename="../gui/aboutbox.cpp" line="141"/>
         <source>Polish</source>
         <translation>Poloneză</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="153"/>
+        <location filename="../gui/aboutbox.cpp" line="155"/>
         <source>Turkish</source>
         <translation>Turcă</translation>
     </message>
@@ -153,7 +153,7 @@
         <translation>Bască</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="147"/>
+        <location filename="../gui/aboutbox.cpp" line="149"/>
         <source>Simplified Chinese</source>
         <translation>Chineză simplificată</translation>
     </message>
@@ -203,8 +203,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="135"/>
+        <location filename="../gui/aboutbox.cpp" line="137"/>
         <source>Japanese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="131"/>
+        <source>Hungarian</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1721,17 +1726,17 @@ Daca nu, variabilele curente şi ecranul vor fi curaţate.</translation>
         <translation>&amp;Limbaj...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2467"/>
+        <location filename="../gui/mainwindow.cpp" line="2468"/>
         <source>System Default</source>
         <translation>&amp;Valoarea implicităa sistemului</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2471"/>
+        <location filename="../gui/mainwindow.cpp" line="2472"/>
         <source>Language</source>
         <translation>Limbaj</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2471"/>
+        <location filename="../gui/mainwindow.cpp" line="2472"/>
         <source>Select the language:</source>
         <translation type="unfinished"></translation>
     </message>
