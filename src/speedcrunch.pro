@@ -173,6 +173,7 @@ TRANSLATIONS += locale/ar_JO.ts \
                 locale/fi_FI.ts \
                 locale/fr_FR.ts \
                 locale/he_IL.ts \
+                locale/hu_HU.ts \
                 locale/id_ID.ts \
                 locale/it_IT.ts \
                 locale/ja_JP.ts \

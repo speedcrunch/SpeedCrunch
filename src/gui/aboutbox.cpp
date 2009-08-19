@@ -128,6 +128,8 @@ AboutBox::AboutBox( QWidget * parent )
                .arg( "Wolf Lammen" );
     msg += i18n.arg( tr("Hebrew") )
                .arg( "Jonathan Avraham" );
+    msg += i18n.arg( tr("Hungarian") )
+               .arg( "T&ouml;r&ouml;k B&aacute;lint" );
     msg += i18n.arg( tr("Indonesian") )
                .arg( "Ariya Hidayat<br>Yolla Indria" );
     msg += i18n.arg( tr("Italian") )

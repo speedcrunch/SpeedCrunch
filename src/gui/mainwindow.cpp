@@ -2446,6 +2446,7 @@ void MainWindow::showLanguageChooserDialog()
     map.insert( QLatin1String("Euskara"), QLatin1String("eu_ES") );
     map.insert( QString::fromUtf8("Français"), QLatin1String("fr_FR") );
     map.insert( QLatin1String("Italiano"), QLatin1String("it_IT") );
+    map.insert( QLatin1String("Magyar"), QLatin1String("hu_HU") );
     map.insert( QLatin1String("Nederlands"), QLatin1String("nl_NL") );
     map.insert( QString::fromUtf8("Norsk (Bokmål)") + QChar(0x200E), QLatin1String("nb_NO") );
     map.insert( QLatin1String("Polski"), QLatin1String("pl_PL") );
