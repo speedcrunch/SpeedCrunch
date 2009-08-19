@@ -610,32 +610,32 @@
     <message>
         <location filename="../core/evaluator.cpp" line="86"/>
         <source>cannot operate on a NaN</source>
-        <translation type="unfinished"></translation>
+        <translation>nie można operować na składniku nieliczbowym</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="89"/>
         <source>underflow - tiny result is out of SpeedCrunch&apos;s number range</source>
-        <translation type="unfinished"></translation>
+        <translation>zbyt mała precyzja - maleńki wynik jest poza zakresem liczb SpeedCrunch</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="92"/>
         <source>overflow - huge result is out of SpeedCrunch&apos;s number range</source>
-        <translation type="unfinished"></translation>
+        <translation>przepełnienie - olbrzymi wynik jest poza zakresem liczb SpeedCrunch</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="98"/>
         <source>overflow - logic result exceeds maximum of 256 bits</source>
-        <translation type="unfinished"></translation>
+        <translation>przepełnienie - długość wyniku logicznego przekracza 256 bitów</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="101"/>
         <source>overflow - integer result exceeds maximum limit for integers</source>
-        <translation type="unfinished"></translation>
+        <translation>przepełnienie - wynik całkowity przekracza maksymalną długość</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="104"/>
         <source>too time consuming computation was rejected</source>
-        <translation type="unfinished"></translation>
+        <translation>zbyt złożone czasowo obliczenie zostało odrzucone</translation>
     </message>
 </context>
 <context>
@@ -1023,60 +1023,60 @@
     <message>
         <location filename="../core/functions.cpp" line="61"/>
         <source>function %1 does not take NaN as an argument</source>
-        <translation type="unfinished"></translation>
+        <translation>funkcja %1 nie przyjmuje argumentów będących nieliczbami</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="64"/>
         <source>computation in %1 is unstable and exceeds the limitations of SpeedCrunch</source>
-        <translation type="unfinished"></translation>
+        <translation>obliczenia w %1 są niezbieżne i przekraczają ograniczenia SpeedCrunch</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="67"/>
         <source>underflow: tiny result of %1 is out of SpeedCrunch&apos;s number range</source>
-        <translation type="unfinished"></translation>
+        <translation>zbyt mała precyzja: maleńki wynik %1 jest poza zakresem liczb SpeedCrunch</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="70"/>
         <source>overflow: huge result of %1 is out of SpeedCrunch&apos;s number range</source>
-        <translation type="unfinished"></translation>
+        <translation>przepełnienie: olbrzymi wynik %1 jest poza zakresem liczb SpeedCrunch</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="73"/>
         <source>function %1 is infinite for submitted argument(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>funkcja %1 przyjmuje wartość nieskończoną dla wprowadzonego argumentu/wprowadzonych argumentów</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="76"/>
         <source>function %1 is not defined for submitted argument(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>funkcja %1 jest nieokreślona dla wprowadzonego argumentu/wprowadzonych argumentów</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="79"/>
         <source>logic overflow: result of %1 exceeds maximum of 256 bits</source>
-        <translation type="unfinished"></translation>
+        <translation>przepełnienie logiczne: długość wyniku %1 przekracza 256 bitów</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="82"/>
         <source>integer overflow: result of %1 exceeds maximum limit for integers</source>
-        <translation type="unfinished"></translation>
+        <translation>przepełnienie całkowite: wynik %1 przekracza maksymalną długość</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="85"/>
         <source>too time consuming computation in %1 was rejected</source>
-        <translation type="unfinished"></translation>
+        <translation>zbyt złożone czasowo obliczenie w %1 zostało odrzucone</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="90"/>
         <source>bug: internal error in %1 that should never occur</source>
-        <translation type="unfinished"></translation>
+        <translation>błąd programu: wystąpił nieoczekiwany błąd w %1</translation>
     </message>
     <message numerus="yes">
         <location filename="../core/functions.cpp" line="149"/>
-        <source>function %1 accepts %2 argument(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <source>function %1 accepts %n argument(s)</source>
+        <translation>
+            <numerusform>funkcja %1 przyjmuje %n argument</numerusform>
+            <numerusform>funkcja %1 przyjmuje %n argumenty</numerusform>
+            <numerusform>funkcja %1 przyjmuje %n argumentów</numerusform>
         </translation>
     </message>
 </context>

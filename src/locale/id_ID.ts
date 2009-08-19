@@ -1072,7 +1072,7 @@
     </message>
     <message numerus="yes">
         <location filename="../core/functions.cpp" line="149"/>
-        <source>function %1 accepts %2 argument(s)</source>
+        <source>function %1 accepts %n argument(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>

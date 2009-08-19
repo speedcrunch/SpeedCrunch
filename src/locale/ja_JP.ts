@@ -43,11 +43,6 @@
         <translation>このプログラムは有用であることを願って頒布されますが、*全くの無保証*です。商業可能性の保証や特定の目的への適合性は、言外に示されたものも含め全く存在しません。詳しくはGNU 一般公衆利用許諾契約書をご覧ください。</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="218"/>
-        <source>SpeedCrunch version %1</source>
-        <translation type="obsolete">SpeedCrunch - Version %1</translation>
-    </message>
-    <message>
         <location filename="../gui/aboutbox.cpp" line="220"/>
         <source>About SpeedCrunch</source>
         <translation>SpeedCrunchについて</translation>
@@ -68,11 +63,6 @@
         <translation>原制作者</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="229"/>
-        <source>Current maintainer</source>
-        <translation type="obsolete">現在の管理者</translation>
-    </message>
-    <message>
         <location filename="../gui/aboutbox.cpp" line="65"/>
         <source>Based on original idea from</source>
         <translation>Based on original idea from</translation>
@@ -81,11 +71,6 @@
         <location filename="../gui/aboutbox.cpp" line="74"/>
         <source>Thanks to</source>
         <translation>Thanks to</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="274"/>
-        <source>...and many others...</source>
-        <translation type="obsolete">... その他のみなさん...</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="107"/>
@@ -141,11 +126,6 @@
         <location filename="../gui/aboutbox.cpp" line="143"/>
         <source>Romanian</source>
         <translation>ルーマニア語</translation>
-    </message>
-    <message>
-        <location filename="../gui/aboutbox.cpp" line="230"/>
-        <source>Developers</source>
-        <translation type="obsolete">開発者</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="131"/>
@@ -529,26 +509,6 @@
         <source>Constants</source>
         <translation>定数</translation>
     </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="167"/>
-        <source>Category</source>
-        <translation type="obsolete">カテゴリ</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="168"/>
-        <source>Search</source>
-        <translation type="obsolete">検索</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="124"/>
-        <source>No match found</source>
-        <translation type="obsolete">見つかりませんでした</translation>
-    </message>
-    <message>
-        <location filename="../gui/constantsdock.cpp" line="304"/>
-        <source>All</source>
-        <translation type="obsolete">すべて</translation>
-    </message>
 </context>
 <context>
     <name>ConstantsWidget</name>
@@ -590,16 +550,6 @@
 </context>
 <context>
     <name>DeleteVariableDlg</name>
-    <message>
-        <location filename="../gui/deletevardlg.cpp" line="74"/>
-        <source>Name</source>
-        <translation type="obsolete">名前</translation>
-    </message>
-    <message>
-        <location filename="../gui/deletevardlg.cpp" line="75"/>
-        <source>Value</source>
-        <translation type="obsolete">値</translation>
-    </message>
     <message>
         <location filename="../gui/deletevardlg.cpp" line="54"/>
         <source>&amp;Delete</source>
@@ -965,21 +915,6 @@
         <translation>正接</translation>
     </message>
     <message>
-        <location filename="../base/functions.cpp" line="103"/>
-        <source>cannot execute function %1</source>
-        <translation type="obsolete">%1の関数を実行できません</translation>
-    </message>
-    <message>
-        <location filename="../base/functions.cpp" line="111"/>
-        <source>function accepts 1 argument</source>
-        <translation type="obsolete">関数は引数を1つ取ります</translation>
-    </message>
-    <message>
-        <location filename="../base/functions.cpp" line="114"/>
-        <source>function accepts %1 arguments</source>
-        <translation type="obsolete">関数は引数を%1個取ります</translation>
-    </message>
-    <message>
         <location filename="../core/functions.cpp" line="319"/>
         <source>function requires 1 or 2 arguments</source>
         <translation>関数は1つか2つの引数が必要です．</translation>
@@ -998,16 +933,6 @@
         <location filename="../core/functions.cpp" line="307"/>
         <source>function requires integer arguments</source>
         <translation>関数は引数は整数でなければなりません</translation>
-    </message>
-    <message>
-        <location filename="../base/functions.cpp" line="764"/>
-        <source>function undefined for specified argument</source>
-        <translation type="obsolete">指定された引数をもつ関数は定義されていません</translation>
-    </message>
-    <message>
-        <location filename="../base/functions.cpp" line="726"/>
-        <source>underflow</source>
-        <translation type="obsolete">アンダーフロー</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="557"/>
@@ -1146,7 +1071,7 @@
     </message>
     <message numerus="yes">
         <location filename="../core/functions.cpp" line="149"/>
-        <source>function %1 accepts %2 argument(s)</source>
+        <source>function %1 accepts %n argument(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
@@ -1166,16 +1091,6 @@
         <location filename="../gui/functionsdock.cpp" line="45"/>
         <source>Functions</source>
         <translation>関数</translation>
-    </message>
-    <message>
-        <location filename="../gui/functionsdock.cpp" line="123"/>
-        <source>Search</source>
-        <translation type="obsolete">検索</translation>
-    </message>
-    <message>
-        <location filename="../gui/functionsdock.cpp" line="124"/>
-        <source>No match found</source>
-        <translation type="obsolete">見つかりませんでした</translation>
     </message>
 </context>
 <context>
@@ -1210,45 +1125,7 @@
     </message>
 </context>
 <context>
-    <name>InsertFunctionDlg</name>
-    <message>
-        <location filename="../gui/insertfunctiondlg.cpp" line="67"/>
-        <source>Name</source>
-        <translation type="obsolete">名前</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertfunctiondlg.cpp" line="68"/>
-        <source>Description</source>
-        <translation type="obsolete">説明</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertfunctiondlg.cpp" line="72"/>
-        <source>&amp;Insert</source>
-        <translation type="obsolete">挿入(&amp;I)</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertfunctiondlg.cpp" line="76"/>
-        <source>Cancel</source>
-        <translation type="obsolete">取り消し</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertfunctiondlg.cpp" line="53"/>
-        <source>Insert Function</source>
-        <translation type="obsolete">関数の挿入</translation>
-    </message>
-</context>
-<context>
     <name>InsertVariableDlg</name>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="90"/>
-        <source>Name</source>
-        <translation type="obsolete">名前</translation>
-    </message>
-    <message>
-        <location filename="../gui/insertvardlg.cpp" line="91"/>
-        <source>Value</source>
-        <translation type="obsolete">値</translation>
-    </message>
     <message>
         <location filename="../gui/insertvardlg.cpp" line="55"/>
         <source>&amp;Insert</source>
@@ -1501,11 +1378,6 @@ If no, current variables and display will be cleared.</source>
         <translation>セッションのエクスポート</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1018"/>
-        <source>Math Book</source>
-        <translation type="obsolete">数学の教科書</translation>
-    </message>
-    <message>
         <location filename="../gui/mainwindow.cpp" line="751"/>
         <source>&amp;Session</source>
         <translation>セッション(&amp;S)</translation>
@@ -1559,11 +1431,6 @@ If no, current variables and display will be cleared.</source>
         <location filename="../gui/mainwindow.cpp" line="549"/>
         <source>&amp;8 Decimal Digits</source>
         <translation>&amp;8桁</translation>
-    </message>
-    <message>
-        <location filename="../gui/mainwindow.cpp" line="617"/>
-        <source>&amp;Automatic Precision</source>
-        <translation type="obsolete">自動精度(&amp;A)</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="515"/>
@@ -1706,11 +1573,6 @@ If no, current variables and display will be cleared.</source>
         <translation>定数(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="646"/>
-        <source>Full &amp;Screen Mode</source>
-        <translation type="obsolete">全画面表示(&amp;S)</translation>
-    </message>
-    <message>
         <location filename="../gui/mainwindow.cpp" line="525"/>
         <source>&amp;Functions</source>
         <translation>関数(&amp;F)</translation>
@@ -1724,11 +1586,6 @@ If no, current variables and display will be cleared.</source>
         <location filename="../gui/mainwindow.cpp" line="527"/>
         <source>&amp;Keypad</source>
         <translation>キーパッド(&amp;K)</translation>
-    </message>
-    <message>
-        <location filename="../gui/mainwindow.cpp" line="650"/>
-        <source>Hide &amp;Menu Bar</source>
-        <translation type="obsolete">メニューを隠す(&amp;M)</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="530"/>
@@ -1776,11 +1633,6 @@ If no, current variables and display will be cleared.</source>
         <translation>科学(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="660"/>
-        <source>System &amp;Default</source>
-        <translation type="obsolete">既定の設定(D&amp;)</translation>
-    </message>
-    <message>
         <location filename="../gui/mainwindow.cpp" line="752"/>
         <source>&amp;Edit</source>
         <translation>編集(&amp;E)</translation>
@@ -1819,11 +1671,6 @@ If no, current variables and display will be cleared.</source>
         <location filename="../gui/mainwindow.cpp" line="756"/>
         <source>Radix &amp;Character</source>
         <translation>小数点に使用する文字(&amp;C)</translation>
-    </message>
-    <message>
-        <location filename="../gui/mainwindow.cpp" line="900"/>
-        <source>&amp;Language</source>
-        <translation type="obsolete">言語(&amp;L)</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="761"/>
@@ -1902,16 +1749,6 @@ If no, current variables and display will be cleared.</source>
         <location filename="../gui/variablesdock.cpp" line="69"/>
         <source>Variables</source>
         <translation>変数</translation>
-    </message>
-    <message>
-        <location filename="../gui/variablesdock.cpp" line="163"/>
-        <source>Search</source>
-        <translation type="obsolete">検索</translation>
-    </message>
-    <message>
-        <location filename="../gui/variablesdock.cpp" line="164"/>
-        <source>No match found</source>
-        <translation type="obsolete">見つかりませんでした</translation>
     </message>
 </context>
 <context>
