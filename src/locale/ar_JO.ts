@@ -18,12 +18,12 @@
         <translation>الألمانية</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="139"/>
+        <location filename="../gui/aboutbox.cpp" line="141"/>
         <source>Portuguese</source>
         <translation>البرتغالية</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="143"/>
+        <location filename="../gui/aboutbox.cpp" line="145"/>
         <source>Russian</source>
         <translation>الروسية</translation>
     </message>
@@ -33,24 +33,24 @@
         <translation>الإيطالية</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="177"/>
+        <location filename="../gui/aboutbox.cpp" line="179"/>
         <source>This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version</source>
         <translation>
        هذا البرنامج مفتوح المصدر إذ بالإمكان إعادة توزيعه أو/والتعديل عليه ضمن ترخيص الGNU العام كما أصدرته مؤسسة البرمجيات الحرة وكما هو في الإصدار الثاني للترخيص أو بحسب اختيارك لأي من الإصدارات السابقة  له
 </translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="183"/>
+        <location filename="../gui/aboutbox.cpp" line="185"/>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.</source>
         <translation>هذا البرنامج موزع بأمل أن يكون مفيدا ولكن بدون أي ضمانات وحتى بدون ضمان التأجير او ملائمته لأي هدف معين. لمزيد من التفاصيل انظر ترخيص الGNU</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="218"/>
+        <location filename="../gui/aboutbox.cpp" line="220"/>
         <source>About SpeedCrunch</source>
         <translation>عن سببيد كرنش</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="135"/>
+        <location filename="../gui/aboutbox.cpp" line="137"/>
         <source>Norwegian</source>
         <translation>النرويجية</translation>
     </message>
@@ -60,7 +60,7 @@
         <translation>العربية</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="147"/>
+        <location filename="../gui/aboutbox.cpp" line="149"/>
         <source>Spanish</source>
         <translation>الإسبانية</translation>
     </message>
@@ -85,13 +85,13 @@
         <translation>البرتغالية البرازيلية</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="169"/>
+        <location filename="../gui/aboutbox.cpp" line="171"/>
         <source>Copyright (C)</source>
         <translation>حقوق الطبع محفوظة
 (C)</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="187"/>
+        <location filename="../gui/aboutbox.cpp" line="189"/>
         <source>Visit &lt;b&gt;http://www.speedcrunch.org&lt;/b&gt; for more information!</source>
         <translation>زيارة&lt;b&gt;http://www.speedcrunch.org&lt;/b&gt; للمزيد من المعلومات !</translation>
     </message>
@@ -112,7 +112,7 @@
         <translation>العبرية</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="149"/>
+        <location filename="../gui/aboutbox.cpp" line="151"/>
         <source>Swedish</source>
         <translation>السويدية</translation>
     </message>
@@ -127,7 +127,7 @@
         <translation>التشيكية</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="141"/>
+        <location filename="../gui/aboutbox.cpp" line="143"/>
         <source>Romanian</source>
         <translation>الرومانية</translation>
     </message>
@@ -137,17 +137,17 @@
         <translation>الأندونيسية</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="137"/>
+        <location filename="../gui/aboutbox.cpp" line="139"/>
         <source>Polish</source>
         <translation>البولندية</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="151"/>
+        <location filename="../gui/aboutbox.cpp" line="153"/>
         <source>Turkish</source>
         <translation>التركية</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="197"/>
+        <location filename="../gui/aboutbox.cpp" line="199"/>
         <source>Close</source>
         <translation>إغلاق</translation>
     </message>
@@ -162,7 +162,7 @@
         <translation>إقليم الباسك</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="145"/>
+        <location filename="../gui/aboutbox.cpp" line="147"/>
         <source>Simplified Chinese</source>
         <translation>الصينيةالمبسطة</translation>
     </message>
@@ -204,6 +204,11 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="64"/>
         <source>Original math book author</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="135"/>
+        <source>Japanese</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1721,17 +1726,17 @@ If no, current variables and display will be cleared.</source>
         <translation>(*)لجميع الملفات (*.sch);; جلسات سبيد كرنش </translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2466"/>
+        <location filename="../gui/mainwindow.cpp" line="2467"/>
         <source>System Default</source>
         <translation>النظام الاعتيادي</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2470"/>
+        <location filename="../gui/mainwindow.cpp" line="2471"/>
         <source>Language</source>
         <translation>اللغة</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2470"/>
+        <location filename="../gui/mainwindow.cpp" line="2471"/>
         <source>Select the language:</source>
         <translation type="unfinished"></translation>
     </message>

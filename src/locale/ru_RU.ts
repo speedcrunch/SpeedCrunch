@@ -18,12 +18,12 @@
         <translation>Немецкий</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="139"/>
+        <location filename="../gui/aboutbox.cpp" line="141"/>
         <source>Portuguese</source>
         <translation>Португальский</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="143"/>
+        <location filename="../gui/aboutbox.cpp" line="145"/>
         <source>Russian</source>
         <translation>Русский</translation>
     </message>
@@ -33,27 +33,27 @@
         <translation>Итальянский</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="177"/>
+        <location filename="../gui/aboutbox.cpp" line="179"/>
         <source>This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version</source>
         <translation>Эта программа является свободным программным обеспечением; вы можете распространять и/или изменять её на условиях GNU GPL (Основной Общественной Лицензии), изданной Организацией Свободного П/О второго или (на ваш выбор) более позднего издания</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="183"/>
+        <location filename="../gui/aboutbox.cpp" line="185"/>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.</source>
         <translation>Эта программа распространяется в надежде, что будет полезной, но БЕЗ ЛЮБЫХ ГАРАНТИЙ, даже без подразумеваемой гарантии ПРИГОДНОСТИ ДЛЯ КАКОЙ-ЛИБО ЦЕЛИ. Подробнее см. GNU GPL.</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="218"/>
+        <location filename="../gui/aboutbox.cpp" line="220"/>
         <source>About SpeedCrunch</source>
         <translation>О программе SpeedCrunch</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="135"/>
+        <location filename="../gui/aboutbox.cpp" line="137"/>
         <source>Norwegian</source>
         <translation>Норвежский</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="147"/>
+        <location filename="../gui/aboutbox.cpp" line="149"/>
         <source>Spanish</source>
         <translation>Испанский</translation>
     </message>
@@ -78,12 +78,12 @@
         <translation>Бразильско-португальский</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="169"/>
+        <location filename="../gui/aboutbox.cpp" line="171"/>
         <source>Copyright (C)</source>
         <translation>Все права защищены (С)</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="187"/>
+        <location filename="../gui/aboutbox.cpp" line="189"/>
         <source>Visit &lt;b&gt;http://www.speedcrunch.org&lt;/b&gt; for more information!</source>
         <translation>За дополнительной информацией обращайтесь на сайт &lt;b&gt;http://www.speedcrunch.org&lt;/b&gt;</translation>
     </message>
@@ -103,7 +103,7 @@
         <translation>Древнееврейский</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="149"/>
+        <location filename="../gui/aboutbox.cpp" line="151"/>
         <source>Swedish</source>
         <translation>Шведский</translation>
     </message>
@@ -118,7 +118,7 @@
         <translation>Чешский язык</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="141"/>
+        <location filename="../gui/aboutbox.cpp" line="143"/>
         <source>Romanian</source>
         <translation>Румынский язык</translation>
     </message>
@@ -128,17 +128,17 @@
         <translation>Индонезийский</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="137"/>
+        <location filename="../gui/aboutbox.cpp" line="139"/>
         <source>Polish</source>
         <translation>Польский</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="151"/>
+        <location filename="../gui/aboutbox.cpp" line="153"/>
         <source>Turkish</source>
         <translation>Турецкий</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="197"/>
+        <location filename="../gui/aboutbox.cpp" line="199"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
@@ -158,7 +158,7 @@
         <translation>Инженер технической поддержки и разработчик ядра</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="145"/>
+        <location filename="../gui/aboutbox.cpp" line="147"/>
         <source>Simplified Chinese</source>
         <translation>упрощенный китайский</translation>
     </message>
@@ -201,6 +201,11 @@
         <location filename="../gui/aboutbox.cpp" line="64"/>
         <source>Original math book author</source>
         <translation type="unfinished">Разработчик математической книги</translation>
+    </message>
+    <message>
+        <location filename="../gui/aboutbox.cpp" line="135"/>
+        <source>Japanese</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1716,17 +1721,17 @@ If no, current variables and display will be cleared.</source>
         <translation>&amp;Язык...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2466"/>
+        <location filename="../gui/mainwindow.cpp" line="2467"/>
         <source>System Default</source>
         <translation>Система &amp;по умолчанию</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2470"/>
+        <location filename="../gui/mainwindow.cpp" line="2471"/>
         <source>Language</source>
         <translation>Язык</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2470"/>
+        <location filename="../gui/mainwindow.cpp" line="2471"/>
         <source>Select the language:</source>
         <translation type="unfinished"></translation>
     </message>
