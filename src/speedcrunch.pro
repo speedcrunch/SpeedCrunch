@@ -175,6 +175,7 @@ TRANSLATIONS += locale/ar_JO.ts \
                 locale/he_IL.ts \
                 locale/id_ID.ts \
                 locale/it_IT.ts \
+                locale/ja_JP.ts \
                 locale/nb_NO.ts \
                 locale/nl_NL.ts \
                 locale/pl_PL.ts \

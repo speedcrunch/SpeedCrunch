@@ -2440,7 +2440,6 @@ void MainWindow::showLanguageChooserDialog()
     map.insert( QLatin1String("Bahasa Indonesia"), QLatin1String("id_ID") );
     map.insert( QLatin1String("British English"), QLatin1String("en_GB") );
     map.insert( QString::fromUtf8("Català"), QLatin1String("ca_ES") );
-    map.insert( QString::fromUtf8("Česky"), QLatin1String("cs_CZ") );
     map.insert( QLatin1String("Deutsch"), QLatin1String("de_DE") );
     map.insert( QString::fromUtf8("Español"), QLatin1String("es_ES") );
     map.insert( QString::fromUtf8("Español Argentino"), QLatin1String("es_AR") );
@@ -2456,9 +2455,11 @@ void MainWindow::showLanguageChooserDialog()
     map.insert( QLatin1String("Suomi"), QLatin1String("fi_FI") );
     map.insert( QLatin1String("Svenska"), QLatin1String("sv_SE") );
     map.insert( QString::fromUtf8("Türkçe"), QLatin1String("tr_TR") );
-    map.insert( QString::fromUtf8("العربية"), QLatin1String("ar_JO") );
-    map.insert( QString::fromUtf8("עברית"), QLatin1String("he_IL") );
+    map.insert( QString::fromUtf8("Česky"), QLatin1String("cs_CZ") );
     map.insert( QString::fromUtf8("Русский"), QLatin1String("ru_RU") );
+    map.insert( QString::fromUtf8("עברית"), QLatin1String("he_IL") );
+    map.insert( QString::fromUtf8("العربية"), QLatin1String("ar_JO") );
+    map.insert( QString::fromUtf8("日本語"), QLatin1String("ja_JP") );
     map.insert( QString::fromUtf8("简化字"), QLatin1String("zh_CN") );
 
     int current = map.values().indexOf( d->settings->language ) + 1;
