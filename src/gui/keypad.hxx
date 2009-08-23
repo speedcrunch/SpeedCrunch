@@ -40,49 +40,14 @@ public:
     ~Keypad();
 
 signals:
-    void buttonPressed( Keypad::Button );
+    void buttonPressed( Keypad::Button ) const;
 
 public slots:
     void handleRadixCharacterChange();
     void retranslateText();
 
 protected slots:
-    void key0Pressed();
-    void key1Pressed();
-    void key2Pressed();
-    void key3Pressed();
-    void key4Pressed();
-    void key5Pressed();
-    void key6Pressed();
-    void key7Pressed();
-    void key8Pressed();
-    void key9Pressed();
-    void keyAcosPressed();
-    void keyAddPressed();
-    void keyAnsPressed();
-    void keyAsinPressed();
-    void keyAtanPressed();
-    void keyCPressed();
-    void keyCosPressed();
-    void keyDivPressed();
-    void keyDotPressed();
-    void keyEEPressed();
-    void keyEqPressed();
-    void keyExpPressed();
-    void keyFactPressed();
-    void keyLnPressed();
-    void keyLParPressed();
-    void keyMulPressed();
-    void keyPercPressed();
-    void keyPiPressed();
-    void keyRaisePressed();
-    void keyRParPressed();
-    void keySinPressed();
-    void keySqrtPressed();
-    void keySubPressed();
-    void keyTanPressed();
-    void keyXPressed();
-    void keyXEqPressed();
+    void emitButtonPressed( int button ) const;
 
 protected:
     virtual void changeEvent( QEvent * );

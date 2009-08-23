@@ -22,6 +22,8 @@
 #include "core/settings.hxx"
 
 #include <QtCore/QLocale>
+#include <QtCore/QHash>
+#include <QtCore/QSignalMapper>
 #include <QtGui/QApplication>
 #include <QtGui/QGridLayout>
 #if QT_VERSION >= 0x040400 && defined(Q_WS_MAC) && !defined(QT_NO_STYLE_MAC)
@@ -33,51 +35,63 @@
 
 struct Keypad::Private
 {
+    static const struct KeyDescription {
+        QString label;
+        Button button;
+        bool boldFont;
+        int gridRow;
+        int gridColumn;
+    } keyDescriptions[];
+
     Keypad * p;
+    QHash<Button, QPair<QPushButton*, const KeyDescription*> > keys;
+    QSignalMapper mapper;
 
-    QPushButton * key0;
-    QPushButton * key1;
-    QPushButton * key2;
-    QPushButton * key3;
-    QPushButton * key4;
-    QPushButton * key5;
-    QPushButton * key6;
-    QPushButton * key7;
-    QPushButton * key8;
-    QPushButton * key9;
-    QPushButton * keyAcos;
-    QPushButton * keyAdd;
-    QPushButton * keyAns;
-    QPushButton * keyAsin;
-    QPushButton * keyAtan;
-    QPushButton * keyC;
-    QPushButton * keyCos;
-    QPushButton * keyDiv;
-    QPushButton * keyDot;
-    QPushButton * keyEE;
-    QPushButton * keyEq;
-    QPushButton * keyExp;
-    QPushButton * keyFact;
-    QPushButton * keyLn;
-    QPushButton * keyLPar;
-    QPushButton * keyMul;
-    QPushButton * keyPerc;
-    QPushButton * keyPi;
-    QPushButton * keyRaise;
-    QPushButton * keyRPar;
-    QPushButton * keySin;
-    QPushButton * keySqrt;
-    QPushButton * keySub;
-    QPushButton * keyTan;
-    QPushButton * keyX;
-    QPushButton * keyXEq;
-
+    QPushButton* key(Button button) const;
     void createButtons();
     void disableButtonFocus();
     void layoutButtons();
     void setButtonTooltips();
-    void setUpButtonPressedSignal();
     void sizeButtons();
+};
+
+const Keypad::Private::KeyDescription Keypad::Private::keyDescriptions[] = {
+    {QString::fromLatin1("0"),      Key0,           true,   3, 0},
+    {QString::fromLatin1("1"),      Key1,           true,   2, 0},
+    {QString::fromLatin1("2"),      Key2,           true,   2, 1},
+    {QString::fromLatin1("3"),      Key3,           true,   2, 2},
+    {QString::fromLatin1("4"),      Key4,           true,   1, 0},
+    {QString::fromLatin1("5"),      Key5,           true,   1, 1},
+    {QString::fromLatin1("6"),      Key6,           true,   1, 2},
+    {QString::fromLatin1("7"),      Key7,           true,   0, 0},
+    {QString::fromLatin1("8"),      Key8,           true,   0, 1},
+    {QString::fromLatin1("9"),      Key9,           true,   0, 2},
+    {QString::fromLatin1(","),      KeyRadixChar,   true,   3, 1},
+    {QString::fromUtf8("="),        KeyEquals,      true,   3, 2},
+    {QString::fromUtf8("÷"),       KeyDivide,      true,   0, 3},
+    {QString::fromUtf8("∗"),      KeyTimes,       true,   1, 3},
+    {QString::fromUtf8("−"),      KeyMinus,       true,   2, 3},
+    {QString::fromUtf8("+"),        KeyPlus,        true,   3, 3},
+    {QString::fromLatin1("acos"),   KeyAcos,        false,  2, 8},
+    {QString::fromLatin1("ans"),    KeyAns,         false,  1, 6},
+    {QString::fromLatin1("asin"),   KeyAsin,        false,  1, 8},
+    {QString::fromLatin1("atan"),   KeyAtan,        false,  3, 8},
+    {QString::fromLatin1("C"),      KeyClear,       false,  0, 4},
+    {QString::fromLatin1("cos"),    KeyCos,         false,  2, 7},
+    {QString::fromLatin1("E"),      KeyEE,          false,  1, 4},
+    {QString::fromLatin1("exp"),    KeyExp,         false,  0, 7},
+    {QString::fromLatin1("!"),      KeyFactorial,   false,  3, 5},
+    {QString::fromLatin1("ln"),     KeyLn,          false,  0, 8},
+    {QString::fromLatin1("("),      KeyLeftPar,     false,  2, 4},
+    {QString::fromLatin1("%"),      KeyPercent,     false,  3, 4},
+    {QString::fromLatin1("^"),      KeyRaise,       false,  1, 5},
+    {QString::fromLatin1(")"),      KeyRightPar,    false,  2, 5},
+    {QString::fromLatin1("sin"),    KeySin,         false,  1, 7},
+    {QString::fromLatin1("tan"),    KeyTan,         false,  3, 7},
+    {QString::fromLatin1("x="),     KeyXEquals,     false,  3, 6},
+    {QString::fromLatin1("x"),      KeyX,           false,  2, 6},
+    {QString::fromUtf8("π"),       KeyPi,          false,  0, 6},
+    {QString::fromUtf8("√"),      KeySqrt,        false,  0, 5}
 };
 
 Keypad::Keypad( QWidget * parent )
@@ -89,9 +103,9 @@ Keypad::Keypad( QWidget * parent )
     d->sizeButtons();
     d->layoutButtons();
     d->setButtonTooltips();
-    d->setUpButtonPressedSignal();
     d->disableButtonFocus();
     setLayoutDirection( Qt::LeftToRight );
+    connect(&d->mapper, SIGNAL(mapped(int)), SLOT(emitButtonPressed(int)));
 }
 
 Keypad::~Keypad()
@@ -100,7 +114,7 @@ Keypad::~Keypad()
 
 void Keypad::handleRadixCharacterChange()
 {
-    d->keyDot->setText( QString(QChar(Settings::instance()->radixCharacter())) );
+    d->key(KeyRadixChar)->setText( QString(QChar(Settings::instance()->radixCharacter())) );
 }
 
 void Keypad::retranslateText()
@@ -109,143 +123,47 @@ void Keypad::retranslateText()
     handleRadixCharacterChange();
 }
 
-void Keypad::key0Pressed()     { emit buttonPressed( Keypad::Key0 ); };
-void Keypad::key1Pressed()     { emit buttonPressed( Keypad::Key1 ); };
-void Keypad::key2Pressed()     { emit buttonPressed( Keypad::Key2 ); };
-void Keypad::key3Pressed()     { emit buttonPressed( Keypad::Key3 ); };
-void Keypad::key4Pressed()     { emit buttonPressed( Keypad::Key4 ); };
-void Keypad::key5Pressed()     { emit buttonPressed( Keypad::Key5 ); };
-void Keypad::key6Pressed()     { emit buttonPressed( Keypad::Key6 ); };
-void Keypad::key7Pressed()     { emit buttonPressed( Keypad::Key7 ); };
-void Keypad::key8Pressed()     { emit buttonPressed( Keypad::Key8 ); };
-void Keypad::key9Pressed()     { emit buttonPressed( Keypad::Key9 ); };
-void Keypad::keyAcosPressed()  { emit buttonPressed( Keypad::KeyAcos ); };
-void Keypad::keyAddPressed()   { emit buttonPressed( Keypad::KeyPlus ); };
-void Keypad::keyAnsPressed()   { emit buttonPressed( Keypad::KeyAns ); };
-void Keypad::keyAsinPressed()  { emit buttonPressed( Keypad::KeyAsin ); };
-void Keypad::keyAtanPressed()  { emit buttonPressed( Keypad::KeyAtan ); };
-void Keypad::keyCosPressed()   { emit buttonPressed( Keypad::KeyCos ); };
-void Keypad::keyCPressed()     { emit buttonPressed( Keypad::KeyClear ); };
-void Keypad::keyDivPressed()   { emit buttonPressed( Keypad::KeyDivide ); };
-void Keypad::keyDotPressed()   { emit buttonPressed( Keypad::KeyRadixChar ); };
-void Keypad::keyEEPressed()    { emit buttonPressed( Keypad::KeyEE ); };
-void Keypad::keyEqPressed()    { emit buttonPressed( Keypad::KeyEquals ); };
-void Keypad::keyExpPressed()   { emit buttonPressed( Keypad::KeyExp ); };
-void Keypad::keyFactPressed()  { emit buttonPressed( Keypad::KeyFactorial ); };
-void Keypad::keyLnPressed()    { emit buttonPressed( Keypad::KeyLn ); };
-void Keypad::keyLParPressed()  { emit buttonPressed( Keypad::KeyLeftPar ); };
-void Keypad::keyMulPressed()   { emit buttonPressed( Keypad::KeyTimes ); };
-void Keypad::keyPercPressed()  { emit buttonPressed( Keypad::KeyPercent ); };
-void Keypad::keyPiPressed()    { emit buttonPressed( Keypad::KeyPi ); };
-void Keypad::keyRaisePressed() { emit buttonPressed( Keypad::KeyRaise ); };
-void Keypad::keyRParPressed()  { emit buttonPressed( Keypad::KeyRightPar ); };
-void Keypad::keySinPressed()   { emit buttonPressed( Keypad::KeySin ); };
-void Keypad::keySqrtPressed()  { emit buttonPressed( Keypad::KeySqrt ); };
-void Keypad::keySubPressed()   { emit buttonPressed( Keypad::KeyMinus ); };
-void Keypad::keyTanPressed()   { emit buttonPressed( Keypad::KeyTan ); };
-void Keypad::keyXPressed()     { emit buttonPressed( Keypad::KeyX ); };
-void Keypad::keyXEqPressed()   { emit buttonPressed( Keypad::KeyXEquals ); };
+void Keypad::emitButtonPressed( int button ) const
+{
+    emit buttonPressed(Button(button));
+}
+
+QPushButton* Keypad::Private::key(Button button) const
+{
+    Q_ASSERT(keys.contains(button));
+    return keys.value(button).first;
+}
 
 void Keypad::Private::createButtons()
 {
-    key0      = new QPushButton( "0", p );
-    key1      = new QPushButton( "1", p );
-    key2      = new QPushButton( "2", p );
-    key3      = new QPushButton( "3", p );
-    key4      = new QPushButton( "4", p );
-    key5      = new QPushButton( "5", p );
-    key6      = new QPushButton( "6", p );
-    key7      = new QPushButton( "7", p );
-    key8      = new QPushButton( "8", p );
-    key9      = new QPushButton( "9", p );
-    keyAcos   = new QPushButton( "acos", p );
-    keyAns    = new QPushButton( "ans", p );
-    keyAsin   = new QPushButton( "asin", p );
-    keyAtan   = new QPushButton( "atan", p );
-    keyC      = new QPushButton( "C", p );
-    keyCos    = new QPushButton( "cos", p );
-    keyEE     = new QPushButton( "E", p );
-    keyExp    = new QPushButton( "exp", p );
-    keyFact   = new QPushButton( "!", p );
-    keyLn     = new QPushButton( "ln", p );
-    keyLPar   = new QPushButton( "(", p );
-    keyPerc   = new QPushButton( "%", p );
-    keyRaise  = new QPushButton( "^", p );
-    keyRPar   = new QPushButton( ")", p );
-    keySin    = new QPushButton( "sin", p );
-    keyTan    = new QPushButton( "tan", p );
-    keyXEq    = new QPushButton( "x=", p );
-    keyX      = new QPushButton( "x", p );
+    keys.clear();
 
-    keyDiv    = new QPushButton( QString::fromUtf8("÷"), p );
-    keyEq     = new QPushButton( QString::fromUtf8("="), p );
-    keyMul    = new QPushButton( QString::fromUtf8("∗"), p );
-    keyAdd    = new QPushButton( QString::fromUtf8("+"), p );
-    keySub    = new QPushButton( QString::fromUtf8("−"), p );
-    keyPi     = new QPushButton( QString::fromUtf8("π"), p );
-    keySqrt   = new QPushButton( QString::fromUtf8("√"), p );
+    QFont boldFont;
+    boldFont.setBold( true );
+    boldFont.setPointSize( boldFont.pointSize() + 3 );
 
-    keyDot    = new QPushButton( QString(QChar(Settings::instance()->radixCharacter())), p );
+    static const int keyDescriptionsCount =
+        int(sizeof keyDescriptions / sizeof keyDescriptions[0]);
+    for (int i = 0; i < keyDescriptionsCount; ++i) {
+        const KeyDescription *description = keyDescriptions + i;
+        QPushButton *key = new QPushButton(description->label);
+        if (description->boldFont)
+            key->setFont(boldFont);
+        const QPair<QPushButton*, const KeyDescription*> hashValue(key, description);
+        keys.insert(description->button, hashValue);
 
-    QFont f = key0->font();
-    f.setBold( true );
-    f.setPointSize( f.pointSize() + 3 );
-    key0->setFont( f );
-    key1->setFont( f );
-    key2->setFont( f );
-    key3->setFont( f );
-    key4->setFont( f );
-    key5->setFont( f );
-    key6->setFont( f );
-    key7->setFont( f );
-    key8->setFont( f );
-    key9->setFont( f );
-    keyEq->setFont( f );
-    keyMul->setFont( f );
-    keyDiv->setFont( f );
-    keyAdd->setFont( f );
-    keySub->setFont( f );
-    keyDot->setFont( f );
+        QObject::connect(key, SIGNAL(clicked()), &mapper, SLOT(map()));
+        mapper.setMapping(key, description->button);
+    }
 }
 
 void Keypad::Private::disableButtonFocus()
 {
-    key0->setFocusPolicy( Qt::NoFocus );
-    key1->setFocusPolicy( Qt::NoFocus );
-    key2->setFocusPolicy( Qt::NoFocus );
-    key3->setFocusPolicy( Qt::NoFocus );
-    key4->setFocusPolicy( Qt::NoFocus );
-    key5->setFocusPolicy( Qt::NoFocus );
-    key6->setFocusPolicy( Qt::NoFocus );
-    key7->setFocusPolicy( Qt::NoFocus );
-    key8->setFocusPolicy( Qt::NoFocus );
-    key9->setFocusPolicy( Qt::NoFocus );
-    keyAcos->setFocusPolicy( Qt::NoFocus );
-    keyAdd->setFocusPolicy( Qt::NoFocus );
-    keyAns->setFocusPolicy( Qt::NoFocus );
-    keyAsin->setFocusPolicy( Qt::NoFocus );
-    keyAtan->setFocusPolicy( Qt::NoFocus );
-    keyCos->setFocusPolicy( Qt::NoFocus );
-    keyC->setFocusPolicy( Qt::NoFocus );
-    keyDiv->setFocusPolicy( Qt::NoFocus );
-    keyDot->setFocusPolicy( Qt::NoFocus );
-    keyEE->setFocusPolicy( Qt::NoFocus );
-    keyEq->setFocusPolicy( Qt::NoFocus );
-    keyExp->setFocusPolicy( Qt::NoFocus );
-    keyFact->setFocusPolicy( Qt::NoFocus );
-    keyLn->setFocusPolicy( Qt::NoFocus );
-    keyLPar->setFocusPolicy( Qt::NoFocus );
-    keyMul->setFocusPolicy( Qt::NoFocus );
-    keyPerc->setFocusPolicy( Qt::NoFocus );
-    keyPi->setFocusPolicy( Qt::NoFocus );
-    keyRaise->setFocusPolicy( Qt::NoFocus );
-    keyRPar->setFocusPolicy( Qt::NoFocus );
-    keySin->setFocusPolicy( Qt::NoFocus );
-    keySqrt->setFocusPolicy( Qt::NoFocus );
-    keySub->setFocusPolicy( Qt::NoFocus );
-    keyTan->setFocusPolicy( Qt::NoFocus );
-    keyXEq->setFocusPolicy( Qt::NoFocus );
-    keyX->setFocusPolicy( Qt::NoFocus );
+    QHashIterator<Button, QPair<QPushButton*, const KeyDescription*> > i(keys);
+    while (i.hasNext()) {
+        i.next();
+        i.value().first->setFocusPolicy( Qt::NoFocus );
+    }
 }
 
 void Keypad::Private::layoutButtons()
@@ -262,116 +180,49 @@ void Keypad::Private::layoutButtons()
     layout->setMargin( 3 );
     layout->setSpacing( layoutSpacing );
 
-    layout->addWidget( key0,     3, 0 );
-    layout->addWidget( key1,     2, 0 );
-    layout->addWidget( key2,     2, 1 );
-    layout->addWidget( key3,     2, 2 );
-    layout->addWidget( key4,     1, 0 );
-    layout->addWidget( key5,     1, 1 );
-    layout->addWidget( key6,     1, 2 );
-    layout->addWidget( key7,     0, 0 );
-    layout->addWidget( key8,     0, 1 );
-    layout->addWidget( key9,     0, 2 );
-    layout->addWidget( keyAcos,  2, 8 );
-    layout->addWidget( keyAdd,   3, 3 );
-    layout->addWidget( keyAns,   1, 6 );
-    layout->addWidget( keyAsin,  1, 8 );
-    layout->addWidget( keyAtan,  3, 8 );
-    layout->addWidget( keyC,     0, 4 );
-    layout->addWidget( keyCos,   2, 7 );
-    layout->addWidget( keyDiv,   0, 3 );
-    layout->addWidget( keyDot,   3, 1 );
-    layout->addWidget( keyEE,    1, 4 );
-    layout->addWidget( keyEq,    3, 2 );
-    layout->addWidget( keyExp,   0, 7 );
-    layout->addWidget( keyFact,  3, 5 );
-    layout->addWidget( keyLn,    0, 8 );
-    layout->addWidget( keyLPar,  2, 4 );
-    layout->addWidget( keyMul,   1, 3 );
-    layout->addWidget( keyPerc,  3, 4 );
-    layout->addWidget( keyPi,    0, 6 );
-    layout->addWidget( keyRaise, 1, 5 );
-    layout->addWidget( keyRPar,  2, 5 );
-    layout->addWidget( keySin,   1, 7 );
-    layout->addWidget( keySqrt,  0, 5 );
-    layout->addWidget( keySub,   2, 3 );
-    layout->addWidget( keyTan,   3, 7 );
-    layout->addWidget( keyX,     2, 6 );
-    layout->addWidget( keyXEq,   3, 6 );
+    QHashIterator<Button, QPair<QPushButton*, const KeyDescription*> > i(keys);
+    while (i.hasNext()) {
+        i.next();
+        QWidget *widget = i.value().first;
+        const int row = i.value().second->gridRow;
+        const int column = i.value().second->gridColumn;
+        layout->addWidget(widget, row, column);
+    }
 }
 
 void Keypad::Private::setButtonTooltips()
 {
-    keyAcos->setToolTip( Keypad::tr("Inverse cosine") );
-    keyAns ->setToolTip( Keypad::tr("The last result") );
-    keyAsin->setToolTip( Keypad::tr("Inverse sine") );
-    keyAtan->setToolTip( Keypad::tr("Inverse tangent") );
-    keyC   ->setToolTip( Keypad::tr("Clear expression") );
-    keyCos ->setToolTip( Keypad::tr("Cosine") );
-    keyEE  ->setToolTip( Keypad::tr("Scientific notation") );
-    keyExp ->setToolTip( Keypad::tr("Exponential") );
-    keyLn  ->setToolTip( Keypad::tr("Natural logarithm") );
-    keySin ->setToolTip( Keypad::tr("Sine") );
-    keySqrt->setToolTip( Keypad::tr("Square root") );
-    keyTan ->setToolTip( Keypad::tr("Tangent") );
-    keyXEq ->setToolTip( Keypad::tr("Assign variable x") );
-    keyX   ->setToolTip( Keypad::tr("The variable x") );
-}
-
-void Keypad::Private::setUpButtonPressedSignal()
-{
-    connect( key0,     SIGNAL(clicked()), p, SLOT(key0Pressed()) );
-    connect( key1,     SIGNAL(clicked()), p, SLOT(key1Pressed()) );
-    connect( key2,     SIGNAL(clicked()), p, SLOT(key2Pressed()) );
-    connect( key3,     SIGNAL(clicked()), p, SLOT(key3Pressed()) );
-    connect( key4,     SIGNAL(clicked()), p, SLOT(key4Pressed()) );
-    connect( key5,     SIGNAL(clicked()), p, SLOT(key5Pressed()) );
-    connect( key6,     SIGNAL(clicked()), p, SLOT(key6Pressed()) );
-    connect( key7,     SIGNAL(clicked()), p, SLOT(key7Pressed()) );
-    connect( key8,     SIGNAL(clicked()), p, SLOT(key8Pressed()) );
-    connect( key9,     SIGNAL(clicked()), p, SLOT(key9Pressed()) );
-    connect( keyAcos,  SIGNAL(clicked()), p, SLOT(keyAcosPressed()) );
-    connect( keyAdd,   SIGNAL(clicked()), p, SLOT(keyAddPressed()) );
-    connect( keyAns,   SIGNAL(clicked()), p, SLOT(keyAnsPressed()) );
-    connect( keyAsin,  SIGNAL(clicked()), p, SLOT(keyAsinPressed()) );
-    connect( keyAtan,  SIGNAL(clicked()), p, SLOT(keyAtanPressed()) );
-    connect( keyC,     SIGNAL(clicked()), p, SLOT(keyCPressed()) );
-    connect( keyCos,   SIGNAL(clicked()), p, SLOT(keyCosPressed()) );
-    connect( keyDiv,   SIGNAL(clicked()), p, SLOT(keyDivPressed()) );
-    connect( keyEE,    SIGNAL(clicked()), p, SLOT(keyEEPressed()) );
-    connect( keyEq,    SIGNAL(clicked()), p, SLOT(keyEqPressed()) );
-    connect( keyExp,   SIGNAL(clicked()), p, SLOT(keyExpPressed()) );
-    connect( keyFact,  SIGNAL(clicked()), p, SLOT(keyFactPressed()) );
-    connect( keyLn,    SIGNAL(clicked()), p, SLOT(keyLnPressed()) );
-    connect( keyLPar,  SIGNAL(clicked()), p, SLOT(keyLParPressed()) );
-    connect( keyMul,   SIGNAL(clicked()), p, SLOT(keyMulPressed()) );
-    connect( keyPerc,  SIGNAL(clicked()), p, SLOT(keyPercPressed()) );
-    connect( keyRaise, SIGNAL(clicked()), p, SLOT(keyRaisePressed()) );
-    connect( keyRPar,  SIGNAL(clicked()), p, SLOT(keyRParPressed()) );
-    connect( keySin,   SIGNAL(clicked()), p, SLOT(keySinPressed()) );
-    connect( keySub,   SIGNAL(clicked()), p, SLOT(keySubPressed()) );
-    connect( keyTan,   SIGNAL(clicked()), p, SLOT(keyTanPressed()) );
-    connect( keyXEq,   SIGNAL(clicked()), p, SLOT(keyXEqPressed()) );
-    connect( keyX,     SIGNAL(clicked()), p, SLOT(keyXPressed()) );
-    connect( keyDot,   SIGNAL(clicked()), p, SLOT(keyDotPressed()) );
-    connect( keyPi,    SIGNAL(clicked()), p, SLOT(keyPiPressed()) );
-    connect( keySqrt,  SIGNAL(clicked()), p, SLOT(keySqrtPressed()) );
+    key(KeyAcos)   ->setToolTip( Keypad::tr("Inverse cosine") );
+    key(KeyAns)    ->setToolTip( Keypad::tr("The last result") );
+    key(KeyAsin)   ->setToolTip( Keypad::tr("Inverse sine") );
+    key(KeyAtan)   ->setToolTip( Keypad::tr("Inverse tangent") );
+    key(KeyClear)  ->setToolTip( Keypad::tr("Clear expression") );
+    key(KeyCos)    ->setToolTip( Keypad::tr("Cosine") );
+    key(KeyEE)     ->setToolTip( Keypad::tr("Scientific notation") );
+    key(KeyExp)    ->setToolTip( Keypad::tr("Exponential") );
+    key(KeyLn)     ->setToolTip( Keypad::tr("Natural logarithm") );
+    key(KeySin)    ->setToolTip( Keypad::tr("Sine") );
+    key(KeySqrt)   ->setToolTip( Keypad::tr("Square root") );
+    key(KeyTan)    ->setToolTip( Keypad::tr("Tangent") );
+    key(KeyXEquals)->setToolTip( Keypad::tr("Assign variable x") );
+    key(KeyX)      ->setToolTip( Keypad::tr("The variable x") );
 }
 
 void Keypad::Private::sizeButtons()
 {
     // The same font in all buttons, so just pick one
-    QFontMetrics fm = key0->fontMetrics();
+    QFontMetrics fm = key(Key0)->fontMetrics();
 
-    int maxWidth = fm.width( keyAcos->text() );
+    int maxWidth = fm.width( key(KeyAcos)->text() );
     int textHeight = qMax( fm.lineSpacing(), 14 );
     //int ls = fm.lineSpacing();
 
     QStyle::ContentsType type = QStyle::CT_ToolButton;
     QStyleOptionButton opt;
-    opt.initFrom(keyAcos);
-    QSize size = keyAcos->style()->sizeFromContents( type, &opt,
-        QSize(int(maxWidth),int(textHeight)).expandedTo(QApplication::globalStrut()), keyAcos );
+    const QWidget *exampleWidget = key(KeyAcos);
+    opt.initFrom(exampleWidget);
+    QSize size = exampleWidget->style()->sizeFromContents( type, &opt,
+        QSize(int(maxWidth),int(textHeight)).expandedTo(QApplication::globalStrut()), exampleWidget );
 
 #ifdef Q_WS_X11
     // we would like to use the button size as indicated by the widget style,
@@ -386,42 +237,11 @@ void Keypad::Private::sizeButtons()
 #endif
 
     // limit the size of the buttons
-    key0    ->setMaximumSize( size ); key0    ->setMinimumSize( size );
-    key1    ->setMaximumSize( size ); key1    ->setMinimumSize( size );
-    key2    ->setMaximumSize( size ); key2    ->setMinimumSize( size );
-    key3    ->setMaximumSize( size ); key3    ->setMinimumSize( size );
-    key4    ->setMaximumSize( size ); key4    ->setMinimumSize( size );
-    key5    ->setMaximumSize( size ); key5    ->setMinimumSize( size );
-    key6    ->setMaximumSize( size ); key6    ->setMinimumSize( size );
-    key7    ->setMaximumSize( size ); key7    ->setMinimumSize( size );
-    key8    ->setMaximumSize( size ); key8    ->setMinimumSize( size );
-    key9    ->setMaximumSize( size ); key9    ->setMinimumSize( size );
-    keyAcos ->setMaximumSize( size ); keyAcos ->setMinimumSize( size );
-    keyAdd  ->setMaximumSize( size ); keyAdd  ->setMinimumSize( size );
-    keyAns  ->setMaximumSize( size ); keyAns  ->setMinimumSize( size );
-    keyAsin ->setMaximumSize( size ); keyAsin ->setMinimumSize( size );
-    keyAtan ->setMaximumSize( size ); keyAtan ->setMinimumSize( size );
-    keyC    ->setMaximumSize( size ); keyC    ->setMinimumSize( size );
-    keyCos  ->setMaximumSize( size ); keyCos  ->setMinimumSize( size );
-    keyDiv  ->setMaximumSize( size ); keyDiv  ->setMinimumSize( size );
-    keyDot  ->setMaximumSize( size ); keyDot  ->setMinimumSize( size );
-    keyEE   ->setMaximumSize( size ); keyEE   ->setMinimumSize( size );
-    keyEq   ->setMaximumSize( size ); keyEq   ->setMinimumSize( size );
-    keyExp  ->setMaximumSize( size ); keyExp  ->setMinimumSize( size );
-    keyFact ->setMaximumSize( size ); keyFact ->setMinimumSize( size );
-    keyLn   ->setMaximumSize( size ); keyLn   ->setMinimumSize( size );
-    keyLPar ->setMaximumSize( size ); keyLPar ->setMinimumSize( size );
-    keyMul  ->setMaximumSize( size ); keyMul  ->setMinimumSize( size );
-    keyPerc ->setMaximumSize( size ); keyPerc ->setMinimumSize( size );
-    keyPi   ->setMaximumSize( size ); keyPi   ->setMinimumSize( size );
-    keyRaise->setMaximumSize( size ); keyRaise->setMinimumSize( size );
-    keyRPar ->setMaximumSize( size ); keyRPar ->setMinimumSize( size );
-    keySin  ->setMaximumSize( size ); keySin  ->setMinimumSize( size );
-    keySqrt ->setMaximumSize( size ); keySqrt ->setMinimumSize( size );
-    keySub  ->setMaximumSize( size ); keySub  ->setMinimumSize( size );
-    keyTan  ->setMaximumSize( size ); keyTan  ->setMinimumSize( size );
-    keyXEq  ->setMaximumSize( size ); keyXEq  ->setMinimumSize( size );
-    keyX    ->setMaximumSize( size ); keyX    ->setMinimumSize( size );
+    QHashIterator<Button, QPair<QPushButton*, const KeyDescription*> > i(keys);
+    while (i.hasNext()) {
+        i.next();
+        i.value().first->setFixedSize( size );
+    }
 }
 
 void Keypad::changeEvent( QEvent * e )
@@ -431,4 +251,3 @@ void Keypad::changeEvent( QEvent * e )
     else
         QWidget::changeEvent( e );
 }
-
