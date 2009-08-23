@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1" language="ja_JP">
+<!DOCTYPE TS>
+<TS version="2.0" language="ja_JP">
 <context>
     <name>AboutBox</name>
     <message>
@@ -65,7 +66,7 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="65"/>
         <source>Based on original idea from</source>
-        <translation>Based on original idea from</translation>
+        <translation>オリジナルアイデア</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="74"/>
@@ -170,47 +171,47 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="58"/>
         <source>Maintainer and core developer</source>
-        <translation type="unfinished"></translation>
+        <translation>管理者および主な開発者</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="60"/>
         <source>Former maintainer</source>
-        <translation type="unfinished"></translation>
+        <translation>前管理者</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="61"/>
         <source>Math engine and expression parser</source>
-        <translation type="unfinished"></translation>
+        <translation>数式解析および処理エンジン</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="62"/>
         <source>General purpose developer</source>
-        <translation type="unfinished"></translation>
+        <translation>多目的開発者</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="63"/>
         <source>Packager and OS X stylist</source>
-        <translation type="unfinished"></translation>
+        <translation>パッケージャーとOS Xスタイリスト</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="64"/>
         <source>Original math book author</source>
-        <translation type="unfinished"></translation>
+        <translation>数学の教科書の元著者</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="109"/>
         <source>Arabic</source>
-        <translation type="unfinished"></translation>
+        <translation>アラビア語</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="137"/>
         <source>Japanese</source>
-        <translation type="unfinished"></translation>
+        <translation>日本語</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="131"/>
         <source>Hungarian</source>
-        <translation type="unfinished"></translation>
+        <translation>ハンガリー語</translation>
     </message>
 </context>
 <context>
@@ -233,7 +234,7 @@
     <message>
         <location filename="../gui/bookdock.cpp" line="165"/>
         <source>Math Book</source>
-        <translation type="unfinished">数学の教科書</translation>
+        <translation>数学の教科書</translation>
     </message>
 </context>
 <context>
@@ -249,262 +250,262 @@
     <message>
         <location filename="../core/constants.cpp" line="205"/>
         <source>Characteristic Impedance of Vacuum</source>
-        <translation>Charakteristische Impedanz des Vakuums</translation>
+        <translation>真空中の固有インピーダンス</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="203"/>
         <source>General Physics</source>
-        <translation>Allgemeine Physik</translation>
+        <translation>一般物理</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="207"/>
         <source>Electric Constant</source>
-        <translation>Elektrische Feldkonstante</translation>
+        <translation>真空の誘電率</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="209"/>
         <source>Magnetic Constant</source>
-        <translation>Magnetische Feldkonstante</translation>
+        <translation>真空の透磁率</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="208"/>
         <source>Gravitation Constant</source>
-        <translation>Gravitationskonstante</translation>
+        <translation>万有引力定数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="210"/>
         <source>Planck&apos;s Constant</source>
-        <translation>Plancksches Wirkungsquantum</translation>
+        <translation>プランク定数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="206"/>
         <source>Dirac&apos;s Constant</source>
-        <translation>Diracsche Konstante</translation>
+        <translation>ディラック定数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="211"/>
         <source>Speed of Light in Vacuum</source>
-        <translation>Lichtgeschwindigkeit im Vakuum</translation>
+        <translation>真空中の光速</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="216"/>
         <source>Bohr-Procopiu Magneton</source>
-        <translation>Bohrsches Magneton</translation>
+        <translation>ボーア磁子</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="214"/>
         <source>Electromagnetic</source>
-        <translation>Elektromagnetisch</translation>
+        <translation>電磁気</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="217"/>
         <source>Conductance Quantum</source>
-        <translation>Quantum der Leitfähigkeit</translation>
+        <translation>量子コンダクタンス</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="218"/>
         <source>Coulomb&apos;s Constant</source>
-        <translation>Coulombsche Konstante</translation>
+        <translation>クーロン定数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="219"/>
         <source>Elementary Charge</source>
-        <translation>Elementarladung</translation>
+        <translation>電気素量</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="220"/>
         <source>Josephson Constant</source>
-        <translation>Josephson-Konstante</translation>
+        <translation>ジョセフソン定数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="221"/>
         <source>Magnetic Flux Quantum</source>
-        <translation>Magnetisches Flussquantum</translation>
+        <translation>磁束量子</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="222"/>
         <source>Nuclear Magneton</source>
-        <translation>Kern-Magneton</translation>
+        <translation>核磁子</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="223"/>
         <source>Resistance Quantum</source>
-        <translation>Widerstandsquantum</translation>
+        <translation>量子抵抗</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="224"/>
         <source>von Klitzing Constant</source>
-        <translation>von-Klitzing-Konstante</translation>
+        <translation>フォン・クリッツィング定数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="229"/>
         <source>Bohr Radius</source>
-        <translation>Bohrscher Radius</translation>
+        <translation>ボーア半径</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="227"/>
         <source>Atomic &amp; Nuclear</source>
-        <translation>Atomar &amp; Nuklear</translation>
+        <translation>原子と核</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="230"/>
         <source>Fermi Coupling Constant</source>
-        <translation>Fermi-Kopplungskonstante</translation>
+        <translation>フェルミ結合定数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="231"/>
         <source>Fine-structure Constant</source>
-        <translation>Feinstrukturkonstante</translation>
+        <translation>微細構造定数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="232"/>
         <source>Hartree Energy</source>
-        <translation>Hartree-Energie</translation>
+        <translation>ハートリーエネルギー</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="233"/>
         <source>Quantum of Circulation</source>
-        <translation>Quantum des Umlaufintegrals</translation>
+        <translation>循環量子</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="234"/>
         <source>Rydberg Constant</source>
-        <translation>Rydberg-Konstante</translation>
+        <translation>リュードベリ定数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="235"/>
         <source>Thomson Cross Section</source>
-        <translation>Thomson-Wirkungsquerschnitt</translation>
+        <translation>トムソン断面積</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="236"/>
         <source>Weak Mixing Angle</source>
-        <translation>Elektroschwacher Mischungswinkel</translation>
+        <translation>ワインバーグ角</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="241"/>
         <source>Atomic Mass Unit</source>
-        <translation>Atomare Masseneinheit</translation>
+        <translation>原子質量単位</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="239"/>
         <source>Physico-chemical</source>
-        <translation>Physikalischen Chemie</translation>
+        <translation>物理化学</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="242"/>
         <source>Avogadro&apos;s Number</source>
-        <translation>Avogadro-Konstante</translation>
+        <translation>アボガドロ定数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="243"/>
         <source>Boltzmann Constant</source>
-        <translation>Boltzmannkonstante</translation>
+        <translation>ボルツマン定数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="244"/>
         <source>Faraday Constant</source>
-        <translation>Faraday-Konstante</translation>
+        <translation>ファラデー定数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="245"/>
         <source>First Radiation Constant</source>
-        <translation>Erste Strahlungskonstante</translation>
+        <translation>第一放射定数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="247"/>
         <source>Loschmidt Constant</source>
-        <translation>Loschmidt-Konstante</translation>
+        <translation>ロシュミット定数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="246"/>
         <source>Gas Constant</source>
-        <translation>Universelle Gaskonstante</translation>
+        <translation>気体定数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="248"/>
         <source>Molar Planck Constant</source>
-        <translation>Molare Planckkonstante</translation>
+        <translation>モルプランク定数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="249"/>
         <source>Second Radiation Constant</source>
-        <translation>Zweite Strahlungskonstante</translation>
+        <translation>第二放射定数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="250"/>
         <source>Stefan-Boltzmann Constant</source>
-        <translation>Stefan-Boltzmann-Konstante</translation>
+        <translation>シュテファン＝ボルツマン定数</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="255"/>
         <source>Astronomical Unit</source>
-        <translation>Astronomische Einheit</translation>
+        <translation>天文単位</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="253"/>
         <source>Astronomy</source>
-        <translation>Astronomie</translation>
+        <translation>天文学</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="256"/>
         <source>Light Year</source>
-        <translation>Lichtjahr</translation>
+        <translation>光年</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="257"/>
         <source>Parsec</source>
-        <translation>Parsec</translation>
+        <translation>パーセク</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="263"/>
         <source>Sidereal Year</source>
-        <translation>Siderisches Jahr</translation>
+        <translation>恒星年</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="259"/>
         <source>days</source>
-        <translation>Tage</translation>
+        <translation>日</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="264"/>
         <source>Tropical Year</source>
-        <translation>Tropisches Jahr</translation>
+        <translation>太陽年</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="261"/>
         <source>Gregorian Year</source>
-        <translation>Gregorianisches Jahr</translation>
+        <translation>グレゴリオ年</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="266"/>
         <source>Earth Mass</source>
-        <translation>Masse der Erde</translation>
+        <translation>地球の質量</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="268"/>
         <source>Sun Mass</source>
-        <translation>Masse der Sonne</translation>
+        <translation>太陽の質量</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="267"/>
         <source>Mean Earth Radius</source>
-        <translation>Mittlerer Radius der Erde</translation>
+        <translation>地球半径の平均</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="269"/>
         <source>Sun Radius</source>
-        <translation>Radius der Sonne</translation>
+        <translation>太陽半径</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="270"/>
         <source>Sun Luminosity</source>
-        <translation>Leuchtkraft der Sonne</translation>
+        <translation>太陽光度</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="262"/>
         <source>Julian Year</source>
-        <translation type="unfinished"></translation>
+        <translation>ユリウス年</translation>
     </message>
 </context>
 <context>
@@ -520,37 +521,37 @@
     <message>
         <location filename="../gui/constantswidget.cpp" line="130"/>
         <source>Category</source>
-        <translation type="unfinished">カテゴリ</translation>
+        <translation>カテゴリ</translation>
     </message>
     <message>
         <location filename="../gui/constantswidget.cpp" line="131"/>
         <source>Search</source>
-        <translation type="unfinished">検索</translation>
+        <translation>検索</translation>
     </message>
     <message>
         <location filename="../gui/constantswidget.cpp" line="132"/>
         <source>No match found</source>
-        <translation type="unfinished">見つかりませんでした</translation>
+        <translation>見つかりませんでした</translation>
     </message>
     <message>
         <location filename="../gui/constantswidget.cpp" line="135"/>
         <source>Name</source>
-        <translation type="unfinished">名前</translation>
+        <translation>名前</translation>
     </message>
     <message>
         <location filename="../gui/constantswidget.cpp" line="136"/>
         <source>Value</source>
-        <translation type="unfinished">値</translation>
+        <translation>値</translation>
     </message>
     <message>
         <location filename="../gui/constantswidget.cpp" line="137"/>
         <source>Unit</source>
-        <translation type="unfinished"></translation>
+        <translation>単位</translation>
     </message>
     <message>
         <location filename="../gui/constantswidget.cpp" line="247"/>
         <source>All</source>
-        <translation type="unfinished">すべて</translation>
+        <translation>すべて</translation>
     </message>
 </context>
 <context>
@@ -614,32 +615,32 @@
     <message>
         <location filename="../core/evaluator.cpp" line="86"/>
         <source>cannot operate on a NaN</source>
-        <translation type="unfinished"></translation>
+        <translation>NaNを処理することはできません．</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="89"/>
         <source>underflow - tiny result is out of SpeedCrunch&apos;s number range</source>
-        <translation type="unfinished"></translation>
+        <translation>アンダーフロー - 極めて小さい結果がSpeedCrunchで表現できる値の範囲を超えました．</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="92"/>
         <source>overflow - huge result is out of SpeedCrunch&apos;s number range</source>
-        <translation type="unfinished"></translation>
+        <translation>オーバーフロー - 極めて大きな結果がSpeedCrunchで表現できる値の範囲を超えました．</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="98"/>
         <source>overflow - logic result exceeds maximum of 256 bits</source>
-        <translation type="unfinished"></translation>
+        <translation>オーバーフロー - 論理値の結果が最大256bitsの範囲を超えました．</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="101"/>
         <source>overflow - integer result exceeds maximum limit for integers</source>
-        <translation type="unfinished"></translation>
+        <translation>オーバーフロー - 整数値の結果が表現できる範囲の上限を超えました．</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="104"/>
         <source>too time consuming computation was rejected</source>
-        <translation type="unfinished"></translation>
+        <translation>計算時間が長くかかったため拒否されました．</translation>
     </message>
 </context>
 <context>
@@ -1022,63 +1023,63 @@
     <message>
         <location filename="../core/functions.cpp" line="61"/>
         <source>function %1 does not take NaN as an argument</source>
-        <translation type="unfinished"></translation>
+        <translation>関数 %1 は引数としてNaNを取ることはできません． </translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="64"/>
         <source>computation in %1 is unstable and exceeds the limitations of SpeedCrunch</source>
-        <translation type="unfinished"></translation>
+        <translation>%1での計算は不安定であり，SpeedCrunchの制限を超えました．</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="67"/>
         <source>underflow: tiny result of %1 is out of SpeedCrunch&apos;s number range</source>
-        <translation type="unfinished"></translation>
+        <translation>アンダーフロー - %1 の極めて小さい結果がSpeedCrunchで表現できる値の範囲を超えました．</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="70"/>
         <source>overflow: huge result of %1 is out of SpeedCrunch&apos;s number range</source>
-        <translation type="unfinished"></translation>
+        <translation>オーバーフロー - %1 の極めて大きな結果がSpeedCrunchで表現できる値の範囲を超えました．</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="73"/>
         <source>function %1 is infinite for submitted argument(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>関数 %1 は与えられた引数で無限大です．</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="76"/>
         <source>function %1 is not defined for submitted argument(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>関数 %1 は与えられた引数で定義されません．</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="79"/>
         <source>logic overflow: result of %1 exceeds maximum of 256 bits</source>
-        <translation type="unfinished"></translation>
+        <translation>論理値オーバーフロー - %1 の結果が最大256bitsの制限を超えました．</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="82"/>
         <source>integer overflow: result of %1 exceeds maximum limit for integers</source>
-        <translation type="unfinished"></translation>
+        <translation>オーバーフロー - %1 の整数値の結果が表現できる範囲の上限を超えました．</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="85"/>
         <source>too time consuming computation in %1 was rejected</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 での計算時間が長くかかったため拒否されました．</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="90"/>
         <source>bug: internal error in %1 that should never occur</source>
-        <translation type="unfinished"></translation>
+        <translation>バグ 起こるはずのない%1 での内部エラー</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="144"/>
         <source>cannot execute function</source>
-        <translation type="unfinished"></translation>
+        <translation>関数を実行することができません．</translation>
     </message>
     <message numerus="yes">
         <location filename="../core/functions.cpp" line="149"/>
         <source>function %1 accepts %n argument(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>関数 %1 は%n個の引数を取ります．</numerusform>
         </translation>
     </message>
 </context>
@@ -1087,7 +1088,7 @@
     <message>
         <location filename="../gui/functionsdialog.cpp" line="33"/>
         <source>Insert Function</source>
-        <translation type="unfinished">関数の挿入</translation>
+        <translation>関数の挿入</translation>
     </message>
 </context>
 <context>
@@ -1103,22 +1104,22 @@
     <message>
         <location filename="../gui/functionswidget.cpp" line="152"/>
         <source>Identifier</source>
-        <translation type="unfinished"></translation>
+        <translation>識別子</translation>
     </message>
     <message>
         <location filename="../gui/functionswidget.cpp" line="153"/>
         <source>Name</source>
-        <translation type="unfinished">名前</translation>
+        <translation>名前</translation>
     </message>
     <message>
         <location filename="../gui/functionswidget.cpp" line="157"/>
         <source>Search</source>
-        <translation type="unfinished">検索</translation>
+        <translation>検索</translation>
     </message>
     <message>
         <location filename="../gui/functionswidget.cpp" line="158"/>
         <source>No match found</source>
-        <translation type="unfinished">見つかりませんでした</translation>
+        <translation>見つかりませんでした</translation>
     </message>
 </context>
 <context>
@@ -1270,22 +1271,22 @@
     <message>
         <location filename="../gui/mainwindow.cpp" line="2030"/>
         <source>To insert a function using keyboard, use Ctrl+F shorcut. From the dialog, you can choose the function you want to insert.</source>
-        <translation>キーボードを使って関数を挿入するとき，Ctrl+Fのショートカットを使うことができます．ダイアログから挿入したい関数を選ぶことができます.</translation>
+        <translation>キーボードを使って関数を挿入するとき，Ctrl+Fのショートカットを使うことができます．ダイアログから挿入したい関数を選ぶことができます。</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2035"/>
         <source>To insert a variable using keyboard, use Ctrl+I shorcut. From the dialog, you can choose the variable you want to insert.</source>
-        <translation>キーボードから変数を挿入するとき，Ctrl+Iのショートカットが使えます．ダイアログから挿入したい変数を選ぶことができます.</translation>
+        <translation>キーボードから変数を挿入するとき，Ctrl+Iのショートカットが使えます．ダイアログから挿入したい変数を選ぶことができます。</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2038"/>
         <source>Use variable &lt;i&gt;pi&lt;/i&gt; to use pi constant.</source>
-        <translation>&lt;i&gt;pi&lt;/i&gt;という変数を使うと円周率になります.</translation>
+        <translation>&lt;i&gt;pi&lt;/i&gt;という変数を使うと円周率になります。</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2042"/>
         <source>Use &lt;i&gt;;&lt;/i&gt; (semicolon) to separate the parameters in functions.</source>
-        <translation>&lt;i&gt;;&lt;/i&gt;（セミコロン）を使うと関数の引数を区切ることができます.</translation>
+        <translation>&lt;i&gt;;&lt;/i&gt;（セミコロン）を使うと関数の引数を区切ることができます。</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2048"/>
@@ -1328,7 +1329,7 @@ Left click the icon to restore it or right click for options.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2014"/>
         <source>The menu bar is now hidden. To make it visible again, press Ctrl+Alt+M.</source>
-        <translation>メニューバーが非表示になっています．もう一度表示するにはCtrl+Alt+Mを押してください.</translation>
+        <translation>メニューバーが非表示になっています．もう一度表示するにはCtrl+Alt+Mを押してください。</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2057"/>
@@ -1375,7 +1376,7 @@ Left click the icon to restore it or right click for options.</source>
         <source>Merge session being imported with current session?
 If no, current variables and display will be cleared.</source>
         <translation>現在のセッションにインポートされたセッションを加えますか？
-もし加えないのならば，現在の変数と表示されている履歴は消去されます.</translation>
+もし加えないのならば，現在の変数と表示されている履歴は消去されます。</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1743"/>
@@ -1700,52 +1701,52 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="524"/>
         <source>F&amp;ull Screen Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>全画面表示(&amp;n)</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="529"/>
         <source>&amp;Menu Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>メニューバー(&amp;M)</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="539"/>
         <source>Save &amp;History on Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>終了時に履歴を保存する(&amp;H)</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="540"/>
         <source>Save &amp;Variables on Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>終了時に変数を保存する(&amp;V)</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="550"/>
         <source>&amp;Automatic</source>
-        <translation type="unfinished"></translation>
+        <translation>自動(&amp;A)</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="558"/>
         <source>&amp;Language...</source>
-        <translation type="unfinished"></translation>
+        <translation>言語(&amp;L)...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="758"/>
         <source>&amp;Precision</source>
-        <translation type="unfinished"></translation>
+        <translation>精度(&amp;P)</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2468"/>
         <source>System Default</source>
-        <translation type="unfinished"></translation>
+        <translation>システムの既定</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2472"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>言語</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2472"/>
         <source>Select the language:</source>
-        <translation type="unfinished"></translation>
+        <translation>言語の選択:</translation>
     </message>
 </context>
 <context>
@@ -1761,22 +1762,22 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/variableswidget.cpp" line="165"/>
         <source>Name</source>
-        <translation type="unfinished">名前</translation>
+        <translation>名前</translation>
     </message>
     <message>
         <location filename="../gui/variableswidget.cpp" line="166"/>
         <source>Value</source>
-        <translation type="unfinished">値</translation>
+        <translation>値</translation>
     </message>
     <message>
         <location filename="../gui/variableswidget.cpp" line="169"/>
         <source>Search</source>
-        <translation type="unfinished">検索</translation>
+        <translation>検索</translation>
     </message>
     <message>
         <location filename="../gui/variableswidget.cpp" line="170"/>
         <source>No match found</source>
-        <translation type="unfinished">見つかりませんでした</translation>
+        <translation>見つかりませんでした</translation>
     </message>
 </context>
 </TS>
