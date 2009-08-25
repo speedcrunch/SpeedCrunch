@@ -1,0 +1,73 @@
+# translation of books.pot to Japanese
+# Kazuki Hamasaki <ne.vivam.si.abis@gmail.com>, 2009
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: books.ja.po\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-08-19 17:30+0000\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Kazuki Hamasaki <ne.vivam.si.abis@gmail.com>\n"
+"Language-Team: Kazuki Hamasaki <ne.vivam.si.abis@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Japanese\n"
+"X-Poedit-Country: JAPAN\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: circle.html.template, math_index.html.template
+msgid "Circle"
+msgstr "円"
+
+#: cube.html.template, circle.html.template, right_triangle.html.template,
+#: math_index.html.template, cone.html.template, sphere.html.template,
+#: sector.html.template, cylinder.html.template,
+#: quadratic_equation.html.template
+msgid "align=\"left\""
+msgstr "align=\"left\""
+
+#: cone.html.template, math_index.html.template
+msgid "Cone"
+msgstr "円錐"
+
+#: cube.html.template, math_index.html.template
+msgid "Cube"
+msgstr "立方体"
+
+#: cylinder.html.template, math_index.html.template
+msgid "Cylinder"
+msgstr "円柱"
+
+#: math_index.html.template
+msgid "SpeedCrunch Book"
+msgstr "SpeedCrunch本"
+
+#: math_index.html.template
+msgid "3D Objects"
+msgstr "立体図形"
+
+#: sphere.html.template, math_index.html.template
+msgid "Sphere"
+msgstr "球"
+
+#: math_index.html.template
+msgid "2D Objects"
+msgstr "平面図形"
+
+#: math_index.html.template, right_triangle.html.template
+msgid "Right Triangle"
+msgstr "直角三角形"
+
+#: math_index.html.template, sector.html.template
+msgid "Sector"
+msgstr "扇形"
+
+#: math_index.html.template
+msgid "Misc"
+msgstr "その他"
+
+#: quadratic_equation.html.template, math_index.html.template
+msgid "Quadratic Equation"
+msgstr "二次方程式"
+
