@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="pt_PT">
+<defaultcodec></defaultcodec>
 <context>
     <name>AboutBox</name>
     <message>
@@ -205,12 +206,12 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="137"/>
         <source>Japanese</source>
-        <translation type="unfinished"></translation>
+        <translation>Japonês</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="131"/>
         <source>Hungarian</source>
-        <translation type="unfinished"></translation>
+        <translation>Húngaro</translation>
     </message>
 </context>
 <context>
@@ -614,32 +615,32 @@
     <message>
         <location filename="../core/evaluator.cpp" line="86"/>
         <source>cannot operate on a NaN</source>
-        <translation type="unfinished"></translation>
+        <translation>não é possível operar sobre NaN</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="89"/>
         <source>underflow - tiny result is out of SpeedCrunch&apos;s number range</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;underflow&apos; - resultado demasiado pequeno para a capacidade numérica da calculadora</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="92"/>
         <source>overflow - huge result is out of SpeedCrunch&apos;s number range</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;overflow&apos; - resultado demasiado grande para a capacidade numérica da calculadora</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="98"/>
         <source>overflow - logic result exceeds maximum of 256 bits</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;overflow&apos; - resultado lógico excede máximo de 256 bits</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="101"/>
         <source>overflow - integer result exceeds maximum limit for integers</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;overflow&apos; - resultado inteiro excede limite máximo para inteiros</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="104"/>
         <source>too time consuming computation was rejected</source>
-        <translation type="unfinished"></translation>
+        <translation>rejeitada computação de muito longa duração</translation>
     </message>
 </context>
 <context>
@@ -1027,22 +1028,22 @@
     <message>
         <location filename="../core/functions.cpp" line="61"/>
         <source>function %1 does not take NaN as an argument</source>
-        <translation type="unfinished"></translation>
+        <translation>função %1 não aceita NaN como argumento</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="64"/>
         <source>computation in %1 is unstable and exceeds the limitations of SpeedCrunch</source>
-        <translation type="unfinished"></translation>
+        <translation>computação em %1 é instável e excede os limites da calculadora</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="67"/>
         <source>underflow: tiny result of %1 is out of SpeedCrunch&apos;s number range</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;underflow&apos;: resultado muito pequeno de %1 fora da capacidade numérica da calculadora</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="70"/>
         <source>overflow: huge result of %1 is out of SpeedCrunch&apos;s number range</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;overflow&apos;: resultado muito grande de %1 fora da capacidade numérica da calculadora</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="73"/>
@@ -1057,12 +1058,12 @@
     <message>
         <location filename="../core/functions.cpp" line="79"/>
         <source>logic overflow: result of %1 exceeds maximum of 256 bits</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;overflow&apos; lógico: resultado de %1 excede máximo de 256 bits</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="82"/>
         <source>integer overflow: result of %1 exceeds maximum limit for integers</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;overflow&apos; inteiro: resultado de %1 excede limite máximo para inteiros</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="85"/>
