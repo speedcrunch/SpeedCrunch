@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="hu_HU">
+<defaultcodec></defaultcodec>
 <context>
     <name>AboutBox</name>
     <message>
@@ -170,47 +171,47 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="58"/>
         <source>Maintainer and core developer</source>
-        <translation type="unfinished"></translation>
+        <translation>Karbantartó és fő fejlesztő</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="60"/>
         <source>Former maintainer</source>
-        <translation type="unfinished"></translation>
+        <translation>Eredeti karbantartó</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="61"/>
         <source>Math engine and expression parser</source>
-        <translation type="unfinished"></translation>
+        <translation>Matematikai motor és kifejezés elemző</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="62"/>
         <source>General purpose developer</source>
-        <translation type="unfinished"></translation>
+        <translation>Általános fejlesztő</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="63"/>
         <source>Packager and OS X stylist</source>
-        <translation type="unfinished"></translation>
+        <translation>Csomagterv és OS X stylist</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="64"/>
         <source>Original math book author</source>
-        <translation type="unfinished"></translation>
+        <translation>Matekkönyv eredeti szerzője</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="109"/>
         <source>Arabic</source>
-        <translation type="unfinished"></translation>
+        <translation>Arab</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="131"/>
         <source>Hungarian</source>
-        <translation type="unfinished"></translation>
+        <translation>Magyar</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="137"/>
         <source>Japanese</source>
-        <translation type="unfinished"></translation>
+        <translation>Japán</translation>
     </message>
 </context>
 <context>
@@ -233,7 +234,7 @@
     <message>
         <location filename="../gui/bookdock.cpp" line="165"/>
         <source>Math Book</source>
-        <translation type="unfinished">Matekkönyv</translation>
+        <translation>Matekkönyv</translation>
     </message>
 </context>
 <context>
@@ -249,7 +250,7 @@
     <message>
         <location filename="../core/constants.cpp" line="259"/>
         <source>days</source>
-        <translation>na</translation>
+        <translation>napok</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="230"/>
@@ -504,7 +505,7 @@
     <message>
         <location filename="../core/constants.cpp" line="262"/>
         <source>Julian Year</source>
-        <translation type="unfinished"></translation>
+        <translation>Juliánus-év</translation>
     </message>
 </context>
 <context>
@@ -520,37 +521,37 @@
     <message>
         <location filename="../gui/constantswidget.cpp" line="130"/>
         <source>Category</source>
-        <translation type="unfinished">Kategória</translation>
+        <translation>Kategória</translation>
     </message>
     <message>
         <location filename="../gui/constantswidget.cpp" line="131"/>
         <source>Search</source>
-        <translation type="unfinished">Keresés</translation>
+        <translation>Keresés</translation>
     </message>
     <message>
         <location filename="../gui/constantswidget.cpp" line="132"/>
         <source>No match found</source>
-        <translation type="unfinished">Nincs találat</translation>
+        <translation>Nincs találat</translation>
     </message>
     <message>
         <location filename="../gui/constantswidget.cpp" line="135"/>
         <source>Name</source>
-        <translation type="unfinished">Név</translation>
+        <translation>Név</translation>
     </message>
     <message>
         <location filename="../gui/constantswidget.cpp" line="136"/>
         <source>Value</source>
-        <translation type="unfinished">Érték</translation>
+        <translation>Érték</translation>
     </message>
     <message>
         <location filename="../gui/constantswidget.cpp" line="137"/>
         <source>Unit</source>
-        <translation type="unfinished"></translation>
+        <translation>Egység</translation>
     </message>
     <message>
         <location filename="../gui/constantswidget.cpp" line="247"/>
         <source>All</source>
-        <translation type="unfinished">Mind</translation>
+        <translation>Mind</translation>
     </message>
 </context>
 <context>
@@ -614,32 +615,32 @@
     <message>
         <location filename="../core/evaluator.cpp" line="86"/>
         <source>cannot operate on a NaN</source>
-        <translation type="unfinished"></translation>
+        <translation>Csak számértéket fogad el</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="89"/>
         <source>underflow - tiny result is out of SpeedCrunch&apos;s number range</source>
-        <translation type="unfinished"></translation>
+        <translation>túlcsordulás - túl kis eredmény kívül a SpeedCrunch határain</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="92"/>
         <source>overflow - huge result is out of SpeedCrunch&apos;s number range</source>
-        <translation type="unfinished"></translation>
+        <translation>túlcsordulás - túl nagy eredmény kívül a SpeedCrunch határain</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="98"/>
         <source>overflow - logic result exceeds maximum of 256 bits</source>
-        <translation type="unfinished"></translation>
+        <translation>túlcsordulás - a logikai eredmény túlépi a 256 bitet</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="101"/>
         <source>overflow - integer result exceeds maximum limit for integers</source>
-        <translation type="unfinished"></translation>
+        <translation>túlcsordulás - az egész eredmény túllépi a maximumot</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="104"/>
         <source>too time consuming computation was rejected</source>
-        <translation type="unfinished"></translation>
+        <translation>A számítás nem elvégezhető: túl sok számítás</translation>
     </message>
 </context>
 <context>
@@ -1022,63 +1023,63 @@
     <message>
         <location filename="../core/functions.cpp" line="61"/>
         <source>function %1 does not take NaN as an argument</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 függvény csak számértéket fogad el</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="64"/>
         <source>computation in %1 is unstable and exceeds the limitations of SpeedCrunch</source>
-        <translation type="unfinished"></translation>
+        <translation>számítás a %1-ban instabil és túllépi a SpeedCrunch határait</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="67"/>
         <source>underflow: tiny result of %1 is out of SpeedCrunch&apos;s number range</source>
-        <translation type="unfinished"></translation>
+        <translation>túlcsordulás: %1 túl kis eredmény kívül a SpeedCrunch határain</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="70"/>
         <source>overflow: huge result of %1 is out of SpeedCrunch&apos;s number range</source>
-        <translation type="unfinished"></translation>
+        <translation>túlcsordulás: %1 túl nagy eredmény kívül a SpeedCrunch határain</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="73"/>
         <source>function %1 is infinite for submitted argument(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 függvény végtelen a megadott értékekkel</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="76"/>
         <source>function %1 is not defined for submitted argument(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 függvény nem definiálható a megadott értékkekel</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="79"/>
         <source>logic overflow: result of %1 exceeds maximum of 256 bits</source>
-        <translation type="unfinished"></translation>
+        <translation>logikai túlcsordulás: %1 eredménye meghaladja a 256 bitet</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="82"/>
         <source>integer overflow: result of %1 exceeds maximum limit for integers</source>
-        <translation type="unfinished"></translation>
+        <translation>egész érték túlcsordulás: %1 eredménye meghaladja az egészek maximumát</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="85"/>
         <source>too time consuming computation in %1 was rejected</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 nem elvégezhető túl sok számítás</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="90"/>
         <source>bug: internal error in %1 that should never occur</source>
-        <translation type="unfinished"></translation>
+        <translation>bug: váratlan belső hiba %1-ban</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="144"/>
         <source>cannot execute function</source>
-        <translation type="unfinished"></translation>
+        <translation>nem lehet elvégezni a függvényt</translation>
     </message>
     <message numerus="yes">
         <location filename="../core/functions.cpp" line="149"/>
         <source>function %1 accepts %n argument(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 függvény nem fogad el %n érték(ek)et</numerusform>
         </translation>
     </message>
 </context>
@@ -1087,7 +1088,7 @@
     <message>
         <location filename="../gui/functionsdialog.cpp" line="33"/>
         <source>Insert Function</source>
-        <translation type="unfinished">Függvény beillesztése</translation>
+        <translation>Függvény beillesztése</translation>
     </message>
 </context>
 <context>
@@ -1103,22 +1104,22 @@
     <message>
         <location filename="../gui/functionswidget.cpp" line="152"/>
         <source>Identifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Azonosító</translation>
     </message>
     <message>
         <location filename="../gui/functionswidget.cpp" line="153"/>
         <source>Name</source>
-        <translation type="unfinished">Név</translation>
+        <translation>Név</translation>
     </message>
     <message>
         <location filename="../gui/functionswidget.cpp" line="157"/>
         <source>Search</source>
-        <translation type="unfinished">Keresés</translation>
+        <translation>Keresés</translation>
     </message>
     <message>
         <location filename="../gui/functionswidget.cpp" line="158"/>
         <source>No match found</source>
-        <translation type="unfinished">Nincs találat</translation>
+        <translation>Nincs találat</translation>
     </message>
 </context>
 <context>
@@ -1701,52 +1702,52 @@ Ha nem, a jelenleg használt változók és az előzmények törlődnek.</transl
     <message>
         <location filename="../gui/mainwindow.cpp" line="524"/>
         <source>F&amp;ull Screen Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Tel&amp;j es képernyő</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="529"/>
         <source>&amp;Menu Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Menüsor</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="539"/>
         <source>Save &amp;History on Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Előzmények mentése és kilépés</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="540"/>
         <source>Save &amp;Variables on Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Változók mentése és kilépés</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="550"/>
         <source>&amp;Automatic</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Automatikus</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="558"/>
         <source>&amp;Language...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nyelv...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="758"/>
         <source>&amp;Precision</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Pontosság</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2468"/>
         <source>System Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Rendszer alapértelmezett</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2472"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Nyelv</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2472"/>
         <source>Select the language:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nyelv kiválasztása:</translation>
     </message>
 </context>
 <context>
@@ -1762,22 +1763,22 @@ Ha nem, a jelenleg használt változók és az előzmények törlődnek.</transl
     <message>
         <location filename="../gui/variableswidget.cpp" line="165"/>
         <source>Name</source>
-        <translation type="unfinished">Név</translation>
+        <translation>Név</translation>
     </message>
     <message>
         <location filename="../gui/variableswidget.cpp" line="166"/>
         <source>Value</source>
-        <translation type="unfinished">Érték</translation>
+        <translation>Érték</translation>
     </message>
     <message>
         <location filename="../gui/variableswidget.cpp" line="169"/>
         <source>Search</source>
-        <translation type="unfinished">Keresés</translation>
+        <translation>Keresés</translation>
     </message>
     <message>
         <location filename="../gui/variableswidget.cpp" line="170"/>
         <source>No match found</source>
-        <translation type="unfinished">Nincs találat</translation>
+        <translation>Nincs találat</translation>
     </message>
 </context>
 </TS>
