@@ -41,6 +41,7 @@
 #include "gui/variablesdock.hxx"
 #include "math/floatconfig.h"
 
+#include <QtCore/QLatin1String>
 #include <QtCore/QLocale>
 #include <QtCore/QTextStream>
 #include <QtCore/QTimer>
@@ -796,9 +797,7 @@ void MainWindow::Private::createFixedWidgets()
     QHBoxLayout * displayLayout = new QHBoxLayout();
     displayLayout->setMargin( 5 );
     widgets.display = new ResultDisplay( widgets.root );
-    QString displayStyle( "TextEdit { font: bold %1pt }" );
-    const int displayPointSize = widgets.display->font().pointSize();
-    widgets.display->setStyleSheet( displayStyle.arg(displayPointSize + 2) );
+    widgets.display->setStyleSheet( QLatin1String("TextEdit { font: bold }") );
     displayLayout->addWidget( widgets.display );
     layouts.root->addLayout( displayLayout );
 
