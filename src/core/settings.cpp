@@ -175,7 +175,10 @@ void Settings::load()
             }
         }
         // load
-        if ( ! value.isEmpty() && name != QLatin1String("pi") && name != QLatin1String("phi") )
+        if ( ! value.isEmpty()
+             && name != QLatin1String("pi")
+             && name != QLatin1String("phi")
+             && name != QLatin1String("e") )
             variables.append( QString::fromLatin1("%1=%2").arg(name).arg(value) );
     }
 
@@ -275,8 +278,10 @@ void Settings::save()
 
         for ( i = 0; i < variables.count(); i++ ) {
             QStringList s = variables[i].split( '=' );
-            if ( s.count() == 2 && s.at(0) != QLatin1String("pi")
-                 && s.at(0) != QLatin1String("phi") )
+            if ( s.count() == 2
+                 && s.at(0) != QLatin1String("pi")
+                 && s.at(0) != QLatin1String("phi")
+                 && s.at(0) != QLatin1String("e") )
             {
                 QString name = "";
                 QString value = s.at( 1 );

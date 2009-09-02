@@ -31,6 +31,13 @@
 
 #include "floatconst.h"
 
+static char sExp[] =
+"2.7182818284""5904523536""0287471352""6624977572""4709369995"
+  "9574966967""6277240766""3035354759""4571382178""5251664274"
+  "2746639193""2003059921""8174135966""2904357290""0334295260"
+  "5956307381""3232862794""3490763233""8298807531""9525101901"
+  "1573834187";
+
 static char sLn2[] =
 "0.6931471805""5994530941""7232121458""1765680755""0013436025"
   "5254120680""0094933936""2196969471""5605863326""9964186875"
@@ -246,6 +253,7 @@ floatstruct c2;
 floatstruct c3;
 floatstruct c12;
 floatstruct c16;
+floatstruct cExp;
 floatstruct cMinus1;
 floatstruct cMinus20;
 floatstruct c1Div2;
@@ -295,6 +303,8 @@ floatmath_init()
   float_setinteger(&cMinus20, -20);
   float_create(&c1Div2);
   float_setscientific(&c1Div2, ".5", NULLTERMINATED);
+  float_create(&cExp);
+  float_setscientific(&cExp, sExp, NULLTERMINATED);
   float_create(&cLn2);
   float_setscientific(&cLn2, sLn2, NULLTERMINATED);
   float_create(&cLn3);
@@ -357,6 +367,7 @@ floatmath_exit()
   float_free(&cMinus1);
   float_free(&cMinus20);
   float_free(&c1Div2);
+  float_free(&cExp);
   float_free(&cLn2);
   float_free(&cLn3);
   float_free(&cLn7);

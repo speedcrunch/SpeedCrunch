@@ -799,12 +799,21 @@ HNumber HMath::deg2rad( const HNumber & angle )
 }
 
 /**
+ * Returns the constant e.
+ */
+HNumber HMath::e()
+{
+  HNumber value;
+  float_copy(&value.d->fnum, &cExp, HMATH_EVAL_PREC);
+  return value;
+}
+
+/**
  * Returns the constant pi.
  */
 HNumber HMath::pi()
 {
   HNumber value;
-
   float_copy(&value.d->fnum, &cPi, HMATH_EVAL_PREC);
   return value;
 }

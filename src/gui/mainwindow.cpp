@@ -1722,12 +1722,12 @@ void MainWindow::saveSession()
 
     // number of variables
     int noVars = d->evaluator->variables().count();
-    stream << noVars - 2 << "\n"; // exclude pi and phi
+    stream << noVars - 3 << "\n"; // exclude pi, phi and e
 
     // variables
     for ( int i = 0; i < noVars; i++ ) {
         Variable var = d->evaluator->variables().at( i );
-        if ( var.name != "pi" && var.name != "phi" ) {
+        if ( var.name != "pi" && var.name != "phi" && var.name != "e" ) {
             char * value = HMath::format( var.value );
             stream << var.name << "\n" << value << "\n";
             free( value );

@@ -1263,6 +1263,7 @@ HNumber Evaluator::eval()
     // cannot overwrite built-in variables and functions
     if ( d->assignId == QLatin1String("pi")
          || d->assignId == QLatin1String("phi")
+         || d->assignId == QLatin1String("e")
          || d->assignId == QLatin1String("ans")
          || Functions::instance()->function(d->assignId) )
     {
@@ -1343,6 +1344,7 @@ void Evaluator::clearVariables()
   set( QString("ans"), ansBackup );
   set( QString("pi"), HMath::pi() );
   set( QString("phi"), HMath::phi() );
+  set( QString("e"), HMath::e() );
 }
 
 QString Evaluator::autoFix( const QString & expr )

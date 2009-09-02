@@ -99,6 +99,7 @@ class HMath
     // FORMAT
     static char * format( const HNumber & n, char format = 'g', int prec = -1 );
     // CONSTANTS
+    static HNumber e();
     static HNumber phi();
     static HNumber pi();
     static HNumber nan(Error error = Success);

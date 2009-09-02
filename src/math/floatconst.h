@@ -45,6 +45,7 @@ extern floatstruct c1;
 extern floatstruct c2;
 extern floatstruct c3;
 extern floatstruct c12;
+extern floatstruct cExp;
 extern floatstruct cMinus1;
 extern floatstruct cMinus20;
 extern floatstruct c1Div2;
