@@ -32,9 +32,10 @@ class VariablesWidget : public QWidget
     Q_OBJECT
 
 public:
-    enum ItemPolicy { ShowAll, ShowUserDefinedOnly };
+    enum ItemPolicy { ShowAll, ShowUser };
 
-    VariablesWidget( ItemPolicy itemPolicy = ShowAll, QWidget * parent = 0 );
+    explicit VariablesWidget( ItemPolicy itemPolicy = ShowUser,
+                              QWidget * parent = 0 );
     ~VariablesWidget();
 
     QTreeWidgetItem * currentItem() const;

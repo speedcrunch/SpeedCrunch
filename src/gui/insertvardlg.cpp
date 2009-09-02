@@ -49,7 +49,7 @@ InsertVariableDlg::InsertVariableDlg( QWidget * parent )
   QVBoxLayout* layout = new QVBoxLayout;
   setLayout( layout );
 
-  d->list = new VariablesWidget( VariablesWidget::ShowAll, this );
+  d->list = new VariablesWidget( VariablesWidget::ShowUser, this );
 
   d->insertButton = new QPushButton( this );
   d->insertButton->setText( tr("&Insert") );

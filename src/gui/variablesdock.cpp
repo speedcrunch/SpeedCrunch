@@ -36,7 +36,7 @@ struct VariablesDock::Private
 VariablesDock::VariablesDock( QWidget * parent )
     : QDockWidget( parent ), d( new VariablesDock::Private )
 {
-    d->variablesWidget = new VariablesWidget( VariablesWidget::ShowAll, this );
+    d->variablesWidget = new VariablesWidget( VariablesWidget::ShowUser, this );
 
     connect( d->variablesWidget, SIGNAL(itemActivated(QTreeWidgetItem *, int) ),
              SLOT(handleItem(QTreeWidgetItem *)) );

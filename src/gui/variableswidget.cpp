@@ -24,6 +24,7 @@
 #include "core/settings.hxx"
 
 #include <QtCore/QEvent>
+#include <QtCore/QLatin1String>
 #include <QtCore/QTimer>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QLabel>
@@ -123,10 +124,11 @@ void VariablesWidget::fillTable()
 
     for ( int k = 0; k < variables.count(); k++ )
     {
-        if ( d->itemPolicy != ShowAll
-             && (variables.at(k).name.toUpper() == "ANS"
-                 || variables.at(k).name.toUpper() == "PHI"
-                 || variables.at(k).name.toUpper() == "PI") )
+        if ( d->itemPolicy == ShowUser
+             && (variables.at(k).name.toUpper() == QLatin1String("ANS")
+                 || variables.at(k).name.toUpper() == QLatin1String("E")
+                 || variables.at(k).name.toUpper() == QLatin1String("PHI")
+                 || variables.at(k).name.toUpper() == QLatin1String("PI")) )
             continue;
 
         QStringList str;
