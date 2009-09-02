@@ -62,7 +62,6 @@ struct Editor::Private
     int index;
     QTimer * matchingTimer;
     Settings * settings;
-    bool syntaxHighlightEnabled;
 };
 
 Editor::Editor( QWidget * parent )
@@ -77,7 +76,6 @@ Editor::Editor( QWidget * parent )
     d->constantCompletion = 0;
     d->completionTimer = new QTimer( this );
     d->autoCalcEnabled = true;
-    d->syntaxHighlightEnabled = true;
     d->highlighter = new SyntaxHighlighter( this );
     d->autoCalcTimer = new QTimer( this );
     d->autoCalcSelTimer = new QTimer( this );
@@ -237,7 +235,7 @@ void Editor::checkAutoComplete()
 
 void Editor::checkMatching()
 {
-    if ( ! d->syntaxHighlightEnabled )
+    if ( ! Settings::instance()->syntaxHighlighting )
         return;
 
     d->matchingTimer->stop();
@@ -272,7 +270,7 @@ void Editor::doMatchingPar()
     // clear previous
     //setExtraSelections( QList<ExtraSelection>() );
 
-    if ( ! d->syntaxHighlightEnabled )
+    if ( ! Settings::instance()->syntaxHighlighting )
         return;
 
     doMatchingLeft();
@@ -698,15 +696,9 @@ void Editor::wheelEvent( QWheelEvent * e )
     e->accept();
 }
 
-void Editor::setSyntaxHighlightingEnabled( bool enable )
+void Editor::highlight()
 {
-    d->syntaxHighlightEnabled = enable;
     d->highlighter->rehighlight();
-}
-
-bool Editor::syntaxHighlight() const
-{
-    return d->syntaxHighlightEnabled;
 }
 
 void Editor::setAnsAvailable( bool avail )

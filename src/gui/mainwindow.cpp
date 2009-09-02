@@ -1674,8 +1674,9 @@ void MainWindow::setSystemTrayIconEnabled( bool b )
 
 void MainWindow::setSyntaxHighlightingEnabled( bool b )
 {
-    d->widgets.editor->setSyntaxHighlightingEnabled( b );
     d->settings->syntaxHighlighting = b;
+    d->widgets.editor->highlight();
+    d->widgets.display->highlight();
 }
 
 void MainWindow::setAngleModeRadian()

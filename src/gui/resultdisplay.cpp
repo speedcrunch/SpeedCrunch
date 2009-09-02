@@ -33,15 +33,15 @@
 
 struct ResultDisplay::Private
 {
-  int count;
-  bool customAppearance;
-  QColor customBackgroundColor;
-  QColor customBackgroundAlternateColor;
-  QColor customTextColor;
-  QStringList expressions;
-  //FlickCharm  flickCharm;
-  SyntaxHighlighter * highlighter;
-  QStringList results;
+    int count;
+    bool customAppearance;
+    QColor customBackgroundColor;
+    QColor customBackgroundAlternateColor;
+    QColor customTextColor;
+    QStringList expressions;
+    //FlickCharm  flickCharm;
+    SyntaxHighlighter * highlighter;
+    QStringList results;
 };
 
 ResultDisplay::ResultDisplay( QWidget * parent, const char * name )
@@ -178,6 +178,11 @@ void ResultDisplay::setCustomTextColor( const QColor & c )
 {
     d->customTextColor = c;
     refresh();
+}
+
+void ResultDisplay::highlight()
+{
+    d->highlighter->rehighlight();
 }
 
 ResultDisplay::~ResultDisplay()

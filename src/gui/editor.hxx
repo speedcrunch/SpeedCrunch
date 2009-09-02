@@ -45,15 +45,14 @@ public:
     void clearHistory();
     int cursorPosition() const;
     void doBackspace();
+    void highlight();
     QStringList history() const;
     QStringList historyResults() const;
-    bool syntaxHighlight() const;
     char radixChar() const;
     void setAnsAvailable( bool );
     void setAutoCalcEnabled( bool );
     void setAutoCompletionEnabled( bool );
     void setCursorPosition( int pos );
-    void setSyntaxHighlightingEnabled( bool );
     void setText( const QString & );
     void setHistory( const QStringList & history );
     void setHistoryResults( const QStringList & results );

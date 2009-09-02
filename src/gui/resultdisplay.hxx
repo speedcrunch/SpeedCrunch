@@ -41,6 +41,7 @@ public:
     QColor customBackgroundColor() const;
     QColor customBackgroundAlternateColor() const;
     QColor customTextColor() const;
+    void highlight();
     void setCustomAppearance( bool );
     void setCustomBackgroundColor( const QColor & base, const QColor & alternate );
     void setCustomTextColor( const QColor & );
