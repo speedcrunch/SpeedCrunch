@@ -1260,17 +1260,13 @@ HNumber Evaluator::eval()
 {
     HNumber result = evalNoAssign(); // this sets d->assignId
 
-    // can not overwrite built-in variables
-    if ( d->assignId == QString("pi") || d->assignId == QString("phi")
-         || d->assignId == QString("ans") )
+    // cannot overwrite built-in variables and functions
+    if ( d->assignId == QLatin1String("pi")
+         || d->assignId == QLatin1String("phi")
+         || d->assignId == QLatin1String("ans")
+         || Functions::instance()->function(d->assignId) )
     {
-        d->error = d->assignId + ": " + tr( "variable cannot be overwritten" );
-        return HMath::nan();
-    }
-
-    // variable can't have the same name as function
-    if ( Functions::instance()->function(d->assignId) ) {
-        d->error = d->assignId + ": " + tr( "identifier matches an existing function name" );
+        d->error = tr( "%1 is a reserved name, please choose another").arg( d->assignId );
         return HMath::nan();
     }
 
