@@ -25,6 +25,7 @@
 #include "core/settings.hxx"
 #include "gui/textedit.hxx"
 
+#include <QtCore/QLatin1String>
 #include <QtGui/QApplication>
 #include <QtGui/QPalette>
 
@@ -75,6 +76,14 @@ void SyntaxHighlighter::highlightBlock( const QString & text )
     if ( ! Settings::instance()->syntaxHighlighting ) {
         QWidget * widget = static_cast<QWidget *>( parent() );
         setFormat( 0, text.length(), widget->palette().text().color() );
+        return;
+    }
+
+    if ( text.startsWith(QLatin1String("=")) ) {
+        QFont font;
+        font.setPointSize( font.pointSize() + 4 );
+        font.setItalic( true );
+        setFormat( 0, text.length(), font );
         return;
     }
 
