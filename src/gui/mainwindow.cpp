@@ -627,7 +627,7 @@ void MainWindow::Private::createActionShortcuts()
     actions.settingsAngleUnitDegree        ->setShortcut( Qt::Key_F10 );
     actions.settingsAngleUnitRadian        ->setShortcut( Qt::Key_F9 );
     actions.settingsResultFormatBinary     ->setShortcut( Qt::Key_F5 );
-    actions.settingsResultFormatGeneral    ->setShortcut( Qt::Key_F7 );
+    actions.settingsResultFormatFixed      ->setShortcut( Qt::Key_F7 );
     actions.settingsResultFormatHexadecimal->setShortcut( Qt::Key_F8 );
     actions.settingsResultFormatOctal      ->setShortcut( Qt::Key_F6 );
     actions.settingsRadixCharDot           ->setShortcut( Qt::CTRL + Qt::Key_Period );
@@ -1208,13 +1208,13 @@ void MainWindow::Private::applySettings()
 void MainWindow::Private::checkInitialResultFormat()
 {
     switch ( settings->resultFormat ) {
-        case 'f': actions.settingsResultFormatFixed      ->setChecked( true ); break;
+        case 'g': actions.settingsResultFormatGeneral    ->setChecked( true ); break;
         case 'n': actions.settingsResultFormatEngineering->setChecked( true ); break;
         case 'e': actions.settingsResultFormatScientific ->setChecked( true ); break;
         case 'h': actions.settingsResultFormatHexadecimal->setChecked( true ); break;
         case 'o': actions.settingsResultFormatOctal      ->setChecked( true ); break;
         case 'b': actions.settingsResultFormatBinary     ->setChecked( true ); break;
-        default : actions.settingsResultFormatGeneral    ->setChecked( true );
+        default : actions.settingsResultFormatFixed      ->setChecked( true );
     }
 }
 

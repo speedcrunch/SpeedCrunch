@@ -89,11 +89,11 @@ void Settings::load()
 
     // format special case
     QString formatStr;
-    formatStr = settings->value( key + QLatin1String("Type"), 'g' ).toString();
+    formatStr = settings->value( key + QLatin1String("Type"), 'f' ).toString();
     if ( formatStr != "g" && formatStr != "f" && formatStr != "e" && formatStr != "n"
          && formatStr != "h" && formatStr != "o" && formatStr != "b" )
     {
-        resultFormat = 'g';
+        resultFormat = 'f';
     }
     else
         resultFormat = formatStr.at( 0 ).toAscii();
