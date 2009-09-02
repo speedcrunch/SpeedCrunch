@@ -268,7 +268,7 @@ void Editor::startSelAutoCalcTimer()
 void Editor::doMatchingPar()
 {
     // clear previous
-    //setExtraSelections( QList<ExtraSelection>() );
+    setExtraSelections( QList<QTextEdit::ExtraSelection>() );
 
     if ( ! Settings::instance()->syntaxHighlighting )
         return;
@@ -722,7 +722,7 @@ void Editor::stopAutoComplete()
 }
 
 // uncomment to activate fade-away effect when the completion pop-up disappears
-//#define COMPLETION_FADE_EFFECT
+#define COMPLETION_FADE_EFFECT
 
 struct EditorCompletion::Private
 {
