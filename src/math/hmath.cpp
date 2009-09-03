@@ -799,7 +799,7 @@ HNumber HMath::deg2rad( const HNumber & angle )
 }
 
 /**
- * Returns the constant e.
+ * Returns the constant e (Euler's number).
  */
 HNumber HMath::e()
 {
@@ -809,7 +809,7 @@ HNumber HMath::e()
 }
 
 /**
- * Returns the constant pi.
+ * Returns the constant Pi.
  */
 HNumber HMath::pi()
 {
@@ -819,13 +819,13 @@ HNumber HMath::pi()
 }
 
 /**
- * Returns the constant phi (golden number).
+ * Returns the constant Phi (golden number).
  */
 HNumber HMath::phi()
 {
-  return HNumber("1.61803398874989484820458683436563811772030917980576"
-                   "28621354486227052604628189024497072072041893911374"
-                   "84754088075386891752");
+  HNumber value;
+  float_copy(&value.d->fnum, &cPhi, HMATH_EVAL_PREC);
+  return value;
 }
 
 /**

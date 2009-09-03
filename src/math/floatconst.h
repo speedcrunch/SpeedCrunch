@@ -53,6 +53,7 @@ extern floatstruct cLn2;
 extern floatstruct cLn3;
 extern floatstruct cLn7;
 extern floatstruct cLn10;
+extern floatstruct cPhi;
 extern floatstruct cPi;
 extern floatstruct cPiDiv2;
 extern floatstruct cPiDiv4;

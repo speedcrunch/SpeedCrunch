@@ -58,6 +58,13 @@ static char sLn10[] =
   "2976033327""9009675726""0967735248""0235997205""0895982983"
   "4196778404""2286248633";
 
+static char sPhi[] =
+"1.6180339887""4989484820""4586834365""6381177203""0917980576"
+  "2862135448""6227052604""6281890244""9707207204""1893911374"
+  "8475408807""5386891752""1266338622""2353693179""3180060766"
+  "7263544333""8908659593""9582905638""3226613199""2829026788"
+  "0675208766";
+
 static char sPi[] =
 "3.1415926535""8979323846""2643383279""5028841971""6939937510"
   "5820974944""5923078164""0628620899""8628034825""3421170679"
@@ -261,6 +268,7 @@ floatstruct cLn2;
 floatstruct cLn3;
 floatstruct cLn7;
 floatstruct cLn10;
+floatstruct cPhi;
 floatstruct cPi;
 floatstruct cPiDiv2;
 floatstruct cPiDiv4;
@@ -313,6 +321,8 @@ floatmath_init()
   float_setscientific(&cLn7, sLn7, NULLTERMINATED);
   float_create(&cLn10);
   float_setscientific(&cLn10, sLn10, NULLTERMINATED);
+  float_create(&cPhi);
+  float_setscientific(&cPhi, sPhi, NULLTERMINATED);
   float_create(&cPi);
   float_setscientific(&cPi, sPi, NULLTERMINATED);
   float_create(&cPiDiv2);
@@ -372,6 +382,7 @@ floatmath_exit()
   float_free(&cLn3);
   float_free(&cLn7);
   float_free(&cLn10);
+  float_free(&cPhi);
   float_free(&cPi);
   float_free(&cPiDiv2);
   float_free(&cPiDiv4);
