@@ -32,6 +32,7 @@
 #include <QtCore/QTimer>
 #include <QtGui/QApplication>
 #include <QtGui/QDesktopWidget>
+#include <QtGui/QFont>
 #include <QtGui/QFrame>
 #include <QtGui/QHeaderView>
 #include <QtGui/QKeyEvent>
@@ -106,7 +107,13 @@ Editor::Editor( QWidget * parent )
     connect( this, SIGNAL(textChanged()), SLOT(checkAutoComplete()) );
     connect( this, SIGNAL(textChanged()), SLOT(checkMatching()) );
 
+    QFont font;
+    font.setPointSize( font.pointSize() + 4 );
+    font.setBold( true );
+    setFont( font );
+
     adjustSize();
+    setFixedHeight( sizeHint().height() + 4 );
 }
 
 Editor::~Editor()

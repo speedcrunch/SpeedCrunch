@@ -797,7 +797,6 @@ void MainWindow::Private::createFixedWidgets()
     QHBoxLayout * displayLayout = new QHBoxLayout();
     displayLayout->setMargin( 5 );
     widgets.display = new ResultDisplay( widgets.root );
-    widgets.display->setStyleSheet( QLatin1String("TextEdit { font: bold }") );
     displayLayout->addWidget( widgets.display );
     layouts.root->addLayout( displayLayout );
 
@@ -806,10 +805,6 @@ void MainWindow::Private::createFixedWidgets()
     editorLayout->setMargin( 5 );
     widgets.editor = new Editor( widgets.root );
     widgets.editor->setFocus();
-    QString editorStyle( "TextEdit { font: bold %1pt }" );
-    const int editorPointSize = widgets.editor->font().pointSize();
-    widgets.editor->setStyleSheet( editorStyle.arg(editorPointSize + 3) );
-    widgets.editor->setFixedHeight( widgets.editor->sizeHint().height() );
     editorLayout->addWidget( widgets.editor );
     layouts.root->addLayout( editorLayout );
 

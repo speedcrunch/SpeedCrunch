@@ -63,6 +63,10 @@ ResultDisplay::ResultDisplay( QWidget * parent, const char * name )
     setReadOnly( true );
     setTabChangesFocus( true );
     setWordWrapMode( QTextOption::WrapAnywhere );
+
+    QFont font;
+    font.setBold( true );
+    setFont( font );
 }
 
 QString ResultDisplay::asText() const
