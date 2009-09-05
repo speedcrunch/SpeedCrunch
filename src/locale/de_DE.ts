@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1" language="de_DE">
+<!DOCTYPE TS>
+<TS version="2.0" language="de_DE">
 <context>
     <name>AboutBox</name>
     <message>
@@ -205,12 +206,12 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="137"/>
         <source>Japanese</source>
-        <translation type="unfinished"></translation>
+        <translation>Japanisch</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="131"/>
         <source>Hungarian</source>
-        <translation type="unfinished"></translation>
+        <translation>Ungarisch</translation>
     </message>
 </context>
 <context>
@@ -634,7 +635,7 @@
     <message>
         <location filename="../core/evaluator.cpp" line="1269"/>
         <source>%1 is a reserved name, please choose another</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 ist ein reservierter Bezeichner, bitte einen anderen wählen</translation>
     </message>
 </context>
 <context>
@@ -992,27 +993,27 @@
     <message>
         <location filename="../core/functions.cpp" line="330"/>
         <source>function undefined for specified arguments</source>
-        <translation>Die Funktion ist für die angegebenen Argumente nicht definiert</translation>
+        <translation>Die Funktion ist für die angegebenen Parameter nicht definiert</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="319"/>
         <source>function requires 1 or 2 arguments</source>
-        <translation>Die Funktion benötigt 1 oder 2 Argumente</translation>
+        <translation>Die Funktion erwartet 1 oder 2 Parameter</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="301"/>
         <source>function requires at least 2 arguments</source>
-        <translation>Die Funktion benötigt mindestens 2 Argumente</translation>
+        <translation>Die Funktion erwartet mindestens 2 Argumente</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="307"/>
         <source>function requires integer arguments</source>
-        <translation>Die Funktion benötigt ganze Zahlen als Argumente</translation>
+        <translation>Die Funktion benötigt ganze Zahlen als Parameter</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="557"/>
         <source>function requires at least 1 argument</source>
-        <translation>Die Funktion benötigt mindestens 1 Argument</translation>
+        <translation>Die Funktion erwartet mindestens 1 Argument</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="144"/>
@@ -1072,9 +1073,9 @@
     <message numerus="yes">
         <location filename="../core/functions.cpp" line="149"/>
         <source>function %1 accepts %n argument(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Funktion %1 erwartet %n Parameter</numerusform>
+            <numerusform>Funktion %1 erwartet %n Parameter</numerusform>
         </translation>
     </message>
 </context>
@@ -1562,7 +1563,7 @@ Falls nein, werden aktuelle Variablen und Anzeigen gelöscht.</translation>
     <message>
         <location filename="../gui/mainwindow.cpp" line="507"/>
         <source>&amp;Export...</source>
-        <translation>&amp;Exportieren</translation>
+        <translation>&amp;Exportieren...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="529"/>
