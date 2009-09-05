@@ -365,12 +365,12 @@ HNumber Functions::Private::ln( Function *, const QVector<HNumber> & args )
 
 HNumber Functions::Private::log( Function *, const QVector<HNumber> & args )
 {
-    return HMath::ln( args.at( 0 ) );
+    return HMath::log( args.at( 0 ) );
 }
 
 HNumber Functions::Private::lg( Function *, const QVector<HNumber> & args )
 {
-    return HMath::ln( args.at( 0 ) );
+    return HMath::lg( args.at( 0 ) );
 }
 
 HNumber Functions::Private::sin( Function *, const QVector<HNumber> & args )
