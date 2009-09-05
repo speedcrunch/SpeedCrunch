@@ -26,6 +26,7 @@
 #include "math/hmath.hxx"
 #include "math/floatconfig.h"
 
+#include <QtCore/QLatin1String>
 #include <QtCore/QTimer>
 #include <QtGui/QApplication>
 #include <QtGui/QClipboard>
@@ -84,9 +85,16 @@ void ResultDisplay::append( const QString & expr, const HNumber & value )
 
     ++d->count;
 
+#if QT_VERSION < 0x040400
+    append( expr );
+    append( QLatin1String("= ") + formatNumber(value) );
+    append( QLatin1String("") );
+#else
     appendPlainText( expr );
     appendPlainText( QLatin1String("= ") + formatNumber(value) );
     appendPlainText( QLatin1String("") );
+#endif
+
     ensureCursorVisible();
 
     // REFACTOR: this only serves to save a session, nonsense
