@@ -81,8 +81,7 @@ void SyntaxHighlighter::highlightBlock( const QString & text )
 
     if ( text.startsWith(QLatin1String("=")) ) {
         QFont font;
-        font.setPointSize( font.pointSize() + 4 );
-        font.setItalic( true );
+        font.setPointSize( font.pointSize() + 2 );
         setFormat( 0, text.length(), font );
         return;
     }
