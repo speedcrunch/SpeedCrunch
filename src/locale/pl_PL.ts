@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1" language="pl_PL">
+<!DOCTYPE TS>
+<TS version="2.0" language="pl_PL">
 <context>
     <name>AboutBox</name>
     <message>
@@ -206,12 +207,12 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="137"/>
         <source>Japanese</source>
-        <translation type="unfinished"></translation>
+        <translation>Japoński</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="131"/>
         <source>Hungarian</source>
-        <translation type="unfinished"></translation>
+        <translation>Węgierski</translation>
     </message>
 </context>
 <context>
@@ -635,7 +636,7 @@
     <message>
         <location filename="../core/evaluator.cpp" line="1269"/>
         <source>%1 is a reserved name, please choose another</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 jest zarezerwowanym określeniem, proszę wybrać inne</translation>
     </message>
 </context>
 <context>
