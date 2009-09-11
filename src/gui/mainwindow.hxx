@@ -51,6 +51,8 @@ private slots:
     void copyResultToClipboard();
     void deleteAllVariables();
     void evaluateEditorExpression();
+    void exportHtml();
+    void exportPlainText();
     void handleEditorTextChange();
     void handleKeypadButtonPress( Keypad::Button );
     void handleSystemTrayIconActivation( QSystemTrayIcon::ActivationReason );
@@ -110,7 +112,6 @@ private slots:
     void showFunctionInsertionDialog();
     void showLanguageChooserDialog();
     void showMenuBarTip();
-    void showSessionExportDialog();
     void showSessionImportDialog();
     void showSessionLoadDialog();
     void showSystemTrayMessage();

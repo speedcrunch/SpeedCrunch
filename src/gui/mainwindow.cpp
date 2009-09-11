@@ -19,6 +19,8 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
+#include "gui/mainwindow.hxx"
+
 #include "3rdparty/binreloc/binreloc.h"
 #include "core/constants.hxx"
 #include "core/evaluator.hxx"
@@ -35,7 +37,6 @@
 #include "gui/historydock.hxx"
 #include "gui/historywidget.hxx"
 #include "gui/insertvardlg.hxx"
-#include "gui/mainwindow.hxx"
 #include "gui/resultdisplay.hxx"
 #include "gui/tipwidget.hxx"
 #include "gui/variablesdock.hxx"
@@ -78,7 +79,8 @@ struct Actions
     QAction * sessionLoad;
     QAction * sessionSave;
     QAction * sessionImport;
-    QAction * sessionExport;
+    QAction * sessionExportHtml;
+    QAction * sessionExportPlainText;
     QAction * sessionQuit;
 
     // edit
@@ -167,6 +169,7 @@ struct Menus
     QMenu * precision;
     QMenu * radixChar;
     QMenu * session;
+    QMenu * sessionExport;
     QMenu * settings;
     QMenu * trayIcon;
     QMenu * view;
@@ -191,24 +194,24 @@ struct Widgets
 
 struct Docks
 {
-  BookDock * book;
-  ConstantsDock * constants;
-  FunctionsDock * functions;
-  HistoryDock * history;
-  VariablesDock * variables;
+    BookDock * book;
+    ConstantsDock * constants;
+    FunctionsDock * functions;
+    HistoryDock * history;
+    VariablesDock * variables;
 };
 
 struct Conditions
 {
-  bool notifyMenuBarHidden;
-  bool trayNotify;
-  bool autoAns;
+    bool notifyMenuBarHidden;
+    bool trayNotify;
+    bool autoAns;
 };
 
 struct StatusBar
 {
-  QLabel * angleUnit;
-  QLabel * resultFormat;
+    QLabel * angleUnit;
+    QLabel * resultFormat;
 };
 
 struct MainWindow::Private
@@ -346,11 +349,12 @@ void MainWindow::Private::createUi()
 
 void MainWindow::Private::createActions()
 {
-    actions.sessionExport = new QAction( p );
-    actions.sessionImport = new QAction( p );
-    actions.sessionLoad   = new QAction( p );
-    actions.sessionQuit   = new QAction( p );
-    actions.sessionSave   = new QAction( p );
+    actions.sessionExportHtml       = new QAction( p );
+    actions.sessionExportPlainText = new QAction( p );
+    actions.sessionImport           = new QAction( p );
+    actions.sessionLoad             = new QAction( p );
+    actions.sessionQuit             = new QAction( p );
+    actions.sessionSave             = new QAction( p );
 
     actions.editClearExpression    = new QAction( p );
     actions.editClearHistory       = new QAction( p );
@@ -504,11 +508,12 @@ void MainWindow::Private::setStatusBarText()
 
 void MainWindow::Private::setActionsText()
 {
-    actions.sessionExport->setText( MainWindow::tr("&Export...") );
-    actions.sessionImport->setText( MainWindow::tr("&Import...") );
-    actions.sessionLoad  ->setText( MainWindow::tr("&Load...") );
-    actions.sessionQuit  ->setText( MainWindow::tr("&Quit") );
-    actions.sessionSave  ->setText( MainWindow::tr("&Save...") );
+    actions.sessionExportHtml     ->setText( MainWindow::tr("&HTML") );
+    actions.sessionExportPlainText->setText( MainWindow::tr("Plain &text") );
+    actions.sessionImport         ->setText( MainWindow::tr("&Import...") );
+    actions.sessionLoad           ->setText( MainWindow::tr("&Load...") );
+    actions.sessionQuit           ->setText( MainWindow::tr("&Quit") );
+    actions.sessionSave           ->setText( MainWindow::tr("&Save...") );
 
     actions.editClearExpression   ->setText( MainWindow::tr("Clear E&xpression") );
     actions.editClearHistory      ->setText( MainWindow::tr("Clear &History") );
@@ -647,7 +652,9 @@ void MainWindow::Private::createMenus()
     menus.session->addAction( actions.sessionSave );
     menus.session->addSeparator();
     menus.session->addAction( actions.sessionImport );
-    menus.session->addAction( actions.sessionExport );
+    menus.sessionExport = menus.session->addMenu( "" );
+    menus.sessionExport->addAction( actions.sessionExportPlainText );
+    menus.sessionExport->addAction( actions.sessionExportHtml );
     menus.session->addSeparator();
     menus.session->addAction( actions.sessionQuit );
 
@@ -749,17 +756,18 @@ void MainWindow::Private::createMenus()
 
 void MainWindow::Private::setMenusText()
 {
-    menus.session     ->setTitle( MainWindow::tr("&Session") );
-    menus.edit        ->setTitle( MainWindow::tr("&Edit") );
-    menus.view        ->setTitle( MainWindow::tr("&View") );
-    menus.settings    ->setTitle( MainWindow::tr("Se&ttings") );
-    menus.resultFormat->setTitle( MainWindow::tr("Result &Format") );
-    menus.radixChar   ->setTitle( MainWindow::tr("Radix &Character") );
-    menus.decimal     ->setTitle( MainWindow::tr("&Decimal") );
-    menus.precision   ->setTitle( MainWindow::tr("&Precision") );
-    menus.angleUnit   ->setTitle( MainWindow::tr("&Angle Unit") );
-    menus.behavior    ->setTitle( MainWindow::tr("&Behavior") );
-    menus.help        ->setTitle( MainWindow::tr("&Help") );
+    menus.session      ->setTitle( MainWindow::tr("&Session") );
+    menus.sessionExport->setTitle( MainWindow::tr("&Export") );
+    menus.edit         ->setTitle( MainWindow::tr("&Edit") );
+    menus.view         ->setTitle( MainWindow::tr("&View") );
+    menus.settings     ->setTitle( MainWindow::tr("Se&ttings") );
+    menus.resultFormat ->setTitle( MainWindow::tr("Result &Format") );
+    menus.radixChar    ->setTitle( MainWindow::tr("Radix &Character") );
+    menus.decimal      ->setTitle( MainWindow::tr("&Decimal") );
+    menus.precision    ->setTitle( MainWindow::tr("&Precision") );
+    menus.angleUnit    ->setTitle( MainWindow::tr("&Angle Unit") );
+    menus.behavior     ->setTitle( MainWindow::tr("&Behavior") );
+    menus.help         ->setTitle( MainWindow::tr("&Help") );
 }
 
 void MainWindow::Private::createStatusBar()
@@ -999,11 +1007,12 @@ void MainWindow::Private::createVariablesDock()
 
 void MainWindow::Private::createFixedConnections()
 {
-    connect( actions.sessionExport, SIGNAL(triggered()), p, SLOT(showSessionExportDialog()) );
+    connect( actions.sessionExportHtml, SIGNAL(triggered()), p, SLOT(exportHtml()) );
+    connect( actions.sessionExportPlainText, SIGNAL(triggered()), p, SLOT(exportPlainText()) );
     connect( actions.sessionImport, SIGNAL(triggered()), p, SLOT(showSessionImportDialog()) );
-    connect( actions.sessionLoad,   SIGNAL(triggered()), p, SLOT(showSessionLoadDialog()) );
-    connect( actions.sessionQuit,   SIGNAL(triggered()), p, SLOT(close()) );
-    connect( actions.sessionSave,   SIGNAL(triggered()), p, SLOT(saveSession()) );
+    connect( actions.sessionLoad, SIGNAL(triggered()), p, SLOT(showSessionLoadDialog()) );
+    connect( actions.sessionQuit, SIGNAL(triggered()), p, SLOT(close()) );
+    connect( actions.sessionSave, SIGNAL(triggered()), p, SLOT(saveSession()) );
 
     connect( actions.editClearExpression, SIGNAL(triggered()), p, SLOT(clearEditor()) );
     connect( actions.editClearHistory, SIGNAL(triggered()), p, SLOT(clearHistory()) );
@@ -1732,11 +1741,11 @@ void MainWindow::saveSession()
     file.close();
 }
 
-void MainWindow::showSessionExportDialog()
+void MainWindow::exportHtml()
 {
-    QString filters = tr( "All Files (*)" );
-    QString fname = QFileDialog::getSaveFileName( this, tr("Export Session"),
-                                                  QString::null, filters );
+    QString fname = QFileDialog::getSaveFileName( this, tr("Export session as HTML"),
+        QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) );
+
     if ( fname.isEmpty() )
         return;
 
@@ -1747,9 +1756,29 @@ void MainWindow::showSessionExportDialog()
     }
 
     QTextStream stream( & file );
+    stream.setCodec( "UTF-8" );
+    stream << d->widgets.display->document()->toHtml( "utf-8" );
 
-    // expressions and results
-    stream << d->widgets.display->asText() << "\n";
+    file.close();
+}
+
+void MainWindow::exportPlainText()
+{
+    QString fname = QFileDialog::getSaveFileName( this, tr("Export session as plain text"),
+        QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) );
+
+    if ( fname.isEmpty() )
+        return;
+
+    QFile file( fname );
+    if ( ! file.open(QIODevice::WriteOnly) ) {
+        QMessageBox::critical( this, tr("Error"), tr("Can't write to file %1").arg(fname) );
+        return;
+    }
+
+    QTextStream stream( & file );
+    stream.setCodec( "UTF-8" );
+    stream << d->widgets.display->document()->toPlainText();
 
     file.close();
 }
