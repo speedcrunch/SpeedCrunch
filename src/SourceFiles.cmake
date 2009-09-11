@@ -1,5 +1,12 @@
 # speedcrunch
 
+SET(speedcrunch_RESOURCES
+resources/speedcrunch.qrc
+)
+
+set(speedcrunch_FORMS
+)
+
 set(speedcrunch_HEADERS
 #variant/variantbase.hxx
 #variant/variant.hxx
