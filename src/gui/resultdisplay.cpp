@@ -16,9 +16,9 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#include "3rdparty/flickcharm/flickcharm.h"
 #include "gui/resultdisplay.hxx"
 
+//#include "3rdparty/flickcharm/flickcharm.h"
 #include "core/functions.hxx"
 #include "core/settings.hxx"
 #include "gui/syntaxhighlighter.hxx"

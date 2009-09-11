@@ -18,8 +18,9 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#include "3rdparty/binreloc/binreloc.h"
 #include "core/settings.hxx"
+
+#include "3rdparty/binreloc/binreloc.h"
 #include "math/floatconfig.h"
 
 #include <QtCore/QDir>

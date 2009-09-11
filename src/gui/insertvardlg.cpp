@@ -20,7 +20,7 @@
 // Boston, MA 02110-1301, USA.
 
 
-#include "insertvardlg.hxx"
+#include "gui/insertvardlg.hxx"
 
 #include "gui/variableswidget.hxx"
 

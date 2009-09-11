@@ -18,6 +18,7 @@
 // Boston, MA 02110-1301, USA.
 
 #include "gui/variablesdock.hxx"
+
 #include "gui/variableswidget.hxx"
 
 #include <QtCore/QEvent>

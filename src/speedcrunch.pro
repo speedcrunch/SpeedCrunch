@@ -50,7 +50,8 @@ QT += network
     }
 }
 
-# Input
+#FORMS +=
+
 HEADERS += 3rdparty/flickcharm/flickcharm.h \
            core/constants.hxx \
            core/evaluator.hxx \
