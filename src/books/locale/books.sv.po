@@ -54,7 +54,7 @@ msgstr "2D-object"
 
 #: math_index.html.template, right_triangle.html.template
 msgid "Right Triangle"
-msgstr "Höger triangel"
+msgstr "Rätvinklig triangel"
 
 #: math_index.html.template, sector.html.template
 msgid "Sector"
