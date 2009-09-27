@@ -344,7 +344,7 @@ QSettings * createQSettings( const QString & KEY )
 #endif // Q_WS_MAC
 
 
-    // Q_WS_X11 || Q_WS_QWS
+#if defined (Q_WS_X11) || defined (Q_WS_QWS)
 #ifdef SPEEDCRUNCH_PORTABLE
     // Portable X11 version: settings are from INI file in the same directory
     BrInitError error;
@@ -361,6 +361,7 @@ QSettings * createQSettings( const QString & KEY )
     // Regular Unix or Embedded Linux (not Mac) version: settings from $HOME/.conf/SpeedCrunch
     settings = new QSettings( QSettings::NativeFormat, QSettings::UserScope, KEY, KEY );
 #endif // SPEEDCRUNCH_PORTABLE
+#endif // Q_WS_X11 || Q_WS_QWS
 
     return settings;
 }
