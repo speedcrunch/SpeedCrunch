@@ -41,7 +41,7 @@ AboutBox::AboutBox( QWidget * parent )
     QString info = "<b>";
     info += QString( "SpeedCrunch %1" ).arg( MAKE_STRING(SPEEDCRUNCH_VERSION) );
 #ifdef SPEEDCRUNCH_PORTABLE
-    msg += " (Portable Edition)";
+    info += " (Portable Edition)";
 #endif
     info += "</b><br>";
     info += QString( "<a href=\"%1\">%2</a>" ).arg( website ).arg( website );
