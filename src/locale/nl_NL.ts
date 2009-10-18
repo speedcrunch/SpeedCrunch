@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1" language="nl">
+<!DOCTYPE TS>
+<TS version="2.0" language="nl">
 <context>
     <name>AboutBox</name>
     <message>
@@ -170,47 +171,47 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="58"/>
         <source>Maintainer and core developer</source>
-        <translation type="unfinished"></translation>
+        <translation>Hoofdontwikkelaar en onderhouder</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="60"/>
         <source>Former maintainer</source>
-        <translation type="unfinished"></translation>
+        <translation>Voormalig onderhouder</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="61"/>
         <source>Math engine and expression parser</source>
-        <translation type="unfinished"></translation>
+        <translation>Wiskunde-engine en expressieparser</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="62"/>
         <source>General purpose developer</source>
-        <translation type="unfinished"></translation>
+        <translation>Ontwikkelaar</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="63"/>
         <source>Packager and OS X stylist</source>
-        <translation type="unfinished"></translation>
+        <translation>OS X-stijl en pakketbouwer</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="64"/>
         <source>Original math book author</source>
-        <translation type="unfinished"></translation>
+        <translation>Oorspronkelijke auteur wiskundeboek</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="109"/>
         <source>Arabic</source>
-        <translation type="unfinished"></translation>
+        <translation>Arabisch</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="137"/>
         <source>Japanese</source>
-        <translation type="unfinished"></translation>
+        <translation>Japans</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="131"/>
         <source>Hungarian</source>
-        <translation type="unfinished"></translation>
+        <translation>Hongaars</translation>
     </message>
 </context>
 <context>
@@ -504,7 +505,7 @@
     <message>
         <location filename="../core/constants.cpp" line="262"/>
         <source>Julian Year</source>
-        <translation type="unfinished"></translation>
+        <translation>Juliaans jaar</translation>
     </message>
 </context>
 <context>
@@ -545,7 +546,7 @@
     <message>
         <location filename="../gui/constantswidget.cpp" line="137"/>
         <source>Unit</source>
-        <translation type="unfinished"></translation>
+        <translation>Eenheid</translation>
     </message>
     <message>
         <location filename="../gui/constantswidget.cpp" line="247"/>
@@ -604,37 +605,37 @@
     <message>
         <location filename="../core/evaluator.cpp" line="86"/>
         <source>cannot operate on a NaN</source>
-        <translation type="unfinished"></translation>
+        <translation>kan niet werken met NaN</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="89"/>
         <source>underflow - tiny result is out of SpeedCrunch&apos;s number range</source>
-        <translation type="unfinished"></translation>
+        <translation>underflow - kleine resultaat valt buiten het numeriek van SpeedCrunch</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="92"/>
         <source>overflow - huge result is out of SpeedCrunch&apos;s number range</source>
-        <translation type="unfinished"></translation>
+        <translation>overflow - grote resultaat valt buiten het numeriek bereik van SpeedCrunch</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="98"/>
         <source>overflow - logic result exceeds maximum of 256 bits</source>
-        <translation type="unfinished"></translation>
+        <translation>overflow - logisch resultaat overschrijdt maximum van 256 bits</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="101"/>
         <source>overflow - integer result exceeds maximum limit for integers</source>
-        <translation type="unfinished"></translation>
+        <translation>overflow - integer resultaat overschrijdt limiet voor integers</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="104"/>
         <source>too time consuming computation was rejected</source>
-        <translation type="unfinished"></translation>
+        <translation>de berekening duurt te lang en werd afgewezen</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="1269"/>
         <source>%1 is a reserved name, please choose another</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 is een gereserveerde naam, kies een andere naam</translation>
     </message>
 </context>
 <context>
@@ -1017,64 +1018,64 @@
     <message>
         <location filename="../core/functions.cpp" line="144"/>
         <source>cannot execute function</source>
-        <translation type="unfinished"></translation>
+        <translation>kan de functie niet uitvoeren</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="61"/>
         <source>function %1 does not take NaN as an argument</source>
-        <translation type="unfinished"></translation>
+        <translation>functie %1 accepteert NaN niet als een argument</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="64"/>
         <source>computation in %1 is unstable and exceeds the limitations of SpeedCrunch</source>
-        <translation type="unfinished"></translation>
+        <translation>berekening in %1 is onstabiel en overschrijdt de beperkingen van SpeedCrunch</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="67"/>
         <source>underflow: tiny result of %1 is out of SpeedCrunch&apos;s number range</source>
-        <translation type="unfinished"></translation>
+        <translation>underflow: kleine resultaat van %1 valt buiten het numeriek bereik van SpeedCrunch</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="70"/>
         <source>overflow: huge result of %1 is out of SpeedCrunch&apos;s number range</source>
-        <translation type="unfinished"></translation>
+        <translation>overflow: grote resultaat van %1 valt buiten het numeriek bereik van SpeedCrunch</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="73"/>
         <source>function %1 is infinite for submitted argument(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>functie %1 is oneindig voor opgegeven argument(en)</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="76"/>
         <source>function %1 is not defined for submitted argument(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>functie %1 is niet gedefinieerd voor opgegeven argument(en)</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="79"/>
         <source>logic overflow: result of %1 exceeds maximum of 256 bits</source>
-        <translation type="unfinished"></translation>
+        <translation>logische overflow: resultaat van %1 overschrijdt maximum van 256 bits</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="82"/>
         <source>integer overflow: result of %1 exceeds maximum limit for integers</source>
-        <translation type="unfinished"></translation>
+        <translation>integer overflow: resultaat van %1 overschrijdt limiet voor integers</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="85"/>
         <source>too time consuming computation in %1 was rejected</source>
-        <translation type="unfinished"></translation>
+        <translation>de berekening in %1 duurt te lang en werd afgewezen</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="90"/>
         <source>bug: internal error in %1 that should never occur</source>
-        <translation type="unfinished"></translation>
+        <translation>bug: interne fout in %1 dat niet voor had mogen voorkomen</translation>
     </message>
     <message numerus="yes">
         <location filename="../core/functions.cpp" line="149"/>
         <source>function %1 accepts %n argument(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>functie %1 accepteert %n argument</numerusform>
+            <numerusform>functie %1 accepteert %n argumenten</numerusform>
         </translation>
     </message>
 </context>
@@ -1099,7 +1100,7 @@
     <message>
         <location filename="../gui/functionswidget.cpp" line="152"/>
         <source>Identifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Unieke naam</translation>
     </message>
     <message>
         <location filename="../gui/functionswidget.cpp" line="153"/>
@@ -1404,7 +1405,7 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="518"/>
         <source>D&amp;elete Variable...</source>
-        <translation type="unfinished">Variabele v&amp;erwijderen...</translation>
+        <translation>Variabele v&amp;erwijderen...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="546"/>
@@ -1499,7 +1500,7 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="542"/>
         <source>Syntax &amp;Highlighting</source>
-        <translation>Accentuering</translation>
+        <translation>A&amp;ccentuering</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="544"/>
@@ -1694,52 +1695,52 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/mainwindow.cpp" line="525"/>
         <source>F&amp;ull Screen Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Volledi&amp;g scherm</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="530"/>
         <source>&amp;Menu Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Menubalk</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="540"/>
         <source>Save &amp;History on Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Gesc&amp;hiedenis opslaan bij afsluiten</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="541"/>
         <source>Save &amp;Variables on Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Variabelen opgslaan bij afsluiten</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="551"/>
         <source>&amp;Automatic</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Automatisch</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="559"/>
         <source>&amp;Language...</source>
-        <translation type="unfinished"></translation>
+        <translation>Taa&amp;l...</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="759"/>
         <source>&amp;Precision</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Precisie</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2468"/>
         <source>System Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Systeemstandaard</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2472"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Taal</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="2472"/>
         <source>Select the language:</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer de taal:</translation>
     </message>
 </context>
 <context>
@@ -1755,22 +1756,22 @@ If no, current variables and display will be cleared.</source>
     <message>
         <location filename="../gui/variableswidget.cpp" line="165"/>
         <source>Name</source>
-        <translation type="unfinished">Naam</translation>
+        <translation>Naam</translation>
     </message>
     <message>
         <location filename="../gui/variableswidget.cpp" line="166"/>
         <source>Value</source>
-        <translation type="unfinished">Waarde</translation>
+        <translation>Waarde</translation>
     </message>
     <message>
         <location filename="../gui/variableswidget.cpp" line="169"/>
         <source>Search</source>
-        <translation type="unfinished">Zoeken</translation>
+        <translation>Zoeken</translation>
     </message>
     <message>
         <location filename="../gui/variableswidget.cpp" line="170"/>
         <source>No match found</source>
-        <translation type="unfinished">Geen resultaten gevonden</translation>
+        <translation>Geen resultaten gevonden</translation>
     </message>
 </context>
 </TS>
