@@ -2479,11 +2479,12 @@ void MainWindow::showLanguageChooserDialog()
     map.insert( QString::fromUtf8("Română"), QLatin1String("ro_RO") );
     map.insert( QLatin1String("Suomi"), QLatin1String("fi_FI") );
     map.insert( QLatin1String("Svenska"), QLatin1String("sv_SE") );
-    map.insert( QString::fromUtf8("Türkçe"), QLatin1String("tr_TR") );
     map.insert( QString::fromUtf8("Česky"), QLatin1String("cs_CZ") );
-    map.insert( QString::fromUtf8("Русский"), QLatin1String("ru_RU") );
-    map.insert( QString::fromUtf8("עברית"), QLatin1String("he_IL") );
+    map.insert( QString::fromUtf8("한국말"), QLatin1String("ko_KR") );
+    map.insert( QString::fromUtf8("Türkçe"), QLatin1String("tr_TR") );
     map.insert( QString::fromUtf8("العربية"), QLatin1String("ar_JO") );
+    map.insert( QString::fromUtf8("עברית"), QLatin1String("he_IL") );
+    map.insert( QString::fromUtf8("Русский"), QLatin1String("ru_RU") );
     map.insert( QString::fromUtf8("日本語"), QLatin1String("ja_JP") );
     map.insert( QString::fromUtf8("简化字"), QLatin1String("zh_CN") );
 
@@ -2503,4 +2504,5 @@ void MainWindow::showLanguageChooserDialog()
         }
     }
 }
+
 

@@ -136,6 +136,8 @@ AboutBox::AboutBox( QWidget * parent )
                .arg( "Alessio Sclocco" );
     msg += i18n.arg( tr("Japanese") )
                .arg( "Kazuki Hamasaki" );
+    msg += i18n.arg( tr("Korean") )
+               .arg( "YoungUk Kim" );
     msg += i18n.arg( tr("Norwegian") )
                .arg( "Thomas Finneid" );
     msg += i18n.arg( tr("Polish") )
