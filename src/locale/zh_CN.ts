@@ -239,7 +239,7 @@
 <context>
     <name>ConstantCompletion</name>
     <message>
-        <location filename="../gui/editor.cpp" line="1007"/>
+        <location filename="../gui/editor.cpp" line="1014"/>
         <source>All</source>
         <translation>全部</translation>
     </message>
@@ -574,12 +574,12 @@
 <context>
     <name>Editor</name>
     <message>
-        <location filename="../gui/editor.cpp" line="521"/>
+        <location filename="../gui/editor.cpp" line="528"/>
         <source>Current result: &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>当前的结果：&lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../gui/editor.cpp" line="561"/>
+        <location filename="../gui/editor.cpp" line="568"/>
         <source>Selection result: &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>选择的结果：&lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
@@ -632,7 +632,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/evaluator.cpp" line="1269"/>
+        <location filename="../core/evaluator.cpp" line="1270"/>
         <source>%1 is a reserved name, please choose another</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1218,535 +1218,550 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1690"/>
+        <location filename="../gui/mainwindow.cpp" line="1694"/>
         <source>Radian</source>
         <translation>弧度</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1341"/>
+        <location filename="../gui/mainwindow.cpp" line="1345"/>
         <source>Degree</source>
         <translation>度数</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2057"/>
+        <location filename="../gui/mainwindow.cpp" line="2081"/>
         <source>Binary</source>
         <translation>二进制</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2102"/>
+        <location filename="../gui/mainwindow.cpp" line="2126"/>
         <source>Octal</source>
         <translation>八进制</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2093"/>
+        <location filename="../gui/mainwindow.cpp" line="2117"/>
         <source>Hexadecimal</source>
         <translation>十六进制</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2075"/>
+        <location filename="../gui/mainwindow.cpp" line="2099"/>
         <source>Fixed decimal</source>
         <translation>固定十进制</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2066"/>
+        <location filename="../gui/mainwindow.cpp" line="2090"/>
         <source>Engineering decimal</source>
         <translation>工程十进制</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2111"/>
+        <location filename="../gui/mainwindow.cpp" line="2135"/>
         <source>Scientific decimal</source>
         <translation>科学十进制</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2084"/>
+        <location filename="../gui/mainwindow.cpp" line="2108"/>
         <source>General decimal</source>
         <translation>通用十进制</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="500"/>
+        <location filename="../gui/mainwindow.cpp" line="504"/>
         <source>Angle unit</source>
         <translation>角度单位</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="501"/>
+        <location filename="../gui/mainwindow.cpp" line="505"/>
         <source>Result format</source>
         <translation>结果格式</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="513"/>
+        <location filename="../gui/mainwindow.cpp" line="518"/>
         <source>Clear E&amp;xpression</source>
         <translation>清除表达式(&amp;X)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="514"/>
+        <location filename="../gui/mainwindow.cpp" line="519"/>
         <source>Clear &amp;History</source>
         <translation>清除历史(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="534"/>
+        <location filename="../gui/mainwindow.cpp" line="539"/>
         <source>&amp;Degree</source>
         <translation>度数(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="517"/>
+        <location filename="../gui/mainwindow.cpp" line="522"/>
         <source>Delete All V&amp;ariables</source>
         <translation>清除所有变量(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="518"/>
+        <location filename="../gui/mainwindow.cpp" line="523"/>
         <source>D&amp;elete Variable...</source>
         <translation>删除变量(&amp;E)...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="546"/>
+        <location filename="../gui/mainwindow.cpp" line="551"/>
         <source>&amp;15 Decimal Digits</source>
         <translation>&amp;15 位小数</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="547"/>
+        <location filename="../gui/mainwindow.cpp" line="552"/>
         <source>&amp;2 Decimal Digits</source>
         <translation>&amp;2 位小数</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="548"/>
+        <location filename="../gui/mainwindow.cpp" line="553"/>
         <source>&amp;3 Decimal Digits</source>
         <translation>&amp;3 位小数</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="549"/>
+        <location filename="../gui/mainwindow.cpp" line="554"/>
         <source>&amp;50 Decimal Digits</source>
         <translation>&amp;50 位小数</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="550"/>
+        <location filename="../gui/mainwindow.cpp" line="555"/>
         <source>&amp;8 Decimal Digits</source>
         <translation>&amp;8 位小数</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="516"/>
+        <location filename="../gui/mainwindow.cpp" line="521"/>
         <source>&amp;Copy</source>
         <translation>复制(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="515"/>
+        <location filename="../gui/mainwindow.cpp" line="520"/>
         <source>Copy Last &amp;Result</source>
         <translation>复制上次计算的结果(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="521"/>
+        <location filename="../gui/mainwindow.cpp" line="526"/>
         <source>&amp;Paste</source>
         <translation>粘贴(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="562"/>
+        <location filename="../gui/mainwindow.cpp" line="567"/>
         <source>&amp;About</source>
         <translation>关于(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="561"/>
+        <location filename="../gui/mainwindow.cpp" line="566"/>
         <source>About &amp;Qt</source>
         <translation>关于 Qt(&amp;Q)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="564"/>
+        <location filename="../gui/mainwindow.cpp" line="569"/>
         <source>SpeedCrunch &amp;Web Site...</source>
         <translation>SpeedCrunch 网址(&amp;W)...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="563"/>
+        <location filename="../gui/mainwindow.cpp" line="568"/>
         <source>&amp;Tip of the Day</source>
         <translation>每日提示(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="519"/>
+        <location filename="../gui/mainwindow.cpp" line="524"/>
         <source>Insert &amp;Function...</source>
         <translation>插入函数(&amp;F)...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="520"/>
+        <location filename="../gui/mainwindow.cpp" line="525"/>
         <source>Insert &amp;Variable...</source>
         <translation>插入变量(&amp;V)...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="539"/>
+        <location filename="../gui/mainwindow.cpp" line="544"/>
         <source>&amp;Partial Results</source>
         <translation>部分结果(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="537"/>
+        <location filename="../gui/mainwindow.cpp" line="542"/>
         <source>Automatic &amp;Completion</source>
         <translation>自动补全(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="536"/>
+        <location filename="../gui/mainwindow.cpp" line="541"/>
         <source>Always On &amp;Top</source>
         <translation>总是在最上(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="538"/>
+        <location filename="../gui/mainwindow.cpp" line="543"/>
         <source>&amp;Minimize To System Tray</source>
         <translation>最小化到系统托盘(&amp;M)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="542"/>
+        <location filename="../gui/mainwindow.cpp" line="547"/>
         <source>Syntax &amp;Highlighting</source>
         <translation>语法高亮(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="544"/>
+        <location filename="../gui/mainwindow.cpp" line="549"/>
         <source>&amp;System Default</source>
         <translation>系统默认(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="545"/>
+        <location filename="../gui/mainwindow.cpp" line="550"/>
         <source>&amp;Dot</source>
         <translation>点(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="543"/>
+        <location filename="../gui/mainwindow.cpp" line="548"/>
         <source>&amp;Comma</source>
         <translation>逗号(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="535"/>
+        <location filename="../gui/mainwindow.cpp" line="540"/>
         <source>&amp;Radian</source>
         <translation>弧度(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="566"/>
+        <location filename="../gui/mainwindow.cpp" line="571"/>
         <source>Scroll Display Down</source>
         <translation>向下滚动显示</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="567"/>
+        <location filename="../gui/mainwindow.cpp" line="572"/>
         <source>Scroll Display Up</source>
         <translation>向上滚动显示</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="522"/>
+        <location filename="../gui/mainwindow.cpp" line="527"/>
         <source>&amp;Select Expression</source>
         <translation>选择表达式(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="508"/>
+        <location filename="../gui/mainwindow.cpp" line="513"/>
         <source>&amp;Import...</source>
         <translation>导入(&amp;I)...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="509"/>
+        <location filename="../gui/mainwindow.cpp" line="514"/>
         <source>&amp;Load...</source>
         <translation>加载(&amp;L)...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="510"/>
+        <location filename="../gui/mainwindow.cpp" line="515"/>
         <source>&amp;Quit</source>
         <translation>退出(&amp;Q)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="511"/>
+        <location filename="../gui/mainwindow.cpp" line="516"/>
         <source>&amp;Save...</source>
         <translation>保存(&amp;S)...</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="507"/>
-        <source>&amp;Export...</source>
-        <translation>导出(&amp;E)...</translation>
-    </message>
-    <message>
-        <location filename="../gui/mainwindow.cpp" line="529"/>
+        <location filename="../gui/mainwindow.cpp" line="534"/>
         <source>Math &amp;Book</source>
         <translation>数学书(&amp;B)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="524"/>
+        <location filename="../gui/mainwindow.cpp" line="529"/>
         <source>&amp;Constants</source>
         <translation>常量(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="526"/>
+        <location filename="../gui/mainwindow.cpp" line="531"/>
         <source>&amp;Functions</source>
         <translation>函数(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="527"/>
+        <location filename="../gui/mainwindow.cpp" line="532"/>
         <source>&amp;History</source>
         <translation>历史(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="528"/>
+        <location filename="../gui/mainwindow.cpp" line="533"/>
         <source>&amp;Keypad</source>
         <translation>键盘(&amp;K)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="531"/>
+        <location filename="../gui/mainwindow.cpp" line="536"/>
         <source>&amp;Status Bar</source>
         <translation>状态栏(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="532"/>
+        <location filename="../gui/mainwindow.cpp" line="537"/>
         <source>&amp;Variables</source>
         <translation>变量(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="552"/>
+        <location filename="../gui/mainwindow.cpp" line="557"/>
         <source>&amp;Binary</source>
         <translation>二进制(&amp;B)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="553"/>
+        <location filename="../gui/mainwindow.cpp" line="558"/>
         <source>&amp;Engineering</source>
         <translation>工程(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="554"/>
+        <location filename="../gui/mainwindow.cpp" line="559"/>
         <source>&amp;Fixed Decimal</source>
         <translation>固定(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="555"/>
+        <location filename="../gui/mainwindow.cpp" line="560"/>
         <source>&amp;General</source>
         <translation>通用(&amp;G)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="556"/>
+        <location filename="../gui/mainwindow.cpp" line="561"/>
         <source>&amp;Hexadecimal</source>
         <translation>十六进制(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="557"/>
+        <location filename="../gui/mainwindow.cpp" line="562"/>
         <source>&amp;Octal</source>
         <translation>八进制(&amp;O)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="558"/>
+        <location filename="../gui/mainwindow.cpp" line="563"/>
         <source>&amp;Scientific</source>
         <translation>科学(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="752"/>
+        <location filename="../gui/mainwindow.cpp" line="759"/>
         <source>&amp;Session</source>
         <translation>会话(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="753"/>
+        <location filename="../gui/mainwindow.cpp" line="761"/>
         <source>&amp;Edit</source>
         <translation>编辑(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="754"/>
+        <location filename="../gui/mainwindow.cpp" line="762"/>
         <source>&amp;View</source>
         <translation>查看(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="755"/>
+        <location filename="../gui/mainwindow.cpp" line="763"/>
         <source>Se&amp;ttings</source>
         <translation>设置(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="756"/>
+        <location filename="../gui/mainwindow.cpp" line="764"/>
         <source>Result &amp;Format</source>
         <translation>结果格式(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="758"/>
+        <location filename="../gui/mainwindow.cpp" line="766"/>
         <source>&amp;Decimal</source>
         <translation>十进制(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="760"/>
+        <location filename="../gui/mainwindow.cpp" line="768"/>
         <source>&amp;Angle Unit</source>
         <translation>角度单位(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="761"/>
+        <location filename="../gui/mainwindow.cpp" line="769"/>
         <source>&amp;Behavior</source>
         <translation>行为(&amp;B)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="757"/>
+        <location filename="../gui/mainwindow.cpp" line="765"/>
         <source>Radix &amp;Character</source>
         <translation>基数字符(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="762"/>
+        <location filename="../gui/mainwindow.cpp" line="770"/>
         <source>&amp;Help</source>
         <translation>帮助(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1298"/>
+        <location filename="../gui/mainwindow.cpp" line="1302"/>
         <source>About Qt</source>
         <translation>关于 Qt</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1434"/>
+        <location filename="../gui/mainwindow.cpp" line="1438"/>
         <source>File %1 is not a valid session</source>
         <translation>文件 %1 不是一个有效的会话</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1697"/>
+        <location filename="../gui/mainwindow.cpp" line="1701"/>
         <source>SpeedCrunch Sessions (*.sch);;All Files (*)</source>
         <translation>SpeedCrunch 会话文件 (*.sch);;全部文件 (*)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1436"/>
+        <location filename="../gui/mainwindow.cpp" line="1440"/>
         <source>Load Session</source>
         <translation>加载会话</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1750"/>
+        <location filename="../gui/mainwindow.cpp" line="1775"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1538"/>
+        <location filename="../gui/mainwindow.cpp" line="1542"/>
         <source>Can&apos;t read from file %1</source>
         <translation>不能读取文件 %1</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1467"/>
+        <location filename="../gui/mainwindow.cpp" line="1471"/>
         <source>Merge session being loaded with current session?
 If no, current variables and display will be cleared.</source>
         <translation>您要把载入的会话和当前会话进行合并么？
 如果不的话，当前的变量和显示将会被清空。</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1547"/>
+        <location filename="../gui/mainwindow.cpp" line="1551"/>
         <source>Question</source>
         <translation>问题</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1742"/>
+        <location filename="../gui/mainwindow.cpp" line="1534"/>
         <source>All Files (*)</source>
         <translation>所有文件 (*)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1531"/>
+        <location filename="../gui/mainwindow.cpp" line="1535"/>
         <source>Import Session</source>
         <translation>导入会话</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1545"/>
+        <location filename="../gui/mainwindow.cpp" line="1549"/>
         <source>Merge session being imported with current session?
 If no, current variables and display will be cleared.</source>
         <translation>您要把导入的会话和当前会话进行合并么？如果不的话，当前的变量和显示将会被清空。</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1574"/>
+        <location filename="../gui/mainwindow.cpp" line="1578"/>
         <source>Ignore error?</source>
         <translation>忽略错误？</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1698"/>
+        <location filename="../gui/mainwindow.cpp" line="1702"/>
         <source>Save Session</source>
         <translation>保存会话</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1750"/>
+        <location filename="../gui/mainwindow.cpp" line="1775"/>
         <source>Can&apos;t write to file %1</source>
         <translation>不能写入文件 %1</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1743"/>
-        <source>Export Session</source>
-        <translation>导出会话</translation>
-    </message>
-    <message>
-        <location filename="../gui/mainwindow.cpp" line="2014"/>
+        <location filename="../gui/mainwindow.cpp" line="2038"/>
         <source>The menu bar is now hidden. To make it visible again, press Ctrl+Alt+M.</source>
         <translation>菜单栏现在被隐藏。如果您想让它再次显示，请按 Ctrl+Alt+M。</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2017"/>
+        <location filename="../gui/mainwindow.cpp" line="2041"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2030"/>
+        <location filename="../gui/mainwindow.cpp" line="2054"/>
         <source>To insert a function using keyboard, use Ctrl+F shorcut. From the dialog, you can choose the function you want to insert.</source>
         <translation>如果想要使用键盘插入函数，请使用 Ctrl+F 快捷键。从这个对话框中，您可以选择您要插入的函数。</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2035"/>
+        <location filename="../gui/mainwindow.cpp" line="2059"/>
         <source>To insert a variable using keyboard, use Ctrl+I shorcut. From the dialog, you can choose the variable you want to insert.</source>
         <translation>如果想要使用键盘插入变量，请使用 Ctrl+I 快捷键。从这个对话框中，您可以选择您要插入的变量。</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2038"/>
+        <location filename="../gui/mainwindow.cpp" line="2062"/>
         <source>Use variable &lt;i&gt;pi&lt;/i&gt; to use pi constant.</source>
         <translation>请使用变量&lt;i&gt;pi&lt;/i&gt;来使用 PI 常量。</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2042"/>
+        <location filename="../gui/mainwindow.cpp" line="2066"/>
         <source>Use &lt;i&gt;;&lt;/i&gt; (semicolon) to separate the parameters in functions.</source>
         <translation>请使用&lt;i&gt;;&lt;/i&gt;(半角分号)来分隔函数中的参数。</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2048"/>
+        <location filename="../gui/mainwindow.cpp" line="2072"/>
         <source>Tip of the day</source>
         <translation>每日提示</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2320"/>
+        <location filename="../gui/mainwindow.cpp" line="2344"/>
         <source>SpeedCrunch is minimized.
 Left click the icon to restore it or right click for options.</source>
         <translation>SpeedCrunch 最小化了。
 左键点击它可以恢复它，或者右键点击它选择选项。</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="525"/>
+        <location filename="../gui/mainwindow.cpp" line="530"/>
         <source>F&amp;ull Screen Mode</source>
         <translation>全屏模式(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="530"/>
+        <location filename="../gui/mainwindow.cpp" line="535"/>
         <source>&amp;Menu Bar</source>
         <translation>隐藏菜单栏(&amp;M)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="540"/>
+        <location filename="../gui/mainwindow.cpp" line="545"/>
         <source>Save &amp;History on Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="541"/>
+        <location filename="../gui/mainwindow.cpp" line="546"/>
         <source>Save &amp;Variables on Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="559"/>
+        <location filename="../gui/mainwindow.cpp" line="564"/>
         <source>&amp;Language...</source>
         <translation>语言(&amp;L)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2468"/>
+        <location filename="../gui/mainwindow.cpp" line="2492"/>
         <source>System Default</source>
         <translation>系统默认(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2472"/>
+        <location filename="../gui/mainwindow.cpp" line="2496"/>
         <source>Language</source>
         <translation>语言</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="2472"/>
+        <location filename="../gui/mainwindow.cpp" line="2496"/>
         <source>Select the language:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="551"/>
+        <location filename="../gui/mainwindow.cpp" line="556"/>
         <source>&amp;Automatic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="759"/>
+        <location filename="../gui/mainwindow.cpp" line="767"/>
         <source>&amp;Precision</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/mainwindow.cpp" line="511"/>
+        <source>&amp;HTML</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/mainwindow.cpp" line="512"/>
+        <source>Plain &amp;text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/mainwindow.cpp" line="760"/>
+        <source>&amp;Export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/mainwindow.cpp" line="1746"/>
+        <source>Export session as HTML</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/mainwindow.cpp" line="1767"/>
+        <source>Export session as plain text</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>VariablesDock</name>
     <message>
-        <location filename="../gui/variablesdock.cpp" line="69"/>
+        <location filename="../gui/variablesdock.cpp" line="70"/>
         <source>Variables</source>
         <translation>变量</translation>
     </message>
@@ -1754,22 +1769,22 @@ Left click the icon to restore it or right click for options.</source>
 <context>
     <name>VariablesWidget</name>
     <message>
-        <location filename="../gui/variableswidget.cpp" line="165"/>
+        <location filename="../gui/variableswidget.cpp" line="167"/>
         <source>Name</source>
         <translation>名称</translation>
     </message>
     <message>
-        <location filename="../gui/variableswidget.cpp" line="166"/>
+        <location filename="../gui/variableswidget.cpp" line="168"/>
         <source>Value</source>
         <translation>值</translation>
     </message>
     <message>
-        <location filename="../gui/variableswidget.cpp" line="169"/>
+        <location filename="../gui/variableswidget.cpp" line="171"/>
         <source>Search</source>
         <translation>搜索</translation>
     </message>
     <message>
-        <location filename="../gui/variableswidget.cpp" line="170"/>
+        <location filename="../gui/variableswidget.cpp" line="172"/>
         <source>No match found</source>
         <translation>没有找到匹配的</translation>
     </message>
