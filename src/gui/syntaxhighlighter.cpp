@@ -79,12 +79,8 @@ void SyntaxHighlighter::highlightBlock( const QString & text )
         return;
     }
 
-    if ( text.startsWith(QLatin1String("=")) ) {
-        QFont font;
-        font.setPointSize( font.pointSize() + 2 );
-        setFormat( 0, text.length(), font );
+    if ( text.startsWith(QLatin1String("=")) )
         return;
-    }
 
     Tokens tokens = Evaluator::instance()->scan( text );
     for ( int i = 0; i < tokens.count(); ++i )

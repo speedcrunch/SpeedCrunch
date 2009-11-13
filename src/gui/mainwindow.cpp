@@ -146,6 +146,8 @@ struct Actions
     QAction * helpAboutQt;
 
     // shortcuts
+    QAction * decreaseFontSize;
+    QAction * increaseFontSize;
     QAction * scrollDown;
     QAction * scrollUp;
 };
@@ -411,8 +413,10 @@ void MainWindow::Private::createActions()
     actions.helpTipOfTheDay = new QAction( p );
     actions.helpWebsite     = new QAction( p );
 
-    actions.scrollDown = new QAction( p );
-    actions.scrollUp   = new QAction( p );
+    actions.decreaseFontSize = new QAction( p );
+    actions.increaseFontSize = new QAction( p );
+    actions.scrollDown       = new QAction( p );
+    actions.scrollUp         = new QAction( p );
 
     actions.settingsLanguage = new QAction( p );
 
@@ -568,6 +572,8 @@ void MainWindow::Private::setActionsText()
     actions.helpTipOfTheDay->setText( MainWindow::tr("&Tip of the Day") );
     actions.helpWebsite    ->setText( MainWindow::tr("SpeedCrunch &Web Site...") );
 
+    actions.decreaseFontSize->setText( MainWindow::tr("Decrease Text Size") );
+    actions.increaseFontSize->setText( MainWindow::tr("Increase Text Size") );
     actions.scrollDown->setText( MainWindow::tr("Scroll Display Down") );
     actions.scrollUp  ->setText( MainWindow::tr("Scroll Display Up") );
 }
@@ -640,8 +646,10 @@ void MainWindow::Private::createActionShortcuts()
 
     actions.helpTipOfTheDay->setShortcut( Qt::CTRL + Qt::Key_T );
 
-    actions.scrollDown->setShortcut( Qt::SHIFT + Qt::Key_PageDown );
-    actions.scrollUp  ->setShortcut( Qt::SHIFT + Qt::Key_PageUp );
+    actions.decreaseFontSize->setShortcut( Qt::CTRL + Qt::Key_Minus );
+    actions.increaseFontSize->setShortcut( Qt::CTRL + Qt::Key_Plus );
+    actions.scrollDown      ->setShortcut( Qt::SHIFT + Qt::Key_PageDown );
+    actions.scrollUp        ->setShortcut( Qt::SHIFT + Qt::Key_PageUp );
 }
 
 void MainWindow::Private::createMenus()
@@ -750,6 +758,8 @@ void MainWindow::Private::createMenus()
     menus.help->addAction( actions.helpAboutQt );
 
     p->addActions( p->menuBar()->actions() );
+    p->addAction( actions.decreaseFontSize );
+    p->addAction( actions.increaseFontSize );
     p->addAction( actions.scrollDown );
     p->addAction( actions.scrollUp );
 }
@@ -1110,6 +1120,8 @@ void MainWindow::Private::createFixedConnections()
 
     connect( p, SIGNAL(languageChanged()), p, SLOT(retranslateText()) );
 
+    connect( actions.decreaseFontSize, SIGNAL(triggered()), p, SLOT(decreaseFontSize()) );
+    connect( actions.increaseFontSize, SIGNAL(triggered()), p, SLOT(increaseFontSize()) );
     connect( actions.scrollDown, SIGNAL(triggered()), p, SLOT(scrollDown()) );
     connect( actions.scrollUp,   SIGNAL(triggered()), p, SLOT(scrollUp()) );
 }
@@ -1795,6 +1807,26 @@ void MainWindow::setWidgetsDirection()
         qApp->setLayoutDirection( Qt::RightToLeft );
     else
         qApp->setLayoutDirection( Qt::LeftToRight );
+}
+
+void MainWindow::decreaseFontSize()
+{
+    QFont f = d->widgets.display->font();
+    const int newSize = f.pointSize() - 1;
+    if ( newSize < 4 )
+        return;
+    f.setPointSize( newSize );
+    d->widgets.display->setFont( f );
+}
+
+void MainWindow::increaseFontSize()
+{
+    QFont f = d->widgets.display->font();
+    const int newSize = f.pointSize() + 1;
+    if ( newSize > 64 )
+        return;
+    f.setPointSize( newSize );
+    d->widgets.display->setFont( f );
 }
 
 void MainWindow::scrollDown()

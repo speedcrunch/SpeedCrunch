@@ -49,6 +49,7 @@ private slots:
     void clearEditor();
     void clearHistory();
     void copyResultToClipboard();
+    void decreaseFontSize();
     void deleteAllVariables();
     void evaluateEditorExpression();
     void exportHtml();
@@ -57,6 +58,7 @@ private slots:
     void handleKeypadButtonPress( Keypad::Button );
     void handleSystemTrayIconActivation( QSystemTrayIcon::ActivationReason );
     void hideAutoCalcTip();
+    void increaseFontSize();
     void insertConstantIntoEditor( const QString & );
     void insertFunctionIntoEditor( const QString & );
     void insertTextIntoEditor( const QString & );
