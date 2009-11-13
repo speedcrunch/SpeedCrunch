@@ -132,6 +132,9 @@ struct Actions
     QAction * settingsBehaviorSyntaxHilite;
     QAction * settingsBehaviorAlwaysOnTop;
     QAction * settingsBehaviorMinimizeToTray;
+    // settings / display
+    QAction * settingsDisplayZoomIn;
+    QAction * settingsDisplayZoomOut;
     // settings / radix character
     QAction * settingsRadixCharDefault;
     QAction * settingsRadixCharDot;
@@ -146,8 +149,6 @@ struct Actions
     QAction * helpAboutQt;
 
     // shortcuts
-    QAction * decreaseFontSize;
-    QAction * increaseFontSize;
     QAction * scrollDown;
     QAction * scrollUp;
 };
@@ -165,6 +166,7 @@ struct Menus
     QMenu * angleUnit;
     QMenu * behavior;
     QMenu * decimal;
+    QMenu * display;
     QMenu * edit;
     QMenu * resultFormat;
     QMenu * help;
@@ -390,6 +392,9 @@ void MainWindow::Private::createActions()
     actions.settingsBehaviorSaveVariablesOnExit = new QAction( p );
     actions.settingsBehaviorSyntaxHilite        = new QAction( p );
 
+    actions.settingsDisplayZoomIn  = new QAction( p );
+    actions.settingsDisplayZoomOut = new QAction( p );
+
     actions.settingsRadixCharComma   = new QAction( p );
     actions.settingsRadixCharDefault = new QAction( p );
     actions.settingsRadixCharDot     = new QAction( p );
@@ -413,8 +418,6 @@ void MainWindow::Private::createActions()
     actions.helpTipOfTheDay = new QAction( p );
     actions.helpWebsite     = new QAction( p );
 
-    actions.decreaseFontSize = new QAction( p );
-    actions.increaseFontSize = new QAction( p );
     actions.scrollDown       = new QAction( p );
     actions.scrollUp         = new QAction( p );
 
@@ -572,8 +575,8 @@ void MainWindow::Private::setActionsText()
     actions.helpTipOfTheDay->setText( MainWindow::tr("&Tip of the Day") );
     actions.helpWebsite    ->setText( MainWindow::tr("SpeedCrunch &Web Site...") );
 
-    actions.decreaseFontSize->setText( MainWindow::tr("Decrease Text Size") );
-    actions.increaseFontSize->setText( MainWindow::tr("Increase Text Size") );
+    actions.settingsDisplayZoomOut->setText( MainWindow::tr("Decrease Text Size") );
+    actions.settingsDisplayZoomIn->setText( MainWindow::tr("Increase Text Size") );
     actions.scrollDown->setText( MainWindow::tr("Scroll Display Down") );
     actions.scrollUp  ->setText( MainWindow::tr("Scroll Display Up") );
 }
@@ -646,8 +649,8 @@ void MainWindow::Private::createActionShortcuts()
 
     actions.helpTipOfTheDay->setShortcut( Qt::CTRL + Qt::Key_T );
 
-    actions.decreaseFontSize->setShortcut( Qt::CTRL + Qt::Key_Minus );
-    actions.increaseFontSize->setShortcut( Qt::CTRL + Qt::Key_Plus );
+    actions.settingsDisplayZoomOut->setShortcut( Qt::CTRL + Qt::Key_Minus );
+    actions.settingsDisplayZoomIn->setShortcut( Qt::CTRL + Qt::Key_Plus );
     actions.scrollDown      ->setShortcut( Qt::SHIFT + Qt::Key_PageDown );
     actions.scrollUp        ->setShortcut( Qt::SHIFT + Qt::Key_PageUp );
 }
@@ -747,6 +750,10 @@ void MainWindow::Private::createMenus()
     menus.behavior->addAction( actions.settingsBehaviorAlwaysOnTop );
     menus.behavior->addAction( actions.settingsBehaviorMinimizeToTray );
 
+    menus.display = menus.settings->addMenu( "" );
+    menus.display->addAction( actions.settingsDisplayZoomIn );
+    menus.display->addAction( actions.settingsDisplayZoomOut );
+
     menus.settings->addAction( actions.settingsLanguage );
 
     menus.help = new QMenu( "", p );
@@ -758,8 +765,8 @@ void MainWindow::Private::createMenus()
     menus.help->addAction( actions.helpAboutQt );
 
     p->addActions( p->menuBar()->actions() );
-    p->addAction( actions.decreaseFontSize );
-    p->addAction( actions.increaseFontSize );
+    //p->addAction( actions.settingsDisplayZoomOut );
+    //p->addAction( actions.settingsDisplayZoomIn );
     p->addAction( actions.scrollDown );
     p->addAction( actions.scrollUp );
 }
@@ -777,6 +784,7 @@ void MainWindow::Private::setMenusText()
     menus.precision    ->setTitle( MainWindow::tr("&Precision") );
     menus.angleUnit    ->setTitle( MainWindow::tr("&Angle Unit") );
     menus.behavior     ->setTitle( MainWindow::tr("&Behavior") );
+    menus.display      ->setTitle( MainWindow::tr("&Display") );
     menus.help         ->setTitle( MainWindow::tr("&Help") );
 }
 
@@ -1120,8 +1128,8 @@ void MainWindow::Private::createFixedConnections()
 
     connect( p, SIGNAL(languageChanged()), p, SLOT(retranslateText()) );
 
-    connect( actions.decreaseFontSize, SIGNAL(triggered()), p, SLOT(decreaseFontSize()) );
-    connect( actions.increaseFontSize, SIGNAL(triggered()), p, SLOT(increaseFontSize()) );
+    connect( actions.settingsDisplayZoomOut, SIGNAL(triggered()), p, SLOT(zoomOut()) );
+    connect( actions.settingsDisplayZoomIn, SIGNAL(triggered()), p, SLOT(zoomIn()) );
     connect( actions.scrollDown, SIGNAL(triggered()), p, SLOT(scrollDown()) );
     connect( actions.scrollUp,   SIGNAL(triggered()), p, SLOT(scrollUp()) );
 }
@@ -1815,21 +1823,21 @@ void MainWindow::setWidgetsDirection()
         qApp->setLayoutDirection( Qt::LeftToRight );
 }
 
-void MainWindow::decreaseFontSize()
+void MainWindow::zoomIn()
 {
     QFont f = d->widgets.display->font();
-    const int newSize = f.pointSize() - 1;
-    if ( newSize < 4 )
+    const int newSize = f.pointSize() + 1;
+    if ( newSize > 64 )
         return;
     f.setPointSize( newSize );
     d->widgets.display->setFont( f );
 }
 
-void MainWindow::increaseFontSize()
+void MainWindow::zoomOut()
 {
     QFont f = d->widgets.display->font();
-    const int newSize = f.pointSize() + 1;
-    if ( newSize > 64 )
+    const int newSize = f.pointSize() - 1;
+    if ( newSize < 4 )
         return;
     f.setPointSize( newSize );
     d->widgets.display->setFont( f );
