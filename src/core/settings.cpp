@@ -27,6 +27,7 @@
 #include <QtCore/QLocale>
 #include <QtCore/QSettings>
 #include <QtGui/QApplication>
+#include <QtGui/QFont>
 
 static Settings * s_settingsInstance = 0;
 static char s_radixCharacter = 0;
@@ -126,6 +127,8 @@ void Settings::load()
     windowPosition = settings->value( key + QLatin1String("WindowPosition"), QPoint() ).toPoint();
     windowSize = settings->value( key + QLatin1String("WindowSize"), QSize(400, 300) ).toSize();
     windowState = settings->value( key + QLatin1String("State") ).toByteArray();
+    displayTextSize = settings->value( key + QLatin1String("DisplayTextSize"),
+                                       QFont().pointSize() ).toInt();
 
     // load history
     key = KEY + QLatin1String("/History/");
@@ -232,6 +235,7 @@ void Settings::save()
     settings->setValue( key + QLatin1String("WindowSize"), windowSize );
     settings->setValue( key + QLatin1String("WindowAlwaysOnTop"), windowAlwaysOnTop );
     settings->setValue( key + QLatin1String("State"), windowState );
+    settings->setValue( key + QLatin1String("DisplayTextSize"), displayTextSize );
 
     // save history
     if ( historySave ) {

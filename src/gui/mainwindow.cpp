@@ -1130,10 +1130,10 @@ void MainWindow::Private::applySettings()
 {
     // window state
     //
-    actions.viewMathBook ->setChecked( settings->mathBookDockVisible  );
+    actions.viewMathBook ->setChecked( settings->mathBookDockVisible );
     actions.viewConstants->setChecked( settings->constantsDockVisible );
     actions.viewFunctions->setChecked( settings->functionsDockVisible );
-    actions.viewHistory  ->setChecked( settings->historyDockVisible   );
+    actions.viewHistory  ->setChecked( settings->historyDockVisible );
     actions.viewVariables->setChecked( settings->variablesDockVisible );
     //
     p->resize( settings->windowSize );
@@ -1209,6 +1209,11 @@ void MainWindow::Private::applySettings()
     else
         p->setSyntaxHighlightingEnabled( false );
 
+    // display text size
+    QFont f = widgets.display->font();
+    f.setPointSize( settings->displayTextSize );
+    widgets.display->setFont( f );
+
     // status bar
     actions.viewStatusBar->setChecked( settings->statusBarVisible );
 
@@ -1273,6 +1278,7 @@ void MainWindow::Private::saveSettings()
     settings->windowPosition = p->pos();
     settings->windowSize = p->size();
     settings->windowState = p->saveState();
+    settings->displayTextSize = widgets.display->font().pointSize();
 
     settings->save();
 }
