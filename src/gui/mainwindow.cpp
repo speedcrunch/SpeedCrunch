@@ -55,6 +55,8 @@
 #include <QtGui/QDesktopServices>
 #include <QtGui/QDesktopWidget>
 #include <QtGui/QFileDialog>
+#include <QtGui/QFont>
+#include <QtGui/QFontDialog>
 #include <QtGui/QInputDialog>
 #include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
@@ -135,6 +137,7 @@ struct Actions
     // settings / display
     QAction * settingsDisplayZoomIn;
     QAction * settingsDisplayZoomOut;
+    QAction * settingsDisplayFont;
     // settings / radix character
     QAction * settingsRadixCharDefault;
     QAction * settingsRadixCharDot;
@@ -394,6 +397,7 @@ void MainWindow::Private::createActions()
 
     actions.settingsDisplayZoomIn  = new QAction( p );
     actions.settingsDisplayZoomOut = new QAction( p );
+    actions.settingsDisplayFont    = new QAction( p );
 
     actions.settingsRadixCharComma   = new QAction( p );
     actions.settingsRadixCharDefault = new QAction( p );
@@ -568,6 +572,9 @@ void MainWindow::Private::setActionsText()
     actions.settingsResultFormatHexadecimal    ->setText( MainWindow::tr("&Hexadecimal") );
     actions.settingsResultFormatOctal          ->setText( MainWindow::tr("&Octal") );
     actions.settingsResultFormatScientific     ->setText( MainWindow::tr("&Scientific") );
+    actions.settingsDisplayZoomIn              ->setText( MainWindow::tr("Zoom &In") );
+    actions.settingsDisplayZoomOut             ->setText( MainWindow::tr("Zoom &Out") );
+    actions.settingsDisplayFont                ->setText( MainWindow::tr("&Font...") );
     actions.settingsLanguage                   ->setText( MainWindow::tr("&Language...") );
 
     actions.helpAboutQt    ->setText( MainWindow::tr("About &Qt") );
@@ -575,8 +582,6 @@ void MainWindow::Private::setActionsText()
     actions.helpTipOfTheDay->setText( MainWindow::tr("&Tip of the Day") );
     actions.helpWebsite    ->setText( MainWindow::tr("SpeedCrunch &Web Site...") );
 
-    actions.settingsDisplayZoomOut->setText( MainWindow::tr("Decrease Text Size") );
-    actions.settingsDisplayZoomIn->setText( MainWindow::tr("Increase Text Size") );
     actions.scrollDown->setText( MainWindow::tr("Scroll Display Down") );
     actions.scrollUp  ->setText( MainWindow::tr("Scroll Display Up") );
 }
@@ -647,10 +652,12 @@ void MainWindow::Private::createActionShortcuts()
     actions.settingsRadixCharDot           ->setShortcut( Qt::CTRL + Qt::Key_Period );
     actions.settingsRadixCharComma         ->setShortcut( Qt::CTRL + Qt::Key_Comma );
 
+    actions.settingsDisplayZoomIn->setShortcut( Qt::CTRL + Qt::Key_Plus );
+    actions.settingsDisplayZoomOut->setShortcut( Qt::CTRL + Qt::Key_Minus );
+
+
     actions.helpTipOfTheDay->setShortcut( Qt::CTRL + Qt::Key_T );
 
-    actions.settingsDisplayZoomOut->setShortcut( Qt::CTRL + Qt::Key_Minus );
-    actions.settingsDisplayZoomIn->setShortcut( Qt::CTRL + Qt::Key_Plus );
     actions.scrollDown      ->setShortcut( Qt::SHIFT + Qt::Key_PageDown );
     actions.scrollUp        ->setShortcut( Qt::SHIFT + Qt::Key_PageUp );
 }
@@ -753,6 +760,8 @@ void MainWindow::Private::createMenus()
     menus.display = menus.settings->addMenu( "" );
     menus.display->addAction( actions.settingsDisplayZoomIn );
     menus.display->addAction( actions.settingsDisplayZoomOut );
+    menus.display->addSeparator();
+    menus.display->addAction( actions.settingsDisplayFont );
 
     menus.settings->addAction( actions.settingsLanguage );
 
@@ -1126,10 +1135,12 @@ void MainWindow::Private::createFixedConnections()
     connect( p, SIGNAL(resultFormatChanged()), widgets.display, SLOT(refresh()) );
     connect( p, SIGNAL(resultPrecisionChanged()), widgets.display, SLOT(refresh()) );
 
-    connect( p, SIGNAL(languageChanged()), p, SLOT(retranslateText()) );
-
     connect( actions.settingsDisplayZoomOut, SIGNAL(triggered()), p, SLOT(zoomOut()) );
     connect( actions.settingsDisplayZoomIn, SIGNAL(triggered()), p, SLOT(zoomIn()) );
+    connect( actions.settingsDisplayFont, SIGNAL(triggered()), p, SLOT(showFontDialog()) );
+
+    connect( p, SIGNAL(languageChanged()), p, SLOT(retranslateText()) );
+
     connect( actions.scrollDown, SIGNAL(triggered()), p, SLOT(scrollDown()) );
     connect( actions.scrollUp,   SIGNAL(triggered()), p, SLOT(scrollUp()) );
 }
@@ -1217,9 +1228,9 @@ void MainWindow::Private::applySettings()
     else
         p->setSyntaxHighlightingEnabled( false );
 
-    // display text size
-    QFont f = widgets.display->font();
-    f.setPointSize( settings->displayTextSize );
+    // display font
+    QFont f;
+    f.fromString( settings->displayFont );
     widgets.display->setFont( f );
 
     // status bar
@@ -1274,7 +1285,7 @@ void MainWindow::Private::saveSettings()
     if ( settings->variableSave ) {
         settings->variables.clear();
         QVector<Variable> vars = evaluator->variables();
-        for ( int i = 0; i < vars.count(); i++ ) {
+        for ( int i = 0; i < vars.count(); ++i ) {
             QString name = vars.at( i ).name;
             char * value = HMath::format( vars.at(i).value, 'e', DECPRECISION );
             settings->variables.append( QString("%1=%2").arg(name).arg(value) );
@@ -1286,7 +1297,7 @@ void MainWindow::Private::saveSettings()
     settings->windowPosition = p->pos();
     settings->windowSize = p->size();
     settings->windowState = p->saveState();
-    settings->displayTextSize = widgets.display->font().pointSize();
+    settings->displayFont = widgets.display->font().toString();
 
     settings->save();
 }
@@ -1841,6 +1852,14 @@ void MainWindow::zoomOut()
         return;
     f.setPointSize( newSize );
     d->widgets.display->setFont( f );
+}
+
+void MainWindow::showFontDialog()
+{
+    bool ok;
+    QFont f = QFontDialog::getFont( &ok, d->widgets.display->font(), this, tr("Display font") );
+    if ( ok )
+        d->widgets.display->setFont( f );
 }
 
 void MainWindow::scrollDown()

@@ -60,7 +60,7 @@ public:
     bool variablesDockVisible;
     bool windowOnfullScreen;
 
-    int displayTextSize;
+    QString displayFont;
 
     QString language;
 

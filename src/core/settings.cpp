@@ -127,8 +127,8 @@ void Settings::load()
     windowPosition = settings->value( key + QLatin1String("WindowPosition"), QPoint() ).toPoint();
     windowSize = settings->value( key + QLatin1String("WindowSize"), QSize(400, 300) ).toSize();
     windowState = settings->value( key + QLatin1String("State") ).toByteArray();
-    displayTextSize = settings->value( key + QLatin1String("DisplayTextSize"),
-                                       QFont().pointSize() ).toInt();
+    displayFont = settings->value( key + QLatin1String("DisplayFont"), QFont().toString()
+                                 ).toString();
 
     // load history
     key = KEY + QLatin1String("/History/");
@@ -235,7 +235,7 @@ void Settings::save()
     settings->setValue( key + QLatin1String("WindowSize"), windowSize );
     settings->setValue( key + QLatin1String("WindowAlwaysOnTop"), windowAlwaysOnTop );
     settings->setValue( key + QLatin1String("State"), windowState );
-    settings->setValue( key + QLatin1String("DisplayTextSize"), displayTextSize );
+    settings->setValue( key + QLatin1String("DisplayFont"), displayFont );
 
     // save history
     if ( historySave ) {
