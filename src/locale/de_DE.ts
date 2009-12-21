@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1" language="de_DE">
+<!DOCTYPE TS>
+<TS version="2.0" language="de_DE">
 <context>
     <name>AboutBox</name>
     <message>
@@ -215,7 +216,7 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="139"/>
         <source>Korean</source>
-        <translation type="unfinished"></translation>
+        <translation>Koreanisch</translation>
     </message>
 </context>
 <context>
@@ -1742,27 +1743,27 @@ Falls nein, werden aktuelle Variablen und Anzeigen gelöscht.</translation>
     <message>
         <location filename="../gui/mainwindow.cpp" line="511"/>
         <source>&amp;HTML</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;HTML</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="512"/>
         <source>Plain &amp;text</source>
-        <translation type="unfinished"></translation>
+        <translation>Einfacher &amp;Text</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="760"/>
         <source>&amp;Export</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Export</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1746"/>
         <source>Export session as HTML</source>
-        <translation type="unfinished"></translation>
+        <translation>Session in HTML exportieren</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1767"/>
         <source>Export session as plain text</source>
-        <translation type="unfinished"></translation>
+        <translation>Session als Text exportieren</translation>
     </message>
 </context>
 <context>
