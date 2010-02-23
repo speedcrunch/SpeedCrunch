@@ -19,7 +19,7 @@
 
 #include "gui/bookdock.hxx"
 
-#include "3rdparty/flickcharm/flickcharm.h"
+#include "thirdparty/flickcharm/flickcharm.h"
 #include "core/settings.hxx"
 
 #include <QtCore/QDir>

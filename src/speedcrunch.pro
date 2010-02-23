@@ -30,17 +30,17 @@ DEPENDPATH += . \
               #symboltables \
               #test \
               #variant \
-              3rdparty/flickcharm
+              thirdparty/flickcharm
 !macx {
     !win32 {
-        DEPENDPATH += 3rdparty/binreloc
+        DEPENDPATH += thirdparty/binreloc
     }
 }
 
-INCLUDEPATH += . math core 3rdparty/flickcharm gui
+INCLUDEPATH += . math core thirdparty/flickcharm gui
 !macx {
     !win32 {
-        INCLUDEPATH += 3rdparty/binreloc
+        INCLUDEPATH += thirdparty/binreloc
     }
 }
 
@@ -54,7 +54,7 @@ QT += network
 
 #FORMS +=
 
-HEADERS += 3rdparty/flickcharm/flickcharm.h \
+HEADERS += thirdparty/flickcharm/flickcharm.h \
            core/constants.hxx \
            core/evaluator.hxx \
            core/functions.hxx \
@@ -103,7 +103,7 @@ HEADERS += 3rdparty/flickcharm/flickcharm.h \
 
 #YACCSOURCES += bison/exprparser.y
 
-SOURCES += 3rdparty/flickcharm/flickcharm.cpp \
+SOURCES += thirdparty/flickcharm/flickcharm.cpp \
            #variant/variantbase.cpp \
            #variant/variant.cpp \
            #variant/real.cpp \
@@ -159,7 +159,7 @@ SOURCES += 3rdparty/flickcharm/flickcharm.cpp \
 
 !macx {
     !win32 {
-        SOURCES += 3rdparty/binreloc/binreloc.c
+        SOURCES += thirdparty/binreloc/binreloc.c
     }
 }
 

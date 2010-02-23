@@ -18,7 +18,7 @@
 
 #include "gui/resultdisplay.hxx"
 
-//#include "3rdparty/flickcharm/flickcharm.h"
+//#include "thirdparty/flickcharm/flickcharm.h"
 #include "core/functions.hxx"
 #include "core/settings.hxx"
 #include "gui/syntaxhighlighter.hxx"

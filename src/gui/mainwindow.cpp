@@ -21,7 +21,7 @@
 
 #include "gui/mainwindow.hxx"
 
-#include "3rdparty/binreloc/binreloc.h"
+#include "thirdparty/binreloc/binreloc.h"
 #include "core/constants.hxx"
 #include "core/evaluator.hxx"
 #include "core/functions.hxx"

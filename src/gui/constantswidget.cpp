@@ -19,7 +19,7 @@
 
 #include "gui/constantswidget.hxx"
 
-#include "3rdparty/flickcharm/flickcharm.h"
+#include "thirdparty/flickcharm/flickcharm.h"
 #include "core/constants.hxx"
 #include "core/settings.hxx"
 

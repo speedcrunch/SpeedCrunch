@@ -19,7 +19,7 @@
 
 #include "gui/historywidget.hxx"
 
-#include "3rdparty/flickcharm/flickcharm.h"
+#include "thirdparty/flickcharm/flickcharm.h"
 
 #include <QtCore/QEvent>
 #include <QtGui/QListWidget>

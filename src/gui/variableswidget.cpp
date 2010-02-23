@@ -19,7 +19,7 @@
 
 #include "gui/variableswidget.hxx"
 
-#include "3rdparty/flickcharm/flickcharm.h"
+#include "thirdparty/flickcharm/flickcharm.h"
 #include "core/evaluator.hxx"
 #include "core/settings.hxx"
 
