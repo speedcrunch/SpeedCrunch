@@ -1,28 +1,28 @@
 /****************************************************************************
 **
-** Copyright (C) 2008-2008 Trolltech ASA. All rights reserved.
+** Copyright (C) 2009 Nokia Corporation and/or its subsidiary(-ies).
+** Contact: Qt Software Information (qt-info@nokia.com)
 **
-** This file is part of the Graphics Dojo project on Trolltech Labs.
+** This file is part of the Graphics Dojo project on Qt Labs.
 **
 ** This file may be used under the terms of the GNU General Public
-** License version 2.0 as published by the Free Software Foundation
+** License version 2.0 or 3.0 as published by the Free Software Foundation
 ** and appearing in the file LICENSE.GPL included in the packaging of
 ** this file.  Please review the following information to ensure GNU
 ** General Public Licensing requirements will be met:
-** http://www.trolltech.com/products/qt/opensource.html
+** http://www.fsf.org/licensing/licenses/info/GPLv2.html and
+** http://www.gnu.org/copyleft/gpl.html.
 **
 ** If you are unsure which license is appropriate for your use, please
-** review the following information:
-** http://www.trolltech.com/products/qt/licensing.html or contact the
-** sales department at sales@trolltech.com.
+** contact the sales department at qt-sales@nokia.com.
 **
 ** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
 ** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 **
 ****************************************************************************/
 
-// NOTE: some parts of the original file were commented for better integration
-// with the SpeedCrunch project
+// Note: some parts of the original file were commented out for better
+// integration with the SpeedCrunch project
 
 #include "flickcharm.h"
 
@@ -90,8 +90,8 @@ void FlickCharm::activateOn(QWidget *widget)
     //QWebView *webView = dynamic_cast<QWebView*>(widget);
     //if (webView) {
     //    QWebFrame *frame = webView->page()->mainFrame();
-    //    frame->setScrollBarPolicy(Qt::Vertical, Qt::ScrollBarAlwaysOff);
-    //    frame->setScrollBarPolicy(Qt::Horizontal, Qt::ScrollBarAlwaysOff);
+    //    //frame->setScrollBarPolicy(Qt::Vertical, Qt::ScrollBarAlwaysOff);
+    //    //frame->setScrollBarPolicy(Qt::Horizontal, Qt::ScrollBarAlwaysOff);
 
     //    webView->installEventFilter(this);
 
@@ -250,6 +250,8 @@ bool FlickCharm::eventFilter(QObject *object, QEvent *event)
             consumed = true;
             data->state = FlickData::Stop;
             data->speed = QPoint(0, 0);
+            data->pressPos = mouseEvent->pos();
+            data->offset = scrollOffset(data->widget);
         }
         if (mouseEvent->type() == QEvent::MouseButtonRelease) {
             consumed = true;
