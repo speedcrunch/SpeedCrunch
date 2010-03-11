@@ -17,7 +17,9 @@ Windows, Linux, and Mac OS X.
 
 Steps to build and install:
     cd src
-    qmake (or cmake)
-    make (or nmake, or gmake)
-    make install (might need administrator privileges)
+    qmake (or "cmake .")
+    make (or "nmake", or "gmake")
+    make install (might require administrator privileges)
 
+If using cmake, you can specify the installation prefix like this:
+    cmake -DCMAKE_INSTALL_PREFIX:STRING="</PREFIX/PATH>"
