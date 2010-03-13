@@ -150,6 +150,7 @@ static Token::Op matchOperator( const QString & text )
             case '%' : result = Token::Percent; break;
             case '!' : result = Token::Exclamation; break;
             case '=' : result = Token::Equal; break;
+            case '\\': result = Token::Backslash; break;
 
             case 0x2070: result = Token::Super0; break; // ⁰
             case 0x00B9: result = Token::Super1; break; // ¹
@@ -172,8 +173,6 @@ static Token::Op matchOperator( const QString & text )
     else if ( text.length() == 3 ) {
         if (text == "mod")
             result = Token::Modulo;
-        else if ( text == "div" )
-            result = Token::Div;
     }
 #endif
 
@@ -202,7 +201,7 @@ static int opPrecedence( Token::Op op )
         case Token::Asterisk    : prec = 5; break;
         case Token::Slash       : prec = 6; break;
         case Token::Modulo      : prec = 6; break;
-        case Token::Div         : prec = 6; break;
+        case Token::Backslash   : prec = 6; break;
         case Token::Plus        : prec = 3; break;
         case Token::Minus       : prec = 3; break;
         case Token::RightPar    : prec = 0; break;
@@ -1021,23 +1020,23 @@ void Evaluator::compile( const Tokens & tokens ) const
                         syntaxStack.push( b );
                         switch ( op.asOperator() ) {
                             // simple binary operations
-                            case Token::Plus:     d->codes.append( Opcode::Add ); break;
-                            case Token::Minus:    d->codes.append( Opcode::Sub ); break;
-                            case Token::Asterisk: d->codes.append( Opcode::Mul ); break;
-                            case Token::Slash:    d->codes.append( Opcode::Div ); break;
-                            case Token::Caret:    d->codes.append( Opcode::Pow ); break;
-                            case Token::Super0:   d->codes.append( Opcode::Pow0 ); break;
-                            case Token::Super1:   d->codes.append( Opcode::Pow1 ); break;
-                            case Token::Super2:   d->codes.append( Opcode::Pow2 ); break;
-                            case Token::Super3:   d->codes.append( Opcode::Pow3 ); break;
-                            case Token::Super4:   d->codes.append( Opcode::Pow4 ); break;
-                            case Token::Super5:   d->codes.append( Opcode::Pow5 ); break;
-                            case Token::Super6:   d->codes.append( Opcode::Pow6 ); break;
-                            case Token::Super7:   d->codes.append( Opcode::Pow7 ); break;
-                            case Token::Super8:   d->codes.append( Opcode::Pow8 ); break;
-                            case Token::Super9:   d->codes.append( Opcode::Pow9 ); break;
-                            case Token::Modulo:   d->codes.append( Opcode::Modulo ); break;
-                            case Token::Div:      d->codes.append( Opcode::IntDiv ); break;
+                            case Token::Plus:      d->codes.append( Opcode::Add ); break;
+                            case Token::Minus:     d->codes.append( Opcode::Sub ); break;
+                            case Token::Asterisk:  d->codes.append( Opcode::Mul ); break;
+                            case Token::Slash:     d->codes.append( Opcode::Div ); break;
+                            case Token::Caret:     d->codes.append( Opcode::Pow ); break;
+                            case Token::Super0:    d->codes.append( Opcode::Pow0 ); break;
+                            case Token::Super1:    d->codes.append( Opcode::Pow1 ); break;
+                            case Token::Super2:    d->codes.append( Opcode::Pow2 ); break;
+                            case Token::Super3:    d->codes.append( Opcode::Pow3 ); break;
+                            case Token::Super4:    d->codes.append( Opcode::Pow4 ); break;
+                            case Token::Super5:    d->codes.append( Opcode::Pow5 ); break;
+                            case Token::Super6:    d->codes.append( Opcode::Pow6 ); break;
+                            case Token::Super7:    d->codes.append( Opcode::Pow7 ); break;
+                            case Token::Super8:    d->codes.append( Opcode::Pow8 ); break;
+                            case Token::Super9:    d->codes.append( Opcode::Pow9 ); break;
+                            case Token::Modulo:    d->codes.append( Opcode::Modulo ); break;
+                            case Token::Backslash: d->codes.append( Opcode::IntDiv ); break;
                             default: break;
                         };
 #ifdef EVALUATOR_DEBUG

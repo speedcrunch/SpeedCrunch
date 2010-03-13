@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2008-2009 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2008,2009,2010 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -37,9 +37,9 @@
 class Token
 {
 public:
-    enum Op { InvalidOp = 0, Plus, Minus, Asterisk, Slash, Caret,
+    enum Op { InvalidOp = 0, Plus, Minus, Asterisk, Slash, Backslash, Caret,
               Super0, Super1, Super2, Super3, Super4, Super5, Super6, Super7, Super8, Super9,
-              LeftPar, RightPar, Semicolon, Percent, Exclamation, Equal, Modulo, Div };
+              LeftPar, RightPar, Semicolon, Percent, Exclamation, Equal, Modulo };
     enum Type { stxUnknown, stxNumber, stxIdentifier, stxOperator, stxOpenPar, stxClosePar,
                 stxSep };
 
