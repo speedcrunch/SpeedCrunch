@@ -37,8 +37,9 @@
 class Token
 {
 public:
-    enum Op { InvalidOp = 0, Plus, Minus, Asterisk, Slash, Caret, LeftPar, RightPar, Semicolon,
-              Percent, Exclamation, Equal, Modulo, Div };
+    enum Op { InvalidOp = 0, Plus, Minus, Asterisk, Slash, Caret,
+              Super0, Super1, Super2, Super3, Super4, Super5, Super6, Super7, Super8, Super9,
+              LeftPar, RightPar, Semicolon, Percent, Exclamation, Equal, Modulo, Div };
     enum Type { stxUnknown, stxNumber, stxIdentifier, stxOperator, stxOpenPar, stxClosePar,
                 stxSep };
 

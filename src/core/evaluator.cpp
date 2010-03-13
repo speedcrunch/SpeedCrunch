@@ -1,7 +1,7 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
 // Copyright (C) 2005-2006 Johan Thelin <e8johan@gmail.com>
-// Copyright (C) 2007-2009 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2007, 2008, 2009, 2010 Helder Correia <helder.pereira.correia@gmail.com>
 // Copyright (C) 2009 Wolf Lammen <ookami1@gmx.de>
 //
 // This program is free software; you can redistribute it and/or
@@ -53,7 +53,9 @@ static void s_deleteEvaluator()
 
 struct Opcode
 {
-    enum { Nop = 0, Load, Ref, Function, Add, Sub, Neg, Mul, Div, Pow, Fact, Modulo, IntDiv };
+    enum { Nop = 0, Load, Ref, Function, Add, Sub, Neg, Mul, Div,
+           Pow, Pow0, Pow1, Pow2, Pow3, Pow4, Pow5, Pow6, Pow7, Pow8, Pow9,
+           Fact, Modulo, IntDiv };
 
     unsigned type;
     unsigned index;
@@ -148,7 +150,19 @@ static Token::Op matchOperator( const QString & text )
             case '%' : result = Token::Percent; break;
             case '!' : result = Token::Exclamation; break;
             case '=' : result = Token::Equal; break;
-            default  : result = Token::InvalidOp; break;
+
+            case 0x2070: result = Token::Super0; break; // ⁰
+            case 0x00B9: result = Token::Super1; break; // ¹
+            case 0x00B2: result = Token::Super2; break; // ²
+            case 0x00B3: result = Token::Super3; break; // ³
+            case 0x2074: result = Token::Super4; break; // ⁴
+            case 0x2075: result = Token::Super5; break; // ⁵
+            case 0x2076: result = Token::Super6; break; // ⁶
+            case 0x2077: result = Token::Super7; break; // ⁷
+            case 0x2078: result = Token::Super8; break; // ⁸
+            case 0x2079: result = Token::Super9; break; // ⁹
+
+            default  : result = Token::InvalidOp;
         }
     } else if ( text.length() == 2 ) {
         if ( text == "**" )
@@ -174,6 +188,16 @@ static int opPrecedence( Token::Op op )
     switch( op ) {
         case Token::Exclamation : prec = 8; break;
         case Token::Percent     : prec = 8; break;
+        case Token::Super0      :
+        case Token::Super1      :
+        case Token::Super2      :
+        case Token::Super3      :
+        case Token::Super4      :
+        case Token::Super5      :
+        case Token::Super6      :
+        case Token::Super7      :
+        case Token::Super8      :
+        case Token::Super9      :
         case Token::Caret       : prec = 7; break;
         case Token::Asterisk    : prec = 5; break;
         case Token::Slash       : prec = 6; break;
@@ -763,11 +787,81 @@ void Evaluator::compile( const Tokens & tokens ) const
                                 syntaxStack.pop();
                                 syntaxStack.push(y);
                                 d->codes.append( Opcode(Opcode::Fact) );
+                                break;
+                            case Token::Super0:
+                                ruleFound = true;
+                                syntaxStack.pop();
+                                syntaxStack.pop();
+                                syntaxStack.push(y);
+                                d->codes.append( Opcode(Opcode::Pow0) );
+                                break;
+                            case Token::Super1:
+                                ruleFound = true;
+                                syntaxStack.pop();
+                                syntaxStack.pop();
+                                syntaxStack.push(y);
+                                d->codes.append( Opcode(Opcode::Pow1) );
+                                break;
+                            case Token::Super2:
+                                ruleFound = true;
+                                syntaxStack.pop();
+                                syntaxStack.pop();
+                                syntaxStack.push(y);
+                                d->codes.append( Opcode(Opcode::Pow2) );
+                                break;
+                            case Token::Super3:
+                                ruleFound = true;
+                                syntaxStack.pop();
+                                syntaxStack.pop();
+                                syntaxStack.push(y);
+                                d->codes.append( Opcode(Opcode::Pow3) );
+                                break;
+                            case Token::Super4:
+                                ruleFound = true;
+                                syntaxStack.pop();
+                                syntaxStack.pop();
+                                syntaxStack.push(y);
+                                d->codes.append( Opcode(Opcode::Pow4) );
+                                break;
+                            case Token::Super5:
+                                ruleFound = true;
+                                syntaxStack.pop();
+                                syntaxStack.pop();
+                                syntaxStack.push(y);
+                                d->codes.append( Opcode(Opcode::Pow5) );
+                                break;
+                            case Token::Super6:
+                                ruleFound = true;
+                                syntaxStack.pop();
+                                syntaxStack.pop();
+                                syntaxStack.push(y);
+                                d->codes.append( Opcode(Opcode::Pow6) );
+                                break;
+                            case Token::Super7:
+                                ruleFound = true;
+                                syntaxStack.pop();
+                                syntaxStack.pop();
+                                syntaxStack.push(y);
+                                d->codes.append( Opcode(Opcode::Pow7) );
+                                break;
+                            case Token::Super8:
+                                ruleFound = true;
+                                syntaxStack.pop();
+                                syntaxStack.pop();
+                                syntaxStack.push(y);
+                                d->codes.append( Opcode(Opcode::Pow8) );
+                                break;
+                            case Token::Super9:
+                                ruleFound = true;
+                                syntaxStack.pop();
+                                syntaxStack.pop();
+                                syntaxStack.push(y);
+                                d->codes.append( Opcode(Opcode::Pow9) );
+                                break;
+                            default:;
 #ifdef EVALUATOR_DEBUG
                                 dbg << "    Rule for postfix operator" << "\n";
 #endif
-                                break;
-                            default:;
                         }
                 }
 
@@ -932,6 +1026,16 @@ void Evaluator::compile( const Tokens & tokens ) const
                             case Token::Asterisk: d->codes.append( Opcode::Mul ); break;
                             case Token::Slash:    d->codes.append( Opcode::Div ); break;
                             case Token::Caret:    d->codes.append( Opcode::Pow ); break;
+                            case Token::Super0:   d->codes.append( Opcode::Pow0 ); break;
+                            case Token::Super1:   d->codes.append( Opcode::Pow1 ); break;
+                            case Token::Super2:   d->codes.append( Opcode::Pow2 ); break;
+                            case Token::Super3:   d->codes.append( Opcode::Pow3 ); break;
+                            case Token::Super4:   d->codes.append( Opcode::Pow4 ); break;
+                            case Token::Super5:   d->codes.append( Opcode::Pow5 ); break;
+                            case Token::Super6:   d->codes.append( Opcode::Pow6 ); break;
+                            case Token::Super7:   d->codes.append( Opcode::Pow7 ); break;
+                            case Token::Super8:   d->codes.append( Opcode::Pow8 ); break;
+                            case Token::Super9:   d->codes.append( Opcode::Pow9 ); break;
                             case Token::Modulo:   d->codes.append( Opcode::Modulo ); break;
                             case Token::Div:      d->codes.append( Opcode::IntDiv ); break;
                             default: break;
@@ -983,10 +1087,16 @@ void Evaluator::compile( const Tokens & tokens ) const
 
                 // auxiliary rule for unary operator:  (op) X -> X
                 // conditions: op is unary, op is first in syntax stack,
-                // token is not '(' or '^' or '!'
+                // token is not '(' or '^' or '!' or any power operator
                 // action: push (op) to result
                 if ( ! ruleFound && token.asOperator() != Token::LeftPar
-                     && token.asOperator() != Token::Exclamation && syntaxStack.itemCount() == 2 )
+                     && token.asOperator() != Token::Exclamation
+                     && token.asOperator() != Token::Super0 && token.asOperator() != Token::Super1
+                     && token.asOperator() != Token::Super2 && token.asOperator() != Token::Super3
+                     && token.asOperator() != Token::Super4 && token.asOperator() != Token::Super5
+                     && token.asOperator() != Token::Super6 && token.asOperator() != Token::Super7
+                     && token.asOperator() != Token::Super8 && token.asOperator() != Token::Super9
+                     && syntaxStack.itemCount() == 2 )
                 {
                     Token x = syntaxStack.top();
                     Token op = syntaxStack.top( 1 );
@@ -999,11 +1109,31 @@ void Evaluator::compile( const Tokens & tokens ) const
                     } else {
                         x = op;
                         op = syntaxStack.top();
-                        if ( ! x.isOperator() && op.isOperator()
-                             && op.asOperator() == Token::Exclamation )
+                        if ( ! x.isOperator() && op.isOperator() )
                         {
                             ruleFound = true;
-                            d->codes.append( Opcode(Opcode::Fact) );
+                            if (op.asOperator() == Token::Exclamation)
+                                d->codes.append( Opcode(Opcode::Fact) );
+                            else if (op.asOperator() == Token::Super0)
+                                d->codes.append( Opcode(Opcode::Pow0) );
+                            else if (op.asOperator() == Token::Super1)
+                                d->codes.append( Opcode(Opcode::Pow1) );
+                            else if (op.asOperator() == Token::Super2)
+                                d->codes.append( Opcode(Opcode::Pow2) );
+                            else if (op.asOperator() == Token::Super3)
+                                d->codes.append( Opcode(Opcode::Pow3) );
+                            else if (op.asOperator() == Token::Super4)
+                                d->codes.append( Opcode(Opcode::Pow4) );
+                            else if (op.asOperator() == Token::Super5)
+                                d->codes.append( Opcode(Opcode::Pow5) );
+                            else if (op.asOperator() == Token::Super6)
+                                d->codes.append( Opcode(Opcode::Pow6) );
+                            else if (op.asOperator() == Token::Super7)
+                                d->codes.append( Opcode(Opcode::Pow7) );
+                            else if (op.asOperator() == Token::Super8)
+                                d->codes.append( Opcode(Opcode::Pow8) );
+                            else if (op.asOperator() == Token::Super9)
+                                d->codes.append( Opcode(Opcode::Pow9) );
                         }
                     }
                     if ( ruleFound) {
@@ -1160,6 +1290,106 @@ HNumber Evaluator::evalNoAssign()
                 val2 = stack.pop();
                 val2 = d->checkOperatorResult(HMath::raise( val2, val1 ));
                 stack.push( val2 );
+                break;
+
+            case Opcode::Pow0:
+                if ( stack.count() < 1 ) {
+                    d->error = tr( "invalid expression" );
+                    return HMath::nan();
+                }
+                val1 = stack.pop();
+                val1 = d->checkOperatorResult(HMath::raise( val1, 0 ));
+                stack.push( val1 );
+                break;
+
+            case Opcode::Pow1:
+                if ( stack.count() < 1 ) {
+                    d->error = tr( "invalid expression" );
+                    return HMath::nan();
+                }
+                val1 = stack.pop();
+                val1 = d->checkOperatorResult(HMath::raise( val1, 1 ));
+                stack.push( val1 );
+                break;
+
+            case Opcode::Pow2:
+                if ( stack.count() < 1 ) {
+                    d->error = tr( "invalid expression" );
+                    return HMath::nan();
+                }
+                val1 = stack.pop();
+                val1 = d->checkOperatorResult(HMath::raise( val1, 2 ));
+                stack.push( val1 );
+                break;
+
+            case Opcode::Pow3:
+                if ( stack.count() < 1 ) {
+                    d->error = tr( "invalid expression" );
+                    return HMath::nan();
+                }
+                val1 = stack.pop();
+                val1 = d->checkOperatorResult(HMath::raise( val1, 3 ));
+                stack.push( val1 );
+                break;
+
+            case Opcode::Pow4:
+                if ( stack.count() < 1 ) {
+                    d->error = tr( "invalid expression" );
+                    return HMath::nan();
+                }
+                val1 = stack.pop();
+                val1 = d->checkOperatorResult(HMath::raise( val1, 4 ));
+                stack.push( val1 );
+                break;
+
+            case Opcode::Pow5:
+                if ( stack.count() < 1 ) {
+                    d->error = tr( "invalid expression" );
+                    return HMath::nan();
+                }
+                val1 = stack.pop();
+                val1 = d->checkOperatorResult(HMath::raise( val1, 5 ));
+                stack.push( val1 );
+                break;
+
+            case Opcode::Pow6:
+                if ( stack.count() < 1 ) {
+                    d->error = tr( "invalid expression" );
+                    return HMath::nan();
+                }
+                val1 = stack.pop();
+                val1 = d->checkOperatorResult(HMath::raise( val1, 6 ));
+                stack.push( val1 );
+                break;
+
+            case Opcode::Pow7:
+                if ( stack.count() < 1 ) {
+                    d->error = tr( "invalid expression" );
+                    return HMath::nan();
+                }
+                val1 = stack.pop();
+                val1 = d->checkOperatorResult(HMath::raise( val1, 7 ));
+                stack.push( val1 );
+                break;
+
+            case Opcode::Pow8:
+                if ( stack.count() < 1 ) {
+                    d->error = tr( "invalid expression" );
+                    return HMath::nan();
+                }
+                val1 = stack.pop();
+                val1 = d->checkOperatorResult(HMath::raise( val1, 8 ));
+                stack.push( val1 );
+                break;
+
+            case Opcode::Pow9:
+                if ( stack.count() < 1 ) {
+                    d->error = tr( "invalid expression" );
+                    return HMath::nan();
+                }
+                val1 = stack.pop();
+                val1 = d->checkOperatorResult(HMath::raise( val1, 9 ));
+                stack.push( val1 );
                 break;
 
             case Opcode::Fact:
@@ -1445,6 +1675,16 @@ QString Evaluator::dump() const
             case Opcode::Div: ctext = "Div"; break;
             case Opcode::Neg: ctext = "Neg"; break;
             case Opcode::Pow: ctext = "Pow"; break;
+            case Opcode::Pow0: ctext = "Pow0"; break;
+            case Opcode::Pow1: ctext = "Pow1"; break;
+            case Opcode::Pow2: ctext = "Pow2"; break;
+            case Opcode::Pow3: ctext = "Pow3"; break;
+            case Opcode::Pow4: ctext = "Pow4"; break;
+            case Opcode::Pow5: ctext = "Pow5"; break;
+            case Opcode::Pow6: ctext = "Pow6"; break;
+            case Opcode::Pow7: ctext = "Pow7"; break;
+            case Opcode::Pow8: ctext = "Pow8"; break;
+            case Opcode::Pow9: ctext = "Pow9"; break;
             case Opcode::Fact: ctext = "Fact"; break;
             default: ctext = "Unknown"; break;
         }
