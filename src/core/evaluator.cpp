@@ -1440,7 +1440,7 @@ HNumber Evaluator::evalNoAssign()
             case Opcode::LSh:
                 if ( stack.count() < 2 ) {
                     d->error = tr( "invalid expression" );
-                    return HNumber( 0 );
+                    return HMath::nan();
                 }
                 val1 = stack.pop();
                 val2 = stack.pop();
@@ -1451,7 +1451,7 @@ HNumber Evaluator::evalNoAssign()
             case Opcode::RSh:
                 if ( stack.count() < 2 ) {
                     d->error = tr( "invalid expression" );
-                    return HNumber( 0 );
+                    return HMath::nan();
                 }
                 val1 = stack.pop();
                 val2 = stack.pop();
@@ -1462,7 +1462,7 @@ HNumber Evaluator::evalNoAssign()
             case Opcode::BAnd:
                 if ( stack.count() < 2 ) {
                     d->error = tr( "invalid expression" );
-                    return HNumber( 0 );
+                    return HMath::nan();
                 }
                 val1 = stack.pop();
                 val2 = stack.pop();
@@ -1473,7 +1473,7 @@ HNumber Evaluator::evalNoAssign()
             case Opcode::BOr:
                 if ( stack.count() < 2 ) {
                     d->error = tr( "invalid expression" );
-                    return HNumber( 0 );
+                    return HMath::nan();
                 }
                 val1 = stack.pop();
                 val2 = stack.pop();
