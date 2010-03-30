@@ -17,37 +17,33 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-
 #ifndef AUTOHIDELABEL_HXX
 #define AUTOHIDELABEL_HXX
-
 
 #include <QtGui/QLabel>
 
 #include <memory>
 
-
 class AutoHideLabel: public QLabel
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    explicit AutoHideLabel( QWidget * parent );
-    ~AutoHideLabel();
+public:
+    explicit AutoHideLabel(QWidget *parent);
 
-  public slots:
-    void showText( const QString & );
+public slots:
+    void showText(const QString&);
     void hideText();
 
-  private slots:
+private slots:
     void fade();
 
-  private:
+private:
     struct Private;
     const std::auto_ptr<Private> d;
-    AutoHideLabel( const AutoHideLabel & );
-    AutoHideLabel& operator=( const AutoHideLabel & );
+    AutoHideLabel(const AutoHideLabel&);
+    AutoHideLabel& operator=(const AutoHideLabel&);
 };
 
-
 #endif
+

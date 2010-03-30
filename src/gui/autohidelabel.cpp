@@ -17,88 +17,75 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-
-#include "autohidelabel.hxx"
+#include "gui/autohidelabel.hxx"
 
 #include <QtCore/QTimer>
 #include <QtGui/QToolTip>
 
-
 #define TIMER_INTERVAL 25
 #define FADE_STEP      16
 
-
 struct AutoHideLabel::Private
 {
-  QTimer * fadeTimer;
-  int      alpha;
+    QTimer *fadeTimer;
+    int alpha;
 };
 
-
-AutoHideLabel::AutoHideLabel( QWidget * parent ): QLabel( parent ),
-  d( new AutoHideLabel::Private )
+AutoHideLabel::AutoHideLabel(QWidget *parent)
+    : QLabel(parent), d(new AutoHideLabel::Private)
 {
-  d->fadeTimer = new QTimer( this );
-  d->fadeTimer->setInterval( TIMER_INTERVAL );
-  connect( d->fadeTimer, SIGNAL( timeout() ), SLOT( fade() ) );
+    d->fadeTimer = new QTimer(this);
+    d->fadeTimer->setInterval(TIMER_INTERVAL);
+    connect(d->fadeTimer, SIGNAL(timeout()), SLOT(fade()));
 
-  d->alpha = 255;
+    d->alpha = 255;
 
-  setPalette( QToolTip::palette() );
-  setAutoFillBackground( true );
-  setFrameShape( QFrame::Box );
+    setPalette(QToolTip::palette());
+    setAutoFillBackground(true);
+    setFrameShape(QFrame::Box);
 }
 
-
-AutoHideLabel::~AutoHideLabel()
+void AutoHideLabel::showText(const QString& msg)
 {
+    setText(msg);
+    adjustSize();
+    show();
+    raise();
+
+    // 5 seconds display + fading
+    d->alpha = 5 * (1000 / TIMER_INTERVAL * FADE_STEP) + 300;
+
+    d->fadeTimer->stop();
+    d->fadeTimer->start();
+    fade();
 }
-
-
-void AutoHideLabel::showText( const QString & msg )
-{
-  setText( msg );
-  adjustSize();
-  show();
-  raise();
-
-  // 5 seconds display + fading
-  d->alpha = 5*(1000/TIMER_INTERVAL*FADE_STEP) + 300;
-
-  d->fadeTimer->stop();
-  d->fadeTimer->start();
-  fade();
-}
-
 
 void AutoHideLabel::hideText()
 {
-  if( d->alpha > 255 )
-    d->alpha = 255;
+    if (d->alpha > 255)
+        d->alpha = 255;
 }
 
 
 void AutoHideLabel::fade()
 {
-  if( d->alpha <= 0)
-  {
-    d->fadeTimer->stop();
-    hide();
-  }
-  else
-  {
-    d->alpha = qMax( 0, d->alpha-FADE_STEP );
-    int a = qMin( 255, d->alpha );
+    if (d->alpha <= 0) {
+        d->fadeTimer->stop();
+        hide();
+    } else {
+      d->alpha = qMax(0, d->alpha-FADE_STEP);
+      int a = qMin(255, d->alpha);
 
-    QPalette pal = QToolTip::palette();
-    QColor c1 = pal.window().color();
-    QColor c2 = pal.windowText().color();
+      QPalette pal = QToolTip::palette();
+      QColor c1 = pal.window().color();
+      QColor c2 = pal.windowText().color();
 
-    c1.setAlpha(a);
-    c2.setAlpha(a);
+      c1.setAlpha(a);
+      c2.setAlpha(a);
 
-    pal.setBrush( QPalette::Window, c1 );
-    pal.setBrush( QPalette::WindowText, c2 );
-    setPalette(pal);
-  }
+      pal.setBrush(QPalette::Window, c1);
+      pal.setBrush(QPalette::WindowText, c2);
+      setPalette(pal);
+    }
 }
+
