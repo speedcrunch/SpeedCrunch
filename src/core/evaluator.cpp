@@ -30,7 +30,7 @@
 #include <QtCore/QMap>
 #include <QtCore/QStack>
 
-// #define EVALUATOR_DEBUG
+#define EVALUATOR_DEBUG
 #ifdef EVALUATOR_DEBUG
 #include <QtCore/QFile>
 #include <QtCore/QTextStream>
@@ -189,7 +189,7 @@ static Token::Op matchOperator( const QString & text )
 // e.g. "+" is 1 while "*" is 3
 static int opPrecedence( Token::Op op )
 {
-    int prec = -1;
+    int prec;
     switch( op ) {
         case Token::Exclamation : prec = 8; break;
         case Token::Percent     : prec = 8; break;
