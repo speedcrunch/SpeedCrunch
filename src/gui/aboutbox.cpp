@@ -100,7 +100,9 @@ AboutBox::AboutBox( QWidget * parent )
            "Thomas Luebking<br>"
            "Thomas Nagy<br>"
            "Vibet Alexis<br>"
-           "Vladimir Pouzanov<br>";
+           "Vladimir Pouzanov<br>"
+           "Wictor Lund<br>"
+           "1100101<br>";
     msg += "</p>";
 
     msg += "<p>";
@@ -164,7 +166,7 @@ AboutBox::AboutBox( QWidget * parent )
                .arg( "Ariya Hidayat" ).arg( "ariya@kde.org" );
     msg += copy.arg( tr("Copyright (C)") ).arg( "2005-2006" )
                .arg( "Johan Thelin" ).arg( "e8johan@gmail.com" );
-    msg += copy.arg( tr("Copyright (C)") ).arg( "2007-2009" )
+    msg += copy.arg( tr("Copyright (C)") ).arg( "2007-2010" )
                .arg( "Helder Correia" ).arg( "helder.pereira.correia@gmail.com" );
     msg += copy.arg( tr("Copyright (C)") ).arg( "2007-2009" )
                .arg( "Wolf Lammen" ).arg( "ookami1@gmx.de" );
