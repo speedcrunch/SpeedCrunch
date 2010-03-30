@@ -55,7 +55,7 @@ struct Opcode
 {
     enum { Nop = 0, Load, Ref, Function, Add, Sub, Neg, Mul, Div,
            Pow, Pow0, Pow1, Pow2, Pow3, Pow4, Pow5, Pow6, Pow7, Pow8, Pow9,
-           Fact, Modulo, IntDiv };
+           Fact, Modulo, IntDiv, LSh, RSh, BAnd, BOr };
 
     unsigned type;
     unsigned index;
@@ -151,6 +151,8 @@ static Token::Op matchOperator( const QString & text )
             case '!' : result = Token::Exclamation; break;
             case '=' : result = Token::Equal; break;
             case '\\': result = Token::Backslash; break;
+            case '&' : result = Token::Ampersand; break;
+            case '|' : result = Token::Pipe; break;
 
             case 0x2070: result = Token::Super0; break; // ⁰
             case 0x00B9: result = Token::Super1; break; // ¹
@@ -168,6 +170,10 @@ static Token::Op matchOperator( const QString & text )
     } else if ( text.length() == 2 ) {
         if ( text == "**" )
             result = Token::Caret;
+        else if( text == "<<" )
+          result = Token::LeftShift;
+        else if( text == ">>" )
+          result = Token::RightShift;
     }
 #if 0
     else if ( text.length() == 3 ) {
@@ -200,14 +206,18 @@ static int opPrecedence( Token::Op op )
         case Token::Caret       : prec = 7; break;
         case Token::Asterisk    : prec = 5; break;
         case Token::Slash       : prec = 6; break;
-        case Token::Modulo      : prec = 6; break;
+        case Token::Modulo      :
         case Token::Backslash   : prec = 6; break;
-        case Token::Plus        : prec = 3; break;
+        case Token::Plus        :
         case Token::Minus       : prec = 3; break;
-        case Token::RightPar    : prec = 0; break;
-        case Token::LeftPar     : prec = -1; break;
-        case Token::Semicolon   : prec = 0; break;
-        default                 : prec = -1; break;
+        case Token::LeftShift   :
+        case Token::RightShift  : prec = 2; break;
+        case Token::Ampersand   : prec = 1; break;
+        case Token::Pipe        : prec = 0; break;
+        case Token::RightPar    :
+        case Token::Semicolon   : prec = -1; break;
+        case Token::LeftPar     : prec = -2; break;
+        default                 : prec = -2; break;
     }
     return prec;
 }
@@ -1037,6 +1047,10 @@ void Evaluator::compile( const Tokens & tokens ) const
                             case Token::Super9:    d->codes.append( Opcode::Pow9 ); break;
                             case Token::Modulo:    d->codes.append( Opcode::Modulo ); break;
                             case Token::Backslash: d->codes.append( Opcode::IntDiv ); break;
+                            case Token::LeftShift: d->codes.append( Opcode::LSh ); break;
+                            case Token::RightShift: d->codes.append( Opcode::RSh ); break;
+                            case Token::Ampersand: d->codes.append( Opcode::BAnd ); break;
+                            case Token::Pipe:      d->codes.append( Opcode::BOr ); break;
                             default: break;
                         };
 #ifdef EVALUATOR_DEBUG
@@ -1423,6 +1437,50 @@ HNumber Evaluator::evalNoAssign()
                 stack.push( HMath::integer(val2) );
                 break;
 
+            case Opcode::LSh:
+                if ( stack.count() < 2 ) {
+                    d->error = tr( "invalid expression" );
+                    return HNumber( 0 );
+                }
+                val1 = stack.pop();
+                val2 = stack.pop();
+                val2 = val2 << val1;
+                stack.push( val2 );
+                break;
+
+            case Opcode::RSh:
+                if ( stack.count() < 2 ) {
+                    d->error = tr( "invalid expression" );
+                    return HNumber( 0 );
+                }
+                val1 = stack.pop();
+                val2 = stack.pop();
+                val2 = val2 >> val1;
+                stack.push( val2 );
+                break;
+
+            case Opcode::BAnd:
+                if ( stack.count() < 2 ) {
+                    d->error = tr( "invalid expression" );
+                    return HNumber( 0 );
+                }
+                val1 = stack.pop();
+                val2 = stack.pop();
+                val2 &= val1;
+                stack.push( val2 );
+                break;
+
+            case Opcode::BOr:
+                if ( stack.count() < 2 ) {
+                    d->error = tr( "invalid expression" );
+                    return HNumber( 0 );
+                }
+                val1 = stack.pop();
+                val2 = stack.pop();
+                val2 |= val1;
+                stack.push( val2 );
+                break;
+
             // reference
             case Opcode::Ref:
                 fname = d->identifiers.at( index );
@@ -1685,6 +1743,10 @@ QString Evaluator::dump() const
             case Opcode::Pow8: ctext = "Pow8"; break;
             case Opcode::Pow9: ctext = "Pow9"; break;
             case Opcode::Fact: ctext = "Fact"; break;
+            case Opcode::LSh: ctext = "LSh"; break;
+            case Opcode::RSh: ctext = "RSh"; break;
+            case Opcode::BAnd: ctext = "BAnd"; break;
+            case Opcode::BOr: ctext = "BOr"; break;
             default: ctext = "Unknown"; break;
         }
         result.append( "   " ).append( ctext ).append("\n");
