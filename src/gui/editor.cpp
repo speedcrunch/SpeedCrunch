@@ -1,8 +1,8 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2004,2005 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2005-2006 Johan Thelin <e8johan@gmail.com>
-// Copyright (C) 2007-2009 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2004, 2005 Ariya Hidayat <ariya@kde.org>
+// Copyright (C) 2005, 2006 Johan Thelin <e8johan@gmail.com>
+// Copyright (C) 2007, 2008. 2009, 2010 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -811,7 +811,8 @@ bool EditorCompletion::eventFilter( QObject * obj, QEvent * ev )
 void EditorCompletion::doneCompletion()
 {
 #ifdef COMPLETION_FADE_EFFECT
-    d->fader->start();
+    if (d->fader->state() == QTimeLine::NotRunning)
+        d->fader->start();
     QTimer::singleShot( 750, d->popup, SLOT(hide()) ); // sentinel
 #else
     d->popup->hide();
