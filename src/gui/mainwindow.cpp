@@ -578,7 +578,7 @@ void MainWindow::Private::setActionsText()
     actions.settingsLanguage                   ->setText( MainWindow::tr("&Language...") );
 
     actions.helpAboutQt    ->setText( MainWindow::tr("About &Qt") );
-    actions.helpAbout      ->setText( MainWindow::tr("&About") );
+    actions.helpAbout      ->setText( MainWindow::tr("About &SpeedCrunch") );
     actions.helpTipOfTheDay->setText( MainWindow::tr("&Tip of the Day") );
     actions.helpWebsite    ->setText( MainWindow::tr("SpeedCrunch &Web Site...") );
 
