@@ -17,7 +17,6 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-
 #include <gui/tipwidget.hxx>
 
 #include <QtCore/QTimer>
@@ -27,134 +26,103 @@
 #include <QtGui/QResizeEvent>
 #include <QtGui/QToolTip>
 
-
 struct TipWidget::Private
 {
-  QLabel *      tipLabel;
-  //QPushButton * nextButton;
-  QTimer *      hideTimer;
-  QTimeLine *   fadeTimeLine;
+    QLabel *tipLabel;
+    QTimer *hideTimer;
+    QTimeLine *fadeTimeLine;
 };
 
-
-TipWidget::TipWidget( QWidget * parent ) :
-  QFrame( parent ), d( new TipWidget::Private )
+TipWidget::TipWidget(QWidget *parent) :
+    QFrame(parent), d(new TipWidget::Private)
 {
-  setObjectName( "TipWidget" );
+    setObjectName("TipWidget");
 
-  d->tipLabel = new QLabel( this );
-  d->tipLabel->setWordWrap( true );
-//  d->tipLabel->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
+    d->tipLabel = new QLabel(this);
+    d->tipLabel->setWordWrap(true);
 
-//  d->nextButton = new QPushButton( this );
-//  d->nextButton->setText( tr("Next") );
-//  d->nextButton->hide();
+    d->hideTimer = new QTimer(this);
+    d->hideTimer->setInterval(4000);
+    d->hideTimer->setSingleShot( true );
+    connect(d->hideTimer, SIGNAL(timeout()), SLOT(disappear()));
 
-  d->hideTimer = new QTimer( this );
-  d->hideTimer->setInterval( 4000 );
-  d->hideTimer->setSingleShot( true );
-  connect( d->hideTimer, SIGNAL( timeout() ), SLOT( disappear() ) );
+    d->fadeTimeLine = new QTimeLine(750, this);
+    d->fadeTimeLine->setFrameRange(0, 100);
+    d->fadeTimeLine->setCurveShape(QTimeLine::EaseInCurve);
+    connect(d->fadeTimeLine, SIGNAL(frameChanged(int)), this, SLOT(animateFade(int)));
 
-  d->fadeTimeLine = new QTimeLine( 750, this );
-  d->fadeTimeLine->setFrameRange( 0, 100 );
-  //d->fadeTimeLine->setUpdateInterval( 25 );
-  d->fadeTimeLine->setCurveShape( QTimeLine::EaseInCurve );
-  connect( d->fadeTimeLine, SIGNAL( frameChanged( int ) ),
-           this, SLOT( animateFade( int ) ) );
+    setPalette(QToolTip::palette());
 
-//  QPalette normal = palette();
-  setPalette( QToolTip::palette() );
+    setFrameShape(QFrame::Box);
+    setAutoFillBackground(true);
 
-//  d->nextButton->setPalette( normal );
-//  d->tipLabel->setPalette( yellow );
-//  d->tipLabel->setAutoFillBackground( true );
-
-  setFrameShape( QFrame::Box );
-  setAutoFillBackground( true );
-
-  setFixedWidth( fontMetrics().width( 'X' ) * 50 );
-  setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
+    setFixedWidth(fontMetrics().width('X') * 50);
+    setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 }
 
-
-TipWidget::~TipWidget()
+void TipWidget::showText(const QString &text, const QString &title)
 {
+    setPalette(QToolTip::palette());
+
+    QString tip = QString("<b>%1</b><br>%2").arg(title).arg(text);
+    d->tipLabel->setText(tip);
+
+    const int spacing = 4;
+    const int margin = 10;
+
+    d->tipLabel->adjustSize();
+    d->tipLabel->move(margin, 0);
+    d->tipLabel->resize((width() - spacing - margin), d->tipLabel->sizeHint().height());
+
+    QTimer::singleShot(0, this, SLOT(appear()));
 }
-
-
-void TipWidget::showText( const QString & msg, const QString & title )
-{
-  setPalette( QToolTip::palette() );
-
-  QString text = QString( "<b>%1</b><br>%2" ).arg( title ).arg( msg );
-  d->tipLabel->setText( text );
-
-  int spacing = 4;
-  int margin  = 10;
-
-  d->tipLabel->adjustSize();
-  d->tipLabel->move( margin, 0 );
-  d->tipLabel->resize( width() - spacing - margin,
-                       d->tipLabel->sizeHint().height() );
-
-  QTimer::singleShot( 0, this, SLOT( appear() ) );
-}
-
 
 void TipWidget::hideText()
 {
-  if( d->fadeTimeLine->state() == QTimeLine::NotRunning )
-  {
-    d->hideTimer->stop();
-    QTimer::singleShot( 0, this, SLOT(disappear()) );
-  }
+    if (d->fadeTimeLine->state() == QTimeLine::NotRunning) {
+        d->hideTimer->stop();
+        QTimer::singleShot(0, this, SLOT(disappear()));
+    }
 }
-
 
 void TipWidget::appear()
 {
-  resize( width(), sizeHint().height() );
+    resize(width(), sizeHint().height());
 
-  show();
-  raise();
+    show();
+    raise();
 
-  d->fadeTimeLine->stop();
-  d->fadeTimeLine->setFrameRange( 0, height() );
-  animateFade( 0 );
+    d->fadeTimeLine->stop();
+    d->fadeTimeLine->setFrameRange(0, height());
+    animateFade(0);
 
-  d->hideTimer->stop();
-  d->hideTimer->start();
+    d->hideTimer->stop();
+    d->hideTimer->start();
 }
-
 
 void TipWidget::disappear()
 {
-  d->fadeTimeLine->setFrameRange( 0, height() );
-  d->fadeTimeLine->start();
+    d->fadeTimeLine->setFrameRange(0, height());
+    d->fadeTimeLine->start();
 }
 
-
-void TipWidget::animateFade( int v )
+void TipWidget::animateFade(int v)
 {
-  resize( width(), d->fadeTimeLine->endFrame() - v );
-  d->tipLabel->move( 10, -v );
+    resize(width(), (d->fadeTimeLine->endFrame() - v));
+    d->tipLabel->move(10, -v);
 
-  int a = qMax( 0, 240 - v*4 );
-
-  QPalette pal = QToolTip::palette();
-  QColor c1 = pal.window().color();
-  QColor c2 = pal.windowText().color();
-
-  c1.setAlpha(a);
-  c2.setAlpha(a);
-
-  pal.setBrush( QPalette::Window, c1 );
-  pal.setBrush( QPalette::WindowText, c2 );
-  setPalette( pal );
+    QPalette palette = QToolTip::palette();
+    QColor color1 = palette.window().color();
+    QColor color2 = palette.windowText().color();
+    int a = qMax(0, (240 - (v << 2)));
+    color1.setAlpha(a);
+    color2.setAlpha(a);
+    palette.setBrush(QPalette::Window, color1);
+    palette.setBrush(QPalette::WindowText, color2);
+    setPalette(palette);
 }
-
 
 QSize TipWidget::sizeHint() const
 {
-  return d->tipLabel->sizeHint() + QSize( 100, 0 );
+    return d->tipLabel->sizeHint() + QSize(100, 0);
 }

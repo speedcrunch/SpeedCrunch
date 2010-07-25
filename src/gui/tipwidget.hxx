@@ -17,41 +17,35 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-
 #ifndef TIPWIDGET_HXX
 #define TIPWIDGET_HXX
-
 
 #include <QtGui/QFrame>
 
 #include <memory>
 
-
 class TipWidget: public QFrame
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    explicit TipWidget( QWidget * parent = 0 );
-    ~TipWidget();
-
+public:
+    explicit TipWidget(QWidget *parent = 0);
     QSize sizeHint() const;
 
-  public slots:
+public slots:
     void hideText();
-    void showText( const QString & msg, const QString & title );
+    void showText(const QString &text, const QString &title);
 
-  private slots:
-    void animateFade( int );
+private slots:
+    void animateFade(int);
     void appear();
     void disappear();
 
-  private:
+private:
     struct Private;
     const std::auto_ptr<Private> d;
-    TipWidget( const TipWidget & );
-    TipWidget & operator=( const TipWidget & );
+    TipWidget(const TipWidget &);
+    TipWidget & operator=(const TipWidget &);
 };
-
 
 #endif
