@@ -55,32 +55,32 @@ QT += network
 #FORMS +=
 
 HEADERS += thirdparty/flickcharm/flickcharm.h \
-           core/constants.hxx \
-           core/evaluator.hxx \
-           core/functions.hxx \
-           #core/settings.hxx \
-           gui/aboutbox.hxx \
-           gui/application.hxx \
-           gui/autohidelabel.hxx \
-           gui/bookdock.hxx \
-           gui/constantsdock.hxx \
-           gui/constantswidget.hxx \
-           gui/deletevardlg.hxx \
-           gui/resultdisplay.hxx \
-           gui/editor.hxx \
-           gui/functionsdialog.hxx \
-           gui/functionsdock.hxx \
-           gui/functionswidget.hxx \
-           gui/historydock.hxx \
-           gui/historywidget.hxx \
-           gui/insertvardlg.hxx \
-           gui/keypad.hxx \
-           #gui/syntaxhighlighter.hxx \
-           #gui/textedit.hxx \
-           gui/tipwidget.hxx \
-           gui/variablesdock.hxx \
-           gui/variableswidget.hxx \
-           gui/mainwindow.hxx
+           core/constants.h \
+           core/evaluator.h \
+           core/functions.h \
+           #core/settings.h \
+           gui/aboutbox.h \
+           gui/application.h \
+           gui/autohidelabel.h \
+           gui/bookdock.h \
+           gui/constantsdock.h \
+           gui/constantswidget.h \
+           gui/deletevardlg.h \
+           gui/resultdisplay.h \
+           gui/editor.h \
+           gui/functionsdialog.h \
+           gui/functionsdock.h \
+           gui/functionswidget.h \
+           gui/historydock.h \
+           gui/historywidget.h \
+           gui/insertvardlg.h \
+           gui/keypad.h \
+           #gui/syntaxhighlighter.h \
+           #gui/textedit.h \
+           gui/tipwidget.h \
+           gui/variablesdock.h \
+           gui/variableswidget.h \
+           gui/mainwindow.h
            #math/floatcommon.h \
            #math/floatconfig.h \
            #math/floatconst.h \
@@ -98,7 +98,7 @@ HEADERS += thirdparty/flickcharm/flickcharm.h \
            #math/floatpower.h \
            #math/floatseries.h \
            #math/floattrig.h \
-           #math/hmath.hxx \
+           #math/hmath.h \
            #math/number.h
 
 #YACCSOURCES += bison/exprparser.y

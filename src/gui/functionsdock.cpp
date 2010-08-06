@@ -17,10 +17,10 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#include "gui/functionsdock.hxx"
+#include "gui/functionsdock.h"
 
-#include "core/functions.hxx"
-#include "gui/functionswidget.hxx"
+#include "core/functions.h"
+#include "gui/functionswidget.h"
 
 #include <QtCore/QEvent>
 #include <QtCore/QTimer>

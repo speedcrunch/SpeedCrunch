@@ -17,10 +17,10 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#include "gui/bookdock.hxx"
+#include "gui/bookdock.h"
 
 #include "thirdparty/flickcharm/flickcharm.h"
-#include "core/settings.hxx"
+#include "core/settings.h"
 
 #include <QtCore/QDir>
 #include <QtCore/QEvent>

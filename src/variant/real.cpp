@@ -29,8 +29,8 @@
 
 *************************************************************************/
 
-#include "variant/real.hxx"
-#include "variant/variant.hxx"
+#include "variant/real.h"
+#include "variant/variant.h"
 
 #include "math/floatconvert.h"
 #include "math/floatconst.h"

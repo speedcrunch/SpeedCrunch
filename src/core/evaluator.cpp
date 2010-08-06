@@ -19,9 +19,9 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#include "core/evaluator.hxx"
+#include "core/evaluator.h"
 
-#include "core/functions.hxx"
+#include "core/functions.h"
 #ifdef _BISON
 #include "bison/bisonparser.cpp"
 #endif // _BISON

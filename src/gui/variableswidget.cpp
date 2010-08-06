@@ -17,11 +17,11 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#include "gui/variableswidget.hxx"
+#include "gui/variableswidget.h"
 
 #include "thirdparty/flickcharm/flickcharm.h"
-#include "core/evaluator.hxx"
-#include "core/settings.hxx"
+#include "core/evaluator.h"
+#include "core/settings.h"
 
 #include <QtCore/QEvent>
 #include <QtCore/QLatin1String>

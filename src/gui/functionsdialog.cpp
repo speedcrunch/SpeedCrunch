@@ -19,9 +19,9 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#include "gui/functionsdialog.hxx"
+#include "gui/functionsdialog.h"
 
-#include "gui/functionswidget.hxx"
+#include "gui/functionswidget.h"
 
 #include <QtGui/QPushButton>
 #include <QtGui/QTreeWidget>

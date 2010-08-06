@@ -29,8 +29,8 @@
 
 *************************************************************************/
 
-#include "variant/formatbase.hxx"
-#include "core/settings.hxx"
+#include "variant/formatbase.h"
+#include "core/settings.h"
 #include <QMultiMap>
 
 const char* fmtDefault = "default";

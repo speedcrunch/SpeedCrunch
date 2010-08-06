@@ -20,9 +20,9 @@
 // Boston, MA 02110-1301, USA.
 
 
-#include "gui/insertvardlg.hxx"
+#include "gui/insertvardlg.h"
 
-#include "gui/variableswidget.hxx"
+#include "gui/variableswidget.h"
 
 #include <QtGui/QPushButton>
 #include <QtGui/QTreeWidget>

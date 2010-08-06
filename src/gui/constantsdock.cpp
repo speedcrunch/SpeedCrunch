@@ -17,9 +17,9 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#include "gui/constantsdock.hxx"
+#include "gui/constantsdock.h"
 
-#include "gui/constantswidget.hxx"
+#include "gui/constantswidget.h"
 
 #include <QtCore/QEvent>
 

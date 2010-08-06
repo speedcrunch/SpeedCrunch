@@ -29,7 +29,7 @@
 
 *************************************************************************/
 
-#include "variant/vstring.hxx"
+#include "variant/vstring.h"
 
 const char* VariantIntf::nString = "Text";
 VariantType VString::vtString;

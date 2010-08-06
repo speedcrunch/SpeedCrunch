@@ -19,13 +19,13 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#include "gui/editor.hxx"
+#include "gui/editor.h"
 
-#include "core/constants.hxx"
-#include "core/evaluator.hxx"
-#include "core/functions.hxx"
-#include "core/settings.hxx"
-#include "gui/syntaxhighlighter.hxx"
+#include "core/constants.h"
+#include "core/evaluator.h"
+#include "core/functions.h"
+#include "core/settings.h"
+#include "gui/syntaxhighlighter.h"
 
 #include <QtCore/QEvent>
 #include <QtCore/QTimeLine>

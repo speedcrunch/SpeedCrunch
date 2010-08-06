@@ -29,8 +29,8 @@
 
 *************************************************************************/
 
-#include "variant/vstring.hxx"
-#include "variant/formatbase.hxx"
+#include "variant/vstring.h"
+#include "variant/formatbase.h"
 
 class InitVariant
 {

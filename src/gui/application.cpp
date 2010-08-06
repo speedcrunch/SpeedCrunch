@@ -16,7 +16,7 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#include "gui/application.hxx"
+#include "gui/application.h"
 
 #if QT_VERSION >= 0x040400
 # define SINGLE_INSTANCE_CHECK 1

@@ -28,8 +28,8 @@
 
 *************************************************************************/
 
-#include "symbols.hxx"
-#include "tables.hxx"
+#include "symbols.h"
+#include "tables.h"
 
 #include <base/errors.h>
 

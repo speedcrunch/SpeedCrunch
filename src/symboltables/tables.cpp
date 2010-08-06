@@ -17,7 +17,7 @@
    Boston, MA 02110-1301, USA.
  */
 
-#include "symboltables/tables.hxx"
+#include "symboltables/tables.h"
 
 struct CSyntaxSymbol
 {

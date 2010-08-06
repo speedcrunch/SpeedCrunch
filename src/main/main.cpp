@@ -17,8 +17,8 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#include "gui/application.hxx"
-#include "gui/mainwindow.hxx"
+#include "gui/application.h"
+#include "gui/mainwindow.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtGui/QApplication>

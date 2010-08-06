@@ -17,11 +17,11 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#include "gui/constantswidget.hxx"
+#include "gui/constantswidget.h"
 
 #include "thirdparty/flickcharm/flickcharm.h"
-#include "core/constants.hxx"
-#include "core/settings.hxx"
+#include "core/constants.h"
+#include "core/settings.h"
 
 #include <QtCore/QEvent>
 #include <QtCore/QTimer>

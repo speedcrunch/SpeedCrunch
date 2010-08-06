@@ -29,7 +29,7 @@
 
 *************************************************************************/
 
-#include "variant/variant.hxx"
+#include "variant/variant.h"
 #include <QtXml/QDomText>
 
 const char* Variant::xmlTagName = "variant";

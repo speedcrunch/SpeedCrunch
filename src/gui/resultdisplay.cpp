@@ -16,14 +16,14 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#include "gui/resultdisplay.hxx"
+#include "gui/resultdisplay.h"
 
 //#include "thirdparty/flickcharm/flickcharm.h"
-#include "core/functions.hxx"
-#include "core/settings.hxx"
-#include "gui/syntaxhighlighter.hxx"
-#include "gui/textedit.hxx"
-#include "math/hmath.hxx"
+#include "core/functions.h"
+#include "core/settings.h"
+#include "gui/syntaxhighlighter.h"
+#include "gui/textedit.h"
+#include "math/hmath.h"
 #include "math/floatconfig.h"
 
 #include <QtCore/QLatin1String>

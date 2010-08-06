@@ -19,11 +19,11 @@
 // Boston, MA 02110-1301, USA.
 
 
-#include "deletevardlg.hxx"
+#include "deletevardlg.h"
 
-#include "gui/variableswidget.hxx"
+#include "gui/variableswidget.h"
 
-#include "core/evaluator.hxx"
+#include "core/evaluator.h"
 
 #include <QtGui/QPushButton>
 #include <QtGui/QTreeWidget>

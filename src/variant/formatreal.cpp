@@ -29,7 +29,7 @@
 
 *************************************************************************/
 
-#include "variant/formatreal.hxx"
+#include "variant/formatreal.h"
 
 static bool _isZero(const QString& str)
 {

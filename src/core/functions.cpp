@@ -19,9 +19,9 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#include "core/functions.hxx"
-#include "core/settings.hxx"
-#include "math/hmath.hxx"
+#include "core/functions.h"
+#include "core/settings.h"
+#include "math/hmath.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QHash>

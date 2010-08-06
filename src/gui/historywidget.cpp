@@ -17,7 +17,7 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#include "gui/historywidget.hxx"
+#include "gui/historywidget.h"
 
 #include "thirdparty/flickcharm/flickcharm.h"
 

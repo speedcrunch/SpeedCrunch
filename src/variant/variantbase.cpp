@@ -29,8 +29,8 @@
 
 *************************************************************************/
 
-#include "variant/variantbase.hxx"
-#include "variant/variant.hxx"
+#include "variant/variantbase.h"
+#include "variant/variant.h"
 #include <QVector>
 #include <QStringList>
 

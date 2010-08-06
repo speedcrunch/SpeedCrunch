@@ -17,9 +17,9 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#include "gui/historydock.hxx"
+#include "gui/historydock.h"
 
-#include "gui/historywidget.hxx"
+#include "gui/historywidget.h"
 
 #include <QtCore/QEvent>
 #include <QtGui/QIcon>

@@ -29,8 +29,8 @@
 
 *************************************************************************/
 
-#include "bison/bisonparser.hxx"
-#include "settings.hxx"
+#include "bison/bisonparser.h"
+#include "settings.h"
 
 #include "symboltables/symbols.cpp" // for the time being do not update CMakeList
 #include "symboltables/tables.cpp" // for the time being do not update CMakeList

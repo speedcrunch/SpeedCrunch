@@ -18,7 +18,7 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#include "core/settings.hxx"
+#include "core/settings.h"
 
 #include "thirdparty/binreloc/binreloc.h"
 #include "math/floatconfig.h"
