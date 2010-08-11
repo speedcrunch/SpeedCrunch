@@ -1,6 +1,6 @@
 /*
  This file is part of the SpeedCrunch project
- Copyright (C) 2004-2006 Ariya Hidayat <ariya@kde.org>
+ Copyright (C) 2004, 2006 Ariya Hidayat <ariya@kde.org>
  Copyright (C) 2009 Helder Correia <helder.pereira.correia@gmail.com>
 
  This program is free software; you can redistribute it and/or
@@ -32,7 +32,7 @@ public:
     explicit AboutBox(QWidget *parent = 0, Qt::WindowFlags f = 0);
 
 private:
-    Q_DISABLE_COPY(AboutBox);
+    Q_DISABLE_COPY(AboutBox)
 };
 
 #endif // GUI_ABOUTBOX_H
