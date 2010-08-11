@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2007 Petri Damstén <damu@iki.fi>
-// Copyright (C) 2008-2009 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2008, 2009, 2010 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -32,92 +32,97 @@
 #include <QtGui/QTextBrowser>
 #include <QtGui/QVBoxLayout>
 
-struct BookDock::Private
+class BookDockPrivate
 {
-    QPushButton * backButton;
-    QHBoxLayout * buttonLayout;
-    QWidget * buttonLayoutWidget;
+public:
+    QPushButton *backButton;
+    QHBoxLayout *buttonLayout;
+    QWidget *buttonLayoutWidget;
     QString file;
     FlickCharm flickCharm;
-    QPushButton * forwardButton;
+    QPushButton *forwardButton;
     QString index;
-    QPushButton * indexButton;
+    QPushButton *indexButton;
     QString language;
-    BookDock * p;
+    BookDock *p;
     QString path;
-    QTextBrowser * sheet;
+    QTextBrowser *sheet;
 
     void handleLayoutDirection();
 };
 
-void BookDock::Private::handleLayoutDirection()
+void BookDockPrivate::handleLayoutDirection()
 {
-    if ( p->layoutDirection() == Qt::RightToLeft ) {
-        backButton->setIcon( QPixmap(":/book_forward.png") );
-        forwardButton->setIcon( QPixmap(":/book_back.png") );
+    if (p->layoutDirection() == Qt::RightToLeft) {
+        backButton->setIcon(QPixmap(":/book_forward.png"));
+        forwardButton->setIcon(QPixmap(":/book_back.png"));
     } else {
-        backButton->setIcon( QPixmap(":/book_back.png") );
-        forwardButton->setIcon( QPixmap(":/book_forward.png") );
+        backButton->setIcon(QPixmap(":/book_back.png"));
+        forwardButton->setIcon(QPixmap(":/book_forward.png"));
     }
 }
 
-BookDock::BookDock( const QString & directory, const QString & file, QWidget * parent )
-    : QDockWidget( parent ), d( new BookDock::Private )
+BookDock::BookDock(const QString &directory, const QString &file, QWidget *parent,
+                   Qt::WindowFlags f)
+    : QDockWidget(parent, f)
+    , d_ptr(new BookDockPrivate)
 {
+    Q_D(BookDock);
+
     d->p = this;
     d->path = directory;
     d->file = file;
     d->index = file;
     d->language = Settings::instance()->language;
 
-    QWidget * widget = new QWidget( this );
-    QVBoxLayout * bookLayout = new QVBoxLayout;
+    QWidget *widget = new QWidget(this);
+    QVBoxLayout *bookLayout = new QVBoxLayout;
 
-    d->sheet = new QTextBrowser( this );
-    d->sheet->setLineWrapMode( QTextEdit::NoWrap );
-    d->sheet->setSearchPaths( QStringList() << d->path );
-    d->flickCharm.activateOn( d->sheet );
+    d->sheet = new QTextBrowser(this);
+    d->sheet->setLineWrapMode(QTextEdit::NoWrap);
+    d->sheet->setSearchPaths(QStringList() << d->path);
+    d->flickCharm.activateOn(d->sheet);
 
-    connect( d->sheet, SIGNAL(anchorClicked(const QUrl &)),
-             SLOT(handleAnchorClick(const QUrl &)) );
+    connect(d->sheet, SIGNAL(anchorClicked(const QUrl &)),
+            SLOT(handleAnchorClick(const QUrl &)));
 
     d->buttonLayoutWidget = new QWidget;
-    d->buttonLayout = new QHBoxLayout( d->buttonLayoutWidget );
-    d->buttonLayout->setSpacing( 0 );
-    d->buttonLayout->setMargin( 0 );
+    d->buttonLayout = new QHBoxLayout(d->buttonLayoutWidget);
+    d->buttonLayout->setSpacing(0);
+    d->buttonLayout->setMargin(0);
 
-    d->backButton = new QPushButton( "", this );
-    d->backButton->setIcon( QPixmap(":/book_back.png") );
-    d->backButton->setFlat( true );
+    d->backButton = new QPushButton("", this);
+    d->backButton->setIcon(QPixmap(":/book_back.png"));
+    d->backButton->setFlat(true);
 
-    connect( d->backButton, SIGNAL(clicked()), d->sheet, SLOT(backward()) );
-    connect( d->sheet, SIGNAL(backwardAvailable(bool)), d->backButton, SLOT(setEnabled(bool)) );
+    connect(d->backButton, SIGNAL(clicked()), d->sheet, SLOT(backward()));
+    connect(d->sheet, SIGNAL(backwardAvailable(bool)), d->backButton, SLOT(setEnabled(bool)));
 
-    d->buttonLayout->addWidget( d->backButton );
+    d->buttonLayout->addWidget(d->backButton);
 
-    d->forwardButton = new QPushButton( "", this );
-    d->forwardButton->setIcon( QPixmap(":/book_forward.png") );
-    d->forwardButton->setFlat( true );
+    d->forwardButton = new QPushButton("", this);
+    d->forwardButton->setIcon(QPixmap(":/book_forward.png"));
+    d->forwardButton->setFlat(true);
 
-    connect( d->forwardButton, SIGNAL(clicked()), d->sheet, SLOT(forward()) );
-    connect( d->sheet, SIGNAL(forwardAvailable(bool)), d->forwardButton, SLOT(setEnabled(bool)) );
+    connect(d->forwardButton, SIGNAL(clicked()), d->sheet, SLOT(forward()));
+    connect(d->sheet, SIGNAL(forwardAvailable(bool)), d->forwardButton, SLOT(setEnabled(bool)));
 
-    d->buttonLayout->addWidget( d->forwardButton );
+    d->buttonLayout->addWidget(d->forwardButton);
 
-    d->indexButton = new QPushButton( "", this );
-    d->indexButton->setIcon( QPixmap(":/book_home.png") );
-    d->indexButton->setFlat( true );
+    d->indexButton = new QPushButton("", this);
+    d->indexButton->setIcon(QPixmap(":/book_home.png"));
+    d->indexButton->setFlat(true);
 
-    connect( d->indexButton, SIGNAL(clicked()), SLOT(home()) );
+    connect(d->indexButton, SIGNAL(clicked()), SLOT(home()));
 
-    d->buttonLayout->addWidget( d->indexButton );
+    d->buttonLayout->addWidget(d->indexButton);
     d->buttonLayout->addStretch();
 
-    bookLayout->addWidget( d->buttonLayoutWidget );
-    bookLayout->addWidget( d->sheet );
+    bookLayout->addWidget(d->buttonLayoutWidget);
+    bookLayout->addWidget(d->sheet);
 
-    widget->setLayout( bookLayout );
-    setWidget( widget );
+    widget->setLayout(bookLayout);
+    setWidget(widget);
 
     retranslateText();
 }
@@ -126,29 +131,20 @@ BookDock::~BookDock()
 {
 }
 
-void BookDock::handleAnchorClick( const QUrl & link )
+void BookDock::handleAnchorClick(const QUrl &link)
 {
-    if ( link.toString().startsWith( "file:#" ) ) {
+    Q_D(BookDock);
+
+    if ( link.toString().startsWith("file:#")) {
         // avoid appended history garbage after clicking on a formula (unknown)
         d->sheet->backward();
         d->sheet->forward();
-
-        QString expr = link.toString().mid( 6 );
-
-#if QT_VERSION < 0x040400
-        // Qt 4.3 and earlier do not properly decode the URL
-        // and thus %5E does not become ^
-        // We do it manually here
-        // FIXME: should we check this at run-time?
-        expr.replace( QLatin1String("%5E"), QLatin1String("^"), Qt::CaseInsensitive );
-#endif
-
-        emit expressionSelected( expr );
+        QString expression = link.toString().mid(6);
+        emit expressionSelected(expression);
     } else {
-        d->sheet->setSource( link );
-        d->file = QFileInfo( link.path() ).fileName();
+        d->sheet->setSource(link);
+        d->file = QFileInfo(link.path()).fileName();
     }
-
     // necessary for QTextBrowser to always draw correctly (why?)
     // causes a bug on Window or maybe just about the version number
     //d->sheet->adjustSize();
@@ -156,49 +152,50 @@ void BookDock::handleAnchorClick( const QUrl & link )
 
 void BookDock::home()
 {
-    d->sheet->setSource( d->index );
+    Q_D(BookDock);
+    d->sheet->setSource(d->index);
     d->file = d->index;
 }
 
 void BookDock::retranslateText()
 {
-    setWindowTitle( tr("Math Book") );
+    Q_D(BookDock);
+    setWindowTitle(tr("Math Book"));
 
     // buttons
-    d->backButton->setText( tr("Back") );
-    d->forwardButton->setText( tr("Forward") );
-    d->indexButton->setText( tr("Index") );
+    d->backButton->setText(tr("Back"));
+    d->forwardButton->setText(tr("Forward"));
+    d->indexButton->setText(tr("Index"));
 
     // page
     d->language = Settings::instance()->language;
-    QString locale = (d->language == "C") ?  QLocale().name() : d->language;
+    QString locale = (d->language == "C") ? QLocale().name() : d->language;
 
     // fallback to English
-    if ( locale == "C" )
+    if (locale == "C")
         locale = "en";
 
     d->language = locale;
     QString fullPath = d->path + d->language + "/";
     QString src = fullPath + d->file;
 
-    if ( ! QDir( fullPath ).isReadable() ) {
-        QString localeShort = locale.left( 2 ).toLower();
+    if (!QDir(fullPath).isReadable()) {
+        QString localeShort = locale.left(2).toLower();
         src = d->path + localeShort + "/" + d->file;
-        if ( ! QDir(d->path + localeShort).isReadable() )
+        if (!QDir(d->path + localeShort).isReadable())
             src = d->path + "en" + "/" + d->file;
     }
 
-    d->sheet->setSource( QUrl::fromLocalFile(src) );
+    d->sheet->setSource(QUrl::fromLocalFile(src));
     d->handleLayoutDirection();
 }
 
-void BookDock::changeEvent( QEvent * e )
+void BookDock::changeEvent(QEvent *event)
 {
-    if ( e->type() == QEvent::LanguageChange )
+    if (event->type() == QEvent::LanguageChange)
         retranslateText();
-    else if ( e->type() == QEvent::LayoutDirectionChange )
-        d->handleLayoutDirection();
+    else if (event->type() == QEvent::LayoutDirectionChange)
+        d_ptr->handleLayoutDirection();
     else
-        QDockWidget::changeEvent( e );
+        QDockWidget::changeEvent(event);
 }
-

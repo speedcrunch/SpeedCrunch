@@ -35,7 +35,7 @@ public:
 };
 
 AutoHideLabel::AutoHideLabel(QWidget *parent, Qt::WindowFlags f)
-    : QLabel(parent)
+    : QLabel(parent, f)
     , d_ptr(new AutoHideLabelPrivate)
 {
     Q_D(AutoHideLabel);
