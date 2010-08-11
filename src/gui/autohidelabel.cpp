@@ -1,21 +1,23 @@
-// This file is part of the SpeedCrunch project
-// Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2008 Helder Correia <helder.pereira.correia@gmail.com>
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program; see the file COPYING.  If not, write to
-// the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-// Boston, MA 02110-1301, USA.
+/*
+  This file is part of the SpeedCrunch project
+  Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
+  Copyright (C) 2008, 2010 Helder Correia <helder.pereira.correia@gmail.com>
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; see the file COPYING.  If not, write to
+  the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+  Boston, MA 02110-1301, USA.
+*/
 
 #include "gui/autohidelabel.h"
 
@@ -23,17 +25,21 @@
 #include <QtGui/QToolTip>
 
 #define TIMER_INTERVAL 25
-#define FADE_STEP      16
+#define FADE_STEP 16
 
-struct AutoHideLabel::Private
+class AutoHideLabelPrivate
 {
+public:
     QTimer *fadeTimer;
     int alpha;
 };
 
-AutoHideLabel::AutoHideLabel(QWidget *parent)
-    : QLabel(parent), d(new AutoHideLabel::Private)
+AutoHideLabel::AutoHideLabel(QWidget *parent, Qt::WindowFlags f)
+    : QLabel(parent)
+    , d_ptr(new AutoHideLabelPrivate)
 {
+    Q_D(AutoHideLabel);
+
     d->fadeTimer = new QTimer(this);
     d->fadeTimer->setInterval(TIMER_INTERVAL);
     connect(d->fadeTimer, SIGNAL(timeout()), SLOT(fade()));
@@ -45,8 +51,14 @@ AutoHideLabel::AutoHideLabel(QWidget *parent)
     setFrameShape(QFrame::Box);
 }
 
-void AutoHideLabel::showText(const QString& msg)
+AutoHideLabel::~AutoHideLabel()
 {
+}
+
+void AutoHideLabel::showText(const QString &msg)
+{
+    Q_D(AutoHideLabel);
+
     setText(msg);
     adjustSize();
     show();
@@ -62,30 +74,30 @@ void AutoHideLabel::showText(const QString& msg)
 
 void AutoHideLabel::hideText()
 {
-    if (d->alpha > 255)
-        d->alpha = 255;
+    if (d_ptr->alpha > 255)
+        d_ptr->alpha = 255;
 }
-
 
 void AutoHideLabel::fade()
 {
+    Q_D(AutoHideLabel);
+
     if (d->alpha <= 0) {
         d->fadeTimer->stop();
         hide();
     } else {
       d->alpha = qMax(0, d->alpha-FADE_STEP);
-      int a = qMin(255, d->alpha);
+      int alpha = qMin(255, d->alpha);
 
-      QPalette pal = QToolTip::palette();
-      QColor c1 = pal.window().color();
-      QColor c2 = pal.windowText().color();
+      QPalette palette = QToolTip::palette();
+      QColor color1 = palette.window().color();
+      QColor color2 = palette.windowText().color();
 
-      c1.setAlpha(a);
-      c2.setAlpha(a);
+      color1.setAlpha(alpha);
+      color2.setAlpha(alpha);
 
-      pal.setBrush(QPalette::Window, c1);
-      pal.setBrush(QPalette::WindowText, c2);
-      setPalette(pal);
+      palette.setBrush(QPalette::Window, color1);
+      palette.setBrush(QPalette::WindowText, color2);
+      setPalette(palette);
     }
 }
-
