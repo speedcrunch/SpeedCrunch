@@ -650,7 +650,12 @@ Tokens Evaluator::scan( const QString& expr ) const
             default:
                 break;
         };
-    };
+    }
+    if (state == Bad) {
+        // invalidating here, too, because:
+        // usually when we set state to Bad, the case Bad won't be run
+        tokens.setValid(false);
+    }
 
     return tokens;
 }
