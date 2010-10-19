@@ -1129,6 +1129,10 @@ void Evaluator::compile( const Tokens & tokens ) const
                         op = syntaxStack.top();
                         if ( ! x.isOperator() && op.isOperator() )
                         {
+                            // if we don't really find the rule,
+                            // restore ruleFound as if nothing happened
+                            // see below
+                            bool ruleFoundOldValue = ruleFound;
                             ruleFound = true;
                             if (op.asOperator() == Token::Exclamation)
                                 d->codes.append( Opcode(Opcode::Fact) );
@@ -1152,6 +1156,7 @@ void Evaluator::compile( const Tokens & tokens ) const
                                 d->codes.append( Opcode(Opcode::Pow8) );
                             else if (op.asOperator() == Token::Super9)
                                 d->codes.append( Opcode(Opcode::Pow9) );
+                            else ruleFound = ruleFoundOldValue;
                         }
                     }
                     if ( ruleFound) {
