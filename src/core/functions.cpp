@@ -165,6 +165,7 @@ struct Functions::Private
     void createBuiltInFunctions();
 
     static HNumber abs( Function *, const QVector<HNumber> & args );
+    static HNumber absdev( Function *, const QVector<HNumber> & args );
     static HNumber acos( Function *, const QVector<HNumber> & args );
     static HNumber and_( Function *, const QVector<HNumber> & args );
     static HNumber arcosh( Function *, const QVector<HNumber> & args );
@@ -228,17 +229,35 @@ struct Functions::Private
     static HNumber sin( Function *, const QVector<HNumber> & args );
     static HNumber sinh( Function *, const QVector<HNumber> & args );
     static HNumber sqrt( Function *, const QVector<HNumber> & args );
+    static HNumber stddev( Function *, const QVector<HNumber> & args );
     static HNumber sum( Function *, const QVector<HNumber> & args );
     static HNumber tan( Function *, const QVector<HNumber> & args );
     static HNumber tanh( Function *, const QVector<HNumber> & args );
     static HNumber trunc( Function *, const QVector<HNumber> & args );
     static HNumber unmask( Function *, const QVector<HNumber> & args );
+    static HNumber variance( Function *, const QVector<HNumber> & args );
     static HNumber xor_( Function *, const QVector<HNumber> & args );
 };
 
 HNumber Functions::Private::abs( Function *, const QVector<HNumber> & args )
 {
     return HMath::abs( args.at(0) );
+}
+
+HNumber Functions::Private::absdev( Function * f, const QVector<HNumber> &args )
+{
+    if ( args.count() < 1 )
+        return HMath::nan();
+
+    HNumber mean = average( f, args );
+    if ( mean.isNan() )
+        return HMath::nan();
+
+    HNumber acc = 0;
+    for ( int i = 0; i < args.count(); i++ )
+        acc += HMath::abs( args.at(i) - mean );
+
+    return acc / HNumber( args.count() );
 }
 
 HNumber Functions::Private::integer( Function *, const QVector<HNumber> & args )
@@ -346,6 +365,11 @@ HNumber Functions::Private::round( Function * f, const QVector<HNumber> & args )
 HNumber Functions::Private::sqrt( Function *, const QVector<HNumber> & args )
 {
     return HMath::sqrt( args.at( 0 ) );
+}
+
+HNumber Functions::Private::stddev( Function * f, const QVector<HNumber> & args )
+{
+    return args.count() < 1 ? HMath::nan() : HMath::sqrt( variance( f, args ));
 }
 
 HNumber Functions::Private::cbrt( Function *, const QVector<HNumber> & args )
@@ -701,6 +725,22 @@ HNumber Functions::Private::unmask( Function *, const QVector<HNumber> & args )
     return HMath::sgnext( args.at( 0 ), args.at( 1 ) );
 }
 
+HNumber Functions::Private::variance( Function * f, const QVector<HNumber> & args )
+{
+    if ( args.count() < 1 )
+        return HMath::nan();
+
+    HNumber mean = average( f, args );
+    if ( mean.isNan() )
+        return HMath::nan();
+
+    HNumber acc = 0;
+    for ( int i = 0; i < args.count(); i++ )
+        acc += (args.at(i) - mean) * (args.at(i) - mean);
+
+    return acc / HNumber( args.count() );
+}
+
 HNumber Functions::Private::not_( Function *, const QVector<HNumber> & args )
 {
 	return ~args.at( 0 );
@@ -755,6 +795,7 @@ void Functions::Private::createBuiltInFunctions()
 {
     // ANALYSIS
     p->add( new Function("abs",     abs,     1, p) );
+    p->add( new Function("absdev",  absdev,     p) );
     p->add( new Function("average", average,    p) );
     p->add( new Function("bin",     bin,     1, p) );
     p->add( new Function("cbrt",    cbrt,    1, p) );
@@ -774,8 +815,10 @@ void Functions::Private::createBuiltInFunctions()
     p->add( new Function("round",   round,      p) );
     p->add( new Function("sign",    sign,    1, p) );
     p->add( new Function("sqrt",    sqrt,    1, p) );
+    p->add( new Function("stddev",  stddev,     p) );
     p->add( new Function("sum",     sum,        p) );
     p->add( new Function("trunc",   trunc,      p) );
+    p->add( new Function("variance",variance,   p) );
 
     // LOGARITHM
     p->add( new Function("arcosh", arcosh, 1, p) );
@@ -881,6 +924,7 @@ void Functions::retranslateText()
 {
     // ANALYSIS
     function( "abs"     )->setName( tr("Absolute Value") );
+    function( "absdev"  )->setName( tr("Absolute Deviation") );
     function( "average" )->setName( tr("Average (Arithmetic Mean)") );
     function( "bin"     )->setName( tr("Binary Representation") );
     function( "cbrt"    )->setName( tr("Cube Root") );
@@ -900,8 +944,10 @@ void Functions::retranslateText()
     function( "round"   )->setName( tr("Rounding") );
     function( "sign"    )->setName( tr("Signum") );
     function( "sqrt"    )->setName( tr("Square Root") );
+    function( "stddev"  )->setName( tr("Standard Deviation (Square Root of Variance)") );
     function( "sum"     )->setName( tr("Sum") );
     function( "trunc"   )->setName( tr("Truncation") );
+    function( "variance")->setName( tr("Variance") );
 
     //// LOGARITHM
     function( "arcosh" )->setName( tr("Area Hyperbolic Cosine") );
