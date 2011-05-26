@@ -807,6 +807,14 @@ void MainWindow::Private::createStatusBar()
     status.angleUnit->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
     status.resultFormat->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
 
+    status.angleUnit->setContextMenuPolicy( Qt::ActionsContextMenu );
+    status.angleUnit->addAction( actions.settingsAngleUnitRadian );
+    status.angleUnit->addAction( actions.settingsAngleUnitDegree );
+
+    status.resultFormat->setContextMenuPolicy( Qt::CustomContextMenu );
+    connect( status.resultFormat, SIGNAL(customContextMenuRequested(const QPoint &)),
+            p, SLOT(showResultFormatContextMenu(const QPoint &)) );
+
     bar->addWidget( status.angleUnit );
     bar->addWidget( status.resultFormat );
 
@@ -2570,4 +2578,9 @@ void MainWindow::showLanguageChooserDialog()
     }
 }
 
+void MainWindow::showResultFormatContextMenu( const QPoint& point )
+{
+    d->menus.resultFormat->popup(
+          d->status.resultFormat->mapToGlobal( point ) );
+}
 

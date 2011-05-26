@@ -113,6 +113,7 @@ private slots:
     void showFunctionInsertionDialog();
     void showLanguageChooserDialog();
     void showMenuBarTip();
+    void showResultFormatContextMenu( const QPoint & );
     void showSessionImportDialog();
     void showSessionLoadDialog();
     void showSystemTrayMessage();
