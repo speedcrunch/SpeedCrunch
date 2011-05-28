@@ -49,6 +49,8 @@ private slots:
     void clearEditor();
     void clearHistory();
     void copyResultToClipboard();
+    void cycleAngleUnits();
+    void cycleResultFormats();
     void deleteAllVariables();
     void evaluateEditorExpression();
     void exportHtml();

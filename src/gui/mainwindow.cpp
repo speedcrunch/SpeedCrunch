@@ -61,6 +61,7 @@
 #include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
 #include <QtGui/QMessageBox>
+#include <QtGui/QPushButton>
 #include <QtGui/QScrollBar>
 #include <QtGui/QStatusBar>
 #include <QtGui/QVBoxLayout>
@@ -217,8 +218,8 @@ struct Conditions
 
 struct StatusBar
 {
-    QLabel * angleUnit;
-    QLabel * resultFormat;
+    QPushButton * angleUnit;
+    QPushButton * resultFormat;
 };
 
 struct MainWindow::Private
@@ -801,11 +802,11 @@ void MainWindow::Private::createStatusBar()
 {
     QStatusBar * bar = p->statusBar();
 
-    status.angleUnit = new QLabel( bar );
-    status.resultFormat = new QLabel( bar );
+    status.angleUnit = new QPushButton( bar );
+    status.resultFormat = new QPushButton( bar );
 
-    status.angleUnit->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
-    status.resultFormat->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
+    status.angleUnit->setFlat( true );
+    status.resultFormat->setFlat( true );
 
     status.angleUnit->setContextMenuPolicy( Qt::ActionsContextMenu );
     status.angleUnit->addAction( actions.settingsAngleUnitRadian );
@@ -814,6 +815,9 @@ void MainWindow::Private::createStatusBar()
     status.resultFormat->setContextMenuPolicy( Qt::CustomContextMenu );
     connect( status.resultFormat, SIGNAL(customContextMenuRequested(const QPoint &)),
             p, SLOT(showResultFormatContextMenu(const QPoint &)) );
+
+    connect( status.angleUnit, SIGNAL(clicked()), p, SLOT(cycleAngleUnits()) );
+    connect( status.resultFormat, SIGNAL(clicked()), p, SLOT(cycleResultFormats()) );
 
     bar->addWidget( status.angleUnit );
     bar->addWidget( status.resultFormat );
@@ -2584,3 +2588,28 @@ void MainWindow::showResultFormatContextMenu( const QPoint& point )
           d->status.resultFormat->mapToGlobal( point ) );
 }
 
+void MainWindow::cycleAngleUnits()
+{
+  if( d->actions.settingsAngleUnitDegree->isChecked() )
+    d->actions.settingsAngleUnitRadian->trigger();
+  else if( d->actions.settingsAngleUnitRadian->isChecked() )
+    d->actions.settingsAngleUnitDegree->trigger();
+}
+
+void MainWindow::cycleResultFormats()
+{
+  if( d->actions.settingsResultFormatGeneral->isChecked() )
+    d->actions.settingsResultFormatFixed->trigger();
+  else if( d->actions.settingsResultFormatFixed->isChecked() )
+    d->actions.settingsResultFormatEngineering->trigger();
+  else if( d->actions.settingsResultFormatEngineering->isChecked() )
+    d->actions.settingsResultFormatScientific->trigger();
+  else if( d->actions.settingsResultFormatScientific->isChecked() )
+    d->actions.settingsResultFormatBinary->trigger();
+  else if( d->actions.settingsResultFormatBinary->isChecked() )
+    d->actions.settingsResultFormatOctal->trigger();
+  else if( d->actions.settingsResultFormatOctal->isChecked() )
+    d->actions.settingsResultFormatHexadecimal->trigger();
+  else if( d->actions.settingsResultFormatHexadecimal->isChecked() )
+    d->actions.settingsResultFormatGeneral->trigger();
+}
