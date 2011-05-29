@@ -61,7 +61,8 @@ AboutBox::AboutBox(QWidget *parent, Qt::WindowFlags f)
     msg += authors.arg(tr("Original author")).arg("Ariya Hidayat");
     msg += authors.arg(tr("Former maintainer")).arg("Johan Thelin");
     msg += authors.arg(tr("Math engine and expression parser")).arg("Wolf Lammen");
-    msg += authors.arg(tr("General purpose developer")).arg("Andreas Scherer");
+    msg += authors.arg(tr("General purpose developers")).arg("Andreas Scherer<br>"
+                                                             "Daniel Sch&auml;ufele");
     msg += authors.arg(tr("Packager and OS X stylist")).arg("Alessandro Portale");
     msg += authors.arg(tr("Original math book author")).arg("Petri Damst&eacute;n");
     msg += authors.arg(tr("Based on original idea from")).arg("Roberto Alsina");
@@ -81,6 +82,7 @@ AboutBox::AboutBox(QWidget *parent, Qt::WindowFlags f)
            "Bart Martens<br>"
            "Bernhard Schiffner<br>"
            "Christian Ehrlich<br>"
+           "Daniel Schäufele<br>"
            "Damir Perisa<br>"
            "Derek O'Connor<br>"
            "Eugeniu Plamadeala<br>"
