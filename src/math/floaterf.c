@@ -142,7 +142,8 @@ char
 erfcsum(floatnum x, /* should be the square of the parameter to erfc */
         int digits)
 {
-  int i, workprec;
+  int i;
+  int workprec = 0;
   floatstruct sum, smd;
   floatnum Ei;
 
