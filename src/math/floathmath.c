@@ -517,7 +517,7 @@ float_gamma(
       return _seterror(x, ZeroDivide);
     result = _gammaint(x, digits);
   }
-  else if (float_getlength(x) - float_getexponent(x) == 2 
+  else if (float_getlength(x) - float_getexponent(x) == 2
            && float_getdigit(x, float_getlength(x) - 1) == 5)
     result = _gamma0_5(x, digits);
   else
@@ -538,7 +538,7 @@ float_lngamma(
   floatnum x,
   int digits)
 {
-  if (x <= 0)
+  if (0 >= x)
     return _seterror(x, OutOfDomain);
   return chckmathparam(x, digits) && _lngamma(x, digits)?
           1 : _setnan(x);
@@ -637,7 +637,7 @@ float_xor(
   return 1;
 }
 
-char 
+char
 _doshift(
   floatnum dest,
   cfloatnum x,
