@@ -353,7 +353,7 @@ floatmath_init()
   }
   float_create(&cUnsignedBound);
   float_copy(&cUnsignedBound, &c1, EXACT);
-  for (i = -1; ++i < 2*sizeof(unsigned);)
+  for (i = -1; ++i < 2*(int)sizeof(unsigned);)
     float_mul(&cUnsignedBound, &c16, &cUnsignedBound, EXACT);
   for (i = -1; ++i < MAXERFCIDX;)
     float_create(&erfccoeff[i]);
