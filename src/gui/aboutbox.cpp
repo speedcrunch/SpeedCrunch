@@ -62,6 +62,7 @@ AboutBox::AboutBox(QWidget *parent, Qt::WindowFlags f)
     msg += authors.arg(tr("Former maintainer")).arg("Johan Thelin");
     msg += authors.arg(tr("Math engine and expression parser")).arg("Wolf Lammen");
     msg += authors.arg(tr("General purpose developers")).arg("Andreas Scherer<br>"
+                                                             "Enrico R&oacute;s<br>"
                                                              "Daniel Sch&auml;ufele");
     msg += authors.arg(tr("Packager and OS X stylist")).arg("Alessandro Portale");
     msg += authors.arg(tr("Original math book author")).arg("Petri Damst&eacute;n");

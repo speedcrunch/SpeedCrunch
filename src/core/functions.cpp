@@ -3,6 +3,7 @@
 // Copyright (C) 2007, 2009 Wolf Lammen
 // Copyright (C) 2007-2009 Helder Correia <helder.pereira.correia@gmail.com>
 // Copyright (C) 2009 Andreas Scherer <andreas_coder@freenet.de>
+// Copyright (C) 2011 Enrico Rós <enrico.ros@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
