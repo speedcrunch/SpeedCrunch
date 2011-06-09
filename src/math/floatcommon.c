@@ -205,7 +205,7 @@ leadingdigits(
   unsigned tmp, ovfl;
   char buf[LOGMSB+1];
 
-  if (digits <= 0 || digits > LOGMSB+1 || float_isnan(x) || float_iszero(x))
+  if (digits <= 0 || digits > (int)LOGMSB+1 || float_isnan(x) || float_iszero(x))
     return 0;
   memset(buf, '0', digits);
   float_getsignificand(buf, digits, x);
@@ -221,15 +221,16 @@ leadingdigits(
     if (ovfl != 0)
       return 0;
   }
+  const unsigned msb = MSB;
   if (float_getsign(x) < 0)
   {
-    if (tmp > MSB)
+    if (tmp > msb)
       return 0;
-    if (tmp == MSB)
+    if (tmp == msb)
       return (int)tmp;
     return -(int)tmp;
   }
-  if (tmp >= MSB)
+  if (tmp >= msb)
     return 0;
   return (int)tmp;
 }
@@ -350,7 +351,7 @@ float_roundtoint(
   floatnum x,
   roundmode mode)
 {
-  signed char value;
+  signed char value = 0;
   signed char sign;
   char digit;
 
