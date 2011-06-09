@@ -318,8 +318,11 @@ const Token& TokenStack::top( unsigned index )
 
 void TokenStack::ensureSpace()
 {
-    while ( topIndex >= size() )
-        resize( size() + 10 );
+    int length = size();
+    while ( topIndex >= length ) {
+        length += 10;
+        resize( length );
+    }
 }
 
 // helper function: return true for valid identifier character
