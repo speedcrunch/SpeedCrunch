@@ -219,7 +219,7 @@ void call1ArgND(HNumberPrivate* dest, HNumberPrivate* n, Float1ArgND func)
   }
 }
 
-static char modwrap(floatnum result, cfloatnum p1, cfloatnum p2, int digits)
+static char modwrap(floatnum result, cfloatnum p1, cfloatnum p2, int /*digits*/)
 {
   floatstruct tmp;
   float_create(&tmp);
