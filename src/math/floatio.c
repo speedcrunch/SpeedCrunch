@@ -79,7 +79,7 @@ _setstr(
   {
     if (src == NULL)
       *(dest->buf) = '\0';
-    else if (dest->sz < strlen(src) + 1)
+    else if (dest->sz < (int)strlen(src) + 1)
       return 0;
     else
       strcpy(dest->buf, src);
@@ -496,7 +496,10 @@ _exp2desc(
     }
     if (tokens->exp > upperLimit)
       return IOExpOverflow;
-    n->exp = sign < 0? -(int)(tokens->exp) : tokens->exp;
+    if (sign < 0)
+      n->exp = -(int)(tokens->exp);
+    else
+      n->exp = tokens->exp;
   }
   return Success;
 }
@@ -575,10 +578,10 @@ enum {idzero, idx10, idx16, idx2, idx8, idxcount};
 
 static t_ioparams ioparams[idxcount] = {
   {IO_BASE_ZERO, IO_BASE_ZERO, '\0', "", "", "", "", 0x7FFFFFFF},
-  {IO_BASE_DEFAULT},
-  {IO_BASE_DEFAULT},
-  {IO_BASE_DEFAULT},
-  {IO_BASE_DEFAULT}
+  {IO_BASE_DEFAULT, IO_BASE_DEFAULT, '\0', "", "", "", "", 0},
+  {IO_BASE_DEFAULT, IO_BASE_DEFAULT, '\0', "", "", "", "", 0},
+  {IO_BASE_DEFAULT, IO_BASE_DEFAULT, '\0', "", "", "", "", 0},
+  {IO_BASE_DEFAULT, IO_BASE_DEFAULT, '\0', "", "", "", "", 0}
 };
 
 static p_ioparams _defaultbase = NULL;
@@ -789,7 +792,7 @@ parse(
   if (params != NULL)
   {
     dot = params->dot;
-    if (params->expbegin != NULL);
+    if (params->expbegin != NULL)
       expbegin = params->expbegin;
     if (params->expend != NULL)
       expend = params->expend;
@@ -916,8 +919,8 @@ cattokens(
   char printleading0;
   char printdot;
   char printexp;
-  char printexpsign;
-  char printexpbase;
+  char printexpsign = 0;
+  char printexpbase = 0;
   char printexpbegin;
   char printexpend;
   char exp[BITS_IN_BINEXP+2];
