@@ -221,7 +221,7 @@ char
 _isfull(
   t_longint* l)
 {
-  return l->length >= UARRAYLG - 1;
+  return l->length >= (int)UARRAYLG - 1;
 }
 
 unsigned
@@ -292,7 +292,7 @@ _longintsetsize(
     l->length = 0;
   else
     l->length = (bitlength - 1) / BITS_IN_UNSIGNED + 1;
-  if (l->length >= UARRAYLG)
+  if (l->length >= (int)UARRAYLG)
     return 0;
   for(i = l->length; i >= 0; --i)
     l->value[i] = 0;
@@ -353,11 +353,12 @@ _checkmul(
     x2 = -f2;
   }
   _longmul(&x1, &x2);
+  const unsigned msb = MSB;
   if (sgn < 0)
   {
     *f1 = -(int)x1;
-    return (x2 == 0 && x1 <= MSB);
+    return (x2 == 0 && x1 <= msb);
   }
   *f1 = (int)x1;
-  return (x2 == 0 && x1 < MSB);
+  return (x2 == 0 && x1 < msb);
 }
