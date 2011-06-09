@@ -42,7 +42,7 @@ _zeroextend(
   int idx;
 
   idx = longint->length - 1;
-  for (; ++idx <= MAXIDX;)
+  for (; ++idx <= (int)MAXIDX;)
     longint->value[idx] = 0;
 }
 
@@ -76,10 +76,11 @@ _neg(
   int idx;
 
   idx = -1;
-  while (++idx <= MAXIDX && longint->value[idx] == 0);
-  if (idx <= MAXIDX)
+  const int maxidx = MAXIDX;
+  while (++idx <= maxidx && longint->value[idx] == 0);
+  if (idx <= maxidx)
     longint->value[idx] = - longint->value[idx];
-  while (++idx <= MAXIDX)
+  while (++idx <= maxidx)
     longint->value[idx] = ~longint->value[idx];
 }
 
@@ -146,7 +147,7 @@ _not(
 {
   int idx;
 
-  for (idx = -1; ++idx <= MAXIDX;)
+  for (idx = -1; ++idx <= (int)MAXIDX;)
     longint->value[idx] = ~(longint->value[idx]);
 }
 
@@ -157,7 +158,7 @@ _and(
 {
   int idx;
 
-  for (idx = -1; ++idx <= MAXIDX;)
+  for (idx = -1; ++idx <= (int)MAXIDX;)
     x1->value[idx] = x1->value[idx] & x2->value[idx];
 }
 
@@ -168,7 +169,7 @@ _or(
 {
   int idx;
 
-  for (idx = -1; ++idx <= MAXIDX;)
+  for (idx = -1; ++idx <= (int)MAXIDX;)
     x1->value[idx] = x1->value[idx] | x2->value[idx];
 }
 
@@ -179,7 +180,7 @@ _xor(
 {
   int idx;
 
-  for (idx = -1; ++idx <= MAXIDX;)
+  for (idx = -1; ++idx <= (int)MAXIDX;)
     x1->value[idx] = x1->value[idx] ^ x2->value[idx];
 }
 
@@ -193,20 +194,21 @@ _shr(
 
   sign = _signof(x) < 0? ~0 : 0;
   moves = shift/BITS_IN_UNSIGNED;
+  const int maxidx = MAXIDX;
   if (moves > 0)
   {
     shift -= moves * BITS_IN_UNSIGNED;
-    for (idx = moves-1; ++idx <= MAXIDX;)
+    for (idx = moves-1; ++idx <= maxidx;)
       x->value[idx-moves] = x->value[idx];
     idx = MAXIDX - moves + 1;
     if (idx < 0)
       idx = 0;
-    for (; idx <= MAXIDX; ++idx)
+    for (; idx <= maxidx; ++idx)
       x->value[idx] = sign;
   }
   if (shift > 0)
   {
-    for (idx = -1; ++idx < MAXIDX;)
+    for (idx = -1; ++idx < maxidx;)
       x->value[idx] = _longshr(x->value[idx], x->value[idx+1], shift);
     x->value[MAXIDX] = _longshr(x->value[MAXIDX], sign, shift);
   }
@@ -225,7 +227,7 @@ _shl(
     shift -= moves * BITS_IN_UNSIGNED;
     for (idx = MAXIDX; idx >= moves; --idx)
       x->value[idx] = x->value[idx-moves];
-    if (moves > MAXIDX)
+    if (moves > (int)MAXIDX)
       moves = MAXIDX+1;
     for (idx = -1; ++idx < moves;)
       x->value[idx] = 0;
