@@ -458,6 +458,8 @@ _scale2int(
   int scale,
   signed char base)
 {
+  (void)scale;
+
   floatstruct pwr;
   int pwrexp;
 
@@ -495,6 +497,8 @@ _extractexp(
   int scale,
   signed char base)
 {
+  (void)scale;
+
   floatstruct pwr;
   floatstruct fbase;
   int decprec;
@@ -538,6 +542,8 @@ _setscale(
   t_longint* l,
   int scale)
 {
+  (void)l;
+
   n->intpart.seq.leadingSignDigits = 0;
   n->intpart.seq.trailing0 = n->fracpart.seq.trailing0 - scale;
   if (n->intpart.seq.trailing0 < 0)
@@ -684,6 +690,8 @@ _outcompl(
   p_number_desc n,
   int scale)
 {
+  (void)scale;
+
   if (!float_isinteger(x))
     return IOInvalidComplement;
   if (n->prefix.sign == IO_SIGN_MINUS)
