@@ -210,6 +210,7 @@ struct Functions::Private
     static HNumber log( Function *, const QVector<HNumber> & args );
     static HNumber mask( Function *, const QVector<HNumber> & args );
     static HNumber max( Function *, const QVector<HNumber> & args );
+    static HNumber median( Function *, const QVector<HNumber> & args );
     static HNumber min( Function *, const QVector<HNumber> & args );
     static HNumber mod( Function *, const QVector<HNumber> & args );
     static HNumber nCr( Function *, const QVector<HNumber> & args );
@@ -575,6 +576,22 @@ HNumber Functions::Private::max( Function * f, const QVector<HNumber> & args )
     return *std::max_element( args.begin(), args.end() );
 }
 
+HNumber Functions::Private::median(Function *, const QVector<HNumber> & args)
+{
+    const int nArgs = args.count();
+    if ( nArgs < 1 )
+        return HMath::nan();
+
+    QVector<HNumber> sortedArgs = args;
+    qSort(sortedArgs);
+
+    if ((nArgs & 1) == 1)
+        return sortedArgs.at( (nArgs - 1) / 2 );
+
+    const int centerLeft = nArgs / 2 - 1;
+    return ( sortedArgs.at( centerLeft ) + sortedArgs.at( centerLeft + 1 ) ) / HNumber( 2 );
+}
+
 HNumber Functions::Private::min( Function * f, const QVector<HNumber> & args )
 {
     if ( args.count() < 1 ) {
@@ -848,6 +865,7 @@ void Functions::Private::createBuiltInFunctions()
     p->add( new Function("hypermean", hypermean, 3, p) );
     p->add( new Function("hyperpmf",  hyperpmf,  4, p) );
     p->add( new Function("hypervar",  hypervar,  3, p) );
+    p->add( new Function("median",    median,       p) );
     p->add( new Function("poicdf",    poicdf,    2, p) );
     p->add( new Function("poimean",   poimean,   1, p) );
     p->add( new Function("poipmf",    poipmf,    2, p) );
@@ -977,6 +995,7 @@ void Functions::retranslateText()
     function( "hypermean" )->setName( tr("Hypergeometric Distribution Mean") );
     function( "hyperpmf"  )->setName( tr("Hypergeometric Probability Mass Function") );
     function( "hypervar"  )->setName( tr("Hypergeometric Distribution Variance") );
+    function( "median"    )->setName( tr("Median Value (50th Percentile)") );
     function( "poicdf"    )->setName( tr("Poissonian Cumulative Distribution Function") );
     function( "poimean"   )->setName( tr("Poissonian Distribution Mean") );
     function( "poipmf"    )->setName( tr("Poissonian Probability Mass Function") );
