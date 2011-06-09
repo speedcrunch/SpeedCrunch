@@ -60,10 +60,12 @@ void out_of_memory(void){
 }
 
 void rt_warn(char *mesg ,...){
+  (void)mesg;
   return;
 }
 
 void rt_error(char *mesg ,...){
+  (void)mesg;
   return;
 }
 
@@ -678,10 +680,12 @@ new_sub_num (length, scale, value)
 
 static void
 _bc_simp_mul (bc_num n1, int n1len, bc_num n2, int n2len, bc_num *prod,
-	      int full_scale)
+              int full_scale)
 {
+  (void)full_scale;
+
   char *n1ptr, *n2ptr, *pvptr;
-  char *n1end, *n2end;		/* To the end of n1 and n2. */
+  char *n1end, *n2end;         /* To the end of n1 and n2. */
   int indx, sum, prodlen;
 
   prodlen = n1len+n2len+1;
@@ -721,7 +725,7 @@ _bc_shift_addsub (bc_num accum, bc_num val, int shift, int sub)
   if (val->n_value[0] == 0)
     count--;
   assert (accum->n_len+accum->n_scale >= shift+count);
-  
+
   /* Set up pointers and others */
   accp = (signed char *)(accum->n_value +
 			 accum->n_len + accum->n_scale - shift - 1);
@@ -769,8 +773,8 @@ _bc_shift_addsub (bc_num accum, bc_num val, int shift, int sub)
   }
 }
 
-/* Recursive divide and conquer multiply algorithm.  
-   Based on 
+/* Recursive divide and conquer multiply algorithm.
+   Based on
    Let u = u0 + u1*(b^n)
    Let v = v0 + v1*(b^n)
    Then uv = (B^2n+B^n)*u1*v1 + B^n*(u1-u0)*(v0-v1) + (B^n+1)*u0*v0
@@ -780,7 +784,7 @@ _bc_shift_addsub (bc_num accum, bc_num val, int shift, int sub)
 static void
 _bc_rec_mul (bc_num u, int ulen, bc_num v, int vlen, bc_num *prod,
 	     int full_scale)
-{ 
+{
   bc_num u0, u1, v0, v1;
   int u0len, v0len;
   bc_num m1, m2, m3, d1, d2;
@@ -881,7 +885,7 @@ bc_multiply (n1, n2, prod, scale)
      bc_num n1, n2, *prod;
      int scale;
 {
-  bc_num pval; 
+  bc_num pval;
   int len1, len2;
   int full_scale, prod_scale;
 
