@@ -170,12 +170,12 @@ const QTreeWidgetItem * FunctionsWidget::currentItem() const
     return d->functions->currentItem();
 }
 
-void FunctionsWidget::handleItemActivated( QTreeWidgetItem * item, int column )
+void FunctionsWidget::handleItemActivated( QTreeWidgetItem * item, int /*column*/ )
 {
     emit functionSelected( item->text(0) );
 }
 
-void FunctionsWidget::clearSelection( QTreeWidgetItem * item )
+void FunctionsWidget::clearSelection( QTreeWidgetItem * /*item*/ )
 {
     d->functions->clearSelection();
 }
