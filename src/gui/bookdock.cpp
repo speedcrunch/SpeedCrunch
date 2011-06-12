@@ -19,7 +19,6 @@
 
 #include "gui/bookdock.h"
 
-#include "thirdparty/flickcharm/flickcharm.h"
 #include "core/settings.h"
 
 #include <QtCore/QDir>
@@ -32,94 +31,59 @@
 #include <QtGui/QTextBrowser>
 #include <QtGui/QVBoxLayout>
 
-class BookDockPrivate
-{
-public:
-    QPushButton *backButton;
-    QHBoxLayout *buttonLayout;
-    QWidget *buttonLayoutWidget;
-    QString file;
-    FlickCharm flickCharm;
-    QPushButton *forwardButton;
-    QString index;
-    QPushButton *indexButton;
-    QString language;
-    BookDock *p;
-    QString path;
-    QTextBrowser *sheet;
-
-    void handleLayoutDirection();
-};
-
-void BookDockPrivate::handleLayoutDirection()
-{
-    if (p->layoutDirection() == Qt::RightToLeft) {
-        backButton->setIcon(QPixmap(":/book_forward.png"));
-        forwardButton->setIcon(QPixmap(":/book_back.png"));
-    } else {
-        backButton->setIcon(QPixmap(":/book_back.png"));
-        forwardButton->setIcon(QPixmap(":/book_forward.png"));
-    }
-}
-
-BookDock::BookDock(const QString &directory, const QString &file, QWidget *parent,
-                   Qt::WindowFlags f)
+BookDock::BookDock(const QString &path, const QString &file, QWidget *parent, Qt::WindowFlags f)
     : QDockWidget(parent, f)
-    , d_ptr(new BookDockPrivate)
 {
-    Q_D(BookDock);
-
-    d->p = this;
-    d->path = directory;
-    d->file = file;
-    d->index = file;
-    d->language = Settings::instance()->language;
+    m_path = path;
+    m_file = file;
+    m_index = file;
+    m_language = Settings::instance()->language;
 
     QWidget *widget = new QWidget(this);
     QVBoxLayout *bookLayout = new QVBoxLayout;
 
-    d->sheet = new QTextBrowser(this);
-    d->sheet->setLineWrapMode(QTextEdit::NoWrap);
-    d->sheet->setSearchPaths(QStringList() << d->path);
-    d->flickCharm.activateOn(d->sheet);
+    m_sheet = new QTextBrowser(this);
+    m_sheet->setLineWrapMode(QTextEdit::NoWrap);
+    m_sheet->setSearchPaths(QStringList() << m_path);
+    m_flickCharm.activateOn(m_sheet);
 
-    connect(d->sheet, SIGNAL(anchorClicked(const QUrl &)),
+    connect(m_sheet, SIGNAL(anchorClicked(const QUrl &)),
             SLOT(handleAnchorClick(const QUrl &)));
 
-    d->buttonLayoutWidget = new QWidget;
-    d->buttonLayout = new QHBoxLayout(d->buttonLayoutWidget);
-    d->buttonLayout->setSpacing(0);
-    d->buttonLayout->setMargin(0);
+    m_buttonLayoutWidget = new QWidget;
+    m_buttonLayout = new QHBoxLayout(m_buttonLayoutWidget);
+    m_buttonLayout->setSpacing(0);
+    m_buttonLayout->setMargin(0);
 
-    d->backButton = new QPushButton("", this);
-    d->backButton->setIcon(QPixmap(":/book_back.png"));
-    d->backButton->setFlat(true);
+    m_backButton = new QPushButton("", this);
+    m_backButton->setIcon(QPixmap(":/book_back.png"));
+    m_backButton->setFlat(true);
 
-    connect(d->backButton, SIGNAL(clicked()), d->sheet, SLOT(backward()));
-    connect(d->sheet, SIGNAL(backwardAvailable(bool)), d->backButton, SLOT(setEnabled(bool)));
+    connect(m_backButton, SIGNAL(clicked()), m_sheet, SLOT(backward()));
+    connect(m_sheet, SIGNAL(backwardAvailable(bool)), m_backButton, SLOT(setEnabled(bool)));
 
-    d->buttonLayout->addWidget(d->backButton);
+    m_buttonLayout->addWidget(m_backButton);
 
-    d->forwardButton = new QPushButton("", this);
-    d->forwardButton->setIcon(QPixmap(":/book_forward.png"));
-    d->forwardButton->setFlat(true);
+    m_forwardButton = new QPushButton("", this);
+    m_forwardButton->setIcon(QPixmap(":/book_forward.png"));
+    m_forwardButton->setFlat(true);
 
-    connect(d->forwardButton, SIGNAL(clicked()), d->sheet, SLOT(forward()));
-    connect(d->sheet, SIGNAL(forwardAvailable(bool)), d->forwardButton, SLOT(setEnabled(bool)));
+    connect(m_forwardButton, SIGNAL(clicked()), m_sheet, SLOT(forward()));
+    connect(m_sheet, SIGNAL(forwardAvailable(bool)), m_forwardButton, SLOT(setEnabled(bool)));
 
-    d->buttonLayout->addWidget(d->forwardButton);
+    m_buttonLayout->addWidget(m_forwardButton);
 
-    d->indexButton = new QPushButton("", this);
-    d->indexButton->setIcon(QPixmap(":/book_home.png"));
-    d->indexButton->setFlat(true);
+    m_indexButton = new QPushButton("", this);
+    m_indexButton->setIcon(QPixmap(":/book_home.png"));
+    m_indexButton->setFlat(true);
 
-    connect(d->indexButton, SIGNAL(clicked()), SLOT(home()));
+    connect(m_indexButton, SIGNAL(clicked()), SLOT(home()));
 
-    d->buttonLayout->addWidget(d->indexButton);
-    d->buttonLayout->addStretch();
+    m_buttonLayout->addWidget(m_indexButton);
+    m_buttonLayout->addStretch();
 
-    bookLayout->addWidget(d->buttonLayoutWidget);
-    bookLayout->addWidget(d->sheet);
+    bookLayout->addWidget(m_buttonLayoutWidget);
+    bookLayout->addWidget(m_sheet);
 
     widget->setLayout(bookLayout);
     setWidget(widget);
@@ -133,61 +97,57 @@ BookDock::~BookDock()
 
 void BookDock::handleAnchorClick(const QUrl &link)
 {
-    Q_D(BookDock);
-
-    if ( link.toString().startsWith("file:#")) {
-        // avoid appended history garbage after clicking on a formula (unknown)
-        d->sheet->backward();
-        d->sheet->forward();
+    if (link.toString().startsWith("file:#")) {
+        // Avoid appended history garbage after clicking on a formula (unknown).
+        m_sheet->backward();
+        m_sheet->forward();
         QString expression = link.toString().mid(6);
         emit expressionSelected(expression);
     } else {
-        d->sheet->setSource(link);
-        d->file = QFileInfo(link.path()).fileName();
+        m_sheet->setSource(link);
+        m_file = QFileInfo(link.path()).fileName();
     }
-    // necessary for QTextBrowser to always draw correctly (why?)
-    // causes a bug on Window or maybe just about the version number
-    //d->sheet->adjustSize();
+    // Necessary for QTextBrowser to always draw correctly (why?).
+    // Causes a bug on Window or maybe just about the version number.
+    // m_sheet->adjustSize();
 }
 
 void BookDock::home()
 {
-    Q_D(BookDock);
-    d->sheet->setSource(d->index);
-    d->file = d->index;
+    m_sheet->setSource(m_index);
+    m_file = m_index;
 }
 
 void BookDock::retranslateText()
 {
-    Q_D(BookDock);
     setWindowTitle(tr("Math Book"));
 
     // buttons
-    d->backButton->setText(tr("Back"));
-    d->forwardButton->setText(tr("Forward"));
-    d->indexButton->setText(tr("Index"));
+    m_backButton->setText(tr("Back"));
+    m_forwardButton->setText(tr("Forward"));
+    m_indexButton->setText(tr("Index"));
 
     // page
-    d->language = Settings::instance()->language;
-    QString locale = (d->language == "C") ? QLocale().name() : d->language;
+    m_language = Settings::instance()->language;
+    QString locale = (m_language == "C") ? QLocale().name() : m_language;
 
     // fallback to English
     if (locale == "C")
         locale = "en";
 
-    d->language = locale;
-    QString fullPath = d->path + d->language + "/";
-    QString src = fullPath + d->file;
+    m_language = locale;
+    QString fullPath = m_path + m_language + "/";
+    QString src = fullPath + m_file;
 
     if (!QDir(fullPath).isReadable()) {
         QString localeShort = locale.left(2).toLower();
-        src = d->path + localeShort + "/" + d->file;
-        if (!QDir(d->path + localeShort).isReadable())
-            src = d->path + "en" + "/" + d->file;
+        src = m_path + localeShort + "/" + m_file;
+        if (!QDir(m_path + localeShort).isReadable())
+            src = m_path + "en" + "/" + m_file;
     }
 
-    d->sheet->setSource(QUrl::fromLocalFile(src));
-    d->handleLayoutDirection();
+    m_sheet->setSource(QUrl::fromLocalFile(src));
+    handleLayoutDirection();
 }
 
 void BookDock::changeEvent(QEvent *event)
@@ -195,7 +155,19 @@ void BookDock::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange)
         retranslateText();
     else if (event->type() == QEvent::LayoutDirectionChange)
-        d_ptr->handleLayoutDirection();
+        handleLayoutDirection();
     else
         QDockWidget::changeEvent(event);
 }
+
+void BookDock::handleLayoutDirection()
+{
+    if (layoutDirection() == Qt::RightToLeft) {
+        m_backButton->setIcon(QPixmap(":/book_forward.png"));
+        m_forwardButton->setIcon(QPixmap(":/book_back.png"));
+    } else {
+        m_backButton->setIcon(QPixmap(":/book_back.png"));
+        m_forwardButton->setIcon(QPixmap(":/book_forward.png"));
+    }
+}
+

@@ -22,10 +22,13 @@
 #ifndef GUI_BOOKDOCK_H
 #define GUI_BOOKDOCK_H
 
-#include <QtCore/QScopedPointer>
+#include "thirdparty/flickcharm/flickcharm.h"
+
 #include <QtGui/QDockWidget>
 
-class BookDockPrivate;
+class QHBoxLayout;
+class QPushButton;
+class QTextBrowser;
 class QUrl;
 
 class BookDock : public QDockWidget
@@ -33,7 +36,7 @@ class BookDock : public QDockWidget
     Q_OBJECT
 
 public:
-    explicit BookDock(const QString &directory, const QString &file,
+    explicit BookDock(const QString &path, const QString &file,
                       QWidget *parent = 0, Qt::WindowFlags f = 0);
     ~BookDock();
 
@@ -51,9 +54,21 @@ private slots:
     void handleAnchorClick(const QUrl &link);
 
 private:
-    QScopedPointer<BookDockPrivate> d_ptr;
-    Q_DECLARE_PRIVATE(BookDock);
     Q_DISABLE_COPY(BookDock);
+
+    QPushButton *m_backButton;
+    QHBoxLayout *m_buttonLayout;
+    QWidget *m_buttonLayoutWidget;
+    QString m_file;
+    FlickCharm m_flickCharm;
+    QPushButton *m_forwardButton;
+    QString m_index;
+    QPushButton *m_indexButton;
+    QString m_language;
+    QString m_path;
+    QTextBrowser *m_sheet;
+
+    void handleLayoutDirection();
 };
 
 #endif // GUI_BOOKDOCK_H
