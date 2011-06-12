@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2008-2009 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2008, 2009, 2010, 2011 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -22,31 +22,24 @@
 
 #include <QtGui/QDockWidget>
 
-#include <memory>
-
-class Functions;
 class FunctionsWidget;
-
-class QTreeWidgetItem;
 
 class FunctionsDock : public QDockWidget
 {
   Q_OBJECT
 
 public:
-    explicit FunctionsDock( QWidget * parent );
-    ~FunctionsDock();
+    explicit FunctionsDock(QWidget *parent);
 
 protected:
-    virtual void changeEvent( QEvent * );
-    void updateList();
+    virtual void changeEvent(QEvent *);
     void retranslateText();
+    void updateList();
 
 private:
-    FunctionsWidget * m_widget;
+    Q_DISABLE_COPY(FunctionsDock);
 
-    FunctionsDock( const FunctionsDock & );
-    FunctionsDock & operator=( const FunctionsDock & );
+    FunctionsWidget *m_widget;
 };
 
 #endif

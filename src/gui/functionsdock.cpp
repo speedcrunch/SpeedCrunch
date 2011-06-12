@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2008-2009 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2008, 2009, 2010, 2011 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -19,37 +19,28 @@
 
 #include "gui/functionsdock.h"
 
-#include "core/functions.h"
 #include "gui/functionswidget.h"
 
 #include <QtCore/QEvent>
-#include <QtCore/QTimer>
-#include <QtGui/QLabel>
-#include <QtGui/QLineEdit>
-#include <QtGui/QTreeWidget>
-#include <QtGui/QVBoxLayout>
 
-FunctionsDock::FunctionsDock( QWidget * parent )
-    : QDockWidget( parent ), m_widget( new FunctionsWidget(this) )
+FunctionsDock::FunctionsDock(QWidget *parent)
+    : QDockWidget(parent)
+    , m_widget(new FunctionsWidget(this))
 {
-    setWidget( m_widget );
+    setWidget(m_widget);
     retranslateText();
-}
-
-FunctionsDock::~FunctionsDock()
-{
 }
 
 void FunctionsDock::retranslateText()
 {
-    setWindowTitle( tr("Functions") );
+    setWindowTitle(tr("Functions"));
 }
 
-void FunctionsDock::changeEvent( QEvent * e )
+void FunctionsDock::changeEvent(QEvent *e)
 {
-    if ( e->type() == QEvent::LanguageChange )
+    if (e->type() == QEvent::LanguageChange)
         retranslateText();
     else
-        QDockWidget::changeEvent( e );
+        QDockWidget::changeEvent(e);
 }
 
