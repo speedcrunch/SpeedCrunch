@@ -24,27 +24,24 @@
 #include <QtCore/QEvent>
 #include <QtGui/QIcon>
 
-HistoryDock::HistoryDock( QWidget * parent )
-    : QDockWidget( parent ), m_widget( new HistoryWidget )
+HistoryDock::HistoryDock(QWidget *parent)
+    : QDockWidget(parent),
+    m_widget(new HistoryWidget(this))
 {
-    setWidget( m_widget );
+    setWidget(m_widget);
     retranslateText();
-}
-
-HistoryDock::~HistoryDock()
-{
 }
 
 void HistoryDock::retranslateText()
 {
-    setWindowTitle( tr("History") );
+    setWindowTitle(tr("History"));
 }
 
-void HistoryDock::changeEvent( QEvent * e )
+void HistoryDock::changeEvent(QEvent *e)
 {
-    if ( e->type() == QEvent::LanguageChange )
+    if (e->type() == QEvent::LanguageChange)
         retranslateText();
     else
-        QDockWidget::changeEvent( e );
+        QDockWidget::changeEvent(e);
 }
 

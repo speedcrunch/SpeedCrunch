@@ -22,8 +22,6 @@
 
 #include <QtGui/QDockWidget>
 
-#include <memory>
-
 class HistoryWidget;
 class QListWidgetItem;
 
@@ -32,20 +30,18 @@ class HistoryDock : public QDockWidget
     Q_OBJECT
 
 public:
-    explicit HistoryDock( QWidget * parent = 0 );
-    ~HistoryDock();
+    explicit HistoryDock(QWidget *parent = 0);
 
 public slots:
     void retranslateText();
 
 protected:
-    void changeEvent( QEvent * );
+    void changeEvent(QEvent *);
 
 private:
-    HistoryWidget * m_widget;
+    Q_DISABLE_COPY(HistoryDock);
 
-    HistoryDock( const HistoryDock & );
-    HistoryDock & operator=( const HistoryDock & );
+    HistoryWidget *m_widget;
 };
 
 #endif
