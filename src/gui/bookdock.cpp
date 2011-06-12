@@ -45,7 +45,6 @@ BookDock::BookDock(const QString &path, const QString &file, QWidget *parent, Qt
     m_sheet = new QTextBrowser(this);
     m_sheet->setLineWrapMode(QTextEdit::NoWrap);
     m_sheet->setSearchPaths(QStringList() << m_path);
-    m_flickCharm.activateOn(m_sheet);
 
     connect(m_sheet, SIGNAL(anchorClicked(const QUrl &)),
             SLOT(handleAnchorClick(const QUrl &)));

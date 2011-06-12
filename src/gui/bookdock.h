@@ -22,8 +22,6 @@
 #ifndef GUI_BOOKDOCK_H
 #define GUI_BOOKDOCK_H
 
-#include "thirdparty/flickcharm/flickcharm.h"
-
 #include <QtGui/QDockWidget>
 
 class QHBoxLayout;
@@ -60,7 +58,6 @@ private:
     QHBoxLayout *m_buttonLayout;
     QWidget *m_buttonLayoutWidget;
     QString m_file;
-    FlickCharm m_flickCharm;
     QPushButton *m_forwardButton;
     QString m_index;
     QPushButton *m_indexButton;
