@@ -30,7 +30,7 @@
 #include <QtCore/QMap>
 #include <QtCore/QStack>
 
-#define EVALUATOR_DEBUG
+//#define EVALUATOR_DEBUG
 #ifdef EVALUATOR_DEBUG
 #include <QtCore/QFile>
 #include <QtCore/QTextStream>
