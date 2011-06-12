@@ -34,8 +34,7 @@ class BookDock : public QDockWidget
     Q_OBJECT
 
 public:
-    explicit BookDock(const QString &path, const QString &homePage,
-                      QWidget *parent = 0, Qt::WindowFlags f = 0);
+    explicit BookDock(const QString &path, const QString &homePage, QWidget *parent = 0);
 
 signals:
     void expressionSelected(const QString &expression);

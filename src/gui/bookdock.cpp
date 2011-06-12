@@ -31,8 +31,8 @@
 #include <QtGui/QTextBrowser>
 #include <QtGui/QVBoxLayout>
 
-BookDock::BookDock(const QString &path, const QString &homePage, QWidget *parent, Qt::WindowFlags f)
-    : QDockWidget(parent, f)
+BookDock::BookDock(const QString &path, const QString &homePage, QWidget *parent)
+    : QDockWidget(parent)
     , m_file(homePage)
     , m_homePage(homePage)
     , m_language(Settings::instance()->language)
