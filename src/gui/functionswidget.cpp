@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2009 Andreas Scherer <andreas_coder@freenet.de>
-// Copyright (C) 2009 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2009, 2011 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -19,7 +19,6 @@
 
 #include "gui/functionswidget.h"
 
-#include "thirdparty/flickcharm/flickcharm.h"
 #include "core/functions.h"
 #include "core/settings.h"
 
@@ -32,167 +31,155 @@
 #include <QtGui/QTreeWidget>
 #include <QtGui/QVBoxLayout>
 
-struct FunctionsWidget::Private
+FunctionsWidget::FunctionsWidget(QWidget *parent)
+    : QWidget(parent)
+    , m_filterTimer(new QTimer(this))
+    , m_functions(new QTreeWidget(this))
+    , m_noMatchLabel(new QLabel(m_functions))
+    , m_searchFilter(new QLineEdit(this))
+    , m_searchLabel(new QLabel(this))
 {
-    QTimer * filterTimer;
-    FlickCharm flickCharm;
-    QTreeWidget * functions;
-    bool insertAllItems;
-    QLabel * noMatchLabel;
-    QLabel * searchLabel;
-    QLineEdit * searchFilter;
-};
 
-FunctionsWidget::FunctionsWidget( QWidget * parent )
-    : QWidget( parent ), d( new FunctionsWidget::Private )
-{
-    d->filterTimer = new QTimer( this );
-    d->functions = new QTreeWidget( this );
-    d->noMatchLabel = new QLabel( d->functions );
-    d->flickCharm.activateOn( d->functions );
-    d->searchFilter = new QLineEdit( this );
-    d->searchLabel = new QLabel( this );
+    m_filterTimer->setInterval(500);
+    m_filterTimer->setSingleShot(true);
 
-    d->filterTimer->setInterval( 500 );
-    d->filterTimer->setSingleShot( true );
+    m_functions->setAutoScroll(true);
+    m_functions->setHorizontalScrollBarPolicy( Qt::ScrollBarAsNeeded);
+    m_functions->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
+    m_functions->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    m_functions->setColumnCount(2);
+    m_functions->setAlternatingRowColors(true);
+    m_functions->setRootIsDecorated(false);
+    m_functions->setEditTriggers(QTreeWidget::NoEditTriggers);
+    m_functions->setSelectionBehavior(QTreeWidget::SelectRows);
+    m_functions->setCursor(QCursor(Qt::PointingHandCursor));
 
-    d->functions->setAutoScroll( true );
-    d->functions->setHorizontalScrollBarPolicy( Qt::ScrollBarAsNeeded );
-    d->functions->setHorizontalScrollMode( QAbstractItemView::ScrollPerPixel );
-    d->functions->setVerticalScrollMode( QAbstractItemView::ScrollPerPixel );
-    d->functions->setColumnCount( 2 );
-    d->functions->setAlternatingRowColors( true );
-    d->functions->setRootIsDecorated( false );
-    d->functions->setEditTriggers( QTreeWidget::NoEditTriggers );
-    d->functions->setSelectionBehavior( QTreeWidget::SelectRows );
-    d->functions->setCursor( QCursor(Qt::PointingHandCursor) );
+    m_noMatchLabel->setAlignment(Qt::AlignCenter);
+    m_noMatchLabel->adjustSize();
+    m_noMatchLabel->hide();
 
-    d->noMatchLabel->setAlignment( Qt::AlignCenter );
-    d->noMatchLabel->adjustSize();
-    d->noMatchLabel->hide();
+    QWidget *searchBox = new QWidget(this);
+    QHBoxLayout *searchLayout = new QHBoxLayout;
+    searchLayout->addWidget(m_searchLabel);
+    searchLayout->addWidget(m_searchFilter);
+    searchLayout->setMargin(0);
+    searchBox->setLayout(searchLayout);
 
-    QWidget * searchBox = new QWidget( this );
-    QHBoxLayout * searchLayout = new QHBoxLayout;
-    searchLayout->addWidget( d->searchLabel );
-    searchLayout->addWidget( d->searchFilter );
-    searchLayout->setMargin( 0 );
-    searchBox->setLayout( searchLayout );
-
-    QVBoxLayout * layout = new QVBoxLayout;
-    layout->setMargin( 3 );
-    layout->addWidget( searchBox );
-    layout->addWidget( d->functions );
-    setLayout( layout );
+    QVBoxLayout *layout = new QVBoxLayout;
+    layout->setMargin(3);
+    layout->addWidget(searchBox);
+    layout->addWidget(m_functions);
+    setLayout(layout);
 
     retranslateText();
 
-    connect( d->filterTimer, SIGNAL(timeout()), SLOT(fillTable()) );
-    connect( d->functions, SIGNAL(itemActivated(QTreeWidgetItem *, int)),
-             SLOT(handleItemActivated(QTreeWidgetItem *, int)) );
-    connect( d->searchFilter, SIGNAL(textChanged(const QString &)), SLOT(triggerFilter()) );
+    connect(m_filterTimer, SIGNAL(timeout()), SLOT(fillTable()));
+    connect(m_functions, SIGNAL(itemActivated(QTreeWidgetItem *, int)),
+            SLOT(handleItemActivated(QTreeWidgetItem *, int)));
+    connect(m_searchFilter, SIGNAL(textChanged(const QString &)), SLOT(triggerFilter()));
 }
 
 FunctionsWidget::~FunctionsWidget()
 {
-    d->filterTimer->stop();
+    m_filterTimer->stop();
 }
 
 void FunctionsWidget::fillTable()
 {
-    setUpdatesEnabled( false );
+    setUpdatesEnabled(false);
 
-    d->filterTimer->stop();
-    d->functions->clear();
-    QString term = d->searchFilter->text();
+    m_filterTimer->stop();
+    m_functions->clear();
+    QString term = m_searchFilter->text();
     QStringList functionNames = Functions::instance()->names();
 
-    for ( int k = 0; k < functionNames.count(); k++ )
+    for (int k = 0; k < functionNames.count(); ++k)
     {
-        Function * f = Functions::instance()->function( functionNames.at(k) );
-        if ( ! f )
+        Function *f = Functions::instance()->function(functionNames.at(k));
+        if (!f)
             continue;
 
         QStringList str;
         str << f->identifier() << f->name();
 
-        if ( term.isEmpty()
-             || str.at(0).contains(term, Qt::CaseInsensitive)
-             || str.at(1).contains(term, Qt::CaseInsensitive) )
+        if (term.isEmpty()
+            || str.at(0).contains(term, Qt::CaseInsensitive)
+            || str.at(1).contains(term, Qt::CaseInsensitive))
         {
-            QTreeWidgetItem * item = new QTreeWidgetItem( d->functions, str );
-            if ( layoutDirection() == Qt::LeftToRight ) {
-                item->setTextAlignment( 0, Qt::AlignLeft );
-                item->setTextAlignment( 1, Qt::AlignLeft );
+            QTreeWidgetItem *item = new QTreeWidgetItem(m_functions, str);
+            if (layoutDirection() == Qt::LeftToRight) {
+                item->setTextAlignment(0, Qt::AlignLeft);
+                item->setTextAlignment(1, Qt::AlignLeft);
             } else {
-                item->setTextAlignment( 0, Qt::AlignRight );
-                item->setTextAlignment( 1, Qt::AlignLeft );
+                item->setTextAlignment(0, Qt::AlignRight);
+                item->setTextAlignment(1, Qt::AlignLeft);
             }
         }
     }
 
-    d->functions->resizeColumnToContents( 0 );
-    d->functions->resizeColumnToContents( 1 );
+    m_functions->resizeColumnToContents(0);
+    m_functions->resizeColumnToContents(1);
 
-    if ( d->functions->topLevelItemCount() > 0 ) {
-        d->noMatchLabel->hide();
-        d->functions->sortItems( 0, Qt::AscendingOrder );
+    if (m_functions->topLevelItemCount() > 0) {
+        m_noMatchLabel->hide();
+        m_functions->sortItems(0, Qt::AscendingOrder);
     } else {
-        d->noMatchLabel->setGeometry( d->functions->geometry() );
-        d->noMatchLabel->show();
-        d->noMatchLabel->raise();
+        m_noMatchLabel->setGeometry(m_functions->geometry());
+        m_noMatchLabel->show();
+        m_noMatchLabel->raise();
     }
 
-  d->searchFilter->setFocus();
-  setUpdatesEnabled( true );
+  m_searchFilter->setFocus();
+  setUpdatesEnabled(true);
 }
 
 void FunctionsWidget::retranslateText()
 {
     QStringList titles;
-    const QString identifier = tr( "Identifier" );
-    const QString name = tr( "Name" );
+    const QString identifier = tr("Identifier");
+    const QString name = tr("Name");
     titles << identifier << name;
-    d->functions->setHeaderLabels( titles );
+    m_functions->setHeaderLabels(titles);
 
-    d->searchLabel->setText( tr("Search") );
-    d->noMatchLabel->setText( tr("No match found") );
+    m_searchLabel->setText(tr("Search"));
+    m_noMatchLabel->setText(tr("No match found"));
 
     fillTable();
 }
 
 QList<QTreeWidgetItem *> FunctionsWidget::selectedItems() const
 {
-    return d->functions->selectedItems();
+    return m_functions->selectedItems();
 }
 
-const QTreeWidgetItem * FunctionsWidget::currentItem() const
+const QTreeWidgetItem *FunctionsWidget::currentItem() const
 {
-    return d->functions->currentItem();
+    return m_functions->currentItem();
 }
 
-void FunctionsWidget::handleItemActivated( QTreeWidgetItem * item, int /*column*/ )
+void FunctionsWidget::handleItemActivated(QTreeWidgetItem *item, int /*column*/)
 {
-    emit functionSelected( item->text(0) );
+    emit functionSelected(item->text(0));
 }
 
-void FunctionsWidget::clearSelection( QTreeWidgetItem * /*item*/ )
+void FunctionsWidget::clearSelection(QTreeWidgetItem * /*item*/)
 {
-    d->functions->clearSelection();
+    m_functions->clearSelection();
 }
 
 void FunctionsWidget::triggerFilter()
 {
-    d->filterTimer->stop();
-    d->filterTimer->start();
+    m_filterTimer->stop();
+    m_filterTimer->start();
 }
 
-void FunctionsWidget::changeEvent( QEvent * e )
+void FunctionsWidget::changeEvent(QEvent *e)
 {
-    if ( e->type() == QEvent::LanguageChange ) {
+    if (e->type() == QEvent::LanguageChange) {
         Functions::instance()->retranslateText();
         retranslateText();
     }
     else
-        QWidget::changeEvent( e );
+        QWidget::changeEvent(e);
 }
 

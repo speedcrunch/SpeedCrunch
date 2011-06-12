@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2009 Andreas Scherer <andreas_coder@freenet.de>
-// Copyright (C) 2009 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2009, 2011 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -23,9 +23,10 @@
 #include <QtCore/QList>
 #include <QtGui/QWidget>
 
-#include <memory>
-
 class QEvent;
+class QLabel;
+class QLineEdit;
+class QTreeWidget;
 class QTreeWidgetItem;
 
 class FunctionsWidget : public QWidget
@@ -33,29 +34,32 @@ class FunctionsWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit FunctionsWidget( QWidget * parent = 0 );
+    explicit FunctionsWidget(QWidget *parent = 0);
     ~FunctionsWidget();
 
-    const QTreeWidgetItem * currentItem() const;
+    const QTreeWidgetItem *currentItem() const;
     QList<QTreeWidgetItem *> selectedItems() const;
 
 signals:
-    void functionSelected( const QString & );
+    void functionSelected(const QString &);
 
 protected slots:
-    void handleItemActivated( QTreeWidgetItem *, int );
-    virtual void changeEvent( QEvent * );
-    void clearSelection( QTreeWidgetItem * );
+    void handleItemActivated(QTreeWidgetItem *, int);
+    virtual void changeEvent(QEvent *);
+    void clearSelection(QTreeWidgetItem *);
     void fillTable();
     void retranslateText();
     void triggerFilter();
 
 private:
-    struct Private;
-    const std::auto_ptr<Private> d;
+    Q_DISABLE_COPY(FunctionsWidget);
 
-    FunctionsWidget( const FunctionsWidget & );
-    FunctionsWidget & operator=( const FunctionsWidget & );
+    QTimer *m_filterTimer;
+    QTreeWidget *m_functions;
+    bool m_insertAllItems;
+    QLabel *m_noMatchLabel;
+    QLineEdit *m_searchFilter;
+    QLabel *m_searchLabel;
 };
 
 #endif
