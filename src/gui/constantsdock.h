@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2008-2009 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2007, 2008, 2009, 2010 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -22,8 +22,6 @@
 
 #include <QtGui/QDockWidget>
 
-#include <memory>
-
 class ConstantsWidget;
 
 class ConstantsDock : public QDockWidget
@@ -31,18 +29,16 @@ class ConstantsDock : public QDockWidget
     Q_OBJECT
 
 public:
-    ConstantsDock( QWidget * parent = 0 );
-    ~ConstantsDock();
+    ConstantsDock(QWidget *parent = 0);
 
 protected:
-    virtual void changeEvent( QEvent * );
+    virtual void changeEvent(QEvent *);
     void retranslateText();
 
 private:
-    ConstantsWidget * m_widget;
+    Q_DISABLE_COPY(ConstantsDock);
 
-    ConstantsDock( const ConstantsDock & );
-    ConstantsDock & operator=( const ConstantsDock & );
+    ConstantsWidget *m_widget;
 };
 
 #endif

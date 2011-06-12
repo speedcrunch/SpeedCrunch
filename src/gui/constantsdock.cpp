@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2007-2009 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2007, 2008, 2009, 2010 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -23,27 +23,24 @@
 
 #include <QtCore/QEvent>
 
-ConstantsDock::ConstantsDock( QWidget * parent )
-  : QDockWidget( parent ), m_widget( new ConstantsWidget(this) )
+ConstantsDock::ConstantsDock(QWidget *parent)
+    : QDockWidget(parent)
+    , m_widget(new ConstantsWidget(this))
 {
     setWidget( m_widget );
     retranslateText();
 }
 
-ConstantsDock::~ConstantsDock()
-{
-}
-
 void ConstantsDock::retranslateText()
 {
-    setWindowTitle( tr("Constants") );
+    setWindowTitle(tr("Constants"));
 }
 
-void ConstantsDock::changeEvent( QEvent * e )
+void ConstantsDock::changeEvent(QEvent *e)
 {
-    if ( e->type() == QEvent::LanguageChange )
+    if (e->type() == QEvent::LanguageChange)
         retranslateText();
     else
-        QDockWidget::changeEvent( e );
+        QDockWidget::changeEvent(e);
 }
 
