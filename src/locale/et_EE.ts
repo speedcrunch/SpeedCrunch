@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="et_EE">
+<!DOCTYPE TS><TS version="1.1" language="et_EE">
+<defaultcodec></defaultcodec>
 <context>
     <name>AboutBox</name>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="39"/>
         <location filename="../gui/aboutbox.cpp" line="233"/>
         <source>About SpeedCrunch</source>
         <translation>SpeedCrunchi info</translation>
@@ -102,7 +101,7 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="130"/>
         <source>Estonian</source>
-        <translation type="unfinished"></translation>
+        <translation>Eesti</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="132"/>
@@ -180,12 +179,6 @@
         <translation>Türgi</translation>
     </message>
     <message>
-        <location filename="../gui/aboutbox.cpp" line="172"/>
-        <location filename="../gui/aboutbox.cpp" line="174"/>
-        <location filename="../gui/aboutbox.cpp" line="176"/>
-        <location filename="../gui/aboutbox.cpp" line="178"/>
-        <location filename="../gui/aboutbox.cpp" line="180"/>
-        <location filename="../gui/aboutbox.cpp" line="182"/>
         <location filename="../gui/aboutbox.cpp" line="184"/>
         <source>Copyright (C)</source>
         <translation>Autoriõigus (C)</translation>
@@ -218,7 +211,7 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="64"/>
         <source>General purpose developers</source>
-        <translation type="unfinished"></translation>
+        <translation>Üldarendajad</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="140"/>
@@ -257,8 +250,6 @@
 <context>
     <name>ConstantCompletion</name>
     <message>
-        <location filename="../gui/editor.cpp" line="947"/>
-        <location filename="../gui/editor.cpp" line="957"/>
         <location filename="../gui/editor.cpp" line="1015"/>
         <source>All</source>
         <translation>Kõik</translation>
@@ -568,7 +559,6 @@
         <translation>Otsing</translation>
     </message>
     <message>
-        <location filename="../gui/constantswidget.cpp" line="178"/>
         <location filename="../gui/constantswidget.cpp" line="247"/>
         <source>All</source>
         <translation>Kõik</translation>
@@ -608,31 +598,6 @@
 <context>
     <name>Evaluator</name>
     <message>
-        <location filename="../core/evaluator.cpp" line="1222"/>
-        <location filename="../core/evaluator.cpp" line="1256"/>
-        <location filename="../core/evaluator.cpp" line="1268"/>
-        <location filename="../core/evaluator.cpp" line="1279"/>
-        <location filename="../core/evaluator.cpp" line="1290"/>
-        <location filename="../core/evaluator.cpp" line="1301"/>
-        <location filename="../core/evaluator.cpp" line="1312"/>
-        <location filename="../core/evaluator.cpp" line="1323"/>
-        <location filename="../core/evaluator.cpp" line="1333"/>
-        <location filename="../core/evaluator.cpp" line="1343"/>
-        <location filename="../core/evaluator.cpp" line="1353"/>
-        <location filename="../core/evaluator.cpp" line="1363"/>
-        <location filename="../core/evaluator.cpp" line="1373"/>
-        <location filename="../core/evaluator.cpp" line="1383"/>
-        <location filename="../core/evaluator.cpp" line="1393"/>
-        <location filename="../core/evaluator.cpp" line="1403"/>
-        <location filename="../core/evaluator.cpp" line="1413"/>
-        <location filename="../core/evaluator.cpp" line="1423"/>
-        <location filename="../core/evaluator.cpp" line="1433"/>
-        <location filename="../core/evaluator.cpp" line="1444"/>
-        <location filename="../core/evaluator.cpp" line="1455"/>
-        <location filename="../core/evaluator.cpp" line="1466"/>
-        <location filename="../core/evaluator.cpp" line="1477"/>
-        <location filename="../core/evaluator.cpp" line="1488"/>
-        <location filename="../core/evaluator.cpp" line="1527"/>
         <location filename="../core/evaluator.cpp" line="1550"/>
         <source>invalid expression</source>
         <translation>Vigane avaldis</translation>
@@ -643,7 +608,6 @@
         <translation>nulliga jagamine</translation>
     </message>
     <message>
-        <location filename="../core/evaluator.cpp" line="1507"/>
         <location filename="../core/evaluator.cpp" line="1522"/>
         <source>unknown function or variable</source>
         <translation>tundmatu funktsioon või muutuja</translation>
@@ -694,7 +658,7 @@
     <message>
         <location filename="../core/functions.cpp" line="946"/>
         <source>Absolute Deviation</source>
-        <translation type="unfinished"></translation>
+        <translation>Absoluuthälve</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="947"/>
@@ -794,7 +758,7 @@
     <message>
         <location filename="../core/functions.cpp" line="966"/>
         <source>Standard Deviation (Square Root of Variance)</source>
-        <translation type="unfinished"></translation>
+        <translation>Standardhälve (ruutjuur dispersioonist)</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="967"/>
@@ -809,7 +773,7 @@
     <message>
         <location filename="../core/functions.cpp" line="969"/>
         <source>Variance</source>
-        <translation type="unfinished"></translation>
+        <translation>Dispersioon</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="972"/>
@@ -929,7 +893,7 @@
     <message>
         <location filename="../core/functions.cpp" line="999"/>
         <source>Median Value (50th Percentile)</source>
-        <translation type="unfinished"></translation>
+        <translation>Mediaanväärtus (50-protsentiil)</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="1000"/>
@@ -1057,13 +1021,11 @@
         <translation>Jääk</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="286"/>
         <location filename="../core/functions.cpp" line="351"/>
         <source>function undefined for specified arguments</source>
         <translation>funktsioon antud argumentide puhul määramata</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="275"/>
         <location filename="../core/functions.cpp" line="340"/>
         <source>function requires 1 or 2 arguments</source>
         <translation>funktsioon vajab 1 või 2 argumenti</translation>
@@ -1079,7 +1041,6 @@
         <translation>funktsioon nõuab täisarvulisi argumente</translation>
     </message>
     <message>
-        <location filename="../core/functions.cpp" line="573"/>
         <location filename="../core/functions.cpp" line="599"/>
         <source>function requires at least 1 argument</source>
         <translation>funktsioon vajab vähemalt 1 argumenti</translation>
@@ -1289,55 +1250,46 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="500"/>
         <location filename="../gui/mainwindow.cpp" line="1744"/>
         <source>Radian</source>
         <translation>Radiaanid</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="500"/>
         <location filename="../gui/mainwindow.cpp" line="1395"/>
         <source>Degree</source>
         <translation>Kraadid</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="504"/>
         <location filename="../gui/mainwindow.cpp" line="2159"/>
         <source>Binary</source>
         <translation>2nd</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="505"/>
         <location filename="../gui/mainwindow.cpp" line="2204"/>
         <source>Octal</source>
         <translation>8nd</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="506"/>
         <location filename="../gui/mainwindow.cpp" line="2195"/>
         <source>Hexadecimal</source>
         <translation>16nd</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="507"/>
         <location filename="../gui/mainwindow.cpp" line="2177"/>
         <source>Fixed decimal</source>
         <translation>Fikseeritud 10nd</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="508"/>
         <location filename="../gui/mainwindow.cpp" line="2168"/>
         <source>Engineering decimal</source>
         <translation>Inseneri 10nd</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="509"/>
         <location filename="../gui/mainwindow.cpp" line="2213"/>
         <source>Scientific decimal</source>
         <translation>Teaduslik 10nd</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="510"/>
         <location filename="../gui/mainwindow.cpp" line="2186"/>
         <source>General decimal</source>
         <translation>Üldine 10nd</translation>
@@ -1680,7 +1632,7 @@
     <message>
         <location filename="../gui/mainwindow.cpp" line="583"/>
         <source>About &amp;SpeedCrunch</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;SpeedCrunchi info</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="798"/>
@@ -1703,7 +1655,6 @@
         <translation>Fail &quot;%1&quot; ei ole sobiv seanss</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1489"/>
         <location filename="../gui/mainwindow.cpp" line="1751"/>
         <source>SpeedCrunch Sessions (*.sch);;All Files (*)</source>
         <translation>SpeedCrunchi seansid (*.sch);;Kõik failid (*)</translation>
@@ -1714,22 +1665,11 @@
         <translation>Seansi laadimine</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1497"/>
-        <location filename="../gui/mainwindow.cpp" line="1506"/>
-        <location filename="../gui/mainwindow.cpp" line="1514"/>
-        <location filename="../gui/mainwindow.cpp" line="1542"/>
-        <location filename="../gui/mainwindow.cpp" line="1564"/>
-        <location filename="../gui/mainwindow.cpp" line="1571"/>
-        <location filename="../gui/mainwindow.cpp" line="1592"/>
-        <location filename="../gui/mainwindow.cpp" line="1627"/>
-        <location filename="../gui/mainwindow.cpp" line="1759"/>
-        <location filename="../gui/mainwindow.cpp" line="1804"/>
         <location filename="../gui/mainwindow.cpp" line="1825"/>
         <source>Error</source>
         <translation>Viga</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1497"/>
         <location filename="../gui/mainwindow.cpp" line="1592"/>
         <source>Can&apos;t read from file %1</source>
         <translation>Failist &quot;%1&quot; pole võimalik lugeda</translation>
@@ -1742,7 +1682,6 @@ If no, current variables and display will be cleared.</source>
 Kui ei, siis kustutatakse praegused muutujad ja ajalugu.</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1523"/>
         <location filename="../gui/mainwindow.cpp" line="1601"/>
         <source>Question</source>
         <translation>Küsimus</translation>
@@ -1775,8 +1714,6 @@ Kui ei, siis kustutatakse praegused muutujad ja ajalugu.</translation>
         <translation>Seansi salvestamine</translation>
     </message>
     <message>
-        <location filename="../gui/mainwindow.cpp" line="1759"/>
-        <location filename="../gui/mainwindow.cpp" line="1804"/>
         <location filename="../gui/mainwindow.cpp" line="1825"/>
         <source>Can&apos;t write to file %1</source>
         <translation>Faili &quot;%1&quot; pole võimalik kirjutada</translation>
