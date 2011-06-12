@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2008-2009 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2008, 2009, 2011 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -29,57 +29,47 @@
 #include <QtGui/QTreeWidget>
 #include <QtGui/QVBoxLayout>
 
-struct VariablesDock::Private
-{
-    VariablesWidget * variablesWidget;
-};
-
 VariablesDock::VariablesDock( QWidget * parent )
-    : QDockWidget( parent ), d( new VariablesDock::Private )
+    : QDockWidget( parent )
+    , m_variablesWidget(new VariablesWidget(VariablesWidget::ShowUser, this))
 {
-    d->variablesWidget = new VariablesWidget( VariablesWidget::ShowUser, this );
+    connect(m_variablesWidget, SIGNAL(itemActivated(QTreeWidgetItem *, int)),
+            SLOT(handleItem(QTreeWidgetItem *)));
 
-    connect( d->variablesWidget, SIGNAL(itemActivated(QTreeWidgetItem *, int) ),
-             SLOT(handleItem(QTreeWidgetItem *)) );
+    setWidget(m_variablesWidget);
 
-    setWidget( d->variablesWidget );
-
-    setMinimumWidth( 200 );
-    setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
-    setWindowIcon( QIcon() );
+    setMinimumWidth(200);
+    setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
+    setWindowIcon(QIcon());
 
     retranslateText();
 }
 
-VariablesDock::~VariablesDock()
-{
-}
-
 void VariablesDock::updateList()
 {
-    d->variablesWidget->fillTable();
+    m_variablesWidget->fillTable();
 }
 
 void VariablesDock::handleRadixCharacterChange()
 {
-    d->variablesWidget->fillTable();
+    m_variablesWidget->fillTable();
 }
 
 void VariablesDock::retranslateText()
 {
-    setWindowTitle( tr("Variables") );
+    setWindowTitle(tr("Variables"));
 }
 
-void VariablesDock::handleItem( QTreeWidgetItem * item )
+void VariablesDock::handleItem(QTreeWidgetItem *item)
 {
-    emit variableSelected( item->text(0) );
+    emit variableSelected(item->text(0));
 }
 
-void VariablesDock::changeEvent( QEvent * e )
+void VariablesDock::changeEvent(QEvent *e)
 {
-    if ( e->type() == QEvent::LanguageChange )
+    if (e->type() == QEvent::LanguageChange)
         retranslateText();
     else
-        QDockWidget::changeEvent( e );
+        QDockWidget::changeEvent(e);
 }
 
