@@ -1,54 +1,67 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Mihkel Tõnnov <mihhkel@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Estonian\n"
+
 #: circle.html.template, math_index.html.template
 msgid "Circle"
-msgstr ""
+msgstr "Ring"
 
 #: cube.html.template, circle.html.template, right_triangle.html.template,
 #: math_index.html.template, cone.html.template, sphere.html.template,
 #: sector.html.template, cylinder.html.template,
 #: quadratic_equation.html.template
 msgid "align=\"left\""
-msgstr ""
+msgstr "align=\"left\""
 
 #: cone.html.template, math_index.html.template
 msgid "Cone"
-msgstr ""
+msgstr "Koonus"
 
 #: cube.html.template, math_index.html.template
 msgid "Cube"
-msgstr ""
+msgstr "Kuup"
 
 #: cylinder.html.template, math_index.html.template
 msgid "Cylinder"
-msgstr ""
+msgstr "Silinder"
 
 #: math_index.html.template
 msgid "SpeedCrunch Book"
-msgstr ""
+msgstr "SpeedCrunchi vihik"
 
 #: math_index.html.template
 msgid "3D Objects"
-msgstr ""
+msgstr "Ruumilised kujundid"
 
 #: sphere.html.template, math_index.html.template
 msgid "Sphere"
-msgstr ""
+msgstr "Kera"
 
 #: math_index.html.template
 msgid "2D Objects"
-msgstr ""
+msgstr "Tasapinnalised kujundid"
 
 #: math_index.html.template, right_triangle.html.template
 msgid "Right Triangle"
-msgstr ""
+msgstr "Täisnurkne kolmnurk"
 
 #: math_index.html.template, sector.html.template
 msgid "Sector"
-msgstr ""
+msgstr "Sektor"
 
 #: math_index.html.template
 msgid "Misc"
-msgstr ""
+msgstr "Muud"
 
 #: quadratic_equation.html.template, math_index.html.template
 msgid "Quadratic Equation"
-msgstr ""
+msgstr "Ruutvõrrand"
+
