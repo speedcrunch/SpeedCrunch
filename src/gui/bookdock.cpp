@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2007 Petri Damstén <damu@iki.fi>
-// Copyright (C) 2008, 2009, 2010 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2008, 2009, 2010, 2011 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -31,22 +31,21 @@
 #include <QtGui/QTextBrowser>
 #include <QtGui/QVBoxLayout>
 
-BookDock::BookDock(const QString &path, const QString &file, QWidget *parent, Qt::WindowFlags f)
+BookDock::BookDock(const QString &path, const QString &homePage, QWidget *parent, Qt::WindowFlags f)
     : QDockWidget(parent, f)
+    , m_file(homePage)
+    , m_homePage(homePage)
+    , m_language(Settings::instance()->language)
+    , m_path(path)
 {
-    m_path = path;
-    m_file = file;
-    m_index = file;
-    m_language = Settings::instance()->language;
-
     QWidget *widget = new QWidget(this);
     QVBoxLayout *bookLayout = new QVBoxLayout;
 
-    m_sheet = new QTextBrowser(this);
-    m_sheet->setLineWrapMode(QTextEdit::NoWrap);
-    m_sheet->setSearchPaths(QStringList() << m_path);
+    m_browser = new QTextBrowser(this);
+    m_browser->setLineWrapMode(QTextEdit::NoWrap);
+    m_browser->setSearchPaths(QStringList() << m_path);
 
-    connect(m_sheet, SIGNAL(anchorClicked(const QUrl &)),
+    connect(m_browser, SIGNAL(anchorClicked(const QUrl &)),
             SLOT(handleAnchorClick(const QUrl &)));
 
     m_buttonLayoutWidget = new QWidget;
@@ -58,8 +57,8 @@ BookDock::BookDock(const QString &path, const QString &file, QWidget *parent, Qt
     m_backButton->setIcon(QPixmap(":/book_back.png"));
     m_backButton->setFlat(true);
 
-    connect(m_backButton, SIGNAL(clicked()), m_sheet, SLOT(backward()));
-    connect(m_sheet, SIGNAL(backwardAvailable(bool)), m_backButton, SLOT(setEnabled(bool)));
+    connect(m_backButton, SIGNAL(clicked()), m_browser, SLOT(backward()));
+    connect(m_browser, SIGNAL(backwardAvailable(bool)), m_backButton, SLOT(setEnabled(bool)));
 
     m_buttonLayout->addWidget(m_backButton);
 
@@ -67,8 +66,8 @@ BookDock::BookDock(const QString &path, const QString &file, QWidget *parent, Qt
     m_forwardButton->setIcon(QPixmap(":/book_forward.png"));
     m_forwardButton->setFlat(true);
 
-    connect(m_forwardButton, SIGNAL(clicked()), m_sheet, SLOT(forward()));
-    connect(m_sheet, SIGNAL(forwardAvailable(bool)), m_forwardButton, SLOT(setEnabled(bool)));
+    connect(m_forwardButton, SIGNAL(clicked()), m_browser, SLOT(forward()));
+    connect(m_browser, SIGNAL(forwardAvailable(bool)), m_forwardButton, SLOT(setEnabled(bool)));
 
     m_buttonLayout->addWidget(m_forwardButton);
 
@@ -76,13 +75,13 @@ BookDock::BookDock(const QString &path, const QString &file, QWidget *parent, Qt
     m_indexButton->setIcon(QPixmap(":/book_home.png"));
     m_indexButton->setFlat(true);
 
-    connect(m_indexButton, SIGNAL(clicked()), SLOT(home()));
+    connect(m_indexButton, SIGNAL(clicked()), SLOT(openHomePage()));
 
     m_buttonLayout->addWidget(m_indexButton);
     m_buttonLayout->addStretch();
 
     bookLayout->addWidget(m_buttonLayoutWidget);
-    bookLayout->addWidget(m_sheet);
+    bookLayout->addWidget(m_browser);
 
     widget->setLayout(bookLayout);
     setWidget(widget);
@@ -90,31 +89,27 @@ BookDock::BookDock(const QString &path, const QString &file, QWidget *parent, Qt
     retranslateText();
 }
 
-BookDock::~BookDock()
-{
-}
-
 void BookDock::handleAnchorClick(const QUrl &link)
 {
     if (link.toString().startsWith("file:#")) {
         // Avoid appended history garbage after clicking on a formula (unknown).
-        m_sheet->backward();
-        m_sheet->forward();
+        m_browser->backward();
+        m_browser->forward();
         QString expression = link.toString().mid(6);
         emit expressionSelected(expression);
     } else {
-        m_sheet->setSource(link);
+        m_browser->setSource(link);
         m_file = QFileInfo(link.path()).fileName();
     }
     // Necessary for QTextBrowser to always draw correctly (why?).
     // Causes a bug on Window or maybe just about the version number.
-    // m_sheet->adjustSize();
+    // m_browser->adjustSize();
 }
 
-void BookDock::home()
+void BookDock::openHomePage()
 {
-    m_sheet->setSource(m_index);
-    m_file = m_index;
+    m_browser->setSource(m_homePage);
+    m_file = m_homePage;
 }
 
 void BookDock::retranslateText()
@@ -145,7 +140,7 @@ void BookDock::retranslateText()
             src = m_path + "en" + "/" + m_file;
     }
 
-    m_sheet->setSource(QUrl::fromLocalFile(src));
+    m_browser->setSource(QUrl::fromLocalFile(src));
     handleLayoutDirection();
 }
 

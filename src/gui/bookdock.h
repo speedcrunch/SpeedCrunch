@@ -1,7 +1,7 @@
 /*
   This file is part of the SpeedCrunch project
   Copyright (C) 2007 Petri Damstén <damu@iki.fi>
-  Copyright (C) 2008, 2009, 2010 Helder Correia <helder.pereira.correia@gmail.com>
+  Copyright (C) 2008, 2009, 2010, 2011 Helder Correia <helder.pereira.correia@gmail.com>
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -34,15 +34,14 @@ class BookDock : public QDockWidget
     Q_OBJECT
 
 public:
-    explicit BookDock(const QString &path, const QString &file,
+    explicit BookDock(const QString &path, const QString &homePage,
                       QWidget *parent = 0, Qt::WindowFlags f = 0);
-    ~BookDock();
 
 signals:
     void expressionSelected(const QString &expression);
 
 public slots:
-    void home();
+    void openHomePage();
     void retranslateText();
 
 protected slots:
@@ -52,6 +51,7 @@ private slots:
     void handleAnchorClick(const QUrl &link);
 
 private:
+    BookDock();
     Q_DISABLE_COPY(BookDock);
 
     QPushButton *m_backButton;
@@ -59,11 +59,11 @@ private:
     QWidget *m_buttonLayoutWidget;
     QString m_file;
     QPushButton *m_forwardButton;
-    QString m_index;
+    QString m_homePage;
     QPushButton *m_indexButton;
     QString m_language;
     QString m_path;
-    QTextBrowser *m_sheet;
+    QTextBrowser *m_browser;
 
     void handleLayoutDirection();
 };
