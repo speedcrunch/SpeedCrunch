@@ -168,6 +168,7 @@ TRANSLATIONS += locale/ar_JO.ts \
                 locale/en_US.ts \
                 locale/es_AR.ts \
                 locale/es_ES.ts \
+                locale/et_EE.ts \
                 locale/eu_ES.ts \
                 locale/fi_FI.ts \
                 locale/fr_FR.ts \

@@ -1,0 +1,54 @@
+#: circle.html.template, math_index.html.template
+msgid "Circle"
+msgstr ""
+
+#: cube.html.template, circle.html.template, right_triangle.html.template,
+#: math_index.html.template, cone.html.template, sphere.html.template,
+#: sector.html.template, cylinder.html.template,
+#: quadratic_equation.html.template
+msgid "align=\"left\""
+msgstr ""
+
+#: cone.html.template, math_index.html.template
+msgid "Cone"
+msgstr ""
+
+#: cube.html.template, math_index.html.template
+msgid "Cube"
+msgstr ""
+
+#: cylinder.html.template, math_index.html.template
+msgid "Cylinder"
+msgstr ""
+
+#: math_index.html.template
+msgid "SpeedCrunch Book"
+msgstr ""
+
+#: math_index.html.template
+msgid "3D Objects"
+msgstr ""
+
+#: sphere.html.template, math_index.html.template
+msgid "Sphere"
+msgstr ""
+
+#: math_index.html.template
+msgid "2D Objects"
+msgstr ""
+
+#: math_index.html.template, right_triangle.html.template
+msgid "Right Triangle"
+msgstr ""
+
+#: math_index.html.template, sector.html.template
+msgid "Sector"
+msgstr ""
+
+#: math_index.html.template
+msgid "Misc"
+msgstr ""
+
+#: quadratic_equation.html.template, math_index.html.template
+msgid "Quadratic Equation"
+msgstr ""
