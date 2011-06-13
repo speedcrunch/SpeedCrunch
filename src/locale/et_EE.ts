@@ -1105,7 +1105,7 @@
         <source>function %1 accepts %n argument(s)</source>
         <translation>
             <numerusform>funktsioon &quot;%1&quot; töötab %n argumendiga</numerusform>
-            <numerusform></numerusform>
+            <numerusform>funktsioon &quot;%1&quot; töötab %n argumendiga</numerusform>
         </translation>
     </message>
 </context>
