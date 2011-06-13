@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2009 Andreas Scherer <andreas_coder@freenet.de>
-// Copyright (C) 2009 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2009, 2011 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -23,8 +23,9 @@
 #include <QtCore/QList>
 #include <QtGui/QWidget>
 
-#include <memory>
-
+class QLabel;
+class QLineEdit;
+class QTreeWidget;
 class QTreeWidgetItem;
 
 class VariablesWidget : public QWidget
@@ -32,38 +33,44 @@ class VariablesWidget : public QWidget
     Q_OBJECT
 
 public:
-    enum ItemPolicy { ShowAll, ShowUser };
+    enum ItemPolicy {
+        ShowAll,
+        ShowUser
+    };
 
-    explicit VariablesWidget( ItemPolicy itemPolicy = ShowUser,
-                              QWidget * parent = 0 );
+    explicit VariablesWidget(ItemPolicy itemPolicy = ShowUser, QWidget *parent = 0);
     ~VariablesWidget();
 
-    QTreeWidgetItem * currentItem() const;
+    QTreeWidgetItem *currentItem() const;
     QList<QTreeWidgetItem *> selectedItems() const;
 
 signals:
-    void itemActivated( QTreeWidgetItem *, int );
-    void itemDoubleClicked( QTreeWidgetItem *, int );
+    void itemActivated(QTreeWidgetItem *, int);
+    void itemDoubleClicked(QTreeWidgetItem *, int);
 
 public slots:
     void fillTable();
     void retranslateText();
 
 protected slots:
-    void catchItemActivated( QTreeWidgetItem *, int );
-    void catchItemDoubleClicked( QTreeWidgetItem *, int );
-    void clearSelection( QTreeWidgetItem * );
+    void catchItemActivated(QTreeWidgetItem *, int);
+    void catchItemDoubleClicked(QTreeWidgetItem *, int);
+    void clearSelection(QTreeWidgetItem *);
     void triggerFilter();
 
 protected:
-    void changeEvent( QEvent * );
+    void changeEvent(QEvent *);
 
 private:
-    struct Private;
-    const std::auto_ptr<Private> d;
+    Q_DISABLE_COPY(VariablesWidget);
 
-    VariablesWidget( const VariablesWidget & );
-    VariablesWidget & operator=( const VariablesWidget & );
+    QTimer *m_filterTimer;
+    ItemPolicy m_itemPolicy;
+    QTreeWidget *m_variables;
+    QLabel *m_noMatchLabel;
+    QLineEdit *m_searchFilter;
+    QLabel *m_searchLabel;
+
 };
 
 #endif

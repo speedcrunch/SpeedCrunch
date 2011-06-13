@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2009 Andreas Scherer <andreas_coder@freenet.de>
-// Copyright (C) 2009 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2009, 2011 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -19,7 +19,6 @@
 
 #include "gui/variableswidget.h"
 
-#include "thirdparty/flickcharm/flickcharm.h"
 #include "core/evaluator.h"
 #include "core/settings.h"
 
@@ -32,187 +31,177 @@
 #include <QtGui/QTreeWidget>
 #include <QtGui/QVBoxLayout>
 
-struct VariablesWidget::Private
+static QString formatValue(const HNumber &value);
+
+VariablesWidget::VariablesWidget(ItemPolicy itemPolicy, QWidget *parent)
+    : QWidget(parent)
+    , m_filterTimer(new QTimer(this))
+    , m_itemPolicy(itemPolicy)
+    , m_variables(new QTreeWidget(this))
+    , m_noMatchLabel(new QLabel(m_variables))
+    , m_searchFilter(new QLineEdit(this))
+    , m_searchLabel(new QLabel(this))
 {
-    QTimer * filterTimer;
-    FlickCharm flickCharm;
-    ItemPolicy itemPolicy;
-    QLabel * noMatchLabel;
-    QLabel * searchLabel;
-    QLineEdit * searchFilter;
-    QTreeWidget * variables;
+    m_filterTimer->setInterval(500);
+    m_filterTimer->setSingleShot(true);
 
-    static QString formatValue( const HNumber & value );
-};
+    m_variables->setAlternatingRowColors(true);
+    m_variables->setAutoScroll(true);
+    m_variables->setColumnCount(2);
+    m_variables->setEditTriggers(QTreeWidget::NoEditTriggers);
+    m_variables->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    m_variables->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
+    m_variables->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    m_variables->setRootIsDecorated(false);
+    m_variables->setSelectionBehavior(QTreeWidget::SelectRows);
+    m_variables->setCursor(QCursor(Qt::PointingHandCursor));
 
-QString VariablesWidget::Private::formatValue( const HNumber & value )
-{
-    char * str = HMath::format( value, 'g' );
-    QString s = QString::fromLatin1( str );
-    if ( Settings::instance()->radixCharacter() != '.' )
-        s.replace( '.', Settings::instance()->radixCharacter() );
-    free( str );
-    return s;
-}
+    m_noMatchLabel->setAlignment(Qt::AlignCenter);
+    m_noMatchLabel->adjustSize();
+    m_noMatchLabel->hide();
 
-VariablesWidget::VariablesWidget( ItemPolicy itemPolicy, QWidget * parent )
-    : QWidget( parent ), d( new VariablesWidget::Private )
-{
-    d->filterTimer = new QTimer( this );
-    d->itemPolicy = itemPolicy;
-    d->variables = new QTreeWidget( this );
-    d->noMatchLabel = new QLabel( d->variables );
-    d->flickCharm.activateOn( d->variables );
-    d->searchFilter = new QLineEdit( this );
-    d->searchLabel = new QLabel( this );
+    QWidget *searchBox = new QWidget(this);
+    QHBoxLayout *searchLayout = new QHBoxLayout;
+    searchLayout->addWidget(m_searchLabel);
+    searchLayout->addWidget(m_searchFilter);
+    searchLayout->setMargin(0);
+    searchBox->setLayout(searchLayout);
 
-    d->filterTimer->setInterval( 500 );
-    d->filterTimer->setSingleShot( true );
-
-    d->variables->setAlternatingRowColors( true );
-    d->variables->setAutoScroll( true );
-    d->variables->setColumnCount( 2 );
-    d->variables->setEditTriggers( QTreeWidget::NoEditTriggers );
-    d->variables->setHorizontalScrollBarPolicy( Qt::ScrollBarAsNeeded );
-    d->variables->setHorizontalScrollMode( QAbstractItemView::ScrollPerPixel );
-    d->variables->setVerticalScrollMode( QAbstractItemView::ScrollPerPixel );
-    d->variables->setRootIsDecorated( false );
-    d->variables->setSelectionBehavior( QTreeWidget::SelectRows );
-    d->variables->setCursor( QCursor(Qt::PointingHandCursor) );
-
-    d->noMatchLabel->setAlignment( Qt::AlignCenter );
-    d->noMatchLabel->adjustSize();
-    d->noMatchLabel->hide();
-
-    QWidget * searchBox = new QWidget( this );
-    QHBoxLayout * searchLayout = new QHBoxLayout;
-    searchLayout->addWidget( d->searchLabel );
-    searchLayout->addWidget( d->searchFilter );
-    searchLayout->setMargin( 0 );
-    searchBox->setLayout( searchLayout );
-
-    QVBoxLayout * layout = new QVBoxLayout;
-    layout->setMargin( 3 );
-    layout->addWidget( searchBox );
-    layout->addWidget( d->variables );
-    setLayout( layout );
+    QVBoxLayout *layout = new QVBoxLayout;
+    layout->setMargin(3);
+    layout->addWidget(searchBox);
+    layout->addWidget(m_variables);
+    setLayout(layout);
 
     retranslateText();
 
-    connect( d->filterTimer, SIGNAL(timeout()), SLOT(fillTable()) );
-    connect( d->searchFilter, SIGNAL(textChanged(const QString &)),
-             SLOT(triggerFilter()) );
-    connect( d->variables, SIGNAL(itemActivated(QTreeWidgetItem *, int)),
-             SLOT( catchItemActivated( QTreeWidgetItem *, int ) ) );
-    connect( d->variables, SIGNAL(itemDoubleClicked(QTreeWidgetItem *, int)),
-             SLOT(catchItemDoubleClicked(QTreeWidgetItem *, int)) );
+    connect(m_filterTimer, SIGNAL(timeout()), SLOT(fillTable()));
+    connect(m_searchFilter, SIGNAL(textChanged(const QString &)), SLOT(triggerFilter()));
+    connect(m_variables, SIGNAL(itemActivated(QTreeWidgetItem *, int)),
+            SLOT( catchItemActivated(QTreeWidgetItem *, int)));
+    connect(m_variables, SIGNAL(itemDoubleClicked(QTreeWidgetItem *, int)),
+            SLOT(catchItemDoubleClicked(QTreeWidgetItem *, int)));
 }
 
 VariablesWidget::~VariablesWidget()
 {
-    d->filterTimer->stop();
+    m_filterTimer->stop();
 }
 
 void VariablesWidget::fillTable()
 {
-    setUpdatesEnabled( false );
+    setUpdatesEnabled(false);
 
-    d->filterTimer->stop();
-    d->variables->clear();
-    QString term = d->searchFilter->text();
+    m_filterTimer->stop();
+    m_variables->clear();
+    QString term = m_searchFilter->text();
     QVector<Variable> variables = Evaluator::instance()->variables();
 
-    for ( int k = 0; k < variables.count(); k++ )
-    {
-        if ( d->itemPolicy == ShowUser
-             && (variables.at(k).name.toUpper() == QLatin1String("ANS")
-                 || variables.at(k).name.toUpper() == QLatin1String("E")
-                 || variables.at(k).name.toUpper() == QLatin1String("PHI")
-                 || variables.at(k).name.toUpper() == QLatin1String("PI")) )
+    for (int k = 0; k < variables.count(); ++k) {
+
+        QString upper = variables.at(k).name.toUpper();
+
+        if (m_itemPolicy == ShowUser
+            && (upper == QLatin1String("ANS")
+                || upper == QLatin1String("E")
+                || upper == QLatin1String("PHI")
+                || upper == QLatin1String("PI")))
+        {
             continue;
+        }
 
         QStringList str;
         str << variables.at(k).name
-            << VariablesWidget::Private::formatValue( variables.at(k).value );
+            << formatValue(variables.at(k).value);
 
-        if ( term.isEmpty()
-             || str.at(0).contains(term, Qt::CaseInsensitive)
-             || str.at(1).contains(term, Qt::CaseInsensitive) )
+        if (term.isEmpty()
+            || str.at(0).contains(term, Qt::CaseInsensitive)
+            || str.at(1).contains(term, Qt::CaseInsensitive))
         {
-            QTreeWidgetItem * item = new QTreeWidgetItem( d->variables, str );
-            item->setTextAlignment( 0, Qt::AlignLeft | Qt::AlignVCenter );
-            item->setTextAlignment( 1, Qt::AlignLeft | Qt::AlignVCenter );
+            QTreeWidgetItem *item = new QTreeWidgetItem(m_variables, str);
+            item->setTextAlignment(0, Qt::AlignLeft | Qt::AlignVCenter);
+            item->setTextAlignment(1, Qt::AlignLeft | Qt::AlignVCenter);
         }
     }
 
-    d->variables->resizeColumnToContents( 0 );
-    d->variables->resizeColumnToContents( 1 );
+    m_variables->resizeColumnToContents(0);
+    m_variables->resizeColumnToContents(1);
 
-    if ( d->variables->topLevelItemCount() > 0 || d->itemPolicy != ShowAll ) {
-        d->noMatchLabel->hide();
-        d->variables->sortItems( 0, Qt::AscendingOrder );
+    if (m_variables->topLevelItemCount() > 0 || m_itemPolicy != ShowAll) {
+        m_noMatchLabel->hide();
+        m_variables->sortItems(0, Qt::AscendingOrder);
     } else {
-        d->noMatchLabel->setGeometry( d->variables->geometry() );
-        d->noMatchLabel->show();
-        d->noMatchLabel->raise();
+        m_noMatchLabel->setGeometry(m_variables->geometry());
+        m_noMatchLabel->show();
+        m_noMatchLabel->raise();
     }
 
-    d->searchFilter->setFocus();
-    setUpdatesEnabled( true );
+    m_searchFilter->setFocus();
+    setUpdatesEnabled(true);
 }
 
 void VariablesWidget::retranslateText()
 {
     QStringList titles;
-    titles << tr( "Name"  );
-    titles << tr( "Value" );
-    d->variables->setHeaderLabels( titles );
+    titles << tr("Name")
+           << tr("Value");
+    m_variables->setHeaderLabels(titles);
 
-    d->searchLabel->setText( tr("Search") );
-    d->noMatchLabel->setText( tr("No match found") );
+    m_searchLabel->setText(tr("Search"));
+    m_noMatchLabel->setText(tr("No match found"));
 
     fillTable();
 }
 
 QList<QTreeWidgetItem *> VariablesWidget::selectedItems() const
 {
-    return d->variables->selectedItems();
+    return m_variables->selectedItems();
 }
 
 QTreeWidgetItem * VariablesWidget::currentItem() const
 {
-    return d->variables->currentItem();
+    return m_variables->currentItem();
 }
 
-void VariablesWidget::catchItemActivated( QTreeWidgetItem * item, int column )
+void VariablesWidget::catchItemActivated(QTreeWidgetItem *item, int column)
 {
-    emit itemActivated( item, column );
+    emit itemActivated(item, column);
 }
 
-void VariablesWidget::catchItemDoubleClicked( QTreeWidgetItem * item, int column )
+void VariablesWidget::catchItemDoubleClicked(QTreeWidgetItem *item, int column)
 {
-    emit itemDoubleClicked( item, column );
+    emit itemDoubleClicked(item, column);
 }
 
-void VariablesWidget::clearSelection( QTreeWidgetItem * item )
+void VariablesWidget::clearSelection(QTreeWidgetItem *item)
 {
-    d->variables->clearSelection();
-    emit itemActivated( item, 0 );
+    m_variables->clearSelection();
+    emit itemActivated(item, 0);
 }
 
 void VariablesWidget::triggerFilter()
 {
-    d->filterTimer->stop();
-    d->filterTimer->start();
+    m_filterTimer->stop();
+    m_filterTimer->start();
 }
 
-void VariablesWidget::changeEvent( QEvent * e )
+void VariablesWidget::changeEvent(QEvent *e)
 {
-    if ( e->type() == QEvent::LanguageChange ) {
-        setLayoutDirection( Qt::LeftToRight );
+    if (e->type() == QEvent::LanguageChange) {
+        setLayoutDirection(Qt::LeftToRight);
         retranslateText();
     }
     else
-        QWidget::changeEvent( e );
+        QWidget::changeEvent(e);
+}
+
+static QString formatValue(const HNumber &value)
+{
+    char *str = HMath::format(value, 'g');
+    QString s = QString::fromLatin1(str);
+    if (Settings::instance()->radixCharacter() != '.')
+        s.replace('.', Settings::instance()->radixCharacter());
+    free(str);
+    return s;
 }
 
