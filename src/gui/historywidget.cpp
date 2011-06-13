@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2008-2009 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2008, 2009, 2011 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -19,78 +19,65 @@
 
 #include "gui/historywidget.h"
 
-#include "thirdparty/flickcharm/flickcharm.h"
-
 #include <QtCore/QEvent>
 #include <QtGui/QListWidget>
 #include <QtGui/QVBoxLayout>
 
-struct HistoryWidget::Private
+
+HistoryWidget::HistoryWidget(QWidget *parent)
+    : QWidget(parent)
+    , m_list(new QListWidget(this))
 {
-    FlickCharm flickCharm;
-    QListWidget * list;
-};
+    m_list->setAlternatingRowColors(true);
+    m_list->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
+    m_list->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    m_list->setCursor(QCursor(Qt::PointingHandCursor));
 
-HistoryWidget::HistoryWidget( QWidget * parent )
-    : QWidget( parent ), d( new HistoryWidget::Private )
-{
-    d->list = new QListWidget( this );
-    d->list->setAlternatingRowColors( true );
-    d->list->setHorizontalScrollMode( QAbstractItemView::ScrollPerPixel );
-    d->list->setVerticalScrollMode( QAbstractItemView::ScrollPerPixel );
-    d->list->setCursor( QCursor(Qt::PointingHandCursor) );
-    d->flickCharm.activateOn( d->list );
+    QVBoxLayout *layout = new QVBoxLayout;
+    layout->setMargin(3);
+    layout->addWidget(m_list);
+    setLayout(layout);
 
-    QVBoxLayout * layout = new QVBoxLayout;
-    layout->setMargin( 3 );
-    layout->addWidget( d->list );
-    setLayout( layout );
-
-    connect( d->list, SIGNAL(itemActivated(QListWidgetItem *)),
-             SLOT(handleItem(QListWidgetItem *)) );
-}
-
-HistoryWidget::~HistoryWidget()
-{
+    connect(m_list, SIGNAL(itemActivated(QListWidgetItem *)), SLOT(handleItem(QListWidgetItem *)));
 }
 
 void HistoryWidget::clear()
 {
-    d->list->clear();
+    m_list->clear();
 }
 
-void HistoryWidget::append( const QString & h )
+void HistoryWidget::append(const QString &h)
 {
-    d->list->addItem( h );
-    d->list->clearSelection();
-    d->list->scrollToBottom();
+    m_list->addItem(h);
+    m_list->clearSelection();
+    m_list->scrollToBottom();
 }
 
-void HistoryWidget::appendHistory( const QStringList & h )
+void HistoryWidget::appendHistory(const QStringList &h)
 {
-    d->list->insertItems( 0, h );
-    d->list->setCurrentRow( h.count() - 1 );
-    d->list->scrollToItem( d->list->item( h.count() ), QListWidget::PositionAtTop );
-    d->list->clearSelection();
+    m_list->insertItems(0, h);
+    m_list->setCurrentRow(h.count() - 1);
+    m_list->scrollToItem(m_list->item(h.count()), QListWidget::PositionAtTop);
+    m_list->clearSelection();
 }
 
-void HistoryWidget::setHistory( const QStringList & h )
+void HistoryWidget::setHistory(const QStringList &h)
 {
-    d->list->clear();
-    appendHistory( h );
+    m_list->clear();
+    appendHistory(h);
 }
 
-void HistoryWidget::handleItem( QListWidgetItem * item )
+void HistoryWidget::handleItem(QListWidgetItem *item)
 {
-    d->list->clearSelection();
-    emit expressionSelected( item->text() );
+    m_list->clearSelection();
+    emit expressionSelected(item->text());
 }
 
-void HistoryWidget::changeEvent( QEvent * e )
+void HistoryWidget::changeEvent(QEvent *e)
 {
-    if ( e->type() == QEvent::LanguageChange )
-        setLayoutDirection( Qt::LeftToRight );
+    if (e->type() == QEvent::LanguageChange)
+        setLayoutDirection(Qt::LeftToRight);
     else
-        QWidget::changeEvent( e );
+        QWidget::changeEvent(e);
 }
 

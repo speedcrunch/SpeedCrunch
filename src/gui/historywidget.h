@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2008-2009 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2008, 2009, 2011 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -22,8 +22,7 @@
 
 #include <QtGui/QWidget>
 
-#include <memory>
-
+class QListWidget;
 class QListWidgetItem;
 
 class HistoryWidget : public QWidget
@@ -31,30 +30,27 @@ class HistoryWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit HistoryWidget( QWidget * parent = 0 );
-    ~HistoryWidget();
+    explicit HistoryWidget(QWidget *parent = 0);
 
 public slots:
-    void append( const QString & );
-    void appendHistory( const QStringList & );
+    void append(const QString &);
+    void appendHistory(const QStringList &);
     void clear();
-    void setHistory( const QStringList & );
+    void setHistory(const QStringList &);
 
 signals:
-    void expressionSelected( const QString & );
+    void expressionSelected(const QString &);
 
 protected slots:
-    void handleItem( QListWidgetItem * );
+    void handleItem(QListWidgetItem *);
 
 protected:
-    void changeEvent( QEvent * );
+    void changeEvent(QEvent *);
 
 private:
-    struct Private;
-    const std::auto_ptr<Private> d;
+    Q_DISABLE_COPY(HistoryWidget);
 
-    HistoryWidget( const HistoryWidget & );
-    HistoryWidget & operator=( const HistoryWidget & );
+    QListWidget *m_list;
 };
 
 #endif
