@@ -1,5 +1,5 @@
 // This file is part of the SpeedCrunch project
-// Copyright (C) 2009 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2009, 2011 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -21,48 +21,47 @@
 
 #include "gui/textedit.h"
 
-#include <memory>
-
 class HNumber;
+class SyntaxHighlighter;
 
 class ResultDisplay : public TextEdit
 {
     Q_OBJECT
 
 public:
-    ResultDisplay( QWidget * parent = 0, const char * name = 0 );
-    ~ResultDisplay();
+    explicit ResultDisplay(QWidget *parent = 0);
 
-    void append( const QString & expr, const HNumber & value );
-    void appendHistory( const QStringList & expressions, const QStringList & results );
-    QString asText() const;
+    void append(const QString &expr, const HNumber &value);
+    void appendHistory(const QStringList &expressions, const QStringList &results);
     int count() const;
     bool customAppearance() const;
     QColor customBackgroundColor() const;
     QColor customBackgroundAlternateColor() const;
     QColor customTextColor() const;
     void highlight();
-    void setCustomAppearance( bool );
-    void setCustomBackgroundColor( const QColor & base, const QColor & alternate );
-    void setCustomTextColor( const QColor & );
-
-    static QString formatNumber( const HNumber & );
+    void setCustomAppearance(bool);
+    void setCustomBackgroundColor(const QColor &base, const QColor &alternate);
+    void setCustomTextColor(const QColor &);
 
 signals:
-    void textCopied( const QString & );
-    void textSelected( const QString & );
+    void textCopied(const QString &);
+    void textSelected(const QString &);
 
 public slots:
     void clear();
     void refresh();
-    void scrollEnd();
 
 private:
-    struct Private;
-    const std::auto_ptr<Private> d;
+    Q_DISABLE_COPY(ResultDisplay);
 
-    ResultDisplay( const ResultDisplay & );
-    ResultDisplay & operator=( const ResultDisplay & );
+    int m_count;
+    bool m_customAppearance;
+    QColor m_customBackgroundColor;
+    QColor m_customBackgroundAlternateColor;
+    QColor m_customTextColor;
+    QStringList m_expressions;
+    SyntaxHighlighter *m_highlighter;
+    QStringList m_results;
 };
 
 #endif

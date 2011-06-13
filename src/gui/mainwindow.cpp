@@ -882,7 +882,6 @@ void MainWindow::Private::createKeypad()
     layouts.root->addLayout( layouts.keypad );
 
     widgets.keypad->show();
-    widgets.display->scrollEnd();
 }
 
 void MainWindow::Private::createBookDock()
@@ -1898,8 +1897,6 @@ void MainWindow::setMenuBarVisible( bool b )
         showMenuBarTip();
         d->conditions.notifyMenuBarHidden = false;
     }
-
-    d->widgets.display->scrollEnd();
 }
 
 void MainWindow::setStatusBarVisible( bool b )

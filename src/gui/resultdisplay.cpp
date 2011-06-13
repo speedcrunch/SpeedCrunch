@@ -1,5 +1,5 @@
 // This file is part of the SpeedCrunch project
-// Copyright (C) 2009 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2009, 2011 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -18,7 +18,6 @@
 
 #include "gui/resultdisplay.h"
 
-//#include "thirdparty/flickcharm/flickcharm.h"
 #include "core/functions.h"
 #include "core/settings.h"
 #include "gui/syntaxhighlighter.h"
@@ -32,192 +31,158 @@
 #include <QtGui/QClipboard>
 #include <QtGui/QScrollBar>
 
-struct ResultDisplay::Private
-{
-    int count;
-    bool customAppearance;
-    QColor customBackgroundColor;
-    QColor customBackgroundAlternateColor;
-    QColor customTextColor;
-    QStringList expressions;
-    //FlickCharm  flickCharm;
-    SyntaxHighlighter * highlighter;
-    QStringList results;
-};
+static QString formatNumber(const HNumber &);
 
-ResultDisplay::ResultDisplay( QWidget * parent, const char * name )
-    : TextEdit( parent ), d( new ResultDisplay::Private )
+ResultDisplay::ResultDisplay(QWidget *parent)
+    : TextEdit(parent)
+    , m_count(0)
+    , m_customAppearance(false)
+    , m_customBackgroundColor(QColor(0, 0, 0))
+    , m_customBackgroundAlternateColor(QColor(21,  21,  21))
+    , m_customTextColor(QColor(255, 255, 255))
+    , m_highlighter(new SyntaxHighlighter(this))
 {
-    d->customAppearance = false;
-    d->count = 0;
-    d->customTextColor = QColor( 255, 255, 255 );
-    d->customBackgroundColor = QColor( 0, 0, 0 );
-    d->customBackgroundAlternateColor = QColor( 21,  21,  21 );
-    d->highlighter = new SyntaxHighlighter( this );
-    d->highlighter->rehighlight();
-    //d->flickCharm.activateOn( this );
-
-    setBackgroundRole( QPalette::Base );
-    setLayoutDirection( Qt::LeftToRight );
-    setMinimumWidth( 150 );
-    setObjectName( name );
-    setReadOnly( true );
-    setTabChangesFocus( true );
-    setWordWrapMode( QTextOption::WrapAnywhere );
+    m_highlighter->rehighlight();
+    setBackgroundRole(QPalette::Base);
+    setLayoutDirection(Qt::LeftToRight);
+    setMinimumWidth(150);
+    setReadOnly(true);
+    setTabChangesFocus(true);
+    setWordWrapMode(QTextOption::WrapAnywhere);
 
     QFont font;
-    font.setBold( true );
-    setFont( font );
+    font.setBold(true);
+    setFont(font);
 }
 
-QString ResultDisplay::asText() const
+void ResultDisplay::append(const QString &expr, const HNumber &value)
 {
-    // TODO **************************************
-    return "";
-    //return toPlainText();
-    // TODO **************************************
-}
-
-void ResultDisplay::append( const QString & expr, const HNumber & value )
-{
-    if ( value.isNan() )
+    if (value.isNan())
         return;
 
-    ++d->count;
+    ++m_count;
 
-#if QT_VERSION < 0x040400
-    append( expr );
-    append( QLatin1String("= ") + formatNumber(value) );
-    append( QLatin1String("") );
-#else
-    appendPlainText( expr );
-    appendPlainText( QLatin1String("= ") + formatNumber(value) );
-    appendPlainText( QLatin1String("") );
-#endif
+    appendPlainText(expr);
+    appendPlainText(QLatin1String("= ") + formatNumber(value));
+    appendPlainText(QLatin1String(""));
 
     ensureCursorVisible();
 
-    // REFACTOR: this only serves to save a session, nonsense
-    d->expressions.append( expr );
+    // REFACTOR: this only serves to save a session, nonsense.
+    m_expressions.append(expr);
     const char format = value.format() != 0 ? value.format() : 'e';
-    char * str = HMath::format( value, format, DECPRECISION );
-    d->results.append( str );
-    free( str );
+    char *str = HMath::format(value, format, DECPRECISION);
+    m_results.append(str);
+    free(str);
 }
 
-void ResultDisplay::appendHistory( const QStringList & expressions, const QStringList & results )
+void ResultDisplay::appendHistory(const QStringList &expressions, const QStringList &results)
 {
     const int count = expressions.count();
-    for ( int i = 0 ; i < count; ++i )
-    {
-        QString str = results.at( i );
-        str.replace( ',', '.' );
-        HNumber result( str.toLatin1().constData() );
+    for (int i = 0 ; i < count; ++i) {
+        QString str = results.at(i);
+        str.replace(',', '.');
+        HNumber result(str.toLatin1().constData());
 
-        if      ( str.indexOf('b') == 1 ) result.setFormat( 'b' );
-        else if ( str.indexOf('o') == 1 ) result.setFormat( 'o' );
-        else if ( str.indexOf('x') == 1 ) result.setFormat( 'h' );
+        if (str.indexOf('b') == 1)
+            result.setFormat('b');
+        else if (str.indexOf('o') == 1)
+            result.setFormat('o');
+        else if (str.indexOf('x') == 1)
+            result.setFormat('h');
 
-        if ( ! result.isNan() )
-            append( expressions.at(i), result );
+        if (!result.isNan())
+            append(expressions.at(i), result);
     }
 }
 
 int ResultDisplay::count() const
 {
-    return d->count;
+    return m_count;
 }
 
 bool ResultDisplay::customAppearance() const
 {
-    return d->customAppearance;
+    return m_customAppearance;
 }
 
 QColor ResultDisplay::customBackgroundColor() const
 {
-    return d->customBackgroundColor;
+    return m_customBackgroundColor;
 }
 
 QColor ResultDisplay::customBackgroundAlternateColor() const
 {
-    return d->customBackgroundAlternateColor;
+    return m_customBackgroundAlternateColor;
 }
 
 QColor ResultDisplay::customTextColor() const
 {
-    return d->customTextColor;
+    return m_customTextColor;
 }
 
-QString ResultDisplay::formatNumber( const HNumber & value )
+void ResultDisplay::setCustomAppearance(bool custom)
 {
-    Settings * settings = Settings::instance();
-    const char format = value.format() != 0 ? value.format() : settings->resultFormat;
-    char * str = HMath::format( value, format, settings->resultPrecision );
-    QString s = QString::fromLatin1( str );
-    free( str );
-    if ( settings->radixCharacter() != '.' )
-        s.replace( '.', settings->radixCharacter() );
-    return s;
-}
-
-void ResultDisplay::setCustomAppearance( bool custom )
-{
-    d->customAppearance = custom;
+    m_customAppearance = custom;
     QColor bgcolor = QApplication::palette().base().color();
-    if ( custom )
+    if (custom)
         bgcolor = customBackgroundColor();
 
     QPalette pal = palette();
-    pal.setColor( QPalette::Background, bgcolor );
-    setPalette( pal );
+    pal.setColor(QPalette::Background, bgcolor);
+    setPalette(pal);
 
     refresh();
 }
 
-void ResultDisplay::setCustomBackgroundColor( const QColor & base, const QColor & alternate )
+void ResultDisplay::setCustomBackgroundColor(const QColor &base, const QColor &alternate)
 {
-    d->customBackgroundColor = base;
-    d->customBackgroundAlternateColor = alternate;
-    if ( d->customAppearance ) {
+    m_customBackgroundColor = base;
+    m_customBackgroundAlternateColor = alternate;
+    if (m_customAppearance) {
         QPalette pal = palette();
-        pal.setColor( QPalette::Base, base );
-        setPalette( pal );
+        pal.setColor(QPalette::Base, base);
+        setPalette(pal);
     }
     refresh();
 }
 
-void ResultDisplay::setCustomTextColor( const QColor & c )
+void ResultDisplay::setCustomTextColor(const QColor &c)
 {
-    d->customTextColor = c;
+    m_customTextColor = c;
     refresh();
 }
 
 void ResultDisplay::highlight()
 {
-    d->highlighter->rehighlight();
-}
-
-ResultDisplay::~ResultDisplay()
-{
+    m_highlighter->rehighlight();
 }
 
 void ResultDisplay::clear()
 {
-    d->count = 0;
-    d->expressions.clear();
-    d->results.clear();
-    setPlainText( QLatin1String("") );
-}
-
-void ResultDisplay::scrollEnd()
-{
+    m_count = 0;
+    m_expressions.clear();
+    m_results.clear();
+    setPlainText(QLatin1String(""));
 }
 
 void ResultDisplay::refresh()
 {
-    const QStringList expressions = d->expressions;
-    const QStringList results = d->results;
+    const QStringList expressions = m_expressions;
+    const QStringList results = m_results;
     clear();
-    appendHistory( expressions, results );
+    appendHistory(expressions, results);
+}
+
+static QString formatNumber(const HNumber &value)
+{
+    Settings *settings = Settings::instance();
+    const char format = value.format() != 0 ? value.format() : settings->resultFormat;
+    char * str = HMath::format(value, format, settings->resultPrecision);
+    QString s = QString::fromLatin1(str);
+    free(str);
+    if (settings->radixCharacter() != '.')
+        s.replace('.', settings->radixCharacter());
+    return s;
 }
 
