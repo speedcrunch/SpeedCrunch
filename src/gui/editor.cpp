@@ -63,6 +63,9 @@ struct Editor::Private
     int index;
     QTimer * matchingTimer;
     Settings * settings;
+
+    QString savedCurrentEditor;
+    QTextCursor savedCurrentPosition;
 };
 
 Editor::Editor( QWidget * parent )
@@ -613,6 +616,10 @@ QString Editor::formatNumber( const HNumber & value ) const
 void Editor::historyBack()
 {
     if ( d->history.count() ) {
+        if ( d->index == d->history.count() ) {
+            d->savedCurrentEditor = toPlainText();
+            d->savedCurrentPosition = textCursor();
+        }
         --(d->index);
         if ( d->index < 0 )
             d->index = 0;
@@ -629,8 +636,14 @@ void Editor::historyForward()
 {
     if ( d->history.count() ) {
         ++(d->index);
-        if ( d->index >= (int)d->history.count() )
-            d->index = d->history.count() - 1;
+
+        if ( d->index >= (int)d->history.count() ) {
+            d->index = d->history.count();
+            setText( d->savedCurrentEditor );
+            setTextCursor( d->savedCurrentPosition );
+            return;
+        }
+
         setText( d->history.at(d->index) );
         QTextCursor cursor = textCursor();
         cursor.movePosition( QTextCursor::EndOfBlock );
