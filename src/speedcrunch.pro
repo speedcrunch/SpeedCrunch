@@ -190,4 +190,4 @@ TRANSLATIONS += locale/ar_JO.ts \
                 locale/zh_CN.ts
 
 win32:RC_FILE = resources/speedcrunch.rc
-
+win32-msvc*:LIBS += User32.lib
