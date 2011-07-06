@@ -204,6 +204,7 @@ leadingdigits(
   int i;
   unsigned tmp, ovfl;
   char buf[LOGMSB+1];
+  const unsigned msb = MSB;
 
   if (digits <= 0 || digits > (int)LOGMSB+1 || float_isnan(x) || float_iszero(x))
     return 0;
@@ -221,7 +222,6 @@ leadingdigits(
     if (ovfl != 0)
       return 0;
   }
-  const unsigned msb = MSB;
   if (float_getsign(x) < 0)
   {
     if (tmp > msb)

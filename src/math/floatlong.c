@@ -335,9 +335,9 @@ _checkmul(
   int f2)
 {
   unsigned x1, x2;
-  signed char sgn;
+  signed char sgn = 1;
+  const unsigned msb = MSB;
 
-  sgn = 1;
   if (*f1 >= 0)
     x1 = *f1;
   else
@@ -353,7 +353,6 @@ _checkmul(
     x2 = -f2;
   }
   _longmul(&x1, &x2);
-  const unsigned msb = MSB;
   if (sgn < 0)
   {
     *f1 = -(int)x1;

@@ -682,13 +682,12 @@ static void
 _bc_simp_mul (bc_num n1, int n1len, bc_num n2, int n2len, bc_num *prod,
               int full_scale)
 {
-  (void)full_scale;
-
   char *n1ptr, *n2ptr, *pvptr;
   char *n1end, *n2end;         /* To the end of n1 and n2. */
-  int indx, sum, prodlen;
+  int indx, sum;
+  const int prodlen = n1len + n2len + 1;
 
-  prodlen = n1len+n2len+1;
+  (void)full_scale;
 
   *prod = bc_new_num (prodlen, 0);
 

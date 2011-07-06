@@ -73,9 +73,7 @@ static void
 _neg(
   t_longint* longint)
 {
-  int idx;
-
-  idx = -1;
+  int idx = -1;
   const int maxidx = MAXIDX;
   while (++idx <= maxidx && longint->value[idx] == 0);
   if (idx <= maxidx)
@@ -189,12 +187,11 @@ _shr(
   t_longint* x,
   unsigned shift)
 {
-  int moves, idx;
-  unsigned sign;
-
-  sign = _signof(x) < 0? ~0 : 0;
-  moves = shift/BITS_IN_UNSIGNED;
+  int idx;
+  const unsigned sign = _signof(x) < 0? ~0 : 0;
+  const int moves = shift/BITS_IN_UNSIGNED;
   const int maxidx = MAXIDX;
+
   if (moves > 0)
   {
     shift -= moves * BITS_IN_UNSIGNED;

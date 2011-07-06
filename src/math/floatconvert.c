@@ -458,10 +458,10 @@ _scale2int(
   int scale,
   signed char base)
 {
-  (void)scale;
-
   floatstruct pwr;
   int pwrexp;
+
+  (void)scale;
 
   if (scale != 0)
   {
@@ -497,14 +497,14 @@ _extractexp(
   int scale,
   signed char base)
 {
-  (void)scale;
-
   floatstruct pwr;
   floatstruct fbase;
   int decprec;
   int pwrexp;
   int exp;
   int logbase;
+
+  (void)scale;
 
   logbase = lgbase(base);
   decprec = DECPRECISION + 3;
