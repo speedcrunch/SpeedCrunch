@@ -22,18 +22,18 @@ DEPENDPATH += . \
               locale \
               main \
               math \
-              resources \
               #symboltables \
               #test \
               #variant \
-              thirdparty/flickcharm
+              resources
+
 !macx {
     !win32 {
         DEPENDPATH += thirdparty/binreloc
     }
 }
 
-INCLUDEPATH += . math core thirdparty/flickcharm gui
+INCLUDEPATH += . math core gui
 !macx {
     !win32 {
         INCLUDEPATH += thirdparty/binreloc
@@ -50,8 +50,7 @@ QT += network
 
 #FORMS +=
 
-HEADERS += thirdparty/flickcharm/flickcharm.h \
-           core/constants.h \
+HEADERS += core/constants.h \
            core/evaluator.h \
            core/functions.h \
            #core/settings.h \
@@ -99,15 +98,15 @@ HEADERS += thirdparty/flickcharm/flickcharm.h \
 
 #YACCSOURCES += bison/exprparser.y
 
-SOURCES += thirdparty/flickcharm/flickcharm.cpp \
-           #variant/variantbase.cpp \
-           #variant/variant.cpp \
-           #variant/real.cpp \
-           #variant/vstring.cpp \
-           #variant/initvariant.cpp \
-           #variant/formatbase.cpp \
-           #variant/formatreal.cpp \
-           core/constants.cpp \
+#SOURCES += variant/variantbase.cpp \
+#           variant/variant.cpp \
+#           variant/real.cpp \
+#           variant/vstring.cpp \
+#           variant/initvariant.cpp \
+#           variant/formatbase.cpp \
+#           variant/formatreal.cpp
+
+SOURCES += core/constants.cpp \
            core/evaluator.cpp \
            core/functions.cpp \
            core/settings.cpp \
