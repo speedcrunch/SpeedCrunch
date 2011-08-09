@@ -1,10 +1,10 @@
-!contains( QT_MAJOR_VERSION, 4 ) {
-    error( unsupported Qt major version $$QT_MAJOR_VERSION found but 4 required )
-}
-!contains( QT_MINOR_VERSION, 6 ) {
-    !contains( QT_MINOR_VERSION, 7 ) {
-        error( 'unsupported Qt minor version $$QT_MINOR_VERSION found but 6 or 7 required' )
-    }
+QT_VERSION = $$[QT_VERSION]
+QT_VERSION = $$split(QT_VERSION, ".")
+QT_VER_MAJ = $$member(QT_VERSION, 0)
+QT_VER_MIN = $$member(QT_VERSION, 1)
+
+lessThan(QT_VER_MAJ, 4) | lessThan(QT_VER_MIN, 6) {
+    error(Qt 4.6 or newer is required but version $$[QT_VERSION] was detected.)
 }
 
 DEFINES += SPEEDCRUNCH_VERSION=trunk
