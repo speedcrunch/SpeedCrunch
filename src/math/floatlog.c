@@ -118,7 +118,7 @@ _factor(
   int idx)
 {
   int factor;
-  char i;
+  int i;
 
   factor = 1;
   for (i = _lincombtbl[idx].c2; --i >= 0;)
