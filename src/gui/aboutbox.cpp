@@ -90,6 +90,7 @@ AboutBox::AboutBox(QWidget *parent, Qt::WindowFlags f)
            "F Chris Carrera<br>"
            "Francesco di Cugno<br>"
            "Gary Cramblitt<br>"
+           "Henrik Nordstrom<br>"
            "Henrique Pinto<br>"
            "Jean-Remy Falleri<br>"
            "Lars Ivar Igesund<br>"
