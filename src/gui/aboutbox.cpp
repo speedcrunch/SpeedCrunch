@@ -126,7 +126,7 @@ AboutBox::AboutBox(QWidget *parent, Qt::WindowFlags f)
     msg += i18n.arg(tr("Czech"))
                .arg("Blond'&aacute;k<br>Jakub Vasicek<br>Pavel Fric");
     msg += i18n.arg(tr("Dutch"))
-               .arg("Bram Schoenmakers<br>Jaap Woldringh<br>Maarten Fonville");
+               .arg("Bram Schoenmakers<br>Jaap Woldringh<br>Maarten Fonville<br>Kristof Bal");
     msg += i18n.arg(tr("Estonian"))
                .arg("Mihkel T&otilde;nnov");
     msg += i18n.arg(tr("French"))
