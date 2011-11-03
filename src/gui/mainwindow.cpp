@@ -1320,7 +1320,7 @@ MainWindow::MainWindow()
     d->p = this;
     d->createUi();
     d->applySettings();
-    d->widgets.editor->setFocus();
+    QTimer::singleShot( 0, d->widgets.editor, SLOT(setFocus()) );
 }
 
 MainWindow::~MainWindow()
