@@ -76,7 +76,8 @@ AboutBox::AboutBox(QWidget *parent, Qt::WindowFlags f)
 
     msg += "<p>";
     msg += QString("<b>%1</b><br>").arg(tr("Thanks to"));
-    msg += "Alejandro Villarreal<br>"
+    msg += "Alan Davies<br>"
+           "Alejandro Villarreal<br>"
            "Alexey Kouznetsov<br>"
            "Anders Lund<br>"
            "Aur&eacute;lien G&acirc;teau<br>"
