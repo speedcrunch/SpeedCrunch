@@ -77,6 +77,7 @@ void Settings::load()
     radixCharStr = settings->value( key + QLatin1String("RadixCharacter"), 0 ).toString();
     setRadixCharacter( radixCharStr.at(0).toAscii() );
 
+    autoAns = settings->value( key + QLatin1String("AutoAns"), true ).toBool();
     autoCalc = settings->value( key + QLatin1String("AutoCalc"), true ).toBool();
     autoCompletion = settings->value( key + QLatin1String("AutoCompletion"), true ).toBool();
     historySave = settings->value( key + QLatin1String("HistorySave"), true ).toBool();
@@ -203,6 +204,7 @@ void Settings::save()
     settings->setValue( key + QLatin1String("HistorySave"), historySave );
     settings->setValue( key + QLatin1String("VariableSave"), variableSave );
     settings->setValue( key + QLatin1String("AutoCompletion"), autoCompletion );
+    settings->setValue( key + QLatin1String("AutoAns"), autoAns );
     settings->setValue( key + QLatin1String("AutoCalc"), autoCalc );
     settings->setValue( key + QLatin1String("SystemTrayIconVisible"), systemTrayIconVisible );
     settings->setValue( key + QLatin1String("SyntaxHighlighting"), syntaxHighlighting );

@@ -134,6 +134,7 @@ struct Actions
     QAction * settingsBehaviorPartialResults;
     QAction * settingsBehaviorAutoCompletion;
     QAction * settingsBehaviorSyntaxHilite;
+    QAction * settingsBehaviorAutoAns;
     QAction * settingsBehaviorAlwaysOnTop;
     QAction * settingsBehaviorMinimizeToTray;
     // settings / display
@@ -390,6 +391,7 @@ void MainWindow::Private::createActions()
     actions.settingsAngleUnitRadian = new QAction( p );
 
     actions.settingsBehaviorAlwaysOnTop         = new QAction( p );
+    actions.settingsBehaviorAutoAns             = new QAction( p );
     actions.settingsBehaviorAutoCompletion      = new QAction( p );
     actions.settingsBehaviorMinimizeToTray      = new QAction( p );
     actions.settingsBehaviorPartialResults      = new QAction( p );
@@ -433,6 +435,7 @@ void MainWindow::Private::createActions()
     actions.settingsAngleUnitRadian->setCheckable( true );
 
     actions.settingsBehaviorAlwaysOnTop        ->setCheckable( true );
+    actions.settingsBehaviorAutoAns            ->setCheckable( true );
     actions.settingsBehaviorAutoCompletion     ->setCheckable( true );
     actions.settingsBehaviorMinimizeToTray     ->setCheckable( true );
     actions.settingsBehaviorPartialResults     ->setCheckable( true );
@@ -552,6 +555,7 @@ void MainWindow::Private::setActionsText()
     actions.settingsAngleUnitDegree            ->setText( MainWindow::tr("&Degree") );
     actions.settingsAngleUnitRadian            ->setText( MainWindow::tr("&Radian") );
     actions.settingsBehaviorAlwaysOnTop        ->setText( MainWindow::tr("Always On &Top") );
+    actions.settingsBehaviorAutoAns            ->setText( MainWindow::tr("Automatic Result &Reuse") );
     actions.settingsBehaviorAutoCompletion     ->setText( MainWindow::tr("Automatic &Completion") );
     actions.settingsBehaviorMinimizeToTray     ->setText( MainWindow::tr("&Minimize To System Tray") );
     actions.settingsBehaviorPartialResults     ->setText( MainWindow::tr("&Partial Results") );
@@ -753,6 +757,7 @@ void MainWindow::Private::createMenus()
     menus.behavior->addAction( actions.settingsBehaviorSaveVariablesOnExit );
     menus.behavior->addSeparator();
     menus.behavior->addAction( actions.settingsBehaviorPartialResults );
+    menus.behavior->addAction( actions.settingsBehaviorAutoAns );
     menus.behavior->addAction( actions.settingsBehaviorAutoCompletion );
     menus.behavior->addAction( actions.settingsBehaviorSyntaxHilite );
     menus.behavior->addSeparator();
@@ -1088,6 +1093,8 @@ void MainWindow::Private::createFixedConnections()
              SLOT(setAutoCompletionEnabled(bool)) );
     connect( actions.settingsBehaviorMinimizeToTray, SIGNAL(toggled(bool)), p,
              SLOT(setSystemTrayIconEnabled(bool)) );
+    connect( actions.settingsBehaviorAutoAns, SIGNAL(toggled(bool)), p,
+             SLOT(setAutoAnsEnabled(bool)) );
     connect( actions.settingsBehaviorPartialResults, SIGNAL(toggled(bool)), p,
              SLOT(setAutoCalcEnabled(bool)) );
     connect( actions.settingsBehaviorSaveHistoryOnExit, SIGNAL(toggled(bool)), p,
@@ -1218,6 +1225,12 @@ void MainWindow::Private::applySettings()
 
     // keypad
     actions.viewKeypad->setChecked( settings->keypadVisible );
+
+    // Automatically prepend 'ans'
+    if ( settings->autoAns )
+        actions.settingsBehaviorAutoAns->setChecked( true );
+    else
+        p->setAutoAnsEnabled( false );
 
     // autocalc
     if ( settings->autoCalc )
@@ -1676,6 +1689,11 @@ void MainWindow::setAlwaysOnTopEnabled( bool b )
         setWindowFlags( windowFlags() & (~ Qt::WindowStaysOnTopHint) );
     move( cur );
     show();
+}
+
+void MainWindow::setAutoAnsEnabled( bool b )
+{
+    d->settings->autoAns = b;
 }
 
 void MainWindow::setAutoCalcEnabled( bool b )
@@ -2425,7 +2443,7 @@ void MainWindow::showSystemTrayMessage()
 
 void MainWindow::handleEditorTextChange()
 {
-    if ( d->conditions.autoAns ) {
+    if ( d->conditions.autoAns && d->settings->autoAns ) {
         QString expr = d->evaluator->autoFix( d->widgets.editor->text() );
         if ( expr.isEmpty() )
             return;

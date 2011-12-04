@@ -73,6 +73,7 @@ private slots:
     void setAlwaysOnTopEnabled( bool );
     void setAngleModeDegree();
     void setAngleModeRadian();
+    void setAutoAnsEnabled( bool );
     void setAutoCalcEnabled( bool );
     void setAutoCompletionEnabled( bool );
     void setConstantsDockVisible( bool );

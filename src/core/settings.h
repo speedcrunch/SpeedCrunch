@@ -42,6 +42,7 @@ public:
     char resultFormat;    // see HMath documentation
     int  resultPrecision; // see HMath documentation
 
+    bool autoAns;
     bool autoCalc;
     bool autoCompletion;
     bool historySave;
