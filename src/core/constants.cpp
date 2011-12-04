@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2007-2009 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2007, 2009, 2011 Helder Correia <helder.pereira.correia@gmail.com>
 // Copyright (C) 2009 Andreas Scherer <andreas_coder@freenet.de>
 //
 // This program is free software; you can redistribute it and/or
@@ -266,7 +266,7 @@ void Constants::Private::retranslateText()
     I18N_CONSTANT(Constants::tr("Light Year"));
     I18N_CONSTANT(Constants::tr("Parsec"));
 
-    const QString days = Constants::tr( "days" );
+    const QString days = Constants::tr("days");
 
     I18N_CONSTANT_DAYS(Constants::tr("Gregorian Year"));
     I18N_CONSTANT_DAYS(Constants::tr("Julian Year"));
@@ -368,36 +368,35 @@ void Constants::Private::retranslateText()
     I18N_CONSTANT(Constants::tr("Zirconium"));
 
     categories.clear();
-    for ( int k = 0; k < list.count(); ++k )
-        if ( ! categories.contains(list.at(k).category) )
-            categories += list.at( k ).category;
+    for (int k = 0; k < list.count(); ++k)
+        if (!categories.contains(list.at(k).category))
+            categories += list.at(k).category;
     categories.sort();
 }
 
 Constants * Constants::instance()
 {
-    if ( ! s_constantsInstance ) {
+    if (!s_constantsInstance) {
         s_constantsInstance = new Constants;
-        qAddPostRoutine( s_deleteConstants );
+        qAddPostRoutine(s_deleteConstants);
     }
-
     return s_constantsInstance;
 }
 
-constant_name_is::constant_name_is( const QString & name )
+constant_name_is::constant_name_is(const QString &name)
     : m_name(name)
 {
 }
 
-bool constant_name_is::operator()( const Constant & c ) const
+bool constant_name_is::operator()(const Constant &c) const
 {
     return c.name == m_name;
 }
 
 Constants::Constants()
-    : d( new Constants::Private )
+    : d(new Constants::Private)
 {
-    setObjectName( "Constants" );
+    setObjectName("Constants");
     d->populate();
     d->retranslateText();
 }
@@ -420,4 +419,3 @@ void Constants::retranslateText()
 {
     d->retranslateText();
 }
-
