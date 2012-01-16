@@ -12,7 +12,7 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="60"/>
         <source>Maintainer and core developer</source>
-        <translation>Uzturētājs un galvenais izstradātājs</translation>
+        <translation>Uzturētājs un galvenais izstrādātājs</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="61"/>
@@ -193,7 +193,7 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="189"/>
         <source>This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version</source>
-        <translation>Šī ir bezmaksas programma, to drīkst izplatīt un/vai pārveidot saskaņā ar GNU General Public License by the Free Software Foundation noteikumiem; vai nu 2. versijas licenci, vai (pēc izvēles) jebkuru jaunāku</translation>
+        <translation>Šī ir bezmaksas programma, to drīkst izplatīt un/vai pārveidot saskaņā ar GNU Vispārējās Publiskās licences noteikumiem; sākot ar otrās (2.) versijas licenci</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="195"/>
@@ -218,7 +218,7 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="64"/>
         <source>General purpose developers</source>
-        <translation>Vispārigā mērķa izstrādātāji</translation>
+        <translation>Vispārigā mērķa izstrādātājs</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="140"/>
@@ -661,7 +661,7 @@
     <message>
         <location filename="../core/evaluator.cpp" line="94"/>
         <source>overflow - huge result is out of SpeedCrunch&apos;s number range</source>
-        <translation>rezultāts ir pārāk liels- ārpus SpeedCrunch skaitļu diapazona</translation>
+        <translation>rezultāts ir pārāk liels - ārpus SpeedCrunch skaitļu diapazona</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="100"/>
@@ -1395,7 +1395,7 @@
     <message>
         <location filename="../gui/mainwindow.cpp" line="535"/>
         <source>Delete All V&amp;ariables</source>
-        <translation>Nodzest visus m&amp;ainīgos</translation>
+        <translation>Nodzēst visus m&amp;ainīgos</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="536"/>
@@ -1490,12 +1490,12 @@
     <message>
         <location filename="../gui/mainwindow.cpp" line="556"/>
         <source>&amp;Minimize To System Tray</source>
-        <translation>&amp;Minimizēt uz sīkjoslu</translation>
+        <translation>&amp;Minimizēt uz rīkjoslu</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="557"/>
         <source>&amp;Partial Results</source>
-        <translation>&amp;Daļējie rezultāti</translation>
+        <translation>&amp;Starprezultāti</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="558"/>
@@ -1510,7 +1510,7 @@
     <message>
         <location filename="../gui/mainwindow.cpp" line="560"/>
         <source>Syntax &amp;Highlighting</source>
-        <translation>Sintakses &amp;iezimēšana</translation>
+        <translation>Sintakses &amp;iezīmēšana</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="561"/>
@@ -1650,7 +1650,7 @@
     <message>
         <location filename="../gui/mainwindow.cpp" line="791"/>
         <source>Se&amp;ttings</source>
-        <translation>Ie&amp;statījumi</translation>
+        <translation>R&amp;īki</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="792"/>
@@ -1670,12 +1670,12 @@
     <message>
         <location filename="../gui/mainwindow.cpp" line="797"/>
         <source>&amp;Behavior</source>
-        <translation>&amp;Uzvedība</translation>
+        <translation>&amp;Iestatījumi</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="793"/>
         <source>Radix &amp;Character</source>
-        <translation>Sākuma &amp;raksturs</translation>
+        <translation>Ciparu &amp;atdalītājs</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="583"/>
