@@ -149,6 +149,8 @@ AboutBox::AboutBox(QWidget *parent, Qt::WindowFlags f)
                .arg("Kazuki Hamasaki");
     msg += i18n.arg(tr("Korean"))
                .arg("YoungUk Kim");
+    msg += i18n.arg(tr("Latvian"))
+               .arg("Ri&#x10D;ards Pauls");
     msg += i18n.arg(tr("Norwegian"))
                .arg("Thomas Finneid");
     msg += i18n.arg(tr("Polish"))
