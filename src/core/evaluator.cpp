@@ -1624,11 +1624,7 @@ QVector<Variable> Evaluator::variables() const
     for ( QMap<QString,Variable>::Iterator it = d->variables.begin(); it != d->variables.end();
           ++it )
     {
-        Variable var;
-        const char * ASCII;
-        var.name = it.value().name;
-        ASCII = var.name.toLatin1();
-        var.value = it.value().value;
+        Variable var = { it.value().name, it.value().value };
         result.append( var );
     }
 
