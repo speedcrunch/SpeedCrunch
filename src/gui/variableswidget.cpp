@@ -99,19 +99,19 @@ void VariablesWidget::fillTable()
 
     for (int k = 0; k < variables.count(); ++k) {
 
-        QString upper = variables.at(k).name.toUpper();
+        QString varName = variables.at(k).name;
 
         if (m_itemPolicy == ShowUser
-            && (upper == QLatin1String("ANS")
-                || upper == QLatin1String("E")
-                || upper == QLatin1String("PHI")
-                || upper == QLatin1String("PI")))
+            && (varName == QLatin1String("ans")
+                || varName == QLatin1String("e")
+                || varName == QLatin1String("phi")
+                || varName == QLatin1String("pi")))
         {
             continue;
         }
 
         QStringList str;
-        str << variables.at(k).name
+        str << varName
             << formatValue(variables.at(k).value);
 
         if (term.isEmpty()
