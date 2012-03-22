@@ -1,6 +1,7 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2009 Andreas Scherer <andreas_coder@freenet.de>
 // Copyright (C) 2009, 2011 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2012 Roger Lamb <rlamb1id@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -99,19 +100,19 @@ void VariablesWidget::fillTable()
 
     for (int k = 0; k < variables.count(); ++k) {
 
-        QString upper = variables.at(k).name.toUpper();
+        QString varName = variables.at(k).name;
 
         if (m_itemPolicy == ShowUser
-            && (upper == QLatin1String("ANS")
-                || upper == QLatin1String("E")
-                || upper == QLatin1String("PHI")
-                || upper == QLatin1String("PI")))
+            && (varName == QLatin1String("ans")
+                || varName == QLatin1String("e")
+                || varName == QLatin1String("phi")
+                || varName == QLatin1String("pi")))
         {
             continue;
         }
 
         QStringList str;
-        str << variables.at(k).name
+        str << varName
             << formatValue(variables.at(k).value);
 
         if (term.isEmpty()
