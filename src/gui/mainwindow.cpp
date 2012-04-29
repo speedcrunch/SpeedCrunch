@@ -137,6 +137,8 @@ struct Actions
     QAction * settingsBehaviorAutoAns;
     QAction * settingsBehaviorAlwaysOnTop;
     QAction * settingsBehaviorMinimizeToTray;
+    QAction * settingsBehaviorAutoCopyResultToCb;
+
     // settings / display
     QAction * settingsDisplayZoomIn;
     QAction * settingsDisplayZoomOut;
@@ -398,6 +400,7 @@ void MainWindow::Private::createActions()
     actions.settingsBehaviorSaveHistoryOnExit   = new QAction( p );
     actions.settingsBehaviorSaveVariablesOnExit = new QAction( p );
     actions.settingsBehaviorSyntaxHilite        = new QAction( p );
+    actions.settingsBehaviorAutoCopyResultToCb  = new QAction( p );
 
     actions.settingsDisplayZoomIn  = new QAction( p );
     actions.settingsDisplayZoomOut = new QAction( p );
@@ -442,6 +445,7 @@ void MainWindow::Private::createActions()
     actions.settingsBehaviorSaveHistoryOnExit  ->setCheckable( true );
     actions.settingsBehaviorSaveVariablesOnExit->setCheckable( true );
     actions.settingsBehaviorSyntaxHilite       ->setCheckable( true );
+    actions.settingsBehaviorAutoCopyResultToCb ->setCheckable( true );
 
     actions.settingsRadixCharComma  ->setCheckable( true );
     actions.settingsRadixCharDefault->setCheckable( true );
@@ -562,6 +566,7 @@ void MainWindow::Private::setActionsText()
     actions.settingsBehaviorSaveHistoryOnExit  ->setText( MainWindow::tr("Save &History on Exit") );
     actions.settingsBehaviorSaveVariablesOnExit->setText( MainWindow::tr("Save &Variables on Exit") );
     actions.settingsBehaviorSyntaxHilite       ->setText( MainWindow::tr("Syntax &Highlighting") );
+    actions.settingsBehaviorAutoCopyResultToCb ->setText( MainWindow::tr("&Auto Copy Result To Clipboard") );
     actions.settingsRadixCharComma             ->setText( MainWindow::tr("&Comma") );
     actions.settingsRadixCharDefault           ->setText( MainWindow::tr("&System Default") );
     actions.settingsRadixCharDot               ->setText( MainWindow::tr("&Dot") );
@@ -763,6 +768,7 @@ void MainWindow::Private::createMenus()
     menus.behavior->addSeparator();
     menus.behavior->addAction( actions.settingsBehaviorAlwaysOnTop );
     menus.behavior->addAction( actions.settingsBehaviorMinimizeToTray );
+    menus.behavior->addAction( actions.settingsBehaviorAutoCopyResultToCb );
 
     menus.display = menus.settings->addMenu( "" );
     menus.display->addAction( actions.settingsDisplayZoomIn );
@@ -1103,6 +1109,9 @@ void MainWindow::Private::createFixedConnections()
              SLOT(setVariableSaveEnabled(bool)) );
     connect( actions.settingsBehaviorSyntaxHilite, SIGNAL(toggled(bool)), p,
              SLOT(setSyntaxHighlightingEnabled(bool)) );
+    connect( actions.settingsBehaviorAutoCopyResultToCb, SIGNAL(toggled(bool)), p,
+             SLOT(setAutoCopyResultToCbEnabled(bool)) );
+
 
     connect( actions.settingsRadixCharComma, SIGNAL(triggered()), p,
              SLOT(setRadixCharacterComma()) );
@@ -1252,6 +1261,13 @@ void MainWindow::Private::applySettings()
         actions.settingsBehaviorSyntaxHilite->setChecked( true );
     else
         p->setSyntaxHighlightingEnabled( false );
+
+    // auto copy result to clipboard
+
+    if ( settings->autoCopyResultToCb )
+        actions.settingsBehaviorAutoCopyResultToCb->setChecked( true );
+    else
+        p->setAutoCopyResultToCbEnabled( false );
 
     // display font
     QFont f;
@@ -1748,6 +1764,11 @@ void MainWindow::setSyntaxHighlightingEnabled( bool b )
     d->settings->syntaxHighlighting = b;
     d->widgets.editor->highlight();
     d->widgets.display->highlight();
+}
+
+void MainWindow::setAutoCopyResultToCbEnabled( bool b )
+{
+    d->settings->autoCopyResultToCb = b;
 }
 
 void MainWindow::setAngleModeRadian()
@@ -2423,6 +2444,8 @@ void MainWindow::evaluateEditorExpression()
             HistoryWidget * history = qobject_cast<HistoryWidget *>( d->docks.history->widget() );
             history->append( str );
         }
+        if ( d->settings->autoCopyResultToCb )
+            copyResultToClipboard();
 
         d->widgets.editor->selectAll();
         d->widgets.editor->stopAutoCalc();

@@ -87,6 +87,7 @@ void Settings::load()
                                           true ).toBool();
     systemTrayIconVisible = settings->value( key + QLatin1String("SystemTrayIconVisible"),
                                              false ).toBool();
+    autoCopyResultToCb = settings->value( key + QLatin1String("AutoCopyResultToCb"), false ).toBool();
 
     key = KEY + QLatin1String("/Format/");
 
@@ -208,6 +209,7 @@ void Settings::save()
     settings->setValue( key + QLatin1String("AutoCalc"), autoCalc );
     settings->setValue( key + QLatin1String("SystemTrayIconVisible"), systemTrayIconVisible );
     settings->setValue( key + QLatin1String("SyntaxHighlighting"), syntaxHighlighting );
+    settings->setValue( key + QLatin1String("AutoCopyResultToCb"), autoCopyResultToCb );
     settings->setValue( key + QLatin1String("Language"), language );
 
     settings->setValue( key + QLatin1String("AngleMode"), QString(QChar(angleUnit)) );
