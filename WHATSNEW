@@ -33,6 +33,7 @@ Improvements:
   expression. An auto-hiding label is shown instead.
 * Huge numbers logarithms don't fail anymore (#289)
 * Current result tip doesn't cover input box fo 50-digit precision anymore (#322)
+* User option to automatically copy result to clipboard (#418)
 
 Additions:
 * Integer division '\' operator (#62)

@@ -137,6 +137,7 @@ struct Actions
     QAction * settingsBehaviorAutoAns;
     QAction * settingsBehaviorAlwaysOnTop;
     QAction * settingsBehaviorMinimizeToTray;
+    QAction * settingsBehaviorAutoResultToClipboard;
     // settings / display
     QAction * settingsDisplayZoomIn;
     QAction * settingsDisplayZoomOut;
@@ -395,14 +396,15 @@ void MainWindow::Private::createActions()
     actions.settingsAngleUnitDegree = new QAction( p );
     actions.settingsAngleUnitRadian = new QAction( p );
 
-    actions.settingsBehaviorAlwaysOnTop         = new QAction( p );
-    actions.settingsBehaviorAutoAns             = new QAction( p );
-    actions.settingsBehaviorAutoCompletion      = new QAction( p );
-    actions.settingsBehaviorMinimizeToTray      = new QAction( p );
-    actions.settingsBehaviorPartialResults      = new QAction( p );
-    actions.settingsBehaviorSaveHistoryOnExit   = new QAction( p );
-    actions.settingsBehaviorSaveVariablesOnExit = new QAction( p );
-    actions.settingsBehaviorSyntaxHilite        = new QAction( p );
+    actions.settingsBehaviorAlwaysOnTop           = new QAction( p );
+    actions.settingsBehaviorAutoAns               = new QAction( p );
+    actions.settingsBehaviorAutoCompletion        = new QAction( p );
+    actions.settingsBehaviorMinimizeToTray        = new QAction( p );
+    actions.settingsBehaviorPartialResults        = new QAction( p );
+    actions.settingsBehaviorSaveHistoryOnExit     = new QAction( p );
+    actions.settingsBehaviorSaveVariablesOnExit   = new QAction( p );
+    actions.settingsBehaviorSyntaxHilite          = new QAction( p );
+    actions.settingsBehaviorAutoResultToClipboard = new QAction( p );
 
     actions.settingsDisplayZoomIn  = new QAction( p );
     actions.settingsDisplayZoomOut = new QAction( p );
@@ -439,14 +441,15 @@ void MainWindow::Private::createActions()
     actions.settingsAngleUnitDegree->setCheckable( true );
     actions.settingsAngleUnitRadian->setCheckable( true );
 
-    actions.settingsBehaviorAlwaysOnTop        ->setCheckable( true );
-    actions.settingsBehaviorAutoAns            ->setCheckable( true );
-    actions.settingsBehaviorAutoCompletion     ->setCheckable( true );
-    actions.settingsBehaviorMinimizeToTray     ->setCheckable( true );
-    actions.settingsBehaviorPartialResults     ->setCheckable( true );
-    actions.settingsBehaviorSaveHistoryOnExit  ->setCheckable( true );
-    actions.settingsBehaviorSaveVariablesOnExit->setCheckable( true );
-    actions.settingsBehaviorSyntaxHilite       ->setCheckable( true );
+    actions.settingsBehaviorAlwaysOnTop          ->setCheckable( true );
+    actions.settingsBehaviorAutoAns              ->setCheckable( true );
+    actions.settingsBehaviorAutoCompletion       ->setCheckable( true );
+    actions.settingsBehaviorMinimizeToTray       ->setCheckable( true );
+    actions.settingsBehaviorPartialResults       ->setCheckable( true );
+    actions.settingsBehaviorSaveHistoryOnExit    ->setCheckable( true );
+    actions.settingsBehaviorSaveVariablesOnExit  ->setCheckable( true );
+    actions.settingsBehaviorSyntaxHilite         ->setCheckable( true );
+    actions.settingsBehaviorAutoResultToClipboard->setCheckable( true );
 
     actions.settingsRadixCharComma  ->setCheckable( true );
     actions.settingsRadixCharDefault->setCheckable( true );
@@ -557,36 +560,37 @@ void MainWindow::Private::setActionsText()
     actions.viewStatusBar     ->setText( MainWindow::tr("&Status Bar") );
     actions.viewVariables     ->setText( MainWindow::tr("&Variables") );
 
-    actions.settingsAngleUnitDegree            ->setText( MainWindow::tr("&Degree") );
-    actions.settingsAngleUnitRadian            ->setText( MainWindow::tr("&Radian") );
-    actions.settingsBehaviorAlwaysOnTop        ->setText( MainWindow::tr("Always On &Top") );
-    actions.settingsBehaviorAutoAns            ->setText( MainWindow::tr("Automatic Result &Reuse") );
-    actions.settingsBehaviorAutoCompletion     ->setText( MainWindow::tr("Automatic &Completion") );
-    actions.settingsBehaviorMinimizeToTray     ->setText( MainWindow::tr("&Minimize To System Tray") );
-    actions.settingsBehaviorPartialResults     ->setText( MainWindow::tr("&Partial Results") );
-    actions.settingsBehaviorSaveHistoryOnExit  ->setText( MainWindow::tr("Save &History on Exit") );
-    actions.settingsBehaviorSaveVariablesOnExit->setText( MainWindow::tr("Save &Variables on Exit") );
-    actions.settingsBehaviorSyntaxHilite       ->setText( MainWindow::tr("Syntax &Highlighting") );
-    actions.settingsRadixCharComma             ->setText( MainWindow::tr("&Comma") );
-    actions.settingsRadixCharDefault           ->setText( MainWindow::tr("&System Default") );
-    actions.settingsRadixCharDot               ->setText( MainWindow::tr("&Dot") );
-    actions.settingsResultFormat15Digits       ->setText( MainWindow::tr("&15 Decimal Digits") );
-    actions.settingsResultFormat2Digits        ->setText( MainWindow::tr("&2 Decimal Digits") );
-    actions.settingsResultFormat3Digits        ->setText( MainWindow::tr("&3 Decimal Digits") );
-    actions.settingsResultFormat50Digits       ->setText( MainWindow::tr("&50 Decimal Digits") );
-    actions.settingsResultFormat8Digits        ->setText( MainWindow::tr("&8 Decimal Digits") );
-    actions.settingsResultFormatAutoPrecision  ->setText( MainWindow::tr("&Automatic") );
-    actions.settingsResultFormatBinary         ->setText( MainWindow::tr("&Binary") );
-    actions.settingsResultFormatEngineering    ->setText( MainWindow::tr("&Engineering") );
-    actions.settingsResultFormatFixed          ->setText( MainWindow::tr("&Fixed Decimal") );
-    actions.settingsResultFormatGeneral        ->setText( MainWindow::tr("&General") );
-    actions.settingsResultFormatHexadecimal    ->setText( MainWindow::tr("&Hexadecimal") );
-    actions.settingsResultFormatOctal          ->setText( MainWindow::tr("&Octal") );
-    actions.settingsResultFormatScientific     ->setText( MainWindow::tr("&Scientific") );
-    actions.settingsDisplayZoomIn              ->setText( MainWindow::tr("Zoom &In") );
-    actions.settingsDisplayZoomOut             ->setText( MainWindow::tr("Zoom &Out") );
-    actions.settingsDisplayFont                ->setText( MainWindow::tr("&Font...") );
-    actions.settingsLanguage                   ->setText( MainWindow::tr("&Language...") );
+    actions.settingsAngleUnitDegree              ->setText( MainWindow::tr("&Degree") );
+    actions.settingsAngleUnitRadian              ->setText( MainWindow::tr("&Radian") );
+    actions.settingsBehaviorAlwaysOnTop          ->setText( MainWindow::tr("Always On &Top") );
+    actions.settingsBehaviorAutoAns              ->setText( MainWindow::tr("Automatic Result &Reuse") );
+    actions.settingsBehaviorAutoCompletion       ->setText( MainWindow::tr("Automatic &Completion") );
+    actions.settingsBehaviorMinimizeToTray       ->setText( MainWindow::tr("&Minimize To System Tray") );
+    actions.settingsBehaviorPartialResults       ->setText( MainWindow::tr("&Partial Results") );
+    actions.settingsBehaviorSaveHistoryOnExit    ->setText( MainWindow::tr("Save &History on Exit") );
+    actions.settingsBehaviorSaveVariablesOnExit  ->setText( MainWindow::tr("Save &Variables on Exit") );
+    actions.settingsBehaviorSyntaxHilite         ->setText( MainWindow::tr("Syntax &Highlighting") );
+    actions.settingsBehaviorAutoResultToClipboard->setText( MainWindow::tr("Automatic &Result to Clipboard") );
+    actions.settingsRadixCharComma               ->setText( MainWindow::tr("&Comma") );
+    actions.settingsRadixCharDefault             ->setText( MainWindow::tr("&System Default") );
+    actions.settingsRadixCharDot                 ->setText( MainWindow::tr("&Dot") );
+    actions.settingsResultFormat15Digits         ->setText( MainWindow::tr("&15 Decimal Digits") );
+    actions.settingsResultFormat2Digits          ->setText( MainWindow::tr("&2 Decimal Digits") );
+    actions.settingsResultFormat3Digits          ->setText( MainWindow::tr("&3 Decimal Digits") );
+    actions.settingsResultFormat50Digits         ->setText( MainWindow::tr("&50 Decimal Digits") );
+    actions.settingsResultFormat8Digits          ->setText( MainWindow::tr("&8 Decimal Digits") );
+    actions.settingsResultFormatAutoPrecision    ->setText( MainWindow::tr("&Automatic") );
+    actions.settingsResultFormatBinary           ->setText( MainWindow::tr("&Binary") );
+    actions.settingsResultFormatEngineering      ->setText( MainWindow::tr("&Engineering") );
+    actions.settingsResultFormatFixed            ->setText( MainWindow::tr("&Fixed Decimal") );
+    actions.settingsResultFormatGeneral          ->setText( MainWindow::tr("&General") );
+    actions.settingsResultFormatHexadecimal      ->setText( MainWindow::tr("&Hexadecimal") );
+    actions.settingsResultFormatOctal            ->setText( MainWindow::tr("&Octal") );
+    actions.settingsResultFormatScientific       ->setText( MainWindow::tr("&Scientific") );
+    actions.settingsDisplayZoomIn                ->setText( MainWindow::tr("Zoom &In") );
+    actions.settingsDisplayZoomOut               ->setText( MainWindow::tr("Zoom &Out") );
+    actions.settingsDisplayFont                  ->setText( MainWindow::tr("&Font...") );
+    actions.settingsLanguage                     ->setText( MainWindow::tr("&Language...") );
 
     actions.helpAboutQt    ->setText( MainWindow::tr("About &Qt") );
     actions.helpAbout      ->setText( MainWindow::tr("About &SpeedCrunch") );
@@ -768,6 +772,7 @@ void MainWindow::Private::createMenus()
     menus.behavior->addSeparator();
     menus.behavior->addAction( actions.settingsBehaviorAlwaysOnTop );
     menus.behavior->addAction( actions.settingsBehaviorMinimizeToTray );
+    menus.behavior->addAction( actions.settingsBehaviorAutoResultToClipboard );
 
     menus.display = menus.settings->addMenu( "" );
     menus.display->addAction( actions.settingsDisplayZoomIn );
@@ -1108,6 +1113,8 @@ void MainWindow::Private::createFixedConnections()
              SLOT(setVariableSaveEnabled(bool)) );
     connect( actions.settingsBehaviorSyntaxHilite, SIGNAL(toggled(bool)), p,
              SLOT(setSyntaxHighlightingEnabled(bool)) );
+    connect( actions.settingsBehaviorAutoResultToClipboard, SIGNAL(toggled(bool)), p,
+             SLOT(setAutoResultToClipboardEnabled(bool)) );
 
     connect( actions.settingsRadixCharComma, SIGNAL(triggered()), p,
              SLOT(setRadixCharacterComma()) );
@@ -1260,6 +1267,12 @@ void MainWindow::Private::applySettings()
         actions.settingsBehaviorSyntaxHilite->setChecked( true );
     else
         p->setSyntaxHighlightingEnabled( false );
+
+    // auto copy result to clipboard
+    if ( settings->autoResultToClipboard )
+        actions.settingsBehaviorAutoResultToClipboard->setChecked( true );
+    else
+        p->setAutoResultToClipboardEnabled( false );
 
     // display font
     QFont f;
@@ -1756,6 +1769,11 @@ void MainWindow::setSyntaxHighlightingEnabled( bool b )
     d->settings->syntaxHighlighting = b;
     d->widgets.editor->highlight();
     d->widgets.display->highlight();
+}
+
+void MainWindow::setAutoResultToClipboardEnabled( bool b )
+{
+    d->settings->autoResultToClipboard = b;
 }
 
 void MainWindow::setAngleModeRadian()
@@ -2436,6 +2454,8 @@ void MainWindow::evaluateEditorExpression()
             HistoryWidget * history = qobject_cast<HistoryWidget *>( d->docks.history->widget() );
             history->append( str );
         }
+        if ( d->settings->autoResultToClipboard )
+            copyResultToClipboard();
 
         d->widgets.editor->selectAll();
         d->widgets.editor->stopAutoCalc();

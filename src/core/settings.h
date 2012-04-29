@@ -50,6 +50,7 @@ public:
     bool systemTrayIconVisible;
     bool variableSave;
     bool windowAlwaysOnTop;
+    bool autoResultToClipboard;
 
     bool constantsDockVisible;
     bool functionsDockVisible;

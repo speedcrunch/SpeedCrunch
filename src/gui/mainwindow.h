@@ -107,6 +107,7 @@ private slots:
     void setResultPrecision( int );
     void setStatusBarVisible( bool );
     void setSyntaxHighlightingEnabled( bool );
+    void setAutoResultToClipboardEnabled( bool );
     void setSystemTrayIconEnabled( bool );
     void setVariableSaveEnabled( bool );
     void setVariablesDockVisible( bool );
