@@ -50,7 +50,7 @@ public:
     bool systemTrayIconVisible;
     bool variableSave;
     bool windowAlwaysOnTop;
-    bool autoCopyResultToCb;
+    bool autoResultToClipboard;
 
     bool constantsDockVisible;
     bool functionsDockVisible;
@@ -61,7 +61,6 @@ public:
     bool statusBarVisible;
     bool variablesDockVisible;
     bool windowOnfullScreen;
-    
 
     QString displayFont;
 
