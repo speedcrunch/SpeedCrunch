@@ -190,11 +190,13 @@ struct Functions::Private
     static HNumber csc( Function *, const QVector<HNumber> & args );
     static HNumber dec( Function *, const QVector<HNumber> & args );
     static HNumber degrees( Function *, const QVector<HNumber> & args );
+    static HNumber dms( Function *, const QVector<HNumber> & args );
     static HNumber erfc( Function *, const QVector<HNumber> & args );
     static HNumber erf( Function *, const QVector<HNumber> & args );
     static HNumber exp( Function *, const QVector<HNumber>& args );
     static HNumber floor( Function *, const QVector<HNumber> & args );
     static HNumber frac( Function *, const QVector<HNumber> & args );
+    static HNumber fromdms( Function *, const QVector<HNumber> & args );
     static HNumber Gamma( Function *, const QVector<HNumber> & args );
     static HNumber gcd( Function *, const QVector<HNumber>& args );
     static HNumber geomean( Function *, const QVector<HNumber> & args );
@@ -490,6 +492,16 @@ HNumber Functions::Private::atan( Function *, const QVector<HNumber> & args )
     return result;
 }
 
+HNumber Functions::Private::fromdms( Function *, const QVector<HNumber> & args )
+{
+    HNumber result = HMath::dms2deg( args.at( 0 ), args.at( 1 ), args.at( 2 ) );
+
+    if ( Settings::instance()->angleUnit == 'r' )
+        result = HMath::deg2rad( result );
+
+    return result;
+}
+
 HNumber Functions::Private::sinh( Function *, const QVector<HNumber> & args )
 {
     return HMath::sinh( args.at(0) );
@@ -565,6 +577,11 @@ HNumber Functions::Private::degrees( Function *, const QVector<HNumber> & args )
 HNumber Functions::Private::radians( Function *, const QVector<HNumber> & args )
 {
     return HMath::deg2rad( args.at(0) );
+}
+
+HNumber Functions::Private::dms( Function *, const QVector<HNumber> & args )
+{
+    return HNumber( args.at(0) ).setFormat( 'm' );
 }
 
 HNumber Functions::Private::max( Function * f, const QVector<HNumber> & args )
@@ -881,6 +898,8 @@ void Functions::Private::createBuiltInFunctions()
     p->add( new Function("csc",     csc,     1, p) );
     p->add( new Function("degrees", degrees, 1, p) );
     p->add( new Function("radians", radians, 1, p) );
+    p->add( new Function("dms"    , dms,     1, p) );
+    p->add( new Function("fromdms", fromdms, 3, p) );
     p->add( new Function("sec",     sec,     1, p) );
     p->add( new Function("sin",     sin,     1, p) );
     p->add( new Function("tan",     tan,     1, p) );
@@ -1011,6 +1030,8 @@ void Functions::retranslateText()
     function( "csc"     )->setName( tr("Cosecant") );
     function( "degrees" )->setName( tr("Degrees of Arc") );
     function( "radians" )->setName( tr("Radians") );
+    function( "dms"     )->setName( tr("Degree-Minute-Second") );
+    function( "fromdms" )->setName( tr("Degrees of Arc") );
     function( "sec"     )->setName( tr("Secant") );
     function( "sin"     )->setName( tr("Sine") );
     function( "tan"     )->setName( tr("Tangent") );
