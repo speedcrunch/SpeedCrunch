@@ -1031,7 +1031,7 @@ void Functions::retranslateText()
     function( "degrees" )->setName( tr("Degrees of Arc") );
     function( "radians" )->setName( tr("Radians") );
     function( "dms"     )->setName( tr("Degree-Minute-Second") );
-    function( "dms"     )->setName( tr("Degrees of Arc") );
+    function( "fromdms" )->setName( tr("Degrees of Arc") );
     function( "sec"     )->setName( tr("Secant") );
     function( "sin"     )->setName( tr("Sine") );
     function( "tan"     )->setName( tr("Tangent") );
