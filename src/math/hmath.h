@@ -164,6 +164,8 @@ class HMath
     static HNumber poissonCdf( const HNumber & k, const HNumber & l );
     static HNumber poissonMean( const HNumber & l );
     static HNumber poissonVariance( const HNumber & l );
+    static HNumber normalPdf( const HNumber & x, const HNumber & m, const HNumber& s );
+    static HNumber normalCdf( const HNumber & x, const HNumber & m, const HNumber& s );
     // LOGIC
     static HNumber mask( const HNumber & val, const HNumber & bits );
     static HNumber sgnext( const HNumber & val, const HNumber & bits );

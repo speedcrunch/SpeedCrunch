@@ -215,6 +215,8 @@ struct Functions::Private
     static HNumber min( Function *, const QVector<HNumber> & args );
     static HNumber mod( Function *, const QVector<HNumber> & args );
     static HNumber nCr( Function *, const QVector<HNumber> & args );
+    static HNumber normalcdf( Function*, const QVector<HNumber> & args );
+    static HNumber normalpdf( Function*, const QVector<HNumber> & args );
     static HNumber not_( Function *, const QVector<HNumber> & args );
     static HNumber nPr( Function *, const QVector<HNumber> & args );
     static HNumber oct( Function *, const QVector<HNumber> & args );
@@ -731,6 +733,38 @@ HNumber Functions::Private::poivar( Function *, const QVector<HNumber> & args )
     return HMath::poissonVariance( args.at( 0 ) );
 }
 
+HNumber Functions::Private::normalpdf( Function * f, const QVector<HNumber> & args)
+{
+    int nArgs = args.count();
+
+    if ( nArgs == 1 ) {
+        // arg 0: x
+        return HMath::normalPdf( args.at( 0 ) , HNumber(0), HNumber(1) );
+    } else if ( nArgs == 3 ) {
+        // arg 0: x; arg 1: mu; arg 2: sigma
+        return HMath::normalPdf( args.at( 0 ), args.at( 1 ), args.at( 2 ) );
+    } else {
+        f->setError( Functions::tr("function %1 requires 1 or 3 arguments").arg(f->identifier() ));
+        return HMath::nan();
+    }
+}
+
+HNumber Functions::Private::normalcdf( Function * f, const QVector<HNumber> & args)
+{
+    int nArgs = args.count();
+
+    if ( nArgs == 1 ) {
+        // arg 0: x
+        return HMath::normalCdf( args.at( 0 ) , HNumber(0), HNumber(1) );
+    } else if ( nArgs == 3 ) {
+        // arg 0: x; arg 1: mu; arg 2: sigma
+        return HMath::normalCdf( args.at( 0 ), args.at( 1 ), args.at( 2 ) );
+    } else {
+        f->setError( Functions::tr("function %1 requires 1 or 3 arguments").arg(f->identifier() ));
+        return HMath::nan();
+    }
+}
+
 HNumber Functions::Private::mask( Function *, const QVector<HNumber> & args )
 {
     // arg 0: value; arg 1: bits
@@ -867,6 +901,8 @@ void Functions::Private::createBuiltInFunctions()
     p->add( new Function("hyperpmf",  hyperpmf,  4, p) );
     p->add( new Function("hypervar",  hypervar,  3, p) );
     p->add( new Function("median",    median,       p) );
+    p->add( new Function("normalcdf", normalcdf,    p) );
+    p->add( new Function("normalpdf", normalpdf,    p) );
     p->add( new Function("poicdf",    poicdf,    2, p) );
     p->add( new Function("poimean",   poimean,   1, p) );
     p->add( new Function("poipmf",    poipmf,    2, p) );
@@ -997,6 +1033,8 @@ void Functions::retranslateText()
     function( "hyperpmf"  )->setName( tr("Hypergeometric Probability Mass Function") );
     function( "hypervar"  )->setName( tr("Hypergeometric Distribution Variance") );
     function( "median"    )->setName( tr("Median Value (50th Percentile)") );
+    function( "normalcdf" )->setName( tr("Normal Cumulative Distrubution Function") );
+    function( "normalpdf" )->setName( tr("Normal Probability Density Function") );
     function( "poicdf"    )->setName( tr("Poissonian Cumulative Distribution Function") );
     function( "poimean"   )->setName( tr("Poissonian Distribution Mean") );
     function( "poipmf"    )->setName( tr("Poissonian Probability Mass Function") );
