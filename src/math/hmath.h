@@ -59,6 +59,7 @@ class HNumber
     // 'f': decimal fixed
     // 'e': decimal scientific
     // 'n': decimal engineering
+    // 'm': degree-minute-second
     // 'h': hexadecimal
     // 'o': octal
     // 'b': binary
@@ -106,6 +107,8 @@ class HMath
     // GENERAL MATH
     static HNumber rad2deg( const HNumber & angle );
     static HNumber deg2rad( const HNumber & angle );
+    static HNumber dms2deg( const HNumber & d, const HNumber & m,
+                            const HNumber & s );
     static HNumber max( const HNumber & n1, const HNumber & n2 );
     static HNumber min( const HNumber & n1, const HNumber & n2 );
     static HNumber abs( const HNumber & n );

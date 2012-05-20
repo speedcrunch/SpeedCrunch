@@ -743,6 +743,109 @@ char* formatGeneral( cfloatnum x, int prec )
   return str;
 }
 
+char* formatDMS( cfloatnum x, int prec )
+{
+  int expd = float_getexponent(x);
+
+  if ( expd > 5 )
+  {
+    // minutes and seconds are too much precision
+    char* str;
+    char* d = formatScientific( x, prec );
+    int sz = strlen(d) + 3;
+
+    str = (char*)malloc( sz );
+    strcpy(str, d);
+    strcat(str, "\xB0 "); // degree sign + space
+        
+    free(d);
+    return str;
+  }
+    
+  // do some math
+  floatstruct dms[3];
+  floatstruct tmp;
+  char* dmsstr[3];
+  int sz = 0;
+  char* str;
+  for (int i = 0; i < 3; ++i)
+    float_create(&dms[i]);
+  float_create(&tmp);
+
+  float_copy(&dms[0], x, DECPRECISION + 2);
+  float_copy(&tmp,    x, DECPRECISION + 2);
+
+  // TODO: check return values?
+  // all of these operations are almost guaranteed to be valid, though
+  float_int (&dms[0]); // d   
+  float_frac(&tmp);
+  float_abs (&tmp);
+  float_muli(&dms[1], &tmp,    60, DECPRECISION + 2);
+  float_copy(&tmp,    &dms[1],     DECPRECISION + 2);
+  float_int (&dms[1]); // m
+  float_frac(&tmp);
+  float_muli(&dms[2], &tmp,    60, DECPRECISION + 2); // s
+  // helps with test for 60: same round that is done in the
+  // formatFixed routine (indirectly)
+  if( prec < 0 )
+  {
+    prec = HMATH_MAX_SHOWN;
+    int scale = float_getlength(x) - float_getexponent(x) - 1;
+    if( scale < HMATH_MAX_SHOWN )
+      prec = scale;
+  }
+  int digits = float_getexponent(&dms[2]) + prec - 3;
+  if ( digits < 1 ) digits = 1;
+  float_round(&dms[2], &dms[2], digits, TONEAREST);
+
+  // it's possible that seconds got rounded up to 60
+  // test for and fix this
+  float_setinteger(&tmp, 60);
+  if (float_cmp(&dms[2], &tmp) >= 0)
+  {
+    float_setinteger(&dms[2], 0);
+    float_copy(&tmp,    &dms[1],      DECPRECISION + 2);
+    float_addi(&dms[1], &tmp,      1, DECPRECISION + 2);
+    
+    float_setinteger(&tmp, 60);      
+    if (float_cmp(&dms[1], &tmp) >= 0)
+    {
+      float_setinteger(&dms[1], 0);
+      float_copy(&tmp,    &dms[0],      DECPRECISION + 2);
+      float_addi(&dms[0], &tmp,      1, DECPRECISION + 2);
+      float_int (&dms[0]);
+    }
+  }
+  
+  // format results
+  dmsstr[0] = formatFixed(&dms[0], 0);
+  dmsstr[1] = formatFixed(&dms[1], 0);
+  dmsstr[2] = formatFixed(&dms[2], prec - 4); // log10(3600) ~= 4
+
+  for (int i = 0; i < 3; ++i)
+    sz += strlen(dmsstr[i]);
+
+  // 1 for d, ', ", 2 spaces, and \0
+  sz += 6;
+    
+  str = (char*)malloc( sz );
+  strcpy(str, dmsstr[0]);
+  strcat(str, "\xB0 "); // degree sign + space
+  strcat(str, dmsstr[1]);
+  strcat(str, "' ");
+  strcat(str, dmsstr[2]);
+  strcat(str, "\"");
+    
+  for (int i = 0; i < 3; ++i)
+  {
+    float_free(&dms[i]);
+    free(dmsstr[i]);
+  }
+  float_free(&tmp);
+
+  return str;
+}
+
 char* formathexfp( cfloatnum x, char base,
                    char expbase, int scale )
 {
@@ -773,6 +876,7 @@ char* HMath::format( const HNumber& hn, char format, int prec )
   case 'f': rs = formatFixed(&hn.d->fnum, prec ); break;
   case 'e': rs = formatScientific(&hn.d->fnum, prec ); break;
   case 'n': rs = formatEngineering(&hn.d->fnum, prec ); break;
+  case 'm': rs = formatDMS(&hn.d->fnum, prec ); break;
   case 'h': rs = formathexfp(&hn.d->fnum, 16, 10, HMATH_HEX_MAX_SHOWN); break;
   case 'o': rs = formathexfp(&hn.d->fnum, 8, 10, HMATH_OCT_MAX_SHOWN); break;
   case 'b': rs = formathexfp(&hn.d->fnum, 2, 10, HMATH_BIN_MAX_SHOWN); break;
@@ -796,6 +900,16 @@ HNumber HMath::rad2deg( const HNumber & angle )
 HNumber HMath::deg2rad( const HNumber & angle )
 {
   return angle * (HMath::pi() / HNumber(180));
+}
+
+/**
+ * Converts degree-minute-second to degrees.
+ */
+HNumber HMath::dms2deg( const HNumber & d,
+                        const HNumber & m,
+                        const HNumber & s )
+{
+    return d + m / HNumber(60) + s / HNumber(3600);
 }
 
 /**
