@@ -1752,6 +1752,31 @@ HNumber HMath::poissonVariance( const HNumber & l )
 }
 
 /**
+ * Calculates the normal probability density function
+ * note: s is the standard deviation, not the variance
+ */
+HNumber HMath::normalPdf( const HNumber & x, const HNumber & m, const HNumber & s )
+{
+    if (x.isNan() || m.isNan() || s.isNan() || s.isNegative() || s.isZero())
+        return HMath::nan();
+    HNumber arg = HMath::raise( (x - m)/s, 2 )/HNumber(-2);
+    return HMath::exp( arg )/(s * HMath::sqrt( HNumber(2)* HMath::pi() ) );    
+}
+
+/**
+ * Calculates the normal cumulative distribution function:
+ * P(X <= x), X ~ N(m, s^2)
+ * note: s is the standard deviation, not the variance
+ */
+HNumber HMath::normalCdf( const HNumber & x, const HNumber & m, const HNumber & s )
+{
+    if (x.isNan() || m.isNan() || s.isNan() || s.isNegative() || s.isZero())
+        return HMath::nan();
+    HNumber arg = (m - x)/(s * HMath::sqrt( HNumber(2) ));
+    return HMath::erfc( arg )/HNumber(2);
+}
+
+/**
  * Returns the erf function (related to normal distribution).
  */
 HNumber HMath::erf( const HNumber & x )
