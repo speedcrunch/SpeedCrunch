@@ -1772,8 +1772,8 @@ HNumber HMath::normalCdf( const HNumber & x, const HNumber & m, const HNumber & 
 {
     if (x.isNan() || m.isNan() || s.isNan() || s.isNegative() || s.isZero())
         return HMath::nan();
-    HNumber arg = (x - m)/(s * HMath::sqrt( HNumber(2) ));
-    return (HNumber(1) + HMath::erf( arg ))/HNumber(2);
+    HNumber arg = (m - x)/(s * HMath::sqrt( HNumber(2) ));
+    return HMath::erfc( arg )/HNumber(2);
 }
 
 /**
