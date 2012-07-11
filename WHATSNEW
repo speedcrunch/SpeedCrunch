@@ -16,6 +16,7 @@ Fixes:
 * Application window does not get focus on launch (#282)
 * Bad background of virtual keypad buttons with dark themes (#288)
 * Crash on input of large hex numbers (#349)
+* Copying from result display doesn't work (#417)
 
 Improvements:
 * Allow only one instance of the application running (raise existing) (#159)
