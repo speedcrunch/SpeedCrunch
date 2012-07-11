@@ -240,6 +240,7 @@ struct MainWindow::Private
     StatusBar status;
     QTranslator * translator;
     Widgets widgets;
+	TextEdit *copyWidget;
 
     Private();
     ~Private();
@@ -300,6 +301,8 @@ MainWindow::Private::Private()
 
     status.angleUnit = 0;
     status.resultFormat = 0;
+	
+	copyWidget = 0;
 };
 
 MainWindow::Private::~Private()
@@ -355,6 +358,8 @@ void MainWindow::Private::createUi()
 
     p->setWindowTitle( "SpeedCrunch" );
     p->setWindowIcon( QPixmap(":/speedcrunch.png") );
+	
+	copyWidget = widgets.editor;
 }
 
 void MainWindow::Private::createActions()
@@ -1061,7 +1066,7 @@ void MainWindow::Private::createFixedConnections()
     connect( actions.editClearExpression, SIGNAL(triggered()), p, SLOT(clearEditor()) );
     connect( actions.editClearHistory, SIGNAL(triggered()), p, SLOT(clearHistory()) );
     connect( actions.editCopyLastResult, SIGNAL(triggered()), p, SLOT(copyResultToClipboard()) );
-    connect( actions.editCopy, SIGNAL(triggered()), widgets.editor, SLOT(copy()) );
+    connect( actions.editCopy, SIGNAL(triggered()), p, SLOT(copy()) );
     connect( actions.editDeleteAllVariables, SIGNAL(triggered()), p, SLOT(deleteAllVariables()) );
     connect( actions.editDeleteVariable, SIGNAL(triggered()), p,
              SLOT(showVariableDeletionDialog()) );
@@ -1149,6 +1154,9 @@ void MainWindow::Private::createFixedConnections()
              SLOT(showAutoCalcTip(const QString &)) );
     connect( widgets.editor, SIGNAL(returnPressed()), p, SLOT( evaluateEditorExpression()) );
     connect( widgets.editor, SIGNAL(textChanged()), p, SLOT( handleEditorTextChange()) );
+	connect( widgets.editor, SIGNAL(copyAvailable(bool)), p, SLOT(handleCopyAvailable(bool)) );
+	
+	connect( widgets.display, SIGNAL(copyAvailable(bool)), p, SLOT(handleCopyAvailable(bool)) );
 
     connect( p, SIGNAL(radixCharacterChanged()), widgets.display, SLOT(refresh()) );
     connect( p, SIGNAL(resultFormatChanged()), widgets.display, SLOT(refresh()) );
@@ -2333,6 +2341,11 @@ void MainWindow::minimizeToSystemTray()
     }
 }
 
+void MainWindow::copy()
+{
+	d->copyWidget->copy();
+}
+
 void MainWindow::raiseWindow()
 {
     activate();
@@ -2439,6 +2452,16 @@ void MainWindow::showSystemTrayMessage()
         msg += QChar( 0x200E );
     if ( d->widgets.trayIcon )
         d->widgets.trayIcon->showMessage( QString(), msg, QSystemTrayIcon::NoIcon, 4000 );
+}
+
+void MainWindow::handleCopyAvailable( bool yes )
+{
+	if (yes)
+	{
+		TextEdit * const textEdit = dynamic_cast<TextEdit *>(sender());
+		if (0 != textEdit)
+			d->copyWidget = textEdit;
+	}
 }
 
 void MainWindow::handleEditorTextChange()
