@@ -240,7 +240,7 @@ struct MainWindow::Private
     StatusBar status;
     QTranslator * translator;
     Widgets widgets;
-	TextEdit *copyWidget;
+    TextEdit *copyWidget;
 
     Private();
     ~Private();
@@ -301,8 +301,8 @@ MainWindow::Private::Private()
 
     status.angleUnit = 0;
     status.resultFormat = 0;
-	
-	copyWidget = 0;
+
+    copyWidget = 0;
 };
 
 MainWindow::Private::~Private()
@@ -358,8 +358,8 @@ void MainWindow::Private::createUi()
 
     p->setWindowTitle( "SpeedCrunch" );
     p->setWindowIcon( QPixmap(":/speedcrunch.png") );
-	
-	copyWidget = widgets.editor;
+
+    copyWidget = widgets.editor;
 }
 
 void MainWindow::Private::createActions()
@@ -1154,9 +1154,9 @@ void MainWindow::Private::createFixedConnections()
              SLOT(showAutoCalcTip(const QString &)) );
     connect( widgets.editor, SIGNAL(returnPressed()), p, SLOT( evaluateEditorExpression()) );
     connect( widgets.editor, SIGNAL(textChanged()), p, SLOT( handleEditorTextChange()) );
-	connect( widgets.editor, SIGNAL(copyAvailable(bool)), p, SLOT(handleCopyAvailable(bool)) );
-	
-	connect( widgets.display, SIGNAL(copyAvailable(bool)), p, SLOT(handleCopyAvailable(bool)) );
+    connect( widgets.editor, SIGNAL(copyAvailable(bool)), p, SLOT(handleCopyAvailable(bool)) );
+
+    connect( widgets.display, SIGNAL(copyAvailable(bool)), p, SLOT(handleCopyAvailable(bool)) );
 
     connect( p, SIGNAL(radixCharacterChanged()), widgets.display, SLOT(refresh()) );
     connect( p, SIGNAL(resultFormatChanged()), widgets.display, SLOT(refresh()) );
@@ -2343,7 +2343,7 @@ void MainWindow::minimizeToSystemTray()
 
 void MainWindow::copy()
 {
-	d->copyWidget->copy();
+    d->copyWidget->copy();
 }
 
 void MainWindow::raiseWindow()
@@ -2456,12 +2456,12 @@ void MainWindow::showSystemTrayMessage()
 
 void MainWindow::handleCopyAvailable( bool yes )
 {
-	if (yes)
-	{
-		TextEdit * const textEdit = dynamic_cast<TextEdit *>(sender());
-		if (0 != textEdit)
-			d->copyWidget = textEdit;
-	}
+    if (yes)
+    {
+        TextEdit * const textEdit = dynamic_cast<TextEdit *>(sender());
+        if (0 != textEdit)
+            d->copyWidget = textEdit;
+    }
 }
 
 void MainWindow::handleEditorTextChange()

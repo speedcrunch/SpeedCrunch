@@ -42,7 +42,7 @@ signals:
     void resultPrecisionChanged();
 
 public slots:
-	void copy();
+    void copy();
     void raiseWindow();
 
 private slots:
@@ -56,7 +56,7 @@ private slots:
     void evaluateEditorExpression();
     void exportHtml();
     void exportPlainText();
-	void handleCopyAvailable( bool yes );
+    void handleCopyAvailable( bool yes );
     void handleEditorTextChange();
     void handleKeypadButtonPress( Keypad::Button );
     void handleSystemTrayIconActivation( QSystemTrayIcon::ActivationReason );
