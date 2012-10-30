@@ -20,8 +20,6 @@
 #ifndef CORE_EVALUATOR_H
 #define CORE_EVALUATOR_H
 
-// #define _BISON
-
 #include "math/hmath.h"
 
 #include <QtCore/QObject>
@@ -29,10 +27,6 @@
 #include <QtCore/QVector>
 
 #include <memory>
-
-#ifdef _BISON
-#include "bison/bisonparser.h"
-#endif // _BISON
 
 class Token
 {

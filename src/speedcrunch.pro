@@ -16,13 +16,11 @@ TEMPLATE = app
 TARGET = speedcrunch
 
 DEPENDPATH += . \
-              #bison \
               core \
               gui \
               locale \
               main \
               math \
-              #symboltables \
               #test \
               #variant \
               resources
@@ -95,8 +93,6 @@ HEADERS += core/constants.h \
            #math/floattrig.h \
            #math/hmath.h \
            #math/number.h
-
-#YACCSOURCES += bison/exprparser.y
 
 #SOURCES += variant/variantbase.cpp \
 #           variant/variant.cpp \

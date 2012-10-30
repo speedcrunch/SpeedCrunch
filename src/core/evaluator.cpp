@@ -22,9 +22,6 @@
 #include "core/evaluator.h"
 
 #include "core/functions.h"
-#ifdef _BISON
-#include "bison/bisonparser.cpp"
-#endif // _BISON
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QMap>
@@ -344,62 +341,14 @@ Evaluator::Evaluator()
     : d( new Evaluator::Private )
 {
     clear();
-
-#ifdef _BISON
-    QStringList script;
-    script << "\\escape \\(\\\"@\\\"\\)"
-           << "@def @(@\"\"@\"@;@\"\"@\"@;@\"\"@\"@)"
-           << "@def @(\"(\"@;\"(\"@;\")\"@)"
-           << "@def (\";\"@;\";\")"
-           << "@def (\"def\";\"def\")"
-
-           << "def(\"escape\";\"esc\")"
-           << "esc \"\\\""
-           << "def(\",\";\"0,\")"
-           << "\\undef (\"esc\"; 0,00)"
-           << "\\def (\".\";\".\")"
-
-           << "\\def (\".\";\"0.\")"
-           << "\\def (\"e\";\"0e\")"
-           << "\\def (\"p\";\"0p\")"
-           << "\\def (\"x\";\"0x\")"
-           << "\\def (\"xs\";\"0xs\")"
-
-           << "\\sin 0.3e1"
-           << "0x2Fp2"
-           << "0xsF0"
-           << "\\def (\"posscale\"; \"1+\")"
-           << "\\def (\"negscale\"; \"1-\")"
-
-           << "2e-1"
-           << "\\def (\"-\";\"-\")"
-           << "-1"
-           << "\\overload (\"add\";\"-\")"
-           << "-1-2"
-
-           << "\\def (\"!\";\"!\")"
-           << "-1!"
-           << "\\def (\"pi\";\"pi\")"
-           << "\\def (\"sin\";\"sin\")"
-           << "sin pi";
-
-    SglExprLex::self().run( script );
-#endif
 }
 
 Evaluator::~Evaluator()
 {
 }
 
-// Sets a new expression
-// note that both the real lex and parse processes will happen later on
-// when needed (i.e. "lazy parse"), for example during evaluation.
 void Evaluator::setExpression( const QString& expr )
 {
-#ifdef _BISON
-    SglExprLex::self().setExpression(expr);
-#endif
-
     d->expression = expr;
     d->dirty = true;
     d->valid = false;
@@ -1645,10 +1594,6 @@ void Evaluator::clearVariables()
 
 QString Evaluator::autoFix( const QString & expr )
 {
-#ifdef _BISON
-    //SglExprLex::self().autoFix(expr);
-#endif
-
     int par = 0;
     QString result;
 
