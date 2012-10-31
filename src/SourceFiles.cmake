@@ -67,7 +67,7 @@ set(speedcrunch_SOURCES
 #variant/initvariant.cpp
 #variant/formatbase.cpp
 #variant/formatreal.cpp
-thirdparty/binreloc/binreloc.c
+thirdparty/binreloc.c
 core/constants.cpp
 core/evaluator.cpp
 core/functions.cpp

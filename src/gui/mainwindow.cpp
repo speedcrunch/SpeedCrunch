@@ -22,7 +22,7 @@
 
 #include "gui/mainwindow.h"
 
-#include "thirdparty/binreloc/binreloc.h"
+#include "thirdparty/binreloc.h"
 #include "core/constants.h"
 #include "core/evaluator.h"
 #include "core/functions.h"

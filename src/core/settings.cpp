@@ -20,7 +20,7 @@
 
 #include "core/settings.h"
 
-#include "thirdparty/binreloc/binreloc.h"
+#include "thirdparty/binreloc.h"
 #include "math/floatconfig.h"
 
 #include <QtCore/QDir>

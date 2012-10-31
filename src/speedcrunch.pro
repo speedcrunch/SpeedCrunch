@@ -27,14 +27,14 @@ DEPENDPATH += . \
 
 !macx {
     !win32 {
-        DEPENDPATH += thirdparty/binreloc
+        DEPENDPATH += thirdparty
     }
 }
 
 INCLUDEPATH += . math core gui
 !macx {
     !win32 {
-        INCLUDEPATH += thirdparty/binreloc
+        INCLUDEPATH += thirdparty
     }
 }
 
@@ -150,7 +150,7 @@ SOURCES += core/constants.cpp \
 
 !macx {
     !win32 {
-        SOURCES += thirdparty/binreloc/binreloc.c
+        SOURCES += thirdparty/binreloc.c
     }
 }
 
