@@ -80,6 +80,7 @@ AboutBox::AboutBox(QWidget *parent, Qt::WindowFlags f)
            "Alejandro Villarreal<br>"
            "Alexey Kouznetsov<br>"
            "Anders Lund<br>"
+           "Artem Golovinsky<br>"
            "Aur&eacute;lien G&acirc;teau<br>"
            "Bart Martens<br>"
            "Bernhard Schiffner<br>"
