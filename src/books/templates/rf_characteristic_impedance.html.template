@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="../css/books.css" />
+  </head>
+  <body>
+    <h1><i18n>Characteristic Impedance (coax)</i18n></h1>
+    <div><a href="file:#Zo = 59.959 / sqrt(er) * ln(d1/d2)">Z<sub>0</sub> = 59.959 / &radic;e<sub>r</sub> &sdot; ln(d<sub>1</sub>/d<sub>2</sub>)</a> &Omega;<br /></div>
+    <table>
+      <tr>
+        <td class="var">e<sub>r</sub></td>
+        <td class="vardesc"><i18n>dielectric constant</i18n></td>
+      </tr>
+      <tr>
+        <td class="var">d<sub>1</sub></td>
+        <td class="vardesc"><i18n>outer conductor's inner diameter</i18n></td>
+      </tr>
+      <tr>
+        <td class="var">d<sub>2</sub></td>
+        <td class="vardesc"><i18n>inner conductor's outer diameter</i18n></td>
+      </tr>
+    </table>
+  </body>
+</html>

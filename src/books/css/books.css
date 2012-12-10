@@ -18,3 +18,13 @@ a:link
   font-size: 12pt;
   font-weight: bold;
 }
+
+.var
+{
+  font-weight: bold;
+}
+
+.vardesc
+{
+  font-style: italic;
+}
