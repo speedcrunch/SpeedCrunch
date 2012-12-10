@@ -94,6 +94,7 @@ AboutBox::AboutBox(QWidget *parent, Qt::WindowFlags f)
            "Gary Cramblitt<br>"
            "Henrik Nordstrom<br>"
            "Henrique Pinto<br>"
+           "James Yuzwalk<br>"
            "Jean-Remy Falleri<br>"
            "Lars Ivar Igesund<br>"
            "Maciek Borowka<br>"
