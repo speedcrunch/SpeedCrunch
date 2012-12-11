@@ -5,6 +5,9 @@
     <link rel="stylesheet" type="text/css" href="../css/books.css" />
   </head>
   <body <i18n>align="left"</i18n>>
+    <h1><i18n>Algebra</i18n></h1><br />
+    <a href="quadratic_equation.html"><i18n>Quadratic Equation</i18n></a><br />
+    <a href="log_base_conversion.html"><i18n>Logarithmic Base Conversion</i18n></a><br />
     <h1><i18n>3D Objects</i18n></h1><br />
     <a href="sphere.html"><i18n>Sphere</i18n></a><br />
     <a href="cube.html"><i18n>Cube</i18n></a><br />
@@ -14,8 +17,6 @@
     <a href="circle.html"><i18n>Circle</i18n></a><br />
     <a href="right_triangle.html"><i18n>Right Triangle</i18n></a><br />
     <a href="sector.html"><i18n>Sector</i18n></a><br />
-    <h1><i18n>Misc</i18n></h1><br />
-    <a href="quadratic_equation.html"><i18n>Quadratic Equation</i18n></a><br />
     <h1><i18n>Radio Frequency</i18n></h1><br />
     <a href="rf_characteristic_impedance.html"><i18n>Characteristic Impedance (coax)</i18n></a><br />
     <a href="rf_propagation_velocity.html"><i18n>Velocity of Propagation (coax)</i18n></a><br />
