@@ -1,7 +1,7 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="stylesheet" type="text/css" href="../css/books.css" />
+    <link rel="stylesheet" type="text/css" href="../css/book.css" />
   </head>
     <h1><i18n>Quadratic Equation</i18n></h1>
     <h2>a&sdot;x<sup>2</sup> + b&sdot;x + c = 0</h2>

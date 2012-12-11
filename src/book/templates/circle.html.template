@@ -1,7 +1,7 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="stylesheet" type="text/css" href="../css/books.css" />
+    <link rel="stylesheet" type="text/css" href="../css/book.css" />
   </head>
   <body>
     <h1><i18n>Circle</i18n></h1>
