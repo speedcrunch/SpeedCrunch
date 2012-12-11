@@ -84,7 +84,7 @@ private slots:
     void setHistoryDockVisible( bool );
     void setHistorySaveEnabled( bool );
     void setKeypadVisible( bool );
-    void setMathBookDockVisible( bool );
+    void setFormulaBookDockVisible( bool );
     void setMenuBarVisible( bool );
     void setRadixCharacterAutomatic();
     void setRadixCharacter( char );

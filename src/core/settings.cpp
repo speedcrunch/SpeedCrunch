@@ -119,7 +119,7 @@ void Settings::load()
                                             false ).toBool();
     variablesDockVisible = settings->value( key + QLatin1String("VariablesDockVisible"),
                                             false ).toBool();
-    mathBookDockVisible = settings->value( key + QLatin1String("MathBookDockVisible"),
+    formulaBookDockVisible = settings->value( key + QLatin1String("FormulaBookDockVisible"),
                                            false ).toBool();
     constantsDockVisible = settings->value( key + QLatin1String("ConstantsDockVisible"),
                                             false ).toBool();
@@ -226,7 +226,7 @@ void Settings::save()
 
     key = KEY + QLatin1String("/Layout/");
 
-    settings->setValue( key + QLatin1String("MathBookDockVisible"), mathBookDockVisible );
+    settings->setValue( key + QLatin1String("FormulaBookDockVisible"), formulaBookDockVisible );
     settings->setValue( key + QLatin1String("ConstantsDockVisible"), constantsDockVisible );
     settings->setValue( key + QLatin1String("FunctionsDockVisible"), functionsDockVisible );
     settings->setValue( key + QLatin1String("HistoryDockVisible"), historyDockVisible );

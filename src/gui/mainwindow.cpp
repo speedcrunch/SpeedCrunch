@@ -101,7 +101,7 @@ struct Actions
 
     // view
     QAction * viewKeypad;
-    QAction * viewMathBook;
+    QAction * viewFormulaBook;
     QAction * viewConstants;
     QAction * viewFunctions;
     QAction * viewVariables;
@@ -388,7 +388,7 @@ void MainWindow::Private::createActions()
     actions.viewFunctions      = new QAction( p );
     actions.viewHistory        = new QAction( p );
     actions.viewKeypad         = new QAction( p );
-    actions.viewMathBook       = new QAction( p );
+    actions.viewFormulaBook    = new QAction( p );
     actions.viewMenuBar        = new QAction( p );
     actions.viewStatusBar      = new QAction( p );
     actions.viewVariables      = new QAction( p );
@@ -474,7 +474,7 @@ void MainWindow::Private::createActions()
     actions.viewFunctions     ->setCheckable( true );
     actions.viewHistory       ->setCheckable( true );
     actions.viewKeypad        ->setCheckable( true );
-    actions.viewMathBook      ->setCheckable( true );
+    actions.viewFormulaBook   ->setCheckable( true );
     actions.viewMenuBar       ->setCheckable( true );
     actions.viewStatusBar     ->setCheckable( true );
     actions.viewVariables     ->setCheckable( true );
@@ -555,7 +555,7 @@ void MainWindow::Private::setActionsText()
     actions.viewFunctions     ->setText( MainWindow::tr("&Functions") );
     actions.viewHistory       ->setText( MainWindow::tr("&History") );
     actions.viewKeypad        ->setText( MainWindow::tr("&Keypad") );
-    actions.viewMathBook      ->setText( MainWindow::tr("Math &Book") );
+    actions.viewFormulaBook   ->setText( MainWindow::tr("Formula &Book") );
     actions.viewMenuBar       ->setText( MainWindow::tr("&Menu Bar") );
     actions.viewStatusBar     ->setText( MainWindow::tr("&Status Bar") );
     actions.viewVariables     ->setText( MainWindow::tr("&Variables") );
@@ -651,7 +651,7 @@ void MainWindow::Private::createActionShortcuts()
     actions.viewFunctions     ->setShortcut( Qt::CTRL + Qt::Key_3 );
     actions.viewHistory       ->setShortcut( Qt::CTRL + Qt::Key_5 );
     actions.viewKeypad        ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_K );
-    actions.viewMathBook      ->setShortcut( Qt::CTRL + Qt::Key_1 );
+    actions.viewFormulaBook   ->setShortcut( Qt::CTRL + Qt::Key_1 );
 #ifndef Q_OS_MAC
     actions.viewMenuBar       ->setShortcut( Qt::CTRL + Qt::ALT + Qt::Key_M );
 #endif
@@ -711,7 +711,7 @@ void MainWindow::Private::createMenus()
     p->menuBar()->addMenu( menus.view );
     menus.view->addAction( actions.viewKeypad );
     menus.view->addSeparator();
-    menus.view->addAction( actions.viewMathBook );
+    menus.view->addAction( actions.viewFormulaBook );
     menus.view->addAction( actions.viewConstants );
     menus.view->addAction( actions.viewFunctions );
     menus.view->addAction( actions.viewVariables );
@@ -942,7 +942,7 @@ void MainWindow::Private::createBookDock()
     docks.book->show();
     docks.book->raise();
 
-    settings->mathBookDockVisible = true;
+    settings->formulaBookDockVisible = true;
 }
 
 void MainWindow::Private::createConstantsDock()
@@ -1088,7 +1088,7 @@ void MainWindow::Private::createFixedConnections()
     connect( actions.viewFunctions, SIGNAL(toggled(bool)), p, SLOT(setFunctionsDockVisible(bool)) );
     connect( actions.viewHistory, SIGNAL(toggled(bool)), p, SLOT(setHistoryDockVisible(bool)) );
     connect( actions.viewKeypad, SIGNAL(toggled(bool)), p, SLOT(setKeypadVisible(bool)) );
-    connect( actions.viewMathBook, SIGNAL(toggled(bool)), p, SLOT(setMathBookDockVisible(bool)) );
+    connect( actions.viewFormulaBook, SIGNAL(toggled(bool)), p, SLOT(setFormulaBookDockVisible(bool)) );
     connect( actions.viewMenuBar, SIGNAL(toggled(bool)), p, SLOT(setMenuBarVisible(bool)) );
     connect( actions.viewStatusBar, SIGNAL(toggled(bool)), p, SLOT(setStatusBarVisible(bool)) );
     connect( actions.viewVariables, SIGNAL(toggled(bool)), p,
@@ -1183,11 +1183,11 @@ void MainWindow::Private::applySettings()
 {
     // window state
     //
-    actions.viewMathBook ->setChecked( settings->mathBookDockVisible );
-    actions.viewConstants->setChecked( settings->constantsDockVisible );
-    actions.viewFunctions->setChecked( settings->functionsDockVisible );
-    actions.viewHistory  ->setChecked( settings->historyDockVisible );
-    actions.viewVariables->setChecked( settings->variablesDockVisible );
+    actions.viewFormulaBook->setChecked( settings->formulaBookDockVisible );
+    actions.viewConstants  ->setChecked( settings->constantsDockVisible );
+    actions.viewFunctions  ->setChecked( settings->functionsDockVisible );
+    actions.viewHistory    ->setChecked( settings->historyDockVisible );
+    actions.viewVariables  ->setChecked( settings->variablesDockVisible );
     //
     p->resize( settings->windowSize );
     //
@@ -2040,10 +2040,10 @@ void MainWindow::Private::deleteBookDock()
     p->disconnect( docks.book );
     docks.book->deleteLater();
     docks.book = 0;
-    actions.viewMathBook->blockSignals( true );
-    actions.viewMathBook->setChecked( false );
-    actions.viewMathBook->blockSignals( false );
-    settings->mathBookDockVisible = false;
+    actions.viewFormulaBook->blockSignals( true );
+    actions.viewFormulaBook->setChecked( false );
+    actions.viewFormulaBook->blockSignals( false );
+    settings->formulaBookDockVisible = false;
 }
 
 void MainWindow::Private::deleteConstantsDock()
@@ -2110,7 +2110,7 @@ void MainWindow::setFunctionsDockVisible( bool b )
         d->deleteFunctionsDock();
 }
 
-void MainWindow::setMathBookDockVisible( bool b )
+void MainWindow::setFormulaBookDockVisible( bool b )
 {
     if ( b )
         d->createBookDock();

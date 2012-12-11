@@ -56,7 +56,7 @@ public:
     bool functionsDockVisible;
     bool historyDockVisible;
     bool keypadVisible;
-    bool mathBookDockVisible;
+    bool formulaBookDockVisible;
     bool menuBarVisible;
     bool statusBarVisible;
     bool variablesDockVisible;
