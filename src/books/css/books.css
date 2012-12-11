@@ -22,9 +22,11 @@ a:link
 .var
 {
   font-weight: bold;
+  font-size: 10pt;
 }
 
 .vardesc
 {
   font-style: italic;
+  font-size: 10pt;
 }
