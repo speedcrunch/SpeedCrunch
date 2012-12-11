@@ -921,7 +921,7 @@ void MainWindow::Private::createBookDock()
     free( dataDir );
 #endif
 
-    docks.book = new BookDock( booksDir, "math_index.html", p );
+    docks.book = new BookDock( booksDir, "index.html", p );
     docks.book->setObjectName( "BookDock" );
     docks.book->installEventFilter( p );
     docks.book->setAllowedAreas( Qt::AllDockWidgetAreas );
