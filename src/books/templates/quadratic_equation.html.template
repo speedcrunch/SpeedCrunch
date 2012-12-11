@@ -1,19 +1,13 @@
 <html>
   <head>
-    <title><i18n>Quadratic Equation</i18n></title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="stylesheet" type="text/css" href="../css/books.css" />
   </head>
-  <body <i18n>align="left"</i18n>>
     <h1><i18n>Quadratic Equation</i18n></h1>
-    <center>
-        <div><h2>ax² + bx + c = 0</h2></div>
-        <div><img src="../images/quadratic_equation.png" /></div>
-    </center>
-    <br />
-    <div align="left">
-      <a href="file:#x1=(-b+sqrt(b%5e2-4*a*c))/(2*a)">x1 = (-b + sqrt(b^2 - 4*a*c)) / (2*a)</a><br />
-      <a href="file:#x2=(-b-sqrt(b%5e2-4*a*c))/(2*a)">x2 = (-b - sqrt(b^2 - 4*a*c)) / (2*a)</a><br />
+    <h2>a&sdot;x<sup>2</sup> + b&sdot;x + c = 0</h2>
+    <div>
+      <a href="file:#x1 = (-b + sqrt(b%5e2 - 4*a*c))/(2*a)">x<sub>1</sub> = (-b + &radic;(b<sup>2</sup> - 4&sdot;a&sdot;c)) / (2&sdot;a)</a><br />
+      <a href="file:#x2 = (-b - sqrt(b%5e2 - 4*a*c))/(2*a)">x<sub>2</sub> = (-b - &radic;(b<sup>2</sup> - 4&sdot;a&sdot;c)) / (2&sdot;a)</a><br />
     </div>
   </body>
 </html>
