@@ -7,7 +7,7 @@
     <h1><i18n>Velocity of Propagation (coax)</i18n></h1>
     <h2><i18n>V<sub>p</sub> = c / &radic;e<sub>r</sub></i18n></h2>
     <div>
-      <a href="file:#Vp = 3e8 / sqrt(er)">V<sub>p</sub> = 3e8 / &radic;er</a> m&sdot;s<sup>-1</sup><br />
+      <a href="file:#Vp = 3e8 / sqrt(er)">V<sub>p</sub> = 3e8 / &radic;e<sub>r</sub></a> m&sdot;s<sup>-1</sup><br />
       <a href="file:#Vp = 299792458 / sqrt(er)">V<sub>p</sub> = 299792458 / &radic;e<sub>r</sub></a> m&sdot;s<sup>-1</sup><br />
       <a href="file:#Vp = 983571056.43045 / sqrt(er)">V<sub>p</sub> = 983571056.43045 / &radic;e<sub>r</sub></a> ft&sdot;s<sup>-1</sup><br />
     </div>
