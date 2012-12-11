@@ -1,32 +1,27 @@
-body
-{
-  background-color: #ffffff;
-  color: #000000;
+body {
+    background-color: #ffffff;
+    color: #000000;
 }
 
-img
-{
-  display: block;
-  margin-left: auto;
-  margin-right: auto
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto
 }
 
-a:link
-{
-  text-decoration: none;
-  color: blue;
-  font-size: 12pt;
-  font-weight: bold;
+a:link {
+    text-decoration: none;
+    color: blue;
+    font-size: 12pt;
+    font-weight: bold;
 }
 
-.var
-{
-  font-weight: bold;
-  font-size: 10pt;
+.var {
+    font-weight: bold;
+    font-size: 10pt;
 }
 
-.vardesc
-{
-  font-style: italic;
-  font-size: 10pt;
+.vardesc {
+    font-style: italic;
+    font-size: 10pt;
 }
