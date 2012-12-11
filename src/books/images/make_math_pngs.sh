@@ -6,7 +6,6 @@ PICS=(
     "sphere"
     "cone"
     "cylinder"
-    "circle"
     "right_triangle"
     "sector"
 )
