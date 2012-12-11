@@ -59,7 +59,7 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 [Files]
 Source: {#SPEEDCRUNCHEXE}; DestDir: "{app}"; Flags: ignoreversion
 Source: locale\*.qm; DestDir: "{app}\locale"; Flags: ignoreversion
-Source: books\*; Excludes: "*.sh,ut3\*,templates\*,locale\*,*.mml,*.svgz"; DestDir: "{app}\books"; Flags: ignoreversion recursesubdirs
+Source: book\*; Excludes: "*.sh,ut3\*,templates\*,locale\*,*.mml,*.svgz"; DestDir: "{app}\book"; Flags: ignoreversion recursesubdirs
 
 [Icons]
 Name: "{group}\{#APPTITLE}"; Filename: "{app}\{#APPTITLE}.exe"

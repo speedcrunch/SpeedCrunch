@@ -901,14 +901,14 @@ void MainWindow::Private::createKeypad()
 
 void MainWindow::Private::createBookDock()
 {
-    QString booksDir;
+    QString bookDir;
 
 #if defined(Q_OS_WIN32) || defined(Q_OS_MAC)
     QString appPath = QApplication::applicationFilePath();
     int ii = appPath.lastIndexOf( '/' );
     if ( ii > 0 )
         appPath.remove( ii, appPath.length() );
-    booksDir = appPath + '/' + QString( "books/" );
+    bookDir = appPath + '/' + QString( "book/" );
 #else
     BrInitError error;
     if ( br_init( & error ) == 0 && error != BR_INIT_ERROR_DISABLED ) {
@@ -917,11 +917,11 @@ void MainWindow::Private::createBookDock()
     }
 
     char * dataDir = br_find_data_dir( 0 );
-    booksDir = QString( dataDir ) + "/speedcrunch/books/";
+    bookDir = QString( dataDir ) + "/speedcrunch/book/";
     free( dataDir );
 #endif
 
-    docks.book = new BookDock( booksDir, "index.html", p );
+    docks.book = new BookDock( bookDir, "index.html", p );
     docks.book->setObjectName( "BookDock" );
     docks.book->installEventFilter( p );
     docks.book->setAllowedAreas( Qt::AllDockWidgetAreas );
