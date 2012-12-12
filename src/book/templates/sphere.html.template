@@ -5,7 +5,7 @@
   </head>
   <body>
     <h1><i18n>Sphere</i18n></h1>
-    <div align="left">
+    <div>
       <a href="file:#A = 4 * pi * r%5e2">A = 4&sdot;&pi;&sdot;r<sup>2</sup></a><br />
       <a href="file:#A = pi *d%5e2">A = &pi;&sdot;d<sup>2</sup></a><br />
       <br />
