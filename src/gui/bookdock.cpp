@@ -114,7 +114,7 @@ void BookDock::openHomePage()
 
 void BookDock::retranslateText()
 {
-    setWindowTitle(tr("Math Book"));
+    setWindowTitle(tr("Formula Book"));
 
     // buttons
     m_backButton->setText(tr("Back"));
