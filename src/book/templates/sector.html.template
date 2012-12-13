@@ -1,18 +1,33 @@
 <html>
   <head>
-    <title><i18n>Sector</i18n></title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="stylesheet" type="text/css" href="../css/book.css" />
   </head>
-  <body <i18n>align="left"</i18n>>
+  <body>
     <h1><i18n>Sector</i18n></h1>
-    <center><img src="../images/sector.png" /></center>
-    <br />
-    <div align="left">
-      <a href="file:#A=(1/2)*b*r">A = (1/2)*b*r</a><br />
-      <a href="file:#A=(aa/360)*pi*r%5e2">A = (aa/360) * pi * r^2</a><br />
+    <div>
+      <a href="file:#A = 1/2 * L * r">A = 1/2&sdot;L&sdot;r</a><br />
+      <a href="file:#A = theta/360 * pi * r%5e2">A = &theta;/360&sdot;&pi;&sdot;r<sup>2</sup></a><br />
       <br />
-      <a href="file:#b=(aa/180)*pi*r">b = (aa/180) * pi * r</a><br />
+      <a href="file:#L = theta/180 * pi * r">L = &theta;/180&sdot;&pi;&sdot;r</a><br />
     </div>
+    <table>
+      <tr>
+        <td class="var">A</td>
+        <td class="vardesc"><i18n>area</i18n></td>
+      </tr>
+      <tr>
+        <td class="var">L</td>
+        <td class="vardesc"><i18n>arc length</i18n></td>
+      </tr>
+      <tr>
+        <td class="var">r</td>
+        <td class="vardesc"><i18n>radius</i18n></td>
+      </tr>
+      <tr>
+        <td class="var">&theta;</td>
+        <td class="vardesc"><i18n>central angle (degrees)</i18n></td>
+      </tr>
+    </table>
   </body>
 </html>
