@@ -81,6 +81,7 @@ void Settings::load()
     autoCalc = settings->value( key + QLatin1String("AutoCalc"), true ).toBool();
     autoCompletion = settings->value( key + QLatin1String("AutoCompletion"), true ).toBool();
     historySave = settings->value( key + QLatin1String("HistorySave"), true ).toBool();
+    leaveLastExpression = settings->value( key + QLatin1String("LeaveLastExpression"), false ).toBool();
     language = settings->value( key + QLatin1String("Language"), "C" ).toString();
     variableSave = settings->value( key + QLatin1String("VariableSave"), true ).toBool();
     syntaxHighlighting = settings->value( key + QLatin1String("SyntaxHighlighting"),
@@ -203,6 +204,7 @@ void Settings::save()
     QString key = KEY + QLatin1String( "/General/" );
 
     settings->setValue( key + QLatin1String("HistorySave"), historySave );
+    settings->setValue( key + QLatin1String("LeaveLastExpression"), leaveLastExpression );
     settings->setValue( key + QLatin1String("VariableSave"), variableSave );
     settings->setValue( key + QLatin1String("AutoCompletion"), autoCompletion );
     settings->setValue( key + QLatin1String("AutoAns"), autoAns );

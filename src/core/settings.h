@@ -46,6 +46,7 @@ public:
     bool autoCalc;
     bool autoCompletion;
     bool historySave;
+    bool leaveLastExpression;
     bool syntaxHighlighting;
     bool systemTrayIconVisible;
     bool variableSave;

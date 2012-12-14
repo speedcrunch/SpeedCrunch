@@ -135,6 +135,7 @@ struct Actions
     QAction * settingsBehaviorAutoCompletion;
     QAction * settingsBehaviorSyntaxHilite;
     QAction * settingsBehaviorAutoAns;
+    QAction * settingsBehaviorLeaveLastExpression;
     QAction * settingsBehaviorAlwaysOnTop;
     QAction * settingsBehaviorMinimizeToTray;
     QAction * settingsBehaviorAutoResultToClipboard;
@@ -399,6 +400,7 @@ void MainWindow::Private::createActions()
     actions.settingsBehaviorAlwaysOnTop           = new QAction( p );
     actions.settingsBehaviorAutoAns               = new QAction( p );
     actions.settingsBehaviorAutoCompletion        = new QAction( p );
+    actions.settingsBehaviorLeaveLastExpression   = new QAction( p );
     actions.settingsBehaviorMinimizeToTray        = new QAction( p );
     actions.settingsBehaviorPartialResults        = new QAction( p );
     actions.settingsBehaviorSaveHistoryOnExit     = new QAction( p );
@@ -444,6 +446,7 @@ void MainWindow::Private::createActions()
     actions.settingsBehaviorAlwaysOnTop          ->setCheckable( true );
     actions.settingsBehaviorAutoAns              ->setCheckable( true );
     actions.settingsBehaviorAutoCompletion       ->setCheckable( true );
+    actions.settingsBehaviorLeaveLastExpression  ->setCheckable( true );
     actions.settingsBehaviorMinimizeToTray       ->setCheckable( true );
     actions.settingsBehaviorPartialResults       ->setCheckable( true );
     actions.settingsBehaviorSaveHistoryOnExit    ->setCheckable( true );
@@ -570,6 +573,7 @@ void MainWindow::Private::setActionsText()
     actions.settingsBehaviorSaveHistoryOnExit    ->setText( MainWindow::tr("Save &History on Exit") );
     actions.settingsBehaviorSaveVariablesOnExit  ->setText( MainWindow::tr("Save &Variables on Exit") );
     actions.settingsBehaviorSyntaxHilite         ->setText( MainWindow::tr("Syntax &Highlighting") );
+    actions.settingsBehaviorLeaveLastExpression  ->setText( MainWindow::tr("Leave &Last Expression") );
     actions.settingsBehaviorAutoResultToClipboard->setText( MainWindow::tr("Automatic &Result to Clipboard") );
     actions.settingsRadixCharComma               ->setText( MainWindow::tr("&Comma") );
     actions.settingsRadixCharDefault             ->setText( MainWindow::tr("&System Default") );
@@ -769,6 +773,7 @@ void MainWindow::Private::createMenus()
     menus.behavior->addAction( actions.settingsBehaviorAutoAns );
     menus.behavior->addAction( actions.settingsBehaviorAutoCompletion );
     menus.behavior->addAction( actions.settingsBehaviorSyntaxHilite );
+    menus.behavior->addAction( actions.settingsBehaviorLeaveLastExpression );
     menus.behavior->addSeparator();
     menus.behavior->addAction( actions.settingsBehaviorAlwaysOnTop );
     menus.behavior->addAction( actions.settingsBehaviorMinimizeToTray );
@@ -1113,6 +1118,8 @@ void MainWindow::Private::createFixedConnections()
              SLOT(setVariableSaveEnabled(bool)) );
     connect( actions.settingsBehaviorSyntaxHilite, SIGNAL(toggled(bool)), p,
              SLOT(setSyntaxHighlightingEnabled(bool)) );
+    connect( actions.settingsBehaviorLeaveLastExpression, SIGNAL(toggled(bool)), p,
+             SLOT(setLeaveLastExpressionEnabled(bool)) );
     connect( actions.settingsBehaviorAutoResultToClipboard, SIGNAL(toggled(bool)), p,
              SLOT(setAutoResultToClipboardEnabled(bool)) );
 
@@ -1217,6 +1224,8 @@ void MainWindow::Private::applySettings()
         actions.settingsBehaviorSaveHistoryOnExit->setChecked( true );
         restoreHistory();
     }
+
+    actions.settingsBehaviorLeaveLastExpression->setChecked( settings->leaveLastExpression );
 
     // variables
     if ( settings->variableSave ) {
@@ -1726,6 +1735,11 @@ void MainWindow::setAutoCalcEnabled( bool b )
 void MainWindow::setHistorySaveEnabled( bool b )
 {
     d->settings->historySave = b;
+}
+
+void MainWindow::setLeaveLastExpressionEnabled( bool b )
+{
+    d->settings->leaveLastExpression = b;
 }
 
 void MainWindow::setVariableSaveEnabled( bool b )
@@ -2457,7 +2471,11 @@ void MainWindow::evaluateEditorExpression()
         if ( d->settings->autoResultToClipboard )
             copyResultToClipboard();
 
-        d->widgets.editor->selectAll();
+        if (d->settings->leaveLastExpression)
+            d->widgets.editor->selectAll();
+        else
+            d->widgets.editor->clear();
+
         d->widgets.editor->stopAutoCalc();
         d->widgets.editor->stopAutoComplete();
         d->conditions.autoAns = true;

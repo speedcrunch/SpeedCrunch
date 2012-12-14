@@ -79,12 +79,13 @@ private slots:
     void setAutoCalcEnabled( bool );
     void setAutoCompletionEnabled( bool );
     void setConstantsDockVisible( bool );
+    void setFormulaBookDockVisible( bool );
     void setFullScreenEnabled( bool );
     void setFunctionsDockVisible( bool );
     void setHistoryDockVisible( bool );
     void setHistorySaveEnabled( bool );
     void setKeypadVisible( bool );
-    void setFormulaBookDockVisible( bool );
+    void setLeaveLastExpressionEnabled( bool );
     void setMenuBarVisible( bool );
     void setRadixCharacterAutomatic();
     void setRadixCharacter( char );

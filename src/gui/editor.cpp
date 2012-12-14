@@ -45,6 +45,13 @@
 
 #include <algorithm>
 
+static void moveCursorToEnd(Editor* editor)
+{
+    QTextCursor cursor = editor->textCursor();
+    cursor.movePosition( QTextCursor::EndOfBlock );
+    editor->setTextCursor( cursor );
+}
+
 struct Editor::Private
 {
     bool ansAvailable;
@@ -60,12 +67,10 @@ struct Editor::Private
     SyntaxHighlighter * highlighter;
     QStringList history;
     QStringList historyResults;
-    int index;
+    QString savedCurrentEditor;
+    int currentHistoryIndex;
     QTimer * matchingTimer;
     Settings * settings;
-
-    QString savedCurrentEditor;
-    QTextCursor savedCurrentPosition;
 };
 
 Editor::Editor( QWidget * parent )
@@ -74,7 +79,7 @@ Editor::Editor( QWidget * parent )
     d->eval = Evaluator::instance();
     d->constants = Constants::instance();
     d->settings = Settings::instance();
-    d->index = 0;
+    d->currentHistoryIndex = 0;
     d->autoCompleteEnabled = true;
     d->completion = new EditorCompletion( this );
     d->constantCompletion = 0;
@@ -182,7 +187,7 @@ QStringList Editor::historyResults() const
 void Editor::setHistory( const QStringList & h )
 {
     d->history = h;
-    d->index = d->history.count();
+    d->currentHistoryIndex = d->history.count();
 }
 
 void Editor::setHistoryResults( const QStringList & results )
@@ -194,13 +199,14 @@ void Editor::appendHistory( const QStringList & h, const QStringList & r )
 {
     d->history += h;
     d->historyResults += r;
-    d->index = d->history.count();
+    d->currentHistoryIndex = d->history.count();
 }
 
 void Editor::clearHistory()
 {
     d->history.clear();
     d->historyResults.clear();
+    d->currentHistoryIndex = 0;
 }
 
 bool Editor::autoCompleteEnabled() const
@@ -230,7 +236,7 @@ void Editor::appendHistory( const QString & expression, const QString & result )
 
     d->history.append( expression );
     d->historyResults.append( result );
-    d->index = d->history.count() - 1;
+    d->currentHistoryIndex = d->history.count();
 }
 
 void Editor::checkAutoComplete()
@@ -615,41 +621,33 @@ QString Editor::formatNumber( const HNumber & value ) const
 
 void Editor::historyBack()
 {
-    if ( d->history.count() ) {
-        if ( d->index == d->history.count() ) {
-            d->savedCurrentEditor = toPlainText();
-            d->savedCurrentPosition = textCursor();
-        }
-        --(d->index);
-        if ( d->index < 0 )
-            d->index = 0;
-        setText( d->history.at(d->index) );
-        QTextCursor cursor = textCursor();
-        cursor.movePosition( QTextCursor::EndOfBlock );
-        setTextCursor( cursor );
-        ensureCursorVisible();
+    if ( !d->history.count() )
         return;
-    }
+    if ( !d->currentHistoryIndex )
+        return;
+
+    if ( d->currentHistoryIndex == d->history.count() )
+        d->savedCurrentEditor = toPlainText();
+    d->currentHistoryIndex--;
+    setText( d->history.at(d->currentHistoryIndex) );
+    moveCursorToEnd( this );
+    ensureCursorVisible();
 }
 
 void Editor::historyForward()
 {
-    if ( d->history.count() ) {
-        ++(d->index);
-
-        if ( d->index >= (int)d->history.count() ) {
-            d->index = d->history.count();
-            setText( d->savedCurrentEditor );
-            setTextCursor( d->savedCurrentPosition );
-            return;
-        }
-
-        setText( d->history.at(d->index) );
-        QTextCursor cursor = textCursor();
-        cursor.movePosition( QTextCursor::EndOfBlock );
-        setTextCursor( cursor );
+    if ( !d->history.count() )
         return;
-    }
+    if ( d->currentHistoryIndex == d->history.count() )
+        return;
+
+    d->currentHistoryIndex++;
+    if ( d->currentHistoryIndex == d->history.count() )
+        setText( d->savedCurrentEditor );
+    else
+        setText( d->history.at(d->currentHistoryIndex) );
+    moveCursorToEnd( this );
+    ensureCursorVisible();
 }
 
 void Editor::triggerEnter()
@@ -658,6 +656,7 @@ void Editor::triggerEnter()
     d->matchingTimer->stop();
     d->autoCalcTimer->stop();
     d->autoCalcSelTimer->stop();
+    d->currentHistoryIndex = d->history.count();
     emit returnPressed();
 }
 
