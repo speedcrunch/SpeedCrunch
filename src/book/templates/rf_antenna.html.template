@@ -1,0 +1,51 @@
+﻿<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="../css/book.css" />
+  </head>
+  <body>
+    <h1><i18n>Antennas</i18n></h1>
+    <div>
+      <a href="file:#Pd = Pin / (4 * pi * r%5e2)">Pd = P<sub>in</sub> / (4&sdot;&pi;&sdot;r<sup>2</sup>)</a> W&sdot;m<sup>-2</sup><br />
+      <a href="file:#E = sqrt(Pd * 120 * pi)">E = &radic;(P<sub>d</sub>&sdot;120&sdot;&pi;)</a> V&sdot;m<sup>-1</sup><br />
+      <a href="file:#E = sqrt((Pin * 120 * pi) / (4 * pi * r%5e2))">E = &radic;[(P<sub>in</sub>&sdot;120&sdot;&pi;) / (4&sdot;&pi;&sdot;r<sup>2</sup>)]</a> V&sdot;m<sup>-1</sup><br />
+      <a href="file:#E = sqrt(30 * Pin) / r">E = &radic;(30&sdot;P<sub>in</sub>) / r</a> V&sdot;m<sup>-1</sup><br />
+      <a href="file:#Ed = E * sqrt(D)">Ed = E&sdot;&radic;D</a> V&sdot;m<sup>-1</sup><br />
+      <a href="file:#Edp = E * sqrt(1.64)">Edp = E&sdot;&radic;1.64</a> V&sdot;m<sup>-1</sup><br />
+    </div>
+    <table>
+      <tr>
+        <td class="var">P<sub>d</sub></td>
+        <td class="vardesc"><i18n>isotropic (unity gain) power density</i18n></td>
+      </tr>
+      <tr>
+        <td class="var">P<sub>in</sub></td>
+        <td class="vardesc"><i18n>antenna input power (W)</i18n></td>
+      </tr>
+      <tr>
+        <td class="var">r</td>
+        <td class="vardesc"><i18n>distance from antenna (m)</i18n></td>
+      </tr>
+      <tr>
+        <td class="var">E</td>
+        <td class="vardesc"><i18n>isotropic (unity gain) field strength</i18n></td>
+      </tr>
+      <tr>
+        <td class="var">Ed</td>
+        <td class="vardesc"><i18n>field strength with directivity</i18n></td>
+      </tr>
+      <tr>
+        <td class="var">D</td>
+        <td class="vardesc"><i18n>directivity</i18n></td>
+      </tr>
+      <tr>
+        <td class="var">Edp</td>
+        <td class="vardesc"><i18n>field strength with half wave length dipole</i18n></td>
+      </tr>
+      <tr>
+        <td class="var">120&sdot;&pi;</td>
+        <td class="vardesc"><i18n>free space impedance (approx. 377&Omega;)</i18n></td>
+      </tr>
+    </table>
+  </body>
+</html>

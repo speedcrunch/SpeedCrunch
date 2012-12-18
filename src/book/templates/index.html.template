@@ -24,6 +24,7 @@
     <a href="elect_reactance.html"><i18n>Reactance</i18n></a><br />
     <a href="elect_resonance.html"><i18n>Resonance</i18n></a><br />
     <h1><i18n>Radio Frequency</i18n></h1><br />
+    <a href="rf_antenna.html"><i18n>Antennas</i18n></a><br />
     <a href="rf_characteristic_impedance.html"><i18n>Characteristic Impedance (coax)</i18n></a><br />
     <a href="rf_propagation_velocity.html"><i18n>Velocity of Propagation (coax)</i18n></a><br />
     <a href="rf_swr.html"><i18n>Standing Wave Ratio & Return Loss</i18n></a><br />
