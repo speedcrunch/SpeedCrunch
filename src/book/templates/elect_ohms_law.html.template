@@ -1,0 +1,28 @@
+﻿<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="../css/book.css" />
+  </head>
+  <body>
+    <h1><i18n>Ohm's Law</i18n></h1>
+    <div>
+      <a href="file:#R = V / I">R = V / I</a>  &Omega;<br />
+      <a href="file:#V = I * R">V = I&sdot;R</a> V<br />
+      <a href="file:#I = V / R">I = V / R</a> A<br />
+    </div>
+    <table>
+      <tr>
+        <td class="var">R</td>
+        <td class="vardesc"><i18n>resistance</i18n></td>
+      </tr>
+      <tr>
+        <td class="var">V</td>
+        <td class="vardesc"><i18n>voltage</i18n></td>
+      </tr>
+      <tr>
+        <td class="var">I</td>
+        <td class="vardesc"><i18n>current</i18n></td>
+      </tr>
+    </table>
+  </body>
+</html>

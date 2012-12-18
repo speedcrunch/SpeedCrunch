@@ -1,4 +1,4 @@
-<html>
+﻿<html>
   <head>
     <title><i18n>SpeedCrunch Book</i18n></title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -18,6 +18,11 @@
     <a href="cylinder.html"><i18n>Cylinder</i18n></a><br />
     <h1><i18n>Unit Conversions</i18n></h1><br />
     <a href="temperature.html"><i18n>Temperature</i18n></a><br />
+    <h1><i18n>Electronics</i18n></h1><br />
+    <a href="elect_ohms_law.html"><i18n>Ohm's Law</i18n></a><br />
+    <a href="elect_power.html"><i18n>Power</i18n></a><br />
+    <a href="elect_reactance.html"><i18n>Reactance</i18n></a><br />
+    <a href="elect_resonance.html"><i18n>Resonance</i18n></a><br />
     <h1><i18n>Radio Frequency</i18n></h1><br />
     <a href="rf_characteristic_impedance.html"><i18n>Characteristic Impedance (coax)</i18n></a><br />
     <a href="rf_propagation_velocity.html"><i18n>Velocity of Propagation (coax)</i18n></a><br />
