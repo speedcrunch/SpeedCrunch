@@ -8,6 +8,8 @@
     <div>
       <a href="file:#Xl = 2 * pi * f * L">X<sub>L</sub> = 2&sdot;&pi;&sdot;f&sdot;L</a> &Omega;<br />
       <a href="file:#Xc = 1 / (2 * pi * f * C)">X<sub>C</sub> = 1 / (2&sdot;&pi;&sdot;f&sdot;C)</a> &Omega;<br />
+      <a href="file:#L = Xl / (2 * pi * f)">L = X<sub>L</sub> / (2&sdot;&pi;&sdot;f)</a> H<br />
+      <a href="file:#C = 1 / (2 * pi * f * Xc)">C = 1 / (2&sdot;&pi;&sdot;f&sdot;X<sub>C</sub>)</a> F<br />
       <a href="file:#f = Xl / (2 * pi * L)">f = X<sub>L</sub> / (2&sdot;&pi;&sdot;L)</a> Hz<br />
       <a href="file:#f = 1 / (Xc * 2 * pi * C)">f = 1 / (X<sub>C</sub>&sdot;2&sdot;&pi;&sdot;C)</a> Hz<br />
     </div>
@@ -22,11 +24,11 @@
       </tr>
       <tr>
         <td class="var">L</td>
-        <td class="vardesc"><i18n>inductance (H)</i18n></td>
+        <td class="vardesc"><i18n>inductance</i18n></td>
       </tr>
       <tr>
         <td class="var">C</td>
-        <td class="vardesc"><i18n>capacitance (F)</i18n></td>
+        <td class="vardesc"><i18n>capacitance</i18n></td>
       </tr>
       <tr>
         <td class="var">f</td>

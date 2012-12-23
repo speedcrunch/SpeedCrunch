@@ -13,7 +13,7 @@
     <table>
       <tr>
         <td class="var">f</td>
-        <td class="vardesc"><i18n>frequency</i18n></td>
+        <td class="vardesc"><i18n>resonance frequency</i18n></td>
       </tr>
       <tr>
         <td class="var">L</td>
