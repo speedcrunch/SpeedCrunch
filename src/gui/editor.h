@@ -1,7 +1,7 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2004-2005 Ariya Hidayat <ariya@kde.org>
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2007-2009 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2007-2009, 2013 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -23,12 +23,20 @@
 
 #include "gui/textedit.h"
 
-#include <memory>
+// Uncomment to activate fade-away effect when the completion pop-up disappears.
+#define COMPLETION_FADE_EFFECT
 
+class Constant;
+class ConstantCompletion;
+class EditorCompletion;
+class Evaluator;
 class HNumber;
+class SyntaxHighlighter;
 
 class QEvent;
 class QKeyEvent;
+class QTimeLine;
+class QTreeWidget;
 class QWheelEvent;
 class QWidget;
 
@@ -37,7 +45,7 @@ class Editor : public TextEdit
     Q_OBJECT
 
 public:
-    explicit Editor( QWidget * parent = 0 );
+    explicit Editor(QWidget* parent = 0);
     ~Editor();
 
     bool autoCalcEnabled() const;
@@ -49,35 +57,35 @@ public:
     QStringList history() const;
     QStringList historyResults() const;
     char radixChar() const;
-    void setAnsAvailable( bool );
-    void setAutoCalcEnabled( bool );
-    void setAutoCompletionEnabled( bool );
-    void setCursorPosition( int pos );
-    void setText( const QString & );
-    void setHistory( const QStringList & history );
-    void setHistoryResults( const QStringList & results );
+    void setAnsAvailable(bool);
+    void setAutoCalcEnabled(bool);
+    void setAutoCompletionEnabled(bool);
+    void setCursorPosition(int pos);
+    void setText(const QString&);
+    void setHistory(const QStringList&);
+    void setHistoryResults(const QStringList&);
     QSize sizeHint() const;
     void stopAutoCalc();
     void stopAutoComplete();
     QString text() const;
 
 signals:
-    void autoCalcEnabled( const QString & );
+    void autoCalcEnabled(const QString&);
     void autoCalcDisabled();
     void returnPressed();
 
 public slots:
-    void appendHistory( const QString & result, const QString & expression );
-    void appendHistory( const QStringList & h, const QStringList & r );
+    void appendHistory(const QString& result, const QString& expression);
+    void appendHistory(const QStringList& expressions, const QStringList& results);
     void cancelConstantCompletion();
     void evaluate();
-    void insertConstant( const QString & );
-    void insert( const QString & );
+    void insertConstant(const QString&);
+    void insert(const QString&);
 
 protected slots:
     void autoCalc();
     void autoCalcSelection();
-    void autoComplete( const QString & item );
+    void autoComplete(const QString&);
     void checkAutoCalc();
     void checkAutoComplete();
     void startSelAutoCalcTimer();
@@ -91,17 +99,28 @@ protected slots:
     void triggerEnter();
 
 protected:
-    QString formatNumber( const HNumber & value ) const;
-    void keyPressEvent( QKeyEvent * );
-    void wheelEvent( QWheelEvent * );
+    QString formatNumber(const HNumber&) const;
+    void keyPressEvent(QKeyEvent*);
+    void wheelEvent(QWheelEvent*);
 
 private:
-    struct Private;
-    const std::auto_ptr<Private> d;
+    Q_DISABLE_COPY(Editor);
 
-    Editor();
-    Editor( const Editor & );
-    Editor & operator=( const Editor & );
+    bool m_ansAvailable;
+    bool m_autoCalcEnabled;
+    QTimer* m_autoCalcSelTimer;
+    QTimer* m_autoCalcTimer;
+    bool m_autoCompleteEnabled;
+    EditorCompletion* m_completion;
+    QTimer* m_completionTimer;
+    ConstantCompletion* m_constantCompletion;
+    Evaluator* m_evaluator;
+    SyntaxHighlighter* m_highlighter;
+    QStringList m_history;
+    QStringList m_historyResults;
+    QString m_savedCurrentEditor;
+    int m_currentHistoryIndex;
+    QTimer* m_matchingTimer;
 };
 
 class EditorCompletion : public QObject
@@ -109,28 +128,30 @@ class EditorCompletion : public QObject
     Q_OBJECT
 
 public:
-    EditorCompletion( Editor * );
+    EditorCompletion(Editor*);
     ~EditorCompletion();
 
-    bool eventFilter( QObject *, QEvent * );
-    void showCompletion( const QStringList & );
+    bool eventFilter(QObject*, QEvent*);
+    void showCompletion(const QStringList&);
 
 signals:
-    void selectedCompletion( const QString & );
+    void selectedCompletion(const QString&);
 
 public slots:
     void doneCompletion();
-    void selectItem( const QString & ); // WORKAROUND 76
+    void selectItem(const QString&);
 
 protected slots:
-    void fade( int );
+    void fade(int);
 
 private:
-    struct Private;
-    const std::auto_ptr<Private> d;
+    Q_DISABLE_COPY(EditorCompletion);
 
-    EditorCompletion( const EditorCompletion & );
-    EditorCompletion & operator=( const EditorCompletion & );
+    Editor* m_editor;
+    QTreeWidget* m_popup;
+#ifdef COMPLETION_FADE_EFFECT
+    QTimeLine* m_fader;
+#endif
 };
 
 class ConstantCompletion : public QObject
@@ -138,14 +159,14 @@ class ConstantCompletion : public QObject
     Q_OBJECT
 
 public:
-    ConstantCompletion( Editor * );
+    ConstantCompletion(Editor*);
     ~ConstantCompletion();
 
-    bool eventFilter( QObject *, QEvent * );
+    bool eventFilter(QObject*, QEvent*);
     void showCompletion();
 
 signals:
-    void selectedCompletion( const QString & item );
+    void selectedCompletion(const QString&);
     void canceledCompletion();
 
 public slots:
@@ -154,15 +175,18 @@ public slots:
 protected slots:
     void showCategory();
     void showConstants();
-    void slide( int );
+    void setHorizontalPosition(int);
 
 private:
-    struct Private;
-    const std::auto_ptr<Private> d;
+    Q_DISABLE_COPY(ConstantCompletion);
 
-    ConstantCompletion( const ConstantCompletion & );
-    ConstantCompletion & operator=( const ConstantCompletion & );
+    QTreeWidget* m_categoryWidget;
+    QList<Constant> m_constantList;
+    Editor* m_editor;
+    QString m_lastCategory;
+    QTreeWidget* m_constantWidget;
+    QFrame* m_popup;
+    QTimeLine* m_slider;
 };
 
 #endif
-
