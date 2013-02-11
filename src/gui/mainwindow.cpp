@@ -179,7 +179,6 @@ void MainWindow::createActions()
     m_actions.settingsResultFormatScientific = new QAction(this);
     m_actions.helpAbout = new QAction(this);
     m_actions.helpAboutQt = new QAction(this);
-    m_actions.helpTipOfTheDay = new QAction(this);
     m_actions.helpWebsite = new QAction(this);
     // Shortcuts.
     m_actions.scrollDown = new QAction(this);
@@ -336,7 +335,6 @@ void MainWindow::setActionsText()
 
     m_actions.helpAboutQt->setText(MainWindow::tr("About &Qt"));
     m_actions.helpAbout->setText(MainWindow::tr("About &SpeedCrunch"));
-    m_actions.helpTipOfTheDay->setText(MainWindow::tr("&Tip of the Day"));
     m_actions.helpWebsite->setText(MainWindow::tr("SpeedCrunch &Web Site..."));
 
     m_actions.scrollDown->setText(MainWindow::tr("Scroll Display Down"));
@@ -405,7 +403,6 @@ void MainWindow::createActionShortcuts()
     m_actions.settingsRadixCharComma->setShortcut(Qt::CTRL + Qt::Key_Comma);
     m_actions.settingsDisplayZoomIn->setShortcut(Qt::CTRL + Qt::Key_Plus);
     m_actions.settingsDisplayZoomOut->setShortcut(Qt::CTRL + Qt::Key_Minus);
-    m_actions.helpTipOfTheDay->setShortcut(Qt::CTRL + Qt::Key_T);
     // Shortcuts.
     m_actions.scrollDown->setShortcut(Qt::SHIFT + Qt::Key_PageDown);
     m_actions.scrollUp->setShortcut(Qt::SHIFT + Qt::Key_PageUp);
@@ -515,7 +512,6 @@ void MainWindow::createMenus()
 
     m_menus.help = new QMenu("", this);
     menuBar()->addMenu(m_menus.help);
-    m_menus.help->addAction(m_actions.helpTipOfTheDay);
     m_menus.help->addAction(m_actions.helpWebsite);
     m_menus.help->addSeparator();
     m_menus.help->addAction(m_actions.helpAbout);
@@ -600,9 +596,6 @@ void MainWindow::createFixedWidgets()
 
     m_widgets.autoCalcTip = new AutoHideLabel(this);
     m_widgets.autoCalcTip->hide();
-
-    m_widgets.tip = new TipWidget(this);
-    m_widgets.tip->hide();
 }
 
 void MainWindow::createKeypad()
@@ -842,7 +835,6 @@ void MainWindow::createFixedConnections()
 
     connect(m_actions.helpAboutQt, SIGNAL(triggered()), SLOT(showAboutQtDialog()));
     connect(m_actions.helpAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
-    connect(m_actions.helpTipOfTheDay, SIGNAL(triggered()), SLOT(showTipOfTheDay()));
     connect(m_actions.helpWebsite, SIGNAL(triggered()), SLOT(openHomePageInSystemBrowser()));
 
     connect(m_widgets.editor, SIGNAL(autoCalcDisabled()), SLOT(hideAutoCalcTip()));
@@ -1840,38 +1832,6 @@ void MainWindow::showMenuBarTip()
 
     m_widgets.tip->move(0, 0);
     m_widgets.tip->showText(msg, tr("Warning"));
-}
-
-void MainWindow::showTipOfTheDay()
-{
-    m_widgets.tip->move(0, 0);
-
-    int tipNo = qrand() % 4;
-    QString msg;
-    switch (tipNo) {
-        case 0:
-            msg = tr(
-                "To insert a function using keyboard, use Ctrl+F shorcut. "
-                "From the dialog, you can choose the function you want to insert."
-            );
-            break;
-        case 1:
-            msg = tr(
-                "To insert a variable using keyboard, use Ctrl+I shorcut. "
-                "From the dialog, you can choose the variable you want to insert."
-            );
-            break;
-        case 2:
-            msg = tr("Use variable <i>pi</i> to use pi constant.");
-            break;
-        case 3:
-            msg = tr("Use <i>;</i> (semicolon) to separate the parameters in functions.");
-            break;
-        default:
-            break;
-    }
-
-    m_widgets.tip->showText(msg, tr("Tip of the day"));
 }
 
 void MainWindow::setResultFormatBinary()

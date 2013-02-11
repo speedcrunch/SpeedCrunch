@@ -145,7 +145,6 @@ private slots:
     void showSessionImportDialog();
     void showSessionLoadDialog();
     void showSystemTrayMessage();
-    void showTipOfTheDay();
     void zoomIn();
     void zoomOut();
 
