@@ -19,7 +19,7 @@
 
 #include "gui/variablesdock.h"
 
-#include "gui/variableswidget.h"
+#include "gui/variablelistwidget.h"
 
 #include <QtCore/QEvent>
 #include <QtCore/QTimer>
@@ -31,7 +31,7 @@
 
 VariablesDock::VariablesDock( QWidget * parent )
     : QDockWidget( parent )
-    , m_variablesWidget(new VariablesWidget(VariablesWidget::ShowUser, this))
+    , m_variablesWidget(new VariableListWidget(VariableListWidget::ShowUser, this))
 {
     connect(m_variablesWidget, SIGNAL(itemActivated(QTreeWidgetItem *, int)),
             SLOT(handleItem(QTreeWidgetItem *)));

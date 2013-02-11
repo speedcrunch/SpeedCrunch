@@ -72,7 +72,7 @@ HEADERS += core/constants.h \
            #gui/textedit.h \
            gui/tipwidget.h \
            gui/variablesdock.h \
-           gui/variableswidget.h \
+           gui/variablelistwidget.h \
            gui/mainwindow.h
            #math/floatcommon.h \
            #math/floatconfig.h \
@@ -126,7 +126,7 @@ SOURCES += core/constants.cpp \
            gui/textedit.cpp \
            gui/tipwidget.cpp \
            gui/variablesdock.cpp \
-           gui/variableswidget.cpp \
+           gui/variablelistwidget.cpp \
            gui/mainwindow.cpp \
            main/main.cpp \
            math/floatcommon.c \

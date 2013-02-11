@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2009 Andreas Scherer <andreas_coder@freenet.de>
-// Copyright (C) 2009, 2011 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2009, 2011, 2013 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -17,8 +17,8 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#ifndef GUI_VARIABLESWIDGET_H
-#define GUI_VARIABLESWIDGET_H
+#ifndef GUI_VARIABLELISTWIDGET_H
+#define GUI_VARIABLELISTWIDGET_H
 
 #include <QtCore/QList>
 #include <QtGui/QWidget>
@@ -28,7 +28,7 @@ class QLineEdit;
 class QTreeWidget;
 class QTreeWidgetItem;
 
-class VariablesWidget : public QWidget
+class VariableListWidget : public QWidget
 {
     Q_OBJECT
 
@@ -38,40 +38,38 @@ public:
         ShowUser
     };
 
-    explicit VariablesWidget(ItemPolicy itemPolicy = ShowUser, QWidget *parent = 0);
-    ~VariablesWidget();
+    explicit VariableListWidget(ItemPolicy itemPolicy = ShowUser, QWidget* parent = 0);
+    ~VariableListWidget();
 
-    QTreeWidgetItem *currentItem() const;
-    QList<QTreeWidgetItem *> selectedItems() const;
+    QTreeWidgetItem* currentItem() const;
+    QList<QTreeWidgetItem*> selectedItems() const;
 
 signals:
-    void itemActivated(QTreeWidgetItem *, int);
-    void itemDoubleClicked(QTreeWidgetItem *, int);
+    void itemActivated(QTreeWidgetItem*, int);
+    void itemDoubleClicked(QTreeWidgetItem*, int);
 
 public slots:
     void fillTable();
     void retranslateText();
 
 protected slots:
-    void catchItemActivated(QTreeWidgetItem *, int);
-    void catchItemDoubleClicked(QTreeWidgetItem *, int);
-    void clearSelection(QTreeWidgetItem *);
+    void catchItemActivated(QTreeWidgetItem*, int);
+    void catchItemDoubleClicked(QTreeWidgetItem*, int);
+    void clearSelection(QTreeWidgetItem*);
     void triggerFilter();
 
 protected:
-    void changeEvent(QEvent *);
+    void changeEvent(QEvent*);
 
 private:
-    Q_DISABLE_COPY(VariablesWidget);
+    Q_DISABLE_COPY(VariableListWidget);
 
-    QTimer *m_filterTimer;
+    QTimer* m_filterTimer;
     ItemPolicy m_itemPolicy;
-    QTreeWidget *m_variables;
-    QLabel *m_noMatchLabel;
-    QLineEdit *m_searchFilter;
-    QLabel *m_searchLabel;
-
+    QTreeWidget* m_variables;
+    QLabel* m_noMatchLabel;
+    QLineEdit* m_searchFilter;
+    QLabel* m_searchLabel;
 };
 
 #endif
-

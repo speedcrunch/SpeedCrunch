@@ -23,7 +23,7 @@
 #include <QtGui/QDockWidget>
 
 class QTreeWidgetItem;
-class VariablesWidget;
+class VariableListWidget;
 
 class VariablesDock : public QDockWidget
 {
@@ -48,7 +48,7 @@ protected:
 private:
     Q_DISABLE_COPY(VariablesDock);
 
-    VariablesWidget *m_variablesWidget;
+    VariableListWidget *m_variablesWidget;
 };
 
 #endif
