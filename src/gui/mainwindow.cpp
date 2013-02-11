@@ -30,13 +30,11 @@
 #include "gui/autohidelabel.h"
 #include "gui/bookdock.h"
 #include "gui/constantsdock.h"
-#include "gui/deletevardlg.h"
 #include "gui/editor.h"
 #include "gui/functionsdialog.h"
 #include "gui/functionsdock.h"
 #include "gui/historydock.h"
 #include "gui/historywidget.h"
-#include "gui/insertvardlg.h"
 #include "gui/resultdisplay.h"
 #include "gui/tipwidget.h"
 #include "gui/variablesdock.h"
@@ -135,10 +133,7 @@ void MainWindow::createActions()
     m_actions.editClearHistory = new QAction(this);
     m_actions.editCopyLastResult = new QAction(this);
     m_actions.editCopy = new QAction(this);
-    m_actions.editDeleteAllVariables = new QAction(this);
-    m_actions.editDeleteVariable = new QAction(this);
     m_actions.editInsertFunction = new QAction(this);
-    m_actions.editInsertVariable = new QAction(this);
     m_actions.editPaste = new QAction(this);
     m_actions.editSelectExpression = new QAction(this);
     m_actions.viewConstants = new QAction(this);
@@ -292,10 +287,7 @@ void MainWindow::setActionsText()
     m_actions.editClearHistory->setText(MainWindow::tr("Clear &History"));
     m_actions.editCopyLastResult->setText(MainWindow::tr("Copy Last &Result"));
     m_actions.editCopy->setText(MainWindow::tr("&Copy"));
-    m_actions.editDeleteAllVariables->setText(MainWindow::tr("Delete All V&ariables"));
-    m_actions.editDeleteVariable->setText(MainWindow::tr("D&elete Variable..."));
     m_actions.editInsertFunction->setText(MainWindow::tr("Insert &Function..."));
-    m_actions.editInsertVariable->setText(MainWindow::tr("Insert &Variable..."));
     m_actions.editPaste->setText(MainWindow::tr("&Paste"));
     m_actions.editSelectExpression->setText(MainWindow::tr("&Select Expression"));
 
@@ -389,9 +381,7 @@ void MainWindow::createActionShortcuts()
     m_actions.editClearHistory->setShortcut(Qt::CTRL + Qt::ALT + Qt::Key_N);
     m_actions.editCopyLastResult->setShortcut(Qt::CTRL + Qt::Key_R);
     m_actions.editCopy->setShortcut(Qt::CTRL + Qt::Key_C);
-    m_actions.editDeleteVariable->setShortcut(Qt::CTRL + Qt::Key_D);
     m_actions.editInsertFunction->setShortcut(Qt::CTRL + Qt::Key_F);
-    m_actions.editInsertVariable->setShortcut(Qt::CTRL + Qt::Key_I);
     m_actions.editPaste->setShortcut(Qt::CTRL + Qt::Key_V);
     m_actions.editSelectExpression->setShortcut(Qt::CTRL + Qt::Key_A);
     m_actions.viewConstants->setShortcut(Qt::CTRL + Qt::Key_2);
@@ -443,10 +433,6 @@ void MainWindow::createMenus()
     m_menus.edit->addAction(m_actions.editSelectExpression);
     m_menus.edit->addSeparator();
     m_menus.edit->addAction(m_actions.editInsertFunction);
-    m_menus.edit->addAction(m_actions.editInsertVariable);
-    m_menus.edit->addSeparator();
-    m_menus.edit->addAction(m_actions.editDeleteVariable);
-    m_menus.edit->addAction(m_actions.editDeleteAllVariables);
     m_menus.edit->addSeparator();
     m_menus.edit->addAction(m_actions.editClearExpression);
     m_menus.edit->addAction(m_actions.editClearHistory);
@@ -773,8 +759,7 @@ void MainWindow::createVariablesDock()
     m_docks.variables->setAllowedAreas(Qt::AllDockWidgetAreas);
     addDockWidget(Qt::RightDockWidgetArea, m_docks.variables);
 
-    connect(m_docks.variables, SIGNAL(variableSelected(const QString&)),
-        SLOT(insertVariableIntoEditor(const QString&)));
+    connect(m_docks.variables, SIGNAL(variableSelected(const QString&)), SLOT(insertVariableIntoEditor(const QString&)));
     connect(this, SIGNAL(radixCharacterChanged()), m_docks.variables, SLOT(handleRadixCharacterChange()));
 
     m_docks.variables->updateList();
@@ -807,10 +792,7 @@ void MainWindow::createFixedConnections()
     connect(m_actions.editClearHistory, SIGNAL(triggered()), SLOT(clearHistory()));
     connect(m_actions.editCopyLastResult, SIGNAL(triggered()), SLOT(copyResultToClipboard()));
     connect(m_actions.editCopy, SIGNAL(triggered()), SLOT(copy()));
-    connect(m_actions.editDeleteAllVariables, SIGNAL(triggered()), SLOT(deleteAllVariables()));
-    connect(m_actions.editDeleteVariable, SIGNAL(triggered()), SLOT(showVariableDeletionDialog()));
     connect(m_actions.editInsertFunction, SIGNAL(triggered()), SLOT(showFunctionInsertionDialog()));
-    connect(m_actions.editInsertVariable, SIGNAL(triggered()), SLOT(showVariableInsertionDialog()));
     connect(m_actions.editPaste, SIGNAL(triggered()), m_widgets.editor, SLOT(paste()));
     connect(m_actions.editSelectExpression, SIGNAL(triggered()), SLOT(selectEditorExpression()));
 
@@ -1149,19 +1131,9 @@ void MainWindow::setAngleModeDegree()
     emit angleUnitChanged();
 }
 
-void MainWindow::deleteAllVariables()
+void MainWindow::deleteVariables()
 {
-    m_evaluator->clearVariables();
-
-    if (m_settings->variablesDockVisible)
-        m_docks.variables->updateList();
-}
-
-void MainWindow::showVariableDeletionDialog()
-{
-    DeleteVariableDlg dialog(this);
-    dialog.resize(400, 300);
-    dialog.exec();
+    m_evaluator->deleteVariables();
 
     if (m_settings->variablesDockVisible)
         m_docks.variables->updateList();
@@ -1223,18 +1195,6 @@ void MainWindow::showFunctionInsertionDialog()
         insertFunctionIntoEditor(dialog.selectedFunctionName());
 }
 
-void MainWindow::showVariableInsertionDialog()
-{
-    InsertVariableDlg dialog(this);
-    dialog.resize(400, 300);
-
-    if (dialog.exec() == QDialog::Accepted) {
-        QString varName = dialog.variableName();
-        if (!varName.isEmpty())
-            m_widgets.editor->insert(varName);
-    }
-}
-
 void MainWindow::showSessionLoadDialog()
 {
     QString errMsg  = tr("File %1 is not a valid session");
@@ -1281,7 +1241,7 @@ void MainWindow::showSessionLoadDialog()
 
     if (button == QMessageBox::No) {
         m_widgets.display->clear();
-        deleteAllVariables();
+        deleteVariables();
         clearHistory();
     }
 
@@ -1359,7 +1319,7 @@ void MainWindow::showSessionImportDialog()
         return;
     if (button == QMessageBox::No) {
         m_widgets.display->clear();
-        deleteAllVariables();
+        deleteVariables();
         clearHistory();
     }
 

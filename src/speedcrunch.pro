@@ -58,7 +58,6 @@ HEADERS += core/constants.h \
            gui/bookdock.h \
            gui/constantsdock.h \
            gui/constantswidget.h \
-           gui/deletevardlg.h \
            gui/resultdisplay.h \
            gui/editor.h \
            gui/functionsdialog.h \
@@ -66,7 +65,6 @@ HEADERS += core/constants.h \
            gui/functionswidget.h \
            gui/historydock.h \
            gui/historywidget.h \
-           gui/insertvardlg.h \
            gui/keypad.h \
            #gui/syntaxhighlighter.h \
            #gui/textedit.h \
@@ -112,7 +110,6 @@ SOURCES += core/constants.cpp \
            gui/bookdock.cpp \
            gui/constantsdock.cpp \
            gui/constantswidget.cpp \
-           gui/deletevardlg.cpp \
            gui/resultdisplay.cpp \
            gui/editor.cpp \
            gui/functionsdialog.cpp \
@@ -120,7 +117,6 @@ SOURCES += core/constants.cpp \
            gui/functionswidget.cpp \
            gui/historydock.cpp \
            gui/historywidget.cpp \
-           gui/insertvardlg.cpp \
            gui/keypad.cpp \
            gui/syntaxhighlighter.cpp \
            gui/textedit.cpp \

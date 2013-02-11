@@ -23,8 +23,11 @@
 #include <QtCore/QList>
 #include <QtGui/QWidget>
 
+class QEvent;
+class QKeyEvent;
 class QLabel;
 class QLineEdit;
+class QTimer;
 class QTreeWidget;
 class QTreeWidgetItem;
 
@@ -42,24 +45,24 @@ public:
     ~VariableListWidget();
 
     QTreeWidgetItem* currentItem() const;
-    QList<QTreeWidgetItem*> selectedItems() const;
 
 signals:
-    void itemActivated(QTreeWidgetItem*, int);
-    void itemDoubleClicked(QTreeWidgetItem*, int);
+    void itemActivated(const QString&);
+    void itemDeleted(const QString&);
 
 public slots:
     void fillTable();
     void retranslateText();
 
 protected slots:
-    void catchItemActivated(QTreeWidgetItem*, int);
-    void catchItemDoubleClicked(QTreeWidgetItem*, int);
-    void clearSelection(QTreeWidgetItem*);
+    void activateItem();
+    void deleteItem();
+    void deleteAllItems();
     void triggerFilter();
 
 protected:
     void changeEvent(QEvent*);
+    void keyPressEvent(QKeyEvent*);
 
 private:
     Q_DISABLE_COPY(VariableListWidget);
@@ -67,6 +70,9 @@ private:
     QTimer* m_filterTimer;
     ItemPolicy m_itemPolicy;
     QTreeWidget* m_variables;
+    QAction* m_insertAction;
+    QAction* m_deleteAction;
+    QAction* m_deleteAllAction;
     QLabel* m_noMatchLabel;
     QLineEdit* m_searchFilter;
     QLabel* m_searchLabel;

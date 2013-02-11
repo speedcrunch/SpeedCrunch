@@ -29,12 +29,11 @@
 #include <QtGui/QTreeWidget>
 #include <QtGui/QVBoxLayout>
 
-VariablesDock::VariablesDock( QWidget * parent )
-    : QDockWidget( parent )
+VariablesDock::VariablesDock(QWidget*  parent)
+    : QDockWidget(parent)
     , m_variablesWidget(new VariableListWidget(VariableListWidget::ShowUser, this))
 {
-    connect(m_variablesWidget, SIGNAL(itemActivated(QTreeWidgetItem *, int)),
-            SLOT(handleItem(QTreeWidgetItem *)));
+    connect(m_variablesWidget, SIGNAL(itemActivated(const QString&)), SIGNAL(variableSelected(const QString&)));
 
     setWidget(m_variablesWidget);
 
@@ -60,12 +59,7 @@ void VariablesDock::retranslateText()
     setWindowTitle(tr("Variables"));
 }
 
-void VariablesDock::handleItem(QTreeWidgetItem *item)
-{
-    emit variableSelected(item->text(0));
-}
-
-void VariablesDock::changeEvent(QEvent *e)
+void VariablesDock::changeEvent(QEvent* e)
 {
     if (e->type() == QEvent::LanguageChange)
         retranslateText();

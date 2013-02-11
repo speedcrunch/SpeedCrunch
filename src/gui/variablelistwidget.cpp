@@ -27,8 +27,10 @@
 #include <QtCore/QLatin1String>
 #include <QtCore/QTimer>
 #include <QtGui/QHBoxLayout>
+#include <QtGui/QKeyEvent>
 #include <QtGui/QLabel>
 #include <QtGui/QLineEdit>
+#include <QtGui/QMenu>
 #include <QtGui/QTreeWidget>
 #include <QtGui/QVBoxLayout>
 
@@ -74,12 +76,25 @@ VariableListWidget::VariableListWidget(ItemPolicy itemPolicy, QWidget* parent)
     layout->addWidget(m_variables);
     setLayout(layout);
 
+    QMenu* contextMenu = new QMenu(m_variables);
+    m_insertAction = new QAction("", contextMenu);
+    m_deleteAction = new QAction("", contextMenu);
+    m_deleteAllAction = new QAction("", contextMenu);
+    m_variables->setContextMenuPolicy(Qt::ActionsContextMenu);
+    m_variables->addAction(m_insertAction);
+    m_variables->addAction(m_deleteAction);
+    m_variables->addAction(m_deleteAllAction);
+
+    QWidget::setTabOrder(m_searchFilter, m_variables);
+
     retranslateText();
 
     connect(m_filterTimer, SIGNAL(timeout()), SLOT(fillTable()));
     connect(m_searchFilter, SIGNAL(textChanged(const QString&)), SLOT(triggerFilter()));
-    connect(m_variables, SIGNAL(itemActivated(QTreeWidgetItem*, int)), SLOT(catchItemActivated(QTreeWidgetItem* , int)));
-    connect(m_variables, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)), SLOT(catchItemDoubleClicked(QTreeWidgetItem*, int)));
+    connect(m_variables, SIGNAL(itemActivated(QTreeWidgetItem*, int)), SLOT(activateItem()));
+    connect(m_insertAction, SIGNAL(triggered()), SLOT(activateItem()));
+    connect(m_deleteAction, SIGNAL(triggered()), SLOT(deleteItem()));
+    connect(m_deleteAllAction, SIGNAL(triggered()), SLOT(deleteAllItems()));
 }
 
 VariableListWidget::~VariableListWidget()
@@ -147,12 +162,11 @@ void VariableListWidget::retranslateText()
     m_searchLabel->setText(tr("Search"));
     m_noMatchLabel->setText(tr("No match found"));
 
-    fillTable();
-}
+    m_insertAction->setText(tr("Insert"));
+    m_deleteAction->setText(tr("Delete"));
+    m_deleteAllAction->setText(tr("Delete All"));
 
-QList<QTreeWidgetItem*> VariableListWidget::selectedItems() const
-{
-    return m_variables->selectedItems();
+    fillTable();
 }
 
 QTreeWidgetItem* VariableListWidget::currentItem() const
@@ -160,20 +174,25 @@ QTreeWidgetItem* VariableListWidget::currentItem() const
     return m_variables->currentItem();
 }
 
-void VariableListWidget::catchItemActivated(QTreeWidgetItem* item, int column)
+void VariableListWidget::activateItem()
 {
-    emit itemActivated(item, column);
+    if (!currentItem() || m_variables->selectedItems().isEmpty())
+        return;
+    emit itemActivated(currentItem()->text(0));
 }
 
-void VariableListWidget::catchItemDoubleClicked(QTreeWidgetItem* item, int column)
+void VariableListWidget::deleteItem()
 {
-    emit itemDoubleClicked(item, column);
+    if (!currentItem() || m_variables->selectedItems().isEmpty())
+        return;
+    Evaluator::instance()->deleteVariable(currentItem()->text(0));
+    fillTable();
 }
 
-void VariableListWidget::clearSelection(QTreeWidgetItem* item)
+void VariableListWidget::deleteAllItems()
 {
-    m_variables->clearSelection();
-    emit itemActivated(item, 0);
+    Evaluator::instance()->deleteVariables();
+    fillTable();
 }
 
 void VariableListWidget::triggerFilter()
@@ -190,6 +209,17 @@ void VariableListWidget::changeEvent(QEvent* event)
         return;
     }
     QWidget::changeEvent(event);
+}
+
+void VariableListWidget::keyPressEvent(QKeyEvent* event)
+{
+    if (event->key() == Qt::Key_Delete) {
+        Evaluator::instance()->deleteVariable(currentItem()->text(0));
+        fillTable();
+        event->accept();
+        return;
+    }
+    QWidget::keyPressEvent(event);
 }
 
 static QString formatValue(const HNumber& value)

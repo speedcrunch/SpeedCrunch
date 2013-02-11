@@ -361,7 +361,7 @@ void Evaluator::clear()
     d->constants.clear();
     d->codes.clear();
     d->assignId = QString();
-    clearVariables();
+    deleteVariables();
 }
 
 QString Evaluator::error() const
@@ -1334,7 +1334,7 @@ bool Evaluator::has( const QString & id )
     return id.isEmpty() ? false : d->variables.contains( id );
 }
 
-void Evaluator::remove( const QString & id )
+void Evaluator::deleteVariable( const QString & id )
 {
     d->variables.remove( id );
 }
@@ -1353,7 +1353,7 @@ QVector<Variable> Evaluator::variables() const
     return result;
 }
 
-void Evaluator::clearVariables()
+void Evaluator::deleteVariables()
 {
   HNumber ansBackup = get( QString("ans") );
 

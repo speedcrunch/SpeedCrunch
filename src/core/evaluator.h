@@ -91,7 +91,6 @@ public:
 
     QString autoFix( const QString & );
     void clear();
-    void clearVariables();
     QString dump() const;
     QString error() const;
     HNumber eval();
@@ -101,7 +100,8 @@ public:
     HNumber get( const QString & id );
     bool has( const QString & id );
     bool isValid() const;
-    void remove( const QString & id );
+    void deleteVariable( const QString & id );
+    void deleteVariables();
     Tokens scan( const QString & ) const;
     void set( const QString & id, HNumber value );
     void setExpression( const QString& expr );

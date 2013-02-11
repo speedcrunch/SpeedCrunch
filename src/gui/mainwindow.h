@@ -73,7 +73,7 @@ private slots:
     void copyResultToClipboard();
     void cycleAngleUnits();
     void cycleResultFormats();
-    void deleteAllVariables();
+    void deleteVariables();
     void evaluateEditorExpression();
     void exportHtml();
     void exportPlainText();
@@ -146,8 +146,6 @@ private slots:
     void showSessionLoadDialog();
     void showSystemTrayMessage();
     void showTipOfTheDay();
-    void showVariableDeletionDialog();
-    void showVariableInsertionDialog();
     void zoomIn();
     void zoomOut();
 
@@ -208,7 +206,6 @@ private:
         QAction* editInsertFunction;
         QAction* editInsertVariable;
         QAction* editDeleteVariable;
-        QAction* editDeleteAllVariables;
         QAction* editClearExpression;
         QAction* editClearHistory;
         QAction* viewKeypad;

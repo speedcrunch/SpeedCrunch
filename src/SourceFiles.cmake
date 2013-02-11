@@ -22,7 +22,6 @@ gui/autohidelabel.h
 gui/bookdock.h
 gui/constantsdock.h
 gui/constantswidget.h
-gui/deletevardlg.h
 gui/resultdisplay.h
 gui/editor.h
 gui/functionsdialog.h
@@ -30,7 +29,6 @@ gui/functionsdock.h
 gui/functionswidget.h
 gui/historydock.h
 gui/historywidget.h
-gui/insertvardlg.h
 gui/keypad.h
 #gui/syntaxhighlighter.h
 #gui/textedit.h
@@ -78,7 +76,6 @@ gui/autohidelabel.cpp
 gui/bookdock.cpp
 gui/constantsdock.cpp
 gui/constantswidget.cpp
-gui/deletevardlg.cpp
 gui/resultdisplay.cpp
 gui/editor.cpp
 gui/functionsdialog.cpp
@@ -86,7 +83,6 @@ gui/functionsdock.cpp
 gui/functionswidget.cpp
 gui/historydock.cpp
 gui/historywidget.cpp
-gui/insertvardlg.cpp
 gui/keypad.cpp
 gui/syntaxhighlighter.cpp
 gui/textedit.cpp

@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2008, 2009, 2011 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2008, 2009, 2011, 2013 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -30,25 +30,24 @@ class VariablesDock : public QDockWidget
     Q_OBJECT
 
 public:
-    explicit VariablesDock(QWidget *parent = 0);
+    explicit VariablesDock(QWidget* parent = 0);
 
     void updateList();
 
 signals:
-    void variableSelected(const QString &);
+    void variableSelected(const QString&);
 
 public slots:
-    void handleItem(QTreeWidgetItem *);
     void handleRadixCharacterChange();
     void retranslateText();
 
 protected:
-    virtual void changeEvent(QEvent *);
+    virtual void changeEvent(QEvent*);
 
 private:
     Q_DISABLE_COPY(VariablesDock);
 
-    VariableListWidget *m_variablesWidget;
+    VariableListWidget* m_variablesWidget;
 };
 
 #endif
