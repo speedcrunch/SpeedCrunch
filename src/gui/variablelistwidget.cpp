@@ -140,7 +140,7 @@ void VariableListWidget::fillTable()
     m_variables->resizeColumnToContents(0);
     m_variables->resizeColumnToContents(1);
 
-    if (m_variables->topLevelItemCount() > 0 || m_itemPolicy != ShowAll) {
+    if (m_variables->topLevelItemCount() > 0) {
         m_noMatchLabel->hide();
         m_variables->sortItems(0, Qt::AscendingOrder);
     } else {
