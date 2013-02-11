@@ -71,6 +71,8 @@ FunctionsWidget::FunctionsWidget(QWidget *parent)
     layout->addWidget(m_functions);
     setLayout(layout);
 
+    QWidget::setTabOrder(m_searchFilter, m_functions);
+
     retranslateText();
 
     connect(m_filterTimer, SIGNAL(timeout()), SLOT(fillTable()));
