@@ -179,7 +179,6 @@ void MainWindow::createActions()
     m_actions.settingsResultFormatScientific = new QAction(this);
     m_actions.helpAbout = new QAction(this);
     m_actions.helpAboutQt = new QAction(this);
-    m_actions.helpWebsite = new QAction(this);
     // Shortcuts.
     m_actions.scrollDown = new QAction(this);
     m_actions.scrollUp = new QAction(this);
@@ -335,7 +334,6 @@ void MainWindow::setActionsText()
 
     m_actions.helpAboutQt->setText(MainWindow::tr("About &Qt"));
     m_actions.helpAbout->setText(MainWindow::tr("About &SpeedCrunch"));
-    m_actions.helpWebsite->setText(MainWindow::tr("SpeedCrunch &Web Site..."));
 
     m_actions.scrollDown->setText(MainWindow::tr("Scroll Display Down"));
     m_actions.scrollUp->setText(MainWindow::tr("Scroll Display Up"));
@@ -512,8 +510,6 @@ void MainWindow::createMenus()
 
     m_menus.help = new QMenu("", this);
     menuBar()->addMenu(m_menus.help);
-    m_menus.help->addAction(m_actions.helpWebsite);
-    m_menus.help->addSeparator();
     m_menus.help->addAction(m_actions.helpAbout);
     m_menus.help->addAction(m_actions.helpAboutQt);
 
@@ -835,7 +831,6 @@ void MainWindow::createFixedConnections()
 
     connect(m_actions.helpAboutQt, SIGNAL(triggered()), SLOT(showAboutQtDialog()));
     connect(m_actions.helpAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
-    connect(m_actions.helpWebsite, SIGNAL(triggered()), SLOT(openHomePageInSystemBrowser()));
 
     connect(m_widgets.editor, SIGNAL(autoCalcDisabled()), SLOT(hideAutoCalcTip()));
     connect(m_widgets.editor, SIGNAL(autoCalcEnabled(const QString&)), SLOT(showAutoCalcTip(const QString&)));
@@ -1166,11 +1161,6 @@ void MainWindow::selectEditorExpression()
     activateWindow();
     m_widgets.editor->selectAll();
     m_widgets.editor->setFocus();
-}
-
-void MainWindow::openHomePageInSystemBrowser()
-{
-    QDesktopServices::openUrl(QUrl(QString::fromLatin1("http://www.speedcrunch.org")));
 }
 
 void MainWindow::hideAutoCalcTip()
