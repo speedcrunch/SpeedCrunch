@@ -137,7 +137,6 @@ private slots:
     void showAboutQtDialog();
     void showAutoCalcTip(const QString&);
     void showFontDialog();
-    void showFunctionInsertionDialog();
     void showLanguageChooserDialog();
     void showMenuBarTip();
     void showResultFormatContextMenu(const QPoint&);

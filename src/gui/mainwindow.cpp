@@ -31,7 +31,6 @@
 #include "gui/bookdock.h"
 #include "gui/constantsdock.h"
 #include "gui/editor.h"
-#include "gui/functionsdialog.h"
 #include "gui/functionsdock.h"
 #include "gui/historydock.h"
 #include "gui/historywidget.h"
@@ -133,7 +132,6 @@ void MainWindow::createActions()
     m_actions.editClearHistory = new QAction(this);
     m_actions.editCopyLastResult = new QAction(this);
     m_actions.editCopy = new QAction(this);
-    m_actions.editInsertFunction = new QAction(this);
     m_actions.editPaste = new QAction(this);
     m_actions.editSelectExpression = new QAction(this);
     m_actions.viewConstants = new QAction(this);
@@ -285,7 +283,6 @@ void MainWindow::setActionsText()
     m_actions.editClearHistory->setText(MainWindow::tr("Clear &History"));
     m_actions.editCopyLastResult->setText(MainWindow::tr("Copy Last &Result"));
     m_actions.editCopy->setText(MainWindow::tr("&Copy"));
-    m_actions.editInsertFunction->setText(MainWindow::tr("Insert &Function..."));
     m_actions.editPaste->setText(MainWindow::tr("&Paste"));
     m_actions.editSelectExpression->setText(MainWindow::tr("&Select Expression"));
 
@@ -377,7 +374,6 @@ void MainWindow::createActionShortcuts()
     m_actions.editClearHistory->setShortcut(Qt::CTRL + Qt::ALT + Qt::Key_N);
     m_actions.editCopyLastResult->setShortcut(Qt::CTRL + Qt::Key_R);
     m_actions.editCopy->setShortcut(Qt::CTRL + Qt::Key_C);
-    m_actions.editInsertFunction->setShortcut(Qt::CTRL + Qt::Key_F);
     m_actions.editPaste->setShortcut(Qt::CTRL + Qt::Key_V);
     m_actions.editSelectExpression->setShortcut(Qt::CTRL + Qt::Key_A);
     m_actions.viewConstants->setShortcut(Qt::CTRL + Qt::Key_2);
@@ -426,9 +422,6 @@ void MainWindow::createMenus()
     m_menus.edit->addAction(m_actions.editCopyLastResult);
     m_menus.edit->addAction(m_actions.editPaste);
     m_menus.edit->addAction(m_actions.editSelectExpression);
-    m_menus.edit->addSeparator();
-    m_menus.edit->addAction(m_actions.editInsertFunction);
-    m_menus.edit->addSeparator();
     m_menus.edit->addAction(m_actions.editClearExpression);
     m_menus.edit->addAction(m_actions.editClearHistory);
 
@@ -781,7 +774,6 @@ void MainWindow::createFixedConnections()
     connect(m_actions.editClearHistory, SIGNAL(triggered()), SLOT(clearHistory()));
     connect(m_actions.editCopyLastResult, SIGNAL(triggered()), SLOT(copyResultToClipboard()));
     connect(m_actions.editCopy, SIGNAL(triggered()), SLOT(copy()));
-    connect(m_actions.editInsertFunction, SIGNAL(triggered()), SLOT(showFunctionInsertionDialog()));
     connect(m_actions.editPaste, SIGNAL(triggered()), m_widgets.editor, SLOT(paste()));
     connect(m_actions.editSelectExpression, SIGNAL(triggered()), SLOT(selectEditorExpression()));
 
@@ -1166,15 +1158,6 @@ void MainWindow::selectEditorExpression()
 void MainWindow::hideAutoCalcTip()
 {
     m_widgets.autoCalcTip->hideText();
-}
-
-void MainWindow::showFunctionInsertionDialog()
-{
-    FunctionsDialog dialog(this);
-    dialog.resize(400, 300);
-
-    if (dialog.exec() == QDialog::Accepted)
-        insertFunctionIntoEditor(dialog.selectedFunctionName());
 }
 
 void MainWindow::showSessionLoadDialog()

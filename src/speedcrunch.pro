@@ -60,7 +60,6 @@ HEADERS += core/constants.h \
            gui/constantswidget.h \
            gui/resultdisplay.h \
            gui/editor.h \
-           gui/functionsdialog.h \
            gui/functionsdock.h \
            gui/functionswidget.h \
            gui/historydock.h \
@@ -112,7 +111,6 @@ SOURCES += core/constants.cpp \
            gui/constantswidget.cpp \
            gui/resultdisplay.cpp \
            gui/editor.cpp \
-           gui/functionsdialog.cpp \
            gui/functionsdock.cpp \
            gui/functionswidget.cpp \
            gui/historydock.cpp \
