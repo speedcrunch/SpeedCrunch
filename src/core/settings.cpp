@@ -130,8 +130,10 @@ void Settings::load()
     windowPosition = settings->value( key + QLatin1String("WindowPosition"), QPoint() ).toPoint();
     windowSize = settings->value( key + QLatin1String("WindowSize"), QSize(400, 300) ).toSize();
     windowState = settings->value( key + QLatin1String("State") ).toByteArray();
-    displayFont = settings->value( key + QLatin1String("DisplayFont"), QFont().toString()
-                                 ).toString();
+
+    key = KEY + QLatin1String("/Display/");
+    displayFont = settings->value( key + QLatin1String("DisplayFont"), QFont().toString() ).toString();
+    colorScheme = settings->value( key + QLatin1String("ColorScheme"), 0 ).toInt();
 
     // load history
     key = KEY + QLatin1String("/History/");
@@ -241,7 +243,11 @@ void Settings::save()
     settings->setValue( key + QLatin1String("WindowSize"), windowSize );
     settings->setValue( key + QLatin1String("WindowAlwaysOnTop"), windowAlwaysOnTop );
     settings->setValue( key + QLatin1String("State"), windowState );
+
+    key = KEY + QLatin1String("/Display/");
+
     settings->setValue( key + QLatin1String("DisplayFont"), displayFont );
+    settings->setValue( key + QLatin1String("ColorScheme"), colorScheme );
 
     // save history
     if ( historySave ) {
@@ -375,4 +381,3 @@ QSettings * createQSettings( const QString & KEY )
 
     return settings;
 }
-

@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2007-2009 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2007-2009, 2013 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -22,33 +22,44 @@
 
 #include <QtGui/QSyntaxHighlighter>
 
-#include <memory>
-
 class TextEdit;
 
-class SyntaxHighlighter : public QSyntaxHighlighter
-{
+class SyntaxHighlighter : public QSyntaxHighlighter {
 public:
-    enum Scheme { AutoScheme };
-    enum Role { Variable = 0, Number, Function, MatchedPar };
+    enum ColorScheme {
+        Standard = 0,
+        Sublime = 1,
+        Terminal = 2
+    };
 
-    SyntaxHighlighter( TextEdit * );
+    enum Role {
+        Background,
+        Number,
+        Function,
+        Operator,
+        Variable,
+        Separator,
+        Parens,
+        MatchedParens,
+        Result
+    };
 
-    QColor color( Role );
-    virtual void highlightBlock( const QString & );
-    void setColor( Role, QColor );
-    void setScheme( Scheme = AutoScheme );
+    explicit SyntaxHighlighter(TextEdit*);
+
+    QColor colorForRole(Role role) const { return m_colorScheme[role]; }
+    void setColorForRole(Role role, const QColor& color) { m_colorScheme[role] = color; }
+
+    void update();
+
+    virtual void highlightBlock(const QString&);
 
 private:
-    struct Private;
-    const std::auto_ptr<Private> d;
-
+    Q_DISABLE_COPY(SyntaxHighlighter);
     SyntaxHighlighter();
-    SyntaxHighlighter( const SyntaxHighlighter & );
-    SyntaxHighlighter( QObject * );
-    SyntaxHighlighter( QTextDocument * );
-    SyntaxHighlighter & operator=( const SyntaxHighlighter & );
+    SyntaxHighlighter(QObject*);
+    SyntaxHighlighter(QTextDocument*);
+
+    QHash<Role, QColor> m_colorScheme;
 };
 
 #endif
-

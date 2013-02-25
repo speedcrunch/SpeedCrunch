@@ -53,7 +53,6 @@ public:
     void clearHistory();
     int cursorPosition() const;
     void doBackspace();
-    void highlight();
     QStringList history() const;
     QStringList historyResults() const;
     char radixChar() const;
@@ -79,6 +78,7 @@ public slots:
     void appendHistory(const QStringList& expressions, const QStringList& results);
     void cancelConstantCompletion();
     void evaluate();
+    void rehighlight();
     void insertConstant(const QString&);
     void insert(const QString&);
 

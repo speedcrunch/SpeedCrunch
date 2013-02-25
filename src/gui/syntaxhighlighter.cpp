@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2007-2009 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2007-2009, 2013 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -29,126 +29,122 @@
 #include <QtGui/QApplication>
 #include <QtGui/QPalette>
 
-struct SyntaxHighlighter::Private
+static inline QHash<SyntaxHighlighter::Role, QColor> createColorScheme(SyntaxHighlighter::ColorScheme id)
 {
-    QMap<SyntaxHighlighter::Role, QColor> colors;
-    SyntaxHighlighter::Scheme scheme;
-
-    QList<QColor> generateColors( const QColor & bg, const QColor & fg, int noColors )
-    {
-        QList<QColor> cols;
-        const int HUE_BASE = (bg.hue() == -1) ? 90 : bg.hue();
-        int h, s, v;
-
-        for ( int i = 0; i < noColors; ++i ) {
-            // generate "normal" colors
-            h = int( HUE_BASE + (360.0 / noColors * i) ) % 360;
-            s = 240;
-            v = int( qMax(bg.value(), fg.value()) * 0.85 );
-
-            // adjust particular cases
-            const int M = 35;
-            if ( (h < bg.hue() + M && h > bg.hue() - M )
-                 || (h < fg.hue() + M && h > fg.hue() - M ) )
-            {
-                h = ((bg.hue() + fg.hue()) / (i+1)) % 360;
-                s = ((bg.saturation() + fg.saturation() + 2*i) / 2) % 256;
-                v = ((bg.value() + fg.value() + 2*i) / 2) % 256;
-            }
-
-            // insert into result list
-            cols.append( QColor::fromHsv(h,s,v) );
-        }
-
-        return cols;
+    QHash<SyntaxHighlighter::Role, QColor> result;
+    switch (id) {
+    case SyntaxHighlighter::Sublime:
+         result[SyntaxHighlighter::Background] = QColor(39, 40, 34);
+         result[SyntaxHighlighter::Number] = QColor(173, 119, 158);
+         result[SyntaxHighlighter::Function] = QColor(213, 38, 106);
+         result[SyntaxHighlighter::Operator] = QColor(242, 248, 214);
+         result[SyntaxHighlighter::Variable] = QColor(64, 181, 238);
+         result[SyntaxHighlighter::Separator] = QColor(197, 218, 107);
+         result[SyntaxHighlighter::Parens] = QColor(103, 112, 88);
+         result[SyntaxHighlighter::MatchedParens] = QColor(163, 126, 219);
+         result[SyntaxHighlighter::Result] = QColor(197, 218, 107);
+         break;
+    case SyntaxHighlighter::Terminal:
+         result[SyntaxHighlighter::Background] = QColor(48, 10, 36);
+         result[SyntaxHighlighter::Number] = QColor(255, 255, 255);
+         result[SyntaxHighlighter::Function] = QColor(239, 41, 40);
+         result[SyntaxHighlighter::Operator] = QColor(196, 160, 0);
+         result[SyntaxHighlighter::Variable] = QColor(74, 154, 7);
+         result[SyntaxHighlighter::Separator] = QColor(100, 80, 123);
+         result[SyntaxHighlighter::Parens] = QColor(173, 127, 168);
+         result[SyntaxHighlighter::MatchedParens] = QColor(100, 80, 123);
+         result[SyntaxHighlighter::Result] = QColor(104, 159, 207);
+         break;
+    case SyntaxHighlighter::Standard:
+    default:
+        result[SyntaxHighlighter::Background] = QColor(255, 255, 255);
+        result[SyntaxHighlighter::Number] = QColor(98, 50, 76);
+        result[SyntaxHighlighter::Function] = QColor(74, 154, 7);
+        result[SyntaxHighlighter::Operator] = QColor(193, 147, 188);
+        result[SyntaxHighlighter::Variable] = QColor(239, 41, 40);
+        result[SyntaxHighlighter::Separator] = QColor(100, 80, 123);
+        result[SyntaxHighlighter::Parens] = QColor(196, 160, 50);
+        result[SyntaxHighlighter::MatchedParens] = QColor(100, 80, 123);
+        result[SyntaxHighlighter::Result] = QColor(104, 159, 207);
+        break;
     }
-};
-
-SyntaxHighlighter::SyntaxHighlighter( TextEdit * e )
-    : QSyntaxHighlighter( e ), d( new SyntaxHighlighter::Private )
-{
-    setDocument( e->document() );
-    setScheme();
+    return result;
 }
 
-void SyntaxHighlighter::highlightBlock( const QString & text )
+SyntaxHighlighter::SyntaxHighlighter(TextEdit* edit)
+    : QSyntaxHighlighter(edit)
 {
-    if ( ! Settings::instance()->syntaxHighlighting ) {
-        QWidget * widget = static_cast<QWidget *>( parent() );
-        setFormat( 0, text.length(), widget->palette().text().color() );
+    setDocument(edit->document());
+    update();
+}
+
+void SyntaxHighlighter::highlightBlock(const QString& text)
+{
+    if (!Settings::instance()->syntaxHighlighting) {
+        setFormat(0, text.length(), colorForRole(Number));
         return;
     }
 
-    if ( text.startsWith(QLatin1String("=")) )
+    if (text.startsWith(QLatin1String("="))) {
+        setFormat(0, 1, colorForRole(Operator));
+        setFormat(1, text.length(), colorForRole(Result));
         return;
+    }
 
-    Tokens tokens = Evaluator::instance()->scan( text );
-    for ( int i = 0; i < tokens.count(); ++i )
-    {
-        const Token & token = tokens.at( i );
+    Tokens tokens = Evaluator::instance()->scan(text);
+
+    for (int i = 0; i < tokens.count(); ++i) {
+        const Token& token = tokens.at(i);
         const QString text = token.text().toLower();
-        QStringList fnames = Functions::instance()->names();
-        QColor col;
+        QStringList functionNames = Functions::instance()->names();
+        QColor color;
 
-        switch ( token.type() )
-        {
-            case Token::stxOperator:
-            case Token::stxUnknown:
-            case Token::stxOpenPar:
-            case Token::stxClosePar:
-                col = QApplication::palette().windowText().color();
-                break;
+        switch (token.type()) {
+        case Token::stxNumber:
+        case Token::stxUnknown:
+            color = colorForRole(Number);
+            break;
 
-            case Token::stxNumber:
-            case Token::stxSep:
-                col = color( SyntaxHighlighter::Number );
-                break;
+        case Token::stxOperator:
+            color = colorForRole(Operator);
+            break;
 
-            case Token::stxIdentifier:
-                col = color( SyntaxHighlighter::Variable );
-                for ( int i = 0; i < fnames.count(); ++i )
-                    if ( fnames.at(i).toLower() == text )
-                        col = color( SyntaxHighlighter::Function );
-                break;
+        case Token::stxSep:
+            color = colorForRole(Separator);
+            break;
 
-            default:
-                break;
+        case Token::stxOpenPar:
+        case Token::stxClosePar:
+            color = colorForRole(Parens);
+            break;
+
+        case Token::stxIdentifier:
+            color = colorForRole(Variable);
+            for (int i = 0; i < functionNames.count(); ++i)
+                if (functionNames.at(i).toLower() == text)
+                    color = colorForRole(Function);
+            break;
+
+        default:
+            break;
         };
 
-        if ( token.pos() >= 0 )
-            setFormat( token.pos(), token.text().length(), col );
+        if (token.pos() >= 0)
+            setFormat(token.pos(), token.text().length(), color);
     }
 }
 
-void SyntaxHighlighter::setScheme( SyntaxHighlighter::Scheme hs )
+void SyntaxHighlighter::update()
 {
-    d->scheme = hs;
+    ColorScheme id = static_cast<ColorScheme>(Settings::instance()->colorScheme);
+    m_colorScheme = createColorScheme(id);
 
-    if ( hs == AutoScheme ) {
-        const int NO_COLORS = 3;
-        QWidget * widget = static_cast<QWidget *>( parent() );
-        const QColor bg = widget->palette().color( QPalette::Base );
-        const QColor fg = widget->palette().color( QPalette::Text );
-        const QList<QColor> list = d->generateColors( bg, fg, NO_COLORS );
-        for ( int i = 0; i < NO_COLORS; ++i )
-            d->colors[ static_cast<SyntaxHighlighter::Role>(i) ] = list.at( i );
+    QColor backgroundColor = colorForRole(Background);
+    QWidget* parentWidget = static_cast<QWidget*>(parent());
+    QPalette pal = parentWidget->palette();
+    pal.setColor(QPalette::Active, QPalette::Base, backgroundColor);
+    pal.setColor(QPalette::Inactive, QPalette::Base, backgroundColor);
+    parentWidget->setPalette(pal);
 
-        // generate special case matched parenthesis
-        const int h = ((bg.hue() + fg.hue()) / 2) % 359;
-        const int s = ((bg.saturation() + fg.saturation()) / 2) % 255;
-        const int v = ((bg.value() + fg.value()) / 2) % 255;
-        d->colors[SyntaxHighlighter::MatchedPar] = QColor::fromHsv( h, s, v );
-    }
-}
-
-QColor SyntaxHighlighter::color( Role r )
-{
-    return d->colors.value( r );
-}
-
-void SyntaxHighlighter::setColor( Role r, QColor c )
-{
-    d->colors[r] = c;
     rehighlight();
 }
-

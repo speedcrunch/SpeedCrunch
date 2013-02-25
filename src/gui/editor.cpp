@@ -302,13 +302,13 @@ void Editor::doMatchingLeft()
             hilite1.cursor = textCursor();
             hilite1.cursor.setPosition(matchPosition);
             hilite1.cursor.setPosition(matchPosition + 1, QTextCursor::KeepAnchor);
-            hilite1.format.setBackground(m_highlighter->color(SyntaxHighlighter::MatchedPar));
+            hilite1.format.setBackground(m_highlighter->colorForRole(SyntaxHighlighter::MatchedParens));
 
             QTextEdit::ExtraSelection hilite2;
             hilite2.cursor = textCursor();
             hilite2.cursor.setPosition(lastToken.pos());
             hilite2.cursor.setPosition(lastToken.pos() + 1, QTextCursor::KeepAnchor);
-            hilite2.format.setBackground(m_highlighter->color(SyntaxHighlighter::MatchedPar));
+            hilite2.format.setBackground(m_highlighter->colorForRole(SyntaxHighlighter::MatchedParens));
 
             QList<QTextEdit::ExtraSelection> extras;
             extras << hilite1;
@@ -353,13 +353,13 @@ void Editor::doMatchingRight()
             hilite1.cursor = textCursor();
             hilite1.cursor.setPosition(currentPosition+matchPosition);
             hilite1.cursor.setPosition(currentPosition+matchPosition + 1, QTextCursor::KeepAnchor);
-            hilite1.format.setBackground(m_highlighter->color(SyntaxHighlighter::MatchedPar));
+            hilite1.format.setBackground(m_highlighter->colorForRole(SyntaxHighlighter::MatchedParens));
 
             QTextEdit::ExtraSelection hilite2;
             hilite2.cursor = textCursor();
             hilite2.cursor.setPosition(currentPosition+firstToken.pos());
             hilite2.cursor.setPosition(currentPosition+firstToken.pos() + 1, QTextCursor::KeepAnchor);
-            hilite2.format.setBackground(m_highlighter->color(SyntaxHighlighter::MatchedPar));
+            hilite2.format.setBackground(m_highlighter->colorForRole(SyntaxHighlighter::MatchedParens));
 
             QList<QTextEdit::ExtraSelection> extras;
             extras << hilite1;
@@ -695,9 +695,9 @@ void Editor::wheelEvent(QWheelEvent* event)
     event->accept();
 }
 
-void Editor::highlight()
+void Editor::rehighlight()
 {
-    m_highlighter->rehighlight();
+    m_highlighter->update();
 }
 
 void Editor::setAnsAvailable(bool available)

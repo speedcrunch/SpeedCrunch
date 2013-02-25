@@ -57,10 +57,12 @@ public:
 
 signals:
     void angleUnitChanged();
+    void colorSchemeChanged();
     void languageChanged();
     void radixCharacterChanged();
     void resultFormatChanged();
     void resultPrecisionChanged();
+    void syntaxHighlightingChanged();
 
 public slots:
     void copy();
@@ -68,6 +70,7 @@ public slots:
 
 private slots:
     void activate();
+    void applySelectedColorScheme();
     void clearEditor();
     void clearHistory();
     void copyResultToClipboard();
@@ -233,7 +236,7 @@ private:
         QAction* settingsBehaviorSaveVariablesOnExit;
         QAction* settingsBehaviorPartialResults;
         QAction* settingsBehaviorAutoCompletion;
-        QAction* settingsBehaviorSyntaxHilite;
+        QAction* settingsBehaviorSyntaxHighlighting;
         QAction* settingsBehaviorAutoAns;
         QAction* settingsBehaviorLeaveLastExpression;
         QAction* settingsBehaviorAlwaysOnTop;
@@ -242,6 +245,9 @@ private:
         QAction* settingsDisplayZoomIn;
         QAction* settingsDisplayZoomOut;
         QAction* settingsDisplayFont;
+        QAction* settingsDisplayColorSchemeStandard;
+        QAction* settingsDisplayColorSchemeSublime;
+        QAction* settingsDisplayColorSchemeTerminal;
         QAction* settingsRadixCharDefault;
         QAction* settingsRadixCharDot;
         QAction* settingsRadixCharComma;
@@ -256,6 +262,7 @@ private:
 
     struct ActionGroups {
         QActionGroup* angle;
+        QActionGroup* colorScheme;
         QActionGroup* digits;
         QActionGroup* resultFormat;
         QActionGroup* radixChar;
@@ -264,6 +271,7 @@ private:
     struct Menus {
         QMenu* angleUnit;
         QMenu* behavior;
+        QMenu* colorScheme;
         QMenu* decimal;
         QMenu* display;
         QMenu* edit;

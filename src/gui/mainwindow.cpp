@@ -35,6 +35,7 @@
 #include "gui/historydock.h"
 #include "gui/historywidget.h"
 #include "gui/resultdisplay.h"
+#include "gui/syntaxhighlighter.h"
 #include "gui/tipwidget.h"
 #include "gui/variablesdock.h"
 #include "math/floatconfig.h"
@@ -153,11 +154,14 @@ void MainWindow::createActions()
     m_actions.settingsBehaviorPartialResults = new QAction(this);
     m_actions.settingsBehaviorSaveHistoryOnExit = new QAction(this);
     m_actions.settingsBehaviorSaveVariablesOnExit = new QAction(this);
-    m_actions.settingsBehaviorSyntaxHilite = new QAction(this);
+    m_actions.settingsBehaviorSyntaxHighlighting = new QAction(this);
     m_actions.settingsBehaviorAutoResultToClipboard = new QAction(this);
+    m_actions.settingsDisplayColorSchemeStandard = new QAction(this);
+    m_actions.settingsDisplayColorSchemeSublime = new QAction(this);
+    m_actions.settingsDisplayColorSchemeTerminal = new QAction(this);
+    m_actions.settingsDisplayFont = new QAction(this);
     m_actions.settingsDisplayZoomIn = new QAction(this);
     m_actions.settingsDisplayZoomOut = new QAction(this);
-    m_actions.settingsDisplayFont = new QAction(this);
     m_actions.settingsLanguage = new QAction(this);
     m_actions.settingsRadixCharComma = new QAction(this);
     m_actions.settingsRadixCharDefault = new QAction(this);
@@ -191,8 +195,11 @@ void MainWindow::createActions()
     m_actions.settingsBehaviorPartialResults->setCheckable(true);
     m_actions.settingsBehaviorSaveHistoryOnExit->setCheckable(true);
     m_actions.settingsBehaviorSaveVariablesOnExit->setCheckable(true);
-    m_actions.settingsBehaviorSyntaxHilite->setCheckable(true);
+    m_actions.settingsBehaviorSyntaxHighlighting->setCheckable(true);
     m_actions.settingsBehaviorAutoResultToClipboard->setCheckable(true);
+    m_actions.settingsDisplayColorSchemeStandard->setCheckable(true);
+    m_actions.settingsDisplayColorSchemeSublime->setCheckable(true);
+    m_actions.settingsDisplayColorSchemeTerminal->setCheckable(true);
     m_actions.settingsRadixCharComma->setCheckable(true);
     m_actions.settingsRadixCharDefault->setCheckable(true);
     m_actions.settingsRadixCharDot->setCheckable(true);
@@ -218,6 +225,10 @@ void MainWindow::createActions()
     m_actions.viewMenuBar->setCheckable(true);
     m_actions.viewStatusBar->setCheckable(true);
     m_actions.viewVariables->setCheckable(true);
+
+    m_actions.settingsDisplayColorSchemeStandard->setData(SyntaxHighlighter::Standard);
+    m_actions.settingsDisplayColorSchemeSublime->setData(SyntaxHighlighter::Sublime);
+    m_actions.settingsDisplayColorSchemeTerminal->setData(SyntaxHighlighter::Terminal);
 }
 
 void MainWindow::retranslateText()
@@ -305,7 +316,7 @@ void MainWindow::setActionsText()
     m_actions.settingsBehaviorPartialResults->setText(MainWindow::tr("&Partial Results"));
     m_actions.settingsBehaviorSaveHistoryOnExit->setText(MainWindow::tr("Save &History on Exit"));
     m_actions.settingsBehaviorSaveVariablesOnExit->setText(MainWindow::tr("Save &Variables on Exit"));
-    m_actions.settingsBehaviorSyntaxHilite->setText(MainWindow::tr("Syntax &Highlighting"));
+    m_actions.settingsBehaviorSyntaxHighlighting->setText(MainWindow::tr("Syntax &Highlighting"));
     m_actions.settingsBehaviorLeaveLastExpression->setText(MainWindow::tr("Leave &Last Expression"));
     m_actions.settingsBehaviorAutoResultToClipboard->setText(MainWindow::tr("Automatic &Result to Clipboard"));
     m_actions.settingsRadixCharComma->setText(MainWindow::tr("&Comma"));
@@ -324,9 +335,12 @@ void MainWindow::setActionsText()
     m_actions.settingsResultFormatHexadecimal->setText(MainWindow::tr("&Hexadecimal"));
     m_actions.settingsResultFormatOctal->setText(MainWindow::tr("&Octal"));
     m_actions.settingsResultFormatScientific->setText(MainWindow::tr("&Scientific"));
+    m_actions.settingsDisplayColorSchemeStandard->setText(MainWindow::tr("Standard"));
+    m_actions.settingsDisplayColorSchemeSublime->setText(MainWindow::tr("Sublime"));
+    m_actions.settingsDisplayColorSchemeTerminal->setText(MainWindow::tr("Terminal"));
+    m_actions.settingsDisplayFont->setText(MainWindow::tr("&Font..."));
     m_actions.settingsDisplayZoomIn->setText(MainWindow::tr("Zoom &In"));
     m_actions.settingsDisplayZoomOut->setText(MainWindow::tr("Zoom &Out"));
-    m_actions.settingsDisplayFont->setText(MainWindow::tr("&Font..."));
     m_actions.settingsLanguage->setText(MainWindow::tr("&Language..."));
 
     m_actions.helpAboutQt->setText(MainWindow::tr("About &Qt"));
@@ -363,6 +377,11 @@ void MainWindow::createActionGroups()
     m_actionGroups.angle = new QActionGroup(this);
     m_actionGroups.angle->addAction(m_actions.settingsAngleUnitRadian);
     m_actionGroups.angle->addAction(m_actions.settingsAngleUnitDegree);
+
+    m_actionGroups.colorScheme = new QActionGroup(this);
+    m_actionGroups.colorScheme->addAction(m_actions.settingsDisplayColorSchemeStandard);
+    m_actionGroups.colorScheme->addAction(m_actions.settingsDisplayColorSchemeSublime);
+    m_actionGroups.colorScheme->addAction(m_actions.settingsDisplayColorSchemeTerminal);
 }
 
 void MainWindow::createActionShortcuts()
@@ -453,6 +472,7 @@ void MainWindow::createMenus()
     m_menus.decimal->addAction(m_actions.settingsResultFormatEngineering);
     m_menus.decimal->addAction(m_actions.settingsResultFormatScientific);
     m_menus.decimal->addSeparator();
+
     m_menus.precision = m_menus.decimal->addMenu("");
     m_menus.precision->addAction(m_actions.settingsResultFormatAutoPrecision);
     m_menus.precision->addAction(m_actions.settingsResultFormat2Digits);
@@ -486,7 +506,7 @@ void MainWindow::createMenus()
     m_menus.behavior->addAction(m_actions.settingsBehaviorPartialResults);
     m_menus.behavior->addAction(m_actions.settingsBehaviorAutoAns);
     m_menus.behavior->addAction(m_actions.settingsBehaviorAutoCompletion);
-    m_menus.behavior->addAction(m_actions.settingsBehaviorSyntaxHilite);
+    m_menus.behavior->addAction(m_actions.settingsBehaviorSyntaxHighlighting);
     m_menus.behavior->addAction(m_actions.settingsBehaviorLeaveLastExpression);
     m_menus.behavior->addSeparator();
     m_menus.behavior->addAction(m_actions.settingsBehaviorAlwaysOnTop);
@@ -494,10 +514,13 @@ void MainWindow::createMenus()
     m_menus.behavior->addAction(m_actions.settingsBehaviorAutoResultToClipboard);
 
     m_menus.display = m_menus.settings->addMenu("");
+    m_menus.colorScheme = m_menus.display->addMenu("");
+    m_menus.colorScheme->addAction(m_actions.settingsDisplayColorSchemeStandard);
+    m_menus.colorScheme->addAction(m_actions.settingsDisplayColorSchemeSublime);
+    m_menus.colorScheme->addAction(m_actions.settingsDisplayColorSchemeTerminal);
+    m_menus.display->addAction(m_actions.settingsDisplayFont);
     m_menus.display->addAction(m_actions.settingsDisplayZoomIn);
     m_menus.display->addAction(m_actions.settingsDisplayZoomOut);
-    m_menus.display->addSeparator();
-    m_menus.display->addAction(m_actions.settingsDisplayFont);
 
     m_menus.settings->addAction(m_actions.settingsLanguage);
 
@@ -527,6 +550,7 @@ void MainWindow::setMenusText()
     m_menus.angleUnit->setTitle(MainWindow::tr("&Angle Unit"));
     m_menus.behavior->setTitle(MainWindow::tr("&Behavior"));
     m_menus.display->setTitle(MainWindow::tr("&Display"));
+    m_menus.colorScheme->setTitle(MainWindow::tr("Color Scheme"));
     m_menus.help->setTitle(MainWindow::tr("&Help"));
 }
 
@@ -797,7 +821,7 @@ void MainWindow::createFixedConnections()
     connect(m_actions.settingsBehaviorPartialResults, SIGNAL(toggled(bool)), SLOT(setAutoCalcEnabled(bool)));
     connect(m_actions.settingsBehaviorSaveHistoryOnExit, SIGNAL(toggled(bool)), SLOT(setHistorySaveEnabled(bool)));
     connect(m_actions.settingsBehaviorSaveVariablesOnExit, SIGNAL(toggled(bool)), SLOT(setVariableSaveEnabled(bool)));
-    connect(m_actions.settingsBehaviorSyntaxHilite, SIGNAL(toggled(bool)), SLOT(setSyntaxHighlightingEnabled(bool)));
+    connect(m_actions.settingsBehaviorSyntaxHighlighting, SIGNAL(toggled(bool)), SLOT(setSyntaxHighlightingEnabled(bool)));
     connect(m_actions.settingsBehaviorLeaveLastExpression, SIGNAL(toggled(bool)), SLOT(setLeaveLastExpressionEnabled(bool)));
     connect(m_actions.settingsBehaviorAutoResultToClipboard, SIGNAL(toggled(bool)), SLOT(setAutoResultToClipboardEnabled(bool)));
 
@@ -835,10 +859,18 @@ void MainWindow::createFixedConnections()
     connect(this, SIGNAL(radixCharacterChanged()), m_widgets.display, SLOT(refresh()));
     connect(this, SIGNAL(resultFormatChanged()), m_widgets.display, SLOT(refresh()));
     connect(this, SIGNAL(resultPrecisionChanged()), m_widgets.display, SLOT(refresh()));
+    connect(this, SIGNAL(colorSchemeChanged()), m_widgets.display, SLOT(rehighlight()));
+    connect(this, SIGNAL(colorSchemeChanged()), m_widgets.editor, SLOT(rehighlight()));
+    connect(this, SIGNAL(syntaxHighlightingChanged()), m_widgets.display, SLOT(rehighlight()));
+    connect(this, SIGNAL(syntaxHighlightingChanged()), m_widgets.editor, SLOT(rehighlight()));
 
+    connect(m_actions.settingsDisplayFont, SIGNAL(triggered()), SLOT(showFontDialog()));
     connect(m_actions.settingsDisplayZoomOut, SIGNAL(triggered()), SLOT(zoomOut()));
     connect(m_actions.settingsDisplayZoomIn, SIGNAL(triggered()), SLOT(zoomIn()));
-    connect(m_actions.settingsDisplayFont, SIGNAL(triggered()), SLOT(showFontDialog()));
+
+    QList<QAction*> colorSchemeActions = m_actionGroups.colorScheme->actions();
+    for (int i = 0; i < colorSchemeActions.size(); ++i)
+        connect(colorSchemeActions.at(i), SIGNAL(triggered()), SLOT(applySelectedColorScheme()));
 
     connect(this, SIGNAL(languageChanged()), SLOT(retranslateText()));
 
@@ -915,7 +947,7 @@ void MainWindow::applySettings()
     m_actions.settingsBehaviorMinimizeToTray->setChecked(m_settings->systemTrayIconVisible);
 
     if (m_settings->syntaxHighlighting)
-        m_actions.settingsBehaviorSyntaxHilite->setChecked(true);
+        m_actions.settingsBehaviorSyntaxHighlighting->setChecked(true);
     else
         setSyntaxHighlightingEnabled(false);
 
@@ -927,6 +959,13 @@ void MainWindow::applySettings()
     QFont font;
     font.fromString(m_settings->displayFont);
     m_widgets.display->setFont(font);
+
+    if (m_settings->colorScheme == SyntaxHighlighter::Standard)
+        m_actions.settingsDisplayColorSchemeStandard->setChecked(true);
+    else if (m_settings->colorScheme == SyntaxHighlighter::Sublime)
+        m_actions.settingsDisplayColorSchemeSublime->setChecked(true);
+    else if (m_settings->colorScheme == SyntaxHighlighter::Terminal)
+        m_actions.settingsDisplayColorSchemeTerminal->setChecked(true);
 
     m_actions.viewStatusBar->setChecked(m_settings->statusBarVisible);
 
@@ -1146,6 +1185,12 @@ void MainWindow::setResultPrecision50Digits()
 void MainWindow::setResultPrecisionAutomatic()
 {
     setResultPrecision(-1);
+}
+
+void MainWindow::applySelectedColorScheme()
+{
+    m_settings->colorScheme = m_actionGroups.colorScheme->checkedAction()->data().toInt();
+    emit colorSchemeChanged();
 }
 
 void MainWindow::selectEditorExpression()
@@ -1415,8 +1460,7 @@ void MainWindow::setSystemTrayIconEnabled(bool b)
 void MainWindow::setSyntaxHighlightingEnabled(bool b)
 {
     m_settings->syntaxHighlighting = b;
-    m_widgets.editor->highlight();
-    m_widgets.display->highlight();
+    emit syntaxHighlightingChanged();
 }
 
 void MainWindow::setAutoResultToClipboardEnabled(bool b)

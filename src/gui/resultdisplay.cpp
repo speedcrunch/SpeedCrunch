@@ -1,5 +1,5 @@
 // This file is part of the SpeedCrunch project
-// Copyright (C) 2009, 2011 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2009, 2011, 2013 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -31,52 +31,43 @@
 #include <QtGui/QClipboard>
 #include <QtGui/QScrollBar>
 
-static QString formatNumber(const HNumber &);
+static QString formatNumber(const HNumber&);
 
-ResultDisplay::ResultDisplay(QWidget *parent)
+ResultDisplay::ResultDisplay(QWidget* parent)
     : TextEdit(parent)
     , m_count(0)
-    , m_customAppearance(false)
-    , m_customBackgroundColor(QColor(0, 0, 0))
-    , m_customBackgroundAlternateColor(QColor(21,  21,  21))
-    , m_customTextColor(QColor(255, 255, 255))
     , m_highlighter(new SyntaxHighlighter(this))
 {
-    m_highlighter->rehighlight();
     setBackgroundRole(QPalette::Base);
     setLayoutDirection(Qt::LeftToRight);
     setMinimumWidth(150);
     setReadOnly(true);
     setTabChangesFocus(true);
     setWordWrapMode(QTextOption::WrapAnywhere);
-
-    QFont font;
-    font.setBold(true);
-    setFont(font);
 }
 
-void ResultDisplay::append(const QString &expr, const HNumber &value)
+void ResultDisplay::append(const QString& expression, const HNumber& value)
 {
     if (value.isNan())
         return;
 
     ++m_count;
 
-    appendPlainText(expr);
+    appendPlainText(expression);
     appendPlainText(QLatin1String("= ") + formatNumber(value));
     appendPlainText(QLatin1String(""));
 
     ensureCursorVisible();
 
-    // REFACTOR: this only serves to save a session, nonsense.
-    m_expressions.append(expr);
+    // TODO: Refactor, this only serves to save a session.
+    m_expressions.append(expression);
     const char format = value.format() != 0 ? value.format() : 'e';
     char *str = HMath::format(value, format, DECPRECISION);
     m_results.append(str);
     free(str);
 }
 
-void ResultDisplay::appendHistory(const QStringList &expressions, const QStringList &results)
+void ResultDisplay::appendHistory(const QStringList& expressions, const QStringList& results)
 {
     const int count = expressions.count();
     for (int i = 0 ; i < count; ++i) {
@@ -101,61 +92,9 @@ int ResultDisplay::count() const
     return m_count;
 }
 
-bool ResultDisplay::customAppearance() const
+void ResultDisplay::rehighlight()
 {
-    return m_customAppearance;
-}
-
-QColor ResultDisplay::customBackgroundColor() const
-{
-    return m_customBackgroundColor;
-}
-
-QColor ResultDisplay::customBackgroundAlternateColor() const
-{
-    return m_customBackgroundAlternateColor;
-}
-
-QColor ResultDisplay::customTextColor() const
-{
-    return m_customTextColor;
-}
-
-void ResultDisplay::setCustomAppearance(bool custom)
-{
-    m_customAppearance = custom;
-    QColor bgcolor = QApplication::palette().base().color();
-    if (custom)
-        bgcolor = customBackgroundColor();
-
-    QPalette pal = palette();
-    pal.setColor(QPalette::Background, bgcolor);
-    setPalette(pal);
-
-    refresh();
-}
-
-void ResultDisplay::setCustomBackgroundColor(const QColor &base, const QColor &alternate)
-{
-    m_customBackgroundColor = base;
-    m_customBackgroundAlternateColor = alternate;
-    if (m_customAppearance) {
-        QPalette pal = palette();
-        pal.setColor(QPalette::Base, base);
-        setPalette(pal);
-    }
-    refresh();
-}
-
-void ResultDisplay::setCustomTextColor(const QColor &c)
-{
-    m_customTextColor = c;
-    refresh();
-}
-
-void ResultDisplay::highlight()
-{
-    m_highlighter->rehighlight();
+    m_highlighter->update();
 }
 
 void ResultDisplay::clear()
@@ -174,11 +113,11 @@ void ResultDisplay::refresh()
     appendHistory(expressions, results);
 }
 
-static QString formatNumber(const HNumber &value)
+static QString formatNumber(const HNumber& value)
 {
-    Settings *settings = Settings::instance();
+    Settings* settings = Settings::instance();
     const char format = value.format() != 0 ? value.format() : settings->resultFormat;
-    char * str = HMath::format(value, format, settings->resultPrecision);
+    char* str = HMath::format(value, format, settings->resultPrecision);
     QString s = QString::fromLatin1(str);
     free(str);
     if (settings->radixCharacter() != '.')
