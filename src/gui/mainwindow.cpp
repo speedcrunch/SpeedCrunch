@@ -180,6 +180,7 @@ void MainWindow::createActions()
     m_actions.settingsResultFormatOctal = new QAction(this);
     m_actions.settingsResultFormatScientific = new QAction(this);
     m_actions.helpAbout = new QAction(this);
+    m_actions.helpFeedback = new QAction(this);
     // Shortcuts.
     m_actions.scrollDown = new QAction(this);
     m_actions.scrollUp = new QAction(this);
@@ -342,6 +343,7 @@ void MainWindow::setActionsText()
     m_actions.settingsDisplayZoomOut->setText(MainWindow::tr("Zoom &Out"));
     m_actions.settingsLanguage->setText(MainWindow::tr("&Language..."));
 
+    m_actions.helpFeedback->setText(MainWindow::tr("Send &Feedback"));
     m_actions.helpAbout->setText(MainWindow::tr("About &SpeedCrunch"));
 
     m_actions.scrollDown->setText(MainWindow::tr("Scroll Display Down"));
@@ -524,6 +526,7 @@ void MainWindow::createMenus()
 
     m_menus.help = new QMenu("", this);
     menuBar()->addMenu(m_menus.help);
+    m_menus.help->addAction(m_actions.helpFeedback);
     m_menus.help->addAction(m_actions.helpAbout);
 
     addActions(menuBar()->actions());
@@ -843,6 +846,7 @@ void MainWindow::createFixedConnections()
     connect(m_actions.settingsLanguage, SIGNAL(triggered()), SLOT(showLanguageChooserDialog()));
 
     connect(m_actions.helpAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
+    connect(m_actions.helpFeedback, SIGNAL(triggered()), SLOT(openFeedbackURL()));
 
     connect(m_widgets.editor, SIGNAL(autoCalcDisabled()), SLOT(hideAutoCalcTip()));
     connect(m_widgets.editor, SIGNAL(autoCalcEnabled(const QString&)), SLOT(showAutoCalcTip(const QString&)));
@@ -2008,6 +2012,11 @@ void MainWindow::minimizeToSystemTray()
             QTimer::singleShot(500, this, SLOT(showSystemTrayMessage()));
         m_conditions.trayNotify = false;
     }
+}
+
+void MainWindow::openFeedbackURL()
+{
+    QDesktopServices::openUrl(QUrl(QString::fromLatin1("https://code.google.com/p/speedcrunch/issues/entry")));
 }
 
 void MainWindow::copy()

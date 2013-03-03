@@ -90,6 +90,7 @@ private slots:
     void insertTextIntoEditor(const QString&);
     void insertVariableIntoEditor(const QString&);
     void minimizeToSystemTray();
+    void openFeedbackURL();
     void retranslateText();
     void saveSession();
     void scrollDown();
@@ -252,8 +253,8 @@ private:
         QAction* settingsRadixCharComma;
         QAction* settingsLanguage;
         QAction* helpTipOfTheDay;
+        QAction* helpFeedback;
         QAction* helpAbout;
-        QAction* helpAboutQt;
         // Shortcuts.
         QAction* scrollDown;
         QAction* scrollUp;
