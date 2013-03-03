@@ -181,6 +181,7 @@ void MainWindow::createActions()
     m_actions.settingsResultFormatScientific = new QAction(this);
     m_actions.helpFeedback = new QAction(this);
     m_actions.helpCommunity = new QAction(this);
+    m_actions.helpNews = new QAction(this);
     m_actions.helpAbout = new QAction(this);
     // Shortcuts.
     m_actions.scrollDown = new QAction(this);
@@ -346,6 +347,7 @@ void MainWindow::setActionsText()
 
     m_actions.helpFeedback->setText(MainWindow::tr("Send &Feedback"));
     m_actions.helpCommunity->setText(MainWindow::tr("Join &Community"));
+    m_actions.helpNews->setText(MainWindow::tr("&News Feed"));
     m_actions.helpAbout->setText(MainWindow::tr("About &SpeedCrunch"));
 
     m_actions.scrollDown->setText(MainWindow::tr("Scroll Display Down"));
@@ -530,6 +532,7 @@ void MainWindow::createMenus()
     menuBar()->addMenu(m_menus.help);
     m_menus.help->addAction(m_actions.helpFeedback);
     m_menus.help->addAction(m_actions.helpCommunity);
+    m_menus.help->addAction(m_actions.helpNews);
     m_menus.help->addAction(m_actions.helpAbout);
 
     addActions(menuBar()->actions());
@@ -850,6 +853,7 @@ void MainWindow::createFixedConnections()
 
     connect(m_actions.helpFeedback, SIGNAL(triggered()), SLOT(openFeedbackURL()));
     connect(m_actions.helpCommunity, SIGNAL(triggered()), SLOT(openCommunityURL()));
+    connect(m_actions.helpNews, SIGNAL(triggered()), SLOT(openNewsURL()));
     connect(m_actions.helpAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
 
     connect(m_widgets.editor, SIGNAL(autoCalcDisabled()), SLOT(hideAutoCalcTip()));
@@ -2026,6 +2030,11 @@ void MainWindow::openFeedbackURL()
 void MainWindow::openCommunityURL()
 {
     QDesktopServices::openUrl(QUrl(QString::fromLatin1("https://groups.google.com/group/speedcrunch/")));
+}
+
+void MainWindow::openNewsURL()
+{
+    QDesktopServices::openUrl(QUrl(QString::fromLatin1("http://speedcrunch.blogspot.com/")));
 }
 
 void MainWindow::copy()

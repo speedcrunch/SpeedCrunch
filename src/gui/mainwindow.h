@@ -92,6 +92,7 @@ private slots:
     void minimizeToSystemTray();
     void openFeedbackURL();
     void openCommunityURL();
+    void openNewsURL();
     void retranslateText();
     void saveSession();
     void scrollDown();
@@ -256,6 +257,7 @@ private:
         QAction* helpTipOfTheDay;
         QAction* helpFeedback;
         QAction* helpCommunity;
+        QAction* helpNews;
         QAction* helpAbout;
         // Shortcuts.
         QAction* scrollDown;
