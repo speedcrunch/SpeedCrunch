@@ -179,6 +179,7 @@ void MainWindow::createActions()
     m_actions.settingsResultFormatHexadecimal = new QAction(this);
     m_actions.settingsResultFormatOctal = new QAction(this);
     m_actions.settingsResultFormatScientific = new QAction(this);
+    m_actions.helpUpdates = new QAction(this);
     m_actions.helpFeedback = new QAction(this);
     m_actions.helpCommunity = new QAction(this);
     m_actions.helpNews = new QAction(this);
@@ -345,6 +346,7 @@ void MainWindow::setActionsText()
     m_actions.settingsDisplayZoomOut->setText(MainWindow::tr("Zoom &Out"));
     m_actions.settingsLanguage->setText(MainWindow::tr("&Language..."));
 
+    m_actions.helpUpdates->setText(MainWindow::tr("Check &Updates"));
     m_actions.helpFeedback->setText(MainWindow::tr("Send &Feedback"));
     m_actions.helpCommunity->setText(MainWindow::tr("Join &Community"));
     m_actions.helpNews->setText(MainWindow::tr("&News Feed"));
@@ -530,6 +532,7 @@ void MainWindow::createMenus()
 
     m_menus.help = new QMenu("", this);
     menuBar()->addMenu(m_menus.help);
+    m_menus.help->addAction(m_actions.helpUpdates);
     m_menus.help->addAction(m_actions.helpFeedback);
     m_menus.help->addAction(m_actions.helpCommunity);
     m_menus.help->addAction(m_actions.helpNews);
@@ -851,6 +854,7 @@ void MainWindow::createFixedConnections()
 
     connect(m_actions.settingsLanguage, SIGNAL(triggered()), SLOT(showLanguageChooserDialog()));
 
+    connect(m_actions.helpUpdates, SIGNAL(triggered()), SLOT(openUpdatesURL()));
     connect(m_actions.helpFeedback, SIGNAL(triggered()), SLOT(openFeedbackURL()));
     connect(m_actions.helpCommunity, SIGNAL(triggered()), SLOT(openCommunityURL()));
     connect(m_actions.helpNews, SIGNAL(triggered()), SLOT(openNewsURL()));
@@ -2020,6 +2024,11 @@ void MainWindow::minimizeToSystemTray()
             QTimer::singleShot(500, this, SLOT(showSystemTrayMessage()));
         m_conditions.trayNotify = false;
     }
+}
+
+void MainWindow::openUpdatesURL()
+{
+    QDesktopServices::openUrl(QUrl(QString::fromLatin1("http://speedcrunch.org")));
 }
 
 void MainWindow::openFeedbackURL()

@@ -90,6 +90,7 @@ private slots:
     void insertTextIntoEditor(const QString&);
     void insertVariableIntoEditor(const QString&);
     void minimizeToSystemTray();
+    void openUpdatesURL();
     void openFeedbackURL();
     void openCommunityURL();
     void openNewsURL();
@@ -255,6 +256,7 @@ private:
         QAction* settingsRadixCharComma;
         QAction* settingsLanguage;
         QAction* helpTipOfTheDay;
+        QAction* helpUpdates;
         QAction* helpFeedback;
         QAction* helpCommunity;
         QAction* helpNews;
