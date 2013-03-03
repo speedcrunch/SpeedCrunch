@@ -538,7 +538,7 @@ float_lngamma(
   floatnum x,
   int digits)
 {
-  if (0 >= x)
+  if (!x)
     return _seterror(x, OutOfDomain);
   return chckmathparam(x, digits) && _lngamma(x, digits)?
           1 : _setnan(x);
