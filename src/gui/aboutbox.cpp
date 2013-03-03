@@ -2,7 +2,7 @@
   This file is part of the SpeedCrunch project
   Copyright (C) 2004, 2006 Ariya Hidayat <ariya@kde.org>
   Copyright (C) 2005, 2006 Johan Thelin <e8johan@gmail.com>
-  Copyright (C) 2007, 2009 Helder Correia <helder.pereira.correia@gmail.com>
+  Copyright (C) 2007, 2009, 2013 Helder Correia <helder.pereira.correia@gmail.com>
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -29,28 +29,25 @@
 #include <QtGui/QTextEdit>
 #include <QtGui/QVBoxLayout>
 
-#define MAKE_STRING(a) DO_MAKE_STRING(a)
-#define DO_MAKE_STRING(a) # a
-
-AboutBox::AboutBox(QWidget *parent, Qt::WindowFlags f)
+AboutBox::AboutBox(QWidget* parent, Qt::WindowFlags f)
     : QDialog(parent, f)
 {
     setObjectName("AboutBox");
     setWindowTitle(tr("About SpeedCrunch"));
 
-    QLabel *infoLabel = new QLabel(this);
-    QString website = "http://www.speedcrunch.org";
+    QLabel* infoLabel = new QLabel(this);
+    QString url = "http://www.speedcrunch.org";
     QString info = "<b>";
-    info += QString("SpeedCrunch %1").arg(MAKE_STRING(SPEEDCRUNCH_VERSION));
+    info += QString("SpeedCrunch %1").arg(SPEEDCRUNCH_VERSION);
 #ifdef SPEEDCRUNCH_PORTABLE
     info += " (Portable Edition)";
 #endif
-    info += "</b><br>";
-    info += QString("<a href=\"%1\">%2</a>").arg(website).arg(website);
+    info += QString("</b> (Qt %1)<br>").arg(QT_VERSION_STR);
+    info += QString("<a href=\"%1\">%2</a>").arg(url).arg(url);
     infoLabel->setText(info);
     infoLabel->setOpenExternalLinks(true);
 
-    QLabel *iconLabel = new QLabel(this);
+    QLabel* iconLabel = new QLabel(this);
     iconLabel->setPixmap(QPixmap(":/speedcrunch.png"));
     iconLabel->setAlignment(Qt::AlignVCenter | Qt::AlignRight);
 
@@ -203,27 +200,24 @@ AboutBox::AboutBox(QWidget *parent, Qt::WindowFlags f)
               "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the "
               "GNU General Public License for more details.");
     msg += "</p>";
-    msg +=  "<p>&nbsp;</p>";
-    msg += QString("<p>%1</p>")
-               .arg(tr("Visit <b>http://www.speedcrunch.org</b> for more information!"));
 
     msg += "</center>";
 
-    QTextEdit *textEdit = new QTextEdit(this);
+    QTextEdit* textEdit = new QTextEdit(this);
     textEdit->setReadOnly(true);
     textEdit->setText(msg);
 
-    QPushButton *closeButton = new QPushButton(this);
+    QPushButton* closeButton = new QPushButton(this);
     closeButton->setObjectName("CloseButton");
     closeButton->setText(tr("Close"));
     QObject::connect(closeButton, SIGNAL(clicked()), SLOT(accept()));
 
-    QSpacerItem *buttonSpacer = new QSpacerItem(20, 20, QSizePolicy::Expanding,
+    QSpacerItem* buttonSpacer = new QSpacerItem(20, 20, QSizePolicy::Expanding,
                                                 QSizePolicy::Minimum);
 
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
-    QHBoxLayout *topLayout = new QHBoxLayout();
-    QHBoxLayout *buttonLayout = new QHBoxLayout();
+    QVBoxLayout* mainLayout = new QVBoxLayout(this);
+    QHBoxLayout* topLayout = new QHBoxLayout();
+    QHBoxLayout* buttonLayout = new QHBoxLayout();
 
     mainLayout->addLayout(topLayout);
     mainLayout->addWidget(textEdit);
@@ -237,8 +231,4 @@ AboutBox::AboutBox(QWidget *parent, Qt::WindowFlags f)
     buttonLayout->addWidget(closeButton);
 
     setWindowTitle(tr("About SpeedCrunch"));
-}
-
-AboutBox::~AboutBox()
-{
 }

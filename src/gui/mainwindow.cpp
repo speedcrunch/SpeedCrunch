@@ -180,7 +180,6 @@ void MainWindow::createActions()
     m_actions.settingsResultFormatOctal = new QAction(this);
     m_actions.settingsResultFormatScientific = new QAction(this);
     m_actions.helpAbout = new QAction(this);
-    m_actions.helpAboutQt = new QAction(this);
     // Shortcuts.
     m_actions.scrollDown = new QAction(this);
     m_actions.scrollUp = new QAction(this);
@@ -343,7 +342,6 @@ void MainWindow::setActionsText()
     m_actions.settingsDisplayZoomOut->setText(MainWindow::tr("Zoom &Out"));
     m_actions.settingsLanguage->setText(MainWindow::tr("&Language..."));
 
-    m_actions.helpAboutQt->setText(MainWindow::tr("About &Qt"));
     m_actions.helpAbout->setText(MainWindow::tr("About &SpeedCrunch"));
 
     m_actions.scrollDown->setText(MainWindow::tr("Scroll Display Down"));
@@ -527,7 +525,6 @@ void MainWindow::createMenus()
     m_menus.help = new QMenu("", this);
     menuBar()->addMenu(m_menus.help);
     m_menus.help->addAction(m_actions.helpAbout);
-    m_menus.help->addAction(m_actions.helpAboutQt);
 
     addActions(menuBar()->actions());
     //addAction(m_actions.settingsDisplayZoomOut);
@@ -845,7 +842,6 @@ void MainWindow::createFixedConnections()
 
     connect(m_actions.settingsLanguage, SIGNAL(triggered()), SLOT(showLanguageChooserDialog()));
 
-    connect(m_actions.helpAboutQt, SIGNAL(triggered()), SLOT(showAboutQtDialog()));
     connect(m_actions.helpAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
 
     connect(m_widgets.editor, SIGNAL(autoCalcDisabled()), SLOT(hideAutoCalcTip()));
@@ -1096,13 +1092,8 @@ bool MainWindow::event(QEvent* event)
 void MainWindow::showAboutDialog()
 {
     AboutBox dialog(this);
-    dialog.resize(400, 300);
+    dialog.resize(400, 400);
     dialog.exec();
-}
-
-void MainWindow::showAboutQtDialog()
-{
-    QMessageBox::aboutQt(this, tr("About Qt"));
 }
 
 void MainWindow::clearHistory()

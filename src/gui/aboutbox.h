@@ -24,13 +24,9 @@
 
 #include <QtGui/QDialog>
 
-class AboutBox : public QDialog
-{
-    Q_OBJECT
-
+class AboutBox : public QDialog {
 public:
     explicit AboutBox(QWidget *parent = 0, Qt::WindowFlags f = 0);
-    ~AboutBox();
 
 private:
     Q_DISABLE_COPY(AboutBox);

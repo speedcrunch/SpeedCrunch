@@ -137,7 +137,6 @@ private slots:
     void setVariablesDockVisible(bool);
     void setWidgetsDirection();
     void showAboutDialog();
-    void showAboutQtDialog();
     void showAutoCalcTip(const QString&);
     void showFontDialog();
     void showLanguageChooserDialog();
