@@ -16,7 +16,7 @@ core/constants.h
 core/evaluator.h
 core/functions.h
 #core/settings.h
-gui/aboutbox.h
+#gui/aboutbox.h
 gui/application.h
 gui/autohidelabel.h
 gui/bookdock.h

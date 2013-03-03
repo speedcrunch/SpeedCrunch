@@ -7,7 +7,7 @@ lessThan(QT_VER_MAJ, 4) | lessThan(QT_VER_MIN, 6) {
     error(Qt 4.6 or newer is required but version $$[QT_VERSION] was detected.)
 }
 
-DEFINES += SPEEDCRUNCH_VERSION=trunk
+DEFINES += SPEEDCRUNCH_VERSION=\\\"master\\\"
 
 win32:DEFINES += _USE_MATH_DEFINES
 
