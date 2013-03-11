@@ -74,6 +74,7 @@ struct Evaluator::Private
     QStringList identifiers;
     QMap<QString,Variable> variables;
     const HNumber & checkOperatorResult(const HNumber &);
+    QString stringFromFunctionError(Function*);
 };
 
 const HNumber& Evaluator::Private::checkOperatorResult( const HNumber & n )
@@ -106,6 +107,45 @@ const HNumber& Evaluator::Private::checkOperatorResult( const HNumber & n )
     return n;
 }
 
+QString Evaluator::Private::stringFromFunctionError(Function* function)
+{
+    if (!function->error())
+        return QString();
+
+    QString result = QString::fromLatin1("<b>%1</b>: ");
+
+    switch (function->error()) {
+    case InvalidParamCount:
+        result += Evaluator::tr("wrong number of arguments");
+        break;
+    case NoOperand:
+        result += Evaluator::tr("does not take NaN as an argument");
+        break;
+    case Overflow:
+    case Underflow:
+    case OutOfLogicRange:
+    case OutOfIntegerRange:
+        result += Evaluator::tr("result out of range");
+        break;
+    case ZeroDivide:
+    case EvalUnstable:
+    case OutOfDomain:
+        result += Evaluator::tr("undefined for argument domain");
+        break;
+    case TooExpensive:
+        result += Evaluator::tr("computation too expensive");
+        break;
+    case BadLiteral:
+    case InvalidPrecision:
+    case InvalidParam:
+        result += Evaluator::tr("internal error, please report a bug");
+        break;
+    default:
+        break;
+    };
+
+    return result.arg(function->identifier());
+}
 
 class TokenStack : public QVector<Token>
 {
@@ -765,7 +805,7 @@ void Evaluator::compile( const Tokens & tokens ) const
                     Token arg = syntaxStack.top();
                     Token id = syntaxStack.top( 1 );
                     if ( ! arg.isOperator() && id.isIdentifier()
-                         && Functions::instance()->function(id.text()) )
+                         && FunctionRepo::instance()->find(id.text()) )
                     {
                         ruleFound = true;
                         d->codes.append( Opcode(Opcode::Function, 1) );
@@ -785,7 +825,7 @@ void Evaluator::compile( const Tokens & tokens ) const
                     Token op = syntaxStack.top( 1 );
                     Token id = syntaxStack.top( 2 );
                     if ( ! x.isOperator() && op.isOperator() && id.isIdentifier()
-                         && Functions::instance()->function(id.text())
+                         && FunctionRepo::instance()->find(id.text())
                          && (op.asOperator() == Token::Plus || op.asOperator() == Token::Minus) )
                     {
                         ruleFound = true;
@@ -807,7 +847,7 @@ void Evaluator::compile( const Tokens & tokens ) const
                     Token op = syntaxStack.top();
                     Token x = syntaxStack.top( 1 );
                     Token id = syntaxStack.top( 2 );
-                    if ( id.isIdentifier() && d->functions->function(id.text()) ) {
+                    if ( id.isIdentifier() && d->functions->find(id.text()) ) {
                         if ( ! x.isOperator() && op.isOperator() &&
                              op.asOperator() == Token::Exclamation )
                         {
@@ -1222,7 +1262,7 @@ HNumber Evaluator::evalNoAssign()
                 if ( has(fname) ) // variable
                     stack.push( get(fname) );
                 else { // function
-                    function = Functions::instance()->function( fname );
+                    function = FunctionRepo::instance()->find( fname );
                     if ( function )
                         refs.push( fname );
                     else {
@@ -1239,7 +1279,7 @@ HNumber Evaluator::evalNoAssign()
                     break;
 
                 fname = refs.pop();
-                function = Functions::instance()->function( fname );
+                function = FunctionRepo::instance()->find( fname );
                 if ( !function ) {
                     d->error = fname + ": " + tr( "unknown function or variable" );
                     return HMath::nan();
@@ -1254,12 +1294,16 @@ HNumber Evaluator::evalNoAssign()
                 for( ; index; --index )
                     args.insert( args.begin(), stack.pop() );
 
-                stack.push( function->exec(args) );
-                if ( ! function->error().isEmpty() ) {
-                    d->error = function->error();
+                if (!args.count()) {
+                    d->error = QString::fromLatin1("%1(%2)").arg(fname).arg(function->usage());
                     return HMath::nan();
                 }
 
+                stack.push( function->exec(args) );
+                if ( function->error() ) {
+                    d->error = d->stringFromFunctionError( function );
+                    return HMath::nan();
+                }
                 break;
 
             default:
@@ -1287,7 +1331,7 @@ HNumber Evaluator::eval()
          || d->assignId == QLatin1String("phi")
          || d->assignId == QLatin1String("e")
          || d->assignId == QLatin1String("ans")
-         || Functions::instance()->function(d->assignId) )
+         || FunctionRepo::instance()->find(d->assignId) )
     {
         d->error = tr( "%1 is a reserved name, please choose another").arg( d->assignId );
         return HMath::nan();
@@ -1424,7 +1468,7 @@ QString Evaluator::autoFix( const QString & expr )
         Tokens tokens = Evaluator::scan( result );
 
         if ( tokens.count() == 1 && tokens.at(0).isIdentifier()
-             && Functions::instance()->function(tokens.at(0).text()) )
+             && FunctionRepo::instance()->find(tokens.at(0).text()) )
         {
             result.append( "(ans)" );
         }

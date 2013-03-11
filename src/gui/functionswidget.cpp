@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2009 Andreas Scherer <andreas_coder@freenet.de>
-// Copyright (C) 2009, 2011 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2009, 2011, 2013 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -31,7 +31,7 @@
 #include <QtGui/QTreeWidget>
 #include <QtGui/QVBoxLayout>
 
-FunctionsWidget::FunctionsWidget(QWidget *parent)
+FunctionsWidget::FunctionsWidget(QWidget* parent)
     : QWidget(parent)
     , m_filterTimer(new QTimer(this))
     , m_functions(new QTreeWidget(this))
@@ -44,7 +44,7 @@ FunctionsWidget::FunctionsWidget(QWidget *parent)
     m_filterTimer->setSingleShot(true);
 
     m_functions->setAutoScroll(true);
-    m_functions->setHorizontalScrollBarPolicy( Qt::ScrollBarAsNeeded);
+    m_functions->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     m_functions->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
     m_functions->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     m_functions->setColumnCount(2);
@@ -58,14 +58,14 @@ FunctionsWidget::FunctionsWidget(QWidget *parent)
     m_noMatchLabel->adjustSize();
     m_noMatchLabel->hide();
 
-    QWidget *searchBox = new QWidget(this);
-    QHBoxLayout *searchLayout = new QHBoxLayout;
+    QWidget* searchBox = new QWidget(this);
+    QHBoxLayout* searchLayout = new QHBoxLayout;
     searchLayout->addWidget(m_searchLabel);
     searchLayout->addWidget(m_searchFilter);
     searchLayout->setMargin(0);
     searchBox->setLayout(searchLayout);
 
-    QVBoxLayout *layout = new QVBoxLayout;
+    QVBoxLayout* layout = new QVBoxLayout;
     layout->setMargin(3);
     layout->addWidget(searchBox);
     layout->addWidget(m_functions);
@@ -76,8 +76,7 @@ FunctionsWidget::FunctionsWidget(QWidget *parent)
     retranslateText();
 
     connect(m_filterTimer, SIGNAL(timeout()), SLOT(fillTable()));
-    connect(m_functions, SIGNAL(itemActivated(QTreeWidgetItem *, int)),
-            SLOT(handleItemActivated(QTreeWidgetItem *, int)));
+    connect(m_functions, SIGNAL(itemActivated(QTreeWidgetItem*, int)), SLOT(handleItemActivated(QTreeWidgetItem*, int)));
     connect(m_searchFilter, SIGNAL(textChanged(const QString &)), SLOT(triggerFilter()));
 }
 
@@ -93,11 +92,10 @@ void FunctionsWidget::fillTable()
     m_filterTimer->stop();
     m_functions->clear();
     QString term = m_searchFilter->text();
-    QStringList functionNames = Functions::instance()->names();
+    QStringList functionNames = FunctionRepo::instance()->getIdentifiers();
 
-    for (int k = 0; k < functionNames.count(); ++k)
-    {
-        Function *f = Functions::instance()->function(functionNames.at(k));
+    for (int k = 0; k < functionNames.count(); ++k) {
+        Function* f = FunctionRepo::instance()->find(functionNames.at(k));
         if (!f)
             continue;
 
@@ -108,7 +106,7 @@ void FunctionsWidget::fillTable()
             || str.at(0).contains(term, Qt::CaseInsensitive)
             || str.at(1).contains(term, Qt::CaseInsensitive))
         {
-            QTreeWidgetItem *item = new QTreeWidgetItem(m_functions, str);
+            QTreeWidgetItem* item = new QTreeWidgetItem(m_functions, str);
             if (layoutDirection() == Qt::LeftToRight) {
                 item->setTextAlignment(0, Qt::AlignLeft);
                 item->setTextAlignment(1, Qt::AlignLeft);
@@ -131,8 +129,8 @@ void FunctionsWidget::fillTable()
         m_noMatchLabel->raise();
     }
 
-  m_searchFilter->setFocus();
-  setUpdatesEnabled(true);
+    m_searchFilter->setFocus();
+    setUpdatesEnabled(true);
 }
 
 void FunctionsWidget::retranslateText()
@@ -149,22 +147,22 @@ void FunctionsWidget::retranslateText()
     fillTable();
 }
 
-QList<QTreeWidgetItem *> FunctionsWidget::selectedItems() const
+QList<QTreeWidgetItem*> FunctionsWidget::selectedItems() const
 {
     return m_functions->selectedItems();
 }
 
-const QTreeWidgetItem *FunctionsWidget::currentItem() const
+const QTreeWidgetItem* FunctionsWidget::currentItem() const
 {
     return m_functions->currentItem();
 }
 
-void FunctionsWidget::handleItemActivated(QTreeWidgetItem *item, int /*column*/)
+void FunctionsWidget::handleItemActivated(QTreeWidgetItem* item, int /*column*/)
 {
     emit functionSelected(item->text(0));
 }
 
-void FunctionsWidget::clearSelection(QTreeWidgetItem * /*item*/)
+void FunctionsWidget::clearSelection(QTreeWidgetItem*)
 {
     m_functions->clearSelection();
 }
@@ -175,13 +173,11 @@ void FunctionsWidget::triggerFilter()
     m_filterTimer->start();
 }
 
-void FunctionsWidget::changeEvent(QEvent *e)
+void FunctionsWidget::changeEvent(QEvent* event)
 {
-    if (e->type() == QEvent::LanguageChange) {
-        Functions::instance()->retranslateText();
+    if (event->type() == QEvent::LanguageChange) {
+        FunctionRepo::instance()->retranslateText();
         retranslateText();
-    }
-    else
-        QWidget::changeEvent(e);
+    } else
+        QWidget::changeEvent(event);
 }
-

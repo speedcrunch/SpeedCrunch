@@ -96,7 +96,7 @@ void SyntaxHighlighter::highlightBlock(const QString& text)
     for (int i = 0; i < tokens.count(); ++i) {
         const Token& token = tokens.at(i);
         const QString text = token.text().toLower();
-        QStringList functionNames = Functions::instance()->names();
+        QStringList functionNames = FunctionRepo::instance()->getIdentifiers();
         QColor color;
 
         switch (token.type()) {

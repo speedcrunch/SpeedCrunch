@@ -395,12 +395,12 @@ void Editor::triggerAutoComplete()
         return;
 
     // Find matches in function names.
-    const QStringList fnames = Functions::instance()->names();
+    const QStringList fnames = FunctionRepo::instance()->getIdentifiers();
     QStringList choices;
     for (int i = 0; i < fnames.count(); ++i) {
         if (fnames.at(i).startsWith(id, Qt::CaseInsensitive)) {
             QString str = fnames.at(i);
-            Function* f = Functions::instance()->function(str);
+            Function* f = FunctionRepo::instance()->find(str);
             if (f)
                 str.append(':').append(f->name());
             choices.append(str);

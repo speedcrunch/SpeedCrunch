@@ -32,7 +32,7 @@ class Constants;
 class ConstantsDock;
 class Editor;
 class Evaluator;
-class Functions;
+class FunctionRepo;
 class FunctionsDock;
 class HistoryDock;
 class ResultDisplay;
@@ -332,7 +332,7 @@ private:
     Constants* m_constants;
     Docks m_docks;
     Evaluator* m_evaluator;
-    Functions* m_functions;
+    FunctionRepo* m_functions;
     Layouts m_layouts;
     Menus m_menus;
     Settings* m_settings;

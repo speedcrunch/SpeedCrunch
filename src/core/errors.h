@@ -26,7 +26,7 @@ extern "C"{
 
 typedef enum
 {
-  Success,
+  Success = 0,
 
 /* a NaN or an empty Variant was submitted as a parameter. Only a few
   functions in the math engine accept such a value. All arithmetic functions
@@ -138,7 +138,7 @@ typedef enum
 /* used with variants, when an operation is not implemented
   for a particular data type.
   used with formats to indicate a not implemented property */
-   NotImplemented,
+  NotImplemented,
 
 /* this value is used internally to indicate the absence of
   any error information altogether */
@@ -151,4 +151,3 @@ typedef enum
 #endif
 
 #endif /* _ERRORS_H */
-

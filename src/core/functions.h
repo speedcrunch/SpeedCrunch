@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2008-2009 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2008-2009, 2013 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -17,68 +17,74 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#ifndef CORE_FUNCTIONS_H
-#define CORE_FUNCTIONS_H
+#ifndef CORE_FUNCTION_H
+#define CORE_FUNCTION_H
 
+#include "core/errors.h"
+#include "math/hmath.h"
+
+#include <QtCore/QHash>
 #include <QtCore/QStringList>
 #include <QtCore/QVector>
 
-#include <memory>
-
 class Function;
-class Functions;
-class HNumber;
 
-typedef HNumber (*FunctionPtr)( Function *, const QVector<HNumber> & );
 
-class Function : public QObject
-{
+class Function : public QObject {
     Q_OBJECT
-
 public:
-    Function( const QString & identifier, FunctionPtr ptr, int argc, QObject * parent = 0 );
-    Function( const QString & identifier, FunctionPtr ptr, QObject * parent = 0  );
-    ~Function();
+    typedef QVector<HNumber> ArgumentList;
+    typedef HNumber (*FunctionImpl)(Function*, const ArgumentList&);
 
-    QString error() const;
-    HNumber exec( const QVector<HNumber> & args );
-    QString identifier() const;
-    QString name() const;
-    void setError( const QString & );
-    void setName( const QString & );
+    Function(const QString& identifier, FunctionImpl ptr, QObject* parent = 0)
+        : QObject(parent)
+        , m_identifier(identifier)
+        , m_ptr(ptr)
+    { }
+
+    const QString& identifier() const { return m_identifier; }
+    const QString& name() const { return m_name; }
+    const QString& usage() const { return m_usage; }
+    Error error() const { return m_error; }
+    HNumber exec(const ArgumentList&);
+
+    void setName(const QString& name) { m_name = name; }
+    void setUsage(const QString& usage) { m_usage = usage; }
+    void setError(Error error) { m_error = error; }
 
 private:
-    struct Private;
-    const std::auto_ptr<Private> d;
-
+    Q_DISABLE_COPY(Function)
     Function();
-    Function( const Function & );
-    Function & operator=( const Function & );
+
+    QString m_identifier;
+    QString m_name;
+    QString m_usage;
+    Error m_error;
+    FunctionImpl m_ptr;
 };
 
-class Functions : public QObject
-{
-  Q_OBJECT
-
+class FunctionRepo : public QObject {
+    Q_OBJECT
 public:
-    static Functions * instance();
-    ~Functions();
+    static FunctionRepo* instance();
 
-    void add( Function * );
-    Function * function( const QString & ) const;
-    QStringList names() const;
+    void insert(Function*);
+    QStringList getIdentifiers() const;
+    Function* find(const QString& identifier) const;
 
 public slots:
     void retranslateText();
 
 private:
-    struct Private;
-    const std::auto_ptr<Private> d;
+    Q_DISABLE_COPY(FunctionRepo)
+    FunctionRepo();
 
-    Functions();
-    Functions( const Functions & );
-    Functions & operator=( const Functions & );
+    void createFunctions();
+    void setFunctionNames();
+    void setNonTranslatableFunctionUsages();
+    void setTranslatableFunctionUsages();
+
+    QHash<QString, Function*> m_functions;
 };
 
-#endif
-
+#endif // CORE_FUNCTION_H

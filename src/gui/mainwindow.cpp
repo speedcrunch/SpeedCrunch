@@ -594,7 +594,7 @@ void MainWindow::createFixedWidgets()
 {
     m_constants = Constants::instance();
     m_evaluator = Evaluator::instance();
-    m_functions = Functions::instance();
+    m_functions = FunctionRepo::instance();
 
     m_widgets.root = new QWidget(this);
     setCentralWidget(m_widgets.root);
@@ -2137,7 +2137,7 @@ void MainWindow::evaluateEditorExpression()
         if (m_settings->variablesDockVisible)
             m_docks.variables->updateList();
         if (m_settings->historyDockVisible) {
-            HistoryWidget* history = qobject_cast<HistoryWidget *>(m_docks.history->widget());
+            HistoryWidget* history = qobject_cast<HistoryWidget*>(m_docks.history->widget());
             history->append(str);
         }
         if (m_settings->autoResultToClipboard)
