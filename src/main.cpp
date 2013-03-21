@@ -23,25 +23,24 @@
 #include <QtCore/QCoreApplication>
 #include <QtGui/QApplication>
 
-int main( int argc, char * argv[] )
+int main(int argc, char* argv[])
 {
-    Application app( argc, argv );
+    Application application(argc, argv);
 
-    if ( app.isRunning() ) {
-        app.sendRaiseRequest();
+    if (application.isRunning()) {
+        application.sendRaiseRequest();
         return 0;
     }
 
-    QCoreApplication::setApplicationName( "speedcrunch" );
-    QCoreApplication::setOrganizationDomain( "speedcrunch.org" );
-    QCoreApplication::setOrganizationName( "SpeedCrunch" );
+    QCoreApplication::setApplicationName("speedcrunch");
+    QCoreApplication::setOrganizationDomain("speedcrunch.org");
+    QCoreApplication::setOrganizationName("SpeedCrunch");
 
-    MainWindow win;
-    win.show();
+    MainWindow window;
+    window.show();
 
-    app.connect( &app, SIGNAL(lastWindowClosed()), &app, SLOT(quit()) );
-    app.connect( &app, SIGNAL(raiseRequested()), &win, SLOT(activate()) );
+    application.connect(&application, SIGNAL(lastWindowClosed()), &application, SLOT(quit()));
+    application.connect(&application, SIGNAL(raiseRequested()), &window, SLOT(activate()));
 
-    return app.exec();
+    return application.exec();
 }
-

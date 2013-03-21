@@ -19,7 +19,6 @@ DEPENDPATH += . \
               core \
               gui \
               locale \
-              main \
               math \
               #test \
               #variant \
@@ -99,7 +98,8 @@ HEADERS += core/constants.h \
 #           variant/formatbase.cpp \
 #           variant/formatreal.cpp
 
-SOURCES += core/constants.cpp \
+SOURCES += main.cpp \
+           core/constants.cpp \
            core/evaluator.cpp \
            core/functions.cpp \
            core/settings.cpp \
@@ -122,7 +122,6 @@ SOURCES += core/constants.cpp \
            gui/variablesdock.cpp \
            gui/variablelistwidget.cpp \
            gui/mainwindow.cpp \
-           main/main.cpp \
            math/floatcommon.c \
            math/floatconst.c \
            math/floatconvert.c \

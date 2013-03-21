@@ -57,6 +57,7 @@ gui/mainwindow.h
 )
 
 set(speedcrunch_SOURCES
+main.cpp
 #variant/variantbase.cpp
 #variant/variant.cpp
 #variant/real.cpp
@@ -88,7 +89,6 @@ gui/tipwidget.cpp
 gui/variablesdock.cpp
 gui/variablelistwidget.cpp
 gui/mainwindow.cpp
-main/main.cpp
 math/floatcommon.c
 math/floatconst.c
 math/floatconvert.c
