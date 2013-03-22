@@ -2221,17 +2221,17 @@ Falls nein, werden aktuelle Variablen und Anzeigen gelöscht.</translation>
     <message>
         <location filename="../gui/mainwindow.cpp" line="551"/>
         <source>&amp;Export</source>
-        <translation>&amp;Export</translation>
+        <translation>&amp;Exportieren</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1537"/>
         <source>Export session as HTML</source>
-        <translation>Session in HTML exportieren</translation>
+        <translation>Sitzung in HTML exportieren</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1558"/>
         <source>Export session as plain text</source>
-        <translation>Session als Text exportieren</translation>
+        <translation>Sitzung als Text exportieren</translation>
     </message>
 </context>
 <context>
