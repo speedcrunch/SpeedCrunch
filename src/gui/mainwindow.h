@@ -195,7 +195,7 @@ private:
 
     static QTranslator* createTranslator(const QString& langCode);
 
-    struct Actions {
+    struct {
         QAction* sessionLoad;
         QAction* sessionSave;
         QAction* sessionImport;
@@ -264,17 +264,17 @@ private:
         // Shortcuts.
         QAction* scrollDown;
         QAction* scrollUp;
-    };
+    } m_actions;
 
-    struct ActionGroups {
+    struct {
         QActionGroup* angle;
         QActionGroup* colorScheme;
         QActionGroup* digits;
         QActionGroup* resultFormat;
         QActionGroup* radixChar;
-    };
+    } m_actionGroups;
 
-    struct Menus {
+    struct {
         QMenu* angleUnit;
         QMenu* behavior;
         QMenu* colorScheme;
@@ -290,14 +290,14 @@ private:
         QMenu* settings;
         QMenu* trayIcon;
         QMenu* view;
-    };
+    } m_menus;
 
-    struct Layouts {
+    struct {
         QVBoxLayout* root;
         QHBoxLayout* keypad;
-    };
+    } m_layouts;
 
-    struct Widgets {
+    struct {
         AutoHideLabel* autoCalcTip;
         ResultDisplay* display;
         Editor* editor;
@@ -305,40 +305,32 @@ private:
         QWidget* root;
         TipWidget* tip;
         QSystemTrayIcon* trayIcon;
-    };
+    } m_widgets;
 
-    struct Docks {
+    struct {
         BookDock* book;
         ConstantsDock* constants;
         FunctionsDock* functions;
         HistoryDock* history;
         VariablesDock* variables;
-    };
+    } m_docks;
 
-    struct Conditions {
+    struct {
         bool notifyMenuBarHidden;
         bool trayNotify;
         bool autoAns;
-    };
+    } m_conditions;
 
-    struct StatusBar {
+    struct {
         QPushButton* angleUnit;
         QPushButton* resultFormat;
-    };
+    } m_status;
 
-    Actions m_actions;
-    ActionGroups m_actionGroups;
-    Conditions m_conditions;
     Constants* m_constants;
-    Docks m_docks;
     Evaluator* m_evaluator;
     FunctionRepo* m_functions;
-    Layouts m_layouts;
-    Menus m_menus;
     Settings* m_settings;
-    StatusBar m_status;
     QTranslator* m_translator;
-    Widgets m_widgets;
     TextEdit* m_copyWidget;
 };
 
