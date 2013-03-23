@@ -20,7 +20,7 @@ DEPENDPATH += . \
               gui \
               locale \
               math \
-              #test \
+              #tests \
               #variant \
               resources
 

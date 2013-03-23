@@ -131,7 +131,7 @@ math/floatseries.c
 math/floattrig.c
 math/hmath.cpp
 math/number.c
-test/testhmath.cpp
+tests/testhmath.cpp
 )
 
 # regression test for Evaluator
@@ -163,7 +163,7 @@ math/floatseries.c
 math/floattrig.c
 math/hmath.cpp
 math/number.c
-test/testevaluator.cpp
+tests/testevaluator.cpp
 )
 
 # regression test for floatnum
@@ -185,6 +185,6 @@ math/floatpower.c
 math/floatseries.c
 math/floattrig.c
 math/number.c
-test/testfloatnum.c
+tests/testfloatnum.c
 )
 
