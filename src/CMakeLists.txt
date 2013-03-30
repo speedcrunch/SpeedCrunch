@@ -80,7 +80,13 @@ ENDIF( APPLE )
 
 ADD_CUSTOM_TARGET( confclean COMMAND rm -rf Makefile CMakeFiles/ CMakeCache.txt cmake_install.cmake DartTestfile.txt install_manifest.txt )
 
-TARGET_LINK_LIBRARIES(${PROGNAME} ${QT_LIBRARIES})
+find_library(x11 X11)
+IF(x11)
+  TARGET_LINK_LIBRARIES(${PROGNAME} ${QT_LIBRARIES} X11)
+ELSE(x11)
+  TARGET_LINK_LIBRARIES(${PROGNAME} ${QT_LIBRARIES})
+ENDIF(x11)
+
 # only needed for static builds when directx is enabled in qt and you
 # get a linker error because of missing a directx function
 #IF(WIN32)

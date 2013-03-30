@@ -8,12 +8,11 @@ lessThan(QT_VER_MAJ, 4) | lessThan(QT_VER_MIN, 6) {
 }
 
 DEFINES += SPEEDCRUNCH_VERSION=\\\"master\\\"
-
 win32:DEFINES += _USE_MATH_DEFINES
 
 TEMPLATE = app
-
 TARGET = speedcrunch
+QT += network
 
 DEPENDPATH += . \
               core \
@@ -24,28 +23,19 @@ DEPENDPATH += . \
               #variant \
               resources
 
+INCLUDEPATH += . math core gui
+
+win32:RC_FILE = resources/speedcrunch.rc
+win32-msvc*:LIBS += User32.lib
 !macx {
     !win32 {
         DEPENDPATH += thirdparty
-    }
-}
-
-INCLUDEPATH += . math core gui
-!macx {
-    !win32 {
         INCLUDEPATH += thirdparty
-    }
-}
-
-QT += network
-
-!macx {
-    !win32 {
         DEFINES += ENABLE_BINRELOC
+        LIBS += -lX11
+        SOURCES += thirdparty/binreloc.c
     }
 }
-
-#FORMS +=
 
 HEADERS += core/constants.h \
            core/evaluator.h \
@@ -141,12 +131,6 @@ SOURCES += main.cpp \
            math/hmath.cpp \
            math/number.c
 
-!macx {
-    !win32 {
-        SOURCES += thirdparty/binreloc.c
-    }
-}
-
 RESOURCES += resources/speedcrunch.qrc
 TRANSLATIONS += locale/ar_JO.ts \
                 locale/ca_ES.ts \
@@ -177,6 +161,3 @@ TRANSLATIONS += locale/ar_JO.ts \
                 locale/sv_SE.ts \
                 locale/tr_TR.ts \
                 locale/zh_CN.ts
-
-win32:RC_FILE = resources/speedcrunch.rc
-win32-msvc*:LIBS += User32.lib
