@@ -47,8 +47,7 @@ class QPushButton;
 class QTranslator;
 class QVBoxLayout;
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
@@ -158,8 +157,7 @@ protected:
     virtual bool eventFilter(QObject*, QEvent*);
 
 private:
-    MainWindow(const MainWindow&);
-    MainWindow & operator=(const MainWindow&);
+    Q_DISABLE_COPY(MainWindow);
 
     void createUi();
     void createActions();
@@ -334,4 +332,4 @@ private:
     TextEdit* m_copyWidget;
 };
 
-#endif
+#endif // GUI_MAINWINDOW_H
