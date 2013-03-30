@@ -1,7 +1,7 @@
 /*
   This file is part of the SpeedCrunch project
   Copyright (C) 2007 Petri Damstén <damu@iki.fi>
-  Copyright (C) 2008, 2009, 2010, 2011 Helder Correia <helder.pereira.correia@gmail.com>
+  Copyright (C) 2008-2013 Helder Correia <helder.pereira.correia@gmail.com>
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -29,42 +29,40 @@ class QPushButton;
 class QTextBrowser;
 class QUrl;
 
-class BookDock : public QDockWidget
-{
+class BookDock : public QDockWidget {
     Q_OBJECT
 
 public:
-    explicit BookDock(const QString &path, const QString &homePage, QWidget *parent = 0);
+    BookDock(const QString& path, const QString& homePage, QWidget* parent = 0);
 
 signals:
-    void expressionSelected(const QString &expression);
+    void expressionSelected(const QString& expression);
 
 public slots:
     void openHomePage();
     void retranslateText();
 
 protected slots:
-    virtual void changeEvent(QEvent *event);
+    virtual void changeEvent(QEvent* event);
 
 private slots:
-    void handleAnchorClick(const QUrl &link);
-
+    void handleAnchorClick(const QUrl& link);
 private:
     BookDock();
     Q_DISABLE_COPY(BookDock);
 
-    QPushButton *m_backButton;
-    QHBoxLayout *m_buttonLayout;
-    QWidget *m_buttonLayoutWidget;
+    void handleLayoutDirection();
+
+    QPushButton* m_backButton;
+    QHBoxLayout* m_buttonLayout;
+    QWidget* m_buttonLayoutWidget;
     QString m_file;
-    QPushButton *m_forwardButton;
+    QPushButton* m_forwardButton;
     QString m_homePage;
-    QPushButton *m_indexButton;
+    QPushButton* m_indexButton;
     QString m_language;
     QString m_path;
-    QTextBrowser *m_browser;
-
-    void handleLayoutDirection();
+    QTextBrowser* m_browser;
 };
 
 #endif // GUI_BOOKDOCK_H

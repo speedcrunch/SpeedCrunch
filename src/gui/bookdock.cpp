@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2007 Petri Damstén <damu@iki.fi>
-// Copyright (C) 2008, 2009, 2010, 2011 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2008-2013 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -31,22 +31,21 @@
 #include <QtGui/QTextBrowser>
 #include <QtGui/QVBoxLayout>
 
-BookDock::BookDock(const QString &path, const QString &homePage, QWidget *parent)
+BookDock::BookDock(const QString& path, const QString& homePage, QWidget* parent)
     : QDockWidget(parent)
     , m_file(homePage)
     , m_homePage(homePage)
     , m_language(Settings::instance()->language)
     , m_path(path)
 {
-    QWidget *widget = new QWidget(this);
-    QVBoxLayout *bookLayout = new QVBoxLayout;
+    QWidget* widget = new QWidget(this);
+    QVBoxLayout* bookLayout = new QVBoxLayout;
 
     m_browser = new QTextBrowser(this);
     m_browser->setLineWrapMode(QTextEdit::NoWrap);
     m_browser->setSearchPaths(QStringList() << m_path);
 
-    connect(m_browser, SIGNAL(anchorClicked(const QUrl &)),
-            SLOT(handleAnchorClick(const QUrl &)));
+    connect(m_browser, SIGNAL(anchorClicked(const QUrl&)), SLOT(handleAnchorClick(const QUrl&)));
 
     m_buttonLayoutWidget = new QWidget;
     m_buttonLayout = new QHBoxLayout(m_buttonLayoutWidget);
@@ -89,7 +88,7 @@ BookDock::BookDock(const QString &path, const QString &homePage, QWidget *parent
     retranslateText();
 }
 
-void BookDock::handleAnchorClick(const QUrl &link)
+void BookDock::handleAnchorClick(const QUrl& link)
 {
     if (link.toString().startsWith("file:#")) {
         // Avoid appended history garbage after clicking on a formula (unknown).
@@ -101,9 +100,6 @@ void BookDock::handleAnchorClick(const QUrl &link)
         m_browser->setSource(link);
         m_file = QFileInfo(link.path()).fileName();
     }
-    // Necessary for QTextBrowser to always draw correctly (why?).
-    // Causes a bug on Window or maybe just about the version number.
-    // m_browser->adjustSize();
 }
 
 void BookDock::openHomePage()
@@ -116,16 +112,13 @@ void BookDock::retranslateText()
 {
     setWindowTitle(tr("Formula Book"));
 
-    // buttons
     m_backButton->setText(tr("Back"));
     m_forwardButton->setText(tr("Forward"));
     m_indexButton->setText(tr("Index"));
 
-    // page
     m_language = Settings::instance()->language;
     QString locale = (m_language == "C") ? QLocale().name() : m_language;
 
-    // fallback to English
     if (locale == "C")
         locale = "en";
 
@@ -144,7 +137,7 @@ void BookDock::retranslateText()
     handleLayoutDirection();
 }
 
-void BookDock::changeEvent(QEvent *event)
+void BookDock::changeEvent(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
         retranslateText();
@@ -164,4 +157,3 @@ void BookDock::handleLayoutDirection()
         m_forwardButton->setIcon(QPixmap(":/book_forward.png"));
     }
 }
-
