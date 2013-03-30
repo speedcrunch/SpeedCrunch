@@ -31,11 +31,9 @@
 #include <QtGui/QTextBrowser>
 #include <QtGui/QVBoxLayout>
 
-BookDock::BookDock(const QString& path, const QString& homePage, QWidget* parent)
+BookDock::BookDock(const QString& path, const QString& indexPage, QWidget* parent)
     : QDockWidget(parent)
-    , m_file(homePage)
-    , m_homePage(homePage)
-    , m_language(Settings::instance()->language)
+    , m_currentPage(indexPage)
     , m_path(path)
 {
     QWidget* widget = new QWidget(this);
@@ -47,76 +45,36 @@ BookDock::BookDock(const QString& path, const QString& homePage, QWidget* parent
 
     connect(m_browser, SIGNAL(anchorClicked(const QUrl&)), SLOT(handleAnchorClick(const QUrl&)));
 
-    m_buttonLayoutWidget = new QWidget;
-    m_buttonLayout = new QHBoxLayout(m_buttonLayoutWidget);
-    m_buttonLayout->setSpacing(0);
-    m_buttonLayout->setMargin(0);
-
-    m_backButton = new QPushButton("", this);
-    m_backButton->setIcon(QPixmap(":/book_back.png"));
-    m_backButton->setFlat(true);
-
-    connect(m_backButton, SIGNAL(clicked()), m_browser, SLOT(backward()));
-    connect(m_browser, SIGNAL(backwardAvailable(bool)), m_backButton, SLOT(setEnabled(bool)));
-
-    m_buttonLayout->addWidget(m_backButton);
-
-    m_forwardButton = new QPushButton("", this);
-    m_forwardButton->setIcon(QPixmap(":/book_forward.png"));
-    m_forwardButton->setFlat(true);
-
-    connect(m_forwardButton, SIGNAL(clicked()), m_browser, SLOT(forward()));
-    connect(m_browser, SIGNAL(forwardAvailable(bool)), m_forwardButton, SLOT(setEnabled(bool)));
-
-    m_buttonLayout->addWidget(m_forwardButton);
-
-    m_indexButton = new QPushButton("", this);
-    m_indexButton->setIcon(QPixmap(":/book_home.png"));
-    m_indexButton->setFlat(true);
-
-    connect(m_indexButton, SIGNAL(clicked()), SLOT(openHomePage()));
-
-    m_buttonLayout->addWidget(m_indexButton);
-    m_buttonLayout->addStretch();
-
-    bookLayout->addWidget(m_buttonLayoutWidget);
     bookLayout->addWidget(m_browser);
-
     widget->setLayout(bookLayout);
     setWidget(widget);
 
     retranslateText();
 }
 
-void BookDock::handleAnchorClick(const QUrl& link)
+void BookDock::handleAnchorClick(const QUrl& url)
 {
-    if (link.toString().startsWith("file:#")) {
+    if (url.toString().startsWith("file:#")) {
         // Avoid appended history garbage after clicking on a formula (unknown).
         m_browser->backward();
         m_browser->forward();
-        QString expression = link.toString().mid(6);
+        QString expression = url.toString().mid(6);
         emit expressionSelected(expression);
-    } else {
-        m_browser->setSource(link);
-        m_file = QFileInfo(link.path()).fileName();
-    }
+    } else
+        openPage(url);
 }
 
-void BookDock::openHomePage()
+void BookDock::openPage(const QUrl& url)
 {
-    m_browser->setSource(m_homePage);
-    m_file = m_homePage;
+    m_browser->setSource(url);
+    m_currentPage = QFileInfo(url.path()).fileName();
 }
 
 void BookDock::retranslateText()
 {
     setWindowTitle(tr("Formula Book"));
 
-    m_backButton->setText(tr("Back"));
-    m_forwardButton->setText(tr("Forward"));
-    m_indexButton->setText(tr("Index"));
-
-    m_language = Settings::instance()->language;
+    QString m_language = Settings::instance()->language;
     QString locale = (m_language == "C") ? QLocale().name() : m_language;
 
     if (locale == "C")
@@ -124,36 +82,22 @@ void BookDock::retranslateText()
 
     m_language = locale;
     QString fullPath = m_path + m_language + "/";
-    QString src = fullPath + m_file;
+    QString src = fullPath + m_currentPage;
 
     if (!QDir(fullPath).isReadable()) {
         QString localeShort = locale.left(2).toLower();
-        src = m_path + localeShort + "/" + m_file;
+        src = m_path + localeShort + "/" + m_currentPage;
         if (!QDir(m_path + localeShort).isReadable())
-            src = m_path + "en" + "/" + m_file;
+            src = m_path + "en" + "/" + m_currentPage;
     }
 
     m_browser->setSource(QUrl::fromLocalFile(src));
-    handleLayoutDirection();
 }
 
 void BookDock::changeEvent(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
         retranslateText();
-    else if (event->type() == QEvent::LayoutDirectionChange)
-        handleLayoutDirection();
     else
         QDockWidget::changeEvent(event);
-}
-
-void BookDock::handleLayoutDirection()
-{
-    if (layoutDirection() == Qt::RightToLeft) {
-        m_backButton->setIcon(QPixmap(":/book_forward.png"));
-        m_forwardButton->setIcon(QPixmap(":/book_back.png"));
-    } else {
-        m_backButton->setIcon(QPixmap(":/book_back.png"));
-        m_forwardButton->setIcon(QPixmap(":/book_forward.png"));
-    }
 }

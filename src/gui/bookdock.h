@@ -33,13 +33,13 @@ class BookDock : public QDockWidget {
     Q_OBJECT
 
 public:
-    BookDock(const QString& path, const QString& homePage, QWidget* parent = 0);
+    BookDock(const QString& path, const QString& indexPage, QWidget* parent = 0);
 
 signals:
     void expressionSelected(const QString& expression);
 
 public slots:
-    void openHomePage();
+    void openPage(const QUrl&);
     void retranslateText();
 
 protected slots:
@@ -51,16 +51,7 @@ private:
     BookDock();
     Q_DISABLE_COPY(BookDock);
 
-    void handleLayoutDirection();
-
-    QPushButton* m_backButton;
-    QHBoxLayout* m_buttonLayout;
-    QWidget* m_buttonLayoutWidget;
-    QString m_file;
-    QPushButton* m_forwardButton;
-    QString m_homePage;
-    QPushButton* m_indexButton;
-    QString m_language;
+    QString m_currentPage;
     QString m_path;
     QTextBrowser* m_browser;
 };
