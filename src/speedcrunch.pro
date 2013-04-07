@@ -20,7 +20,6 @@ DEPENDPATH += . \
               locale \
               math \
               #tests \
-              #variant \
               resources
 
 INCLUDEPATH += . math core gui
@@ -79,14 +78,6 @@ HEADERS += core/constants.h \
            #math/floattrig.h \
            #math/hmath.h \
            #math/number.h
-
-#SOURCES += variant/variantbase.cpp \
-#           variant/variant.cpp \
-#           variant/real.cpp \
-#           variant/vstring.cpp \
-#           variant/initvariant.cpp \
-#           variant/formatbase.cpp \
-#           variant/formatreal.cpp
 
 SOURCES += main.cpp \
            core/constants.cpp \

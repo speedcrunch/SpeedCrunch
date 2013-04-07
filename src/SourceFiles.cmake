@@ -8,9 +8,6 @@ set(speedcrunch_FORMS
 )
 
 set(speedcrunch_HEADERS
-#variant/variantbase.h
-#variant/variant.h
-#variant/real.h
 #thirdparty/binreloc/binreloc.h
 core/constants.h
 core/evaluator.h
@@ -58,13 +55,6 @@ gui/mainwindow.h
 
 set(speedcrunch_SOURCES
 main.cpp
-#variant/variantbase.cpp
-#variant/variant.cpp
-#variant/real.cpp
-#variant/vstring.cpp
-#variant/initvariant.cpp
-#variant/formatbase.cpp
-#variant/formatreal.cpp
 thirdparty/binreloc.c
 core/constants.cpp
 core/evaluator.cpp
