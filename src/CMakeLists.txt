@@ -160,7 +160,7 @@ INSTALL(DIRECTORY   book/
 
 IF(NOT WIN32)
 # freedesktop menu
-INSTALL(FILES       speedcrunch.desktop
+INSTALL(FILES       ../pkg/speedcrunch.desktop
         DESTINATION ${MENUDIR}
 )
 

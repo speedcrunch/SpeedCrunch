@@ -3,7 +3,7 @@
 #define NUMERICVERSION GetFileVersion(SPEEDCRUNCHEXE)
 #define VERSION "trunk" ; GetFileVersionString(SPEEDCRUNCHEXE)
 #define URL "http://speedcrunch.org"
-#define COPYRIGHT "2004-2009 " + URL
+#define COPYRIGHT "2004-2013 " + URL
 
 [Setup]
 AllowNoIcons=yes
