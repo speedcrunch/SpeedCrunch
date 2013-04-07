@@ -1,6 +1,0 @@
-#! /bin/sh
-
-astyle --indent=spaces=4 --brackets=linux --indent-labels --pad=oper --unpad=paren \
-       --one-line=keep-statements --convert-tabs --indent-preprocessor \
-       $(git status | grep "modified:\|new file:" | grep -e "\.c\|\.cpp\|\.h" | cut -d : -f 2 \
-                    | xargs echo)
