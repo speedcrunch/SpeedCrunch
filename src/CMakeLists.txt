@@ -23,9 +23,10 @@ SET(CMAKE_COLOR_MAKEFILE      ON)
 SET(CMAKE_VERBOSE_MAKEFILE    OFF)
 SET(CMAKE_INCLUDE_CURRENT_DIR TRUE)
 
-SET(QT_MIN_VERSION "4.6.0")
+SET(QT_MIN_VERSION "4.8.0")
 
 ADD_DEFINITIONS("-DSPEEDCRUNCH_VERSION=\\\"${speedcrunch_VERSION}\\\"")
+ADD_DEFINITIONS(-DQT_USE_QSTRINGBUILDER)
 
 IF( NOT WIN32 )
 IF( NOT APPLE )
@@ -64,17 +65,11 @@ ADD_EXECUTABLE( ${PROGNAME} WIN32 MACOSX_BUNDLE ${speedcrunch_SOURCES} ${speedcr
 IF( APPLE )
   SET( speedcrunch_RESOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources )
   SET( speedcrunch_TRANSLATION_DIR ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/MacOS/locale )
-  SET( speedcrunch_BOOKDIR ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/MacOS/book )
   ADD_CUSTOM_COMMAND( TARGET ${PROGNAME} POST_BUILD
     COMMAND mkdir ARGS -p ${speedcrunch_RESOURCE_DIR}
     COMMAND mkdir ARGS -p ${speedcrunch_TRANSLATION_DIR}
-    COMMAND mkdir ARGS -p ${speedcrunch_BOOKDIR}
     COMMAND cp ARGS -f resources/${MACOSX_BUNDLE_ICON_FILE} ${speedcrunch_RESOURCE_DIR}
     COMMAND cp ARGS -f i18n/*.qm ${speedcrunch_TRANSLATION_DIR}
-    COMMAND cp ARGS -Rf book/ ${speedcrunch_BOOKDIR}
-    COMMAND rm ARGS -f ${speedcrunch_BOOKDIR}/genbook.sh
-    COMMAND rm ARGS -rf ${speedcrunch_BOOKDIR}/i18n
-    COMMAND for ARGS svnDir in `find ${speedcrunch_BOOKDIR} -type d -name \".svn\"` \; do rm -rf $svnDir \; done
     COMMENT Setting up translations & resources )
 ENDIF( APPLE )
 
@@ -116,17 +111,13 @@ INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR} thirdparty core gui math)
 
 # macros, definitions and options
 IF(WIN32)
-  SET(BOOKDIR  book)
   SET(LOCALEDIR locale)
 ELSE(WIN32)
   SET(SHAREDIR  "share/")
-  SET(BOOKDIR  "${SHAREDIR}/${PROGNAME}/book/")
   SET(LOCALEDIR "${SHAREDIR}/${PROGNAME}/locale/")
   SET(MENUDIR   "${SHAREDIR}/applications/")
   SET(ICONDIR   "${SHAREDIR}/pixmaps/")
 ENDIF(WIN32)
-
-ADD_DEFINITIONS("-DBOOKDIR=\\\"${BOOKDIR}\\\"")
 
 # portable edition
 OPTION(PORTABLE "Enable to build in portable mode" OFF)
@@ -144,18 +135,6 @@ INSTALL(DIRECTORY   ${CMAKE_CURRENT_SOURCE_DIR}/locale/
         DESTINATION ${LOCALEDIR}
         PATTERN     "locale/*.qm"
         PATTERN     "locale/*.ts" EXCLUDE
-)
-
-# book
-INSTALL(DIRECTORY   book/
-        DESTINATION ${BOOKDIR}
-        PATTERN     "book/images/*.mml" EXCLUDE
-        PATTERN     "book/images/*.sh" EXCLUDE
-        PATTERN     "book/images/*.svgz" EXCLUDE
-        PATTERN     "book/locale" EXCLUDE
-        PATTERN     "book/templates" EXCLUDE
-        PATTERN     "book/ut3" EXCLUDE
-        PATTERN     "book/*.sh" EXCLUDE
 )
 
 IF(NOT WIN32)

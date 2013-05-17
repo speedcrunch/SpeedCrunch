@@ -270,15 +270,14 @@ void Settings::save()
         settings->endGroup();
 
         for ( k = 0; k < hkeys.count(); k++ ) {
-            settings->remove( (key + QLatin1String("Expression%1")).arg(k) );
-            settings->remove( (key + QLatin1String("Expression%1Result")).arg(k) );
+            settings->remove( key + "Expression" + QString::number(k) );
+            settings->remove( key + "Expression" + QString::number(k) + "Result" );
         }
 
         settings->setValue( key + QLatin1String("/Count/"), (int)history.count() );
         for ( i = 0; i < realHistory.count(); i++ ) {
-            settings->setValue( (key + QLatin1String("Expression%1")).arg(i), realHistory.at(i) );
-            settings->setValue( (key + QLatin1String("Expression%1Result")).arg(i),
-                                realHistoryResults.at(i) );
+            settings->setValue( (key + "Expression" + QString::number(i)), realHistory.at(i) );
+            settings->setValue( (key + "Expression" + QString::number(i) + "Result"), realHistoryResults.at(i) );
         }
     }
 

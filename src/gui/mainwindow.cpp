@@ -254,7 +254,6 @@ void MainWindow::retranslateText()
     setMenusText();
     setActionsText();
     setStatusBarText();
-
     setWidgetsDirection();
 }
 
@@ -639,27 +638,7 @@ void MainWindow::createKeypad()
 
 void MainWindow::createBookDock()
 {
-    QString bookDir;
-
-#if defined(Q_OS_WIN32) || defined(Q_OS_MAC)
-    QString appPath = QApplication::applicationFilePath();
-    int ii = appPath.lastIndexOf('/');
-    if (ii > 0)
-        appPath.remove(ii, appPath.length());
-    bookDir = appPath + '/' + QString("book/");
-#else
-    BrInitError error;
-    if (br_init(& error) == 0 && error != BR_INIT_ERROR_DISABLED) {
-        qDebug("Warning: BinReloc failed to initialize (error code %d)", error);
-        qDebug("Will fallback to hardcoded default path.");
-    }
-
-    char* dataDir = br_find_data_dir(0);
-    bookDir = QString(dataDir) + "/speedcrunch/book/";
-    free(dataDir);
-#endif
-
-    m_docks.book = new BookDock(bookDir, "index.html", this);
+    m_docks.book = new BookDock(this);
     m_docks.book->setObjectName("BookDock");
     m_docks.book->installEventFilter(this);
     m_docks.book->setAllowedAreas(Qt::AllDockWidgetAreas);
@@ -892,6 +871,8 @@ void MainWindow::createFixedConnections()
 
 void MainWindow::applySettings()
 {
+    emit languageChanged();
+
     m_actions.viewFormulaBook->setChecked(m_settings->formulaBookDockVisible);
     m_actions.viewConstants->setChecked(m_settings->constantsDockVisible);
     m_actions.viewFunctions->setChecked(m_settings->functionsDockVisible);
@@ -985,8 +966,6 @@ void MainWindow::applySettings()
     m_actions.viewMenuBar->setChecked(m_settings->menuBarVisible);
     menuBar()->setVisible(m_settings->menuBarVisible);
 #endif
-
-    emit languageChanged();
 }
 
 void MainWindow::checkInitialResultFormat()

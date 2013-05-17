@@ -3,11 +3,12 @@ QT_VERSION = $$split(QT_VERSION, ".")
 QT_VER_MAJ = $$member(QT_VERSION, 0)
 QT_VER_MIN = $$member(QT_VERSION, 1)
 
-lessThan(QT_VER_MAJ, 4) | lessThan(QT_VER_MIN, 6) {
-    error(Qt 4.6 or newer is required but version $$[QT_VERSION] was detected.)
+lessThan(QT_VER_MAJ, 4) | lessThan(QT_VER_MIN, 8) {
+    error(Qt 4.8 or newer is required but version $$[QT_VERSION] was detected.)
 }
 
 DEFINES += SPEEDCRUNCH_VERSION=\\\"master\\\"
+DEFINES += QT_USE_QSTRINGBUILDER
 win32:DEFINES += _USE_MATH_DEFINES
 
 TEMPLATE = app
@@ -36,7 +37,8 @@ win32-msvc*:LIBS += User32.lib
     }
 }
 
-HEADERS += core/constants.h \
+HEADERS += core/book.h \
+           core/constants.h \
            core/evaluator.h \
            core/functions.h \
            #core/settings.h \
@@ -80,6 +82,7 @@ HEADERS += core/constants.h \
            #math/number.h
 
 SOURCES += main.cpp \
+           core/book.cpp \
            core/constants.cpp \
            core/evaluator.cpp \
            core/functions.cpp \

@@ -9,6 +9,7 @@ set(speedcrunch_FORMS
 
 set(speedcrunch_HEADERS
 #thirdparty/binreloc/binreloc.h
+core/book.h
 core/constants.h
 core/evaluator.h
 core/functions.h
@@ -56,6 +57,7 @@ gui/mainwindow.h
 set(speedcrunch_SOURCES
 main.cpp
 thirdparty/binreloc.c
+core/book.cpp
 core/constants.cpp
 core/evaluator.cpp
 core/functions.cpp
