@@ -71,6 +71,9 @@ void BookDock::openPage(const QUrl& url)
 void BookDock::retranslateText()
 {
     setWindowTitle(tr("Formula Book"));
+    QString content = m_book->getCurrentPageContent();
+    if (!content.isNull())
+        m_browser->setHtml(content);
 }
 
 void BookDock::changeEvent(QEvent* event)

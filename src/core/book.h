@@ -27,13 +27,15 @@ class Book : public QObject {
 
 public:
     explicit Book(QObject* parent = 0);
-    QString getPageContent(const QString& id = "index");
+    QString getPageContent(const QString& id);
+    QString getCurrentPageContent();
 
 private:
     Q_DISABLE_COPY(Book);
 
     typedef QString (*PageMaker)();
     QHash<QString, PageMaker> m_toc;
+    QString m_currentPageID;
 };
 
 #endif // CORE_BOOK_H

@@ -460,5 +460,15 @@ Book::Book(QObject* parent)
 QString Book::getPageContent(const QString& id)
 {
     PageMaker maker = m_toc.value(id);
-    return maker ? maker() : QString();
+    if (!maker)
+        return QString();
+    m_currentPageID = id;
+    return maker();
+}
+
+QString Book::getCurrentPageContent()
+{
+    if (m_currentPageID.isNull())
+        return QString();
+    return getPageContent(m_currentPageID);
 }
