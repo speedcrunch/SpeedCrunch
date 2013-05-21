@@ -48,8 +48,8 @@ public:
     explicit Editor(QWidget* parent = 0);
     ~Editor();
 
-    bool autoCalcEnabled() const;
-    bool autoCompleteEnabled() const;
+    bool isAutoCalcEnabled() const;
+    bool isAutoCompletionEnabled() const;
     void clearHistory();
     int cursorPosition() const;
     void doBackspace();
@@ -106,11 +106,11 @@ protected:
 private:
     Q_DISABLE_COPY(Editor);
 
-    bool m_ansAvailable;
-    bool m_autoCalcEnabled;
+    bool m_isAnsAvailable;
+    bool m_isAutoCalcEnabled;
     QTimer* m_autoCalcSelTimer;
     QTimer* m_autoCalcTimer;
-    bool m_autoCompleteEnabled;
+    bool m_isAutoCompletionEnabled;
     EditorCompletion* m_completion;
     QTimer* m_completionTimer;
     ConstantCompletion* m_constantCompletion;

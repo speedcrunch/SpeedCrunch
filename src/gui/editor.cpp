@@ -57,16 +57,16 @@ Editor::Editor(QWidget* parent)
 {
     m_evaluator = Evaluator::instance();
     m_currentHistoryIndex = 0;
-    m_autoCompleteEnabled = true;
+    m_isAutoCompletionEnabled = true;
     m_completion = new EditorCompletion(this);
     m_constantCompletion = 0;
     m_completionTimer = new QTimer(this);
-    m_autoCalcEnabled = true;
+    m_isAutoCalcEnabled = true;
     m_highlighter = new SyntaxHighlighter(this);
     m_autoCalcTimer = new QTimer(this);
     m_autoCalcSelTimer = new QTimer(this);
     m_matchingTimer = new QTimer(this);
-    m_ansAvailable = false;
+    m_isAnsAvailable = false;
 
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
     setTabChangesFocus(true);
@@ -185,24 +185,24 @@ void Editor::clearHistory()
     m_currentHistoryIndex = 0;
 }
 
-bool Editor::autoCompleteEnabled() const
+bool Editor::isAutoCompletionEnabled() const
 {
-    return m_autoCompleteEnabled;
+    return m_isAutoCompletionEnabled;
 }
 
 void Editor::setAutoCompletionEnabled(bool enable)
 {
-    m_autoCompleteEnabled = enable;
+    m_isAutoCompletionEnabled = enable;
 }
 
-bool Editor::autoCalcEnabled() const
+bool Editor::isAutoCalcEnabled() const
 {
-    return m_autoCalcEnabled;
+    return m_isAutoCalcEnabled;
 }
 
 void Editor::setAutoCalcEnabled(bool enable)
 {
-    m_autoCalcEnabled = enable;
+    m_isAutoCalcEnabled = enable;
 }
 
 void Editor::appendHistory(const QString& expression, const QString& result)
@@ -217,7 +217,7 @@ void Editor::appendHistory(const QString& expression, const QString& result)
 
 void Editor::checkAutoComplete()
 {
-    if (!m_autoCompleteEnabled)
+    if (!m_isAutoCompletionEnabled)
         return;
 
     m_completionTimer->stop();
@@ -237,7 +237,7 @@ void Editor::checkMatching()
 
 void Editor::checkAutoCalc()
 {
-    if (!m_autoCalcEnabled)
+    if (!m_isAutoCalcEnabled)
         return;
 
     m_autoCalcTimer->stop();
@@ -249,7 +249,7 @@ void Editor::checkAutoCalc()
 
 void Editor::startSelAutoCalcTimer()
 {
-    if (!m_autoCalcEnabled)
+    if (!m_isAutoCalcEnabled)
         return;
 
     m_autoCalcSelTimer->stop();
@@ -371,7 +371,7 @@ void Editor::doMatchingRight()
 
 void Editor::triggerAutoComplete()
 {
-    if (!m_autoCompleteEnabled)
+    if (!m_isAutoCompletionEnabled)
         return;
 
     // Tokenize the expression (this is very fast).
@@ -451,7 +451,7 @@ void Editor::triggerAutoComplete()
 
 void Editor::autoComplete(const QString& item)
 {
-    if (!m_autoCompleteEnabled || item.isEmpty())
+    if (!m_isAutoCompletionEnabled || item.isEmpty())
         return;
 
     const int currentPosition = textCursor().position();
@@ -477,7 +477,7 @@ void Editor::autoComplete(const QString& item)
 
 void Editor::autoCalc()
 {
-    if (!m_autoCalcEnabled)
+    if (!m_isAutoCalcEnabled)
         return;
 
     const QString str = m_evaluator->autoFix(text());
@@ -485,7 +485,7 @@ void Editor::autoCalc()
         return;
 
     // very short (just one token) and still no calculation, then skip
-    if (!m_ansAvailable) {
+    if (!m_isAnsAvailable) {
         const Tokens tokens = m_evaluator->scan(text());
         if (tokens.count() < 2)
             return;
@@ -517,7 +517,7 @@ void Editor::autoCalc()
 
 void Editor::autoCalcSelection()
 {
-    if (!m_autoCalcEnabled)
+    if (!m_isAutoCalcEnabled)
         return;
 
     const QString str = m_evaluator->autoFix(textCursor().selectedText());
@@ -525,7 +525,7 @@ void Editor::autoCalcSelection()
         return;
 
     // Very short (just one token) and still no calculation, then skip.
-    if (!m_ansAvailable) {
+    if (!m_isAnsAvailable) {
         const Tokens tokens = m_evaluator->scan(text());
         if (tokens.count() < 2)
             return;
@@ -702,7 +702,7 @@ void Editor::rehighlight()
 
 void Editor::setAnsAvailable(bool available)
 {
-    m_ansAvailable = available;
+    m_isAnsAvailable = available;
 }
 
 void Editor::stopAutoCalc()

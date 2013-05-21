@@ -724,7 +724,7 @@ void MainWindow::createHistoryDock()
     m_docks.history->setAllowedAreas(Qt::AllDockWidgetAreas);
     addDockWidget(Qt::RightDockWidgetArea, m_docks.history);
 
-    HistoryWidget* history = qobject_cast<HistoryWidget *>(m_docks.history->widget());
+    HistoryWidget* history = qobject_cast<HistoryWidget*>(m_docks.history->widget());
     connect(history, SIGNAL(expressionSelected(const QString&)), SLOT(insertTextIntoEditor(const QString&)));
 
     HistoryWidget* historyWidget = qobject_cast<HistoryWidget *>(m_docks.history->widget());
@@ -1429,7 +1429,7 @@ void MainWindow::setSystemTrayIconEnabled(bool b)
         m_menus.trayIcon = new QMenu(this);
         m_menus.trayIcon->addAction(m_actions.editCopyLastResult);
         m_menus.trayIcon->addSeparator();
-        m_menus.trayIcon->addAction(m_actions.sessionQuit   );
+        m_menus.trayIcon->addAction(m_actions.sessionQuit);
 
         m_widgets.trayIcon->setContextMenu(m_menus.trayIcon);
         connect(m_widgets.trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
@@ -1626,7 +1626,7 @@ void MainWindow::setStatusBarVisible(bool b)
     m_settings->statusBarVisible = b;
 }
 
-void MainWindow::showAutoCalcTip(const QString & msg)
+void MainWindow::showAutoCalcTip(const QString& msg)
 {
     m_widgets.autoCalcTip->showText(msg);
     m_widgets.autoCalcTip->adjustSize();
@@ -1908,7 +1908,7 @@ void MainWindow::activate()
     m_widgets.editor->setFocus();
 }
 
-void MainWindow::insertConstantIntoEditor(const QString & c)
+void MainWindow::insertConstantIntoEditor(const QString& c)
 {
     if (c.isEmpty())
         return;
@@ -1918,21 +1918,24 @@ void MainWindow::insertConstantIntoEditor(const QString & c)
     insertTextIntoEditor(s);
 }
 
-void MainWindow::insertTextIntoEditor(const QString & s)
+void MainWindow::insertTextIntoEditor(const QString& s)
 {
     if (s.isEmpty())
         return;
 
-    m_widgets.editor->blockSignals(true);
+    bool shouldAutoComplete = m_widgets.editor->isAutoCompletionEnabled();
+    if (shouldAutoComplete)
+        m_widgets.editor->setAutoCompletionEnabled(false);
     m_widgets.editor->insert(s);
-    m_widgets.editor->blockSignals(false);
+    if (shouldAutoComplete)
+        m_widgets.editor->setAutoCompletionEnabled(true);
 
-    if (!isActiveWindow ())
+    if (!isActiveWindow())
         activateWindow();
     QTimer::singleShot(0, m_widgets.editor, SLOT(setFocus()));
 }
 
-void MainWindow::insertFunctionIntoEditor(const QString & f)
+void MainWindow::insertFunctionIntoEditor(const QString& f)
 {
     if (!f.isEmpty())
         insertTextIntoEditor(f + "(");
@@ -1964,17 +1967,17 @@ void MainWindow::handleKeypadButtonPress(Keypad::Button b)
         case Keypad::KeyPercent: m_widgets.editor->insert("%"); break;
         case Keypad::KeyFactorial: m_widgets.editor->insert("!"); break;
 
-        case Keypad::KeyX: m_widgets.editor->insert("x"  ); break;
-        case Keypad::KeyXEquals: m_widgets.editor->insert("x=" ); break;
-        case Keypad::KeyPi: m_widgets.editor->insert("pi" ); break;
+        case Keypad::KeyX: m_widgets.editor->insert("x"); break;
+        case Keypad::KeyXEquals: m_widgets.editor->insert("x="); break;
+        case Keypad::KeyPi: m_widgets.editor->insert("pi"); break;
         case Keypad::KeyAns: m_widgets.editor->insert("ans"); break;
 
         case Keypad::KeySqrt: m_widgets.editor->insert("sqrt("); break;
-        case Keypad::KeyLn: m_widgets.editor->insert("ln("  ); break;
-        case Keypad::KeyExp: m_widgets.editor->insert("exp(" ); break;
-        case Keypad::KeySin: m_widgets.editor->insert("sin(" ); break;
-        case Keypad::KeyCos: m_widgets.editor->insert("cos(" ); break;
-        case Keypad::KeyTan: m_widgets.editor->insert("tan(" ); break;
+        case Keypad::KeyLn: m_widgets.editor->insert("ln("); break;
+        case Keypad::KeyExp: m_widgets.editor->insert("exp("); break;
+        case Keypad::KeySin: m_widgets.editor->insert("sin("); break;
+        case Keypad::KeyCos: m_widgets.editor->insert("cos("); break;
+        case Keypad::KeyTan: m_widgets.editor->insert("tan("); break;
         case Keypad::KeyAcos: m_widgets.editor->insert("acos("); break;
         case Keypad::KeyAtan: m_widgets.editor->insert("atan("); break;
         case Keypad::KeyAsin: m_widgets.editor->insert("asin("); break;
@@ -2206,7 +2209,7 @@ void MainWindow::handleSystemTrayIconActivation(QSystemTrayIcon::ActivationReaso
     }
 }
 
-void MainWindow::insertVariableIntoEditor(const QString & v)
+void MainWindow::insertVariableIntoEditor(const QString& v)
 {
     insertTextIntoEditor(v);
 }
