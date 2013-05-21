@@ -413,10 +413,13 @@ void MainWindow::createActionShortcuts()
     m_actions.viewVariables->setShortcut(Qt::CTRL + Qt::Key_4);
     m_actions.settingsAngleUnitDegree->setShortcut(Qt::Key_F10);
     m_actions.settingsAngleUnitRadian->setShortcut(Qt::Key_F9);
+    m_actions.settingsResultFormatGeneral->setShortcut(Qt::Key_F1);
+    m_actions.settingsResultFormatFixed->setShortcut(Qt::Key_F2);
+    m_actions.settingsResultFormatEngineering->setShortcut(Qt::Key_F3);
+    m_actions.settingsResultFormatScientific->setShortcut(Qt::Key_F4);
     m_actions.settingsResultFormatBinary->setShortcut(Qt::Key_F5);
-    m_actions.settingsResultFormatFixed->setShortcut(Qt::Key_F7);
-    m_actions.settingsResultFormatHexadecimal->setShortcut(Qt::Key_F8);
     m_actions.settingsResultFormatOctal->setShortcut(Qt::Key_F6);
+    m_actions.settingsResultFormatHexadecimal->setShortcut(Qt::Key_F7);
     m_actions.settingsRadixCharDot->setShortcut(Qt::CTRL + Qt::Key_Period);
     m_actions.settingsRadixCharComma->setShortcut(Qt::CTRL + Qt::Key_Comma);
     m_actions.settingsDisplayZoomIn->setShortcut(Qt::CTRL + Qt::Key_Plus);
