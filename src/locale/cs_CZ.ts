@@ -168,7 +168,7 @@
     <message>
         <location filename="../gui/aboutbox.cpp" line="151"/>
         <source>Latvian</source>
-        <translation type="unfinished"></translation>
+        <translation>Lotyšština</translation>
     </message>
     <message>
         <location filename="../gui/aboutbox.cpp" line="167"/>
@@ -237,195 +237,195 @@
         <location filename="../core/book.cpp" line="67"/>
         <location filename="../core/book.cpp" line="84"/>
         <source>Index</source>
-        <translation type="unfinished">Rejstřík</translation>
+        <translation>Rejstřík</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="85"/>
         <source>Algebra</source>
-        <translation type="unfinished"></translation>
+        <translation>Algebra</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="86"/>
         <location filename="../core/book.cpp" line="116"/>
         <source>Quadratic Equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Kvadratická rovnice</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="87"/>
         <location filename="../core/book.cpp" line="127"/>
         <source>Logarithmic Base Conversion</source>
-        <translation type="unfinished"></translation>
+        <translation>Převod logaritmického základu</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="88"/>
         <source>Geometry</source>
-        <translation type="unfinished"></translation>
+        <translation>Geometrie</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="89"/>
         <location filename="../core/book.cpp" line="217"/>
         <source>Circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Kruh</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="90"/>
         <location filename="../core/book.cpp" line="292"/>
         <source>Sector</source>
-        <translation type="unfinished"></translation>
+        <translation>Výseč</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="91"/>
         <location filename="../core/book.cpp" line="310"/>
         <source>Sphere</source>
-        <translation type="unfinished"></translation>
+        <translation>Koule</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="92"/>
         <location filename="../core/book.cpp" line="255"/>
         <source>Cube</source>
-        <translation type="unfinished"></translation>
+        <translation>Krychle</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="93"/>
         <location filename="../core/book.cpp" line="236"/>
         <source>Cone</source>
-        <translation type="unfinished"></translation>
+        <translation>Kužel</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="94"/>
         <location filename="../core/book.cpp" line="275"/>
         <source>Cylinder</source>
-        <translation type="unfinished"></translation>
+        <translation>Válec</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="95"/>
         <source>Unit Conversions</source>
-        <translation type="unfinished"></translation>
+        <translation>Převody jednotek</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="96"/>
         <location filename="../core/book.cpp" line="423"/>
         <source>Temperature</source>
-        <translation type="unfinished"></translation>
+        <translation>Teplota</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="97"/>
         <source>Electronics</source>
-        <translation type="unfinished"></translation>
+        <translation>Elektronika</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="98"/>
         <location filename="../core/book.cpp" line="137"/>
         <source>Ohm&apos;s Law</source>
-        <translation type="unfinished"></translation>
+        <translation>Ohmův zákon</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="99"/>
         <location filename="../core/book.cpp" line="154"/>
         <source>Power</source>
-        <translation type="unfinished"></translation>
+        <translation>Síla</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="100"/>
         <location filename="../core/book.cpp" line="178"/>
         <source>Reactance</source>
-        <translation type="unfinished"></translation>
+        <translation>Jalový odpor</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="101"/>
         <location filename="../core/book.cpp" line="200"/>
         <source>Resonance</source>
-        <translation type="unfinished"></translation>
+        <translation>Rezonance</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="102"/>
         <location filename="../core/book.cpp" line="329"/>
         <source>Radio Frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozhlasový kmitočet</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="103"/>
         <source>Antennas</source>
-        <translation type="unfinished"></translation>
+        <translation>Antény</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="104"/>
         <location filename="../core/book.cpp" line="349"/>
         <source>Characteristic Impedance (coax)</source>
-        <translation type="unfinished"></translation>
+        <translation>Charakteristická impedance (coax)</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="105"/>
         <location filename="../core/book.cpp" line="364"/>
         <source>Velocity of Propagation (coax)</source>
-        <translation type="unfinished"></translation>
+        <translation>Rychlost šíření (coax)</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="106"/>
         <location filename="../core/book.cpp" line="381"/>
         <source>Standing Wave Ratio &amp; Return Loss</source>
-        <translation type="unfinished"></translation>
+        <translation>Stálý poměr vlny a zpáteční ztráta</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="107"/>
         <location filename="../core/book.cpp" line="407"/>
         <source>Free Space Wavelength</source>
-        <translation type="unfinished"></translation>
+        <translation>Vlnová délka ve volném prostoru</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="142"/>
         <location filename="../core/book.cpp" line="168"/>
         <source>resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Odpor</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="143"/>
         <location filename="../core/book.cpp" line="167"/>
         <source>voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Napětí</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="144"/>
         <location filename="../core/book.cpp" line="166"/>
         <source>current</source>
-        <translation type="unfinished"></translation>
+        <translation>Proud</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="165"/>
         <source>power</source>
-        <translation type="unfinished"></translation>
+        <translation>Výkon</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="186"/>
         <source>inductive reactance</source>
-        <translation type="unfinished"></translation>
+        <translation>Indukční jalový odpor</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="187"/>
         <source>capacitive reactance</source>
-        <translation type="unfinished"></translation>
+        <translation>Kapacitní jalový odpor</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="188"/>
         <location filename="../core/book.cpp" line="206"/>
         <source>inductance</source>
-        <translation type="unfinished"></translation>
+        <translation>Induktance</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="189"/>
         <location filename="../core/book.cpp" line="207"/>
         <source>capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Kapacitance</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="190"/>
         <source>frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>Kmitočet</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="205"/>
         <source>resonance frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>Kmitočet rezonance</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="223"/>
@@ -433,18 +433,18 @@
         <location filename="../core/book.cpp" line="297"/>
         <location filename="../core/book.cpp" line="316"/>
         <source>area</source>
-        <translation type="unfinished"></translation>
+        <translation>Oblast</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="224"/>
         <source>perimeter</source>
-        <translation type="unfinished"></translation>
+        <translation>Obvod</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="225"/>
         <location filename="../core/book.cpp" line="319"/>
         <source>diameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Průměr</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="226"/>
@@ -453,7 +453,7 @@
         <location filename="../core/book.cpp" line="299"/>
         <location filename="../core/book.cpp" line="318"/>
         <source>radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Poloměr</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="241"/>
@@ -461,128 +461,128 @@
         <location filename="../core/book.cpp" line="279"/>
         <location filename="../core/book.cpp" line="317"/>
         <source>volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Objem</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="242"/>
         <location filename="../core/book.cpp" line="262"/>
         <source>surface area</source>
-        <translation type="unfinished"></translation>
+        <translation>Oblast povrchu</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="244"/>
         <location filename="../core/book.cpp" line="282"/>
         <source>height</source>
-        <translation type="unfinished"></translation>
+        <translation>Výška</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="245"/>
         <source>slant height</source>
-        <translation type="unfinished"></translation>
+        <translation>Výška strany jehlanu</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="263"/>
         <source>face diagonal</source>
-        <translation type="unfinished"></translation>
+        <translation>Čelo úhlopříčně</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="264"/>
         <source>space diagonal</source>
-        <translation type="unfinished"></translation>
+        <translation>Prostor úhlopříčně</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="265"/>
         <source>edge length</source>
-        <translation type="unfinished"></translation>
+        <translation>Délka okraje</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="298"/>
         <source>arc length</source>
-        <translation type="unfinished"></translation>
+        <translation>Délka oblouku</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="300"/>
         <source>central angle (degrees)</source>
-        <translation type="unfinished"></translation>
+        <translation>Středový úhel (stupně)</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="337"/>
         <location filename="../core/book.cpp" line="429"/>
         <source>temperature (C)</source>
-        <translation type="unfinished"></translation>
+        <translation>Teplota (C)</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="338"/>
         <location filename="../core/book.cpp" line="430"/>
         <source>temperature (F)</source>
-        <translation type="unfinished"></translation>
+        <translation>Teplota (F)</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="339"/>
         <location filename="../core/book.cpp" line="431"/>
         <source>temperature (K)</source>
-        <translation type="unfinished"></translation>
+        <translation>Teplota (K)</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="352"/>
         <location filename="../core/book.cpp" line="371"/>
         <source>dielectric constant</source>
-        <translation type="unfinished"></translation>
+        <translation>Dielektrická konstanta</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="353"/>
         <source>outer conductor&apos;s inner diameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Vnitřní průměr vnějšího vodiče</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="354"/>
         <source>inner conductor&apos;s outer diameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Vnější průměr vnitřního vodiče</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="370"/>
         <source>speed of light</source>
-        <translation type="unfinished"></translation>
+        <translation>Rychlost světla</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="391"/>
         <source>input power (W)</source>
-        <translation type="unfinished"></translation>
+        <translation>Jmenovitý příkon (W)</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="392"/>
         <source>reflected power (W)</source>
-        <translation type="unfinished"></translation>
+        <translation>Odrážený příkon (W)</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="393"/>
         <source>transmitted power (W)</source>
-        <translation type="unfinished"></translation>
+        <translation>Přenášený příkon (W)</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="394"/>
         <source>return loss (dB)</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpáteční ztráta (dB)</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="395"/>
         <source>reflection coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Součinitel odrazu</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="396"/>
         <source>standing wave ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>Stálý poměr vlny</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="397"/>
         <source>normalized impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>Normalizovaná impedance</translation>
     </message>
     <message>
         <location filename="../core/book.cpp" line="413"/>
         <source>frequency (Hz)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kmitočet (Hz)</translation>
     </message>
 </context>
 <context>
@@ -590,7 +590,7 @@
     <message>
         <location filename="../gui/bookdock.cpp" line="73"/>
         <source>Formula Book</source>
-        <translation type="unfinished"></translation>
+        <translation>Sbírka vzorců</translation>
     </message>
 </context>
 <context>
@@ -703,422 +703,422 @@
     <message>
         <location filename="../core/constants.cpp" line="284"/>
         <source>Molar Mass</source>
-        <translation type="unfinished"></translation>
+        <translation>Molární hmotnost</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="286"/>
         <source>Aluminium</source>
-        <translation type="unfinished"></translation>
+        <translation>Hliník</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="287"/>
         <source>Antimony</source>
-        <translation type="unfinished"></translation>
+        <translation>Antimon</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="288"/>
         <source>Argon</source>
-        <translation type="unfinished"></translation>
+        <translation>Argon</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="289"/>
         <source>Arsenic</source>
-        <translation type="unfinished"></translation>
+        <translation>Arsen</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="290"/>
         <source>Barium</source>
-        <translation type="unfinished"></translation>
+        <translation>Barium</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="291"/>
         <source>Beryllium</source>
-        <translation type="unfinished"></translation>
+        <translation>Berylium</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="292"/>
         <source>Bismuth</source>
-        <translation type="unfinished"></translation>
+        <translation>Bismut</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="293"/>
         <source>Boron</source>
-        <translation type="unfinished"></translation>
+        <translation>Bór</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="294"/>
         <source>Bromine</source>
-        <translation type="unfinished"></translation>
+        <translation>Brom</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="295"/>
         <source>Cadmium</source>
-        <translation type="unfinished"></translation>
+        <translation>Kadmium</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="296"/>
         <source>Caesium</source>
-        <translation type="unfinished"></translation>
+        <translation>Cesium</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="297"/>
         <source>Calcium</source>
-        <translation type="unfinished"></translation>
+        <translation>Vápník</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="298"/>
         <source>Carbon</source>
-        <translation type="unfinished"></translation>
+        <translation>Uhlík</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="299"/>
         <source>Cerium</source>
-        <translation type="unfinished"></translation>
+        <translation>Cer</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="300"/>
         <source>Chlorine</source>
-        <translation type="unfinished"></translation>
+        <translation>Chlór</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="301"/>
         <source>Chromium</source>
-        <translation type="unfinished"></translation>
+        <translation>Chrom</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="302"/>
         <source>Cobalt</source>
-        <translation type="unfinished"></translation>
+        <translation>Kobalt</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="303"/>
         <source>Copper</source>
-        <translation type="unfinished"></translation>
+        <translation>Měď</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="304"/>
         <source>Dysprosium</source>
-        <translation type="unfinished"></translation>
+        <translation>Dysprosium</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="305"/>
         <source>Erbium</source>
-        <translation type="unfinished"></translation>
+        <translation>Erbium</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="306"/>
         <source>Europium</source>
-        <translation type="unfinished"></translation>
+        <translation>Europium</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="307"/>
         <source>Fluorine</source>
-        <translation type="unfinished"></translation>
+        <translation>Fluor</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="308"/>
         <source>Gadolinium</source>
-        <translation type="unfinished"></translation>
+        <translation>Gadolinium</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="309"/>
         <source>Gallium</source>
-        <translation type="unfinished"></translation>
+        <translation>Galium</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="310"/>
         <source>Germanium</source>
-        <translation type="unfinished"></translation>
+        <translation>Germanium</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="311"/>
         <source>Gold</source>
-        <translation type="unfinished"></translation>
+        <translation>Zlato</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="312"/>
         <source>Hafnium</source>
-        <translation type="unfinished"></translation>
+        <translation>Hafnium</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="313"/>
         <source>Helium</source>
-        <translation type="unfinished"></translation>
+        <translation>Helium</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="314"/>
         <source>Holmium</source>
-        <translation type="unfinished"></translation>
+        <translation>Holmium</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="315"/>
         <source>Hydrogen</source>
-        <translation type="unfinished"></translation>
+        <translation>Vodík</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="316"/>
         <source>Indium</source>
-        <translation type="unfinished"></translation>
+        <translation>Indium</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="317"/>
         <source>Iodine</source>
-        <translation type="unfinished"></translation>
+        <translation>Jód</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="318"/>
         <source>Iridium</source>
-        <translation type="unfinished"></translation>
+        <translation>Iridium</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="319"/>
         <source>Iron</source>
-        <translation type="unfinished"></translation>
+        <translation>Železo</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="320"/>
         <source>Krypton</source>
-        <translation type="unfinished"></translation>
+        <translation>Krypton</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="321"/>
         <source>Lanthanum</source>
-        <translation type="unfinished"></translation>
+        <translation>Lanthan</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="322"/>
         <source>Lead</source>
-        <translation type="unfinished"></translation>
+        <translation>Olovo</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="323"/>
         <source>Lithium</source>
-        <translation type="unfinished"></translation>
+        <translation>Lithium</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="324"/>
         <source>Lutetium</source>
-        <translation type="unfinished"></translation>
+        <translation>Lutecium</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="325"/>
         <source>Magnesium</source>
-        <translation type="unfinished"></translation>
+        <translation>Hořčík</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="326"/>
         <source>Manganese</source>
-        <translation type="unfinished"></translation>
+        <translation>Mangan</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="327"/>
         <source>Mercury</source>
-        <translation type="unfinished"></translation>
+        <translation>Merkur</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="328"/>
         <source>Molybdenum</source>
-        <translation type="unfinished"></translation>
+        <translation>Molybden</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="329"/>
         <source>Neodymium</source>
-        <translation type="unfinished"></translation>
+        <translation>Neodym</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="330"/>
         <source>Neon</source>
-        <translation type="unfinished"></translation>
+        <translation>Neon</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="331"/>
         <source>Nickel</source>
-        <translation type="unfinished"></translation>
+        <translation>Nikl</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="332"/>
         <source>Niobium</source>
-        <translation type="unfinished"></translation>
+        <translation>Niob</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="333"/>
         <source>Nitrogen</source>
-        <translation type="unfinished"></translation>
+        <translation>Dusík</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="334"/>
         <source>Osmium</source>
-        <translation type="unfinished"></translation>
+        <translation>Osmium</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="335"/>
         <source>Oxygen</source>
-        <translation type="unfinished"></translation>
+        <translation>Oxygen</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="336"/>
         <source>Palladium</source>
-        <translation type="unfinished"></translation>
+        <translation>Palladium</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="337"/>
         <source>Phosphorus</source>
-        <translation type="unfinished"></translation>
+        <translation>Fosfor</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="338"/>
         <source>Platinum</source>
-        <translation type="unfinished"></translation>
+        <translation>Platina</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="339"/>
         <source>Potassium</source>
-        <translation type="unfinished"></translation>
+        <translation>Draslík</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="340"/>
         <source>Praseodymium</source>
-        <translation type="unfinished"></translation>
+        <translation>Praseodym</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="341"/>
         <source>Protactinium</source>
-        <translation type="unfinished"></translation>
+        <translation>Protaktinium</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="342"/>
         <source>Rhenium</source>
-        <translation type="unfinished"></translation>
+        <translation>Rhenium</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="343"/>
         <source>Rubidium</source>
-        <translation type="unfinished"></translation>
+        <translation>Rubidium</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="344"/>
         <source>Ruthenium</source>
-        <translation type="unfinished"></translation>
+        <translation>Ruthenium</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="345"/>
         <source>Samarium</source>
-        <translation type="unfinished"></translation>
+        <translation>Samarium</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="346"/>
         <source>Scandium</source>
-        <translation type="unfinished"></translation>
+        <translation>Skandium</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="347"/>
         <source>Selenium</source>
-        <translation type="unfinished"></translation>
+        <translation>Selen</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="348"/>
         <source>Silicon</source>
-        <translation type="unfinished"></translation>
+        <translation>Křemík</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="349"/>
         <source>Silver</source>
-        <translation type="unfinished"></translation>
+        <translation>Stříbro</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="350"/>
         <source>Sodium</source>
-        <translation type="unfinished"></translation>
+        <translation>Sodík</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="351"/>
         <source>Strontium</source>
-        <translation type="unfinished"></translation>
+        <translation>Stroncium</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="352"/>
         <source>Sulfur</source>
-        <translation type="unfinished"></translation>
+        <translation>Síra</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="353"/>
         <source>Tantalum</source>
-        <translation type="unfinished"></translation>
+        <translation>Tantal</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="354"/>
         <source>Tellurium</source>
-        <translation type="unfinished"></translation>
+        <translation>Telur</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="355"/>
         <source>Terbium</source>
-        <translation type="unfinished"></translation>
+        <translation>Terbium</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="356"/>
         <source>Thallium</source>
-        <translation type="unfinished"></translation>
+        <translation>Thalium</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="357"/>
         <source>Thorium</source>
-        <translation type="unfinished"></translation>
+        <translation>Thorium</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="358"/>
         <source>Thulium</source>
-        <translation type="unfinished"></translation>
+        <translation>Thulium</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="359"/>
         <source>Tin</source>
-        <translation type="unfinished"></translation>
+        <translation>Cín</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="360"/>
         <source>Titanium</source>
-        <translation type="unfinished"></translation>
+        <translation>Titan</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="361"/>
         <source>Tungsten</source>
-        <translation type="unfinished"></translation>
+        <translation>Wolframová žárovka</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="362"/>
         <source>Uranium</source>
-        <translation type="unfinished"></translation>
+        <translation>Uran</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="363"/>
         <source>Vanadium</source>
-        <translation type="unfinished"></translation>
+        <translation>Vanad</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="364"/>
         <source>Xenon</source>
-        <translation type="unfinished"></translation>
+        <translation>Xenon</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="365"/>
         <source>Ytterbium</source>
-        <translation type="unfinished"></translation>
+        <translation>Yterbium</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="366"/>
         <source>Yttrium</source>
-        <translation type="unfinished"></translation>
+        <translation>Ytrium</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="367"/>
         <source>Zinc</source>
-        <translation type="unfinished"></translation>
+        <translation>Zinek</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="368"/>
         <source>Zirconium</source>
-        <translation type="unfinished"></translation>
+        <translation>Zirkon</translation>
     </message>
     <message>
         <location filename="../core/constants.cpp" line="237"/>
@@ -1406,32 +1406,32 @@
     <message>
         <location filename="../core/evaluator.cpp" line="119"/>
         <source>wrong number of arguments</source>
-        <translation type="unfinished"></translation>
+        <translation>špatný počet argumentů</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="122"/>
         <source>does not take NaN as an argument</source>
-        <translation type="unfinished"></translation>
+        <translation>NaN není jako argument dovolen</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="128"/>
         <source>result out of range</source>
-        <translation type="unfinished"></translation>
+        <translation>výsledek je mimo rozsah</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="133"/>
         <source>undefined for argument domain</source>
-        <translation type="unfinished"></translation>
+        <translation>pro argument nestanoveno</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="136"/>
         <source>computation too expensive</source>
-        <translation type="unfinished"></translation>
+        <translation>výpočet by byl příliš nákladný</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="141"/>
         <source>internal error, please report a bug</source>
-        <translation type="unfinished"></translation>
+        <translation>vnitřní chyba, nahlaste, prosím, chybu</translation>
     </message>
     <message>
         <location filename="../core/evaluator.cpp" line="1269"/>
@@ -1450,367 +1450,367 @@
     <message>
         <location filename="../core/functions.cpp" line="905"/>
         <source>Absolute Value</source>
-        <translation type="unfinished">Absolutní hodnota</translation>
+        <translation>Absolutní hodnota</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="906"/>
         <source>Absolute Deviation</source>
-        <translation type="unfinished">Absolutní odchylka</translation>
+        <translation>Absolutní odchylka</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="907"/>
         <source>Arc Cosine</source>
-        <translation type="unfinished">Arkus kosinus</translation>
+        <translation>Arkus kosinus</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="908"/>
         <source>Logical AND</source>
-        <translation type="unfinished">Logické ANO</translation>
+        <translation>Logické ANO</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="909"/>
         <source>Area Hyperbolic Cosine</source>
-        <translation type="unfinished">Oblastní hyperbolický kosinus</translation>
+        <translation>Oblastní hyperbolický kosinus</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="910"/>
         <source>Area Hyperbolic Sine</source>
-        <translation type="unfinished">Oblastní hyperbolický sinus</translation>
+        <translation>Oblastní hyperbolický sinus</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="911"/>
         <source>Area Hyperbolic Tangent</source>
-        <translation type="unfinished">Oblastní hyperbolický tangens</translation>
+        <translation>Oblastní hyperbolický tangens</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="912"/>
         <source>Arc Sine</source>
-        <translation type="unfinished">Arkus sinus</translation>
+        <translation>Arkus sinus</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="913"/>
         <source>Arc Tangent</source>
-        <translation type="unfinished">Arkus tangens</translation>
+        <translation>Arkus tangens</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="914"/>
         <source>Average (Arithmetic Mean)</source>
-        <translation type="unfinished">Průměr (aritmetický)</translation>
+        <translation>Průměr (aritmetický)</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="915"/>
         <source>Binary Representation</source>
-        <translation type="unfinished">Dvojková soustava</translation>
+        <translation>Dvojková soustava</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="916"/>
         <source>Binomial Cumulative Distribution Function</source>
-        <translation type="unfinished">Sčítající se funkce rozložení dvojčlenného rozložení</translation>
+        <translation>Sčítající se funkce rozložení dvojčlenného rozložení</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="917"/>
         <source>Binomial Distribution Mean</source>
-        <translation type="unfinished">Předpokládaná hodnota dvojčlenného rozložení</translation>
+        <translation>Předpokládaná hodnota dvojčlenného rozložení</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="918"/>
         <source>Binomial Probability Mass Function</source>
-        <translation type="unfinished">Funkce pravděpodobnosti dvojčlenného rozložení</translation>
+        <translation>Funkce pravděpodobnosti dvojčlenného rozložení</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="919"/>
         <source>Binomial Distribution Variance</source>
-        <translation type="unfinished">Odchylka dvojčlenného rozložení pravděpodobnosti</translation>
+        <translation>Odchylka dvojčlenného rozložení pravděpodobnosti</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="920"/>
         <source>Cube Root</source>
-        <translation type="unfinished">Třetí odmocnina</translation>
+        <translation>Třetí odmocnina</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="921"/>
         <source>Ceiling</source>
-        <translation type="unfinished">Zaokrouhlení nahoru</translation>
+        <translation>Zaokrouhlení nahoru</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="922"/>
         <source>Cosine</source>
-        <translation type="unfinished">Kosinus</translation>
+        <translation>Kosinus</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="923"/>
         <source>Hyperbolic Cosine</source>
-        <translation type="unfinished">Hyperbolický kosinus</translation>
+        <translation>Hyperbolický kosinus</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="924"/>
         <source>Cotangent</source>
-        <translation type="unfinished">Kotangens</translation>
+        <translation>Kotangens</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="925"/>
         <source>Cosecant</source>
-        <translation type="unfinished">Kosekans</translation>
+        <translation>Kosekans</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="926"/>
         <source>Decimal Representation</source>
-        <translation type="unfinished">Desítková soustava</translation>
+        <translation>Desítková soustava</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="927"/>
         <source>Degrees of Arc</source>
-        <translation type="unfinished">Úhlová míra ve stupních</translation>
+        <translation>Úhlová míra ve stupních</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="928"/>
         <source>Error Function</source>
-        <translation type="unfinished">Chybová funkce</translation>
+        <translation>Chybová funkce</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="929"/>
         <source>Complementary Error Function</source>
-        <translation type="unfinished">Doplňková chybová funkce</translation>
+        <translation>Doplňková chybová funkce</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="930"/>
         <source>Exponential</source>
-        <translation type="unfinished">Exponenciální</translation>
+        <translation>Exponenciální</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="931"/>
         <source>Floor</source>
-        <translation type="unfinished">Zaokrouhlení dolů</translation>
+        <translation>Zaokrouhlení dolů</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="932"/>
         <source>Fractional Part</source>
-        <translation type="unfinished">Desetinná část</translation>
+        <translation>Desetinná místa</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="933"/>
         <source>Extension of Factorials [= (x-1)!]</source>
-        <translation type="unfinished">Rozšíření faktoriálů [= (x-1)!]</translation>
+        <translation>Rozšíření faktoriálů [= (x-1)!]</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="934"/>
         <source>Greatest Common Divisor</source>
-        <translation type="unfinished">Největší společný dělitel</translation>
+        <translation>Největší společný dělitel</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="935"/>
         <source>Geometric Mean</source>
-        <translation type="unfinished">Geometrický průměr</translation>
+        <translation>Geometrický průměr</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="936"/>
         <source>Hexadecimal Representation</source>
-        <translation type="unfinished">Šestnáctková soustava</translation>
+        <translation>Šestnáctková soustava</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="937"/>
         <source>Hypergeometric Cumulative Distribution Function</source>
-        <translation type="unfinished">Sčítající se funkce rozložení hypergeometrického rozložení</translation>
+        <translation>Sčítající se funkce rozložení hypergeometrického rozložení</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="938"/>
         <source>Hypergeometric Distribution Mean</source>
-        <translation type="unfinished">Předpokládaná hodnota hypergeometrického rozložení</translation>
+        <translation>Předpokládaná hodnota hypergeometrického rozložení</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="939"/>
         <source>Hypergeometric Probability Mass Function</source>
-        <translation type="unfinished">Funkce pravděpodobnosti hypergeometrického rozložení pravděpodobnosti</translation>
+        <translation>Funkce pravděpodobnosti hypergeometrického rozložení pravděpodobnosti</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="940"/>
         <source>Hypergeometric Distribution Variance</source>
-        <translation type="unfinished">Odchylka hypergeometrického rozložení</translation>
+        <translation>Odchylka hypergeometrického rozložení</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="941"/>
         <source>Integer Quotient</source>
-        <translation type="unfinished">Celočíselný podíl</translation>
+        <translation>Celočíselný podíl</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="942"/>
         <source>Integer Part</source>
-        <translation type="unfinished">Celočíselná část</translation>
+        <translation>Celočíselná část</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="943"/>
         <source>Base-2 Logarithm</source>
-        <translation type="unfinished">Dvojkový logaritmus</translation>
+        <translation>Dvojkový logaritmus</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="944"/>
         <source>Natural Logarithm</source>
-        <translation type="unfinished">Přirozený logaritmus</translation>
+        <translation>Přirozený logaritmus</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="946"/>
         <source>Base-10 Logarithm</source>
-        <translation type="unfinished">Desítkový logaritmus</translation>
+        <translation>Desítkový logaritmus</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="947"/>
         <source>Mask to a bit size</source>
-        <translation type="unfinished">Zakrýt na délku bitu</translation>
+        <translation>Zakrýt na délku bitu</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="948"/>
         <source>Maximum</source>
-        <translation type="unfinished">Maximum</translation>
+        <translation>Maximum</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="949"/>
         <source>Median Value (50th Percentile)</source>
-        <translation type="unfinished">Střední hodnota (50tý percentil)</translation>
+        <translation>Střední hodnota (50tý percentil)</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="950"/>
         <source>Minimum</source>
-        <translation type="unfinished">Minimum</translation>
+        <translation>Minimum</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="951"/>
         <source>Modulo</source>
-        <translation type="unfinished">Modulo</translation>
+        <translation>Modulo</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="952"/>
         <source>Combination (Binomial Coefficient)</source>
-        <translation type="unfinished">Kombinace (kombinační číslo)</translation>
+        <translation>Kombinace (kombinační číslo)</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="953"/>
         <source>Logical NOT</source>
-        <translation type="unfinished">Logické NE</translation>
+        <translation>Logické NE</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="954"/>
         <source>Permutation (Arrangement)</source>
-        <translation type="unfinished">Permutace (uspořádání)</translation>
+        <translation>Permutace (uspořádání)</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="955"/>
         <source>Octal Representation</source>
-        <translation type="unfinished">Osmičková soustava</translation>
+        <translation>Osmičková soustava</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="956"/>
         <source>Logical OR</source>
-        <translation type="unfinished">Logické NEBO</translation>
+        <translation>Logické NEBO</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="957"/>
         <source>Poissonian Cumulative Distribution Function</source>
-        <translation type="unfinished">Sčítající se funkce rozložení poissoniánského rozložení</translation>
+        <translation>Sčítající se funkce rozložení poissoniánského rozložení</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="958"/>
         <source>Poissonian Distribution Mean</source>
-        <translation type="unfinished">Předpokládaná hodnota poissoniánského rozložení</translation>
+        <translation>Předpokládaná hodnota poissoniánského rozložení</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="959"/>
         <source>Poissonian Probability Mass Function</source>
-        <translation type="unfinished">Funkce pravděpodobnosti poissoniánského rozložení</translation>
+        <translation>Funkce pravděpodobnosti poissoniánského rozložení</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="960"/>
         <source>Poissonian Distribution Variance</source>
-        <translation type="unfinished">Odchylka poissoniánského rozložení</translation>
+        <translation>Odchylka poissoniánského rozložení</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="961"/>
         <source>Product</source>
-        <translation type="unfinished">Součin</translation>
+        <translation>Součin</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="962"/>
         <source>Radians</source>
-        <translation type="unfinished">Radiány</translation>
+        <translation>Radiány</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="963"/>
         <source>Rounding</source>
-        <translation type="unfinished">Zaokrouhlení</translation>
+        <translation>Zaokrouhlení</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="964"/>
         <source>Secant</source>
-        <translation type="unfinished">Sekans</translation>
+        <translation>Sekans</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="965"/>
         <source>Arithmetic Shift Left</source>
-        <translation type="unfinished">Aritmetický posuv doleva</translation>
+        <translation>Aritmetický posuv doleva</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="966"/>
         <source>Arithmetic Shift Right</source>
-        <translation type="unfinished">Aritmetický posuv doprava</translation>
+        <translation>Aritmetický posuv doprava</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="967"/>
         <source>Signum</source>
-        <translation type="unfinished">Signum</translation>
+        <translation>Signum</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="968"/>
         <source>Sine</source>
-        <translation type="unfinished">Sinus</translation>
+        <translation>Sinus</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="969"/>
         <source>Hyperbolic Sine</source>
-        <translation type="unfinished">Hyperbolický sinus</translation>
+        <translation>Hyperbolický sinus</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="970"/>
         <source>Square Root</source>
-        <translation type="unfinished">Druhá odmocnina</translation>
+        <translation>Druhá odmocnina</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="971"/>
         <source>Standard Deviation (Square Root of Variance)</source>
-        <translation type="unfinished">Běžná odchylka (druhá odmocnina rozdílu)</translation>
+        <translation>Běžná odchylka (druhá odmocnina rozdílu)</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="972"/>
         <source>Sum</source>
-        <translation type="unfinished">Součet</translation>
+        <translation>Součet</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="973"/>
         <source>Tangent</source>
-        <translation type="unfinished">Tangens</translation>
+        <translation>Tangens</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="974"/>
         <source>Hyperbolic Tangent</source>
-        <translation type="unfinished">Hyperbolický tangens</translation>
+        <translation>Hyperbolický tangens</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="975"/>
         <source>Truncation</source>
-        <translation type="unfinished">Oříznutí</translation>
+        <translation>Oříznutí desetinných míst</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="976"/>
         <source>Sign-extent a value</source>
-        <translation type="unfinished">Rozšíření znaménka hodnoty</translation>
+        <translation>Rozšíření znaménka hodnoty</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="977"/>
         <source>Variance</source>
-        <translation type="unfinished">Rozdíl</translation>
+        <translation>Variance</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="978"/>
         <source>Logical XOR</source>
-        <translation type="unfinished">Logické výhradní NEBO (XOR; negace ekvivalence)</translation>
+        <translation>Logické výhradní NEBO (XOR; negace ekvivalence)</translation>
     </message>
 </context>
 <context>
@@ -1818,39 +1818,39 @@
     <message>
         <location filename="../core/functions.cpp" line="883"/>
         <source>max; trials; probability</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximum; Pokusy; Pravděpodobnost</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="884"/>
         <location filename="../core/functions.cpp" line="886"/>
         <source>trials; probability</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokusy; Pravděpodobnost</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="885"/>
         <source>hits; trials; probability</source>
-        <translation type="unfinished"></translation>
+        <translation>Nálezy; Pokusy; Pravděpodobnost</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="887"/>
         <source>max; total; hits; trials</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximum; Celkem; Nálezy; Pokusy</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="888"/>
         <location filename="../core/functions.cpp" line="890"/>
         <source>total; hits; trials</source>
-        <translation type="unfinished"></translation>
+        <translation>Celkem; Nálezy; Pokusy</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="889"/>
         <source>count; total; hits; trials</source>
-        <translation type="unfinished"></translation>
+        <translation>Počet; Celkem; Nálezy; Pokusy</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="891"/>
         <source>dividend; divisor</source>
-        <translation type="unfinished"></translation>
+        <translation>Čitatel; Jmenovatel</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="892"/>
@@ -1858,24 +1858,24 @@
         <location filename="../core/functions.cpp" line="899"/>
         <location filename="../core/functions.cpp" line="900"/>
         <source>n; bits</source>
-        <translation type="unfinished"></translation>
+        <translation>n; Bits</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="893"/>
         <source>value; modulo</source>
-        <translation type="unfinished"></translation>
+        <translation>Hodnota; Modulo </translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="894"/>
         <location filename="../core/functions.cpp" line="896"/>
         <source>events; average_events</source>
-        <translation type="unfinished"></translation>
+        <translation>Události; Průměr_Události</translation>
     </message>
     <message>
         <location filename="../core/functions.cpp" line="895"/>
         <location filename="../core/functions.cpp" line="897"/>
         <source>average_events</source>
-        <translation type="unfinished"></translation>
+        <translation>Průměr_Události</translation>
     </message>
 </context>
 <context>
@@ -2178,17 +2178,17 @@ Klepněte levým tlačítkem myši, abyste obnovil jeho velikost, nebo klepněte
     <message>
         <location filename="../gui/mainwindow.cpp" line="340"/>
         <source>Standard</source>
-        <translation type="unfinished"></translation>
+        <translation>Standardní</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="341"/>
         <source>Sublime</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytříbené</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="342"/>
         <source>Terminal</source>
-        <translation type="unfinished"></translation>
+        <translation>Terminál</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="346"/>
@@ -2198,22 +2198,22 @@ Klepněte levým tlačítkem myši, abyste obnovil jeho velikost, nebo klepněte
     <message>
         <location filename="../gui/mainwindow.cpp" line="348"/>
         <source>Check &amp;Updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Zkontrolovat &amp;aktualizace</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="349"/>
         <source>Send &amp;Feedback</source>
-        <translation type="unfinished"></translation>
+        <translation>Poslat zpětnou &amp;vazbu</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="350"/>
         <source>Join &amp;Community</source>
-        <translation type="unfinished"></translation>
+        <translation>Spojit se se &amp;společenstvím</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="351"/>
         <source>&amp;News Feed</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Novinky</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="352"/>
@@ -2238,7 +2238,7 @@ Klepněte levým tlačítkem myši, abyste obnovil jeho velikost, nebo klepněte
     <message>
         <location filename="../gui/mainwindow.cpp" line="561"/>
         <source>Color Scheme</source>
-        <translation type="unfinished"></translation>
+        <translation>Barevné pojetí</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="1294"/>
@@ -2290,7 +2290,7 @@ Pokud ne, budou současné proměnné a zobrazení smazány.</translation>
     <message>
         <location filename="../gui/mainwindow.cpp" line="307"/>
         <source>Formula &amp;Book</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Sbírka vzorců</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="308"/>
@@ -2300,7 +2300,7 @@ Pokud ne, budou současné proměnné a zobrazení smazány.</translation>
     <message>
         <location filename="../gui/mainwindow.cpp" line="315"/>
         <source>Automatic Result &amp;Reuse</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatické &amp;znovupoužití výsledků</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="319"/>
@@ -2315,12 +2315,12 @@ Pokud ne, budou současné proměnné a zobrazení smazány.</translation>
     <message>
         <location filename="../gui/mainwindow.cpp" line="322"/>
         <source>Leave &amp;Last Expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Ponechat &amp;poslední výraz</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="323"/>
         <source>Automatic &amp;Result to Clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Výsledek automaticky do schránky</translation>
     </message>
     <message>
         <location filename="../gui/mainwindow.cpp" line="327"/>
@@ -2578,37 +2578,37 @@ Pokud ne, budou současné proměnné a zobrazení smazány.</translation>
     <message>
         <location filename="../gui/variablelistwidget.cpp" line="159"/>
         <source>Name</source>
-        <translation type="unfinished">Název</translation>
+        <translation>Název</translation>
     </message>
     <message>
         <location filename="../gui/variablelistwidget.cpp" line="159"/>
         <source>Value</source>
-        <translation type="unfinished">Hodnota</translation>
+        <translation>Hodnota</translation>
     </message>
     <message>
         <location filename="../gui/variablelistwidget.cpp" line="162"/>
         <source>Search</source>
-        <translation type="unfinished">Hledání</translation>
+        <translation>Hledání</translation>
     </message>
     <message>
         <location filename="../gui/variablelistwidget.cpp" line="163"/>
         <source>No match found</source>
-        <translation type="unfinished">Nenalezena žádná shoda</translation>
+        <translation>Nenalezena žádná shoda</translation>
     </message>
     <message>
         <location filename="../gui/variablelistwidget.cpp" line="165"/>
         <source>Insert</source>
-        <translation type="unfinished"></translation>
+        <translation>Vložit</translation>
     </message>
     <message>
         <location filename="../gui/variablelistwidget.cpp" line="166"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Smazat</translation>
     </message>
     <message>
         <location filename="../gui/variablelistwidget.cpp" line="167"/>
         <source>Delete All</source>
-        <translation type="unfinished"></translation>
+        <translation>Smazat vše</translation>
     </message>
 </context>
 <context>
