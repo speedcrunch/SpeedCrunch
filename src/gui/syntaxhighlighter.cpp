@@ -98,7 +98,7 @@ void SyntaxHighlighter::highlightBlock(const QString& text)
 
     for (int i = 0; i < tokens.count(); ++i) {
         const Token& token = tokens.at(i);
-        const QString text = token.text().toLower();
+        const QString tokenText = token.text().toLower();
         QStringList functionNames = FunctionRepo::instance()->getIdentifiers();
         QColor color;
 
@@ -124,7 +124,7 @@ void SyntaxHighlighter::highlightBlock(const QString& text)
         case Token::stxIdentifier:
             color = colorForRole(Variable);
             for (int i = 0; i < functionNames.count(); ++i)
-                if (functionNames.at(i).toLower() == text)
+                if (functionNames.at(i).toLower() == tokenText)
                     color = colorForRole(Function);
             break;
 
@@ -132,8 +132,11 @@ void SyntaxHighlighter::highlightBlock(const QString& text)
             break;
         };
 
-        if (token.pos() >= 0)
+        if (token.pos() >= 0) {
             setFormat(token.pos(), token.text().length(), color);
+            if(token.type() == Token::stxNumber)
+                groupDigits(text, token.pos(), token.text().length());
+        }
     }
 }
 
