@@ -88,6 +88,7 @@ void SyntaxHighlighter::highlightBlock(const QString& text)
     if (text.startsWith(QLatin1String("="))) {
         setFormat(0, 1, colorForRole(Operator));
         setFormat(1, text.length(), colorForRole(Result));
+        groupDigits(text, 1, text.length() - 1);
         return;
     }
 
@@ -95,7 +96,7 @@ void SyntaxHighlighter::highlightBlock(const QString& text)
 
     for (int i = 0; i < tokens.count(); ++i) {
         const Token& token = tokens.at(i);
-        const QString text = token.text().toLower();
+        const QString tokenText = token.text().toLower();
         QStringList functionNames = FunctionRepo::instance()->getIdentifiers();
         QColor color;
 
@@ -121,7 +122,7 @@ void SyntaxHighlighter::highlightBlock(const QString& text)
         case Token::stxIdentifier:
             color = colorForRole(Variable);
             for (int i = 0; i < functionNames.count(); ++i)
-                if (functionNames.at(i).toLower() == text)
+                if (functionNames.at(i).toLower() == tokenText)
                     color = colorForRole(Function);
             break;
 
@@ -129,8 +130,11 @@ void SyntaxHighlighter::highlightBlock(const QString& text)
             break;
         };
 
-        if (token.pos() >= 0)
+        if (token.pos() >= 0) {
             setFormat(token.pos(), token.text().length(), color);
+            if (token.type() == Token::stxNumber)
+                groupDigits(text, token.pos(), token.text().length());
+        }
     }
 }
 
@@ -147,4 +151,120 @@ void SyntaxHighlighter::update()
     parentWidget->setPalette(pal);
 
     rehighlight();
+}
+
+void SyntaxHighlighter::groupDigits(const QString& text, int pos, int length)
+{
+    // Used to find out which characters belong to which radixes.
+    static int charType[128] = { 0 };
+    static const int BIN_CHAR = (1 << 0);
+    static const int OCT_CHAR = (1 << 1);
+    static const int DEC_CHAR = (1 << 2);
+    static const int HEX_CHAR = (1 << 3);
+
+    if (charType['0'] == 0) { // Initialize the table on first call (not thread-safe!).
+        charType['0'] = HEX_CHAR | DEC_CHAR | OCT_CHAR | BIN_CHAR;
+        charType['1'] = HEX_CHAR | DEC_CHAR | OCT_CHAR | BIN_CHAR;
+        charType['2'] = HEX_CHAR | DEC_CHAR | OCT_CHAR;
+        charType['3'] = HEX_CHAR | DEC_CHAR | OCT_CHAR;
+        charType['4'] = HEX_CHAR | DEC_CHAR | OCT_CHAR;
+        charType['5'] = HEX_CHAR | DEC_CHAR | OCT_CHAR;
+        charType['6'] = HEX_CHAR | DEC_CHAR | OCT_CHAR;
+        charType['7'] = HEX_CHAR | DEC_CHAR | OCT_CHAR;
+        charType['8'] = HEX_CHAR | DEC_CHAR;
+        charType['9'] = HEX_CHAR | DEC_CHAR;
+        charType['a'] = HEX_CHAR;
+        charType['b'] = HEX_CHAR;
+        charType['c'] = HEX_CHAR;
+        charType['d'] = HEX_CHAR;
+        charType['e'] = HEX_CHAR;
+        charType['f'] = HEX_CHAR;
+        charType['A'] = HEX_CHAR;
+        charType['B'] = HEX_CHAR;
+        charType['C'] = HEX_CHAR;
+        charType['D'] = HEX_CHAR;
+        charType['E'] = HEX_CHAR;
+        charType['F'] = HEX_CHAR;
+    }
+
+    qreal groupSpacing = 140; // Size of the space between groups (100 means no space).
+    int s = -1; // Index of the first digit (most significant).
+    bool invertGroup = false; // If true, group digits from the most significant digit.
+    int groupSize = 3; // Number of digits to group (depends on the radix).
+    int allowedChars = DEC_CHAR; // Allowed characters for the radix of the current number being parsed.
+
+    int endPos = pos + length;
+    if (endPos > text.length())
+        endPos = text.length();
+    for (int i = pos; i < endPos; ++i) {
+        ushort c = text[i].unicode();
+        bool isNumber = c < 256 && (charType[c] & allowedChars);
+
+        if (s >= 0) {
+            if (!isNumber) {
+                // End of current number found, start grouping the digits.
+                if (invertGroup)
+                    for (s += groupSize - 1; s < i ; s += groupSize) {
+                        // Only change the letter spacing from the format and keep the other properties.
+                        QTextCharFormat fmt = format(s);
+                        fmt.setFontLetterSpacing(groupSpacing);
+                        setFormat(s, 1, fmt);
+                    }
+                else
+                    for (int e = i - (groupSize + 1); e >= s ; e -= groupSize) {
+                        QTextCharFormat fmt = format(e);
+                        fmt.setFontLetterSpacing(groupSpacing);
+                        setFormat(e, 1, fmt);
+                    }
+                s = -1; // Reset.
+            }
+        } else {
+            if (isNumber) // Start of number found.
+                s = i;
+        }
+
+        if (!isNumber) {
+            if (c == '.') {
+                // Invert the grouping for the fractional part.
+                invertGroup = true;
+            } else {
+                // Look for a radix prefix.
+                invertGroup = false;
+                if (i > 0 && text[i - 1] == '0') {
+                    if (c == 'x') {
+                        groupSize = 4;
+                        allowedChars = HEX_CHAR;
+                    } else if (c == 'o') {
+                        groupSize = 3;
+                        allowedChars = OCT_CHAR;
+                    } else if (c == 'b') {
+                        groupSize = 4;
+                        allowedChars = BIN_CHAR;
+                    } else {
+                        groupSize = 3;
+                        allowedChars = DEC_CHAR;
+                    }
+                } else {
+                    groupSize = 3;
+                    allowedChars = DEC_CHAR;
+                }
+            }
+        }
+    }
+
+    // Group the last digits if the string finishes with the number.
+    if (s >= 0) {
+        if (invertGroup)
+            for (s += groupSize - 1; s < endPos ; s += groupSize) {
+                QTextCharFormat fmt = format(s);
+                fmt.setFontLetterSpacing(groupSpacing);
+                setFormat(s, 1, fmt);
+            }
+        else
+            for (int e = endPos - (groupSize + 1); e >= s ; e -= groupSize) {
+                QTextCharFormat fmt = format(e);
+                fmt.setFontLetterSpacing(groupSpacing);
+                setFormat(e, 1, fmt);
+            }
+    }
 }
