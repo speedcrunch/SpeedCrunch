@@ -88,6 +88,9 @@ void SyntaxHighlighter::highlightBlock(const QString& text)
     if (text.startsWith(QLatin1String("="))) {
         setFormat(0, 1, colorForRole(Operator));
         setFormat(1, text.length(), colorForRole(Result));
+
+        groupDigits(text, 1, text.length() - 1);
+
         return;
     }
 
@@ -147,4 +150,135 @@ void SyntaxHighlighter::update()
     parentWidget->setPalette(pal);
 
     rehighlight();
+}
+
+void SyntaxHighlighter::groupDigits(const QString& text, unsigned pos, unsigned length)
+{
+    /* Group digits by increasing the space between digits of different groups. */
+
+    // charType is used to find out which characters belong to which radixes
+    static int charType[256] = {0};
+    static const int BIN_CHAR = (1 << 0);
+    static const int OCT_CHAR = (1 << 1);
+    static const int DEC_CHAR = (1 << 2);
+    static const int HEX_CHAR = (1 << 3);
+
+    if(charType['0'] == 0) {
+        /* Init the charType table the first time this method is called (not thread safe!). */
+        charType['0'] = HEX_CHAR | DEC_CHAR | OCT_CHAR | BIN_CHAR;
+        charType['1'] = HEX_CHAR | DEC_CHAR | OCT_CHAR | BIN_CHAR;
+        charType['2'] = HEX_CHAR | DEC_CHAR | OCT_CHAR;
+        charType['3'] = HEX_CHAR | DEC_CHAR | OCT_CHAR;
+        charType['4'] = HEX_CHAR | DEC_CHAR | OCT_CHAR;
+        charType['5'] = HEX_CHAR | DEC_CHAR | OCT_CHAR;
+        charType['6'] = HEX_CHAR | DEC_CHAR | OCT_CHAR;
+        charType['7'] = HEX_CHAR | DEC_CHAR | OCT_CHAR;
+        charType['8'] = HEX_CHAR | DEC_CHAR;
+        charType['9'] = HEX_CHAR | DEC_CHAR;
+        charType['a'] = HEX_CHAR;
+        charType['b'] = HEX_CHAR;
+        charType['c'] = HEX_CHAR;
+        charType['d'] = HEX_CHAR;
+        charType['e'] = HEX_CHAR;
+        charType['f'] = HEX_CHAR;
+        charType['A'] = HEX_CHAR;
+        charType['B'] = HEX_CHAR;
+        charType['C'] = HEX_CHAR;
+        charType['D'] = HEX_CHAR;
+        charType['E'] = HEX_CHAR;
+        charType['F'] = HEX_CHAR;
+    }
+
+    // Size of the space between groups (100=no space):
+    qreal groupSpacing = 140;
+    // Index of the first digit (most significant):
+    int s = -1;
+    // If true, group digits from the most significant digit:
+    bool invertGroup = false;
+    // Number of digits to group (depends on the radix):
+    int groupSize = 3;
+    // Allowed characters for the radix of the current number being parsed:
+    int allowedChars = DEC_CHAR;
+
+    int endpos = pos + length;
+    if(endpos > text.length())
+        endpos = text.length();
+    for(int i = pos; i < endpos; ++i) {
+        ushort c = text[i].unicode();
+        bool isNumber = c < 256 && (charType[c] & allowedChars);
+
+        if(s >= 0) {
+            if(!isNumber) {
+                // End of current number found, start grouping the digits
+                if(invertGroup) {
+                    for(s += groupSize - 1; s < i ; s += groupSize) {
+                        // Only change the letter spacing from the format
+                        // (but keep the other properties, like the foreground color)
+                        QTextCharFormat fmt = format(s);
+                        fmt.setFontLetterSpacing(groupSpacing);
+                        setFormat(s, 1, fmt);
+                    }
+                } else {
+                    for(int e = i - (groupSize + 1); e >= s ; e -= groupSize) {
+                        QTextCharFormat fmt = format(e);
+                        fmt.setFontLetterSpacing(groupSpacing);
+                        setFormat(e, 1, fmt);
+                    }
+                }
+                s = -1;  // Reset
+            }
+        } else {
+            if(isNumber) {
+                // Start of number found:
+                s = i;
+            }
+        }
+
+        if(!isNumber) {
+            // Invert the grouping for the fractional part
+            if(c == '.') invertGroup = true;
+            else {
+                // Look for a radix prefix
+                invertGroup = false;
+
+                if(i > 0 && text[i - 1] == '0') {
+                    if(c == 'x') {
+                        groupSize = 4;
+                        allowedChars = HEX_CHAR;
+                    } else if(c == 'o') {
+                        groupSize = 3;
+                        allowedChars = OCT_CHAR;
+                    } else if(c == 'b') {
+                        groupSize = 4;  // 8 ?
+                        allowedChars = BIN_CHAR;
+                    } else {
+                        // Reset to decimal
+                        groupSize = 3;
+                        allowedChars = DEC_CHAR;
+                    }
+                } else {
+                    // Reset to decimal
+                    groupSize = 3;
+                    allowedChars = DEC_CHAR;
+                }
+            }
+        }
+    }
+
+    // Group the last digits if the string finishes with the number
+    if(s >= 0) {
+        if(invertGroup) {
+            for(s += groupSize - 1; s < endpos ; s += groupSize) {
+                QTextCharFormat fmt = format(s);
+                fmt.setFontLetterSpacing(groupSpacing);
+                setFormat(s, 1, fmt);
+            }
+        } else {
+            for(int e = endpos - (groupSize + 1); e >= s ; e -= groupSize) {
+                QTextCharFormat fmt = format(e);
+                fmt.setFontLetterSpacing(groupSpacing);
+                setFormat(e, 1, fmt);
+            }
+        }
+    }
 }
