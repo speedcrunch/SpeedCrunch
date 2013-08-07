@@ -68,6 +68,7 @@ AboutBox::AboutBox(QWidget* parent, Qt::WindowFlags f)
                                                     "Michael Pyne<br>"
                                                     "Jonathan Avraham<br>"
                                                     "Jonathan Riddell<br>"
+                                                    "Tey<br>"
                                                     "Witold Wysota");
     msg += authors.arg(tr("Graphics")).arg("Kuswanto (Zeus)<br>Oxygen Project");
 
