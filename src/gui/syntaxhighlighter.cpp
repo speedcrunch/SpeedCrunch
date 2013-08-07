@@ -198,7 +198,7 @@ void SyntaxHighlighter::groupDigits(const QString& text, int pos, int length)
         endPos = text.length();
     for (int i = pos; i < endPos; ++i) {
         ushort c = text[i].unicode();
-        bool isNumber = c < 256 && (charType[c] & allowedChars);
+        bool isNumber = c < 128 && (charType[c] & allowedChars);
 
         if (s >= 0) {
             if (!isNumber) {
