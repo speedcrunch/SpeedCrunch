@@ -34,6 +34,7 @@ public:
 
     enum Role {
         Background,
+        EditorCursor,
         Number,
         Function,
         Operator,

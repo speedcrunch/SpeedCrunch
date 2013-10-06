@@ -100,8 +100,10 @@ protected slots:
 
 protected:
     QString formatNumber(const HNumber&) const;
-    void keyPressEvent(QKeyEvent*);
-    void wheelEvent(QWheelEvent*);
+    virtual void focusOutEvent(QFocusEvent*);
+    virtual void keyPressEvent(QKeyEvent*);
+    virtual void paintEvent(QPaintEvent*);
+    virtual void wheelEvent(QWheelEvent*);
 
 private:
     Q_DISABLE_COPY(Editor);
@@ -121,6 +123,7 @@ private:
     QString m_savedCurrentEditor;
     int m_currentHistoryIndex;
     QTimer* m_matchingTimer;
+    bool m_shouldPaintCustomCursor;
 };
 
 class EditorCompletion : public QObject

@@ -37,6 +37,7 @@
 #include <QtGui/QHeaderView>
 #include <QtGui/QKeyEvent>
 #include <QtGui/QLineEdit>
+#include <QtGui/QPainter>
 #include <QtGui/QPlainTextEdit>
 #include <QtGui/QStyle>
 #include <QtGui/QTreeWidget>
@@ -66,12 +67,15 @@ Editor::Editor(QWidget* parent)
     m_autoCalcSelTimer = new QTimer(this);
     m_matchingTimer = new QTimer(this);
     m_isAnsAvailable = false;
+    m_shouldPaintCustomCursor = true;
 
+    setViewportMargins(0, 0, 0, 0);
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
     setTabChangesFocus(true);
     setWordWrapMode(QTextOption::NoWrap);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setCursorWidth(0);
 
     connect(m_autoCalcTimer, SIGNAL(timeout()), SLOT(autoCalc()));
     connect(m_autoCalcSelTimer, SIGNAL(timeout()), SLOT(autoCalcSelection()));
@@ -575,6 +579,24 @@ void Editor::evaluate()
     triggerEnter();
 }
 
+void Editor::paintEvent(QPaintEvent* event)
+{
+    QPlainTextEdit::paintEvent(event);
+
+    if (!m_shouldPaintCustomCursor) {
+        m_shouldPaintCustomCursor = true;
+        return;
+    }
+    m_shouldPaintCustomCursor = false;
+
+    QRect cursor = cursorRect();
+    cursor.setLeft(cursor.left() - 1);
+    cursor.setRight(cursor.right() + 1);
+
+    QPainter painter(viewport());
+    painter.fillRect(cursor, m_highlighter->colorForRole(SyntaxHighlighter::EditorCursor));
+}
+
 QString Editor::formatNumber(const HNumber& value) const
 {
     const char format = value.format() != 0 ? value.format() : Settings::instance()->resultFormat;
@@ -625,6 +647,12 @@ void Editor::triggerEnter()
     m_autoCalcSelTimer->stop();
     m_currentHistoryIndex = m_history.count();
     emit returnPressed();
+}
+
+void Editor::focusOutEvent(QFocusEvent* event)
+{
+    m_shouldPaintCustomCursor = false;
+    QPlainTextEdit::focusOutEvent(event);
 }
 
 void Editor::keyPressEvent(QKeyEvent* event)
