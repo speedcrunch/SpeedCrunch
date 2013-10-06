@@ -21,7 +21,7 @@
 #ifndef GUI_EDITOR_H
 #define GUI_EDITOR_H
 
-#include "gui/textedit.h"
+#include <QtGui/QPlainTextEdit>
 
 // Uncomment to activate fade-away effect when the completion pop-up disappears.
 #define COMPLETION_FADE_EFFECT
@@ -40,7 +40,7 @@ class QTreeWidget;
 class QWheelEvent;
 class QWidget;
 
-class Editor : public TextEdit
+class Editor : public QPlainTextEdit
 {
     Q_OBJECT
 

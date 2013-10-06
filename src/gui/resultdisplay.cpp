@@ -21,7 +21,6 @@
 #include "core/functions.h"
 #include "core/settings.h"
 #include "gui/syntaxhighlighter.h"
-#include "gui/textedit.h"
 #include "math/hmath.h"
 #include "math/floatconfig.h"
 
@@ -34,7 +33,7 @@
 static QString formatNumber(const HNumber&);
 
 ResultDisplay::ResultDisplay(QWidget* parent)
-    : TextEdit(parent)
+    : QPlainTextEdit(parent)
     , m_count(0)
     , m_highlighter(new SyntaxHighlighter(this))
 {

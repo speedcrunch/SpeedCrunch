@@ -23,11 +23,11 @@
 #include "core/evaluator.h"
 #include "core/functions.h"
 #include "core/settings.h"
-#include "gui/textedit.h"
 
 #include <QtCore/QLatin1String>
 #include <QtGui/QApplication>
 #include <QtGui/QPalette>
+#include <QtGui/QPlainTextEdit>
 
 static inline QHash<SyntaxHighlighter::Role, QColor> createColorScheme(SyntaxHighlighter::ColorScheme id)
 {
@@ -71,7 +71,7 @@ static inline QHash<SyntaxHighlighter::Role, QColor> createColorScheme(SyntaxHig
     return result;
 }
 
-SyntaxHighlighter::SyntaxHighlighter(TextEdit* edit)
+SyntaxHighlighter::SyntaxHighlighter(QPlainTextEdit* edit)
     : QSyntaxHighlighter(edit)
 {
     setDocument(edit->document());

@@ -28,7 +28,6 @@ gui/historydock.h
 gui/historywidget.h
 gui/keypad.h
 #gui/syntaxhighlighter.h
-#gui/textedit.h
 gui/tipwidget.h
 gui/variablesdock.h
 gui/variablelistwidget.h
@@ -76,7 +75,6 @@ gui/historydock.cpp
 gui/historywidget.cpp
 gui/keypad.cpp
 gui/syntaxhighlighter.cpp
-gui/textedit.cpp
 gui/tipwidget.cpp
 gui/variablesdock.cpp
 gui/variablelistwidget.cpp

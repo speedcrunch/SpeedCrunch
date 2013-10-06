@@ -2152,7 +2152,7 @@ void MainWindow::handleCopyAvailable(bool copyAvailable)
 {
     if (!copyAvailable)
         return;
-    TextEdit* const textEdit = dynamic_cast<TextEdit*>(sender());
+    QPlainTextEdit* const textEdit = static_cast<QPlainTextEdit*>(sender());
     if (textEdit)
         m_copyWidget = textEdit;
 }

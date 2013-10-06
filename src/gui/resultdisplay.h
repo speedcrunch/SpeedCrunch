@@ -19,12 +19,12 @@
 #ifndef GUI_RESULTDISPLAY_H
 #define GUI_RESULTDISPLAY_H
 
-#include "gui/textedit.h"
+#include <QtGui/QPlainTextEdit>
 
 class HNumber;
 class SyntaxHighlighter;
 
-class ResultDisplay : public TextEdit
+class ResultDisplay : public QPlainTextEdit
 {
     Q_OBJECT
 

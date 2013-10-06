@@ -39,7 +39,6 @@
 #include <QtGui/QLineEdit>
 #include <QtGui/QPlainTextEdit>
 #include <QtGui/QStyle>
-#include <QtGui/QTextEdit>
 #include <QtGui/QTreeWidget>
 #include <QtGui/QWheelEvent>
 
@@ -53,7 +52,7 @@ static void moveCursorToEnd(Editor* editor)
 }
 
 Editor::Editor(QWidget* parent)
-    : TextEdit(parent)
+    : QPlainTextEdit(parent)
 {
     m_evaluator = Evaluator::instance();
     m_currentHistoryIndex = 0;
@@ -73,13 +72,6 @@ Editor::Editor(QWidget* parent)
     setWordWrapMode(QTextOption::NoWrap);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
-#if QT_VERSION < 0x040400
-    setAcceptRichText(false);
-    setLineWrapMode(QTextEdit::NoWrap);
-//#else
-//    setLineWrapMode(QPlainTextEdit::NoWrap);
-#endif
 
     connect(m_autoCalcTimer, SIGNAL(timeout()), SLOT(autoCalc()));
     connect(m_autoCalcSelTimer, SIGNAL(timeout()), SLOT(autoCalcSelection()));
@@ -683,7 +675,7 @@ void Editor::keyPressEvent(QKeyEvent* event)
         return;
     }
 
-    TextEdit::keyPressEvent(event);
+    QPlainTextEdit::keyPressEvent(event);
 }
 
 void Editor::wheelEvent(QWheelEvent* event)

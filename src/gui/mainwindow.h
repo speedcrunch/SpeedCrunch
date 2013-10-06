@@ -37,12 +37,12 @@ class FunctionsDock;
 class HistoryDock;
 class ResultDisplay;
 class Settings;
-class TextEdit;
 class TipWidget;
 class VariablesDock;
 
 class QActionGroup;
 class QHBoxLayout;
+class QPlainTextEdit;
 class QPushButton;
 class QTranslator;
 class QVBoxLayout;
@@ -329,7 +329,7 @@ private:
     FunctionRepo* m_functions;
     Settings* m_settings;
     QTranslator* m_translator;
-    TextEdit* m_copyWidget;
+    QPlainTextEdit* m_copyWidget;
 };
 
 #endif // GUI_MAINWINDOW_H

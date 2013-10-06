@@ -22,7 +22,7 @@
 
 #include <QtGui/QSyntaxHighlighter>
 
-class TextEdit;
+class QPlainTextEdit;
 
 class SyntaxHighlighter : public QSyntaxHighlighter {
 public:
@@ -44,7 +44,7 @@ public:
         Result
     };
 
-    explicit SyntaxHighlighter(TextEdit*);
+    explicit SyntaxHighlighter(QPlainTextEdit*);
 
     QColor colorForRole(Role role) const { return m_colorScheme[role]; }
     void setColorForRole(Role role, const QColor& color) { m_colorScheme[role] = color; }
