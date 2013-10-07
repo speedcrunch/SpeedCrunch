@@ -740,6 +740,13 @@ void Editor::wheelEvent(QWheelEvent* event)
 void Editor::rehighlight()
 {
     m_highlighter->update();
+    setStyleSheet(QString(
+        "QPlainTextEdit {"
+        "   background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 %2, stop: 1 %1);"
+        "}"
+    ).arg(m_highlighter->colorForRole(SyntaxHighlighter::DisplayBackground).name())
+     .arg(m_highlighter->colorForRole(SyntaxHighlighter::EditorFadeAway).name())
+    );
 }
 
 void Editor::setAnsAvailable(bool available)

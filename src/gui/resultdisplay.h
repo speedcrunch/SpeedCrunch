@@ -53,6 +53,7 @@ public slots:
 protected:
     virtual void wheelEvent(QWheelEvent*);
     float linesPerPage() { return static_cast<float>(viewport()->height()) / fontMetrics().height(); }
+    void updateScrollBarStyleSheet();
 
 private:
     Q_DISABLE_COPY(ResultDisplay);

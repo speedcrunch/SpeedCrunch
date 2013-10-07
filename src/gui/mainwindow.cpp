@@ -581,18 +581,20 @@ void MainWindow::createFixedWidgets()
     setCentralWidget(m_widgets.root);
 
     m_layouts.root = new QVBoxLayout(m_widgets.root);
-    m_layouts.root->setMargin(0);
     m_layouts.root->setSpacing(0);
+    m_layouts.root->setContentsMargins(0, 0, 0, 0);
 
     QHBoxLayout* displayLayout = new QHBoxLayout();
-    displayLayout->setMargin(5);
+    displayLayout->setSpacing(0);
     m_widgets.display = new ResultDisplay(m_widgets.root);
+    m_widgets.display->setFrameStyle(QFrame::NoFrame);
     displayLayout->addWidget(m_widgets.display);
     m_layouts.root->addLayout(displayLayout);
 
     QHBoxLayout* editorLayout = new QHBoxLayout();
-    editorLayout->setMargin(5);
+    editorLayout->setSpacing(0);
     m_widgets.editor = new Editor(m_widgets.root);
+    m_widgets.editor->setFrameStyle(QFrame::NoFrame);
     m_widgets.editor->setFocus();
     editorLayout->addWidget(m_widgets.editor);
     m_layouts.root->addLayout(editorLayout);

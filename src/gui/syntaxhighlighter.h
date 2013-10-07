@@ -33,8 +33,10 @@ public:
     };
 
     enum Role {
-        Background,
+        DisplayBackground,
+        DisplayScrollBar,
         EditorCursor,
+        EditorFadeAway,
         Number,
         Function,
         Operator,

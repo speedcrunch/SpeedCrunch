@@ -37,6 +37,7 @@ ResultDisplay::ResultDisplay(QWidget* parent)
     , m_count(0)
     , m_highlighter(new SyntaxHighlighter(this))
 {
+    setViewportMargins(0, 0, 0, 0);
     setBackgroundRole(QPalette::Base);
     setLayoutDirection(Qt::LeftToRight);
     setMinimumWidth(150);
@@ -94,6 +95,7 @@ int ResultDisplay::count() const
 void ResultDisplay::rehighlight()
 {
     m_highlighter->update();
+    updateScrollBarStyleSheet();
 }
 
 void ResultDisplay::clear()
@@ -168,6 +170,31 @@ void ResultDisplay::wheelEvent(QWheelEvent* event)
     }
 
     QPlainTextEdit::wheelEvent(event);
+}
+
+void ResultDisplay::updateScrollBarStyleSheet()
+{
+    verticalScrollBar()->setStyleSheet(QString(
+        "QScrollBar:vertical {"
+        "   border: 0;"
+        "   margin: 0 0 0 0;"
+        "   background: %1;"
+        "   width: 5px;"
+        "}"
+        "QScrollBar::handle:vertical {"
+        "   background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 %1, stop: 0.4 %2, stop: 0.6 %2, stop: 1 %1);"
+        "}"
+        "QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {"
+        "   border: 0;"
+        "   width: 0;"
+        "   height: 0;"
+        "   background: %1;"
+        "}"
+        "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {"
+        "   background: %1;"
+        "}"
+    ).arg(m_highlighter->colorForRole(SyntaxHighlighter::DisplayBackground).name())
+     .arg(m_highlighter->colorForRole(SyntaxHighlighter::DisplayScrollBar).name()));
 }
 
 static QString formatNumber(const HNumber& value)

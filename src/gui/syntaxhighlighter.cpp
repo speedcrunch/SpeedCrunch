@@ -34,7 +34,10 @@ static inline QHash<SyntaxHighlighter::Role, QColor> createColorScheme(SyntaxHig
     QHash<SyntaxHighlighter::Role, QColor> result;
     switch (id) {
     case SyntaxHighlighter::Sublime:
-         result[SyntaxHighlighter::Background] = QColor(39, 40, 34);
+         result[SyntaxHighlighter::DisplayBackground] = QColor(39, 40, 34);
+         result[SyntaxHighlighter::DisplayScrollBar] = QColor(110, 120, 100);
+         result[SyntaxHighlighter::EditorCursor] = QColor(100, 200, 255);
+         result[SyntaxHighlighter::EditorFadeAway] = QColor(29, 30, 24);
          result[SyntaxHighlighter::Number] = QColor(173, 119, 158);
          result[SyntaxHighlighter::Function] = QColor(213, 38, 106);
          result[SyntaxHighlighter::Operator] = QColor(242, 248, 214);
@@ -45,7 +48,10 @@ static inline QHash<SyntaxHighlighter::Role, QColor> createColorScheme(SyntaxHig
          result[SyntaxHighlighter::Result] = QColor(197, 218, 107);
          break;
     case SyntaxHighlighter::Terminal:
-         result[SyntaxHighlighter::Background] = QColor(48, 10, 36);
+         result[SyntaxHighlighter::DisplayBackground] = QColor(48, 10, 36);
+         result[SyntaxHighlighter::DisplayScrollBar] = QColor(140, 100, 140);
+         result[SyntaxHighlighter::EditorCursor] = QColor(140, 100, 140);
+         result[SyntaxHighlighter::EditorFadeAway] = QColor(38, 0, 26);
          result[SyntaxHighlighter::Number] = QColor(255, 255, 255);
          result[SyntaxHighlighter::Function] = QColor(239, 41, 40);
          result[SyntaxHighlighter::Operator] = QColor(196, 160, 0);
@@ -57,7 +63,10 @@ static inline QHash<SyntaxHighlighter::Role, QColor> createColorScheme(SyntaxHig
          break;
     case SyntaxHighlighter::Standard:
     default:
-        result[SyntaxHighlighter::Background] = QColor(255, 255, 255);
+        result[SyntaxHighlighter::DisplayBackground] = QColor(255, 255, 255);
+        result[SyntaxHighlighter::DisplayScrollBar] = QColor(190, 190, 190);
+        result[SyntaxHighlighter::EditorCursor] = QColor(255, 100, 100);
+        result[SyntaxHighlighter::EditorFadeAway] = QColor(220, 220, 220);
         result[SyntaxHighlighter::Number] = QColor(98, 50, 76);
         result[SyntaxHighlighter::Function] = QColor(74, 154, 7);
         result[SyntaxHighlighter::Operator] = QColor(193, 147, 188);
@@ -143,7 +152,7 @@ void SyntaxHighlighter::update()
     ColorScheme id = static_cast<ColorScheme>(Settings::instance()->colorScheme);
     m_colorScheme = createColorScheme(id);
 
-    QColor backgroundColor = colorForRole(Background);
+    QColor backgroundColor = colorForRole(DisplayBackground);
     QWidget* parentWidget = static_cast<QWidget*>(parent());
     QPalette pal = parentWidget->palette();
     pal.setColor(QPalette::Active, QPalette::Base, backgroundColor);
