@@ -160,8 +160,6 @@ void MainWindow::createActions()
     m_actions.settingsDisplayColorSchemeSublime = new QAction(this);
     m_actions.settingsDisplayColorSchemeTerminal = new QAction(this);
     m_actions.settingsDisplayFont = new QAction(this);
-    m_actions.settingsDisplayZoomIn = new QAction(this);
-    m_actions.settingsDisplayZoomOut = new QAction(this);
     m_actions.settingsLanguage = new QAction(this);
     m_actions.settingsRadixCharComma = new QAction(this);
     m_actions.settingsRadixCharDefault = new QAction(this);
@@ -184,9 +182,6 @@ void MainWindow::createActions()
     m_actions.helpCommunity = new QAction(this);
     m_actions.helpNews = new QAction(this);
     m_actions.helpAbout = new QAction(this);
-    // Shortcuts.
-    m_actions.scrollDown = new QAction(this);
-    m_actions.scrollUp = new QAction(this);
 
     m_actions.settingsAngleUnitDegree->setCheckable(true);
     m_actions.settingsAngleUnitRadian->setCheckable(true);
@@ -341,8 +336,6 @@ void MainWindow::setActionsText()
     m_actions.settingsDisplayColorSchemeSublime->setText(MainWindow::tr("Sublime"));
     m_actions.settingsDisplayColorSchemeTerminal->setText(MainWindow::tr("Terminal"));
     m_actions.settingsDisplayFont->setText(MainWindow::tr("&Font..."));
-    m_actions.settingsDisplayZoomIn->setText(MainWindow::tr("Zoom &In"));
-    m_actions.settingsDisplayZoomOut->setText(MainWindow::tr("Zoom &Out"));
     m_actions.settingsLanguage->setText(MainWindow::tr("&Language..."));
 
     m_actions.helpUpdates->setText(MainWindow::tr("Check &Updates"));
@@ -350,9 +343,6 @@ void MainWindow::setActionsText()
     m_actions.helpCommunity->setText(MainWindow::tr("Join &Community"));
     m_actions.helpNews->setText(MainWindow::tr("&News Feed"));
     m_actions.helpAbout->setText(MainWindow::tr("About &SpeedCrunch"));
-
-    m_actions.scrollDown->setText(MainWindow::tr("Scroll Display Down"));
-    m_actions.scrollUp->setText(MainWindow::tr("Scroll Display Up"));
 }
 
 void MainWindow::createActionGroups()
@@ -422,11 +412,6 @@ void MainWindow::createActionShortcuts()
     m_actions.settingsResultFormatHexadecimal->setShortcut(Qt::Key_F7);
     m_actions.settingsRadixCharDot->setShortcut(Qt::CTRL + Qt::Key_Period);
     m_actions.settingsRadixCharComma->setShortcut(Qt::CTRL + Qt::Key_Comma);
-    m_actions.settingsDisplayZoomIn->setShortcut(Qt::CTRL + Qt::Key_Plus);
-    m_actions.settingsDisplayZoomOut->setShortcut(Qt::CTRL + Qt::Key_Minus);
-    // Shortcuts.
-    m_actions.scrollDown->setShortcut(Qt::SHIFT + Qt::Key_PageDown);
-    m_actions.scrollUp->setShortcut(Qt::SHIFT + Qt::Key_PageUp);
 }
 
 void MainWindow::createMenus()
@@ -527,8 +512,6 @@ void MainWindow::createMenus()
     m_menus.colorScheme->addAction(m_actions.settingsDisplayColorSchemeSublime);
     m_menus.colorScheme->addAction(m_actions.settingsDisplayColorSchemeTerminal);
     m_menus.display->addAction(m_actions.settingsDisplayFont);
-    m_menus.display->addAction(m_actions.settingsDisplayZoomIn);
-    m_menus.display->addAction(m_actions.settingsDisplayZoomOut);
 
     m_menus.settings->addAction(m_actions.settingsLanguage);
 
@@ -541,10 +524,6 @@ void MainWindow::createMenus()
     m_menus.help->addAction(m_actions.helpAbout);
 
     addActions(menuBar()->actions());
-    //addAction(m_actions.settingsDisplayZoomOut);
-    //addAction(m_actions.settingsDisplayZoomIn);
-    addAction(m_actions.scrollDown);
-    addAction(m_actions.scrollUp);
 }
 
 void MainWindow::setMenusText()
@@ -845,6 +824,12 @@ void MainWindow::createFixedConnections()
     connect(m_widgets.editor, SIGNAL(autoCalcDisabled()), SLOT(hideAutoCalcTip()));
     connect(m_widgets.editor, SIGNAL(autoCalcEnabled(const QString&)), SLOT(showAutoCalcTip(const QString&)));
     connect(m_widgets.editor, SIGNAL(returnPressed()), SLOT(evaluateEditorExpression()));
+    connect(m_widgets.editor, SIGNAL(shiftDownPressed()), m_widgets.display, SLOT(zoomOut()));
+    connect(m_widgets.editor, SIGNAL(shiftUpPressed()), m_widgets.display, SLOT(zoomIn()));
+    connect(m_widgets.editor, SIGNAL(shiftPageUpPressed()), m_widgets.display, SLOT(scrollLineUp()));
+    connect(m_widgets.editor, SIGNAL(shiftPageDownPressed()), m_widgets.display, SLOT(scrollLineDown()));
+    connect(m_widgets.editor, SIGNAL(pageUpPressed()), m_widgets.display, SLOT(scrollPageUp()));
+    connect(m_widgets.editor, SIGNAL(pageDownPressed()), m_widgets.display, SLOT(scrollPageDown()));
     connect(m_widgets.editor, SIGNAL(textChanged()), SLOT(handleEditorTextChange()));
     connect(m_widgets.editor, SIGNAL(copyAvailable(bool)), SLOT(handleCopyAvailable(bool)));
 
@@ -859,17 +844,12 @@ void MainWindow::createFixedConnections()
     connect(this, SIGNAL(syntaxHighlightingChanged()), m_widgets.editor, SLOT(rehighlight()));
 
     connect(m_actions.settingsDisplayFont, SIGNAL(triggered()), SLOT(showFontDialog()));
-    connect(m_actions.settingsDisplayZoomOut, SIGNAL(triggered()), SLOT(zoomOut()));
-    connect(m_actions.settingsDisplayZoomIn, SIGNAL(triggered()), SLOT(zoomIn()));
 
     QList<QAction*> colorSchemeActions = m_actionGroups.colorScheme->actions();
     for (int i = 0; i < colorSchemeActions.size(); ++i)
         connect(colorSchemeActions.at(i), SIGNAL(triggered()), SLOT(applySelectedColorScheme()));
 
     connect(this, SIGNAL(languageChanged()), SLOT(retranslateText()));
-
-    connect(m_actions.scrollDown, SIGNAL(triggered()), SLOT(scrollDown()));
-    connect(m_actions.scrollUp, SIGNAL(triggered()), SLOT(scrollUp()));
 }
 
 void MainWindow::applySettings()
@@ -1570,46 +1550,12 @@ void MainWindow::setWidgetsDirection()
         qApp->setLayoutDirection(Qt::LeftToRight);
 }
 
-void MainWindow::zoomIn()
-{
-    QFont f = m_widgets.display->font();
-    const int newSize = f.pointSize() + 1;
-    if (newSize > 64)
-        return;
-    f.setPointSize(newSize);
-    m_widgets.display->setFont(f);
-}
-
-void MainWindow::zoomOut()
-{
-    QFont f = m_widgets.display->font();
-    const int newSize = f.pointSize() - 1;
-    if (newSize < 4)
-        return;
-    f.setPointSize(newSize);
-    m_widgets.display->setFont(f);
-}
-
 void MainWindow::showFontDialog()
 {
     bool ok;
     QFont f = QFontDialog::getFont(&ok, m_widgets.display->font(), this, tr("Display font"));
     if (ok)
         m_widgets.display->setFont(f);
-}
-
-void MainWindow::scrollDown()
-{
-    QScrollBar* sb = m_widgets.display->verticalScrollBar();
-    int value = sb->value() + 40;
-    sb->setValue(value);
-}
-
-void MainWindow::scrollUp()
-{
-    QScrollBar* sb = m_widgets.display->verticalScrollBar();
-    int value = sb->value() - 40;
-    sb->setValue(value);
 }
 
 void MainWindow::setMenuBarVisible(bool b)

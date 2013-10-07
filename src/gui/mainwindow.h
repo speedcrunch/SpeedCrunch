@@ -95,8 +95,6 @@ private slots:
     void openNewsURL();
     void retranslateText();
     void saveSession();
-    void scrollDown();
-    void scrollUp();
     void selectEditorExpression();
     void setAlwaysOnTopEnabled(bool);
     void setAngleModeDegree();
@@ -148,8 +146,6 @@ private slots:
     void showSessionImportDialog();
     void showSessionLoadDialog();
     void showSystemTrayMessage();
-    void zoomIn();
-    void zoomOut();
 
 protected:
     virtual void closeEvent(QCloseEvent*);
@@ -259,9 +255,6 @@ private:
         QAction* helpCommunity;
         QAction* helpNews;
         QAction* helpAbout;
-        // Shortcuts.
-        QAction* scrollDown;
-        QAction* scrollUp;
     } m_actions;
 
     struct {

@@ -43,6 +43,16 @@ public slots:
     void clear();
     void rehighlight();
     void refresh();
+    void scrollLineUp();
+    void scrollLineDown();
+    void scrollPageUp();
+    void scrollPageDown();
+    void zoomIn();
+    void zoomOut();
+
+protected:
+    virtual void wheelEvent(QWheelEvent*);
+    float linesPerPage() { return static_cast<float>(viewport()->height()) / fontMetrics().height(); }
 
 private:
     Q_DISABLE_COPY(ResultDisplay);

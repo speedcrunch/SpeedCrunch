@@ -71,7 +71,13 @@ public:
 signals:
     void autoCalcEnabled(const QString&);
     void autoCalcDisabled();
+    void shiftDownPressed();
+    void shiftUpPressed();
+    void pageDownPressed();
+    void pageUpPressed();
     void returnPressed();
+    void shiftPageDownPressed();
+    void shiftPageUpPressed();
 
 public slots:
     void appendHistory(const QString& result, const QString& expression);

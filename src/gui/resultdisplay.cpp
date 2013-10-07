@@ -41,7 +41,7 @@ ResultDisplay::ResultDisplay(QWidget* parent)
     setLayoutDirection(Qt::LeftToRight);
     setMinimumWidth(150);
     setReadOnly(true);
-    setTabChangesFocus(true);
+    setFocusPolicy(Qt::NoFocus);
     setWordWrapMode(QTextOption::WrapAnywhere);
 }
 
@@ -61,7 +61,7 @@ void ResultDisplay::append(const QString& expression, const HNumber& value)
     // TODO: Refactor, this only serves to save a session.
     m_expressions.append(expression);
     const char format = value.format() != 0 ? value.format() : 'e';
-    char *str = HMath::format(value, format, DECPRECISION);
+    char* str = HMath::format(value, format, DECPRECISION);
     m_results.append(str);
     free(str);
 }
@@ -112,6 +112,64 @@ void ResultDisplay::refresh()
     appendHistory(expressions, results);
 }
 
+void ResultDisplay::scrollLineUp()
+{
+    QScrollBar* bar = verticalScrollBar();
+    bar->setValue(bar->value() - 1);
+}
+
+void ResultDisplay::scrollLineDown()
+{
+    QScrollBar* bar = verticalScrollBar();
+    bar->setValue(bar->value() + 1);
+}
+
+void ResultDisplay::scrollPageUp()
+{
+    QScrollBar* bar = verticalScrollBar();
+    bar->setValue(bar->value() - linesPerPage());
+}
+
+void ResultDisplay::scrollPageDown()
+{
+    QScrollBar* bar = verticalScrollBar();
+    bar->setValue(bar->value() + linesPerPage());
+}
+
+void ResultDisplay::zoomIn()
+{
+    QFont newFont = font();
+    const int newSize = newFont.pointSize() + 1;
+    if (newSize > 64)
+        return;
+    newFont.setPointSize(newSize);
+    setFont(newFont);
+}
+
+void ResultDisplay::zoomOut()
+{
+    QFont newFont = font();
+    const int newSize = newFont.pointSize() - 1;
+    if (newSize < 4)
+        return;
+    newFont.setPointSize(newSize);
+    setFont(newFont);
+}
+
+void ResultDisplay::wheelEvent(QWheelEvent* event)
+{
+    if (event->modifiers() == Qt::ShiftModifier) {
+        if (event->delta() > 0)
+            zoomIn();
+        else if (event->delta() < 0)
+            zoomOut();
+        event->accept();
+        return;
+    }
+
+    QPlainTextEdit::wheelEvent(event);
+}
+
 static QString formatNumber(const HNumber& value)
 {
     Settings* settings = Settings::instance();
@@ -123,4 +181,3 @@ static QString formatNumber(const HNumber& value)
         s.replace('.', settings->radixCharacter());
     return s;
 }
-

@@ -617,7 +617,7 @@ void Editor::historyBack()
 
     if (m_currentHistoryIndex == m_history.count())
         m_savedCurrentEditor = toPlainText();
-    m_currentHistoryIndex--;
+    --m_currentHistoryIndex;
     setText(m_history.at(m_currentHistoryIndex));
     moveCursorToEnd(this);
     ensureCursorVisible();
@@ -670,13 +670,37 @@ void Editor::keyPressEvent(QKeyEvent* event)
     }
 
     if (event->key() == Qt::Key_Up) {
-        historyBack();
+        if (event->modifiers() & Qt::ShiftModifier)
+            emit shiftUpPressed();
+        else
+            historyBack();
         event->accept();
         return;
     }
 
     if (event->key() == Qt::Key_Down) {
-        historyForward();
+        if (event->modifiers() & Qt::ShiftModifier)
+            emit shiftDownPressed();
+        else
+            historyForward();
+        event->accept();
+        return;
+    }
+
+    if (event->key() == Qt::Key_PageUp) {
+        if (event->modifiers())
+            emit shiftPageUpPressed();
+        else
+            emit pageUpPressed();
+        event->accept();
+        return;
+    }
+
+    if (event->key() == Qt::Key_PageDown) {
+        if (event->modifiers())
+            emit shiftPageDownPressed();
+        else
+            emit pageDownPressed();
         event->accept();
         return;
     }
@@ -694,10 +718,8 @@ void Editor::keyPressEvent(QKeyEvent* event)
         && !m_constantCompletion)
     {
         m_constantCompletion = new ConstantCompletion(this);
-        connect(m_constantCompletion, SIGNAL(selectedCompletion(const QString &)),
-                 SLOT(insertConstant(const QString &)));
-        connect(m_constantCompletion, SIGNAL(canceledCompletion()),
-                 SLOT(cancelConstantCompletion()));
+        connect(m_constantCompletion, SIGNAL(selectedCompletion(const QString&)), SLOT(insertConstant(const QString&)));
+        connect(m_constantCompletion, SIGNAL(canceledCompletion()), SLOT(cancelConstantCompletion()));
         m_constantCompletion->showCompletion();
         event->accept();
         return;
