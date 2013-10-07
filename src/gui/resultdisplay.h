@@ -22,6 +22,7 @@
 #include <QtGui/QPlainTextEdit>
 
 class HNumber;
+class FadeOverlay;
 class SyntaxHighlighter;
 
 class ResultDisplay : public QPlainTextEdit
@@ -52,16 +53,20 @@ public slots:
 
 protected:
     virtual void wheelEvent(QWheelEvent*);
+    virtual void resizeEvent(QResizeEvent*);
     float linesPerPage() { return static_cast<float>(viewport()->height()) / fontMetrics().height(); }
     void updateScrollBarStyleSheet();
 
 private:
     Q_DISABLE_COPY(ResultDisplay);
 
+    friend class FadeOverlay;
+
     int m_count;
     QStringList m_expressions;
     SyntaxHighlighter* m_highlighter;
     QStringList m_results;
+    FadeOverlay* m_fadeOverlay;
 };
 
 #endif

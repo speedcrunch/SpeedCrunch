@@ -28,14 +28,29 @@
 #include <QtCore/QTimer>
 #include <QtGui/QApplication>
 #include <QtGui/QClipboard>
+#include <QtGui/QPainter>
 #include <QtGui/QScrollBar>
 
+#define OVERLAY_GRADIENT_HEIGHT 50
+
 static QString formatNumber(const HNumber&);
+
+class FadeOverlay : public QWidget {
+public:
+    explicit FadeOverlay(QWidget*);
+protected:
+    virtual void paintEvent(QPaintEvent*);
+    virtual void resizeEvent(QResizeEvent*);
+private:
+    QImage m_bottomGradientImage;
+    QImage m_topGradientImage;
+};
 
 ResultDisplay::ResultDisplay(QWidget* parent)
     : QPlainTextEdit(parent)
     , m_count(0)
     , m_highlighter(new SyntaxHighlighter(this))
+    , m_fadeOverlay(new FadeOverlay(this))
 {
     setViewportMargins(0, 0, 0, 0);
     setBackgroundRole(QPalette::Base);
@@ -172,6 +187,12 @@ void ResultDisplay::wheelEvent(QWheelEvent* event)
     QPlainTextEdit::wheelEvent(event);
 }
 
+void ResultDisplay::resizeEvent(QResizeEvent* event)
+{
+    QPlainTextEdit::resizeEvent(event);
+    m_fadeOverlay->resize(event->size());
+}
+
 void ResultDisplay::updateScrollBarStyleSheet()
 {
     verticalScrollBar()->setStyleSheet(QString(
@@ -195,6 +216,43 @@ void ResultDisplay::updateScrollBarStyleSheet()
         "}"
     ).arg(m_highlighter->colorForRole(SyntaxHighlighter::DisplayBackground).name())
      .arg(m_highlighter->colorForRole(SyntaxHighlighter::DisplayScrollBar).name()));
+}
+
+FadeOverlay::FadeOverlay(QWidget* parent) : QWidget(parent)
+{
+    setPalette(Qt::transparent);
+    setAttribute(Qt::WA_TransparentForMouseEvents);
+}
+
+void FadeOverlay::paintEvent(QPaintEvent*)
+{
+    ResultDisplay* widget = qobject_cast<ResultDisplay*>(parent());
+    int scrollBarValue = widget->verticalScrollBar()->value();
+    bool shouldPaintTopGradient = (scrollBarValue > 0);
+    bool shouldPaintBottomGradient = scrollBarValue < widget->verticalScrollBar()->maximum();
+
+    QPainter painter(this);
+    if (shouldPaintTopGradient)
+        painter.drawImage(0, 0, m_topGradientImage);
+    if (shouldPaintBottomGradient)
+        painter.drawImage(0, size().height() - OVERLAY_GRADIENT_HEIGHT, m_bottomGradientImage);
+}
+
+void FadeOverlay::resizeEvent(QResizeEvent*)
+{
+    ResultDisplay* widget = qobject_cast<ResultDisplay*>(parent());
+    QColor backgroundColor = widget->m_highlighter->colorForRole(SyntaxHighlighter::DisplayBackground);
+
+    QLinearGradient gradient = QLinearGradient(0, 0, 0, OVERLAY_GRADIENT_HEIGHT);
+    gradient.setColorAt(0, backgroundColor);
+    backgroundColor.setAlpha(0);
+    gradient.setColorAt(1, backgroundColor);
+
+    m_topGradientImage = QImage(size().width(), OVERLAY_GRADIENT_HEIGHT, QImage::Format_ARGB32_Premultiplied);
+    m_topGradientImage.fill(0);
+    QPainter painter(&m_topGradientImage);
+    painter.fillRect(QRect(0, 0, size().width(), OVERLAY_GRADIENT_HEIGHT), gradient);
+    m_bottomGradientImage = m_topGradientImage.mirrored();
 }
 
 static QString formatNumber(const HNumber& value)
