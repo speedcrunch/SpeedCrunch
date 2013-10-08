@@ -48,6 +48,7 @@ public slots:
     void scrollLines(int numberOfLines);
     void scrollLineUp();
     void scrollLineDown();
+    void scrollPage(int direction);
     void scrollPageUp();
     void scrollPageDown();
     void zoomIn();

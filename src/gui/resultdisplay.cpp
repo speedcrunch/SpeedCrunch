@@ -148,16 +148,29 @@ void ResultDisplay::scrollLineDown()
     scrollLines(1);
 }
 
+void ResultDisplay::scrollPage(int direction)
+{
+    m_scrolledLines = 0;
+    bool mustStartTimer = (m_scrollDirection == 0);
+    m_scrollDirection = direction;
+    if (mustStartTimer)
+        m_timer.start(16, this);
+}
+
 void ResultDisplay::scrollPageUp()
 {
-    m_scrollDirection = -1;
-    m_timer.start(16, this);
+    if (verticalScrollBar()->value() == 0)
+        return;
+
+    scrollPage(-1);
 }
 
 void ResultDisplay::scrollPageDown()
 {
-    m_scrollDirection = 1;
-    m_timer.start(16, this);
+    if (verticalScrollBar()->value() == verticalScrollBar()->maximum())
+        return;
+
+    scrollPage(1);
 }
 
 void ResultDisplay::zoomIn()
@@ -191,8 +204,9 @@ void ResultDisplay::timerEvent(QTimerEvent* event)
         scrollLines(m_scrollDirection);
         ++m_scrolledLines;
     } else {
-        m_scrolledLines = 0;
         m_timer.stop();
+        m_scrolledLines = 0;
+        m_scrollDirection = 0;
     }
 }
 
