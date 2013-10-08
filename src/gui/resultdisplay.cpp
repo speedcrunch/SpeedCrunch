@@ -215,13 +215,13 @@ void ResultDisplay::wheelEvent(QWheelEvent* event)
     if (event->modifiers() == Qt::ShiftModifier) {
         if (event->delta() > 0)
             zoomIn();
-        else if (event->delta() < 0)
+        else
             zoomOut();
-        event->accept();
-        return;
-    }
-
-    QPlainTextEdit::wheelEvent(event);
+    } else if (event->delta() > 0)
+        scrollPageUp();
+    else
+        scrollPageDown();
+    event->accept();
 }
 
 void ResultDisplay::resizeEvent(QResizeEvent* event)
