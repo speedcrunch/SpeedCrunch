@@ -19,6 +19,7 @@
 #ifndef GUI_RESULTDISPLAY_H
 #define GUI_RESULTDISPLAY_H
 
+#include <QtCore/QBasicTimer>
 #include <QtGui/QPlainTextEdit>
 
 class HNumber;
@@ -44,6 +45,7 @@ public slots:
     void clear();
     void rehighlight();
     void refresh();
+    void scrollLines(int numberOfLines);
     void scrollLineUp();
     void scrollLineDown();
     void scrollPageUp();
@@ -54,6 +56,7 @@ public slots:
 protected:
     virtual void wheelEvent(QWheelEvent*);
     virtual void resizeEvent(QResizeEvent*);
+    virtual void timerEvent(QTimerEvent*);
     float linesPerPage() { return static_cast<float>(viewport()->height()) / fontMetrics().height(); }
     void updateScrollBarStyleSheet();
 
@@ -67,6 +70,9 @@ private:
     SyntaxHighlighter* m_highlighter;
     QStringList m_results;
     FadeOverlay* m_fadeOverlay;
+    QBasicTimer m_timer;
+    int m_scrolledLines;
+    int m_scrollDirection;
 };
 
 #endif

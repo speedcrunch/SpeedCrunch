@@ -25,7 +25,6 @@
 #include "math/floatconfig.h"
 
 #include <QtCore/QLatin1String>
-#include <QtCore/QTimer>
 #include <QtGui/QApplication>
 #include <QtGui/QClipboard>
 #include <QtGui/QPainter>
@@ -52,6 +51,8 @@ ResultDisplay::ResultDisplay(QWidget* parent)
     , m_count(0)
     , m_highlighter(new SyntaxHighlighter(this))
     , m_fadeOverlay(new FadeOverlay(this))
+    , m_scrolledLines(0)
+    , m_scrollDirection(0)
 {
     setViewportMargins(0, 0, 0, 0);
     setBackgroundRole(QPalette::Base);
@@ -131,28 +132,32 @@ void ResultDisplay::refresh()
     appendHistory(expressions, results);
 }
 
-void ResultDisplay::scrollLineUp()
+void ResultDisplay::scrollLines(int numberOfLines)
 {
     QScrollBar* bar = verticalScrollBar();
-    bar->setValue(bar->value() - 1);
+    bar->setValue(bar->value() + numberOfLines);
+}
+
+void ResultDisplay::scrollLineUp()
+{
+    scrollLines(-1);
 }
 
 void ResultDisplay::scrollLineDown()
 {
-    QScrollBar* bar = verticalScrollBar();
-    bar->setValue(bar->value() + 1);
+    scrollLines(1);
 }
 
 void ResultDisplay::scrollPageUp()
 {
-    QScrollBar* bar = verticalScrollBar();
-    bar->setValue(bar->value() - linesPerPage());
+    m_scrollDirection = -1;
+    m_timer.start(16, this);
 }
 
 void ResultDisplay::scrollPageDown()
 {
-    QScrollBar* bar = verticalScrollBar();
-    bar->setValue(bar->value() + linesPerPage());
+    m_scrollDirection = 1;
+    m_timer.start(16, this);
 }
 
 void ResultDisplay::zoomIn()
@@ -173,6 +178,22 @@ void ResultDisplay::zoomOut()
         return;
     newFont.setPointSize(newSize);
     setFont(newFont);
+}
+
+void ResultDisplay::timerEvent(QTimerEvent* event)
+{
+    if (event->timerId() != m_timer.timerId()) {
+        QWidget::timerEvent(event);
+        return;
+    }
+
+    if (m_scrolledLines < linesPerPage()) {
+        scrollLines(m_scrollDirection);
+        ++m_scrolledLines;
+    } else {
+        m_scrolledLines = 0;
+        m_timer.stop();
+    }
 }
 
 void ResultDisplay::wheelEvent(QWheelEvent* event)
