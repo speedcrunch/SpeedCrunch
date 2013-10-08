@@ -38,6 +38,7 @@ static QString formatNumber(const HNumber&);
 class FadeOverlay : public QWidget {
 public:
     explicit FadeOverlay(QWidget*);
+    void updateGradients();
 protected:
     virtual void paintEvent(QPaintEvent*);
     virtual void resizeEvent(QResizeEvent*);
@@ -111,6 +112,7 @@ void ResultDisplay::rehighlight()
 {
     m_highlighter->update();
     updateScrollBarStyleSheet();
+    m_fadeOverlay->updateGradients();
 }
 
 void ResultDisplay::clear()
@@ -239,6 +241,11 @@ void FadeOverlay::paintEvent(QPaintEvent*)
 }
 
 void FadeOverlay::resizeEvent(QResizeEvent*)
+{
+    updateGradients();
+}
+
+void FadeOverlay::updateGradients()
 {
     ResultDisplay* widget = qobject_cast<ResultDisplay*>(parent());
     QColor backgroundColor = widget->m_highlighter->colorForRole(SyntaxHighlighter::DisplayBackground);
