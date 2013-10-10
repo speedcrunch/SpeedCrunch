@@ -29,7 +29,7 @@
 #include <QtGui/QApplication>
 #include <QtGui/QFont>
 
-static Settings * s_settingsInstance = 0;
+static Settings* s_settingsInstance = 0;
 static char s_radixCharacter = 0;
 
 static void s_deleteSettings()
@@ -37,158 +37,142 @@ static void s_deleteSettings()
     delete s_settingsInstance;
 }
 
-static QSettings * createQSettings( const QString & key );
+static QSettings* createQSettings(const QString & key);
 
-Settings::Settings()
+Settings* Settings::instance()
 {
-}
-
-Settings * Settings::instance()
-{
-    if ( ! s_settingsInstance ) {
+    if (!s_settingsInstance) {
         s_settingsInstance = new Settings;
         s_settingsInstance->load();
-        qAddPostRoutine( s_deleteSettings );
+        qAddPostRoutine(s_deleteSettings);
     }
 
     return s_settingsInstance;
 }
 
+Settings::Settings()
+{
+}
+
 void Settings::load()
 {
-    const char * KEY = "SpeedCrunch";
+    const char* KEY = "SpeedCrunch";
 
-    QSettings * settings = createQSettings( KEY );
-    if ( ! settings )
+    QSettings* settings = createQSettings(KEY);
+    if (!settings)
         return;
 
-    QString key = QString::fromLatin1( KEY ) + QLatin1String("/General/");
+    QString key = QString::fromLatin1(KEY) + QLatin1String("/General/");
 
-    // angle mode special case
+    // Angle mode special case.
     QString angleUnitStr;
-    angleUnitStr = settings->value( key + QLatin1String("AngleMode"), "r" ).toString();
-    if ( angleUnitStr != QLatin1String("r") && angleUnitStr != QLatin1String("d") )
+    angleUnitStr = settings->value(key + QLatin1String("AngleMode"), "r").toString();
+    if (angleUnitStr != QLatin1String("r") && angleUnitStr != QLatin1String("d"))
         angleUnit = 'r';
     else
-        angleUnit = angleUnitStr.at( 0 ).toAscii();
+        angleUnit = angleUnitStr.at(0).toAscii();
 
-    // radix character special case
+    // Radix character special case.
     QString radixCharStr;
-    radixCharStr = settings->value( key + QLatin1String("RadixCharacter"), 0 ).toString();
-    setRadixCharacter( radixCharStr.at(0).toAscii() );
+    radixCharStr = settings->value(key + QLatin1String("RadixCharacter"), 0).toString();
+    setRadixCharacter(radixCharStr.at(0).toAscii());
 
-    autoAns = settings->value( key + QLatin1String("AutoAns"), true ).toBool();
-    autoCalc = settings->value( key + QLatin1String("AutoCalc"), true ).toBool();
-    autoCompletion = settings->value( key + QLatin1String("AutoCompletion"), true ).toBool();
-    historySave = settings->value( key + QLatin1String("HistorySave"), true ).toBool();
-    leaveLastExpression = settings->value( key + QLatin1String("LeaveLastExpression"), false ).toBool();
-    language = settings->value( key + QLatin1String("Language"), "C" ).toString();
-    variableSave = settings->value( key + QLatin1String("VariableSave"), true ).toBool();
-    syntaxHighlighting = settings->value( key + QLatin1String("SyntaxHighlighting"),
-                                          true ).toBool();
-    systemTrayIconVisible = settings->value( key + QLatin1String("SystemTrayIconVisible"),
-                                             false ).toBool();
-    autoResultToClipboard = settings->value( key + QLatin1String("AutoResultToClipboard"), false ).toBool();
+    autoAns = settings->value(key + QLatin1String("AutoAns"), true).toBool();
+    autoCalc = settings->value(key + QLatin1String("AutoCalc"), true).toBool();
+    autoCompletion = settings->value(key + QLatin1String("AutoCompletion"), true).toBool();
+    historySave = settings->value(key + QLatin1String("HistorySave"), true).toBool();
+    leaveLastExpression = settings->value(key + QLatin1String("LeaveLastExpression"), false).toBool();
+    language = settings->value(key + QLatin1String("Language"), "C").toString();
+    variableSave = settings->value(key + QLatin1String("VariableSave"), true).toBool();
+    syntaxHighlighting = settings->value(key + QLatin1String("SyntaxHighlighting"), true).toBool();
+    systemTrayIconVisible = settings->value(key + QLatin1String("SystemTrayIconVisible"), false).toBool();
+    autoResultToClipboard = settings->value(key + QLatin1String("AutoResultToClipboard"), false).toBool();
 
     key = KEY + QLatin1String("/Format/");
 
-    // format special case
-    QString formatStr;
-    formatStr = settings->value( key + QLatin1String("Type"), 'f' ).toString();
-    if ( formatStr != "g" && formatStr != "f" && formatStr != "e" && formatStr != "n"
-         && formatStr != "h" && formatStr != "o" && formatStr != "b" )
-    {
+    // Format special case.
+    QString format;
+    format = settings->value(key + QLatin1String("Type"), 'f').toString();
+    if (format != "g" && format != "f" && format != "e" && format != "n"&& format != "h" && format != "o" && format != "b")
         resultFormat = 'f';
-    }
     else
-        resultFormat = formatStr.at( 0 ).toAscii();
+        resultFormat = format.at(0).toAscii();
 
-    resultPrecision = settings->value( key + QLatin1String("Precision"), -1 ).toInt();
+    resultPrecision = settings->value(key + QLatin1String("Precision"), -1).toInt();
 
-    if ( resultPrecision > DECPRECISION )
+    if (resultPrecision > DECPRECISION)
         resultPrecision = DECPRECISION;
 
     key = KEY + QLatin1String("/Layout/");
-    windowOnfullScreen = settings->value( key + QLatin1String("WindowOnFullScreen"),
-                                          false ).toBool();
-    historyDockVisible = settings->value( key + QLatin1String("HistoryDockVisible"),
-                                          false ).toBool();
-    keypadVisible = settings->value( key + QLatin1String("KeypadVisible"), true ).toBool();
-    menuBarVisible = settings->value( key + QLatin1String("MenuBarVisible"), true ).toBool();
-    statusBarVisible = settings->value( key + QLatin1String("StatusBarVisible"), false ).toBool();
-    functionsDockVisible = settings->value( key + QLatin1String("FunctionsDockVisible"),
-                                            false ).toBool();
-    variablesDockVisible = settings->value( key + QLatin1String("VariablesDockVisible"),
-                                            false ).toBool();
-    formulaBookDockVisible = settings->value( key + QLatin1String("FormulaBookDockVisible"),
-                                           false ).toBool();
-    constantsDockVisible = settings->value( key + QLatin1String("ConstantsDockVisible"),
-                                            false ).toBool();
-    windowAlwaysOnTop = settings->value( key + QLatin1String("WindowAlwaysOnTop"),
-                                         false ).toBool();
+    windowOnfullScreen = settings->value(key + QLatin1String("WindowOnFullScreen"), false).toBool();
+    historyDockVisible = settings->value(key + QLatin1String("HistoryDockVisible"), false).toBool();
+    menuBarVisible = settings->value(key + QLatin1String("MenuBarVisible"), true).toBool();
+    statusBarVisible = settings->value(key + QLatin1String("StatusBarVisible"), false).toBool();
+    functionsDockVisible = settings->value(key + QLatin1String("FunctionsDockVisible"), false).toBool();
+    variablesDockVisible = settings->value(key + QLatin1String("VariablesDockVisible"), false).toBool();
+    formulaBookDockVisible = settings->value(key + QLatin1String("FormulaBookDockVisible"), false).toBool();
+    constantsDockVisible = settings->value(key + QLatin1String("ConstantsDockVisible"), false).toBool();
+    windowAlwaysOnTop = settings->value(key + QLatin1String("WindowAlwaysOnTop"), false).toBool();
 
-    windowPosition = settings->value( key + QLatin1String("WindowPosition"), QPoint() ).toPoint();
-    windowSize = settings->value( key + QLatin1String("WindowSize"), QSize(400, 300) ).toSize();
-    windowState = settings->value( key + QLatin1String("State") ).toByteArray();
+    windowPosition = settings->value(key + QLatin1String("WindowPosition"), QPoint()).toPoint();
+    windowSize = settings->value(key + QLatin1String("WindowSize"), QSize(400, 300)).toSize();
+    windowState = settings->value(key + QLatin1String("State")).toByteArray();
 
     key = KEY + QLatin1String("/Display/");
-    displayFont = settings->value( key + QLatin1String("DisplayFont"), QFont().toString() ).toString();
-    colorScheme = settings->value( key + QLatin1String("ColorScheme"), 0 ).toInt();
+    displayFont = settings->value(key + QLatin1String("DisplayFont"), QFont().toString()).toString();
+    colorScheme = settings->value(key + QLatin1String("ColorScheme"), 0).toInt();
 
-    // load history
+    // Load history.
     key = KEY + QLatin1String("/History/");
     history.clear();
-    int count = settings->value( key + QLatin1String("Count"), 0 ).toInt();
-    for ( int i = 0; i < count; ++i ) {
-        QString keyname = QString( key + QLatin1String("Expression%1") ).arg( i );
-        QString str = settings->value( keyname ).toString();
-        if ( ! str.isEmpty() ) {
+    int count = settings->value(key + QLatin1String("Count"), 0).toInt();
+    for (int i = 0; i < count; ++i) {
+        QString keyname = QString(key + QLatin1String("Expression%1")).arg(i);
+        QString str = settings->value(keyname).toString();
+        if (!str.isEmpty()) {
             QString expr;
-            for ( int c = 0; c < str.length(); c++ )
-                if ( str.at(c) >= 32 )
-                    expr.append( str.at(c) );
-            history.append( expr );
+            for (int c = 0; c < str.length(); ++c)
+                if (str.at(c) >= 32)
+                    expr.append(str.at(c));
+            history.append(expr);
         }
     }
 
-    // load results
+    // Load results.
     historyResults.clear();
-    for ( int i = 0; i < count; ++i ) {
-        QString keyname = QString( key + QLatin1String("Expression%1Result") ).arg( i );
-        QString str = settings->value( keyname ).toString();
-        if ( ! str.isEmpty() )
-            historyResults.append( str );
+    for (int i = 0; i < count; ++i) {
+        QString keyname = QString(key + QLatin1String("Expression%1Result")).arg(i);
+        QString str = settings->value(keyname).toString();
+        if (!str.isEmpty())
+            historyResults.append(str);
     }
-    if ( history.count() != historyResults.count() ) {
-        // avoid application crash because of new features with old settings files
+    if (history.count() != historyResults.count()) {
+        // Avoid application crash because of new features with old settings files.
         history.clear();
         historyResults.clear();
     }
 
-    // load variables
+    // Load variables.
     key = KEY + QLatin1String("/Variables/");
     variables.clear();
-    settings->beginGroup( key );
+    settings->beginGroup(key);
     QStringList names = settings->childKeys();
     settings->endGroup();
-    for ( int k = 0; k < names.count(); ++k ) {
-        QString name = names.at( k );
+    for (int k = 0; k < names.count(); ++k) {
+        QString name = names.at(k);
         QString keyname = key + name;
-        QString value = settings->value( keyname ).toString();
-        // treat upper case escape code
-        for ( int c = 0; c < name.length(); ++c ) {
-            if ( name.at(c) == '_' ) {
-                name.remove( c, 1 );
-                if ( name.at(c) != '_' )
-                    name[c] = name.at( c ).toUpper();
+        QString value = settings->value(keyname).toString();
+        // Treat upper case escape code.
+        for (int c = 0; c < name.length(); ++c) {
+            if (name.at(c) == '_') {
+                name.remove(c, 1);
+                if (name.at(c) != '_')
+                    name[c] = name.at(c).toUpper();
             }
         }
-        // load
-        if ( ! value.isEmpty()
-             && name != QLatin1String("pi")
-             && name != QLatin1String("phi")
-             && name != QLatin1String("e") )
-            variables.append( QString::fromLatin1("%1=%2").arg(name).arg(value) );
+        // Load.
+        if (!value.isEmpty() && name != QLatin1String("pi") && name != QLatin1String("phi") && name != QLatin1String("e"))
+            variables.append(QString::fromLatin1("%1=%2").arg(name).arg(value));
     }
 
     delete settings;
@@ -196,121 +180,114 @@ void Settings::load()
 
 void Settings::save()
 {
-    const QString KEY = QString::fromLatin1( "SpeedCrunch" );
+    const QString KEY = QString::fromLatin1("SpeedCrunch");
 
-    QSettings * settings = createQSettings( KEY );
-    if ( ! settings )
+    QSettings* settings = createQSettings(KEY);
+    if (!settings)
         return;
 
-    int k, i; // used on loops
-    QString key = KEY + QLatin1String( "/General/" );
+    int k, i;
+    QString key = KEY + QLatin1String("/General/");
 
-    settings->setValue( key + QLatin1String("HistorySave"), historySave );
-    settings->setValue( key + QLatin1String("LeaveLastExpression"), leaveLastExpression );
-    settings->setValue( key + QLatin1String("VariableSave"), variableSave );
-    settings->setValue( key + QLatin1String("AutoCompletion"), autoCompletion );
-    settings->setValue( key + QLatin1String("AutoAns"), autoAns );
-    settings->setValue( key + QLatin1String("AutoCalc"), autoCalc );
-    settings->setValue( key + QLatin1String("SystemTrayIconVisible"), systemTrayIconVisible );
-    settings->setValue( key + QLatin1String("SyntaxHighlighting"), syntaxHighlighting );
-    settings->setValue( key + QLatin1String("AutoResultToClipboard"), autoResultToClipboard );
-    settings->setValue( key + QLatin1String("Language"), language );
+    settings->setValue(key + QLatin1String("HistorySave"), historySave);
+    settings->setValue(key + QLatin1String("LeaveLastExpression"), leaveLastExpression);
+    settings->setValue(key + QLatin1String("VariableSave"), variableSave);
+    settings->setValue(key + QLatin1String("AutoCompletion"), autoCompletion);
+    settings->setValue(key + QLatin1String("AutoAns"), autoAns);
+    settings->setValue(key + QLatin1String("AutoCalc"), autoCalc);
+    settings->setValue(key + QLatin1String("SystemTrayIconVisible"), systemTrayIconVisible);
+    settings->setValue(key + QLatin1String("SyntaxHighlighting"), syntaxHighlighting);
+    settings->setValue(key + QLatin1String("AutoResultToClipboard"), autoResultToClipboard);
+    settings->setValue(key + QLatin1String("Language"), language);
 
-    settings->setValue( key + QLatin1String("AngleMode"), QString(QChar(angleUnit)) );
+    settings->setValue(key + QLatin1String("AngleMode"), QString(QChar(angleUnit)));
 
     char c = 'C';
-    if ( s_radixCharacter != 0 )
+    if (s_radixCharacter != 0)
         c = s_radixCharacter;
-    settings->setValue( key + QLatin1String("RadixCharacter"), QString(QChar(c)) );
+    settings->setValue(key + QLatin1String("RadixCharacter"), QString(QChar(c)));
 
     key = KEY + QLatin1String("/Format/");
 
-    settings->setValue( key + QLatin1String("Type"), QString(QChar(resultFormat)) );
-    settings->setValue( key + QLatin1String("Precision"), resultPrecision );
+    settings->setValue(key + QLatin1String("Type"), QString(QChar(resultFormat)));
+    settings->setValue(key + QLatin1String("Precision"), resultPrecision);
 
     key = KEY + QLatin1String("/Layout/");
 
-    settings->setValue( key + QLatin1String("FormulaBookDockVisible"), formulaBookDockVisible );
-    settings->setValue( key + QLatin1String("ConstantsDockVisible"), constantsDockVisible );
-    settings->setValue( key + QLatin1String("FunctionsDockVisible"), functionsDockVisible );
-    settings->setValue( key + QLatin1String("HistoryDockVisible"), historyDockVisible );
-    settings->setValue( key + QLatin1String("WindowOnFullScreen"), windowOnfullScreen );
-    settings->setValue( key + QLatin1String("KeypadVisible"), keypadVisible );
-    settings->setValue( key + QLatin1String("MenuBarVisible"), menuBarVisible );
-    settings->setValue( key + QLatin1String("StatusBarVisible"), statusBarVisible );
-    settings->setValue( key + QLatin1String("VariablesDockVisible"), variablesDockVisible );
-    settings->setValue( key + QLatin1String("WindowPosition"), windowPosition );
-    settings->setValue( key + QLatin1String("WindowSize"), windowSize );
-    settings->setValue( key + QLatin1String("WindowAlwaysOnTop"), windowAlwaysOnTop );
-    settings->setValue( key + QLatin1String("State"), windowState );
+    settings->setValue(key + QLatin1String("FormulaBookDockVisible"), formulaBookDockVisible);
+    settings->setValue(key + QLatin1String("ConstantsDockVisible"), constantsDockVisible);
+    settings->setValue(key + QLatin1String("FunctionsDockVisible"), functionsDockVisible);
+    settings->setValue(key + QLatin1String("HistoryDockVisible"), historyDockVisible);
+    settings->setValue(key + QLatin1String("WindowOnFullScreen"), windowOnfullScreen);
+    settings->setValue(key + QLatin1String("MenuBarVisible"), menuBarVisible);
+    settings->setValue(key + QLatin1String("StatusBarVisible"), statusBarVisible);
+    settings->setValue(key + QLatin1String("VariablesDockVisible"), variablesDockVisible);
+    settings->setValue(key + QLatin1String("WindowPosition"), windowPosition);
+    settings->setValue(key + QLatin1String("WindowSize"), windowSize);
+    settings->setValue(key + QLatin1String("WindowAlwaysOnTop"), windowAlwaysOnTop);
+    settings->setValue(key + QLatin1String("State"), windowState);
 
     key = KEY + QLatin1String("/Display/");
 
-    settings->setValue( key + QLatin1String("DisplayFont"), displayFont );
-    settings->setValue( key + QLatin1String("ColorScheme"), colorScheme );
+    settings->setValue(key + QLatin1String("DisplayFont"), displayFont);
+    settings->setValue(key + QLatin1String("ColorScheme"), colorScheme);
 
     // save history
-    if ( historySave ) {
+    if (historySave) {
         key = KEY + QLatin1String("/History/");
         QStringList realHistory = history;
         QStringList realHistoryResults = historyResults;
 
-        if ( history.count() > 100 ) {
+        if (history.count() > 100) {
             realHistory.clear();
             realHistoryResults.clear();
             unsigned start = history.count() - 100;
-            for ( int j = start; j < history.count(); j++ ) {
-                realHistory.append( history.at(j) );
-                realHistoryResults.append( historyResults.at(j) );
+            for (int j = start; j < history.count(); ++j) {
+                realHistory.append(history.at(j));
+                realHistoryResults.append(historyResults.at(j));
             }
         }
 
-        settings->beginGroup( key );
+        settings->beginGroup(key);
         QStringList hkeys = settings->childKeys();
         settings->endGroup();
 
-        for ( k = 0; k < hkeys.count(); k++ ) {
-            settings->remove( key + "Expression" + QString::number(k) );
-            settings->remove( key + "Expression" + QString::number(k) + "Result" );
+        for (k = 0; k < hkeys.count(); k++) {
+            settings->remove(key + "Expression" + QString::number(k));
+            settings->remove(key + "Expression" + QString::number(k) + "Result");
         }
 
-        settings->setValue( key + QLatin1String("/Count/"), (int)history.count() );
-        for ( i = 0; i < realHistory.count(); i++ ) {
-            settings->setValue( (key + "Expression" + QString::number(i)), realHistory.at(i) );
-            settings->setValue( (key + "Expression" + QString::number(i) + "Result"), realHistoryResults.at(i) );
+        settings->setValue(key + QLatin1String("/Count/"), (int)history.count());
+        for (i = 0; i < realHistory.count(); i++) {
+            settings->setValue((key + "Expression" + QString::number(i)), realHistory.at(i));
+            settings->setValue((key + "Expression" + QString::number(i) + "Result"), realHistoryResults.at(i));
         }
     }
 
-    // save variables
-    if ( variableSave ) {
-        key = KEY + QLatin1String( "/Variables/" );
-        settings->beginGroup( key );
+    // Save variables.
+    if (variableSave) {
+        key = KEY + QLatin1String("/Variables/");
+        settings->beginGroup(key);
         QStringList vkeys = settings->childKeys();
         settings->endGroup();
 
-        for ( k = 0; k < vkeys.count(); ++k )
-            //settings->remove( (key + QLatin1String("%1")).arg(vkeys.at(k)) );
-            settings->remove( key + vkeys.at(k) );
+        for (k = 0; k < vkeys.count(); ++k)
+            settings->remove(key + vkeys.at(k));
 
-        for ( i = 0; i < variables.count(); i++ ) {
-            QStringList s = variables[i].split( '=' );
-            if ( s.count() == 2
-                 && s.at(0) != QLatin1String("pi")
-                 && s.at(0) != QLatin1String("phi")
-                 && s.at(0) != QLatin1String("e") )
-            {
+        for (i = 0; i < variables.count(); ++i) {
+            QStringList s = variables[i].split('=');
+            if (s.count() == 2 && s.at(0) != QLatin1String("pi") && s.at(0) != QLatin1String("phi") && s.at(0) != QLatin1String("e")) {
                 QString name = "";
-                QString value = s.at( 1 );
-                int length = s.at( 0 ).length();
-                for ( int c = 0; c < length; ++c ) {
-                    if ( s.at(0).at(c).isUpper() || s.at(0).at(c) == '_' ) {
+                QString value = s.at(1);
+                int length = s.at(0).length();
+                for (int c = 0; c < length; ++c) {
+                    if (s.at(0).at(c).isUpper() || s.at(0).at(c) == '_') {
                         name += '_';
-                        name += s.at( 0 ).at( c ).toLower();
+                        name += s.at(0).at(c).toLower();
                     } else
-                        name += s.at( 0 ).at( c );
+                        name += s.at(0).at(c);
                 }
-                //settings->setValue( QString(key + "%1").arg(name), value );
-                settings->setValue( key + name, value );
+                settings->setValue(key + name, value);
             }
         }
     }
@@ -328,53 +305,53 @@ bool Settings::isRadixCharacterAuto() const
     return s_radixCharacter == 0;
 }
 
-void Settings::setRadixCharacter( char c )
+void Settings::setRadixCharacter(char c)
 {
     s_radixCharacter = (c != ',' && c != '.') ? 0 : c;
 };
 
-QSettings * createQSettings( const QString & KEY )
+QSettings* createQSettings(const QString & KEY)
 {
-    QSettings * settings = 0;
+    QSettings* settings = 0;
 
 #ifdef Q_WS_WIN
 #ifdef SPEEDCRUNCH_PORTABLE
-    // Portable Windows version: settings are from INI file in same directory
+    // Portable Windows version: settings are from INI file in same directory.
     QString appPath = QApplication::applicationFilePath();
-    int ii = appPath.lastIndexOf( '/' );
-    if ( ii > 0)
-        appPath.remove( ii, appPath.length() );
+    int ii = appPath.lastIndexOf('/');
+    if (ii > 0)
+        appPath.remove(ii, appPath.length());
     QString iniFile = appPath + '/' + KEY + ".ini";
-    settings = new QSettings( iniFile, QSettings::IniFormat );
+    settings = new QSettings(iniFile, QSettings::IniFormat);
 #else
     // Regular Windows version:
-    //   settings are from the registry HKEY_CURRENT_USER\Software\SpeedCrunch
-    settings = new QSettings( QSettings::NativeFormat, QSettings::UserScope, KEY, KEY );
+    //   settings are from the registry HKEY_CURRENT_USER\Software\SpeedCrunch.
+    settings = new QSettings(QSettings::NativeFormat, QSettings::UserScope, KEY, KEY);
 #endif // SPEEDCRUNCH_PORTABLE
 #endif // Q_WS_WIN
 
 
 #ifdef Q_WS_MAC
-    settings = new QSettings( QSettings::NativeFormat, QSettings::UserScope, KEY, KEY );
+    settings = new QSettings(QSettings::NativeFormat, QSettings::UserScope, KEY, KEY);
 #endif // Q_WS_MAC
 
 
 #if defined (Q_WS_X11) || defined (Q_WS_QWS)
 #ifdef SPEEDCRUNCH_PORTABLE
-    // Portable X11 version: settings are from INI file in the same directory
+    // Portable X11 version: settings are from INI file in the same directory.
     BrInitError error;
-    if ( br_init( & error ) == 0 && error != BR_INIT_ERROR_DISABLED ) {
-        qDebug( "Warning: BinReloc failed to initialize (error code %d)", error );
-        qDebug( "Will fallback to hardcoded default path." );
+    if (br_init(& error) == 0 && error != BR_INIT_ERROR_DISABLED) {
+        qDebug("Warning: BinReloc failed to initialize (error code %d)", error);
+        qDebug("Will fallback to hardcoded default path.");
     }
 
-    const char * prefix = br_find_prefix( 0 );
-    QString iniFile = QString( prefix ) + '/' + KEY + QLatin1String( ".ini" );
-    free( prefix );
-    settings = new QSettings( iniFile, QSettings::IniFormat );
+    const char* prefix = br_find_prefix(0);
+    QString iniFile = QString(prefix) + '/' + KEY + QLatin1String(".ini");
+    free(prefix);
+    settings = new QSettings(iniFile, QSettings::IniFormat);
 #else
-    // Regular Unix or Embedded Linux (not Mac) version: settings from $HOME/.conf/SpeedCrunch
-    settings = new QSettings( QSettings::NativeFormat, QSettings::UserScope, KEY, KEY );
+    // Regular Unix or Embedded Linux (not Mac) version: settings from $HOME/.conf/SpeedCrunch.
+    settings = new QSettings(QSettings::NativeFormat, QSettings::UserScope, KEY, KEY);
 #endif // SPEEDCRUNCH_PORTABLE
 #endif // Q_WS_X11 || Q_WS_QWS
 

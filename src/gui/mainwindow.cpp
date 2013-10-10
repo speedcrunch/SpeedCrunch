@@ -139,7 +139,6 @@ void MainWindow::createActions()
     m_actions.viewFullScreenMode = new QAction(this);
     m_actions.viewFunctions = new QAction(this);
     m_actions.viewHistory = new QAction(this);
-    m_actions.viewKeypad = new QAction(this);
     m_actions.viewFormulaBook = new QAction(this);
     m_actions.viewMenuBar = new QAction(this);
     m_actions.viewStatusBar = new QAction(this);
@@ -218,7 +217,6 @@ void MainWindow::createActions()
     m_actions.viewFullScreenMode->setCheckable(true);
     m_actions.viewFunctions->setCheckable(true);
     m_actions.viewHistory->setCheckable(true);
-    m_actions.viewKeypad->setCheckable(true);
     m_actions.viewFormulaBook->setCheckable(true);
     m_actions.viewMenuBar->setCheckable(true);
     m_actions.viewStatusBar->setCheckable(true);
@@ -298,7 +296,6 @@ void MainWindow::setActionsText()
     m_actions.viewFullScreenMode->setText(MainWindow::tr("F&ull Screen Mode"));
     m_actions.viewFunctions->setText(MainWindow::tr("&Functions"));
     m_actions.viewHistory->setText(MainWindow::tr("&History"));
-    m_actions.viewKeypad->setText(MainWindow::tr("&Keypad"));
     m_actions.viewFormulaBook->setText(MainWindow::tr("Formula &Book"));
     m_actions.viewMenuBar->setText(MainWindow::tr("&Menu Bar"));
     m_actions.viewStatusBar->setText(MainWindow::tr("&Status Bar"));
@@ -394,7 +391,6 @@ void MainWindow::createActionShortcuts()
     m_actions.viewFullScreenMode->setShortcut(Qt::Key_F11);
     m_actions.viewFunctions->setShortcut(Qt::CTRL + Qt::Key_3);
     m_actions.viewHistory->setShortcut(Qt::CTRL + Qt::Key_5);
-    m_actions.viewKeypad->setShortcut(Qt::CTRL + Qt::ALT + Qt::Key_K);
     m_actions.viewFormulaBook->setShortcut(Qt::CTRL + Qt::Key_1);
 #ifndef Q_OS_MAC
     m_actions.viewMenuBar->setShortcut(Qt::CTRL + Qt::ALT + Qt::Key_M);
@@ -439,8 +435,6 @@ void MainWindow::createMenus()
 
     m_menus.view = new QMenu("", this);
     menuBar()->addMenu(m_menus.view);
-    m_menus.view->addAction(m_actions.viewKeypad);
-    m_menus.view->addSeparator();
     m_menus.view->addAction(m_actions.viewFormulaBook);
     m_menus.view->addAction(m_actions.viewConstants);
     m_menus.view->addAction(m_actions.viewFunctions);
@@ -603,23 +597,6 @@ void MainWindow::createFixedWidgets()
     m_widgets.autoCalcTip->hide();
 }
 
-void MainWindow::createKeypad()
-{
-    m_widgets.keypad = new Keypad(m_widgets.root);
-    m_widgets.keypad->setFocusPolicy(Qt::NoFocus);
-
-    connect(m_widgets.keypad, SIGNAL(buttonPressed(Keypad::Button)), SLOT(handleKeypadButtonPress(Keypad::Button)));
-    connect(this, SIGNAL(radixCharacterChanged()), m_widgets.keypad, SLOT(handleRadixCharacterChange()));
-
-    m_layouts.keypad = new QHBoxLayout();
-    m_layouts.keypad->addStretch();
-    m_layouts.keypad->addWidget(m_widgets.keypad);
-    m_layouts.keypad->addStretch();
-    m_layouts.root->addLayout(m_layouts.keypad);
-
-    m_widgets.keypad->show();
-}
-
 void MainWindow::createBookDock()
 {
     m_docks.book = new BookDock(this);
@@ -777,7 +754,6 @@ void MainWindow::createFixedConnections()
     connect(m_actions.viewFullScreenMode, SIGNAL(toggled(bool)), SLOT(setFullScreenEnabled(bool)));
     connect(m_actions.viewFunctions, SIGNAL(toggled(bool)), SLOT(setFunctionsDockVisible(bool)));
     connect(m_actions.viewHistory, SIGNAL(toggled(bool)), SLOT(setHistoryDockVisible(bool)));
-    connect(m_actions.viewKeypad, SIGNAL(toggled(bool)), SLOT(setKeypadVisible(bool)));
     connect(m_actions.viewFormulaBook, SIGNAL(toggled(bool)), SLOT(setFormulaBookDockVisible(bool)));
     connect(m_actions.viewMenuBar, SIGNAL(toggled(bool)), SLOT(setMenuBarVisible(bool)));
     connect(m_actions.viewStatusBar, SIGNAL(toggled(bool)), SLOT(setStatusBarVisible(bool)));
@@ -905,8 +881,6 @@ void MainWindow::applySettings()
     else if (m_settings->radixCharacter() == ',')
         m_actions.settingsRadixCharComma->setChecked(true);
 
-    m_actions.viewKeypad->setChecked(m_settings->keypadVisible);
-
     if (m_settings->autoAns)
         m_actions.settingsBehaviorAutoAns->setChecked(true);
     else
@@ -1013,7 +987,6 @@ MainWindow::MainWindow()
     m_translator = 0;
     m_settings = Settings::instance();
 
-    m_widgets.keypad   = 0;
     m_widgets.trayIcon = 0;
 
     m_menus.trayIcon = 0;
@@ -1638,17 +1611,6 @@ bool MainWindow::eventFilter(QObject* o, QEvent* e)
     return QMainWindow::eventFilter(o, e);
 }
 
-void MainWindow::deleteKeypad()
-{
-    disconnect(m_widgets.keypad);
-    m_widgets.keypad->deleteLater();
-    m_widgets.keypad = 0;
-
-    m_layouts.root->removeItem(m_layouts.keypad);
-    m_layouts.keypad->deleteLater();
-    m_layouts.keypad = 0;
-}
-
 void MainWindow::deleteStatusBar()
 {
     m_status.angleUnit->deleteLater();
@@ -1770,15 +1732,6 @@ void MainWindow::setVariablesDockVisible(bool b)
         deleteVariablesDock();
 }
 
-void MainWindow::setKeypadVisible(bool b)
-{
-    m_settings->keypadVisible = b;
-    if (b)
-        createKeypad();
-    else
-        deleteKeypad();
-}
-
 void MainWindow::showMenuBarTip()
 {
     QString msg = tr("The menu bar is now hidden. "
@@ -1890,62 +1843,6 @@ void MainWindow::insertFunctionIntoEditor(const QString& f)
 {
     if (!f.isEmpty())
         insertTextIntoEditor(f + "(");
-}
-
-void MainWindow::handleKeypadButtonPress(Keypad::Button b)
-{
-    switch (b) {
-        case Keypad::Key0: m_widgets.editor->insert("0"); break;
-        case Keypad::Key1: m_widgets.editor->insert("1"); break;
-        case Keypad::Key2: m_widgets.editor->insert("2"); break;
-        case Keypad::Key3: m_widgets.editor->insert("3"); break;
-        case Keypad::Key4: m_widgets.editor->insert("4"); break;
-        case Keypad::Key5: m_widgets.editor->insert("5"); break;
-        case Keypad::Key6: m_widgets.editor->insert("6"); break;
-        case Keypad::Key7: m_widgets.editor->insert("7"); break;
-        case Keypad::Key8: m_widgets.editor->insert("8"); break;
-        case Keypad::Key9: m_widgets.editor->insert("9"); break;
-
-        case Keypad::KeyPlus: m_widgets.editor->insert("+"); break;
-        case Keypad::KeyMinus: m_widgets.editor->insert("-"); break;
-        case Keypad::KeyTimes: m_widgets.editor->insert("*"); break;
-        case Keypad::KeyDivide: m_widgets.editor->insert("/"); break;
-
-        case Keypad::KeyEE: m_widgets.editor->insert("e"); break;
-        case Keypad::KeyLeftPar: m_widgets.editor->insert("("); break;
-        case Keypad::KeyRightPar: m_widgets.editor->insert(")"); break;
-        case Keypad::KeyRaise: m_widgets.editor->insert("^"); break;
-        case Keypad::KeyPercent: m_widgets.editor->insert("%"); break;
-        case Keypad::KeyFactorial: m_widgets.editor->insert("!"); break;
-
-        case Keypad::KeyX: m_widgets.editor->insert("x"); break;
-        case Keypad::KeyXEquals: m_widgets.editor->insert("x="); break;
-        case Keypad::KeyPi: m_widgets.editor->insert("pi"); break;
-        case Keypad::KeyAns: m_widgets.editor->insert("ans"); break;
-
-        case Keypad::KeySqrt: m_widgets.editor->insert("sqrt("); break;
-        case Keypad::KeyLn: m_widgets.editor->insert("ln("); break;
-        case Keypad::KeyExp: m_widgets.editor->insert("exp("); break;
-        case Keypad::KeySin: m_widgets.editor->insert("sin("); break;
-        case Keypad::KeyCos: m_widgets.editor->insert("cos("); break;
-        case Keypad::KeyTan: m_widgets.editor->insert("tan("); break;
-        case Keypad::KeyAcos: m_widgets.editor->insert("acos("); break;
-        case Keypad::KeyAtan: m_widgets.editor->insert("atan("); break;
-        case Keypad::KeyAsin: m_widgets.editor->insert("asin("); break;
-
-        case Keypad::KeyRadixChar:
-            m_widgets.editor->insert(QString(m_settings->radixCharacter()));
-            break;
-
-        case Keypad::KeyClear: clearEditor(); break;
-
-        default: break;
-  }
-
-    QTimer::singleShot(0, m_widgets.editor, SLOT(setFocus()));
-
-    if (b == Keypad::KeyEquals)
-        m_widgets.editor->evaluate();
 }
 
 void MainWindow::minimizeToSystemTray()

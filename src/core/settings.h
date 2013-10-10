@@ -1,7 +1,7 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
 // Copyright (C) 2005-2006 Johan Thelin <e8johan@gmail.com>
-// Copyright (C) 2007-2009 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2007-2013 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -25,22 +25,21 @@
 #include <QtCore/QSize>
 #include <QtCore/QStringList>
 
-class Settings
-{
+class Settings {
 public:
-    static Settings * instance();
+    static Settings* instance();
 
     void load();
     void save();
 
-    char radixCharacter() const; // 0: auto
-    void setRadixCharacter( char c = 0 );
+    char radixCharacter() const; // 0: Automatic.
+    void setRadixCharacter(char c = 0);
     bool isRadixCharacterAuto() const;
 
-    char angleUnit; // 'r': radian; 'd': degree
+    char angleUnit; // 'r': radian; 'd': degree.
 
-    char resultFormat;    // see HMath documentation
-    int  resultPrecision; // see HMath documentation
+    char resultFormat; // See HMath documentation.
+    int resultPrecision; // Ditto.
 
     bool autoAns;
     bool autoCalc;
@@ -56,7 +55,6 @@ public:
     bool constantsDockVisible;
     bool functionsDockVisible;
     bool historyDockVisible;
-    bool keypadVisible;
     bool formulaBookDockVisible;
     bool menuBarVisible;
     bool statusBarVisible;
@@ -72,15 +70,13 @@ public:
     QStringList historyResults;
     QStringList variables;
 
-    QPoint      windowPosition;
-    QSize       windowSize;
-    QByteArray  windowState;
+    QPoint windowPosition;
+    QSize windowSize;
+    QByteArray windowState;
 
 private:
     Settings();
-    Settings( const Settings & );
-    Settings & operator=( const Settings & );
+    Q_DISABLE_COPY(Settings);
 };
 
 #endif
-
