@@ -106,7 +106,9 @@ private slots:
     void setHistoryDockVisible(bool);
     void setHistorySaveEnabled(bool);
     void setLeaveLastExpressionEnabled(bool);
+#ifndef Q_OS_MAC
     void setMenuBarVisible(bool);
+#endif
     void setRadixCharacterAutomatic();
     void setRadixCharacter(char);
     void setRadixCharacterComma();
@@ -137,7 +139,9 @@ private slots:
     void showAutoCalcTip(const QString&);
     void showFontDialog();
     void showLanguageChooserDialog();
+#ifndef Q_OS_MAC
     void showMenuBarTip();
+#endif
     void showResultFormatContextMenu(const QPoint&);
     void showSessionImportDialog();
     void showSessionLoadDialog();
@@ -180,6 +184,9 @@ private:
     void setActionsText();
     void setMenusText();
     void setStatusBarText();
+#ifndef Q_OS_MAC
+    bool shouldAllowHiddenMenuBar();
+#endif
 
     static QTranslator* createTranslator(const QString& langCode);
 
@@ -204,7 +211,9 @@ private:
         QAction* viewFunctions;
         QAction* viewVariables;
         QAction* viewHistory;
+#ifndef Q_OS_MAC
         QAction* viewMenuBar;
+#endif
         QAction* viewStatusBar;
         QAction* viewFullScreenMode;
         QAction* settingsResultFormatGeneral;
@@ -298,7 +307,9 @@ private:
     } m_docks;
 
     struct {
+#ifndef Q_OS_MAC
         bool notifyMenuBarHidden;
+#endif
         bool trayNotify;
         bool autoAns;
     } m_conditions;
