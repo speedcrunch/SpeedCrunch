@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2008,2009,2010 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2008, 2009, 2010, 2013 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -20,28 +20,27 @@
 #ifndef CORE_EVALUATOR_H
 #define CORE_EVALUATOR_H
 
+#include "core/functions.h"
 #include "math/hmath.h"
 
+#include <QtCore/QMap>
 #include <QtCore/QObject>
 #include <QtCore/QString>
+#include <QtCore/QStringList>
 #include <QtCore/QVector>
 
-#include <memory>
-
-class Token
-{
+class Token {
 public:
     enum Op { InvalidOp = 0, Plus, Minus, Asterisk, Slash, Backslash, Caret,
               Super0, Super1, Super2, Super3, Super4, Super5, Super6, Super7, Super8, Super9,
               LeftPar, RightPar, Semicolon, Percent, Exclamation, Equal, Modulo,
               LeftShift, RightShift, Ampersand, Pipe };
-    enum Type { stxUnknown, stxNumber, stxIdentifier, stxOperator, stxOpenPar, stxClosePar,
-                stxSep };
+    enum Type { stxUnknown, stxNumber, stxIdentifier, stxOperator, stxOpenPar, stxClosePar, stxSep };
 
     static const Token null;
 
-    Token( Type type = stxUnknown, const QString & text = QString::null, int pos = -1 );
-    Token( const Token & );
+    Token(Type type = stxUnknown, const QString& text = QString::null, int pos = -1);
+    Token(const Token&);
 
     HNumber asNumber() const;
     Op asOperator() const;
@@ -53,7 +52,7 @@ public:
     QString text() const { return m_text; }
     Type type() const { return m_type; }
 
-    Token & operator=( const Token & );
+    Token& operator=(const Token&);
 
 protected:
     int m_pos;
@@ -61,64 +60,78 @@ protected:
     Type m_type;
 };
 
-class Tokens : public QVector<Token>
-{
+class Tokens : public QVector<Token> {
 public:
-    Tokens() : QVector<Token>(), m_valid( true ) {};
+    Tokens() : QVector<Token>(), m_valid(true) { };
 
     bool valid() const { return m_valid; }
-    void setValid( bool v ) { m_valid = v; }
+    void setValid(bool v) { m_valid = v; }
 
 protected:
     bool m_valid;
 };
 
-struct Variable
-{
+struct Variable {
     QString name;
     HNumber value;
 };
 
-class Functions;
-
-class Evaluator : public QObject
-{
+class Evaluator : public QObject {
     Q_OBJECT
 
 public:
-    static Evaluator * instance();
-    ~Evaluator();
+    static Evaluator* instance();
 
-    QString autoFix( const QString & );
+    QString autoFix(const QString&);
     void clear();
-    QString dump() const;
+    QString dump();
     QString error() const;
     HNumber eval();
     HNumber evalNoAssign();
     HNumber evalUpdateAns();
     QString expression() const;
-    HNumber get( const QString & id );
-    bool has( const QString & id );
-    bool isValid() const;
-    void deleteVariable( const QString & id );
+    HNumber get(const QString& id);
+    bool has(const QString& id) const;
+    bool isValid();
+    void deleteVariable(const QString& id);
     void deleteVariables();
-    Tokens scan( const QString & ) const;
-    void set( const QString & id, HNumber value );
-    void setExpression( const QString& expr );
+    Tokens scan(const QString&) const;
+    void set(const QString& id, HNumber value);
+    void setExpression(const QString&);
     Tokens tokens() const;
     QVector<Variable> variables() const;
 
 protected:
-    void compile( const Tokens & ) const;
+    void compile(const Tokens&);
 
 private:
-    struct Private;
-    const std::auto_ptr<Private> d;
-
     Evaluator();
-    Evaluator( const Evaluator & );
-    Evaluator & operator=( const Evaluator & );
+    Q_DISABLE_COPY(Evaluator);
+
+    struct Opcode {
+        enum { Nop = 0, Load, Ref, Function, Add, Sub, Neg, Mul, Div, Pow,
+               Fact, Modulo, IntDiv, LSh, RSh, BAnd, BOr };
+
+        unsigned type;
+        unsigned index;
+
+        Opcode() : type(Nop), index(0) {};
+        Opcode(unsigned t) : type(t), index(0) {};
+        Opcode(unsigned t, unsigned i): type(t), index(i) {};
+    };
+
+    bool m_dirty;
+    QString m_error;
+    QString m_expression;
+    bool m_valid;
+    QString m_assignId;
+    QVector<Opcode> m_codes;
+    QVector<HNumber> m_constants;
+    QStringList m_identifiers;
+    QMap<QString, Variable> m_variables;
+
+    const HNumber& checkOperatorResult(const HNumber&);
+    QString stringFromFunctionError(Function*);
 };
 
 #endif
-
