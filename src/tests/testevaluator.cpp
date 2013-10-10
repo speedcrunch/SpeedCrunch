@@ -324,7 +324,6 @@ void test_function_stat()
   CHECK_EVAL( "MAX(-1; 0; 1; 2)",     "2"    );
   CHECK_EVAL( "MAX(-2; -1; 0; 1; 2)", "2"    );
 
-  CHECK_EVAL( "SUM()",               "0"    );
   CHECK_EVAL( "SUM(0)",              "0"    );
   CHECK_EVAL( "SUM(1)",              "1"    );
   CHECK_EVAL( "SUM(-1)",             "-1"   );
@@ -338,7 +337,6 @@ void test_function_stat()
   CHECK_EVAL( "SUM(1;2;3;4;5;6)",    "21"   );
   CHECK_EVAL( "SUM(1;-2;3;-4;5;-6)", "-3"   );
 
-  CHECK_EVAL( "PRODUCT()",               "1"    );
   CHECK_EVAL( "PRODUCT(0)",              "0"    );
   CHECK_EVAL( "PRODUCT(1)",              "1"    );
   CHECK_EVAL( "PRODUCT(-1)",             "-1"   );
@@ -351,7 +349,6 @@ void test_function_stat()
   CHECK_EVAL( "PRODUCT(1;2;3;4;5;6)",    "720"  );
   CHECK_EVAL( "PRODUCT(1;-2;3;-4;5;-6)", "-720" );
 
-  CHECK_EVAL( "AVERAGE()",          "NaN" );
   CHECK_EVAL( "AVERAGE(0)",         "0"   );
   CHECK_EVAL( "AVERAGE(0;0)",       "0"   );
   CHECK_EVAL( "AVERAGE(0;0;0)",     "0"   );
@@ -365,7 +362,6 @@ void test_function_stat()
   CHECK_EVAL( "AVERAGE(2.25;4.75)", "3.5" );
   CHECK_EVAL( "AVERAGE(1/3;2/3)",   "0.5" );
 
-  CHECK_EVAL( "GEOMEAN()",          "NaN" );
   CHECK_EVAL( "GEOMEAN(0)",         "NaN" );
   CHECK_EVAL( "GEOMEAN(-1)",        "NaN" );
   CHECK_EVAL( "GEOMEAN(-1e20)",     "NaN" );
@@ -386,10 +382,6 @@ void test_function_stat()
 
 void test_function_logic()
 {
-  CHECK_EVAL( "and()", "NaN" );
-  CHECK_EVAL( "or()",  "NaN" );
-  CHECK_EVAL( "xor()", "NaN" );
-
   CHECK_EVAL( "and(0)", "0" );
   CHECK_EVAL( "and(1)", "1" );
 

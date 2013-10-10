@@ -1390,9 +1390,9 @@ QString Evaluator::autoFix(const QString& expr)
     if (tokens.count()) {
         for(int i = 0; i < tokens.count(); ++i)
             if (tokens.at(i).asOperator() == Token::LeftPar)
-                par++;
+                ++par;
             else if (tokens.at(i).asOperator() == Token::RightPar)
-                par--;
+                --par;
 
         if (par < 0)
             par = 0;
