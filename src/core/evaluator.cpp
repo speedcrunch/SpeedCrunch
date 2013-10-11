@@ -410,6 +410,8 @@ Tokens Evaluator::scan(const QString& expr) const
             // Skip any whitespaces.
             if (ch.isSpace())
                 ++i;
+            else if (ch == '?') // Comment.
+                state = Finish;
             else if (ch.isDigit()) // Check for number.
                 state = InNumber;
             else if (ch == '#') { // Simple hexadecimal notation.

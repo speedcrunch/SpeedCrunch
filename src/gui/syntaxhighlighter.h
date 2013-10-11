@@ -33,6 +33,7 @@ public:
     };
 
     enum Role {
+        Comment,
         DisplayBackground,
         DisplayScrollBar,
         EditorCursor,

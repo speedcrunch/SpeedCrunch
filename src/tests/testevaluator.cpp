@@ -513,6 +513,11 @@ void test_auto_fix_untouch()
   CHECK_AUTOFIX( "1/sin pi",   "1/sin pi"   );
 }
 
+void test_comments()
+{
+  CHECK_EVAL( "ncr(3;3) ? this is because foo",  "1" );
+}
+
 int main( int argc, char * * argv )
 {
   QCoreApplication app( argc, argv );
@@ -540,6 +545,8 @@ int main( int argc, char * * argv )
   test_auto_fix_ans();
   test_auto_fix_trailing_equal();
   test_auto_fix_untouch();
+
+  test_comments();
 
   cerr << eval_total_tests  << " total, "
        << eval_failed_tests << " failed"

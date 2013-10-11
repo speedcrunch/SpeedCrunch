@@ -34,6 +34,7 @@ static inline QHash<SyntaxHighlighter::Role, QColor> createColorScheme(SyntaxHig
     QHash<SyntaxHighlighter::Role, QColor> result;
     switch (id) {
     case SyntaxHighlighter::Sublime:
+         result[SyntaxHighlighter::Comment] = QColor(55, 55, 50);
          result[SyntaxHighlighter::DisplayBackground] = QColor(39, 40, 34);
          result[SyntaxHighlighter::DisplayScrollBar] = QColor(110, 120, 100);
          result[SyntaxHighlighter::EditorCursor] = QColor(100, 200, 255);
@@ -48,6 +49,7 @@ static inline QHash<SyntaxHighlighter::Role, QColor> createColorScheme(SyntaxHig
          result[SyntaxHighlighter::Result] = QColor(197, 218, 107);
          break;
     case SyntaxHighlighter::Terminal:
+         result[SyntaxHighlighter::Comment] = QColor(65, 25, 55);
          result[SyntaxHighlighter::DisplayBackground] = QColor(48, 10, 36);
          result[SyntaxHighlighter::DisplayScrollBar] = QColor(140, 100, 140);
          result[SyntaxHighlighter::EditorCursor] = QColor(140, 100, 140);
@@ -63,6 +65,7 @@ static inline QHash<SyntaxHighlighter::Role, QColor> createColorScheme(SyntaxHig
          break;
     case SyntaxHighlighter::Standard:
     default:
+        result[SyntaxHighlighter::Comment] = QColor(210, 210, 210);
         result[SyntaxHighlighter::DisplayBackground] = QColor(255, 255, 255);
         result[SyntaxHighlighter::DisplayScrollBar] = QColor(190, 190, 190);
         result[SyntaxHighlighter::EditorCursor] = QColor(255, 100, 100);
@@ -100,6 +103,10 @@ void SyntaxHighlighter::highlightBlock(const QString& text)
         groupDigits(text, 1, text.length() - 1);
         return;
     }
+
+    int questionMarkIndex = text.indexOf('?');
+    if (questionMarkIndex != -1)
+        setFormat(questionMarkIndex, text.length(), colorForRole(Comment));
 
     Tokens tokens = Evaluator::instance()->scan(text);
 
