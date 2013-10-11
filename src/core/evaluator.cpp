@@ -48,28 +48,28 @@ static void s_deleteEvaluator()
 const HNumber& Evaluator::checkOperatorResult(const HNumber& n)
 {
     switch (n.error()) {
-        case NoOperand:
-            m_error = Evaluator::tr("cannot operate on a NaN");
-            break;
-        case Underflow:
-            m_error = Evaluator::tr("underflow - tiny result is out of SpeedCrunch's number range");
-            break;
-        case Overflow:
-            m_error = Evaluator::tr("overflow - huge result is out of SpeedCrunch's number range");
-            break;
-        case ZeroDivide:
-            m_error = Evaluator::tr("division by zero");
-            break;
-        case OutOfLogicRange:
-            m_error = Evaluator::tr("overflow - logic result exceeds maximum of 256 bits");
-            break;
-        case OutOfIntegerRange:
-            m_error = Evaluator::tr("overflow - integer result exceeds maximum limit for integers");
-            break;
-        case TooExpensive:
-            m_error = Evaluator::tr("too time consuming computation was rejected");
-            break;
-        default:;
+    case NoOperand:
+        m_error = Evaluator::tr("cannot operate on a NaN");
+        break;
+    case Underflow:
+        m_error = Evaluator::tr("underflow - tiny result is out of SpeedCrunch's number range");
+        break;
+    case Overflow:
+        m_error = Evaluator::tr("overflow - huge result is out of SpeedCrunch's number range");
+        break;
+    case ZeroDivide:
+        m_error = Evaluator::tr("division by zero");
+        break;
+    case OutOfLogicRange:
+        m_error = Evaluator::tr("overflow - logic result exceeds maximum of 256 bits");
+        break;
+    case OutOfIntegerRange:
+        m_error = Evaluator::tr("overflow - integer result exceeds maximum limit for integers");
+        break;
+    case TooExpensive:
+        m_error = Evaluator::tr("too time consuming computation was rejected");
+        break;
+    default:;
     }
     return n;
 }
@@ -133,8 +133,7 @@ private:
 
 const Token Token::null;
 
-// helper function: return operator of given token text
-// e.g. "*" yields Operator::Asterisk, and so on
+// Helper function: return operator of given token text e.g. "*" yields Operator::Asterisk.
 static Token::Op matchOperator(const QString& text)
 {
     Token::Op result = Token::InvalidOp;
@@ -142,22 +141,21 @@ static Token::Op matchOperator(const QString& text)
     if (text.length() == 1) {
         QChar p = text.at(0);
         switch(p.unicode()) {
-            case '+' : result = Token::Plus; break;
-            case '-' : result = Token::Minus; break;
-            case '*' : result = Token::Asterisk; break;
-            case '/' : result = Token::Slash; break;
-            case '^' : result = Token::Caret; break;
-            case ';' : result = Token::Semicolon; break;
-            case '(' : result = Token::LeftPar; break;
-            case ')' : result = Token::RightPar; break;
-            case '%' : result = Token::Percent; break;
-            case '!' : result = Token::Exclamation; break;
-            case '=' : result = Token::Equal; break;
-            case '\\': result = Token::Backslash; break;
-            case '&' : result = Token::Ampersand; break;
-            case '|' : result = Token::Pipe; break;
-
-            default  : result = Token::InvalidOp;
+        case '+': result = Token::Plus; break;
+        case '-': result = Token::Minus; break;
+        case '*': result = Token::Asterisk; break;
+        case '/': result = Token::Slash; break;
+        case '^': result = Token::Caret; break;
+        case ';': result = Token::Semicolon; break;
+        case '(': result = Token::LeftPar; break;
+        case ')': result = Token::RightPar; break;
+        case '%': result = Token::Percent; break;
+        case '!': result = Token::Exclamation; break;
+        case '=': result = Token::Equal; break;
+        case '\\': result = Token::Backslash; break;
+        case '&': result = Token::Ampersand; break;
+        case '|': result = Token::Pipe; break;
+        default: result = Token::InvalidOp;
         }
     } else if (text.length() == 2) {
         if (text == "**")
@@ -177,29 +175,28 @@ static Token::Op matchOperator(const QString& text)
    return result;
 }
 
-// helper function: give operator precedence
-// e.g. "+" is 1 while "*" is 3
+// Helper function: give operator precedence e.g. "+" is 1 while "*" is 3.
 static int opPrecedence(Token::Op op)
 {
     int prec;
     switch(op) {
-        case Token::Exclamation : prec = 8; break;
-        case Token::Percent     : prec = 8; break;
-        case Token::Caret       : prec = 7; break;
-        case Token::Asterisk    : prec = 5; break;
-        case Token::Slash       : prec = 6; break;
-        case Token::Modulo      :
-        case Token::Backslash   : prec = 6; break;
-        case Token::Plus        :
-        case Token::Minus       : prec = 3; break;
-        case Token::LeftShift   :
-        case Token::RightShift  : prec = 2; break;
-        case Token::Ampersand   : prec = 1; break;
-        case Token::Pipe        : prec = 0; break;
-        case Token::RightPar    :
-        case Token::Semicolon   : prec = -1; break;
-        case Token::LeftPar     : prec = -2; break;
-        default                 : prec = -2; break;
+    case Token::Exclamation: prec = 8; break;
+    case Token::Percent: prec = 8; break;
+    case Token::Caret: prec = 7; break;
+    case Token::Asterisk: prec = 5; break;
+    case Token::Slash: prec = 6; break;
+    case Token::Modulo:
+    case Token::Backslash: prec = 6; break;
+    case Token::Plus:
+    case Token::Minus: prec = 3; break;
+    case Token::LeftShift:
+    case Token::RightShift: prec = 2; break;
+    case Token::Ampersand: prec = 1; break;
+    case Token::Pipe: prec = 0; break;
+    case Token::RightPar:
+    case Token::Semicolon: prec = -1; break;
+    case Token::LeftPar: prec = -2; break;
+    default: prec = -2; break;
     }
     return prec;
 }
@@ -229,7 +226,7 @@ Token& Token::operator=(const Token& token)
 HNumber Token::asNumber() const
 {
     QString text = m_text;
-    text.replace(",", "."); // issue 151
+    text.replace(",", "."); // Issue 151.
     return isNumber() ? HNumber((const char*)text.toLatin1()) : HNumber(0);
 }
 
@@ -243,13 +240,13 @@ QString Token::description() const
     QString desc;
 
     switch (m_type) {
-        case stxNumber     : desc = "Number"; break;
-        case stxIdentifier : desc = "Identifier"; break;
-        case stxOpenPar    : //refty
-        case stxClosePar   :
-        case stxSep        :
-        case stxOperator   : desc = "Operator"; break;
-        default            : desc = "Unknown"; break;
+    case stxNumber: desc = "Number"; break;
+    case stxIdentifier: desc = "Identifier"; break;
+    case stxOpenPar:
+    case stxClosePar:
+    case stxSep:
+    case stxOperator: desc = "Operator"; break;
+    default: desc = "Unknown"; break;
     }
 
     while (desc.length() < 10)
@@ -261,7 +258,7 @@ QString Token::description() const
     return desc;
 }
 
-TokenStack::TokenStack(): QVector<Token>()
+TokenStack::TokenStack() : QVector<Token>()
 {
     topIndex = 0;
     ensureSpace();
@@ -307,7 +304,7 @@ void TokenStack::ensureSpace()
     }
 }
 
-// helper function: return true for valid identifier character
+// Helper function: return true for valid identifier character.
 static bool isIdentifier(QChar ch)
 {
     return ch.unicode() == '_' || ch.unicode() == '$' || ch.isLetter();
@@ -461,8 +458,7 @@ Tokens Evaluator::scan(const QString& expr) const
                     state = Bad;
             }
 
-            // Beginning with unknown alphanumeric?
-            // Could be identifier, or function.
+            // Beginning with unknown alphanumeric?  Could be identifier, or function.
             if (state == Bad && isIdentifier(ch))
                 state = InIdentifier;
             break;
@@ -471,8 +467,7 @@ Tokens Evaluator::scan(const QString& expr) const
             // Consume as long as alpha, dollar sign, underscore, or digit.
             if (isIdentifier(ch) || ch.isDigit())
                 tokenText.append(ex.at(i++));
-            // We're done with identifier.
-            else {
+            else { // We're done with identifier.
                 tokens.append(Token(Token::stxIdentifier, tokenText, tokenStart));
                 tokenStart = i;
                 tokenText = "";
