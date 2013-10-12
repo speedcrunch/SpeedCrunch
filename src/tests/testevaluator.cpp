@@ -34,6 +34,7 @@ static int eval_failed_tests = 0;
 #define CHECK_AUTOFIX(s,p) checkAutoFix(__FILE__,__LINE__,#s,s,p)
 #define CHECK_DIV_BY_ZERO(s) checkDivisionByZero(__FILE__,__LINE__,#s,s)
 #define CHECK_EVAL(x,y) checkEval(__FILE__,__LINE__,#x,x,y)
+#define CHECK_EVAL_KNOWN_ISSUE(x,y,n) checkEval(__FILE__,__LINE__,#x,x,y,n)
 #define CHECK_EVAL_PRECISE(x,y) checkEvalPrecise(__FILE__,__LINE__,#x,x,y)
 
 static void checkAutoFix(const char* file, int line, const char* msg, const QString& expr, const QString& fixed)
@@ -63,7 +64,7 @@ static void checkDivisionByZero(const char* file, int line, const char* msg, con
     }
 }
 
-static void checkEval(const char* file, int line, const char* msg, const QString& expr, const char* expected)
+static void checkEval(const char* file, int line, const char* msg, const QString& expr, const char* expected, int issue = 0)
 {
     ++eval_total_tests;
 
@@ -77,7 +78,10 @@ static void checkEval(const char* file, int line, const char* msg, const QString
         char* result = HMath::format(rn, 'f');
         if (strcmp(result, expected)) {
             ++eval_failed_tests;
-            cerr << file << "[" << line << "]: " << msg << "  Result: " << result << ", "<< "Expected: " << expected << endl;
+            cerr << file << "[" << line << "]: " << msg << "  Result: " << result << ", "<< "Expected: " << expected;
+            if (issue)
+                cerr << "    [ISSUE " << issue << "]";
+            cerr << endl;
         }
         free(result);
     }
@@ -161,14 +165,11 @@ void test_unary()
     CHECK_EVAL("(5-7)^2",  "4");
     CHECK_EVAL("-(5-7)^2", "-4");
 
-    CHECK_EVAL("0!", "1");
-    CHECK_EVAL("1!", "1");
-    CHECK_EVAL("2!", "2");
-    CHECK_EVAL("3!", "6");
-    CHECK_EVAL("4!", "24");
-    CHECK_EVAL("5!", "120");
-    CHECK_EVAL("6!", "720");
-    CHECK_EVAL("7!", "5040");
+    CHECK_EVAL("-cos(pi)^3", "1");
+    CHECK_EVAL("1*(-cos(pi)^2)", "-1");
+
+    CHECK_EVAL_KNOWN_ISSUE("1/-1^2", "-1", 450);
+    CHECK_EVAL_KNOWN_ISSUE("1*-1^2", "-1", 450);
 
     // Factorial has higher precedence than unary minus.
     CHECK_EVAL("-1!", "-1");
@@ -234,6 +235,15 @@ void test_function_basic()
     CHECK_EVAL("INT(0.9999*1)", "0");
     CHECK_EVAL("INT(2.1)", "2");
     CHECK_EVAL("INT(-3.4)", "-3");
+
+    CHECK_EVAL("0!", "1");
+    CHECK_EVAL("1!", "1");
+    CHECK_EVAL("2!", "2");
+    CHECK_EVAL("3!", "6");
+    CHECK_EVAL("4!", "24");
+    CHECK_EVAL("5!", "120");
+    CHECK_EVAL("6!", "720");
+    CHECK_EVAL("7!", "5040");
 
     CHECK_EVAL_PRECISE("exp((1)/2) + exp((1)/2)", "3.29744254140025629369730157562832714330755220142030");
 }

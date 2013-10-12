@@ -212,7 +212,7 @@ Token::Token(const Token& token)
 {
     m_type = token.m_type;
     m_text = token.m_text;
-    m_pos  = token.m_pos;
+    m_pos = token.m_pos;
 }
 
 Token& Token::operator=(const Token& token)
@@ -395,6 +395,11 @@ Tokens Evaluator::scan(const QString& expr) const
 
     // Force a terminator.
     ex.append(QChar());
+
+    // Work around issue 160 until new more flexible parser is written.
+    if (ex.at(0) == '-')
+        ex.prepend('0');
+    ex.replace("(-", "(0-");
 
     // Main loop.
     while (state != Bad && state != Finish && i < ex.length()) {
