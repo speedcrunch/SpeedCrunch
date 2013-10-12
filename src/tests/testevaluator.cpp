@@ -30,6 +30,7 @@ using namespace std;
 static Evaluator* eval = 0;
 static int eval_total_tests  = 0;
 static int eval_failed_tests = 0;
+static int eval_new_failed_tests = 0;
 
 #define CHECK_AUTOFIX(s,p) checkAutoFix(__FILE__,__LINE__,#s,s,p)
 #define CHECK_DIV_BY_ZERO(s) checkDivisionByZero(__FILE__,__LINE__,#s,s)
@@ -59,8 +60,8 @@ static void checkDivisionByZero(const char* file, int line, const char* msg, con
     HNumber rn = eval->evalUpdateAns();
 
     if (eval->error().isEmpty()) {
-        eval_failed_tests++;
-        cerr << file << "[" << line << "]: " << msg << "  Error: " << "division by zero not caught" << endl;
+        ++eval_failed_tests;
+        cerr << "[" << line << "]:\t" << msg << "  Error: " << "division by zero not caught" << endl;
     }
 }
 
@@ -73,14 +74,18 @@ static void checkEval(const char* file, int line, const char* msg, const QString
 
     if (!eval->error().isEmpty()) {
         ++eval_failed_tests;
-        cerr << file << "[" << line << "]: " << msg << "  Error: " << qPrintable(eval->error()) << endl;
+        cerr << "[Line " << line << "]\t:" << msg << "  Error: " << qPrintable(eval->error()) << endl;
     } else {
         char* result = HMath::format(rn, 'f');
         if (strcmp(result, expected)) {
             ++eval_failed_tests;
-            cerr << file << "[" << line << "]: " << msg << "  Result: " << result << ", "<< "Expected: " << expected;
+            cerr << "[Line " << line << "]\t" << msg << "\tResult: " << result << "\tExpected: " << expected;
             if (issue)
-                cerr << "    [ISSUE " << issue << "]";
+                cerr << "\t[ISSUE " << issue << "]";
+            else {
+                cerr << "\t[NEW]";
+                ++eval_new_failed_tests;
+            }
             cerr << endl;
         }
         free(result);
@@ -99,7 +104,7 @@ static void checkEvalPrecise(const char* file, int line, const char* msg, const 
     char* result = HMath::format(rn, 'f', 50);
     if (strcmp(result, expected)) {
         ++eval_failed_tests;
-        cerr << file << "[" << line <<"]: " << msg << "  Result: " << result << ", "<< "Expected: " << expected << endl;
+        cerr << "[Line" << line <<"]:\t" << msg << "  Result: " << result << ", "<< "Expected: " << expected << endl;
     }
     free(result);
 }
@@ -245,6 +250,9 @@ void test_function_basic()
     CHECK_EVAL("6!", "720");
     CHECK_EVAL("7!", "5040");
     CHECK_EVAL("(1+1)!^2", "4");
+    CHECK_EVAL_KNOWN_ISSUE("frac 3!", "0", 451);
+
+    CHECK_EVAL_KNOWN_ISSUE("log 10^2", "2", 451);
 
     CHECK_EVAL_PRECISE("exp((1)/2) + exp((1)/2)", "3.29744254140025629369730157562832714330755220142030");
 }
@@ -540,6 +548,9 @@ int main(int argc, char* argv[])
 
     test_comments();
 
-    cerr << eval_total_tests  << " total, " << eval_failed_tests << " failed" << endl;
+    cerr << eval_total_tests  << " total, " << eval_failed_tests << " failed";
+    if (eval_failed_tests)
+        cerr << ", " << eval_new_failed_tests << " new";
+    cerr << endl;
     return 0;
 }
