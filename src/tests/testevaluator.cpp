@@ -244,6 +244,7 @@ void test_function_basic()
     CHECK_EVAL("5!", "120");
     CHECK_EVAL("6!", "720");
     CHECK_EVAL("7!", "5040");
+    CHECK_EVAL("(1+1)!^2", "4");
 
     CHECK_EVAL_PRECISE("exp((1)/2) + exp((1)/2)", "3.29744254140025629369730157562832714330755220142030");
 }
@@ -397,7 +398,7 @@ void test_function_logic()
     CHECK_EVAL("xor(0;0)", "0");
     CHECK_EVAL("xor(0;1)", "1");
     CHECK_EVAL("xor(1;0)", "1");
-CHECK_EVAL("xor(1;1)", "0");
+    CHECK_EVAL("xor(1;1)", "0");
 }
 
 void test_function_discrete()
