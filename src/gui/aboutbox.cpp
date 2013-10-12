@@ -1,24 +1,22 @@
-/*
-  This file is part of the SpeedCrunch project
-  Copyright (C) 2004, 2006 Ariya Hidayat <ariya@kde.org>
-  Copyright (C) 2005, 2006 Johan Thelin <e8johan@gmail.com>
-  Copyright (C) 2007, 2009, 2013 Helder Correia <helder.pereira.correia@gmail.com>
-
-  This program is free software; you can redistribute it and/or
-  modify it under the terms of the GNU General Public License
-  as published by the Free Software Foundation; either version 2
-  of the License, or (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program; see the file COPYING.  If not, write to
-  the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-  Boston, MA 02110-1301, USA.
-*/
+//  This file is part of the SpeedCrunch project
+//  Copyright (C) 2004, 2006 Ariya Hidayat <ariya@kde.org>
+//  Copyright (C) 2005, 2006 Johan Thelin <e8johan@gmail.com>
+//  Copyright (C) 2007, 2009, 2013 Helder Correia <helder.pereira.correia@gmail.com>
+//
+//  This program is free software; you can redistribute it and/or
+//  modify it under the terms of the GNU General Public License
+//  as published by the Free Software Foundation; either version 2
+//  of the License, or (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program; see the file COPYING.  If not, write to
+//  the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+//  Boston, MA 02110-1301, USA.
 
 #include "gui/aboutbox.h"
 
@@ -57,20 +55,21 @@ AboutBox::AboutBox(QWidget* parent, Qt::WindowFlags f)
     msg += authors.arg(tr("Maintainer and core developer")).arg("Helder Correia");
     msg += authors.arg(tr("Original author")).arg("Ariya Hidayat");
     msg += authors.arg(tr("Former maintainer")).arg("Johan Thelin");
-    msg += authors.arg(tr("Math engine and expression parser")).arg("Wolf Lammen");
-    msg += authors.arg(tr("General purpose developers")).arg("Andreas Scherer<br>"
-                                                             "Enrico R&oacute;s<br>"
-                                                             "Daniel Sch&auml;ufele");
-    msg += authors.arg(tr("Packager and OS X stylist")).arg("Alessandro Portale");
-    msg += authors.arg(tr("Original math book author")).arg("Petri Damst&eacute;n");
-    msg += authors.arg(tr("Based on original idea from")).arg("Roberto Alsina");
-    msg += authors.arg(tr("Special thanks to")).arg("Marco Wegner<br>"
-                                                    "Michael Pyne<br>"
-                                                    "Jonathan Avraham<br>"
-                                                    "Jonathan Riddell<br>"
-                                                    "Tey<br>"
-                                                    "Witold Wysota");
-    msg += authors.arg(tr("Graphics")).arg("Kuswanto (Zeus)<br>Oxygen Project");
+    msg += authors.arg(tr("Math engine author")).arg("Wolf Lammen");
+    msg += authors.arg(tr("Package producer")).arg("Alessandro Portale");
+    msg += authors.arg(tr("Special thanks to")).arg(
+        "Andreas Scherer<br>"
+        "Enrico R&oacute;s<br>"
+        "Daniel Sch&auml;ufele<br>"
+        "Marco Wegner<br>"
+        "Michael Pyne<br>"
+        "Jonathan Avraham<br>"
+        "Jonathan Riddell<br>"
+        "Petri Damst&eacute;n<br>"
+        "Roberto Alsina<br>"
+        "Tey<br>"
+        "Witold Wysota"
+    );
 
     msg += "<p>";
     msg += QString("<b>%1</b><br>").arg(tr("Thanks to"));
@@ -177,7 +176,7 @@ AboutBox::AboutBox(QWidget* parent, Qt::WindowFlags f)
                .arg("Ariya Hidayat").arg("ariya@kde.org");
     msg += copy.arg(tr("Copyright (C)")).arg("2005-2006")
                .arg("Johan Thelin").arg("e8johan@gmail.com");
-    msg += copy.arg(tr("Copyright (C)")).arg("2007-2010")
+    msg += copy.arg(tr("Copyright (C)")).arg("2007-2013")
                .arg("Helder Correia").arg("helder.pereira.correia@gmail.com");
     msg += copy.arg(tr("Copyright (C)")).arg("2007-2009")
                .arg("Wolf Lammen").arg("ookami1@gmx.de");
@@ -213,8 +212,7 @@ AboutBox::AboutBox(QWidget* parent, Qt::WindowFlags f)
     closeButton->setText(tr("Close"));
     QObject::connect(closeButton, SIGNAL(clicked()), SLOT(accept()));
 
-    QSpacerItem* buttonSpacer = new QSpacerItem(20, 20, QSizePolicy::Expanding,
-                                                QSizePolicy::Minimum);
+    QSpacerItem* buttonSpacer = new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
     QHBoxLayout* topLayout = new QHBoxLayout();
