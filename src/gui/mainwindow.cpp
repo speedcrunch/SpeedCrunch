@@ -403,7 +403,7 @@ void MainWindow::createActionShortcuts()
     m_actions.sessionQuit->setShortcut(Qt::CTRL + Qt::Key_Q);
     m_actions.sessionSave->setShortcut(Qt::CTRL + Qt::Key_S);
     m_actions.editClearExpression->setShortcut(Qt::Key_Escape);
-    m_actions.editClearHistory->setShortcut(Qt::CTRL + Qt::ALT + Qt::Key_N);
+    m_actions.editClearHistory->setShortcut(Qt::CTRL + Qt::Key_N);
     m_actions.editCopyLastResult->setShortcut(Qt::CTRL + Qt::Key_R);
     m_actions.editCopy->setShortcut(Qt::CTRL + Qt::Key_C);
     m_actions.editPaste->setShortcut(Qt::CTRL + Qt::Key_V);
@@ -415,9 +415,9 @@ void MainWindow::createActionShortcuts()
     m_actions.viewFormulaBook->setShortcut(Qt::CTRL + Qt::Key_1);
 #ifndef Q_OS_MAC
     if (shouldAllowHiddenMenuBar())
-        m_actions.viewMenuBar->setShortcut(Qt::CTRL + Qt::ALT + Qt::Key_M);
+        m_actions.viewMenuBar->setShortcut(Qt::CTRL + Qt::Key_M);
 #endif
-    m_actions.viewStatusBar->setShortcut(Qt::CTRL + Qt::ALT + Qt::Key_B);
+    m_actions.viewStatusBar->setShortcut(Qt::CTRL + Qt::Key_B);
     m_actions.viewVariables->setShortcut(Qt::CTRL + Qt::Key_4);
     m_actions.settingsAngleUnitDegree->setShortcut(Qt::Key_F10);
     m_actions.settingsAngleUnitRadian->setShortcut(Qt::Key_F9);
@@ -1767,8 +1767,7 @@ void MainWindow::setVariablesDockVisible(bool b)
 #ifndef Q_OS_MAC
 void MainWindow::showMenuBarTip()
 {
-    QString msg = tr("The menu bar is now hidden. "
-                      "To make it visible again, press Ctrl+Alt+M.");
+    QString msg = tr("The menu bar is now hidden. To make it visible again, press Ctrl+M.");
 
     m_widgets.tip->move(0, 0);
     m_widgets.tip->showText(msg, tr("Warning"));
