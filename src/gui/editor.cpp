@@ -28,6 +28,7 @@
 #include "gui/syntaxhighlighter.h"
 
 #include <QtCore/QEvent>
+#include <QtCore/QMimeData>
 #include <QtCore/QTimeLine>
 #include <QtCore/QTimer>
 #include <QtGui/QApplication>
@@ -471,6 +472,20 @@ void Editor::autoComplete(const QString& item)
     blockSignals(false);
 }
 
+void Editor::insertFromMimeData(const QMimeData* source)
+{
+    QStringList expressions = source->text().split('\n', QString::SkipEmptyParts);
+    if (expressions.size() == 1) {
+        QPlainTextEdit::insertFromMimeData(source);
+        return;
+    }
+
+    for (int i = 0; i < expressions.size(); ++i) {
+        insert(expressions.at(i));
+        evaluate();
+    }
+}
+
 void Editor::autoCalc()
 {
     if (!m_isAutoCalcEnabled)
@@ -480,27 +495,19 @@ void Editor::autoCalc()
     if (str.isEmpty())
         return;
 
-    // very short (just one token) and still no calculation, then skip
+    // Very short (just one token) and still no calculation, then skip.
     if (!m_isAnsAvailable) {
         const Tokens tokens = m_evaluator->scan(text());
         if (tokens.count() < 2)
             return;
     }
 
-    // too short even after autofix ? do not bother either...
+    // Too short even after autofix? Do not bother either.
     const Tokens tokens = m_evaluator->scan(str);
     if (tokens.count() < 2)
         return;
 
-    // strip off assignment operator, e.g. "x=1+2" becomes "1+2" only
-    // the reason is that we want only to evaluate (on the fly) the expression,
-    // not to update (put the result in) the variable
-    //if(tokens.count() > 2) // reftk
-    //if(tokens.at(0).isIdentifier())
-    //if(tokens.at(1).asOperator() == Token::Equal)
-    //  str.remove(0, tokens.at(1).pos()+1);
-
-    // same reason as above, do not update "ans"
+    // Same reason as above, do not update "ans".
     m_evaluator->setExpression(str);
     const HNumber num = m_evaluator->evalNoAssign();
 
@@ -532,15 +539,7 @@ void Editor::autoCalcSelection()
     if (tokens.count() < 2)
         return;
 
-    // strip off assignment operator, e.g. "x=1+2" becomes "1+2" only
-    // the reason is that we want only to evaluate (on the fly) the expression,
-    // not to update (put the result in) the variable
-    //if(tokens.count() > 2) // reftk
-    //if(tokens.at(0).isIdentifier())
-    //if(tokens.at(1).asOperator() == Token::Equal)
-    //  str.remove(0, tokens.at(1).pos()+1);
-
-    // same reason as above, do not update "ans"
+    // Same reason as above, do not update "ans".
     m_evaluator->setExpression(str);
     const HNumber num = m_evaluator->evalNoAssign();
 

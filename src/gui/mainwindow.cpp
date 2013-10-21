@@ -1197,14 +1197,14 @@ void MainWindow::showSessionLoadDialog()
 
     QTextStream stream(&file);
 
-    // version of the format
+    // Version of the format.
     QString version = stream.readLine();
     if (version != "0.10") {
         QMessageBox::critical(this, tr("Error"), errMsg.arg(fname));
         return;
     }
 
-    // number of calculations
+    // Number of calculations.
     bool ok;
     int noCalcs = stream.readLine().toInt(&ok);
     if (ok == false || noCalcs < 0) {
@@ -1257,7 +1257,7 @@ void MainWindow::showSessionLoadDialog()
         history->appendHistory(expList);
     }
 
-    // variables
+    // Variables.
     int noVars = stream.readLine().toInt(&ok);
     if (ok == false || noVars < 0) {
         QMessageBox::critical(this, tr("Error"), errMsg.arg(fname));
@@ -1291,7 +1291,7 @@ void MainWindow::showSessionImportDialog()
         return;
     }
 
-    // ask for merge with current session
+    // Ask for merge with current session.
     QString mergeMsg = tr(
         "Merge session being imported with current session?\n"
         "If no, current variables and display will be cleared."

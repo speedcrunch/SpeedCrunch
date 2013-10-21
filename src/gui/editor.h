@@ -35,13 +35,13 @@ class SyntaxHighlighter;
 
 class QEvent;
 class QKeyEvent;
+class QMimeData;
 class QTimeLine;
 class QTreeWidget;
 class QWheelEvent;
 class QWidget;
 
-class Editor : public QPlainTextEdit
-{
+class Editor : public QPlainTextEdit {
     Q_OBJECT
 
 public:
@@ -73,11 +73,11 @@ signals:
     void autoCalcDisabled();
     void controlPageDownPressed();
     void controlPageUpPressed();
-    void shiftDownPressed();
-    void shiftUpPressed();
     void pageDownPressed();
     void pageUpPressed();
     void returnPressed();
+    void shiftDownPressed();
+    void shiftUpPressed();
     void shiftPageDownPressed();
     void shiftPageUpPressed();
 
@@ -86,32 +86,33 @@ public slots:
     void appendHistory(const QStringList& expressions, const QStringList& results);
     void cancelConstantCompletion();
     void evaluate();
-    void rehighlight();
-    void insertConstant(const QString&);
     void insert(const QString&);
+    void insertConstant(const QString&);
+    void rehighlight();
 
 protected slots:
+    virtual void insertFromMimeData(const QMimeData*);
     void autoCalc();
     void autoCalcSelection();
     void autoComplete(const QString&);
     void checkAutoCalc();
     void checkAutoComplete();
-    void startSelAutoCalcTimer();
     void checkMatching();
     void doMatchingLeft();
     void doMatchingPar();
     void doMatchingRight();
     void historyBack();
     void historyForward();
+    void startSelAutoCalcTimer();
     void triggerAutoComplete();
     void triggerEnter();
 
 protected:
-    QString formatNumber(const HNumber&) const;
     virtual void focusOutEvent(QFocusEvent*);
     virtual void keyPressEvent(QKeyEvent*);
     virtual void paintEvent(QPaintEvent*);
     virtual void wheelEvent(QWheelEvent*);
+    QString formatNumber(const HNumber&) const;
 
 private:
     Q_DISABLE_COPY(Editor);
@@ -134,8 +135,7 @@ private:
     bool m_shouldPaintCustomCursor;
 };
 
-class EditorCompletion : public QObject
-{
+class EditorCompletion : public QObject {
     Q_OBJECT
 
 public:
@@ -165,8 +165,7 @@ private:
 #endif
 };
 
-class ConstantCompletion : public QObject
-{
+class ConstantCompletion : public QObject {
     Q_OBJECT
 
 public:
@@ -177,16 +176,16 @@ public:
     void showCompletion();
 
 signals:
-    void selectedCompletion(const QString&);
     void canceledCompletion();
+    void selectedCompletion(const QString&);
 
 public slots:
     void doneCompletion();
 
 protected slots:
+    void setHorizontalPosition(int);
     void showCategory();
     void showConstants();
-    void setHorizontalPosition(int);
 
 private:
     Q_DISABLE_COPY(ConstantCompletion);
