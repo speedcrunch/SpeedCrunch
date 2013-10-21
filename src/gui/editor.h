@@ -71,6 +71,8 @@ public:
 signals:
     void autoCalcEnabled(const QString&);
     void autoCalcDisabled();
+    void controlPageDownPressed();
+    void controlPageUpPressed();
     void shiftDownPressed();
     void shiftUpPressed();
     void pageDownPressed();

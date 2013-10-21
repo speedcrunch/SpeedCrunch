@@ -45,12 +45,13 @@ public slots:
     void clear();
     void rehighlight();
     void refresh();
-    void scrollLines(int numberOfLines);
+    void scrollLines(int);
     void scrollLineUp();
     void scrollLineDown();
-    void scrollPage(int direction);
     void scrollPageUp();
     void scrollPageDown();
+    void scrollToBottom();
+    void scrollToTop();
     void zoomIn();
     void zoomOut();
 
@@ -58,7 +59,11 @@ protected:
     virtual void wheelEvent(QWheelEvent*);
     virtual void resizeEvent(QResizeEvent*);
     virtual void timerEvent(QTimerEvent*);
+    void fullContentScrollEvent();
     float linesPerPage() { return static_cast<float>(viewport()->height()) / fontMetrics().height(); }
+    void pageScrollEvent();
+    void scrollToDirection(int);
+    void stopActiveScrollingAnimation();
     void updateScrollBarStyleSheet();
 
 private:
@@ -71,9 +76,10 @@ private:
     SyntaxHighlighter* m_highlighter;
     QStringList m_results;
     FadeOverlay* m_fadeOverlay;
-    QBasicTimer m_timer;
+    QBasicTimer m_scrollTimer;
     int m_scrolledLines;
     int m_scrollDirection;
+    bool m_isScrollingPageOnly;
 };
 
 #endif

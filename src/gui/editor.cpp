@@ -688,8 +688,10 @@ void Editor::keyPressEvent(QKeyEvent* event)
     }
 
     if (event->key() == Qt::Key_PageUp) {
-        if (event->modifiers())
+        if (event->modifiers() & Qt::ShiftModifier)
             emit shiftPageUpPressed();
+        else if (event->modifiers() & Qt::ControlModifier)
+            emit controlPageUpPressed();
         else
             emit pageUpPressed();
         event->accept();
@@ -697,8 +699,10 @@ void Editor::keyPressEvent(QKeyEvent* event)
     }
 
     if (event->key() == Qt::Key_PageDown) {
-        if (event->modifiers())
+        if (event->modifiers() & Qt::ShiftModifier)
             emit shiftPageDownPressed();
+        else if (event->modifiers() & Qt::ControlModifier)
+            emit controlPageDownPressed();
         else
             emit pageDownPressed();
         event->accept();

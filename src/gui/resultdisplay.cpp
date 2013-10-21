@@ -53,6 +53,7 @@ ResultDisplay::ResultDisplay(QWidget* parent)
     , m_fadeOverlay(new FadeOverlay(this))
     , m_scrolledLines(0)
     , m_scrollDirection(0)
+    , m_isScrollingPageOnly(false)
 {
     setViewportMargins(0, 0, 0, 0);
     setBackgroundRole(QPalette::Base);
@@ -73,8 +74,6 @@ void ResultDisplay::append(const QString& expression, const HNumber& value)
     appendPlainText(expression);
     appendPlainText(QLatin1String("= ") + formatNumber(value));
     appendPlainText(QLatin1String(""));
-
-    ensureCursorVisible();
 
     // TODO: Refactor, this only serves to save a session.
     m_expressions.append(expression);
@@ -140,21 +139,31 @@ void ResultDisplay::scrollLines(int numberOfLines)
 
 void ResultDisplay::scrollLineUp()
 {
+    if (m_scrollDirection != 0) {
+        stopActiveScrollingAnimation();
+        return;
+    }
+
     scrollLines(-1);
 }
 
 void ResultDisplay::scrollLineDown()
 {
+    if (m_scrollDirection != 0) {
+        stopActiveScrollingAnimation();
+        return;
+    }
+
     scrollLines(1);
 }
 
-void ResultDisplay::scrollPage(int direction)
+void ResultDisplay::scrollToDirection(int direction)
 {
     m_scrolledLines = 0;
     bool mustStartTimer = (m_scrollDirection == 0);
     m_scrollDirection = direction;
     if (mustStartTimer)
-        m_timer.start(16, this);
+        m_scrollTimer.start(16, this);
 }
 
 void ResultDisplay::scrollPageUp()
@@ -162,7 +171,8 @@ void ResultDisplay::scrollPageUp()
     if (verticalScrollBar()->value() == 0)
         return;
 
-    scrollPage(-1);
+    m_isScrollingPageOnly = true;
+    scrollToDirection(-1);
 }
 
 void ResultDisplay::scrollPageDown()
@@ -170,7 +180,26 @@ void ResultDisplay::scrollPageDown()
     if (verticalScrollBar()->value() == verticalScrollBar()->maximum())
         return;
 
-    scrollPage(1);
+    m_isScrollingPageOnly = true;
+    scrollToDirection(1);
+}
+
+void ResultDisplay::scrollToTop()
+{
+    if (verticalScrollBar()->value() == 0)
+        return;
+
+    m_isScrollingPageOnly = false;
+    scrollToDirection(-1);
+}
+
+void ResultDisplay::scrollToBottom()
+{
+    if (verticalScrollBar()->value() == verticalScrollBar()->maximum())
+        return;
+
+    m_isScrollingPageOnly = false;
+    scrollToDirection(1);
 }
 
 void ResultDisplay::zoomIn()
@@ -195,19 +224,40 @@ void ResultDisplay::zoomOut()
 
 void ResultDisplay::timerEvent(QTimerEvent* event)
 {
-    if (event->timerId() != m_timer.timerId()) {
+    if (event->timerId() != m_scrollTimer.timerId()) {
         QWidget::timerEvent(event);
         return;
     }
 
-    if (m_scrolledLines < linesPerPage()) {
-        scrollLines(m_scrollDirection);
-        ++m_scrolledLines;
-    } else {
-        m_timer.stop();
-        m_scrolledLines = 0;
-        m_scrollDirection = 0;
+    if (m_isScrollingPageOnly)
+        pageScrollEvent();
+    else
+        fullContentScrollEvent();
+}
+
+void ResultDisplay::pageScrollEvent()
+{
+    if (m_scrolledLines >= linesPerPage()) {
+        stopActiveScrollingAnimation();
+        return;
     }
+
+    scrollLines(m_scrollDirection * 2);
+    m_scrolledLines += 2;
+}
+
+void ResultDisplay::fullContentScrollEvent()
+{
+    QScrollBar* bar = verticalScrollBar();
+    int value = bar->value();
+    bool shouldStop = (m_scrollDirection == -1 && value <= 0) || (m_scrollDirection == 1 && value >= bar->maximum());
+
+    if (shouldStop && m_scrollDirection != 0) {
+        stopActiveScrollingAnimation();
+        return;
+    }
+
+    scrollLines(m_scrollDirection * 10);
 }
 
 void ResultDisplay::wheelEvent(QWheelEvent* event)
@@ -228,6 +278,13 @@ void ResultDisplay::resizeEvent(QResizeEvent* event)
 {
     QPlainTextEdit::resizeEvent(event);
     m_fadeOverlay->resize(event->size());
+}
+
+void ResultDisplay::stopActiveScrollingAnimation()
+{
+    m_scrollTimer.stop();
+    m_scrolledLines = 0;
+    m_scrollDirection = 0;
 }
 
 void ResultDisplay::updateScrollBarStyleSheet()

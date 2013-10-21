@@ -830,6 +830,8 @@ void MainWindow::createFixedConnections()
     connect(m_widgets.editor, SIGNAL(returnPressed()), SLOT(evaluateEditorExpression()));
     connect(m_widgets.editor, SIGNAL(shiftDownPressed()), m_widgets.display, SLOT(zoomOut()));
     connect(m_widgets.editor, SIGNAL(shiftUpPressed()), m_widgets.display, SLOT(zoomIn()));
+    connect(m_widgets.editor, SIGNAL(controlPageUpPressed()), m_widgets.display, SLOT(scrollToTop()));
+    connect(m_widgets.editor, SIGNAL(controlPageDownPressed()), m_widgets.display, SLOT(scrollToBottom()));
     connect(m_widgets.editor, SIGNAL(shiftPageUpPressed()), m_widgets.display, SLOT(scrollLineUp()));
     connect(m_widgets.editor, SIGNAL(shiftPageDownPressed()), m_widgets.display, SLOT(scrollLineDown()));
     connect(m_widgets.editor, SIGNAL(pageUpPressed()), m_widgets.display, SLOT(scrollPageUp()));
@@ -1974,47 +1976,58 @@ void MainWindow::restoreHistory()
         history->setHistory(m_widgets.editor->history());
     }
 
-    // free some useless memory
+    // Free some useless memory.
     m_settings->history.clear();
     m_settings->historyResults.clear();
 }
 
 void MainWindow::evaluateEditorExpression()
 {
-    QString str = m_evaluator->autoFix(m_widgets.editor->text());
-    if (str.isEmpty())
+    QString expr = m_evaluator->autoFix(m_widgets.editor->text());
+
+    if (expr.isEmpty())
         return;
 
-    m_evaluator->setExpression(str);
+    m_evaluator->setExpression(expr);
     HNumber result = m_evaluator->evalUpdateAns();
 
-    if (!m_evaluator->error().isEmpty())
+    if (!m_evaluator->error().isEmpty()) {
         showAutoCalcTip(m_evaluator->error());
-    else if (!result.isNan()) {
-        m_widgets.display->append(str, result);
-        const char format = result.format() != 0 ? result.format() : 'e';
-        char* num = HMath::format(result, format, DECPRECISION);
-        m_widgets.editor->appendHistory(str, num);
-        free(num);
-        m_widgets.editor->setAnsAvailable(true);
-        if (m_settings->variablesDockVisible)
-            m_docks.variables->updateList();
-        if (m_settings->historyDockVisible) {
-            HistoryWidget* history = qobject_cast<HistoryWidget*>(m_docks.history->widget());
-            history->append(str);
-        }
-        if (m_settings->autoResultToClipboard)
-            copyResultToClipboard();
-
-        if (m_settings->leaveLastExpression)
-            m_widgets.editor->selectAll();
-        else
-            m_widgets.editor->clear();
-
-        m_widgets.editor->stopAutoCalc();
-        m_widgets.editor->stopAutoComplete();
-        m_conditions.autoAns = true;
+        return;
     }
+
+    if (result.isNan())
+        return;
+
+
+    m_widgets.display->append(expr, result);
+    m_widgets.display->scrollToBottom();
+
+    const char format = result.format() != 0 ? result.format() : 'e';
+    char* num = HMath::format(result, format, DECPRECISION);
+    m_widgets.editor->appendHistory(expr, num);
+    free(num);
+    m_widgets.editor->setAnsAvailable(true);
+
+    if (m_settings->variablesDockVisible)
+        m_docks.variables->updateList();
+
+    if (m_settings->historyDockVisible) {
+        HistoryWidget* history = qobject_cast<HistoryWidget*>(m_docks.history->widget());
+        history->append(expr);
+    }
+
+    if (m_settings->autoResultToClipboard)
+        copyResultToClipboard();
+
+    if (m_settings->leaveLastExpression)
+        m_widgets.editor->selectAll();
+    else
+        m_widgets.editor->clear();
+
+    m_widgets.editor->stopAutoCalc();
+    m_widgets.editor->stopAutoComplete();
+    m_conditions.autoAns = true;
 }
 
 void MainWindow::showSystemTrayMessage()
