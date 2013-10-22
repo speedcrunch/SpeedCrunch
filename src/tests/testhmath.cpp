@@ -512,6 +512,8 @@ void test_functions()
   CHECK( HMath::raise( "2",   "2"   ), "4"     );
   CHECK( HMath::raise( "3",   "3"   ), "27"    );
   CHECK( HMath::raise( "4",   "4"   ), "256"   );
+  CHECK( HMath::raise("-27", HNumber("1") / HNumber("3")), "-3");
+  CHECK( HMath::raise("-27", HNumber("-1") / HNumber("3")), "-0.33333333333333333333");
   CHECK_PRECISE( HMath::raise( "2", "0.1" ),
                  "1.07177346253629316421300632502334202290638460497756" );
   CHECK_PRECISE( HMath::raise( "2", "0.2" ),

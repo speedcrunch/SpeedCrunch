@@ -1099,9 +1099,18 @@ HNumber HMath::raise( const HNumber & n1, int n )
 /**
  * Raises n1 to n2.
  */
-HNumber HMath::raise( const HNumber & n1, const HNumber & n2  )
+HNumber HMath::raise(const HNumber& n1, const HNumber& n2)
 {
   HNumber result;
+
+  // Work around issue 402: Powers with negative base and non-integer exponent are NaN.
+  if (n1.isNegative() && !n2.isInteger()) {
+      HNumber n1_ = -n1;
+      HNumber n2_ = -n2;
+      call2Args(result.d, n1_.d, n2_.d, float_raise);
+      return HNumber(-1) / result;
+  }
+
   call2Args(result.d, n1.d, n2.d, float_raise);
   return result;
 }

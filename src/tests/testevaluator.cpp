@@ -253,7 +253,9 @@ void test_function_basic()
     CHECK_EVAL_KNOWN_ISSUE("frac 3!", "0", 451);
 
     CHECK_EVAL_KNOWN_ISSUE("log 10^2", "2", 451);
-    CHECK_EVAL_KNOWN_ISSUE("(-27)^(1/3)", "-3", 402);
+
+    CHECK_EVAL("(-27)^(1/3)", "-3");
+    CHECK_EVAL("(-27)^(-1/3)", "-0.33333333333333333333");
 
     CHECK_EVAL_PRECISE("exp((1)/2) + exp((1)/2)", "3.29744254140025629369730157562832714330755220142030");
 }
