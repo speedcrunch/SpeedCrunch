@@ -994,10 +994,10 @@ void MainWindow::saveSettings()
 
     if (m_settings->variableSave) {
         m_settings->variables.clear();
-        QVector<Variable> vars = m_evaluator->variables();
-        for (int i = 0; i < vars.count(); ++i) {
-            QString name = vars.at(i).name;
-            char* value = HMath::format(vars.at(i).value, 'e', DECPRECISION);
+        QList<Evaluator::Variable> variables = m_evaluator->getUserDefinedVariablesPlusAns();
+        for (int i = 0; i < variables.count(); ++i) {
+            QString name = variables.at(i).name;
+            char* value = HMath::format(variables.at(i).value, 'e', DECPRECISION);
             m_settings->variables.append(QString("%1=%2").arg(name).arg(value));
             free(value);
         }
@@ -1103,7 +1103,7 @@ void MainWindow::clearEditor()
 void MainWindow::copyResultToClipboard()
 {
     QClipboard* cb = QApplication::clipboard();
-    HNumber num = m_evaluator->get("ans");
+    HNumber num = m_evaluator->getVariable(QLatin1String("ans")).value;
     char* strToCopy = HMath::format(num, m_settings->resultFormat, m_settings->resultPrecision);
     QString final(strToCopy);
     if (m_settings->radixCharacter() == ',')
@@ -1127,7 +1127,7 @@ void MainWindow::setAngleModeDegree()
 
 void MainWindow::deleteVariables()
 {
-    m_evaluator->deleteVariables();
+    m_evaluator->unsetAllUserDefinedVariables();
 
     if (m_settings->variablesDockVisible)
         m_docks.variables->updateList();
@@ -1272,7 +1272,7 @@ void MainWindow::showSessionLoadDialog()
         }
         HNumber num(val.toAscii().data());
         if (num != HMath::nan())
-            m_evaluator->set(var, num);
+            m_evaluator->setVariable(var, num);
     }
 
     file.close();
@@ -1479,23 +1479,21 @@ void MainWindow::saveSession()
     stream << m_widgets.display->count() << "\n";
 
     // Expressions and results.
-    // stream << m_widgets.display->asText() << "\n";
-    stream <<
-        m_widgets.display->toPlainText().replace(QLatin1String("= "), QLatin1String(""))
-            .replace(QLatin1String("\n\n"), QLatin1String("\n"));
+    QString history = m_widgets.display->toPlainText();
+    history.replace(QLatin1String("= "), QLatin1String(""));
+    history.replace(QLatin1String("\n\n"), QLatin1String("\n"));
+    stream << history;
 
     // Number of variables.
-    int noVars = m_evaluator->variables().count();
-    stream << noVars - 3 << "\n"; // Exclude pi, phi and e.
+    QList<Evaluator::Variable> variables = m_evaluator->getUserDefinedVariablesPlusAns();
+    stream << variables.count() << "\n";
 
-    // Variables
-    for (int i = 0; i < noVars; ++i) {
-        Variable var = m_evaluator->variables().at(i);
-        if (var.name != "pi" && var.name != "phi" && var.name != "e") {
-            char* value = HMath::format(var.value);
-            stream << var.name << "\n" << value << "\n";
-            free(value);
-        }
+    // Variables.
+    for (int i = 0; i < variables.count(); ++i) {
+        Evaluator::Variable var = variables.at(i);
+        char* value = HMath::format(var.value);
+        stream << var.name << "\n" << value << "\n";
+        free(value);
     }
 
     file.close();
@@ -1926,8 +1924,7 @@ void MainWindow::raiseWindow()
 #endif // Q_OS_WIN
 
 #ifdef Q_WS_X11
-    static Atom NET_ACTIVE_WINDOW = XInternAtom(QX11Info::display(), "_NET_ACTIVE_WINDOW",
-                                                 False);
+    static Atom NET_ACTIVE_WINDOW = XInternAtom(QX11Info::display(), "_NET_ACTIVE_WINDOW", False);
 
     XClientMessageEvent xev;
     xev.type = ClientMessage;
@@ -1947,11 +1944,14 @@ void MainWindow::raiseWindow()
 
 void MainWindow::restoreVariables()
 {
-    for (int k = 0; k < m_settings->variables.count(); k++) {
+    for (int k = 0; k < m_settings->variables.count(); ++k) {
         m_evaluator->setExpression(m_settings->variables.at(k));
         m_evaluator->eval();
         QStringList list = m_settings->variables.at(k).split("=");
-        m_evaluator->set(list.at(0), HNumber(list.at(1).toAscii().data()));
+        Evaluator::Variable::Type type = Evaluator::Variable::UserDefined;
+        if (list.at(0) == QLatin1String("ans"))
+            type = Evaluator::Variable::BuiltIn;
+        m_evaluator->setVariable(list.at(0), HNumber(list.at(1).toAscii().data()), type);
     }
 
     if (m_docks.variables)

@@ -321,7 +321,16 @@ Evaluator* Evaluator::instance()
 
 Evaluator::Evaluator()
 {
-    clear();
+    reset();
+}
+
+void Evaluator::initializeBuiltInVariables()
+{
+    setVariable(QLatin1String("e"), HMath::e(), Variable::BuiltIn);
+    setVariable(QString::fromUtf8("ℯ"), HMath::e(), Variable::BuiltIn);
+
+    setVariable(QLatin1String("pi"), HMath::pi(), Variable::BuiltIn);
+    setVariable(QString::fromUtf8("π"), HMath::pi(), Variable::BuiltIn);
 }
 
 void Evaluator::setExpression(const QString& expr)
@@ -350,7 +359,7 @@ bool Evaluator::isValid()
     return m_valid;
 }
 
-void Evaluator::clear()
+void Evaluator::reset()
 {
     m_expression = QString();
     m_dirty = true;
@@ -359,7 +368,7 @@ void Evaluator::clear()
     m_constants.clear();
     m_codes.clear();
     m_assignId = QString();
-    deleteVariables();
+    unsetAllUserDefinedVariables(); // Initializes built-in variables.
 }
 
 QString Evaluator::error() const
@@ -1206,8 +1215,8 @@ HNumber Evaluator::evalNoAssign()
             // Reference.
             case Opcode::Ref:
                 fname = m_identifiers.at(index);
-                if (has(fname)) // Variable.
-                    stack.push(get(fname));
+                if (hasVariable(fname)) // Variable.
+                    stack.push(getVariable(fname).value);
                 else { // Function.
                     function = FunctionRepo::instance()->find(fname);
                     if (function)
@@ -1269,24 +1278,30 @@ HNumber Evaluator::evalNoAssign()
     return result;
 }
 
+bool Evaluator::isBuiltInVariable(const QString& id) const
+{
+    // Defining variables with the same name as existing functions is not supported for now.
+    if (FunctionRepo::instance()->find(id))
+        return true;
+
+    if (!m_variables.contains(id))
+        return false;
+
+    return m_variables.value(id).type == Variable::BuiltIn;
+}
+
 HNumber Evaluator::eval()
 {
     HNumber result = evalNoAssign(); // This sets m_assignId.
 
-    // Cannot overwrite built-in variables and functions.
-    if (m_assignId == QLatin1String("pi")
-         || m_assignId == QLatin1String("phi")
-         || m_assignId == QLatin1String("e")
-         || m_assignId == QLatin1String("ans")
-         || FunctionRepo::instance()->find(m_assignId))
-    {
+    if (isBuiltInVariable(m_assignId)) {
         m_error = tr("%1 is a reserved name, please choose another").arg(m_assignId);
         return HMath::nan();
     }
 
     // Handle variable assignment, e.g. "x=2*4".
     if (!m_assignId.isEmpty())
-        set(m_assignId, result);
+        setVariable(m_assignId, result);
 
     return result;
 }
@@ -1294,64 +1309,70 @@ HNumber Evaluator::eval()
 HNumber Evaluator::evalUpdateAns()
 {
     HNumber result = eval();
-
-    // "ans" is default variable to hold calculation result.
     if (m_error.isEmpty())
-        set(QString("ans"), result);
-
+        setVariable(QLatin1String("ans"), result, Variable::BuiltIn);
     return result;
 }
 
-void Evaluator::set(const QString& id, HNumber value)
+void Evaluator::setVariable(const QString& id, HNumber value, Variable::Type type)
 {
-    if (!id.isEmpty()) {
-        m_variables[id].name  = id;
-        m_variables[id].value = value;
-    }
+    m_variables.insert(id, Variable(id, value, type));
 }
 
-HNumber Evaluator::get(const QString& id)
+Evaluator::Variable Evaluator::getVariable(const QString& id) const
 {
     if (id.isEmpty())
-        return HNumber(0);
+        return Variable(QLatin1String(""), HNumber(0));
 
-    if (!m_variables.contains(id))
-        set(id, HNumber(0));
-    return m_variables.value(id).value;
+    return m_variables.value(id);
 }
 
-bool Evaluator::has(const QString& id) const
+bool Evaluator::hasVariable(const QString& id) const
 {
     return id.isEmpty() ? false : m_variables.contains(id);
 }
 
-void Evaluator::deleteVariable(const QString& id)
+void Evaluator::unsetVariable(const QString& id)
 {
+    if (isBuiltInVariable(id))
+        return;
+
     m_variables.remove(id);
 }
 
-QVector<Variable> Evaluator::variables() const
+QList<Evaluator::Variable> Evaluator::getVariables() const
 {
-    QVector<Variable> result;
+    return m_variables.values();
+}
 
-    for (QMap<QString,Variable>::ConstIterator it = m_variables.begin(); it != m_variables.end(); ++it) {
-        Variable var = { it.value().name, it.value().value };
-        result.append(var);
+QList<Evaluator::Variable> Evaluator::getUserDefinedVariables() const
+{
+    QList<Variable> result = m_variables.values();
+    QList<Variable>::iterator iter = result.begin();
+    while (iter != result.end()) {
+        if ((*iter).type == Variable::BuiltIn)
+            iter = result.erase(iter);
+        else
+            ++iter;
     }
-
     return result;
 }
 
-void Evaluator::deleteVariables()
+QList<Evaluator::Variable> Evaluator::getUserDefinedVariablesPlusAns() const
 {
-  HNumber ansBackup = get(QString("ans"));
+    QList<Evaluator::Variable> result = getUserDefinedVariables();
+    Variable ans = getVariable(QLatin1String("ans"));
+    if (!ans.name.isEmpty())
+        result.append(ans);
+    return result;
+}
 
-  m_variables.clear();
-
-  set(QString("ans"), ansBackup);
-  set(QString("pi"), HMath::pi());
-  set(QString("phi"), HMath::phi());
-  set(QString("e"), HMath::e());
+void Evaluator::unsetAllUserDefinedVariables()
+{
+    HNumber ansBackup = getVariable(QLatin1String("ans")).value;
+    m_variables.clear();
+    setVariable(QLatin1String("ans"), ansBackup, Variable::BuiltIn);
+    initializeBuiltInVariables();
 }
 
 static void replaceSuperscriptPowersWithCaretEquivalent(QString& expr)

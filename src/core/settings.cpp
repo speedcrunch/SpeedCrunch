@@ -37,7 +37,7 @@ static void s_deleteSettings()
     delete s_settingsInstance;
 }
 
-static QSettings* createQSettings(const QString & key);
+static QSettings* createQSettings(const QString& key);
 
 Settings* Settings::instance()
 {
@@ -171,7 +171,7 @@ void Settings::load()
             }
         }
         // Load.
-        if (!value.isEmpty() && name != QLatin1String("pi") && name != QLatin1String("phi") && name != QLatin1String("e"))
+        if (!value.isEmpty())
             variables.append(QString::fromLatin1("%1=%2").arg(name).arg(value));
     }
 
@@ -232,7 +232,7 @@ void Settings::save()
     settings->setValue(key + QLatin1String("DisplayFont"), displayFont);
     settings->setValue(key + QLatin1String("ColorScheme"), colorScheme);
 
-    // save history
+    // Save history.
     if (historySave) {
         key = KEY + QLatin1String("/History/");
         QStringList realHistory = history;
@@ -276,7 +276,7 @@ void Settings::save()
 
         for (i = 0; i < variables.count(); ++i) {
             QStringList s = variables[i].split('=');
-            if (s.count() == 2 && s.at(0) != QLatin1String("pi") && s.at(0) != QLatin1String("phi") && s.at(0) != QLatin1String("e")) {
+            if (s.count() == 2) {
                 QString name = "";
                 QString value = s.at(1);
                 int length = s.at(0).length();
@@ -310,7 +310,7 @@ void Settings::setRadixCharacter(char c)
     s_radixCharacter = (c != ',' && c != '.') ? 0 : c;
 };
 
-QSettings* createQSettings(const QString & KEY)
+QSettings* createQSettings(const QString& KEY)
 {
     QSettings* settings = 0;
 
@@ -324,8 +324,7 @@ QSettings* createQSettings(const QString & KEY)
     QString iniFile = appPath + '/' + KEY + ".ini";
     settings = new QSettings(iniFile, QSettings::IniFormat);
 #else
-    // Regular Windows version:
-    //   settings are from the registry HKEY_CURRENT_USER\Software\SpeedCrunch.
+    // Regular Windows version, settings are from the registry HKEY_CURRENT_USER\Software\SpeedCrunch.
     settings = new QSettings(QSettings::NativeFormat, QSettings::UserScope, KEY, KEY);
 #endif // SPEEDCRUNCH_PORTABLE
 #endif // Q_WS_WIN
@@ -350,7 +349,7 @@ QSettings* createQSettings(const QString & KEY)
     free(prefix);
     settings = new QSettings(iniFile, QSettings::IniFormat);
 #else
-    // Regular Unix or Embedded Linux (not Mac) version: settings from $HOME/.conf/SpeedCrunch.
+    // Regular Unix or Embedded Linux (not Mac) version: settings from $HOME/.config/SpeedCrunch.
     settings = new QSettings(QSettings::NativeFormat, QSettings::UserScope, KEY, KEY);
 #endif // SPEEDCRUNCH_PORTABLE
 #endif // Q_WS_X11 || Q_WS_QWS

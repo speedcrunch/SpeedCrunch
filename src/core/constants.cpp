@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2007, 2009, 2011 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2007, 2009, 2011, 2013 Helder Correia <helder.pereira.correia@gmail.com>
 // Copyright (C) 2009 Andreas Scherer <andreas_coder@freenet.de>
 //
 // This program is free software; you can redistribute it and/or
@@ -20,11 +20,14 @@
 
 #include "core/constants.h"
 
+#include "core/numberformatter.h"
+#include "math/hmath.h"
+
 #include <QtCore/QCoreApplication>
 
 #include <algorithm>
 
-static Constants * s_constantsInstance = 0;
+static Constants* s_constantsInstance = 0;
 
 static void s_deleteConstants()
 {
@@ -45,7 +48,7 @@ struct Constants::Private
     c.unit = UNIT; \
     list << c;
 
-#define PUSH_CONSTANT_DAYS(NAME,VALUE) \
+#define PUSH_CONSTANT_NO_UNIT(NAME,VALUE) \
     c.value = VALUE; \
     list << c;
 
@@ -61,6 +64,11 @@ struct Constants::Private
 void Constants::Private::populate()
 {
     Constant c;
+
+    // Universal.
+    PUSH_CONSTANT_NO_UNIT("π (Archimedes' constant pi)", "3.1415926535897932");
+    PUSH_CONSTANT_NO_UNIT("e (Euler's number)", "2.7182818284590452");
+    PUSH_CONSTANT_NO_UNIT("φ (golden ratio)", "1.6180339887498948");
 
     // General Physics.
     PUSH_CONSTANT("Characteristic Impedance of Vacuum", QLatin1String("376.730313461"), QString::fromUtf8("Ω"));
@@ -108,10 +116,10 @@ void Constants::Private::populate()
     PUSH_CONSTANT("Astronomical Unit", QLatin1String("149597870691"), QLatin1String("m"));
     PUSH_CONSTANT("Light Year", QLatin1String("9.4607304725808e15"), QLatin1String("m"));
     PUSH_CONSTANT("Parsec", QLatin1String("3.08567802e16"), QLatin1String("m"));
-    PUSH_CONSTANT_DAYS("Gregorian Year", QLatin1String("365.2425"));
-    PUSH_CONSTANT_DAYS("Julian Year", QLatin1String("365.25"));
-    PUSH_CONSTANT_DAYS("Sidereal Year", QLatin1String("365.2564"));
-    PUSH_CONSTANT_DAYS("Tropical Year", QLatin1String("365.2422"));
+    PUSH_CONSTANT_NO_UNIT("Gregorian Year", QLatin1String("365.2425"));
+    PUSH_CONSTANT_NO_UNIT("Julian Year", QLatin1String("365.25"));
+    PUSH_CONSTANT_NO_UNIT("Sidereal Year", QLatin1String("365.2564"));
+    PUSH_CONSTANT_NO_UNIT("Tropical Year", QLatin1String("365.2422"));
     PUSH_CONSTANT("Earth Mass", QLatin1String("5.9736e24"), QLatin1String("kg"));
     PUSH_CONSTANT("Mean Earth Radius", QLatin1String("6371000"), QLatin1String("m"));
     PUSH_CONSTANT("Sun Mass", QLatin1String("1.9891e30"), QLatin1String("kg"));
@@ -208,6 +216,13 @@ void Constants::Private::retranslateText()
 {
     QList<Constant>::iterator i = list.begin();
     QString cat;
+
+    // http://en.wikipedia.org/wiki/Mathematical_constant
+    cat = Constants::tr("Universal");
+
+    I18N_CONSTANT(Constants::tr("Archimedes' constant Pi") + QString::fromUtf8(" (π)"));
+    I18N_CONSTANT(Constants::tr("Euler's number") + QString::fromUtf8(" (ℯ)"));
+    I18N_CONSTANT(Constants::tr("Golden ratio") + QString::fromUtf8(" (φ)"));
 
     // http://en.wikipedia.org/wiki/Physical_constant#Table_of_universal_constants
     cat = Constants::tr("General Physics");
@@ -374,7 +389,7 @@ void Constants::Private::retranslateText()
     categories.sort();
 }
 
-Constants * Constants::instance()
+Constants* Constants::instance()
 {
     if (!s_constantsInstance) {
         s_constantsInstance = new Constants;
@@ -383,12 +398,12 @@ Constants * Constants::instance()
     return s_constantsInstance;
 }
 
-constant_name_is::constant_name_is(const QString &name)
+constant_name_is::constant_name_is(const QString& name)
     : m_name(name)
 {
 }
 
-bool constant_name_is::operator()(const Constant &c) const
+bool constant_name_is::operator()(const Constant& c) const
 {
     return c.name == m_name;
 }
@@ -405,12 +420,12 @@ Constants::~Constants()
 {
 }
 
-const QList<Constant> & Constants::list() const
+const QList<Constant>& Constants::list() const
 {
     return d->list;
 }
 
-const QStringList & Constants::categories() const
+const QStringList& Constants::categories() const
 {
     return d->categories;
 }

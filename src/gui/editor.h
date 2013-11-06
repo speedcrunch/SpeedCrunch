@@ -1,6 +1,5 @@
 // This file is part of the SpeedCrunch project
-// Copyright (C) 2004-2005 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
+// Copyright (C) 2004, 2005, 2007 Ariya Hidayat <ariya@kde.org>
 // Copyright (C) 2007-2009, 2013 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
@@ -112,7 +111,6 @@ protected:
     virtual void keyPressEvent(QKeyEvent*);
     virtual void paintEvent(QPaintEvent*);
     virtual void wheelEvent(QWheelEvent*);
-    QString formatNumber(const HNumber&) const;
 
 private:
     Q_DISABLE_COPY(Editor);

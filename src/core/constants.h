@@ -25,8 +25,7 @@
 
 #include <memory>
 
-struct Constant
-{
+struct Constant {
     QString category;
     QString name;
     QString unit;
@@ -37,20 +36,19 @@ class constant_name_is
 {
     QString m_name;
 public:
-    explicit constant_name_is( const QString & );
-    bool operator()( const Constant & ) const;
+    explicit constant_name_is(const QString&);
+    bool operator()(const Constant&) const;
 };
 
-class Constants : public QObject
-{
+class Constants : public QObject {
     Q_OBJECT
 
 public:
-    static Constants * instance();
+    static Constants* instance();
     ~Constants();
 
-    const QStringList & categories() const;
-    const QList<Constant> & list() const;
+    const QStringList& categories() const;
+    const QList<Constant>& list() const;
 
 public slots:
     void retranslateText();
@@ -60,9 +58,8 @@ private:
     const std::auto_ptr<Private> d;
 
     Constants();
-    Constants( const Constants & );
-    Constants & operator=( const Constants & );
+    Constants(const Constants&);
+    Constants& operator=(const Constants&);
 };
 
 #endif
-

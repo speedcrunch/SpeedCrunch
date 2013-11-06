@@ -24,6 +24,7 @@
 #include "core/constants.h"
 #include "core/evaluator.h"
 #include "core/functions.h"
+#include "core/numberformatter.h"
 #include "core/settings.h"
 #include "gui/syntaxhighlighter.h"
 
@@ -405,26 +406,26 @@ void Editor::triggerAutoComplete()
     }
     choices.sort();
 
-    // find matches in variables names
+    // Find matches in variables names.
     QStringList vchoices;
-    for (int i = 0; i < m_evaluator->variables().count(); ++i)
-        if (m_evaluator->variables().at(i).name.startsWith(id, Qt::CaseInsensitive))
-            vchoices.append(QString("%1: %2")
-                                 .arg(m_evaluator->variables().at(i).name)
-                                 .arg(formatNumber(m_evaluator->variables().at(i).value)));
+    QList<Evaluator::Variable> variables = m_evaluator->getVariables();
+    for (int i = 0; i < variables.count(); ++i)
+        if (variables.at(i).name.startsWith(id, Qt::CaseInsensitive))
+            vchoices.append(QString("%1: %2").arg(variables.at(i).name)
+                .arg(NumberFormatter::format(variables.at(i).value)));
     vchoices.sort();
     choices += vchoices;
 
-    // no match, don't bother with completion
+    // No match, don't bother with completion.
     if (!choices.count())
         return;
 
-    // single perfect match, no need to give choices
+    // Single perfect match, no need to give choices.
     if (choices.count() == 1)
         if (choices.at(0).toLower() == id.toLower())
             return;
 
-    // one match, complete it for the user
+    // One match, complete it for the user.
     if (choices.count() == 1) {
         QString str = choices.at(0).split(':').at(0);
         str = str.remove(0, id.length());
@@ -442,7 +443,7 @@ void Editor::triggerAutoComplete()
         return;
     }
 
-    // present the user with completion choices
+    // Present the user with completion choices.
     m_completion->showCompletion(choices);
 }
 
@@ -512,7 +513,7 @@ void Editor::autoCalc()
     const HNumber num = m_evaluator->evalNoAssign();
 
     if (m_evaluator->error().isEmpty()) {
-        const QString message = tr("Current result: <b>%1</b>").arg(formatNumber(num));
+        const QString message = tr("Current result: <b>%1</b>").arg(NumberFormatter::format(num));
         emit autoCalcEnabled(message);
     } else
         emit autoCalcEnabled(m_evaluator->error());
@@ -544,7 +545,7 @@ void Editor::autoCalcSelection()
     const HNumber num = m_evaluator->evalNoAssign();
 
     if (m_evaluator->error().isEmpty()) {
-        const QString message = tr("Selection result: <b>%1</b>").arg(formatNumber(num));
+        const QString message = tr("Selection result: <b>%1</b>").arg(NumberFormatter::format(num));
         emit autoCalcEnabled(message);
     } else
         emit autoCalcEnabled(m_evaluator->error());
@@ -594,17 +595,6 @@ void Editor::paintEvent(QPaintEvent* event)
 
     QPainter painter(viewport());
     painter.fillRect(cursor, m_highlighter->colorForRole(SyntaxHighlighter::EditorCursor));
-}
-
-QString Editor::formatNumber(const HNumber& value) const
-{
-    const char format = value.format() != 0 ? value.format() : Settings::instance()->resultFormat;
-    char* formatted = HMath::format(value, format, Settings::instance()->resultPrecision);
-    QString result = QString::fromLatin1(formatted);
-    if (Settings::instance()->radixCharacter() != '.')
-        result.replace('.', Settings::instance()->radixCharacter());
-    free(formatted);
-    return result;
 }
 
 void Editor::historyBack()

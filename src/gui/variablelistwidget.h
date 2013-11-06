@@ -36,12 +36,7 @@ class VariableListWidget : public QWidget
     Q_OBJECT
 
 public:
-    enum ItemPolicy {
-        ShowAll,
-        ShowUser
-    };
-
-    explicit VariableListWidget(ItemPolicy itemPolicy = ShowUser, QWidget* parent = 0);
+    explicit VariableListWidget(QWidget* parent = 0);
     ~VariableListWidget();
 
     QTreeWidgetItem* currentItem() const;
@@ -68,7 +63,6 @@ private:
     Q_DISABLE_COPY(VariableListWidget);
 
     QTimer* m_filterTimer;
-    ItemPolicy m_itemPolicy;
     QTreeWidget* m_variables;
     QAction* m_insertAction;
     QAction* m_deleteAction;

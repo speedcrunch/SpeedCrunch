@@ -24,7 +24,6 @@
 #include "core/settings.h"
 
 #include <QtCore/QEvent>
-#include <QtCore/QLatin1String>
 #include <QtCore/QTimer>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QKeyEvent>
@@ -36,10 +35,9 @@
 
 static QString formatValue(const HNumber& value);
 
-VariableListWidget::VariableListWidget(ItemPolicy itemPolicy, QWidget* parent)
+VariableListWidget::VariableListWidget(QWidget* parent)
     : QWidget(parent)
     , m_filterTimer(new QTimer(this))
-    , m_itemPolicy(itemPolicy)
     , m_variables(new QTreeWidget(this))
     , m_noMatchLabel(new QLabel(m_variables))
     , m_searchFilter(new QLineEdit(this))
@@ -109,20 +107,10 @@ void VariableListWidget::fillTable()
     m_filterTimer->stop();
     m_variables->clear();
     QString term = m_searchFilter->text();
-    QVector<Variable> variables = Evaluator::instance()->variables();
+    QList<Evaluator::Variable> variables = Evaluator::instance()->getUserDefinedVariables();
 
     for (int i = 0; i < variables.count(); ++i) {
-
         QString varName = variables.at(i).name;
-
-        if (m_itemPolicy == ShowUser
-            && (varName == QLatin1String("ans")
-                || varName == QLatin1String("e")
-                || varName == QLatin1String("phi")
-                || varName == QLatin1String("pi")))
-        {
-            continue;
-        }
 
         QStringList namesAndValues;
         namesAndValues << varName << formatValue(variables.at(i).value);
@@ -166,7 +154,7 @@ void VariableListWidget::retranslateText()
     m_deleteAction->setText(tr("Delete"));
     m_deleteAllAction->setText(tr("Delete All"));
 
-    fillTable();
+    QTimer::singleShot(0, this, SLOT(fillTable()));
 }
 
 QTreeWidgetItem* VariableListWidget::currentItem() const
@@ -185,13 +173,13 @@ void VariableListWidget::deleteItem()
 {
     if (!currentItem() || m_variables->selectedItems().isEmpty())
         return;
-    Evaluator::instance()->deleteVariable(currentItem()->text(0));
+    Evaluator::instance()->unsetVariable(currentItem()->text(0));
     fillTable();
 }
 
 void VariableListWidget::deleteAllItems()
 {
-    Evaluator::instance()->deleteVariables();
+    Evaluator::instance()->unsetAllUserDefinedVariables();
     fillTable();
 }
 
@@ -214,7 +202,7 @@ void VariableListWidget::changeEvent(QEvent* event)
 void VariableListWidget::keyPressEvent(QKeyEvent* event)
 {
     if (event->key() == Qt::Key_Delete) {
-        Evaluator::instance()->deleteVariable(currentItem()->text(0));
+        Evaluator::instance()->unsetVariable(currentItem()->text(0));
         fillTable();
         event->accept();
         return;

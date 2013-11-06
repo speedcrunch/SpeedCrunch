@@ -19,6 +19,7 @@
 #include "gui/resultdisplay.h"
 
 #include "core/functions.h"
+#include "core/numberformatter.h"
 #include "core/settings.h"
 #include "gui/syntaxhighlighter.h"
 #include "math/hmath.h"
@@ -31,8 +32,6 @@
 #include <QtGui/QScrollBar>
 
 #define OVERLAY_GRADIENT_HEIGHT 50
-
-static QString formatNumber(const HNumber&);
 
 class FadeOverlay : public QWidget {
 public:
@@ -72,7 +71,7 @@ void ResultDisplay::append(const QString& expression, const HNumber& value)
     ++m_count;
 
     appendPlainText(expression);
-    appendPlainText(QLatin1String("= ") + formatNumber(value));
+    appendPlainText(QLatin1String("= ") + NumberFormatter::format(value));
     appendPlainText(QLatin1String(""));
 
     // TODO: Refactor, this only serves to save a session.
@@ -352,16 +351,4 @@ void FadeOverlay::updateGradients()
     QPainter painter(&m_topGradientImage);
     painter.fillRect(QRect(0, 0, size().width(), OVERLAY_GRADIENT_HEIGHT), gradient);
     m_bottomGradientImage = m_topGradientImage.mirrored();
-}
-
-static QString formatNumber(const HNumber& value)
-{
-    Settings* settings = Settings::instance();
-    const char format = value.format() != 0 ? value.format() : settings->resultFormat;
-    char* str = HMath::format(value, format, settings->resultPrecision);
-    QString s = QString::fromLatin1(str);
-    free(str);
-    if (settings->radixCharacter() != '.')
-        s.replace('.', settings->radixCharacter());
-    return s;
 }

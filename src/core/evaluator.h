@@ -23,8 +23,9 @@
 #include "core/functions.h"
 #include "math/hmath.h"
 
-#include <QtCore/QMap>
+#include <QtCore/QHash>
 #include <QtCore/QObject>
+#include <QtCore/QSet>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 #include <QtCore/QVector>
@@ -71,35 +72,45 @@ protected:
     bool m_valid;
 };
 
-struct Variable {
-    QString name;
-    HNumber value;
-};
 
 class Evaluator : public QObject {
     Q_OBJECT
 
 public:
+    struct Variable {
+        enum Type { BuiltIn, UserDefined};
+        Variable() : name(""), value(HNumber(0)) { }
+        Variable(const QString& n, HNumber v, Type t = UserDefined) : name(n), value(v), type(t) { }
+        bool operator==(const Variable& other) const { return name == other.name; }
+        QString name;
+        HNumber value;
+        Type type;
+    };
+
     static Evaluator* instance();
+    void reset();
 
     QString autoFix(const QString&);
-    void clear();
     QString dump();
     QString error() const;
     HNumber eval();
     HNumber evalNoAssign();
     HNumber evalUpdateAns();
     QString expression() const;
-    HNumber get(const QString& id);
-    bool has(const QString& id) const;
     bool isValid();
-    void deleteVariable(const QString& id);
-    void deleteVariables();
     Tokens scan(const QString&) const;
-    void set(const QString& id, HNumber value);
     void setExpression(const QString&);
     Tokens tokens() const;
-    QVector<Variable> variables() const;
+
+    Variable getVariable(const QString&) const;
+    QList<Variable> getVariables() const;
+    QList<Variable> getUserDefinedVariables() const;
+    QList<Variable> getUserDefinedVariablesPlusAns() const;
+    void setVariable(const QString&, HNumber, Variable::Type = Variable::UserDefined);
+    void unsetVariable(const QString&);
+    void unsetAllUserDefinedVariables();
+    bool isBuiltInVariable(const QString&) const;
+    bool hasVariable(const QString&) const;
 
 protected:
     void compile(const Tokens&);
@@ -128,10 +139,11 @@ private:
     QVector<Opcode> m_codes;
     QVector<HNumber> m_constants;
     QStringList m_identifiers;
-    QMap<QString, Variable> m_variables;
+    QHash<QString, Variable> m_variables;
 
     const HNumber& checkOperatorResult(const HNumber&);
     QString stringFromFunctionError(Function*);
+    void initializeBuiltInVariables();
 };
 
 #endif

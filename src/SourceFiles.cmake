@@ -13,6 +13,7 @@ core/book.h
 core/constants.h
 core/evaluator.h
 core/functions.h
+#core/numberformatter.h
 #core/settings.h
 #gui/aboutbox.h
 gui/application.h
@@ -59,6 +60,7 @@ core/book.cpp
 core/constants.cpp
 core/evaluator.cpp
 core/functions.cpp
+core/numberformatter.cpp
 core/settings.cpp
 gui/aboutbox.cpp
 gui/application.cpp

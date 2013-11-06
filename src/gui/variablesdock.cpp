@@ -31,7 +31,7 @@
 
 VariablesDock::VariablesDock(QWidget*  parent)
     : QDockWidget(parent)
-    , m_variablesWidget(new VariableListWidget(VariableListWidget::ShowUser, this))
+    , m_variablesWidget(new VariableListWidget(this))
 {
     connect(m_variablesWidget, SIGNAL(itemActivated(const QString&)), SIGNAL(variableSelected(const QString&)));
 
@@ -66,4 +66,3 @@ void VariablesDock::changeEvent(QEvent* e)
     else
         QDockWidget::changeEvent(e);
 }
-
