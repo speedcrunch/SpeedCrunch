@@ -1077,7 +1077,7 @@ bool MainWindow::event(QEvent* event)
 void MainWindow::showAboutDialog()
 {
     AboutBox dialog(this);
-    dialog.resize(400, 400);
+    dialog.resize(480, 640);
     dialog.exec();
 }
 

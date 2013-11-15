@@ -33,58 +33,37 @@ AboutBox::AboutBox(QWidget* parent, Qt::WindowFlags f)
     setObjectName("AboutBox");
     setWindowTitle(tr("About SpeedCrunch"));
 
-    QLabel* infoLabel = new QLabel(this);
-    QString url = "http://www.speedcrunch.org";
-    QString info = "<b>";
-    info += QString("SpeedCrunch %1").arg(SPEEDCRUNCH_VERSION);
-#ifdef SPEEDCRUNCH_PORTABLE
-    info += " (Portable Edition)";
-#endif
-    info += QString("</b> (Qt %1)<br>").arg(QT_VERSION_STR);
-    info += QString("<a href=\"%1\">%2</a>").arg(url).arg(url);
-    infoLabel->setText(info);
-    infoLabel->setOpenExternalLinks(true);
-
-    QLabel* iconLabel = new QLabel(this);
-    iconLabel->setPixmap(QPixmap(":/speedcrunch.png"));
-    iconLabel->setAlignment(Qt::AlignVCenter | Qt::AlignRight);
-
     QString msg = "<center>";
+    msg += "<img src=\":/speedcrunch.png\"><br>";
+    msg += "<b>SpeedCrunch " + QLatin1String(SPEEDCRUNCH_VERSION);
+#ifdef SPEEDCRUNCH_PORTABLE
+    msg += " (Portable Edition)";
+#endif
+    msg += "</b><br>(Qt " + QLatin1String(QT_VERSION_STR) + ")<br>";
 
-    const QString authors = "<p><b>%1</b><br>%2";
-    msg += authors.arg(tr("Maintainer and core developer")).arg("Helder Correia");
+    const QString authors = "<p><b>%2</b><br>%1";
+    msg += authors.arg(tr("Maintainer, core developer, designer, translator")).arg("Helder Correia");
     msg += authors.arg(tr("Original author")).arg("Ariya Hidayat");
+    msg += authors.arg(tr("Math engine")).arg("Wolf Lammen");
+    msg += authors.arg(tr("Packager")).arg("Alessandro Portale");
     msg += authors.arg(tr("Former maintainer")).arg("Johan Thelin");
-    msg += authors.arg(tr("Math engine author")).arg("Wolf Lammen");
-    msg += authors.arg(tr("Package producer")).arg("Alessandro Portale");
-    msg += authors.arg(tr("Special thanks to")).arg(
-        "Andreas Scherer<br>"
-        "Enrico R&oacute;s<br>"
-        "Daniel Sch&auml;ufele<br>"
-        "Marco Wegner<br>"
-        "Michael Pyne<br>"
-        "Jonathan Avraham<br>"
-        "Jonathan Riddell<br>"
-        "Petri Damst&eacute;n<br>"
-        "Roberto Alsina<br>"
-        "Tey<br>"
-        "Witold Wysota"
-    );
 
-    msg += "<p>";
-    msg += QString("<b>%1</b><br>").arg(tr("Thanks to"));
+    msg += "<p>" + QString("<b>%1</b><br>").arg(tr("Thanks"));
     msg += "Alan Davies<br>"
            "Alejandro Villarreal<br>"
            "Alexey Kouznetsov<br>"
            "Anders Lund<br>"
+           "Andreas Scherer<br>"
            "Artem Golovinsky<br>"
            "Aur&eacute;lien G&acirc;teau<br>"
            "Bart Martens<br>"
            "Bernhard Schiffner<br>"
            "Christian Ehrlich<br>"
-           "Daniel Schäufele<br>"
            "Damir Perisa<br>"
+           "Daniel Schäufele<br>"
+           "Daniel Sch&auml;ufele<br>"
            "Derek O'Connor<br>"
+           "Enrico R&oacute;s<br>"
            "Eugeniu Plamadeala<br>"
            "F Chris Carrera<br>"
            "Francesco di Cugno<br>"
@@ -93,25 +72,32 @@ AboutBox::AboutBox(QWidget* parent, Qt::WindowFlags f)
            "Henrique Pinto<br>"
            "James Yuzwalk<br>"
            "Jean-Remy Falleri<br>"
+           "Jonathan Avraham<br>"
+           "Jonathan Riddell<br>"
            "Lars Ivar Igesund<br>"
            "Maciek Borowka<br>"
+           "Marco Wegner<br>"
            "Matthew J Smith<br>"
            "Melchior Franz<br>"
+           "Michael Pyne<br>"
            "Mohamed Eldesoky<br>"
+           "Petri Damst&eacute;n<br>"
            "Philippe Fremy<br>"
            "Pieter Pareit<br>"
+           "Roberto Alsina<br>"
            "Roland \"liquidat\" Wolters<br>"
            "Sarah Hobbs<br>"
            "Stephan Binner<br>"
+           "Tey<br>"
            "Thomas Luebking<br>"
            "Thomas Nagy<br>"
            "Vibet Alexis<br>"
            "Vladimir Pouzanov<br>"
            "Wictor Lund<br>"
+           "Witold Wysota<br>"
            "1100101<br>";
-    msg += "</p>";
 
-    msg += "<p>";
+    msg += "</p><p>";
     msg += QString("<b>%1</b><br><br>").arg(tr("Translations"));
     const QString i18n = "<b>%1</b><br>%2<br><br>";
     msg += i18n.arg(tr("Arabic"))
@@ -171,21 +157,14 @@ AboutBox::AboutBox(QWidget* parent, Qt::WindowFlags f)
     msg += "</p>";
 
     msg += "<p>";
-    const QString copy = "<b>%1 %2 %3</b><br><i>%4</i><br><br>";
-    msg += copy.arg(tr("Copyright (C)")).arg("2004-2007")
-               .arg("Ariya Hidayat").arg("ariya@kde.org");
-    msg += copy.arg(tr("Copyright (C)")).arg("2005-2006")
-               .arg("Johan Thelin").arg("e8johan@gmail.com");
-    msg += copy.arg(tr("Copyright (C)")).arg("2007-2013")
-               .arg("Helder Correia").arg("helder.pereira.correia@gmail.com");
-    msg += copy.arg(tr("Copyright (C)")).arg("2007-2009")
-               .arg("Wolf Lammen").arg("ookami1@gmx.de");
-    msg += copy.arg(tr("Copyright (C)")).arg("2007")
-               .arg("Petri Damst&eacute;n").arg("damu@iki.fi");
-    msg += copy.arg(tr("Copyright (C)")).arg("2008-2009")
-               .arg("Alessandro Portale").arg("alessandro.portale@googlemail.com");
-    msg += copy.arg(tr("Copyright (C)")).arg("2009")
-               .arg("Andreas Scherer").arg("andreas_coder@freenet.de");
+    const QString copy = "%1 %2 <b>%3</b><br>";
+    msg += copy.arg(tr("Copyright (C)")).arg("2004-2007").arg("Ariya Hidayat");
+    msg += copy.arg(tr("Copyright (C)")).arg("2005-2006").arg("Johan Thelin");
+    msg += copy.arg(tr("Copyright (C)")).arg("2007-2013").arg("Helder Correia");
+    msg += copy.arg(tr("Copyright (C)")).arg("2007-2009").arg("Wolf Lammen");
+    msg += copy.arg(tr("Copyright (C)")).arg("2007").arg("Petri Damst&eacute;n");
+    msg += copy.arg(tr("Copyright (C)")).arg("2008-2009").arg("Alessandro Portale");
+    msg += copy.arg(tr("Copyright (C)")).arg("2009").arg("Andreas Scherer");
     msg += "</p>";
 
     msg += "<p>";
@@ -207,27 +186,8 @@ AboutBox::AboutBox(QWidget* parent, Qt::WindowFlags f)
     textEdit->setReadOnly(true);
     textEdit->setText(msg);
 
-    QPushButton* closeButton = new QPushButton(this);
-    closeButton->setObjectName("CloseButton");
-    closeButton->setText(tr("Close"));
-    QObject::connect(closeButton, SIGNAL(clicked()), SLOT(accept()));
-
-    QSpacerItem* buttonSpacer = new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
-    QHBoxLayout* topLayout = new QHBoxLayout();
-    QHBoxLayout* buttonLayout = new QHBoxLayout();
-
-    mainLayout->addLayout(topLayout);
     mainLayout->addWidget(textEdit);
-    mainLayout->addLayout(buttonLayout);
-    mainLayout->setStretchFactor(textEdit, 1);
-
-    topLayout->addWidget(infoLabel);
-    topLayout->addWidget(iconLabel);
-
-    buttonLayout->addItem(buttonSpacer);
-    buttonLayout->addWidget(closeButton);
 
     setWindowTitle(tr("About SpeedCrunch"));
 }
