@@ -108,7 +108,7 @@ void SyntaxHighlighter::highlightBlock(const QString& text)
     if (questionMarkIndex != -1)
         setFormat(questionMarkIndex, text.length(), colorForRole(Comment));
 
-    Tokens tokens = Evaluator::instance()->scan(text);
+    Tokens tokens = Evaluator::instance()->scan(text, Evaluator::NoAutoFix);
 
     for (int i = 0; i < tokens.count(); ++i) {
         const Token& token = tokens.at(i);

@@ -385,7 +385,7 @@ Tokens Evaluator::tokens() const
     return scan(m_expression);
 }
 
-Tokens Evaluator::scan(const QString& expr) const
+Tokens Evaluator::scan(const QString& expr, Evaluator::AutoFixPolicy policy) const
 {
     // Result.
     Tokens tokens;
@@ -406,9 +406,11 @@ Tokens Evaluator::scan(const QString& expr) const
     ex.append(QChar());
 
     // Work around issue 160 until new more flexible parser is written.
-    if (ex.at(0) == '-')
-        ex.prepend('0');
-    ex.replace("(-", "(0-");
+    if (policy == AutoFix) {
+        if (ex.at(0) == '-')
+            ex.prepend('0');
+        ex.replace("(-", "(0-");
+    }
 
     // Main loop.
     while (state != Bad && state != Finish && i < ex.length()) {

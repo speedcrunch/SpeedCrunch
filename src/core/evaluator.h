@@ -78,7 +78,7 @@ class Evaluator : public QObject {
 
 public:
     struct Variable {
-        enum Type { BuiltIn, UserDefined};
+        enum Type { BuiltIn, UserDefined };
         Variable() : name(""), value(HNumber(0)) { }
         Variable(const QString& n, HNumber v, Type t = UserDefined) : name(n), value(v), type(t) { }
         bool operator==(const Variable& other) const { return name == other.name; }
@@ -86,6 +86,9 @@ public:
         HNumber value;
         Type type;
     };
+
+    // Needed only for issue 160 workaround.
+    enum AutoFixPolicy { AutoFix, NoAutoFix };
 
     static Evaluator* instance();
     void reset();
@@ -98,7 +101,7 @@ public:
     HNumber evalUpdateAns();
     QString expression() const;
     bool isValid();
-    Tokens scan(const QString&) const;
+    Tokens scan(const QString&, AutoFixPolicy = AutoFix) const;
     void setExpression(const QString&);
     Tokens tokens() const;
 
