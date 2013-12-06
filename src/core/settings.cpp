@@ -115,7 +115,7 @@ void Settings::load()
     windowAlwaysOnTop = settings->value(key + QLatin1String("WindowAlwaysOnTop"), false).toBool();
 
     windowPosition = settings->value(key + QLatin1String("WindowPosition"), QPoint()).toPoint();
-    windowSize = settings->value(key + QLatin1String("WindowSize"), QSize(400, 300)).toSize();
+    windowSize = settings->value(key + QLatin1String("WindowSize"), QSize(640, 480)).toSize();
     windowState = settings->value(key + QLatin1String("State")).toByteArray();
 
     key = KEY + QLatin1String("/Display/");

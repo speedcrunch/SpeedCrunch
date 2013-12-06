@@ -27,9 +27,9 @@ class QPlainTextEdit;
 class SyntaxHighlighter : public QSyntaxHighlighter {
 public:
     enum ColorScheme {
-        Standard = 0,
-        Sublime = 1,
-        Terminal = 2
+        Terminal = 0,
+        Standard = 1,
+        Sublime = 2
     };
 
     enum Role {
