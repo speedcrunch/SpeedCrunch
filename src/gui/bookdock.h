@@ -51,7 +51,6 @@ protected:
 private slots:
     void handleAnchorClick(const QUrl& link);
 private:
-    BookDock();
     Q_DISABLE_COPY(BookDock);
     Book* m_book;
     TextBrowser* m_browser;
