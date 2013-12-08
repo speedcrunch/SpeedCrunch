@@ -25,7 +25,7 @@
 // Uncomment to activate fade-away effect when the completion pop-up disappears.
 #define COMPLETION_FADE_EFFECT
 
-class Constant;
+struct Constant;
 class ConstantCompletion;
 class EditorCompletion;
 class Evaluator;
