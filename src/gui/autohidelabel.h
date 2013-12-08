@@ -44,8 +44,8 @@ private slots:
 
 private:
     QScopedPointer<AutoHideLabelPrivate> d_ptr;
-    Q_DECLARE_PRIVATE(AutoHideLabel);
-    Q_DISABLE_COPY(AutoHideLabel);
+    Q_DECLARE_PRIVATE(AutoHideLabel)
+    Q_DISABLE_COPY(AutoHideLabel)
 };
 
 #endif // GUI_AUTOHIDELABEL_H

@@ -48,7 +48,7 @@ protected:
     void changeEvent(QEvent *);
 
 private:
-    Q_DISABLE_COPY(HistoryWidget);
+    Q_DISABLE_COPY(HistoryWidget)
 
     QListWidget *m_list;
 };

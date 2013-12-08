@@ -113,7 +113,7 @@ protected:
     virtual void wheelEvent(QWheelEvent*);
 
 private:
-    Q_DISABLE_COPY(Editor);
+    Q_DISABLE_COPY(Editor)
 
     bool m_isAnsAvailable;
     bool m_isAutoCalcEnabled;
@@ -154,7 +154,7 @@ protected slots:
     void fade(int);
 
 private:
-    Q_DISABLE_COPY(EditorCompletion);
+    Q_DISABLE_COPY(EditorCompletion)
 
     Editor* m_editor;
     QTreeWidget* m_popup;
@@ -186,7 +186,7 @@ protected slots:
     void showConstants();
 
 private:
-    Q_DISABLE_COPY(ConstantCompletion);
+    Q_DISABLE_COPY(ConstantCompletion)
 
     QTreeWidget* m_categoryWidget;
     QList<Constant> m_constantList;

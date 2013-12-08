@@ -34,7 +34,7 @@ class TextBrowser : public QTextBrowser {
 public:
     TextBrowser(QWidget* parent) : QTextBrowser(parent) { }
 public slots:
-    virtual void setSource(const QUrl&) { };
+    virtual void setSource(const QUrl&) { }
 };
 
 class BookDock : public QDockWidget {
@@ -51,7 +51,7 @@ protected:
 private slots:
     void handleAnchorClick(const QUrl& link);
 private:
-    Q_DISABLE_COPY(BookDock);
+    Q_DISABLE_COPY(BookDock)
     Book* m_book;
     TextBrowser* m_browser;
 };

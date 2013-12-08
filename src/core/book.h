@@ -31,7 +31,7 @@ public:
     QString getCurrentPageContent();
 
 private:
-    Q_DISABLE_COPY(Book);
+    Q_DISABLE_COPY(Book)
 
     typedef QString (*PageMaker)();
     QHash<QString, PageMaker> m_toc;

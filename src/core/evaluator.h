@@ -49,7 +49,7 @@ public:
     bool isNumber() const { return m_type == stxNumber; }
     bool isOperator() const { return m_type >= stxOperator; }
     bool isIdentifier() const { return m_type == stxIdentifier; }
-    int pos() const { return m_pos; };
+    int pos() const { return m_pos; }
     QString text() const { return m_text; }
     Type type() const { return m_type; }
 
@@ -63,7 +63,7 @@ protected:
 
 class Tokens : public QVector<Token> {
 public:
-    Tokens() : QVector<Token>(), m_valid(true) { };
+    Tokens() : QVector<Token>(), m_valid(true) { }
 
     bool valid() const { return m_valid; }
     void setValid(bool v) { m_valid = v; }
@@ -120,7 +120,7 @@ protected:
 
 private:
     Evaluator();
-    Q_DISABLE_COPY(Evaluator);
+    Q_DISABLE_COPY(Evaluator)
 
     struct Opcode {
         enum { Nop = 0, Load, Ref, Function, Add, Sub, Neg, Mul, Div, Pow,
@@ -129,9 +129,9 @@ private:
         unsigned type;
         unsigned index;
 
-        Opcode() : type(Nop), index(0) {};
-        Opcode(unsigned t) : type(t), index(0) {};
-        Opcode(unsigned t, unsigned i): type(t), index(i) {};
+        Opcode() : type(Nop), index(0) {}
+        Opcode(unsigned t) : type(t), index(0) {}
+        Opcode(unsigned t, unsigned i): type(t), index(i) {}
     };
 
     bool m_dirty;
