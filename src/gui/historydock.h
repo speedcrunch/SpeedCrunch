@@ -39,7 +39,7 @@ protected:
     void changeEvent(QEvent *);
 
 private:
-    Q_DISABLE_COPY(HistoryDock);
+    Q_DISABLE_COPY(HistoryDock)
 
     HistoryWidget *m_widget;
 };

@@ -29,6 +29,7 @@
 #include <QtCore/QHash>
 
 #include <algorithm>
+#include <functional>
 #include <cfloat>
 #include <cmath>
 #include <numeric>

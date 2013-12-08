@@ -37,7 +37,7 @@ protected:
     void updateList();
 
 private:
-    Q_DISABLE_COPY(FunctionsDock);
+    Q_DISABLE_COPY(FunctionsDock)
 
     FunctionsWidget *m_widget;
 };

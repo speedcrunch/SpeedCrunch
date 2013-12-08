@@ -67,7 +67,7 @@ protected:
     void updateScrollBarStyleSheet();
 
 private:
-    Q_DISABLE_COPY(ResultDisplay);
+    Q_DISABLE_COPY(ResultDisplay)
 
     friend class FadeOverlay;
 

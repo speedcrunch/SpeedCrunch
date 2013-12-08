@@ -27,7 +27,7 @@ public:
     explicit AboutBox(QWidget *parent = 0, Qt::WindowFlags f = 0);
 
 private:
-    Q_DISABLE_COPY(AboutBox);
+    Q_DISABLE_COPY(AboutBox)
 };
 
 #endif // GUI_ABOUTBOX_H

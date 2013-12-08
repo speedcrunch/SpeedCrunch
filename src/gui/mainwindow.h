@@ -153,7 +153,7 @@ protected:
     virtual bool eventFilter(QObject*, QEvent*);
 
 private:
-    Q_DISABLE_COPY(MainWindow);
+    Q_DISABLE_COPY(MainWindow)
 
     void createUi();
     void createActions();

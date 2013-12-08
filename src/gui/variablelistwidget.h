@@ -60,7 +60,7 @@ protected:
     void keyPressEvent(QKeyEvent*);
 
 private:
-    Q_DISABLE_COPY(VariableListWidget);
+    Q_DISABLE_COPY(VariableListWidget)
 
     QTimer* m_filterTimer;
     QTreeWidget* m_variables;

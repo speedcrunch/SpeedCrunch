@@ -53,7 +53,7 @@ protected:
     virtual void changeEvent(QEvent *);
 
 private:
-    Q_DISABLE_COPY(ConstantsWidget);
+    Q_DISABLE_COPY(ConstantsWidget)
 
     QComboBox *m_category;
     QLabel *m_categoryLabel;

@@ -45,7 +45,7 @@ protected:
     virtual void changeEvent(QEvent*);
 
 private:
-    Q_DISABLE_COPY(VariablesDock);
+    Q_DISABLE_COPY(VariablesDock)
 
     VariableListWidget* m_variablesWidget;
 };

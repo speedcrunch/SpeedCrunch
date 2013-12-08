@@ -36,7 +36,7 @@ protected:
     void retranslateText();
 
 private:
-    Q_DISABLE_COPY(ConstantsDock);
+    Q_DISABLE_COPY(ConstantsDock)
 
     ConstantsWidget *m_widget;
 };

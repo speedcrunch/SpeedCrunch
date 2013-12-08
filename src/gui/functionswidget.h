@@ -51,7 +51,7 @@ protected slots:
     void triggerFilter();
 
 private:
-    Q_DISABLE_COPY(FunctionsWidget);
+    Q_DISABLE_COPY(FunctionsWidget)
 
     QTimer* m_filterTimer;
     QTreeWidget* m_functions;
