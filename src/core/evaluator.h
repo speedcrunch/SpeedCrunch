@@ -145,7 +145,7 @@ private:
     QHash<QString, Variable> m_variables;
 
     const HNumber& checkOperatorResult(const HNumber&);
-    QString stringFromFunctionError(Function*);
+    static QString stringFromFunctionError(Function*);
     void initializeBuiltInVariables();
 };
 
