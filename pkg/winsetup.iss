@@ -1,5 +1,5 @@
 #define APPTITLE "SpeedCrunch"
-#define SPEEDCRUNCHEXE "release\" + APPTITLE + ".exe"
+#define SPEEDCRUNCHEXE "..\src\release\" + APPTITLE + ".exe"
 #define NUMERICVERSION GetFileVersion(SPEEDCRUNCHEXE)
 #define VERSION "trunk" ; GetFileVersionString(SPEEDCRUNCHEXE)
 #define URL "http://speedcrunch.org"
@@ -17,7 +17,7 @@ Compression=lzma/ultra
 DefaultDirName={pf}\{#APPTITLE}
 DefaultGroupName={#APPTITLE}
 DisableProgramGroupPage=true
-LicenseFile=..\doc\COPYING.rtf
+LicenseFile=COPYING.rtf
 InternalCompressLevel=ultra
 OutputBaseFilename={#APPTITLE}-{#VERSION}
 OutputDir=.
@@ -58,8 +58,6 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 
 [Files]
 Source: {#SPEEDCRUNCHEXE}; DestDir: "{app}"; Flags: ignoreversion
-Source: locale\*.qm; DestDir: "{app}\locale"; Flags: ignoreversion
-Source: book\*; Excludes: "*.sh,ut3\*,templates\*,locale\*,*.mml,*.svgz"; DestDir: "{app}\book"; Flags: ignoreversion recursesubdirs
 
 [Icons]
 Name: "{group}\{#APPTITLE}"; Filename: "{app}\{#APPTITLE}.exe"
