@@ -822,15 +822,15 @@ QStringList FunctionRepo::getIdentifiers() const
 void FunctionRepo::setNonTranslatableFunctionUsages()
 {
     find("abs")->setUsage(QString::fromLatin1("x"));
-    find("absdev")->setUsage(QString::fromUtf8("x₁; x₂ ; ..."));
+    find("absdev")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
     find("acos")->setUsage(QString::fromLatin1("x"));
-    find("and")->setUsage(QString::fromUtf8("x₁; x₂ ; ..."));
+    find("and")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
     find("arcosh")->setUsage(QString::fromLatin1("x"));
     find("arsinh")->setUsage(QString::fromLatin1("x"));
     find("artanh")->setUsage(QString::fromLatin1("x"));
     find("asin")->setUsage(QString::fromLatin1("x"));
     find("atan")->setUsage(QString::fromLatin1("x"));
-    find("average")->setUsage(QString::fromUtf8("x₁; x₂ ; ..."));
+    find("average")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
     find("bin")->setUsage(QString::fromLatin1("n"));
     find("cbrt")->setUsage(QString::fromLatin1("x"));
     find("ceil")->setUsage(QString::fromLatin1("x"));
@@ -846,23 +846,23 @@ void FunctionRepo::setNonTranslatableFunctionUsages()
     find("floor")->setUsage(QString::fromLatin1("x"));
     find("frac")->setUsage(QString::fromLatin1("x"));
     find("gamma")->setUsage(QString::fromLatin1("x"));
-    find("gcd")->setUsage(QString::fromUtf8("n₁; n₂ ; ..."));
-    find("geomean")->setUsage(QString::fromUtf8("x₁; x₂ ; ..."));
+    find("gcd")->setUsage(QLatin1String("n<sub>1</sub>; n<sub>2</sub>; ..."));
+    find("geomean")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
     find("hex")->setUsage(QString::fromLatin1("n"));
     find("int")->setUsage(QString::fromLatin1("x"));
     find("lg")->setUsage(QString::fromLatin1("x"));
     find("ln")->setUsage(QString::fromLatin1("x"));
     find("lngamma")->setUsage(QString::fromLatin1("x"));
     find("log")->setUsage(QString::fromLatin1("x"));
-    find("max")->setUsage(QString::fromUtf8("x₁; x₂ ; ..."));
-    find("median")->setUsage(QString::fromUtf8("x₁; x₂ ; ..."));
-    find("min")->setUsage(QString::fromUtf8("x₁; x₂ ; ..."));
-    find("ncr")->setUsage(QString::fromUtf8("x₁; x₂"));
+    find("max")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
+    find("median")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
+    find("min")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
+    find("ncr")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>"));
     find("not")->setUsage(QString::fromLatin1("n"));
-    find("npr")->setUsage(QString::fromUtf8("x₁; x₂"));
+    find("npr")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>"));
     find("oct")->setUsage(QString::fromLatin1("n"));
-    find("or")->setUsage(QString::fromUtf8("x₁; x₂ ; ..."));
-    find("product")->setUsage(QString::fromUtf8("x₁; x₂ ; ..."));
+    find("or")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
+    find("product")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
     find("radians")->setUsage(QString::fromLatin1("x"));
     find("round")->setUsage(QString::fromLatin1("x"));
     find("sec")->setUsage(QString::fromLatin1("x)"));
@@ -870,13 +870,13 @@ void FunctionRepo::setNonTranslatableFunctionUsages()
     find("sin")->setUsage(QString::fromLatin1("x"));
     find("sinh")->setUsage(QString::fromLatin1("x"));
     find("sqrt")->setUsage(QString::fromLatin1("x"));
-    find("stddev")->setUsage(QString::fromUtf8("x₁; x₂ ; ..."));
-    find("sum")->setUsage(QString::fromUtf8("x₁; x₂ ; ..."));
+    find("stddev")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
+    find("sum")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
     find("tan")->setUsage(QString::fromLatin1("x"));
     find("tanh")->setUsage(QString::fromLatin1("x"));
     find("trunc")->setUsage(QString::fromLatin1("x"));
-    find("variance")->setUsage(QString::fromUtf8("x₁; x₂ ; ..."));
-    find("xor")->setUsage(QString::fromUtf8("x₁; x₂ ; ..."));
+    find("variance")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
+    find("xor")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
 }
 
 void FunctionRepo::setTranslatableFunctionUsages()
