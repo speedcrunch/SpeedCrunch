@@ -60,7 +60,6 @@ AboutBox::AboutBox(QWidget* parent, Qt::WindowFlags f)
            "Bernhard Schiffner<br>"
            "Christian Ehrlich<br>"
            "Damir Perisa<br>"
-           "Daniel Schäufele<br>"
            "Daniel Sch&auml;ufele<br>"
            "Derek O'Connor<br>"
            "Enrico R&oacute;s<br>"
