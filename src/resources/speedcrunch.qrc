@@ -1,5 +1,34 @@
 <!DOCTYPE RCC><RCC version="1.0">
     <qresource>
         <file>speedcrunch.png</file>
+        <file>locale/ar_JO.qm</file>
+        <file>locale/ca_ES.qm</file>
+        <file>locale/cs_CZ.qm</file>
+        <file>locale/de_DE.qm</file>
+        <file>locale/en_GB.qm</file>
+        <file>locale/en_US.qm</file>
+        <file>locale/es_AR.qm</file>
+        <file>locale/es_ES.qm</file>
+        <file>locale/et_EE.qm</file>
+        <file>locale/eu_ES.qm</file>
+        <file>locale/fi_FI.qm</file>
+        <file>locale/fr_FR.qm</file>
+        <file>locale/he_IL.qm</file>
+        <file>locale/hu_HU.qm</file>
+        <file>locale/id_ID.qm</file>
+        <file>locale/it_IT.qm</file>
+        <file>locale/ja_JP.qm</file>
+        <file>locale/ko_KR.qm</file>
+        <file>locale/lv_LV.qm</file>
+        <file>locale/nb_NO.qm</file>
+        <file>locale/nl_NL.qm</file>
+        <file>locale/pl_PL.qm</file>
+        <file>locale/pt_BR.qm</file>
+        <file>locale/pt_PT.qm</file>
+        <file>locale/ro_RO.qm</file>
+        <file>locale/ru_RU.qm</file>
+        <file>locale/sv_SE.qm</file>
+        <file>locale/tr_TR.qm</file>
+        <file>locale/zh_CN.qm</file>
     </qresource>
 </RCC>

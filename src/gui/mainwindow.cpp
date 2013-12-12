@@ -77,33 +77,13 @@
 QTranslator* MainWindow::createTranslator(const QString& langCode)
 {
     QTranslator* translator = new QTranslator;
-    QString localeFile = (langCode == "C") ? QLocale().name() : langCode;
+    QString locale = (langCode == "C") ? QLocale().name() : langCode;
 
-    // Fallback to English.
-    if (localeFile == "C")
-        localeFile = "en";
+    if (locale == "C")
+        locale = "en";
 
-#if defined(Q_OS_WIN32) || defined(Q_OS_MAC)
-    QString appPath = QApplication::applicationFilePath();
-    int ii = appPath.lastIndexOf('/');
-    if (ii > 0)
-        appPath.remove(ii, appPath.length());
-    QString fname = appPath + '/' + QString("locale/") + localeFile;
-    translator->load(fname);
+    translator->load(QString(":/locale/") + locale);
     return translator;
-#else
-
-    BrInitError error;
-    if (br_init(& error) == 0 && error != BR_INIT_ERROR_DISABLED) {
-        qDebug("Warning: BinReloc failed to initialize (error code %d)", error);
-        qDebug("Will fallback to hardcoded default path.");
-    }
-
-    char* dataDir = br_find_data_dir(0);
-    QString localeDir = QString(dataDir) + "/speedcrunch/locale";
-    free(dataDir);
-    return translator->load(localeFile, localeDir) ? translator : 0;
-#endif
 }
 
 void MainWindow::createUi()

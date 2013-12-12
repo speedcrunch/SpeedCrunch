@@ -64,13 +64,9 @@ QT4_WRAP_CPP( speedcrunch_HEADERS_MOC ${speedcrunch_HEADERS} )
 ADD_EXECUTABLE( ${PROGNAME} WIN32 MACOSX_BUNDLE ${speedcrunch_SOURCES} ${speedcrunch_HEADERS_MOC} ${speedcrunch_RESOURCES_SOURCES} ${speedcrunch_FORMS_HEADERS} )
 IF( APPLE )
   SET( speedcrunch_RESOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources )
-  SET( speedcrunch_TRANSLATION_DIR ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/MacOS/locale )
   ADD_CUSTOM_COMMAND( TARGET ${PROGNAME} POST_BUILD
     COMMAND mkdir ARGS -p ${speedcrunch_RESOURCE_DIR}
-    COMMAND mkdir ARGS -p ${speedcrunch_TRANSLATION_DIR}
-    COMMAND cp ARGS -f resources/${MACOSX_BUNDLE_ICON_FILE} ${speedcrunch_RESOURCE_DIR}
-    COMMAND cp ARGS -f i18n/*.qm ${speedcrunch_TRANSLATION_DIR}
-    COMMENT Setting up translations & resources )
+    COMMAND cp ARGS -f resources/${MACOSX_BUNDLE_ICON_FILE} ${speedcrunch_RESOURCE_DIR} )
 ENDIF( APPLE )
 
 ADD_CUSTOM_TARGET( confclean COMMAND rm -rf Makefile CMakeFiles/ CMakeCache.txt cmake_install.cmake DartTestfile.txt install_manifest.txt )
@@ -110,14 +106,11 @@ INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR} thirdparty core gui math)
 ################################# INSTALL ######################################
 
 # macros, definitions and options
-IF(WIN32)
-  SET(LOCALEDIR locale)
-ELSE(WIN32)
+IF(NOT WIN32)
   SET(SHAREDIR  "share/")
-  SET(LOCALEDIR "${SHAREDIR}/${PROGNAME}/locale/")
   SET(MENUDIR   "${SHAREDIR}/applications/")
   SET(ICONDIR   "${SHAREDIR}/pixmaps/")
-ENDIF(WIN32)
+ENDIF(NOT WIN32)
 
 # portable edition
 OPTION(PORTABLE "Enable to build in portable mode" OFF)
@@ -128,13 +121,6 @@ ENDIF(PORTABLE_SPEEDCRUNCH)
 # executable
 INSTALL(TARGETS     ${PROGNAME}
         DESTINATION bin
-)
-
-# translations (.qm files)
-INSTALL(DIRECTORY   ${CMAKE_CURRENT_SOURCE_DIR}/locale/
-        DESTINATION ${LOCALEDIR}
-        PATTERN     "locale/*.qm"
-        PATTERN     "locale/*.ts" EXCLUDE
 )
 
 IF(NOT WIN32)
