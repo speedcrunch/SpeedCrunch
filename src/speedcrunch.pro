@@ -37,6 +37,8 @@ win32-msvc*:LIBS += User32.lib
     }
 }
 
+macx:ICON = resources/speedcrunch.icns
+
 HEADERS += core/book.h \
            core/constants.h \
            core/evaluator.h \
