@@ -37,6 +37,11 @@ win32-msvc*:LIBS += User32.lib
     }
 }
 
+macx {
+    ICON = resources/speedcrunch.icns
+    QMAKE_INFO_PLIST = ../pkg/Info.plist
+}
+
 HEADERS += core/book.h \
            core/constants.h \
            core/evaluator.h \
