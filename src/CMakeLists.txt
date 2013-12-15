@@ -1,6 +1,6 @@
 PROJECT(speedcrunch)
 
-SET( speedcrunch_VERSION "master" )
+SET( speedcrunch_VERSION "0.11" )
 
 IF( APPLE )
   SET( PROGNAME SpeedCrunch )

@@ -7,7 +7,7 @@ lessThan(QT_VER_MAJ, 4) | lessThan(QT_VER_MIN, 8) {
     error(Qt 4.8 or newer is required but version $$[QT_VERSION] was detected.)
 }
 
-DEFINES += SPEEDCRUNCH_VERSION=\\\"master\\\"
+DEFINES += SPEEDCRUNCH_VERSION=\\\"0.11\\\"
 DEFINES += QT_USE_QSTRINGBUILDER
 win32:DEFINES += _USE_MATH_DEFINES
 

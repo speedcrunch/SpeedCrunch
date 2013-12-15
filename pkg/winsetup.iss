@@ -1,7 +1,7 @@
 #define APPTITLE "SpeedCrunch"
 #define SPEEDCRUNCHEXE "..\src\release\" + APPTITLE + ".exe"
 #define NUMERICVERSION GetFileVersion(SPEEDCRUNCHEXE)
-#define VERSION "trunk" ; GetFileVersionString(SPEEDCRUNCHEXE)
+#define VERSION "0.11" ; GetFileVersionString(SPEEDCRUNCHEXE)
 #define URL "http://speedcrunch.org"
 #define COPYRIGHT "2004-2013 " + URL
 
