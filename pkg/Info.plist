@@ -11,7 +11,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleExecutable</key>
-	<string>speedcrunch</string>
+	<string>SpeedCrunch</string>
 	<key>CFBundleIdentifier</key>
 	<string>org.speedcrunch</string>
 	<key>CFBundleShortVersionString</key>
