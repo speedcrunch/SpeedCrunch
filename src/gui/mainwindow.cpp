@@ -598,6 +598,11 @@ void MainWindow::createFixedWidgets()
 
     m_widgets.autoCalcTip = new AutoHideLabel(this);
     m_widgets.autoCalcTip->hide();
+
+    if (shouldAllowHiddenMenuBar()) {
+        m_widgets.tip = new TipWidget(this);
+        m_widgets.tip->hide();
+    }
 }
 
 void MainWindow::createBookDock()
@@ -998,6 +1003,7 @@ MainWindow::MainWindow()
     m_settings = Settings::instance();
 
     m_widgets.trayIcon = 0;
+    m_widgets.tip = 0;
 
     m_menus.trayIcon = 0;
 
@@ -1514,10 +1520,13 @@ void MainWindow::exportPlainText()
         return;
     }
 
-    QTextStream stream(& file);
+    QByteArray text;
+    QTextStream stream(&text, QIODevice::WriteOnly | QIODevice::Text);
     stream.setCodec("UTF-8");
     stream << m_widgets.display->document()->toPlainText();
+    stream.flush();
 
+    file.write(text);
     file.close();
 }
 
