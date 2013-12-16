@@ -159,4 +159,5 @@ TRANSLATIONS += resources/locale/ar_JO.ts \
                 resources/locale/ru_RU.ts \
                 resources/locale/sv_SE.ts \
                 resources/locale/tr_TR.ts \
+                resources/locale/vi_VN.ts \
                 resources/locale/zh_CN.ts
