@@ -941,7 +941,15 @@ void MainWindow::applySettings()
     }
 #endif
 
+    if (m_widgets.display->isEmpty())
+        QTimer::singleShot(0, this, SLOT(showReadyMessage()));
+
     QTimer::singleShot(100, m_widgets.editor, SLOT(setFocus()));
+}
+
+void MainWindow::showReadyMessage()
+{
+    showAutoCalcTip(tr("Type an expression here"));
 }
 
 void MainWindow::checkInitialResultFormat()
@@ -1989,7 +1997,6 @@ void MainWindow::evaluateEditorExpression()
 
     if (result.isNan())
         return;
-
 
     m_widgets.display->append(expr, result);
     m_widgets.display->scrollToBottom();
