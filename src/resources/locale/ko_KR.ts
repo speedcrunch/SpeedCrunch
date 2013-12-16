@@ -1911,55 +1911,55 @@
     <name>MainWindow</name>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="243"/>
-        <location filename="../../gui/mainwindow.cpp" line="1435"/>
+        <location filename="../../gui/mainwindow.cpp" line="1451"/>
         <source>Radian</source>
         <translation>라디안</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="243"/>
-        <location filename="../../gui/mainwindow.cpp" line="1103"/>
+        <location filename="../../gui/mainwindow.cpp" line="1119"/>
         <source>Degree</source>
         <translation>도</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="247"/>
-        <location filename="../../gui/mainwindow.cpp" line="1763"/>
+        <location filename="../../gui/mainwindow.cpp" line="1782"/>
         <source>Binary</source>
         <translation>2진법</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="248"/>
-        <location filename="../../gui/mainwindow.cpp" line="1808"/>
+        <location filename="../../gui/mainwindow.cpp" line="1827"/>
         <source>Octal</source>
         <translation>8진법</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="249"/>
-        <location filename="../../gui/mainwindow.cpp" line="1799"/>
+        <location filename="../../gui/mainwindow.cpp" line="1818"/>
         <source>Hexadecimal</source>
         <translation>16진법</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="250"/>
-        <location filename="../../gui/mainwindow.cpp" line="1781"/>
+        <location filename="../../gui/mainwindow.cpp" line="1800"/>
         <source>Fixed decimal</source>
         <translation>고정 소수점</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="251"/>
-        <location filename="../../gui/mainwindow.cpp" line="1772"/>
+        <location filename="../../gui/mainwindow.cpp" line="1791"/>
         <source>Engineering decimal</source>
         <translation>공학적 소수점</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="252"/>
-        <location filename="../../gui/mainwindow.cpp" line="1817"/>
+        <location filename="../../gui/mainwindow.cpp" line="1836"/>
         <source>Scientific decimal</source>
         <translation>과학적 소수점</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="253"/>
-        <location filename="../../gui/mainwindow.cpp" line="1790"/>
+        <location filename="../../gui/mainwindow.cpp" line="1809"/>
         <source>General decimal</source>
         <translation>일반 소수점</translation>
     </message>
@@ -2209,7 +2209,12 @@
         <translation>터미널</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1750"/>
+        <location filename="../../gui/mainwindow.cpp" line="952"/>
+        <source>Type an expression here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../gui/mainwindow.cpp" line="1769"/>
         <source>The menu bar is now hidden. To make it visible again, press Ctrl+M.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2284,117 +2289,117 @@
         <translation>도움말(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1166"/>
+        <location filename="../../gui/mainwindow.cpp" line="1182"/>
         <source>File %1 is not a valid session</source>
         <translation>파일 %1은 유효한 세션이 아닙니다</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1167"/>
-        <location filename="../../gui/mainwindow.cpp" line="1442"/>
+        <location filename="../../gui/mainwindow.cpp" line="1183"/>
+        <location filename="../../gui/mainwindow.cpp" line="1458"/>
         <source>SpeedCrunch Sessions (*.sch);;All Files (*)</source>
         <translation>SpeedCrunch 세션 (*.sch);;모든 파일 (*)</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1168"/>
+        <location filename="../../gui/mainwindow.cpp" line="1184"/>
         <source>Load Session</source>
         <translation>세션 불러오기</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1174"/>
-        <location filename="../../gui/mainwindow.cpp" line="1183"/>
-        <location filename="../../gui/mainwindow.cpp" line="1191"/>
-        <location filename="../../gui/mainwindow.cpp" line="1221"/>
-        <location filename="../../gui/mainwindow.cpp" line="1243"/>
-        <location filename="../../gui/mainwindow.cpp" line="1250"/>
-        <location filename="../../gui/mainwindow.cpp" line="1270"/>
-        <location filename="../../gui/mainwindow.cpp" line="1306"/>
-        <location filename="../../gui/mainwindow.cpp" line="1449"/>
-        <location filename="../../gui/mainwindow.cpp" line="1492"/>
-        <location filename="../../gui/mainwindow.cpp" line="1513"/>
+        <location filename="../../gui/mainwindow.cpp" line="1190"/>
+        <location filename="../../gui/mainwindow.cpp" line="1199"/>
+        <location filename="../../gui/mainwindow.cpp" line="1207"/>
+        <location filename="../../gui/mainwindow.cpp" line="1237"/>
+        <location filename="../../gui/mainwindow.cpp" line="1259"/>
+        <location filename="../../gui/mainwindow.cpp" line="1266"/>
+        <location filename="../../gui/mainwindow.cpp" line="1286"/>
+        <location filename="../../gui/mainwindow.cpp" line="1322"/>
+        <location filename="../../gui/mainwindow.cpp" line="1465"/>
+        <location filename="../../gui/mainwindow.cpp" line="1508"/>
+        <location filename="../../gui/mainwindow.cpp" line="1529"/>
         <source>Error</source>
         <translation>오류</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1174"/>
-        <location filename="../../gui/mainwindow.cpp" line="1270"/>
+        <location filename="../../gui/mainwindow.cpp" line="1190"/>
+        <location filename="../../gui/mainwindow.cpp" line="1286"/>
         <source>Can&apos;t read from file %1</source>
         <translation>%1로부터 파일을 읽을 수 없음</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1196"/>
+        <location filename="../../gui/mainwindow.cpp" line="1212"/>
         <source>Merge session being loaded with current session?
 If no, current variables and display will be cleared.</source>
         <translation>현재 세션과 함께 불러오고 있는 세션을 병합하겠습니까?
 아니라면 현재 변수와 화면은 모두 지워질 것입니다.</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1202"/>
-        <location filename="../../gui/mainwindow.cpp" line="1281"/>
+        <location filename="../../gui/mainwindow.cpp" line="1218"/>
+        <location filename="../../gui/mainwindow.cpp" line="1297"/>
         <source>Question</source>
         <translation>질문</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1263"/>
+        <location filename="../../gui/mainwindow.cpp" line="1279"/>
         <source>All Files (*)</source>
         <translation>모든 파일 (*)</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1264"/>
+        <location filename="../../gui/mainwindow.cpp" line="1280"/>
         <source>Import Session</source>
         <translation>세션 가져오기</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1275"/>
+        <location filename="../../gui/mainwindow.cpp" line="1291"/>
         <source>Merge session being imported with current session?
 If no, current variables and display will be cleared.</source>
         <translation>현재 세션과 가져오고 있는 세션을 병합하겠습니까?
 아니라면 현재 변수와 화면은 모두 지워질 것입니다.</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1306"/>
+        <location filename="../../gui/mainwindow.cpp" line="1322"/>
         <source>Ignore error?</source>
         <translation>오류 무시?</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1443"/>
+        <location filename="../../gui/mainwindow.cpp" line="1459"/>
         <source>Save Session</source>
         <translation>세션 저장</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1449"/>
-        <location filename="../../gui/mainwindow.cpp" line="1492"/>
-        <location filename="../../gui/mainwindow.cpp" line="1513"/>
+        <location filename="../../gui/mainwindow.cpp" line="1465"/>
+        <location filename="../../gui/mainwindow.cpp" line="1508"/>
+        <location filename="../../gui/mainwindow.cpp" line="1529"/>
         <source>Can&apos;t write to file %1</source>
         <translation>%1에 파일을 쓸 수 없음</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1541"/>
+        <location filename="../../gui/mainwindow.cpp" line="1560"/>
         <source>Display font</source>
         <translation>화면 글꼴</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1753"/>
+        <location filename="../../gui/mainwindow.cpp" line="1772"/>
         <source>Warning</source>
         <translation>경고</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="2015"/>
+        <location filename="../../gui/mainwindow.cpp" line="2033"/>
         <source>SpeedCrunch is minimized.
 Left click the icon to restore it or right click for options.</source>
         <translation>SpeedCrunch가 최소화 되었습니다. 그것을 복원하려면 왼쪽 클릭을 하고 옵션을 보려면 오른쪽 클릭하세요.</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="2172"/>
+        <location filename="../../gui/mainwindow.cpp" line="2190"/>
         <source>System Default</source>
         <translation>시스템 기본값</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="2176"/>
+        <location filename="../../gui/mainwindow.cpp" line="2194"/>
         <source>Language</source>
         <translation>언어</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="2176"/>
+        <location filename="../../gui/mainwindow.cpp" line="2194"/>
         <source>Select the language:</source>
         <translation>언어 선택:</translation>
     </message>
@@ -2454,12 +2459,12 @@ Left click the icon to restore it or right click for options.</source>
         <translation>색상 구성</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1484"/>
+        <location filename="../../gui/mainwindow.cpp" line="1500"/>
         <source>Export session as HTML</source>
         <translation>HTML로 세션 내보내기</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1505"/>
+        <location filename="../../gui/mainwindow.cpp" line="1521"/>
         <source>Export session as plain text</source>
         <translation>일반 텍스트로 세션 내보내기</translation>
     </message>

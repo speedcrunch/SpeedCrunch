@@ -22,22 +22,22 @@
     <message>
         <location filename="../../gui/aboutbox.cpp" line="45"/>
         <source>Maintainer, core developer, designer, translator</source>
-        <translation type="unfinished"></translation>
+        <translation>Údržbář, hlavní vývojář, návrhář, překladatel</translation>
     </message>
     <message>
         <location filename="../../gui/aboutbox.cpp" line="47"/>
         <source>Math engine</source>
-        <translation type="unfinished"></translation>
+        <translation>Matematický stroj</translation>
     </message>
     <message>
         <location filename="../../gui/aboutbox.cpp" line="48"/>
         <source>Packager</source>
-        <translation type="unfinished"></translation>
+        <translation>Tvůrce balíčků</translation>
     </message>
     <message>
         <location filename="../../gui/aboutbox.cpp" line="51"/>
         <source>Thanks</source>
-        <translation type="unfinished"></translation>
+        <translation>Poděkování</translation>
     </message>
     <message>
         <location filename="../../gui/aboutbox.cpp" line="100"/>
@@ -578,22 +578,22 @@
     <message>
         <location filename="../../core/constants.cpp" line="221"/>
         <source>Universal</source>
-        <translation type="unfinished"></translation>
+        <translation>Všeobecný</translation>
     </message>
     <message>
         <location filename="../../core/constants.cpp" line="223"/>
         <source>Archimedes&apos; constant Pi</source>
-        <translation type="unfinished"></translation>
+        <translation>Archimédova konstanta pí</translation>
     </message>
     <message>
         <location filename="../../core/constants.cpp" line="224"/>
         <source>Euler&apos;s number</source>
-        <translation type="unfinished"></translation>
+        <translation>Eulerovo číslo</translation>
     </message>
     <message>
         <location filename="../../core/constants.cpp" line="225"/>
         <source>Golden ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>Zlatý poměr</translation>
     </message>
     <message>
         <location filename="../../core/constants.cpp" line="228"/>
@@ -1911,55 +1911,55 @@
     <name>MainWindow</name>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="243"/>
-        <location filename="../../gui/mainwindow.cpp" line="1435"/>
+        <location filename="../../gui/mainwindow.cpp" line="1451"/>
         <source>Radian</source>
         <translation>Radián</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="243"/>
-        <location filename="../../gui/mainwindow.cpp" line="1103"/>
+        <location filename="../../gui/mainwindow.cpp" line="1119"/>
         <source>Degree</source>
         <translation>Stupeň</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="247"/>
-        <location filename="../../gui/mainwindow.cpp" line="1763"/>
+        <location filename="../../gui/mainwindow.cpp" line="1782"/>
         <source>Binary</source>
         <translation>Binární</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="248"/>
-        <location filename="../../gui/mainwindow.cpp" line="1808"/>
+        <location filename="../../gui/mainwindow.cpp" line="1827"/>
         <source>Octal</source>
         <translation>Osmičkový</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="249"/>
-        <location filename="../../gui/mainwindow.cpp" line="1799"/>
+        <location filename="../../gui/mainwindow.cpp" line="1818"/>
         <source>Hexadecimal</source>
         <translation>Šestnáctková</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="250"/>
-        <location filename="../../gui/mainwindow.cpp" line="1781"/>
+        <location filename="../../gui/mainwindow.cpp" line="1800"/>
         <source>Fixed decimal</source>
         <translation>Pevná desítková</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="251"/>
-        <location filename="../../gui/mainwindow.cpp" line="1772"/>
+        <location filename="../../gui/mainwindow.cpp" line="1791"/>
         <source>Engineering decimal</source>
         <translation>Technická desítková</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="252"/>
-        <location filename="../../gui/mainwindow.cpp" line="1817"/>
+        <location filename="../../gui/mainwindow.cpp" line="1836"/>
         <source>Scientific decimal</source>
         <translation>Vědecká desítková</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="253"/>
-        <location filename="../../gui/mainwindow.cpp" line="1790"/>
+        <location filename="../../gui/mainwindow.cpp" line="1809"/>
         <source>General decimal</source>
         <translation>Obecná desítková</translation>
     </message>
@@ -2209,9 +2209,14 @@
         <translation>Terminál</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1750"/>
-        <source>The menu bar is now hidden. To make it visible again, press Ctrl+M.</source>
+        <location filename="../../gui/mainwindow.cpp" line="952"/>
+        <source>Type an expression here</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../gui/mainwindow.cpp" line="1769"/>
+        <source>The menu bar is now hidden. To make it visible again, press Ctrl+M.</source>
+        <translation>Pruh s nabídkou je nyní skryt. Pro jeho opětovné zviditelnění stiskněte Ctrl+M.</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="336"/>
@@ -2284,118 +2289,118 @@
         <translation>&amp;Nápověda</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1166"/>
+        <location filename="../../gui/mainwindow.cpp" line="1182"/>
         <source>File %1 is not a valid session</source>
         <translation>Soubor %1 není platné sezení</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1167"/>
-        <location filename="../../gui/mainwindow.cpp" line="1442"/>
+        <location filename="../../gui/mainwindow.cpp" line="1183"/>
+        <location filename="../../gui/mainwindow.cpp" line="1458"/>
         <source>SpeedCrunch Sessions (*.sch);;All Files (*)</source>
         <translation>Sezení SpeedCrunch (*.sch);;All Files (*)</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1168"/>
+        <location filename="../../gui/mainwindow.cpp" line="1184"/>
         <source>Load Session</source>
         <translation>Nahrát sezení</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1174"/>
-        <location filename="../../gui/mainwindow.cpp" line="1183"/>
-        <location filename="../../gui/mainwindow.cpp" line="1191"/>
-        <location filename="../../gui/mainwindow.cpp" line="1221"/>
-        <location filename="../../gui/mainwindow.cpp" line="1243"/>
-        <location filename="../../gui/mainwindow.cpp" line="1250"/>
-        <location filename="../../gui/mainwindow.cpp" line="1270"/>
-        <location filename="../../gui/mainwindow.cpp" line="1306"/>
-        <location filename="../../gui/mainwindow.cpp" line="1449"/>
-        <location filename="../../gui/mainwindow.cpp" line="1492"/>
-        <location filename="../../gui/mainwindow.cpp" line="1513"/>
+        <location filename="../../gui/mainwindow.cpp" line="1190"/>
+        <location filename="../../gui/mainwindow.cpp" line="1199"/>
+        <location filename="../../gui/mainwindow.cpp" line="1207"/>
+        <location filename="../../gui/mainwindow.cpp" line="1237"/>
+        <location filename="../../gui/mainwindow.cpp" line="1259"/>
+        <location filename="../../gui/mainwindow.cpp" line="1266"/>
+        <location filename="../../gui/mainwindow.cpp" line="1286"/>
+        <location filename="../../gui/mainwindow.cpp" line="1322"/>
+        <location filename="../../gui/mainwindow.cpp" line="1465"/>
+        <location filename="../../gui/mainwindow.cpp" line="1508"/>
+        <location filename="../../gui/mainwindow.cpp" line="1529"/>
         <source>Error</source>
         <translation>Chyba</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1174"/>
-        <location filename="../../gui/mainwindow.cpp" line="1270"/>
+        <location filename="../../gui/mainwindow.cpp" line="1190"/>
+        <location filename="../../gui/mainwindow.cpp" line="1286"/>
         <source>Can&apos;t read from file %1</source>
         <translation>Nelze číst ze souboru %1</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1196"/>
+        <location filename="../../gui/mainwindow.cpp" line="1212"/>
         <source>Merge session being loaded with current session?
 If no, current variables and display will be cleared.</source>
         <translation>Sloučit sezení, jež bylo nahráno, s nynějším sezením?
 Pokud ne, budou současné proměnné a zobrazení smazány.</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1202"/>
-        <location filename="../../gui/mainwindow.cpp" line="1281"/>
+        <location filename="../../gui/mainwindow.cpp" line="1218"/>
+        <location filename="../../gui/mainwindow.cpp" line="1297"/>
         <source>Question</source>
         <translation>Otázka</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1263"/>
+        <location filename="../../gui/mainwindow.cpp" line="1279"/>
         <source>All Files (*)</source>
         <translation>Všechny soubory (*)</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1264"/>
+        <location filename="../../gui/mainwindow.cpp" line="1280"/>
         <source>Import Session</source>
         <translation>Zavést sezení</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1275"/>
+        <location filename="../../gui/mainwindow.cpp" line="1291"/>
         <source>Merge session being imported with current session?
 If no, current variables and display will be cleared.</source>
         <translation>Sloučit sezení, jež bylo zavedeno, s nynějším sezením?
 Pokud ne, budou současné proměnné a zobrazení smazány.</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1306"/>
+        <location filename="../../gui/mainwindow.cpp" line="1322"/>
         <source>Ignore error?</source>
         <translation>Přehlížet chybu?</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1443"/>
+        <location filename="../../gui/mainwindow.cpp" line="1459"/>
         <source>Save Session</source>
         <translation>Uložit sezení</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1449"/>
-        <location filename="../../gui/mainwindow.cpp" line="1492"/>
-        <location filename="../../gui/mainwindow.cpp" line="1513"/>
+        <location filename="../../gui/mainwindow.cpp" line="1465"/>
+        <location filename="../../gui/mainwindow.cpp" line="1508"/>
+        <location filename="../../gui/mainwindow.cpp" line="1529"/>
         <source>Can&apos;t write to file %1</source>
         <translation>Nelze zapisovat do souboru %1</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1541"/>
+        <location filename="../../gui/mainwindow.cpp" line="1560"/>
         <source>Display font</source>
         <translation>Zobrazit písmo</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1753"/>
+        <location filename="../../gui/mainwindow.cpp" line="1772"/>
         <source>Warning</source>
         <translation>Upozornění</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="2015"/>
+        <location filename="../../gui/mainwindow.cpp" line="2033"/>
         <source>SpeedCrunch is minimized.
 Left click the icon to restore it or right click for options.</source>
         <translation>SpeedCrunch je zmenšen.
 Klepněte levým tlačítkem myši, abyste obnovil jeho velikost, nebo klepněte pravým tlačítkem myši, abyste zobrazil volby.</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="2172"/>
+        <location filename="../../gui/mainwindow.cpp" line="2190"/>
         <source>System Default</source>
         <translation>Výchozí nastavení systému</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="2176"/>
+        <location filename="../../gui/mainwindow.cpp" line="2194"/>
         <source>Language</source>
         <translation>Jazyk</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="2176"/>
+        <location filename="../../gui/mainwindow.cpp" line="2194"/>
         <source>Select the language:</source>
         <translation>Výběr jazyka:</translation>
     </message>
@@ -2455,12 +2460,12 @@ Klepněte levým tlačítkem myši, abyste obnovil jeho velikost, nebo klepněte
         <translation>Barevné pojetí</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1484"/>
+        <location filename="../../gui/mainwindow.cpp" line="1500"/>
         <source>Export session as HTML</source>
         <translation>Vyvést sezení jako HTML</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1505"/>
+        <location filename="../../gui/mainwindow.cpp" line="1521"/>
         <source>Export session as plain text</source>
         <translation>Vyvést sezení jako prostý text</translation>
     </message>
