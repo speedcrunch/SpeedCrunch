@@ -142,6 +142,7 @@ private slots:
 #ifndef Q_OS_MAC
     void showMenuBarTip();
 #endif
+    void showReadyMessage();
     void showResultFormatContextMenu(const QPoint&);
     void showSessionImportDialog();
     void showSessionLoadDialog();
