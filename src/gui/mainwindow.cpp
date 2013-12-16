@@ -940,6 +940,8 @@ void MainWindow::applySettings()
         menuBar()->setVisible(m_settings->menuBarVisible);
     }
 #endif
+
+    QTimer::singleShot(100, m_widgets.editor, SLOT(setFocus()));
 }
 
 void MainWindow::checkInitialResultFormat()
