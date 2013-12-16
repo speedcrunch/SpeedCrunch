@@ -1520,10 +1520,13 @@ void MainWindow::exportPlainText()
         return;
     }
 
-    QTextStream stream(& file);
+    QByteArray text;
+    QTextStream stream(&text, QIODevice::WriteOnly | QIODevice::Text);
     stream.setCodec("UTF-8");
     stream << m_widgets.display->document()->toPlainText();
+    stream.flush();
 
+    file.write(text);
     file.close();
 }
 
