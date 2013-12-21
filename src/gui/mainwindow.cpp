@@ -599,10 +599,12 @@ void MainWindow::createFixedWidgets()
     m_widgets.autoCalcTip = new AutoHideLabel(this);
     m_widgets.autoCalcTip->hide();
 
+#ifndef Q_OS_MAC
     if (shouldAllowHiddenMenuBar()) {
         m_widgets.tip = new TipWidget(this);
         m_widgets.tip->hide();
     }
+#endif // Q_OS_MAC
 }
 
 void MainWindow::createBookDock()
