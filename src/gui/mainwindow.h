@@ -79,6 +79,8 @@ private slots:
     void exportPlainText();
     void handleCopyAvailable(bool copyAvailable);
     void handleEditorTextChange();
+    void handleDisplaySelectionChange();
+    void handleEditorSelectionChange();
     void handleSystemTrayIconActivation(QSystemTrayIcon::ActivationReason);
     void hideAutoCalcTip();
     void insertConstantIntoEditor(const QString&);
@@ -156,6 +158,7 @@ protected:
 private:
     Q_DISABLE_COPY(MainWindow)
 
+    void clearTextEditSelection(QPlainTextEdit*);
     void createUi();
     void createActions();
     void createActionGroups();
