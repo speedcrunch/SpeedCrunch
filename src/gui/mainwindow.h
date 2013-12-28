@@ -132,6 +132,7 @@ private slots:
     void setResultPrecision(int);
     void setStatusBarVisible(bool);
     void setSyntaxHighlightingEnabled(bool);
+    void setDigitGroupingEnabled(bool);
     void setAutoResultToClipboardEnabled(bool);
     void setSystemTrayIconEnabled(bool);
     void setVariableSaveEnabled(bool);
@@ -240,6 +241,7 @@ private:
         QAction* settingsBehaviorPartialResults;
         QAction* settingsBehaviorAutoCompletion;
         QAction* settingsBehaviorSyntaxHighlighting;
+        QAction* settingsBehaviorDigitGrouping;
         QAction* settingsBehaviorAutoAns;
         QAction* settingsBehaviorLeaveLastExpression;
         QAction* settingsBehaviorAlwaysOnTop;

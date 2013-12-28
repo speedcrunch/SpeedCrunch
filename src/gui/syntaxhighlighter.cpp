@@ -100,7 +100,8 @@ void SyntaxHighlighter::highlightBlock(const QString& text)
     if (text.startsWith(QLatin1String("="))) {
         setFormat(0, 1, colorForRole(Operator));
         setFormat(1, text.length(), colorForRole(Result));
-        groupDigits(text, 1, text.length() - 1);
+        if (Settings::instance()->digitGrouping)
+            groupDigits(text, 1, text.length() - 1);
         return;
     }
 
@@ -148,7 +149,7 @@ void SyntaxHighlighter::highlightBlock(const QString& text)
 
         if (token.pos() >= 0) {
             setFormat(token.pos(), token.text().length(), color);
-            if (token.type() == Token::stxNumber)
+            if (token.type() == Token::stxNumber && Settings::instance()->digitGrouping)
                 groupDigits(text, token.pos(), token.text().length());
         }
     }

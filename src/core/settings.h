@@ -44,6 +44,7 @@ public:
     bool autoAns;
     bool autoCalc;
     bool autoCompletion;
+    bool digitGrouping;
     bool historySave;
     bool leaveLastExpression;
     bool syntaxHighlighting;
