@@ -718,6 +718,12 @@ void Editor::keyPressEvent(QKeyEvent* event)
         return;
     }
 
+    if (event->matches(QKeySequence::Copy)) {
+        emit copySequencePressed();
+        event->accept();
+        return;
+    }
+
     QPlainTextEdit::keyPressEvent(event);
 }
 

@@ -1937,7 +1937,7 @@
         <location filename="../../gui/mainwindow.cpp" line="249"/>
         <location filename="../../gui/mainwindow.cpp" line="1818"/>
         <source>Hexadecimal</source>
-        <translation>Hexadezimal&gt;</translation>
+        <translation>Hexadezimal</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="250"/>
