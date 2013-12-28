@@ -85,6 +85,7 @@ void Settings::load()
     language = settings->value(key + QLatin1String("Language"), "C").toString();
     variableSave = settings->value(key + QLatin1String("VariableSave"), true).toBool();
     syntaxHighlighting = settings->value(key + QLatin1String("SyntaxHighlighting"), true).toBool();
+    digitGrouping = settings->value(key + QLatin1String("DigitGrouping"), false).toBool();
     systemTrayIconVisible = settings->value(key + QLatin1String("SystemTrayIconVisible"), false).toBool();
     autoResultToClipboard = settings->value(key + QLatin1String("AutoResultToClipboard"), false).toBool();
 
@@ -197,6 +198,7 @@ void Settings::save()
     settings->setValue(key + QLatin1String("AutoCalc"), autoCalc);
     settings->setValue(key + QLatin1String("SystemTrayIconVisible"), systemTrayIconVisible);
     settings->setValue(key + QLatin1String("SyntaxHighlighting"), syntaxHighlighting);
+    settings->setValue(key + QLatin1String("DigitGrouping"), digitGrouping);
     settings->setValue(key + QLatin1String("AutoResultToClipboard"), autoResultToClipboard);
     settings->setValue(key + QLatin1String("Language"), language);
 
