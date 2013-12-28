@@ -72,6 +72,7 @@ signals:
     void autoCalcDisabled();
     void controlPageDownPressed();
     void controlPageUpPressed();
+    void copySequencePressed();
     void pageDownPressed();
     void pageUpPressed();
     void returnPressed();
