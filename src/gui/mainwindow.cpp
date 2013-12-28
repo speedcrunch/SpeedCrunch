@@ -830,6 +830,7 @@ void MainWindow::createFixedConnections()
     connect(m_widgets.editor, SIGNAL(pageDownPressed()), m_widgets.display, SLOT(scrollPageDown()));
     connect(m_widgets.editor, SIGNAL(textChanged()), SLOT(handleEditorTextChange()));
     connect(m_widgets.editor, SIGNAL(copyAvailable(bool)), SLOT(handleCopyAvailable(bool)));
+    connect(m_widgets.editor, SIGNAL(copySequencePressed()), SLOT(copy()));
     connect(m_widgets.editor, SIGNAL(selectionChanged()), SLOT(handleEditorSelectionChange()));
 
     connect(m_widgets.display, SIGNAL(copyAvailable(bool)), SLOT(handleCopyAvailable(bool)));
@@ -2065,7 +2066,6 @@ void MainWindow::clearTextEditSelection(QPlainTextEdit* edit)
 
 void MainWindow::handleDisplaySelectionChange()
 {
-    m_widgets.display->copy();
     clearTextEditSelection(m_widgets.editor);
 }
 
@@ -2085,6 +2085,7 @@ void MainWindow::handleCopyAvailable(bool copyAvailable)
 
 void MainWindow::handleEditorTextChange()
 {
+    clearTextEditSelection(m_widgets.display);
     if (m_conditions.autoAns && m_settings->autoAns) {
         QString expr = m_evaluator->autoFix(m_widgets.editor->text());
         if (expr.isEmpty())
