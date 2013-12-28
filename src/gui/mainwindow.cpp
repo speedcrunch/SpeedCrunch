@@ -825,8 +825,10 @@ void MainWindow::createFixedConnections()
     connect(m_widgets.editor, SIGNAL(pageDownPressed()), m_widgets.display, SLOT(scrollPageDown()));
     connect(m_widgets.editor, SIGNAL(textChanged()), SLOT(handleEditorTextChange()));
     connect(m_widgets.editor, SIGNAL(copyAvailable(bool)), SLOT(handleCopyAvailable(bool)));
+    connect(m_widgets.editor, SIGNAL(selectionChanged()), SLOT(handleEditorSelectionChange()));
 
     connect(m_widgets.display, SIGNAL(copyAvailable(bool)), SLOT(handleCopyAvailable(bool)));
+    connect(m_widgets.display, SIGNAL(selectionChanged()), SLOT(handleDisplaySelectionChange()));
 
     connect(this, SIGNAL(radixCharacterChanged()), m_widgets.display, SLOT(refresh()));
     connect(this, SIGNAL(resultFormatChanged()), m_widgets.display, SLOT(refresh()));
@@ -2037,6 +2039,24 @@ void MainWindow::showSystemTrayMessage()
         msg += QChar(0x200E);
     if (m_widgets.trayIcon)
         m_widgets.trayIcon->showMessage(QString(), msg, QSystemTrayIcon::NoIcon, 4000);
+}
+
+void MainWindow::clearTextEditSelection(QPlainTextEdit* edit)
+{
+    QTextCursor cursor = edit->textCursor();
+    cursor.clearSelection();
+    edit->setTextCursor(cursor);
+}
+
+void MainWindow::handleDisplaySelectionChange()
+{
+    m_widgets.display->copy();
+    clearTextEditSelection(m_widgets.editor);
+}
+
+void MainWindow::handleEditorSelectionChange()
+{
+    clearTextEditSelection(m_widgets.display);
 }
 
 void MainWindow::handleCopyAvailable(bool copyAvailable)
