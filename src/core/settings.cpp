@@ -118,6 +118,7 @@ void Settings::load()
     windowPosition = settings->value(key + QLatin1String("WindowPosition"), QPoint()).toPoint();
     windowSize = settings->value(key + QLatin1String("WindowSize"), QSize(640, 480)).toSize();
     windowState = settings->value(key + QLatin1String("State")).toByteArray();
+    maximized = settings->value(key + QLatin1String("Maximized"), false).toBool();
 
     key = KEY + QLatin1String("/Display/");
     displayFont = settings->value(key + QLatin1String("DisplayFont"), QFont().toString()).toString();
@@ -228,6 +229,7 @@ void Settings::save()
     settings->setValue(key + QLatin1String("WindowSize"), windowSize);
     settings->setValue(key + QLatin1String("WindowAlwaysOnTop"), windowAlwaysOnTop);
     settings->setValue(key + QLatin1String("State"), windowState);
+    settings->setValue(key + QLatin1String("Maximized"), maximized);
 
     key = KEY + QLatin1String("/Display/");
 

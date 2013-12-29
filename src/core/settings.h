@@ -74,6 +74,7 @@ public:
     QPoint windowPosition;
     QSize windowSize;
     QByteArray windowState;
+    bool maximized;
 
 private:
     Settings();
