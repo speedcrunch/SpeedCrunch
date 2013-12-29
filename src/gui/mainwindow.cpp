@@ -865,7 +865,9 @@ void MainWindow::applySettings()
 
     resize(m_settings->windowSize);
 
-    if (m_settings->windowPosition.isNull()) {
+    if (m_settings->maximized)
+        showMaximized();
+    else if (m_settings->windowPosition.isNull()) {
         QDesktopWidget* desktop = QApplication::desktop();
         QRect screen = desktop->availableGeometry(this);
         move(screen.center() - rect().center());
@@ -1015,6 +1017,7 @@ void MainWindow::saveSettings()
     m_settings->windowSize = size();
     m_settings->windowState = saveState();
     m_settings->displayFont = m_widgets.display->font().toString();
+    m_settings->maximized = isMaximized();
 
     m_settings->save();
 }
