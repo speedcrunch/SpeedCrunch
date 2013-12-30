@@ -173,6 +173,7 @@ void test_unary()
     CHECK_EVAL("-cos(pi)^3", "1");
     CHECK_EVAL("1*(-cos(pi)^2)", "-1");
 
+    CHECK_EVAL_KNOWN_ISSUE("3^3^3", "19683", 448);
     CHECK_EVAL_KNOWN_ISSUE("1/-1^2", "-1", 450);
     CHECK_EVAL_KNOWN_ISSUE("1*-1^2", "-1", 450);
 
