@@ -24,10 +24,11 @@
 #include <QtCore/QCoreApplication>
 #include <QtCore/QStack>
 
-//#define EVALUATOR_DEBUG
+#define EVALUATOR_DEBUG
 #ifdef EVALUATOR_DEBUG
 #include <QtCore/QFile>
 #include <QtCore/QTextStream>
+#include <QDebug>
 
 QTextStream& operator<<(QTextStream& s, HNumber num)
 {
@@ -49,7 +50,8 @@ const HNumber& Evaluator::checkOperatorResult(const HNumber& n)
 {
     switch (n.error()) {
     case NoOperand:
-        m_error = Evaluator::tr("cannot operate on a NaN");
+        if(m_assignFunc == false)
+            m_error = Evaluator::tr("cannot operate on a NaN");
         break;
     case Underflow:
         m_error = Evaluator::tr("underflow - tiny result is out of SpeedCrunch's number range");
@@ -368,6 +370,8 @@ void Evaluator::reset()
     m_constants.clear();
     m_codes.clear();
     m_assignId = QString();
+    m_assignFunc = false;
+    m_assignArg.clear();
     unsetAllUserDefinedVariables(); // Initializes built-in variables.
 }
 
@@ -1027,13 +1031,7 @@ void Evaluator::compile(const Tokens& tokens)
 
 HNumber Evaluator::evalNoAssign()
 {
-    QStack<HNumber> stack;
-    QStack<QString> refs;
-    int index;
-    HNumber val1, val2;
-    QVector<HNumber> args;
-    QString fname;
-    Function* function;
+    HNumber result;
 
     if (m_dirty) {
         Tokens tokens = scan(m_expression);
@@ -1046,19 +1044,76 @@ HNumber Evaluator::evalNoAssign()
 
         // Variable assignment?
         m_assignId = QString();
+        m_assignFunc = false;
+        m_assignArg.clear();
         if (tokens.count() > 2 && tokens.at(0).isIdentifier()
              && tokens.at(1).asOperator() == Token::Equal)
         {
             m_assignId = tokens.at(0).text();
             tokens.erase(tokens.begin());
             tokens.erase(tokens.begin());
+        } else if (tokens.count() > 2 && tokens.at(0).isIdentifier()
+             && tokens.at(1).asOperator() == Token::LeftPar)
+        {
+            // Check for function assignment
+            // Syntax: ident opLeftPar (ident (opSemiColon ident)*)? opRightPar opEqual
+            int t;
+            if (tokens.count() > 4 && tokens.at(2).asOperator() == Token::RightPar) {
+                // Functions with no argument.
+                t = 3;
+                if (tokens.at(3).asOperator() == Token::Equal)
+                    m_assignFunc = true;
+            } else {
+                for (t = 2; t + 1 < tokens.count(); t += 2)  {
+                    if (!tokens.at(t).isIdentifier())
+                        break;
+                    
+                    m_assignArg.append(tokens.at(t).text());
+
+                    if (tokens.at(t + 1).asOperator() == Token::RightPar) {
+                        // Check for the equal operator
+                        t += 2;
+                        if (t < tokens.count() && tokens.at(t).asOperator() == Token::Equal)
+                            m_assignFunc = true;
+
+                        break;
+                    } else if (!tokens.at(t + 1).asOperator() == Token::Semicolon)
+                        break;
+                }
+            }
+
+            if (m_assignFunc == true) {
+                m_assignId = tokens.at(0).text();
+                for (; t >= 0; --t)
+                    tokens.erase(tokens.begin());
+            } else
+                m_assignArg.clear();
         }
 
         compile(tokens);
     }
+    
+    result = exec(m_codes, m_constants, m_identifiers);
+    
+    if (m_error.isEmpty() && result.isNan() && m_assignFunc == true)
+        result = HNumber(0);
 
-    for (int pc = 0; pc < m_codes.count(); ++pc) {
-        const Opcode& opcode = m_codes.at(pc);
+    return result;
+}
+
+HNumber Evaluator::exec(const QVector<Opcode>& opcodes, const QVector<HNumber>& constants,
+                        const QStringList& identifiers) {
+    QStack<HNumber> stack;
+    QHash<int, QString> refs;
+    int index;
+    HNumber val1, val2;
+    QVector<HNumber> args;
+    QString fname;
+    Function* function;
+    UserFunction* userFunction = NULL;
+
+    for (int pc = 0; pc < opcodes.count(); ++pc) {
+        const Opcode& opcode = opcodes.at(pc);
         index = opcode.index;
         switch (opcode.type) {
             // No operation.
@@ -1067,7 +1122,7 @@ HNumber Evaluator::evalNoAssign()
 
             // Load a constant, push to stack.
             case Opcode::Load:
-                val1 = m_constants.at(index);
+                val1 = constants.at(index);
                 stack.push(val1);
                 break;
 
@@ -1216,14 +1271,24 @@ HNumber Evaluator::evalNoAssign()
 
             // Reference.
             case Opcode::Ref:
-                fname = m_identifiers.at(index);
-                if (hasVariable(fname)) // Variable.
+                fname = identifiers.at(index);
+                if (m_assignArg.contains(fname)) // Argument.
+                    stack.push(HMath::nan());
+                else if (hasVariable(fname)) // Variable.
                     stack.push(getVariable(fname).value);
                 else { // Function.
                     function = FunctionRepo::instance()->find(fname);
-                    if (function)
-                        refs.push(fname);
-                    else {
+                    if (function) {
+                        stack.push(HMath::nan());
+                        refs.insert(stack.count(), fname);
+                    } else if (m_assignFunc) {
+                        // Allow arbitrary identifiers when declaring user functions.
+                        stack.push(HMath::nan());
+                        refs.insert(stack.count(), fname);
+                    } else if (hasUserFunction(fname)) {
+                        stack.push(HMath::nan());
+                        refs.insert(stack.count(), fname);
+                    } else {
                         m_error = fname + ": " + tr("unknown function or variable");
                         return HMath::nan();
                     }
@@ -1236,9 +1301,22 @@ HNumber Evaluator::evalNoAssign()
                 if (refs.isEmpty())
                     break;
 
-                fname = refs.pop();
+                fname = refs.take(stack.count() - index);
+                //qDebug() << "Looking for " << fname << " ... " << m_assignFunc;
                 function = FunctionRepo::instance()->find(fname);
+
+                userFunction = NULL;
                 if (!function) {
+                    if (m_assignFunc) {
+                        // Allow arbitrary identifiers when declaring user functions.
+                    } else {
+                        // Check if this is a valid user function call.
+                        //qDebug() << m_userFunctions;
+                        userFunction = getUserFunction(fname);
+                    }
+                }   
+
+                if (!function && !userFunction && !m_assignFunc) {
                     m_error = fname + ": " + tr("unknown function or variable");
                     return HMath::nan();
                 }
@@ -1252,15 +1330,28 @@ HNumber Evaluator::evalNoAssign()
                 for(; index; --index)
                     args.insert(args.begin(), stack.pop());
 
-                if (!args.count()) {
-                    m_error = QString::fromLatin1("%1(%2)").arg(fname).arg(function->usage());
-                    return HMath::nan();
-                }
+                // Remove the NaN we put on the stack (needed to make the user
+                // functions declaration work with arbitrary identifiers).
+                stack.pop();
 
-                stack.push(function->exec(args));
-                if (function->error()) {
-                    m_error = stringFromFunctionError(function);
-                    return HMath::nan();
+                if (m_assignFunc) {
+                    // Allow arbitrary identifiers when declaring user functions.
+                    stack.push(HMath::nan());
+                } else if (userFunction) {
+                    stack.push(execUserFunction(userFunction, args));
+                    if (!m_error.isEmpty())
+                        return HMath::nan();
+                } else {
+                    if (!args.count()) {
+                        m_error = QString::fromLatin1("%1(%2)").arg(fname).arg(function->usage());
+                        return HMath::nan();
+                    }
+
+                    stack.push(function->exec(args));
+                    if (function->error()) {
+                        m_error = stringFromFunctionError(function);
+                        return HMath::nan();
+                    }
                 }
                 break;
 
@@ -1275,8 +1366,58 @@ HNumber Evaluator::evalNoAssign()
         return HMath::nan();
     }
 
-    HNumber result = stack.pop();
+    return stack.pop();
+}
 
+HNumber Evaluator::execUserFunction(UserFunction* function, QVector<HNumber>& arguments) {
+    /* TODO:
+     *   OK ignore missing variables or user functions when declaring a user function.
+     *   OK prohibit user function recursion by using a flag in UserFunction.
+     *   OK when an error happens in a user function, tell the user which one it is.
+     *   - save user functions when the app closes, and restore them at startup.
+     *   - show a list of user functions and allow the user to delete them.
+     *   - replace user variables by user functions (with no argument) ?
+     */
+    if (arguments.count() != function->descr.arguments.count()) {
+        m_error = "<b>" + function->descr.name + "</b>: " + tr("wrong number of arguments");
+        return HMath::nan();
+    }
+    
+    if (function->inUse) {
+        m_error = "<b>" + function->descr.name + "</b>: " + tr("user function recursion is not supported");
+        return HMath::nan();
+    }
+    
+    function->inUse = true;
+
+    QVector<Opcode> newOpcodes;
+    QVector<HNumber> newConstants = function->constants; // Copy
+
+    // Replace references to function arguments by constants.
+    for (int i = 0; i < function->opcodes.count(); ++i) {
+        Opcode opcode = function->opcodes.at(i);
+
+        if (opcode.type == Opcode::Ref) {
+            // Check if the identifier is an argument name.
+            QString name = function->identifiers.at(opcode.index);
+            int argIdx = function->descr.arguments.indexOf(name);
+            if (argIdx >= 0) {
+                // Replace the reference by a constant value.
+                opcode = Opcode(Opcode::Load, newConstants.count());
+                newConstants.append(arguments.at(argIdx));
+            }
+        }
+
+        newOpcodes.append(opcode);
+    }
+
+    HNumber result = exec(newOpcodes, newConstants, function->identifiers);
+    if (!m_error.isEmpty()) {
+        // Tell the user where the error happened.
+        m_error = "<b>" + function->descr.name + "</b>: " + m_error;
+    }
+
+    function->inUse = false;
     return result;
 }
 
@@ -1301,9 +1442,45 @@ HNumber Evaluator::eval()
         return HMath::nan();
     }
 
-    // Handle variable assignment, e.g. "x=2*4".
-    if (!m_assignId.isEmpty())
-        setVariable(m_assignId, result);
+    // Handle user variable or function assignment.
+    if (!m_assignId.isEmpty()) {
+        if (m_assignFunc) {
+            if(hasVariable(m_assignId)) {
+                m_error = tr("%1 is a variable name, please choose another or delete the variable").arg(m_assignId);
+                return HMath::nan();
+            }
+
+            // Check that each arguments are unique and not a reserved identifier.
+            for (int i = 0; i < m_assignArg.count() - 1; ++i) {
+                const QString &argName = m_assignArg.at(i);
+
+                if (m_assignArg.indexOf(argName, i + 1) != -1) {
+                    m_error = tr("argument %1 is used more than once").arg(argName);
+                    return HMath::nan();
+                }
+
+                if (isBuiltInVariable(argName)) {
+                    m_error = tr("%1 is a reserved name, please choose another").arg(argName);
+                    return HMath::nan();
+                }
+            }
+
+            UserFunction* userFunction = new UserFunction(m_assignId, m_assignArg, m_expression);
+            userFunction->constants = m_constants;
+            userFunction->identifiers = m_identifiers;
+            userFunction->opcodes = m_codes;
+
+            m_userFunctions.insert(m_assignId, userFunction);
+            //qDebug() << "Inserted function " << m_assignId;
+        } else {
+            if(hasUserFunction(m_assignId)) {
+                m_error = tr("%1 is a user function name, please choose another or delete the function").arg(m_assignId);
+                return HMath::nan();
+            }
+
+            setVariable(m_assignId, result);
+        }
+    }
 
     return result;
 }
@@ -1389,6 +1566,49 @@ static void replaceSuperscriptPowersWithCaretEquivalent(QString& expr)
     expr.replace(QString::fromUtf8("⁷"), QLatin1String("^7"));
     expr.replace(QString::fromUtf8("⁸"), QLatin1String("^8"));
     expr.replace(QString::fromUtf8("⁹"), QLatin1String("^9"));
+}
+
+QList<Evaluator::UserFunctionDescr> Evaluator::getUserFunctions() const
+{
+    QList<UserFunctionDescr> result;
+    QHash<QString, UserFunction*>::const_iterator iter = m_userFunctions.begin();
+    while (iter != m_userFunctions.end()) {
+        result.append(iter.value()->descr);
+        ++iter;
+    }
+    return result;
+}
+
+void Evaluator::setUserFunction(const UserFunctionDescr& descr)
+{
+    // We need to compile the function, so pretend the user typed it.
+    setExpression(descr.name + "(" + descr.arguments.join(";") + ")=" + descr.expression);
+    eval();
+}
+
+void Evaluator::unsetUserFunction(const QString& fname)
+{
+    UserFunction *function = m_userFunctions.take(fname);
+    if (function) delete function;
+    // FIXME: would "m_userFunctions.remove(fname);" be enough ?
+}
+
+void Evaluator::unsetAllUserFunctions()
+{
+    while (!m_userFunctions.isEmpty()) {
+        unsetUserFunction(m_userFunctions.begin().key());
+    }
+}
+
+bool Evaluator::hasUserFunction(const QString& fname)
+{
+    return fname.isEmpty() ? false : m_userFunctions.contains(fname);
+}
+
+Evaluator::UserFunction* Evaluator::getUserFunction(const QString& fname) const
+{
+    // TODO: handle the fname.isEmpty() case ?
+    return m_userFunctions.value(fname);
 }
 
 QString Evaluator::autoFix(const QString& expr)

@@ -29,6 +29,7 @@
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 #include <QtCore/QVector>
+#include <QtCore/QStack>
 
 class Token {
 public:
@@ -86,6 +87,15 @@ public:
         HNumber value;
         Type type;
     };
+    
+    struct UserFunctionDescr {
+        QString name;
+        QStringList arguments;
+        QString expression;
+
+        UserFunctionDescr(QString name, QStringList arguments, QString expression)
+            : name(name), arguments(arguments), expression(expression) {}
+    };
 
     // Needed only for issue 160 workaround.
     enum AutoFixPolicy { AutoFix, NoAutoFix };
@@ -114,6 +124,13 @@ public:
     void unsetAllUserDefinedVariables();
     bool isBuiltInVariable(const QString&) const;
     bool hasVariable(const QString&) const;
+    
+    //UserFunctionDescr getUserFunction(const QString&) const;
+    QList<UserFunctionDescr> getUserFunctions() const;
+    void setUserFunction(const UserFunctionDescr&);
+    void unsetUserFunction(const QString&);
+    void unsetAllUserFunctions();
+    bool hasUserFunction(const QString&);
 
 protected:
     void compile(const Tokens&);
@@ -133,20 +150,42 @@ private:
         Opcode(unsigned t) : type(t), index(0) {}
         Opcode(unsigned t, unsigned i): type(t), index(i) {}
     };
+    
+    struct UserFunction {
+        UserFunctionDescr descr;
+
+        QVector<HNumber> constants;
+        QStringList identifiers;
+        QVector<Opcode> opcodes;
+        
+        bool inUse;
+
+        UserFunction(UserFunctionDescr& descr)
+            : descr(descr), inUse(false) {}
+        UserFunction(QString name, QStringList arguments, QString expression)
+            : descr(name, arguments, expression), inUse(false) {}
+    };
 
     bool m_dirty;
     QString m_error;
     QString m_expression;
     bool m_valid;
     QString m_assignId;
+    bool m_assignFunc;
+    QStringList m_assignArg;
     QVector<Opcode> m_codes;
     QVector<HNumber> m_constants;
     QStringList m_identifiers;
     QHash<QString, Variable> m_variables;
+    QHash<QString, UserFunction*> m_userFunctions;
 
     const HNumber& checkOperatorResult(const HNumber&);
     static QString stringFromFunctionError(Function*);
     void initializeBuiltInVariables();
+    HNumber exec(const QVector<Opcode>& opcodes, const QVector<HNumber>& constants,
+                 const QStringList& identifiers);
+    HNumber execUserFunction(UserFunction* function, QVector<HNumber>& arguments);
+    UserFunction* getUserFunction(const QString&) const;
 };
 
 #endif
