@@ -1465,7 +1465,7 @@ HNumber Evaluator::eval()
                 }
             }
 
-            UserFunction* userFunction = new UserFunction(m_assignId, m_assignArg, m_expression);
+            UserFunction* userFunction = new UserFunction(m_assignId, m_assignArg, m_expression.section("=", 1, 1).trimmed());
             userFunction->constants = m_constants;
             userFunction->identifiers = m_identifiers;
             userFunction->opcodes = m_codes;

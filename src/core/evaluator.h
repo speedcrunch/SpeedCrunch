@@ -29,7 +29,6 @@
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 #include <QtCore/QVector>
-#include <QtCore/QStack>
 
 class Token {
 public:

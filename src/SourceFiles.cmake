@@ -31,6 +31,8 @@ gui/historywidget.h
 gui/tipwidget.h
 gui/variablesdock.h
 gui/variablelistwidget.h
+gui/userfunctionsdock.h
+gui/userfunctionlistwidget.h
 gui/mainwindow.h
 #math/floatcommon.h
 #math/floatconfig.h
@@ -78,6 +80,8 @@ gui/syntaxhighlighter.cpp
 gui/tipwidget.cpp
 gui/variablesdock.cpp
 gui/variablelistwidget.cpp
+gui/userfunctionsdock.cpp
+gui/userfunctionlistwidget.cpp
 gui/mainwindow.cpp
 math/floatcommon.c
 math/floatconst.c

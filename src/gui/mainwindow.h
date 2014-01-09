@@ -37,6 +37,7 @@ class ResultDisplay;
 class Settings;
 class TipWidget;
 class VariablesDock;
+class UserFunctionsDock;
 
 class QActionGroup;
 class QHBoxLayout;
@@ -74,6 +75,7 @@ private slots:
     void cycleAngleUnits();
     void cycleResultFormats();
     void deleteVariables();
+    void deleteUserFunctions();
     void evaluateEditorExpression();
     void exportHtml();
     void exportPlainText();
@@ -87,6 +89,7 @@ private slots:
     void insertFunctionIntoEditor(const QString&);
     void insertTextIntoEditor(const QString&);
     void insertVariableIntoEditor(const QString&);
+    void insertUserFunctionIntoEditor(const QString&);
     void minimizeToSystemTray();
     void openUpdatesURL();
     void openFeedbackURL();
@@ -136,7 +139,9 @@ private slots:
     void setAutoResultToClipboardEnabled(bool);
     void setSystemTrayIconEnabled(bool);
     void setVariableSaveEnabled(bool);
+    void setUserFunctionSaveEnabled(bool b);
     void setVariablesDockVisible(bool);
+    void setUserFunctionsDockVisible(bool);
     void setWidgetsDirection();
     void showAboutDialog();
     void showAutoCalcTip(const QString&);
@@ -172,6 +177,7 @@ private:
     void createFunctionsDock();
     void createHistoryDock();
     void createVariablesDock();
+    void createUserFunctionsDock();
     void createFixedConnections();
     void applySettings();
     void checkInitialResultFormat();
@@ -179,12 +185,14 @@ private:
     void checkInitialLanguage();
     void restoreHistory();
     void restoreVariables();
+    void restoreUserFunctions();
     void deleteStatusBar();
     void deleteBookDock();
     void deleteConstantsDock();
     void deleteFunctionsDock();
     void deleteHistoryDock();
     void deleteVariablesDock();
+    void deleteUserFunctionsDock();
     void saveSettings();
     void setActionsText();
     void setMenusText();
@@ -209,12 +217,15 @@ private:
         QAction* editInsertFunction;
         QAction* editInsertVariable;
         QAction* editDeleteVariable;
+        QAction* editInsertUserFunction;
+        QAction* editDeleteUserFunction;
         QAction* editClearExpression;
         QAction* editClearHistory;
         QAction* viewFormulaBook;
         QAction* viewConstants;
         QAction* viewFunctions;
         QAction* viewVariables;
+        QAction* viewUserFunctions;
         QAction* viewHistory;
 #ifndef Q_OS_MAC
         QAction* viewMenuBar;
@@ -238,6 +249,7 @@ private:
         QAction* settingsAngleUnitDegree;
         QAction* settingsBehaviorSaveHistoryOnExit;
         QAction* settingsBehaviorSaveVariablesOnExit;
+        QAction* settingsBehaviorSaveUserFunctionsOnExit;
         QAction* settingsBehaviorPartialResults;
         QAction* settingsBehaviorAutoCompletion;
         QAction* settingsBehaviorSyntaxHighlighting;
@@ -310,6 +322,7 @@ private:
         FunctionsDock* functions;
         HistoryDock* history;
         VariablesDock* variables;
+        UserFunctionsDock* userFunctions;
     } m_docks;
 
     struct {

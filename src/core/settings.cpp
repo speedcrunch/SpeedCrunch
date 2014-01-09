@@ -84,6 +84,7 @@ void Settings::load()
     leaveLastExpression = settings->value(key + QLatin1String("LeaveLastExpression"), false).toBool();
     language = settings->value(key + QLatin1String("Language"), "C").toString();
     variableSave = settings->value(key + QLatin1String("VariableSave"), true).toBool();
+    userFunctionSave = settings->value(key + QLatin1String("UserFunctionSave"), true).toBool();
     syntaxHighlighting = settings->value(key + QLatin1String("SyntaxHighlighting"), true).toBool();
     digitGrouping = settings->value(key + QLatin1String("DigitGrouping"), false).toBool();
     systemTrayIconVisible = settings->value(key + QLatin1String("SystemTrayIconVisible"), false).toBool();
@@ -111,6 +112,7 @@ void Settings::load()
     statusBarVisible = settings->value(key + QLatin1String("StatusBarVisible"), false).toBool();
     functionsDockVisible = settings->value(key + QLatin1String("FunctionsDockVisible"), false).toBool();
     variablesDockVisible = settings->value(key + QLatin1String("VariablesDockVisible"), false).toBool();
+    userFunctionsDockVisible = settings->value(key + QLatin1String("UserFunctionsDockVisible"), false).toBool();
     formulaBookDockVisible = settings->value(key + QLatin1String("FormulaBookDockVisible"), false).toBool();
     constantsDockVisible = settings->value(key + QLatin1String("ConstantsDockVisible"), false).toBool();
     windowAlwaysOnTop = settings->value(key + QLatin1String("WindowAlwaysOnTop"), false).toBool();
@@ -177,6 +179,31 @@ void Settings::load()
             variables.append(QString::fromLatin1("%1=%2").arg(name).arg(value));
     }
 
+    // Load user functions.
+    key = KEY + QLatin1String("/UserFunctions/");
+    userFunctions.clear();
+    settings->beginGroup(key);
+    names = settings->childKeys();
+    settings->endGroup();
+    for (int k = 0; k < names.count(); ++k) {
+        QString name = names.at(k);
+        QString keyname = key + name;
+        QStringList value = settings->value(keyname).toStringList();
+        // Treat upper case escape code.
+        for (int c = 0; c < name.length(); ++c) {
+            if (name.at(c) == '_') {
+                name.remove(c, 1);
+                if (name.at(c) != '_')
+                    name[c] = name.at(c).toUpper();
+            }
+        }
+        // Load.
+        if (!value.isEmpty()) {
+            value.prepend(name);
+            userFunctions.append(value);
+        }
+    }
+
     delete settings;
 }
 
@@ -194,6 +221,7 @@ void Settings::save()
     settings->setValue(key + QLatin1String("HistorySave"), historySave);
     settings->setValue(key + QLatin1String("LeaveLastExpression"), leaveLastExpression);
     settings->setValue(key + QLatin1String("VariableSave"), variableSave);
+    settings->setValue(key + QLatin1String("UserFunctionSave"), userFunctionSave);
     settings->setValue(key + QLatin1String("AutoCompletion"), autoCompletion);
     settings->setValue(key + QLatin1String("AutoAns"), autoAns);
     settings->setValue(key + QLatin1String("AutoCalc"), autoCalc);
@@ -225,6 +253,7 @@ void Settings::save()
     settings->setValue(key + QLatin1String("MenuBarVisible"), menuBarVisible);
     settings->setValue(key + QLatin1String("StatusBarVisible"), statusBarVisible);
     settings->setValue(key + QLatin1String("VariablesDockVisible"), variablesDockVisible);
+    settings->setValue(key + QLatin1String("UserFunctionsDockVisible"), userFunctionsDockVisible);
     settings->setValue(key + QLatin1String("WindowPosition"), windowPosition);
     settings->setValue(key + QLatin1String("WindowSize"), windowSize);
     settings->setValue(key + QLatin1String("WindowAlwaysOnTop"), windowAlwaysOnTop);
@@ -283,6 +312,34 @@ void Settings::save()
             if (s.count() == 2) {
                 QString name = "";
                 QString value = s.at(1);
+                int length = s.at(0).length();
+                for (int c = 0; c < length; ++c) {
+                    if (s.at(0).at(c).isUpper() || s.at(0).at(c) == '_') {
+                        name += '_';
+                        name += s.at(0).at(c).toLower();
+                    } else
+                        name += s.at(0).at(c);
+                }
+                settings->setValue(key + name, value);
+            }
+        }
+    }
+
+    // Save user functions.
+    if (userFunctionSave) {
+        key = KEY + QLatin1String("/UserFunctions/");
+        settings->beginGroup(key);
+        QStringList vkeys = settings->childKeys();
+        settings->endGroup();
+
+        for (k = 0; k < vkeys.count(); ++k)
+            settings->remove(key + vkeys.at(k));
+
+        for (i = 0; i < userFunctions.count(); ++i) {
+            QStringList s = userFunctions.at(i);
+            if (s.count() >= 2) {
+                QString name = "";
+                QVariant value(s.mid(1));
                 int length = s.at(0).length();
                 for (int c = 0; c < length; ++c) {
                     if (s.at(0).at(c).isUpper() || s.at(0).at(c) == '_') {

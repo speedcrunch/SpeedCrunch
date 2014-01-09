@@ -24,6 +24,7 @@
 #include <QtCore/QPoint>
 #include <QtCore/QSize>
 #include <QtCore/QStringList>
+#include <QtCore/QList>
 
 class Settings {
 public:
@@ -50,6 +51,7 @@ public:
     bool syntaxHighlighting;
     bool systemTrayIconVisible;
     bool variableSave;
+    bool userFunctionSave;
     bool windowAlwaysOnTop;
     bool autoResultToClipboard;
 
@@ -60,6 +62,7 @@ public:
     bool menuBarVisible;
     bool statusBarVisible;
     bool variablesDockVisible;
+    bool userFunctionsDockVisible;
     bool windowOnfullScreen;
 
     int colorScheme;
@@ -70,6 +73,7 @@ public:
     QStringList history;
     QStringList historyResults;
     QStringList variables;
+    QList<QStringList> userFunctions;
 
     QPoint windowPosition;
     QSize windowSize;
