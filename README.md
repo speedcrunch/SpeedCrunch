@@ -1,11 +1,7 @@
-<p align="center"><img src="/src/resources/speedcrunch.png"></p>
-
 # SpeedCrunch
-A cross-platform, keyboard-oriented desktop scientific calculator.
+A cross-platform, keyboard-oriented desktop scientific calculator. For binary downloads, please visit the [home](http://speedcrunch.org/) or [download](https://bitbucket.org/heldercorreia/speedcrunch/downloads) pages. These are the official mirrors for development: [GitHub](https://github.com/speedcrunch), [Google Code](https://code.google.com/p/speedcrunch/), [Gitorious](https://gitorious.org/speedcrunch), [Bitbucket](https://bitbucket.org/heldercorreia/speedcrunch/).
 
-## Installing
-For release package downloads see the [official page](http://www.speedcrunch.org/).
-
+## Building
 To build from source, use either CMake or QMake to build the project:
 
     cd src && cmake . && make
