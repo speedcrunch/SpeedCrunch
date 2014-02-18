@@ -2,7 +2,7 @@
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
 // Copyright (C) 2004, 2005 Ariya Hidayat <ariya@kde.org>
 // Copyright (C) 2005, 2006 Johan Thelin <e8johan@gmail.com>
-// Copyright (C) 2007-2010, 2013 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2007-2010, 2013, 2014 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -300,13 +300,13 @@ void Editor::doMatchingLeft()
             hilite1.cursor = textCursor();
             hilite1.cursor.setPosition(matchPosition);
             hilite1.cursor.setPosition(matchPosition + 1, QTextCursor::KeepAnchor);
-            hilite1.format.setBackground(m_highlighter->colorForRole(SyntaxHighlighter::MatchedParens));
+            hilite1.format.setBackground(m_highlighter->colorForRole(SyntaxHighlighter::Matched));
 
             QTextEdit::ExtraSelection hilite2;
             hilite2.cursor = textCursor();
             hilite2.cursor.setPosition(lastToken.pos());
             hilite2.cursor.setPosition(lastToken.pos() + 1, QTextCursor::KeepAnchor);
-            hilite2.format.setBackground(m_highlighter->colorForRole(SyntaxHighlighter::MatchedParens));
+            hilite2.format.setBackground(m_highlighter->colorForRole(SyntaxHighlighter::Matched));
 
             QList<QTextEdit::ExtraSelection> extras;
             extras << hilite1;
@@ -351,13 +351,13 @@ void Editor::doMatchingRight()
             hilite1.cursor = textCursor();
             hilite1.cursor.setPosition(currentPosition+matchPosition);
             hilite1.cursor.setPosition(currentPosition+matchPosition + 1, QTextCursor::KeepAnchor);
-            hilite1.format.setBackground(m_highlighter->colorForRole(SyntaxHighlighter::MatchedParens));
+            hilite1.format.setBackground(m_highlighter->colorForRole(SyntaxHighlighter::Matched));
 
             QTextEdit::ExtraSelection hilite2;
             hilite2.cursor = textCursor();
             hilite2.cursor.setPosition(currentPosition+firstToken.pos());
             hilite2.cursor.setPosition(currentPosition+firstToken.pos() + 1, QTextCursor::KeepAnchor);
-            hilite2.format.setBackground(m_highlighter->colorForRole(SyntaxHighlighter::MatchedParens));
+            hilite2.format.setBackground(m_highlighter->colorForRole(SyntaxHighlighter::Matched));
 
             QList<QTextEdit::ExtraSelection> extras;
             extras << hilite1;
@@ -594,7 +594,7 @@ void Editor::paintEvent(QPaintEvent* event)
     cursor.setRight(cursor.right() + 1);
 
     QPainter painter(viewport());
-    painter.fillRect(cursor, m_highlighter->colorForRole(SyntaxHighlighter::EditorCursor));
+    painter.fillRect(cursor, m_highlighter->colorForRole(SyntaxHighlighter::Cursor));
 }
 
 void Editor::historyBack()
@@ -743,8 +743,8 @@ void Editor::rehighlight()
         "QPlainTextEdit {"
         "   background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 %2, stop: 1 %1);"
         "}"
-    ).arg(m_highlighter->colorForRole(SyntaxHighlighter::DisplayBackground).name())
-     .arg(m_highlighter->colorForRole(SyntaxHighlighter::EditorFadeAway).name())
+    ).arg(m_highlighter->colorForRole(SyntaxHighlighter::Background).name())
+     .arg(m_highlighter->colorForRole(SyntaxHighlighter::EditorFade).name())
     );
 }
 

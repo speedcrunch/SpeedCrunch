@@ -1,5 +1,5 @@
 // This file is part of the SpeedCrunch project
-// Copyright (C) 2009, 2011, 2013 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2009, 2011, 2013, 2014 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -307,8 +307,8 @@ void ResultDisplay::updateScrollBarStyleSheet()
         "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {"
         "   background: %1;"
         "}"
-    ).arg(m_highlighter->colorForRole(SyntaxHighlighter::DisplayBackground).name())
-     .arg(m_highlighter->colorForRole(SyntaxHighlighter::DisplayScrollBar).name()));
+    ).arg(m_highlighter->colorForRole(SyntaxHighlighter::Background).name())
+     .arg(m_highlighter->colorForRole(SyntaxHighlighter::ScrollBar).name()));
 }
 
 FadeOverlay::FadeOverlay(QWidget* parent) : QWidget(parent)
@@ -339,7 +339,7 @@ void FadeOverlay::resizeEvent(QResizeEvent*)
 void FadeOverlay::updateGradients()
 {
     ResultDisplay* widget = qobject_cast<ResultDisplay*>(parent());
-    QColor backgroundColor = widget->m_highlighter->colorForRole(SyntaxHighlighter::DisplayBackground);
+    QColor backgroundColor = widget->m_highlighter->colorForRole(SyntaxHighlighter::Background);
 
     QLinearGradient gradient = QLinearGradient(0, 0, 0, OVERLAY_GRADIENT_HEIGHT);
     gradient.setColorAt(0, backgroundColor);
