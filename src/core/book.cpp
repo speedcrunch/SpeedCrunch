@@ -334,9 +334,9 @@ static QString makeRFAntennasPage()
         FORMULA_UNIT(Ed = E * sqrt(D), Ed = E&sdot;&radic;D, V&sdot;m<sup>-1</sup>)
         FORMULA_UNIT(Edp = E * sqrt(1.64), Edp = E&sdot;&radic;1.64, V&sdot;m<sup>-1</sup>)
         TABLE
-        VARIABLE(T<sub>c</sub></sub>) CAPTION(Book::tr("temperature (C)")) ROW
-        VARIABLE(T<sub>f</sub>) CAPTION(Book::tr("temperature (F)")) ROW
-        VARIABLE(T<sub>k</sub>) CAPTION(Book::tr("temperature (K)"))
+        VARIABLE(T<sub>c</sub>) CAPTION(Book::tr("temperature") + QString::fromUtf8(" (°C)")) ROW
+        VARIABLE(T<sub>f</sub>) CAPTION(Book::tr("temperature") + QString::fromUtf8(" (°F)")) ROW
+        VARIABLE(T<sub>k</sub>) CAPTION(Book::tr("temperature") + " (K)")
         _TABLE
         END;
 }
@@ -388,10 +388,10 @@ static QString makeRFSWRPage()
         FORMULA_UNIT(Pr = Pin * r%5e2, P<sub>r</sub> = P<sub>in</sub>&sdot;&rho;<sup>2</sup>, W)
         FORMULA_UNIT(Pt = Pin * (1-r%5e2), P<sub>t</sub> = P<sub>in</sub>&sdot;(1-&rho;<sup>2</sup>), W)
         TABLE
-        VARIABLE(P<sub>in</sub>) CAPTION(Book::tr("input power (W)")) ROW
-        VARIABLE(P<sub>r</sub>) CAPTION(Book::tr("reflected power (W)")) ROW
-        VARIABLE(P<sub>t</sub>) CAPTION(Book::tr("transmitted power (W)")) ROW
-        VARIABLE(R<sub>L</sub>) CAPTION(Book::tr("return loss (dB)")) ROW
+        VARIABLE(P<sub>in</sub>) CAPTION(Book::tr("input power") + " (W)") ROW
+        VARIABLE(P<sub>r</sub>) CAPTION(Book::tr("reflected power") + " (W)") ROW
+        VARIABLE(P<sub>t</sub>) CAPTION(Book::tr("transmitted power") + " (W)") ROW
+        VARIABLE(R<sub>L</sub>) CAPTION(Book::tr("return loss") + " (dB)") ROW
         VARIABLE(&rho;) CAPTION(Book::tr("reflection coefficient")) ROW
         VARIABLE(SWR) CAPTION(Book::tr("standing wave ratio")) ROW
         VARIABLE(Z) CAPTION(Book::tr("normalized impedance")) ROW
@@ -426,9 +426,9 @@ static QString makeUnitsTemperaturePage()
         FORMULA(Tc = (Tf - 32) / 1.8, T<sub>c</sub> = (T<sub>f</sub> - 32) / 1.8)
         FORMULA(Tc = Tk - 273.15, T<sub>c</sub> = T<sub>k</sub> - 273.15)
         TABLE
-        VARIABLE(T<sub>c</sub></sub>) CAPTION(Book::tr("temperature (C)")) ROW
-        VARIABLE(T<sub>f</sub>) CAPTION(Book::tr("temperature (F)")) ROW
-        VARIABLE(T<sub>k</sub>) CAPTION(Book::tr("temperature (K)"))
+        VARIABLE(T<sub>c</sub>) CAPTION(Book::tr("temperature") + QString::fromUtf8(" (°C)")) ROW
+        VARIABLE(T<sub>f</sub>) CAPTION(Book::tr("temperature") + QString::fromUtf8(" (°F)")) ROW
+        VARIABLE(T<sub>k</sub>) CAPTION(Book::tr("temperature") + " (K)")
         _TABLE
         END;
 }
