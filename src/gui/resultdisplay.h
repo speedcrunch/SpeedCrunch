@@ -39,6 +39,8 @@ public:
     bool isEmpty() const { return m_count == 0; }
 
 signals:
+    void shiftControlWheelDown();
+    void shiftControlWheelUp();
     void textCopied(const QString&);
     void textSelected(const QString&);
 

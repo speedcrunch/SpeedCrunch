@@ -261,7 +261,12 @@ void ResultDisplay::fullContentScrollEvent()
 
 void ResultDisplay::wheelEvent(QWheelEvent* event)
 {
-    if (event->modifiers() == Qt::ShiftModifier) {
+    if (event->modifiers() == (Qt::ShiftModifier | Qt::ControlModifier)) {
+        if (event->delta() > 0)
+            emit shiftControlWheelUp();
+        else
+            emit shiftControlWheelDown();
+    } else if (event->modifiers() == Qt::ShiftModifier) {
         if (event->delta() > 0)
             zoomIn();
         else
