@@ -78,6 +78,7 @@ void Constants::Private::populate()
     PUSH_CONSTANT("Magnetic Constant", QLatin1String("1.256637061e-6"), QString::fromUtf8("N/A²"));
     PUSH_CONSTANT("Planck's Constant", QLatin1String("6.62606896e-34"), QString::fromUtf8("J·s"));
     PUSH_CONSTANT("Speed of Light in Vacuum", QLatin1String("299792458"), QLatin1String("m/s"));
+    PUSH_CONSTANT("Standard Gravity", QLatin1String("9.80665"), QString::fromUtf8("m/s²"));
 
     // Electromagnetic.
     PUSH_CONSTANT("Bohr-Procopiu Magneton", QLatin1String("927.400949e-26"), QLatin1String("J/T"));
@@ -234,6 +235,8 @@ void Constants::Private::retranslateText()
     I18N_CONSTANT(Constants::tr("Magnetic Constant"));
     I18N_CONSTANT(Constants::tr("Planck's Constant"));
     I18N_CONSTANT(Constants::tr("Speed of Light in Vacuum"));
+    I18N_CONSTANT(Constants::tr("Standard Gravity"));
+
 
     // http://en.wikipedia.org/wiki/Physical_constant#Table_of_electromagnetic_constants
     cat = Constants::tr("Electromagnetic");
