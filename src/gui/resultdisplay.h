@@ -41,8 +41,7 @@ public:
 signals:
     void shiftControlWheelDown();
     void shiftControlWheelUp();
-    void textCopied(const QString&);
-    void textSelected(const QString&);
+    void expressionSelected(const QString&);
 
 public slots:
     void clear();
@@ -59,6 +58,7 @@ public slots:
     void zoomOut();
 
 protected:
+    virtual void mouseDoubleClickEvent(QMouseEvent*);
     virtual void wheelEvent(QWheelEvent*);
     virtual void resizeEvent(QResizeEvent*);
     virtual void timerEvent(QTimerEvent*);

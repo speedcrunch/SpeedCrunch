@@ -221,6 +221,19 @@ void ResultDisplay::zoomOut()
     setFont(newFont);
 }
 
+void ResultDisplay::mouseDoubleClickEvent(QMouseEvent*)
+{
+    QTextCursor cursor = textCursor();
+    cursor.movePosition(QTextCursor::StartOfBlock);
+    cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+    setTextCursor(cursor);
+    QString text = cursor.selectedText();
+    QString resultMarker = QLatin1String("= ");
+    if (text.startsWith(resultMarker))
+        text.remove(resultMarker);
+    emit expressionSelected(text);
+}
+
 void ResultDisplay::timerEvent(QTimerEvent* event)
 {
     if (event->timerId() != m_scrollTimer.timerId()) {
