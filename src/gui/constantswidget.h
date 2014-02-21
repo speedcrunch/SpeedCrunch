@@ -20,7 +20,7 @@
 #ifndef GUI_CONSTANTSWIDGET_H
 #define GUI_CONSTANTSWIDGET_H
 
-#include <QtGui/QWidget>
+#include <QtWidgets/QWidget>
 
 class QComboBox;
 class QLabel;

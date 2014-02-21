@@ -20,6 +20,7 @@
 #define CORE_BOOK_H
 
 #include <QtCore/QHash>
+#include <QtCore/QObject>
 #include <QtCore/QString>
 
 class Book : public QObject {

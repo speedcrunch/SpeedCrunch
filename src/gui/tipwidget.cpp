@@ -21,10 +21,10 @@
 
 #include <QtCore/QTimer>
 #include <QtCore/QTimeLine>
-#include <QtGui/QLabel>
-#include <QtGui/QPushButton>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QPushButton>
 #include <QtGui/QResizeEvent>
-#include <QtGui/QToolTip>
+#include <QtWidgets/QToolTip>
 
 struct TipWidget::Private
 {

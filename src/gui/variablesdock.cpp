@@ -24,10 +24,10 @@
 #include <QtCore/QEvent>
 #include <QtCore/QTimer>
 #include <QtGui/QIcon>
-#include <QtGui/QLabel>
-#include <QtGui/QLineEdit>
-#include <QtGui/QTreeWidget>
-#include <QtGui/QVBoxLayout>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
+#include <QtWidgets/QTreeWidget>
+#include <QtWidgets/QVBoxLayout>
 
 VariablesDock::VariablesDock(QWidget*  parent)
     : QDockWidget(parent)

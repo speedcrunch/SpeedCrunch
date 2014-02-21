@@ -20,7 +20,7 @@
 #ifndef GUI_EDITOR_H
 #define GUI_EDITOR_H
 
-#include <QtGui/QPlainTextEdit>
+#include <QtWidgets/QPlainTextEdit>
 
 // Uncomment to activate fade-away effect when the completion pop-up disappears.
 #define COMPLETION_FADE_EFFECT

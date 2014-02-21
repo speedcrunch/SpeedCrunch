@@ -20,7 +20,7 @@
 #ifndef GUI_FUNCTIONSDOCK_H
 #define GUI_FUNCTIONSDOCK_H
 
-#include <QtGui/QDockWidget>
+#include <QtWidgets/QDockWidget>
 
 class FunctionsWidget;
 

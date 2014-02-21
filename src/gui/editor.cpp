@@ -32,17 +32,17 @@
 #include <QtCore/QMimeData>
 #include <QtCore/QTimeLine>
 #include <QtCore/QTimer>
-#include <QtGui/QApplication>
-#include <QtGui/QDesktopWidget>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QDesktopWidget>
 #include <QtGui/QFont>
-#include <QtGui/QFrame>
-#include <QtGui/QHeaderView>
+#include <QtWidgets/QFrame>
+#include <QtWidgets/QHeaderView>
 #include <QtGui/QKeyEvent>
-#include <QtGui/QLineEdit>
+#include <QtWidgets/QLineEdit>
 #include <QtGui/QPainter>
-#include <QtGui/QPlainTextEdit>
-#include <QtGui/QStyle>
-#include <QtGui/QTreeWidget>
+#include <QtWidgets/QPlainTextEdit>
+#include <QtWidgets/QStyle>
+#include <QtWidgets/QTreeWidget>
 #include <QtGui/QWheelEvent>
 
 #include <algorithm>

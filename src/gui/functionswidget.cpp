@@ -25,11 +25,11 @@
 #include <QtCore/QEvent>
 #include <QtCore/QString>
 #include <QtCore/QTimer>
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QLabel>
-#include <QtGui/QLineEdit>
-#include <QtGui/QTreeWidget>
-#include <QtGui/QVBoxLayout>
+#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
+#include <QtWidgets/QTreeWidget>
+#include <QtWidgets/QVBoxLayout>
 
 FunctionsWidget::FunctionsWidget(QWidget* parent)
     : QWidget(parent)

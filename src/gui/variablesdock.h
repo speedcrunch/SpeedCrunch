@@ -20,7 +20,7 @@
 #ifndef GUI_VARIABLESDOCK_H
 #define GUI_VARIABLESDOCK_H
 
-#include <QtGui/QDockWidget>
+#include <QtWidgets/QDockWidget>
 
 class QTreeWidgetItem;
 class VariableListWidget;

@@ -22,7 +22,7 @@
 #include "gui/autohidelabel.h"
 
 #include <QtCore/QTimer>
-#include <QtGui/QToolTip>
+#include <QtWidgets/QToolTip>
 
 #define TIMER_INTERVAL 25
 #define FADE_STEP 16

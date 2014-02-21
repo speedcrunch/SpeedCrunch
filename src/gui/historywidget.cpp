@@ -20,8 +20,8 @@
 #include "gui/historywidget.h"
 
 #include <QtCore/QEvent>
-#include <QtGui/QListWidget>
-#include <QtGui/QVBoxLayout>
+#include <QtWidgets/QListWidget>
+#include <QtWidgets/QVBoxLayout>
 
 
 HistoryWidget::HistoryWidget(QWidget *parent)

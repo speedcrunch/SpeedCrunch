@@ -20,7 +20,7 @@
 #ifndef GUI_HISTORYDOCK_H
 #define GUI_HISTORYDOCK_H
 
-#include <QtGui/QDockWidget>
+#include <QtWidgets/QDockWidget>
 
 class HistoryWidget;
 class QListWidgetItem;

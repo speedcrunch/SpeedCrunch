@@ -22,7 +22,7 @@
 #define GUI_APPLICATION_H
 
 #include <QtCore/QScopedPointer>
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 
 class ApplicationPrivate;
 

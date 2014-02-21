@@ -20,7 +20,7 @@
 #ifndef TIPWIDGET_H
 #define TIPWIDGET_H
 
-#include <QtGui/QFrame>
+#include <QtWidgets/QFrame>
 
 #include <memory>
 

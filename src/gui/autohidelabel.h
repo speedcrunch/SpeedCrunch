@@ -23,7 +23,7 @@
 #define GUI_AUTOHIDELABEL_H
 
 #include <QtCore/QScopedPointer>
-#include <QtGui/QLabel>
+#include <QtWidgets/QLabel>
 
 class AutoHideLabelPrivate;
 

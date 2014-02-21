@@ -20,7 +20,7 @@
 #ifndef GUI_CONSTANTSDOCK_H
 #define GUI_CONSTANTSDOCK_H
 
-#include <QtGui/QDockWidget>
+#include <QtWidgets/QDockWidget>
 
 class ConstantsWidget;
 

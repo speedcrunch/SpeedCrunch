@@ -20,7 +20,7 @@
 #ifndef GUI_ABOUTBOX_H
 #define GUI_ABOUTBOX_H
 
-#include <QtGui/QDialog>
+#include <QtWidgets/QDialog>
 
 class AboutBox : public QDialog {
 public:

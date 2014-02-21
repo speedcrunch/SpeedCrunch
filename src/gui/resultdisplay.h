@@ -20,7 +20,7 @@
 #define GUI_RESULTDISPLAY_H
 
 #include <QtCore/QBasicTimer>
-#include <QtGui/QPlainTextEdit>
+#include <QtWidgets/QPlainTextEdit>
 
 class HNumber;
 class FadeOverlay;

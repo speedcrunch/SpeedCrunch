@@ -46,23 +46,23 @@
 #include <QtCore/QTimer>
 #include <QtCore/QTranslator>
 #include <QtCore/QUrl>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
+#include <QtWidgets/QAction>
+#include <QtWidgets/QApplication>
 #include <QtGui/QClipboard>
 #include <QtGui/QCloseEvent>
 #include <QtGui/QDesktopServices>
-#include <QtGui/QDesktopWidget>
-#include <QtGui/QFileDialog>
+#include <QtWidgets/QDesktopWidget>
+#include <QtWidgets/QFileDialog>
 #include <QtGui/QFont>
-#include <QtGui/QFontDialog>
-#include <QtGui/QInputDialog>
-#include <QtGui/QMenu>
-#include <QtGui/QMenuBar>
-#include <QtGui/QMessageBox>
-#include <QtGui/QPushButton>
-#include <QtGui/QScrollBar>
-#include <QtGui/QStatusBar>
-#include <QtGui/QVBoxLayout>
+#include <QtWidgets/QFontDialog>
+#include <QtWidgets/QInputDialog>
+#include <QtWidgets/QMenu>
+#include <QtWidgets/QMenuBar>
+#include <QtWidgets/QMessageBox>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QScrollBar>
+#include <QtWidgets/QStatusBar>
+#include <QtWidgets/QVBoxLayout>
 #ifdef Q_WS_X11
 #include <QtGui/QX11Info>
 
@@ -1297,7 +1297,7 @@ void MainWindow::showSessionLoadDialog()
             QMessageBox::critical(this, tr("Error"), errMsg.arg(fname));
             return;
         }
-        HNumber num(val.toAscii().data());
+        HNumber num(val.toLatin1().data());
         if (num != HMath::nan())
             m_evaluator->setVariable(var, num);
     }
@@ -1536,7 +1536,7 @@ void MainWindow::saveSession()
 void MainWindow::exportHtml()
 {
     QString fname = QFileDialog::getSaveFileName(this, tr("Export session as HTML"),
-        QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation));
+        QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).first());
 
     if (fname.isEmpty())
         return;
@@ -1557,7 +1557,7 @@ void MainWindow::exportHtml()
 void MainWindow::exportPlainText()
 {
     QString fname = QFileDialog::getSaveFileName(this, tr("Export session as plain text"),
-        QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation));
+        QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).first());
 
     if (fname.isEmpty())
         return;
@@ -1988,7 +1988,7 @@ void MainWindow::restoreVariables()
         Evaluator::Variable::Type type = Evaluator::Variable::UserDefined;
         if (list.at(0) == QLatin1String("ans"))
             type = Evaluator::Variable::BuiltIn;
-        m_evaluator->setVariable(list.at(0), HNumber(list.at(1).toAscii().data()), type);
+        m_evaluator->setVariable(list.at(0), HNumber(list.at(1).toLatin1().data()), type);
     }
 
     if (m_docks.variables)

@@ -26,7 +26,7 @@
 #include <QtCore/QDir>
 #include <QtCore/QLocale>
 #include <QtCore/QSettings>
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 #include <QtGui/QFont>
 
 static Settings* s_settingsInstance = 0;
@@ -70,12 +70,12 @@ void Settings::load()
     if (angleUnitStr != QLatin1String("r") && angleUnitStr != QLatin1String("d"))
         angleUnit = 'r';
     else
-        angleUnit = angleUnitStr.at(0).toAscii();
+        angleUnit = angleUnitStr.at(0).toLatin1();
 
     // Radix character special case.
     QString radixCharStr;
     radixCharStr = settings->value(key + QLatin1String("RadixCharacter"), 0).toString();
-    setRadixCharacter(radixCharStr.at(0).toAscii());
+    setRadixCharacter(radixCharStr.at(0).toLatin1());
 
     autoAns = settings->value(key + QLatin1String("AutoAns"), true).toBool();
     autoCalc = settings->value(key + QLatin1String("AutoCalc"), true).toBool();
@@ -97,7 +97,7 @@ void Settings::load()
     if (format != "g" && format != "f" && format != "e" && format != "n"&& format != "h" && format != "o" && format != "b")
         resultFormat = 'f';
     else
-        resultFormat = format.at(0).toAscii();
+        resultFormat = format.at(0).toLatin1();
 
     resultPrecision = settings->value(key + QLatin1String("Precision"), -1).toInt();
 
@@ -301,7 +301,7 @@ void Settings::save()
 
 char Settings::radixCharacter() const
 {
-    return s_radixCharacter == 0 ? QLocale().decimalPoint().toAscii() : s_radixCharacter;
+    return s_radixCharacter == 0 ? QLocale().decimalPoint().toLatin1() : s_radixCharacter;
 }
 
 bool Settings::isRadixCharacterAuto() const

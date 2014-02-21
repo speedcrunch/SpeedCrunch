@@ -3,8 +3,8 @@ QT_VERSION = $$split(QT_VERSION, ".")
 QT_VER_MAJ = $$member(QT_VERSION, 0)
 QT_VER_MIN = $$member(QT_VERSION, 1)
 
-lessThan(QT_VER_MAJ, 4) | lessThan(QT_VER_MIN, 8) {
-    error(Qt 4.8 or newer is required but version $$[QT_VERSION] was detected.)
+lessThan(QT_VER_MAJ, 5) {
+    error(Qt 5.0 or newer is required but version $$[QT_VERSION] was detected.)
 }
 
 DEFINES += SPEEDCRUNCH_VERSION=\\\"master\\\"
@@ -13,7 +13,7 @@ win32:DEFINES += _USE_MATH_DEFINES
 
 TEMPLATE = app
 TARGET = speedcrunch
-QT += network
+QT += widgets network
 
 DEPENDPATH += . \
               core \

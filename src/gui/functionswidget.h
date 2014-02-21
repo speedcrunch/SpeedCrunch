@@ -21,7 +21,7 @@
 #define GUI_FUNCTIONSWIDGET_H
 
 #include <QtCore/QList>
-#include <QtGui/QWidget>
+#include <QtWidgets/QWidget>
 
 class QEvent;
 class QLabel;

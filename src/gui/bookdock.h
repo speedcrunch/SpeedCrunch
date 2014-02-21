@@ -22,8 +22,8 @@
 
 #include "core/book.h"
 
-#include <QtGui/QDockWidget>
-#include <QtGui/QTextBrowser>
+#include <QtWidgets/QDockWidget>
+#include <QtWidgets/QTextBrowser>
 
 class QHBoxLayout;
 class QPushButton;

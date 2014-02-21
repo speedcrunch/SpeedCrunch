@@ -25,9 +25,9 @@
 #include "core/settings.h"
 
 #include <QtCore/QLatin1String>
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 #include <QtGui/QPalette>
-#include <QtGui/QPlainTextEdit>
+#include <QtWidgets/QPlainTextEdit>
 
 #define SH(x,r,g,b) (setColorForRole(SyntaxHighlighter::x, QColor(r,g,b)))
 
