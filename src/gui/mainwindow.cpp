@@ -2109,7 +2109,7 @@ void MainWindow::handleEditorTextChange()
         if (expr.isEmpty())
             return;
 
-        Tokens tokens = m_evaluator->scan(expr);
+        Tokens tokens = m_evaluator->scan(expr, Evaluator::NoAutoFix);
         if (tokens.count() == 1) {
             bool operatorCondition =
                 tokens.at(0).asOperator() == Token::Plus
