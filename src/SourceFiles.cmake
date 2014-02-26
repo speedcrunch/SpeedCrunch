@@ -14,6 +14,7 @@ core/constants.h
 core/evaluator.h
 core/functions.h
 #core/numberformatter.h
+core/pageserver.h
 #core/settings.h
 #gui/aboutbox.h
 gui/application.h
@@ -61,6 +62,7 @@ core/constants.cpp
 core/evaluator.cpp
 core/functions.cpp
 core/numberformatter.cpp
+core/pageserver.cpp
 core/settings.cpp
 gui/aboutbox.cpp
 gui/application.cpp

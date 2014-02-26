@@ -1,5 +1,5 @@
 // This file is part of the SpeedCrunch project
-// Copyright (C) 2013 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2013, 2014 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -433,42 +433,25 @@ static QString makeUnitsTemperaturePage()
         END;
 }
 
-Book::Book(QObject* parent)
-    : QObject(parent)
+void Book::createPages()
 {
-    m_toc["index"] = &makeIndexPage;
-    m_toc["algebra/quadratic-equation"] = &makeAlgebraQuadraticEquationPage;
-    m_toc["algebra/log-base-conversion"] = &makeAlgebraLogBaseConversionPage;
-    m_toc["electronics/ohmslaw"] = &makeElectronicsOhmsLawPage;
-    m_toc["electronics/power"] = &makeElectronicsPowerPage;
-    m_toc["electronics/reactance"] = &makeElectronicsReactancePage;
-    m_toc["electronics/resonance"] = &makeElectronicsResonancePage;
-    m_toc["geometry/circle"] = &makeGeometryCirclePage;
-    m_toc["geometry/cone"] = &makeGeometryConePage;
-    m_toc["geometry/cube"] = &makeGeometryCubePage;
-    m_toc["geometry/cylinder"] = &makeGeometryCylinderPage;
-    m_toc["geometry/sector"] = &makeGeometrySectorPage;
-    m_toc["geometry/sphere"] = &makeGeometrySpherePage;
-    m_toc["rf/antennas"] = &makeRFAntennasPage;
-    m_toc["rf/impedance"] = &makeRFImpedancePage;
-    m_toc["rf/propagation"] = &makeRFPropagationPage;
-    m_toc["rf/swr"] = &makeRFSWRPage;
-    m_toc["rf/wavelength"] = &makeRFWavelengthPage;
-    m_toc["units/temperature"] = &makeUnitsTemperaturePage;
-}
-
-QString Book::getPageContent(const QString& id)
-{
-    PageMaker maker = m_toc.value(id);
-    if (!maker)
-        return QString();
-    m_currentPageID = id;
-    return maker();
-}
-
-QString Book::getCurrentPageContent()
-{
-    if (m_currentPageID.isNull())
-        return QString();
-    return getPageContent(m_currentPageID);
+    addPage("index", &makeIndexPage);
+    addPage("algebra/quadratic-equation", &makeAlgebraQuadraticEquationPage);
+    addPage("algebra/log-base-conversion", &makeAlgebraLogBaseConversionPage);
+    addPage("electronics/ohmslaw", &makeElectronicsOhmsLawPage);
+    addPage("electronics/power", &makeElectronicsPowerPage);
+    addPage("electronics/reactance", &makeElectronicsReactancePage);
+    addPage("electronics/resonance", &makeElectronicsResonancePage);
+    addPage("geometry/circle", &makeGeometryCirclePage);
+    addPage("geometry/cone", &makeGeometryConePage);
+    addPage("geometry/cube", &makeGeometryCubePage);
+    addPage("geometry/cylinder", &makeGeometryCylinderPage);
+    addPage("geometry/sector", &makeGeometrySectorPage);
+    addPage("geometry/sphere", &makeGeometrySpherePage);
+    addPage("rf/antennas", &makeRFAntennasPage);
+    addPage("rf/impedance", &makeRFImpedancePage);
+    addPage("rf/propagation", &makeRFPropagationPage);
+    addPage("rf/swr", &makeRFSWRPage);
+    addPage("rf/wavelength", &makeRFWavelengthPage);
+    addPage("units/temperature", &makeUnitsTemperaturePage);
 }

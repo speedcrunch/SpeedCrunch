@@ -1,5 +1,5 @@
 // This file is part of the SpeedCrunch project
-// Copyright (C) 2013, 2014 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2014 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -16,21 +16,20 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#ifndef CORE_BOOK_H
-#define CORE_BOOK_H
-
 #include "core/pageserver.h"
 
-class Book : public PageServer {
-    Q_OBJECT
+QString PageServer::getPageContent(const QString& id)
+{
+    PageMaker maker = m_toc.value(id);
+    if (!maker)
+        return QString();
+    m_currentPageID = id;
+    return maker();
+}
 
-public:
-    explicit Book(QObject* parent = 0) : PageServer(parent) { createPages(); }
-    virtual void createPages();
-
-private:
-    Q_DISABLE_COPY(Book)
-
-};
-
-#endif // CORE_BOOK_H
+QString PageServer::getCurrentPageContent()
+{
+    if (m_currentPageID.isNull())
+        return QString();
+    return getPageContent(m_currentPageID);
+}
