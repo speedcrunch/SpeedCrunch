@@ -13,6 +13,7 @@ core/book.h
 core/constants.h
 core/evaluator.h
 core/functions.h
+core/manual.h
 #core/numberformatter.h
 core/pageserver.h
 #core/settings.h
@@ -28,6 +29,7 @@ gui/functionsdock.h
 gui/functionswidget.h
 gui/historydock.h
 gui/historywidget.h
+gui/manualwindow.h
 #gui/syntaxhighlighter.h
 gui/tipwidget.h
 gui/variablesdock.h
@@ -61,6 +63,7 @@ core/book.cpp
 core/constants.cpp
 core/evaluator.cpp
 core/functions.cpp
+core/manual.cpp
 core/numberformatter.cpp
 core/pageserver.cpp
 core/settings.cpp
@@ -70,6 +73,7 @@ gui/autohidelabel.cpp
 gui/bookdock.cpp
 gui/constantsdock.cpp
 gui/constantswidget.cpp
+gui/manualwindow.cpp
 gui/resultdisplay.cpp
 gui/editor.cpp
 gui/functionsdock.cpp

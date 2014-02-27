@@ -1,6 +1,5 @@
 // This file is part of the SpeedCrunch project
-// Copyright (C) 2007 Petri Damstén <damu@iki.fi>
-// Copyright (C) 2008-2014 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2014 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -17,32 +16,25 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#ifndef GUI_BOOKDOCK_H
-#define GUI_BOOKDOCK_H
+#ifndef GUI_MANUALWINDOW_H
+#define GUI_MANUALWINDOW_H
 
-#include "core/book.h"
+#include "core/manual.h"
 
-#include <QtGui/QDockWidget>
 #include <QtGui/QTextBrowser>
 
+class QCloseEvent;
+class QEvent;
 class QUrl;
 
-class TextBrowser : public QTextBrowser {
-    Q_OBJECT
-public:
-    TextBrowser(QWidget* parent) : QTextBrowser(parent) { }
-public slots:
-    virtual void setSource(const QUrl&) { }
-};
-
-class BookDock : public QDockWidget {
+class ManualWindow : public QTextBrowser {
     Q_OBJECT
 
 public:
-    BookDock(QWidget* parent = 0);
+    ManualWindow(QWidget* parent = 0);
 
 signals:
-    void expressionSelected(const QString&);
+    void windowClosed();
 
 public slots:
     void openPage(const QUrl&);
@@ -50,14 +42,11 @@ public slots:
 
 protected:
     virtual void changeEvent(QEvent*);
-
-private slots:
-    void handleAnchorClick(const QUrl&);
+	virtual void closeEvent(QCloseEvent*);
 
 private:
-    Q_DISABLE_COPY(BookDock)
-    Book* m_book;
-    TextBrowser* m_browser;
+    Q_DISABLE_COPY(ManualWindow)
+    Manual* m_manual;
 };
 
-#endif // GUI_BOOKDOCK_H
+#endif // GUI_MANUALWINDOW_H

@@ -22,13 +22,7 @@
 #include "core/book.h"
 #include "core/settings.h"
 
-#include <QtCore/QDir>
 #include <QtCore/QEvent>
-#include <QtCore/QFile>
-#include <QtCore/QLibraryInfo>
-#include <QtCore/QLocale>
-#include <QtGui/QComboBox>
-#include <QtGui/QPushButton>
 #include <QtGui/QTextBrowser>
 #include <QtGui/QVBoxLayout>
 

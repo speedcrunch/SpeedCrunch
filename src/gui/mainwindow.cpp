@@ -34,6 +34,7 @@
 #include "gui/functionsdock.h"
 #include "gui/historydock.h"
 #include "gui/historywidget.h"
+#include "gui/manualwindow.h"
 #include "gui/resultdisplay.h"
 #include "gui/syntaxhighlighter.h"
 #include "gui/tipwidget.h"
@@ -160,6 +161,7 @@ void MainWindow::createActions()
     m_actions.settingsResultFormatHexadecimal = new QAction(this);
     m_actions.settingsResultFormatOctal = new QAction(this);
     m_actions.settingsResultFormatScientific = new QAction(this);
+    m_actions.helpManual = new QAction(this);
     m_actions.helpUpdates = new QAction(this);
     m_actions.helpFeedback = new QAction(this);
     m_actions.helpCommunity = new QAction(this);
@@ -339,6 +341,7 @@ void MainWindow::setActionsText()
     m_actions.settingsDisplayFont->setText(MainWindow::tr("&Font..."));
     m_actions.settingsLanguage->setText(MainWindow::tr("&Language..."));
 
+    m_actions.helpManual->setText(MainWindow::tr("User &Manual"));
     m_actions.helpUpdates->setText(MainWindow::tr("Check &Updates"));
     m_actions.helpFeedback->setText(MainWindow::tr("Send &Feedback"));
     m_actions.helpCommunity->setText(MainWindow::tr("Join &Community"));
@@ -518,10 +521,13 @@ void MainWindow::createMenus()
 
     m_menus.help = new QMenu("", this);
     menuBar()->addMenu(m_menus.help);
+    m_menus.help->addAction(m_actions.helpManual);
+    m_menus.help->addSeparator();
     m_menus.help->addAction(m_actions.helpUpdates);
     m_menus.help->addAction(m_actions.helpFeedback);
     m_menus.help->addAction(m_actions.helpCommunity);
     m_menus.help->addAction(m_actions.helpNews);
+    m_menus.help->addSeparator();
     m_menus.help->addAction(m_actions.helpAbout);
 
     addActions(menuBar()->actions());
@@ -811,6 +817,7 @@ void MainWindow::createFixedConnections()
 
     connect(m_actions.settingsLanguage, SIGNAL(triggered()), SLOT(showLanguageChooserDialog()));
 
+    connect(m_actions.helpManual, SIGNAL(triggered()), SLOT(showManualWindow()));
     connect(m_actions.helpUpdates, SIGNAL(triggered()), SLOT(openUpdatesURL()));
     connect(m_actions.helpFeedback, SIGNAL(triggered()), SLOT(openFeedbackURL()));
     connect(m_actions.helpCommunity, SIGNAL(triggered()), SLOT(openCommunityURL()));
@@ -965,6 +972,19 @@ void MainWindow::applySettings()
     QTimer::singleShot(100, m_widgets.editor, SLOT(setFocus()));
 }
 
+void MainWindow::showManualWindow()
+{
+    if (m_widgets.manual) {
+        m_widgets.manual->raise();
+        m_widgets.manual->activateWindow();
+        return;
+    }
+
+    m_widgets.manual = new ManualWindow();
+    m_widgets.manual->show();
+    connect(m_widgets.manual, SIGNAL(windowClosed()), SLOT(handleManualClosed()));
+}
+
 void MainWindow::showReadyMessage()
 {
     showAutoCalcTip(tr("Type an expression here"));
@@ -1033,6 +1053,7 @@ MainWindow::MainWindow()
 
     m_widgets.trayIcon = 0;
     m_widgets.tip = 0;
+    m_widgets.manual = 0;
 
     m_menus.trayIcon = 0;
 
@@ -2080,6 +2101,13 @@ void MainWindow::clearTextEditSelection(QPlainTextEdit* edit)
     QTextCursor cursor = edit->textCursor();
     cursor.clearSelection();
     edit->setTextCursor(cursor);
+}
+
+void MainWindow::handleManualClosed()
+{
+    disconnect(m_widgets.manual);
+    m_widgets.manual->deleteLater();
+    m_widgets.manual = 0;
 }
 
 void MainWindow::handleDisplaySelectionChange()

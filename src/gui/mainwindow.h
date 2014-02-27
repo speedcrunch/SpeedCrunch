@@ -33,6 +33,7 @@ class Evaluator;
 class FunctionRepo;
 class FunctionsDock;
 class HistoryDock;
+class ManualWindow;
 class ResultDisplay;
 class Settings;
 class TipWidget;
@@ -82,6 +83,7 @@ private slots:
     void handleEditorTextChange();
     void handleDisplaySelectionChange();
     void handleEditorSelectionChange();
+    void handleManualClosed();
     void handleSystemTrayIconActivation(QSystemTrayIcon::ActivationReason);
     void hideAutoCalcTip();
     void increaseOpacity();
@@ -144,6 +146,7 @@ private slots:
     void showAutoCalcTip(const QString&);
     void showFontDialog();
     void showLanguageChooserDialog();
+    void showManualWindow();
 #ifndef Q_OS_MAC
     void showMenuBarTip();
 #endif
@@ -260,6 +263,7 @@ private:
         QAction* settingsRadixCharComma;
         QAction* settingsLanguage;
         QAction* helpTipOfTheDay;
+        QAction* helpManual;
         QAction* helpUpdates;
         QAction* helpFeedback;
         QAction* helpCommunity;
@@ -304,6 +308,7 @@ private:
         QWidget* root;
         TipWidget* tip;
         QSystemTrayIcon* trayIcon;
+        ManualWindow* manual;
     } m_widgets;
 
     struct {
