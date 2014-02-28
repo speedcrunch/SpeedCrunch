@@ -17,7 +17,7 @@ core/manual.h
 #core/numberformatter.h
 core/pageserver.h
 #core/settings.h
-#gui/aboutbox.h
+gui/aboutbox.h
 gui/application.h
 gui/autohidelabel.h
 gui/bookdock.h

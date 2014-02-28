@@ -23,6 +23,8 @@
 #include <QtGui/QDialog>
 
 class AboutBox : public QDialog {
+    Q_OBJECT
+
 public:
     explicit AboutBox(QWidget *parent = 0, Qt::WindowFlags f = 0);
 
