@@ -50,6 +50,7 @@ HEADERS += core/book.h \
            core/functions.h \
            #core/numberformatter.h \
            #core/settings.h \
+           core/manual.h \
            gui/aboutbox.h \
            gui/application.h \
            gui/autohidelabel.h \
@@ -66,6 +67,7 @@ HEADERS += core/book.h \
            gui/tipwidget.h \
            gui/variablesdock.h \
            gui/variablelistwidget.h \
+           gui/manualwindow.h \
            gui/mainwindow.h
            #math/floatcommon.h \
            #math/floatconfig.h \
@@ -92,7 +94,9 @@ SOURCES += main.cpp \
            core/constants.cpp \
            core/evaluator.cpp \
            core/functions.cpp \
+           core/manual.cpp \
            core/numberformatter.cpp \
+           core/pageserver.cpp \
            core/settings.cpp \
            gui/aboutbox.cpp \
            gui/application.cpp \
@@ -111,6 +115,7 @@ SOURCES += main.cpp \
            gui/variablesdock.cpp \
            gui/variablelistwidget.cpp \
            gui/mainwindow.cpp \
+           gui/manualwindow.cpp \
            math/floatcommon.c \
            math/floatconst.c \
            math/floatconvert.c \
