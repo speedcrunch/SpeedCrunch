@@ -30,7 +30,6 @@ public:
 
 private:
     Q_DISABLE_COPY(Book)
-
 };
 
 #endif // CORE_BOOK_H

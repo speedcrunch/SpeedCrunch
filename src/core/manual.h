@@ -30,7 +30,6 @@ public:
 
 private:
     Q_DISABLE_COPY(Manual)
-
 };
 
 #endif // CORE_MANUAL_H

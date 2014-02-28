@@ -23,8 +23,6 @@
 #include <QtCore/QString>
 
 class PageServer : public QObject {
-    Q_OBJECT
-
 public:
     explicit PageServer(QObject* parent = 0) : QObject(parent) { }
     QString getPageContent(const QString& id);
