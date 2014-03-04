@@ -100,10 +100,10 @@ static HNumber function_hyperpmf(Function*, const Function::ArgumentList&);
 static HNumber function_hypervar(Function*, const Function::ArgumentList&);
 static HNumber function_idiv(Function*, const Function::ArgumentList&);
 static HNumber function_integer(Function*, const Function::ArgumentList&);
-static HNumber function_lg(Function*, const Function::ArgumentList&);
+static HNumber function_lb(Function*, const Function::ArgumentList&);
 static HNumber function_ln(Function*, const Function::ArgumentList&);
 static HNumber function_lnGamma(Function*, const Function::ArgumentList&);
-static HNumber function_log(Function*, const Function::ArgumentList&);
+static HNumber function_lg(Function*, const Function::ArgumentList&);
 static HNumber function_mask(Function*, const Function::ArgumentList&);
 static HNumber function_max(Function*, const Function::ArgumentList&);
 static HNumber function_median(Function*, const Function::ArgumentList&);
@@ -273,13 +273,13 @@ HNumber function_ln(Function* f, const Function::ArgumentList& args)
     return HMath::ln(args.at(0));
 }
 
-HNumber function_log(Function* f, const Function::ArgumentList& args)
+HNumber function_lg(Function* f, const Function::ArgumentList& args)
 {
     ENSURE_ARGUMENT_COUNT(1);
-    return HMath::log(args.at(0));
+    return HMath::lg(args.at(0));
 }
 
-HNumber function_lg(Function* f, const Function::ArgumentList& args)
+HNumber function_lb(Function* f, const Function::ArgumentList& args)
 {
     ENSURE_ARGUMENT_COUNT(1);
     return HMath::lg(args.at(0));
@@ -757,9 +757,9 @@ void FunctionRepo::createFunctions()
     insert(new Function("csc", function_csc, this));
     insert(new Function("degrees", function_degrees, this));
     insert(new Function("exp", function_exp, this));
+    insert(new Function("lb", function_lb, this));
     insert(new Function("lg", function_lg, this));
     insert(new Function("ln", function_ln, this));
-    insert(new Function("log", function_log, this));
     insert(new Function("radians", function_radians, this));
     insert(new Function("sec", function_sec, this));
     insert(new Function("sin", function_sin, this));
@@ -850,10 +850,10 @@ void FunctionRepo::setNonTranslatableFunctionUsages()
     find("geomean")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
     find("hex")->setUsage(QString::fromLatin1("n"));
     find("int")->setUsage(QString::fromLatin1("x"));
+    find("lb")->setUsage(QString::fromLatin1("x"));
     find("lg")->setUsage(QString::fromLatin1("x"));
     find("ln")->setUsage(QString::fromLatin1("x"));
     find("lngamma")->setUsage(QString::fromLatin1("x"));
-    find("log")->setUsage(QString::fromLatin1("x"));
     find("max")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
     find("median")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
     find("min")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
@@ -941,10 +941,10 @@ void FunctionRepo::setFunctionNames()
     find("hypervar")->setName(Function::tr("Hypergeometric Distribution Variance"));
     find("idiv")->setName(Function::tr("Integer Quotient"));
     find("int")->setName(Function::tr("Integer Part"));
-    find("lg")->setName(Function::tr("Base-2 Logarithm"));
+    find("lb")->setName(Function::tr("Binary Logarithm"));
+    find("lg")->setName(Function::tr("Common Logarithm"));
     find("ln")->setName(Function::tr("Natural Logarithm"));
     find("lngamma")->setName("ln(abs(Gamma))");
-    find("log")->setName(Function::tr("Base-10 Logarithm"));
     find("mask")->setName(Function::tr("Mask to a bit size"));
     find("max")->setName(Function::tr("Maximum"));
     find("median")->setName(Function::tr("Median Value (50th Percentile)"));

@@ -152,7 +152,7 @@ float_arcosh(
 }
 
 char
-float_log(
+float_lg(
   floatnum x,
   int digits)
 {
@@ -175,7 +175,7 @@ float_log(
 }
 
 char
-float_lg(
+float_lb(
   floatnum x,
   int digits)
 {

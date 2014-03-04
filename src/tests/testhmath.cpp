@@ -716,37 +716,37 @@ void test_functions()
   CHECK_PRECISE( HMath::ln( "100" ),
                  "4.60517018598809136803598290936872841520220297725755"  );
 
-  // log
-  CHECK( HMath::log( "NaN"   ), "NaN" );
-  CHECK( HMath::log( "-1"    ), "NaN" );
-  CHECK( HMath::log( "0"     ), "NaN" );
-  CHECK( HMath::log( "1e-5"  ), "-5"  );
-  CHECK( HMath::log( "1e-4"  ), "-4"  );
-  CHECK( HMath::log( "1e-3"  ), "-3"  );
-  CHECK( HMath::log( "10"    ), "1"   );
-  CHECK( HMath::log( "100"   ), "2"   );
-  CHECK( HMath::log( "1000"  ), "3"   );
-  CHECK( HMath::log( "10000" ), "4"   );
-  CHECK( HMath::log( "1e5"   ), "5"   );
-  CHECK( HMath::log( "1e6"   ), "6"   );
-  CHECK( HMath::log( "1e7"   ), "7"   );
-  CHECK( HMath::log( "1e8"   ), "8"   );
-  CHECK( HMath::log( "1e9"   ), "9"   );
-  CHECK( HMath::log( "1e10"  ), "10"  );
-  CHECK( HMath::log( "0.00000000001" ), "-11" );
-
   // lg
-  CHECK( HMath::lg( "NaN" ), "NaN" );
-  CHECK( HMath::lg( "-1"  ), "NaN" );
-  CHECK( HMath::lg( "0"   ), "NaN" );
-  CHECK( HMath::lg( "1"   ), "0"   );
-  CHECK( HMath::lg( "2"   ), "1"   );
-  CHECK( HMath::lg( "4"   ), "2"   );
-  CHECK( HMath::lg( "8"   ), "3"   );
-  CHECK( HMath::lg( "16"  ), "4"   );
-  CHECK( HMath::lg( "32"  ), "5"   );
-  CHECK( HMath::lg( "32"  ), "5"   );
-  CHECK( HMath::lg( "0.00000000001" ), "-36.54120904376098582657" );
+  CHECK( HMath::lg( "NaN"   ), "NaN" );
+  CHECK( HMath::lg( "-1"    ), "NaN" );
+  CHECK( HMath::lg( "0"     ), "NaN" );
+  CHECK( HMath::lg( "1e-5"  ), "-5"  );
+  CHECK( HMath::lg( "1e-4"  ), "-4"  );
+  CHECK( HMath::lg( "1e-3"  ), "-3"  );
+  CHECK( HMath::lg( "10"    ), "1"   );
+  CHECK( HMath::lg( "100"   ), "2"   );
+  CHECK( HMath::lg( "1000"  ), "3"   );
+  CHECK( HMath::lg( "10000" ), "4"   );
+  CHECK( HMath::lg( "1e5"   ), "5"   );
+  CHECK( HMath::lg( "1e6"   ), "6"   );
+  CHECK( HMath::lg( "1e7"   ), "7"   );
+  CHECK( HMath::lg( "1e8"   ), "8"   );
+  CHECK( HMath::lg( "1e9"   ), "9"   );
+  CHECK( HMath::lg( "1e10"  ), "10"  );
+  CHECK( HMath::lg( "0.00000000001" ), "-11" );
+
+  // lb
+  CHECK( HMath::lb( "NaN" ), "NaN" );
+  CHECK( HMath::lb( "-1"  ), "NaN" );
+  CHECK( HMath::lb( "0"   ), "NaN" );
+  CHECK( HMath::lb( "1"   ), "0"   );
+  CHECK( HMath::lb( "2"   ), "1"   );
+  CHECK( HMath::lb( "4"   ), "2"   );
+  CHECK( HMath::lb( "8"   ), "3"   );
+  CHECK( HMath::lb( "16"  ), "4"   );
+  CHECK( HMath::lb( "32"  ), "5"   );
+  CHECK( HMath::lb( "32"  ), "5"   );
+  CHECK( HMath::lb( "0.00000000001" ), "-36.54120904376098582657" );
 
   // sin
   CHECK( HMath::sin( "NaN"   ), "NaN" );

@@ -1138,24 +1138,24 @@ HNumber HMath::ln( const HNumber & x )
 }
 
 /**
- * Returns the base-10 logarithm of x.
- * If x is non positive, returns NaN.
- */
-HNumber HMath::log( const HNumber & x )
-{
-  HNumber result;
-  call1Arg(result.d, x.d, float_log);
-  return result;
-}
-
-/**
- * Returns the base-2 logarithm of x.
+ * Returns the common logarithm of x.
  * If x is non positive, returns NaN.
  */
 HNumber HMath::lg( const HNumber & x )
 {
   HNumber result;
   call1Arg(result.d, x.d, float_lg);
+  return result;
+}
+
+/**
+ * Returns the binary logarithm of x.
+ * If x is non positive, returns NaN.
+ */
+HNumber HMath::lb( const HNumber & x )
+{
+  HNumber result;
+  call1Arg(result.d, x.d, float_lb);
   return result;
 }
 

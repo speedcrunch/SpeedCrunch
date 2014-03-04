@@ -253,7 +253,7 @@ void test_function_basic()
     CHECK_EVAL("(1+1)!^2", "4");
     CHECK_EVAL_KNOWN_ISSUE("frac 3!", "0", 451);
 
-    CHECK_EVAL_KNOWN_ISSUE("log 10^2", "2", 451);
+    CHECK_EVAL_KNOWN_ISSUE("lg 10^2", "2", 451);
 
     CHECK_EVAL("(-27)^(1/3)", "-3");
     CHECK_EVAL("(-27)^(-1/3)", "-0.33333333333333333333");
@@ -495,7 +495,7 @@ void test_auto_fix_ans()
     CHECK_AUTOFIX("tan", "tan(ans)");
     CHECK_AUTOFIX("abs", "abs(ans)");
     CHECK_AUTOFIX("exp", "exp(ans)");
-    CHECK_AUTOFIX("log", "log(ans)");
+    CHECK_AUTOFIX("lg", "lg(ans)");
 }
 
 void test_auto_fix_trailing_equal()
