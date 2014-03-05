@@ -1,6 +1,6 @@
 // HMath: C++ high precision math routines
 // Copyright (C) 2004 Ariya Hidayat <ariya.hidayat@gmail.com>
-// Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2007-2008, 2014 Helder Correia <helder.pereira.correia@gmail.com>
 // Copyright (C) 2008 Wolf Lammen
 //
 // This program is free software; you can redistribute it and/or
@@ -121,7 +121,7 @@ class HMath
     static HNumber cbrt( const HNumber & n );
     static HNumber raise( const HNumber & n1, int n );
     static HNumber raise( const HNumber & n1, const HNumber & n2 );
-    static HNumber sign( const HNumber & x );
+    static HNumber sgn( const HNumber & x );
     // EXPONENTIAL FUNCTION AND RELATED
     static HNumber exp( const HNumber & x );
     static HNumber ln( const HNumber & x );
@@ -173,4 +173,3 @@ class HMath
 std::ostream & operator<<( std::ostream &, const HNumber & );
 
 #endif
-

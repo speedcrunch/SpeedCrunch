@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2004-2006 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2007-2008, 2014 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -432,13 +432,13 @@ void test_functions()
   CHECK_PRECISE( HMath::cbrt( -20 ),
                  "-2.71441761659490657151808946967948920480510776948910" );
 
-  // sign
-  CHECK( HMath::sign( "NaN" ), "NaN" );
-  CHECK( HMath::sign( 0     ), "0"   );
-  CHECK( HMath::sign( 1     ), "1"   );
-  CHECK( HMath::sign( -1    ), "-1"  );
-  CHECK( HMath::sign( 2     ), "1"   );
-  CHECK( HMath::sign( -2    ), "-1"  );
+  // sgn
+  CHECK( HMath::sgn( "NaN" ), "NaN" );
+  CHECK( HMath::sgn( 0     ), "0"   );
+  CHECK( HMath::sgn( 1     ), "1"   );
+  CHECK( HMath::sgn( -1    ), "-1"  );
+  CHECK( HMath::sgn( 2     ), "1"   );
+  CHECK( HMath::sgn( -2    ), "-1"  );
 
   // factorial/1
   CHECK( HMath::factorial( "NaN"  ), "NaN"   );

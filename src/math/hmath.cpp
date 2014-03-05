@@ -1,6 +1,6 @@
 // HMath: C++ high precision math routines
 // Copyright (C) 2004 Ariya Hidayat <ariya.hidayat@gmail.com>
-// Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2007-2008, 2014 Helder Correia <helder.pereira.correia@gmail.com>
 // Copyright (C) 2008, 2009 Wolf Lammen
 //
 // This program is free software; you can redistribute it and/or
@@ -1324,9 +1324,9 @@ HNumber HMath::lnGamma( const HNumber & x )
 }
 
 /**
- * Returns the sign of x.
+ * Returns signum x.
  */
-HNumber HMath::sign( const HNumber & x )
+HNumber HMath::sgn( const HNumber & x )
 {
   if (x.isNan())
     return HMath::nan(checkNaNParam(*x.d));

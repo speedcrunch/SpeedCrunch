@@ -122,7 +122,7 @@ static HNumber function_product(Function*, const Function::ArgumentList&);
 static HNumber function_radians(Function*, const Function::ArgumentList&);
 static HNumber function_round(Function*, const Function::ArgumentList&);
 static HNumber function_sec(Function*, const Function::ArgumentList&);
-static HNumber function_sign(Function*, const Function::ArgumentList&);
+static HNumber function_sgn(Function*, const Function::ArgumentList&);
 static HNumber function_sin(Function*, const Function::ArgumentList&);
 static HNumber function_sinh(Function*, const Function::ArgumentList&);
 static HNumber function_sqrt(Function*, const Function::ArgumentList&);
@@ -426,10 +426,10 @@ HNumber function_lnGamma(Function* f, const Function::ArgumentList& args)
     return HMath::lnGamma(args.at(0));
 }
 
-HNumber function_sign(Function* f, const Function::ArgumentList& args)
+HNumber function_sgn(Function* f, const Function::ArgumentList& args)
 {
     ENSURE_ARGUMENT_COUNT(1);
-    return HMath::sign(args.at(0));
+    return HMath::sgn(args.at(0));
 }
 
 HNumber function_ncr(Function* f, const Function::ArgumentList& args)
@@ -715,7 +715,7 @@ void FunctionRepo::createFunctions()
     insert(new Function("oct", function_oct, this));
     insert(new Function("product", function_product, this));
     insert(new Function("round", function_round, this));
-    insert(new Function("sign", function_sign, this));
+    insert(new Function("sgn", function_sgn, this));
     insert(new Function("sqrt", function_sqrt, this));
     insert(new Function("stddev", function_stddev, this));
     insert(new Function("sum", function_sum, this));
@@ -866,7 +866,7 @@ void FunctionRepo::setNonTranslatableFunctionUsages()
     find("radians")->setUsage(QString::fromLatin1("x"));
     find("round")->setUsage(QString::fromLatin1("x"));
     find("sec")->setUsage(QString::fromLatin1("x)"));
-    find("sign")->setUsage(QString::fromLatin1("x"));
+    find("sgn")->setUsage(QString::fromLatin1("x"));
     find("sin")->setUsage(QString::fromLatin1("x"));
     find("sinh")->setUsage(QString::fromLatin1("x"));
     find("sqrt")->setUsage(QString::fromLatin1("x"));
@@ -965,7 +965,7 @@ void FunctionRepo::setFunctionNames()
     find("sec")->setName(Function::tr("Secant"));
     find("shl")->setName(Function::tr("Arithmetic Shift Left"));
     find("shr")->setName(Function::tr("Arithmetic Shift Right"));
-    find("sign")->setName(Function::tr("Signum"));
+    find("sgn")->setName(Function::tr("Signum"));
     find("sin")->setName(Function::tr("Sine"));
     find("sinh")->setName(Function::tr("Hyperbolic Sine"));
     find("sqrt")->setName(Function::tr("Square Root"));
@@ -974,7 +974,7 @@ void FunctionRepo::setFunctionNames()
     find("tan")->setName(Function::tr("Tangent"));
     find("tanh")->setName(Function::tr("Hyperbolic Tangent"));
     find("trunc")->setName(Function::tr("Truncation"));
-    find("unmask")->setName(Function::tr("Sign-extent a value"));
+    find("unmask")->setName(Function::tr("Sign-extend a value"));
     find("variance")->setName(Function::tr("Variance"));
     find("xor")->setName(Function::tr("Logical XOR"));
 }
