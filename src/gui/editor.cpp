@@ -642,37 +642,32 @@ void Editor::focusOutEvent(QFocusEvent* event)
 
 void Editor::keyPressEvent(QKeyEvent* event)
 {
-    if (event->key() == Qt::Key_Enter) {
+    int key = event->key();
+
+    switch (key) {
+    case Qt::Key_Enter:
+    case Qt::Key_Return:
         QTimer::singleShot(0, this, SLOT(triggerEnter()));
         event->accept();
         return;
-    }
 
-    if (event->key() == Qt::Key_Return) {
-        QTimer::singleShot(0, this, SLOT(triggerEnter()));
-        event->accept();
-        return;
-    }
-
-    if (event->key() == Qt::Key_Up) {
+    case Qt::Key_Up:
         if (event->modifiers() & Qt::ShiftModifier)
             emit shiftUpPressed();
         else
             historyBack();
         event->accept();
         return;
-    }
 
-    if (event->key() == Qt::Key_Down) {
+    case Qt::Key_Down:
         if (event->modifiers() & Qt::ShiftModifier)
             emit shiftDownPressed();
         else
             historyForward();
         event->accept();
         return;
-    }
 
-    if (event->key() == Qt::Key_PageUp) {
+    case Qt::Key_PageUp:
         if (event->modifiers() & Qt::ShiftModifier)
             emit shiftPageUpPressed();
         else if (event->modifiers() & Qt::ControlModifier)
@@ -681,9 +676,8 @@ void Editor::keyPressEvent(QKeyEvent* event)
             emit pageUpPressed();
         event->accept();
         return;
-    }
 
-    if (event->key() == Qt::Key_PageDown) {
+    case Qt::Key_PageDown:
         if (event->modifiers() & Qt::ShiftModifier)
             emit shiftPageDownPressed();
         else if (event->modifiers() & Qt::ControlModifier)
@@ -692,26 +686,24 @@ void Editor::keyPressEvent(QKeyEvent* event)
             emit pageDownPressed();
         event->accept();
         return;
-    }
 
-    if (event->key() == Qt::Key_Left
-        || event->key() == Qt::Key_Right
-        || event->key() == Qt::Key_Home
-        || event->key() == Qt::Key_End)
-    {
+    case Qt::Key_Left:
+    case Qt::Key_Right:
+    case Qt::Key_Home:
+    case Qt::Key_End:
         checkMatching();
-    }
 
-    if (event->key() == Qt::Key_Space
-        && event->modifiers() == Qt::ControlModifier
-        && !m_constantCompletion)
-    {
-        m_constantCompletion = new ConstantCompletion(this);
-        connect(m_constantCompletion, SIGNAL(selectedCompletion(const QString&)), SLOT(insertConstant(const QString&)));
-        connect(m_constantCompletion, SIGNAL(canceledCompletion()), SLOT(cancelConstantCompletion()));
-        m_constantCompletion->showCompletion();
-        event->accept();
-        return;
+    case Qt::Key_Space:
+        if (event->modifiers() == Qt::ControlModifier && !m_constantCompletion) {
+            m_constantCompletion = new ConstantCompletion(this);
+            connect(m_constantCompletion, SIGNAL(selectedCompletion(const QString&)), SLOT(insertConstant(const QString&)));
+            connect(m_constantCompletion, SIGNAL(canceledCompletion()), SLOT(cancelConstantCompletion()));
+            m_constantCompletion->showCompletion();
+            event->accept();
+            return;
+        }
+
+    default:;
     }
 
     if (event->matches(QKeySequence::Copy)) {
@@ -795,41 +787,41 @@ EditorCompletion::~EditorCompletion()
 
 bool EditorCompletion::eventFilter(QObject* object, QEvent* event)
 {
-    if (object == m_popup) {
+    if (object != m_popup)
+        return false;
 
-        if (event->type() == QEvent::KeyPress) {
-            QKeyEvent* keyEvent = (QKeyEvent*)event;
+    if (event->type() == QEvent::KeyPress) {
+        int key = static_cast<QKeyEvent*>(event)->key();
 
-            if (keyEvent->key() == Qt::Key_Enter
-                || keyEvent->key() == Qt::Key_Return
-                || keyEvent->key() == Qt::Key_Tab)
-            {
-                doneCompletion();
-                return true;
-            }
+        switch (key) {
+        case Qt::Key_Enter:
+        case Qt::Key_Return:
+        case Qt::Key_Tab:
+            doneCompletion();
+            return true;
 
-            if (keyEvent->key() == Qt::Key_Up
-                || keyEvent->key() == Qt::Key_Down
-                || keyEvent->key() == Qt::Key_Home
-                || keyEvent->key() == Qt::Key_End
-                || keyEvent->key() == Qt::Key_PageUp
-                || keyEvent->key() == Qt::Key_PageDown)
-            {
-                return false;
-            }
+        case Qt::Key_Up:
+        case Qt::Key_Down:
+        case Qt::Key_Home:
+        case Qt::Key_End:
+        case Qt::Key_PageUp:
+        case Qt::Key_PageDown:
+            doneCompletion();
+            return true;
 
+        default:
             m_popup->hide();
             m_editor->setFocus();
-            if (keyEvent->key() != Qt::Key_Escape)
+            if (key != Qt::Key_Escape)
                 QApplication::sendEvent(m_editor, event);
             return true;
         }
+    }
 
-        if (event->type() == QEvent::MouseButtonPress) {
-            m_popup->hide();
-            m_editor->setFocus();
-            return true;
-        }
+    if (event->type() == QEvent::MouseButtonPress) {
+        m_popup->hide();
+        m_editor->setFocus();
+        return true;
     }
 
     return false;
@@ -1038,33 +1030,30 @@ bool ConstantCompletion::eventFilter(QObject* object, QEvent* event)
     if (object == m_constantWidget) {
 
         if (event->type() == QEvent::KeyPress) {
-            QKeyEvent* keyEvent = (QKeyEvent*)event;
+            int key = static_cast<QKeyEvent*>(event)->key();
 
-            if (keyEvent->key() == Qt::Key_Enter
-                || keyEvent->key() == Qt::Key_Return
-                || keyEvent->key() == Qt::Key_Tab)
-            {
+            switch (key) {
+            case Qt::Key_Enter:
+            case Qt::Key_Return:
+            case Qt::Key_Tab:
                 doneCompletion();
                 return true;
-            }
 
-            if (keyEvent->key() == Qt::Key_Left) {
+            case Qt::Key_Left:
                 showCategory();
                 return true;
-            }
 
-            if (keyEvent->key() == Qt::Key_Right
-                || keyEvent->key() == Qt::Key_Up
-                || keyEvent->key() == Qt::Key_Down
-                || keyEvent->key() == Qt::Key_Home
-                || keyEvent->key() == Qt::Key_End
-                || keyEvent->key() == Qt::Key_PageUp
-                || keyEvent->key() == Qt::Key_PageDown)
-            {
+            case Qt::Key_Right:
+            case Qt::Key_Up:
+            case Qt::Key_Down:
+            case Qt::Key_Home:
+            case Qt::Key_End:
+            case Qt::Key_PageUp:
+            case Qt::Key_PageDown:
                 return false;
             }
 
-            if (keyEvent->key() != Qt::Key_Escape)
+            if (key != Qt::Key_Escape)
                 QApplication::sendEvent(m_editor, event);
             emit canceledCompletion();
             return true;
@@ -1074,27 +1063,25 @@ bool ConstantCompletion::eventFilter(QObject* object, QEvent* event)
     if (object == m_categoryWidget) {
 
         if (event->type() == QEvent::KeyPress) {
-            QKeyEvent* keyEvent = (QKeyEvent*)event;
+            int key = static_cast<QKeyEvent*>(event)->key();
 
-            if (keyEvent->key() == Qt::Key_Enter
-                || keyEvent->key() == Qt::Key_Return
-                || keyEvent->key() == Qt::Key_Right)
-            {
+            switch (key) {
+            case Qt::Key_Enter:
+            case Qt::Key_Return:
+            case Qt::Key_Right:
                 showConstants();
                 return true;
-            }
 
-            if (keyEvent->key() == Qt::Key_Up
-                || keyEvent->key() == Qt::Key_Down
-                || keyEvent->key() == Qt::Key_Home
-                || keyEvent->key() == Qt::Key_End
-                || keyEvent->key() == Qt::Key_PageUp
-                || keyEvent->key() == Qt::Key_PageDown)
-            {
+            case Qt::Key_Up:
+            case Qt::Key_Down:
+            case Qt::Key_Home:
+            case Qt::Key_End:
+            case Qt::Key_PageUp:
+            case Qt::Key_PageDown:
                 return false;
             }
 
-            if (keyEvent->key() != Qt::Key_Escape)
+            if (key != Qt::Key_Escape)
                 QApplication::sendEvent(m_editor, event);
             emit canceledCompletion();
             return true;
