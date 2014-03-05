@@ -692,6 +692,7 @@ void Editor::keyPressEvent(QKeyEvent* event)
     case Qt::Key_Home:
     case Qt::Key_End:
         checkMatching();
+        checkAutoCalc();
 
     case Qt::Key_Space:
         if (event->modifiers() == Qt::ControlModifier && !m_constantCompletion) {
