@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2004, 2005, 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2007-2009, 2013 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2007-2009, 2013, 2014 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -22,9 +22,6 @@
 
 #include <QtGui/QPlainTextEdit>
 
-// Uncomment to activate fade-away effect when the completion pop-up disappears.
-#define COMPLETION_FADE_EFFECT
-
 struct Constant;
 class ConstantCompletion;
 class EditorCompletion;
@@ -45,7 +42,6 @@ class Editor : public QPlainTextEdit {
 
 public:
     explicit Editor(QWidget* parent = 0);
-    ~Editor();
 
     bool isAutoCalcEnabled() const;
     bool isAutoCompletionEnabled() const;
@@ -150,9 +146,6 @@ signals:
 public slots:
     void doneCompletion();
     void selectItem(const QString&);
-
-protected slots:
-    void fade(int);
 
 private:
     Q_DISABLE_COPY(EditorCompletion)

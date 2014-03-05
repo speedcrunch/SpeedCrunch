@@ -98,10 +98,6 @@ Editor::Editor(QWidget* parent)
     setFixedHeight(sizeHint().height() + 4);
 }
 
-Editor::~Editor()
-{
-}
-
 QString Editor::text() const
 {
     return toPlainText();
@@ -790,13 +786,6 @@ EditorCompletion::EditorCompletion(Editor* editor)
     m_popup->setFocusPolicy(Qt::NoFocus);
     m_popup->setFocusProxy(editor);
     m_popup->setFrameStyle(QFrame::Box | QFrame::Plain);
-
-#ifdef COMPLETION_FADE_EFFECT
-    m_fader = new QTimeLine(500, this);
-    m_fader->setFrameRange(0, 100);
-    m_fader->setCurveShape(QTimeLine::EaseInCurve);
-    connect(m_fader, SIGNAL(frameChanged(int)), SLOT(fade(int)));
-#endif
 }
 
 EditorCompletion::~EditorCompletion()
@@ -848,13 +837,7 @@ bool EditorCompletion::eventFilter(QObject* object, QEvent* event)
 
 void EditorCompletion::doneCompletion()
 {
-#ifdef COMPLETION_FADE_EFFECT
-    if (m_fader->state() == QTimeLine::NotRunning)
-        m_fader->start();
-    QTimer::singleShot(750, m_popup, SLOT(hide())); // Sentinel.
-#else
     m_popup->hide();
-#endif
     m_editor->setFocus();
     QTreeWidgetItem* item = m_popup->currentItem();
     emit selectedCompletion(item ? item->text(0) : QString());
@@ -864,11 +847,6 @@ void EditorCompletion::showCompletion(const QStringList& choices)
 {
     if (!choices.count())
         return;
-
-#ifdef COMPLETION_FADE_EFFECT
-    m_fader->stop();
-    fade(0);
-#endif
 
     m_popup->setUpdatesEnabled(false);
     m_popup->clear();
@@ -918,11 +896,6 @@ void EditorCompletion::selectItem(const QString& item)
     QList<QTreeWidgetItem*> targets = m_popup->findItems(item, Qt::MatchExactly);
     if (targets.count() > 0)
         m_popup->setCurrentItem(targets.at(0));
-}
-
-void EditorCompletion::fade(int v)
-{
-    m_popup->setWindowOpacity((qreal)(100-v) / 100);
 }
 
 ConstantCompletion::ConstantCompletion(Editor* editor)
