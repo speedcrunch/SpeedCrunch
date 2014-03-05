@@ -270,7 +270,7 @@ void Editor::doMatchingLeft()
 
     // Check for right par.
     QString subtext = text().left(currentPosition);
-    Tokens tokens = m_evaluator->scan(subtext);
+    Tokens tokens = m_evaluator->scan(subtext, Evaluator::NoAutoFix);
     if (!tokens.valid() || tokens.count() < 1)
         return;
     Token lastToken = tokens.at(tokens.count() - 1);
