@@ -371,7 +371,7 @@ void Editor::triggerAutoComplete()
     // Tokenize the expression (this is very fast).
     const int currentPosition = textCursor().position();
     QString subtext = text().left(currentPosition);
-    const Tokens tokens = m_evaluator->scan(subtext);
+    const Tokens tokens = m_evaluator->scan(subtext, Evaluator::NoAutoFix);
     if (!tokens.valid() || tokens.count() < 1)
         return;
 
@@ -420,24 +420,6 @@ void Editor::triggerAutoComplete()
     if (choices.count() == 1)
         if (choices.at(0).toLower() == id.toLower())
             return;
-
-    // One match, complete it for the user.
-    if (choices.count() == 1) {
-        QString str = choices.at(0).split(':').at(0);
-        str = str.remove(0, id.length());
-        const int currentPosition = textCursor().position();
-        if (textCursor().selectionStart() == textCursor().selectionEnd()) {
-            blockSignals(true);
-            QTextCursor cursor = textCursor();
-            cursor.clearSelection();
-            cursor.insertText(str);
-            cursor.setPosition(currentPosition);
-            cursor.setPosition(currentPosition+str.length(), QTextCursor::KeepAnchor);
-            setTextCursor(cursor);
-            blockSignals(false);
-        }
-        return;
-    }
 
     // Present the user with completion choices.
     m_completion->showCompletion(choices);
