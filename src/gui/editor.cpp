@@ -929,8 +929,8 @@ ConstantCompletion::ConstantCompletion(Editor* editor)
 
     connect(m_constantWidget, SIGNAL(itemClicked(QTreeWidgetItem*, int)), SLOT(doneCompletion()));
 
-    m_slider = new QTimeLine(250, m_popup);
-    m_slider->setCurveShape(QTimeLine::EaseInCurve);
+    m_slider = new QTimeLine(100, m_popup);
+    m_slider->setCurveShape(QTimeLine::LinearCurve);
     connect(m_slider, SIGNAL(frameChanged(int)), SLOT(setHorizontalPosition(int)));
 
     const Constants* constants = Constants::instance();
