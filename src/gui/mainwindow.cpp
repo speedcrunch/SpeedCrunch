@@ -27,7 +27,6 @@
 #include "core/functions.h"
 #include "core/settings.h"
 #include "gui/aboutbox.h"
-#include "gui/autohidelabel.h"
 #include "gui/bookdock.h"
 #include "gui/constantsdock.h"
 #include "gui/editor.h"
@@ -57,10 +56,12 @@
 #include <QtGui/QFont>
 #include <QtGui/QFontDialog>
 #include <QtGui/QInputDialog>
+#include <QtGui/QLabel>
 #include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
 #include <QtGui/QMessageBox>
 #include <QtGui/QPushButton>
+#include <QtGui/QToolTip>
 #include <QtGui/QScrollBar>
 #include <QtGui/QStatusBar>
 #include <QtGui/QVBoxLayout>
@@ -606,8 +607,11 @@ void MainWindow::createFixedWidgets()
     editorLayout->addWidget(m_widgets.editor);
     m_layouts.root->addLayout(editorLayout);
 
-    m_widgets.autoCalcTip = new AutoHideLabel(this);
-    m_widgets.autoCalcTip->hide();
+    m_widgets.state = new QLabel(this);
+    m_widgets.state->setPalette(QToolTip::palette());
+    m_widgets.state->setAutoFillBackground(true);
+    m_widgets.state->setFrameShape(QFrame::Box);
+    m_widgets.state->hide();
 
 #ifndef Q_OS_MAC
     if (shouldAllowHiddenMenuBar()) {
@@ -824,8 +828,8 @@ void MainWindow::createFixedConnections()
     connect(m_actions.helpNews, SIGNAL(triggered()), SLOT(openNewsURL()));
     connect(m_actions.helpAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
 
-    connect(m_widgets.editor, SIGNAL(autoCalcDisabled()), SLOT(hideAutoCalcTip()));
-    connect(m_widgets.editor, SIGNAL(autoCalcEnabled(const QString&)), SLOT(showAutoCalcTip(const QString&)));
+    connect(m_widgets.editor, SIGNAL(autoCalcDisabled()), SLOT(hideStateLabel()));
+    connect(m_widgets.editor, SIGNAL(autoCalcEnabled(const QString&)), SLOT(showStateLabel(const QString&)));
     connect(m_widgets.editor, SIGNAL(returnPressed()), SLOT(evaluateEditorExpression()));
     connect(m_widgets.editor, SIGNAL(shiftDownPressed()), m_widgets.display, SLOT(zoomOut()));
     connect(m_widgets.editor, SIGNAL(shiftUpPressed()), m_widgets.display, SLOT(zoomIn()));
@@ -987,7 +991,7 @@ void MainWindow::showManualWindow()
 
 void MainWindow::showReadyMessage()
 {
-    showAutoCalcTip(tr("Type an expression here"));
+    showStateLabel(tr("Type an expression here"));
 }
 
 void MainWindow::checkInitialResultFormat()
@@ -1224,9 +1228,9 @@ void MainWindow::selectEditorExpression()
     m_widgets.editor->setFocus();
 }
 
-void MainWindow::hideAutoCalcTip()
+void MainWindow::hideStateLabel()
 {
-    m_widgets.autoCalcTip->hideText();
+    m_widgets.state->hide();
 }
 
 void MainWindow::showSessionLoadDialog()
@@ -1640,14 +1644,14 @@ void MainWindow::setStatusBarVisible(bool b)
     m_settings->statusBarVisible = b;
 }
 
-void MainWindow::showAutoCalcTip(const QString& msg)
+void MainWindow::showStateLabel(const QString& msg)
 {
-    m_widgets.autoCalcTip->showText(msg);
-    m_widgets.autoCalcTip->adjustSize();
-    const int h = m_widgets.autoCalcTip->height();
-    QPoint p = m_widgets.editor->mapToGlobal(QPoint(0, -h));
-    p = mapFromGlobal(p);
-    m_widgets.autoCalcTip->move(p);
+    m_widgets.state->setText(msg);
+    m_widgets.state->adjustSize();
+    m_widgets.state->show();
+    const int height = m_widgets.state->height();
+    QPoint pos = mapFromGlobal(m_widgets.editor->mapToGlobal(QPoint(0, -height)));
+    m_widgets.state->move(pos);
 }
 
 void MainWindow::setFullScreenEnabled(bool b)
@@ -2050,7 +2054,7 @@ void MainWindow::evaluateEditorExpression()
     HNumber result = m_evaluator->evalUpdateAns();
 
     if (!m_evaluator->error().isEmpty()) {
-        showAutoCalcTip(m_evaluator->error());
+        showStateLabel(m_evaluator->error());
         return;
     }
 

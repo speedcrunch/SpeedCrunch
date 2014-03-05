@@ -41,6 +41,7 @@ class VariablesDock;
 
 class QActionGroup;
 class QHBoxLayout;
+class QLabel;
 class QPlainTextEdit;
 class QPushButton;
 class QTranslator;
@@ -85,7 +86,7 @@ private slots:
     void handleEditorSelectionChange();
     void handleManualClosed();
     void handleSystemTrayIconActivation(QSystemTrayIcon::ActivationReason);
-    void hideAutoCalcTip();
+    void hideStateLabel();
     void increaseOpacity();
     void insertConstantIntoEditor(const QString&);
     void insertFunctionIntoEditor(const QString&);
@@ -143,7 +144,7 @@ private slots:
     void setVariablesDockVisible(bool);
     void setWidgetsDirection();
     void showAboutDialog();
-    void showAutoCalcTip(const QString&);
+    void showStateLabel(const QString&);
     void showFontDialog();
     void showLanguageChooserDialog();
     void showManualWindow();
@@ -302,7 +303,7 @@ private:
     } m_layouts;
 
     struct {
-        AutoHideLabel* autoCalcTip;
+        QLabel* state;
         ResultDisplay* display;
         Editor* editor;
         QWidget* root;

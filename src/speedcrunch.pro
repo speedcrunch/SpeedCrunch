@@ -50,7 +50,6 @@ HEADERS += core/book.h \
            core/manual.h \
            gui/aboutbox.h \
            gui/application.h \
-           gui/autohidelabel.h \
            gui/bookdock.h \
            gui/constantsdock.h \
            gui/constantswidget.h \
@@ -77,7 +76,6 @@ SOURCES += main.cpp \
            core/settings.cpp \
            gui/aboutbox.cpp \
            gui/application.cpp \
-           gui/autohidelabel.cpp \
            gui/bookdock.cpp \
            gui/constantsdock.cpp \
            gui/constantswidget.cpp \
