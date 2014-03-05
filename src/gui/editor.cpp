@@ -807,8 +807,7 @@ bool EditorCompletion::eventFilter(QObject* object, QEvent* event)
         case Qt::Key_End:
         case Qt::Key_PageUp:
         case Qt::Key_PageDown:
-            doneCompletion();
-            return true;
+            return false;
 
         default:
             m_popup->hide();
