@@ -1216,7 +1216,7 @@ HNumber HMath::csc( const HNumber & x )
 /**
  * Returns the arc tangent of x.
  */
-HNumber HMath::atan( const HNumber & x )
+HNumber HMath::arctan( const HNumber & x )
 {
   HNumber result;
   call1Arg(result.d, x.d, float_arctan);
@@ -1226,7 +1226,7 @@ HNumber HMath::atan( const HNumber & x )
 /**
  * Returns the arc sine of x.
  */
-HNumber HMath::asin( const HNumber & x )
+HNumber HMath::arcsin( const HNumber & x )
 {
   HNumber result;
   call1Arg(result.d, x.d, float_arcsin);
@@ -1236,7 +1236,7 @@ HNumber HMath::asin( const HNumber & x )
 /**
  * Returns the arc cosine of x.
  */
-HNumber HMath::acos( const HNumber & x )
+HNumber HMath::arccos( const HNumber & x )
 {
   HNumber result;
   call1Arg(result.d, x.d, float_arccos);

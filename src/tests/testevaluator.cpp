@@ -292,8 +292,8 @@ void test_function_trig()
     CHECK_EVAL("cos(-pi/2) + cos(pi/2)", "0");
     CHECK_EVAL("cos(-pi/2) - cos(pi/2)", "0");
 
-    CHECK_EVAL("asin(sin(1))", "1");
-    CHECK_EVAL("acos(cos(1))", "1");
+    CHECK_EVAL("arcsin(sin(1))", "1");
+    CHECK_EVAL("arccos(cos(1))", "1");
 
     CHECK_EVAL("degrees(0)", "0");
     CHECK_EVAL("degrees(pi/2)", "90");

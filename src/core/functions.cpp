@@ -62,15 +62,15 @@ static void s_deleteFunctions()
 
 static HNumber function_abs(Function*, const Function::ArgumentList&);
 static HNumber function_absdev(Function*, const Function::ArgumentList&);
-static HNumber function_acos(Function*, const Function::ArgumentList&);
+static HNumber function_arccos(Function*, const Function::ArgumentList&);
 static HNumber function_and(Function*, const Function::ArgumentList&);
 static HNumber function_arcosh(Function*, const Function::ArgumentList&);
 static HNumber function_arsinh(Function*, const Function::ArgumentList&);
 static HNumber function_artanh(Function*, const Function::ArgumentList&);
 static HNumber function_ashl(Function*, const Function::ArgumentList&);
 static HNumber function_ashr(Function*, const Function::ArgumentList&);
-static HNumber function_asin(Function*, const Function::ArgumentList&);
-static HNumber function_atan(Function*, const Function::ArgumentList&);
+static HNumber function_arcsin(Function*, const Function::ArgumentList&);
+static HNumber function_arctan(Function*, const Function::ArgumentList&);
 static HNumber function_average(Function*, const Function::ArgumentList&);
 static HNumber function_bin(Function*, const Function::ArgumentList&);
 static HNumber function_binomcdf(Function*, const Function::ArgumentList&);
@@ -339,28 +339,28 @@ HNumber function_csc(Function* f, const Function::ArgumentList& args)
     return HMath::csc(angle);
 }
 
-HNumber function_asin(Function* f, const Function::ArgumentList& args)
+HNumber function_arcsin(Function* f, const Function::ArgumentList& args)
 {
     ENSURE_ARGUMENT_COUNT(1);
-    HNumber result = HMath::asin(args.at(0));
+    HNumber result = HMath::arcsin(args.at(0));
     if (Settings::instance()->angleUnit == 'd')
         result = HMath::rad2deg(result);
     return result;
 }
 
-HNumber function_acos(Function* f, const Function::ArgumentList& args)
+HNumber function_arccos(Function* f, const Function::ArgumentList& args)
 {
     ENSURE_ARGUMENT_COUNT(1);
-    HNumber result = HMath::acos(args.at(0));
+    HNumber result = HMath::arccos(args.at(0));
     if (Settings::instance()->angleUnit == 'd')
         result = HMath::rad2deg(result);
     return result;
 }
 
-HNumber function_atan(Function* f, const Function::ArgumentList& args)
+HNumber function_arctan(Function* f, const Function::ArgumentList& args)
 {
     ENSURE_ARGUMENT_COUNT(1);
-    HNumber result = HMath::atan(args.at(0));
+    HNumber result = HMath::arctan(args.at(0));
     if (Settings::instance()->angleUnit == 'd')
         result = HMath::rad2deg(result);
     return result;
@@ -745,12 +745,12 @@ void FunctionRepo::createFunctions()
     insert(new Function("poivar", function_poivar, this));
 
     // Trigonometry.
-    insert(new Function("acos", function_acos, this));
+    insert(new Function("arccos", function_arccos, this));
     insert(new Function("arcosh", function_arcosh, this));
     insert(new Function("arsinh", function_arsinh, this));
     insert(new Function("artanh", function_artanh, this));
-    insert(new Function("asin", function_asin, this));
-    insert(new Function("atan", function_atan, this));
+    insert(new Function("arcsin", function_arcsin, this));
+    insert(new Function("arctan", function_arctan, this));
     insert(new Function("cos", function_cos, this));
     insert(new Function("cosh", function_cosh, this));
     insert(new Function("cot", function_cot, this));
@@ -823,13 +823,13 @@ void FunctionRepo::setNonTranslatableFunctionUsages()
 {
     find("abs")->setUsage(QString::fromLatin1("x"));
     find("absdev")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
-    find("acos")->setUsage(QString::fromLatin1("x"));
+    find("arccos")->setUsage(QString::fromLatin1("x"));
     find("and")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
     find("arcosh")->setUsage(QString::fromLatin1("x"));
     find("arsinh")->setUsage(QString::fromLatin1("x"));
     find("artanh")->setUsage(QString::fromLatin1("x"));
-    find("asin")->setUsage(QString::fromLatin1("x"));
-    find("atan")->setUsage(QString::fromLatin1("x"));
+    find("arcsin")->setUsage(QString::fromLatin1("x"));
+    find("arctan")->setUsage(QString::fromLatin1("x"));
     find("average")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
     find("bin")->setUsage(QString::fromLatin1("n"));
     find("cbrt")->setUsage(QString::fromLatin1("x"));
@@ -905,13 +905,13 @@ void FunctionRepo::setFunctionNames()
 {
     find("abs")->setName(Function::tr("Absolute Value"));
     find("absdev")->setName(Function::tr("Absolute Deviation"));
-    find("acos")->setName(Function::tr("Arc Cosine"));
+    find("arccos")->setName(Function::tr("Arc Cosine"));
     find("and")->setName(Function::tr("Logical AND"));
     find("arcosh")->setName(Function::tr("Area Hyperbolic Cosine"));
     find("arsinh")->setName(Function::tr("Area Hyperbolic Sine"));
     find("artanh")->setName(Function::tr("Area Hyperbolic Tangent"));
-    find("asin")->setName(Function::tr("Arc Sine"));
-    find("atan")->setName(Function::tr("Arc Tangent"));
+    find("arcsin")->setName(Function::tr("Arc Sine"));
+    find("arctan")->setName(Function::tr("Arc Tangent"));
     find("average")->setName(Function::tr("Average (Arithmetic Mean)"));
     find("bin")->setName(Function::tr("Binary Representation"));
     find("binomcdf")->setName(Function::tr("Binomial Cumulative Distribution Function"));

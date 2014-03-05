@@ -140,9 +140,9 @@ class HMath
     static HNumber cot( const HNumber & x );
     static HNumber sec( const HNumber & x );
     static HNumber csc( const HNumber & x );
-    static HNumber asin( const HNumber & x );
-    static HNumber acos( const HNumber & x );
-    static HNumber atan( const HNumber & x );
+    static HNumber arcsin( const HNumber & x );
+    static HNumber arccos( const HNumber & x );
+    static HNumber arctan( const HNumber & x );
     // HIGHER MATH FUNCTIONS
     static HNumber factorial( const HNumber & x, const HNumber & base = HNumber(1) );
     static HNumber gamma( const HNumber & x);
