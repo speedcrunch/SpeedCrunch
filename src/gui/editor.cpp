@@ -216,7 +216,7 @@ void Editor::checkAutoComplete()
 
     m_completionTimer->stop();
     m_completionTimer->setSingleShot(true);
-    m_completionTimer->start(500);
+    m_completionTimer->start();
 }
 
 void Editor::checkMatching()
@@ -226,7 +226,7 @@ void Editor::checkMatching()
 
     m_matchingTimer->stop();
     m_matchingTimer->setSingleShot(true);
-    m_matchingTimer->start(200);
+    m_matchingTimer->start();
 }
 
 void Editor::checkAutoCalc()
@@ -236,7 +236,7 @@ void Editor::checkAutoCalc()
 
     m_autoCalcTimer->stop();
     m_autoCalcTimer->setSingleShot(true);
-    m_autoCalcTimer->start(1);
+    m_autoCalcTimer->start();
 
     emit autoCalcDisabled();
 }
@@ -248,7 +248,7 @@ void Editor::startSelAutoCalcTimer()
 
     m_autoCalcSelTimer->stop();
     m_autoCalcSelTimer->setSingleShot(true);
-    m_autoCalcSelTimer->start(1);
+    m_autoCalcSelTimer->start();
 }
 
 void Editor::doMatchingPar()
