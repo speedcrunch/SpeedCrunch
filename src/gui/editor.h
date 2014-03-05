@@ -152,9 +152,6 @@ private:
 
     Editor* m_editor;
     QTreeWidget* m_popup;
-#ifdef COMPLETION_FADE_EFFECT
-    QTimeLine* m_fader;
-#endif
 };
 
 class ConstantCompletion : public QObject {
