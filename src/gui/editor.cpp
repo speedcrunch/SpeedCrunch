@@ -890,9 +890,10 @@ void EditorCompletion::showCompletion(const QStringList& choices)
     m_popup->resize(width, height);
 
     // Position, reference is editor's cursor position in global coord.
-    QFontMetrics fm(m_editor->font());
-    const int currentPosition = m_editor->textCursor().position();
-    const int pixelsOffset = fm.width(m_editor->text(), currentPosition);
+    QFontMetrics metrics(m_editor->font());
+    QTextCursor cursor = m_editor->textCursor();
+    cursor.movePosition(QTextCursor::StartOfWord);
+    const int pixelsOffset = metrics.width(m_editor->text(), cursor.position());
     QPoint position = m_editor->mapToGlobal(QPoint(pixelsOffset, m_editor->height()));
 
     // If popup is partially invisible, move to other position.
