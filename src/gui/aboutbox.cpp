@@ -80,6 +80,7 @@ AboutBox::AboutBox(QWidget* parent, Qt::WindowFlags f)
            "Melchior Franz<br>"
            "Michael Pyne<br>"
            "Mohamed Eldesoky<br>"
+           "Oliver Gubler<br>"
            "Petri Damst&eacute;n<br>"
            "Philippe Fremy<br>"
            "Pieter Pareit<br>"
