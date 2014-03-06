@@ -748,6 +748,14 @@ void test_functions()
   CHECK( HMath::lb( "32"  ), "5"   );
   CHECK( HMath::lb( "0.00000000001" ), "-36.54120904376098582657" );
 
+  // log
+  CHECK( HMath::log( "NaN", "NaN" ), "NaN" );
+  CHECK( HMath::log( "1", "NaN" ), "NaN" );
+  CHECK( HMath::log( "NaN", "1" ), "NaN" );
+  CHECK( HMath::log( "123", "1234" ), "1.47916531845224081828" );
+  CHECK( HMath::log( "0.123", "0.1234" ), "0.99845065797473594741" );
+  CHECK( HMath::log( "0.00000000001", "0.00000000000001"), "1.27272727272727272727" );
+
   // sin
   CHECK( HMath::sin( "NaN"   ), "NaN" );
   CHECK( HMath::sin( "0"     ), "0"   );

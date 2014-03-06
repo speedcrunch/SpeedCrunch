@@ -127,6 +127,7 @@ class HMath
     static HNumber ln( const HNumber & x );
     static HNumber lg( const HNumber & x );
     static HNumber lb( const HNumber & x );
+    static HNumber log( const HNumber & base, const HNumber & x );
     static HNumber sinh( const HNumber & x );
     static HNumber cosh( const HNumber & x );
     static HNumber tanh( const HNumber & x );

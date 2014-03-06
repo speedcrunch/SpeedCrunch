@@ -104,6 +104,7 @@ static HNumber function_lb(Function*, const Function::ArgumentList&);
 static HNumber function_ln(Function*, const Function::ArgumentList&);
 static HNumber function_lnGamma(Function*, const Function::ArgumentList&);
 static HNumber function_lg(Function*, const Function::ArgumentList&);
+static HNumber function_log(Function*, const Function::ArgumentList&);
 static HNumber function_mask(Function*, const Function::ArgumentList&);
 static HNumber function_max(Function*, const Function::ArgumentList&);
 static HNumber function_median(Function*, const Function::ArgumentList&);
@@ -283,6 +284,12 @@ HNumber function_lb(Function* f, const Function::ArgumentList& args)
 {
     ENSURE_ARGUMENT_COUNT(1);
     return HMath::lg(args.at(0));
+}
+
+HNumber function_log(Function* f, const Function::ArgumentList& args)
+{
+    ENSURE_ARGUMENT_COUNT(2);
+    return HMath::log(args.at(0), args.at(1));
 }
 
 HNumber function_sin(Function* f, const Function::ArgumentList& args)
@@ -760,6 +767,7 @@ void FunctionRepo::createFunctions()
     insert(new Function("lb", function_lb, this));
     insert(new Function("lg", function_lg, this));
     insert(new Function("ln", function_ln, this));
+    insert(new Function("log", function_log, this));
     insert(new Function("radians", function_radians, this));
     insert(new Function("sec", function_sec, this));
     insert(new Function("sin", function_sin, this));
@@ -854,6 +862,7 @@ void FunctionRepo::setNonTranslatableFunctionUsages()
     find("lg")->setUsage(QString::fromLatin1("x"));
     find("ln")->setUsage(QString::fromLatin1("x"));
     find("lngamma")->setUsage(QString::fromLatin1("x"));
+    find("log")->setUsage(tr("base; x"));
     find("max")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
     find("median")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
     find("min")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
@@ -945,6 +954,7 @@ void FunctionRepo::setFunctionNames()
     find("lg")->setName(Function::tr("Common Logarithm"));
     find("ln")->setName(Function::tr("Natural Logarithm"));
     find("lngamma")->setName("ln(abs(Gamma))");
+    find("log")->setName(Function::tr("Logarithm to Arbitrary Base"));
     find("mask")->setName(Function::tr("Mask to a bit size"));
     find("max")->setName(Function::tr("Maximum"));
     find("median")->setName(Function::tr("Median Value (50th Percentile)"));

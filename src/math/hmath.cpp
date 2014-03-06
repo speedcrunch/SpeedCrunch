@@ -1160,6 +1160,15 @@ HNumber HMath::lb( const HNumber & x )
 }
 
 /**
+ * Returns the logarithm of x to base.
+ * If x is non positive, returns NaN.
+ */
+HNumber HMath::log( const HNumber & base, const HNumber & x )
+{
+  return lg(x) / lg(base);
+}
+
+/**
  * Returns the sine of x. Note that x must be in radians.
  */
 HNumber HMath::sin( const HNumber & x )

@@ -29,7 +29,6 @@
 
 class Function;
 
-
 class Function : public QObject {
     Q_OBJECT
 public:
