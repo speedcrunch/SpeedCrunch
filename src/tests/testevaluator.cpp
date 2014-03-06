@@ -242,6 +242,14 @@ void test_function_basic()
     CHECK_EVAL("INT(2.1)", "2");
     CHECK_EVAL("INT(-3.4)", "-3");
 
+    CHECK_EVAL("log(0.123; 0.1234)", "0.99845065797473594741");
+    CHECK_EVAL("lg(0.00000000001)", "-11");
+    CHECK_EVAL("lg(1e-3)", "-3");
+    CHECK_EVAL("lb(0.00000000001)", "-36.54120904376098582657");
+    CHECK_EVAL("lb(32)", "5");
+    CHECK_EVAL("ln(100)", "4.60517018598809136804");
+    CHECK_EVAL("ln(4.0)", "1.38629436111989061883");
+
     CHECK_EVAL("0!", "1");
     CHECK_EVAL("1!", "1");
     CHECK_EVAL("2!", "2");

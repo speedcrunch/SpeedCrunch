@@ -283,7 +283,7 @@ HNumber function_lg(Function* f, const Function::ArgumentList& args)
 HNumber function_lb(Function* f, const Function::ArgumentList& args)
 {
     ENSURE_ARGUMENT_COUNT(1);
-    return HMath::lg(args.at(0));
+    return HMath::lb(args.at(0));
 }
 
 HNumber function_log(Function* f, const Function::ArgumentList& args)

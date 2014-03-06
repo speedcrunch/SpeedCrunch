@@ -745,7 +745,6 @@ void test_functions()
   CHECK( HMath::lb( "8"   ), "3"   );
   CHECK( HMath::lb( "16"  ), "4"   );
   CHECK( HMath::lb( "32"  ), "5"   );
-  CHECK( HMath::lb( "32"  ), "5"   );
   CHECK( HMath::lb( "0.00000000001" ), "-36.54120904376098582657" );
 
   // log
