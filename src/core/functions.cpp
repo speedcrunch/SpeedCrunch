@@ -1,7 +1,7 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2004-2006 Ariya Hidayat <ariya@kde.org>
 // Copyright (C) 2007, 2009 Wolf Lammen
-// Copyright (C) 2007-2009, 2013 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2007-2009, 2013, 2014 Helder Correia <helder.pereira.correia@gmail.com>
 // Copyright (C) 2009 Andreas Scherer <andreas_coder@freenet.de>
 // Copyright (C) 2011 Enrico Rós <enrico.ros@gmail.com>
 //
@@ -34,6 +34,11 @@
 #include <cmath>
 #include <numeric>
 
+#define FUNCTION_INSERT(ID) insert(new Function(#ID, function_ ## ID, this))
+#define FUNCTION_USAGE(ID, USAGE) find(#ID)->setUsage(QString::fromLatin1(USAGE));
+#define FUNCTION_USAGE_TR(ID, USAGE) find(#ID)->setUsage(USAGE);
+#define FUNCTION_NAME(ID, NAME) find(#ID)->setName(NAME)
+
 #define ENSURE_POSITIVE_ARGUMENT_COUNT() \
     if (args.count() < 1) { \
         f->setError(InvalidParamCount); \
@@ -44,13 +49,13 @@
     if (args.count() != (i)) { \
         f->setError(InvalidParamCount); \
         return HMath::nan(); \
-    } \
+    }
 
 #define ENSURE_EITHER_ARGUMENT_COUNT(i, j) \
     if (args.count() != (i) && args.count() != (j)) { \
         f->setError(InvalidParamCount); \
         return HMath::nan(); \
-    } \
+    }
 
 static FunctionRepo* s_FunctionRepoInstance = 0;
 
@@ -59,82 +64,6 @@ static void s_deleteFunctions()
 {
     delete s_FunctionRepoInstance;
 }
-
-static HNumber function_abs(Function*, const Function::ArgumentList&);
-static HNumber function_absdev(Function*, const Function::ArgumentList&);
-static HNumber function_arccos(Function*, const Function::ArgumentList&);
-static HNumber function_and(Function*, const Function::ArgumentList&);
-static HNumber function_arcosh(Function*, const Function::ArgumentList&);
-static HNumber function_arsinh(Function*, const Function::ArgumentList&);
-static HNumber function_artanh(Function*, const Function::ArgumentList&);
-static HNumber function_ashl(Function*, const Function::ArgumentList&);
-static HNumber function_ashr(Function*, const Function::ArgumentList&);
-static HNumber function_arcsin(Function*, const Function::ArgumentList&);
-static HNumber function_arctan(Function*, const Function::ArgumentList&);
-static HNumber function_average(Function*, const Function::ArgumentList&);
-static HNumber function_bin(Function*, const Function::ArgumentList&);
-static HNumber function_binomcdf(Function*, const Function::ArgumentList&);
-static HNumber function_binommean(Function*, const Function::ArgumentList&);
-static HNumber function_binompmf(Function*, const Function::ArgumentList&);
-static HNumber function_binomvar(Function*, const Function::ArgumentList&);
-static HNumber function_cbrt(Function*, const Function::ArgumentList&);
-static HNumber function_ceil(Function*, const Function::ArgumentList&);
-static HNumber function_cos(Function*, const Function::ArgumentList&);
-static HNumber function_cosh(Function*, const Function::ArgumentList&);
-static HNumber function_cot(Function*, const Function::ArgumentList&);
-static HNumber function_csc(Function*, const Function::ArgumentList&);
-static HNumber function_dec(Function*, const Function::ArgumentList&);
-static HNumber function_degrees(Function*, const Function::ArgumentList&);
-static HNumber function_erfc(Function*, const Function::ArgumentList&);
-static HNumber function_erf(Function*, const Function::ArgumentList&);
-static HNumber function_exp(Function*, const Function::ArgumentList&);
-static HNumber function_floor(Function*, const Function::ArgumentList&);
-static HNumber function_frac(Function*, const Function::ArgumentList&);
-static HNumber function_gamma(Function*, const Function::ArgumentList&);
-static HNumber function_gcd(Function*, const Function::ArgumentList&);
-static HNumber function_geomean(Function*, const Function::ArgumentList&);
-static HNumber function_hex(Function*, const Function::ArgumentList&);
-static HNumber function_hypercdf(Function*, const Function::ArgumentList&);
-static HNumber function_hypermean(Function*, const Function::ArgumentList&);
-static HNumber function_hyperpmf(Function*, const Function::ArgumentList&);
-static HNumber function_hypervar(Function*, const Function::ArgumentList&);
-static HNumber function_idiv(Function*, const Function::ArgumentList&);
-static HNumber function_integer(Function*, const Function::ArgumentList&);
-static HNumber function_lb(Function*, const Function::ArgumentList&);
-static HNumber function_ln(Function*, const Function::ArgumentList&);
-static HNumber function_lnGamma(Function*, const Function::ArgumentList&);
-static HNumber function_lg(Function*, const Function::ArgumentList&);
-static HNumber function_log(Function*, const Function::ArgumentList&);
-static HNumber function_mask(Function*, const Function::ArgumentList&);
-static HNumber function_max(Function*, const Function::ArgumentList&);
-static HNumber function_median(Function*, const Function::ArgumentList&);
-static HNumber function_min(Function*, const Function::ArgumentList&);
-static HNumber function_mod(Function*, const Function::ArgumentList&);
-static HNumber function_ncr(Function*, const Function::ArgumentList&);
-static HNumber function_not(Function*, const Function::ArgumentList&);
-static HNumber function_npr(Function*, const Function::ArgumentList&);
-static HNumber function_oct(Function*, const Function::ArgumentList&);
-static HNumber function_or(Function*, const Function::ArgumentList&);
-static HNumber function_poicdf(Function*, const Function::ArgumentList&);
-static HNumber function_poimean(Function*, const Function::ArgumentList&);
-static HNumber function_poipmf(Function*, const Function::ArgumentList&);
-static HNumber function_poivar(Function*, const Function::ArgumentList&);
-static HNumber function_product(Function*, const Function::ArgumentList&);
-static HNumber function_radians(Function*, const Function::ArgumentList&);
-static HNumber function_round(Function*, const Function::ArgumentList&);
-static HNumber function_sec(Function*, const Function::ArgumentList&);
-static HNumber function_sgn(Function*, const Function::ArgumentList&);
-static HNumber function_sin(Function*, const Function::ArgumentList&);
-static HNumber function_sinh(Function*, const Function::ArgumentList&);
-static HNumber function_sqrt(Function*, const Function::ArgumentList&);
-static HNumber function_stddev(Function*, const Function::ArgumentList&);
-static HNumber function_sum(Function*, const Function::ArgumentList&);
-static HNumber function_tan(Function*, const Function::ArgumentList&);
-static HNumber function_tanh(Function*, const Function::ArgumentList&);
-static HNumber function_trunc(Function*, const Function::ArgumentList&);
-static HNumber function_unmask(Function*, const Function::ArgumentList&);
-static HNumber function_variance(Function*, const Function::ArgumentList&);
-static HNumber function_xor(Function*, const Function::ArgumentList&);
 
 HNumber Function::exec(const Function::ArgumentList& args)
 {
@@ -151,6 +80,12 @@ HNumber function_abs(Function* f, const Function::ArgumentList& args)
     return HMath::abs(args.at(0));
 }
 
+HNumber function_average(Function* f, const Function::ArgumentList& args)
+{
+    ENSURE_POSITIVE_ARGUMENT_COUNT();
+    return std::accumulate(args.begin(), args.end(), HNumber(0)) / HNumber(args.count());
+}
+
 HNumber function_absdev(Function* f, const Function::ArgumentList& args)
 {
     ENSURE_POSITIVE_ARGUMENT_COUNT();
@@ -163,7 +98,7 @@ HNumber function_absdev(Function* f, const Function::ArgumentList& args)
     return acc / HNumber(args.count());
 }
 
-HNumber function_integer(Function* f, const Function::ArgumentList& args)
+HNumber function_int(Function* f, const Function::ArgumentList& args)
 {
     ENSURE_ARGUMENT_COUNT(1);
     return HMath::integer(args.at(0));
@@ -250,6 +185,21 @@ HNumber function_sqrt(Function* f, const Function::ArgumentList& args)
     return HMath::sqrt(args.at(0));
 }
 
+HNumber function_variance(Function* f, const Function::ArgumentList& args)
+{
+    ENSURE_POSITIVE_ARGUMENT_COUNT();
+
+    HNumber mean = function_average(f, args);
+    if (mean.isNan())
+        return HMath::nan();
+
+    HNumber acc = 0;
+    for (int i = 0; i < args.count(); ++i)
+        acc += (args.at(i) - mean) * (args.at(i) - mean);
+
+    return acc / HNumber(args.count());
+}
+
 HNumber function_stddev(Function* f, const Function::ArgumentList& args)
 {
     ENSURE_POSITIVE_ARGUMENT_COUNT();
@@ -307,7 +257,7 @@ HNumber function_cos(Function* f, const Function::ArgumentList& args)
     HNumber angle = args.at(0);
     if (Settings::instance()->angleUnit == 'd')
         angle = HMath::deg2rad(angle);
-	return HMath::cos(angle);
+    return HMath::cos(angle);
 }
 
 HNumber function_tan(Function* f, const Function::ArgumentList& args)
@@ -427,7 +377,7 @@ HNumber function_gamma(Function* f, const Function::ArgumentList& args)
     return HMath::gamma(args.at(0));
 }
 
-HNumber function_lnGamma(Function* f, const Function::ArgumentList& args)
+HNumber function_lngamma(Function* f, const Function::ArgumentList& args)
 {
     ENSURE_ARGUMENT_COUNT(1);
     return HMath::lnGamma(args.at(0));
@@ -499,12 +449,6 @@ HNumber function_product(Function* f, const Function::ArgumentList& args)
 {
     ENSURE_POSITIVE_ARGUMENT_COUNT();
     return std::accumulate(args.begin(), args.end(), HNumber(1), std::multiplies<HNumber>());
-}
-
-HNumber function_average(Function* f, const Function::ArgumentList& args)
-{
-    ENSURE_POSITIVE_ARGUMENT_COUNT();
-    return std::accumulate(args.begin(), args.end(), HNumber(0)) / HNumber(args.count());
 }
 
 HNumber function_geomean(Function* f, const Function::ArgumentList& args)
@@ -634,21 +578,6 @@ HNumber function_unmask(Function* f, const Function::ArgumentList& args)
     return HMath::sgnext(args.at(0), args.at(1));
 }
 
-HNumber function_variance(Function* f, const Function::ArgumentList& args)
-{
-    ENSURE_POSITIVE_ARGUMENT_COUNT();
-
-    HNumber mean = function_average(f, args);
-    if (mean.isNan())
-        return HMath::nan();
-
-    HNumber acc = 0;
-    for (int i = 0; i < args.count(); ++i)
-        acc += (args.at(i) - mean) * (args.at(i) - mean);
-
-    return acc / HNumber(args.count());
-}
-
 HNumber function_not(Function* f, const Function::ArgumentList& args)
 {
     ENSURE_ARGUMENT_COUNT(1);
@@ -676,13 +605,13 @@ HNumber function_xor(Function* f, const Function::ArgumentList& args)
         std::mem_fun_ref(&HNumber::operator^));
 }
 
-HNumber function_ashl(Function* f, const Function::ArgumentList& args)
+HNumber function_shl(Function* f, const Function::ArgumentList& args)
 {
     ENSURE_ARGUMENT_COUNT(2);
     return HMath::ashr(args.at(0), -args.at(1));
 }
 
-HNumber function_ashr(Function* f, const Function::ArgumentList& args)
+HNumber function_shr(Function* f, const Function::ArgumentList& args)
 {
     ENSURE_ARGUMENT_COUNT(2);
     return HMath::ashr(args.at(0), args.at(1));
@@ -703,89 +632,89 @@ HNumber function_mod(Function* f, const Function::ArgumentList& args)
 void FunctionRepo::createFunctions()
 {
     // Analysis.
-    insert(new Function("abs", function_abs, this));
-    insert(new Function("absdev", function_absdev, this));
-    insert(new Function("average", function_average, this));
-    insert(new Function("bin", function_bin, this));
-    insert(new Function("cbrt", function_cbrt, this));
-    insert(new Function("ceil", function_ceil, this));
-    insert(new Function("dec", function_dec, this));
-    insert(new Function("floor", function_floor, this));
-    insert(new Function("frac", function_frac, this));
-    insert(new Function("gamma", function_gamma, this));
-    insert(new Function("geomean", function_geomean, this));
-    insert(new Function("hex", function_hex, this));
-    insert(new Function("int", function_integer, this));
-    insert(new Function("lngamma", function_lnGamma, this));
-    insert(new Function("max", function_max, this));
-    insert(new Function("min", function_min, this));
-    insert(new Function("oct", function_oct, this));
-    insert(new Function("product", function_product, this));
-    insert(new Function("round", function_round, this));
-    insert(new Function("sgn", function_sgn, this));
-    insert(new Function("sqrt", function_sqrt, this));
-    insert(new Function("stddev", function_stddev, this));
-    insert(new Function("sum", function_sum, this));
-    insert(new Function("trunc", function_trunc, this));
-    insert(new Function("variance", function_variance, this));
+    FUNCTION_INSERT(abs);
+    FUNCTION_INSERT(absdev);
+    FUNCTION_INSERT(average);
+    FUNCTION_INSERT(bin);
+    FUNCTION_INSERT(cbrt);
+    FUNCTION_INSERT(ceil);
+    FUNCTION_INSERT(dec);
+    FUNCTION_INSERT(floor);
+    FUNCTION_INSERT(frac);
+    FUNCTION_INSERT(gamma);
+    FUNCTION_INSERT(geomean);
+    FUNCTION_INSERT(hex);
+    FUNCTION_INSERT(int);
+    FUNCTION_INSERT(lngamma);
+    FUNCTION_INSERT(max);
+    FUNCTION_INSERT(min);
+    FUNCTION_INSERT(oct);
+    FUNCTION_INSERT(product);
+    FUNCTION_INSERT(round);
+    FUNCTION_INSERT(sgn);
+    FUNCTION_INSERT(sqrt);
+    FUNCTION_INSERT(stddev);
+    FUNCTION_INSERT(sum);
+    FUNCTION_INSERT(trunc);
+    FUNCTION_INSERT(variance);
 
     // Discrete.
-    insert(new Function("gcd", function_gcd, this));
-    insert(new Function("ncr", function_ncr, this));
-    insert(new Function("npr", function_npr, this));
+    FUNCTION_INSERT(gcd);
+    FUNCTION_INSERT(ncr);
+    FUNCTION_INSERT(npr);
 
     // Probability.
-    insert(new Function("binomcdf", function_binomcdf, this));
-    insert(new Function("binommean", function_binommean, this));
-    insert(new Function("binompmf", function_binompmf, this));
-    insert(new Function("binomvar", function_binomvar, this));
-    insert(new Function("erf", function_erf, this));
-    insert(new Function("erfc", function_erfc, this));
-    insert(new Function("hypercdf", function_hypercdf, this));
-    insert(new Function("hypermean", function_hypermean, this));
-    insert(new Function("hyperpmf", function_hyperpmf, this));
-    insert(new Function("hypervar", function_hypervar, this));
-    insert(new Function("median", function_median, this));
-    insert(new Function("poicdf", function_poicdf, this));
-    insert(new Function("poimean", function_poimean, this));
-    insert(new Function("poipmf", function_poipmf, this));
-    insert(new Function("poivar", function_poivar, this));
+    FUNCTION_INSERT(binomcdf);
+    FUNCTION_INSERT(binommean);
+    FUNCTION_INSERT(binompmf);
+    FUNCTION_INSERT(binomvar);
+    FUNCTION_INSERT(erf);
+    FUNCTION_INSERT(erfc);
+    FUNCTION_INSERT(hypercdf);
+    FUNCTION_INSERT(hypermean);
+    FUNCTION_INSERT(hyperpmf);
+    FUNCTION_INSERT(hypervar);
+    FUNCTION_INSERT(median);
+    FUNCTION_INSERT(poicdf);
+    FUNCTION_INSERT(poimean);
+    FUNCTION_INSERT(poipmf);
+    FUNCTION_INSERT(poivar);
 
     // Trigonometry.
-    insert(new Function("arccos", function_arccos, this));
-    insert(new Function("arcosh", function_arcosh, this));
-    insert(new Function("arsinh", function_arsinh, this));
-    insert(new Function("artanh", function_artanh, this));
-    insert(new Function("arcsin", function_arcsin, this));
-    insert(new Function("arctan", function_arctan, this));
-    insert(new Function("cos", function_cos, this));
-    insert(new Function("cosh", function_cosh, this));
-    insert(new Function("cot", function_cot, this));
-    insert(new Function("csc", function_csc, this));
-    insert(new Function("degrees", function_degrees, this));
-    insert(new Function("exp", function_exp, this));
-    insert(new Function("lb", function_lb, this));
-    insert(new Function("lg", function_lg, this));
-    insert(new Function("ln", function_ln, this));
-    insert(new Function("log", function_log, this));
-    insert(new Function("radians", function_radians, this));
-    insert(new Function("sec", function_sec, this));
-    insert(new Function("sin", function_sin, this));
-    insert(new Function("sinh", function_sinh, this));
-    insert(new Function("tan", function_tan, this));
-    insert(new Function("tanh", function_tanh, this));
+    FUNCTION_INSERT(arccos);
+    FUNCTION_INSERT(arcosh);
+    FUNCTION_INSERT(arsinh);
+    FUNCTION_INSERT(artanh);
+    FUNCTION_INSERT(arcsin);
+    FUNCTION_INSERT(arctan);
+    FUNCTION_INSERT(cos);
+    FUNCTION_INSERT(cosh);
+    FUNCTION_INSERT(cot);
+    FUNCTION_INSERT(csc);
+    FUNCTION_INSERT(degrees);
+    FUNCTION_INSERT(exp);
+    FUNCTION_INSERT(lb);
+    FUNCTION_INSERT(lg);
+    FUNCTION_INSERT(ln);
+    FUNCTION_INSERT(log);
+    FUNCTION_INSERT(radians);
+    FUNCTION_INSERT(sec);
+    FUNCTION_INSERT(sin);
+    FUNCTION_INSERT(sinh);
+    FUNCTION_INSERT(tan);
+    FUNCTION_INSERT(tanh);
 
     // Logic.
-    insert(new Function("mask", function_mask, this));
-    insert(new Function("unmask", function_unmask, this));
-    insert(new Function("not", function_not, this));
-    insert(new Function("and", function_and, this));
-    insert(new Function("or", function_or, this));
-    insert(new Function("xor", function_xor, this));
-    insert(new Function("shl", function_ashl, this));
-    insert(new Function("shr", function_ashr, this));
-    insert(new Function("idiv", function_idiv, this));
-    insert(new Function("mod", function_mod, this));
+    FUNCTION_INSERT(mask);
+    FUNCTION_INSERT(unmask);
+    FUNCTION_INSERT(not);
+    FUNCTION_INSERT(and);
+    FUNCTION_INSERT(or);
+    FUNCTION_INSERT(xor);
+    FUNCTION_INSERT(shl);
+    FUNCTION_INSERT(shr);
+    FUNCTION_INSERT(idiv);
+    FUNCTION_INSERT(mod);
 }
 
 FunctionRepo* FunctionRepo::instance()
@@ -829,164 +758,164 @@ QStringList FunctionRepo::getIdentifiers() const
 
 void FunctionRepo::setNonTranslatableFunctionUsages()
 {
-    find("abs")->setUsage(QString::fromLatin1("x"));
-    find("absdev")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
-    find("arccos")->setUsage(QString::fromLatin1("x"));
-    find("and")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
-    find("arcosh")->setUsage(QString::fromLatin1("x"));
-    find("arsinh")->setUsage(QString::fromLatin1("x"));
-    find("artanh")->setUsage(QString::fromLatin1("x"));
-    find("arcsin")->setUsage(QString::fromLatin1("x"));
-    find("arctan")->setUsage(QString::fromLatin1("x"));
-    find("average")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
-    find("bin")->setUsage(QString::fromLatin1("n"));
-    find("cbrt")->setUsage(QString::fromLatin1("x"));
-    find("ceil")->setUsage(QString::fromLatin1("x"));
-    find("cos")->setUsage(QString::fromLatin1("x"));
-    find("cosh")->setUsage(QString::fromLatin1("x"));
-    find("cot")->setUsage(QString::fromLatin1("x"));
-    find("csc")->setUsage(QString::fromLatin1("x"));
-    find("dec")->setUsage(QString::fromLatin1("x"));
-    find("degrees")->setUsage(QString::fromLatin1("x"));
-    find("erf" )->setUsage(QString::fromLatin1("x"));
-    find("erfc")->setUsage(QString::fromLatin1("x"));
-    find("exp")->setUsage(QString::fromLatin1("x"));
-    find("floor")->setUsage(QString::fromLatin1("x"));
-    find("frac")->setUsage(QString::fromLatin1("x"));
-    find("gamma")->setUsage(QString::fromLatin1("x"));
-    find("gcd")->setUsage(QLatin1String("n<sub>1</sub>; n<sub>2</sub>; ..."));
-    find("geomean")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
-    find("hex")->setUsage(QString::fromLatin1("n"));
-    find("int")->setUsage(QString::fromLatin1("x"));
-    find("lb")->setUsage(QString::fromLatin1("x"));
-    find("lg")->setUsage(QString::fromLatin1("x"));
-    find("ln")->setUsage(QString::fromLatin1("x"));
-    find("lngamma")->setUsage(QString::fromLatin1("x"));
-    find("log")->setUsage(tr("base; x"));
-    find("max")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
-    find("median")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
-    find("min")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
-    find("ncr")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>"));
-    find("not")->setUsage(QString::fromLatin1("n"));
-    find("npr")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>"));
-    find("oct")->setUsage(QString::fromLatin1("n"));
-    find("or")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
-    find("product")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
-    find("radians")->setUsage(QString::fromLatin1("x"));
-    find("round")->setUsage(QString::fromLatin1("x"));
-    find("sec")->setUsage(QString::fromLatin1("x)"));
-    find("sgn")->setUsage(QString::fromLatin1("x"));
-    find("sin")->setUsage(QString::fromLatin1("x"));
-    find("sinh")->setUsage(QString::fromLatin1("x"));
-    find("sqrt")->setUsage(QString::fromLatin1("x"));
-    find("stddev")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
-    find("sum")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
-    find("tan")->setUsage(QString::fromLatin1("x"));
-    find("tanh")->setUsage(QString::fromLatin1("x"));
-    find("trunc")->setUsage(QString::fromLatin1("x"));
-    find("variance")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
-    find("xor")->setUsage(QLatin1String("x<sub>1</sub>; x<sub>2</sub>; ..."));
+    FUNCTION_USAGE(abs, "x");
+    FUNCTION_USAGE(absdev, "x<sub>1</sub>; x<sub>2</sub>; ...");
+    FUNCTION_USAGE(arccos, "x");
+    FUNCTION_USAGE(and, "x<sub>1</sub>; x<sub>2</sub>; ...");
+    FUNCTION_USAGE(arcosh, "x");
+    FUNCTION_USAGE(arsinh, "x");
+    FUNCTION_USAGE(artanh, "x");
+    FUNCTION_USAGE(arcsin, "x");
+    FUNCTION_USAGE(arctan, "x");
+    FUNCTION_USAGE(average, "x<sub>1</sub>; x<sub>2</sub>; ...");
+    FUNCTION_USAGE(bin, "n");
+    FUNCTION_USAGE(cbrt, "x");
+    FUNCTION_USAGE(ceil, "x");
+    FUNCTION_USAGE(cos, "x");
+    FUNCTION_USAGE(cosh, "x");
+    FUNCTION_USAGE(cot, "x");
+    FUNCTION_USAGE(csc, "x");
+    FUNCTION_USAGE(dec, "x");
+    FUNCTION_USAGE(degrees, "x");
+    FUNCTION_USAGE(erf, "x");
+    FUNCTION_USAGE(erfc, "x");
+    FUNCTION_USAGE(exp, "x");
+    FUNCTION_USAGE(floor, "x");
+    FUNCTION_USAGE(frac, "x");
+    FUNCTION_USAGE(gamma, "x");
+    FUNCTION_USAGE(gcd, "n<sub>1</sub>; n<sub>2</sub>; ...");
+    FUNCTION_USAGE(geomean, "x<sub>1</sub>; x<sub>2</sub>; ...");
+    FUNCTION_USAGE(hex, "n");
+    FUNCTION_USAGE(int, "x");
+    FUNCTION_USAGE(lb, "x");
+    FUNCTION_USAGE(lg, "x");
+    FUNCTION_USAGE(ln, "x");
+    FUNCTION_USAGE(lngamma, "x");
+    FUNCTION_USAGE(max, "x<sub>1</sub>; x<sub>2</sub>; ...");
+    FUNCTION_USAGE(median, "x<sub>1</sub>; x<sub>2</sub>; ...");
+    FUNCTION_USAGE(min, "x<sub>1</sub>; x<sub>2</sub>; ...");
+    FUNCTION_USAGE(ncr, "x<sub>1</sub>; x<sub>2</sub>");
+    FUNCTION_USAGE(not, "n");
+    FUNCTION_USAGE(npr, "x<sub>1</sub>; x<sub>2</sub>");
+    FUNCTION_USAGE(oct, "n");
+    FUNCTION_USAGE(or, "x<sub>1</sub>; x<sub>2</sub>; ...");
+    FUNCTION_USAGE(product, "x<sub>1</sub>; x<sub>2</sub>; ...");
+    FUNCTION_USAGE(radians, "x");
+    FUNCTION_USAGE(round, "x");
+    FUNCTION_USAGE(sec, "x)");
+    FUNCTION_USAGE(sgn, "x");
+    FUNCTION_USAGE(sin, "x");
+    FUNCTION_USAGE(sinh, "x");
+    FUNCTION_USAGE(sqrt, "x");
+    FUNCTION_USAGE(stddev, "x<sub>1</sub>; x<sub>2</sub>; ...");
+    FUNCTION_USAGE(sum, "x<sub>1</sub>; x<sub>2</sub>; ...");
+    FUNCTION_USAGE(tan, "x");
+    FUNCTION_USAGE(tanh, "x");
+    FUNCTION_USAGE(trunc, "x");
+    FUNCTION_USAGE(variance, "x<sub>1</sub>; x<sub>2</sub>; ...");
+    FUNCTION_USAGE(xor, "x<sub>1</sub>; x<sub>2</sub>; ...");
 }
 
 void FunctionRepo::setTranslatableFunctionUsages()
 {
-    find("binomcdf")->setUsage(tr("max; trials; probability"));
-    find("binommean")->setUsage(tr("trials; probability"));
-    find("binompmf")->setUsage(tr("hits; trials; probability"));
-    find("binomvar")->setUsage(tr("trials; probability"));
-    find("hypercdf")->setUsage(tr("max; total; hits; trials"));
-    find("hypermean")->setUsage(tr("total; hits; trials"));
-    find("hyperpmf")->setUsage(tr("count; total; hits; trials"));
-    find("hypervar")->setUsage(tr("total; hits; trials"));
-    find("idiv")->setUsage(tr("dividend; divisor"));
-    find("mask")->setUsage(tr("n; bits"));
-    find("mod")->setUsage(tr("value; modulo"));
-    find("poicdf")->setUsage(tr("events; average_events"));
-    find("poimean")->setUsage(tr("average_events"));
-    find("poipmf")->setUsage(tr("events; average_events"));
-    find("poivar")->setUsage(tr("average_events"));
-    find("shl")->setUsage(tr("n; bits"));
-    find("shr")->setUsage(tr("n; bits"));
-    find("unmask")->setUsage(tr("n; bits"));
+    FUNCTION_USAGE_TR(binomcdf, tr("max; trials; probability"));
+    FUNCTION_USAGE_TR(binommean, tr("trials; probability"));
+    FUNCTION_USAGE_TR(binompmf, tr("hits; trials; probability"));
+    FUNCTION_USAGE_TR(binomvar, tr("trials; probability"));
+    FUNCTION_USAGE_TR(hypercdf, tr("max; total; hits; trials"));
+    FUNCTION_USAGE_TR(hypermean, tr("total; hits; trials"));
+    FUNCTION_USAGE_TR(hyperpmf, tr("count; total; hits; trials"));
+    FUNCTION_USAGE_TR(hypervar, tr("total; hits; trials"));
+    FUNCTION_USAGE_TR(idiv, tr("dividend; divisor"));
+    FUNCTION_USAGE_TR(log, tr("base; x"));
+    FUNCTION_USAGE_TR(mask, tr("n; bits"));
+    FUNCTION_USAGE_TR(mod, tr("value; modulo"));
+    FUNCTION_USAGE_TR(poicdf, tr("events; average_events"));
+    FUNCTION_USAGE_TR(poimean, tr("average_events"));
+    FUNCTION_USAGE_TR(poipmf, tr("events; average_events"));
+    FUNCTION_USAGE_TR(poivar, tr("average_events"));
+    FUNCTION_USAGE_TR(shl, tr("n; bits"));
+    FUNCTION_USAGE_TR(shr, tr("n; bits"));
+    FUNCTION_USAGE_TR(unmask, tr("n; bits"));
 }
 
 void FunctionRepo::setFunctionNames()
 {
-    find("abs")->setName(Function::tr("Absolute Value"));
-    find("absdev")->setName(Function::tr("Absolute Deviation"));
-    find("arccos")->setName(Function::tr("Arc Cosine"));
-    find("and")->setName(Function::tr("Logical AND"));
-    find("arcosh")->setName(Function::tr("Area Hyperbolic Cosine"));
-    find("arsinh")->setName(Function::tr("Area Hyperbolic Sine"));
-    find("artanh")->setName(Function::tr("Area Hyperbolic Tangent"));
-    find("arcsin")->setName(Function::tr("Arc Sine"));
-    find("arctan")->setName(Function::tr("Arc Tangent"));
-    find("average")->setName(Function::tr("Average (Arithmetic Mean)"));
-    find("bin")->setName(Function::tr("Binary Representation"));
-    find("binomcdf")->setName(Function::tr("Binomial Cumulative Distribution Function"));
-    find("binommean")->setName(Function::tr("Binomial Distribution Mean"));
-    find("binompmf")->setName(Function::tr("Binomial Probability Mass Function"));
-    find("binomvar")->setName(Function::tr("Binomial Distribution Variance"));
-    find("cbrt")->setName(Function::tr("Cube Root"));
-    find("ceil")->setName(Function::tr("Ceiling"));
-    find("cos")->setName(Function::tr("Cosine"));
-    find("cosh")->setName(Function::tr("Hyperbolic Cosine"));
-    find("cot")->setName(Function::tr("Cotangent"));
-    find("csc")->setName(Function::tr("Cosecant"));
-    find("dec")->setName(Function::tr("Decimal Representation"));
-    find("degrees")->setName(Function::tr("Degrees of Arc"));
-    find("erf" )->setName(Function::tr("Error Function"));
-    find("erfc")->setName(Function::tr("Complementary Error Function"));
-    find("exp")->setName(Function::tr("Exponential"));
-    find("floor")->setName(Function::tr("Floor"));
-    find("frac")->setName(Function::tr("Fractional Part"));
-    find("gamma")->setName(Function::tr("Extension of Factorials [= (x-1)!]"));
-    find("gcd")->setName(Function::tr("Greatest Common Divisor"));
-    find("geomean")->setName(Function::tr("Geometric Mean"));
-    find("hex")->setName(Function::tr("Hexadecimal Representation"));
-    find("hypercdf")->setName(Function::tr("Hypergeometric Cumulative Distribution Function"));
-    find("hypermean")->setName(Function::tr("Hypergeometric Distribution Mean"));
-    find("hyperpmf")->setName(Function::tr("Hypergeometric Probability Mass Function"));
-    find("hypervar")->setName(Function::tr("Hypergeometric Distribution Variance"));
-    find("idiv")->setName(Function::tr("Integer Quotient"));
-    find("int")->setName(Function::tr("Integer Part"));
-    find("lb")->setName(Function::tr("Binary Logarithm"));
-    find("lg")->setName(Function::tr("Common Logarithm"));
-    find("ln")->setName(Function::tr("Natural Logarithm"));
-    find("lngamma")->setName("ln(abs(Gamma))");
-    find("log")->setName(Function::tr("Logarithm to Arbitrary Base"));
-    find("mask")->setName(Function::tr("Mask to a bit size"));
-    find("max")->setName(Function::tr("Maximum"));
-    find("median")->setName(Function::tr("Median Value (50th Percentile)"));
-    find("min")->setName(Function::tr("Minimum"));
-    find("mod")->setName(Function::tr("Modulo"));
-    find("ncr")->setName(Function::tr("Combination (Binomial Coefficient)"));
-    find("not")->setName(Function::tr("Logical NOT"));
-    find("npr")->setName(Function::tr("Permutation (Arrangement)"));
-    find("oct")->setName(Function::tr("Octal Representation"));
-    find("or")->setName(Function::tr("Logical OR"));
-    find("poicdf")->setName(Function::tr("Poissonian Cumulative Distribution Function"));
-    find("poimean")->setName(Function::tr("Poissonian Distribution Mean"));
-    find("poipmf")->setName(Function::tr("Poissonian Probability Mass Function"));
-    find("poivar")->setName(Function::tr("Poissonian Distribution Variance"));
-    find("product")->setName(Function::tr("Product"));
-    find("radians")->setName(Function::tr("Radians"));
-    find("round")->setName(Function::tr("Rounding"));
-    find("sec")->setName(Function::tr("Secant"));
-    find("shl")->setName(Function::tr("Arithmetic Shift Left"));
-    find("shr")->setName(Function::tr("Arithmetic Shift Right"));
-    find("sgn")->setName(Function::tr("Signum"));
-    find("sin")->setName(Function::tr("Sine"));
-    find("sinh")->setName(Function::tr("Hyperbolic Sine"));
-    find("sqrt")->setName(Function::tr("Square Root"));
-    find("stddev")->setName(Function::tr("Standard Deviation (Square Root of Variance)"));
-    find("sum")->setName(Function::tr("Sum"));
-    find("tan")->setName(Function::tr("Tangent"));
-    find("tanh")->setName(Function::tr("Hyperbolic Tangent"));
-    find("trunc")->setName(Function::tr("Truncation"));
-    find("unmask")->setName(Function::tr("Sign-extend a value"));
-    find("variance")->setName(Function::tr("Variance"));
-    find("xor")->setName(Function::tr("Logical XOR"));
+    FUNCTION_NAME(abs, tr("Absolute Value"));
+    FUNCTION_NAME(absdev, tr("Absolute Deviation"));
+    FUNCTION_NAME(arccos, tr("Arc Cosine"));
+    FUNCTION_NAME(and, tr("Logical AND"));
+    FUNCTION_NAME(arcosh, tr("Area Hyperbolic Cosine"));
+    FUNCTION_NAME(arsinh, tr("Area Hyperbolic Sine"));
+    FUNCTION_NAME(artanh, tr("Area Hyperbolic Tangent"));
+    FUNCTION_NAME(arcsin, tr("Arc Sine"));
+    FUNCTION_NAME(arctan, tr("Arc Tangent"));
+    FUNCTION_NAME(average, tr("Average (Arithmetic Mean)"));
+    FUNCTION_NAME(bin, tr("Binary Representation"));
+    FUNCTION_NAME(binomcdf, tr("Binomial Cumulative Distribution Function"));
+    FUNCTION_NAME(binommean, tr("Binomial Distribution Mean"));
+    FUNCTION_NAME(binompmf, tr("Binomial Probability Mass Function"));
+    FUNCTION_NAME(binomvar, tr("Binomial Distribution Variance"));
+    FUNCTION_NAME(cbrt, tr("Cube Root"));
+    FUNCTION_NAME(ceil, tr("Ceiling"));
+    FUNCTION_NAME(cos, tr("Cosine"));
+    FUNCTION_NAME(cosh, tr("Hyperbolic Cosine"));
+    FUNCTION_NAME(cot, tr("Cotangent"));
+    FUNCTION_NAME(csc, tr("Cosecant"));
+    FUNCTION_NAME(dec, tr("Decimal Representation"));
+    FUNCTION_NAME(degrees, tr("Degrees of Arc"));
+    FUNCTION_NAME(erf, tr("Error Function"));
+    FUNCTION_NAME(erfc, tr("Complementary Error Function"));
+    FUNCTION_NAME(exp, tr("Exponential"));
+    FUNCTION_NAME(floor, tr("Floor"));
+    FUNCTION_NAME(frac, tr("Fractional Part"));
+    FUNCTION_NAME(gamma, tr("Extension of Factorials [= (x-1)!]"));
+    FUNCTION_NAME(gcd, tr("Greatest Common Divisor"));
+    FUNCTION_NAME(geomean, tr("Geometric Mean"));
+    FUNCTION_NAME(hex, tr("Hexadecimal Representation"));
+    FUNCTION_NAME(hypercdf, tr("Hypergeometric Cumulative Distribution Function"));
+    FUNCTION_NAME(hypermean, tr("Hypergeometric Distribution Mean"));
+    FUNCTION_NAME(hyperpmf, tr("Hypergeometric Probability Mass Function"));
+    FUNCTION_NAME(hypervar, tr("Hypergeometric Distribution Variance"));
+    FUNCTION_NAME(idiv, tr("Integer Quotient"));
+    FUNCTION_NAME(int, tr("Integer Part"));
+    FUNCTION_NAME(lb, tr("Binary Logarithm"));
+    FUNCTION_NAME(lg, tr("Common Logarithm"));
+    FUNCTION_NAME(ln, tr("Natural Logarithm"));
+    FUNCTION_NAME(lngamma, "ln(abs(Gamma))");
+    FUNCTION_NAME(log, tr("Logarithm to Arbitrary Base"));
+    FUNCTION_NAME(mask, tr("Mask to a bit size"));
+    FUNCTION_NAME(max, tr("Maximum"));
+    FUNCTION_NAME(median, tr("Median Value (50th Percentile)"));
+    FUNCTION_NAME(min, tr("Minimum"));
+    FUNCTION_NAME(mod, tr("Modulo"));
+    FUNCTION_NAME(ncr, tr("Combination (Binomial Coefficient)"));
+    FUNCTION_NAME(not, tr("Logical NOT"));
+    FUNCTION_NAME(npr, tr("Permutation (Arrangement)"));
+    FUNCTION_NAME(oct, tr("Octal Representation"));
+    FUNCTION_NAME(or, tr("Logical OR"));
+    FUNCTION_NAME(poicdf, tr("Poissonian Cumulative Distribution Function"));
+    FUNCTION_NAME(poimean, tr("Poissonian Distribution Mean"));
+    FUNCTION_NAME(poipmf, tr("Poissonian Probability Mass Function"));
+    FUNCTION_NAME(poivar, tr("Poissonian Distribution Variance"));
+    FUNCTION_NAME(product, tr("Product"));
+    FUNCTION_NAME(radians, tr("Radians"));
+    FUNCTION_NAME(round, tr("Rounding"));
+    FUNCTION_NAME(sec, tr("Secant"));
+    FUNCTION_NAME(shl, tr("Arithmetic Shift Left"));
+    FUNCTION_NAME(shr, tr("Arithmetic Shift Right"));
+    FUNCTION_NAME(sgn, tr("Signum"));
+    FUNCTION_NAME(sin, tr("Sine"));
+    FUNCTION_NAME(sinh, tr("Hyperbolic Sine"));
+    FUNCTION_NAME(sqrt, tr("Square Root"));
+    FUNCTION_NAME(stddev, tr("Standard Deviation (Square Root of Variance)"));
+    FUNCTION_NAME(sum, tr("Sum"));
+    FUNCTION_NAME(tan, tr("Tangent"));
+    FUNCTION_NAME(tanh, tr("Hyperbolic Tangent"));
+    FUNCTION_NAME(trunc, tr("Truncation"));
+    FUNCTION_NAME(unmask, tr("Sign-extend a value"));
+    FUNCTION_NAME(variance, tr("Variance"));
+    FUNCTION_NAME(xor, tr("Logical XOR"));
 }
 
 void FunctionRepo::retranslateText()
