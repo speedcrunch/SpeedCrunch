@@ -34,7 +34,6 @@ static int hmath_total_tests  = 0;
 static int hmath_failed_tests = 0;
 
 static HNumber PI;
-static HNumber PHI;
 
 static void check_value( const char * file, int line, const char * msg,
                          const HNumber & n, const char * expected )
@@ -171,7 +170,6 @@ void test_format()
 
   // general format
   CHECK_FORMAT( 'g', -1, PI,  "3.14159265358979323846" );
-  CHECK_FORMAT( 'g', -1, PHI, "1.6180339887498948482"  );
   CHECK_FORMAT( 'g', 3, HNumber( "0"           ), "0"          );
   CHECK_FORMAT( 'g', 3, HNumber( "0.000000001" ), "1.000e-9"   );
   CHECK_FORMAT( 'g', 3, HNumber( "0.00000001"  ), "1.000e-8"   );
@@ -256,10 +254,6 @@ void test_functions()
   // pi
   CHECK( PI, "3.14159265358979323846" );
   CHECK_PRECISE( PI, "3.14159265358979323846264338327950288419716939937511" );
-
-  // phi
-  CHECK( PHI, "1.6180339887498948482" );
-  CHECK_PRECISE( PHI, "1.61803398874989484820458683436563811772030917980576" );
 
   // abs
   CHECK( HMath::abs( "NaN"            ), "NaN"           );
@@ -1129,17 +1123,14 @@ int main( int argc, char * * argv )
   // initialize floatnum
   floatmath_init();
   PI  = HMath::pi();
-  PHI = HMath::phi();
 
   test_create();
   test_format();
   test_op();
   test_functions();
 
-  cerr << hmath_total_tests  << " total, "
-       << hmath_failed_tests << " failed"
-       << endl;
+  if (hmath_failed_tests)
+      cerr << hmath_total_tests  << " total, " << hmath_failed_tests << " failed" << endl;
 
   return hmath_failed_tests;
 }
-
