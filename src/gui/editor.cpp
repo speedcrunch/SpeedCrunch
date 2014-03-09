@@ -407,7 +407,7 @@ void Editor::triggerAutoComplete()
     QList<Evaluator::Variable> variables = m_evaluator->getVariables();
     for (int i = 0; i < variables.count(); ++i)
         if (variables.at(i).name.startsWith(id, Qt::CaseInsensitive))
-            vchoices.append(QString("%1: %2").arg(variables.at(i).name)
+            vchoices.append(QString("%1:%2").arg(variables.at(i).name)
                 .arg(NumberFormatter::format(variables.at(i).value)));
     vchoices.sort();
     choices += vchoices;
@@ -749,8 +749,10 @@ EditorCompletion::EditorCompletion(Editor* editor)
     m_popup->setColumnCount(2);
     m_popup->setRootIsDecorated(false);
     m_popup->header()->hide();
+    m_popup->header()->setStretchLastSection(false);
     m_popup->setEditTriggers(QTreeWidget::NoEditTriggers);
     m_popup->setSelectionBehavior(QTreeWidget::SelectRows);
+    m_popup->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     m_popup->setMouseTracking(true);
     m_popup->installEventFilter(this);
 
@@ -822,27 +824,44 @@ void EditorCompletion::showCompletion(const QStringList& choices)
     if (!choices.count())
         return;
 
+    int maxIdentifierLength = 0;
+    int maxDescriptionLength = 0;
+    QFontMetrics metrics(m_editor->font());
+
     m_popup->setUpdatesEnabled(false);
     m_popup->clear();
+
     for (int i = 0; i < choices.count(); ++i) {
-        QTreeWidgetItem* item = new QTreeWidgetItem(m_popup, choices.at(i).split(':'));
+        QStringList pair = choices.at(i).split(':');
+        QTreeWidgetItem* item = new QTreeWidgetItem(m_popup, pair);
+
         if (item && m_editor->layoutDirection() == Qt::RightToLeft)
             item->setTextAlignment(0, Qt::AlignRight);
+
+        int length = metrics.boundingRect(pair.at(0)).width();
+        if (length > maxIdentifierLength)
+            maxIdentifierLength = length;
+
+        length = metrics.boundingRect(pair.at(1)).width();
+        if (length > maxDescriptionLength)
+            maxDescriptionLength = length;
     }
+
     m_popup->sortItems(0, Qt::AscendingOrder);
     m_popup->sortItems(1, Qt::AscendingOrder);
     m_popup->setCurrentItem(m_popup->topLevelItem(0));
-    m_popup->adjustSize();
-    m_popup->setUpdatesEnabled(true);
 
     // Size of the pop-up.
-    m_popup->adjustSize();
-    const int height = m_popup->sizeHintForRow(0) * qMin(7, choices.count()) + 3;
-    const int width = m_popup->width();
-    m_popup->resize(width, height);
+    m_popup->resizeColumnToContents(0);
+    m_popup->setColumnWidth(0, m_popup->columnWidth(0) + 25);
+    m_popup->resizeColumnToContents(1);
+    m_popup->setColumnWidth(1, m_popup->columnWidth(1) + 25);
+
+    const int maxVisibleItems = 8;
+    const int height = m_popup->sizeHintForRow(0) * qMin(maxVisibleItems, choices.count()) + 3;
+    const int width = m_popup->columnWidth(0) + m_popup->columnWidth(1) + 1;
 
     // Position, reference is editor's cursor position in global coord.
-    QFontMetrics metrics(m_editor->font());
     QTextCursor cursor = m_editor->textCursor();
     cursor.movePosition(QTextCursor::StartOfWord);
     const int pixelsOffset = metrics.width(m_editor->text(), cursor.position());
@@ -855,9 +874,10 @@ void EditorCompletion::showCompletion(const QStringList& choices)
     if (position.x() + width > screen.x() + screen.width())
         position.setX(screen.x() + screen.width() - width);
 
-    m_popup->move(position);
-    m_popup->setFocus();
+    m_popup->setUpdatesEnabled(true);
+    m_popup->setGeometry(QRect(position, QSize(width, height)));
     m_popup->show();
+    m_popup->setFocus();
 }
 
 void EditorCompletion::selectItem(const QString& item)
