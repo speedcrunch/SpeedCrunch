@@ -449,6 +449,8 @@ void Editor::autoComplete(const QString& item)
     setTextCursor(cursor);
     insert(str.at(0));
     blockSignals(false);
+    if (FunctionRepo::instance()->find(str.at(0)))
+        insert(QString::fromLatin1("("));
 }
 
 void Editor::insertFromMimeData(const QMimeData* source)
