@@ -21,7 +21,7 @@
 
 #include "gui/constantswidget.h"
 
-#include <QtCore/QEvent>
+#include <QEvent>
 
 ConstantsDock::ConstantsDock(QWidget *parent)
     : QDockWidget(parent)

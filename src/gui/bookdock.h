@@ -22,8 +22,8 @@
 
 #include "core/book.h"
 
-#include <QtGui/QDockWidget>
-#include <QtGui/QTextBrowser>
+#include <QDockWidget>
+#include <QTextBrowser>
 
 class QUrl;
 

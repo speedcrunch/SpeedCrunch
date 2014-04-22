@@ -21,8 +21,8 @@
 #ifndef GUI_MAINWINDOW_H
 #define GUI_MAINWINDOW_H
 
-#include <QtGui/QMainWindow>
-#include <QtGui/QSystemTrayIcon>
+#include <QMainWindow>
+#include <QSystemTrayIcon>
 
 class AutoHideLabel;
 class BookDock;

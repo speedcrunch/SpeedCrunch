@@ -19,9 +19,9 @@
 
 #include "gui/historywidget.h"
 
-#include <QtCore/QEvent>
-#include <QtGui/QListWidget>
-#include <QtGui/QVBoxLayout>
+#include <QEvent>
+#include <QListWidget>
+#include <QVBoxLayout>
 
 
 HistoryWidget::HistoryWidget(QWidget *parent)

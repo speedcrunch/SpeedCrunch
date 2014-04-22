@@ -25,8 +25,8 @@
 #include "core/settings.h"
 #include "math/hmath.h"
 
-#include <QtCore/QCoreApplication>
-#include <QtCore/QHash>
+#include <QCoreApplication>
+#include <QHash>
 
 #include <algorithm>
 #include <functional>

@@ -23,15 +23,15 @@
 #include "core/evaluator.h"
 #include "core/settings.h"
 
-#include <QtCore/QEvent>
-#include <QtCore/QTimer>
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QKeyEvent>
-#include <QtGui/QLabel>
-#include <QtGui/QLineEdit>
-#include <QtGui/QMenu>
-#include <QtGui/QTreeWidget>
-#include <QtGui/QVBoxLayout>
+#include <QEvent>
+#include <QTimer>
+#include <QHBoxLayout>
+#include <QKeyEvent>
+#include <QLabel>
+#include <QLineEdit>
+#include <QMenu>
+#include <QTreeWidget>
+#include <QVBoxLayout>
 
 static QString formatValue(const HNumber& value);
 

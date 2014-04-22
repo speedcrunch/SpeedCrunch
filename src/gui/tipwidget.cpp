@@ -19,12 +19,12 @@
 
 #include <gui/tipwidget.h>
 
-#include <QtCore/QTimer>
-#include <QtCore/QTimeLine>
-#include <QtGui/QLabel>
-#include <QtGui/QPushButton>
-#include <QtGui/QResizeEvent>
-#include <QtGui/QToolTip>
+#include <QTimer>
+#include <QTimeLine>
+#include <QLabel>
+#include <QPushButton>
+#include <QResizeEvent>
+#include <QToolTip>
 
 struct TipWidget::Private
 {

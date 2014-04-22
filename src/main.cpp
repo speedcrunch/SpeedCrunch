@@ -20,8 +20,8 @@
 #include "gui/application.h"
 #include "gui/mainwindow.h"
 
-#include <QtCore/QCoreApplication>
-#include <QtGui/QApplication>
+#include <QCoreApplication>
+#include <QApplication>
 
 int main(int argc, char* argv[])
 {

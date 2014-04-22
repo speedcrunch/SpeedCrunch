@@ -24,10 +24,10 @@
 #include "core/functions.h"
 #include "core/settings.h"
 
-#include <QtCore/QLatin1String>
-#include <QtGui/QApplication>
-#include <QtGui/QPalette>
-#include <QtGui/QPlainTextEdit>
+#include <QLatin1String>
+#include <QApplication>
+#include <QPalette>
+#include <QPlainTextEdit>
 
 #define SH(x,r,g,b) (setColorForRole(SyntaxHighlighter::x, QColor(r,g,b)))
 

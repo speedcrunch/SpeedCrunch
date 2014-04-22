@@ -22,14 +22,14 @@
 #include "core/functions.h"
 #include "core/settings.h"
 
-#include <QtCore/QEvent>
-#include <QtCore/QString>
-#include <QtCore/QTimer>
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QLabel>
-#include <QtGui/QLineEdit>
-#include <QtGui/QTreeWidget>
-#include <QtGui/QVBoxLayout>
+#include <QEvent>
+#include <QString>
+#include <QTimer>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QLineEdit>
+#include <QTreeWidget>
+#include <QVBoxLayout>
 
 FunctionsWidget::FunctionsWidget(QWidget* parent)
     : QWidget(parent)

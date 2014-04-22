@@ -25,11 +25,11 @@
 #include "math/hmath.h"
 #include "math/floatconfig.h"
 
-#include <QtCore/QLatin1String>
-#include <QtGui/QApplication>
-#include <QtGui/QClipboard>
-#include <QtGui/QPainter>
-#include <QtGui/QScrollBar>
+#include <QLatin1String>
+#include <QApplication>
+#include <QClipboard>
+#include <QPainter>
+#include <QScrollBar>
 
 #define OVERLAY_GRADIENT_HEIGHT 50
 

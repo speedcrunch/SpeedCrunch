@@ -19,8 +19,8 @@
 #ifndef GUI_RESULTDISPLAY_H
 #define GUI_RESULTDISPLAY_H
 
-#include <QtCore/QBasicTimer>
-#include <QtGui/QPlainTextEdit>
+#include <QBasicTimer>
+#include <QPlainTextEdit>
 
 class HNumber;
 class FadeOverlay;
