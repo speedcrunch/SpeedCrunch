@@ -284,10 +284,11 @@ void ResultDisplay::wheelEvent(QWheelEvent* event)
             zoomIn();
         else
             zoomOut();
-    } else if (event->delta() > 0)
-        scrollPageUp();
-    else
-        scrollPageDown();
+    } else {
+        QPlainTextEdit::wheelEvent(event);
+        return;
+    }
+
     event->accept();
 }
 
