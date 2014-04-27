@@ -21,13 +21,13 @@
 
 #include "gui/variablelistwidget.h"
 
-#include <QtCore/QEvent>
-#include <QtCore/QTimer>
-#include <QtGui/QIcon>
-#include <QtGui/QLabel>
-#include <QtGui/QLineEdit>
-#include <QtGui/QTreeWidget>
-#include <QtGui/QVBoxLayout>
+#include <QEvent>
+#include <QTimer>
+#include <QIcon>
+#include <QLabel>
+#include <QLineEdit>
+#include <QTreeWidget>
+#include <QVBoxLayout>
 
 VariablesDock::VariablesDock(QWidget*  parent)
     : QDockWidget(parent)

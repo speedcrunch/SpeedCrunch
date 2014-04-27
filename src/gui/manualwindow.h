@@ -21,7 +21,7 @@
 
 #include "core/manual.h"
 
-#include <QtGui/QTextBrowser>
+#include <QTextBrowser>
 
 class QCloseEvent;
 class QEvent;

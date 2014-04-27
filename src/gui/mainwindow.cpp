@@ -40,33 +40,33 @@
 #include "gui/variablesdock.h"
 #include "math/floatconfig.h"
 
-#include <QtCore/QLatin1String>
-#include <QtCore/QLocale>
-#include <QtCore/QTextStream>
-#include <QtCore/QTimer>
-#include <QtCore/QTranslator>
-#include <QtCore/QUrl>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QClipboard>
-#include <QtGui/QCloseEvent>
-#include <QtGui/QDesktopServices>
-#include <QtGui/QDesktopWidget>
-#include <QtGui/QFileDialog>
-#include <QtGui/QFont>
-#include <QtGui/QFontDialog>
-#include <QtGui/QInputDialog>
-#include <QtGui/QLabel>
-#include <QtGui/QMenu>
-#include <QtGui/QMenuBar>
-#include <QtGui/QMessageBox>
-#include <QtGui/QPushButton>
-#include <QtGui/QToolTip>
-#include <QtGui/QScrollBar>
-#include <QtGui/QStatusBar>
-#include <QtGui/QVBoxLayout>
+#include <QLatin1String>
+#include <QLocale>
+#include <QTextStream>
+#include <QTimer>
+#include <QTranslator>
+#include <QUrl>
+#include <QAction>
+#include <QApplication>
+#include <QClipboard>
+#include <QCloseEvent>
+#include <QDesktopServices>
+#include <QDesktopWidget>
+#include <QFileDialog>
+#include <QFont>
+#include <QFontDialog>
+#include <QInputDialog>
+#include <QLabel>
+#include <QMenu>
+#include <QMenuBar>
+#include <QMessageBox>
+#include <QPushButton>
+#include <QScrollBar>
+#include <QStatusBar>
+#include <QToolTip>
+#include <QVBoxLayout>
 #ifdef Q_WS_X11
-#include <QtGui/QX11Info>
+#include <QX11Info>
 
 #include <X11/Xatom.h>
 #include <X11/Xlib.h>
@@ -1322,7 +1322,7 @@ void MainWindow::showSessionLoadDialog()
             QMessageBox::critical(this, tr("Error"), errMsg.arg(fname));
             return;
         }
-        HNumber num(val.toAscii().data());
+        HNumber num(val.toLatin1().data());
         if (num != HMath::nan())
             m_evaluator->setVariable(var, num);
     }
@@ -1558,10 +1558,19 @@ void MainWindow::saveSession()
     file.close();
 }
 
+inline static QString documentsLocation()
+{
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+    return QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+#else
+    return QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+#endif
+}
+
 void MainWindow::exportHtml()
 {
     QString fname = QFileDialog::getSaveFileName(this, tr("Export session as HTML"),
-        QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation));
+        documentsLocation());
 
     if (fname.isEmpty())
         return;
@@ -1582,7 +1591,7 @@ void MainWindow::exportHtml()
 void MainWindow::exportPlainText()
 {
     QString fname = QFileDialog::getSaveFileName(this, tr("Export session as plain text"),
-        QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation));
+        documentsLocation());
 
     if (fname.isEmpty())
         return;
@@ -2013,7 +2022,7 @@ void MainWindow::restoreVariables()
         Evaluator::Variable::Type type = Evaluator::Variable::UserDefined;
         if (list.at(0) == QLatin1String("ans"))
             type = Evaluator::Variable::BuiltIn;
-        m_evaluator->setVariable(list.at(0), HNumber(list.at(1).toAscii().data()), type);
+        m_evaluator->setVariable(list.at(0), HNumber(list.at(1).toLatin1().data()), type);
     }
 
     if (m_docks.variables)

@@ -22,9 +22,9 @@
 #include "core/book.h"
 #include "core/settings.h"
 
-#include <QtCore/QEvent>
-#include <QtGui/QTextBrowser>
-#include <QtGui/QVBoxLayout>
+#include <QEvent>
+#include <QTextBrowser>
+#include <QVBoxLayout>
 
 BookDock::BookDock(QWidget* parent)
     : QDockWidget(parent)

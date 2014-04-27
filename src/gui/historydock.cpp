@@ -21,8 +21,8 @@
 
 #include "gui/historywidget.h"
 
-#include <QtCore/QEvent>
-#include <QtGui/QIcon>
+#include <QEvent>
+#include <QIcon>
 
 HistoryDock::HistoryDock(QWidget *parent)
     : QDockWidget(parent),

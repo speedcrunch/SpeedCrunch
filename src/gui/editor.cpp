@@ -28,22 +28,22 @@
 #include "core/settings.h"
 #include "gui/syntaxhighlighter.h"
 
-#include <QtCore/QEvent>
-#include <QtCore/QMimeData>
-#include <QtCore/QTimeLine>
-#include <QtCore/QTimer>
-#include <QtGui/QApplication>
-#include <QtGui/QDesktopWidget>
-#include <QtGui/QFont>
-#include <QtGui/QFrame>
-#include <QtGui/QHeaderView>
-#include <QtGui/QKeyEvent>
-#include <QtGui/QLineEdit>
-#include <QtGui/QPainter>
-#include <QtGui/QPlainTextEdit>
-#include <QtGui/QStyle>
-#include <QtGui/QTreeWidget>
-#include <QtGui/QWheelEvent>
+#include <QEvent>
+#include <QMimeData>
+#include <QTimeLine>
+#include <QTimer>
+#include <QApplication>
+#include <QDesktopWidget>
+#include <QFont>
+#include <QFrame>
+#include <QHeaderView>
+#include <QKeyEvent>
+#include <QLineEdit>
+#include <QPainter>
+#include <QPlainTextEdit>
+#include <QStyle>
+#include <QTreeWidget>
+#include <QWheelEvent>
 
 #include <algorithm>
 

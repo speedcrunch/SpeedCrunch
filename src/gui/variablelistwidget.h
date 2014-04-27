@@ -20,8 +20,8 @@
 #ifndef GUI_VARIABLELISTWIDGET_H
 #define GUI_VARIABLELISTWIDGET_H
 
-#include <QtCore/QList>
-#include <QtGui/QWidget>
+#include <QList>
+#include <QWidget>
 
 class QEvent;
 class QKeyEvent;

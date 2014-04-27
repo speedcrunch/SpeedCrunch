@@ -20,7 +20,7 @@
 #ifndef GUI_EDITOR_H
 #define GUI_EDITOR_H
 
-#include <QtGui/QPlainTextEdit>
+#include <QPlainTextEdit>
 
 struct Constant;
 class ConstantCompletion;

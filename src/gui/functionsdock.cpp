@@ -21,7 +21,7 @@
 
 #include "gui/functionswidget.h"
 
-#include <QtCore/QEvent>
+#include <QEvent>
 
 FunctionsDock::FunctionsDock(QWidget *parent)
     : QDockWidget(parent)

@@ -1,9 +1,8 @@
-QT_VERSION = $$[QT_VERSION]
-QT_VERSION = $$split(QT_VERSION, ".")
-QT_VER_MAJ = $$member(QT_VERSION, 0)
-QT_VER_MIN = $$member(QT_VERSION, 1)
+equals(QT_MAJOR_VERSION, 5) {
+    QT += widgets
+}
 
-lessThan(QT_VER_MAJ, 4) | lessThan(QT_VER_MIN, 8) {
+equals(QT_MAJOR_VERSION, 4) : lessThan(QT_MINOR_VERSION, 8) {
     error(Qt 4.8 or newer is required but version $$[QT_VERSION] was detected.)
 }
 

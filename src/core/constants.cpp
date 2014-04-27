@@ -23,7 +23,7 @@
 #include "core/numberformatter.h"
 #include "math/hmath.h"
 
-#include <QtCore/QCoreApplication>
+#include <QCoreApplication>
 
 #include <algorithm>
 

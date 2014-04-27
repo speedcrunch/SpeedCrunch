@@ -23,11 +23,11 @@
 #include "thirdparty/binreloc.h"
 #include "math/floatconfig.h"
 
-#include <QtCore/QDir>
-#include <QtCore/QLocale>
-#include <QtCore/QSettings>
-#include <QtGui/QApplication>
-#include <QtGui/QFont>
+#include <QDir>
+#include <QLocale>
+#include <QSettings>
+#include <QApplication>
+#include <QFont>
 
 static Settings* s_settingsInstance = 0;
 static char s_radixCharacter = 0;
@@ -70,12 +70,12 @@ void Settings::load()
     if (angleUnitStr != QLatin1String("r") && angleUnitStr != QLatin1String("d"))
         angleUnit = 'r';
     else
-        angleUnit = angleUnitStr.at(0).toAscii();
+        angleUnit = angleUnitStr.at(0).toLatin1();
 
     // Radix character special case.
     QString radixCharStr;
     radixCharStr = settings->value(key + QLatin1String("RadixCharacter"), 0).toString();
-    setRadixCharacter(radixCharStr.at(0).toAscii());
+    setRadixCharacter(radixCharStr.at(0).toLatin1());
 
     autoAns = settings->value(key + QLatin1String("AutoAns"), true).toBool();
     autoCalc = settings->value(key + QLatin1String("AutoCalc"), true).toBool();
@@ -97,7 +97,7 @@ void Settings::load()
     if (format != "g" && format != "f" && format != "e" && format != "n"&& format != "h" && format != "o" && format != "b")
         resultFormat = 'f';
     else
-        resultFormat = format.at(0).toAscii();
+        resultFormat = format.at(0).toLatin1();
 
     resultPrecision = settings->value(key + QLatin1String("Precision"), -1).toInt();
 
@@ -301,7 +301,7 @@ void Settings::save()
 
 char Settings::radixCharacter() const
 {
-    return s_radixCharacter == 0 ? QLocale().decimalPoint().toAscii() : s_radixCharacter;
+    return s_radixCharacter == 0 ? QLocale().decimalPoint().toLatin1() : s_radixCharacter;
 }
 
 bool Settings::isRadixCharacterAuto() const
@@ -318,8 +318,8 @@ QSettings* createQSettings(const QString& KEY)
 {
     QSettings* settings = 0;
 
-#ifdef Q_WS_WIN
 #ifdef SPEEDCRUNCH_PORTABLE
+#if defined(Q_WS_WIN)
     // Portable Windows version: settings are from INI file in same directory.
     QString appPath = QApplication::applicationFilePath();
     int ii = appPath.lastIndexOf('/');
@@ -327,20 +327,7 @@ QSettings* createQSettings(const QString& KEY)
         appPath.remove(ii, appPath.length());
     QString iniFile = appPath + '/' + KEY + ".ini";
     settings = new QSettings(iniFile, QSettings::IniFormat);
-#else
-    // Regular Windows version, settings are from the registry HKEY_CURRENT_USER\Software\SpeedCrunch.
-    settings = new QSettings(QSettings::NativeFormat, QSettings::UserScope, KEY, KEY);
-#endif // SPEEDCRUNCH_PORTABLE
-#endif // Q_WS_WIN
-
-
-#ifdef Q_WS_MAC
-    settings = new QSettings(QSettings::NativeFormat, QSettings::UserScope, KEY, KEY);
-#endif // Q_WS_MAC
-
-
-#if defined (Q_WS_X11) || defined (Q_WS_QWS)
-#ifdef SPEEDCRUNCH_PORTABLE
+#elif defined(Q_WS_X11) || defined (Q_WS_QWS)
     // Portable X11 version: settings are from INI file in the same directory.
     BrInitError error;
     if (br_init(& error) == 0 && error != BR_INIT_ERROR_DISABLED) {
@@ -352,11 +339,10 @@ QSettings* createQSettings(const QString& KEY)
     QString iniFile = QString(prefix) + '/' + KEY + QLatin1String(".ini");
     free(prefix);
     settings = new QSettings(iniFile, QSettings::IniFormat);
-#else
-    // Regular Unix or Embedded Linux (not Mac) version: settings from $HOME/.config/SpeedCrunch.
+#endif // Q_WS_WIN / Q_WS_X11 || Q_WS_QWS
+#else // SPEEDCRUNCH_PORTABLE
     settings = new QSettings(QSettings::NativeFormat, QSettings::UserScope, KEY, KEY);
 #endif // SPEEDCRUNCH_PORTABLE
-#endif // Q_WS_X11 || Q_WS_QWS
 
     return settings;
 }

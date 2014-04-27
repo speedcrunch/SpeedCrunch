@@ -20,7 +20,7 @@
 #ifndef GUI_HISTORYWIDGET_H
 #define GUI_HISTORYWIDGET_H
 
-#include <QtGui/QWidget>
+#include <QWidget>
 
 class QListWidget;
 class QListWidgetItem;

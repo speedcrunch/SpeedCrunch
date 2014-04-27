@@ -19,8 +19,9 @@
 #ifndef CORE_PAGESERVER_H
 #define CORE_PAGESERVER_H
 
-#include <QtCore/QHash>
-#include <QtCore/QString>
+#include <QHash>
+#include <QObject>
+#include <QString>
 
 class PageServer : public QObject {
 public:

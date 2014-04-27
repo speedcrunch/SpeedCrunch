@@ -23,9 +23,9 @@
 #include "core/errors.h"
 #include "math/hmath.h"
 
-#include <QtCore/QHash>
-#include <QtCore/QStringList>
-#include <QtCore/QVector>
+#include <QHash>
+#include <QStringList>
+#include <QVector>
 
 class Function;
 
