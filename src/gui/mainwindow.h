@@ -25,6 +25,7 @@
 #include <QSystemTrayIcon>
 
 class AutoHideLabel;
+class BitfieldWidget;
 class BookDock;
 class Constants;
 class ConstantsDock;
@@ -81,6 +82,7 @@ private slots:
     void exportHtml();
     void exportPlainText();
     void handleCopyAvailable(bool copyAvailable);
+    void handleBitsChanged(const QString&str);
     void handleEditorTextChange();
     void handleDisplaySelectionChange();
     void handleEditorSelectionChange();
@@ -106,6 +108,7 @@ private slots:
     void setAutoAnsEnabled(bool);
     void setAutoCalcEnabled(bool);
     void setAutoCompletionEnabled(bool);
+    void setBitfieldVisible(bool);
     void setConstantsDockVisible(bool);
     void setFormulaBookDockVisible(bool);
     void setFullScreenEnabled(bool);
@@ -227,6 +230,7 @@ private:
 #endif
         QAction* viewStatusBar;
         QAction* viewFullScreenMode;
+        QAction* viewBitfield;
         QAction* settingsResultFormatGeneral;
         QAction* settingsResultFormatFixed;
         QAction* settingsResultFormatEngineering;
@@ -310,6 +314,7 @@ private:
         TipWidget* tip;
         QSystemTrayIcon* trayIcon;
         ManualWindow* manual;
+        BitfieldWidget* bitfield;
     } m_widgets;
 
     struct {

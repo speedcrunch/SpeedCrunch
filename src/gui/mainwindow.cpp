@@ -25,8 +25,10 @@
 #include "core/constants.h"
 #include "core/evaluator.h"
 #include "core/functions.h"
+#include "core/numberformatter.h"
 #include "core/settings.h"
 #include "gui/aboutbox.h"
+#include "gui/bitfieldwidget.h"
 #include "gui/bookdock.h"
 #include "gui/constantsdock.h"
 #include "gui/editor.h"
@@ -128,6 +130,7 @@ void MainWindow::createActions()
 #endif
     m_actions.viewStatusBar = new QAction(this);
     m_actions.viewVariables = new QAction(this);
+    m_actions.viewBitfield = new QAction(this);
     m_actions.settingsAngleUnitDegree = new QAction(this);
     m_actions.settingsAngleUnitRadian = new QAction(this);
     m_actions.settingsBehaviorAlwaysOnTop = new QAction(this);
@@ -212,6 +215,7 @@ void MainWindow::createActions()
 #endif
     m_actions.viewStatusBar->setCheckable(true);
     m_actions.viewVariables->setCheckable(true);
+    m_actions.viewBitfield->setCheckable(true);
 
     m_actions.settingsDisplayColorSchemeStandard->setData(SyntaxHighlighter::Standard);
     m_actions.settingsDisplayColorSchemeSublime->setData(SyntaxHighlighter::Sublime);
@@ -306,6 +310,7 @@ void MainWindow::setActionsText()
 #endif
     m_actions.viewStatusBar->setText(MainWindow::tr("&Status Bar"));
     m_actions.viewVariables->setText(MainWindow::tr("&Variables"));
+    m_actions.viewBitfield->setText(MainWindow::tr("Bitfield"));
 
     m_actions.settingsAngleUnitDegree->setText(MainWindow::tr("&Degree"));
     m_actions.settingsAngleUnitRadian->setText(MainWindow::tr("&Radian"));
@@ -395,6 +400,7 @@ void MainWindow::createActionShortcuts()
     m_actions.editCopy->setShortcut(Qt::CTRL + Qt::Key_C);
     m_actions.editPaste->setShortcut(Qt::CTRL + Qt::Key_V);
     m_actions.editSelectExpression->setShortcut(Qt::CTRL + Qt::Key_A);
+    m_actions.viewBitfield->setShortcut(Qt::CTRL + Qt::Key_6);
     m_actions.viewConstants->setShortcut(Qt::CTRL + Qt::Key_2);
     m_actions.viewFullScreenMode->setShortcut(Qt::Key_F11);
     m_actions.viewFunctions->setShortcut(Qt::CTRL + Qt::Key_3);
@@ -449,6 +455,7 @@ void MainWindow::createMenus()
     m_menus.view->addAction(m_actions.viewFunctions);
     m_menus.view->addAction(m_actions.viewVariables);
     m_menus.view->addAction(m_actions.viewHistory);
+    m_menus.view->addAction(m_actions.viewBitfield);
     m_menus.view->addSeparator();
     m_menus.view->addAction(m_actions.viewStatusBar);
 #ifndef Q_OS_MAC
@@ -606,6 +613,10 @@ void MainWindow::createFixedWidgets()
     m_widgets.editor->setFocus();
     editorLayout->addWidget(m_widgets.editor);
     m_layouts.root->addLayout(editorLayout);
+
+    m_widgets.bitfield = new BitfieldWidget(this);
+    m_layouts.root->addWidget(m_widgets.bitfield);
+    m_widgets.bitfield->setVisible(false);
 
     m_widgets.state = new QLabel(this);
     m_widgets.state->setPalette(QToolTip::palette());
@@ -785,6 +796,7 @@ void MainWindow::createFixedConnections()
 #endif
     connect(m_actions.viewStatusBar, SIGNAL(toggled(bool)), SLOT(setStatusBarVisible(bool)));
     connect(m_actions.viewVariables, SIGNAL(toggled(bool)), SLOT(setVariablesDockVisible(bool)));
+    connect(m_actions.viewBitfield, SIGNAL(toggled(bool)), SLOT(setBitfieldVisible(bool)));
 
     connect(m_actions.settingsAngleUnitDegree, SIGNAL(triggered()), SLOT(setAngleModeDegree()));
     connect(m_actions.settingsAngleUnitRadian, SIGNAL(triggered()), SLOT(setAngleModeRadian()));
@@ -850,6 +862,8 @@ void MainWindow::createFixedConnections()
     connect(m_widgets.display, SIGNAL(shiftControlWheelDown()), SLOT(decreaseOpacity()));
     connect(m_widgets.display, SIGNAL(shiftControlWheelUp()), SLOT(increaseOpacity()));
 
+    connect(m_widgets.bitfield, SIGNAL(bitsChanged(QString)), SLOT(handleBitsChanged(QString)));
+
     connect(this, SIGNAL(radixCharacterChanged()), m_widgets.display, SLOT(refresh()));
     connect(this, SIGNAL(resultFormatChanged()), m_widgets.display, SLOT(refresh()));
     connect(this, SIGNAL(resultPrecisionChanged()), m_widgets.display, SLOT(refresh()));
@@ -876,6 +890,7 @@ void MainWindow::applySettings()
     m_actions.viewFunctions->setChecked(m_settings->functionsDockVisible);
     m_actions.viewHistory->setChecked(m_settings->historyDockVisible);
     m_actions.viewVariables->setChecked(m_settings->variablesDockVisible);
+    m_actions.viewBitfield->setChecked(m_settings->bitfieldVisible);
 
     resize(m_settings->windowSize);
 
@@ -1458,6 +1473,13 @@ void MainWindow::setAutoCompletionEnabled(bool b)
 {
     m_settings->autoCompletion = b;
     m_widgets.editor->setAutoCompletionEnabled(b);
+}
+
+void MainWindow::setBitfieldVisible(bool b)
+{
+    m_settings->bitfieldVisible = b;
+    m_widgets.bitfield->setVisible(b);
+    m_widgets.display->scrollToBottom();
 }
 
 void MainWindow::setSystemTrayIconEnabled(bool b)
@@ -2079,6 +2101,8 @@ void MainWindow::evaluateEditorExpression()
     free(num);
     m_widgets.editor->setAnsAvailable(true);
 
+    m_widgets.bitfield->updateBits(result);
+
     if (m_settings->variablesDockVisible)
         m_docks.variables->updateList();
 
@@ -2140,6 +2164,15 @@ void MainWindow::handleCopyAvailable(bool copyAvailable)
     QPlainTextEdit* const textEdit = static_cast<QPlainTextEdit*>(sender());
     if (textEdit)
         m_copyWidget = textEdit;
+}
+
+void MainWindow::handleBitsChanged(const QString &str)
+{
+    clearEditor();
+    insertTextIntoEditor(str);
+    m_evaluator->setExpression(str);
+    HNumber num(m_evaluator->evalNoAssign());
+    showStateLabel(QString("Current value: %1").arg(NumberFormatter::format(num)));
 }
 
 void MainWindow::handleEditorTextChange()
