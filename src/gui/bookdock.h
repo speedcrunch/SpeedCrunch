@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2007 Petri Damstén <damu@iki.fi>
-// Copyright (C) 2008-2013 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2008-2014 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -22,11 +22,9 @@
 
 #include "core/book.h"
 
-#include <QtGui/QDockWidget>
-#include <QtGui/QTextBrowser>
+#include <QDockWidget>
+#include <QTextBrowser>
 
-class QHBoxLayout;
-class QPushButton;
 class QUrl;
 
 class TextBrowser : public QTextBrowser {
@@ -39,17 +37,23 @@ public slots:
 
 class BookDock : public QDockWidget {
     Q_OBJECT
+
 public:
     BookDock(QWidget* parent = 0);
+
 signals:
-    void expressionSelected(const QString& expression);
+    void expressionSelected(const QString&);
+
 public slots:
     void openPage(const QUrl&);
     void retranslateText();
+
 protected:
-    virtual void changeEvent(QEvent* event);
+    virtual void changeEvent(QEvent*);
+
 private slots:
-    void handleAnchorClick(const QUrl& link);
+    void handleAnchorClick(const QUrl&);
+
 private:
     Q_DISABLE_COPY(BookDock)
     Book* m_book;

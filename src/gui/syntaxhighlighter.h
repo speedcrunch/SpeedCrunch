@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2007-2009, 2013 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2007-2009, 2013, 2014 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -33,23 +33,24 @@ public:
     };
 
     enum Role {
-        Comment,
-        DisplayBackground,
-        DisplayScrollBar,
-        EditorCursor,
-        EditorFadeAway,
+        Cursor,
         Number,
+        Parens,
+        Result,
+        Comment,
+        Matched,
         Function,
         Operator,
         Variable,
+        ScrollBar,
         Separator,
-        Parens,
-        MatchedParens,
-        Result
+        Background,
+        EditorFade
     };
 
     explicit SyntaxHighlighter(QPlainTextEdit*);
 
+    void setColorScheme(ColorScheme);
     QColor colorForRole(Role role) const { return m_colorScheme[role]; }
     void setColorForRole(Role role, const QColor& color) { m_colorScheme[role] = color; }
 

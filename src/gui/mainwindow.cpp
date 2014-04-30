@@ -1,7 +1,7 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2004, 2007 Ariya Hidayat <ariya@kde.org>
 // Copyright (C) 2005, 2006 Johan Thelin <e8johan@gmail.com>
-// Copyright (C) 2007-2013 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2007-2014 Helder Correia <helder.pereira.correia@gmail.com>
 // Copyright (C) 2011 Daniel Schäufele <git@schaeufele.org>
 //
 // This program is free software; you can redistribute it and/or
@@ -27,13 +27,13 @@
 #include "core/functions.h"
 #include "core/settings.h"
 #include "gui/aboutbox.h"
-#include "gui/autohidelabel.h"
 #include "gui/bookdock.h"
 #include "gui/constantsdock.h"
 #include "gui/editor.h"
 #include "gui/functionsdock.h"
 #include "gui/historydock.h"
 #include "gui/historywidget.h"
+#include "gui/manualwindow.h"
 #include "gui/resultdisplay.h"
 #include "gui/syntaxhighlighter.h"
 #include "gui/tipwidget.h"
@@ -41,31 +41,33 @@
 #include "gui/userfunctionsdock.h"
 #include "math/floatconfig.h"
 
-#include <QtCore/QLatin1String>
-#include <QtCore/QLocale>
-#include <QtCore/QTextStream>
-#include <QtCore/QTimer>
-#include <QtCore/QTranslator>
-#include <QtCore/QUrl>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QClipboard>
-#include <QtGui/QCloseEvent>
-#include <QtGui/QDesktopServices>
-#include <QtGui/QDesktopWidget>
-#include <QtGui/QFileDialog>
-#include <QtGui/QFont>
-#include <QtGui/QFontDialog>
-#include <QtGui/QInputDialog>
-#include <QtGui/QMenu>
-#include <QtGui/QMenuBar>
-#include <QtGui/QMessageBox>
-#include <QtGui/QPushButton>
-#include <QtGui/QScrollBar>
-#include <QtGui/QStatusBar>
-#include <QtGui/QVBoxLayout>
+#include <QLatin1String>
+#include <QLocale>
+#include <QTextStream>
+#include <QTimer>
+#include <QTranslator>
+#include <QUrl>
+#include <QAction>
+#include <QApplication>
+#include <QClipboard>
+#include <QCloseEvent>
+#include <QDesktopServices>
+#include <QDesktopWidget>
+#include <QFileDialog>
+#include <QFont>
+#include <QFontDialog>
+#include <QInputDialog>
+#include <QLabel>
+#include <QMenu>
+#include <QMenuBar>
+#include <QMessageBox>
+#include <QPushButton>
+#include <QScrollBar>
+#include <QStatusBar>
+#include <QToolTip>
+#include <QVBoxLayout>
 #ifdef Q_WS_X11
-#include <QtGui/QX11Info>
+#include <QX11Info>
 
 #include <X11/Xatom.h>
 #include <X11/Xlib.h>
@@ -163,6 +165,7 @@ void MainWindow::createActions()
     m_actions.settingsResultFormatHexadecimal = new QAction(this);
     m_actions.settingsResultFormatOctal = new QAction(this);
     m_actions.settingsResultFormatScientific = new QAction(this);
+    m_actions.helpManual = new QAction(this);
     m_actions.helpUpdates = new QAction(this);
     m_actions.helpFeedback = new QAction(this);
     m_actions.helpCommunity = new QAction(this);
@@ -346,6 +349,7 @@ void MainWindow::setActionsText()
     m_actions.settingsDisplayFont->setText(MainWindow::tr("&Font..."));
     m_actions.settingsLanguage->setText(MainWindow::tr("&Language..."));
 
+    m_actions.helpManual->setText(MainWindow::tr("User &Manual"));
     m_actions.helpUpdates->setText(MainWindow::tr("Check &Updates"));
     m_actions.helpFeedback->setText(MainWindow::tr("Send &Feedback"));
     m_actions.helpCommunity->setText(MainWindow::tr("Join &Community"));
@@ -528,10 +532,13 @@ void MainWindow::createMenus()
 
     m_menus.help = new QMenu("", this);
     menuBar()->addMenu(m_menus.help);
+    m_menus.help->addAction(m_actions.helpManual);
+    m_menus.help->addSeparator();
     m_menus.help->addAction(m_actions.helpUpdates);
     m_menus.help->addAction(m_actions.helpFeedback);
     m_menus.help->addAction(m_actions.helpCommunity);
     m_menus.help->addAction(m_actions.helpNews);
+    m_menus.help->addSeparator();
     m_menus.help->addAction(m_actions.helpAbout);
 
     addActions(menuBar()->actions());
@@ -610,8 +617,11 @@ void MainWindow::createFixedWidgets()
     editorLayout->addWidget(m_widgets.editor);
     m_layouts.root->addLayout(editorLayout);
 
-    m_widgets.autoCalcTip = new AutoHideLabel(this);
-    m_widgets.autoCalcTip->hide();
+    m_widgets.state = new QLabel(this);
+    m_widgets.state->setPalette(QToolTip::palette());
+    m_widgets.state->setAutoFillBackground(true);
+    m_widgets.state->setFrameShape(QFrame::Box);
+    m_widgets.state->hide();
 
 #ifndef Q_OS_MAC
     if (shouldAllowHiddenMenuBar()) {
@@ -863,14 +873,15 @@ void MainWindow::createFixedConnections()
 
     connect(m_actions.settingsLanguage, SIGNAL(triggered()), SLOT(showLanguageChooserDialog()));
 
+    connect(m_actions.helpManual, SIGNAL(triggered()), SLOT(showManualWindow()));
     connect(m_actions.helpUpdates, SIGNAL(triggered()), SLOT(openUpdatesURL()));
     connect(m_actions.helpFeedback, SIGNAL(triggered()), SLOT(openFeedbackURL()));
     connect(m_actions.helpCommunity, SIGNAL(triggered()), SLOT(openCommunityURL()));
     connect(m_actions.helpNews, SIGNAL(triggered()), SLOT(openNewsURL()));
     connect(m_actions.helpAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
 
-    connect(m_widgets.editor, SIGNAL(autoCalcDisabled()), SLOT(hideAutoCalcTip()));
-    connect(m_widgets.editor, SIGNAL(autoCalcEnabled(const QString&)), SLOT(showAutoCalcTip(const QString&)));
+    connect(m_widgets.editor, SIGNAL(autoCalcDisabled()), SLOT(hideStateLabel()));
+    connect(m_widgets.editor, SIGNAL(autoCalcEnabled(const QString&)), SLOT(showStateLabel(const QString&)));
     connect(m_widgets.editor, SIGNAL(returnPressed()), SLOT(evaluateEditorExpression()));
     connect(m_widgets.editor, SIGNAL(shiftDownPressed()), m_widgets.display, SLOT(zoomOut()));
     connect(m_widgets.editor, SIGNAL(shiftUpPressed()), m_widgets.display, SLOT(zoomIn()));
@@ -886,7 +897,10 @@ void MainWindow::createFixedConnections()
     connect(m_widgets.editor, SIGNAL(selectionChanged()), SLOT(handleEditorSelectionChange()));
 
     connect(m_widgets.display, SIGNAL(copyAvailable(bool)), SLOT(handleCopyAvailable(bool)));
+    connect(m_widgets.display, SIGNAL(expressionSelected(const QString&)), SLOT(insertTextIntoEditor(const QString&)));
     connect(m_widgets.display, SIGNAL(selectionChanged()), SLOT(handleDisplaySelectionChange()));
+    connect(m_widgets.display, SIGNAL(shiftControlWheelDown()), SLOT(decreaseOpacity()));
+    connect(m_widgets.display, SIGNAL(shiftControlWheelUp()), SLOT(increaseOpacity()));
 
     connect(this, SIGNAL(radixCharacterChanged()), m_widgets.display, SLOT(refresh()));
     connect(this, SIGNAL(resultFormatChanged()), m_widgets.display, SLOT(refresh()));
@@ -1020,9 +1034,22 @@ void MainWindow::applySettings()
     QTimer::singleShot(100, m_widgets.editor, SLOT(setFocus()));
 }
 
+void MainWindow::showManualWindow()
+{
+    if (m_widgets.manual) {
+        m_widgets.manual->raise();
+        m_widgets.manual->activateWindow();
+        return;
+    }
+
+    m_widgets.manual = new ManualWindow();
+    m_widgets.manual->show();
+    connect(m_widgets.manual, SIGNAL(windowClosed()), SLOT(handleManualClosed()));
+}
+
 void MainWindow::showReadyMessage()
 {
-    showAutoCalcTip(tr("Type an expression here"));
+    showStateLabel(tr("Type an expression here"));
 }
 
 void MainWindow::checkInitialResultFormat()
@@ -1098,6 +1125,7 @@ MainWindow::MainWindow()
 
     m_widgets.trayIcon = 0;
     m_widgets.tip = 0;
+    m_widgets.manual = 0;
 
     m_menus.trayIcon = 0;
 
@@ -1208,6 +1236,18 @@ void MainWindow::setAngleModeDegree()
     emit angleUnitChanged();
 }
 
+void MainWindow::decreaseOpacity()
+{
+    if (windowOpacity() > 0.4)
+        setWindowOpacity(windowOpacity() - 0.1);
+}
+
+void MainWindow::increaseOpacity()
+{
+    if (windowOpacity() < 1.0)
+        setWindowOpacity(windowOpacity() + 0.1);
+}
+
 void MainWindow::deleteVariables()
 {
     m_evaluator->unsetAllUserDefinedVariables();
@@ -1267,9 +1307,9 @@ void MainWindow::selectEditorExpression()
     m_widgets.editor->setFocus();
 }
 
-void MainWindow::hideAutoCalcTip()
+void MainWindow::hideStateLabel()
 {
-    m_widgets.autoCalcTip->hideText();
+    m_widgets.state->hide();
 }
 
 void MainWindow::showSessionLoadDialog()
@@ -1362,7 +1402,7 @@ void MainWindow::showSessionLoadDialog()
             QMessageBox::critical(this, tr("Error"), errMsg.arg(fname));
             return;
         }
-        HNumber num(val.toAscii().data());
+        HNumber num(val.toLatin1().data());
         if (num != HMath::nan())
             m_evaluator->setVariable(var, num);
     }
@@ -1636,10 +1676,19 @@ void MainWindow::saveSession()
     file.close();
 }
 
+inline static QString documentsLocation()
+{
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+    return QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+#else
+    return QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+#endif
+}
+
 void MainWindow::exportHtml()
 {
     QString fname = QFileDialog::getSaveFileName(this, tr("Export session as HTML"),
-        QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation));
+        documentsLocation());
 
     if (fname.isEmpty())
         return;
@@ -1660,7 +1709,7 @@ void MainWindow::exportHtml()
 void MainWindow::exportPlainText()
 {
     QString fname = QFileDialog::getSaveFileName(this, tr("Export session as plain text"),
-        QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation));
+        documentsLocation());
 
     if (fname.isEmpty())
         return;
@@ -1722,14 +1771,14 @@ void MainWindow::setStatusBarVisible(bool b)
     m_settings->statusBarVisible = b;
 }
 
-void MainWindow::showAutoCalcTip(const QString& msg)
+void MainWindow::showStateLabel(const QString& msg)
 {
-    m_widgets.autoCalcTip->showText(msg);
-    m_widgets.autoCalcTip->adjustSize();
-    const int h = m_widgets.autoCalcTip->height();
-    QPoint p = m_widgets.editor->mapToGlobal(QPoint(0, -h));
-    p = mapFromGlobal(p);
-    m_widgets.autoCalcTip->move(p);
+    m_widgets.state->setText(msg);
+    m_widgets.state->adjustSize();
+    m_widgets.state->show();
+    const int height = m_widgets.state->height();
+    QPoint pos = mapFromGlobal(m_widgets.editor->mapToGlobal(QPoint(0, -height)));
+    m_widgets.state->move(pos);
 }
 
 void MainWindow::setFullScreenEnabled(bool b)
@@ -2121,7 +2170,7 @@ void MainWindow::restoreVariables()
         Evaluator::Variable::Type type = Evaluator::Variable::UserDefined;
         if (list.at(0) == QLatin1String("ans"))
             type = Evaluator::Variable::BuiltIn;
-        m_evaluator->setVariable(list.at(0), HNumber(list.at(1).toAscii().data()), type);
+        m_evaluator->setVariable(list.at(0), HNumber(list.at(1).toLatin1().data()), type);
     }
 
     if (m_docks.variables)
@@ -2176,7 +2225,7 @@ void MainWindow::evaluateEditorExpression()
     HNumber result = m_evaluator->evalUpdateAns();
 
     if (!m_evaluator->error().isEmpty()) {
-        showAutoCalcTip(m_evaluator->error());
+        showStateLabel(m_evaluator->error());
         return;
     }
 
@@ -2232,6 +2281,13 @@ void MainWindow::clearTextEditSelection(QPlainTextEdit* edit)
     edit->setTextCursor(cursor);
 }
 
+void MainWindow::handleManualClosed()
+{
+    disconnect(m_widgets.manual);
+    m_widgets.manual->deleteLater();
+    m_widgets.manual = 0;
+}
+
 void MainWindow::handleDisplaySelectionChange()
 {
     clearTextEditSelection(m_widgets.editor);
@@ -2259,7 +2315,7 @@ void MainWindow::handleEditorTextChange()
         if (expr.isEmpty())
             return;
 
-        Tokens tokens = m_evaluator->scan(expr);
+        Tokens tokens = m_evaluator->scan(expr, Evaluator::NoAutoFix);
         if (tokens.count() == 1) {
             bool operatorCondition =
                 tokens.at(0).asOperator() == Token::Plus

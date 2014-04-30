@@ -242,6 +242,14 @@ void test_function_basic()
     CHECK_EVAL("INT(2.1)", "2");
     CHECK_EVAL("INT(-3.4)", "-3");
 
+    CHECK_EVAL("log(0.123; 0.1234)", "0.99845065797473594741");
+    CHECK_EVAL("lg(0.00000000001)", "-11");
+    CHECK_EVAL("lg(1e-3)", "-3");
+    CHECK_EVAL("lb(0.00000000001)", "-36.54120904376098582657");
+    CHECK_EVAL("lb(32)", "5");
+    CHECK_EVAL("ln(100)", "4.60517018598809136804");
+    CHECK_EVAL("ln(4.0)", "1.38629436111989061883");
+
     CHECK_EVAL("0!", "1");
     CHECK_EVAL("1!", "1");
     CHECK_EVAL("2!", "2");
@@ -253,7 +261,7 @@ void test_function_basic()
     CHECK_EVAL("(1+1)!^2", "4");
     CHECK_EVAL_KNOWN_ISSUE("frac 3!", "0", 451);
 
-    CHECK_EVAL_KNOWN_ISSUE("log 10^2", "2", 451);
+    CHECK_EVAL_KNOWN_ISSUE("lg 10^2", "2", 451);
 
     CHECK_EVAL("(-27)^(1/3)", "-3");
     CHECK_EVAL("(-27)^(-1/3)", "-0.33333333333333333333");
@@ -292,8 +300,8 @@ void test_function_trig()
     CHECK_EVAL("cos(-pi/2) + cos(pi/2)", "0");
     CHECK_EVAL("cos(-pi/2) - cos(pi/2)", "0");
 
-    CHECK_EVAL("asin(sin(1))", "1");
-    CHECK_EVAL("acos(cos(1))", "1");
+    CHECK_EVAL("arcsin(sin(1))", "1");
+    CHECK_EVAL("arccos(cos(1))", "1");
 
     CHECK_EVAL("degrees(0)", "0");
     CHECK_EVAL("degrees(pi/2)", "90");
@@ -495,7 +503,7 @@ void test_auto_fix_ans()
     CHECK_AUTOFIX("tan", "tan(ans)");
     CHECK_AUTOFIX("abs", "abs(ans)");
     CHECK_AUTOFIX("exp", "exp(ans)");
-    CHECK_AUTOFIX("log", "log(ans)");
+    CHECK_AUTOFIX("lg", "lg(ans)");
 }
 
 void test_auto_fix_trailing_equal()

@@ -1,6 +1,6 @@
 // HMath: C++ high precision math routines
 // Copyright (C) 2004 Ariya Hidayat <ariya.hidayat@gmail.com>
-// Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2007-2008, 2014 Helder Correia <helder.pereira.correia@gmail.com>
 // Copyright (C) 2008, 2009 Wolf Lammen
 //
 // This program is free software; you can redistribute it and/or
@@ -1138,18 +1138,7 @@ HNumber HMath::ln( const HNumber & x )
 }
 
 /**
- * Returns the base-10 logarithm of x.
- * If x is non positive, returns NaN.
- */
-HNumber HMath::log( const HNumber & x )
-{
-  HNumber result;
-  call1Arg(result.d, x.d, float_log);
-  return result;
-}
-
-/**
- * Returns the base-2 logarithm of x.
+ * Returns the common logarithm of x.
  * If x is non positive, returns NaN.
  */
 HNumber HMath::lg( const HNumber & x )
@@ -1157,6 +1146,26 @@ HNumber HMath::lg( const HNumber & x )
   HNumber result;
   call1Arg(result.d, x.d, float_lg);
   return result;
+}
+
+/**
+ * Returns the binary logarithm of x.
+ * If x is non positive, returns NaN.
+ */
+HNumber HMath::lb( const HNumber & x )
+{
+  HNumber result;
+  call1Arg(result.d, x.d, float_lb);
+  return result;
+}
+
+/**
+ * Returns the logarithm of x to base.
+ * If x is non positive, returns NaN.
+ */
+HNumber HMath::log( const HNumber & base, const HNumber & x )
+{
+  return lg(x) / lg(base);
 }
 
 /**
@@ -1216,7 +1225,7 @@ HNumber HMath::csc( const HNumber & x )
 /**
  * Returns the arc tangent of x.
  */
-HNumber HMath::atan( const HNumber & x )
+HNumber HMath::arctan( const HNumber & x )
 {
   HNumber result;
   call1Arg(result.d, x.d, float_arctan);
@@ -1226,7 +1235,7 @@ HNumber HMath::atan( const HNumber & x )
 /**
  * Returns the arc sine of x.
  */
-HNumber HMath::asin( const HNumber & x )
+HNumber HMath::arcsin( const HNumber & x )
 {
   HNumber result;
   call1Arg(result.d, x.d, float_arcsin);
@@ -1236,7 +1245,7 @@ HNumber HMath::asin( const HNumber & x )
 /**
  * Returns the arc cosine of x.
  */
-HNumber HMath::acos( const HNumber & x )
+HNumber HMath::arccos( const HNumber & x )
 {
   HNumber result;
   call1Arg(result.d, x.d, float_arccos);
@@ -1324,9 +1333,9 @@ HNumber HMath::lnGamma( const HNumber & x )
 }
 
 /**
- * Returns the sign of x.
+ * Returns signum x.
  */
-HNumber HMath::sign( const HNumber & x )
+HNumber HMath::sgn( const HNumber & x )
 {
   if (x.isNan())
     return HMath::nan(checkNaNParam(*x.d));

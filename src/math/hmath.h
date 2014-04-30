@@ -1,6 +1,6 @@
 // HMath: C++ high precision math routines
 // Copyright (C) 2004 Ariya Hidayat <ariya.hidayat@gmail.com>
-// Copyright (C) 2007-2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2007-2008, 2014 Helder Correia <helder.pereira.correia@gmail.com>
 // Copyright (C) 2008 Wolf Lammen
 //
 // This program is free software; you can redistribute it and/or
@@ -121,12 +121,13 @@ class HMath
     static HNumber cbrt( const HNumber & n );
     static HNumber raise( const HNumber & n1, int n );
     static HNumber raise( const HNumber & n1, const HNumber & n2 );
-    static HNumber sign( const HNumber & x );
+    static HNumber sgn( const HNumber & x );
     // EXPONENTIAL FUNCTION AND RELATED
     static HNumber exp( const HNumber & x );
     static HNumber ln( const HNumber & x );
-    static HNumber log( const HNumber & x );
     static HNumber lg( const HNumber & x );
+    static HNumber lb( const HNumber & x );
+    static HNumber log( const HNumber & base, const HNumber & x );
     static HNumber sinh( const HNumber & x );
     static HNumber cosh( const HNumber & x );
     static HNumber tanh( const HNumber & x );
@@ -140,9 +141,9 @@ class HMath
     static HNumber cot( const HNumber & x );
     static HNumber sec( const HNumber & x );
     static HNumber csc( const HNumber & x );
-    static HNumber asin( const HNumber & x );
-    static HNumber acos( const HNumber & x );
-    static HNumber atan( const HNumber & x );
+    static HNumber arcsin( const HNumber & x );
+    static HNumber arccos( const HNumber & x );
+    static HNumber arctan( const HNumber & x );
     // HIGHER MATH FUNCTIONS
     static HNumber factorial( const HNumber & x, const HNumber & base = HNumber(1) );
     static HNumber gamma( const HNumber & x);
@@ -173,4 +174,3 @@ class HMath
 std::ostream & operator<<( std::ostream &, const HNumber & );
 
 #endif
-

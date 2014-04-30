@@ -21,13 +21,13 @@
 
 #include "core/evaluator.h"
 
-#include <QtCore/QCoreApplication>
-#include <QtCore/QStack>
+#include <QCoreApplication>
+#include <QStack>
 
 #define EVALUATOR_DEBUG
 #ifdef EVALUATOR_DEBUG
-#include <QtCore/QFile>
-#include <QtCore/QTextStream>
+#include <QFile>
+#include <QTextStream>
 #include <QDebug>
 
 QTextStream& operator<<(QTextStream& s, HNumber num)

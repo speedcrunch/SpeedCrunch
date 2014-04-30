@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2007-2009, 2013 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2007-2009, 2013, 2014 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -24,63 +24,42 @@
 #include "core/functions.h"
 #include "core/settings.h"
 
-#include <QtCore/QLatin1String>
-#include <QtGui/QApplication>
-#include <QtGui/QPalette>
-#include <QtGui/QPlainTextEdit>
+#include <QLatin1String>
+#include <QApplication>
+#include <QPalette>
+#include <QPlainTextEdit>
 
-static inline QHash<SyntaxHighlighter::Role, QColor> createColorScheme(SyntaxHighlighter::ColorScheme id)
+#define SH(x,r,g,b) (setColorForRole(SyntaxHighlighter::x, QColor(r,g,b)))
+
+void SyntaxHighlighter::setColorScheme(SyntaxHighlighter::ColorScheme id)
 {
-    QHash<SyntaxHighlighter::Role, QColor> result;
     switch (id) {
     case SyntaxHighlighter::Sublime:
-         result[SyntaxHighlighter::Comment] = QColor(55, 55, 50);
-         result[SyntaxHighlighter::DisplayBackground] = QColor(39, 40, 34);
-         result[SyntaxHighlighter::DisplayScrollBar] = QColor(110, 120, 100);
-         result[SyntaxHighlighter::EditorCursor] = QColor(100, 200, 255);
-         result[SyntaxHighlighter::EditorFadeAway] = QColor(29, 30, 24);
-         result[SyntaxHighlighter::Number] = QColor(173, 119, 158);
-         result[SyntaxHighlighter::Function] = QColor(213, 38, 106);
-         result[SyntaxHighlighter::Operator] = QColor(242, 248, 214);
-         result[SyntaxHighlighter::Variable] = QColor(64, 181, 238);
-         result[SyntaxHighlighter::Separator] = QColor(197, 218, 107);
-         result[SyntaxHighlighter::Parens] = QColor(103, 112, 88);
-         result[SyntaxHighlighter::MatchedParens] = QColor(163, 126, 219);
-         result[SyntaxHighlighter::Result] = QColor(197, 218, 107);
-         break;
+        SH(Cursor, 100, 200, 255);  SH(Function, 213, 38, 106);   SH(EditorFade, 29, 30, 24);
+        SH(Number, 173, 119, 158);  SH(Operator, 242, 248, 214);
+        SH(Parens, 103, 112, 88);   SH(Variable, 64, 181, 238);
+        SH(Result, 197, 218, 107);  SH(ScrollBar, 110, 120, 100);
+        SH(Comment, 55, 55, 50);    SH(Separator, 197, 218, 107);
+        SH(Matched, 163, 126, 219); SH(Background, 39, 40, 34);
+        break;
     case SyntaxHighlighter::Terminal:
-         result[SyntaxHighlighter::Comment] = QColor(65, 25, 55);
-         result[SyntaxHighlighter::DisplayBackground] = QColor(48, 10, 36);
-         result[SyntaxHighlighter::DisplayScrollBar] = QColor(140, 100, 140);
-         result[SyntaxHighlighter::EditorCursor] = QColor(140, 100, 140);
-         result[SyntaxHighlighter::EditorFadeAway] = QColor(38, 0, 26);
-         result[SyntaxHighlighter::Number] = QColor(255, 255, 255);
-         result[SyntaxHighlighter::Function] = QColor(239, 41, 40);
-         result[SyntaxHighlighter::Operator] = QColor(196, 160, 0);
-         result[SyntaxHighlighter::Variable] = QColor(74, 154, 7);
-         result[SyntaxHighlighter::Separator] = QColor(100, 80, 123);
-         result[SyntaxHighlighter::Parens] = QColor(173, 127, 168);
-         result[SyntaxHighlighter::MatchedParens] = QColor(100, 80, 123);
-         result[SyntaxHighlighter::Result] = QColor(104, 159, 207);
-         break;
+        SH(Cursor, 140, 100, 140);  SH(Function, 239, 41, 40);    SH(EditorFade, 38, 0, 26);
+        SH(Number, 255, 255, 255);  SH(Operator, 196, 160, 0);
+        SH(Parens, 173, 127, 168);  SH(Variable, 74, 154, 7);
+        SH(Result, 104, 159, 207);  SH(ScrollBar, 140, 100, 140);
+        SH(Comment, 65, 25, 55);    SH(Separator, 100, 80, 123);
+        SH(Matched, 100, 80, 123);  SH(Background, 48, 10, 36);
+        break;
     case SyntaxHighlighter::Standard:
     default:
-        result[SyntaxHighlighter::Comment] = QColor(210, 210, 210);
-        result[SyntaxHighlighter::DisplayBackground] = QColor(255, 255, 255);
-        result[SyntaxHighlighter::DisplayScrollBar] = QColor(190, 190, 190);
-        result[SyntaxHighlighter::EditorCursor] = QColor(255, 100, 100);
-        result[SyntaxHighlighter::EditorFadeAway] = QColor(220, 220, 220);
-        result[SyntaxHighlighter::Number] = QColor(98, 50, 76);
-        result[SyntaxHighlighter::Function] = QColor(74, 154, 7);
-        result[SyntaxHighlighter::Operator] = QColor(193, 147, 188);
-        result[SyntaxHighlighter::Variable] = QColor(239, 41, 40);
-        result[SyntaxHighlighter::Separator] = QColor(100, 80, 123);
-        result[SyntaxHighlighter::Parens] = QColor(196, 160, 50);
-        result[SyntaxHighlighter::MatchedParens] = QColor(100, 80, 123);
-        result[SyntaxHighlighter::Result] = QColor(104, 159, 207);
+        SH(Cursor, 255, 100, 100);  SH(Function, 74, 154, 7);     SH(EditorFade, 220, 220, 220);
+        SH(Number, 98, 50, 76);     SH(Operator, 193, 147, 188);
+        SH(Parens, 196, 160, 50);   SH(Variable, 239, 41, 40);
+        SH(Result, 104, 159, 207);  SH(ScrollBar, 190, 190, 190);
+        SH(Comment, 210, 210, 210); SH(Separator, 100, 80, 123);
+        SH(Matched, 100, 80, 123);  SH(Background, 255, 255, 255);
         break;
     }
-    return result;
 }
 
 SyntaxHighlighter::SyntaxHighlighter(QPlainTextEdit* edit)
@@ -158,9 +137,9 @@ void SyntaxHighlighter::highlightBlock(const QString& text)
 void SyntaxHighlighter::update()
 {
     ColorScheme id = static_cast<ColorScheme>(Settings::instance()->colorScheme);
-    m_colorScheme = createColorScheme(id);
+    setColorScheme(id);
 
-    QColor backgroundColor = colorForRole(DisplayBackground);
+    QColor backgroundColor = colorForRole(Background);
     QWidget* parentWidget = static_cast<QWidget*>(parent());
     QPalette pal = parentWidget->palette();
     pal.setColor(QPalette::Active, QPalette::Base, backgroundColor);

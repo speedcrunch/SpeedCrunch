@@ -1,7 +1,7 @@
 // This file is part of the SpeedCrunch project
 // Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
 // Copyright (C) 2005, 2006 Johan Thelin <e8johan@gmail.com>
-// Copyright (C) 2007-2013 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2007-2014 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -21,8 +21,8 @@
 #ifndef GUI_MAINWINDOW_H
 #define GUI_MAINWINDOW_H
 
-#include <QtGui/QMainWindow>
-#include <QtGui/QSystemTrayIcon>
+#include <QMainWindow>
+#include <QSystemTrayIcon>
 
 class AutoHideLabel;
 class BookDock;
@@ -33,6 +33,7 @@ class Evaluator;
 class FunctionRepo;
 class FunctionsDock;
 class HistoryDock;
+class ManualWindow;
 class ResultDisplay;
 class Settings;
 class TipWidget;
@@ -41,6 +42,7 @@ class UserFunctionsDock;
 
 class QActionGroup;
 class QHBoxLayout;
+class QLabel;
 class QPlainTextEdit;
 class QPushButton;
 class QTranslator;
@@ -74,6 +76,7 @@ private slots:
     void copyResultToClipboard();
     void cycleAngleUnits();
     void cycleResultFormats();
+    void decreaseOpacity();
     void deleteVariables();
     void deleteUserFunctions();
     void evaluateEditorExpression();
@@ -83,8 +86,10 @@ private slots:
     void handleEditorTextChange();
     void handleDisplaySelectionChange();
     void handleEditorSelectionChange();
+    void handleManualClosed();
     void handleSystemTrayIconActivation(QSystemTrayIcon::ActivationReason);
-    void hideAutoCalcTip();
+    void hideStateLabel();
+    void increaseOpacity();
     void insertConstantIntoEditor(const QString&);
     void insertFunctionIntoEditor(const QString&);
     void insertTextIntoEditor(const QString&);
@@ -144,9 +149,10 @@ private slots:
     void setUserFunctionsDockVisible(bool);
     void setWidgetsDirection();
     void showAboutDialog();
-    void showAutoCalcTip(const QString&);
+    void showStateLabel(const QString&);
     void showFontDialog();
     void showLanguageChooserDialog();
+    void showManualWindow();
 #ifndef Q_OS_MAC
     void showMenuBarTip();
 #endif
@@ -270,6 +276,7 @@ private:
         QAction* settingsRadixCharComma;
         QAction* settingsLanguage;
         QAction* helpTipOfTheDay;
+        QAction* helpManual;
         QAction* helpUpdates;
         QAction* helpFeedback;
         QAction* helpCommunity;
@@ -308,12 +315,13 @@ private:
     } m_layouts;
 
     struct {
-        AutoHideLabel* autoCalcTip;
+        QLabel* state;
         ResultDisplay* display;
         Editor* editor;
         QWidget* root;
         TipWidget* tip;
         QSystemTrayIcon* trayIcon;
+        ManualWindow* manual;
     } m_widgets;
 
     struct {

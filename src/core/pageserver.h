@@ -1,6 +1,5 @@
 // This file is part of the SpeedCrunch project
-// Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2014 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -17,35 +16,28 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#ifndef TIPWIDGET_H
-#define TIPWIDGET_H
+#ifndef CORE_PAGESERVER_H
+#define CORE_PAGESERVER_H
 
-#include <QFrame>
+#include <QHash>
+#include <QObject>
+#include <QString>
 
-#include <memory>
-
-class TipWidget: public QFrame
-{
-    Q_OBJECT
-
+class PageServer : public QObject {
 public:
-    explicit TipWidget(QWidget *parent = 0);
-    QSize sizeHint() const;
+    explicit PageServer(QObject* parent = 0) : QObject(parent) { }
+    QString getPageContent(const QString& id);
+    QString getCurrentPageContent();
 
-public slots:
-    void hideText();
-    void showText(const QString &text, const QString &title);
-
-private slots:
-    void animateFade(int);
-    void appear();
-    void disappear();
+protected:
+    typedef QString (*PageMaker)();
+    void addPage(const QString& id, PageMaker maker) { m_toc[id] = maker; }
+    virtual void createPages() = 0;
 
 private:
-    struct Private;
-    const std::auto_ptr<Private> d;
-    TipWidget(const TipWidget &);
-    TipWidget & operator=(const TipWidget &);
+    Q_DISABLE_COPY(PageServer)
+    QHash<QString, PageMaker> m_toc;
+    QString m_currentPageID;
 };
 
-#endif
+#endif // CORE_PAGESERVER_H

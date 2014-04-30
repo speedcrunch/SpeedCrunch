@@ -20,9 +20,11 @@
 #ifndef GUI_ABOUTBOX_H
 #define GUI_ABOUTBOX_H
 
-#include <QtGui/QDialog>
+#include <QDialog>
 
 class AboutBox : public QDialog {
+    Q_OBJECT
+
 public:
     explicit AboutBox(QWidget *parent = 0, Qt::WindowFlags f = 0);
 

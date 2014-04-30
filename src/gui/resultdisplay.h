@@ -19,8 +19,8 @@
 #ifndef GUI_RESULTDISPLAY_H
 #define GUI_RESULTDISPLAY_H
 
-#include <QtCore/QBasicTimer>
-#include <QtGui/QPlainTextEdit>
+#include <QBasicTimer>
+#include <QPlainTextEdit>
 
 class HNumber;
 class FadeOverlay;
@@ -39,8 +39,9 @@ public:
     bool isEmpty() const { return m_count == 0; }
 
 signals:
-    void textCopied(const QString&);
-    void textSelected(const QString&);
+    void shiftControlWheelDown();
+    void shiftControlWheelUp();
+    void expressionSelected(const QString&);
 
 public slots:
     void clear();
@@ -57,6 +58,7 @@ public slots:
     void zoomOut();
 
 protected:
+    virtual void mouseDoubleClickEvent(QMouseEvent*);
     virtual void wheelEvent(QWheelEvent*);
     virtual void resizeEvent(QResizeEvent*);
     virtual void timerEvent(QTimerEvent*);

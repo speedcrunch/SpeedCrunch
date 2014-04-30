@@ -30,7 +30,7 @@
 *************************************************************************/
 
 #ifndef FLOATHMATH_H
-# define FLOATHMATH_H
+#define FLOATHMATH_H
 
 #include "floatnum.h"
 
@@ -47,27 +47,27 @@ extern "C" {
            OutOfDomain */
 char float_lnxplus1(floatnum x, int digits);
 
-/* evaluates ln x for x > 0. Near x == 0, this function yields better
-   results than float_lnxplus1.
+/* evaluates ln x (the logarithm to base e) for x > 0.
+   Near x == 0, this function yields better results than float_lnxplus1.
    In case of an error, x is set to NaN and 0 is returned.
    Errors: NaNOperand
            InvalidPrecision (digits > MATHPRECISION)
            OutOfDomain */
 char float_ln(floatnum x, int digits);
 
-/* evaluates log x (the logarithm to base 10) for x > 0.
-   In case of an error, x is set to NaN and 0 is returned.
-   Errors: NaNOperand
-           InvalidPrecision (digits > MATHPRECISION)
-           OutOfDomain */
-char float_log(floatnum x, int digits);
-
-/* evaluates lg x (the logarithm to base 2) for x > 0.
+/* evaluates lg x (the logarithm to base 10) for x > 0.
    In case of an error, x is set to NaN and 0 is returned.
    Errors: NaNOperand
            InvalidPrecision (digits > MATHPRECISION)
            OutOfDomain */
 char float_lg(floatnum x, int digits);
+
+/* evaluates lb x (the logarithm to base 2) for x > 0.
+   In case of an error, x is set to NaN and 0 is returned.
+   Errors: NaNOperand
+           InvalidPrecision (digits > MATHPRECISION)
+           OutOfDomain */
+char float_lb(floatnum x, int digits);
 
 /* evaluates arsinh x, the inverse function of sinh.
    In case of an error, x is set to NaN and 0 is returned.

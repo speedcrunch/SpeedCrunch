@@ -23,12 +23,12 @@
 #include "core/functions.h"
 #include "math/hmath.h"
 
-#include <QtCore/QHash>
-#include <QtCore/QObject>
-#include <QtCore/QSet>
-#include <QtCore/QString>
-#include <QtCore/QStringList>
-#include <QtCore/QVector>
+#include <QHash>
+#include <QObject>
+#include <QSet>
+#include <QString>
+#include <QStringList>
+#include <QVector>
 
 class Token {
 public:

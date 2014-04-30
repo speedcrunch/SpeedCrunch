@@ -1,6 +1,5 @@
 // This file is part of the SpeedCrunch project
-// Copyright (C) 2007 Ariya Hidayat <ariya@kde.org>
-// Copyright (C) 2008 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2014 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -17,35 +16,20 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#ifndef TIPWIDGET_H
-#define TIPWIDGET_H
+#ifndef CORE_MANUAL_H
+#define CORE_MANUAL_H
 
-#include <QFrame>
+#include "core/pageserver.h"
 
-#include <memory>
-
-class TipWidget: public QFrame
-{
+class Manual : public PageServer {
     Q_OBJECT
 
 public:
-    explicit TipWidget(QWidget *parent = 0);
-    QSize sizeHint() const;
-
-public slots:
-    void hideText();
-    void showText(const QString &text, const QString &title);
-
-private slots:
-    void animateFade(int);
-    void appear();
-    void disappear();
+    explicit Manual(QObject* parent = 0) : PageServer(parent) { createPages(); }
+    virtual void createPages();
 
 private:
-    struct Private;
-    const std::auto_ptr<Private> d;
-    TipWidget(const TipWidget &);
-    TipWidget & operator=(const TipWidget &);
+    Q_DISABLE_COPY(Manual)
 };
 
-#endif
+#endif // CORE_MANUAL_H

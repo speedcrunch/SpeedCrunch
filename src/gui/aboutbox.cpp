@@ -20,12 +20,12 @@
 
 #include "gui/aboutbox.h"
 
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QLabel>
-#include <QtGui/QPushButton>
-#include <QtGui/QSpacerItem>
-#include <QtGui/QTextEdit>
-#include <QtGui/QVBoxLayout>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QPushButton>
+#include <QSpacerItem>
+#include <QTextEdit>
+#include <QVBoxLayout>
 
 AboutBox::AboutBox(QWidget* parent, Qt::WindowFlags f)
     : QDialog(parent, f)
@@ -80,6 +80,7 @@ AboutBox::AboutBox(QWidget* parent, Qt::WindowFlags f)
            "Melchior Franz<br>"
            "Michael Pyne<br>"
            "Mohamed Eldesoky<br>"
+           "Oliver Gubler<br>"
            "Petri Damst&eacute;n<br>"
            "Philippe Fremy<br>"
            "Pieter Pareit<br>"

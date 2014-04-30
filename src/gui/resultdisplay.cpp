@@ -1,5 +1,5 @@
 // This file is part of the SpeedCrunch project
-// Copyright (C) 2009, 2011, 2013 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2009, 2011, 2013, 2014 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -25,11 +25,11 @@
 #include "math/hmath.h"
 #include "math/floatconfig.h"
 
-#include <QtCore/QLatin1String>
-#include <QtGui/QApplication>
-#include <QtGui/QClipboard>
-#include <QtGui/QPainter>
-#include <QtGui/QScrollBar>
+#include <QLatin1String>
+#include <QApplication>
+#include <QClipboard>
+#include <QPainter>
+#include <QScrollBar>
 
 #define OVERLAY_GRADIENT_HEIGHT 50
 
@@ -221,6 +221,19 @@ void ResultDisplay::zoomOut()
     setFont(newFont);
 }
 
+void ResultDisplay::mouseDoubleClickEvent(QMouseEvent*)
+{
+    QTextCursor cursor = textCursor();
+    cursor.movePosition(QTextCursor::StartOfBlock);
+    cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+    setTextCursor(cursor);
+    QString text = cursor.selectedText();
+    QString resultMarker = QLatin1String("= ");
+    if (text.startsWith(resultMarker))
+        text.remove(resultMarker);
+    emit expressionSelected(text);
+}
+
 void ResultDisplay::timerEvent(QTimerEvent* event)
 {
     if (event->timerId() != m_scrollTimer.timerId()) {
@@ -261,15 +274,21 @@ void ResultDisplay::fullContentScrollEvent()
 
 void ResultDisplay::wheelEvent(QWheelEvent* event)
 {
-    if (event->modifiers() == Qt::ShiftModifier) {
+    if (event->modifiers() == (Qt::ShiftModifier | Qt::ControlModifier)) {
+        if (event->delta() > 0)
+            emit shiftControlWheelUp();
+        else
+            emit shiftControlWheelDown();
+    } else if (event->modifiers() == Qt::ShiftModifier) {
         if (event->delta() > 0)
             zoomIn();
         else
             zoomOut();
-    } else if (event->delta() > 0)
-        scrollPageUp();
-    else
-        scrollPageDown();
+    } else {
+        QPlainTextEdit::wheelEvent(event);
+        return;
+    }
+
     event->accept();
 }
 
@@ -307,8 +326,8 @@ void ResultDisplay::updateScrollBarStyleSheet()
         "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {"
         "   background: %1;"
         "}"
-    ).arg(m_highlighter->colorForRole(SyntaxHighlighter::DisplayBackground).name())
-     .arg(m_highlighter->colorForRole(SyntaxHighlighter::DisplayScrollBar).name()));
+    ).arg(m_highlighter->colorForRole(SyntaxHighlighter::Background).name())
+     .arg(m_highlighter->colorForRole(SyntaxHighlighter::ScrollBar).name()));
 }
 
 FadeOverlay::FadeOverlay(QWidget* parent) : QWidget(parent)
@@ -339,7 +358,7 @@ void FadeOverlay::resizeEvent(QResizeEvent*)
 void FadeOverlay::updateGradients()
 {
     ResultDisplay* widget = qobject_cast<ResultDisplay*>(parent());
-    QColor backgroundColor = widget->m_highlighter->colorForRole(SyntaxHighlighter::DisplayBackground);
+    QColor backgroundColor = widget->m_highlighter->colorForRole(SyntaxHighlighter::Background);
 
     QLinearGradient gradient = QLinearGradient(0, 0, 0, OVERLAY_GRADIENT_HEIGHT);
     gradient.setColorAt(0, backgroundColor);

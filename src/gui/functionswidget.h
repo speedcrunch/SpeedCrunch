@@ -20,8 +20,8 @@
 #ifndef GUI_FUNCTIONSWIDGET_H
 #define GUI_FUNCTIONSWIDGET_H
 
-#include <QtCore/QList>
-#include <QtGui/QWidget>
+#include <QList>
+#include <QWidget>
 
 class QEvent;
 class QLabel;

@@ -1,5 +1,5 @@
 // This file is part of the SpeedCrunch project
-// Copyright (C) 2013 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2013, 2014 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -334,9 +334,9 @@ static QString makeRFAntennasPage()
         FORMULA_UNIT(Ed = E * sqrt(D), Ed = E&sdot;&radic;D, V&sdot;m<sup>-1</sup>)
         FORMULA_UNIT(Edp = E * sqrt(1.64), Edp = E&sdot;&radic;1.64, V&sdot;m<sup>-1</sup>)
         TABLE
-        VARIABLE(T<sub>c</sub></sub>) CAPTION(Book::tr("temperature (C)")) ROW
-        VARIABLE(T<sub>f</sub>) CAPTION(Book::tr("temperature (F)")) ROW
-        VARIABLE(T<sub>k</sub>) CAPTION(Book::tr("temperature (K)"))
+        VARIABLE(T<sub>c</sub>) CAPTION(Book::tr("temperature") + QString::fromUtf8(" (°C)")) ROW
+        VARIABLE(T<sub>f</sub>) CAPTION(Book::tr("temperature") + QString::fromUtf8(" (°F)")) ROW
+        VARIABLE(T<sub>k</sub>) CAPTION(Book::tr("temperature") + " (K)")
         _TABLE
         END;
 }
@@ -388,10 +388,10 @@ static QString makeRFSWRPage()
         FORMULA_UNIT(Pr = Pin * r%5e2, P<sub>r</sub> = P<sub>in</sub>&sdot;&rho;<sup>2</sup>, W)
         FORMULA_UNIT(Pt = Pin * (1-r%5e2), P<sub>t</sub> = P<sub>in</sub>&sdot;(1-&rho;<sup>2</sup>), W)
         TABLE
-        VARIABLE(P<sub>in</sub>) CAPTION(Book::tr("input power (W)")) ROW
-        VARIABLE(P<sub>r</sub>) CAPTION(Book::tr("reflected power (W)")) ROW
-        VARIABLE(P<sub>t</sub>) CAPTION(Book::tr("transmitted power (W)")) ROW
-        VARIABLE(R<sub>L</sub>) CAPTION(Book::tr("return loss (dB)")) ROW
+        VARIABLE(P<sub>in</sub>) CAPTION(Book::tr("input power") + " (W)") ROW
+        VARIABLE(P<sub>r</sub>) CAPTION(Book::tr("reflected power") + " (W)") ROW
+        VARIABLE(P<sub>t</sub>) CAPTION(Book::tr("transmitted power") + " (W)") ROW
+        VARIABLE(R<sub>L</sub>) CAPTION(Book::tr("return loss") + " (dB)") ROW
         VARIABLE(&rho;) CAPTION(Book::tr("reflection coefficient")) ROW
         VARIABLE(SWR) CAPTION(Book::tr("standing wave ratio")) ROW
         VARIABLE(Z) CAPTION(Book::tr("normalized impedance")) ROW
@@ -426,49 +426,32 @@ static QString makeUnitsTemperaturePage()
         FORMULA(Tc = (Tf - 32) / 1.8, T<sub>c</sub> = (T<sub>f</sub> - 32) / 1.8)
         FORMULA(Tc = Tk - 273.15, T<sub>c</sub> = T<sub>k</sub> - 273.15)
         TABLE
-        VARIABLE(T<sub>c</sub></sub>) CAPTION(Book::tr("temperature (C)")) ROW
-        VARIABLE(T<sub>f</sub>) CAPTION(Book::tr("temperature (F)")) ROW
-        VARIABLE(T<sub>k</sub>) CAPTION(Book::tr("temperature (K)"))
+        VARIABLE(T<sub>c</sub>) CAPTION(Book::tr("temperature") + QString::fromUtf8(" (°C)")) ROW
+        VARIABLE(T<sub>f</sub>) CAPTION(Book::tr("temperature") + QString::fromUtf8(" (°F)")) ROW
+        VARIABLE(T<sub>k</sub>) CAPTION(Book::tr("temperature") + " (K)")
         _TABLE
         END;
 }
 
-Book::Book(QObject* parent)
-    : QObject(parent)
+void Book::createPages()
 {
-    m_toc["index"] = &makeIndexPage;
-    m_toc["algebra/quadratic-equation"] = &makeAlgebraQuadraticEquationPage;
-    m_toc["algebra/log-base-conversion"] = &makeAlgebraLogBaseConversionPage;
-    m_toc["electronics/ohmslaw"] = &makeElectronicsOhmsLawPage;
-    m_toc["electronics/power"] = &makeElectronicsPowerPage;
-    m_toc["electronics/reactance"] = &makeElectronicsReactancePage;
-    m_toc["electronics/resonance"] = &makeElectronicsResonancePage;
-    m_toc["geometry/circle"] = &makeGeometryCirclePage;
-    m_toc["geometry/cone"] = &makeGeometryConePage;
-    m_toc["geometry/cube"] = &makeGeometryCubePage;
-    m_toc["geometry/cylinder"] = &makeGeometryCylinderPage;
-    m_toc["geometry/sector"] = &makeGeometrySectorPage;
-    m_toc["geometry/sphere"] = &makeGeometrySpherePage;
-    m_toc["rf/antennas"] = &makeRFAntennasPage;
-    m_toc["rf/impedance"] = &makeRFImpedancePage;
-    m_toc["rf/propagation"] = &makeRFPropagationPage;
-    m_toc["rf/swr"] = &makeRFSWRPage;
-    m_toc["rf/wavelength"] = &makeRFWavelengthPage;
-    m_toc["units/temperature"] = &makeUnitsTemperaturePage;
-}
-
-QString Book::getPageContent(const QString& id)
-{
-    PageMaker maker = m_toc.value(id);
-    if (!maker)
-        return QString();
-    m_currentPageID = id;
-    return maker();
-}
-
-QString Book::getCurrentPageContent()
-{
-    if (m_currentPageID.isNull())
-        return QString();
-    return getPageContent(m_currentPageID);
+    addPage("index", &makeIndexPage);
+    addPage("algebra/quadratic-equation", &makeAlgebraQuadraticEquationPage);
+    addPage("algebra/log-base-conversion", &makeAlgebraLogBaseConversionPage);
+    addPage("electronics/ohmslaw", &makeElectronicsOhmsLawPage);
+    addPage("electronics/power", &makeElectronicsPowerPage);
+    addPage("electronics/reactance", &makeElectronicsReactancePage);
+    addPage("electronics/resonance", &makeElectronicsResonancePage);
+    addPage("geometry/circle", &makeGeometryCirclePage);
+    addPage("geometry/cone", &makeGeometryConePage);
+    addPage("geometry/cube", &makeGeometryCubePage);
+    addPage("geometry/cylinder", &makeGeometryCylinderPage);
+    addPage("geometry/sector", &makeGeometrySectorPage);
+    addPage("geometry/sphere", &makeGeometrySpherePage);
+    addPage("rf/antennas", &makeRFAntennasPage);
+    addPage("rf/impedance", &makeRFImpedancePage);
+    addPage("rf/propagation", &makeRFPropagationPage);
+    addPage("rf/swr", &makeRFSWRPage);
+    addPage("rf/wavelength", &makeRFWavelengthPage);
+    addPage("units/temperature", &makeUnitsTemperaturePage);
 }

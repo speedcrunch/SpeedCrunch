@@ -20,11 +20,11 @@
 
 #include "gui/application.h"
 
-#include <QtCore/QByteArray>
+#include <QByteArray>
 
-#include <QtCore/QSharedMemory>
-#include <QtNetwork/QLocalServer>
-#include <QtNetwork/QLocalSocket>
+#include <QSharedMemory>
+#include <QLocalServer>
+#include <QLocalSocket>
 
 #define GUI_APPLICATION_SHARED_MEMORY_KEY "speedcrunch"
 #define GUI_APPLICATION_LOCAL_SOCKET_TIMEOUT 1000
