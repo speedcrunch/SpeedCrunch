@@ -1776,6 +1776,7 @@ void MainWindow::showStateLabel(const QString& msg)
     m_widgets.state->setText(msg);
     m_widgets.state->adjustSize();
     m_widgets.state->show();
+    m_widgets.state->raise();
     const int height = m_widgets.state->height();
     QPoint pos = mapFromGlobal(m_widgets.editor->mapToGlobal(QPoint(0, -height)));
     m_widgets.state->move(pos);
