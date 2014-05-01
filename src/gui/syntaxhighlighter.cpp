@@ -220,7 +220,7 @@ void SyntaxHighlighter::groupDigits(const QString& text, int pos, int length)
         }
 
         if (!isNumber) {
-            if (c == '.') {
+            if (c == '.' || c == ',') {
                 // Invert the grouping for the fractional part.
                 invertGroup = true;
             } else {
