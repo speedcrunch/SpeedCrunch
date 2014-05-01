@@ -24,6 +24,8 @@ gui/resultdisplay.h
 gui/tipwidget.h
 gui/variablelistwidget.h
 gui/variablesdock.h
+gui/userfunctionsdock.h
+gui/userfunctionlistwidget.h
 )
 
 set(speedcrunch_SOURCES
@@ -53,6 +55,8 @@ gui/syntaxhighlighter.cpp
 gui/tipwidget.cpp
 gui/variablelistwidget.cpp
 gui/variablesdock.cpp
+gui/userfunctionsdock.cpp
+gui/userfunctionlistwidget.cpp
 math/floatcommon.c
 math/floatconst.c
 math/floatconvert.c

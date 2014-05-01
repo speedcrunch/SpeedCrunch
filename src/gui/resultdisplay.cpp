@@ -65,21 +65,23 @@ ResultDisplay::ResultDisplay(QWidget* parent)
 
 void ResultDisplay::append(const QString& expression, const HNumber& value)
 {
-    if (value.isNan())
-        return;
-
     ++m_count;
 
     appendPlainText(expression);
-    appendPlainText(QLatin1String("= ") + NumberFormatter::format(value));
+    if (!value.isNan())
+        appendPlainText(QLatin1String("= ") + NumberFormatter::format(value));
     appendPlainText(QLatin1String(""));
 
     // TODO: Refactor, this only serves to save a session.
     m_expressions.append(expression);
-    const char format = value.format() != 0 ? value.format() : 'e';
-    char* str = HMath::format(value, format, DECPRECISION);
-    m_results.append(str);
-    free(str);
+    if (value.isNan()) {
+        m_results.append("");
+    } else {
+        const char format = value.format() != 0 ? value.format() : 'e';
+        char* str = HMath::format(value, format, DECPRECISION);
+        m_results.append(str);
+        free(str);
+    }
 }
 
 void ResultDisplay::appendHistory(const QStringList& expressions, const QStringList& results)
@@ -97,8 +99,7 @@ void ResultDisplay::appendHistory(const QStringList& expressions, const QStringL
         else if (str.indexOf('x') == 1)
             result.setFormat('h');
 
-        if (!result.isNan())
-            append(expressions.at(i), result);
+        append(expressions.at(i), result);
     }
 }
 
