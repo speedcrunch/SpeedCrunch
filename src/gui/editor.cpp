@@ -873,8 +873,8 @@ void EditorCompletion::showCompletion(const QStringList& choices)
             maxDescriptionLength = length;
     }
 
-    m_popup->sortItems(0, Qt::AscendingOrder);
     m_popup->sortItems(1, Qt::AscendingOrder);
+    m_popup->sortItems(0, Qt::AscendingOrder);
     m_popup->setCurrentItem(m_popup->topLevelItem(0));
 
     // Size of the pop-up.
