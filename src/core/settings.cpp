@@ -146,9 +146,9 @@ void Settings::load()
     historyResults.clear();
     for (int i = 0; i < count; ++i) {
         QString keyname = QString(key + QLatin1String("Expression%1Result")).arg(i);
-        QString str = settings->value(keyname).toString();
-        if (!str.isEmpty())
-            historyResults.append(str);
+        QVariant value = settings->value(keyname);
+        if (value.isValid())
+            historyResults.append(value.toString());
     }
     if (history.count() != historyResults.count()) {
         // Avoid application crash because of new features with old settings files.

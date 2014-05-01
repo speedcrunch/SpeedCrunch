@@ -1095,9 +1095,6 @@ HNumber Evaluator::evalNoAssign()
     
     result = exec(m_codes, m_constants, m_identifiers);
     
-    if (m_error.isEmpty() && result.isNan() && m_assignFunc == true)
-        result = HNumber(0);
-
     return result;
 }
 
@@ -1307,13 +1304,9 @@ HNumber Evaluator::exec(const QVector<Opcode>& opcodes, const QVector<HNumber>& 
 
                 userFunction = NULL;
                 if (!function) {
-                    if (m_assignFunc) {
-                        // Allow arbitrary identifiers when declaring user functions.
-                    } else {
-                        // Check if this is a valid user function call.
-                        //qDebug() << m_userFunctions;
-                        userFunction = getUserFunction(fname);
-                    }
+                    // Check if this is a valid user function call.
+                    //qDebug() << m_userFunctions;
+                    userFunction = getUserFunction(fname);
                 }   
 
                 if (!function && !userFunction && !m_assignFunc) {
@@ -1334,6 +1327,20 @@ HNumber Evaluator::exec(const QVector<Opcode>& opcodes, const QVector<HNumber>& 
                 // functions declaration work with arbitrary identifiers).
                 stack.pop();
 
+                // Show function signature if the user gave no argument (yet).
+                if (userFunction) {
+                    if (!args.count() && userFunction->descr.arguments.count() != 0) {
+                        m_error = QString::fromLatin1("%1(%2)").arg(userFunction->descr.name)
+                            .arg(userFunction->descr.arguments.join(";"));
+                        return HMath::nan();
+                    }
+                } else if (function) {
+                    if (!args.count()) {
+                        m_error = QString::fromLatin1("%1(%2)").arg(fname).arg(function->usage());
+                        return HMath::nan();
+                    }
+                }
+
                 if (m_assignFunc) {
                     // Allow arbitrary identifiers when declaring user functions.
                     stack.push(HMath::nan());
@@ -1342,11 +1349,6 @@ HNumber Evaluator::exec(const QVector<Opcode>& opcodes, const QVector<HNumber>& 
                     if (!m_error.isEmpty())
                         return HMath::nan();
                 } else {
-                    if (!args.count()) {
-                        m_error = QString::fromLatin1("%1(%2)").arg(fname).arg(function->usage());
-                        return HMath::nan();
-                    }
-
                     stack.push(function->exec(args));
                     if (function->error()) {
                         m_error = stringFromFunctionError(function);
@@ -1374,8 +1376,8 @@ HNumber Evaluator::execUserFunction(UserFunction* function, QVector<HNumber>& ar
      *   OK ignore missing variables or user functions when declaring a user function.
      *   OK prohibit user function recursion by using a flag in UserFunction.
      *   OK when an error happens in a user function, tell the user which one it is.
-     *   - save user functions when the app closes, and restore them at startup.
-     *   - show a list of user functions and allow the user to delete them.
+     *   OK save user functions when the app closes, and restore them at startup.
+     *   OK show a list of user functions and allow the user to delete them.
      *   - replace user variables by user functions (with no argument) ?
      */
     if (arguments.count() != function->descr.arguments.count()) {
@@ -1419,6 +1421,11 @@ HNumber Evaluator::execUserFunction(UserFunction* function, QVector<HNumber>& ar
 
     function->inUse = false;
     return result;
+}
+
+bool Evaluator::isUserFunctionAssign() const
+{
+    return m_assignFunc;
 }
 
 bool Evaluator::isBuiltInVariable(const QString& id) const
@@ -1488,7 +1495,7 @@ HNumber Evaluator::eval()
 HNumber Evaluator::evalUpdateAns()
 {
     HNumber result = eval();
-    if (m_error.isEmpty())
+    if (m_error.isEmpty() && !m_assignFunc)
         setVariable(QLatin1String("ans"), result, Variable::BuiltIn);
     return result;
 }

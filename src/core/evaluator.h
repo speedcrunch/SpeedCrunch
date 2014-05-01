@@ -113,6 +113,7 @@ public:
     Tokens scan(const QString&, AutoFixPolicy = AutoFix) const;
     void setExpression(const QString&);
     Tokens tokens() const;
+    bool isUserFunctionAssign() const;
 
     Variable getVariable(const QString&) const;
     QList<Variable> getVariables() const;

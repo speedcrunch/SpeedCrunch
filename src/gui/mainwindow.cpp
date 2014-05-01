@@ -1330,7 +1330,7 @@ void MainWindow::showSessionLoadDialog()
 
     // Version of the format.
     QString version = stream.readLine();
-    if (version != "0.10" && version != "0.11") {
+    if (version != "0.10" && version != "0.12") {
         QMessageBox::critical(this, tr("Error"), errMsg.arg(fname));
         return;
     }
@@ -1402,12 +1402,22 @@ void MainWindow::showSessionLoadDialog()
             QMessageBox::critical(this, tr("Error"), errMsg.arg(fname));
             return;
         }
+
+        // Only allow the "ans" built-in variable to be set.
+        Evaluator::Variable::Type type = m_evaluator->isBuiltInVariable(var) ?
+            Evaluator::Variable::BuiltIn : Evaluator::Variable::UserDefined;
+        if (type == Evaluator::Variable::BuiltIn && var != "ans")
+            continue;
+
         HNumber num(val.toLatin1().data());
         if (num != HMath::nan())
-            m_evaluator->setVariable(var, num);
+            m_evaluator->setVariable(var, num, type);
     }
 
-    if (version == "0.11") {
+    if (m_settings->variablesDockVisible)
+        m_docks.variables->updateList();
+
+    if (version == "0.12") {
         // User functions.
         int noUsrFuncs = stream.readLine().toInt(&ok);
         if (ok == false || noUsrFuncs < 0) {
@@ -1425,9 +1435,13 @@ void MainWindow::showSessionLoadDialog()
             Evaluator::UserFunctionDescr descr(name, args.split(";"), expr);
             m_evaluator->setUserFunction(descr);
         }
+
+        if (m_settings->userFunctionsDockVisible)
+            m_docks.userFunctions->updateList();
     }
 
     file.close();
+
 }
 
 void MainWindow::showSessionImportDialog()
@@ -1487,10 +1501,15 @@ void MainWindow::showSessionImportDialog()
             }
         } else {
             m_widgets.display->append(str, result);
-            char* num = HMath::format(result, 'e', DECPRECISION);
-            m_widgets.editor->appendHistory(str, num);
-            free(num);
-            m_widgets.editor->setAnsAvailable(true);
+            if (result.isNan()) {
+                m_widgets.editor->appendHistory(str, "");
+            } else {
+                char* num = HMath::format(result, 'e', DECPRECISION);
+                m_widgets.editor->appendHistory(str, num);
+                free(num);
+                m_widgets.editor->setAnsAvailable(true);
+            }
+
             if (m_settings->variablesDockVisible)
                 m_docks.variables->updateList();
             if (m_settings->userFunctionsDockVisible)
@@ -1504,7 +1523,8 @@ void MainWindow::showSessionImportDialog()
             m_widgets.editor->selectAll();
             m_widgets.editor->stopAutoCalc();
             m_widgets.editor->stopAutoComplete();
-            m_conditions.autoAns = true;
+            if(!result.isNan())
+                m_conditions.autoAns = true;
         }
 
         exp = stream.readLine();
@@ -1640,16 +1660,54 @@ void MainWindow::saveSession()
     QTextStream stream(&file);
 
     // Format version.
-    stream << "0.11" << "\n";
+    stream << "0.12" << "\n";
 
+#if 1
+    QStringList history = m_widgets.editor->history();
+    QStringList historyResults = m_widgets.editor->historyResults();
+    
+    Q_ASSERT(history.count() == historyResults.count());
+
+    // Number of calculations.
+    stream << history.count() << "\n";
+
+    // Expressions and results.
+    for (int i = 0; i < history.count(); ++i) {
+        stream << history.at(i) << QLatin1String("\n");
+        stream << historyResults.at(i) << QLatin1String("\n");
+    }
+#else
     // Number of calculations.
     stream << m_widgets.display->count() << "\n";
 
     // Expressions and results.
-    QString history = m_widgets.display->toPlainText();
-    history.replace(QLatin1String("= "), QLatin1String(""));
-    history.replace(QLatin1String("\n\n"), QLatin1String("\n"));
-    stream << history;
+    QStringList historyLines = m_widgets.display->toPlainText().split(QLatin1String("\n"));
+    int exprCount = 0;
+    for (int i = 0; i < historyLines.count(); ++i) {
+        if (historyLines.at(i).isEmpty())
+            continue;
+
+        // If the expression has a result, just remove the equal sign prefix,
+        // otherwise, export the result as an empty line.
+        if (i + 1 < historyLines.count() && !historyLines.at(i + 1).isEmpty()) {
+            // Expression.
+            stream << historyLines.at(i) << QLatin1String("\n");
+            ++i;
+            // Result.
+            const QString &result = historyLines.at(i);
+            if (result.startsWith(QLatin1String("= ")))
+                stream << result.mid(2) << QLatin1String("\n");
+            else
+                stream << result << QLatin1String("\n");
+        } else {
+            // User function assignment, so there is no result.
+            stream << historyLines.at(i) << QLatin1String("\n\n");
+        }
+        ++exprCount;
+    }
+    
+    Q_ASSERT(exprCount == m_widgets.display->count());
+#endif
 
     // Number of variables.
     QList<Evaluator::Variable> variables = m_evaluator->getUserDefinedVariablesPlusAns();
@@ -2230,17 +2288,23 @@ void MainWindow::evaluateEditorExpression()
         return;
     }
 
-    if (result.isNan())
+    if (m_evaluator->isUserFunctionAssign()) {
+        result = HMath::nan();
+    } else if (result.isNan())
         return;
 
     m_widgets.display->append(expr, result);
     m_widgets.display->scrollToBottom();
 
-    const char format = result.format() != 0 ? result.format() : 'e';
-    char* num = HMath::format(result, format, DECPRECISION);
-    m_widgets.editor->appendHistory(expr, num);
-    free(num);
-    m_widgets.editor->setAnsAvailable(true);
+    if (result.isNan()) {
+        m_widgets.editor->appendHistory(expr, "");
+    } else {
+        const char format = result.format() != 0 ? result.format() : 'e';
+        char* num = HMath::format(result, format, DECPRECISION);
+        m_widgets.editor->appendHistory(expr, num);
+        free(num);
+        m_widgets.editor->setAnsAvailable(true);
+    }
 
     if (m_settings->variablesDockVisible)
         m_docks.variables->updateList();
@@ -2263,7 +2327,8 @@ void MainWindow::evaluateEditorExpression()
 
     m_widgets.editor->stopAutoCalc();
     m_widgets.editor->stopAutoComplete();
-    m_conditions.autoAns = true;
+    if (!result.isNan())
+        m_conditions.autoAns = true;
 }
 
 void MainWindow::showSystemTrayMessage()
