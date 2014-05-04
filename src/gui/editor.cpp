@@ -688,6 +688,27 @@ void Editor::keyPressEvent(QKeyEvent* event)
             return;
         }
 
+    case Qt::Key_P:
+        if (event->modifiers() == Qt::ControlModifier) {
+            QTextCursor cursor = textCursor();
+            if (cursor.hasSelection()) {
+                const int selectionStart = cursor.selectionStart();
+                const int selectionEnd = cursor.selectionEnd();
+                cursor.setPosition(selectionStart);
+                cursor.insertText("(");
+                cursor.setPosition(selectionEnd + 1);
+                cursor.insertText(")");
+            } else {
+                cursor.movePosition(QTextCursor::Start);
+                cursor.insertText("(");
+                cursor.movePosition(QTextCursor::End);
+                cursor.insertText(")");
+            }
+            setTextCursor(cursor);
+            event->accept();
+            return;
+        }
+
     default:;
     }
 
