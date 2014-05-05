@@ -25,7 +25,7 @@
 #include <QSystemTrayIcon>
 
 class AutoHideLabel;
-class BitfieldWidget;
+class BitFieldWidget;
 class BookDock;
 class Constants;
 class ConstantsDock;
@@ -314,7 +314,7 @@ private:
         TipWidget* tip;
         QSystemTrayIcon* trayIcon;
         ManualWindow* manual;
-        BitfieldWidget* bitfield;
+        BitFieldWidget* bitField;
     } m_widgets;
 
     struct {

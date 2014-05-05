@@ -1,4 +1,5 @@
 // This file is part of the SpeedCrunch project
+// Copyright (C) 2014 Sébastien Szymanski <seb.szymanski@gmail.com>
 // Copyright (C) 2014 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
@@ -15,59 +16,64 @@
 // along with this program; see the file COPYING.  If not, write to
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
+
 #ifndef BITFIELDWIDGET_H
 #define BITFIELDWIDGET_H
 
-#include <QtGui/QLabel>
-#include <QtGui/QWidget>
+#include <QLabel>
+#include <QWidget>
 
 class HNumber;
 
 class BitWidget : public QLabel {
     Q_OBJECT
 
-    public:
-        explicit BitWidget(int apos, QWidget *parent = 0);
-        ~BitWidget();
+public:
+    explicit BitWidget(int apos, QWidget* parent = 0);
 
-        bool state() const;
-        void setState(bool state);
+    bool state() const { return m_state; }
+    void setState(bool state) { m_state = state; update(); }
 
-    signals:
-        void stateChanged(bool);
+signals:
+    void stateChanged(bool);
 
-    protected:
-        void mouseReleaseEvent(QMouseEvent *ev);
-        void paintEvent(QPaintEvent *e);
+protected:
+    void mouseReleaseEvent(QMouseEvent*);
+    void paintEvent(QPaintEvent*);
 
-    private:
-        Q_DISABLE_COPY(BitWidget)
+private:
+    enum {
+        SizePixels = 20,
+    };
 
-        bool m_state;
+    Q_DISABLE_COPY(BitWidget)
+
+    bool m_state;
 };
 
-class BitfieldWidget : public QWidget
-{
+class BitFieldWidget : public QWidget {
     Q_OBJECT
 
 public:
-    explicit BitfieldWidget(QWidget *parent = 0);
-    ~BitfieldWidget();
+    explicit BitFieldWidget(QWidget* parent = 0);
 
 signals:
     void bitsChanged(const QString&);
 
 public slots:
-    void updateBits(const HNumber& number);
+    void updateBits(const HNumber&);
 
 private slots:
     void onBitChanged();
 
 private:
-    Q_DISABLE_COPY(BitfieldWidget)
+    enum {
+        NumberOfBits = 64
+    };
+
+    Q_DISABLE_COPY(BitFieldWidget)
 
     QList<BitWidget*> m_bitWidgets;
-    static int BitCount;
 };
 
 #endif // BITFIELDWIDGET_H

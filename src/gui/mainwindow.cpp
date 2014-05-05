@@ -614,9 +614,9 @@ void MainWindow::createFixedWidgets()
     editorLayout->addWidget(m_widgets.editor);
     m_layouts.root->addLayout(editorLayout);
 
-    m_widgets.bitfield = new BitfieldWidget(this);
-    m_layouts.root->addWidget(m_widgets.bitfield);
-    m_widgets.bitfield->setVisible(false);
+    m_widgets.bitField = new BitFieldWidget(this);
+    m_layouts.root->addWidget(m_widgets.bitField);
+    m_widgets.bitField->setVisible(false);
 
     m_widgets.state = new QLabel(this);
     m_widgets.state->setPalette(QToolTip::palette());
@@ -862,7 +862,7 @@ void MainWindow::createFixedConnections()
     connect(m_widgets.display, SIGNAL(shiftControlWheelDown()), SLOT(decreaseOpacity()));
     connect(m_widgets.display, SIGNAL(shiftControlWheelUp()), SLOT(increaseOpacity()));
 
-    connect(m_widgets.bitfield, SIGNAL(bitsChanged(QString)), SLOT(handleBitsChanged(QString)));
+    connect(m_widgets.bitField, SIGNAL(bitsChanged(QString)), SLOT(handleBitsChanged(QString)));
 
     connect(this, SIGNAL(radixCharacterChanged()), m_widgets.display, SLOT(refresh()));
     connect(this, SIGNAL(resultFormatChanged()), m_widgets.display, SLOT(refresh()));
@@ -1478,7 +1478,7 @@ void MainWindow::setAutoCompletionEnabled(bool b)
 void MainWindow::setBitfieldVisible(bool b)
 {
     m_settings->bitfieldVisible = b;
-    m_widgets.bitfield->setVisible(b);
+    m_widgets.bitField->setVisible(b);
     m_widgets.display->scrollToBottom();
 }
 
@@ -2101,7 +2101,7 @@ void MainWindow::evaluateEditorExpression()
     free(num);
     m_widgets.editor->setAnsAvailable(true);
 
-    m_widgets.bitfield->updateBits(result);
+    m_widgets.bitField->updateBits(result);
 
     if (m_settings->variablesDockVisible)
         m_docks.variables->updateList();

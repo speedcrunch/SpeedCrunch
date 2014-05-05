@@ -87,6 +87,7 @@ AboutBox::AboutBox(QWidget* parent, Qt::WindowFlags f)
            "Roberto Alsina<br>"
            "Roland \"liquidat\" Wolters<br>"
            "Sarah Hobbs<br>"
+           "S&eacute;bastien Szymanski<br>"
            "Stephan Binner<br>"
            "Tey<br>"
            "Thomas Luebking<br>"
