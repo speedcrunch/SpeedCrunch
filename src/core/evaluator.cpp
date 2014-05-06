@@ -401,6 +401,7 @@ Tokens Evaluator::scan(const QString& expr, Evaluator::AutoFixPolicy policy) con
     QString tokenText;
     int tokenStart = 0;
     Token::Type type;
+    bool numberFrac = false;
 
     // Force a terminator.
     ex.append(QChar());
@@ -419,6 +420,8 @@ Tokens Evaluator::scan(const QString& expr, Evaluator::AutoFixPolicy policy) con
         switch (state) {
         case Start:
             tokenStart = i;
+            // State variables reset
+            numberFrac = false;
 
             // Skip any whitespaces.
             if (ch.isSpace())
@@ -526,7 +529,12 @@ Tokens Evaluator::scan(const QString& expr, Evaluator::AutoFixPolicy policy) con
         case InHexa:
             if (ch.isDigit() || (ch >= 'A' && ch < 'G') || (ch >= 'a' && ch < 'g'))
                 tokenText.append(ex.at(i++).toUpper());
-            else { // We're done with hexadecimal number.
+            else if (!numberFrac && (ch == '.' || ch == ',')) {
+                // Allow a unique fractionnal part.
+                tokenText.append('.');
+                ++i;
+                numberFrac = true;
+            } else { // We're done with hexadecimal number.
                 tokens.append(Token(Token::stxNumber, tokenText, tokenStart));
                 tokenText = "";
                 state = Start;
@@ -536,7 +544,12 @@ Tokens Evaluator::scan(const QString& expr, Evaluator::AutoFixPolicy policy) con
         case InBinary:
             if (ch == '0' || ch == '1')
                 tokenText.append(ex.at(i++));
-            else { // We're done with binary number.
+            else if (!numberFrac && (ch == '.' || ch == ',')) {
+                // Allow a unique fractionnal part.
+                tokenText.append('.');
+                ++i;
+                numberFrac = true;
+            } else { // We're done with binary number.
                 tokens.append(Token(Token::stxNumber, tokenText, tokenStart));
                 tokenText = "";
                 state = Start;
@@ -546,7 +559,12 @@ Tokens Evaluator::scan(const QString& expr, Evaluator::AutoFixPolicy policy) con
         case InOctal:
             if (ch >= '0' && ch < '8')
                 tokenText.append(ex.at(i++));
-            else { // We're done with octal number.
+            else if (!numberFrac && (ch == '.' || ch == ',')) {
+                // Allow a unique fractionnal part.
+                tokenText.append('.');
+                ++i;
+                numberFrac = true;
+            } else { // We're done with octal number.
                 tokens.append(Token(Token::stxNumber, tokenText, tokenStart));
                 tokenText = ""; state = Start;
             }
