@@ -215,6 +215,17 @@ void test_radix_char()
     CHECK_EVAL("1+,5", "1.5");
     CHECK_EVAL(".5*,5", "0.25");
     CHECK_EVAL("1.01+2,02", "3.03");
+
+    CHECK_EVAL("0b1.0 + 1", "2");
+    CHECK_EVAL("0b1.1 * 1", "1.5");
+    CHECK_EVAL("0b01.010 / 1", "1.25");
+    CHECK_EVAL("-0b.010 - 1", "-1.25");
+
+    CHECK_EVAL("0o.7 + 1", "1.875");
+    CHECK_EVAL("-0o.7 + 1", "0.125");
+
+    CHECK_EVAL("0x.f + 1", "1.9375");
+    CHECK_EVAL("-0x.f + 1", "0.0625");
 }
 
 void test_function_basic()
