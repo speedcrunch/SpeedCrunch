@@ -694,8 +694,7 @@ void MainWindow::createFunctionsDock()
     m_docks.functions->setAllowedAreas(Qt::AllDockWidgetAreas);
     addDockWidget(Qt::RightDockWidgetArea, m_docks.functions);
 
-    connect(m_docks.functions->widget(), SIGNAL(functionSelected(const QString&)),
-        SLOT(insertFunctionIntoEditor(const QString&)));
+    connect(m_docks.functions->widget(), SIGNAL(functionSelected(const QString&)), SLOT(insertFunctionIntoEditor(const QString&)));
 
     if (m_docks.history)
         tabifyDockWidget(m_docks.history, m_docks.functions);
@@ -1954,11 +1953,9 @@ void MainWindow::insertTextIntoEditor(const QString& s)
         return;
 
     bool shouldAutoComplete = m_widgets.editor->isAutoCompletionEnabled();
-    if (shouldAutoComplete)
-        m_widgets.editor->setAutoCompletionEnabled(false);
+    m_widgets.editor->setAutoCompletionEnabled(false);
     m_widgets.editor->insert(s);
-    if (shouldAutoComplete)
-        m_widgets.editor->setAutoCompletionEnabled(true);
+    m_widgets.editor->setAutoCompletionEnabled(shouldAutoComplete);
 
     if (!isActiveWindow())
         activateWindow();
@@ -1967,19 +1964,23 @@ void MainWindow::insertTextIntoEditor(const QString& s)
 
 void MainWindow::insertFunctionIntoEditor(const QString& f)
 {
-    if (!f.isEmpty())
-        insertTextIntoEditor(f + "(");
+    if (f.isEmpty())
+        return;
+    insertTextIntoEditor(f + "()");
+    QTextCursor cursor = m_widgets.editor->textCursor();
+    cursor.movePosition(QTextCursor::PreviousCharacter);
+    m_widgets.editor->setTextCursor(cursor);
 }
 
 void MainWindow::minimizeToSystemTray()
 {
-    if (m_widgets.trayIcon) {
-        hide();
-        m_widgets.trayIcon->show();
-        if (m_conditions.trayNotify)
-            QTimer::singleShot(500, this, SLOT(showSystemTrayMessage()));
-        m_conditions.trayNotify = false;
-    }
+    if (!m_widgets.trayIcon)
+        return;
+    hide();
+    m_widgets.trayIcon->show();
+    if (m_conditions.trayNotify)
+        QTimer::singleShot(500, this, SLOT(showSystemTrayMessage()));
+    m_conditions.trayNotify = false;
 }
 
 void MainWindow::openUpdatesURL()
