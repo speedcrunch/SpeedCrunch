@@ -614,10 +614,6 @@ void MainWindow::createFixedWidgets()
     editorLayout->addWidget(m_widgets.editor);
     m_layouts.root->addLayout(editorLayout);
 
-    m_widgets.bitField = new BitFieldWidget(this);
-    m_layouts.root->addWidget(m_widgets.bitField);
-    m_widgets.bitField->setVisible(false);
-
     m_widgets.state = new QLabel(this);
     m_widgets.state->setPalette(QToolTip::palette());
     m_widgets.state->setAutoFillBackground(true);
@@ -630,6 +626,15 @@ void MainWindow::createFixedWidgets()
         m_widgets.tip->hide();
     }
 #endif // Q_OS_MAC
+}
+
+void MainWindow::createBitField() {
+    m_widgets.bitField = new BitFieldWidget(m_widgets.root);
+    m_layouts.root->addWidget(m_widgets.bitField);
+    m_widgets.bitField->show();
+    m_widgets.display->scrollToBottom();
+    connect(m_widgets.bitField, SIGNAL(bitsChanged(const QString&)), SLOT(handleBitsChanged(const QString&)));
+    m_settings->bitfieldVisible = true;
 }
 
 void MainWindow::createBookDock()
@@ -860,8 +865,6 @@ void MainWindow::createFixedConnections()
     connect(m_widgets.display, SIGNAL(selectionChanged()), SLOT(handleDisplaySelectionChange()));
     connect(m_widgets.display, SIGNAL(shiftControlWheelDown()), SLOT(decreaseOpacity()));
     connect(m_widgets.display, SIGNAL(shiftControlWheelUp()), SLOT(increaseOpacity()));
-
-    connect(m_widgets.bitField, SIGNAL(bitsChanged(QString)), SLOT(handleBitsChanged(QString)));
 
     connect(this, SIGNAL(radixCharacterChanged()), m_widgets.display, SLOT(refresh()));
     connect(this, SIGNAL(resultFormatChanged()), m_widgets.display, SLOT(refresh()));
@@ -1477,9 +1480,10 @@ void MainWindow::setAutoCompletionEnabled(bool b)
 
 void MainWindow::setBitfieldVisible(bool b)
 {
-    m_settings->bitfieldVisible = b;
-    m_widgets.bitField->setVisible(b);
-    m_widgets.display->scrollToBottom();
+    if (b)
+        createBitField();
+    else
+        deleteBitField();
 }
 
 void MainWindow::setSystemTrayIconEnabled(bool b)
@@ -1747,6 +1751,16 @@ void MainWindow::deleteStatusBar()
     m_status.resultFormat = 0;
 
     setStatusBar(0);
+}
+
+void MainWindow::deleteBitField()
+{
+    m_widgets.bitField->hide();
+    m_layouts.root->removeWidget(m_widgets.bitField);
+    disconnect(m_widgets.bitField);
+    m_widgets.bitField->deleteLater();
+    m_widgets.bitField = 0;
+    m_settings->bitfieldVisible = false;
 }
 
 void MainWindow::deleteBookDock()
@@ -2105,7 +2119,8 @@ void MainWindow::evaluateEditorExpression()
     free(num);
     m_widgets.editor->setAnsAvailable(true);
 
-    m_widgets.bitField->updateBits(result);
+    if (m_settings->bitfieldVisible)
+        m_widgets.bitField->updateBits(result);
 
     if (m_settings->variablesDockVisible)
         m_docks.variables->updateList();
@@ -2170,7 +2185,7 @@ void MainWindow::handleCopyAvailable(bool copyAvailable)
         m_copyWidget = textEdit;
 }
 
-void MainWindow::handleBitsChanged(const QString &str)
+void MainWindow::handleBitsChanged(const QString& str)
 {
     clearEditor();
     insertTextIntoEditor(str);

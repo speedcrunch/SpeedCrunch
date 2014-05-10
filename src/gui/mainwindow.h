@@ -178,6 +178,7 @@ private:
     void createMenus();
     void createStatusBar();
     void createFixedWidgets();
+    void createBitField();
     void createBookDock();
     void createConstantsDock();
     void createFunctionsDock();
@@ -191,6 +192,7 @@ private:
     void restoreHistory();
     void restoreVariables();
     void deleteStatusBar();
+    void deleteBitField();
     void deleteBookDock();
     void deleteConstantsDock();
     void deleteFunctionsDock();
