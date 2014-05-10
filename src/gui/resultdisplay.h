@@ -45,6 +45,8 @@ signals:
 
 public slots:
     void clear();
+    void decreaseFontPointSize();
+    void increaseFontPointSize();
     void rehighlight();
     void refresh();
     void scrollLines(int);
@@ -54,8 +56,6 @@ public slots:
     void scrollPageDown();
     void scrollToBottom();
     void scrollToTop();
-    void zoomIn();
-    void zoomOut();
 
 protected:
     virtual void mouseDoubleClickEvent(QMouseEvent*);

@@ -842,8 +842,8 @@ void MainWindow::createFixedConnections()
     connect(m_widgets.editor, SIGNAL(autoCalcDisabled()), SLOT(hideStateLabel()));
     connect(m_widgets.editor, SIGNAL(autoCalcEnabled(const QString&)), SLOT(showStateLabel(const QString&)));
     connect(m_widgets.editor, SIGNAL(returnPressed()), SLOT(evaluateEditorExpression()));
-    connect(m_widgets.editor, SIGNAL(shiftDownPressed()), m_widgets.display, SLOT(zoomOut()));
-    connect(m_widgets.editor, SIGNAL(shiftUpPressed()), m_widgets.display, SLOT(zoomIn()));
+    connect(m_widgets.editor, SIGNAL(shiftDownPressed()), SLOT(decreaseDisplayFontPointSize()));
+    connect(m_widgets.editor, SIGNAL(shiftUpPressed()), SLOT(increaseDisplayFontPointSize()));
     connect(m_widgets.editor, SIGNAL(controlPageUpPressed()), m_widgets.display, SLOT(scrollToTop()));
     connect(m_widgets.editor, SIGNAL(controlPageDownPressed()), m_widgets.display, SLOT(scrollToBottom()));
     connect(m_widgets.editor, SIGNAL(shiftPageUpPressed()), m_widgets.display, SLOT(scrollLineUp()));
@@ -967,6 +967,7 @@ void MainWindow::applySettings()
     QFont font;
     font.fromString(m_settings->displayFont);
     m_widgets.display->setFont(font);
+    m_widgets.editor->setFont(font);
 
     if (m_settings->colorScheme == SyntaxHighlighter::Standard)
         m_actions.settingsDisplayColorSchemeStandard->setChecked(true);
@@ -1651,8 +1652,10 @@ void MainWindow::showFontDialog()
 {
     bool ok;
     QFont f = QFontDialog::getFont(&ok, m_widgets.display->font(), this, tr("Display font"));
-    if (ok)
-        m_widgets.display->setFont(f);
+    if (!ok)
+        return;
+    m_widgets.display->setFont(f);
+    m_widgets.editor->setFont(f);
 }
 
 #ifndef Q_OS_MAC
@@ -2280,6 +2283,18 @@ void MainWindow::setRadixCharacter(char c)
 {
     m_settings->setRadixCharacter(c);
     emit radixCharacterChanged();
+}
+
+void MainWindow::increaseDisplayFontPointSize()
+{
+    m_widgets.display->increaseFontPointSize();
+    m_widgets.editor->increaseFontPointSize();
+}
+
+void MainWindow::decreaseDisplayFontPointSize()
+{
+    m_widgets.display->decreaseFontPointSize();
+    m_widgets.editor->decreaseFontPointSize();
 }
 
 void MainWindow::showLanguageChooserDialog()

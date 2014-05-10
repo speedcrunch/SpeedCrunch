@@ -159,6 +159,8 @@ private slots:
     void showSessionImportDialog();
     void showSessionLoadDialog();
     void showSystemTrayMessage();
+    void increaseDisplayFontPointSize();
+    void decreaseDisplayFontPointSize();
 
 protected:
     virtual void closeEvent(QCloseEvent*);

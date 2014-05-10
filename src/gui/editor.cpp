@@ -89,13 +89,8 @@ Editor::Editor(QWidget* parent)
     connect(this, SIGNAL(textChanged()), SLOT(checkAutoComplete()));
     connect(this, SIGNAL(textChanged()), SLOT(checkMatching()));
 
-    QFont font;
-    font.setPointSize(font.pointSize() + 4);
-    font.setBold(true);
-    setFont(font);
-
     adjustSize();
-    setFixedHeight(sizeHint().height() + 4);
+    setFixedHeight(sizeHint().height());
 }
 
 QString Editor::text() const
@@ -136,12 +131,9 @@ QSize Editor::sizeHint() const
 {
     ensurePolished();
     const QFontMetrics metrics = fontMetrics();
-    const int margin = frameWidth() * 2;
-    const int height = qMax(metrics.lineSpacing() + 2, 14) + margin;
-    const int width = metrics.width('x') * 20 + margin;
-
-    QSize size = QSize(width, height).expandedTo(QApplication::globalStrut());
-    return style()->sizeFromContents(QStyle::CT_LineEdit, 0, size, this);
+    const int width = metrics.width('x') * 10;
+    const int height = metrics.lineSpacing() + 6;
+    return QSize(width, height);
 }
 
 QStringList Editor::history() const
@@ -503,6 +495,26 @@ void Editor::autoCalc()
         emit autoCalcEnabled(m_evaluator->error());
 }
 
+void Editor::increaseFontPointSize()
+{
+    QFont newFont = font();
+    const int newSize = newFont.pointSize() + 1;
+    if (newSize > 96)
+        return;
+    newFont.setPointSize(newSize);
+    setFont(newFont);
+}
+
+void Editor::decreaseFontPointSize()
+{
+    QFont newFont = font();
+    const int newSize = newFont.pointSize() - 1;
+    if (newSize < 8)
+        return;
+    newFont.setPointSize(newSize);
+    setFont(newFont);
+}
+
 void Editor::autoCalcSelection()
 {
     if (!m_isAutoCalcEnabled)
@@ -620,6 +632,13 @@ void Editor::triggerEnter()
     m_autoCalcSelTimer->stop();
     m_currentHistoryIndex = m_history.count();
     emit returnPressed();
+}
+
+void Editor::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::FontChange)
+        setFixedHeight(sizeHint().height());
+    QPlainTextEdit::changeEvent(event);
 }
 
 void Editor::focusOutEvent(QFocusEvent* event)

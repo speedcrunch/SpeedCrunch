@@ -201,21 +201,21 @@ void ResultDisplay::scrollToBottom()
     scrollToDirection(1);
 }
 
-void ResultDisplay::zoomIn()
+void ResultDisplay::increaseFontPointSize()
 {
     QFont newFont = font();
     const int newSize = newFont.pointSize() + 1;
-    if (newSize > 64)
+    if (newSize > 96)
         return;
     newFont.setPointSize(newSize);
     setFont(newFont);
 }
 
-void ResultDisplay::zoomOut()
+void ResultDisplay::decreaseFontPointSize()
 {
     QFont newFont = font();
     const int newSize = newFont.pointSize() - 1;
-    if (newSize < 4)
+    if (newSize < 8)
         return;
     newFont.setPointSize(newSize);
     setFont(newFont);
@@ -281,9 +281,9 @@ void ResultDisplay::wheelEvent(QWheelEvent* event)
             emit shiftControlWheelDown();
     } else if (event->modifiers() == Qt::ShiftModifier) {
         if (event->delta() > 0)
-            zoomIn();
+            increaseFontPointSize();
         else
-            zoomOut();
+            decreaseFontPointSize();
     } else {
         QPlainTextEdit::wheelEvent(event);
         return;

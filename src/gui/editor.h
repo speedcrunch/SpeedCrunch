@@ -82,6 +82,8 @@ public slots:
     void appendHistory(const QStringList& expressions, const QStringList& results);
     void cancelConstantCompletion();
     void evaluate();
+    void decreaseFontPointSize();
+    void increaseFontPointSize();
     void insert(const QString&);
     void insertConstant(const QString&);
     void rehighlight();
@@ -104,6 +106,7 @@ protected slots:
     void triggerEnter();
 
 protected:
+    virtual void changeEvent(QEvent*);
     virtual void focusOutEvent(QFocusEvent*);
     virtual void keyPressEvent(QKeyEvent*);
     virtual void paintEvent(QPaintEvent*);
