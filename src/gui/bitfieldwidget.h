@@ -60,6 +60,9 @@ public:
 signals:
     void bitsChanged(const QString&);
 
+protected:
+    virtual void wheelEvent(QWheelEvent *we);
+
 public slots:
     void updateBits(const HNumber&);
 
@@ -72,6 +75,9 @@ private:
     };
 
     Q_DISABLE_COPY(BitFieldWidget)
+
+    void shiftBitsLeft();
+    void shiftBitsRight();
 
     QList<BitWidget*> m_bitWidgets;
 };

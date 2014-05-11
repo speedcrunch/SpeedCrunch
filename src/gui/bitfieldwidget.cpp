@@ -116,6 +116,14 @@ BitFieldWidget::BitFieldWidget(QWidget* parent) :
     mainLayout->addStretch();
 }
 
+void BitFieldWidget::wheelEvent(QWheelEvent* we)
+{
+    if (we->delta() > 0)
+        shiftBitsLeft();
+    else
+        shiftBitsRight();
+}
+
 void BitFieldWidget::updateBits(const HNumber& number)
 {
     QString binaryNumberString = HMath::format(number, 'b');
@@ -150,4 +158,34 @@ void BitFieldWidget::onBitChanged()
     expression.prepend("0b");
 
     emit bitsChanged(expression);
+}
+
+void BitFieldWidget::shiftBitsLeft()
+{
+    QList<BitWidget*>::ConstIterator it(m_bitWidgets.constEnd());
+    QList<BitWidget*>::ConstIterator itBegin(m_bitWidgets.constBegin());
+
+    --it;
+    while (it != itBegin) {
+        (*it)->setState((*(it-1))->state());
+        --it;
+    }
+
+    (*itBegin)->setState(false);
+    onBitChanged();
+}
+
+void BitFieldWidget::shiftBitsRight()
+{
+    QList<BitWidget*>::ConstIterator it(m_bitWidgets.constBegin());
+    QList<BitWidget*>::ConstIterator itEnd(m_bitWidgets.constEnd());
+
+    --itEnd;
+    while (it != itEnd) {
+        (*it)->setState((*(it+1))->state());
+        it++;
+    }
+
+    (*itEnd)->setState(false);
+    onBitChanged();
 }
