@@ -2188,9 +2188,8 @@ void MainWindow::handleCopyAvailable(bool copyAvailable)
 void MainWindow::handleBitsChanged(const QString& str)
 {
     clearEditor();
-    insertTextIntoEditor(str);
-    m_evaluator->setExpression(str);
-    HNumber num(m_evaluator->evalNoAssign());
+    HNumber num(str.toLatin1().data());
+    insertTextIntoEditor(QString(HMath::format(num, 'h')));
     showStateLabel(QString("Current value: %1").arg(NumberFormatter::format(num)));
 }
 
