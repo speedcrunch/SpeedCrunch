@@ -68,6 +68,10 @@ public slots:
 
 private slots:
     void onBitChanged();
+    void invertBits();
+    void shiftBitsLeft();
+    void shiftBitsRight();
+    void resetBits();
 
 private:
     enum {
@@ -75,9 +79,6 @@ private:
     };
 
     Q_DISABLE_COPY(BitFieldWidget)
-
-    void shiftBitsLeft();
-    void shiftBitsRight();
 
     QList<BitWidget*> m_bitWidgets;
 };

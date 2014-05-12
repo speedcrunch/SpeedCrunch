@@ -110,9 +110,35 @@ BitFieldWidget::BitFieldWidget(QWidget* parent) :
         }
     }
 
+    QPushButton* resetButton = new QPushButton("0");
+    resetButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    connect(resetButton, SIGNAL(clicked()), this, SLOT(resetBits()));
+
+    QPushButton* invertButton = new QPushButton("~");
+    invertButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    connect(invertButton, SIGNAL(clicked()), this, SLOT(invertBits()));
+
+    QPushButton* shiftLeftButton = new QPushButton("<<");
+    shiftLeftButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    connect(shiftLeftButton, SIGNAL(clicked()), this, SLOT(shiftBitsLeft()));
+
+    QPushButton* shiftRightButton = new QPushButton(">>");
+    shiftRightButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    connect(shiftRightButton, SIGNAL(clicked()), this, SLOT(shiftBitsRight()));
+
+    QVBoxLayout* buttonsLayout = new QVBoxLayout;
+    buttonsLayout->addWidget(resetButton);
+    buttonsLayout->addWidget(shiftLeftButton);
+
+    QVBoxLayout* buttonsLayout2 = new QVBoxLayout;
+    buttonsLayout2->addWidget(invertButton);
+    buttonsLayout2->addWidget(shiftRightButton);
+
     QHBoxLayout* mainLayout = new QHBoxLayout(this);
     mainLayout->addStretch();
     mainLayout->addLayout(fieldLayout);
+    mainLayout->addLayout(buttonsLayout);
+    mainLayout->addLayout(buttonsLayout2);
     mainLayout->addStretch();
 }
 
@@ -158,6 +184,22 @@ void BitFieldWidget::onBitChanged()
     expression.prepend("0b");
 
     emit bitsChanged(expression);
+}
+
+void BitFieldWidget::invertBits()
+{
+    foreach (BitWidget* w, m_bitWidgets)
+        w->setState(!w->state());
+
+    onBitChanged();
+}
+
+void BitFieldWidget::resetBits()
+{
+    foreach (BitWidget* w, m_bitWidgets)
+        w->setState(false);
+
+    onBitChanged();
 }
 
 void BitFieldWidget::shiftBitsLeft()
