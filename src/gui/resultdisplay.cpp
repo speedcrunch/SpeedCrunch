@@ -281,9 +281,9 @@ void ResultDisplay::wheelEvent(QWheelEvent* event)
             emit shiftControlWheelDown();
     } else if (event->modifiers() == Qt::ShiftModifier) {
         if (event->delta() > 0)
-            increaseFontPointSize();
+            emit shiftWheelUp();
         else
-            decreaseFontPointSize();
+            emit shiftWheelDown();
     } else {
         QPlainTextEdit::wheelEvent(event);
         return;

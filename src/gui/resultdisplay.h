@@ -39,6 +39,8 @@ public:
     bool isEmpty() const { return m_count == 0; }
 
 signals:
+    void shiftWheelDown();
+    void shiftWheelUp();
     void shiftControlWheelDown();
     void shiftControlWheelUp();
     void expressionSelected(const QString&);
