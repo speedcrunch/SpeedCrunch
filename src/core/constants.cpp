@@ -211,6 +211,34 @@ void Constants::Private::populate()
     PUSH_CONSTANT("Yttrium", QLatin1String("88.90585"), QLatin1String("g/mol"));
     PUSH_CONSTANT("Zinc", QLatin1String("65.38"), QLatin1String("g/mol"));
     PUSH_CONSTANT("Zirconium", QLatin1String("91.224"), QLatin1String("g/mol"));
+
+    // Particle Masses
+    // Leptons
+    PUSH_CONSTANT("Electron Mass", QLatin1String("0.510998928"), QString::fromUtf8("MeV/c²"));
+    PUSH_CONSTANT("Muon Mass"    , QLatin1String("105.6583715"), QString::fromUtf8("MeV/c²"));
+    PUSH_CONSTANT("Tau Mass"     , QLatin1String("1776.82")    , QString::fromUtf8("MeV/c²"));
+
+    // Quarks
+    PUSH_CONSTANT("Up-Quark Mass"     , QLatin1String("2.3")   , QString::fromUtf8("MeV/c²"));
+    PUSH_CONSTANT("Down-Quark Mass"   , QLatin1String("4.8")   , QString::fromUtf8("MeV/c²"));
+    PUSH_CONSTANT("Charm-Quark Mass"  , QLatin1String("1.275") , QString::fromUtf8("GeV/c²"));
+    PUSH_CONSTANT("Strange-Quark Mass", QLatin1String("95")    , QString::fromUtf8("MeV/c²"));
+    PUSH_CONSTANT("Top-Quark Mass"    , QLatin1String("173.07"), QString::fromUtf8("GeV/c²"));
+    PUSH_CONSTANT("Bottom-Quark Mass" , QLatin1String("4.18")  , QString::fromUtf8("GeV/c²"));
+
+    // Bosons
+    PUSH_CONSTANT("W-Boson Mass"    , QLatin1String("80.385") , QString::fromUtf8("GeV/c²"));
+    PUSH_CONSTANT("Z-Boson Mass"    , QLatin1String("91.1876"), QString::fromUtf8("GeV/c²"));
+    PUSH_CONSTANT("Higgs-Boson Mass", QLatin1String("125.9")  , QString::fromUtf8("GeV/c²"));
+
+    // Hadrons
+    PUSH_CONSTANT("Proton Mass"      , QLatin1String("938.272046"), QString::fromUtf8("MeV/c²"));
+    PUSH_CONSTANT("Neutron Mass"     , QLatin1String("939.565379"), QString::fromUtf8("MeV/c²"));
+
+    // SI-Units
+    PUSH_CONSTANT("Electron Mass (SI)", QLatin1String("9.10938291e-31") , QLatin1String("kg"));
+    PUSH_CONSTANT("Proton Mass (SI)"  , QLatin1String("1.672621777e-27"), QLatin1String("kg"));
+    PUSH_CONSTANT("Neutron Mass (SI)" , QLatin1String("1.674927351e-27"), QLatin1String("kg"));
 }
 
 void Constants::Private::retranslateText()
@@ -384,6 +412,27 @@ void Constants::Private::retranslateText()
     I18N_CONSTANT(Constants::tr("Yttrium"));
     I18N_CONSTANT(Constants::tr("Zinc"));
     I18N_CONSTANT(Constants::tr("Zirconium"));
+
+    // http://pdg.lbl.gov/index.html
+    cat = Constants::tr("Particle Masses");
+
+    I18N_CONSTANT(Constants::tr("Electron Mass"));
+    I18N_CONSTANT(Constants::tr("Muon Mass"));
+    I18N_CONSTANT(Constants::tr("Tau Mass"));
+    I18N_CONSTANT(Constants::tr("Up-Quark Mass"));
+    I18N_CONSTANT(Constants::tr("Down-Quark Mass"));
+    I18N_CONSTANT(Constants::tr("Charm-Quark Mass"));
+    I18N_CONSTANT(Constants::tr("Strange-Quark Mass"));
+    I18N_CONSTANT(Constants::tr("Top-Quark Mass"));
+    I18N_CONSTANT(Constants::tr("Bottom-Quark Mass"));
+    I18N_CONSTANT(Constants::tr("W-Boson Mass"));
+    I18N_CONSTANT(Constants::tr("Z-Boson Mass"));
+    I18N_CONSTANT(Constants::tr("Higgs-Boson Mass"));
+    I18N_CONSTANT(Constants::tr("Proton Mass"));
+    I18N_CONSTANT(Constants::tr("Neutron Mass"));
+    I18N_CONSTANT(Constants::tr("Electron Mass (SI)"));
+    I18N_CONSTANT(Constants::tr("Proton Mass (SI)"));
+    I18N_CONSTANT(Constants::tr("Neutron Mass (SI)"));
 
     categories.clear();
     for (int k = 0; k < list.count(); ++k)
