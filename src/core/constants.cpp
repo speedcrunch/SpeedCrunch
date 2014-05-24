@@ -211,6 +211,12 @@ void Constants::Private::populate()
     PUSH_CONSTANT("Yttrium", QLatin1String("88.90585"), QLatin1String("g/mol"));
     PUSH_CONSTANT("Zinc", QLatin1String("65.38"), QLatin1String("g/mol"));
     PUSH_CONSTANT("Zirconium", QLatin1String("91.224"), QLatin1String("g/mol"));
+
+    // TODO Particle Masses
+    PUSH_CONSTANT("Proton Mass", QLatin1String("938.272046"), QLatin1String("MeV/c^2"));
+    PUSH_CONSTANT("Proton Mass (SI)", QLatin1String("1.672621777e-27"), QLatin1String("kg"));
+    PUSH_CONSTANT("Neutron Mass", QLatin1String("939.565379"), QLatin1String("MeV/c^2"));
+    PUSH_CONSTANT("Neutron Mass (SI)", QLatin1String("1.674927351e-27"), QLatin1String("kg"));
 }
 
 void Constants::Private::retranslateText()
@@ -384,6 +390,12 @@ void Constants::Private::retranslateText()
     I18N_CONSTANT(Constants::tr("Yttrium"));
     I18N_CONSTANT(Constants::tr("Zinc"));
     I18N_CONSTANT(Constants::tr("Zirconium"));
+
+    // TODO http://pdg.lbl.gov/index.html
+    cat = Constants::tr("Particle Masses");
+
+    I18N_CONSTANT(Constants::tr("Proton Mass"));
+    I18N_CONSTANT(Constants::tr("Proton Mass (SI)"));
 
     categories.clear();
     for (int k = 0; k < list.count(); ++k)
