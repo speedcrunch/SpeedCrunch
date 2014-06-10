@@ -141,6 +141,7 @@ void MainWindow::createActions()
     m_actions.settingsBehaviorPartialResults = new QAction(this);
     m_actions.settingsBehaviorSaveHistoryOnExit = new QAction(this);
     m_actions.settingsBehaviorSaveVariablesOnExit = new QAction(this);
+    m_actions.settingsBehaviorSaveWindowPositionOnExit = new QAction(this);
     m_actions.settingsBehaviorSyntaxHighlighting = new QAction(this);
     m_actions.settingsBehaviorDigitGrouping = new QAction(this);
     m_actions.settingsBehaviorAutoResultToClipboard = new QAction(this);
@@ -182,6 +183,7 @@ void MainWindow::createActions()
     m_actions.settingsBehaviorPartialResults->setCheckable(true);
     m_actions.settingsBehaviorSaveHistoryOnExit->setCheckable(true);
     m_actions.settingsBehaviorSaveVariablesOnExit->setCheckable(true);
+    m_actions.settingsBehaviorSaveWindowPositionOnExit->setCheckable(true);
     m_actions.settingsBehaviorSyntaxHighlighting->setCheckable(true);
     m_actions.settingsBehaviorDigitGrouping->setCheckable(true);
     m_actions.settingsBehaviorAutoResultToClipboard->setCheckable(true);
@@ -321,6 +323,7 @@ void MainWindow::setActionsText()
     m_actions.settingsBehaviorPartialResults->setText(MainWindow::tr("&Partial Results"));
     m_actions.settingsBehaviorSaveHistoryOnExit->setText(MainWindow::tr("Save &History on Exit"));
     m_actions.settingsBehaviorSaveVariablesOnExit->setText(MainWindow::tr("Save &Variables on Exit"));
+    m_actions.settingsBehaviorSaveWindowPositionOnExit->setText(MainWindow::tr("Save &Window Positon on Exit"));
     m_actions.settingsBehaviorSyntaxHighlighting->setText(MainWindow::tr("Syntax &Highlighting"));
     m_actions.settingsBehaviorDigitGrouping->setText(MainWindow::tr("Digit &Grouping"));
     m_actions.settingsBehaviorLeaveLastExpression->setText(MainWindow::tr("Leave &Last Expression"));
@@ -506,6 +509,7 @@ void MainWindow::createMenus()
     m_menus.behavior = m_menus.settings->addMenu("");
     m_menus.behavior->addAction(m_actions.settingsBehaviorSaveHistoryOnExit);
     m_menus.behavior->addAction(m_actions.settingsBehaviorSaveVariablesOnExit);
+    m_menus.behavior->addAction(m_actions.settingsBehaviorSaveWindowPositionOnExit);
     m_menus.behavior->addSeparator();
     m_menus.behavior->addAction(m_actions.settingsBehaviorPartialResults);
     m_menus.behavior->addAction(m_actions.settingsBehaviorAutoAns);
@@ -812,6 +816,7 @@ void MainWindow::createFixedConnections()
     connect(m_actions.settingsBehaviorPartialResults, SIGNAL(toggled(bool)), SLOT(setAutoCalcEnabled(bool)));
     connect(m_actions.settingsBehaviorSaveHistoryOnExit, SIGNAL(toggled(bool)), SLOT(setHistorySaveEnabled(bool)));
     connect(m_actions.settingsBehaviorSaveVariablesOnExit, SIGNAL(toggled(bool)), SLOT(setVariableSaveEnabled(bool)));
+    connect(m_actions.settingsBehaviorSaveWindowPositionOnExit, SIGNAL(toggled(bool)), SLOT(setWindowPositionSaveEnabled(bool)));
     connect(m_actions.settingsBehaviorSyntaxHighlighting, SIGNAL(toggled(bool)), SLOT(setSyntaxHighlightingEnabled(bool)));
     connect(m_actions.settingsBehaviorDigitGrouping, SIGNAL(toggled(bool)), SLOT(setDigitGroupingEnabled(bool)));
     connect(m_actions.settingsBehaviorLeaveLastExpression, SIGNAL(toggled(bool)), SLOT(setLeaveLastExpressionEnabled(bool)));
@@ -923,6 +928,7 @@ void MainWindow::applySettings()
     }
 
     m_actions.settingsBehaviorLeaveLastExpression->setChecked(m_settings->leaveLastExpression);
+    m_actions.settingsBehaviorSaveWindowPositionOnExit->setChecked(m_settings->windowPositionSave);
 
     if (m_settings->variableSave) {
         m_actions.settingsBehaviorSaveVariablesOnExit->setChecked(true);
@@ -1060,7 +1066,11 @@ void MainWindow::saveSettings()
         }
     }
 
-    m_settings->windowPosition = pos();
+    if (m_settings->windowPositionSave)
+        m_settings->windowPosition = pos();
+    else
+        m_settings->windowPosition = QPoint(0, 0);
+
     m_settings->windowSize = size();
     m_settings->windowState = saveState();
     m_settings->displayFont = m_widgets.display->font().toString();
@@ -1472,6 +1482,11 @@ void MainWindow::setLeaveLastExpressionEnabled(bool b)
 void MainWindow::setVariableSaveEnabled(bool b)
 {
     m_settings->variableSave = b;
+}
+
+void MainWindow::setWindowPositionSaveEnabled(bool b)
+{
+    m_settings->windowPositionSave = b;
 }
 
 void MainWindow::setAutoCompletionEnabled(bool b)
