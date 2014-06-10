@@ -613,7 +613,9 @@ _outfixpdec(
   if (digits <= 0)
     /* underflow */
     return IOConversionUnderflow;
-  float_round(x, x, digits, TONEAREST);
+  if (float_round(x, x, digits, TONEAREST) != TRUE)
+    /* float_round() can err if the number contains too many digits */
+    return float_geterror();
   _setfndesc(n, x);
   return desc2str(tokens, n, scale);
 }
