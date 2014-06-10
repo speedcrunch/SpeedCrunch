@@ -145,6 +145,7 @@ private slots:
     void setSystemTrayIconEnabled(bool);
     void setVariableSaveEnabled(bool);
     void setVariablesDockVisible(bool);
+    void setWindowPositionSaveEnabled(bool);
     void setWidgetsDirection();
     void showAboutDialog();
     void showStateLabel(const QString&);
@@ -252,6 +253,7 @@ private:
         QAction* settingsAngleUnitDegree;
         QAction* settingsBehaviorSaveHistoryOnExit;
         QAction* settingsBehaviorSaveVariablesOnExit;
+        QAction* settingsBehaviorSaveWindowPositionOnExit;
         QAction* settingsBehaviorPartialResults;
         QAction* settingsBehaviorAutoCompletion;
         QAction* settingsBehaviorSyntaxHighlighting;

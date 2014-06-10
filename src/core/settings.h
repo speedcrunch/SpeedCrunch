@@ -52,6 +52,7 @@ public:
     bool variableSave;
     bool windowAlwaysOnTop;
     bool autoResultToClipboard;
+    bool windowPositionSave;
 
     bool constantsDockVisible;
     bool functionsDockVisible;

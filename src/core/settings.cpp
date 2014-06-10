@@ -88,6 +88,7 @@ void Settings::load()
     digitGrouping = settings->value(key + QLatin1String("DigitGrouping"), false).toBool();
     systemTrayIconVisible = settings->value(key + QLatin1String("SystemTrayIconVisible"), false).toBool();
     autoResultToClipboard = settings->value(key + QLatin1String("AutoResultToClipboard"), false).toBool();
+    windowPositionSave = settings->value(key + QLatin1String("WindowPositionSave"), true).toBool();
 
     key = KEY + QLatin1String("/Format/");
 
@@ -203,6 +204,7 @@ void Settings::save()
     settings->setValue(key + QLatin1String("DigitGrouping"), digitGrouping);
     settings->setValue(key + QLatin1String("AutoResultToClipboard"), autoResultToClipboard);
     settings->setValue(key + QLatin1String("Language"), language);
+    settings->setValue(key + QLatin1String("WindowPositionSave"), windowPositionSave);
 
     settings->setValue(key + QLatin1String("AngleMode"), QString(QChar(angleUnit)));
 
