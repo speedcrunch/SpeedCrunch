@@ -37,6 +37,9 @@ static int eval_new_failed_tests = 0;
 #define CHECK_EVAL(x,y) checkEval(__FILE__,__LINE__,#x,x,y)
 #define CHECK_EVAL_KNOWN_ISSUE(x,y,n) checkEval(__FILE__,__LINE__,#x,x,y,n)
 #define CHECK_EVAL_PRECISE(x,y) checkEvalPrecise(__FILE__,__LINE__,#x,x,y)
+#define CHECK_EVAL_FAIL(x) checkEval(__FILE__,__LINE__,#x,x,"",0,true)
+#define CHECK_USERFUNC_SET(x) checkEval(__FILE__,__LINE__,#x,x,"NaN")
+#define CHECK_USERFUNC_SET_FAIL(x) checkEval(__FILE__,__LINE__,#x,x,"",0,true)
 
 static void checkAutoFix(const char* file, int line, const char* msg, const QString& expr, const QString& fixed)
 {
@@ -65,7 +68,7 @@ static void checkDivisionByZero(const char* file, int line, const char* msg, con
     }
 }
 
-static void checkEval(const char* file, int line, const char* msg, const QString& expr, const char* expected, int issue = 0)
+static void checkEval(const char* file, int line, const char* msg, const QString& expr, const char* expected, int issue = 0, bool shouldFail = false)
 {
     ++eval_total_tests;
 
@@ -73,13 +76,16 @@ static void checkEval(const char* file, int line, const char* msg, const QString
     HNumber rn = eval->evalUpdateAns();
 
     if (!eval->error().isEmpty()) {
-        ++eval_failed_tests;
-        cerr << "[Line " << line << "]\t:" << msg << "  Error: " << qPrintable(eval->error()) << endl;
+        if (!shouldFail) {
+            ++eval_failed_tests;
+            cerr << "[Line " << line << "]\t:" << msg << "  Error: " << qPrintable(eval->error()) << endl;
+        }
     } else {
         char* result = HMath::format(rn, 'f');
-        if (strcmp(result, expected)) {
+        if (shouldFail || strcmp(result, expected)) {
             ++eval_failed_tests;
-            cerr << "[Line " << line << "]\t" << msg << "\tResult: " << result << "\tExpected: " << expected;
+            cerr << "[Line " << line << "]\t" << msg << "\tResult: " << result;
+            cerr << "\tExpected: " << (shouldFail ? "should fail" : expected);
             if (issue)
                 cerr << "\t[ISSUE " << issue << "]";
             else {
@@ -541,6 +547,68 @@ void test_comments()
     CHECK_EVAL("ncr(3;3) ? this is because foo",  "1");
 }
 
+void test_user_functions()
+{
+    // Check user functions can be defined and used
+    CHECK_USERFUNC_SET("func1(a;b) = a * b + 10");
+    CHECK_EVAL("func1(2;5)", "20"); // = 2 * 5 + 10
+    // Check some expected error conditions
+    CHECK_EVAL_FAIL("func1()");
+    CHECK_EVAL_FAIL("func1(2)");
+    CHECK_EVAL_FAIL("func1(2;5;1)");
+
+    // Check user functions can call other user functions
+    CHECK_USERFUNC_SET("func2(a;b) = func1(a;b) - 10");
+    CHECK_EVAL("func2(2;5)", "10"); // = (2 * 5 + 10) - 10
+
+    // Check user functions can be redefined
+    CHECK_USERFUNC_SET("func2(a;b) = 10 + func1(a;b)");
+    CHECK_EVAL("func2(2;5)", "30"); // = 10 + (2 * 5 + 10)
+
+    // Check user functions can refer to other user functions not defined
+    CHECK_USERFUNC_SET("func2(a;b) = 10 * a + func3(a;b)");
+    CHECK_EVAL_FAIL("func2(2;5)");
+    CHECK_USERFUNC_SET("func3(a;b) = a - b");
+    CHECK_EVAL("func2(2;5)", "17"); // = 10 * 2 + (2 - 5)
+
+    // Check user functions can call builtin functions
+    CHECK_USERFUNC_SET("func2(a;b) = sum(func1(a;b);5)");
+    CHECK_EVAL("func2(2;5)", "25"); // = sum((2 * 5 + 10);5)
+
+    // Check recursive user functions are not allowed
+    CHECK_USERFUNC_SET("func_r(a) = a * func_r(a)");
+    CHECK_EVAL_FAIL("func_r(1)");
+    CHECK_USERFUNC_SET("func_r1(a) = a * func_r2(a)");
+    CHECK_USERFUNC_SET("func_r2(a) = a + func_r1(a)");
+    CHECK_EVAL_FAIL("func_r1(1)");
+
+    // Check user functions can refer to user variables
+    CHECK_USERFUNC_SET("func1(a;b) = a * b - var1");
+    CHECK_EVAL_FAIL("func1(2;5)");
+    CHECK_EVAL("var1 = 5", "5");
+    CHECK_EVAL("func1(2;5)", "5");  // = 2 * 5 - 5
+
+    // Check conflicts between the names of user functions arguments and user variables
+    CHECK_EVAL("arg1 = 10", "10");
+    CHECK_USERFUNC_SET("func1(arg1;arg2) = arg1 * arg2");
+    CHECK_EVAL("func1(2;5)", "10"); // = 2 * 5 (not 10 * 5)
+
+    // Check user functions names can not mask builtin functions
+    CHECK_USERFUNC_SET_FAIL("sum(a;b) = a * b");
+
+    // Check user functions names can not mask user variables
+    CHECK_EVAL("var1 = 5", "5");
+    CHECK_USERFUNC_SET_FAIL("var1(a;b) = a * b");
+
+    // Check user functions can take no argument
+    CHECK_EVAL("func1() = 2 * 10", "20");
+    // NOTE: we use CHECK_EVAL to define the function, because its result is known at definition
+    //       time. CHECK_USERFUNC_SET expects NaN, which is what is returned when the function body
+    //       contains at least one component whose value can not be known at definition time
+    //       (e.g., reference to user function arguments or to user/builtin functions).
+    CHECK_EVAL("func1()", "20");    // = 2 * 5
+}
+
 int main(int argc, char* argv[])
 {
     QCoreApplication app(argc, argv);
@@ -570,6 +638,8 @@ int main(int argc, char* argv[])
     test_auto_fix_untouch();
 
     test_comments();
+
+    test_user_functions();
 
     cerr << eval_total_tests  << " total, " << eval_failed_tests << " failed";
     if (eval_failed_tests)

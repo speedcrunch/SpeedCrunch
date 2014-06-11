@@ -193,7 +193,7 @@ void Editor::setAutoCalcEnabled(bool enable)
 
 void Editor::appendHistory(const QString& expression, const QString& result)
 {
-    if (expression.isEmpty() || result.isEmpty())
+    if (expression.isEmpty())
         return;
 
     m_history.append(expression);
@@ -404,6 +404,19 @@ void Editor::triggerAutoComplete()
     vchoices.sort();
     choices += vchoices;
 
+    // Find matches in user functions.
+    QStringList ufchoices;
+    QList<Evaluator::UserFunctionDescr> userFunctions = m_evaluator->getUserFunctions();
+    for (int i = 0; i < userFunctions.count(); ++i)
+        if (userFunctions.at(i).name.startsWith(id, Qt::CaseInsensitive))
+            ufchoices.append(QString("%1:User function").arg(userFunctions.at(i).name));
+    ufchoices.sort();
+    choices += ufchoices;
+
+    // TODO: if we are assigning a user function, find matches in its arguments names and
+    //       replace variables names that collide. But we cannot know if we are assigning
+    //       a user function without evaluating the expression (a token scan will not be enough).
+
     // No match, don't bother with completion.
     if (!choices.count())
         return;
@@ -441,7 +454,7 @@ void Editor::autoComplete(const QString& item)
     setTextCursor(cursor);
     insert(str.at(0));
     blockSignals(false);
-    if (FunctionRepo::instance()->find(str.at(0))) {
+    if (FunctionRepo::instance()->find(str.at(0)) || m_evaluator->hasUserFunction(str.at(0))) {
         insert(QString::fromLatin1("()"));
         cursor = textCursor();
         cursor.movePosition(QTextCursor::PreviousCharacter);
@@ -489,8 +502,13 @@ void Editor::autoCalc()
     const HNumber num = m_evaluator->evalNoAssign();
 
     if (m_evaluator->error().isEmpty()) {
-        const QString message = tr("Current result: <b>%1</b>").arg(NumberFormatter::format(num));
-        emit autoCalcEnabled(message);
+        if (num.isNan() && m_evaluator->isUserFunctionAssign()) {
+            // Result is not always available when assigning a user function.
+            emit autoCalcDisabled();
+        } else {
+            const QString message = tr("Current result: <b>%1</b>").arg(NumberFormatter::format(num));
+            emit autoCalcEnabled(message);
+        }
     } else
         emit autoCalcEnabled(m_evaluator->error());
 }
@@ -541,8 +559,14 @@ void Editor::autoCalcSelection()
     const HNumber num = m_evaluator->evalNoAssign();
 
     if (m_evaluator->error().isEmpty()) {
-        const QString message = tr("Selection result: <b>%1</b>").arg(NumberFormatter::format(num));
-        emit autoCalcEnabled(message);
+        if (num.isNan() && m_evaluator->isUserFunctionAssign()) {
+            // Result is not always available when assigning a user function.
+            const QString message = tr("Selection result: n/a");
+            emit autoCalcEnabled(message);
+        } else {
+            const QString message = tr("Selection result: <b>%1</b>").arg(NumberFormatter::format(num));
+            emit autoCalcEnabled(message);
+        }
     } else
         emit autoCalcEnabled(m_evaluator->error());
 }
@@ -893,8 +917,8 @@ void EditorCompletion::showCompletion(const QStringList& choices)
             maxDescriptionLength = length;
     }
 
-    m_popup->sortItems(0, Qt::AscendingOrder);
     m_popup->sortItems(1, Qt::AscendingOrder);
+    m_popup->sortItems(0, Qt::AscendingOrder);
     m_popup->setCurrentItem(m_popup->topLevelItem(0));
 
     // Size of the pop-up.

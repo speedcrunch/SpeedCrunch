@@ -40,6 +40,7 @@
 #include "gui/syntaxhighlighter.h"
 #include "gui/tipwidget.h"
 #include "gui/variablesdock.h"
+#include "gui/userfunctionsdock.h"
 #include "math/floatconfig.h"
 
 #include <QLatin1String>
@@ -131,6 +132,7 @@ void MainWindow::createActions()
     m_actions.viewStatusBar = new QAction(this);
     m_actions.viewVariables = new QAction(this);
     m_actions.viewBitfield = new QAction(this);
+    m_actions.viewUserFunctions = new QAction(this);
     m_actions.settingsAngleUnitDegree = new QAction(this);
     m_actions.settingsAngleUnitRadian = new QAction(this);
     m_actions.settingsBehaviorAlwaysOnTop = new QAction(this);
@@ -141,6 +143,7 @@ void MainWindow::createActions()
     m_actions.settingsBehaviorPartialResults = new QAction(this);
     m_actions.settingsBehaviorSaveHistoryOnExit = new QAction(this);
     m_actions.settingsBehaviorSaveVariablesOnExit = new QAction(this);
+    m_actions.settingsBehaviorSaveUserFunctionsOnExit = new QAction(this);
     m_actions.settingsBehaviorSaveWindowPositionOnExit = new QAction(this);
     m_actions.settingsBehaviorSyntaxHighlighting = new QAction(this);
     m_actions.settingsBehaviorDigitGrouping = new QAction(this);
@@ -183,6 +186,7 @@ void MainWindow::createActions()
     m_actions.settingsBehaviorPartialResults->setCheckable(true);
     m_actions.settingsBehaviorSaveHistoryOnExit->setCheckable(true);
     m_actions.settingsBehaviorSaveVariablesOnExit->setCheckable(true);
+    m_actions.settingsBehaviorSaveUserFunctionsOnExit->setCheckable(true);
     m_actions.settingsBehaviorSaveWindowPositionOnExit->setCheckable(true);
     m_actions.settingsBehaviorSyntaxHighlighting->setCheckable(true);
     m_actions.settingsBehaviorDigitGrouping->setCheckable(true);
@@ -218,6 +222,7 @@ void MainWindow::createActions()
     m_actions.viewStatusBar->setCheckable(true);
     m_actions.viewVariables->setCheckable(true);
     m_actions.viewBitfield->setCheckable(true);
+    m_actions.viewUserFunctions->setCheckable(true);
 
     m_actions.settingsDisplayColorSchemeStandard->setData(SyntaxHighlighter::Standard);
     m_actions.settingsDisplayColorSchemeSublime->setData(SyntaxHighlighter::Sublime);
@@ -313,6 +318,7 @@ void MainWindow::setActionsText()
     m_actions.viewStatusBar->setText(MainWindow::tr("&Status Bar"));
     m_actions.viewVariables->setText(MainWindow::tr("&Variables"));
     m_actions.viewBitfield->setText(MainWindow::tr("Bitfield"));
+    m_actions.viewUserFunctions->setText(MainWindow::tr("Use&r Functions"));
 
     m_actions.settingsAngleUnitDegree->setText(MainWindow::tr("&Degree"));
     m_actions.settingsAngleUnitRadian->setText(MainWindow::tr("&Radian"));
@@ -323,6 +329,7 @@ void MainWindow::setActionsText()
     m_actions.settingsBehaviorPartialResults->setText(MainWindow::tr("&Partial Results"));
     m_actions.settingsBehaviorSaveHistoryOnExit->setText(MainWindow::tr("Save &History on Exit"));
     m_actions.settingsBehaviorSaveVariablesOnExit->setText(MainWindow::tr("Save &Variables on Exit"));
+    m_actions.settingsBehaviorSaveUserFunctionsOnExit->setText(MainWindow::tr("Save User &Functions on Exit"));
     m_actions.settingsBehaviorSaveWindowPositionOnExit->setText(MainWindow::tr("Save &Window Positon on Exit"));
     m_actions.settingsBehaviorSyntaxHighlighting->setText(MainWindow::tr("Syntax &Highlighting"));
     m_actions.settingsBehaviorDigitGrouping->setText(MainWindow::tr("Digit &Grouping"));
@@ -407,7 +414,7 @@ void MainWindow::createActionShortcuts()
     m_actions.viewConstants->setShortcut(Qt::CTRL + Qt::Key_2);
     m_actions.viewFullScreenMode->setShortcut(Qt::Key_F11);
     m_actions.viewFunctions->setShortcut(Qt::CTRL + Qt::Key_3);
-    m_actions.viewHistory->setShortcut(Qt::CTRL + Qt::Key_5);
+    m_actions.viewHistory->setShortcut(Qt::CTRL + Qt::Key_7);
     m_actions.viewFormulaBook->setShortcut(Qt::CTRL + Qt::Key_1);
 #ifndef Q_OS_MAC
     if (shouldAllowHiddenMenuBar())
@@ -415,6 +422,7 @@ void MainWindow::createActionShortcuts()
 #endif
     m_actions.viewStatusBar->setShortcut(Qt::CTRL + Qt::Key_B);
     m_actions.viewVariables->setShortcut(Qt::CTRL + Qt::Key_4);
+    m_actions.viewUserFunctions->setShortcut(Qt::CTRL + Qt::Key_5);
     m_actions.settingsAngleUnitDegree->setShortcut(Qt::Key_F10);
     m_actions.settingsAngleUnitRadian->setShortcut(Qt::Key_F9);
     m_actions.settingsResultFormatGeneral->setShortcut(Qt::Key_F1);
@@ -457,8 +465,9 @@ void MainWindow::createMenus()
     m_menus.view->addAction(m_actions.viewConstants);
     m_menus.view->addAction(m_actions.viewFunctions);
     m_menus.view->addAction(m_actions.viewVariables);
-    m_menus.view->addAction(m_actions.viewHistory);
+    m_menus.view->addAction(m_actions.viewUserFunctions);
     m_menus.view->addAction(m_actions.viewBitfield);
+    m_menus.view->addAction(m_actions.viewHistory);
     m_menus.view->addSeparator();
     m_menus.view->addAction(m_actions.viewStatusBar);
 #ifndef Q_OS_MAC
@@ -509,6 +518,7 @@ void MainWindow::createMenus()
     m_menus.behavior = m_menus.settings->addMenu("");
     m_menus.behavior->addAction(m_actions.settingsBehaviorSaveHistoryOnExit);
     m_menus.behavior->addAction(m_actions.settingsBehaviorSaveVariablesOnExit);
+    m_menus.behavior->addAction(m_actions.settingsBehaviorSaveUserFunctionsOnExit);
     m_menus.behavior->addAction(m_actions.settingsBehaviorSaveWindowPositionOnExit);
     m_menus.behavior->addSeparator();
     m_menus.behavior->addAction(m_actions.settingsBehaviorPartialResults);
@@ -656,6 +666,8 @@ void MainWindow::createBookDock()
         tabifyDockWidget(m_docks.functions, m_docks.book);
     else if (m_docks.variables)
         tabifyDockWidget(m_docks.variables, m_docks.book);
+    else if (m_docks.userFunctions)
+        tabifyDockWidget(m_docks.userFunctions, m_docks.book);
     else if (m_docks.history)
         tabifyDockWidget(m_docks.history, m_docks.book);
     else if (m_docks.constants)
@@ -684,6 +696,8 @@ void MainWindow::createConstantsDock()
         tabifyDockWidget(m_docks.functions, m_docks.constants);
     else if (m_docks.variables)
         tabifyDockWidget(m_docks.variables, m_docks.constants);
+    else if (m_docks.userFunctions)
+        tabifyDockWidget(m_docks.userFunctions, m_docks.constants);
     else if (m_docks.history)
         tabifyDockWidget(m_docks.history, m_docks.constants);
     else if (m_docks.book)
@@ -709,6 +723,8 @@ void MainWindow::createFunctionsDock()
         tabifyDockWidget(m_docks.history, m_docks.functions);
     else if (m_docks.variables)
         tabifyDockWidget(m_docks.variables, m_docks.functions);
+    else if (m_docks.userFunctions)
+        tabifyDockWidget(m_docks.userFunctions, m_docks.functions);
     else if (m_docks.constants)
         tabifyDockWidget(m_docks.constants, m_docks.functions);
     else if (m_docks.book)
@@ -738,6 +754,8 @@ void MainWindow::createHistoryDock()
         tabifyDockWidget(m_docks.functions, m_docks.history);
     else if (m_docks.variables)
         tabifyDockWidget(m_docks.variables, m_docks.history);
+    else if (m_docks.userFunctions)
+        tabifyDockWidget(m_docks.userFunctions, m_docks.history);
     else if (m_docks.constants)
         tabifyDockWidget(m_docks.constants, m_docks.history);
     else if (m_docks.book)
@@ -764,6 +782,8 @@ void MainWindow::createVariablesDock()
 
     if (m_docks.functions)
         tabifyDockWidget(m_docks.functions, m_docks.variables);
+    else if (m_docks.userFunctions)
+        tabifyDockWidget(m_docks.userFunctions, m_docks.variables);
     else if (m_docks.history)
         tabifyDockWidget(m_docks.history, m_docks.variables);
     else if (m_docks.constants)
@@ -775,6 +795,36 @@ void MainWindow::createVariablesDock()
     m_docks.variables->raise();
 
     m_settings->variablesDockVisible = true;
+}
+
+void MainWindow::createUserFunctionsDock()
+{
+    m_docks.userFunctions = new UserFunctionsDock(this);
+    m_docks.userFunctions->setObjectName("UserFunctionsDock");
+    m_docks.userFunctions->installEventFilter(this);
+    m_docks.userFunctions->setAllowedAreas(Qt::AllDockWidgetAreas);
+    addDockWidget(Qt::RightDockWidgetArea, m_docks.userFunctions);
+
+    connect(m_docks.userFunctions, SIGNAL(userFunctionSelected(const QString&)), SLOT(insertUserFunctionIntoEditor(const QString&)));
+    connect(this, SIGNAL(radixCharacterChanged()), m_docks.userFunctions, SLOT(handleRadixCharacterChange()));
+
+    m_docks.userFunctions->updateList();
+
+    if (m_docks.functions)
+        tabifyDockWidget(m_docks.functions, m_docks.userFunctions);
+    else if (m_docks.variables)
+        tabifyDockWidget(m_docks.variables, m_docks.userFunctions);
+    else if (m_docks.history)
+        tabifyDockWidget(m_docks.history, m_docks.userFunctions);
+    else if (m_docks.constants)
+        tabifyDockWidget(m_docks.constants, m_docks.userFunctions);
+    else if (m_docks.book)
+        tabifyDockWidget(m_docks.book, m_docks.userFunctions);
+
+    m_docks.userFunctions->show();
+    m_docks.userFunctions->raise();
+
+    m_settings->userFunctionsDockVisible = true;
 }
 
 void MainWindow::createFixedConnections()
@@ -805,6 +855,7 @@ void MainWindow::createFixedConnections()
     connect(m_actions.viewStatusBar, SIGNAL(toggled(bool)), SLOT(setStatusBarVisible(bool)));
     connect(m_actions.viewVariables, SIGNAL(toggled(bool)), SLOT(setVariablesDockVisible(bool)));
     connect(m_actions.viewBitfield, SIGNAL(toggled(bool)), SLOT(setBitfieldVisible(bool)));
+    connect(m_actions.viewUserFunctions, SIGNAL(toggled(bool)), SLOT(setUserFunctionsDockVisible(bool)));
 
     connect(m_actions.settingsAngleUnitDegree, SIGNAL(triggered()), SLOT(setAngleModeDegree()));
     connect(m_actions.settingsAngleUnitRadian, SIGNAL(triggered()), SLOT(setAngleModeRadian()));
@@ -816,6 +867,7 @@ void MainWindow::createFixedConnections()
     connect(m_actions.settingsBehaviorPartialResults, SIGNAL(toggled(bool)), SLOT(setAutoCalcEnabled(bool)));
     connect(m_actions.settingsBehaviorSaveHistoryOnExit, SIGNAL(toggled(bool)), SLOT(setHistorySaveEnabled(bool)));
     connect(m_actions.settingsBehaviorSaveVariablesOnExit, SIGNAL(toggled(bool)), SLOT(setVariableSaveEnabled(bool)));
+    connect(m_actions.settingsBehaviorSaveUserFunctionsOnExit, SIGNAL(toggled(bool)), SLOT(setUserFunctionSaveEnabled(bool)));
     connect(m_actions.settingsBehaviorSaveWindowPositionOnExit, SIGNAL(toggled(bool)), SLOT(setWindowPositionSaveEnabled(bool)));
     connect(m_actions.settingsBehaviorSyntaxHighlighting, SIGNAL(toggled(bool)), SLOT(setSyntaxHighlightingEnabled(bool)));
     connect(m_actions.settingsBehaviorDigitGrouping, SIGNAL(toggled(bool)), SLOT(setDigitGroupingEnabled(bool)));
@@ -900,6 +952,7 @@ void MainWindow::applySettings()
     m_actions.viewHistory->setChecked(m_settings->historyDockVisible);
     m_actions.viewVariables->setChecked(m_settings->variablesDockVisible);
     m_actions.viewBitfield->setChecked(m_settings->bitfieldVisible);
+    m_actions.viewUserFunctions->setChecked(m_settings->userFunctionsDockVisible);
 
     resize(m_settings->windowSize);
 
@@ -933,6 +986,11 @@ void MainWindow::applySettings()
     if (m_settings->variableSave) {
         m_actions.settingsBehaviorSaveVariablesOnExit->setChecked(true);
         restoreVariables();
+    }
+
+    if (m_settings->userFunctionSave) {
+        m_actions.settingsBehaviorSaveUserFunctionsOnExit->setChecked(true);
+        restoreUserFunctions();
     }
 
     checkInitialResultFormat();
@@ -1066,6 +1124,16 @@ void MainWindow::saveSettings()
         }
     }
 
+    if (m_settings->userFunctionSave) {
+        QList<Evaluator::UserFunctionDescr> userFunctions = m_evaluator->getUserFunctions();
+        for (int i = 0; i < userFunctions.count(); ++i) {
+            Evaluator::UserFunctionDescr descr = userFunctions.at(i);
+            QStringList funcParts;
+            funcParts << descr.name << descr.arguments << descr.expression;
+            m_settings->userFunctions.append(funcParts);
+        }
+    }
+
     m_settings->windowPosition = m_settings->windowPositionSave ? pos() : QPoint(0, 0);
     m_settings->windowSize = size();
     m_settings->windowState = saveState();
@@ -1098,6 +1166,7 @@ MainWindow::MainWindow()
     m_docks.constants = 0;
     m_docks.functions = 0;
     m_docks.variables = 0;
+    m_docks.userFunctions = 0;
 
     m_status.angleUnit = 0;
     m_status.resultFormat = 0;
@@ -1119,6 +1188,8 @@ MainWindow::~MainWindow()
         deleteConstantsDock();
     if (m_docks.variables)
         deleteVariablesDock();
+    if (m_docks.userFunctions)
+        deleteUserFunctionsDock();
     if (m_docks.functions)
         deleteFunctionsDock();
     if (m_docks.history)
@@ -1211,6 +1282,14 @@ void MainWindow::deleteVariables()
         m_docks.variables->updateList();
 }
 
+void MainWindow::deleteUserFunctions()
+{
+    m_evaluator->unsetAllUserFunctions();
+
+    if (m_settings->userFunctionsDockVisible)
+        m_docks.userFunctions->updateList();
+}
+
 void MainWindow::setResultPrecision2Digits()
 {
     setResultPrecision(2);
@@ -1277,7 +1356,7 @@ void MainWindow::showSessionLoadDialog()
 
     // Version of the format.
     QString version = stream.readLine();
-    if (version != "0.10") {
+    if (version != "0.10" && version != "0.12") {
         QMessageBox::critical(this, tr("Error"), errMsg.arg(fname));
         return;
     }
@@ -1306,6 +1385,7 @@ void MainWindow::showSessionLoadDialog()
     if (button == QMessageBox::No) {
         m_widgets.display->clear();
         deleteVariables();
+        deleteUserFunctions();
         clearHistory();
     }
 
@@ -1348,12 +1428,46 @@ void MainWindow::showSessionLoadDialog()
             QMessageBox::critical(this, tr("Error"), errMsg.arg(fname));
             return;
         }
+
+        // Only allow the "ans" built-in variable to be set.
+        Evaluator::Variable::Type type = m_evaluator->isBuiltInVariable(var) ?
+            Evaluator::Variable::BuiltIn : Evaluator::Variable::UserDefined;
+        if (type == Evaluator::Variable::BuiltIn && var != "ans")
+            continue;
+
         HNumber num(val.toLatin1().data());
         if (num != HMath::nan())
-            m_evaluator->setVariable(var, num);
+            m_evaluator->setVariable(var, num, type);
+    }
+
+    if (m_settings->variablesDockVisible)
+        m_docks.variables->updateList();
+
+    if (version == "0.12") {
+        // User functions.
+        int noUsrFuncs = stream.readLine().toInt(&ok);
+        if (ok == false || noUsrFuncs < 0) {
+            QMessageBox::critical(this, tr("Error"), errMsg.arg(fname));
+            return;
+        }
+        for (int i = 0; i < noUsrFuncs; i++) {
+            QString name = stream.readLine();
+            QString args = stream.readLine();
+            QString expr = stream.readLine();
+            if (name.isNull() || args.isNull() || expr.isNull()) {
+                QMessageBox::critical(this, tr("Error"), errMsg.arg(fname));
+                return;
+            }
+            Evaluator::UserFunctionDescr descr(name, args.split(";"), expr);
+            m_evaluator->setUserFunction(descr);
+        }
+
+        if (m_settings->userFunctionsDockVisible)
+            m_docks.userFunctions->updateList();
     }
 
     file.close();
+
 }
 
 void MainWindow::showSessionImportDialog()
@@ -1384,6 +1498,7 @@ void MainWindow::showSessionImportDialog()
     if (button == QMessageBox::No) {
         m_widgets.display->clear();
         deleteVariables();
+        deleteUserFunctions();
         clearHistory();
     }
 
@@ -1412,12 +1527,19 @@ void MainWindow::showSessionImportDialog()
             }
         } else {
             m_widgets.display->append(str, result);
-            char* num = HMath::format(result, 'e', DECPRECISION);
-            m_widgets.editor->appendHistory(str, num);
-            free(num);
-            m_widgets.editor->setAnsAvailable(true);
+            if (result.isNan()) {
+                m_widgets.editor->appendHistory(str, "");
+            } else {
+                char* num = HMath::format(result, 'e', DECPRECISION);
+                m_widgets.editor->appendHistory(str, num);
+                free(num);
+                m_widgets.editor->setAnsAvailable(true);
+            }
+
             if (m_settings->variablesDockVisible)
                 m_docks.variables->updateList();
+            if (m_settings->userFunctionsDockVisible)
+                m_docks.userFunctions->updateList();
             if (m_settings->historyDockVisible) {
                 HistoryWidget* history = qobject_cast<HistoryWidget*>(m_docks.history->widget());
                 history->append(str);
@@ -1427,7 +1549,8 @@ void MainWindow::showSessionImportDialog()
             m_widgets.editor->selectAll();
             m_widgets.editor->stopAutoCalc();
             m_widgets.editor->stopAutoComplete();
-            m_conditions.autoAns = true;
+            if(!result.isNan())
+                m_conditions.autoAns = true;
         }
 
         exp = stream.readLine();
@@ -1478,6 +1601,11 @@ void MainWindow::setLeaveLastExpressionEnabled(bool b)
 void MainWindow::setVariableSaveEnabled(bool b)
 {
     m_settings->variableSave = b;
+}
+
+void MainWindow::setUserFunctionSaveEnabled(bool b)
+{
+    m_settings->userFunctionSave = b;
 }
 
 void MainWindow::setWindowPositionSaveEnabled(bool b)
@@ -1571,16 +1699,54 @@ void MainWindow::saveSession()
     QTextStream stream(&file);
 
     // Format version.
-    stream << "0.10" << "\n";
+    stream << "0.12" << "\n";
 
+#if 1
+    QStringList history = m_widgets.editor->history();
+    QStringList historyResults = m_widgets.editor->historyResults();
+
+    Q_ASSERT(history.count() == historyResults.count());
+
+    // Number of calculations.
+    stream << history.count() << "\n";
+
+    // Expressions and results.
+    for (int i = 0; i < history.count(); ++i) {
+        stream << history.at(i) << QLatin1String("\n");
+        stream << historyResults.at(i) << QLatin1String("\n");
+    }
+#else
     // Number of calculations.
     stream << m_widgets.display->count() << "\n";
 
     // Expressions and results.
-    QString history = m_widgets.display->toPlainText();
-    history.replace(QLatin1String("= "), QLatin1String(""));
-    history.replace(QLatin1String("\n\n"), QLatin1String("\n"));
-    stream << history;
+    QStringList historyLines = m_widgets.display->toPlainText().split(QLatin1String("\n"));
+    int exprCount = 0;
+    for (int i = 0; i < historyLines.count(); ++i) {
+        if (historyLines.at(i).isEmpty())
+            continue;
+
+        // If the expression has a result, just remove the equal sign prefix,
+        // otherwise, export the result as an empty line.
+        if (i + 1 < historyLines.count() && !historyLines.at(i + 1).isEmpty()) {
+            // Expression.
+            stream << historyLines.at(i) << QLatin1String("\n");
+            ++i;
+            // Result.
+            const QString &result = historyLines.at(i);
+            if (result.startsWith(QLatin1String("= ")))
+                stream << result.mid(2) << QLatin1String("\n");
+            else
+                stream << result << QLatin1String("\n");
+        } else {
+            // User function assignment, so there is no result.
+            stream << historyLines.at(i) << QLatin1String("\n\n");
+        }
+        ++exprCount;
+    }
+
+    Q_ASSERT(exprCount == m_widgets.display->count());
+#endif
 
     // Number of variables.
     QList<Evaluator::Variable> variables = m_evaluator->getUserDefinedVariablesPlusAns();
@@ -1592,6 +1758,16 @@ void MainWindow::saveSession()
         char* value = HMath::format(var.value);
         stream << var.name << "\n" << value << "\n";
         free(value);
+    }
+
+    // Number of user functions.
+    QList<Evaluator::UserFunctionDescr> userFunctions = m_evaluator->getUserFunctions();
+    stream << userFunctions.count() << "\n";
+
+    // User functions.
+    for (int i = 0; i < userFunctions.count(); ++i) {
+        Evaluator::UserFunctionDescr descr = userFunctions.at(i);
+        stream << descr.name << "\n" << descr.arguments.join(";") << "\n" << descr.expression << "\n";
     }
 
     file.close();
@@ -1699,6 +1875,7 @@ void MainWindow::showStateLabel(const QString& msg)
     m_widgets.state->setText(msg);
     m_widgets.state->adjustSize();
     m_widgets.state->show();
+    m_widgets.state->raise();
     const int height = m_widgets.state->height();
     QPoint pos = mapFromGlobal(m_widgets.editor->mapToGlobal(QPoint(0, -height)));
     m_widgets.state->move(pos);
@@ -1747,6 +1924,14 @@ bool MainWindow::eventFilter(QObject* o, QEvent* e)
     if (o == m_docks.variables) {
         if (e->type() == QEvent::Close) {
             deleteVariablesDock();
+            return true;
+        }
+        return false;
+    }
+
+    if (o == m_docks.userFunctions) {
+        if (e->type() == QEvent::Close) {
+            deleteUserFunctionsDock();
             return true;
         }
         return false;
@@ -1846,6 +2031,20 @@ void MainWindow::deleteVariablesDock()
     m_settings->variablesDockVisible = false;
 }
 
+void MainWindow::deleteUserFunctionsDock()
+{
+    Q_ASSERT(m_docks.userFunctions);
+
+    removeDockWidget(m_docks.userFunctions);
+    disconnect(m_docks.userFunctions);
+    m_docks.userFunctions->deleteLater();
+    m_docks.userFunctions = 0;
+    m_actions.viewUserFunctions->blockSignals(true);
+    m_actions.viewUserFunctions->setChecked(false);
+    m_actions.viewUserFunctions->blockSignals(false);
+    m_settings->userFunctionsDockVisible = false;
+}
+
 void MainWindow::setFunctionsDockVisible(bool b)
 {
     if (b)
@@ -1884,6 +2083,14 @@ void MainWindow::setVariablesDockVisible(bool b)
         createVariablesDock();
     else
         deleteVariablesDock();
+}
+
+void MainWindow::setUserFunctionsDockVisible(bool b)
+{
+    if (b)
+        createUserFunctionsDock();
+    else
+        deleteUserFunctionsDock();
 }
 
 #ifndef Q_OS_MAC
@@ -2084,6 +2291,20 @@ void MainWindow::restoreVariables()
     m_settings->variables.clear();
 }
 
+void MainWindow::restoreUserFunctions()
+{
+    for (int k = 0; k < m_settings->userFunctions.count(); ++k) {
+        QStringList funcParts = m_settings->userFunctions.at(k);
+        Evaluator::UserFunctionDescr descr(funcParts.first(), funcParts.mid(1, funcParts.size() - 2), funcParts.last());
+        m_evaluator->setUserFunction(descr);
+    }
+
+    if (m_docks.userFunctions)
+        m_docks.userFunctions->updateList();
+
+    m_settings->userFunctions.clear();
+}
+
 void MainWindow::restoreHistory()
 {
     if (m_settings->historyResults.count() != m_settings->history.count()) {
@@ -2120,23 +2341,32 @@ void MainWindow::evaluateEditorExpression()
         return;
     }
 
-    if (result.isNan())
+    if (m_evaluator->isUserFunctionAssign()) {
+        result = HMath::nan();
+    } else if (result.isNan())
         return;
 
     m_widgets.display->append(expr, result);
     m_widgets.display->scrollToBottom();
 
-    const char format = result.format() != 0 ? result.format() : 'e';
-    char* num = HMath::format(result, format, DECPRECISION);
-    m_widgets.editor->appendHistory(expr, num);
-    free(num);
-    m_widgets.editor->setAnsAvailable(true);
+    if (result.isNan()) {
+        m_widgets.editor->appendHistory(expr, "");
+    } else {
+        const char format = result.format() != 0 ? result.format() : 'e';
+        char* num = HMath::format(result, format, DECPRECISION);
+        m_widgets.editor->appendHistory(expr, num);
+        free(num);
+        m_widgets.editor->setAnsAvailable(true);
+    }
 
     if (m_settings->bitfieldVisible)
         m_widgets.bitField->updateBits(result);
 
     if (m_settings->variablesDockVisible)
         m_docks.variables->updateList();
+
+    if (m_settings->userFunctionsDockVisible)
+        m_docks.userFunctions->updateList();
 
     if (m_settings->historyDockVisible) {
         HistoryWidget* history = qobject_cast<HistoryWidget*>(m_docks.history->widget());
@@ -2153,7 +2383,8 @@ void MainWindow::evaluateEditorExpression()
 
     m_widgets.editor->stopAutoCalc();
     m_widgets.editor->stopAutoComplete();
-    m_conditions.autoAns = true;
+    if (!result.isNan())
+        m_conditions.autoAns = true;
 }
 
 void MainWindow::showSystemTrayMessage()
@@ -2255,6 +2486,10 @@ void MainWindow::handleSystemTrayIconActivation(QSystemTrayIcon::ActivationReaso
             m_docks.variables->hide();
             m_docks.variables->show();
         }
+        if (m_docks.userFunctions && m_docks.userFunctions->isFloating()) {
+            m_docks.userFunctions->hide();
+            m_docks.userFunctions->show();
+        }
         if (m_docks.constants && m_docks.constants->isFloating()) {
             m_docks.constants->hide();
             m_docks.constants->show();
@@ -2263,6 +2498,11 @@ void MainWindow::handleSystemTrayIconActivation(QSystemTrayIcon::ActivationReaso
 }
 
 void MainWindow::insertVariableIntoEditor(const QString& v)
+{
+    insertTextIntoEditor(v);
+}
+
+void MainWindow::insertUserFunctionIntoEditor(const QString& v)
 {
     insertTextIntoEditor(v);
 }

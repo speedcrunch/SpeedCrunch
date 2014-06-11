@@ -62,6 +62,8 @@ HEADERS += core/book.h \
            gui/tipwidget.h \
            gui/variablesdock.h \
            gui/variablelistwidget.h \
+           gui/userfunctionsdock.h \
+           gui/userfunctionlistwidget.h \
            gui/manualwindow.h \
            gui/mainwindow.h
 
@@ -90,6 +92,8 @@ SOURCES += main.cpp \
            gui/tipwidget.cpp \
            gui/variablesdock.cpp \
            gui/variablelistwidget.cpp \
+           gui/userfunctionsdock.cpp \
+           gui/userfunctionlistwidget.cpp \
            gui/mainwindow.cpp \
            gui/manualwindow.cpp \
            math/floatcommon.c \
