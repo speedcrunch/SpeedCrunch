@@ -21,7 +21,7 @@
 #define GUI_USERFUNCTIONLISTWIDGET_H
 
 #include <QtCore/QList>
-#include <QtGui/QWidget>
+#include <QWidget>
 
 class QEvent;
 class QKeyEvent;

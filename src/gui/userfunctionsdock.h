@@ -20,7 +20,7 @@
 #ifndef GUI_USERFUNCTIONSDOCK_H
 #define GUI_USERFUNCTIONSDOCK_H
 
-#include <QtGui/QDockWidget>
+#include <QDockWidget>
 
 class QTreeWidgetItem;
 class UserFunctionListWidget;

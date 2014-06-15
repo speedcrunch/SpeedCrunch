@@ -20,7 +20,7 @@
 #ifndef GUI_SYNTAXHIGHLIGHTER_H
 #define GUI_SYNTAXHIGHLIGHTER_H
 
-#include <QtGui/QSyntaxHighlighter>
+#include <QSyntaxHighlighter>
 
 class QPlainTextEdit;
 
