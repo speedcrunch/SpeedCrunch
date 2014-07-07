@@ -2285,7 +2285,7 @@
     <message>
         <location filename="../../gui/mainwindow.cpp" line="545"/>
         <source>Radix &amp;Character</source>
-        <translation>&amp;Dezimalkomma</translation>
+        <translation>&amp;Dezimaltrennzeichen</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="350"/>
