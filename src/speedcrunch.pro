@@ -35,8 +35,8 @@ win32-msvc*:LIBS += User32.lib
         target.path = "/bin"
         menu.path = "/share/applications"
         icon.path = "/share/pixmaps"
-        menu.files += resources/speedcrunch.png
-        icon.files += ../pkg/speedcrunch.desktop
+        icon.files += resources/speedcrunch.png
+        menu.files += ../pkg/speedcrunch.desktop
         INSTALLS += target icon menu
     }
 }
