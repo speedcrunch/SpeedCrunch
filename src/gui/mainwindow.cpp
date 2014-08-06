@@ -2399,8 +2399,10 @@ void MainWindow::showSystemTrayMessage()
 void MainWindow::clearTextEditSelection(QPlainTextEdit* edit)
 {
     QTextCursor cursor = edit->textCursor();
-    cursor.clearSelection();
-    edit->setTextCursor(cursor);
+    if (cursor.hasSelection()) {
+        cursor.clearSelection();
+        edit->setTextCursor(cursor);
+    }
 }
 
 void MainWindow::handleManualClosed()
