@@ -86,10 +86,12 @@ void Settings::load()
     variableSave = settings->value(key + QLatin1String("VariableSave"), true).toBool();
     userFunctionSave = settings->value(key + QLatin1String("UserFunctionSave"), true).toBool();
     syntaxHighlighting = settings->value(key + QLatin1String("SyntaxHighlighting"), true).toBool();
-    digitGrouping = settings->value(key + QLatin1String("DigitGrouping"), false).toBool();
     systemTrayIconVisible = settings->value(key + QLatin1String("SystemTrayIconVisible"), false).toBool();
     autoResultToClipboard = settings->value(key + QLatin1String("AutoResultToClipboard"), false).toBool();
     windowPositionSave = settings->value(key + QLatin1String("WindowPositionSave"), true).toBool();
+
+    digitGrouping = settings->value(key + QLatin1String("DigitGrouping"), 0).toInt();
+    digitGrouping = std::min(3, std::max(0, digitGrouping));
 
     key = KEY + QLatin1String("/Format/");
 
