@@ -146,7 +146,10 @@ void MainWindow::createActions()
     m_actions.settingsBehaviorSaveUserFunctionsOnExit = new QAction(this);
     m_actions.settingsBehaviorSaveWindowPositionOnExit = new QAction(this);
     m_actions.settingsBehaviorSyntaxHighlighting = new QAction(this);
-    m_actions.settingsBehaviorDigitGrouping = new QAction(this);
+    m_actions.settingsBehaviorDigitGroupingNone = new QAction(this);
+    m_actions.settingsBehaviorDigitGroupingOneSpace = new QAction(this);
+    m_actions.settingsBehaviorDigitGroupingTwoSpaces = new QAction(this);
+    m_actions.settingsBehaviorDigitGroupingThreeSpaces = new QAction(this);
     m_actions.settingsBehaviorAutoResultToClipboard = new QAction(this);
     m_actions.settingsDisplayColorSchemeStandard = new QAction(this);
     m_actions.settingsDisplayColorSchemeSublime = new QAction(this);
@@ -189,7 +192,14 @@ void MainWindow::createActions()
     m_actions.settingsBehaviorSaveUserFunctionsOnExit->setCheckable(true);
     m_actions.settingsBehaviorSaveWindowPositionOnExit->setCheckable(true);
     m_actions.settingsBehaviorSyntaxHighlighting->setCheckable(true);
-    m_actions.settingsBehaviorDigitGrouping->setCheckable(true);
+    m_actions.settingsBehaviorDigitGroupingNone->setCheckable(true);
+    m_actions.settingsBehaviorDigitGroupingNone->setData(0);
+    m_actions.settingsBehaviorDigitGroupingOneSpace->setCheckable(true);
+    m_actions.settingsBehaviorDigitGroupingOneSpace->setData(1);
+    m_actions.settingsBehaviorDigitGroupingTwoSpaces->setCheckable(true);
+    m_actions.settingsBehaviorDigitGroupingTwoSpaces->setData(2);
+    m_actions.settingsBehaviorDigitGroupingThreeSpaces->setCheckable(true);
+    m_actions.settingsBehaviorDigitGroupingThreeSpaces->setData(3);
     m_actions.settingsBehaviorAutoResultToClipboard->setCheckable(true);
     m_actions.settingsDisplayColorSchemeStandard->setCheckable(true);
     m_actions.settingsDisplayColorSchemeSublime->setCheckable(true);
@@ -332,7 +342,10 @@ void MainWindow::setActionsText()
     m_actions.settingsBehaviorSaveUserFunctionsOnExit->setText(MainWindow::tr("Save User &Functions on Exit"));
     m_actions.settingsBehaviorSaveWindowPositionOnExit->setText(MainWindow::tr("Save &Window Positon on Exit"));
     m_actions.settingsBehaviorSyntaxHighlighting->setText(MainWindow::tr("Syntax &Highlighting"));
-    m_actions.settingsBehaviorDigitGrouping->setText(MainWindow::tr("Digit &Grouping"));
+    m_actions.settingsBehaviorDigitGroupingNone->setText(MainWindow::tr("Disabled"));
+    m_actions.settingsBehaviorDigitGroupingOneSpace->setText(MainWindow::tr("One Space"));
+    m_actions.settingsBehaviorDigitGroupingTwoSpaces->setText(MainWindow::tr("Two Spaces"));
+    m_actions.settingsBehaviorDigitGroupingThreeSpaces->setText(MainWindow::tr("Three Spaces"));
     m_actions.settingsBehaviorLeaveLastExpression->setText(MainWindow::tr("Leave &Last Expression"));
     m_actions.settingsBehaviorAutoResultToClipboard->setText(MainWindow::tr("Automatic &Result to Clipboard"));
     m_actions.settingsRadixCharComma->setText(MainWindow::tr("&Comma"));
@@ -397,6 +410,12 @@ void MainWindow::createActionGroups()
     m_actionGroups.colorScheme->addAction(m_actions.settingsDisplayColorSchemeStandard);
     m_actionGroups.colorScheme->addAction(m_actions.settingsDisplayColorSchemeSublime);
     m_actionGroups.colorScheme->addAction(m_actions.settingsDisplayColorSchemeTerminal);
+
+    m_actionGroups.digitGrouping = new QActionGroup(this);
+    m_actionGroups.digitGrouping->addAction(m_actions.settingsBehaviorDigitGroupingNone);
+    m_actionGroups.digitGrouping->addAction(m_actions.settingsBehaviorDigitGroupingOneSpace);
+    m_actionGroups.digitGrouping->addAction(m_actions.settingsBehaviorDigitGroupingTwoSpaces);
+    m_actionGroups.digitGrouping->addAction(m_actions.settingsBehaviorDigitGroupingThreeSpaces);
 }
 
 void MainWindow::createActionShortcuts()
@@ -525,7 +544,13 @@ void MainWindow::createMenus()
     m_menus.behavior->addAction(m_actions.settingsBehaviorAutoAns);
     m_menus.behavior->addAction(m_actions.settingsBehaviorAutoCompletion);
     m_menus.behavior->addAction(m_actions.settingsBehaviorSyntaxHighlighting);
-    m_menus.behavior->addAction(m_actions.settingsBehaviorDigitGrouping);
+
+    m_menus.digitGrouping = m_menus.behavior->addMenu("");
+    m_menus.digitGrouping->addAction(m_actions.settingsBehaviorDigitGroupingNone);
+    m_menus.digitGrouping->addAction(m_actions.settingsBehaviorDigitGroupingOneSpace);
+    m_menus.digitGrouping->addAction(m_actions.settingsBehaviorDigitGroupingTwoSpaces);
+    m_menus.digitGrouping->addAction(m_actions.settingsBehaviorDigitGroupingThreeSpaces);
+
     m_menus.behavior->addAction(m_actions.settingsBehaviorLeaveLastExpression);
     m_menus.behavior->addSeparator();
     m_menus.behavior->addAction(m_actions.settingsBehaviorAlwaysOnTop);
@@ -571,6 +596,7 @@ void MainWindow::setMenusText()
     m_menus.display->setTitle(MainWindow::tr("&Display"));
     m_menus.colorScheme->setTitle(MainWindow::tr("Color Scheme"));
     m_menus.help->setTitle(MainWindow::tr("&Help"));
+    m_menus.digitGrouping->setTitle(MainWindow::tr("Digit Grouping"));
 }
 
 void MainWindow::createStatusBar()
@@ -870,7 +896,7 @@ void MainWindow::createFixedConnections()
     connect(m_actions.settingsBehaviorSaveUserFunctionsOnExit, SIGNAL(toggled(bool)), SLOT(setUserFunctionSaveEnabled(bool)));
     connect(m_actions.settingsBehaviorSaveWindowPositionOnExit, SIGNAL(toggled(bool)), SLOT(setWindowPositionSaveEnabled(bool)));
     connect(m_actions.settingsBehaviorSyntaxHighlighting, SIGNAL(toggled(bool)), SLOT(setSyntaxHighlightingEnabled(bool)));
-    connect(m_actions.settingsBehaviorDigitGrouping, SIGNAL(toggled(bool)), SLOT(setDigitGroupingEnabled(bool)));
+    connect(m_actionGroups.digitGrouping, SIGNAL(triggered(QAction*)), SLOT(setDigitGrouping(QAction*)));
     connect(m_actions.settingsBehaviorLeaveLastExpression, SIGNAL(toggled(bool)), SLOT(setLeaveLastExpressionEnabled(bool)));
     connect(m_actions.settingsBehaviorAutoResultToClipboard, SIGNAL(toggled(bool)), SLOT(setAutoResultToClipboardEnabled(bool)));
 
@@ -1020,8 +1046,7 @@ void MainWindow::applySettings()
 
     m_actions.settingsBehaviorMinimizeToTray->setChecked(m_settings->systemTrayIconVisible);
 
-   if (m_settings->digitGrouping)
-        m_actions.settingsBehaviorDigitGrouping->setChecked(true);
+    checkInitialDigitGrouping();
 
     if (m_settings->syntaxHighlighting)
         m_actions.settingsBehaviorSyntaxHighlighting->setChecked(true);
@@ -1100,6 +1125,17 @@ void MainWindow::checkInitialResultPrecision()
         case 15: m_actions.settingsResultFormat15Digits->setChecked(true); break;
         case 50: m_actions.settingsResultFormat50Digits->setChecked(true); break;
         default: m_actions.settingsResultFormatAutoPrecision->setChecked(true);
+    }
+}
+
+void MainWindow::checkInitialDigitGrouping()
+{
+    switch (m_settings->digitGrouping) {
+        case 1: m_actions.settingsBehaviorDigitGroupingOneSpace->setChecked(true); break;
+        case 2: m_actions.settingsBehaviorDigitGroupingTwoSpaces->setChecked(true); break;
+        case 3: m_actions.settingsBehaviorDigitGroupingThreeSpaces->setChecked(true); break;
+        default:
+        case 0: m_actions.settingsBehaviorDigitGroupingNone->setChecked(true); break;
     }
 }
 
@@ -1655,13 +1691,13 @@ void MainWindow::setSystemTrayIconEnabled(bool b)
 void MainWindow::setSyntaxHighlightingEnabled(bool b)
 {
     m_settings->syntaxHighlighting = b;
-    m_actions.settingsBehaviorDigitGrouping->setEnabled(b);
+    m_menus.digitGrouping->setEnabled(b);
     emit syntaxHighlightingChanged();
 }
 
-void MainWindow::setDigitGroupingEnabled(bool b)
+void MainWindow::setDigitGrouping(QAction *action)
 {
-    m_settings->digitGrouping = b;
+    m_settings->digitGrouping = action->data().toInt();
     emit syntaxHighlightingChanged();
 }
 
