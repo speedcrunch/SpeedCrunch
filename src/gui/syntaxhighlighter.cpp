@@ -79,7 +79,7 @@ void SyntaxHighlighter::highlightBlock(const QString& text)
     if (text.startsWith(QLatin1String("="))) {
         setFormat(0, 1, colorForRole(Operator));
         setFormat(1, text.length(), colorForRole(Result));
-        if (Settings::instance()->digitGrouping)
+        if (Settings::instance()->digitGrouping > 0)
             groupDigits(text, 1, text.length() - 1);
         return;
     }
@@ -128,7 +128,7 @@ void SyntaxHighlighter::highlightBlock(const QString& text)
 
         if (token.pos() >= 0) {
             setFormat(token.pos(), token.text().length(), color);
-            if (token.type() == Token::stxNumber && Settings::instance()->digitGrouping)
+            if (token.type() == Token::stxNumber && Settings::instance()->digitGrouping > 0)
                 groupDigits(text, token.pos(), token.text().length());
         }
     }
@@ -183,7 +183,8 @@ void SyntaxHighlighter::groupDigits(const QString& text, int pos, int length)
         charType['F'] = HEX_CHAR;
     }
 
-    qreal groupSpacing = 140; // Size of the space between groups (100 means no space).
+    qreal groupSpacing = 100; // Size of the space between groups (100 means no space).
+    groupSpacing += 40 * Settings::instance()->digitGrouping;
     int s = -1; // Index of the first digit (most significant).
     bool invertGroup = false; // If true, group digits from the most significant digit.
     int groupSize = 3; // Number of digits to group (depends on the radix).

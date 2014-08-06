@@ -143,7 +143,7 @@ private slots:
     void setResultPrecision(int);
     void setStatusBarVisible(bool);
     void setSyntaxHighlightingEnabled(bool);
-    void setDigitGroupingEnabled(bool);
+    void setDigitGrouping(QAction*);
     void setAutoResultToClipboardEnabled(bool);
     void setSystemTrayIconEnabled(bool);
     void setVariableSaveEnabled(bool);
@@ -196,6 +196,7 @@ private:
     void checkInitialResultFormat();
     void checkInitialResultPrecision();
     void checkInitialLanguage();
+    void checkInitialDigitGrouping();
     void restoreHistory();
     void restoreVariables();
     void restoreUserFunctions();
@@ -269,7 +270,10 @@ private:
         QAction* settingsBehaviorPartialResults;
         QAction* settingsBehaviorAutoCompletion;
         QAction* settingsBehaviorSyntaxHighlighting;
-        QAction* settingsBehaviorDigitGrouping;
+        QAction* settingsBehaviorDigitGroupingNone;
+        QAction* settingsBehaviorDigitGroupingOneSpace;
+        QAction* settingsBehaviorDigitGroupingTwoSpaces;
+        QAction* settingsBehaviorDigitGroupingThreeSpaces;
         QAction* settingsBehaviorAutoAns;
         QAction* settingsBehaviorLeaveLastExpression;
         QAction* settingsBehaviorAlwaysOnTop;
@@ -300,6 +304,7 @@ private:
         QActionGroup* digits;
         QActionGroup* resultFormat;
         QActionGroup* radixChar;
+        QActionGroup* digitGrouping;
     } m_actionGroups;
 
     struct {
@@ -307,6 +312,7 @@ private:
         QMenu* behavior;
         QMenu* colorScheme;
         QMenu* decimal;
+        QMenu* digitGrouping;
         QMenu* display;
         QMenu* edit;
         QMenu* resultFormat;
