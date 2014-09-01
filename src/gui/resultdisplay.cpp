@@ -69,7 +69,7 @@ void ResultDisplay::append(const QString& expression, const HNumber& value)
 
     appendPlainText(expression);
     if (!value.isNan())
-        appendPlainText(QLatin1String("= ") + NumberFormatter::format(value));
+        appendHtml(QLatin1String("<b>= ") + NumberFormatter::format(value) + QLatin1String("</b>"));
     appendPlainText(QLatin1String(""));
 
     // TODO: Refactor, this only serves to save a session.
