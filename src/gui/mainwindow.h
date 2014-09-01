@@ -110,6 +110,7 @@ private slots:
     void setAngleModeRadian();
     void setAutoAnsEnabled(bool);
     void setAutoCalcEnabled(bool);
+    void setUseEqualsSign(bool);
     void setAutoCompletionEnabled(bool);
     void setBitfieldVisible(bool);
     void setConstantsDockVisible(bool);
@@ -275,6 +276,7 @@ private:
         QAction* settingsBehaviorDigitGroupingTwoSpaces;
         QAction* settingsBehaviorDigitGroupingThreeSpaces;
         QAction* settingsBehaviorAutoAns;
+        QAction* settingsBehaviorUseEqualsSign;
         QAction* settingsBehaviorLeaveLastExpression;
         QAction* settingsBehaviorAlwaysOnTop;
         QAction* settingsBehaviorMinimizeToTray;

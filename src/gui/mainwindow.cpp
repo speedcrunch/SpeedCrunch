@@ -138,6 +138,7 @@ void MainWindow::createActions()
     m_actions.settingsBehaviorAlwaysOnTop = new QAction(this);
     m_actions.settingsBehaviorAutoAns = new QAction(this);
     m_actions.settingsBehaviorAutoCompletion = new QAction(this);
+    m_actions.settingsBehaviorUseEqualsSign = new QAction(this);
     m_actions.settingsBehaviorLeaveLastExpression = new QAction(this);
     m_actions.settingsBehaviorMinimizeToTray = new QAction(this);
     m_actions.settingsBehaviorPartialResults = new QAction(this);
@@ -184,6 +185,7 @@ void MainWindow::createActions()
     m_actions.settingsBehaviorAlwaysOnTop->setCheckable(true);
     m_actions.settingsBehaviorAutoAns->setCheckable(true);
     m_actions.settingsBehaviorAutoCompletion->setCheckable(true);
+    m_actions.settingsBehaviorUseEqualsSign->setCheckable(true);
     m_actions.settingsBehaviorLeaveLastExpression->setCheckable(true);
     m_actions.settingsBehaviorMinimizeToTray->setCheckable(true);
     m_actions.settingsBehaviorPartialResults->setCheckable(true);
@@ -335,6 +337,7 @@ void MainWindow::setActionsText()
     m_actions.settingsBehaviorAlwaysOnTop->setText(MainWindow::tr("Always On &Top"));
     m_actions.settingsBehaviorAutoAns->setText(MainWindow::tr("Automatic Result &Reuse"));
     m_actions.settingsBehaviorAutoCompletion->setText(MainWindow::tr("Automatic &Completion"));
+    m_actions.settingsBehaviorUseEqualsSign->setText(MainWindow::tr("&Equals Sign Indicator"));
     m_actions.settingsBehaviorMinimizeToTray->setText(MainWindow::tr("&Minimize To System Tray"));
     m_actions.settingsBehaviorPartialResults->setText(MainWindow::tr("&Partial Results"));
     m_actions.settingsBehaviorSaveHistoryOnExit->setText(MainWindow::tr("Save &History on Exit"));
@@ -544,6 +547,7 @@ void MainWindow::createMenus()
     m_menus.behavior->addAction(m_actions.settingsBehaviorAutoAns);
     m_menus.behavior->addAction(m_actions.settingsBehaviorAutoCompletion);
     m_menus.behavior->addAction(m_actions.settingsBehaviorSyntaxHighlighting);
+    m_menus.behavior->addAction(m_actions.settingsBehaviorUseEqualsSign);
 
     m_menus.digitGrouping = m_menus.behavior->addMenu("");
     m_menus.digitGrouping->addAction(m_actions.settingsBehaviorDigitGroupingNone);
@@ -891,6 +895,7 @@ void MainWindow::createFixedConnections()
     connect(m_actions.settingsBehaviorMinimizeToTray, SIGNAL(toggled(bool)), SLOT(setSystemTrayIconEnabled(bool)));
     connect(m_actions.settingsBehaviorAutoAns, SIGNAL(toggled(bool)), SLOT(setAutoAnsEnabled(bool)));
     connect(m_actions.settingsBehaviorPartialResults, SIGNAL(toggled(bool)), SLOT(setAutoCalcEnabled(bool)));
+    connect(m_actions.settingsBehaviorUseEqualsSign, SIGNAL(toggled(bool)), SLOT(setUseEqualsSign(bool)));
     connect(m_actions.settingsBehaviorSaveHistoryOnExit, SIGNAL(toggled(bool)), SLOT(setHistorySaveEnabled(bool)));
     connect(m_actions.settingsBehaviorSaveVariablesOnExit, SIGNAL(toggled(bool)), SLOT(setVariableSaveEnabled(bool)));
     connect(m_actions.settingsBehaviorSaveUserFunctionsOnExit, SIGNAL(toggled(bool)), SLOT(setUserFunctionSaveEnabled(bool)));
@@ -1043,6 +1048,11 @@ void MainWindow::applySettings()
         m_actions.settingsBehaviorAutoCompletion->setChecked(true);
     else
         setAutoCompletionEnabled(false);
+
+    if (m_settings->useEqualsSign)
+        m_actions.settingsBehaviorUseEqualsSign->setChecked(true);
+    else
+        setUseEqualsSign(false);
 
     m_actions.settingsBehaviorMinimizeToTray->setChecked(m_settings->systemTrayIconVisible);
 
@@ -1622,6 +1632,12 @@ void MainWindow::setAutoCalcEnabled(bool b)
 {
     m_settings->autoCalc = b;
     m_widgets.editor->setAutoCalcEnabled(b);
+}
+
+void MainWindow::setUseEqualsSign(bool b)
+{
+	m_settings->useEqualsSign = b;
+	emit resultFormatChanged();
 }
 
 void MainWindow::setHistorySaveEnabled(bool b)
