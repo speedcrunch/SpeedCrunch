@@ -214,26 +214,26 @@ void Constants::Private::populate()
 
     // Particle Masses
         // Leptons
-    PUSH_CONSTANT("Electron Mass", QLatin1String("0.510998928"), QLatin1String("MeV/c^2"));
-    PUSH_CONSTANT("Muon Mass"    , QLatin1String("105.6583715"), QLatin1String("MeV/c^2"));
-    PUSH_CONSTANT("Tau Mass"     , QLatin1String("1776.82")    , QLatin1String("MeV/c^2"));
+    PUSH_CONSTANT("Electron Mass", QLatin1String("0.510998928"), QString::fromUtf8("MeV/c²"));
+    PUSH_CONSTANT("Muon Mass"    , QLatin1String("105.6583715"), QString::fromUtf8("MeV/c²"));
+    PUSH_CONSTANT("Tau Mass"     , QLatin1String("1776.82")    , QString::fromUtf8("MeV/c²"));
 
         // Quarks
-    PUSH_CONSTANT("Up-Quark Mass"     , QLatin1String("2.3")   , QLatin1String("MeV/c^2"));
-    PUSH_CONSTANT("Down-Quark Mass"   , QLatin1String("4.8")   , QLatin1String("MeV/c^2"));
-    PUSH_CONSTANT("Charm-Quark Mass"  , QLatin1String("1.275") , QLatin1String("GeV/c^2"));
-    PUSH_CONSTANT("Strange-Quark Mass", QLatin1String("95")    , QLatin1String("MeV/c^2"));
-    PUSH_CONSTANT("Top-Quark Mass"    , QLatin1String("173.07"), QLatin1String("GeV/c^2"));
-    PUSH_CONSTANT("Bottom-Quark Mass" , QLatin1String("4.18")  , QLatin1String("GeV/c^2"));
+    PUSH_CONSTANT("Up-Quark Mass"     , QLatin1String("2.3")   , QString::fromUtf8("MeV/c²"));
+    PUSH_CONSTANT("Down-Quark Mass"   , QLatin1String("4.8")   , QString::fromUtf8("MeV/c²"));
+    PUSH_CONSTANT("Charm-Quark Mass"  , QLatin1String("1.275") , QString::fromUtf8("GeV/c²"));
+    PUSH_CONSTANT("Strange-Quark Mass", QLatin1String("95")    , QString::fromUtf8("MeV/c²"));
+    PUSH_CONSTANT("Top-Quark Mass"    , QLatin1String("173.07"), QString::fromUtf8("GeV/c²"));
+    PUSH_CONSTANT("Bottom-Quark Mass" , QLatin1String("4.18")  , QString::fromUtf8("GeV/c²"));
 
         // Bosons
-    PUSH_CONSTANT("W-Boson Mass"    , QLatin1String("80.385")     , QLatin1String("GeV/c^2"));
-    PUSH_CONSTANT("Z-Boson Mass"    , QLatin1String("91.1876")     , QLatin1String("GeV/c^2"));
-    PUSH_CONSTANT("Higgs-Boson Mass", QLatin1String("125.9")     , QLatin1String("GeV/c^2"));
+    PUSH_CONSTANT("W-Boson Mass"    , QLatin1String("80.385") , QString::fromUtf8("GeV/c²"));
+    PUSH_CONSTANT("Z-Boson Mass"    , QLatin1String("91.1876"), QString::fromUtf8("GeV/c²"));
+    PUSH_CONSTANT("Higgs-Boson Mass", QLatin1String("125.9")  , QString::fromUtf8("GeV/c²"));
 
         // Hadrons
-    PUSH_CONSTANT("Proton Mass"      , QLatin1String("938.272046")     , QLatin1String("MeV/c^2"));
-    PUSH_CONSTANT("Neutron Mass"     , QLatin1String("939.565379")     , QLatin1String("MeV/c^2"));
+    PUSH_CONSTANT("Proton Mass"      , QLatin1String("938.272046"), QString::fromUtf8("MeV/c²"));
+    PUSH_CONSTANT("Neutron Mass"     , QLatin1String("939.565379"), QString::fromUtf8("MeV/c²"));
 
         // SI-Units
     PUSH_CONSTANT("Electron Mass (SI)", QLatin1String("9.10938291e-31") , QLatin1String("kg"));
