@@ -67,7 +67,6 @@ signals:
 
 public slots:
     void copy();
-    void raiseWindow();
 
 private slots:
     void activate();
