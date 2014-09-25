@@ -15,6 +15,8 @@ gui/bookdock.h
 gui/constantsdock.h
 gui/constantswidget.h
 gui/editor.h
+gui/formatsdock.h
+gui/formatswidget.h
 gui/functionsdock.h
 gui/functionswidget.h
 gui/historydock.h
@@ -46,6 +48,8 @@ gui/bookdock.cpp
 gui/constantsdock.cpp
 gui/constantswidget.cpp
 gui/editor.cpp
+gui/formatsdock.cpp
+gui/formatswidget.cpp
 gui/functionsdock.cpp
 gui/functionswidget.cpp
 gui/historydock.cpp

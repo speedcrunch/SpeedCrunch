@@ -482,24 +482,16 @@ void Editor::autoCalc()
         return;
 
     const QString str = m_evaluator->autoFix(text());
-    if (str.isEmpty())
-        return;
 
-    // Very short (just one token) and still no calculation, then skip.
-    if (!m_isAnsAvailable) {
-        const Tokens tokens = m_evaluator->scan(text());
-        if (tokens.count() < 2)
-            return;
-    }
-
-    // Too short even after autofix? Do not bother either.
-    const Tokens tokens = m_evaluator->scan(str);
-    if (tokens.count() < 2)
-        return;
-
-    // Same reason as above, do not update "ans".
+    // calc always so that we can pass even invalid results through signal
     m_evaluator->setExpression(str);
     const HNumber num = m_evaluator->evalNoAssign();
+
+    emit autoCalcChanged(num);
+
+    // don't show auto-calc tooltip if there is nothing to calc
+    if (m_evaluator->tokens().count() < 2)
+        return;
 
     if (m_evaluator->error().isEmpty()) {
         if (num.isNan() && m_evaluator->isUserFunctionAssign()) {
@@ -539,6 +531,9 @@ void Editor::autoCalcSelection()
         return;
 
     const QString str = m_evaluator->autoFix(textCursor().selectedText());
+
+    textChanged();
+
     if (str.isEmpty())
         return;
 

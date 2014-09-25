@@ -57,6 +57,7 @@ public:
     bool windowPositionSave;
 
     bool constantsDockVisible;
+    bool formatsDockVisible;
     bool functionsDockVisible;
     bool historyDockVisible;
     bool formulaBookDockVisible;

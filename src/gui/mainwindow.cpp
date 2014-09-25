@@ -32,6 +32,7 @@
 #include "gui/bookdock.h"
 #include "gui/constantsdock.h"
 #include "gui/editor.h"
+#include "gui/formatsdock.h"
 #include "gui/functionsdock.h"
 #include "gui/historydock.h"
 #include "gui/historywidget.h"
@@ -121,6 +122,7 @@ void MainWindow::createActions()
     m_actions.editPaste = new QAction(this);
     m_actions.editSelectExpression = new QAction(this);
     m_actions.viewConstants = new QAction(this);
+    m_actions.viewFormats = new QAction(this);
     m_actions.viewFullScreenMode = new QAction(this);
     m_actions.viewFunctions = new QAction(this);
     m_actions.viewHistory = new QAction(this);
@@ -221,6 +223,7 @@ void MainWindow::createActions()
     m_actions.settingsResultFormatOctal->setCheckable(true);
     m_actions.settingsResultFormatScientific->setCheckable(true);
     m_actions.viewConstants->setCheckable(true);
+    m_actions.viewFormats->setCheckable(true);
     m_actions.viewFullScreenMode->setCheckable(true);
     m_actions.viewFunctions->setCheckable(true);
     m_actions.viewHistory->setCheckable(true);
@@ -317,6 +320,7 @@ void MainWindow::setActionsText()
     m_actions.editSelectExpression->setText(MainWindow::tr("&Select Expression"));
 
     m_actions.viewConstants->setText(MainWindow::tr("&Constants"));
+    m_actions.viewFormats->setText(MainWindow::tr("&Formats"));
     m_actions.viewFullScreenMode->setText(MainWindow::tr("F&ull Screen Mode"));
     m_actions.viewFunctions->setText(MainWindow::tr("&Functions"));
     m_actions.viewHistory->setText(MainWindow::tr("&History"));
@@ -430,10 +434,11 @@ void MainWindow::createActionShortcuts()
     m_actions.editPaste->setShortcut(Qt::CTRL + Qt::Key_V);
     m_actions.editSelectExpression->setShortcut(Qt::CTRL + Qt::Key_A);
     m_actions.viewBitfield->setShortcut(Qt::CTRL + Qt::Key_6);
+    m_actions.viewFormats->setShortcut(Qt::CTRL + Qt::Key_7);
     m_actions.viewConstants->setShortcut(Qt::CTRL + Qt::Key_2);
     m_actions.viewFullScreenMode->setShortcut(Qt::Key_F11);
     m_actions.viewFunctions->setShortcut(Qt::CTRL + Qt::Key_3);
-    m_actions.viewHistory->setShortcut(Qt::CTRL + Qt::Key_7);
+    m_actions.viewHistory->setShortcut(Qt::CTRL + Qt::Key_8);
     m_actions.viewFormulaBook->setShortcut(Qt::CTRL + Qt::Key_1);
 #ifndef Q_OS_MAC
     if (shouldAllowHiddenMenuBar())
@@ -486,6 +491,7 @@ void MainWindow::createMenus()
     m_menus.view->addAction(m_actions.viewVariables);
     m_menus.view->addAction(m_actions.viewUserFunctions);
     m_menus.view->addAction(m_actions.viewBitfield);
+    m_menus.view->addAction(m_actions.viewFormats);
     m_menus.view->addAction(m_actions.viewHistory);
     m_menus.view->addSeparator();
     m_menus.view->addAction(m_actions.viewStatusBar);
@@ -698,6 +704,8 @@ void MainWindow::createBookDock()
         tabifyDockWidget(m_docks.history, m_docks.book);
     else if (m_docks.constants)
         tabifyDockWidget(m_docks.constants, m_docks.book);
+    else if (m_docks.formats)
+        tabifyDockWidget(m_docks.formats, m_docks.book);
 
     m_docks.book->show();
     m_docks.book->raise();
@@ -726,6 +734,8 @@ void MainWindow::createConstantsDock()
         tabifyDockWidget(m_docks.userFunctions, m_docks.constants);
     else if (m_docks.history)
         tabifyDockWidget(m_docks.history, m_docks.constants);
+    else if (m_docks.formats)
+        tabifyDockWidget(m_docks.formats, m_docks.constants);
     else if (m_docks.book)
         tabifyDockWidget(m_docks.book, m_docks.constants);
 
@@ -733,6 +743,47 @@ void MainWindow::createConstantsDock()
     m_docks.constants->raise();
 
     m_settings->constantsDockVisible = true;
+}
+
+void MainWindow::createFormatsDock()
+{
+    m_docks.formats = new FormatsDock(this);
+    m_docks.formats->setObjectName("FormatsDock");
+    m_docks.formats->installEventFilter(this);
+    m_docks.formats->setAllowedAreas(Qt::AllDockWidgetAreas);
+    addDockWidget(Qt::RightDockWidgetArea, m_docks.formats);
+
+    connect(m_widgets.editor, SIGNAL(autoCalcChanged(const HNumber&)), m_docks.formats->widget(),
+        SLOT(updateNumber(const HNumber&)));
+    connect(this, SIGNAL(colorSchemeChanged()), m_docks.formats->widget(),
+        SLOT(rehighlight()));
+    connect(this, SIGNAL(syntaxHighlightingChanged()), m_docks.formats->widget(),
+        SLOT(rehighlight()));
+    connect(this, SIGNAL(radixCharacterChanged()), m_docks.formats->widget(),
+        SLOT(handleRadixCharacterChange()));
+
+    if (m_docks.functions)
+        tabifyDockWidget(m_docks.functions, m_docks.formats);
+    else if (m_docks.variables)
+        tabifyDockWidget(m_docks.variables, m_docks.formats);
+    else if (m_docks.userFunctions)
+        tabifyDockWidget(m_docks.userFunctions, m_docks.formats);
+    else if (m_docks.history)
+        tabifyDockWidget(m_docks.history, m_docks.formats);
+    else if (m_docks.constants)
+        tabifyDockWidget(m_docks.constants, m_docks.formats);
+    else if (m_docks.book)
+        tabifyDockWidget(m_docks.book, m_docks.formats);
+
+
+    //QFont font;
+    //font.fromString(m_settings->displayFont);
+    //m_docks.formats->setNumberFont(font);
+
+    m_docks.formats->show();
+    m_docks.formats->raise();
+
+    m_settings->formatsDockVisible = true;
 }
 
 void MainWindow::createFunctionsDock()
@@ -753,6 +804,8 @@ void MainWindow::createFunctionsDock()
         tabifyDockWidget(m_docks.userFunctions, m_docks.functions);
     else if (m_docks.constants)
         tabifyDockWidget(m_docks.constants, m_docks.functions);
+    else if (m_docks.formats)
+        tabifyDockWidget(m_docks.formats, m_docks.functions);
     else if (m_docks.book)
         tabifyDockWidget(m_docks.book, m_docks.functions);
 
@@ -784,6 +837,8 @@ void MainWindow::createHistoryDock()
         tabifyDockWidget(m_docks.userFunctions, m_docks.history);
     else if (m_docks.constants)
         tabifyDockWidget(m_docks.constants, m_docks.history);
+    else if (m_docks.formats)
+        tabifyDockWidget(m_docks.formats, m_docks.history);
     else if (m_docks.book)
         tabifyDockWidget(m_docks.book, m_docks.history);
 
@@ -814,6 +869,8 @@ void MainWindow::createVariablesDock()
         tabifyDockWidget(m_docks.history, m_docks.variables);
     else if (m_docks.constants)
         tabifyDockWidget(m_docks.constants, m_docks.variables);
+    else if (m_docks.formats)
+        tabifyDockWidget(m_docks.formats, m_docks.variables);
     else if (m_docks.book)
         tabifyDockWidget(m_docks.book, m_docks.variables);
 
@@ -844,6 +901,8 @@ void MainWindow::createUserFunctionsDock()
         tabifyDockWidget(m_docks.history, m_docks.userFunctions);
     else if (m_docks.constants)
         tabifyDockWidget(m_docks.constants, m_docks.userFunctions);
+    else if (m_docks.formats)
+        tabifyDockWidget(m_docks.formats, m_docks.userFunctions);
     else if (m_docks.book)
         tabifyDockWidget(m_docks.book, m_docks.userFunctions);
 
@@ -870,6 +929,7 @@ void MainWindow::createFixedConnections()
     connect(m_actions.editSelectExpression, SIGNAL(triggered()), SLOT(selectEditorExpression()));
 
     connect(m_actions.viewConstants, SIGNAL(toggled(bool)), SLOT(setConstantsDockVisible(bool)));
+    connect(m_actions.viewFormats, SIGNAL(toggled(bool)), SLOT(setFormatsDockVisible(bool)));
     connect(m_actions.viewFullScreenMode, SIGNAL(toggled(bool)), SLOT(setFullScreenEnabled(bool)));
     connect(m_actions.viewFunctions, SIGNAL(toggled(bool)), SLOT(setFunctionsDockVisible(bool)));
     connect(m_actions.viewHistory, SIGNAL(toggled(bool)), SLOT(setHistoryDockVisible(bool)));
@@ -974,6 +1034,7 @@ void MainWindow::applySettings()
 
     m_actions.viewFormulaBook->setChecked(m_settings->formulaBookDockVisible);
     m_actions.viewConstants->setChecked(m_settings->constantsDockVisible);
+    m_actions.viewFormats->setChecked(m_settings->formatsDockVisible);
     m_actions.viewFunctions->setChecked(m_settings->functionsDockVisible);
     m_actions.viewHistory->setChecked(m_settings->historyDockVisible);
     m_actions.viewVariables->setChecked(m_settings->variablesDockVisible);
@@ -1062,6 +1123,9 @@ void MainWindow::applySettings()
     font.fromString(m_settings->displayFont);
     m_widgets.display->setFont(font);
     m_widgets.editor->setFont(font);
+
+    if (m_docks.formats)
+      m_docks.formats->setNumberFont(font);
 
     if (m_settings->colorScheme == SyntaxHighlighter::Standard)
         m_actions.settingsDisplayColorSchemeStandard->setChecked(true);
@@ -1200,6 +1264,7 @@ MainWindow::MainWindow()
     m_docks.book = 0;
     m_docks.history = 0;
     m_docks.constants = 0;
+    m_docks.formats = 0;
     m_docks.functions = 0;
     m_docks.variables = 0;
     m_docks.userFunctions = 0;
@@ -1222,6 +1287,8 @@ MainWindow::~MainWindow()
         deleteBookDock();
     if (m_docks.constants)
         deleteConstantsDock();
+    if (m_docks.formats)
+        deleteFormatsDock();
     if (m_docks.variables)
         deleteVariablesDock();
     if (m_docks.userFunctions)
@@ -1885,6 +1952,9 @@ void MainWindow::showFontDialog()
         return;
     m_widgets.display->setFont(f);
     m_widgets.editor->setFont(f);
+
+    if (m_docks.formats)
+      m_docks.formats->setNumberFont(f);
 }
 
 #ifndef Q_OS_MAC
@@ -1936,6 +2006,14 @@ bool MainWindow::eventFilter(QObject* o, QEvent* e)
     if (o == m_docks.constants) {
         if (e->type() == QEvent::Close) {
             deleteConstantsDock();
+            return true;
+        }
+        return false;
+    }
+
+    if (o == m_docks.formats) {
+        if (e->type() == QEvent::Close) {
+            deleteFormatsDock();
             return true;
         }
         return false;
@@ -2025,6 +2103,20 @@ void MainWindow::deleteConstantsDock()
     m_settings->constantsDockVisible = false;
 }
 
+void MainWindow::deleteFormatsDock()
+{
+    Q_ASSERT(m_docks.formats);
+
+    removeDockWidget(m_docks.formats);
+    disconnect(m_docks.formats);
+    m_docks.formats->deleteLater();
+    m_docks.formats = 0;
+    m_actions.viewFormats->blockSignals(true);
+    m_actions.viewFormats->setChecked(false);
+    m_actions.viewFormats->blockSignals(false);
+    m_settings->formatsDockVisible = false;
+}
+
 void MainWindow::deleteFunctionsDock()
 {
     Q_ASSERT(m_docks.functions);
@@ -2103,6 +2195,14 @@ void MainWindow::setConstantsDockVisible(bool b)
         createConstantsDock();
     else
         deleteConstantsDock();
+}
+
+void MainWindow::setFormatsDockVisible(bool b)
+{
+    if (b)
+        createFormatsDock();
+    else
+        deleteFormatsDock();
 }
 
 void MainWindow::setHistoryDockVisible(bool b)
@@ -2398,6 +2498,9 @@ void MainWindow::evaluateEditorExpression()
     if (m_settings->bitfieldVisible)
         m_widgets.bitField->updateBits(result);
 
+    if (m_settings->formatsDockVisible)
+        m_docks.formats->updateNumber(result);
+
     if (m_settings->variablesDockVisible)
         m_docks.variables->updateList();
 
@@ -2531,6 +2634,10 @@ void MainWindow::handleSystemTrayIconActivation(QSystemTrayIcon::ActivationReaso
         if (m_docks.constants && m_docks.constants->isFloating()) {
             m_docks.constants->hide();
             m_docks.constants->show();
+        }
+        if (m_docks.formats && m_docks.formats->isFloating()) {
+            m_docks.formats->hide();
+            m_docks.formats->show();
         }
     }
 }

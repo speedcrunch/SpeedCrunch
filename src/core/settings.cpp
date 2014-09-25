@@ -118,6 +118,7 @@ void Settings::load()
     userFunctionsDockVisible = settings->value(key + QLatin1String("UserFunctionsDockVisible"), false).toBool();
     formulaBookDockVisible = settings->value(key + QLatin1String("FormulaBookDockVisible"), false).toBool();
     constantsDockVisible = settings->value(key + QLatin1String("ConstantsDockVisible"), false).toBool();
+    formatsDockVisible = settings->value(key + QLatin1String("FormatsDockVisible"), false).toBool();
     windowAlwaysOnTop = settings->value(key + QLatin1String("WindowAlwaysOnTop"), false).toBool();
     bitfieldVisible = settings->value(key + QLatin1String("BitfieldVisible"), false).toBool();
 
@@ -252,6 +253,7 @@ void Settings::save()
 
     settings->setValue(key + QLatin1String("FormulaBookDockVisible"), formulaBookDockVisible);
     settings->setValue(key + QLatin1String("ConstantsDockVisible"), constantsDockVisible);
+    settings->setValue(key + QLatin1String("FormatsDockVisible"), formatsDockVisible);
     settings->setValue(key + QLatin1String("FunctionsDockVisible"), functionsDockVisible);
     settings->setValue(key + QLatin1String("HistoryDockVisible"), historyDockVisible);
     settings->setValue(key + QLatin1String("WindowOnFullScreen"), windowOnfullScreen);
