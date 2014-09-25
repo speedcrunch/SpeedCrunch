@@ -18,9 +18,13 @@
 // Boston, MA 02110-1301, USA.
 
 // TODO:
-// - dvojkovy doplnek
-// - hex/bin/oct - only for whole part of the number
-// - autocalc disabled
+// - 2's complement
+// - cz transl
+// - doplnovat nulami
+// - ignorovat mezery
+// - rozdelovat po bytech (hex po 4, bin po 1, oct? dec fix po milion
+// - Ctrl+C
+// - barva pro ?
 
 #include <QEvent>
 #include <QLabel>
@@ -69,15 +73,38 @@ public slots:
 
     void updateNumber(const HNumber& number)
     {
-      QString str = HMath::format(number, format);
-      setPlainText("= " + str);
+      HNumber res = number;
+      const char* prefix = "= ";
+      
+      switch (format) {
+      case 'h':
+      case 'o':
+      case 'b':
+          // show only integer part
+          if (!number.isNan()) {
+              if (!number.isInteger()) {
+                  res = HMath::integer(res);
+                  prefix = "# ";
+              }
+              if (number.isNegative()) {
+                  res = HMath::gmask(res, 32);
+              }
+          }
+          break;
+      default:
+          break;
+      }
+      
+      QString str = HMath::format(res, format);
+      setPlainText(prefix + str);
 
       if (Settings::instance()->radixCharacter() != '.')
         handleRadixCharacterChange();
+      update();
     }
 
     void rehighlight()
-    {
+    {                              
         m_highlighter->update();
     }
 
@@ -94,6 +121,17 @@ protected:
         if (e->type() == QEvent::FontChange)
             setFixedHeight(sizeHint().height());
         QPlainTextEdit::changeEvent(e);
+    }
+
+    virtual void focusOutEvent(QFocusEvent* e)
+    {
+        if (e->lostFocus())
+        {
+            QTextCursor cursor = textCursor();
+            cursor.movePosition(QTextCursor::End);
+            setTextCursor(cursor);
+        }
+        QPlainTextEdit::focusOutEvent(e);
     }
 
 private:
@@ -178,6 +216,26 @@ void FormatsWidget::setNumberFont(const QFont& f)
   setFont(f);
 }
 
+void FormatsWidget::increaseFontPointSize()
+{
+    QFont newFont = font();
+    const int newSize = newFont.pointSize() + 1;
+    if (newSize > 96)
+        return;
+    newFont.setPointSize(newSize);
+    setNumberFont(newFont);
+}
+
+void FormatsWidget::decreaseFontPointSize()
+{
+    QFont newFont = font();
+    const int newSize = newFont.pointSize() - 1;
+    if (newSize < 8)
+        return;
+    newFont.setPointSize(newSize);
+    setNumberFont(newFont);
+}
+ 
 void FormatsWidget::rehighlight()
 {
     for (int i = 0; i <  m_fmtLbls.size(); i++)

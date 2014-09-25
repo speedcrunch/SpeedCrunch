@@ -37,13 +37,16 @@ class FormatsWidget : public QWidget
 
 public:
     explicit FormatsWidget(QWidget* parent = 0);
-    void setNumberFont(const QFont&);
 
 signals:
     void constantSelected(const QString&);
 
 public slots:
     void updateNumber(const HNumber&);
+    void increaseFontPointSize();
+    void decreaseFontPointSize();
+    void setNumberFont(const QFont&);
+
     void rehighlight();
     void handleRadixCharacterChange();
 

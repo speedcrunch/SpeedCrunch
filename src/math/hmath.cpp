@@ -1800,6 +1800,27 @@ HNumber HMath::mask ( const HNumber & val, const HNumber & bits )
 }
 
 /**
+ * Restricts a logic value to a bit size rounded up bits_grp.
+ */
+HNumber HMath::gmask ( const HNumber & val, const HNumber & bits_grp )
+{
+  if ( val.isNan() || bits_grp == 0 || bits_grp >= LOGICRANGE || ! bits_grp.isInteger() )
+    return HMath::nan();
+  
+  // count number of bits to show (rounded to 32s)
+  HNumber bits = HMath::ceil(HMath::log(2, HMath::abs(HMath::integer(val))));
+  if (bits >= LOGICRANGE)
+  { // mask doesn't handle 256 bits
+    return HMath::nan();
+  }
+  bits = HMath::integer(bits / bits_grp + 1) * bits_grp;
+  if (bits >= LOGICRANGE)
+    bits = LOGICRANGE - 1;
+  
+  return HMath::mask(val, bits);
+}
+
+/**
  * sign-extends an unsigned value
  */
 HNumber HMath::sgnext( const HNumber & val, const HNumber & bits )

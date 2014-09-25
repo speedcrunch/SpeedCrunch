@@ -572,6 +572,12 @@ HNumber function_mask(Function* f, const Function::ArgumentList& args)
     return HMath::mask(args.at(0), args.at(1));
 }
 
+HNumber function_gmask(Function* f, const Function::ArgumentList& args)
+{
+    ENSURE_ARGUMENT_COUNT(2);
+    return HMath::gmask(args.at(0), args.at(1));
+}
+
 HNumber function_unmask(Function* f, const Function::ArgumentList& args)
 {
     ENSURE_ARGUMENT_COUNT(2);
@@ -706,6 +712,7 @@ void FunctionRepo::createFunctions()
 
     // Logic.
     FUNCTION_INSERT(mask);
+    FUNCTION_INSERT(gmask);
     FUNCTION_INSERT(unmask);
     FUNCTION_INSERT(not);
     FUNCTION_INSERT(and);
@@ -827,6 +834,7 @@ void FunctionRepo::setTranslatableFunctionUsages()
     FUNCTION_USAGE_TR(hyperpmf, tr("count; total; hits; trials"));
     FUNCTION_USAGE_TR(hypervar, tr("total; hits; trials"));
     FUNCTION_USAGE_TR(idiv, tr("dividend; divisor"));
+    FUNCTION_USAGE_TR(gmask, tr("n; bits group"));
     FUNCTION_USAGE_TR(log, tr("base; x"));
     FUNCTION_USAGE_TR(mask, tr("n; bits"));
     FUNCTION_USAGE_TR(mod, tr("value; modulo"));
@@ -878,6 +886,7 @@ void FunctionRepo::setFunctionNames()
     FUNCTION_NAME(hyperpmf, tr("Hypergeometric Probability Mass Function"));
     FUNCTION_NAME(hypervar, tr("Hypergeometric Distribution Variance"));
     FUNCTION_NAME(idiv, tr("Integer Quotient"));
+    FUNCTION_NAME(gmask, tr("Mask to a bit group size"));
     FUNCTION_NAME(int, tr("Integer Part"));
     FUNCTION_NAME(lb, tr("Binary Logarithm"));
     FUNCTION_NAME(lg, tr("Common Logarithm"));

@@ -762,6 +762,16 @@ void MainWindow::createFormatsDock()
     connect(this, SIGNAL(radixCharacterChanged()), m_docks.formats->widget(),
         SLOT(handleRadixCharacterChange()));
 
+    connect(m_widgets.editor, SIGNAL(shiftDownPressed()), m_docks.formats->widget(),
+        SLOT(decreaseFontPointSize()));
+    connect(m_widgets.editor, SIGNAL(shiftUpPressed()), m_docks.formats->widget(),
+        SLOT(increaseFontPointSize()));
+  
+    connect(m_widgets.display, SIGNAL(shiftWheelDown()), m_docks.formats->widget(),
+        SLOT(decreaseFontPointSize()));
+    connect(m_widgets.display, SIGNAL(shiftWheelUp()), m_docks.formats->widget(),
+        SLOT(increaseFontPointSize()));
+
     if (m_docks.functions)
         tabifyDockWidget(m_docks.functions, m_docks.formats);
     else if (m_docks.variables)

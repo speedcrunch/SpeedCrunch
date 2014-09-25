@@ -167,6 +167,7 @@ class HMath
     static HNumber poissonVariance( const HNumber & l );
     // LOGIC
     static HNumber mask( const HNumber & val, const HNumber & bits );
+    static HNumber gmask( const HNumber & val, const HNumber & bits_grp );
     static HNumber sgnext( const HNumber & val, const HNumber & bits );
     static HNumber ashr( const HNumber & val, const HNumber & bits );
 };
