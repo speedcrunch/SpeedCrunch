@@ -17,18 +17,6 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-// TODO:
-// - cz transl
-// - doplnovat nulami
-// - ignorovat mezery
-// - rozdelovat po bytech (hex po 4, bin po 1, oct? dec fix po milion
-// - H negroupuje 2x...
-// -
-// - Future work:
-// - Parsing 2xNNN, 2oNNN, 2bNNN format - idea here is that if the tag starts with '2', the number is in two's complement form
-//   (I'm not brave anough to change floatio lib for this; I've only added future support to ResultDisplay::appendHistory())
-// - It would be great to add also two's complement forms to Result output format options, but it would require parsing of 2xNNN format
-
 #include <QEvent>
 #include <QPushButton>
 #include <QToolButton>
@@ -70,33 +58,27 @@ QSize FormatLabel::sizeHint() const
 
 void FormatLabel::updateNumber(const HNumber& number)
 {
-  HNumber res = number;
+  this->number = number;
   QString prefix("= ");
-
-  this->number = res;
 
   switch (format) {
   case 'H':
   case 'O':
   case 'B':
-      // show only integer part
-      if (!number.isNan()) {
-          if (!number.isInteger()) {
-              res = HMath::integer(res);
-              prefix = QString::fromUtf8("≈ ");
-          }
+      if (!number.isNan() && !number.isInteger()) {
+          // show warning - truncated to integer part
+          prefix = QString::fromUtf8("≈ ");
       }
       break;
   default:
       break;
   }
 
-  QString str = HMath::format(res, format);
+  QString str = HMath::format(number, format);
   setPlainText(prefix + str);
 
   if (Settings::instance()->radixCharacter() != '.')
     handleRadixCharacterChange();
-  //update();
 }
 
 void FormatLabel::rehighlight()

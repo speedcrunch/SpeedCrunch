@@ -241,7 +241,7 @@ All parameters have to be integers from the range -2^255 to +2^256-1 (signed or 
 </varlistentry>
 <varlistentry>
 <term>compln (n; bits group)</term>
-<listitem><para>Returns two's complement if n is negative, otherwise returns n.  The result is always unsigned. Number of bits set in two's complement is determined as the least whole multiple of 'bits group' sufficient to represent the whole value n. So hex (compln (-0xFFFFF; 16)) returns 0xFFF00001, the 32-bit two's complement bit pattern of -1048575.</para></listitem>
+<listitem><para>Returns two's complement if n is negative, otherwise returns n (truncated to integer). The result is always unsigned. Number of bits set in two's complement is determined as the least whole multiple of 'bits group' sufficient to represent the whole value n. So hex (compln (-0xFFFFF; 16)) returns 0xFFF00001, the 32-bit two's complement bit pattern of -1048575.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>cos (x)</term>

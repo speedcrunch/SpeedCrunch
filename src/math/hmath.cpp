@@ -771,36 +771,23 @@ char* formathexfp( cfloatnum x, char base,
 char* HMath::format( const HNumber& hn, char format, int prec )
 {
   char* rs = 0;
-  HNumber tmp;
 
   switch (format)
   {
   case 'f': rs = formatFixed(&hn.d->fnum, prec ); break;
   case 'e': rs = formatScientific(&hn.d->fnum, prec ); break;
   case 'n': rs = formatEngineering(&hn.d->fnum, prec ); break;
-  case 'H': if (hn.isNegative()) { // format two's complement
-                tmp = compln(hn, DEF_2CMPL_BITGRP);
-                rs = HMath::format(tmp, 'h', prec);
-                if (rs[0] == '0' && rs[1] == 'x') rs[0] = '2';
-                break;
-            }
-            // fall through
+  case 'H': rs = HMath::format(compln(hn, DEF_2CMPL_BITGRP), 'h', prec);
+            //if (rs[0] == '0' && rs[1] == 'x') rs[0] = '2'; // set '2x' tag
+            break;
   case 'h': rs = formathexfp(&hn.d->fnum, 16, 10, HMATH_HEX_MAX_SHOWN); break;
-  case 'O': if (hn.isNegative()) { // format two's complement
-                tmp = compln(hn, DEF_2CMPL_BITGRP);
-                rs = HMath::format(tmp, 'o', prec);
-                if (rs[0] == '0' && rs[1] == 'o') rs[0] = '2';
-                break;
-            }
-            // fall through
+  case 'O': rs = HMath::format(compln(hn, DEF_2CMPL_BITGRP), 'o', prec);
+            //if (rs[0] == '0' && rs[1] == 'o') rs[0] = '2'; // set '2o' tag
+            break;
   case 'o': rs = formathexfp(&hn.d->fnum, 8, 10, HMATH_OCT_MAX_SHOWN); break;
-  case 'B': if (hn.isNegative()) { // format two's complement
-                tmp = compln(hn, DEF_2CMPL_BITGRP);
-                rs = HMath::format(tmp, 'b', prec);
-                if (rs[0] == '0' && rs[1] == 'b') rs[0] = '2';
-                break;
-            }
-            // fall through
+  case 'B': rs = HMath::format(compln(hn, DEF_2CMPL_BITGRP), 'b', prec);
+            //if (rs[0] == '0' && rs[1] == 'b') rs[0] = '2'; // set '2b' tag
+            break;
   case 'b': rs = formathexfp(&hn.d->fnum, 2, 10, HMATH_BIN_MAX_SHOWN); break;
   case 'g': default: rs = formatGeneral(&hn.d->fnum, prec );
   }

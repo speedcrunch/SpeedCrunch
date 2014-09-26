@@ -94,13 +94,19 @@ QTranslator* MainWindow::createTranslator(const QString& langCode)
 
 void MainWindow::createUi()
 {
+    setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);
+    setCorner(Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);
+    setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
+    setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
+    setDockNestingEnabled(true);
+  
     createActions();
     createActionGroups();
     createActionShortcuts();
     createMenus();
     createFixedWidgets();
     createFixedConnections();
-
+  
     setWindowTitle("SpeedCrunch");
     setWindowIcon(QPixmap(":/speedcrunch.png"));
 
@@ -784,11 +790,6 @@ void MainWindow::createFormatsDock()
         tabifyDockWidget(m_docks.constants, m_docks.formats);
     else if (m_docks.book)
         tabifyDockWidget(m_docks.book, m_docks.formats);
-
-
-    //QFont font;
-    //font.fromString(m_settings->displayFont);
-    //m_docks.formats->setNumberFont(font);
 
     m_docks.formats->show();
     m_docks.formats->raise();
