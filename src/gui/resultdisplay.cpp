@@ -92,12 +92,31 @@ void ResultDisplay::appendHistory(const QStringList& expressions, const QStringL
         str.replace(',', '.');
         HNumber result(str.toLatin1().constData());
 
-        if (str.indexOf('b') == 1)
-            result.setFormat('b');
-        else if (str.indexOf('o') == 1)
+        switch (str[1].toAscii()) {
+        case 'b':
+          if (str[0] == '2')
+            result.setFormat('B');
+          else
+            result.setFormat('B');
+          break;
+
+        case 'o':
+          if (str[0] == '2')
+            result.setFormat('O');
+          else
             result.setFormat('o');
-        else if (str.indexOf('x') == 1)
+          break;
+
+        case 'x':
+          if (str[0] == '2')
+            result.setFormat('H');
+          else
             result.setFormat('h');
+          break;
+
+        default:
+          break;
+        }
 
         append(expressions.at(i), result);
     }

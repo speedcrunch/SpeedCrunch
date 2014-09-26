@@ -41,6 +41,10 @@
 #define HMATH_OCT_MAX_SHOWN ((11073*HMATH_MAX_SHOWN)/10000 + 1)
 #define HMATH_HEX_MAX_SHOWN ((8305*HMATH_MAX_SHOWN)/10000 + 1)
 
+
+// default bit group for two's complement formatting
+#define DEF_2CMPL_BITGRP 32
+
 /*------------------------   Helper routines  -------------------------*/
 
 static void checkfullcancellation( cfloatnum op1, cfloatnum op2,
@@ -767,14 +771,36 @@ char* formathexfp( cfloatnum x, char base,
 char* HMath::format( const HNumber& hn, char format, int prec )
 {
   char* rs = 0;
+  HNumber tmp;
 
   switch (format)
   {
   case 'f': rs = formatFixed(&hn.d->fnum, prec ); break;
   case 'e': rs = formatScientific(&hn.d->fnum, prec ); break;
   case 'n': rs = formatEngineering(&hn.d->fnum, prec ); break;
+  case 'H': if (hn.isNegative()) { // format two's complement
+                tmp = compln(hn, DEF_2CMPL_BITGRP);
+                rs = HMath::format(tmp, 'h', prec);
+                if (rs[0] == '0' && rs[1] == 'x') rs[0] = '2';
+                break;
+            }
+            // fall through
   case 'h': rs = formathexfp(&hn.d->fnum, 16, 10, HMATH_HEX_MAX_SHOWN); break;
+  case 'O': if (hn.isNegative()) { // format two's complement
+                tmp = compln(hn, DEF_2CMPL_BITGRP);
+                rs = HMath::format(tmp, 'o', prec);
+                if (rs[0] == '0' && rs[1] == 'o') rs[0] = '2';
+                break;
+            }
+            // fall through
   case 'o': rs = formathexfp(&hn.d->fnum, 8, 10, HMATH_OCT_MAX_SHOWN); break;
+  case 'B': if (hn.isNegative()) { // format two's complement
+                tmp = compln(hn, DEF_2CMPL_BITGRP);
+                rs = HMath::format(tmp, 'b', prec);
+                if (rs[0] == '0' && rs[1] == 'b') rs[0] = '2';
+                break;
+            }
+            // fall through
   case 'b': rs = formathexfp(&hn.d->fnum, 2, 10, HMATH_BIN_MAX_SHOWN); break;
   case 'g': default: rs = formatGeneral(&hn.d->fnum, prec );
   }
@@ -1800,23 +1826,24 @@ HNumber HMath::mask ( const HNumber & val, const HNumber & bits )
 }
 
 /**
- * Restricts a logic value to a bit size rounded up bits_grp.
+ * Returns two's complement for a negative value, setting bits determined from the value and rounded up to a multiple of bits_grp.
  */
-HNumber HMath::gmask ( const HNumber & val, const HNumber & bits_grp )
+HNumber HMath::compln ( const HNumber & val, const HNumber & bits_grp )
 {
   if ( val.isNan() || bits_grp == 0 || bits_grp >= LOGICRANGE || ! bits_grp.isInteger() )
     return HMath::nan();
-  
-  // count number of bits to show (rounded to 32s)
+
+  // count number of minimum bits
   HNumber bits = HMath::ceil(HMath::log(2, HMath::abs(HMath::integer(val))));
   if (bits >= LOGICRANGE)
   { // mask doesn't handle 256 bits
     return HMath::nan();
   }
+  // round bits size to multiple of bits_grp
   bits = HMath::integer(bits / bits_grp + 1) * bits_grp;
   if (bits >= LOGICRANGE)
     bits = LOGICRANGE - 1;
-  
+
   return HMath::mask(val, bits);
 }
 

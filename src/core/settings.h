@@ -83,6 +83,12 @@ public:
     QByteArray windowState;
     bool maximized;
 
+    // Formats widget
+    char formatsHex;
+    char formatsOct;
+    char formatsBin;
+    char formatsExp;
+
 private:
     Settings();
     Q_DISABLE_COPY(Settings);

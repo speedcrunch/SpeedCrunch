@@ -108,6 +108,19 @@ void Settings::load()
     if (resultPrecision > DECPRECISION)
         resultPrecision = DECPRECISION;
 
+    key = KEY + QLatin1String("/FormatsWidget/");
+    format = settings->value(key + QLatin1String("Hex"), 'h').toString();
+    formatsHex = (format == "h" || format == "H") ? format.at(0).toLatin1() : 'h';
+
+    format = settings->value(key + QLatin1String("Oct"), 'o').toString();
+    formatsOct = (format == "o" || format == "O") ? format.at(0).toLatin1() : 'o';
+
+    format = settings->value(key + QLatin1String("Bin"), 'b').toString();
+    formatsBin = (format == "b" || format == "B") ? format.at(0).toLatin1() : 'b';
+
+    format = settings->value(key + QLatin1String("Exp"), 'e').toString();
+    formatsExp = (format == "e" || format == "n") ? format.at(0).toLatin1() : 'e';
+
     key = KEY + QLatin1String("/Layout/");
     windowOnfullScreen = settings->value(key + QLatin1String("WindowOnFullScreen"), false).toBool();
     historyDockVisible = settings->value(key + QLatin1String("HistoryDockVisible"), false).toBool();
@@ -248,6 +261,12 @@ void Settings::save()
 
     settings->setValue(key + QLatin1String("Type"), QString(QChar(resultFormat)));
     settings->setValue(key + QLatin1String("Precision"), resultPrecision);
+
+    key = KEY + QLatin1String("/FormatsWidget/");
+    settings->setValue(key + QLatin1String("Hex"), QString(formatsHex));
+    settings->setValue(key + QLatin1String("Oct"), QString(formatsOct));
+    settings->setValue(key + QLatin1String("Bin"), QString(formatsBin));
+    settings->setValue(key + QLatin1String("Exp"), QString(formatsExp));
 
     key = KEY + QLatin1String("/Layout/");
 

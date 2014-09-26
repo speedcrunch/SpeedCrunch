@@ -18,140 +18,168 @@
 // Boston, MA 02110-1301, USA.
 
 // TODO:
-// - 2's complement
 // - cz transl
 // - doplnovat nulami
 // - ignorovat mezery
 // - rozdelovat po bytech (hex po 4, bin po 1, oct? dec fix po milion
-// - Ctrl+C
-// - barva pro ?
+// - H negroupuje 2x...
+// -
+// - Future work:
+// - Parsing 2xNNN, 2oNNN, 2bNNN format - idea here is that if the tag starts with '2', the number is in two's complement form
+//   (I'm not brave anough to change floatio lib for this; I've only added future support to ResultDisplay::appendHistory())
+// - It would be great to add also two's complement forms to Result output format options, but it would require parsing of 2xNNN format
 
 #include <QEvent>
-#include <QLabel>
+#include <QPushButton>
+#include <QToolButton>
 #include <QPlainTextEdit>
 #include <QGridLayout>
 #include <QSize>
 
 #include "gui/formatswidget.h"
 #include "core/settings.h"
-#include "math/hmath.h"
 #include "syntaxhighlighter.h"
 
 //------------------------------------------------------------------------------
 
-class FormatLabel : public QPlainTextEdit
+FormatLabel::FormatLabel(QWidget *parent, char& format)
+: QPlainTextEdit(parent),
+  format(format)
 {
-public:
+    setReadOnly(true);
+    setFrameStyle(QFrame::NoFrame);
+    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+    setTabChangesFocus(true);
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    adjustSize();
+    setFixedHeight(sizeHint().height());
+    setLineWrapMode(QPlainTextEdit::NoWrap);
 
-    FormatLabel(QWidget *parent, char format)
-    : QPlainTextEdit(parent),
-      format(format)
-    {
-        setReadOnly(true);
-        setFrameStyle(QFrame::NoFrame);
-        setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
-        setTabChangesFocus(true);
-        setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        adjustSize();
-        setFixedHeight(sizeHint().height());
-        setLineWrapMode(QPlainTextEdit::NoWrap);
+    m_highlighter = new SyntaxHighlighter(this);
+}
 
-        m_highlighter = new SyntaxHighlighter(this);
-    }
+QSize FormatLabel::sizeHint() const
+{
+    ensurePolished();
+    const QFontMetrics metrics = fontMetrics();
+    const int width = metrics.width('x') * 10;
+    const int height = metrics.lineSpacing() + 10;
+    return QSize(width, height);
+}
 
-    virtual QSize sizeHint() const
-    {
-        ensurePolished();
-        const QFontMetrics metrics = fontMetrics();
-        const int width = metrics.width('x') * 10;
-        const int height = metrics.lineSpacing() + 10;
-        return QSize(width, height);
-    }
+void FormatLabel::updateNumber(const HNumber& number)
+{
+  HNumber res = number;
+  QString prefix("= ");
 
-public slots:
+  this->number = res;
 
-    void updateNumber(const HNumber& number)
-    {
-      HNumber res = number;
-      const char* prefix = "= ";
-      
-      switch (format) {
-      case 'h':
-      case 'o':
-      case 'b':
-          // show only integer part
-          if (!number.isNan()) {
-              if (!number.isInteger()) {
-                  res = HMath::integer(res);
-                  prefix = "# ";
-              }
-              if (number.isNegative()) {
-                  res = HMath::gmask(res, 32);
-              }
+  switch (format) {
+  case 'H':
+  case 'O':
+  case 'B':
+      // show only integer part
+      if (!number.isNan()) {
+          if (!number.isInteger()) {
+              res = HMath::integer(res);
+              prefix = QString::fromUtf8("≈ ");
           }
-          break;
-      default:
-          break;
       }
-      
-      QString str = HMath::format(res, format);
-      setPlainText(prefix + str);
+      break;
+  default:
+      break;
+  }
 
-      if (Settings::instance()->radixCharacter() != '.')
-        handleRadixCharacterChange();
-      update();
-    }
+  QString str = HMath::format(res, format);
+  setPlainText(prefix + str);
 
-    void rehighlight()
-    {                              
-        m_highlighter->update();
-    }
+  if (Settings::instance()->radixCharacter() != '.')
+    handleRadixCharacterChange();
+  //update();
+}
 
-    void handleRadixCharacterChange()
+void FormatLabel::rehighlight()
+{
+    m_highlighter->update();
+}
+
+void FormatLabel::handleRadixCharacterChange()
+{
+  const char radixChar = Settings::instance()->radixCharacter();
+  setPlainText(toPlainText().replace(QRegExp("[,.]"), QString(radixChar)));
+}
+
+// switches between H-h, O-o and B-b formats
+void FormatLabel::setAltFormat(bool altFormat)
+{
+  switch (tolower(format)) {
+  case 'h': format = (altFormat ? 'H' : 'h'); updateNumber(number); break;
+  case 'o': format = (altFormat ? 'O' : 'o'); updateNumber(number); break;
+  case 'b': format = (altFormat ? 'B' : 'b'); updateNumber(number); break;
+  case 'e':
+  case 'n': format = (altFormat ? 'n' : 'e'); updateNumber(number); break;
+  default:
+      break;
+  }
+}
+
+void FormatLabel::changeEvent(QEvent *e)
+{
+    if (e->type() == QEvent::FontChange)
+        setFixedHeight(sizeHint().height());
+    QPlainTextEdit::changeEvent(e);
+}
+
+void FormatLabel::focusOutEvent(QFocusEvent* e)
+{
+    if (e->lostFocus())
     {
-      const char radixChar = Settings::instance()->radixCharacter();
-      setPlainText(toPlainText().replace(QRegExp("[,.]"), QString(radixChar)));
+        QTextCursor cursor = textCursor();
+        cursor.movePosition(QTextCursor::End);
+        setTextCursor(cursor);
     }
+    QPlainTextEdit::focusOutEvent(e);
+}
 
-protected:
-
-    virtual void changeEvent(QEvent *e)
-    {
-        if (e->type() == QEvent::FontChange)
-            setFixedHeight(sizeHint().height());
-        QPlainTextEdit::changeEvent(e);
-    }
-
-    virtual void focusOutEvent(QFocusEvent* e)
-    {
-        if (e->lostFocus())
-        {
-            QTextCursor cursor = textCursor();
-            cursor.movePosition(QTextCursor::End);
-            setTextCursor(cursor);
-        }
-        QPlainTextEdit::focusOutEvent(e);
-    }
-
-private:
-
-    SyntaxHighlighter *m_highlighter;
-    char format;
-
-}; // FmtText
 
 //------------------------------------------------------------------------------
 
-void FormatsWidget::createLblFmt(QLabel*& lbl, FormatLabel*& fmt, char format)
+void FormatsWidget::createLblFmt(QAction*& act, FormatLabel*& fmt, char& format)
 {
-    lbl = new QLabel(this);
+    act = new QAction(this);
     fmt = new FormatLabel(this, format);
+
+    connect(act, SIGNAL(toggled(bool)), fmt, SLOT(setAltFormat(bool)));
+
+    QToolButton *btn = new QToolButton(this);
+
+    btn->setDefaultAction(act);
+    btn->setAutoRaise(true);
+    btn->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+    switch (tolower(format)) {
+    case 'h':
+    case 'o':
+    case 'b':
+        act->setCheckable(true);
+        if (tolower(format) != format)
+          act->setChecked(true);
+        break;
+    case 'e':
+    case 'n':
+        act->setCheckable(true);
+        if (format == 'n')
+          act->setChecked(true);
+        break;
+    default:
+        break;
+    }
 
     m_fmtLbls.append(fmt);
 
     int row = layout->rowCount();
-    layout->addWidget(lbl, row, 1);
+    layout->addWidget(btn, row, 1);
     layout->addWidget(fmt, row, 0);
 }
 
@@ -161,18 +189,23 @@ FormatsWidget::FormatsWidget(QWidget *parent)
     layout = new QGridLayout(this);
     layout->setMargin(0);
     layout->setVerticalSpacing(0);
+    layout->setHorizontalSpacing(0);
+    layout->setColumnStretch(0, 1);
 
-    createLblFmt(m_lblDec, m_fmtDec, 'f');
-    createLblFmt(m_lblHex, m_fmtHex, 'h');
-    createLblFmt(m_lblOct, m_fmtOct, 'o');
-    createLblFmt(m_lblBin, m_fmtBin, 'b');
-    createLblFmt(m_lblEng, m_fmtEng, 'n');
-    createLblFmt(m_lblSci, m_fmtSci, 'e');
+    static char formatsDec = 'f';
+    createLblFmt(m_actDec, m_fmtDec, formatsDec);
+    createLblFmt(m_actHex, m_fmtHex, Settings::instance()->formatsHex);
+    createLblFmt(m_actOct, m_fmtOct, Settings::instance()->formatsOct);
+    createLblFmt(m_actBin, m_fmtBin, Settings::instance()->formatsBin);
+    createLblFmt(m_actExp, m_fmtExp, Settings::instance()->formatsExp);
 
     // add empty row eating as much as possible (no spacing between format rows)
+    QWidget *spacer = new QWidget();
     int row = layout->rowCount();
-    layout->addWidget(new QWidget(), row, 0, -1, -1);
+    layout->addWidget(spacer, row, 0, -1, -1);
     layout->setRowStretch(row, 1);
+
+    //setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 
     retranslateText();
 }
@@ -185,12 +218,13 @@ void FormatsWidget::updateNumber(const HNumber& number)
 
 void FormatsWidget::retranslateText()
 {
-    m_lblDec->setText(tr("Dec"));
-    m_lblHex->setText(tr("Hex"));
-    m_lblOct->setText(tr("Oct"));
-    m_lblBin->setText(tr("Bin"));
-    m_lblEng->setText(tr("Eng"));
-    m_lblSci->setText(tr("Sci"));
+    QString tooltip = tr("Toggle between default and two's complement format");
+
+    m_actDec->setText(tr("Dec"));
+    m_actHex->setText(tr("Hex"));  m_actHex->setToolTip(tooltip);
+    m_actOct->setText(tr("Oct"));  m_actOct->setToolTip(tooltip);
+    m_actBin->setText(tr("Bin"));  m_actBin->setToolTip(tooltip);
+    m_actExp->setText(tr("Exp"));  m_actExp->setToolTip(tr("Toggle between scientific and engineering format"));
 }
 
 void FormatsWidget::changeEvent(QEvent *e)
@@ -235,19 +269,11 @@ void FormatsWidget::decreaseFontPointSize()
     newFont.setPointSize(newSize);
     setNumberFont(newFont);
 }
- 
+
 void FormatsWidget::rehighlight()
 {
     for (int i = 0; i <  m_fmtLbls.size(); i++)
         m_fmtLbls.at(i)->rehighlight();
-
-    //~ setStyleSheet(QString(
-        //~ "QPlainTextEdit {"
-        //~ "   background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 %2, stop: 1 %1);"
-        //~ "}"
-    //~ ).arg(m_highlighter->colorForRole(SyntaxHighlighter::Background).name())
-     //~ .arg(m_highlighter->colorForRole(SyntaxHighlighter::EditorFade).name())
-    //~ );
 }
 
 

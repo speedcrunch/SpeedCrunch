@@ -22,14 +22,50 @@
 
 #include <QWidget>
 #include <QList>
+#include <QPlainTextEdit>
+#include <QAction>
 
+#include "math/hmath.h"
+
+class QPlainTextEdit;
 class QGridLayout;
-class QLabel;
+class QAction;
 class FormatLabel;
 class QSize;
 class QFont;
 
 class HNumber;
+class SyntaxHighlighter;
+
+//------------------------------------------------------------------------------
+
+class FormatLabel : public QPlainTextEdit
+{
+    Q_OBJECT
+
+public:
+
+    FormatLabel(QWidget *parent, char& format);
+    virtual QSize sizeHint() const;
+
+public slots:
+    void updateNumber(const HNumber& number);
+    void rehighlight();
+    void handleRadixCharacterChange();
+    void setAltFormat(bool altFormat);
+
+protected:
+    virtual void changeEvent(QEvent *e);
+    virtual void focusOutEvent(QFocusEvent* e);
+
+private:
+    SyntaxHighlighter *m_highlighter;
+    char& format;
+    HNumber number;
+};
+
+//------------------------------------------------------------------------------
+
 
 class FormatsWidget : public QWidget
 {
@@ -62,25 +98,22 @@ private:
     QGridLayout *layout;
     QList<FormatLabel*> m_fmtLbls;
 
-    QLabel      *m_lblDec;
+    QAction     *m_actDec;
     FormatLabel *m_fmtDec;
 
-    QLabel      *m_lblHex;
+    QAction     *m_actHex;
     FormatLabel *m_fmtHex;
 
-    QLabel      *m_lblOct;
+    QAction     *m_actOct;
     FormatLabel *m_fmtOct;
 
-    QLabel      *m_lblBin;
+    QAction     *m_actBin;
     FormatLabel *m_fmtBin;
 
-    QLabel      *m_lblEng;
-    FormatLabel *m_fmtEng;
+    QAction     *m_actExp;
+    FormatLabel *m_fmtExp;
 
-    QLabel      *m_lblSci;
-    FormatLabel *m_fmtSci;
-
-    void createLblFmt(QLabel*&, FormatLabel*&, char format);
+    void createLblFmt(QAction*&, FormatLabel*&, char&);
 };
 
 #endif // GUI_FORMATSWIDGET_H

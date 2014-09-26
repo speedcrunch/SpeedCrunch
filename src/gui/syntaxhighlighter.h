@@ -37,7 +37,7 @@ public:
         Number,
         Parens,
         Result,
-        ResultDoubt,
+        ResultApprox,
         Comment,
         Matched,
         Function,

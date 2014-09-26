@@ -766,7 +766,7 @@ void MainWindow::createFormatsDock()
         SLOT(decreaseFontPointSize()));
     connect(m_widgets.editor, SIGNAL(shiftUpPressed()), m_docks.formats->widget(),
         SLOT(increaseFontPointSize()));
-  
+
     connect(m_widgets.display, SIGNAL(shiftWheelDown()), m_docks.formats->widget(),
         SLOT(decreaseFontPointSize()));
     connect(m_widgets.display, SIGNAL(shiftWheelUp()), m_docks.formats->widget(),
