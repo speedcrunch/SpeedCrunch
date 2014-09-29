@@ -866,7 +866,7 @@ void FunctionRepo::setFunctionNames()
     FUNCTION_NAME(binomvar, tr("Binomial Distribution Variance"));
     FUNCTION_NAME(cbrt, tr("Cube Root"));
     FUNCTION_NAME(ceil, tr("Ceiling"));
-    FUNCTION_NAME(compln, tr("Two's complement for negative number, truncate to integer"));
+    FUNCTION_NAME(compln, tr("Signed integer two's complement notation (truncates to integer)"));
     FUNCTION_NAME(cos, tr("Cosine"));
     FUNCTION_NAME(cosh, tr("Hyperbolic Cosine"));
     FUNCTION_NAME(cot, tr("Cotangent"));

@@ -2464,11 +2464,14 @@ void MainWindow::evaluateEditorExpression()
 {
     QString expr = m_evaluator->autoFix(m_widgets.editor->text());
 
-    if (expr.isEmpty())
-        return;
-
     m_evaluator->setExpression(expr);
     HNumber result = m_evaluator->evalUpdateAns();
+
+    if (m_settings->formatsDockVisible)
+        m_docks.formats->updateNumber(result);
+
+    if (expr.isEmpty())
+        return;
 
     if (!m_evaluator->error().isEmpty()) {
         showStateLabel(m_evaluator->error());
@@ -2495,9 +2498,6 @@ void MainWindow::evaluateEditorExpression()
 
     if (m_settings->bitfieldVisible)
         m_widgets.bitField->updateBits(result);
-
-    if (m_settings->formatsDockVisible)
-        m_docks.formats->updateNumber(result);
 
     if (m_settings->variablesDockVisible)
         m_docks.variables->updateList();

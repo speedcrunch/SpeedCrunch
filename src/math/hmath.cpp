@@ -1817,21 +1817,22 @@ HNumber HMath::mask ( const HNumber & val, const HNumber & bits )
  */
 HNumber HMath::compln ( const HNumber & val, const HNumber & bits_grp )
 {
-  if ( val.isNan() || bits_grp == 0 || bits_grp >= LOGICRANGE || ! bits_grp.isInteger() )
+  if ( val.isNan() || bits_grp == 0 || bits_grp > LOGICRANGE || ! bits_grp.isInteger() )
     return HMath::nan();
+
+  HNumber intVal = HMath::integer(val);
+  if (intVal.isZero())
+	  return 0;
 
   // count number of minimum bits
-  HNumber bits = HMath::ceil(HMath::log(2, HMath::abs(HMath::integer(val))));
-  if (bits >= LOGICRANGE)
-  { // mask doesn't handle 256 bits
-    return HMath::nan();
-  }
+  HNumber bits = HMath::ceil(HMath::log(2, HMath::abs(intVal)));
+
   // round bits size to multiple of bits_grp
   bits = HMath::integer(bits / bits_grp + 1) * bits_grp;
-  if (bits >= LOGICRANGE)
-    bits = LOGICRANGE - 1;
+  if (bits > LOGICRANGE || (intVal.isPositive() && bits > LOGICRANGE-1))
+    return HMath::nan();
 
-  return HMath::mask(val, bits);
+  return val & ~(HNumber(-1) << HNumber(bits));
 }
 
 /**
