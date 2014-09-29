@@ -57,6 +57,7 @@ public:
     bool windowPositionSave;
 
     bool constantsDockVisible;
+    bool formatsDockVisible;
     bool functionsDockVisible;
     bool historyDockVisible;
     bool formulaBookDockVisible;
@@ -66,6 +67,8 @@ public:
     bool userFunctionsDockVisible;
     bool windowOnfullScreen;
     bool bitfieldVisible;
+
+    bool displayFormatsTitle;
 
     int colorScheme;
     QString displayFont;
@@ -81,6 +84,12 @@ public:
     QSize windowSize;
     QByteArray windowState;
     bool maximized;
+
+    // Formats widget
+    char formatsHex;
+    char formatsOct;
+    char formatsBin;
+    char formatsExp;
 
 private:
     Settings();

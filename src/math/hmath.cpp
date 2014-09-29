@@ -41,6 +41,10 @@
 #define HMATH_OCT_MAX_SHOWN ((11073*HMATH_MAX_SHOWN)/10000 + 1)
 #define HMATH_HEX_MAX_SHOWN ((8305*HMATH_MAX_SHOWN)/10000 + 1)
 
+
+// default bit group for two's complement formatting
+#define DEF_2CMPL_BITGRP 32
+
 /*------------------------   Helper routines  -------------------------*/
 
 static void checkfullcancellation( cfloatnum op1, cfloatnum op2,
@@ -773,8 +777,17 @@ char* HMath::format( const HNumber& hn, char format, int prec )
   case 'f': rs = formatFixed(&hn.d->fnum, prec ); break;
   case 'e': rs = formatScientific(&hn.d->fnum, prec ); break;
   case 'n': rs = formatEngineering(&hn.d->fnum, prec ); break;
+  case 'H': rs = HMath::format(compln(hn, DEF_2CMPL_BITGRP), 'h', prec);
+            //if (rs[0] == '0' && rs[1] == 'x') rs[0] = '2'; // set '2x' tag
+            break;
   case 'h': rs = formathexfp(&hn.d->fnum, 16, 10, HMATH_HEX_MAX_SHOWN); break;
+  case 'O': rs = HMath::format(compln(hn, DEF_2CMPL_BITGRP), 'o', prec);
+            //if (rs[0] == '0' && rs[1] == 'o') rs[0] = '2'; // set '2o' tag
+            break;
   case 'o': rs = formathexfp(&hn.d->fnum, 8, 10, HMATH_OCT_MAX_SHOWN); break;
+  case 'B': rs = HMath::format(compln(hn, DEF_2CMPL_BITGRP), 'b', prec);
+            //if (rs[0] == '0' && rs[1] == 'b') rs[0] = '2'; // set '2b' tag
+            break;
   case 'b': rs = formathexfp(&hn.d->fnum, 2, 10, HMATH_BIN_MAX_SHOWN); break;
   case 'g': default: rs = formatGeneral(&hn.d->fnum, prec );
   }
@@ -1797,6 +1810,50 @@ HNumber HMath::mask ( const HNumber & val, const HNumber & bits )
   if ( val.isNan() || bits == 0 || bits >= LOGICRANGE || ! bits.isInteger() )
     return HMath::nan();
   return val & ~(HNumber(-1) << HNumber(bits));
+}
+
+/**
+ * Returns two's complement for a negative value, setting bits determined from the value and rounded up to a multiple of bits_grp.
+ */
+HNumber HMath::compln ( const HNumber & val, const HNumber & bits_grp )
+{
+  if ( val.isNan() || bits_grp == 0 || bits_grp > LOGICRANGE || ! bits_grp.isInteger() )
+    return HMath::nan();
+
+  HNumber intVal = HMath::integer(val);
+  if (intVal.isZero())
+	  return 0;
+
+  // for whole positive numbers 2^bits we need one more bit
+  // (use raise() instead of 1<<n because of LOGICRANGE logic operations limits)
+  if (abs(intVal) > raise(2, LOGICRANGE-1) || intVal >= raise(2, LOGICRANGE-1))
+    return HMath::nan();
+
+  // count number of minimum bits for value - ceil(log(2,n))
+  HNumber bits = 0;
+  for (HNumber tmp = abs(intVal); tmp > 0; tmp = tmp >> 1)
+    bits += 1;
+  //HNumber bits = HMath::ceil(HMath::log(2, HMath::abs(intVal)) - HNumber("1.0e-20")) + 1;
+ 
+  // one more bit for sign
+  bits += 1;
+
+  // for whole positive numbers 2^bits we need one more bit 
+  if (intVal >= raise(2, bits-1))
+    bits += 1;
+
+  // round bits size to multiple of bits_grp
+  bits = HMath::ceil(HNumber(bits) / bits_grp) * bits_grp;
+
+  if (bits > LOGICRANGE)
+    return HMath::nan();
+
+  //return val & ~(HNumber(-1) << HNumber(bits));
+  if (intVal.isNegative())
+    return raise(2, bits) + intVal;
+  else
+    return intVal;
+  //return ~(HNumber(-1) << HNumber(bits));
 }
 
 /**

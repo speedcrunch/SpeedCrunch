@@ -572,6 +572,12 @@ HNumber function_mask(Function* f, const Function::ArgumentList& args)
     return HMath::mask(args.at(0), args.at(1));
 }
 
+HNumber function_compln(Function* f, const Function::ArgumentList& args)
+{
+    ENSURE_ARGUMENT_COUNT(2);
+    return HMath::compln(args.at(0), args.at(1));
+}
+
 HNumber function_unmask(Function* f, const Function::ArgumentList& args)
 {
     ENSURE_ARGUMENT_COUNT(2);
@@ -706,6 +712,7 @@ void FunctionRepo::createFunctions()
 
     // Logic.
     FUNCTION_INSERT(mask);
+    FUNCTION_INSERT(compln);
     FUNCTION_INSERT(unmask);
     FUNCTION_INSERT(not);
     FUNCTION_INSERT(and);
@@ -827,6 +834,7 @@ void FunctionRepo::setTranslatableFunctionUsages()
     FUNCTION_USAGE_TR(hyperpmf, tr("count; total; hits; trials"));
     FUNCTION_USAGE_TR(hypervar, tr("total; hits; trials"));
     FUNCTION_USAGE_TR(idiv, tr("dividend; divisor"));
+    FUNCTION_USAGE_TR(compln, tr("n; compl bits group"));
     FUNCTION_USAGE_TR(log, tr("base; x"));
     FUNCTION_USAGE_TR(mask, tr("n; bits"));
     FUNCTION_USAGE_TR(mod, tr("value; modulo"));
@@ -858,6 +866,7 @@ void FunctionRepo::setFunctionNames()
     FUNCTION_NAME(binomvar, tr("Binomial Distribution Variance"));
     FUNCTION_NAME(cbrt, tr("Cube Root"));
     FUNCTION_NAME(ceil, tr("Ceiling"));
+    FUNCTION_NAME(compln, tr("Signed integer two's complement notation (truncates to integer)"));
     FUNCTION_NAME(cos, tr("Cosine"));
     FUNCTION_NAME(cosh, tr("Hyperbolic Cosine"));
     FUNCTION_NAME(cot, tr("Cotangent"));

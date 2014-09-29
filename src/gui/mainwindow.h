@@ -31,6 +31,7 @@ class Constants;
 class ConstantsDock;
 class Editor;
 class Evaluator;
+class FormatsDock;
 class FunctionRepo;
 class FunctionsDock;
 class HistoryDock;
@@ -113,6 +114,7 @@ private slots:
     void setAutoCompletionEnabled(bool);
     void setBitfieldVisible(bool);
     void setConstantsDockVisible(bool);
+    void setFormatsDockVisible(bool);
     void setFormulaBookDockVisible(bool);
     void setFullScreenEnabled(bool);
     void setFunctionsDockVisible(bool);
@@ -167,6 +169,7 @@ private slots:
     void showSystemTrayMessage();
     void increaseDisplayFontPointSize();
     void decreaseDisplayFontPointSize();
+    void setDisplayFormatsTitle(bool);
 
 protected:
     virtual void closeEvent(QCloseEvent*);
@@ -187,6 +190,7 @@ private:
     void createBitField();
     void createBookDock();
     void createConstantsDock();
+    void createFormatsDock();
     void createFunctionsDock();
     void createHistoryDock();
     void createVariablesDock();
@@ -204,6 +208,7 @@ private:
     void deleteBitField();
     void deleteBookDock();
     void deleteConstantsDock();
+    void deleteFormatsDock();
     void deleteFunctionsDock();
     void deleteHistoryDock();
     void deleteVariablesDock();
@@ -238,6 +243,7 @@ private:
         QAction* editClearHistory;
         QAction* viewFormulaBook;
         QAction* viewConstants;
+        QAction* viewFormats;
         QAction* viewFunctions;
         QAction* viewVariables;
         QAction* viewUserFunctions;
@@ -285,11 +291,11 @@ private:
         QAction* settingsDisplayColorSchemeStandard;
         QAction* settingsDisplayColorSchemeSublime;
         QAction* settingsDisplayColorSchemeTerminal;
+        QAction* settingsDisplayFormatsTitle;
         QAction* settingsRadixCharDefault;
         QAction* settingsRadixCharDot;
         QAction* settingsRadixCharComma;
         QAction* settingsLanguage;
-        QAction* helpTipOfTheDay;
         QAction* helpManual;
         QAction* helpUpdates;
         QAction* helpFeedback;
@@ -344,6 +350,7 @@ private:
     struct {
         BookDock* book;
         ConstantsDock* constants;
+        FormatsDock* formats;
         FunctionsDock* functions;
         HistoryDock* history;
         VariablesDock* variables;

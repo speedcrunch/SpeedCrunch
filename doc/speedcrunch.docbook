@@ -240,6 +240,10 @@ All parameters have to be integers from the range -2^255 to +2^256-1 (signed or 
 <listitem><para>Finds the smalles integer greater then or equal to x, the ceiling of x.</para></listitem>
 </varlistentry>
 <varlistentry>
+<term>compln (n; bits group)</term>
+<listitem><para>Convert to signed integer two's complement notation: negative numbers are converted to two's complement with bits extended to the least whole multiple of 'bits group' sufficient to represent the whole value n, positive numbers are only truncated to integer part. The result is always unsigned, sign is represented by the most significant bit. E.g. hex (compln (-0xFFFFF; 16)) returns 0xFFF00001, the 32-bit two's complement bit pattern of -1048575.</para></listitem>
+</varlistentry>
+<varlistentry>
 <term>cos (x)</term>
 <listitem><para>Evaluates the cosine of x.  The result is dependent on the degree setting.  If &quot;degrees&quot; is active, the paramter x is assumed to be an arc from a 360 degree circle, otherwise a full circle is represented by 2*pie.  The inverse function is acos(y).  Although the cosine is mathematically defined for all x, for x beyond approximately 1e77, the periodicity of the cosine is not recognized any more, so &app; issues an error then.</para></listitem>
 </varlistentry>

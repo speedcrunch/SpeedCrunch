@@ -108,6 +108,19 @@ void Settings::load()
     if (resultPrecision > DECPRECISION)
         resultPrecision = DECPRECISION;
 
+    key = KEY + QLatin1String("/FormatsWidget/");
+    format = settings->value(key + QLatin1String("Hex"), 'h').toString();
+    formatsHex = (format == "h" || format == "H") ? format.at(0).toLatin1() : 'h';
+
+    format = settings->value(key + QLatin1String("Oct"), 'o').toString();
+    formatsOct = (format == "o" || format == "O") ? format.at(0).toLatin1() : 'o';
+
+    format = settings->value(key + QLatin1String("Bin"), 'b').toString();
+    formatsBin = (format == "b" || format == "B") ? format.at(0).toLatin1() : 'b';
+
+    format = settings->value(key + QLatin1String("Exp"), 'e').toString();
+    formatsExp = (format == "e" || format == "n") ? format.at(0).toLatin1() : 'e';
+
     key = KEY + QLatin1String("/Layout/");
     windowOnfullScreen = settings->value(key + QLatin1String("WindowOnFullScreen"), false).toBool();
     historyDockVisible = settings->value(key + QLatin1String("HistoryDockVisible"), false).toBool();
@@ -118,6 +131,7 @@ void Settings::load()
     userFunctionsDockVisible = settings->value(key + QLatin1String("UserFunctionsDockVisible"), false).toBool();
     formulaBookDockVisible = settings->value(key + QLatin1String("FormulaBookDockVisible"), false).toBool();
     constantsDockVisible = settings->value(key + QLatin1String("ConstantsDockVisible"), false).toBool();
+    formatsDockVisible = settings->value(key + QLatin1String("FormatsDockVisible"), false).toBool();
     windowAlwaysOnTop = settings->value(key + QLatin1String("WindowAlwaysOnTop"), false).toBool();
     bitfieldVisible = settings->value(key + QLatin1String("BitfieldVisible"), false).toBool();
 
@@ -129,6 +143,8 @@ void Settings::load()
     key = KEY + QLatin1String("/Display/");
     displayFont = settings->value(key + QLatin1String("DisplayFont"), QFont().toString()).toString();
     colorScheme = settings->value(key + QLatin1String("ColorScheme"), 0).toInt();
+
+    displayFormatsTitle = settings->value(key + QLatin1String("FormatsTitle"), true).toBool();
 
     // Load history.
     key = KEY + QLatin1String("/History/");
@@ -248,10 +264,17 @@ void Settings::save()
     settings->setValue(key + QLatin1String("Type"), QString(QChar(resultFormat)));
     settings->setValue(key + QLatin1String("Precision"), resultPrecision);
 
+    key = KEY + QLatin1String("/FormatsWidget/");
+    settings->setValue(key + QLatin1String("Hex"), QString(formatsHex));
+    settings->setValue(key + QLatin1String("Oct"), QString(formatsOct));
+    settings->setValue(key + QLatin1String("Bin"), QString(formatsBin));
+    settings->setValue(key + QLatin1String("Exp"), QString(formatsExp));
+
     key = KEY + QLatin1String("/Layout/");
 
     settings->setValue(key + QLatin1String("FormulaBookDockVisible"), formulaBookDockVisible);
     settings->setValue(key + QLatin1String("ConstantsDockVisible"), constantsDockVisible);
+    settings->setValue(key + QLatin1String("FormatsDockVisible"), formatsDockVisible);
     settings->setValue(key + QLatin1String("FunctionsDockVisible"), functionsDockVisible);
     settings->setValue(key + QLatin1String("HistoryDockVisible"), historyDockVisible);
     settings->setValue(key + QLatin1String("WindowOnFullScreen"), windowOnfullScreen);
@@ -270,6 +293,8 @@ void Settings::save()
 
     settings->setValue(key + QLatin1String("DisplayFont"), displayFont);
     settings->setValue(key + QLatin1String("ColorScheme"), colorScheme);
+
+    settings->setValue(key + QLatin1String("FormatsTitle"), displayFormatsTitle);
 
     // Save history.
     if (historySave) {

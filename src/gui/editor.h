@@ -66,6 +66,7 @@ public:
 signals:
     void autoCalcEnabled(const QString&);
     void autoCalcDisabled();
+    void autoCalcChanged(const HNumber& num);
     void controlPageDownPressed();
     void controlPageUpPressed();
     void copySequencePressed();

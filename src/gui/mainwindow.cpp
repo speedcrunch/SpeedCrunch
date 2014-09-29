@@ -32,6 +32,7 @@
 #include "gui/bookdock.h"
 #include "gui/constantsdock.h"
 #include "gui/editor.h"
+#include "gui/formatsdock.h"
 #include "gui/functionsdock.h"
 #include "gui/historydock.h"
 #include "gui/historywidget.h"
@@ -121,6 +122,7 @@ void MainWindow::createActions()
     m_actions.editPaste = new QAction(this);
     m_actions.editSelectExpression = new QAction(this);
     m_actions.viewConstants = new QAction(this);
+    m_actions.viewFormats = new QAction(this);
     m_actions.viewFullScreenMode = new QAction(this);
     m_actions.viewFunctions = new QAction(this);
     m_actions.viewHistory = new QAction(this);
@@ -155,6 +157,7 @@ void MainWindow::createActions()
     m_actions.settingsDisplayColorSchemeSublime = new QAction(this);
     m_actions.settingsDisplayColorSchemeTerminal = new QAction(this);
     m_actions.settingsDisplayFont = new QAction(this);
+    m_actions.settingsDisplayFormatsTitle = new QAction(this);
     m_actions.settingsLanguage = new QAction(this);
     m_actions.settingsRadixCharComma = new QAction(this);
     m_actions.settingsRadixCharDefault = new QAction(this);
@@ -204,6 +207,7 @@ void MainWindow::createActions()
     m_actions.settingsDisplayColorSchemeStandard->setCheckable(true);
     m_actions.settingsDisplayColorSchemeSublime->setCheckable(true);
     m_actions.settingsDisplayColorSchemeTerminal->setCheckable(true);
+    m_actions.settingsDisplayFormatsTitle->setCheckable(true);
     m_actions.settingsRadixCharComma->setCheckable(true);
     m_actions.settingsRadixCharDefault->setCheckable(true);
     m_actions.settingsRadixCharDot->setCheckable(true);
@@ -221,6 +225,7 @@ void MainWindow::createActions()
     m_actions.settingsResultFormatOctal->setCheckable(true);
     m_actions.settingsResultFormatScientific->setCheckable(true);
     m_actions.viewConstants->setCheckable(true);
+    m_actions.viewFormats->setCheckable(true);
     m_actions.viewFullScreenMode->setCheckable(true);
     m_actions.viewFunctions->setCheckable(true);
     m_actions.viewHistory->setCheckable(true);
@@ -317,6 +322,7 @@ void MainWindow::setActionsText()
     m_actions.editSelectExpression->setText(MainWindow::tr("&Select Expression"));
 
     m_actions.viewConstants->setText(MainWindow::tr("&Constants"));
+    m_actions.viewFormats->setText(MainWindow::tr("&Formats"));
     m_actions.viewFullScreenMode->setText(MainWindow::tr("F&ull Screen Mode"));
     m_actions.viewFunctions->setText(MainWindow::tr("&Functions"));
     m_actions.viewHistory->setText(MainWindow::tr("&History"));
@@ -368,6 +374,7 @@ void MainWindow::setActionsText()
     m_actions.settingsDisplayColorSchemeSublime->setText(MainWindow::tr("Sublime"));
     m_actions.settingsDisplayColorSchemeTerminal->setText(MainWindow::tr("Terminal"));
     m_actions.settingsDisplayFont->setText(MainWindow::tr("&Font..."));
+    m_actions.settingsDisplayFormatsTitle->setText(MainWindow::tr("Show docked Formats title bar"));
     m_actions.settingsLanguage->setText(MainWindow::tr("&Language..."));
 
     m_actions.helpManual->setText(MainWindow::tr("User &Manual"));
@@ -430,10 +437,11 @@ void MainWindow::createActionShortcuts()
     m_actions.editPaste->setShortcut(Qt::CTRL + Qt::Key_V);
     m_actions.editSelectExpression->setShortcut(Qt::CTRL + Qt::Key_A);
     m_actions.viewBitfield->setShortcut(Qt::CTRL + Qt::Key_6);
+    m_actions.viewFormats->setShortcut(Qt::CTRL + Qt::Key_7);
     m_actions.viewConstants->setShortcut(Qt::CTRL + Qt::Key_2);
     m_actions.viewFullScreenMode->setShortcut(Qt::Key_F11);
     m_actions.viewFunctions->setShortcut(Qt::CTRL + Qt::Key_3);
-    m_actions.viewHistory->setShortcut(Qt::CTRL + Qt::Key_7);
+    m_actions.viewHistory->setShortcut(Qt::CTRL + Qt::Key_8);
     m_actions.viewFormulaBook->setShortcut(Qt::CTRL + Qt::Key_1);
 #ifndef Q_OS_MAC
     if (shouldAllowHiddenMenuBar())
@@ -486,6 +494,7 @@ void MainWindow::createMenus()
     m_menus.view->addAction(m_actions.viewVariables);
     m_menus.view->addAction(m_actions.viewUserFunctions);
     m_menus.view->addAction(m_actions.viewBitfield);
+    m_menus.view->addAction(m_actions.viewFormats);
     m_menus.view->addAction(m_actions.viewHistory);
     m_menus.view->addSeparator();
     m_menus.view->addAction(m_actions.viewStatusBar);
@@ -563,6 +572,8 @@ void MainWindow::createMenus()
     m_menus.colorScheme->addAction(m_actions.settingsDisplayColorSchemeSublime);
     m_menus.colorScheme->addAction(m_actions.settingsDisplayColorSchemeTerminal);
     m_menus.display->addAction(m_actions.settingsDisplayFont);
+    m_menus.display->addSeparator();
+    m_menus.display->addAction(m_actions.settingsDisplayFormatsTitle);
 
     m_menus.settings->addAction(m_actions.settingsLanguage);
 
@@ -735,6 +746,39 @@ void MainWindow::createConstantsDock()
     m_settings->constantsDockVisible = true;
 }
 
+void MainWindow::createFormatsDock()
+{
+    m_docks.formats = new FormatsDock(this);
+    m_docks.formats->setObjectName("FormatsDock");
+    m_docks.formats->installEventFilter(this);
+    m_docks.formats->setAllowedAreas(Qt::AllDockWidgetAreas);
+    addDockWidget(Qt::BottomDockWidgetArea, m_docks.formats);
+
+    connect(m_widgets.editor, SIGNAL(autoCalcChanged(const HNumber&)), m_docks.formats->widget(),
+        SLOT(updateNumber(const HNumber&)));
+    connect(this, SIGNAL(colorSchemeChanged()), m_docks.formats->widget(),
+        SLOT(rehighlight()));
+    connect(this, SIGNAL(syntaxHighlightingChanged()), m_docks.formats->widget(),
+        SLOT(rehighlight()));
+    connect(this, SIGNAL(radixCharacterChanged()), m_docks.formats->widget(),
+        SLOT(handleRadixCharacterChange()));
+
+    connect(m_widgets.editor, SIGNAL(shiftDownPressed()), m_docks.formats->widget(),
+        SLOT(decreaseFontPointSize()));
+    connect(m_widgets.editor, SIGNAL(shiftUpPressed()), m_docks.formats->widget(),
+        SLOT(increaseFontPointSize()));
+
+    connect(m_widgets.display, SIGNAL(shiftWheelDown()), m_docks.formats->widget(),
+        SLOT(decreaseFontPointSize()));
+    connect(m_widgets.display, SIGNAL(shiftWheelUp()), m_docks.formats->widget(),
+        SLOT(increaseFontPointSize()));
+
+    m_docks.formats->show();
+    m_docks.formats->raise();
+
+    m_settings->formatsDockVisible = true;
+}
+
 void MainWindow::createFunctionsDock()
 {
     m_docks.functions = new FunctionsDock(this);
@@ -870,6 +914,7 @@ void MainWindow::createFixedConnections()
     connect(m_actions.editSelectExpression, SIGNAL(triggered()), SLOT(selectEditorExpression()));
 
     connect(m_actions.viewConstants, SIGNAL(toggled(bool)), SLOT(setConstantsDockVisible(bool)));
+    connect(m_actions.viewFormats, SIGNAL(toggled(bool)), SLOT(setFormatsDockVisible(bool)));
     connect(m_actions.viewFullScreenMode, SIGNAL(toggled(bool)), SLOT(setFullScreenEnabled(bool)));
     connect(m_actions.viewFunctions, SIGNAL(toggled(bool)), SLOT(setFunctionsDockVisible(bool)));
     connect(m_actions.viewHistory, SIGNAL(toggled(bool)), SLOT(setHistoryDockVisible(bool)));
@@ -961,6 +1006,8 @@ void MainWindow::createFixedConnections()
 
     connect(m_actions.settingsDisplayFont, SIGNAL(triggered()), SLOT(showFontDialog()));
 
+    connect(m_actions.settingsDisplayFormatsTitle, SIGNAL(toggled(bool)), SLOT(setDisplayFormatsTitle(bool)));
+
     QList<QAction*> colorSchemeActions = m_actionGroups.colorScheme->actions();
     for (int i = 0; i < colorSchemeActions.size(); ++i)
         connect(colorSchemeActions.at(i), SIGNAL(triggered()), SLOT(applySelectedColorScheme()));
@@ -974,6 +1021,7 @@ void MainWindow::applySettings()
 
     m_actions.viewFormulaBook->setChecked(m_settings->formulaBookDockVisible);
     m_actions.viewConstants->setChecked(m_settings->constantsDockVisible);
+    m_actions.viewFormats->setChecked(m_settings->formatsDockVisible);
     m_actions.viewFunctions->setChecked(m_settings->functionsDockVisible);
     m_actions.viewHistory->setChecked(m_settings->historyDockVisible);
     m_actions.viewVariables->setChecked(m_settings->variablesDockVisible);
@@ -1063,12 +1111,18 @@ void MainWindow::applySettings()
     m_widgets.display->setFont(font);
     m_widgets.editor->setFont(font);
 
+    if (m_docks.formats)
+      m_docks.formats->setNumberFont(font);
+
     if (m_settings->colorScheme == SyntaxHighlighter::Standard)
         m_actions.settingsDisplayColorSchemeStandard->setChecked(true);
     else if (m_settings->colorScheme == SyntaxHighlighter::Sublime)
         m_actions.settingsDisplayColorSchemeSublime->setChecked(true);
     else if (m_settings->colorScheme == SyntaxHighlighter::Terminal)
         m_actions.settingsDisplayColorSchemeTerminal->setChecked(true);
+
+    m_actions.settingsDisplayFormatsTitle->setChecked(m_settings->displayFormatsTitle);
+    setDisplayFormatsTitle(m_settings->displayFormatsTitle);
 
     m_actions.viewStatusBar->setChecked(m_settings->statusBarVisible);
 
@@ -1200,6 +1254,7 @@ MainWindow::MainWindow()
     m_docks.book = 0;
     m_docks.history = 0;
     m_docks.constants = 0;
+    m_docks.formats = 0;
     m_docks.functions = 0;
     m_docks.variables = 0;
     m_docks.userFunctions = 0;
@@ -1211,6 +1266,14 @@ MainWindow::MainWindow()
 
     createUi();
     applySettings();
+
+    // do this after resotoreState() in applySettings(), otherwise it can be changed by saved state
+    setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);
+    setCorner(Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);
+    setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
+    setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
+    setDockNestingEnabled(true);
+
     QTimer::singleShot(0, m_widgets.editor, SLOT(setFocus()));
 }
 
@@ -1222,6 +1285,8 @@ MainWindow::~MainWindow()
         deleteBookDock();
     if (m_docks.constants)
         deleteConstantsDock();
+    if (m_docks.formats)
+        deleteFormatsDock();
     if (m_docks.variables)
         deleteVariablesDock();
     if (m_docks.userFunctions)
@@ -1885,6 +1950,9 @@ void MainWindow::showFontDialog()
         return;
     m_widgets.display->setFont(f);
     m_widgets.editor->setFont(f);
+
+    if (m_docks.formats)
+      m_docks.formats->setNumberFont(f);
 }
 
 #ifndef Q_OS_MAC
@@ -1936,6 +2004,14 @@ bool MainWindow::eventFilter(QObject* o, QEvent* e)
     if (o == m_docks.constants) {
         if (e->type() == QEvent::Close) {
             deleteConstantsDock();
+            return true;
+        }
+        return false;
+    }
+
+    if (o == m_docks.formats) {
+        if (e->type() == QEvent::Close) {
+            deleteFormatsDock();
             return true;
         }
         return false;
@@ -2025,6 +2101,20 @@ void MainWindow::deleteConstantsDock()
     m_settings->constantsDockVisible = false;
 }
 
+void MainWindow::deleteFormatsDock()
+{
+    Q_ASSERT(m_docks.formats);
+
+    removeDockWidget(m_docks.formats);
+    disconnect(m_docks.formats);
+    m_docks.formats->deleteLater();
+    m_docks.formats = 0;
+    m_actions.viewFormats->blockSignals(true);
+    m_actions.viewFormats->setChecked(false);
+    m_actions.viewFormats->blockSignals(false);
+    m_settings->formatsDockVisible = false;
+}
+
 void MainWindow::deleteFunctionsDock()
 {
     Q_ASSERT(m_docks.functions);
@@ -2103,6 +2193,14 @@ void MainWindow::setConstantsDockVisible(bool b)
         createConstantsDock();
     else
         deleteConstantsDock();
+}
+
+void MainWindow::setFormatsDockVisible(bool b)
+{
+    if (b)
+        createFormatsDock();
+    else
+        deleteFormatsDock();
 }
 
 void MainWindow::setHistoryDockVisible(bool b)
@@ -2366,11 +2464,14 @@ void MainWindow::evaluateEditorExpression()
 {
     QString expr = m_evaluator->autoFix(m_widgets.editor->text());
 
-    if (expr.isEmpty())
-        return;
-
     m_evaluator->setExpression(expr);
     HNumber result = m_evaluator->evalUpdateAns();
+
+    if (m_settings->formatsDockVisible)
+        m_docks.formats->updateNumber(result);
+
+    if (expr.isEmpty())
+        return;
 
     if (!m_evaluator->error().isEmpty()) {
         showStateLabel(m_evaluator->error());
@@ -2532,6 +2633,10 @@ void MainWindow::handleSystemTrayIconActivation(QSystemTrayIcon::ActivationReaso
             m_docks.constants->hide();
             m_docks.constants->show();
         }
+        if (m_docks.formats && m_docks.formats->isFloating()) {
+            m_docks.formats->hide();
+            m_docks.formats->show();
+        }
     }
 }
 
@@ -2600,6 +2705,13 @@ void MainWindow::decreaseDisplayFontPointSize()
 {
     m_widgets.display->decreaseFontPointSize();
     m_widgets.editor->decreaseFontPointSize();
+}
+
+void MainWindow::setDisplayFormatsTitle(bool on)
+{
+  if (m_docks.formats)
+    m_docks.formats->displayTitleBar(on);
+  m_settings->displayFormatsTitle = on;
 }
 
 void MainWindow::showLanguageChooserDialog()

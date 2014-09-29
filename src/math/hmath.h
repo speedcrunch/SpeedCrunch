@@ -60,8 +60,11 @@ class HNumber
     // 'e': decimal scientific
     // 'n': decimal engineering
     // 'h': hexadecimal
+    // 'H': hexadecimal two's complement for negative integers
     // 'o': octal
+    // 'O': octal two's complement for negative integers
     // 'b': binary
+    // 'B': binary two's complement for negative integers
     char format() const;
     HNumber& setFormat( char c = 0 );
 
@@ -167,6 +170,7 @@ class HMath
     static HNumber poissonVariance( const HNumber & l );
     // LOGIC
     static HNumber mask( const HNumber & val, const HNumber & bits );
+    static HNumber compln( const HNumber & val, const HNumber & bits_grp );
     static HNumber sgnext( const HNumber & val, const HNumber & bits );
     static HNumber ashr( const HNumber & val, const HNumber & bits );
 };

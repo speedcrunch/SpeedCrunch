@@ -436,6 +436,24 @@ void test_function_logic()
     CHECK_EVAL("xor(0;1)", "1");
     CHECK_EVAL("xor(1;0)", "1");
     CHECK_EVAL("xor(1;1)", "0");
+
+
+    CHECK_EVAL("compln(1;0)", "NaN");
+    CHECK_EVAL("compln(1;257)", "NaN");
+    CHECK_EVAL("compln(1;256)", "1");
+    CHECK_EVAL("compln(0;1)", "0");
+    CHECK_EVAL("compln(1;1)", "1");
+    CHECK_EVAL("compln(-1;1)", "1");
+    CHECK_EVAL("compln(-1;8)", "255");
+    CHECK_EVAL("compln(-1;8)", "255");
+    CHECK_EVAL("compln(-0xFFFFF;16)", "4293918721");
+    CHECK_EVAL("compln(2**256;1)", "NaN");
+    CHECK_EVAL("hex(compln(2**256-1;1))", "NaN");
+    CHECK_EVAL("hex(compln(2**255;1))", "NaN");
+    CHECK_EVAL("hex(compln(2**255-1;1))", "0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
+    CHECK_EVAL("hex(compln(-1;256))", "0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
+    CHECK_EVAL("hex(compln(-2;256))", "0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE");
+    CHECK_EVAL("hex(compln(-2**255;256))", "0x8000000000000000000000000000000000000000000000000000000000000000");
 }
 
 void test_function_discrete()
