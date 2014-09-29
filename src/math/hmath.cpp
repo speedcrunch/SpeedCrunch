@@ -1824,15 +1824,36 @@ HNumber HMath::compln ( const HNumber & val, const HNumber & bits_grp )
   if (intVal.isZero())
 	  return 0;
 
-  // count number of minimum bits
-  HNumber bits = HMath::ceil(HMath::log(2, HMath::abs(intVal)));
-
-  // round bits size to multiple of bits_grp
-  bits = HMath::integer(bits / bits_grp + 1) * bits_grp;
-  if (bits > LOGICRANGE || (intVal.isPositive() && bits > LOGICRANGE-1))
+  // for whole positive numbers 2^bits we need one more bit
+  // (use raise() instead of 1<<n because of LOGICRANGE logic operations limits)
+  if (abs(intVal) > raise(2, LOGICRANGE-1) || intVal >= raise(2, LOGICRANGE-1))
     return HMath::nan();
 
-  return val & ~(HNumber(-1) << HNumber(bits));
+  // count number of minimum bits for value - ceil(log(2,n))
+  HNumber bits = 0;
+  for (HNumber tmp = abs(intVal); tmp > 0; tmp = tmp >> 1)
+    bits += 1;
+  //HNumber bits = HMath::ceil(HMath::log(2, HMath::abs(intVal)) - HNumber("1.0e-20")) + 1;
+ 
+  // one more bit for sign
+  bits += 1;
+
+  // for whole positive numbers 2^bits we need one more bit 
+  if (intVal >= raise(2, bits-1))
+    bits += 1;
+
+  // round bits size to multiple of bits_grp
+  bits = HMath::ceil(HNumber(bits) / bits_grp) * bits_grp;
+
+  if (bits > LOGICRANGE)
+    return HMath::nan();
+
+  //return val & ~(HNumber(-1) << HNumber(bits));
+  if (intVal.isNegative())
+    return raise(2, bits) + intVal;
+  else
+    return intVal;
+  //return ~(HNumber(-1) << HNumber(bits));
 }
 
 /**
