@@ -144,6 +144,8 @@ void Settings::load()
     displayFont = settings->value(key + QLatin1String("DisplayFont"), QFont().toString()).toString();
     colorScheme = settings->value(key + QLatin1String("ColorScheme"), 0).toInt();
 
+    displayFormatsTitle = settings->value(key + QLatin1String("FormatsTitle"), true).toBool();
+
     // Load history.
     key = KEY + QLatin1String("/History/");
     history.clear();
@@ -291,6 +293,8 @@ void Settings::save()
 
     settings->setValue(key + QLatin1String("DisplayFont"), displayFont);
     settings->setValue(key + QLatin1String("ColorScheme"), colorScheme);
+
+    settings->setValue(key + QLatin1String("FormatsTitle"), displayFormatsTitle);
 
     // Save history.
     if (historySave) {

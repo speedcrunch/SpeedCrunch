@@ -94,19 +94,13 @@ QTranslator* MainWindow::createTranslator(const QString& langCode)
 
 void MainWindow::createUi()
 {
-    setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);
-    setCorner(Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);
-    setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
-    setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
-    setDockNestingEnabled(true);
-  
     createActions();
     createActionGroups();
     createActionShortcuts();
     createMenus();
     createFixedWidgets();
     createFixedConnections();
-  
+
     setWindowTitle("SpeedCrunch");
     setWindowIcon(QPixmap(":/speedcrunch.png"));
 
@@ -163,6 +157,7 @@ void MainWindow::createActions()
     m_actions.settingsDisplayColorSchemeSublime = new QAction(this);
     m_actions.settingsDisplayColorSchemeTerminal = new QAction(this);
     m_actions.settingsDisplayFont = new QAction(this);
+    m_actions.settingsDisplayFormatsTitle = new QAction(this);
     m_actions.settingsLanguage = new QAction(this);
     m_actions.settingsRadixCharComma = new QAction(this);
     m_actions.settingsRadixCharDefault = new QAction(this);
@@ -212,6 +207,7 @@ void MainWindow::createActions()
     m_actions.settingsDisplayColorSchemeStandard->setCheckable(true);
     m_actions.settingsDisplayColorSchemeSublime->setCheckable(true);
     m_actions.settingsDisplayColorSchemeTerminal->setCheckable(true);
+    m_actions.settingsDisplayFormatsTitle->setCheckable(true);
     m_actions.settingsRadixCharComma->setCheckable(true);
     m_actions.settingsRadixCharDefault->setCheckable(true);
     m_actions.settingsRadixCharDot->setCheckable(true);
@@ -378,6 +374,7 @@ void MainWindow::setActionsText()
     m_actions.settingsDisplayColorSchemeSublime->setText(MainWindow::tr("Sublime"));
     m_actions.settingsDisplayColorSchemeTerminal->setText(MainWindow::tr("Terminal"));
     m_actions.settingsDisplayFont->setText(MainWindow::tr("&Font..."));
+    m_actions.settingsDisplayFormatsTitle->setText(MainWindow::tr("Show docked Formats title bar"));
     m_actions.settingsLanguage->setText(MainWindow::tr("&Language..."));
 
     m_actions.helpManual->setText(MainWindow::tr("User &Manual"));
@@ -575,6 +572,8 @@ void MainWindow::createMenus()
     m_menus.colorScheme->addAction(m_actions.settingsDisplayColorSchemeSublime);
     m_menus.colorScheme->addAction(m_actions.settingsDisplayColorSchemeTerminal);
     m_menus.display->addAction(m_actions.settingsDisplayFont);
+    m_menus.display->addSeparator();
+    m_menus.display->addAction(m_actions.settingsDisplayFormatsTitle);
 
     m_menus.settings->addAction(m_actions.settingsLanguage);
 
@@ -710,8 +709,6 @@ void MainWindow::createBookDock()
         tabifyDockWidget(m_docks.history, m_docks.book);
     else if (m_docks.constants)
         tabifyDockWidget(m_docks.constants, m_docks.book);
-    else if (m_docks.formats)
-        tabifyDockWidget(m_docks.formats, m_docks.book);
 
     m_docks.book->show();
     m_docks.book->raise();
@@ -740,8 +737,6 @@ void MainWindow::createConstantsDock()
         tabifyDockWidget(m_docks.userFunctions, m_docks.constants);
     else if (m_docks.history)
         tabifyDockWidget(m_docks.history, m_docks.constants);
-    else if (m_docks.formats)
-        tabifyDockWidget(m_docks.formats, m_docks.constants);
     else if (m_docks.book)
         tabifyDockWidget(m_docks.book, m_docks.constants);
 
@@ -757,7 +752,7 @@ void MainWindow::createFormatsDock()
     m_docks.formats->setObjectName("FormatsDock");
     m_docks.formats->installEventFilter(this);
     m_docks.formats->setAllowedAreas(Qt::AllDockWidgetAreas);
-    addDockWidget(Qt::RightDockWidgetArea, m_docks.formats);
+    addDockWidget(Qt::BottomDockWidgetArea, m_docks.formats);
 
     connect(m_widgets.editor, SIGNAL(autoCalcChanged(const HNumber&)), m_docks.formats->widget(),
         SLOT(updateNumber(const HNumber&)));
@@ -777,19 +772,6 @@ void MainWindow::createFormatsDock()
         SLOT(decreaseFontPointSize()));
     connect(m_widgets.display, SIGNAL(shiftWheelUp()), m_docks.formats->widget(),
         SLOT(increaseFontPointSize()));
-
-    if (m_docks.functions)
-        tabifyDockWidget(m_docks.functions, m_docks.formats);
-    else if (m_docks.variables)
-        tabifyDockWidget(m_docks.variables, m_docks.formats);
-    else if (m_docks.userFunctions)
-        tabifyDockWidget(m_docks.userFunctions, m_docks.formats);
-    else if (m_docks.history)
-        tabifyDockWidget(m_docks.history, m_docks.formats);
-    else if (m_docks.constants)
-        tabifyDockWidget(m_docks.constants, m_docks.formats);
-    else if (m_docks.book)
-        tabifyDockWidget(m_docks.book, m_docks.formats);
 
     m_docks.formats->show();
     m_docks.formats->raise();
@@ -815,8 +797,6 @@ void MainWindow::createFunctionsDock()
         tabifyDockWidget(m_docks.userFunctions, m_docks.functions);
     else if (m_docks.constants)
         tabifyDockWidget(m_docks.constants, m_docks.functions);
-    else if (m_docks.formats)
-        tabifyDockWidget(m_docks.formats, m_docks.functions);
     else if (m_docks.book)
         tabifyDockWidget(m_docks.book, m_docks.functions);
 
@@ -848,8 +828,6 @@ void MainWindow::createHistoryDock()
         tabifyDockWidget(m_docks.userFunctions, m_docks.history);
     else if (m_docks.constants)
         tabifyDockWidget(m_docks.constants, m_docks.history);
-    else if (m_docks.formats)
-        tabifyDockWidget(m_docks.formats, m_docks.history);
     else if (m_docks.book)
         tabifyDockWidget(m_docks.book, m_docks.history);
 
@@ -880,8 +858,6 @@ void MainWindow::createVariablesDock()
         tabifyDockWidget(m_docks.history, m_docks.variables);
     else if (m_docks.constants)
         tabifyDockWidget(m_docks.constants, m_docks.variables);
-    else if (m_docks.formats)
-        tabifyDockWidget(m_docks.formats, m_docks.variables);
     else if (m_docks.book)
         tabifyDockWidget(m_docks.book, m_docks.variables);
 
@@ -912,8 +888,6 @@ void MainWindow::createUserFunctionsDock()
         tabifyDockWidget(m_docks.history, m_docks.userFunctions);
     else if (m_docks.constants)
         tabifyDockWidget(m_docks.constants, m_docks.userFunctions);
-    else if (m_docks.formats)
-        tabifyDockWidget(m_docks.formats, m_docks.userFunctions);
     else if (m_docks.book)
         tabifyDockWidget(m_docks.book, m_docks.userFunctions);
 
@@ -1032,6 +1006,8 @@ void MainWindow::createFixedConnections()
 
     connect(m_actions.settingsDisplayFont, SIGNAL(triggered()), SLOT(showFontDialog()));
 
+    connect(m_actions.settingsDisplayFormatsTitle, SIGNAL(toggled(bool)), SLOT(setDisplayFormatsTitle(bool)));
+
     QList<QAction*> colorSchemeActions = m_actionGroups.colorScheme->actions();
     for (int i = 0; i < colorSchemeActions.size(); ++i)
         connect(colorSchemeActions.at(i), SIGNAL(triggered()), SLOT(applySelectedColorScheme()));
@@ -1144,6 +1120,9 @@ void MainWindow::applySettings()
         m_actions.settingsDisplayColorSchemeSublime->setChecked(true);
     else if (m_settings->colorScheme == SyntaxHighlighter::Terminal)
         m_actions.settingsDisplayColorSchemeTerminal->setChecked(true);
+
+    m_actions.settingsDisplayFormatsTitle->setChecked(m_settings->displayFormatsTitle);
+    setDisplayFormatsTitle(m_settings->displayFormatsTitle);
 
     m_actions.viewStatusBar->setChecked(m_settings->statusBarVisible);
 
@@ -1287,6 +1266,14 @@ MainWindow::MainWindow()
 
     createUi();
     applySettings();
+
+    // do this after resotoreState() in applySettings(), otherwise it can be changed by saved state
+    setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);
+    setCorner(Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);
+    setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
+    setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
+    setDockNestingEnabled(true);
+
     QTimer::singleShot(0, m_widgets.editor, SLOT(setFocus()));
 }
 
@@ -2718,6 +2705,13 @@ void MainWindow::decreaseDisplayFontPointSize()
 {
     m_widgets.display->decreaseFontPointSize();
     m_widgets.editor->decreaseFontPointSize();
+}
+
+void MainWindow::setDisplayFormatsTitle(bool on)
+{
+  if (m_docks.formats)
+    m_docks.formats->displayTitleBar(on);
+  m_settings->displayFormatsTitle = on;
 }
 
 void MainWindow::showLanguageChooserDialog()

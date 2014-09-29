@@ -169,6 +169,7 @@ private slots:
     void showSystemTrayMessage();
     void increaseDisplayFontPointSize();
     void decreaseDisplayFontPointSize();
+    void setDisplayFormatsTitle(bool);
 
 protected:
     virtual void closeEvent(QCloseEvent*);
@@ -290,11 +291,11 @@ private:
         QAction* settingsDisplayColorSchemeStandard;
         QAction* settingsDisplayColorSchemeSublime;
         QAction* settingsDisplayColorSchemeTerminal;
+        QAction* settingsDisplayFormatsTitle;
         QAction* settingsRadixCharDefault;
         QAction* settingsRadixCharDot;
         QAction* settingsRadixCharComma;
         QAction* settingsLanguage;
-        QAction* helpTipOfTheDay;
         QAction* helpManual;
         QAction* helpUpdates;
         QAction* helpFeedback;

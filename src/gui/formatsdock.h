@@ -35,6 +35,7 @@ public:
 public slots:
     void updateNumber(const HNumber&);
     void setNumberFont(const QFont&);
+    void displayTitleBar(bool);
 
 protected:
     virtual void changeEvent(QEvent *);

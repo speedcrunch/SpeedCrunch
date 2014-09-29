@@ -34,12 +34,20 @@ FormatsDock::FormatsDock(QWidget *parent)
 
 void FormatsDock::updateNumber(const HNumber& number)
 {
-  m_widget->updateNumber(number);
+    m_widget->updateNumber(number);
 }
 
 void FormatsDock::setNumberFont(const QFont& f)
 {
-  m_widget->setNumberFont(f);
+    m_widget->setNumberFont(f);
+}
+
+void FormatsDock::displayTitleBar(bool on)
+{
+    if (on)
+      setTitleBarWidget(NULL);
+    else
+      setTitleBarWidget(new QWidget());
 }
 
 void FormatsDock::retranslateText()

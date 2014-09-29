@@ -68,6 +68,8 @@ public:
     bool windowOnfullScreen;
     bool bitfieldVisible;
 
+    bool displayFormatsTitle;
+
     int colorScheme;
     QString displayFont;
 
