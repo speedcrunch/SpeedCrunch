@@ -29,22 +29,29 @@ using namespace std;
 #define CHECK(x,y) check_value(__FILE__,__LINE__,#x,x,y)
 #define CHECK_FORMAT(f,p,x,y) check_format(__FILE__,__LINE__,#x,x,f,p,y)
 #define CHECK_PRECISE(x,y) check_precise(__FILE__,__LINE__,#x,x,y)
+#define CHECK_KNOWN_ISSUE(x,y,n) check_value(__FILE__,__LINE__,#x,x,y,n)
 
 static int hmath_total_tests  = 0;
 static int hmath_failed_tests = 0;
+static int hmath_new_failed_tests = 0;
 
 static HNumber PI;
 
-static void check_value(const char* file, int line, const char* msg, const HNumber& n, const char* expected)
+static void check_value(const char* file, int line, const char* msg, const HNumber& n, const char* expected, int issue = 0)
 {
     ++hmath_total_tests;
     char* result = HMath::format(n, 'f');
-    if (strcmp(result, expected))
-    {
-      hmath_failed_tests++;
-      cerr << file << "[" << line << "]: " << msg << endl
-           << "  Result  : " << result   << endl
-           << "  Expected: " << expected << endl << endl;
+    if (strcmp(result, expected)) {
+        ++hmath_failed_tests;
+        cerr << "[Line " << line << "]\t" << msg << "\tResult: " << result;
+        cerr << "\tExpected: " << expected;
+        if (issue)
+            cerr << "\t[ISSUE " << issue << "]";
+        else {
+            cerr << "\t[NEW]";
+            ++hmath_new_failed_tests;
+        }
+        cerr << endl;
     }
     free(result);
 }
@@ -250,6 +257,7 @@ void test_functions()
     CHECK(HMath::floor("2.6041980"), "2");
     CHECK(HMath::floor("0.000001"), "0");
     CHECK(HMath::floor("-0.000001"), "-1");
+    CHECK_KNOWN_ISSUE(HMath::floor(HNumber(1) / 3 * 3), "1", 532);
 
     CHECK(HMath::ceil("NaN"), "NaN");
     CHECK(HMath::ceil("0"), "0");
@@ -261,6 +269,7 @@ void test_functions()
     CHECK(HMath::ceil("2.6041980"), "3");
     CHECK(HMath::ceil("0.000001"), "1");
     CHECK(HMath::ceil("-0.000001"), "0");
+    CHECK_KNOWN_ISSUE(HMath::ceil(HMath::log(2, 128)), "7", 532);
 
     CHECK(HMath::gcd("NaN", "NaN"), "NaN");
     CHECK(HMath::gcd("NaN", "5"), "NaN");
@@ -892,7 +901,9 @@ int main(int argc, char* argv[])
     test_functions();
 
     if (hmath_failed_tests)
-      cerr << hmath_total_tests  << " total, " << hmath_failed_tests << " failed" << endl;
+        cerr << hmath_total_tests  << " total, "
+             << hmath_failed_tests << " failed, "
+             << hmath_new_failed_tests << " new" << endl;
 
   return hmath_failed_tests;
 }
