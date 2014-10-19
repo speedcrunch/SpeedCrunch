@@ -34,6 +34,7 @@ UserFunctionsDock::UserFunctionsDock(QWidget*  parent)
     , m_userFunctionsWidget(new UserFunctionListWidget(this))
 {
     connect(m_userFunctionsWidget, SIGNAL(itemActivated(const QString&)), SIGNAL(userFunctionSelected(const QString&)));
+    connect(m_userFunctionsWidget, SIGNAL(itemEdited(const QString&)), SIGNAL(userFunctionEdited(const QString&)));
 
     setWidget(m_userFunctionsWidget);
 

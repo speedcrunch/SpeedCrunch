@@ -832,6 +832,7 @@ void MainWindow::createUserFunctionsDock()
     addDockWidget(Qt::RightDockWidgetArea, m_docks.userFunctions);
 
     connect(m_docks.userFunctions, SIGNAL(userFunctionSelected(const QString&)), SLOT(insertUserFunctionIntoEditor(const QString&)));
+    connect(m_docks.userFunctions, SIGNAL(userFunctionEdited(const QString&)), SLOT(insertUserFunctionIntoEditor(const QString&)));
     connect(this, SIGNAL(radixCharacterChanged()), m_docks.userFunctions, SLOT(handleRadixCharacterChange()));
 
     m_docks.userFunctions->updateList();

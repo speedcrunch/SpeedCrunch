@@ -75,10 +75,12 @@ UserFunctionListWidget::UserFunctionListWidget(QWidget* parent)
 
     QMenu* contextMenu = new QMenu(m_userFunctions);
     m_insertAction = new QAction("", contextMenu);
+    m_editAction = new QAction("", contextMenu);
     m_deleteAction = new QAction("", contextMenu);
     m_deleteAllAction = new QAction("", contextMenu);
     m_userFunctions->setContextMenuPolicy(Qt::ActionsContextMenu);
     m_userFunctions->addAction(m_insertAction);
+    m_userFunctions->addAction(m_editAction);
     m_userFunctions->addAction(m_deleteAction);
     m_userFunctions->addAction(m_deleteAllAction);
 
@@ -90,6 +92,7 @@ UserFunctionListWidget::UserFunctionListWidget(QWidget* parent)
     connect(m_searchFilter, SIGNAL(textChanged(const QString&)), SLOT(triggerFilter()));
     connect(m_userFunctions, SIGNAL(itemActivated(QTreeWidgetItem*, int)), SLOT(activateItem()));
     connect(m_insertAction, SIGNAL(triggered()), SLOT(activateItem()));
+    connect(m_editAction, SIGNAL(triggered()), SLOT(editItem()));
     connect(m_deleteAction, SIGNAL(triggered()), SLOT(deleteItem()));
     connect(m_deleteAllAction, SIGNAL(triggered()), SLOT(deleteAllItems()));
 }
@@ -150,6 +153,7 @@ void UserFunctionListWidget::retranslateText()
     m_noMatchLabel->setText(tr("No match found"));
 
     m_insertAction->setText(tr("Insert"));
+    m_editAction->setText(tr("Edit"));
     m_deleteAction->setText(tr("Delete"));
     m_deleteAllAction->setText(tr("Delete All"));
 
@@ -171,6 +175,13 @@ void UserFunctionListWidget::activateItem()
     if (!currentItem() || m_userFunctions->selectedItems().isEmpty())
         return;
     emit itemActivated(currentItem()->text(0));
+}
+
+void UserFunctionListWidget::editItem()
+{
+    if (!currentItem() || m_userFunctions->selectedItems().isEmpty())
+        return;
+    emit itemEdited(currentItem()->text(0) + " = " + currentItem()->text(1));
 }
 
 void UserFunctionListWidget::deleteItem()
@@ -205,11 +216,13 @@ void UserFunctionListWidget::changeEvent(QEvent* event)
 
 void UserFunctionListWidget::keyPressEvent(QKeyEvent* event)
 {
-    if (event->key() == Qt::Key_Delete) {
-        Evaluator::instance()->unsetUserFunction(getUserFunctionName(currentItem()));
-        fillTable();
-        event->accept();
+    if (event->key() == Qt::Key_Delete)
+        deleteItem();
+    else if (event->key() == Qt::Key_E)
+        editItem();
+    else {
+        QWidget::keyPressEvent(event);
         return;
     }
-    QWidget::keyPressEvent(event);
+    event->accept();
 }
