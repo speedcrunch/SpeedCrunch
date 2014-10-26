@@ -117,9 +117,9 @@ void SyntaxHighlighter::highlightBlock(const QString& text)
 
         case Token::stxIdentifier:
             color = colorForRole(Variable);
-            for (int i = 0; i < functionNames.count(); ++i)
-                if (functionNames.at(i).toLower() == tokenText)
-                    color = colorForRole(Function);
+            if (Evaluator::instance()->hasUserFunction(token.text())
+                || functionNames.contains(tokenText, Qt::CaseInsensitive))
+                color = colorForRole(Function);
             break;
 
         default:
