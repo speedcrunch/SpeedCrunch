@@ -144,7 +144,7 @@ void SyntaxHighlighter::highlightBlock(const QString& text)
 
         setFormat(token.pos(), end, color);
         if (token.type() == Token::stxNumber && Settings::instance()->digitGrouping > 0)
-            groupDigits(text, token.pos(), token.text().length());
+            groupDigits(text, token.pos(), end - token.pos());
     }
 }
 
@@ -168,7 +168,8 @@ void SyntaxHighlighter::formatDigitsGroup(const QString& text, int start, int en
     Q_ASSERT(start <= end);
     Q_ASSERT(size > 0);
 
-    qreal spacing = 140; // Size of the space between groups (100 means no space).
+    qreal spacing = 100; // Size of the space between groups (100 means no space).
+    spacing += 40 * Settings::instance()->digitGrouping;
     Evaluator *evaluator = Evaluator::instance();
     int inc = !invert ? -1 : 1;
     if(!invert)
@@ -238,8 +239,6 @@ void SyntaxHighlighter::groupDigits(const QString& text, int pos, int length)
         charType['F'] = HEX_CHAR;
     }
 
-    qreal groupSpacing = 100; // Size of the space between groups (100 means no space).
-    groupSpacing += 40 * Settings::instance()->digitGrouping;
     int s = -1; // Index of the first digit (most significant).
     bool invertGroup = false; // If true, group digits from the most significant digit.
     int groupSize = 3; // Number of digits to group (depends on the radix).
