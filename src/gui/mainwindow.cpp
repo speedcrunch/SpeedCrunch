@@ -151,6 +151,8 @@ void MainWindow::createActions()
     m_actions.settingsBehaviorDigitGroupingTwoSpaces = new QAction(this);
     m_actions.settingsBehaviorDigitGroupingThreeSpaces = new QAction(this);
     m_actions.settingsBehaviorAutoResultToClipboard = new QAction(this);
+    m_actions.settingsBehaviorParseAllRadixChar = new QAction(this);
+    m_actions.settingsBehaviorStrictDigitGrouping = new QAction(this);
     m_actions.settingsDisplayColorSchemeStandard = new QAction(this);
     m_actions.settingsDisplayColorSchemeSublime = new QAction(this);
     m_actions.settingsDisplayColorSchemeTerminal = new QAction(this);
@@ -201,6 +203,8 @@ void MainWindow::createActions()
     m_actions.settingsBehaviorDigitGroupingThreeSpaces->setCheckable(true);
     m_actions.settingsBehaviorDigitGroupingThreeSpaces->setData(3);
     m_actions.settingsBehaviorAutoResultToClipboard->setCheckable(true);
+    m_actions.settingsBehaviorParseAllRadixChar->setCheckable(true);
+    m_actions.settingsBehaviorStrictDigitGrouping->setCheckable(true);
     m_actions.settingsDisplayColorSchemeStandard->setCheckable(true);
     m_actions.settingsDisplayColorSchemeSublime->setCheckable(true);
     m_actions.settingsDisplayColorSchemeTerminal->setCheckable(true);
@@ -348,6 +352,8 @@ void MainWindow::setActionsText()
     m_actions.settingsBehaviorDigitGroupingThreeSpaces->setText(MainWindow::tr("Large Space"));
     m_actions.settingsBehaviorLeaveLastExpression->setText(MainWindow::tr("Leave &Last Expression"));
     m_actions.settingsBehaviorAutoResultToClipboard->setText(MainWindow::tr("Automatic &Result to Clipboard"));
+    m_actions.settingsBehaviorParseAllRadixChar->setText(MainWindow::tr("Detect &All Radix Characters"));
+    m_actions.settingsBehaviorStrictDigitGrouping->setText(MainWindow::tr("&Strict Digit Groups Detection"));
     m_actions.settingsRadixCharComma->setText(MainWindow::tr("&Comma"));
     m_actions.settingsRadixCharDefault->setText(MainWindow::tr("&System Default"));
     m_actions.settingsRadixCharDot->setText(MainWindow::tr("&Dot"));
@@ -552,6 +558,8 @@ void MainWindow::createMenus()
     m_menus.digitGrouping->addAction(m_actions.settingsBehaviorDigitGroupingThreeSpaces);
 
     m_menus.behavior->addAction(m_actions.settingsBehaviorLeaveLastExpression);
+    m_menus.behavior->addAction(m_actions.settingsBehaviorParseAllRadixChar);
+    m_menus.behavior->addAction(m_actions.settingsBehaviorStrictDigitGrouping);
     m_menus.behavior->addSeparator();
     m_menus.behavior->addAction(m_actions.settingsBehaviorAlwaysOnTop);
     m_menus.behavior->addAction(m_actions.settingsBehaviorMinimizeToTray);
@@ -900,6 +908,8 @@ void MainWindow::createFixedConnections()
     connect(m_actionGroups.digitGrouping, SIGNAL(triggered(QAction*)), SLOT(setDigitGrouping(QAction*)));
     connect(m_actions.settingsBehaviorLeaveLastExpression, SIGNAL(toggled(bool)), SLOT(setLeaveLastExpressionEnabled(bool)));
     connect(m_actions.settingsBehaviorAutoResultToClipboard, SIGNAL(toggled(bool)), SLOT(setAutoResultToClipboardEnabled(bool)));
+    connect(m_actions.settingsBehaviorParseAllRadixChar, SIGNAL(toggled(bool)), SLOT(setParseAllRadixChar(bool)));
+    connect(m_actions.settingsBehaviorStrictDigitGrouping, SIGNAL(toggled(bool)), SLOT(setStrictDigitGrouping(bool)));
 
     connect(m_actions.settingsRadixCharComma, SIGNAL(triggered()), SLOT(setRadixCharacterComma()));
     connect(m_actions.settingsRadixCharDefault, SIGNAL(triggered()), SLOT(setRadixCharacterAutomatic()));
@@ -1058,6 +1068,9 @@ void MainWindow::applySettings()
         m_actions.settingsBehaviorAutoResultToClipboard->setChecked(true);
     else
         setAutoResultToClipboardEnabled(false);
+
+    m_actions.settingsBehaviorParseAllRadixChar->setChecked(m_settings->parseAllRadixChar);
+    m_actions.settingsBehaviorStrictDigitGrouping->setChecked(m_settings->strictDigitGrouping);
 
     QFont font;
     font.fromString(m_settings->displayFont);
@@ -1705,6 +1718,18 @@ void MainWindow::setDigitGrouping(QAction *action)
 void MainWindow::setAutoResultToClipboardEnabled(bool b)
 {
     m_settings->autoResultToClipboard = b;
+}
+
+void MainWindow::setParseAllRadixChar(bool b)
+{
+    m_settings->parseAllRadixChar = b;
+    emit radixCharacterChanged();
+}
+
+void MainWindow::setStrictDigitGrouping(bool b)
+{
+    m_settings->strictDigitGrouping = b;
+    emit radixCharacterChanged();   // FIXME?
 }
 
 void MainWindow::setAngleModeRadian()

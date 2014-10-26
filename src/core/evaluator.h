@@ -102,6 +102,9 @@ public:
     static Evaluator* instance();
     void reset();
 
+    static bool isSeparatorChar(const QChar&);
+    static bool isRadixChar(const QChar&);
+
     QString autoFix(const QString&);
     QString dump();
     QString error() const;

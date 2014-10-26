@@ -234,6 +234,50 @@ void test_radix_char()
     CHECK_EVAL("-0x.f + 1", "0.0625");
 }
 
+void test_thoushand_sep()
+{
+    CHECK_EVAL("12'345.678'9", "12345.6789");
+    CHECK_EVAL("1234'5.67'89", "12345.6789");
+    CHECK_EVAL("1234'56", "123456");
+    //CHECK_EVAL("'123456", "123456");  // FIXME: should not fail?
+    CHECK_EVAL("123456'", "123456");
+    CHECK_EVAL("123'''456", "123456");
+    CHECK_EVAL(".'123456", "0.123456");
+
+    CHECK_EVAL("12 345.678 9", "12345.6789");
+    CHECK_EVAL("12_345.678_9", "12345.6789");
+    CHECK_EVAL(QString::fromUtf8("12·345.678·9"), "12345.6789");
+    CHECK_EVAL(QString::fromUtf8("12٫345.678٫9"), "12345.6789");
+    CHECK_EVAL(QString::fromUtf8("12٬345.678٬9"), "12345.6789");
+    CHECK_EVAL(QString::fromUtf8("12˙345.678˙9"), "12345.6789");
+    CHECK_EVAL(QString::fromUtf8("12⎖345.678⎖9"), "12345.6789");
+
+    CHECK_EVAL("12$345.678~9", "12345.6789");
+    CHECK_EVAL("12`345.678@9", "12345.6789");
+}
+
+void test_thoushand_sep_strict()
+{
+    CHECK_EVAL("12'345.678'9", "12345.6789");
+    CHECK_EVAL("1234'5.67'89", "12345.6789");
+    CHECK_EVAL("1234'56", "123456");
+    //CHECK_EVAL("'123456", "123456");  // FIXME: should not fail?
+    CHECK_EVAL("123456'", "123456");
+    CHECK_EVAL("123'''456", "123456");
+    CHECK_EVAL(".'123456", "0.123456");
+
+    CHECK_EVAL("12 345.678 9", "12345.6789");
+    CHECK_EVAL("12_345.678_9", "12345.6789");
+    CHECK_EVAL(QString::fromUtf8("12·345.678·9"), "12345.6789");
+    CHECK_EVAL(QString::fromUtf8("12٫345.678٫9"), "12345.6789");
+    CHECK_EVAL(QString::fromUtf8("12٬345.678٬9"), "12345.6789");
+    CHECK_EVAL(QString::fromUtf8("12˙345.678˙9"), "12345.6789");
+    CHECK_EVAL(QString::fromUtf8("12⎖345.678⎖9"), "12345.6789");
+
+    CHECK_EVAL_FAIL("12$345.678~9");
+    CHECK_EVAL_FAIL("12`345.678@9");
+}
+
 void test_function_basic()
 {
     CHECK_EVAL("ABS(0)", "0");
@@ -616,6 +660,8 @@ int main(int argc, char* argv[])
     Settings* settings = Settings::instance();
     settings->angleUnit = 'r';
     settings->setRadixCharacter('.');
+    settings->parseAllRadixChar = true;
+    settings->strictDigitGrouping = true;
 
     eval = Evaluator::instance();
 
@@ -625,6 +671,11 @@ int main(int argc, char* argv[])
 
     test_divide_by_zero();
     test_radix_char();
+
+    settings->strictDigitGrouping = false;
+    test_thoushand_sep();
+    settings->strictDigitGrouping = true;
+    test_thoushand_sep_strict();
 
     test_function_basic();
     test_function_trig();

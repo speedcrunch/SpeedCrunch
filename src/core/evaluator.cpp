@@ -22,6 +22,8 @@
 
 #include "core/evaluator.h"
 
+#include "core/settings.h"
+
 #include <QCoreApplication>
 #include <QStack>
 
@@ -228,7 +230,6 @@ Token& Token::operator=(const Token& token)
 HNumber Token::asNumber() const
 {
     QString text = m_text;
-    text.replace(",", "."); // Issue 151.
     return isNumber() ? HNumber((const char*)text.toLatin1()) : HNumber(0);
 }
 
@@ -310,6 +311,51 @@ void TokenStack::ensureSpace()
 static bool isIdentifier(QChar ch)
 {
     return ch.unicode() == '_' || ch.unicode() == '$' || ch.isLetter();
+}
+
+// Helper function: return true for valid radix characters.
+bool Evaluator::isRadixChar(const QChar &ch)
+{
+    if (Settings::instance()->parseAllRadixChar)
+        return ch.unicode() == '.' || ch.unicode() == ',';
+    // There exist more than 2 radix characters actually:
+    //   U+0027 ' apostrophe
+    //   U+002C , comma
+    //   U+002E . full stop
+    //   U+00B7 · middle dot
+    //   U+066B ٫ arabic decimal separator
+    //   U+2396 ⎖ decimal separator key symbol
+
+    return ch.unicode() == Settings::instance()->radixCharacter();
+}
+
+/* Only match known thousand separators: 
+ *   U+0020   space
+ *   U+0027 ' apostrophe
+ *   U+002C , comma
+ *   U+002E . full stop
+ *   U+005F _ low line
+ *   U+00B7 · middle dot
+ *   U+066B ٫ arabic decimal separator
+ *   U+066C ٬ arabic thousands separator
+ *   U+02D9 ˙ dot above
+ *   U+2396 ⎖ decimal separator key symbol
+ */
+static QRegExp s_separatorStrictRE("[ ',\\._\\x00B7\\x066B\\x066C\\x02D9\\x2396]");
+
+// Match everything that is not alphanumeric or an operator or NUL.
+static QRegExp s_separatorRE("[^a-zA-Z0-9\\+\\-\\*/\\^;\\(\\)%!=\\\\&\\|<>\\?#\\x0000]");
+
+// Helper function: return true for valid thousand separator characters.
+bool Evaluator::isSeparatorChar(const QChar &ch)
+{
+    if (isRadixChar(ch))
+        return false;
+
+    if (Settings::instance()->strictDigitGrouping)
+        return s_separatorStrictRE.exactMatch(ch);
+    else
+        return s_separatorRE.exactMatch(ch);
 }
 
 Evaluator* Evaluator::instance()
@@ -438,9 +484,10 @@ Tokens Evaluator::scan(const QString& expr, Evaluator::AutoFixPolicy policy) con
                 tokenText.append("0x");
                 state = InHexa;
                 ++i;
-            } else if (ch == '.' || ch == ',') { // Radix character?
-                tokenText.append(ex.at(i++));
+            } else if (isRadixChar(ch)) { // Radix character?
+                tokenText.append('.');  // Issue 151.
                 state = InDecimal;
+                ++i;
             } else if (ch.isNull()) // Terminator character.
                 state = Finish;
             else { // Look for operator match.
@@ -501,7 +548,7 @@ Tokens Evaluator::scan(const QString& expr, Evaluator::AutoFixPolicy policy) con
         case InNumber:
             if (ch.isDigit()) // Consume as long as it's a digit.
                 tokenText.append(ex.at(i++));
-            else if (ch == '.' || ch == ',') { // Convert to '.'.
+            else if (isRadixChar(ch)) { // Convert to '.'.
                 tokenText.append('.');
                 ++i;
                 state = InDecimal;
@@ -523,7 +570,9 @@ Tokens Evaluator::scan(const QString& expr, Evaluator::AutoFixPolicy policy) con
             } else if (ch.toUpper() == 'D' && tokenText == "0") { // Explicit decimal notation.
                 tokenText = ""; // We also need to get rid of the leading zero.
                 ++i;
-            } else { // We're done with integer number.
+            } else if (isSeparatorChar(ch)) // Ignore thousand separators
+                ++i;
+            else { // We're done with integer number.
                 tokens.append(Token(Token::stxNumber, tokenText, tokenStart));
                 tokenText = "";
                 state = Start;
@@ -533,12 +582,14 @@ Tokens Evaluator::scan(const QString& expr, Evaluator::AutoFixPolicy policy) con
         case InHexa:
             if (ch.isDigit() || (ch >= 'A' && ch < 'G') || (ch >= 'a' && ch < 'g'))
                 tokenText.append(ex.at(i++).toUpper());
-            else if (!numberFrac && (ch == '.' || ch == ',')) {
+            else if (!numberFrac && (isRadixChar(ch))) {
                 // Allow a unique fractionnal part.
                 tokenText.append('.');
                 ++i;
                 numberFrac = true;
-            } else { // We're done with hexadecimal number.
+            } else if (isSeparatorChar(ch)) // Ignore thousand separators
+                ++i;
+            else { // We're done with hexadecimal number.
                 tokens.append(Token(Token::stxNumber, tokenText, tokenStart));
                 tokenText = "";
                 state = Start;
@@ -548,12 +599,14 @@ Tokens Evaluator::scan(const QString& expr, Evaluator::AutoFixPolicy policy) con
         case InBinary:
             if (ch == '0' || ch == '1')
                 tokenText.append(ex.at(i++));
-            else if (!numberFrac && (ch == '.' || ch == ',')) {
+            else if (!numberFrac && (isRadixChar(ch))) {
                 // Allow a unique fractionnal part.
                 tokenText.append('.');
                 ++i;
                 numberFrac = true;
-            } else { // We're done with binary number.
+            } else if (isSeparatorChar(ch)) // Ignore thousand separators
+                ++i;
+            else { // We're done with binary number.
                 tokens.append(Token(Token::stxNumber, tokenText, tokenStart));
                 tokenText = "";
                 state = Start;
@@ -563,12 +616,14 @@ Tokens Evaluator::scan(const QString& expr, Evaluator::AutoFixPolicy policy) con
         case InOctal:
             if (ch >= '0' && ch < '8')
                 tokenText.append(ex.at(i++));
-            else if (!numberFrac && (ch == '.' || ch == ',')) {
+            else if (!numberFrac && (isRadixChar(ch))) {
                 // Allow a unique fractionnal part.
                 tokenText.append('.');
                 ++i;
                 numberFrac = true;
-            } else { // We're done with octal number.
+            } else if (isSeparatorChar(ch)) // Ignore thousand separators
+                ++i;
+            else { // We're done with octal number.
                 tokens.append(Token(Token::stxNumber, tokenText, tokenStart));
                 tokenText = ""; state = Start;
             }
@@ -581,7 +636,9 @@ Tokens Evaluator::scan(const QString& expr, Evaluator::AutoFixPolicy policy) con
                 tokenText.append('E');
                 ++i;
                 state = InExpIndicator;
-            } else { // We're done with floating-point number.
+            } else if (isSeparatorChar(ch)) // Ignore thousand separators
+                ++i;
+            else { // We're done with floating-point number.
                 tokens.append(Token(Token::stxNumber, tokenText, tokenStart));
                 tokenText = "";
                 state = Start;
@@ -593,6 +650,8 @@ Tokens Evaluator::scan(const QString& expr, Evaluator::AutoFixPolicy policy) con
                 tokenText.append(ex.at(i++));
             else if (ch.isDigit()) // Consume as long as it's a digit.
                 state = InExponent;
+            else if (isSeparatorChar(ch)) // Ignore thousand separators
+                ++i;
             else // Invalid thing here.
                 state = Bad;
             break;
@@ -600,6 +659,8 @@ Tokens Evaluator::scan(const QString& expr, Evaluator::AutoFixPolicy policy) con
         case InExponent:
             if (ch.isDigit()) // Consume as long as it's a digit.
                 tokenText.append(ex.at(i++));
+            else if (isSeparatorChar(ch)) // Ignore thousand separators
+                ++i;
             else { // We're done with floating-point number.
                 tokens.append(Token(Token::stxNumber, tokenText, tokenStart));
                 tokenText = "";

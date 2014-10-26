@@ -145,6 +145,8 @@ private slots:
     void setSyntaxHighlightingEnabled(bool);
     void setDigitGrouping(QAction*);
     void setAutoResultToClipboardEnabled(bool);
+    void setParseAllRadixChar(bool);
+    void setStrictDigitGrouping(bool);
     void setSystemTrayIconEnabled(bool);
     void setVariableSaveEnabled(bool);
     void setUserFunctionSaveEnabled(bool b);
@@ -279,6 +281,8 @@ private:
         QAction* settingsBehaviorAlwaysOnTop;
         QAction* settingsBehaviorMinimizeToTray;
         QAction* settingsBehaviorAutoResultToClipboard;
+        QAction* settingsBehaviorParseAllRadixChar;
+        QAction* settingsBehaviorStrictDigitGrouping;
         QAction* settingsDisplayZoomIn;
         QAction* settingsDisplayZoomOut;
         QAction* settingsDisplayFont;

@@ -64,6 +64,7 @@ private:
     SyntaxHighlighter(QObject*);
     SyntaxHighlighter(QTextDocument*);
     void groupDigits(const QString& text, int pos, int length);
+    void formatDigitsGroup(const QString& text, int start, int end, bool invert, int size);
 
     QHash<Role, QColor> m_colorScheme;
 };

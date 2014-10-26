@@ -100,6 +100,8 @@ void SyntaxHighlighter::highlightBlock(const QString& text)
         case Token::stxNumber:
         case Token::stxUnknown:
             color = colorForRole(Number);
+            // TODO: color thousand separators differently? It might help troubleshooting issues
+            //       in non-strict mode where more than 95k characters are valid separators.
             break;
 
         case Token::stxOperator:
@@ -126,11 +128,23 @@ void SyntaxHighlighter::highlightBlock(const QString& text)
             break;
         };
 
-        if (token.pos() >= 0) {
-            setFormat(token.pos(), token.text().length(), color);
-            if (token.type() == Token::stxNumber && Settings::instance()->digitGrouping > 0)
-                groupDigits(text, token.pos(), token.text().length());
+        Q_ASSERT(token.pos() >= 0); // Why would pos() ever return a negative value?
+
+        // The token text might be a modified version of the displayed text,
+        // so we must not rely on it to find out the number of character to highlight.
+        int end = text.length();
+        if (i + 1 < tokens.size())
+        {
+            const Token& nextToken = tokens.at(i + 1);
+
+            Q_ASSERT(nextToken.pos() >= 0);
+
+            end = nextToken.pos();
         }
+
+        setFormat(token.pos(), end, color);
+        if (token.type() == Token::stxNumber && Settings::instance()->digitGrouping > 0)
+            groupDigits(text, token.pos(), token.text().length());
     }
 }
 
@@ -147,6 +161,47 @@ void SyntaxHighlighter::update()
     parentWidget->setPalette(pal);
 
     rehighlight();
+}
+
+void SyntaxHighlighter::formatDigitsGroup(const QString& text, int start, int end, bool invert, int size)
+{
+    Q_ASSERT(start <= end);
+    Q_ASSERT(size > 0);
+
+    qreal spacing = 140; // Size of the space between groups (100 means no space).
+    Evaluator *evaluator = Evaluator::instance();
+    int inc = !invert ? -1 : 1;
+    if(!invert)
+    {
+        int tmp = start;
+        start = end - 1;
+        end = tmp - 1;
+
+        // Skip the first digit so that we add the spacing to the first digit of the next group.
+        while (start != end && evaluator->isSeparatorChar(text[start].unicode()))
+            --start;
+        if (start == end)
+            return; // Bug ?
+        --start;
+    }
+
+    for (int count = 0 ; start != end ; start += inc)
+    {
+        // When there are separators in the number, we must not count them as part of the group.
+        if (!evaluator->isSeparatorChar(text[start].unicode()))
+        {
+            ++count;
+            if (count == size)
+            {
+                // Only change the letter spacing from the format and keep the other properties.
+                QTextCharFormat fmt = format(start);
+                fmt.setFontLetterSpacing(spacing);
+                setFormat(start, 1, fmt);
+                count = 0; // Reset
+                // TODO: if the next character is a separator, do not add spacing?
+            }
+        }
+    }
 }
 
 void SyntaxHighlighter::groupDigits(const QString& text, int pos, int length)
@@ -189,6 +244,7 @@ void SyntaxHighlighter::groupDigits(const QString& text, int pos, int length)
     bool invertGroup = false; // If true, group digits from the most significant digit.
     int groupSize = 3; // Number of digits to group (depends on the radix).
     int allowedChars = DEC_CHAR; // Allowed characters for the radix of the current number being parsed.
+    Evaluator *evaluator = Evaluator::instance();
 
     int endPos = pos + length;
     if (endPos > text.length())
@@ -198,21 +254,9 @@ void SyntaxHighlighter::groupDigits(const QString& text, int pos, int length)
         bool isNumber = c < 128 && (charType[c] & allowedChars);
 
         if (s >= 0) {
-            if (!isNumber) {
+            if (!isNumber && !evaluator->isSeparatorChar(c)) {
                 // End of current number found, start grouping the digits.
-                if (invertGroup)
-                    for (s += groupSize - 1; s < i ; s += groupSize) {
-                        // Only change the letter spacing from the format and keep the other properties.
-                        QTextCharFormat fmt = format(s);
-                        fmt.setFontLetterSpacing(groupSpacing);
-                        setFormat(s, 1, fmt);
-                    }
-                else
-                    for (int e = i - (groupSize + 1); e >= s ; e -= groupSize) {
-                        QTextCharFormat fmt = format(e);
-                        fmt.setFontLetterSpacing(groupSpacing);
-                        setFormat(e, 1, fmt);
-                    }
+                formatDigitsGroup(text, s, i, invertGroup, groupSize);
                 s = -1; // Reset.
             }
         } else {
@@ -221,7 +265,7 @@ void SyntaxHighlighter::groupDigits(const QString& text, int pos, int length)
         }
 
         if (!isNumber) {
-            if (c == '.' || c == ',') {
+            if (evaluator->isRadixChar(c)) {
                 // Invert the grouping for the fractional part.
                 invertGroup = true;
             } else {
@@ -241,7 +285,7 @@ void SyntaxHighlighter::groupDigits(const QString& text, int pos, int length)
                         groupSize = 3;
                         allowedChars = DEC_CHAR;
                     }
-                } else {
+                } else if (!evaluator->isSeparatorChar(c)){
                     groupSize = 3;
                     allowedChars = DEC_CHAR;
                 }
@@ -251,17 +295,6 @@ void SyntaxHighlighter::groupDigits(const QString& text, int pos, int length)
 
     // Group the last digits if the string finishes with the number.
     if (s >= 0) {
-        if (invertGroup)
-            for (s += groupSize - 1; s < endPos ; s += groupSize) {
-                QTextCharFormat fmt = format(s);
-                fmt.setFontLetterSpacing(groupSpacing);
-                setFormat(s, 1, fmt);
-            }
-        else
-            for (int e = endPos - (groupSize + 1); e >= s ; e -= groupSize) {
-                QTextCharFormat fmt = format(e);
-                fmt.setFontLetterSpacing(groupSpacing);
-                setFormat(e, 1, fmt);
-            }
+        formatDigitsGroup(text, s, endPos, invertGroup, groupSize);
     }
 }
