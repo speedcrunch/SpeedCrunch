@@ -45,7 +45,7 @@ public:
         ScrollBar,
         Separator,
         Background,
-        EditorFade
+        EditorBackground
     };
 
     explicit SyntaxHighlighter(QPlainTextEdit*);

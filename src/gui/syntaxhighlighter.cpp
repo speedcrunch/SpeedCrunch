@@ -35,7 +35,7 @@ void SyntaxHighlighter::setColorScheme(SyntaxHighlighter::ColorScheme id)
 {
     switch (id) {
     case SyntaxHighlighter::Sublime:
-        SH(Cursor, 100, 200, 255);  SH(Function, 213, 38, 106);   SH(EditorFade, 29, 30, 24);
+        SH(Cursor, 100, 200, 255);  SH(Function, 213, 38, 106);   SH(EditorBackground, 29, 30, 24);
         SH(Number, 173, 119, 158);  SH(Operator, 242, 248, 214);
         SH(Parens, 103, 112, 88);   SH(Variable, 64, 181, 238);
         SH(Result, 197, 218, 107);  SH(ScrollBar, 110, 120, 100);
@@ -43,7 +43,7 @@ void SyntaxHighlighter::setColorScheme(SyntaxHighlighter::ColorScheme id)
         SH(Matched, 163, 126, 219); SH(Background, 39, 40, 34);
         break;
     case SyntaxHighlighter::Terminal:
-        SH(Cursor, 140, 100, 140);  SH(Function, 239, 41, 40);    SH(EditorFade, 38, 0, 26);
+        SH(Cursor, 140, 100, 140);  SH(Function, 239, 41, 40);    SH(EditorBackground, 38, 0, 26);
         SH(Number, 255, 255, 255);  SH(Operator, 196, 160, 0);
         SH(Parens, 173, 127, 168);  SH(Variable, 74, 154, 7);
         SH(Result, 104, 159, 207);  SH(ScrollBar, 140, 100, 140);
@@ -52,7 +52,7 @@ void SyntaxHighlighter::setColorScheme(SyntaxHighlighter::ColorScheme id)
         break;
     case SyntaxHighlighter::Standard:
     default:
-        SH(Cursor, 255, 100, 100);  SH(Function, 74, 154, 7);     SH(EditorFade, 220, 220, 220);
+        SH(Cursor, 255, 100, 100);  SH(Function, 74, 154, 7);     SH(EditorBackground, 220, 220, 220);
         SH(Number, 98, 50, 76);     SH(Operator, 193, 147, 188);
         SH(Parens, 196, 160, 50);   SH(Variable, 239, 41, 40);
         SH(Result, 104, 159, 207);  SH(ScrollBar, 190, 190, 190);

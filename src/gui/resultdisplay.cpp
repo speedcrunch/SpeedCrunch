@@ -316,7 +316,7 @@ void ResultDisplay::updateScrollBarStyleSheet()
         "   width: 5px;"
         "}"
         "QScrollBar::handle:vertical {"
-        "   background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 %1, stop: 0.4 %2, stop: 0.6 %2, stop: 1 %1);"
+        "   background: %2;"
         "}"
         "QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {"
         "   border: 0;"
