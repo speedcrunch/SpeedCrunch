@@ -25,11 +25,14 @@
 
 class HNumber;
 
+//------------------------------------------------------------------------------ 
+
 class BitWidget : public QLabel {
     Q_OBJECT
 
 public:
     explicit BitWidget(int apos, QWidget* parent = 0);
+    virtual QSize sizeHint() const;
 
     bool state() const { return m_state; }
     void setState(bool state) { m_state = state; update(); }
@@ -43,13 +46,15 @@ protected:
 
 private:
     enum {
-        SizePixels = 20,
+        SizePixels = 5,
     };
 
     Q_DISABLE_COPY(BitWidget)
 
     bool m_state;
 };
+
+//------------------------------------------------------------------------------ 
 
 class BitFieldWidget : public QWidget {
     Q_OBJECT

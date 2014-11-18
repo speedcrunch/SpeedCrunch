@@ -27,18 +27,27 @@
 #include <QListIterator>
 #include <QPainter>
 #include <QPaintEvent>
-#include <QPushButton>
+#include <QToolButton>
+
+//------------------------------------------------------------------------------ 
 
 BitWidget::BitWidget(int bitPosition, QWidget* parent)
     : QLabel(parent),
     m_state(false)
 {
-    setFixedSize(SizePixels, SizePixels);
-
+    setMinimumSize(SizePixels, SizePixels);
+    setMaximumSize(SizePixels*4, SizePixels*4);
+    setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
+  
     HNumber number(HMath::raise(HNumber(2), bitPosition));
     setToolTip(QString("2<sup>%1</sup> = %2")
         .arg(bitPosition)
         .arg(HMath::format(number, 'd')));
+}
+
+QSize BitWidget::sizeHint() const
+{
+    return QSize(SizePixels*4, SizePixels*4);
 }
 
 void BitWidget::mouseReleaseEvent(QMouseEvent*)
@@ -57,6 +66,8 @@ void BitWidget::paintEvent(QPaintEvent* event)
     else
         painter.drawRect(event->rect());
 }
+
+//------------------------------------------------------------------------------ 
 
 BitFieldWidget::BitFieldWidget(QWidget* parent) :
     QWidget(parent)
@@ -110,35 +121,50 @@ BitFieldWidget::BitFieldWidget(QWidget* parent) :
         }
     }
 
-    QPushButton* resetButton = new QPushButton("0");
-    resetButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    QToolButton* resetButton = new QToolButton();
+    resetButton->setText("0");
+    resetButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     connect(resetButton, SIGNAL(clicked()), this, SLOT(resetBits()));
 
-    QPushButton* invertButton = new QPushButton("~");
-    invertButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    QToolButton* invertButton = new QToolButton();
+    invertButton->setText("~");
+    invertButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     connect(invertButton, SIGNAL(clicked()), this, SLOT(invertBits()));
 
-    QPushButton* shiftLeftButton = new QPushButton("<<");
-    shiftLeftButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    QToolButton* shiftLeftButton = new QToolButton();
+    shiftLeftButton->setText("<<");
+    shiftLeftButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     connect(shiftLeftButton, SIGNAL(clicked()), this, SLOT(shiftBitsLeft()));
 
-    QPushButton* shiftRightButton = new QPushButton(">>");
-    shiftRightButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    QToolButton* shiftRightButton = new QToolButton();
+    shiftRightButton->setText(">>");
+    shiftRightButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     connect(shiftRightButton, SIGNAL(clicked()), this, SLOT(shiftBitsRight()));
 
-    QVBoxLayout* buttonsLayout = new QVBoxLayout;
-    buttonsLayout->addWidget(resetButton);
-    buttonsLayout->addWidget(shiftLeftButton);
+    int col = fieldLayout->columnCount();
+    fieldLayout->addWidget(resetButton, 0, col);
+    fieldLayout->addWidget(shiftLeftButton, 1, col);
+    fieldLayout->addWidget(invertButton, 0, ++col);
+    fieldLayout->addWidget(shiftRightButton, 1, col);
 
-    QVBoxLayout* buttonsLayout2 = new QVBoxLayout;
-    buttonsLayout2->addWidget(invertButton);
-    buttonsLayout2->addWidget(shiftRightButton);
+    // add empty row eating as much as possible (no spacing between format rows)
+    fieldLayout->addWidget(new QWidget(), 2, 0, -1, -1);
+    fieldLayout->setRowStretch(2, 1);
+    
+    //QVBoxLayout* buttonsLayout = new QVBoxLayout;
+    //buttonsLayout->addWidget(resetButton);
+    //buttonsLayout->addWidget(shiftLeftButton);
+
+    //QVBoxLayout* buttonsLayout2 = new QVBoxLayout;
+    //buttonsLayout2->addWidget(invertButton);
+    //buttonsLayout2->addWidget(shiftRightButton);
 
     QHBoxLayout* mainLayout = new QHBoxLayout(this);
+    mainLayout->setMargin(0);
     mainLayout->addStretch();
     mainLayout->addLayout(fieldLayout);
-    mainLayout->addLayout(buttonsLayout);
-    mainLayout->addLayout(buttonsLayout2);
+    //mainLayout->addLayout(buttonsLayout);
+    //mainLayout->addLayout(buttonsLayout2);
     mainLayout->addStretch();
 }
 
