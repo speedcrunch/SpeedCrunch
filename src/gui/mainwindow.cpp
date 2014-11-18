@@ -93,6 +93,13 @@ QTranslator* MainWindow::createTranslator(const QString& langCode)
 
 void MainWindow::createUi()
 {
+    // set docking behavior
+    setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);
+    setCorner(Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);
+    setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
+    setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
+    setDockNestingEnabled(true);
+  
     createActions();
     createActionGroups();
     createActionShortcuts();
