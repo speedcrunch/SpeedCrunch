@@ -120,7 +120,8 @@ void Settings::load()
     userFunctionsDockVisible = settings->value(key + QLatin1String("UserFunctionsDockVisible"), false).toBool();
     formulaBookDockVisible = settings->value(key + QLatin1String("FormulaBookDockVisible"), false).toBool();
     constantsDockVisible = settings->value(key + QLatin1String("ConstantsDockVisible"), false).toBool();
-    bitFieldDockVisible = settings->value(key + QLatin1String("bitFieldDockVisible"), false).toBool();
+    bitFieldDockVisible = settings->value(key + QLatin1String("BitFieldDockVisible"), false).toBool();
+    bitFieldDockTitle = settings->value(key + QLatin1String("BitFieldDockTitle"), true).toBool();    
     windowAlwaysOnTop = settings->value(key + QLatin1String("WindowAlwaysOnTop"), false).toBool();
 
     windowPosition = settings->value(key + QLatin1String("WindowPosition"), QPoint()).toPoint();
@@ -263,7 +264,8 @@ void Settings::save()
     settings->setValue(key + QLatin1String("StatusBarVisible"), statusBarVisible);
     settings->setValue(key + QLatin1String("VariablesDockVisible"), variablesDockVisible);
     settings->setValue(key + QLatin1String("UserFunctionsDockVisible"), userFunctionsDockVisible);
-    settings->setValue(key + QLatin1String("bitFieldDockVisible"), bitFieldDockVisible);
+    settings->setValue(key + QLatin1String("BitFieldDockVisible"), bitFieldDockVisible);
+    settings->setValue(key + QLatin1String("BitFieldDockTitle"), bitFieldDockTitle);
     settings->setValue(key + QLatin1String("WindowPosition"), windowPosition);
     settings->setValue(key + QLatin1String("WindowSize"), windowSize);
     settings->setValue(key + QLatin1String("WindowAlwaysOnTop"), windowAlwaysOnTop);

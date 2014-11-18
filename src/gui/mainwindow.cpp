@@ -132,6 +132,8 @@ void MainWindow::createActions()
     m_actions.viewStatusBar = new QAction(this);
     m_actions.viewVariables = new QAction(this);
     m_actions.viewBitfield = new QAction(this);
+    m_actions.viewBitfieldDockTitle = new QAction(this);
+    m_actions.viewBitfieldDockTitle->setEnabled(false);
     m_actions.viewUserFunctions = new QAction(this);
     m_actions.settingsAngleUnitDegree = new QAction(this);
     m_actions.settingsAngleUnitRadian = new QAction(this);
@@ -236,6 +238,7 @@ void MainWindow::createActions()
     m_actions.viewStatusBar->setCheckable(true);
     m_actions.viewVariables->setCheckable(true);
     m_actions.viewBitfield->setCheckable(true);
+    m_actions.viewBitfieldDockTitle->setCheckable(true);
     m_actions.viewUserFunctions->setCheckable(true);
 
     m_actions.settingsDisplayColorSchemeStandard->setData(SyntaxHighlighter::Standard);
@@ -332,6 +335,7 @@ void MainWindow::setActionsText()
     m_actions.viewStatusBar->setText(MainWindow::tr("&Status Bar"));
     m_actions.viewVariables->setText(MainWindow::tr("&Variables"));
     m_actions.viewBitfield->setText(MainWindow::tr("Bitfield"));
+    m_actions.viewBitfieldDockTitle->setText(MainWindow::tr("Bitfield dock title bar"));
     m_actions.viewUserFunctions->setText(MainWindow::tr("Use&r Functions"));
 
     m_actions.settingsAngleUnitDegree->setText(MainWindow::tr("&Degree"));
@@ -493,6 +497,8 @@ void MainWindow::createMenus()
     m_menus.view->addAction(m_actions.viewUserFunctions);
     m_menus.view->addAction(m_actions.viewBitfield);
     m_menus.view->addAction(m_actions.viewHistory);
+    m_menus.view->addSeparator();
+    m_menus.view->addAction(m_actions.viewBitfieldDockTitle);
     m_menus.view->addSeparator();
     m_menus.view->addAction(m_actions.viewStatusBar);
 #ifndef Q_OS_MAC
@@ -681,13 +687,14 @@ void MainWindow::createBitFieldDock() {
     m_docks.bitField->setObjectName("BitFieldDock");
     m_docks.bitField->installEventFilter(this);
     m_docks.bitField->setAllowedAreas(Qt::AllDockWidgetAreas);
-    //m_docks.bitField->setFeatures(m_docks.bitField->features() | QDockWidget::DockWidgetVerticalTitleBar); 
+    m_docks.bitField->displayTitleBar(m_settings->bitFieldDockTitle);
     addDockWidget(Qt::BottomDockWidgetArea, m_docks.bitField);
 
     connect(m_docks.bitField->widget(), SIGNAL(bitsChanged(const QString&)), SLOT(handleBitsChanged(const QString&)));
   
     m_docks.bitField->show();
     m_docks.bitField->raise();
+    m_actions.viewBitfieldDockTitle->setEnabled(true);
 
     m_settings->bitFieldDockVisible = true;
 }
@@ -897,6 +904,7 @@ void MainWindow::createFixedConnections()
     connect(m_actions.viewStatusBar, SIGNAL(toggled(bool)), SLOT(setStatusBarVisible(bool)));
     connect(m_actions.viewVariables, SIGNAL(toggled(bool)), SLOT(setVariablesDockVisible(bool)));
     connect(m_actions.viewBitfield, SIGNAL(toggled(bool)), SLOT(setBitfieldDockVisible(bool)));
+    connect(m_actions.viewBitfieldDockTitle, SIGNAL(toggled(bool)), SLOT(setBitfieldDockTitle(bool)));
     connect(m_actions.viewUserFunctions, SIGNAL(toggled(bool)), SLOT(setUserFunctionsDockVisible(bool)));
 
     connect(m_actions.settingsAngleUnitDegree, SIGNAL(triggered()), SLOT(setAngleModeDegree()));
@@ -996,6 +1004,8 @@ void MainWindow::applySettings()
     m_actions.viewHistory->setChecked(m_settings->historyDockVisible);
     m_actions.viewVariables->setChecked(m_settings->variablesDockVisible);
     m_actions.viewBitfield->setChecked(m_settings->bitFieldDockVisible);
+    m_actions.viewBitfieldDockTitle->setChecked(m_settings->bitFieldDockTitle);
+    setBitfieldDockTitle(m_settings->bitFieldDockTitle);
     m_actions.viewUserFunctions->setChecked(m_settings->userFunctionsDockVisible);
 
     resize(m_settings->windowSize);
@@ -1218,6 +1228,7 @@ MainWindow::MainWindow()
     m_conditions.notifyMenuBarHidden = true;
 #endif
 
+    m_docks.bitField = 0;
     m_docks.book = 0;
     m_docks.history = 0;
     m_docks.constants = 0;
@@ -1686,6 +1697,13 @@ void MainWindow::setBitfieldDockVisible(bool b)
         deleteBitFieldDock();
 }
 
+void MainWindow::setBitfieldDockTitle(bool on)
+{
+    if (m_docks.bitField)
+        m_docks.bitField->displayTitleBar(on);
+    m_settings->bitFieldDockTitle = on;
+}
+
 void MainWindow::setSystemTrayIconEnabled(bool b)
 {
     if (b && !m_widgets.trayIcon && QSystemTrayIcon::isSystemTrayAvailable()) {
@@ -2041,6 +2059,7 @@ void MainWindow::deleteBitFieldDock()
     m_actions.viewBitfield->blockSignals(true);
     m_actions.viewBitfield->setChecked(false);
     m_actions.viewBitfield->blockSignals(false);
+    m_actions.viewBitfieldDockTitle->setEnabled(false);
     m_settings->bitFieldDockVisible = false;
 }
 

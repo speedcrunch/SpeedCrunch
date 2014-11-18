@@ -33,6 +33,7 @@ public:
     BitFieldDock(QWidget *parent = 0);
 
 public slots:
+    void displayTitleBar(bool);
     void updateBits(const HNumber&);
 
 protected:

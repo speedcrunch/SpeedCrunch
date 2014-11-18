@@ -82,6 +82,9 @@ BitFieldWidget::BitFieldWidget(QWidget* parent) :
     QGridLayout* fieldLayout = new QGridLayout;
     int bitOffset = 0;
 
+    // add empty row so that there will be the same row-spacing maring at top and bottom
+    fieldLayout->addWidget(new QWidget(), 0, 0, -1, -1);
+
     for (int column = 0; column < 17; ++column) {
         if ((column % 2) == 0) {
             if ((column % 4) != 0)
@@ -101,8 +104,8 @@ BitFieldWidget::BitFieldWidget(QWidget* parent) :
             topNumberLabel->setText(QString("%1").arg(topNumber));
             bottomNumberLabel->setText(QString("%1").arg(bottomNumber));
 
-            fieldLayout->addWidget(topNumberLabel, 0, column);
-            fieldLayout->addWidget(bottomNumberLabel, 1, column);
+            fieldLayout->addWidget(topNumberLabel, 1, column);
+            fieldLayout->addWidget(bottomNumberLabel, 2, column);
 
         } else {
             QHBoxLayout* bottomLayout(new QHBoxLayout);
@@ -116,8 +119,8 @@ BitFieldWidget::BitFieldWidget(QWidget* parent) :
 
             ++bitOffset;
 
-            fieldLayout->addLayout(bottomLayout, 1, column, Qt::AlignCenter);
-            fieldLayout->addLayout(topLayout, 0, column, Qt::AlignCenter);
+            fieldLayout->addLayout(bottomLayout, 2, column, Qt::AlignCenter);
+            fieldLayout->addLayout(topLayout, 1, column, Qt::AlignCenter);
         }
     }
 
@@ -142,29 +145,19 @@ BitFieldWidget::BitFieldWidget(QWidget* parent) :
     connect(shiftRightButton, SIGNAL(clicked()), this, SLOT(shiftBitsRight()));
 
     int col = fieldLayout->columnCount();
-    fieldLayout->addWidget(resetButton, 0, col);
-    fieldLayout->addWidget(shiftLeftButton, 1, col);
-    fieldLayout->addWidget(invertButton, 0, ++col);
-    fieldLayout->addWidget(shiftRightButton, 1, col);
+    fieldLayout->addWidget(resetButton, 1, col);
+    fieldLayout->addWidget(shiftLeftButton, 2, col);
+    fieldLayout->addWidget(invertButton, 1, ++col);
+    fieldLayout->addWidget(shiftRightButton, 2, col);
 
     // add empty row eating as much as possible (no spacing between format rows)
-    fieldLayout->addWidget(new QWidget(), 2, 0, -1, -1);
-    fieldLayout->setRowStretch(2, 1);
+    fieldLayout->addWidget(new QWidget(), 3, 0, -1, -1);
+    fieldLayout->setRowStretch(3, 1);
     
-    //QVBoxLayout* buttonsLayout = new QVBoxLayout;
-    //buttonsLayout->addWidget(resetButton);
-    //buttonsLayout->addWidget(shiftLeftButton);
-
-    //QVBoxLayout* buttonsLayout2 = new QVBoxLayout;
-    //buttonsLayout2->addWidget(invertButton);
-    //buttonsLayout2->addWidget(shiftRightButton);
-
     QHBoxLayout* mainLayout = new QHBoxLayout(this);
     mainLayout->setMargin(0);
     mainLayout->addStretch();
     mainLayout->addLayout(fieldLayout);
-    //mainLayout->addLayout(buttonsLayout);
-    //mainLayout->addLayout(buttonsLayout2);
     mainLayout->addStretch();
 }
 

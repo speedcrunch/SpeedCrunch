@@ -112,6 +112,7 @@ private slots:
     void setAutoCalcEnabled(bool);
     void setAutoCompletionEnabled(bool);
     void setBitfieldDockVisible(bool);
+    void setBitfieldDockTitle(bool);
     void setConstantsDockVisible(bool);
     void setFormulaBookDockVisible(bool);
     void setFullScreenEnabled(bool);
@@ -250,6 +251,7 @@ private:
         QAction* viewStatusBar;
         QAction* viewFullScreenMode;
         QAction* viewBitfield;
+        QAction* viewBitfieldDockTitle;
         QAction* settingsResultFormatGeneral;
         QAction* settingsResultFormatFixed;
         QAction* settingsResultFormatEngineering;

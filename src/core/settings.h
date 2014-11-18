@@ -68,6 +68,7 @@ public:
     bool variablesDockVisible;
     bool userFunctionsDockVisible;
     bool bitFieldDockVisible;
+    bool bitFieldDockTitle;
     bool windowOnfullScreen;
 
     int colorScheme;

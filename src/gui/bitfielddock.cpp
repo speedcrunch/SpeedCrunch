@@ -32,6 +32,14 @@ BitFieldDock::BitFieldDock(QWidget *parent)
     retranslateText();
 }
 
+void BitFieldDock::displayTitleBar(bool on)
+{
+    if (on)
+        setTitleBarWidget(NULL);
+    else
+        setTitleBarWidget(new QWidget());
+}
+
 void BitFieldDock::updateBits(const HNumber& number)
 {
     m_widget->updateBits(number);
