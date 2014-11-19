@@ -26,12 +26,21 @@
 #include <QtCore/QStringList>
 #include <QtCore/QList>
 
+// current application version (format to be comparable lexicographically) 
+#define APP_VERSION_FULL "00.12.00.00"
+// milestones for compatibility checks
+#define APP_VERSION_00120000 "00.12.00.00"
+// unknown format (always lexicographically <APP_VERSION_FULL) 
+#define APP_VERSION_UNKN "00.00.00.00"
+
 class Settings {
 public:
     static Settings* instance();
 
     void load();
     void save();
+
+    QString appVersion; // "00.00.00.00" format
 
     char radixCharacter() const; // 0: Automatic.
     void setRadixCharacter(char c = 0);

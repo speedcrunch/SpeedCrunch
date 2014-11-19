@@ -1009,6 +1009,10 @@ void MainWindow::applySettings()
     } else
         move(m_settings->windowPosition);
 
+    // docking layout has changed in 0.12 - reset window state
+    if (m_settings->appVersion < APP_VERSION_00120000)
+      m_settings->windowState.clear();
+    
     restoreState(m_settings->windowState);
 
     m_actions.viewFullScreenMode->setChecked(m_settings->windowOnfullScreen);
