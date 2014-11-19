@@ -37,6 +37,9 @@ public:
     void setRadixCharacter(char c = 0);
     bool isRadixCharacterAuto() const;
 
+    bool parseAllRadixChar;
+    bool strictDigitGrouping;
+
     char angleUnit; // 'r': radian; 'd': degree.
 
     char resultFormat; // See HMath documentation.

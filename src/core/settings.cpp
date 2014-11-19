@@ -89,6 +89,8 @@ void Settings::load()
     systemTrayIconVisible = settings->value(key + QLatin1String("SystemTrayIconVisible"), false).toBool();
     autoResultToClipboard = settings->value(key + QLatin1String("AutoResultToClipboard"), false).toBool();
     windowPositionSave = settings->value(key + QLatin1String("WindowPositionSave"), true).toBool();
+    parseAllRadixChar = settings->value(key + QLatin1String("ParseAllRadixChar"), true).toBool();
+    strictDigitGrouping = settings->value(key + QLatin1String("StrictDigitGrouping"), true).toBool();
 
     digitGrouping = settings->value(key + QLatin1String("DigitGrouping"), 0).toInt();
     digitGrouping = std::min(3, std::max(0, digitGrouping));
@@ -235,6 +237,8 @@ void Settings::save()
     settings->setValue(key + QLatin1String("AutoResultToClipboard"), autoResultToClipboard);
     settings->setValue(key + QLatin1String("Language"), language);
     settings->setValue(key + QLatin1String("WindowPositionSave"), windowPositionSave);
+    settings->setValue(key + QLatin1String("ParseAllRadixChar"), parseAllRadixChar);
+    settings->setValue(key + QLatin1String("StrictDigitGrouping"), strictDigitGrouping);
 
     settings->setValue(key + QLatin1String("AngleMode"), QString(QChar(angleUnit)));
 
