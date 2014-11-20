@@ -29,7 +29,7 @@
 #include <QPaintEvent>
 #include <QToolButton>
 
-//------------------------------------------------------------------------------ 
+//------------------------------------------------------------------------------
 
 BitWidget::BitWidget(int bitPosition, QWidget* parent)
     : QLabel(parent),
@@ -38,7 +38,7 @@ BitWidget::BitWidget(int bitPosition, QWidget* parent)
     setMinimumSize(SizePixels, SizePixels);
     setMaximumSize(SizePixels*4, SizePixels*4);
     setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
-  
+
     HNumber number(HMath::raise(HNumber(2), bitPosition));
     setToolTip(QString("2<sup>%1</sup> = %2")
         .arg(bitPosition)
@@ -67,7 +67,7 @@ void BitWidget::paintEvent(QPaintEvent* event)
         painter.drawRect(event->rect());
 }
 
-//------------------------------------------------------------------------------ 
+//------------------------------------------------------------------------------
 
 BitFieldWidget::BitFieldWidget(QWidget* parent) :
     QWidget(parent)
@@ -153,9 +153,9 @@ BitFieldWidget::BitFieldWidget(QWidget* parent) :
     // add empty row eating as much as possible (no spacing between format rows)
     fieldLayout->addWidget(new QWidget(), 3, 0, -1, -1);
     fieldLayout->setRowStretch(3, 1);
-    
+
     QHBoxLayout* mainLayout = new QHBoxLayout(this);
-    mainLayout->setMargin(0);
+    mainLayout->setContentsMargins(2, 0, 2, 0);
     mainLayout->addStretch();
     mainLayout->addLayout(fieldLayout);
     mainLayout->addStretch();
