@@ -691,7 +691,7 @@ void MainWindow::createBitFieldDock() {
     addDockWidget(Qt::BottomDockWidgetArea, m_docks.bitField);
 
     connect(m_docks.bitField->widget(), SIGNAL(bitsChanged(const QString&)), SLOT(handleBitsChanged(const QString&)));
-  
+
     m_docks.bitField->show();
     m_docks.bitField->raise();
     m_actions.viewBitfieldDockTitle->setEnabled(true);
@@ -955,6 +955,7 @@ void MainWindow::createFixedConnections()
 
     connect(m_widgets.editor, SIGNAL(autoCalcDisabled()), SLOT(hideStateLabel()));
     connect(m_widgets.editor, SIGNAL(autoCalcEnabled(const QString&)), SLOT(showStateLabel(const QString&)));
+    connect(m_widgets.editor, SIGNAL(posChanged(const QMoveEvent*)), SLOT(updateStateLabelPos()));
     connect(m_widgets.editor, SIGNAL(returnPressed()), SLOT(evaluateEditorExpression()));
     connect(m_widgets.editor, SIGNAL(shiftDownPressed()), SLOT(decreaseDisplayFontPointSize()));
     connect(m_widgets.editor, SIGNAL(shiftUpPressed()), SLOT(increaseDisplayFontPointSize()));
@@ -1965,6 +1966,11 @@ void MainWindow::showStateLabel(const QString& msg)
     m_widgets.state->adjustSize();
     m_widgets.state->show();
     m_widgets.state->raise();
+    updateStateLabelPos();
+}
+
+void MainWindow::updateStateLabelPos()
+{
     const int height = m_widgets.state->height();
     QPoint pos = mapFromGlobal(m_widgets.editor->mapToGlobal(QPoint(0, -height)));
     m_widgets.state->move(pos);

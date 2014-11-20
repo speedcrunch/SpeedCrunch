@@ -170,6 +170,7 @@ private slots:
     void showSystemTrayMessage();
     void increaseDisplayFontPointSize();
     void decreaseDisplayFontPointSize();
+    void updateStateLabelPos();
 
 protected:
     virtual void closeEvent(QCloseEvent*);

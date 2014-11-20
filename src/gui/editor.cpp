@@ -778,6 +778,11 @@ void Editor::keyPressEvent(QKeyEvent* event)
     QPlainTextEdit::keyPressEvent(event);
 }
 
+void Editor::moveEvent(QMoveEvent* event)
+{
+    emit posChanged(event);
+}
+
 void Editor::wheelEvent(QWheelEvent* event)
 {
     if (event->delta() > 0)
