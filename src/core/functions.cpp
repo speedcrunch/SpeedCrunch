@@ -623,6 +623,12 @@ HNumber function_idiv(Function* f, const Function::ArgumentList& args)
     return HMath::idiv(args.at(0), args.at(1));
 }
 
+HNumber function_div(Function* f, const Function::ArgumentList& args)
+{
+    ENSURE_ARGUMENT_COUNT(2);
+    return HMath::idiv(args.at(0), args.at(1));
+}
+
 HNumber function_mod(Function* f, const Function::ArgumentList& args)
 {
     ENSURE_ARGUMENT_COUNT(2);
@@ -714,6 +720,7 @@ void FunctionRepo::createFunctions()
     FUNCTION_INSERT(shl);
     FUNCTION_INSERT(shr);
     FUNCTION_INSERT(idiv);
+    FUNCTION_INSERT(div);
     FUNCTION_INSERT(mod);
 }
 
@@ -822,6 +829,7 @@ void FunctionRepo::setTranslatableFunctionUsages()
     FUNCTION_USAGE_TR(binommean, tr("trials; probability"));
     FUNCTION_USAGE_TR(binompmf, tr("hits; trials; probability"));
     FUNCTION_USAGE_TR(binomvar, tr("trials; probability"));
+    FUNCTION_USAGE_TR(div, tr("dividend; divisor"));
     FUNCTION_USAGE_TR(hypercdf, tr("max; total; hits; trials"));
     FUNCTION_USAGE_TR(hypermean, tr("total; hits; trials"));
     FUNCTION_USAGE_TR(hyperpmf, tr("count; total; hits; trials"));
@@ -864,6 +872,7 @@ void FunctionRepo::setFunctionNames()
     FUNCTION_NAME(csc, tr("Cosecant"));
     FUNCTION_NAME(dec, tr("Decimal Representation"));
     FUNCTION_NAME(degrees, tr("Degrees of Arc"));
+    FUNCTION_NAME(div, tr("Integer Quotient"));
     FUNCTION_NAME(erf, tr("Error Function"));
     FUNCTION_NAME(erfc, tr("Complementary Error Function"));
     FUNCTION_NAME(exp, tr("Exponential"));
