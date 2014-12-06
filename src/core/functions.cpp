@@ -323,6 +323,15 @@ HNumber function_arctan(Function* f, const Function::ArgumentList& args)
     return result;
 }
 
+HNumber function_arctan2(Function* f, const Function::ArgumentList& args)
+{
+    ENSURE_ARGUMENT_COUNT(2);
+    HNumber result = HMath::arctan2(args.at(0), args.at(1));
+    if (Settings::instance()->angleUnit == 'd')
+        result = HMath::rad2deg(result);
+    return result;
+}
+
 HNumber function_sinh(Function* f, const Function::ArgumentList& args)
 {
     ENSURE_ARGUMENT_COUNT(1);
@@ -693,6 +702,7 @@ void FunctionRepo::createFunctions()
     FUNCTION_INSERT(artanh);
     FUNCTION_INSERT(arcsin);
     FUNCTION_INSERT(arctan);
+    FUNCTION_INSERT(arctan2);
     FUNCTION_INSERT(cos);
     FUNCTION_INSERT(cosh);
     FUNCTION_INSERT(cot);
@@ -774,6 +784,7 @@ void FunctionRepo::setNonTranslatableFunctionUsages()
     FUNCTION_USAGE(artanh, "x");
     FUNCTION_USAGE(arcsin, "x");
     FUNCTION_USAGE(arctan, "x");
+    FUNCTION_USAGE(arctan2, "y; x");
     FUNCTION_USAGE(average, "x<sub>1</sub>; x<sub>2</sub>; ...");
     FUNCTION_USAGE(bin, "n");
     FUNCTION_USAGE(cbrt, "x");
@@ -858,6 +869,7 @@ void FunctionRepo::setFunctionNames()
     FUNCTION_NAME(artanh, tr("Area Hyperbolic Tangent"));
     FUNCTION_NAME(arcsin, tr("Arc Sine"));
     FUNCTION_NAME(arctan, tr("Arc Tangent"));
+    FUNCTION_NAME(arctan2, tr("Arc Tangent from Cathedus"));
     FUNCTION_NAME(average, tr("Average (Arithmetic Mean)"));
     FUNCTION_NAME(bin, tr("Binary Representation"));
     FUNCTION_NAME(binomcdf, tr("Binomial Cumulative Distribution Function"));

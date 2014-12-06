@@ -118,7 +118,7 @@ void float_create(floatnum f);
    any subsequent arithmetic operation on this variable will fail.
    However, a variable such finalized can still be re-used without prior
    initialization, by making it the destination of an operation.
-   If you wish to deliberately "empty" a variable, without detroying it,
+   If you wish to deliberately "empty" a variable, without destroying it,
    call this function.
    An alias "float_free" to this function is defined that you
    may use anywhere as a replacement for float_setnan.

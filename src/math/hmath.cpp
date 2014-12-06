@@ -1233,6 +1233,32 @@ HNumber HMath::arctan( const HNumber & x )
 };
 
 /**
+ * Returns the arc tangent calculated from the two cathedus.
+ * It's calculated from (opposite leg / adjacent leg) and
+ * results in a full circle range (-Pi;Pi) depending on
+ * the sign of the respective legs.
+ * Both legs can not be 0 the same time.
+ */
+HNumber HMath::arctan2( const HNumber & x, const HNumber & y )
+{
+/* x: opposite leg;  y: adjacent leg */
+  Error error = checkNaNParam(*x.d, y.d);
+  if (error != Success)
+    return HMath::nan(error);
+
+  if (x.isZero() && y.isZero()) return HMath::nan();
+  if (x.isPositive() && y.isZero()) return (HMath::pi()/2.0);
+  if (x.isNegative() && y.isZero()) return (0.0-(HMath::pi()/2.0));
+
+  HNumber offset = HNumber(0.0);
+  /* 2. Quadrant */
+  if (x.isPositive() && y.isNegative()) offset+=HMath::pi();
+  /* 3. Quadrant */
+  if (x.isNegative() && y.isNegative()) offset-=HMath::pi();
+  return (arctan(x/y)+offset);
+}
+
+/**
  * Returns the arc sine of x.
  */
 HNumber HMath::arcsin( const HNumber & x )
