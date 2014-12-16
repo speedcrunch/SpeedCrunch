@@ -2573,17 +2573,17 @@ Left click the icon to restore it or right click for options.</source>
 Hacer clic en en icono con el botón izquierdo para restaurarlo o con el botón derecho para mostrar opciones.</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="2668"/>
+        <location filename="../../gui/mainwindow.cpp" line="2672"/>
         <source>System Default</source>
         <translation>Defecto (Sistema)</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="2672"/>
+        <location filename="../../gui/mainwindow.cpp" line="2676"/>
         <source>Language</source>
         <translation>Idioma</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="2672"/>
+        <location filename="../../gui/mainwindow.cpp" line="2676"/>
         <source>Select the language:</source>
         <translation type="unfinished"></translation>
     </message>

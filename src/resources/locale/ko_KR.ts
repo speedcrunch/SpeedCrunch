@@ -2572,17 +2572,17 @@ Left click the icon to restore it or right click for options.</source>
         <translation>SpeedCrunch가 최소화 되었습니다. 그것을 복원하려면 왼쪽 클릭을 하고 옵션을 보려면 오른쪽 클릭하세요.</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="2668"/>
+        <location filename="../../gui/mainwindow.cpp" line="2672"/>
         <source>System Default</source>
         <translation>시스템 기본값</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="2672"/>
+        <location filename="../../gui/mainwindow.cpp" line="2676"/>
         <source>Language</source>
         <translation>언어</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="2672"/>
+        <location filename="../../gui/mainwindow.cpp" line="2676"/>
         <source>Select the language:</source>
         <translation>언어 선택:</translation>
     </message>

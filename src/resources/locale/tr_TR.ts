@@ -2896,17 +2896,17 @@ Left click the icon to restore it or right click for options.</source>
 Yeniden yüklemek için Sol Tıklayın ya da seçenekler için Sağ Tıklayın.</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="2668"/>
+        <location filename="../../gui/mainwindow.cpp" line="2672"/>
         <source>System Default</source>
         <translation>Sistem Varsayılanı</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="2672"/>
+        <location filename="../../gui/mainwindow.cpp" line="2676"/>
         <source>Language</source>
         <translation>Dil</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="2672"/>
+        <location filename="../../gui/mainwindow.cpp" line="2676"/>
         <source>Select the language:</source>
         <translation>Dil seçin:</translation>
     </message>

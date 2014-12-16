@@ -2574,17 +2574,17 @@ Left click the icon to restore it or right click for options.</source>
         <translation> سوف يصغر البرنامج ,انقر على اليسار ليعاد الى وضعه وعلى اليمين للخيارات</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="2668"/>
+        <location filename="../../gui/mainwindow.cpp" line="2672"/>
         <source>System Default</source>
         <translation>النظام الاعتيادي</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="2672"/>
+        <location filename="../../gui/mainwindow.cpp" line="2676"/>
         <source>Language</source>
         <translation>اللغة</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="2672"/>
+        <location filename="../../gui/mainwindow.cpp" line="2676"/>
         <source>Select the language:</source>
         <translation type="unfinished"></translation>
     </message>
