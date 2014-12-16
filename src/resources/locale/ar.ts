@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="es_ES">
+<TS version="2.0" language="ar">
 <context>
     <name>AboutBox</name>
     <message>
         <location filename="../../gui/aboutbox.cpp" line="34"/>
         <location filename="../../gui/aboutbox.cpp" line="194"/>
         <source>About SpeedCrunch</source>
-        <translation>Acerca de SpeedCrunch</translation>
+        <translation>عن سببيد كرنش</translation>
     </message>
     <message>
         <location filename="../../gui/aboutbox.cpp" line="46"/>
         <source>Original author</source>
-        <translation>Autor original</translation>
+        <translation>المؤلف الأصلي</translation>
     </message>
     <message>
         <location filename="../../gui/aboutbox.cpp" line="49"/>
@@ -42,42 +42,43 @@
     <message>
         <location filename="../../gui/aboutbox.cpp" line="103"/>
         <source>Translations</source>
-        <translation>Traducciones</translation>
+        <translation>الترجمة</translation>
     </message>
     <message>
         <location filename="../../gui/aboutbox.cpp" line="105"/>
         <source>Arabic</source>
-        <translation type="unfinished"></translation>
+        <translation>العربية</translation>
     </message>
     <message>
         <location filename="../../gui/aboutbox.cpp" line="107"/>
         <source>Argentinian Spanish</source>
-        <translation>Español Argentino</translation>
+        <translation>
+الإسبانية الأرجنتينية</translation>
     </message>
     <message>
         <location filename="../../gui/aboutbox.cpp" line="109"/>
         <source>Basque</source>
-        <translation>Vasco</translation>
+        <translation>إقليم الباسك</translation>
     </message>
     <message>
         <location filename="../../gui/aboutbox.cpp" line="111"/>
         <source>Brazilian Portuguese</source>
-        <translation>Portugués Brasileño</translation>
+        <translation>البرتغالية البرازيلية</translation>
     </message>
     <message>
         <location filename="../../gui/aboutbox.cpp" line="113"/>
         <source>Catalan</source>
-        <translation type="unfinished"></translation>
+        <translation>إقليم كاتالونيا الإسباني</translation>
     </message>
     <message>
         <location filename="../../gui/aboutbox.cpp" line="115"/>
         <source>Czech</source>
-        <translation>Checo</translation>
+        <translation>التشيكية</translation>
     </message>
     <message>
         <location filename="../../gui/aboutbox.cpp" line="117"/>
         <source>Dutch</source>
-        <translation>Neerlandés</translation>
+        <translation>الهولندية</translation>
     </message>
     <message>
         <location filename="../../gui/aboutbox.cpp" line="119"/>
@@ -87,32 +88,32 @@
     <message>
         <location filename="../../gui/aboutbox.cpp" line="121"/>
         <source>French</source>
-        <translation>Francés</translation>
+        <translation>الفرنسية</translation>
     </message>
     <message>
         <location filename="../../gui/aboutbox.cpp" line="123"/>
         <source>Finnish</source>
-        <translation>Finés</translation>
+        <translation>الفنلندية</translation>
     </message>
     <message>
         <location filename="../../gui/aboutbox.cpp" line="125"/>
         <source>German</source>
-        <translation>Alemán</translation>
+        <translation>الألمانية</translation>
     </message>
     <message>
         <location filename="../../gui/aboutbox.cpp" line="127"/>
         <source>Hebrew</source>
-        <translation>Hebreo</translation>
+        <translation>العبرية</translation>
     </message>
     <message>
         <location filename="../../gui/aboutbox.cpp" line="131"/>
         <source>Indonesian</source>
-        <translation>Indonesio</translation>
+        <translation>الأندونيسية</translation>
     </message>
     <message>
         <location filename="../../gui/aboutbox.cpp" line="133"/>
         <source>Italian</source>
-        <translation>Italiano</translation>
+        <translation>الإيطالية</translation>
     </message>
     <message>
         <location filename="../../gui/aboutbox.cpp" line="139"/>
@@ -122,47 +123,47 @@
     <message>
         <location filename="../../gui/aboutbox.cpp" line="141"/>
         <source>Norwegian</source>
-        <translation>Noruego</translation>
+        <translation>النرويجية</translation>
     </message>
     <message>
         <location filename="../../gui/aboutbox.cpp" line="143"/>
         <source>Polish</source>
-        <translation>Polaco</translation>
+        <translation>البولندية</translation>
     </message>
     <message>
         <location filename="../../gui/aboutbox.cpp" line="145"/>
         <source>Portuguese</source>
-        <translation>Portugués</translation>
+        <translation>البرتغالية</translation>
     </message>
     <message>
         <location filename="../../gui/aboutbox.cpp" line="147"/>
         <source>Romanian</source>
-        <translation>Rumano</translation>
+        <translation>الرومانية</translation>
     </message>
     <message>
         <location filename="../../gui/aboutbox.cpp" line="149"/>
         <source>Russian</source>
-        <translation>Ruso</translation>
+        <translation>الروسية</translation>
     </message>
     <message>
         <location filename="../../gui/aboutbox.cpp" line="151"/>
         <source>Simplified Chinese</source>
-        <translation type="unfinished"></translation>
+        <translation>الصينيةالمبسطة</translation>
     </message>
     <message>
         <location filename="../../gui/aboutbox.cpp" line="153"/>
         <source>Spanish</source>
-        <translation>Español</translation>
+        <translation>الإسبانية</translation>
     </message>
     <message>
         <location filename="../../gui/aboutbox.cpp" line="155"/>
         <source>Swedish</source>
-        <translation>Sueco</translation>
+        <translation>السويدية</translation>
     </message>
     <message>
         <location filename="../../gui/aboutbox.cpp" line="157"/>
         <source>Turkish</source>
-        <translation>Turco</translation>
+        <translation>التركية</translation>
     </message>
     <message>
         <location filename="../../gui/aboutbox.cpp" line="163"/>
@@ -173,17 +174,20 @@
         <location filename="../../gui/aboutbox.cpp" line="168"/>
         <location filename="../../gui/aboutbox.cpp" line="169"/>
         <source>Copyright (C)</source>
-        <translation>Copyright (C)</translation>
+        <translation>حقوق الطبع محفوظة
+(C)</translation>
     </message>
     <message>
         <location filename="../../gui/aboutbox.cpp" line="173"/>
         <source>This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version</source>
-        <translation>Este programa es software libre; puede ser redistribuido y/o modificado bajo los términos de la GNU General Public License como fue publicada por la Free Software Foundation; ya sea la versión 2 de la Licencia, o (a su elección), cualquier versión posterior</translation>
+        <translation>
+       هذا البرنامج مفتوح المصدر إذ بالإمكان إعادة توزيعه أو/والتعديل عليه ضمن ترخيص الGNU العام كما أصدرته مؤسسة البرمجيات الحرة وكما هو في الإصدار الثاني للترخيص أو بحسب اختيارك لأي من الإصدارات السابقة  له
+</translation>
     </message>
     <message>
         <location filename="../../gui/aboutbox.cpp" line="179"/>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.</source>
-        <translation>Este programa se distribuye con la idea de que será útil, pero SIN NINGUNA GARANTÍA; ni siquiera la garantía implícita de SER COMERCIAL o SER ADECUADO PARA ALGÚN PROPÓSITO PARTICULAR. Vea la GNU General Public LIcense para más detalles.</translation>
+        <translation>هذا البرنامج موزع بأمل أن يكون مفيدا ولكن بدون أي ضمانات وحتى بدون ضمان التأجير او ملائمته لأي هدف معين. لمزيد من التفاصيل انظر ترخيص الGNU</translation>
     </message>
     <message>
         <location filename="../../gui/aboutbox.cpp" line="135"/>
@@ -562,7 +566,7 @@
         <location filename="../../gui/editor.cpp" line="1027"/>
         <location filename="../../gui/editor.cpp" line="1086"/>
         <source>All</source>
-        <translation>Todo</translation>
+        <translation>الكل</translation>
     </message>
 </context>
 <context>
@@ -1368,7 +1372,7 @@
     <message>
         <location filename="../../gui/constantsdock.cpp" line="36"/>
         <source>Constants</source>
-        <translation>Constantes</translation>
+        <translation>ثوابت</translation>
     </message>
 </context>
 <context>
@@ -1376,17 +1380,17 @@
     <message>
         <location filename="../../gui/constantswidget.cpp" line="118"/>
         <source>No match found</source>
-        <translation>No se encontraron coincidencias</translation>
+        <translation>لم نعثر على مطابق</translation>
     </message>
     <message>
         <location filename="../../gui/constantswidget.cpp" line="121"/>
         <source>Name</source>
-        <translation>Nombre</translation>
+        <translation>الاسم</translation>
     </message>
     <message>
         <location filename="../../gui/constantswidget.cpp" line="122"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>القيمة</translation>
     </message>
     <message>
         <location filename="../../gui/constantswidget.cpp" line="123"/>
@@ -1396,18 +1400,18 @@
     <message>
         <location filename="../../gui/constantswidget.cpp" line="116"/>
         <source>Category</source>
-        <translation type="unfinished"></translation>
+        <translation>فئة</translation>
     </message>
     <message>
         <location filename="../../gui/constantswidget.cpp" line="117"/>
         <source>Search</source>
-        <translation>Búsqueda</translation>
+        <translation>بحث</translation>
     </message>
     <message>
         <location filename="../../gui/constantswidget.cpp" line="164"/>
         <location filename="../../gui/constantswidget.cpp" line="232"/>
         <source>All</source>
-        <translation>Todo</translation>
+        <translation>الكل</translation>
     </message>
 </context>
 <context>
@@ -1415,7 +1419,7 @@
     <message>
         <location filename="../../gui/editor.cpp" line="519"/>
         <source>Current result: &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation>Resultado actual: &lt;b&gt;%1&lt;/b&gt;</translation>
+        <translation>النتيجة الحالية : &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../../gui/editor.cpp" line="574"/>
@@ -1425,7 +1429,7 @@
     <message>
         <location filename="../../gui/editor.cpp" line="577"/>
         <source>Selection result: &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation>Resultado de la selección: &lt;b&gt;%1&lt;/b&gt;</translation>
+        <translation>النتيجة المختارة : &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -1448,18 +1452,18 @@
         <location filename="../../core/evaluator.cpp" line="1395"/>
         <location filename="../../core/evaluator.cpp" line="1444"/>
         <source>invalid expression</source>
-        <translation>expresión inválida</translation>
+        <translation>تعبير غير موجود</translation>
     </message>
     <message>
         <location filename="../../core/evaluator.cpp" line="65"/>
         <source>division by zero</source>
-        <translation>división por cero</translation>
+        <translation>مقسوم على الصفر</translation>
     </message>
     <message>
         <location filename="../../core/evaluator.cpp" line="1368"/>
         <location filename="../../core/evaluator.cpp" line="1390"/>
         <source>unknown function or variable</source>
-        <translation>función o variable desconocida</translation>
+        <translation>اقتران أو متغير غير معروف</translation>
     </message>
     <message>
         <location filename="../../core/evaluator.cpp" line="56"/>
@@ -1994,7 +1998,7 @@
     <message>
         <location filename="../../gui/functionsdock.cpp" line="36"/>
         <source>Functions</source>
-        <translation>Funciones</translation>
+        <translation>الاقترانات</translation>
     </message>
 </context>
 <context>
@@ -2002,17 +2006,17 @@
     <message>
         <location filename="../../gui/functionswidget.cpp" line="140"/>
         <source>Name</source>
-        <translation>Nombre</translation>
+        <translation>الاسم</translation>
     </message>
     <message>
         <location filename="../../gui/functionswidget.cpp" line="144"/>
         <source>Search</source>
-        <translation>Búsqueda</translation>
+        <translation>بحث</translation>
     </message>
     <message>
         <location filename="../../gui/functionswidget.cpp" line="145"/>
         <source>No match found</source>
-        <translation>No se encontraron coincidencias</translation>
+        <translation>لم نعثر على مطابق</translation>
     </message>
     <message>
         <location filename="../../gui/functionswidget.cpp" line="139"/>
@@ -2025,7 +2029,7 @@
     <message>
         <location filename="../../gui/historydock.cpp" line="37"/>
         <source>History</source>
-        <translation>Historial</translation>
+        <translation>السجل</translation>
     </message>
 </context>
 <context>
@@ -2034,150 +2038,150 @@
         <location filename="../../gui/mainwindow.cpp" line="273"/>
         <location filename="../../gui/mainwindow.cpp" line="1743"/>
         <source>Radian</source>
-        <translation>Radian</translation>
+        <translation>راديان</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="273"/>
         <location filename="../../gui/mainwindow.cpp" line="1310"/>
         <source>Degree</source>
-        <translation>Grado</translation>
+        <translation>درجة</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="277"/>
         <location filename="../../gui/mainwindow.cpp" line="2174"/>
         <source>Binary</source>
-        <translation>Binario</translation>
+        <translation>عدد ثنائي القيمة</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="278"/>
         <location filename="../../gui/mainwindow.cpp" line="2219"/>
         <source>Octal</source>
-        <translation>Octal</translation>
+        <translation>الثماني</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="279"/>
         <location filename="../../gui/mainwindow.cpp" line="2210"/>
         <source>Hexadecimal</source>
-        <translation>Hexadecimal</translation>
+        <translation>السادس عشري</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="280"/>
         <location filename="../../gui/mainwindow.cpp" line="2192"/>
         <source>Fixed decimal</source>
-        <translation>Decimal fija</translation>
+        <translation>أقرب عدد صحيح عشري</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="281"/>
         <location filename="../../gui/mainwindow.cpp" line="2183"/>
         <source>Engineering decimal</source>
-        <translation>Decimal ingeniería</translation>
+        <translation>الهندسة العشرية</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="282"/>
         <location filename="../../gui/mainwindow.cpp" line="2228"/>
         <source>Scientific decimal</source>
-        <translation>Decimal científica</translation>
+        <translation>العدد العشري العلمي</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="283"/>
         <location filename="../../gui/mainwindow.cpp" line="2201"/>
         <source>General decimal</source>
-        <translation>Decimal genérica</translation>
+        <translation>العدد العشري العام</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="290"/>
         <source>Angle unit</source>
-        <translation>Unidad angular</translation>
+        <translation>وحدة الزاوية</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="291"/>
         <source>Result format</source>
-        <translation>Formato del resultado</translation>
+        <translation>صيغة النتيجة</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="311"/>
         <source>&amp;Import...</source>
-        <translation>&amp;Importar...</translation>
+        <translation>استيراد...</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="312"/>
         <source>&amp;Load...</source>
-        <translation>&amp;Cargar...</translation>
+        <translation>تحميل...</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="313"/>
         <source>&amp;Quit</source>
-        <translation>&amp;Salir</translation>
+        <translation>إنهاء</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="314"/>
         <source>&amp;Save...</source>
-        <translation>&amp;Guardar...</translation>
+        <translation>حفظ...</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="316"/>
         <source>Clear E&amp;xpression</source>
-        <translation>Borrar E&amp;xpresión</translation>
+        <translation> مسح الجلسة</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="317"/>
         <source>Clear &amp;History</source>
-        <translation>Borrar &amp;Historial</translation>
+        <translation>مسح السجل</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="318"/>
         <source>Copy Last &amp;Result</source>
-        <translation>Copiar el Último &amp;Resultado</translation>
+        <translation> آخر نتيجة نسخ</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="319"/>
         <source>&amp;Copy</source>
-        <translation>&amp;Copiar</translation>
+        <translation>نسخ</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="320"/>
         <source>&amp;Paste</source>
-        <translation>&amp;Pegar</translation>
+        <translation>لصق</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="321"/>
         <source>&amp;Select Expression</source>
-        <translation>&amp;Seleccionar Expresión</translation>
+        <translation>التعبير المختار</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="323"/>
         <source>&amp;Constants</source>
-        <translation>&amp;Constantes</translation>
+        <translation>المحتويات</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="324"/>
         <source>F&amp;ull Screen Mode</source>
-        <translation>Modo &amp;Pantalla Completa</translation>
+        <translation>عرض كل الشاشة</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="325"/>
         <source>&amp;Functions</source>
-        <translation>&amp;Funciones</translation>
+        <translation>الاقتران</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="326"/>
         <source>&amp;History</source>
-        <translation>&amp;Historial</translation>
+        <translation>السجل</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="330"/>
         <source>&amp;Menu Bar</source>
-        <translation>Ocultar Barra de &amp;Menú</translation>
+        <translation>إخفاء شريط القائمة</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="332"/>
         <source>&amp;Status Bar</source>
-        <translation>Barra de &amp;Estado</translation>
+        <translation>شريط الحالة</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="333"/>
         <source>&amp;Variables</source>
-        <translation>&amp;Variables</translation>
+        <translation>المتغيرات</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="334"/>
@@ -2192,17 +2196,17 @@
     <message>
         <location filename="../../gui/mainwindow.cpp" line="337"/>
         <source>&amp;Degree</source>
-        <translation>Gra&amp;do</translation>
+        <translation>درجة</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="338"/>
         <source>&amp;Radian</source>
-        <translation>&amp;Radian</translation>
+        <translation>راديان</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="339"/>
         <source>Always On &amp;Top</source>
-        <translation>Siempre &amp;Encima</translation>
+        <translation>أظهره دائما</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="340"/>
@@ -2212,17 +2216,17 @@
     <message>
         <location filename="../../gui/mainwindow.cpp" line="341"/>
         <source>Automatic &amp;Completion</source>
-        <translation>&amp;Completado Automático</translation>
+        <translation>الإكمال الأتوماتيكي</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="342"/>
         <source>&amp;Minimize To System Tray</source>
-        <translation>&amp;Minimizar a Área de Notificación del Sistema</translation>
+        <translation>تصغير الى النظام</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="343"/>
         <source>&amp;Partial Results</source>
-        <translation>Resultados &amp;Parciales</translation>
+        <translation>النتيجة الجزئية</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="344"/>
@@ -2247,7 +2251,7 @@
     <message>
         <location filename="../../gui/mainwindow.cpp" line="348"/>
         <source>Syntax &amp;Highlighting</source>
-        <translation>&amp;Resaltado de la Sintaxis</translation>
+        <translation>تركيز الاهتمام على قواعد الصياغة</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="353"/>
@@ -2262,77 +2266,77 @@
     <message>
         <location filename="../../gui/mainwindow.cpp" line="357"/>
         <source>&amp;Comma</source>
-        <translation>&amp;Coma</translation>
+        <translation>فاصلة</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="358"/>
         <source>&amp;System Default</source>
-        <translation>Defecto (&amp;Sistema)</translation>
+        <translation>النظام الاعتيادي</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="359"/>
         <source>&amp;Dot</source>
-        <translation>&amp;Punto</translation>
+        <translation>نقطة</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="360"/>
         <source>&amp;15 Decimal Digits</source>
-        <translation>&amp;15 Dígitos Decimales</translation>
+        <translation>رقم عشري15</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="361"/>
         <source>&amp;2 Decimal Digits</source>
-        <translation>&amp;2 Dígitos Decimales</translation>
+        <translation>رقمين عشريين</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="362"/>
         <source>&amp;3 Decimal Digits</source>
-        <translation>&amp;3 Dígitos Decimales</translation>
+        <translation>3 أرقام عشرية</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="363"/>
         <source>&amp;50 Decimal Digits</source>
-        <translation>&amp;50 Dígitos Decimales</translation>
+        <translation>رقم عشري 50</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="364"/>
         <source>&amp;8 Decimal Digits</source>
-        <translation>&amp;8 Dígitos Decimales</translation>
+        <translation>أرقام عشرية 8</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="366"/>
         <source>&amp;Binary</source>
-        <translation>&amp;Binario</translation>
+        <translation>عدد ثنائي القيمة</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="367"/>
         <source>&amp;Engineering</source>
-        <translation>Ing&amp;eniería</translation>
+        <translation>الهندسي</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="368"/>
         <source>&amp;Fixed Decimal</source>
-        <translation>Punto Decimal Fi&amp;jo</translation>
+        <translation> عدد عشري ثابت</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="369"/>
         <source>&amp;General</source>
-        <translation>Ge&amp;neral</translation>
+        <translation>عام</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="370"/>
         <source>&amp;Hexadecimal</source>
-        <translation>&amp;Hexadecimal</translation>
+        <translation>السادس عشري</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="371"/>
         <source>&amp;Octal</source>
-        <translation>&amp;Octal</translation>
+        <translation>ثماني</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="372"/>
         <source>&amp;Scientific</source>
-        <translation>&amp;Científica</translation>
+        <translation>علمي</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="373"/>
@@ -2372,52 +2376,52 @@
     <message>
         <location filename="../../gui/mainwindow.cpp" line="377"/>
         <source>&amp;Language...</source>
-        <translation>&amp;Idioma...</translation>
+        <translation>اللغة</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="593"/>
         <source>&amp;Session</source>
-        <translation>&amp;Sesión</translation>
+        <translation>الجلسة</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="595"/>
         <source>&amp;Edit</source>
-        <translation>&amp;Editar</translation>
+        <translation>تعديل</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="596"/>
         <source>&amp;View</source>
-        <translation>&amp;Ver</translation>
+        <translation>عرض</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="597"/>
         <source>Se&amp;ttings</source>
-        <translation>&amp;Configuración</translation>
+        <translation>ضبط الخيارات</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="598"/>
         <source>Result &amp;Format</source>
-        <translation>&amp;Formato del Resultado</translation>
+        <translation>صيغة النتيجة</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="600"/>
         <source>&amp;Decimal</source>
-        <translation>&amp;Decimal</translation>
+        <translation>العشري</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="602"/>
         <source>&amp;Angle Unit</source>
-        <translation>Unidad &amp;Angular</translation>
+        <translation>وحدة الزاوية</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="603"/>
         <source>&amp;Behavior</source>
-        <translation>&amp;Comportamiento</translation>
+        <translation>السلوك</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="599"/>
         <source>Radix &amp;Character</source>
-        <translation>Separador &amp;Decimal</translation>
+        <translation>أساس العلامة</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="349"/>
@@ -2462,7 +2466,7 @@
     <message>
         <location filename="../../gui/mainwindow.cpp" line="606"/>
         <source>&amp;Help</source>
-        <translation>A&amp;yuda</translation>
+        <translation>مساعدة</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="607"/>
@@ -2472,18 +2476,18 @@
     <message>
         <location filename="../../gui/mainwindow.cpp" line="1393"/>
         <source>File %1 is not a valid session</source>
-        <translation>Archivo %1 no es una sesión válida</translation>
+        <translation>الملف %1 ليس متوفرا في الجلسة</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="1394"/>
         <location filename="../../gui/mainwindow.cpp" line="1750"/>
         <source>SpeedCrunch Sessions (*.sch);;All Files (*)</source>
-        <translation>Sesiones de SpeedCrunch (*.sch);;Todos los Ficheros (*)</translation>
+        <translation>(*)لجميع الملفات (*.sch);; جلسات سبيد كرنش </translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="1395"/>
         <source>Load Session</source>
-        <translation>Cargar Sesión</translation>
+        <translation>تحميل الجلسة</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="1401"/>
@@ -2500,60 +2504,58 @@
         <location filename="../../gui/mainwindow.cpp" line="1857"/>
         <location filename="../../gui/mainwindow.cpp" line="1878"/>
         <source>Error</source>
-        <translation>Error</translation>
+        <translation>خطأ</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="1401"/>
         <location filename="../../gui/mainwindow.cpp" line="1532"/>
         <source>Can&apos;t read from file %1</source>
-        <translation>No puede leerse desde el archivo %1</translation>
+        <translation>لا يمكن القراءة من الملف %1</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="1423"/>
         <source>Merge session being loaded with current session?
 If no, current variables and display will be cleared.</source>
-        <translation>¿Combinar sesión que está siendo cargada con la sesión actual?
-Si no es así, las variables actuales y la pantalla serán borradas.</translation>
+        <translation>هل تدمج الجلسة المحملة مع الجلسة الجارية؟ وإلا فستمسح المتغيرات وشاشة العرض.</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="1429"/>
         <location filename="../../gui/mainwindow.cpp" line="1543"/>
         <source>Question</source>
-        <translation>Pregunta</translation>
+        <translation>سؤال</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="1525"/>
         <source>All Files (*)</source>
-        <translation>Todos los Archivos (*)</translation>
+        <translation>جميع الملفات (*)</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="1526"/>
         <source>Import Session</source>
-        <translation>Importar Sesión</translation>
+        <translation>استيراد الجلسة</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="1537"/>
         <source>Merge session being imported with current session?
 If no, current variables and display will be cleared.</source>
-        <translation>¿Combinar sesión que está siendo importada con la sesión actual?
-Si no es así, las variables actuales y la pantalla serán borradas.</translation>
+        <translation> الدمج للجلسة بدأ بالتحميل مع الجلسة الحالية ؟ ,إذا لا ,المتغيرات الحالية والمعروض سوف يمسح.</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="1569"/>
         <source>Ignore error?</source>
-        <translation>¿Ignorar error?</translation>
+        <translation>تجاهل الأخطاء؟</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="1751"/>
         <source>Save Session</source>
-        <translation>Guardar Sesión</translation>
+        <translation>حفظ الجلسة</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="1757"/>
         <location filename="../../gui/mainwindow.cpp" line="1857"/>
         <location filename="../../gui/mainwindow.cpp" line="1878"/>
         <source>Can&apos;t write to file %1</source>
-        <translation>No se puede escribir en el archivo %1</translation>
+        <translation>لا يمكن الكتابة على الملف %1</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="1909"/>
@@ -2563,24 +2565,23 @@ Si no es así, las variables actuales y la pantalla serán borradas.</translatio
     <message>
         <location filename="../../gui/mainwindow.cpp" line="2164"/>
         <source>Warning</source>
-        <translation>Advertencia</translation>
+        <translation>تحذير</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="2454"/>
         <source>SpeedCrunch is minimized.
 Left click the icon to restore it or right click for options.</source>
-        <translation>SpeedCrunch está minimizado.
-Hacer clic en en icono con el botón izquierdo para restaurarlo o con el botón derecho para mostrar opciones.</translation>
+        <translation> سوف يصغر البرنامج ,انقر على اليسار ليعاد الى وضعه وعلى اليمين للخيارات</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="2668"/>
         <source>System Default</source>
-        <translation>Defecto (Sistema)</translation>
+        <translation>النظام الاعتيادي</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="2672"/>
         <source>Language</source>
-        <translation>Idioma</translation>
+        <translation>اللغة</translation>
     </message>
     <message>
         <location filename="../../gui/mainwindow.cpp" line="2672"/>
@@ -2699,22 +2700,22 @@ Hacer clic en en icono con el botón izquierdo para restaurarlo o con el botón 
     <message>
         <location filename="../../gui/userfunctionlistwidget.cpp" line="149"/>
         <source>Name</source>
-        <translation type="unfinished">Nombre</translation>
+        <translation type="unfinished">الاسم</translation>
     </message>
     <message>
         <location filename="../../gui/userfunctionlistwidget.cpp" line="149"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">القيمة</translation>
     </message>
     <message>
         <location filename="../../gui/userfunctionlistwidget.cpp" line="152"/>
         <source>Search</source>
-        <translation type="unfinished">Búsqueda</translation>
+        <translation type="unfinished">بحث</translation>
     </message>
     <message>
         <location filename="../../gui/userfunctionlistwidget.cpp" line="153"/>
         <source>No match found</source>
-        <translation type="unfinished">No se encontraron coincidencias</translation>
+        <translation type="unfinished">لم نعثر على مطابق</translation>
     </message>
     <message>
         <location filename="../../gui/userfunctionlistwidget.cpp" line="155"/>
@@ -2750,22 +2751,22 @@ Hacer clic en en icono con el botón izquierdo para restaurarlo o con el botón 
     <message>
         <location filename="../../gui/variablelistwidget.cpp" line="147"/>
         <source>Name</source>
-        <translation>Nombre</translation>
+        <translation>الاسم</translation>
     </message>
     <message>
         <location filename="../../gui/variablelistwidget.cpp" line="147"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>القيمة</translation>
     </message>
     <message>
         <location filename="../../gui/variablelistwidget.cpp" line="150"/>
         <source>Search</source>
-        <translation>Búsqueda</translation>
+        <translation>بحث</translation>
     </message>
     <message>
         <location filename="../../gui/variablelistwidget.cpp" line="151"/>
         <source>No match found</source>
-        <translation>No se encontraron coincidencias</translation>
+        <translation>لم نعثر على مطابق</translation>
     </message>
     <message>
         <location filename="../../gui/variablelistwidget.cpp" line="153"/>
@@ -2788,7 +2789,7 @@ Hacer clic en en icono con el botón izquierdo para restaurarlo o con el botón 
     <message>
         <location filename="../../gui/variablesdock.cpp" line="59"/>
         <source>Variables</source>
-        <translation>Variables</translation>
+        <translation>المتغيرات</translation>
     </message>
 </context>
 </TS>

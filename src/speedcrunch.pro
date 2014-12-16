@@ -120,11 +120,12 @@ SOURCES += main.cpp \
            math/number.c
 
 RESOURCES += resources/speedcrunch.qrc
-TRANSLATIONS += resources/locale/ar_JO.ts \
+TRANSLATIONS += resources/locale/ar.ts \
                 resources/locale/ca_ES.ts \
                 resources/locale/cs_CZ.ts \
+                resources/locale/da.ts \
                 resources/locale/de_DE.ts \
-                resources/locale/en_GB.ts \
+                resources/locale/el.ts \
                 resources/locale/en_US.ts \
                 resources/locale/es_AR.ts \
                 resources/locale/es_ES.ts \
@@ -138,6 +139,7 @@ TRANSLATIONS += resources/locale/ar_JO.ts \
                 resources/locale/it_IT.ts \
                 resources/locale/ja_JP.ts \
                 resources/locale/ko_KR.ts \
+                resources/locale/lt.ts \
                 resources/locale/lv_LV.ts \
                 resources/locale/nb_NO.ts \
                 resources/locale/nl_NL.ts \
@@ -146,7 +148,9 @@ TRANSLATIONS += resources/locale/ar_JO.ts \
                 resources/locale/pt_PT.ts \
                 resources/locale/ro_RO.ts \
                 resources/locale/ru_RU.ts \
+                resources/locale/sk.ts \
                 resources/locale/sv_SE.ts \
                 resources/locale/tr_TR.ts \
-                resources/locale/vi_VN.ts \
+                resources/locale/uz@Latn.ts \
+                resources/locale/vi.ts \
                 resources/locale/zh_CN.ts
