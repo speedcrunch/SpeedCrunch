@@ -1,4 +1,7 @@
 equals(QT_MAJOR_VERSION, 5) {
+    lessThan(QT_MINOR_VERSION, 4) {
+        error(Qt 5.4 or newer is required but version $$[QT_VERSION] was detected.)
+    }
     QT += widgets
 }
 
