@@ -29,7 +29,9 @@ public:
     enum ColorScheme {
         Terminal = 0,
         Standard = 1,
-        Sublime = 2
+        Sublime = 2,
+        SolarizedLight = 3,
+        SolarizedDark = 4
     };
 
     enum Role {

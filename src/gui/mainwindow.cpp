@@ -157,6 +157,8 @@ void MainWindow::createActions()
     m_actions.settingsDisplayColorSchemeStandard = new QAction(this);
     m_actions.settingsDisplayColorSchemeSublime = new QAction(this);
     m_actions.settingsDisplayColorSchemeTerminal = new QAction(this);
+    m_actions.settingsDisplayColorSchemeSolarizedDark = new QAction(this);
+    m_actions.settingsDisplayColorSchemeSolarizedLight = new QAction(this);
     m_actions.settingsDisplayFont = new QAction(this);
     m_actions.settingsLanguage = new QAction(this);
     m_actions.settingsRadixCharComma = new QAction(this);
@@ -209,6 +211,8 @@ void MainWindow::createActions()
     m_actions.settingsDisplayColorSchemeStandard->setCheckable(true);
     m_actions.settingsDisplayColorSchemeSublime->setCheckable(true);
     m_actions.settingsDisplayColorSchemeTerminal->setCheckable(true);
+    m_actions.settingsDisplayColorSchemeSolarizedDark->setCheckable(true);
+    m_actions.settingsDisplayColorSchemeSolarizedLight->setCheckable(true);
     m_actions.settingsRadixCharComma->setCheckable(true);
     m_actions.settingsRadixCharDefault->setCheckable(true);
     m_actions.settingsRadixCharDot->setCheckable(true);
@@ -242,6 +246,8 @@ void MainWindow::createActions()
     m_actions.settingsDisplayColorSchemeStandard->setData(SyntaxHighlighter::Standard);
     m_actions.settingsDisplayColorSchemeSublime->setData(SyntaxHighlighter::Sublime);
     m_actions.settingsDisplayColorSchemeTerminal->setData(SyntaxHighlighter::Terminal);
+    m_actions.settingsDisplayColorSchemeSolarizedDark->setData(SyntaxHighlighter::SolarizedDark);
+    m_actions.settingsDisplayColorSchemeSolarizedLight->setData(SyntaxHighlighter::SolarizedLight);
 }
 
 void MainWindow::retranslateText()
@@ -371,9 +377,11 @@ void MainWindow::setActionsText()
     m_actions.settingsResultFormatHexadecimal->setText(MainWindow::tr("&Hexadecimal"));
     m_actions.settingsResultFormatOctal->setText(MainWindow::tr("&Octal"));
     m_actions.settingsResultFormatScientific->setText(MainWindow::tr("&Scientific"));
-    m_actions.settingsDisplayColorSchemeStandard->setText(MainWindow::tr("Standard"));
-    m_actions.settingsDisplayColorSchemeSublime->setText(MainWindow::tr("Sublime"));
-    m_actions.settingsDisplayColorSchemeTerminal->setText(MainWindow::tr("Terminal"));
+    m_actions.settingsDisplayColorSchemeStandard->setText(QLatin1String("Standard"));
+    m_actions.settingsDisplayColorSchemeSublime->setText(QLatin1String("Sublime"));
+    m_actions.settingsDisplayColorSchemeTerminal->setText(QLatin1String("Terminal"));
+    m_actions.settingsDisplayColorSchemeSolarizedDark->setText(QLatin1String("Solarized Dark"));
+    m_actions.settingsDisplayColorSchemeSolarizedLight->setText(QLatin1String("Solarized Light"));
     m_actions.settingsDisplayFont->setText(MainWindow::tr("&Font..."));
     m_actions.settingsLanguage->setText(MainWindow::tr("&Language..."));
 
@@ -417,6 +425,8 @@ void MainWindow::createActionGroups()
     m_actionGroups.colorScheme->addAction(m_actions.settingsDisplayColorSchemeStandard);
     m_actionGroups.colorScheme->addAction(m_actions.settingsDisplayColorSchemeSublime);
     m_actionGroups.colorScheme->addAction(m_actions.settingsDisplayColorSchemeTerminal);
+    m_actionGroups.colorScheme->addAction(m_actions.settingsDisplayColorSchemeSolarizedDark);
+    m_actionGroups.colorScheme->addAction(m_actions.settingsDisplayColorSchemeSolarizedLight);
 
     m_actionGroups.digitGrouping = new QActionGroup(this);
     m_actionGroups.digitGrouping->addAction(m_actions.settingsBehaviorDigitGroupingNone);
@@ -571,6 +581,8 @@ void MainWindow::createMenus()
     m_menus.colorScheme->addAction(m_actions.settingsDisplayColorSchemeStandard);
     m_menus.colorScheme->addAction(m_actions.settingsDisplayColorSchemeSublime);
     m_menus.colorScheme->addAction(m_actions.settingsDisplayColorSchemeTerminal);
+    m_menus.colorScheme->addAction(m_actions.settingsDisplayColorSchemeSolarizedDark);
+    m_menus.colorScheme->addAction(m_actions.settingsDisplayColorSchemeSolarizedLight);
     m_menus.display->addAction(m_actions.settingsDisplayFont);
 
     m_menus.settings->addAction(m_actions.settingsLanguage);
@@ -1084,6 +1096,10 @@ void MainWindow::applySettings()
         m_actions.settingsDisplayColorSchemeSublime->setChecked(true);
     else if (m_settings->colorScheme == SyntaxHighlighter::Terminal)
         m_actions.settingsDisplayColorSchemeTerminal->setChecked(true);
+    else if (m_settings->colorScheme == SyntaxHighlighter::SolarizedDark)
+        m_actions.settingsDisplayColorSchemeSolarizedDark->setChecked(true);
+    else if (m_settings->colorScheme == SyntaxHighlighter::SolarizedLight)
+        m_actions.settingsDisplayColorSchemeSolarizedLight->setChecked(true);
 
     m_actions.viewStatusBar->setChecked(m_settings->statusBarVisible);
 
