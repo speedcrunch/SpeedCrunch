@@ -31,7 +31,7 @@
 #include <QPainter>
 #include <QScrollBar>
 
-#define OVERLAY_GRADIENT_HEIGHT 50
+#define OVERLAY_GRADIENT_HEIGHT 15
 
 class FadeOverlay : public QWidget {
 public:
