@@ -1,5 +1,5 @@
 // This file is part of the SpeedCrunch project
-// Copyright (C) 2009, 2011, 2013 Helder Correia <helder.pereira.correia@gmail.com>
+// Copyright (C) 2009, 2011, 2013, 2014 Helder Correia <helder.pereira.correia@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -23,7 +23,6 @@
 #include <QPlainTextEdit>
 
 class HNumber;
-class FadeOverlay;
 class SyntaxHighlighter;
 
 class ResultDisplay : public QPlainTextEdit
@@ -62,7 +61,6 @@ public slots:
 protected:
     virtual void mouseDoubleClickEvent(QMouseEvent*);
     virtual void wheelEvent(QWheelEvent*);
-    virtual void resizeEvent(QResizeEvent*);
     virtual void timerEvent(QTimerEvent*);
     void fullContentScrollEvent();
     float linesPerPage() { return static_cast<float>(viewport()->height()) / fontMetrics().height(); }
@@ -74,13 +72,10 @@ protected:
 private:
     Q_DISABLE_COPY(ResultDisplay)
 
-    friend class FadeOverlay;
-
     int m_count;
     QStringList m_expressions;
     SyntaxHighlighter* m_highlighter;
     QStringList m_results;
-    FadeOverlay* m_fadeOverlay;
     QBasicTimer m_scrollTimer;
     int m_scrolledLines;
     int m_scrollDirection;
