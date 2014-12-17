@@ -506,18 +506,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>temperature (C)</source>
-        <translation type="obsolete">hőmérséklet (C)</translation>
-    </message>
-    <message>
-        <source>temperature (F)</source>
-        <translation type="obsolete">hőmérséklet (F)</translation>
-    </message>
-    <message>
-        <source>temperature (K)</source>
-        <translation type="obsolete">hőmérséklet (K)</translation>
-    </message>
-    <message>
         <location filename="../../core/book.cpp" line="352"/>
         <location filename="../../core/book.cpp" line="371"/>
         <source>dielectric constant</source>
@@ -1562,181 +1550,6 @@
     </message>
 </context>
 <context>
-    <name>Function</name>
-    <message>
-        <source>Absolute Value</source>
-        <translation type="obsolete">abszolút érték</translation>
-    </message>
-    <message>
-        <source>Arc Cosine</source>
-        <translation type="obsolete">Arkusz Coszinusz</translation>
-    </message>
-    <message>
-        <source>Logical AND</source>
-        <translation type="obsolete">Logikai AND</translation>
-    </message>
-    <message>
-        <source>Area Hyperbolic Cosine</source>
-        <translation type="obsolete">Area Hiperbolikus Koszinusz</translation>
-    </message>
-    <message>
-        <source>Area Hyperbolic Sine</source>
-        <translation type="obsolete">Area Hiperbolikus Szinusz</translation>
-    </message>
-    <message>
-        <source>Area Hyperbolic Tangent</source>
-        <translation type="obsolete">Area Hiperbolikusz Tangens</translation>
-    </message>
-    <message>
-        <source>Arc Sine</source>
-        <translation type="obsolete">Arkusz Szinusz</translation>
-    </message>
-    <message>
-        <source>Arc Tangent</source>
-        <translation type="obsolete">Arkusz Tangens</translation>
-    </message>
-    <message>
-        <source>Average (Arithmetic Mean)</source>
-        <translation type="obsolete">Átlag (Számtani Közép)</translation>
-    </message>
-    <message>
-        <source>Binary Representation</source>
-        <translation type="obsolete">Bináris Megfelelő</translation>
-    </message>
-    <message>
-        <source>Cube Root</source>
-        <translation type="obsolete">Négyzetgyök</translation>
-    </message>
-    <message>
-        <source>Ceiling</source>
-        <translation type="obsolete">Felső egészrész</translation>
-    </message>
-    <message>
-        <source>Cosine</source>
-        <translation type="obsolete">Koszinusz</translation>
-    </message>
-    <message>
-        <source>Hyperbolic Cosine</source>
-        <translation type="obsolete">Koszinusz Hiperbolikusz</translation>
-    </message>
-    <message>
-        <source>Cotangent</source>
-        <translation type="obsolete">Kotangens</translation>
-    </message>
-    <message>
-        <source>Cosecant</source>
-        <translation type="obsolete">Koszekáns</translation>
-    </message>
-    <message>
-        <source>Decimal Representation</source>
-        <translation type="obsolete">Decimális Megfelelő</translation>
-    </message>
-    <message>
-        <source>Exponential</source>
-        <translation type="obsolete">Exponenciális</translation>
-    </message>
-    <message>
-        <source>Floor</source>
-        <translation type="obsolete">Alsó Egészrész</translation>
-    </message>
-    <message>
-        <source>Greatest Common Divisor</source>
-        <translation type="obsolete">Legnagyobb Közös Osztó</translation>
-    </message>
-    <message>
-        <source>Integer Quotient</source>
-        <translation type="obsolete">egész hányados</translation>
-    </message>
-    <message>
-        <source>Integer Part</source>
-        <translation type="obsolete">egész rész</translation>
-    </message>
-    <message>
-        <source>Base-2 Logarithm</source>
-        <translation type="obsolete">2-es Alapú Logaritmus</translation>
-    </message>
-    <message>
-        <source>Natural Logarithm</source>
-        <translation type="obsolete">Természetes Logaritmus</translation>
-    </message>
-    <message>
-        <source>Base-10 Logarithm</source>
-        <translation type="obsolete">10-es Alapú Logaritmus</translation>
-    </message>
-    <message>
-        <source>Maximum</source>
-        <translation type="obsolete">Maximum</translation>
-    </message>
-    <message>
-        <source>Minimum</source>
-        <translation type="obsolete">Minimum</translation>
-    </message>
-    <message>
-        <source>Logical NOT</source>
-        <translation type="obsolete">Logikai NOT</translation>
-    </message>
-    <message>
-        <source>Logical OR</source>
-        <translation type="obsolete">Logikai OR</translation>
-    </message>
-    <message>
-        <source>Product</source>
-        <translation type="obsolete">Szorzat</translation>
-    </message>
-    <message>
-        <source>Radians</source>
-        <translation type="obsolete">Radián</translation>
-    </message>
-    <message>
-        <source>Rounding</source>
-        <translation type="obsolete">Kerekítés</translation>
-    </message>
-    <message>
-        <source>Secant</source>
-        <translation type="obsolete">Szekáns</translation>
-    </message>
-    <message>
-        <source>Arithmetic Shift Left</source>
-        <translation type="obsolete">Aritmetikai Lépés Balra</translation>
-    </message>
-    <message>
-        <source>Arithmetic Shift Right</source>
-        <translation type="obsolete">Aritmetikai Lépés Jobbra</translation>
-    </message>
-    <message>
-        <source>Signum</source>
-        <translation type="obsolete">Előjel</translation>
-    </message>
-    <message>
-        <source>Sine</source>
-        <translation type="obsolete">Szinusz</translation>
-    </message>
-    <message>
-        <source>Hyperbolic Sine</source>
-        <translation type="obsolete">Szinusz Hiperbolikusz</translation>
-    </message>
-    <message>
-        <source>Square Root</source>
-        <translation type="obsolete">Négyzetgyök</translation>
-    </message>
-    <message>
-        <source>Sum</source>
-        <translation type="obsolete">Összeg</translation>
-    </message>
-    <message>
-        <source>Tangent</source>
-        <translation type="obsolete">Tangens</translation>
-    </message>
-    <message>
-        <source>Hyperbolic Tangent</source>
-        <translation type="obsolete">Tangens Hiperbolikusz</translation>
-    </message>
-    <message>
-        <source>Logical XOR</source>
-        <translation type="obsolete">Logikai XOR</translation>
-    </message>
-</context>
-<context>
     <name>FunctionRepo</name>
     <message>
         <location filename="../../core/functions.cpp" line="821"/>
@@ -1808,7 +1621,7 @@
     <message>
         <location filename="../../core/functions.cpp" line="844"/>
         <source>Absolute Value</source>
-        <translation type="unfinished">abszolút érték</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="845"/>
@@ -1818,47 +1631,47 @@
     <message>
         <location filename="../../core/functions.cpp" line="846"/>
         <source>Arc Cosine</source>
-        <translation type="unfinished">Arkusz Coszinusz</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="847"/>
         <source>Logical AND</source>
-        <translation type="unfinished">Logikai AND</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="848"/>
         <source>Area Hyperbolic Cosine</source>
-        <translation type="unfinished">Area Hiperbolikus Koszinusz</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="849"/>
         <source>Area Hyperbolic Sine</source>
-        <translation type="unfinished">Area Hiperbolikus Szinusz</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="850"/>
         <source>Area Hyperbolic Tangent</source>
-        <translation type="unfinished">Area Hiperbolikusz Tangens</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="851"/>
         <source>Arc Sine</source>
-        <translation type="unfinished">Arkusz Szinusz</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="852"/>
         <source>Arc Tangent</source>
-        <translation type="unfinished">Arkusz Tangens</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="853"/>
         <source>Average (Arithmetic Mean)</source>
-        <translation type="unfinished">Átlag (Számtani Közép)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="854"/>
         <source>Binary Representation</source>
-        <translation type="unfinished">Bináris Megfelelő</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="855"/>
@@ -1883,37 +1696,37 @@
     <message>
         <location filename="../../core/functions.cpp" line="859"/>
         <source>Cube Root</source>
-        <translation type="unfinished">Négyzetgyök</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="860"/>
         <source>Ceiling</source>
-        <translation type="unfinished">Felső egészrész</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="861"/>
         <source>Cosine</source>
-        <translation type="unfinished">Koszinusz</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="862"/>
         <source>Hyperbolic Cosine</source>
-        <translation type="unfinished">Koszinusz Hiperbolikusz</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="863"/>
         <source>Cotangent</source>
-        <translation type="unfinished">Kotangens</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="864"/>
         <source>Cosecant</source>
-        <translation type="unfinished">Koszekáns</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="865"/>
         <source>Decimal Representation</source>
-        <translation type="unfinished">Decimális Megfelelő</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="866"/>
@@ -1933,12 +1746,12 @@
     <message>
         <location filename="../../core/functions.cpp" line="869"/>
         <source>Exponential</source>
-        <translation type="unfinished">Exponenciális</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="870"/>
         <source>Floor</source>
-        <translation type="unfinished">Alsó Egészrész</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="871"/>
@@ -1953,7 +1766,7 @@
     <message>
         <location filename="../../core/functions.cpp" line="873"/>
         <source>Greatest Common Divisor</source>
-        <translation type="unfinished">Legnagyobb Közös Osztó</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="874"/>
@@ -1988,12 +1801,12 @@
     <message>
         <location filename="../../core/functions.cpp" line="880"/>
         <source>Integer Quotient</source>
-        <translation type="unfinished">egész hányados</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="881"/>
         <source>Integer Part</source>
-        <translation type="unfinished">egész rész</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="882"/>
@@ -2008,7 +1821,7 @@
     <message>
         <location filename="../../core/functions.cpp" line="884"/>
         <source>Natural Logarithm</source>
-        <translation type="unfinished">Természetes Logaritmus</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="886"/>
@@ -2023,7 +1836,7 @@
     <message>
         <location filename="../../core/functions.cpp" line="888"/>
         <source>Maximum</source>
-        <translation type="unfinished">Maximum</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="889"/>
@@ -2033,7 +1846,7 @@
     <message>
         <location filename="../../core/functions.cpp" line="890"/>
         <source>Minimum</source>
-        <translation type="unfinished">Minimum</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="891"/>
@@ -2048,7 +1861,7 @@
     <message>
         <location filename="../../core/functions.cpp" line="893"/>
         <source>Logical NOT</source>
-        <translation type="unfinished">Logikai NOT</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="894"/>
@@ -2063,7 +1876,7 @@
     <message>
         <location filename="../../core/functions.cpp" line="896"/>
         <source>Logical OR</source>
-        <translation type="unfinished">Logikai OR</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="897"/>
@@ -2088,52 +1901,52 @@
     <message>
         <location filename="../../core/functions.cpp" line="901"/>
         <source>Product</source>
-        <translation type="unfinished">Szorzat</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="902"/>
         <source>Radians</source>
-        <translation type="unfinished">Radián</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="903"/>
         <source>Rounding</source>
-        <translation type="unfinished">Kerekítés</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="904"/>
         <source>Secant</source>
-        <translation type="unfinished">Szekáns</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="905"/>
         <source>Arithmetic Shift Left</source>
-        <translation type="unfinished">Aritmetikai Lépés Balra</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="906"/>
         <source>Arithmetic Shift Right</source>
-        <translation type="unfinished">Aritmetikai Lépés Jobbra</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="907"/>
         <source>Signum</source>
-        <translation type="unfinished">Előjel</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="908"/>
         <source>Sine</source>
-        <translation type="unfinished">Szinusz</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="909"/>
         <source>Hyperbolic Sine</source>
-        <translation type="unfinished">Szinusz Hiperbolikusz</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="910"/>
         <source>Square Root</source>
-        <translation type="unfinished">Négyzetgyök</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="911"/>
@@ -2143,17 +1956,17 @@
     <message>
         <location filename="../../core/functions.cpp" line="912"/>
         <source>Sum</source>
-        <translation type="unfinished">Összeg</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="913"/>
         <source>Tangent</source>
-        <translation type="unfinished">Tangens</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="914"/>
         <source>Hyperbolic Tangent</source>
-        <translation type="unfinished">Tangens Hiperbolikusz</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="915"/>
@@ -2173,7 +1986,7 @@
     <message>
         <location filename="../../core/functions.cpp" line="918"/>
         <source>Logical XOR</source>
-        <translation type="unfinished">Logikai XOR</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2218,624 +2031,624 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="273"/>
-        <location filename="../../gui/mainwindow.cpp" line="1743"/>
+        <location filename="../../gui/mainwindow.cpp" line="274"/>
+        <location filename="../../gui/mainwindow.cpp" line="1744"/>
         <source>Radian</source>
         <translation>Radián</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="273"/>
-        <location filename="../../gui/mainwindow.cpp" line="1310"/>
+        <location filename="../../gui/mainwindow.cpp" line="274"/>
+        <location filename="../../gui/mainwindow.cpp" line="1311"/>
         <source>Degree</source>
         <translation>Fok</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="277"/>
-        <location filename="../../gui/mainwindow.cpp" line="2174"/>
+        <location filename="../../gui/mainwindow.cpp" line="278"/>
+        <location filename="../../gui/mainwindow.cpp" line="2175"/>
         <source>Binary</source>
         <translation>Bináris</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="278"/>
-        <location filename="../../gui/mainwindow.cpp" line="2219"/>
+        <location filename="../../gui/mainwindow.cpp" line="279"/>
+        <location filename="../../gui/mainwindow.cpp" line="2220"/>
         <source>Octal</source>
         <translation>Oktális</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="279"/>
-        <location filename="../../gui/mainwindow.cpp" line="2210"/>
+        <location filename="../../gui/mainwindow.cpp" line="280"/>
+        <location filename="../../gui/mainwindow.cpp" line="2211"/>
         <source>Hexadecimal</source>
         <translation>Hexadecimális</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="280"/>
-        <location filename="../../gui/mainwindow.cpp" line="2192"/>
+        <location filename="../../gui/mainwindow.cpp" line="281"/>
+        <location filename="../../gui/mainwindow.cpp" line="2193"/>
         <source>Fixed decimal</source>
         <translation>Fix tizedes</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="281"/>
-        <location filename="../../gui/mainwindow.cpp" line="2183"/>
+        <location filename="../../gui/mainwindow.cpp" line="282"/>
+        <location filename="../../gui/mainwindow.cpp" line="2184"/>
         <source>Engineering decimal</source>
         <translation>Mérnöki tizedes</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="282"/>
-        <location filename="../../gui/mainwindow.cpp" line="2228"/>
+        <location filename="../../gui/mainwindow.cpp" line="283"/>
+        <location filename="../../gui/mainwindow.cpp" line="2229"/>
         <source>Scientific decimal</source>
         <translation>Tudományos tizedes</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="283"/>
-        <location filename="../../gui/mainwindow.cpp" line="2201"/>
+        <location filename="../../gui/mainwindow.cpp" line="284"/>
+        <location filename="../../gui/mainwindow.cpp" line="2202"/>
         <source>General decimal</source>
         <translation>Általános decimális</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="290"/>
+        <location filename="../../gui/mainwindow.cpp" line="291"/>
         <source>Angle unit</source>
         <translation>Szög egység</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="291"/>
+        <location filename="../../gui/mainwindow.cpp" line="292"/>
         <source>Result format</source>
         <translation>Eredmény formátuma</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="311"/>
+        <location filename="../../gui/mainwindow.cpp" line="312"/>
         <source>&amp;Import...</source>
         <translation>&amp;Importálás...</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="312"/>
+        <location filename="../../gui/mainwindow.cpp" line="313"/>
         <source>&amp;Load...</source>
         <translation>&amp;Betöltés...</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="313"/>
+        <location filename="../../gui/mainwindow.cpp" line="314"/>
         <source>&amp;Quit</source>
         <translation>&amp;Kilépés</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="314"/>
+        <location filename="../../gui/mainwindow.cpp" line="315"/>
         <source>&amp;Save...</source>
         <translation>&amp;Mentés...</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="316"/>
+        <location filename="../../gui/mainwindow.cpp" line="317"/>
         <source>Clear E&amp;xpression</source>
         <translation>E&amp;gyenlet törlése</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="317"/>
+        <location filename="../../gui/mainwindow.cpp" line="318"/>
         <source>Clear &amp;History</source>
         <translation>Elő&amp;zmények törlése</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="318"/>
+        <location filename="../../gui/mainwindow.cpp" line="319"/>
         <source>Copy Last &amp;Result</source>
         <translation>&amp;Utolsó eredmény másolása</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="319"/>
+        <location filename="../../gui/mainwindow.cpp" line="320"/>
         <source>&amp;Copy</source>
         <translation>&amp;Másolás</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="320"/>
+        <location filename="../../gui/mainwindow.cpp" line="321"/>
         <source>&amp;Paste</source>
         <translation>&amp;Beillesztés</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="321"/>
+        <location filename="../../gui/mainwindow.cpp" line="322"/>
         <source>&amp;Select Expression</source>
         <translation>&amp;Egyenlet kiválasztása</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="323"/>
+        <location filename="../../gui/mainwindow.cpp" line="324"/>
         <source>&amp;Constants</source>
         <translation>&amp;Állandók</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="324"/>
+        <location filename="../../gui/mainwindow.cpp" line="325"/>
         <source>F&amp;ull Screen Mode</source>
         <translation>Tel&amp;j es képernyő</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="325"/>
+        <location filename="../../gui/mainwindow.cpp" line="326"/>
         <source>&amp;Functions</source>
         <translation>&amp;Függvények</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="326"/>
+        <location filename="../../gui/mainwindow.cpp" line="327"/>
         <source>&amp;History</source>
         <translation>&amp;Előzmények</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="330"/>
+        <location filename="../../gui/mainwindow.cpp" line="331"/>
         <source>&amp;Menu Bar</source>
         <translation>&amp;Menüsor</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="332"/>
+        <location filename="../../gui/mainwindow.cpp" line="333"/>
         <source>&amp;Status Bar</source>
         <translation>Á&amp;llapotsor</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="333"/>
+        <location filename="../../gui/mainwindow.cpp" line="334"/>
         <source>&amp;Variables</source>
         <translation>&amp;Változók</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="334"/>
+        <location filename="../../gui/mainwindow.cpp" line="335"/>
         <source>Bitfield</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="335"/>
+        <location filename="../../gui/mainwindow.cpp" line="336"/>
         <source>Use&amp;r Functions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="337"/>
+        <location filename="../../gui/mainwindow.cpp" line="338"/>
         <source>&amp;Degree</source>
         <translation>&amp;Fok</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="338"/>
+        <location filename="../../gui/mainwindow.cpp" line="339"/>
         <source>&amp;Radian</source>
         <translation>&amp;Radián</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="339"/>
+        <location filename="../../gui/mainwindow.cpp" line="340"/>
         <source>Always On &amp;Top</source>
         <translation>&amp;Mindig felül</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="340"/>
+        <location filename="../../gui/mainwindow.cpp" line="341"/>
         <source>Automatic Result &amp;Reuse</source>
         <translation>Ere&amp;dmény Automatikus Felhasználása</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="341"/>
+        <location filename="../../gui/mainwindow.cpp" line="342"/>
         <source>Automatic &amp;Completion</source>
         <translation>Automatikus &amp;Kiegészítés</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="342"/>
+        <location filename="../../gui/mainwindow.cpp" line="343"/>
         <source>&amp;Minimize To System Tray</source>
         <translation>&amp;Kicsinyítés a tálcára</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="343"/>
+        <location filename="../../gui/mainwindow.cpp" line="344"/>
         <source>&amp;Partial Results</source>
         <translation>&amp;Részleges eredmény</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="344"/>
+        <location filename="../../gui/mainwindow.cpp" line="345"/>
         <source>Save &amp;History on Exit</source>
         <translation>&amp;Előzmények mentése és kilépés</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="345"/>
+        <location filename="../../gui/mainwindow.cpp" line="346"/>
         <source>Save &amp;Variables on Exit</source>
         <translation>&amp;Változók mentése és kilépés</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="346"/>
+        <location filename="../../gui/mainwindow.cpp" line="347"/>
         <source>Save User &amp;Functions on Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="347"/>
+        <location filename="../../gui/mainwindow.cpp" line="348"/>
         <source>Save &amp;Window Positon on Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="348"/>
+        <location filename="../../gui/mainwindow.cpp" line="349"/>
         <source>Syntax &amp;Highlighting</source>
         <translation>&amp;Kiemelés és szintaktika</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="349"/>
-        <source>Disabled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../gui/mainwindow.cpp" line="350"/>
-        <source>Small Space</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../gui/mainwindow.cpp" line="351"/>
-        <source>Medium Space</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../gui/mainwindow.cpp" line="352"/>
-        <source>Large Space</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../gui/mainwindow.cpp" line="353"/>
+        <location filename="../../gui/mainwindow.cpp" line="354"/>
         <source>Leave &amp;Last Expression</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="354"/>
+        <location filename="../../gui/mainwindow.cpp" line="355"/>
         <source>Automatic &amp;Result to Clipboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="355"/>
-        <source>Detect &amp;All Radix Characters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../gui/mainwindow.cpp" line="356"/>
-        <source>&amp;Strict Digit Groups Detection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../gui/mainwindow.cpp" line="357"/>
+        <location filename="../../gui/mainwindow.cpp" line="358"/>
         <source>&amp;Comma</source>
         <translation>&amp;Vessző</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="358"/>
+        <location filename="../../gui/mainwindow.cpp" line="359"/>
         <source>&amp;System Default</source>
         <translation>Rendszer &amp;alapértelmezett</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="359"/>
+        <location filename="../../gui/mainwindow.cpp" line="360"/>
         <source>&amp;Dot</source>
         <translation>&amp;Pont</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="360"/>
+        <location filename="../../gui/mainwindow.cpp" line="361"/>
         <source>&amp;15 Decimal Digits</source>
         <translation>&amp;15 tizedesig</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="361"/>
+        <location filename="../../gui/mainwindow.cpp" line="362"/>
         <source>&amp;2 Decimal Digits</source>
         <translation>&amp;2 tizedesig</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="362"/>
+        <location filename="../../gui/mainwindow.cpp" line="363"/>
         <source>&amp;3 Decimal Digits</source>
         <translation>&amp;3 tizedesig</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="363"/>
+        <location filename="../../gui/mainwindow.cpp" line="364"/>
         <source>&amp;50 Decimal Digits</source>
         <translation>&amp;50 tizedesig</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="364"/>
+        <location filename="../../gui/mainwindow.cpp" line="365"/>
         <source>&amp;8 Decimal Digits</source>
         <translation>&amp;8 tizedesig</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="366"/>
+        <location filename="../../gui/mainwindow.cpp" line="367"/>
         <source>&amp;Binary</source>
         <translation>&amp;Bináris</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="367"/>
+        <location filename="../../gui/mainwindow.cpp" line="368"/>
         <source>&amp;Engineering</source>
         <translation>&amp;Mérnöki</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="368"/>
+        <location filename="../../gui/mainwindow.cpp" line="369"/>
         <source>&amp;Fixed Decimal</source>
         <translation>&amp;Fix tizedes</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="369"/>
+        <location filename="../../gui/mainwindow.cpp" line="370"/>
         <source>&amp;General</source>
         <translation>Ál&amp;talános</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="370"/>
+        <location filename="../../gui/mainwindow.cpp" line="371"/>
         <source>&amp;Hexadecimal</source>
         <translation>&amp;Hexadecimális</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="371"/>
+        <location filename="../../gui/mainwindow.cpp" line="372"/>
         <source>&amp;Octal</source>
         <translation>&amp;Oktális</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="372"/>
+        <location filename="../../gui/mainwindow.cpp" line="373"/>
         <source>&amp;Scientific</source>
         <translation>&amp;Tudományos</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="373"/>
+        <location filename="../../gui/mainwindow.cpp" line="374"/>
         <source>Standard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="374"/>
+        <location filename="../../gui/mainwindow.cpp" line="375"/>
         <source>Sublime</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="375"/>
+        <location filename="../../gui/mainwindow.cpp" line="376"/>
         <source>Terminal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="379"/>
+        <location filename="../../gui/mainwindow.cpp" line="380"/>
         <source>User &amp;Manual</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="607"/>
-        <source>Digit Grouping</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../gui/mainwindow.cpp" line="1117"/>
+        <location filename="../../gui/mainwindow.cpp" line="1118"/>
         <source>Type an expression here</source>
         <translation>Ide írhaszt egyenleteket</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="2161"/>
+        <location filename="../../gui/mainwindow.cpp" line="2162"/>
         <source>The menu bar is now hidden. To make it visible again, press Ctrl+M.</source>
         <translation>A </translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="376"/>
+        <location filename="../../gui/mainwindow.cpp" line="377"/>
         <source>&amp;Font...</source>
         <translation>&amp;Betűtípus</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="377"/>
+        <location filename="../../gui/mainwindow.cpp" line="378"/>
         <source>&amp;Language...</source>
         <translation>&amp;Nyelv...</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="593"/>
+        <location filename="../../gui/mainwindow.cpp" line="594"/>
         <source>&amp;Session</source>
         <translation>&amp;Munkamenet</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="595"/>
+        <location filename="../../gui/mainwindow.cpp" line="596"/>
         <source>&amp;Edit</source>
         <translation>&amp;Szerkesztés</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="596"/>
+        <location filename="../../gui/mainwindow.cpp" line="597"/>
         <source>&amp;View</source>
         <translation>&amp;Nézet</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="597"/>
+        <location filename="../../gui/mainwindow.cpp" line="598"/>
         <source>Se&amp;ttings</source>
         <translation>&amp;Beállítások</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="598"/>
+        <location filename="../../gui/mainwindow.cpp" line="599"/>
         <source>Result &amp;Format</source>
         <translation>&amp;Eredmény formátuma</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="600"/>
+        <location filename="../../gui/mainwindow.cpp" line="601"/>
         <source>&amp;Decimal</source>
         <translation>&amp;Decimális</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="602"/>
+        <location filename="../../gui/mainwindow.cpp" line="603"/>
         <source>&amp;Angle Unit</source>
         <translation>&amp;Szög egység</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="603"/>
+        <location filename="../../gui/mainwindow.cpp" line="604"/>
         <source>&amp;Behavior</source>
         <translation>&amp;Tulajdonságok</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="599"/>
+        <location filename="../../gui/mainwindow.cpp" line="600"/>
         <source>Radix &amp;Character</source>
         <translation>Elválasztó &amp;karakter</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="384"/>
+        <location filename="../../gui/mainwindow.cpp" line="350"/>
+        <source>Disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../gui/mainwindow.cpp" line="351"/>
+        <source>Small Space</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../gui/mainwindow.cpp" line="352"/>
+        <source>Medium Space</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../gui/mainwindow.cpp" line="353"/>
+        <source>Large Space</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../gui/mainwindow.cpp" line="356"/>
+        <source>Detect &amp;All Radix Characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../gui/mainwindow.cpp" line="357"/>
+        <source>&amp;Strict Digit Groups Detection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../gui/mainwindow.cpp" line="385"/>
         <source>About &amp;SpeedCrunch</source>
         <translation>&amp;A SpeedCrunch Súgója</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="604"/>
+        <location filename="../../gui/mainwindow.cpp" line="605"/>
         <source>&amp;Display</source>
         <translation>&amp;Megjelenítés</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="606"/>
+        <location filename="../../gui/mainwindow.cpp" line="607"/>
         <source>&amp;Help</source>
         <translation>&amp;Segítség</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1393"/>
+        <location filename="../../gui/mainwindow.cpp" line="608"/>
+        <source>Digit Grouping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../gui/mainwindow.cpp" line="1394"/>
         <source>File %1 is not a valid session</source>
         <translation>A %1 fálj nem érvényes munkamenet</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1394"/>
-        <location filename="../../gui/mainwindow.cpp" line="1750"/>
+        <location filename="../../gui/mainwindow.cpp" line="1395"/>
+        <location filename="../../gui/mainwindow.cpp" line="1751"/>
         <source>SpeedCrunch Sessions (*.sch);;All Files (*)</source>
         <translation>SpeedCrunch munkamenetek(*.sch);;Minden fájl (*)</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1395"/>
+        <location filename="../../gui/mainwindow.cpp" line="1396"/>
         <source>Load Session</source>
         <translation>Munkamenet betöltése</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1401"/>
-        <location filename="../../gui/mainwindow.cpp" line="1410"/>
-        <location filename="../../gui/mainwindow.cpp" line="1418"/>
-        <location filename="../../gui/mainwindow.cpp" line="1449"/>
-        <location filename="../../gui/mainwindow.cpp" line="1471"/>
-        <location filename="../../gui/mainwindow.cpp" line="1478"/>
-        <location filename="../../gui/mainwindow.cpp" line="1500"/>
-        <location filename="../../gui/mainwindow.cpp" line="1508"/>
-        <location filename="../../gui/mainwindow.cpp" line="1532"/>
-        <location filename="../../gui/mainwindow.cpp" line="1569"/>
-        <location filename="../../gui/mainwindow.cpp" line="1757"/>
-        <location filename="../../gui/mainwindow.cpp" line="1857"/>
-        <location filename="../../gui/mainwindow.cpp" line="1878"/>
+        <location filename="../../gui/mainwindow.cpp" line="1402"/>
+        <location filename="../../gui/mainwindow.cpp" line="1411"/>
+        <location filename="../../gui/mainwindow.cpp" line="1419"/>
+        <location filename="../../gui/mainwindow.cpp" line="1450"/>
+        <location filename="../../gui/mainwindow.cpp" line="1472"/>
+        <location filename="../../gui/mainwindow.cpp" line="1479"/>
+        <location filename="../../gui/mainwindow.cpp" line="1501"/>
+        <location filename="../../gui/mainwindow.cpp" line="1509"/>
+        <location filename="../../gui/mainwindow.cpp" line="1533"/>
+        <location filename="../../gui/mainwindow.cpp" line="1570"/>
+        <location filename="../../gui/mainwindow.cpp" line="1758"/>
+        <location filename="../../gui/mainwindow.cpp" line="1858"/>
+        <location filename="../../gui/mainwindow.cpp" line="1879"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1401"/>
-        <location filename="../../gui/mainwindow.cpp" line="1532"/>
+        <location filename="../../gui/mainwindow.cpp" line="1402"/>
+        <location filename="../../gui/mainwindow.cpp" line="1533"/>
         <source>Can&apos;t read from file %1</source>
         <translation>Nem tudom beolvasni a fájlt: %1</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1423"/>
+        <location filename="../../gui/mainwindow.cpp" line="1424"/>
         <source>Merge session being loaded with current session?
 If no, current variables and display will be cleared.</source>
         <translation>A munkamenetet a jelenlegivel együtt importálta?
 Ha nem, a jelenleg használt változók és az előzmények törlődnek.</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1429"/>
-        <location filename="../../gui/mainwindow.cpp" line="1543"/>
+        <location filename="../../gui/mainwindow.cpp" line="1430"/>
+        <location filename="../../gui/mainwindow.cpp" line="1544"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1525"/>
+        <location filename="../../gui/mainwindow.cpp" line="1526"/>
         <source>All Files (*)</source>
         <translation>Minden fájl (*)</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1526"/>
+        <location filename="../../gui/mainwindow.cpp" line="1527"/>
         <source>Import Session</source>
         <translation>Munkamenet importálása</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1537"/>
+        <location filename="../../gui/mainwindow.cpp" line="1538"/>
         <source>Merge session being imported with current session?
 If no, current variables and display will be cleared.</source>
         <translation>A munkamenetet a jelenlegivel együtt importálta?
 Ha nem, a jelenleg használt változók és az előzmények törlődnek.</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1569"/>
+        <location filename="../../gui/mainwindow.cpp" line="1570"/>
         <source>Ignore error?</source>
         <translation>Hiba figyelmen kívül hagyása?</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1751"/>
+        <location filename="../../gui/mainwindow.cpp" line="1752"/>
         <source>Save Session</source>
         <translation>Munkamenet mentése</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1757"/>
-        <location filename="../../gui/mainwindow.cpp" line="1857"/>
-        <location filename="../../gui/mainwindow.cpp" line="1878"/>
+        <location filename="../../gui/mainwindow.cpp" line="1758"/>
+        <location filename="../../gui/mainwindow.cpp" line="1858"/>
+        <location filename="../../gui/mainwindow.cpp" line="1879"/>
         <source>Can&apos;t write to file %1</source>
         <translation>Nem tudok ebbe a fájlba írni: %1</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1909"/>
+        <location filename="../../gui/mainwindow.cpp" line="1910"/>
         <source>Display font</source>
         <translation>Betűtípus</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="2164"/>
+        <location filename="../../gui/mainwindow.cpp" line="2165"/>
         <source>Warning</source>
         <translation>Vigyázat</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="2454"/>
+        <location filename="../../gui/mainwindow.cpp" line="2455"/>
         <source>SpeedCrunch is minimized.
 Left click the icon to restore it or right click for options.</source>
         <translation>SpeedCrunch kis méretre van állítva.
 Bal kattintással visszaállíthatod vagy jobbal eléred a beálításokat.</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="2672"/>
+        <location filename="../../gui/mainwindow.cpp" line="2673"/>
         <source>System Default</source>
         <translation>Rendszer alapértelmezett</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="2676"/>
+        <location filename="../../gui/mainwindow.cpp" line="2677"/>
         <source>Language</source>
         <translation>Nyelv</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="2676"/>
+        <location filename="../../gui/mainwindow.cpp" line="2677"/>
         <source>Select the language:</source>
         <translation>Nyelv kiválasztása:</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="365"/>
+        <location filename="../../gui/mainwindow.cpp" line="366"/>
         <source>&amp;Automatic</source>
         <translation>&amp;Automatikus</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="601"/>
+        <location filename="../../gui/mainwindow.cpp" line="602"/>
         <source>&amp;Precision</source>
         <translation>&amp;Pontosság</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="309"/>
+        <location filename="../../gui/mainwindow.cpp" line="310"/>
         <source>&amp;HTML</source>
         <translation>&amp;HTML</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="310"/>
+        <location filename="../../gui/mainwindow.cpp" line="311"/>
         <source>Plain &amp;text</source>
         <translation>E&amp;gyszerű szöveg</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="327"/>
+        <location filename="../../gui/mainwindow.cpp" line="328"/>
         <source>Formula &amp;Book</source>
         <translation>Függvény&amp;táblázat</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="380"/>
+        <location filename="../../gui/mainwindow.cpp" line="381"/>
         <source>Check &amp;Updates</source>
         <translation>&amp;Frissítések Keresése</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="381"/>
+        <location filename="../../gui/mainwindow.cpp" line="382"/>
         <source>Send &amp;Feedback</source>
         <translation>&amp;Visszajelzés Küldése</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="382"/>
+        <location filename="../../gui/mainwindow.cpp" line="383"/>
         <source>Join &amp;Community</source>
         <translation>&amp;Csatlakozz A Közösséghez</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="383"/>
+        <location filename="../../gui/mainwindow.cpp" line="384"/>
         <source>&amp;News Feed</source>
         <translation>&amp;Hírcsatorna</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="594"/>
+        <location filename="../../gui/mainwindow.cpp" line="595"/>
         <source>&amp;Export</source>
         <translation>&amp;Exportálás</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="605"/>
+        <location filename="../../gui/mainwindow.cpp" line="606"/>
         <source>Color Scheme</source>
         <translation>Színbeállítások</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1849"/>
+        <location filename="../../gui/mainwindow.cpp" line="1850"/>
         <source>Export session as HTML</source>
         <translation>Munkamenet exportálása HTML-be</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1870"/>
+        <location filename="../../gui/mainwindow.cpp" line="1871"/>
         <source>Export session as plain text</source>
         <translation>Munkamenet exportálása szövegként</translation>
     </message>

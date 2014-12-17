@@ -86,6 +86,8 @@ QTranslator* MainWindow::createTranslator(const QString& langCode)
 
     if (locale == "C")
         locale = "en";
+    else if (locale == "uz" || locale == "uz_UZ")
+        locale = "uz@Latn";
 
     translator->load(QString(":/locale/") + locale);
     return translator;

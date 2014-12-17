@@ -506,18 +506,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>temperature (C)</source>
-        <translation type="obsolete">Sıcaklık (C)</translation>
-    </message>
-    <message>
-        <source>temperature (F)</source>
-        <translation type="obsolete">Sıcaklık (F)</translation>
-    </message>
-    <message>
-        <source>temperature (K)</source>
-        <translation type="obsolete">Sıcaklık (K)</translation>
-    </message>
-    <message>
         <location filename="../../core/book.cpp" line="352"/>
         <location filename="../../core/book.cpp" line="371"/>
         <source>dielectric constant</source>
@@ -537,22 +525,6 @@
         <location filename="../../core/book.cpp" line="370"/>
         <source>speed of light</source>
         <translation>Işık hızı</translation>
-    </message>
-    <message>
-        <source>input power (W)</source>
-        <translation type="obsolete">Giriş gücü (W)</translation>
-    </message>
-    <message>
-        <source>reflected power (W)</source>
-        <translation type="obsolete">Yansıyan güç (W)</translation>
-    </message>
-    <message>
-        <source>transmitted power (W)</source>
-        <translation type="obsolete">İletilen güç (W)</translation>
-    </message>
-    <message>
-        <source>return loss (dB)</source>
-        <translation type="obsolete">Geri dönüş kaybı (dB)</translation>
     </message>
     <message>
         <location filename="../../core/book.cpp" line="395"/>
@@ -1578,301 +1550,6 @@
     </message>
 </context>
 <context>
-    <name>Function</name>
-    <message>
-        <source>Absolute Value</source>
-        <translation type="obsolete">Mutlak değer</translation>
-    </message>
-    <message>
-        <source>Absolute Deviation</source>
-        <translation type="obsolete">Mutlak sapma</translation>
-    </message>
-    <message>
-        <source>Arc Cosine</source>
-        <translation type="obsolete">Ark kosinüs</translation>
-    </message>
-    <message>
-        <source>Logical AND</source>
-        <translation type="obsolete">Lojik AND</translation>
-    </message>
-    <message>
-        <source>Area Hyperbolic Cosine</source>
-        <translation type="obsolete">Alan hiperbolik kosinüsü</translation>
-    </message>
-    <message>
-        <source>Area Hyperbolic Sine</source>
-        <translation type="obsolete">Alan hiperbolik sinüsü</translation>
-    </message>
-    <message>
-        <source>Area Hyperbolic Tangent</source>
-        <translation type="obsolete">Alan hiperbolik tanjantı</translation>
-    </message>
-    <message>
-        <source>Arc Sine</source>
-        <translation type="obsolete">Ark sinüs</translation>
-    </message>
-    <message>
-        <source>Arc Tangent</source>
-        <translation type="obsolete">Ark tanjant</translation>
-    </message>
-    <message>
-        <source>Average (Arithmetic Mean)</source>
-        <translation type="obsolete">Ortalam (Aritmetik ortalama)</translation>
-    </message>
-    <message>
-        <source>Binary Representation</source>
-        <translation type="obsolete">İkili tabanda gösterim</translation>
-    </message>
-    <message>
-        <source>Binomial Cumulative Distribution Function</source>
-        <translation type="obsolete">Kümülatif binom açılımı fonksiyonu</translation>
-    </message>
-    <message>
-        <source>Binomial Distribution Mean</source>
-        <translation type="obsolete">Binom açılımının ortalaması</translation>
-    </message>
-    <message>
-        <source>Binomial Probability Mass Function</source>
-        <translation type="obsolete">Binom olasılık kütle fonksiyonu</translation>
-    </message>
-    <message>
-        <source>Binomial Distribution Variance</source>
-        <translation type="obsolete">Binom açılımının varyansı</translation>
-    </message>
-    <message>
-        <source>Cube Root</source>
-        <translation type="obsolete">Küp kök</translation>
-    </message>
-    <message>
-        <source>Ceiling</source>
-        <translation type="obsolete">Tavan</translation>
-    </message>
-    <message>
-        <source>Cosine</source>
-        <translation type="obsolete">Kosinüs</translation>
-    </message>
-    <message>
-        <source>Hyperbolic Cosine</source>
-        <translation type="obsolete">Hiperbolik kosinüs</translation>
-    </message>
-    <message>
-        <source>Cotangent</source>
-        <translation type="obsolete">Kotanjant</translation>
-    </message>
-    <message>
-        <source>Cosecant</source>
-        <translation type="obsolete">Kosekant</translation>
-    </message>
-    <message>
-        <source>Decimal Representation</source>
-        <translation type="obsolete">Ondalık tabanda gösterim</translation>
-    </message>
-    <message>
-        <source>Degrees of Arc</source>
-        <translation type="obsolete">Ark dereceleri</translation>
-    </message>
-    <message>
-        <source>Error Function</source>
-        <translation type="obsolete">Hata fonksiyonu</translation>
-    </message>
-    <message>
-        <source>Complementary Error Function</source>
-        <translation type="obsolete">Tamamlayıcı hata fonksiyonu</translation>
-    </message>
-    <message>
-        <source>Exponential</source>
-        <translation type="obsolete">Üstel</translation>
-    </message>
-    <message>
-        <source>Floor</source>
-        <translation type="obsolete">Taban</translation>
-    </message>
-    <message>
-        <source>Fractional Part</source>
-        <translation type="obsolete">Kesirli bölüm</translation>
-    </message>
-    <message>
-        <source>Extension of Factorials [= (x-1)!]</source>
-        <translation type="obsolete">Faktöriyel uzantısı [=(x-1)!]</translation>
-    </message>
-    <message>
-        <source>Greatest Common Divisor</source>
-        <translation type="obsolete">En büyük ortak bölen</translation>
-    </message>
-    <message>
-        <source>Geometric Mean</source>
-        <translation type="obsolete">Geometrik ortalama</translation>
-    </message>
-    <message>
-        <source>Hexadecimal Representation</source>
-        <translation type="obsolete">Onaltılı tabanda gösterim</translation>
-    </message>
-    <message>
-        <source>Hypergeometric Cumulative Distribution Function</source>
-        <translation type="obsolete">Hipergeometrik olasılık fonksiyonu</translation>
-    </message>
-    <message>
-        <source>Hypergeometric Distribution Mean</source>
-        <translation type="obsolete">Hipergeometrik dağılım ortalaması</translation>
-    </message>
-    <message>
-        <source>Hypergeometric Probability Mass Function</source>
-        <translation type="obsolete">Hipergeometrik olasılık kütle fonksiyonu</translation>
-    </message>
-    <message>
-        <source>Hypergeometric Distribution Variance</source>
-        <translation type="obsolete">Hipergeometrik dağılım varyansı</translation>
-    </message>
-    <message>
-        <source>Integer Quotient</source>
-        <translation type="obsolete">Tamsayı bölümü</translation>
-    </message>
-    <message>
-        <source>Integer Part</source>
-        <translation type="obsolete">Tamsayı kısmı</translation>
-    </message>
-    <message>
-        <source>Base-2 Logarithm</source>
-        <translation type="obsolete">2-Tabanlı Logaritma</translation>
-    </message>
-    <message>
-        <source>Natural Logarithm</source>
-        <translation type="obsolete">Doğal logaritma</translation>
-    </message>
-    <message>
-        <source>Base-10 Logarithm</source>
-        <translation type="obsolete">10-Tabanlı Logaritma</translation>
-    </message>
-    <message>
-        <source>Mask to a bit size</source>
-        <translation type="obsolete">Bir bit büyüklük için maske</translation>
-    </message>
-    <message>
-        <source>Maximum</source>
-        <translation type="obsolete">En fazla</translation>
-    </message>
-    <message>
-        <source>Median Value (50th Percentile)</source>
-        <translation type="obsolete">Medyan değeri (50. yüzdelik)</translation>
-    </message>
-    <message>
-        <source>Minimum</source>
-        <translation type="obsolete">En az</translation>
-    </message>
-    <message>
-        <source>Modulo</source>
-        <translation type="obsolete">Modül</translation>
-    </message>
-    <message>
-        <source>Combination (Binomial Coefficient)</source>
-        <translation type="obsolete">Kombinasyon (Binom Katsayısı)</translation>
-    </message>
-    <message>
-        <source>Logical NOT</source>
-        <translation type="obsolete">Lojik NOT</translation>
-    </message>
-    <message>
-        <source>Permutation (Arrangement)</source>
-        <translation type="obsolete">Permütasyon (Sıralama)</translation>
-    </message>
-    <message>
-        <source>Octal Representation</source>
-        <translation type="obsolete">Sekizlik Gösterim</translation>
-    </message>
-    <message>
-        <source>Logical OR</source>
-        <translation type="obsolete">Lojik OR</translation>
-    </message>
-    <message>
-        <source>Poissonian Cumulative Distribution Function</source>
-        <translation type="obsolete">Poissonian Kümülatif Açılım Fonksiyonu</translation>
-    </message>
-    <message>
-        <source>Poissonian Distribution Mean</source>
-        <translation type="obsolete">Poissonian Açılım Ortalaması</translation>
-    </message>
-    <message>
-        <source>Poissonian Probability Mass Function</source>
-        <translation type="obsolete">Poissonian Olasılık Kütle Fonksiyonu</translation>
-    </message>
-    <message>
-        <source>Poissonian Distribution Variance</source>
-        <translation type="obsolete">Poissonian Açılımı Varyansı</translation>
-    </message>
-    <message>
-        <source>Product</source>
-        <translation type="obsolete">Ürün</translation>
-    </message>
-    <message>
-        <source>Radians</source>
-        <translation type="obsolete">Radyan</translation>
-    </message>
-    <message>
-        <source>Rounding</source>
-        <translation type="obsolete">Yuvarlama</translation>
-    </message>
-    <message>
-        <source>Secant</source>
-        <translation type="obsolete">Sekant</translation>
-    </message>
-    <message>
-        <source>Arithmetic Shift Left</source>
-        <translation type="obsolete">Aritmetik sola kayma</translation>
-    </message>
-    <message>
-        <source>Arithmetic Shift Right</source>
-        <translation type="obsolete">Aritmetik sağa kayma</translation>
-    </message>
-    <message>
-        <source>Signum</source>
-        <translation type="obsolete">İşaret</translation>
-    </message>
-    <message>
-        <source>Sine</source>
-        <translation type="obsolete">Sinüs</translation>
-    </message>
-    <message>
-        <source>Hyperbolic Sine</source>
-        <translation type="obsolete">Hiperbolik sinüs</translation>
-    </message>
-    <message>
-        <source>Square Root</source>
-        <translation type="obsolete">Kare kök</translation>
-    </message>
-    <message>
-        <source>Standard Deviation (Square Root of Variance)</source>
-        <translation type="obsolete">Standart Sapma (Varyansın Karekökü)</translation>
-    </message>
-    <message>
-        <source>Sum</source>
-        <translation type="obsolete">Toplama</translation>
-    </message>
-    <message>
-        <source>Tangent</source>
-        <translation type="obsolete">Tanjant</translation>
-    </message>
-    <message>
-        <source>Hyperbolic Tangent</source>
-        <translation type="obsolete">Hiperbolik Tanjant</translation>
-    </message>
-    <message>
-        <source>Truncation</source>
-        <translation type="obsolete">Kesme</translation>
-    </message>
-    <message>
-        <source>Sign-extent a value</source>
-        <translation type="obsolete">İşaret-ölçüsünde bir değer</translation>
-    </message>
-    <message>
-        <source>Variance</source>
-        <translation type="obsolete">Varyans</translation>
-    </message>
-    <message>
-        <source>Logical XOR</source>
-        <translation type="obsolete">Lojik XOR</translation>
-    </message>
-</context>
-<context>
     <name>FunctionRepo</name>
     <message>
         <location filename="../../core/functions.cpp" line="821"/>
@@ -1944,192 +1621,192 @@
     <message>
         <location filename="../../core/functions.cpp" line="844"/>
         <source>Absolute Value</source>
-        <translation type="unfinished">Mutlak değer</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="845"/>
         <source>Absolute Deviation</source>
-        <translation type="unfinished">Mutlak sapma</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="846"/>
         <source>Arc Cosine</source>
-        <translation type="unfinished">Ark kosinüs</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="847"/>
         <source>Logical AND</source>
-        <translation type="unfinished">Lojik AND</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="848"/>
         <source>Area Hyperbolic Cosine</source>
-        <translation type="unfinished">Alan hiperbolik kosinüsü</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="849"/>
         <source>Area Hyperbolic Sine</source>
-        <translation type="unfinished">Alan hiperbolik sinüsü</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="850"/>
         <source>Area Hyperbolic Tangent</source>
-        <translation type="unfinished">Alan hiperbolik tanjantı</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="851"/>
         <source>Arc Sine</source>
-        <translation type="unfinished">Ark sinüs</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="852"/>
         <source>Arc Tangent</source>
-        <translation type="unfinished">Ark tanjant</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="853"/>
         <source>Average (Arithmetic Mean)</source>
-        <translation type="unfinished">Ortalam (Aritmetik ortalama)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="854"/>
         <source>Binary Representation</source>
-        <translation type="unfinished">İkili tabanda gösterim</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="855"/>
         <source>Binomial Cumulative Distribution Function</source>
-        <translation type="unfinished">Kümülatif binom açılımı fonksiyonu</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="856"/>
         <source>Binomial Distribution Mean</source>
-        <translation type="unfinished">Binom açılımının ortalaması</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="857"/>
         <source>Binomial Probability Mass Function</source>
-        <translation type="unfinished">Binom olasılık kütle fonksiyonu</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="858"/>
         <source>Binomial Distribution Variance</source>
-        <translation type="unfinished">Binom açılımının varyansı</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="859"/>
         <source>Cube Root</source>
-        <translation type="unfinished">Küp kök</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="860"/>
         <source>Ceiling</source>
-        <translation type="unfinished">Tavan</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="861"/>
         <source>Cosine</source>
-        <translation type="unfinished">Kosinüs</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="862"/>
         <source>Hyperbolic Cosine</source>
-        <translation type="unfinished">Hiperbolik kosinüs</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="863"/>
         <source>Cotangent</source>
-        <translation type="unfinished">Kotanjant</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="864"/>
         <source>Cosecant</source>
-        <translation type="unfinished">Kosekant</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="865"/>
         <source>Decimal Representation</source>
-        <translation type="unfinished">Ondalık tabanda gösterim</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="866"/>
         <source>Degrees of Arc</source>
-        <translation type="unfinished">Ark dereceleri</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="867"/>
         <source>Error Function</source>
-        <translation type="unfinished">Hata fonksiyonu</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="868"/>
         <source>Complementary Error Function</source>
-        <translation type="unfinished">Tamamlayıcı hata fonksiyonu</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="869"/>
         <source>Exponential</source>
-        <translation type="unfinished">Üstel</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="870"/>
         <source>Floor</source>
-        <translation type="unfinished">Taban</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="871"/>
         <source>Fractional Part</source>
-        <translation type="unfinished">Kesirli bölüm</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="872"/>
         <source>Extension of Factorials [= (x-1)!]</source>
-        <translation type="unfinished">Faktöriyel uzantısı [=(x-1)!]</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="873"/>
         <source>Greatest Common Divisor</source>
-        <translation type="unfinished">En büyük ortak bölen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="874"/>
         <source>Geometric Mean</source>
-        <translation type="unfinished">Geometrik ortalama</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="875"/>
         <source>Hexadecimal Representation</source>
-        <translation type="unfinished">Onaltılı tabanda gösterim</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="876"/>
         <source>Hypergeometric Cumulative Distribution Function</source>
-        <translation type="unfinished">Hipergeometrik olasılık fonksiyonu</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="877"/>
         <source>Hypergeometric Distribution Mean</source>
-        <translation type="unfinished">Hipergeometrik dağılım ortalaması</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="878"/>
         <source>Hypergeometric Probability Mass Function</source>
-        <translation type="unfinished">Hipergeometrik olasılık kütle fonksiyonu</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="879"/>
         <source>Hypergeometric Distribution Variance</source>
-        <translation type="unfinished">Hipergeometrik dağılım varyansı</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="880"/>
         <source>Integer Quotient</source>
-        <translation type="unfinished">Tamsayı bölümü</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="881"/>
         <source>Integer Part</source>
-        <translation type="unfinished">Tamsayı kısmı</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="882"/>
@@ -2144,7 +1821,7 @@
     <message>
         <location filename="../../core/functions.cpp" line="884"/>
         <source>Natural Logarithm</source>
-        <translation type="unfinished">Doğal logaritma</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="886"/>
@@ -2154,147 +1831,147 @@
     <message>
         <location filename="../../core/functions.cpp" line="887"/>
         <source>Mask to a bit size</source>
-        <translation type="unfinished">Bir bit büyüklük için maske</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="888"/>
         <source>Maximum</source>
-        <translation type="unfinished">En fazla</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="889"/>
         <source>Median Value (50th Percentile)</source>
-        <translation type="unfinished">Medyan değeri (50. yüzdelik)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="890"/>
         <source>Minimum</source>
-        <translation type="unfinished">En az</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="891"/>
         <source>Modulo</source>
-        <translation type="unfinished">Modül</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="892"/>
         <source>Combination (Binomial Coefficient)</source>
-        <translation type="unfinished">Kombinasyon (Binom Katsayısı)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="893"/>
         <source>Logical NOT</source>
-        <translation type="unfinished">Lojik NOT</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="894"/>
         <source>Permutation (Arrangement)</source>
-        <translation type="unfinished">Permütasyon (Sıralama)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="895"/>
         <source>Octal Representation</source>
-        <translation type="unfinished">Sekizlik Gösterim</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="896"/>
         <source>Logical OR</source>
-        <translation type="unfinished">Lojik OR</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="897"/>
         <source>Poissonian Cumulative Distribution Function</source>
-        <translation type="unfinished">Poissonian Kümülatif Açılım Fonksiyonu</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="898"/>
         <source>Poissonian Distribution Mean</source>
-        <translation type="unfinished">Poissonian Açılım Ortalaması</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="899"/>
         <source>Poissonian Probability Mass Function</source>
-        <translation type="unfinished">Poissonian Olasılık Kütle Fonksiyonu</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="900"/>
         <source>Poissonian Distribution Variance</source>
-        <translation type="unfinished">Poissonian Açılımı Varyansı</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="901"/>
         <source>Product</source>
-        <translation type="unfinished">Ürün</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="902"/>
         <source>Radians</source>
-        <translation type="unfinished">Radyan</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="903"/>
         <source>Rounding</source>
-        <translation type="unfinished">Yuvarlama</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="904"/>
         <source>Secant</source>
-        <translation type="unfinished">Sekant</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="905"/>
         <source>Arithmetic Shift Left</source>
-        <translation type="unfinished">Aritmetik sola kayma</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="906"/>
         <source>Arithmetic Shift Right</source>
-        <translation type="unfinished">Aritmetik sağa kayma</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="907"/>
         <source>Signum</source>
-        <translation type="unfinished">İşaret</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="908"/>
         <source>Sine</source>
-        <translation type="unfinished">Sinüs</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="909"/>
         <source>Hyperbolic Sine</source>
-        <translation type="unfinished">Hiperbolik sinüs</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="910"/>
         <source>Square Root</source>
-        <translation type="unfinished">Kare kök</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="911"/>
         <source>Standard Deviation (Square Root of Variance)</source>
-        <translation type="unfinished">Standart Sapma (Varyansın Karekökü)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="912"/>
         <source>Sum</source>
-        <translation type="unfinished">Toplama</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="913"/>
         <source>Tangent</source>
-        <translation type="unfinished">Tanjant</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="914"/>
         <source>Hyperbolic Tangent</source>
-        <translation type="unfinished">Hiperbolik Tanjant</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="915"/>
         <source>Truncation</source>
-        <translation type="unfinished">Kesme</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="916"/>
@@ -2304,12 +1981,12 @@
     <message>
         <location filename="../../core/functions.cpp" line="917"/>
         <source>Variance</source>
-        <translation type="unfinished">Varyans</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/functions.cpp" line="918"/>
         <source>Logical XOR</source>
-        <translation type="unfinished">Lojik XOR</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2354,624 +2031,624 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="273"/>
-        <location filename="../../gui/mainwindow.cpp" line="1743"/>
+        <location filename="../../gui/mainwindow.cpp" line="274"/>
+        <location filename="../../gui/mainwindow.cpp" line="1744"/>
         <source>Radian</source>
         <translation>Radyan</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="273"/>
-        <location filename="../../gui/mainwindow.cpp" line="1310"/>
+        <location filename="../../gui/mainwindow.cpp" line="274"/>
+        <location filename="../../gui/mainwindow.cpp" line="1311"/>
         <source>Degree</source>
         <translation>Derece</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="277"/>
-        <location filename="../../gui/mainwindow.cpp" line="2174"/>
+        <location filename="../../gui/mainwindow.cpp" line="278"/>
+        <location filename="../../gui/mainwindow.cpp" line="2175"/>
         <source>Binary</source>
         <translation>İkilik</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="278"/>
-        <location filename="../../gui/mainwindow.cpp" line="2219"/>
+        <location filename="../../gui/mainwindow.cpp" line="279"/>
+        <location filename="../../gui/mainwindow.cpp" line="2220"/>
         <source>Octal</source>
         <translation>Sekizlik</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="279"/>
-        <location filename="../../gui/mainwindow.cpp" line="2210"/>
+        <location filename="../../gui/mainwindow.cpp" line="280"/>
+        <location filename="../../gui/mainwindow.cpp" line="2211"/>
         <source>Hexadecimal</source>
         <translation>Onaltılık</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="280"/>
-        <location filename="../../gui/mainwindow.cpp" line="2192"/>
+        <location filename="../../gui/mainwindow.cpp" line="281"/>
+        <location filename="../../gui/mainwindow.cpp" line="2193"/>
         <source>Fixed decimal</source>
         <translation>Sabit ondalık</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="281"/>
-        <location filename="../../gui/mainwindow.cpp" line="2183"/>
+        <location filename="../../gui/mainwindow.cpp" line="282"/>
+        <location filename="../../gui/mainwindow.cpp" line="2184"/>
         <source>Engineering decimal</source>
         <translation>Mühendislik ondalığı</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="282"/>
-        <location filename="../../gui/mainwindow.cpp" line="2228"/>
+        <location filename="../../gui/mainwindow.cpp" line="283"/>
+        <location filename="../../gui/mainwindow.cpp" line="2229"/>
         <source>Scientific decimal</source>
         <translation>Bilimsel ondalık</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="283"/>
-        <location filename="../../gui/mainwindow.cpp" line="2201"/>
+        <location filename="../../gui/mainwindow.cpp" line="284"/>
+        <location filename="../../gui/mainwindow.cpp" line="2202"/>
         <source>General decimal</source>
         <translation>Genel ondalık</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="290"/>
+        <location filename="../../gui/mainwindow.cpp" line="291"/>
         <source>Angle unit</source>
         <translation>Açı birimi</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="291"/>
+        <location filename="../../gui/mainwindow.cpp" line="292"/>
         <source>Result format</source>
         <translation>Sonuç biçimi</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="311"/>
+        <location filename="../../gui/mainwindow.cpp" line="312"/>
         <source>&amp;Import...</source>
         <translation>&amp;İçeAktar...</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="312"/>
+        <location filename="../../gui/mainwindow.cpp" line="313"/>
         <source>&amp;Load...</source>
         <translation>&amp;Yükle...</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="313"/>
+        <location filename="../../gui/mainwindow.cpp" line="314"/>
         <source>&amp;Quit</source>
         <translation>&amp;Çık</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="314"/>
+        <location filename="../../gui/mainwindow.cpp" line="315"/>
         <source>&amp;Save...</source>
         <translation>&amp;Kaydet...</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="316"/>
+        <location filename="../../gui/mainwindow.cpp" line="317"/>
         <source>Clear E&amp;xpression</source>
         <translation>Açık İ&amp;fade</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="317"/>
+        <location filename="../../gui/mainwindow.cpp" line="318"/>
         <source>Clear &amp;History</source>
         <translation>Geçmişi &amp;Temizle</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="318"/>
+        <location filename="../../gui/mainwindow.cpp" line="319"/>
         <source>Copy Last &amp;Result</source>
         <translation>Son Kopya &amp;Sonuç</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="319"/>
+        <location filename="../../gui/mainwindow.cpp" line="320"/>
         <source>&amp;Copy</source>
         <translation>&amp;Kopyala</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="320"/>
+        <location filename="../../gui/mainwindow.cpp" line="321"/>
         <source>&amp;Paste</source>
         <translation>&amp;Yapıştır</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="321"/>
+        <location filename="../../gui/mainwindow.cpp" line="322"/>
         <source>&amp;Select Expression</source>
         <translation>İfade &amp;Seçin</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="323"/>
+        <location filename="../../gui/mainwindow.cpp" line="324"/>
         <source>&amp;Constants</source>
         <translation>&amp;Sabitler</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="324"/>
+        <location filename="../../gui/mainwindow.cpp" line="325"/>
         <source>F&amp;ull Screen Mode</source>
         <translation>T&amp;am Ekran Modu</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="325"/>
+        <location filename="../../gui/mainwindow.cpp" line="326"/>
         <source>&amp;Functions</source>
         <translation>&amp;Fonksiyonlar</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="326"/>
+        <location filename="../../gui/mainwindow.cpp" line="327"/>
         <source>&amp;History</source>
         <translation>&amp;Geçmiş</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="330"/>
+        <location filename="../../gui/mainwindow.cpp" line="331"/>
         <source>&amp;Menu Bar</source>
         <translation>&amp;Menü Çubuğu</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="332"/>
+        <location filename="../../gui/mainwindow.cpp" line="333"/>
         <source>&amp;Status Bar</source>
         <translation>&amp;Durum Çubuğu</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="333"/>
+        <location filename="../../gui/mainwindow.cpp" line="334"/>
         <source>&amp;Variables</source>
         <translation>&amp;Değişkenler</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="334"/>
+        <location filename="../../gui/mainwindow.cpp" line="335"/>
         <source>Bitfield</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="335"/>
+        <location filename="../../gui/mainwindow.cpp" line="336"/>
         <source>Use&amp;r Functions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="337"/>
+        <location filename="../../gui/mainwindow.cpp" line="338"/>
         <source>&amp;Degree</source>
         <translation>&amp;Derece</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="338"/>
+        <location filename="../../gui/mainwindow.cpp" line="339"/>
         <source>&amp;Radian</source>
         <translation>&amp;Radyan</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="339"/>
+        <location filename="../../gui/mainwindow.cpp" line="340"/>
         <source>Always On &amp;Top</source>
         <translation>Daima En &amp;Üstte</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="340"/>
+        <location filename="../../gui/mainwindow.cpp" line="341"/>
         <source>Automatic Result &amp;Reuse</source>
         <translation>Otomatik &amp;Sonuç Yenile</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="341"/>
+        <location filename="../../gui/mainwindow.cpp" line="342"/>
         <source>Automatic &amp;Completion</source>
         <translation>Otomatik &amp;Tamamlama</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="342"/>
+        <location filename="../../gui/mainwindow.cpp" line="343"/>
         <source>&amp;Minimize To System Tray</source>
         <translation>Sistem Tepsisine &amp;Küçült</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="343"/>
+        <location filename="../../gui/mainwindow.cpp" line="344"/>
         <source>&amp;Partial Results</source>
         <translation>&amp;Kısmi Sonuçlar</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="344"/>
+        <location filename="../../gui/mainwindow.cpp" line="345"/>
         <source>Save &amp;History on Exit</source>
         <translation>Çıkışta &amp;Geçmiş Kaydedilsin</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="345"/>
+        <location filename="../../gui/mainwindow.cpp" line="346"/>
         <source>Save &amp;Variables on Exit</source>
         <translation>Çıkışta &amp;Değişkenler Kaydedilsin</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="346"/>
+        <location filename="../../gui/mainwindow.cpp" line="347"/>
         <source>Save User &amp;Functions on Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="347"/>
+        <location filename="../../gui/mainwindow.cpp" line="348"/>
         <source>Save &amp;Window Positon on Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="348"/>
+        <location filename="../../gui/mainwindow.cpp" line="349"/>
         <source>Syntax &amp;Highlighting</source>
         <translation>Sözdizimi &amp;Vurgulama</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="349"/>
-        <source>Disabled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../gui/mainwindow.cpp" line="350"/>
-        <source>Small Space</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../gui/mainwindow.cpp" line="351"/>
-        <source>Medium Space</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../gui/mainwindow.cpp" line="352"/>
-        <source>Large Space</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../gui/mainwindow.cpp" line="353"/>
+        <location filename="../../gui/mainwindow.cpp" line="354"/>
         <source>Leave &amp;Last Expression</source>
         <translation>&amp;Son İfade Bırakın</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="354"/>
+        <location filename="../../gui/mainwindow.cpp" line="355"/>
         <source>Automatic &amp;Result to Clipboard</source>
         <translation>Pano İçin Otomatik &amp;Sonuç</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="355"/>
-        <source>Detect &amp;All Radix Characters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../gui/mainwindow.cpp" line="356"/>
-        <source>&amp;Strict Digit Groups Detection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../gui/mainwindow.cpp" line="357"/>
+        <location filename="../../gui/mainwindow.cpp" line="358"/>
         <source>&amp;Comma</source>
         <translation>&amp;Virgül</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="358"/>
+        <location filename="../../gui/mainwindow.cpp" line="359"/>
         <source>&amp;System Default</source>
         <translation>&amp;Sistem Varsayılanı</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="359"/>
+        <location filename="../../gui/mainwindow.cpp" line="360"/>
         <source>&amp;Dot</source>
         <translation>&amp;Nokta</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="360"/>
+        <location filename="../../gui/mainwindow.cpp" line="361"/>
         <source>&amp;15 Decimal Digits</source>
         <translation>&amp;15 Ondalık Basamak</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="361"/>
+        <location filename="../../gui/mainwindow.cpp" line="362"/>
         <source>&amp;2 Decimal Digits</source>
         <translation>&amp;2 Ondalık Basamak</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="362"/>
+        <location filename="../../gui/mainwindow.cpp" line="363"/>
         <source>&amp;3 Decimal Digits</source>
         <translation>&amp;3 Ondalık Basamak</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="363"/>
+        <location filename="../../gui/mainwindow.cpp" line="364"/>
         <source>&amp;50 Decimal Digits</source>
         <translation>&amp;50 Ondalık Basamak</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="364"/>
+        <location filename="../../gui/mainwindow.cpp" line="365"/>
         <source>&amp;8 Decimal Digits</source>
         <translation>&amp;8 Ondalık Basamak</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="366"/>
+        <location filename="../../gui/mainwindow.cpp" line="367"/>
         <source>&amp;Binary</source>
         <translation>&amp;İkilik</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="367"/>
+        <location filename="../../gui/mainwindow.cpp" line="368"/>
         <source>&amp;Engineering</source>
         <translation>&amp;Mühendislik</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="368"/>
+        <location filename="../../gui/mainwindow.cpp" line="369"/>
         <source>&amp;Fixed Decimal</source>
         <translation>&amp;Sabit Ondalık</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="369"/>
+        <location filename="../../gui/mainwindow.cpp" line="370"/>
         <source>&amp;General</source>
         <translation>&amp;Genel</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="370"/>
+        <location filename="../../gui/mainwindow.cpp" line="371"/>
         <source>&amp;Hexadecimal</source>
         <translation>&amp;Onaltılık</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="371"/>
+        <location filename="../../gui/mainwindow.cpp" line="372"/>
         <source>&amp;Octal</source>
         <translation>&amp;Sekizlik</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="372"/>
+        <location filename="../../gui/mainwindow.cpp" line="373"/>
         <source>&amp;Scientific</source>
         <translation>&amp;Bilimsel</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="373"/>
+        <location filename="../../gui/mainwindow.cpp" line="374"/>
         <source>Standard</source>
         <translation>Standart</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="374"/>
+        <location filename="../../gui/mainwindow.cpp" line="375"/>
         <source>Sublime</source>
         <translation>Olağanüstü</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="375"/>
+        <location filename="../../gui/mainwindow.cpp" line="376"/>
         <source>Terminal</source>
         <translation>Terminal</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="379"/>
+        <location filename="../../gui/mainwindow.cpp" line="380"/>
         <source>User &amp;Manual</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="607"/>
-        <source>Digit Grouping</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../gui/mainwindow.cpp" line="1117"/>
+        <location filename="../../gui/mainwindow.cpp" line="1118"/>
         <source>Type an expression here</source>
         <translation>Bir İfade Girin</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="2161"/>
+        <location filename="../../gui/mainwindow.cpp" line="2162"/>
         <source>The menu bar is now hidden. To make it visible again, press Ctrl+M.</source>
         <translation>Menü çubuğu şimdi gizlidir. Tekrar görünür yapmak için Ctrl + M tuşlarına basın.</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="376"/>
+        <location filename="../../gui/mainwindow.cpp" line="377"/>
         <source>&amp;Font...</source>
         <translation>&amp;YazıTipi</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="377"/>
+        <location filename="../../gui/mainwindow.cpp" line="378"/>
         <source>&amp;Language...</source>
         <translation>&amp;Dil</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="593"/>
+        <location filename="../../gui/mainwindow.cpp" line="594"/>
         <source>&amp;Session</source>
         <translation>&amp;Oturum</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="595"/>
+        <location filename="../../gui/mainwindow.cpp" line="596"/>
         <source>&amp;Edit</source>
         <translation>&amp;Düzenle</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="596"/>
+        <location filename="../../gui/mainwindow.cpp" line="597"/>
         <source>&amp;View</source>
         <translation>&amp;Görünüm</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="597"/>
+        <location filename="../../gui/mainwindow.cpp" line="598"/>
         <source>Se&amp;ttings</source>
         <translation>&amp;Ayarlar</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="598"/>
+        <location filename="../../gui/mainwindow.cpp" line="599"/>
         <source>Result &amp;Format</source>
         <translation>Sonuç &amp;Biçimi</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="600"/>
+        <location filename="../../gui/mainwindow.cpp" line="601"/>
         <source>&amp;Decimal</source>
         <translation>&amp;Ondalık</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="602"/>
+        <location filename="../../gui/mainwindow.cpp" line="603"/>
         <source>&amp;Angle Unit</source>
         <translation>&amp;Açı Birimi</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="603"/>
+        <location filename="../../gui/mainwindow.cpp" line="604"/>
         <source>&amp;Behavior</source>
         <translation>&amp;Davranış</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="599"/>
+        <location filename="../../gui/mainwindow.cpp" line="600"/>
         <source>Radix &amp;Character</source>
         <translation>Sayı Tabanı &amp;Karakteri</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="384"/>
+        <location filename="../../gui/mainwindow.cpp" line="350"/>
+        <source>Disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../gui/mainwindow.cpp" line="351"/>
+        <source>Small Space</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../gui/mainwindow.cpp" line="352"/>
+        <source>Medium Space</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../gui/mainwindow.cpp" line="353"/>
+        <source>Large Space</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../gui/mainwindow.cpp" line="356"/>
+        <source>Detect &amp;All Radix Characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../gui/mainwindow.cpp" line="357"/>
+        <source>&amp;Strict Digit Groups Detection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../gui/mainwindow.cpp" line="385"/>
         <source>About &amp;SpeedCrunch</source>
         <translation>&amp;SpeedCrunch Hakkında</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="604"/>
+        <location filename="../../gui/mainwindow.cpp" line="605"/>
         <source>&amp;Display</source>
         <translation>&amp;Görüntü</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="606"/>
+        <location filename="../../gui/mainwindow.cpp" line="607"/>
         <source>&amp;Help</source>
         <translation>&amp;Yardım</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1393"/>
+        <location filename="../../gui/mainwindow.cpp" line="608"/>
+        <source>Digit Grouping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../gui/mainwindow.cpp" line="1394"/>
         <source>File %1 is not a valid session</source>
         <translation>%1 Dosyası geçerli bir oturum değil</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1394"/>
-        <location filename="../../gui/mainwindow.cpp" line="1750"/>
+        <location filename="../../gui/mainwindow.cpp" line="1395"/>
+        <location filename="../../gui/mainwindow.cpp" line="1751"/>
         <source>SpeedCrunch Sessions (*.sch);;All Files (*)</source>
         <translation>SpeedCrunch Oturumu (*.sch);;Tüm Dosyalar (*)</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1395"/>
+        <location filename="../../gui/mainwindow.cpp" line="1396"/>
         <source>Load Session</source>
         <translation>Oturumu Yükle</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1401"/>
-        <location filename="../../gui/mainwindow.cpp" line="1410"/>
-        <location filename="../../gui/mainwindow.cpp" line="1418"/>
-        <location filename="../../gui/mainwindow.cpp" line="1449"/>
-        <location filename="../../gui/mainwindow.cpp" line="1471"/>
-        <location filename="../../gui/mainwindow.cpp" line="1478"/>
-        <location filename="../../gui/mainwindow.cpp" line="1500"/>
-        <location filename="../../gui/mainwindow.cpp" line="1508"/>
-        <location filename="../../gui/mainwindow.cpp" line="1532"/>
-        <location filename="../../gui/mainwindow.cpp" line="1569"/>
-        <location filename="../../gui/mainwindow.cpp" line="1757"/>
-        <location filename="../../gui/mainwindow.cpp" line="1857"/>
-        <location filename="../../gui/mainwindow.cpp" line="1878"/>
+        <location filename="../../gui/mainwindow.cpp" line="1402"/>
+        <location filename="../../gui/mainwindow.cpp" line="1411"/>
+        <location filename="../../gui/mainwindow.cpp" line="1419"/>
+        <location filename="../../gui/mainwindow.cpp" line="1450"/>
+        <location filename="../../gui/mainwindow.cpp" line="1472"/>
+        <location filename="../../gui/mainwindow.cpp" line="1479"/>
+        <location filename="../../gui/mainwindow.cpp" line="1501"/>
+        <location filename="../../gui/mainwindow.cpp" line="1509"/>
+        <location filename="../../gui/mainwindow.cpp" line="1533"/>
+        <location filename="../../gui/mainwindow.cpp" line="1570"/>
+        <location filename="../../gui/mainwindow.cpp" line="1758"/>
+        <location filename="../../gui/mainwindow.cpp" line="1858"/>
+        <location filename="../../gui/mainwindow.cpp" line="1879"/>
         <source>Error</source>
         <translation>Hata</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1401"/>
-        <location filename="../../gui/mainwindow.cpp" line="1532"/>
+        <location filename="../../gui/mainwindow.cpp" line="1402"/>
+        <location filename="../../gui/mainwindow.cpp" line="1533"/>
         <source>Can&apos;t read from file %1</source>
         <translation>%1 Dosyasından Okunamadı</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1423"/>
+        <location filename="../../gui/mainwindow.cpp" line="1424"/>
         <source>Merge session being loaded with current session?
 If no, current variables and display will be cleared.</source>
         <translation>Geçerli oturum ile yüklenen oturum birleştirilsin mi?
 Cevabınız eğer hayırsa, geçerli değişkenler ve görüntü temizlenecek.</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1429"/>
-        <location filename="../../gui/mainwindow.cpp" line="1543"/>
+        <location filename="../../gui/mainwindow.cpp" line="1430"/>
+        <location filename="../../gui/mainwindow.cpp" line="1544"/>
         <source>Question</source>
         <translation>Soru</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1525"/>
+        <location filename="../../gui/mainwindow.cpp" line="1526"/>
         <source>All Files (*)</source>
         <translation>Tüm Dosyalar (*)</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1526"/>
+        <location filename="../../gui/mainwindow.cpp" line="1527"/>
         <source>Import Session</source>
         <translation>Oturumu İçeAktar</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1537"/>
+        <location filename="../../gui/mainwindow.cpp" line="1538"/>
         <source>Merge session being imported with current session?
 If no, current variables and display will be cleared.</source>
         <translation>Geçerli oturum ile içe aktarılan oturum birleştirilsin mi?
 Cevabınız eğer hayırsa, geçerli değişkenler ve görüntü temizlenecek.</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1569"/>
+        <location filename="../../gui/mainwindow.cpp" line="1570"/>
         <source>Ignore error?</source>
         <translation>Hatayı Yoksay?</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1751"/>
+        <location filename="../../gui/mainwindow.cpp" line="1752"/>
         <source>Save Session</source>
         <translation>Oturumu Kaydet</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1757"/>
-        <location filename="../../gui/mainwindow.cpp" line="1857"/>
-        <location filename="../../gui/mainwindow.cpp" line="1878"/>
+        <location filename="../../gui/mainwindow.cpp" line="1758"/>
+        <location filename="../../gui/mainwindow.cpp" line="1858"/>
+        <location filename="../../gui/mainwindow.cpp" line="1879"/>
         <source>Can&apos;t write to file %1</source>
         <translation>%1 dosyasına yazılamıyor</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1909"/>
+        <location filename="../../gui/mainwindow.cpp" line="1910"/>
         <source>Display font</source>
         <translation>Yazı tipini görüntüle</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="2164"/>
+        <location filename="../../gui/mainwindow.cpp" line="2165"/>
         <source>Warning</source>
         <translation>Uyarı</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="2454"/>
+        <location filename="../../gui/mainwindow.cpp" line="2455"/>
         <source>SpeedCrunch is minimized.
 Left click the icon to restore it or right click for options.</source>
         <translation>SpeedCrunch küçültüldü.
 Yeniden yüklemek için Sol Tıklayın ya da seçenekler için Sağ Tıklayın.</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="2672"/>
+        <location filename="../../gui/mainwindow.cpp" line="2673"/>
         <source>System Default</source>
         <translation>Sistem Varsayılanı</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="2676"/>
+        <location filename="../../gui/mainwindow.cpp" line="2677"/>
         <source>Language</source>
         <translation>Dil</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="2676"/>
+        <location filename="../../gui/mainwindow.cpp" line="2677"/>
         <source>Select the language:</source>
         <translation>Dil seçin:</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="365"/>
+        <location filename="../../gui/mainwindow.cpp" line="366"/>
         <source>&amp;Automatic</source>
         <translation>&amp;Otomatik</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="601"/>
+        <location filename="../../gui/mainwindow.cpp" line="602"/>
         <source>&amp;Precision</source>
         <translation>&amp;Hassasiyet</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="309"/>
+        <location filename="../../gui/mainwindow.cpp" line="310"/>
         <source>&amp;HTML</source>
         <translation>&amp;HTML</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="310"/>
+        <location filename="../../gui/mainwindow.cpp" line="311"/>
         <source>Plain &amp;text</source>
         <translation>Düz &amp;Metin</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="327"/>
+        <location filename="../../gui/mainwindow.cpp" line="328"/>
         <source>Formula &amp;Book</source>
         <translation>Formül &amp;Kitabı</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="380"/>
+        <location filename="../../gui/mainwindow.cpp" line="381"/>
         <source>Check &amp;Updates</source>
         <translation>&amp;Güncellemeleri Kontrol Et</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="381"/>
+        <location filename="../../gui/mainwindow.cpp" line="382"/>
         <source>Send &amp;Feedback</source>
         <translation>&amp;Görüş Gönder</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="382"/>
+        <location filename="../../gui/mainwindow.cpp" line="383"/>
         <source>Join &amp;Community</source>
         <translation>&amp;Topluluğa Katıl</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="383"/>
+        <location filename="../../gui/mainwindow.cpp" line="384"/>
         <source>&amp;News Feed</source>
         <translation>&amp;Haber Kaynağı</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="594"/>
+        <location filename="../../gui/mainwindow.cpp" line="595"/>
         <source>&amp;Export</source>
         <translation>&amp;DışaAktar</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="605"/>
+        <location filename="../../gui/mainwindow.cpp" line="606"/>
         <source>Color Scheme</source>
         <translation>Renk Düzeni</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1849"/>
+        <location filename="../../gui/mainwindow.cpp" line="1850"/>
         <source>Export session as HTML</source>
         <translation>Oturumu HTML olarak dışa aktar</translation>
     </message>
     <message>
-        <location filename="../../gui/mainwindow.cpp" line="1870"/>
+        <location filename="../../gui/mainwindow.cpp" line="1871"/>
         <source>Export session as plain text</source>
         <translation>Oturumu düz metin olarak dışa aktar</translation>
     </message>
