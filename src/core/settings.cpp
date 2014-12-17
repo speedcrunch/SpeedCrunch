@@ -20,7 +20,6 @@
 
 #include "core/settings.h"
 
-#include "thirdparty/binreloc.h"
 #include "math/floatconfig.h"
 
 #include <QDir>
@@ -386,27 +385,13 @@ QSettings* createQSettings(const QString& KEY)
     QSettings* settings = 0;
 
 #ifdef SPEEDCRUNCH_PORTABLE
-#if defined(Q_WS_WIN)
-    // Portable Windows version: settings are from INI file in same directory.
+    // Portable Edition: settings are from INI file in same directory.
     QString appPath = QApplication::applicationFilePath();
     int ii = appPath.lastIndexOf('/');
     if (ii > 0)
         appPath.remove(ii, appPath.length());
     QString iniFile = appPath + '/' + KEY + ".ini";
     settings = new QSettings(iniFile, QSettings::IniFormat);
-#elif defined(Q_WS_X11) || defined (Q_WS_QWS)
-    // Portable X11 version: settings are from INI file in the same directory.
-    BrInitError error;
-    if (br_init(& error) == 0 && error != BR_INIT_ERROR_DISABLED) {
-        qDebug("Warning: BinReloc failed to initialize (error code %d)", error);
-        qDebug("Will fallback to hardcoded default path.");
-    }
-
-    const char* prefix = br_find_prefix(0);
-    QString iniFile = QString(prefix) + '/' + KEY + QLatin1String(".ini");
-    free(prefix);
-    settings = new QSettings(iniFile, QSettings::IniFormat);
-#endif // Q_WS_WIN / Q_WS_X11 || Q_WS_QWS
 #else // SPEEDCRUNCH_PORTABLE
     settings = new QSettings(QSettings::NativeFormat, QSettings::UserScope, KEY, KEY);
 #endif // SPEEDCRUNCH_PORTABLE

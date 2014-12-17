@@ -29,9 +29,7 @@ win32-msvc*:LIBS += User32.lib
     !win32 {
         DEPENDPATH += thirdparty
         INCLUDEPATH += thirdparty
-        DEFINES += ENABLE_BINRELOC
         LIBS += -lX11
-        SOURCES += thirdparty/binreloc.c
         target.path = "/bin"
         menu.path = "/share/applications"
         icon.path = "/share/pixmaps"

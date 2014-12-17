@@ -75,7 +75,6 @@ math/floatseries.c
 math/floattrig.c
 math/hmath.cpp
 math/number.c
-thirdparty/binreloc.c
 )
 
 set(testhmath_SOURCES
