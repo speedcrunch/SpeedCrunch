@@ -69,9 +69,9 @@ void SyntaxHighlighter::setColorScheme(SyntaxHighlighter::ColorScheme id)
     case SyntaxHighlighter::Standard:
     default:
         SH(Cursor, 255, 100, 100);  SH(Function, 74, 154, 7);     SH(EditorBackground, 220, 220, 220);
-        SH(Number, 98, 50, 76);     SH(Operator, 193, 147, 188);
-        SH(Parens, 196, 160, 50);   SH(Variable, 239, 41, 40);
-        SH(Result, 104, 159, 207);  SH(ScrollBar, 190, 190, 190);
+        SH(Number, 40, 40, 40);     SH(Operator, 150, 150, 150);
+        SH(Parens, 255, 160, 50);   SH(Variable, 239, 41, 40);
+        SH(Result, 0, 100, 200);    SH(ScrollBar, 255, 120, 50);
         SH(Comment, 210, 210, 210); SH(Separator, 100, 80, 123);
         SH(Matched, 100, 80, 123);  SH(Background, 255, 255, 255);
         break;
