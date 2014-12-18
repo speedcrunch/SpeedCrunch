@@ -729,9 +729,8 @@ FunctionRepo* FunctionRepo::instance()
 FunctionRepo::FunctionRepo()
 {
     createFunctions();
-    setFunctionNames();
     setNonTranslatableFunctionUsages();
-    setTranslatableFunctionUsages();
+    retranslateText();
 }
 
 void FunctionRepo::insert(Function* function)

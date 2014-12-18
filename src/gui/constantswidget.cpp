@@ -228,6 +228,7 @@ void ConstantsWidget::triggerFilter()
 void ConstantsWidget::updateList()
 {
     m_category->clear();
+    Constants::instance()->retranslateText();
     m_category->addItems(Constants::instance()->categories());
     m_category->insertItem(0, tr("All"));
     m_category->setCurrentIndex(0);
