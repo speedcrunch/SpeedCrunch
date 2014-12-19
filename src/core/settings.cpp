@@ -396,5 +396,24 @@ QSettings* createQSettings(const QString& KEY)
     settings = new QSettings(QSettings::NativeFormat, QSettings::UserScope, KEY, KEY);
 #endif // SPEEDCRUNCH_PORTABLE
 
+#if defined (Q_WS_X11) || defined (Q_WS_QWS)
+#ifdef SPEEDCRUNCH_PORTABLE
+    // Portable X11 version: settings are from INI file in the same directory.
+    BrInitError error;
+    if (br_init(& error) == 0 && error != BR_INIT_ERROR_DISABLED) {
+        qDebug("Warning: BinReloc failed to initialize (error code %d)", error);
+        qDebug("Will fallback to hardcoded default path.");
+    }
+
+    const char* prefix = br_find_prefix((const char *) 0);
+    QString iniFile = QString(prefix) + '/' + KEY + QLatin1String(".ini");
+    free((char *)prefix);
+    settings = new QSettings(iniFile, QSettings::IniFormat);
+#else
+    // Regular Unix or Embedded Linux (not Mac) version: settings from $HOME/.config/SpeedCrunch.
+    settings = new QSettings(QSettings::NativeFormat, QSettings::UserScope, KEY, KEY);
+#endif // SPEEDCRUNCH_PORTABLE
+#endif // Q_WS_X11 || Q_WS_QWS
+
     return settings;
 }
