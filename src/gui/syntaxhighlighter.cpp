@@ -148,7 +148,7 @@ void SyntaxHighlighter::highlightBlock(const QString& text)
 
         // The token text might be a modified version of the displayed text,
         // so we must not rely on it to find out the number of character to highlight.
-        int end = text.length();
+        int end = (questionMarkIndex != -1) ? questionMarkIndex : text.length();
         if (i + 1 < tokens.size())
         {
             const Token& nextToken = tokens.at(i + 1);
@@ -158,7 +158,7 @@ void SyntaxHighlighter::highlightBlock(const QString& text)
             end = nextToken.pos();
         }
 
-        setFormat(token.pos(), end, color);
+        setFormat(token.pos(), end - token.pos(), color);
         if (token.type() == Token::stxNumber && Settings::instance()->digitGrouping > 0)
             groupDigits(text, token.pos(), end - token.pos());
     }
