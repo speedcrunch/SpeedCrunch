@@ -1610,7 +1610,7 @@ QList<Evaluator::Variable> Evaluator::getVariables() const
 QList<Evaluator::Variable> Evaluator::getUserDefinedVariables() const
 {
     QList<Variable> result = m_variables.values();
-    QList<Variable>::iterator iter = result.begin();
+    auto iter = result.begin();
     while (iter != result.end()) {
         if ((*iter).type == Variable::BuiltIn)
             iter = result.erase(iter);
@@ -1654,7 +1654,7 @@ static void replaceSuperscriptPowersWithCaretEquivalent(QString& expr)
 QList<Evaluator::UserFunctionDescr> Evaluator::getUserFunctions() const
 {
     QList<UserFunctionDescr> result;
-    QHash<QString, UserFunction*>::const_iterator iter = m_userFunctions.begin();
+    auto iter = m_userFunctions.begin();
     while (iter != m_userFunctions.end()) {
         result.append(iter.value()->descr);
         ++iter;

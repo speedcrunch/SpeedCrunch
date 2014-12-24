@@ -243,7 +243,7 @@ void Constants::Private::populate()
 
 void Constants::Private::retranslateText()
 {
-    QList<Constant>::iterator i = list.begin();
+    auto i = list.begin();
     QString cat;
 
     // http://en.wikipedia.org/wiki/Mathematical_constant

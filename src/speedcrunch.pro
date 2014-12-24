@@ -2,11 +2,19 @@ equals(QT_MAJOR_VERSION, 5) {
     lessThan(QT_MINOR_VERSION, 4) {
         error(Qt 5.4 or newer is required but version $$[QT_VERSION] was detected.)
     }
+
     QT += widgets
+    CONFIG += c++11
 }
 
-equals(QT_MAJOR_VERSION, 4) : lessThan(QT_MINOR_VERSION, 8) {
-    error(Qt 4.8 or newer is required but version $$[QT_VERSION] was detected.)
+equals(QT_MAJOR_VERSION, 4) {
+    lessThan(QT_MINOR_VERSION, 8) {
+        error(Qt 4.8 or newer is required but version $$[QT_VERSION] was detected.)
+    }
+
+    !win32 {
+        QMAKE_CXXFLAGS += -std=c++11
+    }
 }
 
 DEFINES += SPEEDCRUNCH_VERSION=\\\"master\\\"
