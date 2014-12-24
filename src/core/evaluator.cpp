@@ -1156,7 +1156,7 @@ HNumber Evaluator::evalNoAssign()
                             m_assignFunc = true;
 
                         break;
-                    } else if (!tokens.at(t + 1).asOperator() == Token::Semicolon)
+                    } else if (tokens.at(t + 1).asOperator() != Token::Semicolon)
                         break;
                 }
             }
