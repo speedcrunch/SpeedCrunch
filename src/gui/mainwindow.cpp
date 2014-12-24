@@ -296,8 +296,10 @@ void MainWindow::setStatusBarText()
 #ifndef Q_OS_MAC
 bool MainWindow::shouldAllowHiddenMenuBar()
 {
-#ifdef Q_WS_X11
-    if (qgetenv("UBUNTU_MENUPROXY") == "libappmenu.so")
+#if defined(Q_OS_UNIX)
+    QByteArray menuProxy = qgetenv("UBUNTU_MENUPROXY");
+    QByteArray qpaTheme = qgetenv("QT_QPA_PLATFORMTHEME");
+    if (menuProxy == "libappmenu.so" || (menuProxy == "1" && qpaTheme == "appmenu-qt5"))
         return false;
 #endif
 
