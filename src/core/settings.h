@@ -63,7 +63,6 @@ public:
     bool functionsDockVisible;
     bool historyDockVisible;
     bool formulaBookDockVisible;
-    bool menuBarVisible;
     bool statusBarVisible;
     bool variablesDockVisible;
     bool userFunctionsDockVisible;

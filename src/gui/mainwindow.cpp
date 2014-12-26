@@ -37,7 +37,6 @@
 #include "gui/manualwindow.h"
 #include "gui/resultdisplay.h"
 #include "gui/syntaxhighlighter.h"
-#include "gui/tipwidget.h"
 #include "gui/variablesdock.h"
 #include "gui/userfunctionsdock.h"
 #include "math/floatconfig.h"
@@ -120,10 +119,6 @@ void MainWindow::createActions()
     m_actions.viewFunctions = new QAction(this);
     m_actions.viewHistory = new QAction(this);
     m_actions.viewFormulaBook = new QAction(this);
-#ifndef Q_OS_MAC
-    if (shouldAllowHiddenMenuBar())
-        m_actions.viewMenuBar = new QAction(this);
-#endif
     m_actions.viewStatusBar = new QAction(this);
     m_actions.viewVariables = new QAction(this);
     m_actions.viewBitfield = new QAction(this);
@@ -228,10 +223,6 @@ void MainWindow::createActions()
     m_actions.viewFunctions->setCheckable(true);
     m_actions.viewHistory->setCheckable(true);
     m_actions.viewFormulaBook->setCheckable(true);
-#ifndef Q_OS_MAC
-    if (shouldAllowHiddenMenuBar())
-        m_actions.viewMenuBar->setCheckable(true);
-#endif
     m_actions.viewStatusBar->setCheckable(true);
     m_actions.viewVariables->setCheckable(true);
     m_actions.viewBitfield->setCheckable(true);
@@ -293,18 +284,6 @@ void MainWindow::setStatusBarText()
     }
 }
 
-#ifndef Q_OS_MAC
-bool MainWindow::shouldAllowHiddenMenuBar()
-{
-#ifdef Q_WS_X11
-    if (qgetenv("UBUNTU_MENUPROXY") == "libappmenu.so")
-        return false;
-#endif
-
-    return true;
-}
-#endif
-
 void MainWindow::setActionsText()
 {
     m_actions.sessionExportHtml->setText(MainWindow::tr("&HTML"));
@@ -326,10 +305,6 @@ void MainWindow::setActionsText()
     m_actions.viewFunctions->setText(MainWindow::tr("&Functions"));
     m_actions.viewHistory->setText(MainWindow::tr("&History"));
     m_actions.viewFormulaBook->setText(MainWindow::tr("Formula &Book"));
-#ifndef Q_OS_MAC
-    if (shouldAllowHiddenMenuBar())
-        m_actions.viewMenuBar->setText(MainWindow::tr("&Menu Bar"));
-#endif
     m_actions.viewStatusBar->setText(MainWindow::tr("&Status Bar"));
     m_actions.viewVariables->setText(MainWindow::tr("&Variables"));
     m_actions.viewBitfield->setText(MainWindow::tr("Bitfield"));
@@ -446,10 +421,6 @@ void MainWindow::createActionShortcuts()
     m_actions.viewFunctions->setShortcut(Qt::CTRL + Qt::Key_3);
     m_actions.viewHistory->setShortcut(Qt::CTRL + Qt::Key_7);
     m_actions.viewFormulaBook->setShortcut(Qt::CTRL + Qt::Key_1);
-#ifndef Q_OS_MAC
-    if (shouldAllowHiddenMenuBar())
-        m_actions.viewMenuBar->setShortcut(Qt::CTRL + Qt::Key_M);
-#endif
     m_actions.viewStatusBar->setShortcut(Qt::CTRL + Qt::Key_B);
     m_actions.viewVariables->setShortcut(Qt::CTRL + Qt::Key_4);
     m_actions.viewUserFunctions->setShortcut(Qt::CTRL + Qt::Key_5);
@@ -500,10 +471,6 @@ void MainWindow::createMenus()
     m_menus.view->addAction(m_actions.viewHistory);
     m_menus.view->addSeparator();
     m_menus.view->addAction(m_actions.viewStatusBar);
-#ifndef Q_OS_MAC
-    if (shouldAllowHiddenMenuBar())
-        m_menus.view->addAction(m_actions.viewMenuBar);
-#endif
     m_menus.view->addSeparator();
     m_menus.view->addAction(m_actions.viewFullScreenMode);
 
@@ -674,13 +641,6 @@ void MainWindow::createFixedWidgets()
     m_widgets.state->setAutoFillBackground(true);
     m_widgets.state->setFrameShape(QFrame::Box);
     m_widgets.state->hide();
-
-#ifndef Q_OS_MAC
-    if (shouldAllowHiddenMenuBar()) {
-        m_widgets.tip = new TipWidget(this);
-        m_widgets.tip->hide();
-    }
-#endif // Q_OS_MAC
 }
 
 void MainWindow::createBitField() {
@@ -890,10 +850,6 @@ void MainWindow::createFixedConnections()
     connect(m_actions.viewFunctions, SIGNAL(toggled(bool)), SLOT(setFunctionsDockVisible(bool)));
     connect(m_actions.viewHistory, SIGNAL(toggled(bool)), SLOT(setHistoryDockVisible(bool)));
     connect(m_actions.viewFormulaBook, SIGNAL(toggled(bool)), SLOT(setFormulaBookDockVisible(bool)));
-#ifndef Q_OS_MAC
-    if (shouldAllowHiddenMenuBar())
-        connect(m_actions.viewMenuBar, SIGNAL(toggled(bool)), SLOT(setMenuBarVisible(bool)));
-#endif
     connect(m_actions.viewStatusBar, SIGNAL(toggled(bool)), SLOT(setStatusBarVisible(bool)));
     connect(m_actions.viewVariables, SIGNAL(toggled(bool)), SLOT(setVariablesDockVisible(bool)));
     connect(m_actions.viewBitfield, SIGNAL(toggled(bool)), SLOT(setBitfieldVisible(bool)));
@@ -1097,13 +1053,6 @@ void MainWindow::applySettings()
 
     m_actions.viewStatusBar->setChecked(m_settings->statusBarVisible);
 
-#ifndef Q_OS_MAC
-    if (shouldAllowHiddenMenuBar()) {
-        m_actions.viewMenuBar->setChecked(m_settings->menuBarVisible);
-        menuBar()->setVisible(m_settings->menuBarVisible);
-    }
-#endif
-
     if (m_widgets.display->isEmpty())
         QTimer::singleShot(0, this, SLOT(showReadyMessage()));
 
@@ -1211,16 +1160,12 @@ MainWindow::MainWindow()
     m_settings = Settings::instance();
 
     m_widgets.trayIcon = 0;
-    m_widgets.tip = 0;
     m_widgets.manual = 0;
 
     m_menus.trayIcon = 0;
 
     m_conditions.autoAns = false;
     m_conditions.trayNotify = true;
-#ifndef Q_OS_MAC
-    m_conditions.notifyMenuBarHidden = true;
-#endif
 
     m_docks.book = 0;
     m_docks.history = 0;
@@ -1924,19 +1869,6 @@ void MainWindow::showFontDialog()
     m_widgets.editor->setFont(f);
 }
 
-#ifndef Q_OS_MAC
-void MainWindow::setMenuBarVisible(bool b)
-{
-    menuBar()->setVisible(b);
-    m_settings->menuBarVisible = b;
-
-    if (!b && m_conditions.notifyMenuBarHidden) {
-        showMenuBarTip();
-        m_conditions.notifyMenuBarHidden = false;
-    }
-}
-#endif
-
 void MainWindow::setStatusBarVisible(bool b)
 {
     b ? createStatusBar() : deleteStatusBar();
@@ -2165,16 +2097,6 @@ void MainWindow::setUserFunctionsDockVisible(bool b)
     else
         deleteUserFunctionsDock();
 }
-
-#ifndef Q_OS_MAC
-void MainWindow::showMenuBarTip()
-{
-    QString msg = tr("The menu bar is now hidden. To make it visible again, press Ctrl+M.");
-
-    m_widgets.tip->move(0, 0);
-    m_widgets.tip->showText(msg, tr("Warning"));
-}
-#endif
 
 void MainWindow::setResultFormatBinary()
 {
