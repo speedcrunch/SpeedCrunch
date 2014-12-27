@@ -13,7 +13,7 @@ equals(QT_MAJOR_VERSION, 4) {
     }
 
     !win32 {
-        QMAKE_CXXFLAGS += -std=c++11
+        QMAKE_CXXFLAGS += -std=c++0x
     }
 }
 
