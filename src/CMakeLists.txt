@@ -47,7 +47,7 @@ if(USING_MSVC)
     add_definitions(/Wall)
 else()
     add_definitions(-Wall)
-    list(APPEND CMAKE_CXX_FLAGS "-std=c++0x")
+    add_definitions(-std=c++0x)
 endif()
 
 # setup for Qt4
