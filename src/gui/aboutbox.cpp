@@ -27,6 +27,8 @@
 #include <QTextEdit>
 #include <QVBoxLayout>
 
+#define THANKS(name) #name"<br>"
+
 AboutBox::AboutBox(QWidget* parent, Qt::WindowFlags f)
     : QDialog(parent, f)
 {
@@ -49,56 +51,58 @@ AboutBox::AboutBox(QWidget* parent, Qt::WindowFlags f)
     msg += authors.arg(tr("Former maintainer")).arg("Johan Thelin");
 
     msg += "<p>" + QString("<b>%1</b><br>").arg(tr("Thanks"));
-    msg += "Alan Davies<br>"
-           "Alejandro Villarreal<br>"
-           "Alexey Kouznetsov<br>"
-           "Anders Lund<br>"
-           "Andreas Scherer<br>"
-           "Artem Golovinsky<br>"
-           "Aur&eacute;lien G&acirc;teau<br>"
-           "Bart Martens<br>"
-           "Bernhard Schiffner<br>"
-           "Christian Ehrlich<br>"
-           "Damir Perisa<br>"
-           "Daniel Sch&auml;ufele<br>"
-           "Derek O'Connor<br>"
-           "Enrico R&oacute;s<br>"
-           "Eugeniu Plamadeala<br>"
-           "Felix Krull<br>"
-           "F Chris Carrera<br>"
-           "Francesco di Cugno<br>"
-           "Gary Cramblitt<br>"
-           "Henrik Nordstrom<br>"
-           "Henrique Pinto<br>"
-           "James Yuzwalk<br>"
-           "Jean-Remy Falleri<br>"
-           "Jonathan Avraham<br>"
-           "Jonathan Riddell<br>"
-           "Lars Ivar Igesund<br>"
-           "Maciek Borowka<br>"
-           "Marco Wegner<br>"
-           "Matthew J Smith<br>"
-           "Melchior Franz<br>"
-           "Michael Pyne<br>"
-           "Mohamed Eldesoky<br>"
-           "Oliver Gubler<br>"
-           "Petri Damst&eacute;n<br>"
-           "Philippe Fremy<br>"
-           "Pieter Pareit<br>"
-           "Roberto Alsina<br>"
-           "Roland \"liquidat\" Wolters<br>"
-           "Sarah Hobbs<br>"
-           "S&eacute;bastien Szymanski<br>"
-           "Stephan Binner<br>"
-           "Steven Honeyman<br>"
-           "Tey<br>"
-           "Thomas Luebking<br>"
-           "Thomas Nagy<br>"
-           "Vibet Alexis<br>"
-           "Vladimir Pouzanov<br>"
-           "Wictor Lund<br>"
-           "Witold Wysota<br>"
-           "1100101<br>";
+    msg +=
+        THANKS(Alan Davies)
+        THANKS(Alejandro Villarreal)
+        THANKS(Alexey Kouznetsov)
+        THANKS(Anders Lund)
+        THANKS(Andreas Scherer)
+        THANKS(Artem Golovinsky)
+        THANKS(Aur&eacute;lien G&acirc;teau)
+        THANKS(Bart Martens)
+        THANKS(Bernhard Schiffner)
+        THANKS(Christian Ehrlich)
+        THANKS(Damir Perisa)
+        THANKS(Daniel Sch&auml;ufele)
+        THANKS(Derek O’Connor)
+        THANKS(Enrico R&oacute;s)
+        THANKS(Eugeniu Plamadeala)
+        THANKS(Felix Krull)
+        THANKS(F Chris Carrera)
+        THANKS(Francesco di Cugno)
+        THANKS(Gary Cramblitt)
+        THANKS(Henrik Nordstrom)
+        THANKS(Henrique Pinto)
+        THANKS(James Yuzwalk)
+        THANKS(Jean-Remy Falleri)
+        THANKS(Jonathan Avraham)
+        THANKS(Jonathan Riddell)
+        THANKS(Lars Ivar Igesund)
+        THANKS(Maciek Borowka)
+        THANKS(Marco Wegner)
+        THANKS(Matthew J Smith)
+        THANKS(Melchior Franz)
+        THANKS(Michael Pyne)
+        THANKS(Mohamed Eldesoky)
+        THANKS(Oliver Gubler)
+        THANKS(Petri Damst&eacute;n)
+        THANKS(Philippe Fremy)
+        THANKS(Pieter Pareit)
+        THANKS(Roberto Alsina)
+        THANKS(Roland ’liquidat’ Wolters)
+        THANKS(Sarah Hobbs)
+        THANKS(S&eacute;bastien Szymanski)
+        THANKS(Stephan Binner)
+        THANKS(Steven Honeyman)
+        THANKS(Tey)
+        THANKS(Thomas Luebking)
+        THANKS(Thomas Nagy)
+        THANKS(Vibet Alexis)
+        THANKS(Vladimir Pouzanov)
+        THANKS(Wictor Lund)
+        THANKS(Witold Wysota)
+        THANKS(1100101)
+        ;
 
     msg += "</p><p>";
     msg += QString("<b>%1</b><br><br>").arg(tr("Translations"));
