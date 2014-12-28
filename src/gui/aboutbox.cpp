@@ -64,6 +64,7 @@ AboutBox::AboutBox(QWidget* parent, Qt::WindowFlags f)
            "Derek O'Connor<br>"
            "Enrico R&oacute;s<br>"
            "Eugeniu Plamadeala<br>"
+           "Felix Krull<br>"
            "F Chris Carrera<br>"
            "Francesco di Cugno<br>"
            "Gary Cramblitt<br>"
