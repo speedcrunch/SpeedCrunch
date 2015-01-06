@@ -31,25 +31,10 @@
 #include <QPainter>
 #include <QScrollBar>
 
-#define OVERLAY_GRADIENT_HEIGHT 50
-
-class FadeOverlay : public QWidget {
-public:
-    explicit FadeOverlay(QWidget*);
-    void updateGradients();
-protected:
-    virtual void paintEvent(QPaintEvent*);
-    virtual void resizeEvent(QResizeEvent*);
-private:
-    QImage m_bottomGradientImage;
-    QImage m_topGradientImage;
-};
-
 ResultDisplay::ResultDisplay(QWidget* parent)
     : QPlainTextEdit(parent)
     , m_count(0)
     , m_highlighter(new SyntaxHighlighter(this))
-    , m_fadeOverlay(new FadeOverlay(this))
     , m_scrolledLines(0)
     , m_scrollDirection(0)
     , m_isScrollingPageOnly(false)
@@ -116,7 +101,6 @@ void ResultDisplay::rehighlight()
 {
     m_highlighter->update();
     updateScrollBarStyleSheet();
-    m_fadeOverlay->updateGradients();
 }
 
 void ResultDisplay::clear()
@@ -297,12 +281,6 @@ void ResultDisplay::wheelEvent(QWheelEvent* event)
     event->accept();
 }
 
-void ResultDisplay::resizeEvent(QResizeEvent* event)
-{
-    QPlainTextEdit::resizeEvent(event);
-    m_fadeOverlay->resize(event->size());
-}
-
 void ResultDisplay::stopActiveScrollingAnimation()
 {
     m_scrollTimer.stop();
@@ -320,7 +298,7 @@ void ResultDisplay::updateScrollBarStyleSheet()
         "   width: 5px;"
         "}"
         "QScrollBar::handle:vertical {"
-        "   background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 %1, stop: 0.4 %2, stop: 0.6 %2, stop: 1 %1);"
+        "   background: %2;"
         "}"
         "QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {"
         "   border: 0;"
@@ -333,46 +311,4 @@ void ResultDisplay::updateScrollBarStyleSheet()
         "}"
     ).arg(m_highlighter->colorForRole(SyntaxHighlighter::Background).name())
      .arg(m_highlighter->colorForRole(SyntaxHighlighter::ScrollBar).name()));
-}
-
-FadeOverlay::FadeOverlay(QWidget* parent) : QWidget(parent)
-{
-    setPalette(Qt::transparent);
-    setAttribute(Qt::WA_TransparentForMouseEvents);
-}
-
-void FadeOverlay::paintEvent(QPaintEvent*)
-{
-    ResultDisplay* widget = qobject_cast<ResultDisplay*>(parent());
-    int scrollBarValue = widget->verticalScrollBar()->value();
-    bool shouldPaintTopGradient = (scrollBarValue > 0);
-    bool shouldPaintBottomGradient = scrollBarValue < widget->verticalScrollBar()->maximum();
-
-    QPainter painter(this);
-    if (shouldPaintTopGradient)
-        painter.drawImage(0, 0, m_topGradientImage);
-    if (shouldPaintBottomGradient)
-        painter.drawImage(0, size().height() - OVERLAY_GRADIENT_HEIGHT, m_bottomGradientImage);
-}
-
-void FadeOverlay::resizeEvent(QResizeEvent*)
-{
-    updateGradients();
-}
-
-void FadeOverlay::updateGradients()
-{
-    ResultDisplay* widget = qobject_cast<ResultDisplay*>(parent());
-    QColor backgroundColor = widget->m_highlighter->colorForRole(SyntaxHighlighter::Background);
-
-    QLinearGradient gradient = QLinearGradient(0, 0, 0, OVERLAY_GRADIENT_HEIGHT);
-    gradient.setColorAt(0, backgroundColor);
-    backgroundColor.setAlpha(0);
-    gradient.setColorAt(1, backgroundColor);
-
-    m_topGradientImage = QImage(size().width(), OVERLAY_GRADIENT_HEIGHT, QImage::Format_ARGB32_Premultiplied);
-    m_topGradientImage.fill(0);
-    QPainter painter(&m_topGradientImage);
-    painter.fillRect(QRect(0, 0, size().width(), OVERLAY_GRADIENT_HEIGHT), gradient);
-    m_bottomGradientImage = m_topGradientImage.mirrored();
 }

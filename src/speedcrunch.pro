@@ -1,9 +1,20 @@
 equals(QT_MAJOR_VERSION, 5) {
+    lessThan(QT_MINOR_VERSION, 2) {
+        error(Qt 5.2 or newer is required but version $$[QT_VERSION] was detected.)
+    }
+
     QT += widgets
+    CONFIG += c++11
 }
 
-equals(QT_MAJOR_VERSION, 4) : lessThan(QT_MINOR_VERSION, 8) {
-    error(Qt 4.8 or newer is required but version $$[QT_VERSION] was detected.)
+equals(QT_MAJOR_VERSION, 4) {
+    lessThan(QT_MINOR_VERSION, 8) {
+        error(Qt 4.8 or newer is required but version $$[QT_VERSION] was detected.)
+    }
+
+    !win32 {
+        QMAKE_CXXFLAGS += -std=c++0x
+    }
 }
 
 DEFINES += SPEEDCRUNCH_VERSION=\\\"master\\\"
@@ -29,9 +40,7 @@ win32-msvc*:LIBS += User32.lib
     !win32 {
         DEPENDPATH += thirdparty
         INCLUDEPATH += thirdparty
-        DEFINES += ENABLE_BINRELOC
         LIBS += -lX11
-        SOURCES += thirdparty/binreloc.c
         target.path = "/bin"
         menu.path = "/share/applications"
         icon.path = "/share/pixmaps"
@@ -54,7 +63,6 @@ HEADERS += core/book.h \
            core/functions.h \
            core/manual.h \
            gui/aboutbox.h \
-           gui/application.h \
            gui/bitfieldwidget.h \
            gui/bookdock.h \
            gui/constantsdock.h \
@@ -83,7 +91,6 @@ SOURCES += main.cpp \
            core/pageserver.cpp \
            core/settings.cpp \
            gui/aboutbox.cpp \
-           gui/application.cpp \
            gui/bitfieldwidget.cpp \
            gui/bookdock.cpp \
            gui/constantsdock.cpp \
@@ -122,11 +129,12 @@ SOURCES += main.cpp \
            math/number.c
 
 RESOURCES += resources/speedcrunch.qrc
-TRANSLATIONS += resources/locale/ar_JO.ts \
+TRANSLATIONS += resources/locale/ar.ts \
                 resources/locale/ca_ES.ts \
                 resources/locale/cs_CZ.ts \
+                resources/locale/da.ts \
                 resources/locale/de_DE.ts \
-                resources/locale/en_GB.ts \
+                resources/locale/el.ts \
                 resources/locale/en_US.ts \
                 resources/locale/es_AR.ts \
                 resources/locale/es_ES.ts \
@@ -140,6 +148,7 @@ TRANSLATIONS += resources/locale/ar_JO.ts \
                 resources/locale/it_IT.ts \
                 resources/locale/ja_JP.ts \
                 resources/locale/ko_KR.ts \
+                resources/locale/lt.ts \
                 resources/locale/lv_LV.ts \
                 resources/locale/nb_NO.ts \
                 resources/locale/nl_NL.ts \
@@ -148,7 +157,9 @@ TRANSLATIONS += resources/locale/ar_JO.ts \
                 resources/locale/pt_PT.ts \
                 resources/locale/ro_RO.ts \
                 resources/locale/ru_RU.ts \
+                resources/locale/sk.ts \
                 resources/locale/sv_SE.ts \
                 resources/locale/tr_TR.ts \
-                resources/locale/vi_VN.ts \
+                resources/locale/uz@Latn.ts \
+                resources/locale/vi.ts \
                 resources/locale/zh_CN.ts

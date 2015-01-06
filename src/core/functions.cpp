@@ -729,9 +729,8 @@ FunctionRepo* FunctionRepo::instance()
 FunctionRepo::FunctionRepo()
 {
     createFunctions();
-    setFunctionNames();
     setNonTranslatableFunctionUsages();
-    setTranslatableFunctionUsages();
+    retranslateText();
 }
 
 void FunctionRepo::insert(Function* function)
@@ -851,7 +850,7 @@ void FunctionRepo::setFunctionNames()
     FUNCTION_NAME(arcsin, tr("Arc Sine"));
     FUNCTION_NAME(arctan, tr("Arc Tangent"));
     FUNCTION_NAME(average, tr("Average (Arithmetic Mean)"));
-    FUNCTION_NAME(bin, tr("Binary Representation"));
+    FUNCTION_NAME(bin, tr("Convert to Binary Representation"));
     FUNCTION_NAME(binomcdf, tr("Binomial Cumulative Distribution Function"));
     FUNCTION_NAME(binommean, tr("Binomial Distribution Mean"));
     FUNCTION_NAME(binompmf, tr("Binomial Probability Mass Function"));
@@ -862,7 +861,7 @@ void FunctionRepo::setFunctionNames()
     FUNCTION_NAME(cosh, tr("Hyperbolic Cosine"));
     FUNCTION_NAME(cot, tr("Cotangent"));
     FUNCTION_NAME(csc, tr("Cosecant"));
-    FUNCTION_NAME(dec, tr("Decimal Representation"));
+    FUNCTION_NAME(dec, tr("Convert to Decimal Representation"));
     FUNCTION_NAME(degrees, tr("Degrees of Arc"));
     FUNCTION_NAME(erf, tr("Error Function"));
     FUNCTION_NAME(erfc, tr("Complementary Error Function"));
@@ -872,7 +871,7 @@ void FunctionRepo::setFunctionNames()
     FUNCTION_NAME(gamma, tr("Extension of Factorials [= (x-1)!]"));
     FUNCTION_NAME(gcd, tr("Greatest Common Divisor"));
     FUNCTION_NAME(geomean, tr("Geometric Mean"));
-    FUNCTION_NAME(hex, tr("Hexadecimal Representation"));
+    FUNCTION_NAME(hex, tr("Convert to Hexadecimal Representation"));
     FUNCTION_NAME(hypercdf, tr("Hypergeometric Cumulative Distribution Function"));
     FUNCTION_NAME(hypermean, tr("Hypergeometric Distribution Mean"));
     FUNCTION_NAME(hyperpmf, tr("Hypergeometric Probability Mass Function"));
@@ -892,7 +891,7 @@ void FunctionRepo::setFunctionNames()
     FUNCTION_NAME(ncr, tr("Combination (Binomial Coefficient)"));
     FUNCTION_NAME(not, tr("Logical NOT"));
     FUNCTION_NAME(npr, tr("Permutation (Arrangement)"));
-    FUNCTION_NAME(oct, tr("Octal Representation"));
+    FUNCTION_NAME(oct, tr("Convert to Octal Representation"));
     FUNCTION_NAME(or, tr("Logical OR"));
     FUNCTION_NAME(poicdf, tr("Poissonian Cumulative Distribution Function"));
     FUNCTION_NAME(poimean, tr("Poissonian Distribution Mean"));

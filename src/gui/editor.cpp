@@ -454,7 +454,17 @@ void Editor::autoComplete(const QString& item)
     setTextCursor(cursor);
     insert(str.at(0));
     blockSignals(false);
-    if (FunctionRepo::instance()->find(str.at(0)) || m_evaluator->hasUserFunction(str.at(0))) {
+
+    cursor = textCursor();
+    bool hasParensAlready;
+    if ((hasParensAlready = cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor))) {
+        QString nextChar = cursor.selectedText();
+        hasParensAlready = (nextChar == "(");
+    }
+    bool shouldAutoInsertParens = (FunctionRepo::instance()->find(str.at(0))
+                                   || m_evaluator->hasUserFunction(str.at(0)))
+                                  && !hasParensAlready;
+    if (shouldAutoInsertParens) {
         insert(QString::fromLatin1("()"));
         cursor = textCursor();
         cursor.movePosition(QTextCursor::PreviousCharacter);
@@ -780,13 +790,8 @@ void Editor::wheelEvent(QWheelEvent* event)
 void Editor::rehighlight()
 {
     m_highlighter->update();
-    setStyleSheet(QString(
-        "QPlainTextEdit {"
-        "   background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 %2, stop: 1 %1);"
-        "}"
-    ).arg(m_highlighter->colorForRole(SyntaxHighlighter::Background).name())
-     .arg(m_highlighter->colorForRole(SyntaxHighlighter::EditorFade).name())
-    );
+    setStyleSheet(QString("QPlainTextEdit { background: %1; }")
+        .arg(m_highlighter->colorForRole(SyntaxHighlighter::EditorBackground).name()));
 }
 
 void Editor::setAnsAvailable(bool available)

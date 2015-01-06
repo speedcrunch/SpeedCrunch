@@ -29,7 +29,9 @@ public:
     enum ColorScheme {
         Terminal = 0,
         Standard = 1,
-        Sublime = 2
+        Sublime = 2,
+        SolarizedLight = 3,
+        SolarizedDark = 4
     };
 
     enum Role {
@@ -45,7 +47,7 @@ public:
         ScrollBar,
         Separator,
         Background,
-        EditorFade
+        EditorBackground
     };
 
     explicit SyntaxHighlighter(QPlainTextEdit*);
@@ -64,6 +66,7 @@ private:
     SyntaxHighlighter(QObject*);
     SyntaxHighlighter(QTextDocument*);
     void groupDigits(const QString& text, int pos, int length);
+    void formatDigitsGroup(const QString& text, int start, int end, bool invert, int size);
 
     QHash<Role, QColor> m_colorScheme;
 };

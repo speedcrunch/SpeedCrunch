@@ -36,6 +36,7 @@ public:
 
 signals:
     void userFunctionSelected(const QString&);
+    void userFunctionEdited(const QString&);
 
 public slots:
     void handleRadixCharacterChange();

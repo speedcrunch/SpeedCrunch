@@ -20,7 +20,6 @@
 
 #include "core/settings.h"
 
-#include "thirdparty/binreloc.h"
 #include "math/floatconfig.h"
 
 #include <QDir>
@@ -90,6 +89,8 @@ void Settings::load()
     systemTrayIconVisible = settings->value(key + QLatin1String("SystemTrayIconVisible"), false).toBool();
     autoResultToClipboard = settings->value(key + QLatin1String("AutoResultToClipboard"), false).toBool();
     windowPositionSave = settings->value(key + QLatin1String("WindowPositionSave"), true).toBool();
+    parseAllRadixChar = settings->value(key + QLatin1String("ParseAllRadixChar"), true).toBool();
+    strictDigitGrouping = settings->value(key + QLatin1String("StrictDigitGrouping"), true).toBool();
 
     digitGrouping = settings->value(key + QLatin1String("DigitGrouping"), 0).toInt();
     digitGrouping = std::min(3, std::max(0, digitGrouping));
@@ -112,7 +113,6 @@ void Settings::load()
     key = KEY + QLatin1String("/Layout/");
     windowOnfullScreen = settings->value(key + QLatin1String("WindowOnFullScreen"), false).toBool();
     historyDockVisible = settings->value(key + QLatin1String("HistoryDockVisible"), false).toBool();
-    menuBarVisible = settings->value(key + QLatin1String("MenuBarVisible"), true).toBool();
     statusBarVisible = settings->value(key + QLatin1String("StatusBarVisible"), false).toBool();
     functionsDockVisible = settings->value(key + QLatin1String("FunctionsDockVisible"), false).toBool();
     variablesDockVisible = settings->value(key + QLatin1String("VariablesDockVisible"), false).toBool();
@@ -237,6 +237,8 @@ void Settings::save()
     settings->setValue(key + QLatin1String("AutoResultToClipboard"), autoResultToClipboard);
     settings->setValue(key + QLatin1String("Language"), language);
     settings->setValue(key + QLatin1String("WindowPositionSave"), windowPositionSave);
+    settings->setValue(key + QLatin1String("ParseAllRadixChar"), parseAllRadixChar);
+    settings->setValue(key + QLatin1String("StrictDigitGrouping"), strictDigitGrouping);
 
     settings->setValue(key + QLatin1String("AngleMode"), QString(QChar(angleUnit)));
 
@@ -257,7 +259,6 @@ void Settings::save()
     settings->setValue(key + QLatin1String("FunctionsDockVisible"), functionsDockVisible);
     settings->setValue(key + QLatin1String("HistoryDockVisible"), historyDockVisible);
     settings->setValue(key + QLatin1String("WindowOnFullScreen"), windowOnfullScreen);
-    settings->setValue(key + QLatin1String("MenuBarVisible"), menuBarVisible);
     settings->setValue(key + QLatin1String("StatusBarVisible"), statusBarVisible);
     settings->setValue(key + QLatin1String("VariablesDockVisible"), variablesDockVisible);
     settings->setValue(key + QLatin1String("UserFunctionsDockVisible"), userFunctionsDockVisible);
@@ -384,27 +385,13 @@ QSettings* createQSettings(const QString& KEY)
     QSettings* settings = 0;
 
 #ifdef SPEEDCRUNCH_PORTABLE
-#if defined(Q_WS_WIN)
-    // Portable Windows version: settings are from INI file in same directory.
+    // Portable Edition: settings are from INI file in same directory.
     QString appPath = QApplication::applicationFilePath();
     int ii = appPath.lastIndexOf('/');
     if (ii > 0)
         appPath.remove(ii, appPath.length());
     QString iniFile = appPath + '/' + KEY + ".ini";
     settings = new QSettings(iniFile, QSettings::IniFormat);
-#elif defined(Q_WS_X11) || defined (Q_WS_QWS)
-    // Portable X11 version: settings are from INI file in the same directory.
-    BrInitError error;
-    if (br_init(& error) == 0 && error != BR_INIT_ERROR_DISABLED) {
-        qDebug("Warning: BinReloc failed to initialize (error code %d)", error);
-        qDebug("Will fallback to hardcoded default path.");
-    }
-
-    const char* prefix = br_find_prefix(0);
-    QString iniFile = QString(prefix) + '/' + KEY + QLatin1String(".ini");
-    free(prefix);
-    settings = new QSettings(iniFile, QSettings::IniFormat);
-#endif // Q_WS_WIN / Q_WS_X11 || Q_WS_QWS
 #else // SPEEDCRUNCH_PORTABLE
     settings = new QSettings(QSettings::NativeFormat, QSettings::UserScope, KEY, KEY);
 #endif // SPEEDCRUNCH_PORTABLE

@@ -37,7 +37,6 @@ class HistoryDock;
 class ManualWindow;
 class ResultDisplay;
 class Settings;
-class TipWidget;
 class VariablesDock;
 class UserFunctionsDock;
 
@@ -67,7 +66,6 @@ signals:
 
 public slots:
     void copy();
-    void raiseWindow();
 
 private slots:
     void activate();
@@ -120,9 +118,6 @@ private slots:
     void setHistoryDockVisible(bool);
     void setHistorySaveEnabled(bool);
     void setLeaveLastExpressionEnabled(bool);
-#ifndef Q_OS_MAC
-    void setMenuBarVisible(bool);
-#endif
     void setRadixCharacterAutomatic();
     void setRadixCharacter(char);
     void setRadixCharacterComma();
@@ -146,6 +141,8 @@ private slots:
     void setSyntaxHighlightingEnabled(bool);
     void setDigitGrouping(QAction*);
     void setAutoResultToClipboardEnabled(bool);
+    void setParseAllRadixChar(bool);
+    void setStrictDigitGrouping(bool);
     void setSystemTrayIconEnabled(bool);
     void setVariableSaveEnabled(bool);
     void setUserFunctionSaveEnabled(bool b);
@@ -158,9 +155,6 @@ private slots:
     void showFontDialog();
     void showLanguageChooserDialog();
     void showManualWindow();
-#ifndef Q_OS_MAC
-    void showMenuBarTip();
-#endif
     void showReadyMessage();
     void showResultFormatContextMenu(const QPoint&);
     void showSessionImportDialog();
@@ -213,9 +207,6 @@ private:
     void setActionsText();
     void setMenusText();
     void setStatusBarText();
-#ifndef Q_OS_MAC
-    bool shouldAllowHiddenMenuBar();
-#endif
 
     static QTranslator* createTranslator(const QString& langCode);
 
@@ -243,9 +234,6 @@ private:
         QAction* viewVariables;
         QAction* viewUserFunctions;
         QAction* viewHistory;
-#ifndef Q_OS_MAC
-        QAction* viewMenuBar;
-#endif
         QAction* viewStatusBar;
         QAction* viewFullScreenMode;
         QAction* viewBitfield;
@@ -281,17 +269,20 @@ private:
         QAction* settingsBehaviorAlwaysOnTop;
         QAction* settingsBehaviorMinimizeToTray;
         QAction* settingsBehaviorAutoResultToClipboard;
+        QAction* settingsBehaviorParseAllRadixChar;
+        QAction* settingsBehaviorStrictDigitGrouping;
         QAction* settingsDisplayZoomIn;
         QAction* settingsDisplayZoomOut;
         QAction* settingsDisplayFont;
         QAction* settingsDisplayColorSchemeStandard;
         QAction* settingsDisplayColorSchemeSublime;
         QAction* settingsDisplayColorSchemeTerminal;
+        QAction* settingsDisplayColorSchemeSolarizedDark;
+        QAction* settingsDisplayColorSchemeSolarizedLight;
         QAction* settingsRadixCharDefault;
         QAction* settingsRadixCharDot;
         QAction* settingsRadixCharComma;
         QAction* settingsLanguage;
-        QAction* helpTipOfTheDay;
         QAction* helpManual;
         QAction* helpUpdates;
         QAction* helpFeedback;
@@ -337,7 +328,6 @@ private:
         ResultDisplay* display;
         Editor* editor;
         QWidget* root;
-        TipWidget* tip;
         QSystemTrayIcon* trayIcon;
         ManualWindow* manual;
         BitFieldWidget* bitField;
@@ -353,9 +343,6 @@ private:
     } m_docks;
 
     struct {
-#ifndef Q_OS_MAC
-        bool notifyMenuBarHidden;
-#endif
         bool trayNotify;
         bool autoAns;
     } m_conditions;

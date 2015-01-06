@@ -21,7 +21,6 @@
 
 #include "gui/mainwindow.h"
 
-#include "thirdparty/binreloc.h"
 #include "core/constants.h"
 #include "core/evaluator.h"
 #include "core/functions.h"
@@ -38,7 +37,6 @@
 #include "gui/manualwindow.h"
 #include "gui/resultdisplay.h"
 #include "gui/syntaxhighlighter.h"
-#include "gui/tipwidget.h"
 #include "gui/variablesdock.h"
 #include "gui/userfunctionsdock.h"
 #include "math/floatconfig.h"
@@ -68,12 +66,6 @@
 #include <QStatusBar>
 #include <QToolTip>
 #include <QVBoxLayout>
-#ifdef Q_WS_X11
-#include <QX11Info>
-
-#include <X11/Xatom.h>
-#include <X11/Xlib.h>
-#endif // Q_WS_X11
 
 #ifdef Q_OS_WIN32
 #include "Windows.h"
@@ -86,6 +78,8 @@ QTranslator* MainWindow::createTranslator(const QString& langCode)
 
     if (locale == "C")
         locale = "en";
+    else if (locale == "uz" || locale == "uz_UZ")
+        locale = "uz@Latn";
 
     translator->load(QString(":/locale/") + locale);
     return translator;
@@ -125,10 +119,6 @@ void MainWindow::createActions()
     m_actions.viewFunctions = new QAction(this);
     m_actions.viewHistory = new QAction(this);
     m_actions.viewFormulaBook = new QAction(this);
-#ifndef Q_OS_MAC
-    if (shouldAllowHiddenMenuBar())
-        m_actions.viewMenuBar = new QAction(this);
-#endif
     m_actions.viewStatusBar = new QAction(this);
     m_actions.viewVariables = new QAction(this);
     m_actions.viewBitfield = new QAction(this);
@@ -152,9 +142,13 @@ void MainWindow::createActions()
     m_actions.settingsBehaviorDigitGroupingTwoSpaces = new QAction(this);
     m_actions.settingsBehaviorDigitGroupingThreeSpaces = new QAction(this);
     m_actions.settingsBehaviorAutoResultToClipboard = new QAction(this);
+    m_actions.settingsBehaviorParseAllRadixChar = new QAction(this);
+    m_actions.settingsBehaviorStrictDigitGrouping = new QAction(this);
     m_actions.settingsDisplayColorSchemeStandard = new QAction(this);
     m_actions.settingsDisplayColorSchemeSublime = new QAction(this);
     m_actions.settingsDisplayColorSchemeTerminal = new QAction(this);
+    m_actions.settingsDisplayColorSchemeSolarizedDark = new QAction(this);
+    m_actions.settingsDisplayColorSchemeSolarizedLight = new QAction(this);
     m_actions.settingsDisplayFont = new QAction(this);
     m_actions.settingsLanguage = new QAction(this);
     m_actions.settingsRadixCharComma = new QAction(this);
@@ -203,9 +197,13 @@ void MainWindow::createActions()
     m_actions.settingsBehaviorDigitGroupingThreeSpaces->setCheckable(true);
     m_actions.settingsBehaviorDigitGroupingThreeSpaces->setData(3);
     m_actions.settingsBehaviorAutoResultToClipboard->setCheckable(true);
+    m_actions.settingsBehaviorParseAllRadixChar->setCheckable(true);
+    m_actions.settingsBehaviorStrictDigitGrouping->setCheckable(true);
     m_actions.settingsDisplayColorSchemeStandard->setCheckable(true);
     m_actions.settingsDisplayColorSchemeSublime->setCheckable(true);
     m_actions.settingsDisplayColorSchemeTerminal->setCheckable(true);
+    m_actions.settingsDisplayColorSchemeSolarizedDark->setCheckable(true);
+    m_actions.settingsDisplayColorSchemeSolarizedLight->setCheckable(true);
     m_actions.settingsRadixCharComma->setCheckable(true);
     m_actions.settingsRadixCharDefault->setCheckable(true);
     m_actions.settingsRadixCharDot->setCheckable(true);
@@ -227,10 +225,6 @@ void MainWindow::createActions()
     m_actions.viewFunctions->setCheckable(true);
     m_actions.viewHistory->setCheckable(true);
     m_actions.viewFormulaBook->setCheckable(true);
-#ifndef Q_OS_MAC
-    if (shouldAllowHiddenMenuBar())
-        m_actions.viewMenuBar->setCheckable(true);
-#endif
     m_actions.viewStatusBar->setCheckable(true);
     m_actions.viewVariables->setCheckable(true);
     m_actions.viewBitfield->setCheckable(true);
@@ -239,6 +233,8 @@ void MainWindow::createActions()
     m_actions.settingsDisplayColorSchemeStandard->setData(SyntaxHighlighter::Standard);
     m_actions.settingsDisplayColorSchemeSublime->setData(SyntaxHighlighter::Sublime);
     m_actions.settingsDisplayColorSchemeTerminal->setData(SyntaxHighlighter::Terminal);
+    m_actions.settingsDisplayColorSchemeSolarizedDark->setData(SyntaxHighlighter::SolarizedDark);
+    m_actions.settingsDisplayColorSchemeSolarizedLight->setData(SyntaxHighlighter::SolarizedLight);
 }
 
 void MainWindow::retranslateText()
@@ -290,18 +286,6 @@ void MainWindow::setStatusBarText()
     }
 }
 
-#ifndef Q_OS_MAC
-bool MainWindow::shouldAllowHiddenMenuBar()
-{
-#ifdef Q_WS_X11
-    if (qgetenv("UBUNTU_MENUPROXY") == "libappmenu.so")
-        return false;
-#endif
-
-    return true;
-}
-#endif
-
 void MainWindow::setActionsText()
 {
     m_actions.sessionExportHtml->setText(MainWindow::tr("&HTML"));
@@ -323,10 +307,6 @@ void MainWindow::setActionsText()
     m_actions.viewFunctions->setText(MainWindow::tr("&Functions"));
     m_actions.viewHistory->setText(MainWindow::tr("&History"));
     m_actions.viewFormulaBook->setText(MainWindow::tr("Formula &Book"));
-#ifndef Q_OS_MAC
-    if (shouldAllowHiddenMenuBar())
-        m_actions.viewMenuBar->setText(MainWindow::tr("&Menu Bar"));
-#endif
     m_actions.viewStatusBar->setText(MainWindow::tr("&Status Bar"));
     m_actions.viewVariables->setText(MainWindow::tr("&Variables"));
     m_actions.viewBitfield->setText(MainWindow::tr("Bitfield"));
@@ -351,6 +331,8 @@ void MainWindow::setActionsText()
     m_actions.settingsBehaviorDigitGroupingThreeSpaces->setText(MainWindow::tr("Large Space"));
     m_actions.settingsBehaviorLeaveLastExpression->setText(MainWindow::tr("Leave &Last Expression"));
     m_actions.settingsBehaviorAutoResultToClipboard->setText(MainWindow::tr("Automatic &Result to Clipboard"));
+    m_actions.settingsBehaviorParseAllRadixChar->setText(MainWindow::tr("Detect &All Radix Characters"));
+    m_actions.settingsBehaviorStrictDigitGrouping->setText(MainWindow::tr("&Strict Digit Groups Detection"));
     m_actions.settingsRadixCharComma->setText(MainWindow::tr("&Comma"));
     m_actions.settingsRadixCharDefault->setText(MainWindow::tr("&System Default"));
     m_actions.settingsRadixCharDot->setText(MainWindow::tr("&Dot"));
@@ -367,9 +349,11 @@ void MainWindow::setActionsText()
     m_actions.settingsResultFormatHexadecimal->setText(MainWindow::tr("&Hexadecimal"));
     m_actions.settingsResultFormatOctal->setText(MainWindow::tr("&Octal"));
     m_actions.settingsResultFormatScientific->setText(MainWindow::tr("&Scientific"));
-    m_actions.settingsDisplayColorSchemeStandard->setText(MainWindow::tr("Standard"));
-    m_actions.settingsDisplayColorSchemeSublime->setText(MainWindow::tr("Sublime"));
-    m_actions.settingsDisplayColorSchemeTerminal->setText(MainWindow::tr("Terminal"));
+    m_actions.settingsDisplayColorSchemeStandard->setText(QLatin1String("Standard"));
+    m_actions.settingsDisplayColorSchemeSublime->setText(QLatin1String("Sublime"));
+    m_actions.settingsDisplayColorSchemeTerminal->setText(QLatin1String("Terminal"));
+    m_actions.settingsDisplayColorSchemeSolarizedDark->setText(QLatin1String("Solarized Dark"));
+    m_actions.settingsDisplayColorSchemeSolarizedLight->setText(QLatin1String("Solarized Light"));
     m_actions.settingsDisplayFont->setText(MainWindow::tr("&Font..."));
     m_actions.settingsLanguage->setText(MainWindow::tr("&Language..."));
 
@@ -413,6 +397,8 @@ void MainWindow::createActionGroups()
     m_actionGroups.colorScheme->addAction(m_actions.settingsDisplayColorSchemeStandard);
     m_actionGroups.colorScheme->addAction(m_actions.settingsDisplayColorSchemeSublime);
     m_actionGroups.colorScheme->addAction(m_actions.settingsDisplayColorSchemeTerminal);
+    m_actionGroups.colorScheme->addAction(m_actions.settingsDisplayColorSchemeSolarizedDark);
+    m_actionGroups.colorScheme->addAction(m_actions.settingsDisplayColorSchemeSolarizedLight);
 
     m_actionGroups.digitGrouping = new QActionGroup(this);
     m_actionGroups.digitGrouping->addAction(m_actions.settingsBehaviorDigitGroupingNone);
@@ -438,10 +424,6 @@ void MainWindow::createActionShortcuts()
     m_actions.viewFunctions->setShortcut(Qt::CTRL + Qt::Key_3);
     m_actions.viewHistory->setShortcut(Qt::CTRL + Qt::Key_7);
     m_actions.viewFormulaBook->setShortcut(Qt::CTRL + Qt::Key_1);
-#ifndef Q_OS_MAC
-    if (shouldAllowHiddenMenuBar())
-        m_actions.viewMenuBar->setShortcut(Qt::CTRL + Qt::Key_M);
-#endif
     m_actions.viewStatusBar->setShortcut(Qt::CTRL + Qt::Key_B);
     m_actions.viewVariables->setShortcut(Qt::CTRL + Qt::Key_4);
     m_actions.viewUserFunctions->setShortcut(Qt::CTRL + Qt::Key_5);
@@ -492,10 +474,6 @@ void MainWindow::createMenus()
     m_menus.view->addAction(m_actions.viewHistory);
     m_menus.view->addSeparator();
     m_menus.view->addAction(m_actions.viewStatusBar);
-#ifndef Q_OS_MAC
-    if (shouldAllowHiddenMenuBar())
-        m_menus.view->addAction(m_actions.viewMenuBar);
-#endif
     m_menus.view->addSeparator();
     m_menus.view->addAction(m_actions.viewFullScreenMode);
 
@@ -556,6 +534,8 @@ void MainWindow::createMenus()
     m_menus.digitGrouping->addAction(m_actions.settingsBehaviorDigitGroupingThreeSpaces);
 
     m_menus.behavior->addAction(m_actions.settingsBehaviorLeaveLastExpression);
+    m_menus.behavior->addAction(m_actions.settingsBehaviorParseAllRadixChar);
+    m_menus.behavior->addAction(m_actions.settingsBehaviorStrictDigitGrouping);
     m_menus.behavior->addSeparator();
     m_menus.behavior->addAction(m_actions.settingsBehaviorAlwaysOnTop);
     m_menus.behavior->addAction(m_actions.settingsBehaviorMinimizeToTray);
@@ -566,6 +546,8 @@ void MainWindow::createMenus()
     m_menus.colorScheme->addAction(m_actions.settingsDisplayColorSchemeStandard);
     m_menus.colorScheme->addAction(m_actions.settingsDisplayColorSchemeSublime);
     m_menus.colorScheme->addAction(m_actions.settingsDisplayColorSchemeTerminal);
+    m_menus.colorScheme->addAction(m_actions.settingsDisplayColorSchemeSolarizedDark);
+    m_menus.colorScheme->addAction(m_actions.settingsDisplayColorSchemeSolarizedLight);
     m_menus.display->addAction(m_actions.settingsDisplayFont);
 
     m_menus.settings->addAction(m_actions.settingsLanguage);
@@ -663,13 +645,6 @@ void MainWindow::createFixedWidgets()
     m_widgets.state->setAutoFillBackground(true);
     m_widgets.state->setFrameShape(QFrame::Box);
     m_widgets.state->hide();
-
-#ifndef Q_OS_MAC
-    if (shouldAllowHiddenMenuBar()) {
-        m_widgets.tip = new TipWidget(this);
-        m_widgets.tip->hide();
-    }
-#endif // Q_OS_MAC
 }
 
 void MainWindow::createBitField() {
@@ -836,6 +811,7 @@ void MainWindow::createUserFunctionsDock()
     addDockWidget(Qt::RightDockWidgetArea, m_docks.userFunctions);
 
     connect(m_docks.userFunctions, SIGNAL(userFunctionSelected(const QString&)), SLOT(insertUserFunctionIntoEditor(const QString&)));
+    connect(m_docks.userFunctions, SIGNAL(userFunctionEdited(const QString&)), SLOT(insertUserFunctionIntoEditor(const QString&)));
     connect(this, SIGNAL(radixCharacterChanged()), m_docks.userFunctions, SLOT(handleRadixCharacterChange()));
 
     m_docks.userFunctions->updateList();
@@ -878,10 +854,6 @@ void MainWindow::createFixedConnections()
     connect(m_actions.viewFunctions, SIGNAL(toggled(bool)), SLOT(setFunctionsDockVisible(bool)));
     connect(m_actions.viewHistory, SIGNAL(toggled(bool)), SLOT(setHistoryDockVisible(bool)));
     connect(m_actions.viewFormulaBook, SIGNAL(toggled(bool)), SLOT(setFormulaBookDockVisible(bool)));
-#ifndef Q_OS_MAC
-    if (shouldAllowHiddenMenuBar())
-        connect(m_actions.viewMenuBar, SIGNAL(toggled(bool)), SLOT(setMenuBarVisible(bool)));
-#endif
     connect(m_actions.viewStatusBar, SIGNAL(toggled(bool)), SLOT(setStatusBarVisible(bool)));
     connect(m_actions.viewVariables, SIGNAL(toggled(bool)), SLOT(setVariablesDockVisible(bool)));
     connect(m_actions.viewBitfield, SIGNAL(toggled(bool)), SLOT(setBitfieldVisible(bool)));
@@ -904,6 +876,8 @@ void MainWindow::createFixedConnections()
     connect(m_actionGroups.digitGrouping, SIGNAL(triggered(QAction*)), SLOT(setDigitGrouping(QAction*)));
     connect(m_actions.settingsBehaviorLeaveLastExpression, SIGNAL(toggled(bool)), SLOT(setLeaveLastExpressionEnabled(bool)));
     connect(m_actions.settingsBehaviorAutoResultToClipboard, SIGNAL(toggled(bool)), SLOT(setAutoResultToClipboardEnabled(bool)));
+    connect(m_actions.settingsBehaviorParseAllRadixChar, SIGNAL(toggled(bool)), SLOT(setParseAllRadixChar(bool)));
+    connect(m_actions.settingsBehaviorStrictDigitGrouping, SIGNAL(toggled(bool)), SLOT(setStrictDigitGrouping(bool)));
 
     connect(m_actions.settingsRadixCharComma, SIGNAL(triggered()), SLOT(setRadixCharacterComma()));
     connect(m_actions.settingsRadixCharDefault, SIGNAL(triggered()), SLOT(setRadixCharacterAutomatic()));
@@ -1068,6 +1042,9 @@ void MainWindow::applySettings()
     else
         setAutoResultToClipboardEnabled(false);
 
+    m_actions.settingsBehaviorParseAllRadixChar->setChecked(m_settings->parseAllRadixChar);
+    m_actions.settingsBehaviorStrictDigitGrouping->setChecked(m_settings->strictDigitGrouping);
+
     QFont font;
     font.fromString(m_settings->displayFont);
     m_widgets.display->setFont(font);
@@ -1079,15 +1056,12 @@ void MainWindow::applySettings()
         m_actions.settingsDisplayColorSchemeSublime->setChecked(true);
     else if (m_settings->colorScheme == SyntaxHighlighter::Terminal)
         m_actions.settingsDisplayColorSchemeTerminal->setChecked(true);
+    else if (m_settings->colorScheme == SyntaxHighlighter::SolarizedDark)
+        m_actions.settingsDisplayColorSchemeSolarizedDark->setChecked(true);
+    else if (m_settings->colorScheme == SyntaxHighlighter::SolarizedLight)
+        m_actions.settingsDisplayColorSchemeSolarizedLight->setChecked(true);
 
     m_actions.viewStatusBar->setChecked(m_settings->statusBarVisible);
-
-#ifndef Q_OS_MAC
-    if (shouldAllowHiddenMenuBar()) {
-        m_actions.viewMenuBar->setChecked(m_settings->menuBarVisible);
-        menuBar()->setVisible(m_settings->menuBarVisible);
-    }
-#endif
 
     if (m_widgets.display->isEmpty())
         QTimer::singleShot(0, this, SLOT(showReadyMessage()));
@@ -1196,16 +1170,12 @@ MainWindow::MainWindow()
     m_settings = Settings::instance();
 
     m_widgets.trayIcon = 0;
-    m_widgets.tip = 0;
     m_widgets.manual = 0;
 
     m_menus.trayIcon = 0;
 
     m_conditions.autoAns = false;
     m_conditions.trayNotify = true;
-#ifndef Q_OS_MAC
-    m_conditions.notifyMenuBarHidden = true;
-#endif
 
     m_docks.book = 0;
     m_docks.history = 0;
@@ -1722,6 +1692,18 @@ void MainWindow::setAutoResultToClipboardEnabled(bool b)
     m_settings->autoResultToClipboard = b;
 }
 
+void MainWindow::setParseAllRadixChar(bool b)
+{
+    m_settings->parseAllRadixChar = b;
+    emit radixCharacterChanged();
+}
+
+void MainWindow::setStrictDigitGrouping(bool b)
+{
+    m_settings->strictDigitGrouping = b;
+    emit radixCharacterChanged();   // FIXME?
+}
+
 void MainWindow::setAngleModeRadian()
 {
     if (m_settings->angleUnit == 'r')
@@ -1902,19 +1884,6 @@ void MainWindow::showFontDialog()
     m_widgets.display->setFont(f);
     m_widgets.editor->setFont(f);
 }
-
-#ifndef Q_OS_MAC
-void MainWindow::setMenuBarVisible(bool b)
-{
-    menuBar()->setVisible(b);
-    m_settings->menuBarVisible = b;
-
-    if (!b && m_conditions.notifyMenuBarHidden) {
-        showMenuBarTip();
-        m_conditions.notifyMenuBarHidden = false;
-    }
-}
-#endif
 
 void MainWindow::setStatusBarVisible(bool b)
 {
@@ -2145,16 +2114,6 @@ void MainWindow::setUserFunctionsDockVisible(bool b)
         deleteUserFunctionsDock();
 }
 
-#ifndef Q_OS_MAC
-void MainWindow::showMenuBarTip()
-{
-    QString msg = tr("The menu bar is now hidden. To make it visible again, press Ctrl+M.");
-
-    m_widgets.tip->move(0, 0);
-    m_widgets.tip->showText(msg, tr("Warning"));
-}
-#endif
-
 void MainWindow::setResultFormatBinary()
 {
     m_actionGroups.digits->setDisabled(true);
@@ -2295,34 +2254,6 @@ void MainWindow::openNewsURL()
 void MainWindow::copy()
 {
     m_copyWidget->copy();
-}
-
-void MainWindow::raiseWindow()
-{
-    activate();
-
-#ifdef Q_OS_WIN
-    SetWindowPos(winId(), HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
-    SetWindowPos(winId(), HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
-#endif // Q_OS_WIN
-
-#ifdef Q_WS_X11
-    static Atom NET_ACTIVE_WINDOW = XInternAtom(QX11Info::display(), "_NET_ACTIVE_WINDOW", False);
-
-    XClientMessageEvent xev;
-    xev.type = ClientMessage;
-    xev.window = winId();
-    xev.message_type = NET_ACTIVE_WINDOW;
-    xev.format = 32;
-    xev.data.l[0] = 2;
-    xev.data.l[1] = CurrentTime;
-    xev.data.l[2] = 0;
-    xev.data.l[3] = 0;
-    xev.data.l[4] = 0;
-
-    XSendEvent(QX11Info::display(), QX11Info::appRootWindow(), False,
-        (SubstructureNotifyMask | SubstructureRedirectMask), (XEvent*)&xev);
-#endif // Q_WS_X11
 }
 
 void MainWindow::restoreVariables()
@@ -2624,9 +2555,10 @@ void MainWindow::showLanguageChooserDialog()
 
     map.insert(QLatin1String("American English"), QLatin1String("en_US"));
     map.insert(QLatin1String("Bahasa Indonesia"), QLatin1String("id_ID"));
-    map.insert(QLatin1String("British English"), QLatin1String("en_GB"));
     map.insert(QString::fromUtf8("Català"), QLatin1String("ca_ES"));
+    map.insert(QLatin1String("Dansk"), QLatin1String("da"));
     map.insert(QLatin1String("Deutsch"), QLatin1String("de_DE"));
+    map.insert(QString::fromUtf8("Ελληνικά"), QLatin1String("el"));
     map.insert(QLatin1String("Eesti"), QLatin1String("et_EE"));
     map.insert(QString::fromUtf8("Español"), QLatin1String("es_ES"));
     map.insert(QString::fromUtf8("Español Argentino"), QLatin1String("es_AR"));
@@ -2634,20 +2566,23 @@ void MainWindow::showLanguageChooserDialog()
     map.insert(QString::fromUtf8("Français"), QLatin1String("fr_FR"));
     map.insert(QLatin1String("Italiano"), QLatin1String("it_IT"));
     map.insert(QString::fromUtf8("Latviešu"), QLatin1String("lv_LV"));
+    map.insert(QString::fromUtf8("Lietuvių"), QLatin1String("lt"));
     map.insert(QLatin1String("Magyar"), QLatin1String("hu_HU"));
     map.insert(QLatin1String("Nederlands"), QLatin1String("nl_NL"));
     map.insert(QString::fromUtf8("Norsk (Bokmål)") + QChar(0x200E), QLatin1String("nb_NO"));
+    map.insert(QString::fromUtf8("Oʻzbekcha"), QLatin1String("uz@Latn"));
     map.insert(QLatin1String("Polski"), QLatin1String("pl_PL"));
     map.insert(QString::fromUtf8("Português do Brasil"), QLatin1String("pt_BR"));
     map.insert(QString::fromUtf8("Português Europeu"), QLatin1String("pt_PT"));
     map.insert(QString::fromUtf8("Română"), QLatin1String("ro_RO"));
+    map.insert(QString::fromUtf8("Slovenčina"), QLatin1String("sk"));
     map.insert(QLatin1String("Suomi"), QLatin1String("fi_FI"));
     map.insert(QLatin1String("Svenska"), QLatin1String("sv_SE"));
     map.insert(QString::fromUtf8("Česky"), QLatin1String("cs_CZ"));
     map.insert(QString::fromUtf8("한국어"), QLatin1String("ko_KR"));
-    map.insert(QString::fromUtf8("Tiếng Việt"), QLatin1String("vi_VN"));
+    map.insert(QString::fromUtf8("Tiếng Việt"), QLatin1String("vi"));
     map.insert(QString::fromUtf8("Türkçe"), QLatin1String("tr_TR"));
-    map.insert(QString::fromUtf8("العربية"), QLatin1String("ar_JO"));
+    map.insert(QString::fromUtf8("العربية"), QLatin1String("ar"));
     map.insert(QString::fromUtf8("עברית"), QLatin1String("he_IL"));
     map.insert(QString::fromUtf8("Русский"), QLatin1String("ru_RU"));
     map.insert(QString::fromUtf8("日本語"), QLatin1String("ja_JP"));

@@ -1,5 +1,18 @@
 PROJECT(speedcrunch)
 
+cmake_minimum_required(VERSION 2.4.4)
+
+if(COMMAND cmake_policy)
+    cmake_policy(SET CMP0003 NEW)
+    cmake_policy(SET CMP0005 OLD)
+endif(COMMAND cmake_policy)
+
+set(CMAKE_COLOR_MAKEFILE      ON)
+set(CMAKE_VERBOSE_MAKEFILE    OFF)
+set(CMAKE_INCLUDE_CURRENT_DIR TRUE)
+
+set(QT_MIN_VERSION "4.8.0")
+
 SET( speedcrunch_VERSION "master" )
 
 IF( APPLE )
@@ -13,26 +26,8 @@ ELSE( APPLE )
   SET( PROGNAME speedcrunch )
 ENDIF( APPLE )
 
-CMAKE_MINIMUM_REQUIRED(VERSION 2.4.4)
-IF(COMMAND cmake_policy)
- CMAKE_POLICY(SET CMP0003 NEW)
- CMAKE_POLICY(SET CMP0005 OLD)   # remove this and the quoted arguments in
-                                 # ADD_DEFINITONS() once CMake 2.6 is used
-ENDIF(COMMAND cmake_policy)
-SET(CMAKE_COLOR_MAKEFILE      ON)
-SET(CMAKE_VERBOSE_MAKEFILE    OFF)
-SET(CMAKE_INCLUDE_CURRENT_DIR TRUE)
-
-SET(QT_MIN_VERSION "4.8.0")
-
 ADD_DEFINITIONS("-DSPEEDCRUNCH_VERSION=\\\"${speedcrunch_VERSION}\\\"")
 ADD_DEFINITIONS(-DQT_USE_QSTRINGBUILDER)
-
-IF( NOT WIN32 )
-IF( NOT APPLE )
-  ADD_DEFINITIONS( -DENABLE_BINRELOC )
-ENDIF( NOT APPLE )
-ENDIF( NOT WIN32 )
 
 # sources
 INCLUDE(SourceFiles.cmake)
@@ -46,10 +41,14 @@ ELSE(MINGW)
   SET(speedcrunch_SOURCES ${speedcrunch_SOURCES} resources/speedcrunch.rc)
 ENDIF(MINGW)
 
-# enable warnings
-IF(CMAKE_COMPILER_IS_GNUCXX )
-  ADD_DEFINITIONS( -Wall )
-ENDIF(CMAKE_COMPILER_IS_GNUCXX )
+# Enable all warnings and C++11 required flags on some compilers.
+string(COMPARE EQUAL "${CMAKE_CXX_COMPILER_ID}" MSVC USING_MSVC)
+if(USING_MSVC)
+    add_definitions(/Wall)
+else()
+    add_definitions(-Wall)
+    add_definitions(-std=c++0x)
+endif()
 
 # setup for Qt4
 SET(QT_USE_QTNETWORK TRUE)
@@ -62,6 +61,7 @@ qt4_add_RESOURCES( speedcrunch_RESOURCES_SOURCES ${speedcrunch_RESOURCES} )
 QT4_WRAP_UI( speedcrunch_FORMS_HEADERS ${speedcrunch_FORMS} )
 QT4_WRAP_CPP( speedcrunch_HEADERS_MOC ${speedcrunch_HEADERS} )
 ADD_EXECUTABLE( ${PROGNAME} WIN32 MACOSX_BUNDLE ${speedcrunch_SOURCES} ${speedcrunch_HEADERS_MOC} ${speedcrunch_RESOURCES_SOURCES} ${speedcrunch_FORMS_HEADERS} )
+
 IF( APPLE )
   SET( speedcrunch_RESOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources )
   ADD_CUSTOM_COMMAND( TARGET ${PROGNAME} POST_BUILD
@@ -101,7 +101,6 @@ ADD_EXECUTABLE(testfloatnum ${testfloatnum_SOURCES})
 ADD_TEST(testfloatnum testfloatnum)
 
 INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR} thirdparty core gui math)
-
 
 ################################# INSTALL ######################################
 

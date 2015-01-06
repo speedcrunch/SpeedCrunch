@@ -44,7 +44,7 @@ public:
 
 signals:
     void itemActivated(const QString&);
-    void itemDeleted(const QString&);
+    void itemEdited(const QString&);
 
 public slots:
     void fillTable();
@@ -52,6 +52,7 @@ public slots:
 
 protected slots:
     void activateItem();
+    void editItem();
     void deleteItem();
     void deleteAllItems();
     void triggerFilter();
@@ -66,6 +67,7 @@ private:
     QTimer* m_filterTimer;
     QTreeWidget* m_userFunctions;
     QAction* m_insertAction;
+    QAction* m_editAction;
     QAction* m_deleteAction;
     QAction* m_deleteAllAction;
     QLabel* m_noMatchLabel;

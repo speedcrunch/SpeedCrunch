@@ -93,6 +93,7 @@ void FunctionsWidget::fillTable()
     m_functions->clear();
     QString term = m_searchFilter->text();
     QStringList functionNames = FunctionRepo::instance()->getIdentifiers();
+    FunctionRepo::instance()->retranslateText();
 
     for (int k = 0; k < functionNames.count(); ++k) {
         Function* f = FunctionRepo::instance()->find(functionNames.at(k));

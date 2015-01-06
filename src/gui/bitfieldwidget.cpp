@@ -162,7 +162,7 @@ void BitFieldWidget::updateBits(const HNumber& number)
     else
         binaryNumberString.remove(0, 2); // Remove '0b'.
 
-    QString::ConstIterator iterator = binaryNumberString.end();
+    auto iterator = binaryNumberString.end();
     while (bitsIterator.hasNext()) {
         if (iterator != binaryNumberString.begin()) {
             --iterator;
@@ -204,8 +204,8 @@ void BitFieldWidget::resetBits()
 
 void BitFieldWidget::shiftBitsLeft()
 {
-    QList<BitWidget*>::ConstIterator it(m_bitWidgets.constEnd());
-    QList<BitWidget*>::ConstIterator itBegin(m_bitWidgets.constBegin());
+    auto it = m_bitWidgets.constEnd();
+    auto itBegin = m_bitWidgets.constBegin();
 
     --it;
     while (it != itBegin) {
@@ -219,8 +219,8 @@ void BitFieldWidget::shiftBitsLeft()
 
 void BitFieldWidget::shiftBitsRight()
 {
-    QList<BitWidget*>::ConstIterator it(m_bitWidgets.constBegin());
-    QList<BitWidget*>::ConstIterator itEnd(m_bitWidgets.constEnd());
+    auto it = m_bitWidgets.constBegin();
+    auto itEnd = m_bitWidgets.constEnd();
 
     --itEnd;
     while (it != itEnd) {

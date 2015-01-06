@@ -45,7 +45,7 @@
         "}" \
     "</style>"
 
-#define BEGIN QString("<html><head>"STYLE"</head><body>")+
+#define BEGIN QString("<html><head>" STYLE "</head><body>")+
 #define SECTION(s) "<h3>"+(s)+"</h3>"
 #define BR "<br />"
 #define INDEX_LINK "<span class=\"page-link\"><a href=\"index\">"+Manual::tr("Index")+"</a></span>"

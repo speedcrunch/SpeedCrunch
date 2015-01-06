@@ -35,7 +35,7 @@ void SyntaxHighlighter::setColorScheme(SyntaxHighlighter::ColorScheme id)
 {
     switch (id) {
     case SyntaxHighlighter::Sublime:
-        SH(Cursor, 100, 200, 255);  SH(Function, 213, 38, 106);   SH(EditorFade, 29, 30, 24);
+        SH(Cursor, 100, 200, 255);  SH(Function, 213, 38, 106);   SH(EditorBackground, 29, 30, 24);
         SH(Number, 173, 119, 158);  SH(Operator, 242, 248, 214);
         SH(Parens, 103, 112, 88);   SH(Variable, 64, 181, 238);
         SH(Result, 197, 218, 107);  SH(ScrollBar, 110, 120, 100);
@@ -43,19 +43,35 @@ void SyntaxHighlighter::setColorScheme(SyntaxHighlighter::ColorScheme id)
         SH(Matched, 163, 126, 219); SH(Background, 39, 40, 34);
         break;
     case SyntaxHighlighter::Terminal:
-        SH(Cursor, 140, 100, 140);  SH(Function, 239, 41, 40);    SH(EditorFade, 38, 0, 26);
+        SH(Cursor, 140, 100, 140);  SH(Function, 239, 41, 40);    SH(EditorBackground, 38, 0, 26);
         SH(Number, 255, 255, 255);  SH(Operator, 196, 160, 0);
         SH(Parens, 173, 127, 168);  SH(Variable, 74, 154, 7);
         SH(Result, 104, 159, 207);  SH(ScrollBar, 140, 100, 140);
         SH(Comment, 65, 25, 55);    SH(Separator, 100, 80, 123);
         SH(Matched, 100, 80, 123);  SH(Background, 48, 10, 36);
         break;
+    case SyntaxHighlighter::SolarizedDark:
+        SH(Cursor, 220, 50, 47);    SH(Function, 38, 139, 210);   SH(EditorBackground, 0, 43, 54);
+        SH(Number, 131, 148, 150);  SH(Operator, 181, 137, 0);
+        SH(Parens, 253, 246, 227);  SH(Variable, 133, 153, 0);
+        SH(Result, 253, 246, 227);  SH(ScrollBar, 211, 54, 130);
+        SH(Comment, 88, 110, 117);  SH(Separator, 181, 137, 0);
+        SH(Matched, 108, 113, 196); SH(Background, 7, 54, 66);
+        break;
+    case SyntaxHighlighter::SolarizedLight:
+        SH(Cursor, 220, 50, 47);    SH(Function, 38, 139, 210);   SH(EditorBackground, 238, 232, 213);
+        SH(Number, 101, 123, 131);  SH(Operator, 181, 137, 0);
+        SH(Parens, 0, 43, 54);      SH(Variable, 133, 153, 0);
+        SH(Result, 7, 54, 66);      SH(ScrollBar, 203, 75, 22);
+        SH(Comment, 88, 110, 117);  SH(Separator, 181, 137, 0);
+        SH(Matched, 108, 113, 196); SH(Background, 253, 246, 227);
+        break;
     case SyntaxHighlighter::Standard:
     default:
-        SH(Cursor, 255, 100, 100);  SH(Function, 74, 154, 7);     SH(EditorFade, 220, 220, 220);
-        SH(Number, 98, 50, 76);     SH(Operator, 193, 147, 188);
-        SH(Parens, 196, 160, 50);   SH(Variable, 239, 41, 40);
-        SH(Result, 104, 159, 207);  SH(ScrollBar, 190, 190, 190);
+        SH(Cursor, 255, 100, 100);  SH(Function, 74, 154, 7);     SH(EditorBackground, 220, 220, 220);
+        SH(Number, 40, 40, 40);     SH(Operator, 150, 150, 150);
+        SH(Parens, 255, 160, 50);   SH(Variable, 239, 41, 40);
+        SH(Result, 0, 100, 200);    SH(ScrollBar, 255, 120, 50);
         SH(Comment, 210, 210, 210); SH(Separator, 100, 80, 123);
         SH(Matched, 100, 80, 123);  SH(Background, 255, 255, 255);
         break;
@@ -104,6 +120,8 @@ void SyntaxHighlighter::highlightBlock(const QString& text)
         case Token::stxNumber:
         case Token::stxUnknown:
             color = colorForRole(Number);
+            // TODO: color thousand separators differently? It might help troubleshooting issues
+            //       in non-strict mode where more than 95k characters are valid separators.
             break;
 
         case Token::stxOperator:
@@ -121,20 +139,32 @@ void SyntaxHighlighter::highlightBlock(const QString& text)
 
         case Token::stxIdentifier:
             color = colorForRole(Variable);
-            for (int i = 0; i < functionNames.count(); ++i)
-                if (functionNames.at(i).toLower() == tokenText)
-                    color = colorForRole(Function);
+            if (Evaluator::instance()->hasUserFunction(token.text())
+                || functionNames.contains(tokenText, Qt::CaseInsensitive))
+                color = colorForRole(Function);
             break;
 
         default:
             break;
         };
 
-        if (token.pos() >= 0) {
-            setFormat(token.pos(), token.text().length(), color);
-            if (token.type() == Token::stxNumber && Settings::instance()->digitGrouping > 0)
-                groupDigits(text, token.pos(), token.text().length());
+        Q_ASSERT(token.pos() >= 0); // Why would pos() ever return a negative value?
+
+        // The token text might be a modified version of the displayed text,
+        // so we must not rely on it to find out the number of character to highlight.
+        int end = (questionMarkIndex != -1) ? questionMarkIndex : text.length();
+        if (i + 1 < tokens.size())
+        {
+            const Token& nextToken = tokens.at(i + 1);
+
+            Q_ASSERT(nextToken.pos() >= 0);
+
+            end = nextToken.pos();
         }
+
+        setFormat(token.pos(), end - token.pos(), color);
+        if (token.type() == Token::stxNumber && Settings::instance()->digitGrouping > 0)
+            groupDigits(text, token.pos(), end - token.pos());
     }
 }
 
@@ -151,6 +181,48 @@ void SyntaxHighlighter::update()
     parentWidget->setPalette(pal);
 
     rehighlight();
+}
+
+void SyntaxHighlighter::formatDigitsGroup(const QString& text, int start, int end, bool invert, int size)
+{
+    Q_ASSERT(start <= end);
+    Q_ASSERT(size > 0);
+
+    qreal spacing = 100; // Size of the space between groups (100 means no space).
+    spacing += 40 * Settings::instance()->digitGrouping;
+    Evaluator *evaluator = Evaluator::instance();
+    int inc = !invert ? -1 : 1;
+    if(!invert)
+    {
+        int tmp = start;
+        start = end - 1;
+        end = tmp - 1;
+
+        // Skip the first digit so that we add the spacing to the first digit of the next group.
+        while (start != end && evaluator->isSeparatorChar(text[start].unicode()))
+            --start;
+        if (start == end)
+            return; // Bug ?
+        --start;
+    }
+
+    for (int count = 0 ; start != end ; start += inc)
+    {
+        // When there are separators in the number, we must not count them as part of the group.
+        if (!evaluator->isSeparatorChar(text[start].unicode()))
+        {
+            ++count;
+            if (count == size)
+            {
+                // Only change the letter spacing from the format and keep the other properties.
+                QTextCharFormat fmt = format(start);
+                fmt.setFontLetterSpacing(spacing);
+                setFormat(start, 1, fmt);
+                count = 0; // Reset
+                // TODO: if the next character is a separator, do not add spacing?
+            }
+        }
+    }
 }
 
 void SyntaxHighlighter::groupDigits(const QString& text, int pos, int length)
@@ -187,12 +259,11 @@ void SyntaxHighlighter::groupDigits(const QString& text, int pos, int length)
         charType['F'] = HEX_CHAR;
     }
 
-    qreal groupSpacing = 100; // Size of the space between groups (100 means no space).
-    groupSpacing += 40 * Settings::instance()->digitGrouping;
     int s = -1; // Index of the first digit (most significant).
     bool invertGroup = false; // If true, group digits from the most significant digit.
     int groupSize = 3; // Number of digits to group (depends on the radix).
     int allowedChars = DEC_CHAR; // Allowed characters for the radix of the current number being parsed.
+    Evaluator *evaluator = Evaluator::instance();
 
     int endPos = pos + length;
     if (endPos > text.length())
@@ -202,21 +273,9 @@ void SyntaxHighlighter::groupDigits(const QString& text, int pos, int length)
         bool isNumber = c < 128 && (charType[c] & allowedChars);
 
         if (s >= 0) {
-            if (!isNumber) {
+            if (!isNumber && !evaluator->isSeparatorChar(c)) {
                 // End of current number found, start grouping the digits.
-                if (invertGroup)
-                    for (s += groupSize - 1; s < i ; s += groupSize) {
-                        // Only change the letter spacing from the format and keep the other properties.
-                        QTextCharFormat fmt = format(s);
-                        fmt.setFontLetterSpacing(groupSpacing);
-                        setFormat(s, 1, fmt);
-                    }
-                else
-                    for (int e = i - (groupSize + 1); e >= s ; e -= groupSize) {
-                        QTextCharFormat fmt = format(e);
-                        fmt.setFontLetterSpacing(groupSpacing);
-                        setFormat(e, 1, fmt);
-                    }
+                formatDigitsGroup(text, s, i, invertGroup, groupSize);
                 s = -1; // Reset.
             }
         } else {
@@ -225,7 +284,7 @@ void SyntaxHighlighter::groupDigits(const QString& text, int pos, int length)
         }
 
         if (!isNumber) {
-            if (c == '.' || c == ',') {
+            if (evaluator->isRadixChar(c)) {
                 // Invert the grouping for the fractional part.
                 invertGroup = true;
             } else {
@@ -245,7 +304,7 @@ void SyntaxHighlighter::groupDigits(const QString& text, int pos, int length)
                         groupSize = 3;
                         allowedChars = DEC_CHAR;
                     }
-                } else {
+                } else if (!evaluator->isSeparatorChar(c)){
                     groupSize = 3;
                     allowedChars = DEC_CHAR;
                 }
@@ -255,17 +314,6 @@ void SyntaxHighlighter::groupDigits(const QString& text, int pos, int length)
 
     // Group the last digits if the string finishes with the number.
     if (s >= 0) {
-        if (invertGroup)
-            for (s += groupSize - 1; s < endPos ; s += groupSize) {
-                QTextCharFormat fmt = format(s);
-                fmt.setFontLetterSpacing(groupSpacing);
-                setFormat(s, 1, fmt);
-            }
-        else
-            for (int e = endPos - (groupSize + 1); e >= s ; e -= groupSize) {
-                QTextCharFormat fmt = format(e);
-                fmt.setFontLetterSpacing(groupSpacing);
-                setFormat(e, 1, fmt);
-            }
+        formatDigitsGroup(text, s, endPos, invertGroup, groupSize);
     }
 }

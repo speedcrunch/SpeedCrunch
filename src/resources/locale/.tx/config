@@ -6,4 +6,4 @@ file_filter = <lang>.ts
 source_file = en_US.ts
 source_lang = en
 type = QT
-lang_map = ar: ar_JO, vi: vi_VN
+#lang_map =
