@@ -1823,6 +1823,105 @@ HNumber HMath::ashr( const HNumber & val, const HNumber & bits )
   return val << -bits;
 }
 
+/**
+ * Decode a IEEE-754 bit pattern with the given parameters
+ */
+HNumber HMath::decodeIeee754( const HNumber & val, const HNumber & exp_bits, const HNumber & significand_bits )
+{
+  if ( val.isNan()
+       || exp_bits <= 0 || exp_bits >= LOGICRANGE || ! exp_bits.isInteger()
+       || significand_bits <= 0 || significand_bits >= LOGICRANGE || ! significand_bits.isInteger())
+    return HMath::nan();
+
+  HNumber sign(HMath::mask(val >> (exp_bits + significand_bits), 1).isZero() ? 1 : -1);
+  HNumber exp = HMath::mask(val >> significand_bits, exp_bits);
+  HNumber exp_value = exp - HMath::raise(2, exp_bits - 1) + 1;
+  // <=> '0.' b_x b_x-1 b_x-2 ... b_0
+  HNumber significand = HMath::mask(val, significand_bits) * HMath::raise(2, -significand_bits);
+
+  if (exp.isZero()) {
+    // Exponent 0, subnormal value or zero.
+    return sign * significand * HMath::raise(2, exp_value + 1);
+  } else if (exp - HMath::raise(2, exp_bits) == -1) {
+    // Exponent all 1...
+    if (significand.isZero()) {
+      // ...and signficand 0, infinity.
+      // TODO: Represent infinity as something other than NaN?
+      return HNumber();
+    } else {
+      // ...and significand not 0, NaN.
+      return HMath::nan();
+    }
+  } else {
+    // Normalised value.
+    return sign * (significand + 1) * HMath::raise(2, exp_value);
+  }
+}
+
+/**
+ * Encode a value in a IEEE-754 binary representation
+ */
+HNumber HMath::encodeIeee754( const HNumber & val, const HNumber & exp_bits, const HNumber & significand_bits )
+{
+  if ( exp_bits <= 0 || exp_bits >= LOGICRANGE || ! exp_bits.isInteger()
+       || significand_bits <= 0 || significand_bits >= LOGICRANGE || ! significand_bits.isInteger())
+    return HMath::nan();
+
+  HNumber sign_bit;
+  HNumber significand;
+  HNumber exponent;
+
+  HNumber min_exp(2 - HMath::raise(2, exp_bits - 1));
+  HNumber max_exp(HMath::raise(2, exp_bits - 1) - 1);
+
+  if (val.isNan()) {
+    // Encode a NaN.
+    sign_bit = 0;
+    significand = HMath::raise(2, significand_bits) - 1;
+    exponent = HMath::raise(2, exp_bits) - 1;
+  } else if (val.isZero()) {
+    // Encode a basic 0.
+    sign_bit = 0;
+    significand = 0;
+    exponent = 0;
+  } else {
+    // Regular input value.
+    sign_bit = val.isNegative() ? 1 : 0;
+
+    // Determine exponent.
+    significand = HMath::abs(val);
+    exponent = 0;
+    while (exponent > min_exp && exponent < max_exp) {
+      HNumber intpart = HMath::integer(significand);
+      if (intpart == 1) {
+        break;
+      } else if (intpart > 1) {
+        exponent += 1;
+      } else {
+        exponent -= 1;
+      }
+      significand = HMath::abs(val) * HMath::raise(2, -exponent);
+    }
+
+    HNumber rounded = HMath::round(significand * HMath::raise(2, significand_bits));
+    HNumber intpart = HMath::integer(rounded * HMath::raise(2, -significand_bits));
+    significand = HMath::mask(rounded, significand_bits);
+    if (intpart.isZero()) {
+      // Subnormal value.
+      exponent = 0;
+    } else if (intpart > 1) {
+      // Infinity.
+      exponent = HMath::raise(2, exp_bits) - 1;
+      significand = 0;
+    } else {
+      // Normalised value.
+      exponent = exponent + max_exp;
+    }
+  }
+
+  return sign_bit << (exp_bits + significand_bits) | exponent << (significand_bits) | significand;
+}
+
 std::ostream& operator<<( std::ostream& s, const HNumber& n )
 {
   char* str = HMath::format( n, 'f' );

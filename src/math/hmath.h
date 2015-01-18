@@ -169,6 +169,9 @@ class HMath
     static HNumber mask( const HNumber & val, const HNumber & bits );
     static HNumber sgnext( const HNumber & val, const HNumber & bits );
     static HNumber ashr( const HNumber & val, const HNumber & bits );
+    // IEEE-754 CONVERSION
+    static HNumber decodeIeee754( const HNumber & val, const HNumber & exp_bits, const HNumber & significand_bits );
+    static HNumber encodeIeee754( const HNumber & val, const HNumber & exp_bits, const HNumber & significand_bits );
 };
 
 std::ostream & operator<<( std::ostream &, const HNumber & );
