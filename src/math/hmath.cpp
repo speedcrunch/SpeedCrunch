@@ -1824,24 +1824,34 @@ HNumber HMath::ashr( const HNumber & val, const HNumber & bits )
 }
 
 /**
- * Decode a IEEE-754 bit pattern with the given parameters
+ * Decode an IEEE-754 bit pattern with the default exponent bias
  */
-HNumber HMath::decodeIeee754( const HNumber & val, const HNumber & exp_bits, const HNumber & significand_bits )
+HNumber HMath::decodeIeee754( const HNumber & val, const HNumber & exp_bits,
+                              const HNumber & significand_bits )
+{
+    return HMath::decodeIeee754(val, exp_bits, significand_bits, HMath::raise(2, exp_bits - 1) - 1);
+}
+
+/**
+ * Decode an IEEE-754 bit pattern with the given parameters
+ */
+HNumber HMath::decodeIeee754( const HNumber & val, const HNumber & exp_bits,
+                              const HNumber & significand_bits, const HNumber & exp_bias )
 {
   if ( val.isNan()
        || exp_bits <= 0 || exp_bits >= LOGICRANGE || ! exp_bits.isInteger()
-       || significand_bits <= 0 || significand_bits >= LOGICRANGE || ! significand_bits.isInteger())
+       || significand_bits <= 0 || significand_bits >= LOGICRANGE || ! significand_bits.isInteger()
+       || ! exp_bias.isInteger() )
     return HMath::nan();
 
   HNumber sign(HMath::mask(val >> (exp_bits + significand_bits), 1).isZero() ? 1 : -1);
   HNumber exp = HMath::mask(val >> significand_bits, exp_bits);
-  HNumber exp_value = exp - HMath::raise(2, exp_bits - 1) + 1;
   // <=> '0.' b_x b_x-1 b_x-2 ... b_0
   HNumber significand = HMath::mask(val, significand_bits) * HMath::raise(2, -significand_bits);
 
   if (exp.isZero()) {
     // Exponent 0, subnormal value or zero.
-    return sign * significand * HMath::raise(2, exp_value + 1);
+    return sign * significand * HMath::raise(2, exp - exp_bias + 1);
   } else if (exp - HMath::raise(2, exp_bits) == -1) {
     // Exponent all 1...
     if (significand.isZero()) {
@@ -1854,25 +1864,36 @@ HNumber HMath::decodeIeee754( const HNumber & val, const HNumber & exp_bits, con
     }
   } else {
     // Normalised value.
-    return sign * (significand + 1) * HMath::raise(2, exp_value);
+    return sign * (significand + 1) * HMath::raise(2, exp - exp_bias);
   }
+}
+
+/**
+ * Encode a value in a IEEE-754 binary representation with the default exponent bias
+ */
+HNumber HMath::encodeIeee754( const HNumber & val, const HNumber & exp_bits,
+                              const HNumber & significand_bits )
+{
+    return HMath::encodeIeee754(val, exp_bits, significand_bits, HMath::raise(2, exp_bits - 1) - 1);
 }
 
 /**
  * Encode a value in a IEEE-754 binary representation
  */
-HNumber HMath::encodeIeee754( const HNumber & val, const HNumber & exp_bits, const HNumber & significand_bits )
+HNumber HMath::encodeIeee754( const HNumber & val, const HNumber & exp_bits,
+                              const HNumber & significand_bits, const HNumber & exp_bias )
 {
   if ( exp_bits <= 0 || exp_bits >= LOGICRANGE || ! exp_bits.isInteger()
-       || significand_bits <= 0 || significand_bits >= LOGICRANGE || ! significand_bits.isInteger())
+       || significand_bits <= 0 || significand_bits >= LOGICRANGE || ! significand_bits.isInteger()
+       || ! exp_bias.isInteger() )
     return HMath::nan();
 
   HNumber sign_bit;
   HNumber significand;
   HNumber exponent;
 
-  HNumber min_exp(2 - HMath::raise(2, exp_bits - 1));
-  HNumber max_exp(HMath::raise(2, exp_bits - 1) - 1);
+  HNumber min_exp(1 - exp_bias);
+  HNumber max_exp(HMath::raise(2, exp_bits) - 2 - exp_bias);
 
   if (val.isNan()) {
     // Encode a NaN.
@@ -1889,19 +1910,10 @@ HNumber HMath::encodeIeee754( const HNumber & val, const HNumber & exp_bits, con
     sign_bit = val.isNegative() ? 1 : 0;
 
     // Determine exponent.
-    significand = HMath::abs(val);
-    exponent = 0;
-    while (exponent > min_exp && exponent < max_exp) {
-      HNumber intpart = HMath::integer(significand);
-      if (intpart == 1) {
-        break;
-      } else if (intpart > 1) {
-        exponent += 1;
-      } else {
-        exponent -= 1;
-      }
-      significand = HMath::abs(val) * HMath::raise(2, -exponent);
-    }
+    for (exponent = min_exp;
+         (significand = HMath::abs(val) * HMath::raise(2, -exponent)) >= 2
+         && exponent < max_exp;
+         exponent += 1);
 
     HNumber rounded = HMath::round(significand * HMath::raise(2, significand_bits));
     HNumber intpart = HMath::integer(rounded * HMath::raise(2, -significand_bits));
@@ -1915,7 +1927,7 @@ HNumber HMath::encodeIeee754( const HNumber & val, const HNumber & exp_bits, con
       significand = 0;
     } else {
       // Normalised value.
-      exponent = exponent + max_exp;
+      exponent = exponent + exp_bias;
     }
   }
 
