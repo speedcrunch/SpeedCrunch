@@ -1931,7 +1931,9 @@ HNumber HMath::encodeIeee754( const HNumber & val, const HNumber & exp_bits,
     }
   }
 
-  return sign_bit << (exp_bits + significand_bits) | exponent << (significand_bits) | significand;
+  HNumber result = sign_bit << (exp_bits + significand_bits) | exponent << (significand_bits) | significand;
+  result.setFormat('h');
+  return result;
 }
 
 std::ostream& operator<<( std::ostream& s, const HNumber& n )
