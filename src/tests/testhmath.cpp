@@ -911,6 +911,7 @@ void test_functions()
     CHECK(HMath::decodeIeee754("0x77", "4", "3", "-2"), "122880");
     CHECK(HMath::decodeIeee754("0x5", "2", "1"), "3");
     CHECK_PRECISE(HMath::decodeIeee754("0x3ffd5555555555555555555555555555", "15", "112"), "0.33333333333333333333333333333333331728391713010637");
+
     CHECK(HMath::encodeIeee754("NaN", "NaN", "NaN"), "NaN");
     CHECK(HMath::encodeIeee754("1", "NaN", "NaN"), "NaN");
     CHECK(HMath::encodeIeee754("1", "-1", "1"), "NaN");
@@ -933,6 +934,7 @@ void test_functions()
     CHECK_FORMAT('h', 0, HMath::encodeIeee754("-73728", "4", "3", "-2"), "0xF1");
     CHECK_FORMAT('h', 0, HMath::encodeIeee754("122880", "4", "3", "-2"), "0x77");
     CHECK_FORMAT('h', 0, HMath::encodeIeee754("3", "2", "1"), "0x5");
+    CHECK_FORMAT('h', 0, HMath::encodeIeee754("1.5", "2", "1"), "0x3");
 }
 
 int main(int argc, char* argv[])

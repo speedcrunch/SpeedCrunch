@@ -1910,10 +1910,25 @@ HNumber HMath::encodeIeee754( const HNumber & val, const HNumber & exp_bits,
     sign_bit = val.isNegative() ? 1 : 0;
 
     // Determine exponent.
-    for (exponent = min_exp;
-         (significand = HMath::abs(val) * HMath::raise(2, -exponent)) >= 2
-         && exponent < max_exp;
-         exponent += 1);
+    HNumber search_min = min_exp;
+    HNumber search_max = max_exp;
+    exponent = HMath::ceil((search_max - search_min) / 2) + search_min;
+    significand = HMath::abs(val) * HMath::raise(2, -exponent);
+
+    do {
+      if (significand >= 1 && significand < 2) {
+        // Integer part is 1, stop here.
+        break;
+      } else if (significand >= 2) {
+        // Increase exponent.
+        search_min = exponent + 1;
+      } else if (significand < 1) {
+        // Decrease exponent.
+        search_max = exponent - 1;
+      }
+      exponent = HMath::ceil((search_max - search_min) / 2) + search_min;
+      significand = HMath::abs(val) * HMath::raise(2, -exponent);
+    } while (exponent != min_exp && exponent != max_exp);
 
     HNumber rounded = HMath::round(significand * HMath::raise(2, significand_bits));
     HNumber intpart = HMath::integer(rounded * HMath::raise(2, -significand_bits));
