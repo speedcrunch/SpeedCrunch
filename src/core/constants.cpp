@@ -74,7 +74,7 @@ void Constants::Private::populate()
     PUSH_CONSTANT("Characteristic Impedance of Vacuum", QLatin1String("376.730313461"), QString::fromUtf8("Ω"));
     PUSH_CONSTANT("Dirac's Constant", QLatin1String("1.054571628e-34"), QString::fromUtf8("J·s"));
     PUSH_CONSTANT("Electric Constant", QLatin1String("8.854187817e-12"), QLatin1String("F/m"));
-    PUSH_CONSTANT("Gravitation Constant", QLatin1String("6.67428e-11"), QString::fromUtf8("m³/(kg·s²)"));
+    PUSH_CONSTANT("Gravitation Constant", QLatin1String("6.67384e-11"), QString::fromUtf8("m³/(kg·s²)"));
     PUSH_CONSTANT("Magnetic Constant", QLatin1String("1.256637061e-6"), QString::fromUtf8("N/A²"));
     PUSH_CONSTANT("Planck's Constant", QLatin1String("6.62606896e-34"), QString::fromUtf8("J·s"));
     PUSH_CONSTANT("Speed of Light in Vacuum", QLatin1String("299792458"), QLatin1String("m/s"));
