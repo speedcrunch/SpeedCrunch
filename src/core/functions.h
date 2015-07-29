@@ -24,6 +24,7 @@
 #include "math/hmath.h"
 
 #include <QHash>
+#include <QObject>
 #include <QStringList>
 #include <QVector>
 

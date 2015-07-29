@@ -21,6 +21,7 @@
 #ifndef CORE_CONSTANTS_H
 #define CORE_CONSTANTS_H
 
+#include <QObject>
 #include <QStringList>
 
 #include <memory>
