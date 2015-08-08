@@ -885,6 +885,56 @@ void test_functions()
     CHECK_PRECISE(HMath::cosh("0.8"), "1.33743494630484459800481995820531977649392453816033");
     CHECK_PRECISE(HMath::cosh("0.9"), "1.43308638544877438784179040162404834162773784130523");
     CHECK_PRECISE(HMath::cosh("1.0"), "1.54308063481524377847790562075706168260152911236586");
+
+    CHECK(HMath::decodeIeee754("NaN", "NaN", "NaN"), "NaN");
+    CHECK(HMath::decodeIeee754("1", "-1", "1"), "NaN");
+    CHECK(HMath::decodeIeee754("1", "1", "0"), "NaN");
+    CHECK(HMath::decodeIeee754("1", "1.5", "1"), "NaN");
+    CHECK(HMath::decodeIeee754("0", "5", "10"), "0");
+    CHECK(HMath::decodeIeee754("0x7ff00000", "8", "23"), "NaN");
+    CHECK(HMath::decodeIeee754("0xffc0feed", "8", "23"), "NaN");
+    CHECK(HMath::decodeIeee754("0x7fffffff", "8", "23"), "NaN");
+    CHECK(HMath::decodeIeee754("0x8000", "5", "10"), "0");
+    CHECK_PRECISE(HMath::decodeIeee754("0x00800000", "8", "23"), "0.00000000000000000000000000000000000001175494350822");
+    CHECK_PRECISE(HMath::decodeIeee754("0x006f6eed", "8", "23"), "0.00000000000000000000000000000000000001023353274603");
+    CHECK(HMath::decodeIeee754("0x41200000", "8", "23"), "10");
+    CHECK(HMath::decodeIeee754("0xc1200000", "8", "23"), "-10");
+    CHECK(HMath::decodeIeee754("0x3fc00000", "8", "23"), "1.5");
+    CHECK_PRECISE(HMath::decodeIeee754("0x3dcccccd", "8", "23"), "0.10000000149011611938476562500000000000000000000000");
+    CHECK(HMath::decodeIeee754("0x7f7fffff", "8", "23"), "340282346638528859811704183484516925440");
+    CHECK(HMath::decodeIeee754("0x418100b9", "8", "23"), "16.1253528594970703125");
+    CHECK(HMath::decodeIeee754("0x4024000000000000", "11", "52"), "10");
+    CHECK(HMath::decodeIeee754("0x01", "4", "3", "-2"), "1");
+    CHECK(HMath::decodeIeee754("0x07", "4", "3", "-2"), "7");
+    CHECK(HMath::decodeIeee754("0x08", "4", "3", "-2"), "8");
+    CHECK(HMath::decodeIeee754("0xf1", "4", "3", "-2"), "-73728");
+    CHECK(HMath::decodeIeee754("0x77", "4", "3", "-2"), "122880");
+    CHECK(HMath::decodeIeee754("0x5", "2", "1"), "3");
+    CHECK_PRECISE(HMath::decodeIeee754("0x3ffd5555555555555555555555555555", "15", "112"), "0.33333333333333333333333333333333331728391713010637");
+
+    CHECK(HMath::encodeIeee754("NaN", "NaN", "NaN"), "NaN");
+    CHECK(HMath::encodeIeee754("1", "NaN", "NaN"), "NaN");
+    CHECK(HMath::encodeIeee754("1", "-1", "1"), "NaN");
+    CHECK(HMath::encodeIeee754("1", "1", "0"), "NaN");
+    CHECK_FORMAT('h', 0, HMath::encodeIeee754("NaN", "5", "10"), "0x7FFF");
+    CHECK_FORMAT('h', 0, HMath::encodeIeee754("NaN", "11", "52"), "0x7FFFFFFFFFFFFFFF");
+    CHECK_FORMAT('h', 0, HMath::encodeIeee754("0", "5", "10"), "0");
+    CHECK_FORMAT('h', 0, HMath::encodeIeee754("1.17549435E-38", "8", "23"), "0x800000");
+    CHECK_FORMAT('h', 0, HMath::encodeIeee754("10", "8", "23"), "0x41200000");
+    CHECK_FORMAT('h', 0, HMath::encodeIeee754("-10", "8", "23"), "0xC1200000");
+    CHECK_FORMAT('h', 0, HMath::encodeIeee754("1.5", "8", "23"), "0x3FC00000");
+    CHECK_FORMAT('h', 0, HMath::encodeIeee754("340282346638528859811704183484516925440","8", "23"), "0x7F7FFFFF");
+    CHECK_FORMAT('h', 0, HMath::encodeIeee754("9999999999999999999999999999999999", "5", "10"), "0x7C00");
+    CHECK_FORMAT('h', 0, HMath::encodeIeee754("-0.1", "8", "23"), "0xBDCCCCCD");
+    CHECK_FORMAT('h', 0, HMath::encodeIeee754("-0.1", "11", "52"), "0xBFB999999999999A");
+    CHECK_FORMAT('h', 0, HMath::encodeIeee754("16.1253528594970703125", "8", "23"), "0x418100B9");
+    CHECK_FORMAT('h', 0, HMath::encodeIeee754("1", "4", "3", "-2"), "0x1");
+    CHECK_FORMAT('h', 0, HMath::encodeIeee754("7", "4", "3", "-2"), "0x7");
+    CHECK_FORMAT('h', 0, HMath::encodeIeee754("8", "4", "3", "-2"), "0x8");
+    CHECK_FORMAT('h', 0, HMath::encodeIeee754("-73728", "4", "3", "-2"), "0xF1");
+    CHECK_FORMAT('h', 0, HMath::encodeIeee754("122880", "4", "3", "-2"), "0x77");
+    CHECK_FORMAT('h', 0, HMath::encodeIeee754("3", "2", "1"), "0x5");
+    CHECK_FORMAT('h', 0, HMath::encodeIeee754("1.5", "2", "1"), "0x3");
 }
 
 int main(int argc, char* argv[])

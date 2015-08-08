@@ -629,6 +629,74 @@ HNumber function_mod(Function* f, const Function::ArgumentList& args)
     return args.at(0) % args.at(1);
 }
 
+HNumber function_ieee754_decode(Function* f, const Function::ArgumentList& args)
+{
+    ENSURE_EITHER_ARGUMENT_COUNT(3, 4);
+    if (args.count() == 3) {
+        return HMath::decodeIeee754(args.at(0), args.at(1), args.at(2));
+    } else {
+        return HMath::decodeIeee754(args.at(0), args.at(1), args.at(2), args.at(3));
+    }
+}
+
+HNumber function_ieee754_encode(Function* f, const Function::ArgumentList& args)
+{
+    ENSURE_EITHER_ARGUMENT_COUNT(3, 4);
+    if (args.count() == 3) {
+        return HMath::encodeIeee754(args.at(0), args.at(1), args.at(2));
+    } else {
+        return HMath::encodeIeee754(args.at(0), args.at(1), args.at(2), args.at(3));
+    }
+}
+
+HNumber function_ieee754_half_decode(Function* f, const Function::ArgumentList& args)
+{
+    ENSURE_ARGUMENT_COUNT(1);
+    return HMath::decodeIeee754(args.at(0), 5, 10);
+}
+
+HNumber function_ieee754_half_encode(Function* f, const Function::ArgumentList& args)
+{
+    ENSURE_ARGUMENT_COUNT(1);
+    return HMath::encodeIeee754(args.at(0), 5, 10);
+}
+
+HNumber function_ieee754_single_decode(Function* f, const Function::ArgumentList& args)
+{
+    ENSURE_ARGUMENT_COUNT(1);
+    return HMath::decodeIeee754(args.at(0), 8, 23);
+}
+
+HNumber function_ieee754_single_encode(Function* f, const Function::ArgumentList& args)
+{
+    ENSURE_ARGUMENT_COUNT(1);
+    return HMath::encodeIeee754(args.at(0), 8, 23);
+}
+
+HNumber function_ieee754_double_decode(Function* f, const Function::ArgumentList& args)
+{
+    ENSURE_ARGUMENT_COUNT(1);
+    return HMath::decodeIeee754(args.at(0), 11, 52);
+}
+
+HNumber function_ieee754_double_encode(Function* f, const Function::ArgumentList& args)
+{
+    ENSURE_ARGUMENT_COUNT(1);
+    return HMath::encodeIeee754(args.at(0), 11, 52);
+}
+
+HNumber function_ieee754_quad_decode(Function* f, const Function::ArgumentList& args)
+{
+    ENSURE_ARGUMENT_COUNT(1);
+    return HMath::decodeIeee754(args.at(0), 15, 112);
+}
+
+HNumber function_ieee754_quad_encode(Function* f, const Function::ArgumentList& args)
+{
+    ENSURE_ARGUMENT_COUNT(1);
+    return HMath::encodeIeee754(args.at(0), 15, 112);
+}
+
 void FunctionRepo::createFunctions()
 {
     // Analysis.
@@ -715,6 +783,18 @@ void FunctionRepo::createFunctions()
     FUNCTION_INSERT(shr);
     FUNCTION_INSERT(idiv);
     FUNCTION_INSERT(mod);
+
+    // IEEE-754.
+    FUNCTION_INSERT(ieee754_decode);
+    FUNCTION_INSERT(ieee754_encode);
+    FUNCTION_INSERT(ieee754_half_decode);
+    FUNCTION_INSERT(ieee754_half_encode);
+    FUNCTION_INSERT(ieee754_single_decode);
+    FUNCTION_INSERT(ieee754_single_encode);
+    FUNCTION_INSERT(ieee754_double_decode);
+    FUNCTION_INSERT(ieee754_double_encode);
+    FUNCTION_INSERT(ieee754_quad_decode);
+    FUNCTION_INSERT(ieee754_quad_encode);
 }
 
 FunctionRepo* FunctionRepo::instance()
@@ -785,6 +865,14 @@ void FunctionRepo::setNonTranslatableFunctionUsages()
     FUNCTION_USAGE(gcd, "n<sub>1</sub>; n<sub>2</sub>; ...");
     FUNCTION_USAGE(geomean, "x<sub>1</sub>; x<sub>2</sub>; ...");
     FUNCTION_USAGE(hex, "n");
+    FUNCTION_USAGE(ieee754_half_decode, "x");
+    FUNCTION_USAGE(ieee754_half_encode, "x");
+    FUNCTION_USAGE(ieee754_single_decode, "x");
+    FUNCTION_USAGE(ieee754_single_encode, "x");
+    FUNCTION_USAGE(ieee754_double_decode, "x");
+    FUNCTION_USAGE(ieee754_double_encode, "x");
+    FUNCTION_USAGE(ieee754_quad_decode, "x");
+    FUNCTION_USAGE(ieee754_quad_encode, "x");
     FUNCTION_USAGE(int, "x");
     FUNCTION_USAGE(lb, "x");
     FUNCTION_USAGE(lg, "x");
@@ -826,6 +914,8 @@ void FunctionRepo::setTranslatableFunctionUsages()
     FUNCTION_USAGE_TR(hyperpmf, tr("count; total; hits; trials"));
     FUNCTION_USAGE_TR(hypervar, tr("total; hits; trials"));
     FUNCTION_USAGE_TR(idiv, tr("dividend; divisor"));
+    FUNCTION_USAGE_TR(ieee754_decode, tr("x; exponent_bits; significand_bits [; exponent_bias]"));
+    FUNCTION_USAGE_TR(ieee754_encode, tr("x; exponent_bits; significand_bits [; exponent_bias]"));
     FUNCTION_USAGE_TR(log, tr("base; x"));
     FUNCTION_USAGE_TR(mask, tr("n; bits"));
     FUNCTION_USAGE_TR(mod, tr("value; modulo"));
@@ -878,6 +968,16 @@ void FunctionRepo::setFunctionNames()
     FUNCTION_NAME(hypervar, tr("Hypergeometric Distribution Variance"));
     FUNCTION_NAME(idiv, tr("Integer Quotient"));
     FUNCTION_NAME(int, tr("Integer Part"));
+    FUNCTION_NAME(ieee754_decode, tr("Decode IEEE-754 Binary Value"));
+    FUNCTION_NAME(ieee754_encode, tr("Encode IEEE-754 Binary Value"));
+    FUNCTION_NAME(ieee754_half_decode, tr("Decode 16-bit Half-Precision Value"));
+    FUNCTION_NAME(ieee754_half_encode, tr("Encode 16-bit Half-Precision Value"));
+    FUNCTION_NAME(ieee754_single_decode, tr("Decode 32-bit Single-Precision Value"));
+    FUNCTION_NAME(ieee754_single_encode, tr("Encode 32-bit Single-Precision Value"));
+    FUNCTION_NAME(ieee754_double_decode, tr("Decode 64-bit Double-Precision Value"));
+    FUNCTION_NAME(ieee754_double_encode, tr("Encode 64-bit Double-Precision Value"));
+    FUNCTION_NAME(ieee754_quad_decode, tr("Decode 128-bit Quad-Precision Value"));
+    FUNCTION_NAME(ieee754_quad_encode, tr("Encode 128-bit Quad-Precision Value"));
     FUNCTION_NAME(lb, tr("Binary Logarithm"));
     FUNCTION_NAME(lg, tr("Common Logarithm"));
     FUNCTION_NAME(ln, tr("Natural Logarithm"));
