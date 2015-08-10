@@ -49,6 +49,7 @@ public:
     bool autoCalc;
     bool autoCompletion;
     int digitGrouping;
+    bool useEqualsSign;
     bool historySave;
     bool leaveLastExpression;
     bool syntaxHighlighting;

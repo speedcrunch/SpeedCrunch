@@ -92,7 +92,11 @@ void SyntaxHighlighter::highlightBlock(const QString& text)
         return;
     }
 
-    if (text.startsWith(QLatin1String("="))) {
+    // NOTE: 4 NBSP chars are used to visually align more closely with the case when we use the 
+    // equals sign, ie: this '4' may change.
+    // TODO/NOTE: In the case of no equals sign, this would still run colorForRole on the first NBSP char.
+    // TODO: Make this configurable and consider abstracting away the management of color positions.
+    if (text.startsWith(QLatin1String("=")) || text.left(4).simplified().isEmpty() ) {
         setFormat(0, 1, colorForRole(Operator));
         setFormat(1, text.length(), colorForRole(Result));
         if (Settings::instance()->digitGrouping > 0)

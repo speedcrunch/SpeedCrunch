@@ -53,8 +53,12 @@ void ResultDisplay::append(const QString& expression, const HNumber& value)
     ++m_count;
 
     appendPlainText(expression);
-    if (!value.isNan())
-        appendPlainText(QLatin1String("= ") + NumberFormatter::format(value));
+    if (!value.isNan()) {
+        // NOTE: For padding with spaces in html, we must use non-breaking spaces (&nbsp;)
+        QLatin1String equalsOrTab = Settings::instance()->useEqualsSign ?
+            QLatin1String("= ") : QLatin1String("&nbsp;&nbsp;&nbsp;&nbsp;");
+        appendHtml(equalsOrTab + NumberFormatter::format(value));
+    }
     appendPlainText(QLatin1String(""));
 
     // TODO: Refactor, this only serves to save a session.
