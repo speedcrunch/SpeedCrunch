@@ -26,12 +26,21 @@
 #include <QtCore/QStringList>
 #include <QtCore/QList>
 
+// current application version (0xMMNNPP format same as QT_VERSION) 
+#define APP_VERSION 0x001200
+// milestones for compatibility checks
+#define APP_VERSION_001200 0x001200
+// unknown format (always <APP_VERSION) 
+#define APP_VERSION_UNKN 0x000000
+
 class Settings {
 public:
     static Settings* instance();
 
     void load();
     void save();
+
+    unsigned appVersion; // 0xMMNNPP format
 
     char radixCharacter() const; // 0: Automatic.
     void setRadixCharacter(char c = 0);

@@ -87,6 +87,13 @@ QTranslator* MainWindow::createTranslator(const QString& langCode)
 
 void MainWindow::createUi()
 {
+    // set docking behavior
+    setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);
+    setCorner(Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);
+    setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
+    setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
+    setDockNestingEnabled(true);
+  
     createActions();
     createActionGroups();
     createActionShortcuts();
@@ -965,6 +972,10 @@ void MainWindow::applySettings()
     } else
         move(m_settings->windowPosition);
 
+    // docking layout has changed in 0.12 - reset window state
+    if (m_settings->appVersion < APP_VERSION_001200)
+      m_settings->windowState.clear();
+    
     restoreState(m_settings->windowState);
 
     m_actions.viewFullScreenMode->setChecked(m_settings->windowOnfullScreen);

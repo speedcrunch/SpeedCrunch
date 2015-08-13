@@ -63,6 +63,8 @@ void Settings::load()
 
     QString key = QString::fromLatin1(KEY) + QLatin1String("/General/");
 
+    appVersion = settings->value(key + QLatin1String("AppVersion"), APP_VERSION_UNKN).toString().toUInt(0, 16);
+
     // Angle mode special case.
     QString angleUnitStr;
     angleUnitStr = settings->value(key + QLatin1String("AngleMode"), "r").toString();
@@ -221,6 +223,8 @@ void Settings::save()
 
     int k, i;
     QString key = KEY + QLatin1String("/General/");
+
+    settings->setValue(key + QLatin1String("AppVersion"), QString().sprintf("0x%06X", APP_VERSION));
 
     settings->setValue(key + QLatin1String("HistorySave"), historySave);
     settings->setValue(key + QLatin1String("LeaveLastExpression"), leaveLastExpression);
