@@ -319,6 +319,21 @@ float_arctan(
 }
 
 char
+float_arctan2(
+  floatnum x,
+  floatnum y,
+  int digits)
+{
+  if (!chckmathparam(x, digits))
+    return 0;
+  if (!chckmathparam(y, digits))
+    return 0;
+  float_div(x, x, y, digits);
+  _arctan(x, digits);
+  return 1;
+}
+
+char
 float_arcsin(
   floatnum x,
   int digits)

@@ -176,6 +176,12 @@ char float_power10(floatnum x, int digits);
            InvalidPrecision (digits > MATHPRECISION) */
 char float_arctan(floatnum x, int digits);
 
+/* evaluates arctan of arguments, resulting in a full circle
+   -pi<x<= pi range.
+   Errors: NaNOperand
+           InvalidPrecision (digits > MATHPRECISION) */
+char float_arctan2(floatnum y, floatnum x, int digits);
+
 /* evaluates arcsin x for -1 <= x <= 1, yielding a result
    -pi/2 <= result <= pi/2.
    In case of an error, x is set to NaN and 0 is returned.

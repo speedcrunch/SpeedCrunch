@@ -323,6 +323,15 @@ HNumber function_arctan(Function* f, const Function::ArgumentList& args)
     return result;
 }
 
+HNumber function_arctan2(Function* f, const Function::ArgumentList& args)
+{
+    ENSURE_ARGUMENT_COUNT(2);
+    HNumber result = HMath::arctan2(args.at(0), args.at(1));
+    if (Settings::instance()->angleUnit == 'd')
+        result = HMath::rad2deg(result);
+    return result;
+}
+
 HNumber function_sinh(Function* f, const Function::ArgumentList& args)
 {
     ENSURE_ARGUMENT_COUNT(1);
@@ -623,6 +632,12 @@ HNumber function_idiv(Function* f, const Function::ArgumentList& args)
     return HMath::idiv(args.at(0), args.at(1));
 }
 
+HNumber function_div(Function* f, const Function::ArgumentList& args)
+{
+    ENSURE_ARGUMENT_COUNT(2);
+    return HMath::idiv(args.at(0), args.at(1));
+}
+
 HNumber function_mod(Function* f, const Function::ArgumentList& args)
 {
     ENSURE_ARGUMENT_COUNT(2);
@@ -687,6 +702,7 @@ void FunctionRepo::createFunctions()
     FUNCTION_INSERT(artanh);
     FUNCTION_INSERT(arcsin);
     FUNCTION_INSERT(arctan);
+    FUNCTION_INSERT(arctan2);
     FUNCTION_INSERT(cos);
     FUNCTION_INSERT(cosh);
     FUNCTION_INSERT(cot);
@@ -714,6 +730,7 @@ void FunctionRepo::createFunctions()
     FUNCTION_INSERT(shl);
     FUNCTION_INSERT(shr);
     FUNCTION_INSERT(idiv);
+    FUNCTION_INSERT(div);
     FUNCTION_INSERT(mod);
 }
 
@@ -766,6 +783,7 @@ void FunctionRepo::setNonTranslatableFunctionUsages()
     FUNCTION_USAGE(artanh, "x");
     FUNCTION_USAGE(arcsin, "x");
     FUNCTION_USAGE(arctan, "x");
+    FUNCTION_USAGE(arctan2, "y; x");
     FUNCTION_USAGE(average, "x<sub>1</sub>; x<sub>2</sub>; ...");
     FUNCTION_USAGE(bin, "n");
     FUNCTION_USAGE(cbrt, "x");
@@ -821,6 +839,7 @@ void FunctionRepo::setTranslatableFunctionUsages()
     FUNCTION_USAGE_TR(binommean, tr("trials; probability"));
     FUNCTION_USAGE_TR(binompmf, tr("hits; trials; probability"));
     FUNCTION_USAGE_TR(binomvar, tr("trials; probability"));
+    FUNCTION_USAGE_TR(div, tr("dividend; divisor"));
     FUNCTION_USAGE_TR(hypercdf, tr("max; total; hits; trials"));
     FUNCTION_USAGE_TR(hypermean, tr("total; hits; trials"));
     FUNCTION_USAGE_TR(hyperpmf, tr("count; total; hits; trials"));
@@ -849,6 +868,7 @@ void FunctionRepo::setFunctionNames()
     FUNCTION_NAME(artanh, tr("Area Hyperbolic Tangent"));
     FUNCTION_NAME(arcsin, tr("Arc Sine"));
     FUNCTION_NAME(arctan, tr("Arc Tangent"));
+    FUNCTION_NAME(arctan2, tr("Arc Tangent from Cathedus"));
     FUNCTION_NAME(average, tr("Average (Arithmetic Mean)"));
     FUNCTION_NAME(bin, tr("Convert to Binary Representation"));
     FUNCTION_NAME(binomcdf, tr("Binomial Cumulative Distribution Function"));
@@ -863,6 +883,7 @@ void FunctionRepo::setFunctionNames()
     FUNCTION_NAME(csc, tr("Cosecant"));
     FUNCTION_NAME(dec, tr("Convert to Decimal Representation"));
     FUNCTION_NAME(degrees, tr("Degrees of Arc"));
+    FUNCTION_NAME(div, tr("Integer Quotient"));
     FUNCTION_NAME(erf, tr("Error Function"));
     FUNCTION_NAME(erfc, tr("Complementary Error Function"));
     FUNCTION_NAME(exp, tr("Exponential"));
