@@ -66,8 +66,9 @@ public:
     bool statusBarVisible;
     bool variablesDockVisible;
     bool userFunctionsDockVisible;
+    bool bitFieldDockVisible;
+    bool bitFieldDockTitle;
     bool windowOnfullScreen;
-    bool bitfieldVisible;
 
     int colorScheme;
     QString displayFont;

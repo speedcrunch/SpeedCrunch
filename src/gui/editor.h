@@ -32,6 +32,7 @@ class SyntaxHighlighter;
 class QEvent;
 class QKeyEvent;
 class QMimeData;
+class QMoveEvent;
 class QTimeLine;
 class QTreeWidget;
 class QWheelEvent;
@@ -71,6 +72,7 @@ signals:
     void copySequencePressed();
     void pageDownPressed();
     void pageUpPressed();
+    void posChanged(const QMoveEvent* event);
     void returnPressed();
     void shiftDownPressed();
     void shiftUpPressed();
@@ -109,6 +111,7 @@ protected:
     virtual void changeEvent(QEvent*);
     virtual void focusOutEvent(QFocusEvent*);
     virtual void keyPressEvent(QKeyEvent*);
+    virtual void moveEvent(QMoveEvent*);
     virtual void paintEvent(QPaintEvent*);
     virtual void wheelEvent(QWheelEvent*);
 

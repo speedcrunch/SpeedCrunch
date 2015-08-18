@@ -63,6 +63,7 @@ HEADERS += core/book.h \
            core/functions.h \
            core/manual.h \
            gui/aboutbox.h \
+           gui/bitfielddock.h \
            gui/bitfieldwidget.h \
            gui/bookdock.h \
            gui/constantsdock.h \
@@ -91,6 +92,7 @@ SOURCES += main.cpp \
            core/pageserver.cpp \
            core/settings.cpp \
            gui/aboutbox.cpp \
+           gui/bitfielddock.cpp \
            gui/bitfieldwidget.cpp \
            gui/bookdock.cpp \
            gui/constantsdock.cpp \

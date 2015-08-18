@@ -25,7 +25,7 @@
 #include <QSystemTrayIcon>
 
 class AutoHideLabel;
-class BitFieldWidget;
+class BitFieldDock;
 class BookDock;
 class Constants;
 class ConstantsDock;
@@ -109,7 +109,8 @@ private slots:
     void setAutoAnsEnabled(bool);
     void setAutoCalcEnabled(bool);
     void setAutoCompletionEnabled(bool);
-    void setBitfieldVisible(bool);
+    void setBitfieldDockVisible(bool);
+    void setBitfieldDockTitle(bool);
     void setConstantsDockVisible(bool);
     void setFormulaBookDockVisible(bool);
     void setFullScreenEnabled(bool);
@@ -161,6 +162,7 @@ private slots:
     void showSystemTrayMessage();
     void increaseDisplayFontPointSize();
     void decreaseDisplayFontPointSize();
+    void updateStateLabelPos();
 
 protected:
     virtual void closeEvent(QCloseEvent*);
@@ -178,7 +180,7 @@ private:
     void createMenus();
     void createStatusBar();
     void createFixedWidgets();
-    void createBitField();
+    void createBitFieldDock();
     void createBookDock();
     void createConstantsDock();
     void createFunctionsDock();
@@ -195,7 +197,7 @@ private:
     void restoreVariables();
     void restoreUserFunctions();
     void deleteStatusBar();
-    void deleteBitField();
+    void deleteBitFieldDock();
     void deleteBookDock();
     void deleteConstantsDock();
     void deleteFunctionsDock();
@@ -236,6 +238,7 @@ private:
         QAction* viewStatusBar;
         QAction* viewFullScreenMode;
         QAction* viewBitfield;
+        QAction* viewBitfieldDockTitle;
         QAction* settingsResultFormatGeneral;
         QAction* settingsResultFormatFixed;
         QAction* settingsResultFormatEngineering;
@@ -328,10 +331,10 @@ private:
         QWidget* root;
         QSystemTrayIcon* trayIcon;
         ManualWindow* manual;
-        BitFieldWidget* bitField;
     } m_widgets;
 
     struct {
+        BitFieldDock* bitField;
         BookDock* book;
         ConstantsDock* constants;
         FunctionsDock* functions;

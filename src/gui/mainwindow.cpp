@@ -27,7 +27,7 @@
 #include "core/numberformatter.h"
 #include "core/settings.h"
 #include "gui/aboutbox.h"
-#include "gui/bitfieldwidget.h"
+#include "gui/bitfielddock.h"
 #include "gui/bookdock.h"
 #include "gui/constantsdock.h"
 #include "gui/editor.h"
@@ -122,6 +122,8 @@ void MainWindow::createActions()
     m_actions.viewStatusBar = new QAction(this);
     m_actions.viewVariables = new QAction(this);
     m_actions.viewBitfield = new QAction(this);
+    m_actions.viewBitfieldDockTitle = new QAction(this);
+    m_actions.viewBitfieldDockTitle->setEnabled(false);
     m_actions.viewUserFunctions = new QAction(this);
     m_actions.settingsAngleUnitDegree = new QAction(this);
     m_actions.settingsAngleUnitRadian = new QAction(this);
@@ -226,6 +228,7 @@ void MainWindow::createActions()
     m_actions.viewStatusBar->setCheckable(true);
     m_actions.viewVariables->setCheckable(true);
     m_actions.viewBitfield->setCheckable(true);
+    m_actions.viewBitfieldDockTitle->setCheckable(true);
     m_actions.viewUserFunctions->setCheckable(true);
 
     m_actions.settingsDisplayColorSchemeStandard->setData(SyntaxHighlighter::Standard);
@@ -308,6 +311,7 @@ void MainWindow::setActionsText()
     m_actions.viewStatusBar->setText(MainWindow::tr("&Status Bar"));
     m_actions.viewVariables->setText(MainWindow::tr("&Variables"));
     m_actions.viewBitfield->setText(MainWindow::tr("Bitfield"));
+    m_actions.viewBitfieldDockTitle->setText(MainWindow::tr("Bitfield dock title bar"));
     m_actions.viewUserFunctions->setText(MainWindow::tr("Use&r Functions"));
 
     m_actions.settingsAngleUnitDegree->setText(MainWindow::tr("&Degree"));
@@ -469,6 +473,8 @@ void MainWindow::createMenus()
     m_menus.view->addAction(m_actions.viewUserFunctions);
     m_menus.view->addAction(m_actions.viewBitfield);
     m_menus.view->addAction(m_actions.viewHistory);
+    m_menus.view->addSeparator();
+    m_menus.view->addAction(m_actions.viewBitfieldDockTitle);
     m_menus.view->addSeparator();
     m_menus.view->addAction(m_actions.viewStatusBar);
     m_menus.view->addSeparator();
@@ -643,13 +649,21 @@ void MainWindow::createFixedWidgets()
     m_widgets.state->hide();
 }
 
-void MainWindow::createBitField() {
-    m_widgets.bitField = new BitFieldWidget(m_widgets.root);
-    m_layouts.root->addWidget(m_widgets.bitField);
-    m_widgets.bitField->show();
-    m_widgets.display->scrollToBottom();
-    connect(m_widgets.bitField, SIGNAL(bitsChanged(const QString&)), SLOT(handleBitsChanged(const QString&)));
-    m_settings->bitfieldVisible = true;
+void MainWindow::createBitFieldDock() {
+    m_docks.bitField = new BitFieldDock(this);
+    m_docks.bitField->setObjectName("BitFieldDock");
+    m_docks.bitField->installEventFilter(this);
+    m_docks.bitField->setAllowedAreas(Qt::AllDockWidgetAreas);
+    m_docks.bitField->displayTitleBar(m_settings->bitFieldDockTitle);
+    addDockWidget(Qt::BottomDockWidgetArea, m_docks.bitField);
+
+    connect(m_docks.bitField->widget(), SIGNAL(bitsChanged(const QString&)), SLOT(handleBitsChanged(const QString&)));
+
+    m_docks.bitField->show();
+    m_docks.bitField->raise();
+    m_actions.viewBitfieldDockTitle->setEnabled(true);
+
+    m_settings->bitFieldDockVisible = true;
 }
 
 void MainWindow::createBookDock()
@@ -852,7 +866,8 @@ void MainWindow::createFixedConnections()
     connect(m_actions.viewFormulaBook, SIGNAL(toggled(bool)), SLOT(setFormulaBookDockVisible(bool)));
     connect(m_actions.viewStatusBar, SIGNAL(toggled(bool)), SLOT(setStatusBarVisible(bool)));
     connect(m_actions.viewVariables, SIGNAL(toggled(bool)), SLOT(setVariablesDockVisible(bool)));
-    connect(m_actions.viewBitfield, SIGNAL(toggled(bool)), SLOT(setBitfieldVisible(bool)));
+    connect(m_actions.viewBitfield, SIGNAL(toggled(bool)), SLOT(setBitfieldDockVisible(bool)));
+    connect(m_actions.viewBitfieldDockTitle, SIGNAL(toggled(bool)), SLOT(setBitfieldDockTitle(bool)));
     connect(m_actions.viewUserFunctions, SIGNAL(toggled(bool)), SLOT(setUserFunctionsDockVisible(bool)));
 
     connect(m_actions.settingsAngleUnitDegree, SIGNAL(triggered()), SLOT(setAngleModeDegree()));
@@ -903,6 +918,7 @@ void MainWindow::createFixedConnections()
 
     connect(m_widgets.editor, SIGNAL(autoCalcDisabled()), SLOT(hideStateLabel()));
     connect(m_widgets.editor, SIGNAL(autoCalcEnabled(const QString&)), SLOT(showStateLabel(const QString&)));
+    connect(m_widgets.editor, SIGNAL(posChanged(const QMoveEvent*)), SLOT(updateStateLabelPos()));
     connect(m_widgets.editor, SIGNAL(returnPressed()), SLOT(evaluateEditorExpression()));
     connect(m_widgets.editor, SIGNAL(shiftDownPressed()), SLOT(decreaseDisplayFontPointSize()));
     connect(m_widgets.editor, SIGNAL(shiftUpPressed()), SLOT(increaseDisplayFontPointSize()));
@@ -951,7 +967,9 @@ void MainWindow::applySettings()
     m_actions.viewFunctions->setChecked(m_settings->functionsDockVisible);
     m_actions.viewHistory->setChecked(m_settings->historyDockVisible);
     m_actions.viewVariables->setChecked(m_settings->variablesDockVisible);
-    m_actions.viewBitfield->setChecked(m_settings->bitfieldVisible);
+    m_actions.viewBitfield->setChecked(m_settings->bitFieldDockVisible);
+    m_actions.viewBitfieldDockTitle->setChecked(m_settings->bitFieldDockTitle);
+    setBitfieldDockTitle(m_settings->bitFieldDockTitle);
     m_actions.viewUserFunctions->setChecked(m_settings->userFunctionsDockVisible);
 
     resize(m_settings->windowSize);
@@ -1167,6 +1185,7 @@ MainWindow::MainWindow()
     m_conditions.autoAns = false;
     m_conditions.trayNotify = true;
 
+    m_docks.bitField = 0;
     m_docks.book = 0;
     m_docks.history = 0;
     m_docks.constants = 0;
@@ -1188,6 +1207,8 @@ MainWindow::~MainWindow()
 {
     if (m_widgets.trayIcon)
         m_widgets.trayIcon->hide();
+    if (m_docks.bitField)
+        deleteBitFieldDock();
     if (m_docks.book)
         deleteBookDock();
     if (m_docks.constants)
@@ -1625,12 +1646,19 @@ void MainWindow::setAutoCompletionEnabled(bool b)
     m_widgets.editor->setAutoCompletionEnabled(b);
 }
 
-void MainWindow::setBitfieldVisible(bool b)
+void MainWindow::setBitfieldDockVisible(bool b)
 {
     if (b)
-        createBitField();
+        createBitFieldDock();
     else
-        deleteBitField();
+        deleteBitFieldDock();
+}
+
+void MainWindow::setBitfieldDockTitle(bool on)
+{
+    if (m_docks.bitField)
+        m_docks.bitField->displayTitleBar(on);
+    m_settings->bitFieldDockTitle = on;
 }
 
 void MainWindow::setSystemTrayIconEnabled(bool b)
@@ -1881,6 +1909,11 @@ void MainWindow::showStateLabel(const QString& msg)
     m_widgets.state->adjustSize();
     m_widgets.state->show();
     m_widgets.state->raise();
+    updateStateLabelPos();
+}
+
+void MainWindow::updateStateLabelPos()
+{
     const int height = m_widgets.state->height();
     QPoint pos = mapFromGlobal(m_widgets.editor->mapToGlobal(QPoint(0, -height)));
     m_widgets.state->move(pos);
@@ -1894,6 +1927,14 @@ void MainWindow::setFullScreenEnabled(bool b)
 
 bool MainWindow::eventFilter(QObject* o, QEvent* e)
 {
+    if (o == m_docks.bitField) {
+        if (e->type() == QEvent::Close) {
+            deleteBitFieldDock();
+            return true;
+        }
+        return false;
+    }
+
     if (o == m_docks.book) {
         if (e->type() == QEvent::Close) {
             deleteBookDock();
@@ -1956,14 +1997,19 @@ void MainWindow::deleteStatusBar()
     setStatusBar(0);
 }
 
-void MainWindow::deleteBitField()
+void MainWindow::deleteBitFieldDock()
 {
-    m_widgets.bitField->hide();
-    m_layouts.root->removeWidget(m_widgets.bitField);
-    disconnect(m_widgets.bitField);
-    m_widgets.bitField->deleteLater();
-    m_widgets.bitField = 0;
-    m_settings->bitfieldVisible = false;
+    Q_ASSERT(m_docks.bitField);
+
+    removeDockWidget(m_docks.bitField);
+    disconnect(m_docks.bitField);
+    m_docks.bitField->deleteLater();
+    m_docks.bitField = 0;
+    m_actions.viewBitfield->blockSignals(true);
+    m_actions.viewBitfield->setChecked(false);
+    m_actions.viewBitfield->blockSignals(false);
+    m_actions.viewBitfieldDockTitle->setEnabled(false);
+    m_settings->bitFieldDockVisible = false;
 }
 
 void MainWindow::deleteBookDock()
@@ -2326,8 +2372,8 @@ void MainWindow::evaluateEditorExpression()
         m_widgets.editor->setAnsAvailable(true);
     }
 
-    if (m_settings->bitfieldVisible)
-        m_widgets.bitField->updateBits(result);
+    if (m_settings->bitFieldDockVisible)
+        m_docks.bitField->updateBits(result);
 
     if (m_settings->variablesDockVisible)
         m_docks.variables->updateList();

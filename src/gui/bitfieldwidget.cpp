@@ -27,18 +27,27 @@
 #include <QListIterator>
 #include <QPainter>
 #include <QPaintEvent>
-#include <QPushButton>
+#include <QToolButton>
+
+//------------------------------------------------------------------------------
 
 BitWidget::BitWidget(int bitPosition, QWidget* parent)
     : QLabel(parent),
     m_state(false)
 {
-    setFixedSize(SizePixels, SizePixels);
+    setMinimumSize(SizePixels, SizePixels);
+    setMaximumSize(SizePixels*4, SizePixels*4);
+    setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
 
     HNumber number(HMath::raise(HNumber(2), bitPosition));
     setToolTip(QString("2<sup>%1</sup> = %2")
         .arg(bitPosition)
         .arg(HMath::format(number, 'd')));
+}
+
+QSize BitWidget::sizeHint() const
+{
+    return QSize(SizePixels*4, SizePixels*4);
 }
 
 void BitWidget::mouseReleaseEvent(QMouseEvent*)
@@ -58,6 +67,8 @@ void BitWidget::paintEvent(QPaintEvent* event)
         painter.drawRect(event->rect());
 }
 
+//------------------------------------------------------------------------------
+
 BitFieldWidget::BitFieldWidget(QWidget* parent) :
     QWidget(parent)
 {
@@ -70,6 +81,9 @@ BitFieldWidget::BitFieldWidget(QWidget* parent) :
 
     QGridLayout* fieldLayout = new QGridLayout;
     int bitOffset = 0;
+
+    // add empty row so that there will be the same row-spacing maring at top and bottom
+    fieldLayout->addWidget(new QWidget(), 0, 0, -1, -1);
 
     for (int column = 0; column < 17; ++column) {
         if ((column % 2) == 0) {
@@ -90,8 +104,8 @@ BitFieldWidget::BitFieldWidget(QWidget* parent) :
             topNumberLabel->setText(QString("%1").arg(topNumber));
             bottomNumberLabel->setText(QString("%1").arg(bottomNumber));
 
-            fieldLayout->addWidget(topNumberLabel, 0, column);
-            fieldLayout->addWidget(bottomNumberLabel, 1, column);
+            fieldLayout->addWidget(topNumberLabel, 1, column);
+            fieldLayout->addWidget(bottomNumberLabel, 2, column);
 
         } else {
             QHBoxLayout* bottomLayout(new QHBoxLayout);
@@ -105,40 +119,45 @@ BitFieldWidget::BitFieldWidget(QWidget* parent) :
 
             ++bitOffset;
 
-            fieldLayout->addLayout(bottomLayout, 1, column, Qt::AlignCenter);
-            fieldLayout->addLayout(topLayout, 0, column, Qt::AlignCenter);
+            fieldLayout->addLayout(bottomLayout, 2, column, Qt::AlignCenter);
+            fieldLayout->addLayout(topLayout, 1, column, Qt::AlignCenter);
         }
     }
 
-    QPushButton* resetButton = new QPushButton("0");
-    resetButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    QToolButton* resetButton = new QToolButton();
+    resetButton->setText("0");
+    resetButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     connect(resetButton, SIGNAL(clicked()), this, SLOT(resetBits()));
 
-    QPushButton* invertButton = new QPushButton("~");
-    invertButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    QToolButton* invertButton = new QToolButton();
+    invertButton->setText("~");
+    invertButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     connect(invertButton, SIGNAL(clicked()), this, SLOT(invertBits()));
 
-    QPushButton* shiftLeftButton = new QPushButton("<<");
-    shiftLeftButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    QToolButton* shiftLeftButton = new QToolButton();
+    shiftLeftButton->setText("<<");
+    shiftLeftButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     connect(shiftLeftButton, SIGNAL(clicked()), this, SLOT(shiftBitsLeft()));
 
-    QPushButton* shiftRightButton = new QPushButton(">>");
-    shiftRightButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    QToolButton* shiftRightButton = new QToolButton();
+    shiftRightButton->setText(">>");
+    shiftRightButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     connect(shiftRightButton, SIGNAL(clicked()), this, SLOT(shiftBitsRight()));
 
-    QVBoxLayout* buttonsLayout = new QVBoxLayout;
-    buttonsLayout->addWidget(resetButton);
-    buttonsLayout->addWidget(shiftLeftButton);
+    int col = fieldLayout->columnCount();
+    fieldLayout->addWidget(resetButton, 1, col);
+    fieldLayout->addWidget(shiftLeftButton, 2, col);
+    fieldLayout->addWidget(invertButton, 1, ++col);
+    fieldLayout->addWidget(shiftRightButton, 2, col);
 
-    QVBoxLayout* buttonsLayout2 = new QVBoxLayout;
-    buttonsLayout2->addWidget(invertButton);
-    buttonsLayout2->addWidget(shiftRightButton);
+    // add empty row eating as much as possible (no spacing between format rows)
+    fieldLayout->addWidget(new QWidget(), 3, 0, -1, -1);
+    fieldLayout->setRowStretch(3, 1);
 
     QHBoxLayout* mainLayout = new QHBoxLayout(this);
+    mainLayout->setContentsMargins(2, 0, 2, 0);
     mainLayout->addStretch();
     mainLayout->addLayout(fieldLayout);
-    mainLayout->addLayout(buttonsLayout);
-    mainLayout->addLayout(buttonsLayout2);
     mainLayout->addStretch();
 }
 
